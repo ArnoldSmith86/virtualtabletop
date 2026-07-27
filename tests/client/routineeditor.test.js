@@ -213,6 +213,32 @@ describe('operation rendering', () => {
     expect(editorForOperation({ func: 'CANVAS' }).ignoredParameters().collection).toBeUndefined();
   });
 
+  test('a widget parameter marks the collection it replaces as ignored', () => {
+    // the engine checks holder/label/timer/from first and never looks at collection then
+    const replaced = { COUNT: 'holder', FLIP: 'holder', LABEL: 'label', MOVE: 'from', ROTATE: 'holder', SHUFFLE: 'holder', SORT: 'holder', TIMER: 'timer' };
+    for(const func in replaced) {
+      const operation = { func, [replaced[func]]: 'w1', collection: 'stuff' };
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      expect(editor.ignoredParameters().collection).toMatch(new RegExp(replaced[func]));
+      expect(editorForOperation({ func }).ignoredParameters().collection).toBeUndefined();
+    }
+  });
+
+  test('FLIP marks face as ignored while the cycle picks a random one', () => {
+    const ignoredFor = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.ignoredParameters();
+    };
+    expect(ignoredFor({ func: 'FLIP', faceCycle: 'random' }).face).toMatch(/random/);
+    expect(ignoredFor({ func: 'FLIP', faceCycle: 'forward' }).face).toBeUndefined();
+    // an explicit face wins over the cycle, so then the cycle is the ignored one
+    const bothSet = ignoredFor({ func: 'FLIP', face: 1, faceCycle: 'random' });
+    expect(bothSet.faceCycle).toMatch(/target face/);
+    expect(bothSet.face).toBeUndefined();
+  });
+
   test('the list view shows custom properties the operation does not support', () => {
     const rendered = renderInListView({ func: 'FLIP', typo: 3, holder: 'h1' });
     const row = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('typo'));
@@ -752,6 +778,28 @@ describe('number popups with text values', () => {
     expect(popup.domElement.querySelector('input[type=text]')).toBeNull();
     popup.hide();
   });
+
+  test('offer 0 as a value - "use default" is what clears the parameter', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineNumberPopup({});
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'MOVEXY', x: 5 }, [ 'x' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+    const zero = [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == '0');
+    expect(zero).not.toBeUndefined();
+    zero.dispatchEvent(new Event('click'));
+    expect(value).toEqual({ x: 0 });
+    popup.hide();
+  });
+
+  test('no parameter offers null as a value, that is what "use default" does', () => {
+    for(const func in routineOperationMetadata)
+      for(const name in routineOperationMetadata[func].parameters)
+        expect(routineOperationMetadata[func].parameters[name].special || []).not.toContain(null);
+  });
 });
 
 describe('the shared widget picker', () => {
@@ -1016,6 +1064,45 @@ describe('variables in widget parameters', () => {
     popup.setNewCollectionValue('DEFAULT');
     expect(value).toEqual({ holder: undefined, collection: 'DEFAULT' });
     popup.hide();
+  });
+});
+
+describe('popups stay out of the play area', () => {
+  const withRoom = (room, callback) => {
+    const roomArea = document.getElementById('roomArea'); // jsdom has no layout, so fake the play area
+    const original = roomArea.getBoundingClientRect;
+    roomArea.getBoundingClientRect = () => room;
+    try {
+      callback();
+    } finally {
+      roomArea.getBoundingClientRect = original;
+    }
+  };
+
+  test('a widget picker is placed in the strip the play area leaves over', () => {
+    // portrait phone: the modules sit above the play area
+    withRoom({ left: 0, top: window.innerHeight/2, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineWidgetIDPopup({}).placementLimits().bottom).toBe(window.innerHeight/2);
+    });
+    // wide screen: the modules sit right of the play area
+    withRoom({ left: 0, top: 0, right: 500, bottom: window.innerHeight }, () => {
+      expect(new RoutineWidgetIDPopup({}).placementLimits().left).toBe(500);
+    });
+  });
+
+  test('popups without a room picker use the whole editor', () => {
+    withRoom({ left: 0, top: window.innerHeight/2, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineStringPopup().placementLimits().bottom).toBe(window.innerHeight);
+      expect(new RoutineNumberPopup({}).placementLimits().bottom).toBe(window.innerHeight);
+      // a number parameter that names a widget does offer the room picker
+      expect(new RoutineNumberPopup({ widgetType: 'seat' }).placementLimits().bottom).toBe(window.innerHeight/2);
+    });
+  });
+
+  test('a play area without a usable strip beside it does not squeeze the popup away', () => {
+    withRoom({ left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineWidgetIDPopup({}).placementLimits().bottom).toBe(window.innerHeight);
+    });
   });
 });
 

@@ -28,6 +28,16 @@
 // template should not word them into the sentence in the mode that ignores them
 // (that is what the template functions are for), and they are never appended as
 // an extra chip either.
+
+// Most operations take either a single widget (holder/label/timer/from/canvas)
+// or a collection - the engine checks the widget parameter first and never looks
+// at collection once it is set (the `if(a.holder !== undefined)` branches in
+// widget.js). Marking collection ignored there is the same situation as
+// CANVAS canvas vs collection, just spelled out per operation.
+function collectionReplacedBy(parameter) {
+  return v=>v(parameter) != null ? { collection: `ignored because ${parameter} is set` } : {};
+}
+
 const routineOperationMetadata = {
   AUDIO: {
     template: '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
@@ -68,7 +78,7 @@ const routineOperationMetadata = {
         with collection - and only collection works with the collections earlier operations define.
         </pre>
       ` },
-      count: { type: 'number', default: null, special: [ null ], display: { 'null': 'all' } },
+      count: { type: 'number', default: null, display: { 'null': 'all' } },
       value: { type: 'number', default: 1 },
       color: { type: 'color', default: '#1F5CA6' },
       x: { type: 'number', default: 0 },
@@ -105,7 +115,8 @@ const routineOperationMetadata = {
       collection: { type: 'collection', default: 'DEFAULT' },
       variable: { type: 'string', default: 'COUNT' }
     },
-    definesVariable: 'variable'
+    definesVariable: 'variable',
+    ignored: collectionReplacedBy('holder')
   },
   DELAY: {
     template: '{func} for {milliseconds} milliseconds',
@@ -131,10 +142,17 @@ const routineOperationMetadata = {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
       holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
-      face: { type: 'number', default: null, special: [ null ], display: { 'null': 'next' } },
+      face: { type: 'number', default: null, display: { 'null': 'next' } },
       faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
     },
-    ignored: v=>v('face') != null ? { faceCycle: 'ignored because a target face is set' } : {}
+    ignored: v=>{
+      const ignored = collectionReplacedBy('holder')(v);
+      if(v('face') != null)
+        ignored.faceCycle = 'ignored because a target face is set';
+      else if(v('faceCycle') == 'random')
+        ignored.face = 'ignored because faceCycle picks a random face';
+      return ignored;
+    }
   },
   FOREACH: {
     template: '{func} {in,range,collection}',
@@ -184,7 +202,8 @@ const routineOperationMetadata = {
       collection: { type: 'collection', default: 'DEFAULT' },
       value: { type: 'string', default: 0 },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'append' ], default: 'set' }
-    }
+    },
+    ignored: collectionReplacedBy('label')
   },
   MOVE: {
     template: v=>v('fillTo') != null ? '{func} widgets from {from,collection} to {to}; fill up to {fillTo}[; flip them to face {face}]' : '{func} {count} widgets from {from,collection} to {to}[; flip them to face {face}]',
@@ -194,9 +213,14 @@ const routineOperationMetadata = {
       from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       to: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
-      face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } }
+      face: { type: 'number', default: null, display: { 'null': 'unchanged' } }
     },
-    ignored: v=>v('fillTo') != null ? { count: 'ignored because "fill up to" is set' } : {}
+    ignored: v=>{
+      const ignored = collectionReplacedBy('from')(v);
+      if(v('fillTo') != null)
+        ignored.count = 'ignored because "fill up to" is set';
+      return ignored;
+    }
   },
   MOVEXY: {
     template: '{func} {count} widgets from {from} to ({x}, {y})[; flip to face {face}]',
@@ -205,8 +229,8 @@ const routineOperationMetadata = {
       from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
-      z: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } },
-      face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } },
+      z: { type: 'number', default: null, display: { 'null': 'unchanged' } },
+      face: { type: 'number', default: null, display: { 'null': 'unchanged' } },
       snapToGrid: { type: 'enum', values: [ true, false ], default: true },
       resetOwner: { type: 'enum', values: [ true, false ], default: true }
     }
@@ -235,16 +259,17 @@ const routineOperationMetadata = {
       collection: { type: 'collection', default: 'DEFAULT' },
       angle: { type: 'number', default: 90, special: [ 45, 60, 90, 135, 180 ] },
       mode: { type: 'enum', values: [ 'set', 'add' ], default: 'add' }
-    }
+    },
+    ignored: collectionReplacedBy('holder')
   },
   SCORE: {
     template: '{func}: get {property} in {seats}[; for round {round}][; use as {mode}][ with multiplier {value}]',
     parameters: {
       property: { type: 'string', default: 'score' },
       seats: { type: 'widgets', default: null, display: { 'null': 'every seat' }, widgetType: 'seat' },
-      round: { type: 'number', default: null, special: [ null ], display: { 'null': 'new round' } },
+      round: { type: 'number', default: null, display: { 'null': 'new round' } },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec' ], default: 'set' },
-      value: { type: 'number', default: null, special: [ null ] }
+      value: { type: 'number', default: null }
     }
   },
   SELECT: {
@@ -287,7 +312,8 @@ const routineOperationMetadata = {
       collection: { type: 'collection', default: 'DEFAULT' },
       mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random' },
       modeValue: { type: 'number', default: 1 }
-    }
+    },
+    ignored: collectionReplacedBy('holder')
   },
   SORT: {
     template: '{func} {holder,collection} by {key}[; reverse {reverse}]',
@@ -299,7 +325,8 @@ const routineOperationMetadata = {
       rearrange: { type: 'enum', values: [ true, false ], default: true },
       locales: { type: 'json', default: null },
       options: { type: 'json', default: null }
-    }
+    },
+    ignored: collectionReplacedBy('holder')
   },
   SWAPHANDS: {
     template: '{func} hands among players in {source}[, interval {interval}][, direction {direction}]',
@@ -327,11 +354,14 @@ const routineOperationMetadata = {
       seconds: { type: 'number', default: 0 }
     },
     ignored: v=>{
-      if([ 'pause', 'start', 'toggle', 'reset' ].indexOf(v('mode')) != -1)
-        return { value: 'ignored for this mode', seconds: 'ignored for this mode' };
-      if(v('seconds'))
-        return { value: 'ignored because seconds is set' };
-      return {};
+      const ignored = collectionReplacedBy('timer')(v);
+      if([ 'pause', 'start', 'toggle', 'reset' ].indexOf(v('mode')) != -1) {
+        ignored.value = 'ignored for this mode';
+        ignored.seconds = 'ignored for this mode';
+      } else if(v('seconds')) {
+        ignored.value = 'ignored because seconds is set';
+      }
+      return ignored;
     }
   },
   TURN: {
