@@ -95,7 +95,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This line has a width of 0 so it is invisible. However, the holders that are attached to it follow the curve of the line. By default the stops are evenly spaced (<b>autoSpaceStops</b>:true) and will rotate (<b>rotateStops</b>:true) to follow the curve of the line. Move the end points, control points, and add and delete stops to see this in action. Stops on the line get <b>linePosition</b> and sometimes <b>lineOriginalRotation</b> properties that should be ignored and managed through the &quotEdit Widgets&quot tab.",
+    "html": "This line has a width of 0 so it is invisible. However, the holders that are attached to it follow the curve of the line. By default the stops are evenly spaced (<b>autoSpaceStops</b>:true) and will rotate (<b>rotateStops</b>:true) to follow the curve of the line. Move the end points, control points, and add and delete stops to see this in action. The line lists its stops in its <b>stops</b> property (<b>[ { \"widget\": ..., \"position\": 0..1 }, ... ]</b>); stops sometimes also get a <b>lineOriginalRotation</b> property. Both should be ignored and managed through the &quotEdit Widgets&quot tab.",
     "layer": -3
   },
   "text4": {
@@ -158,7 +158,17 @@
     },
     "lineDash": "8 8",
     "lineWidth": 5,
-    "lineColor": "#0000ff"
+    "lineColor": "#0000ff",
+    "stops": [
+      {
+        "widget": "line2S0",
+        "position": 0
+      },
+      {
+        "widget": "line2S1",
+        "position": 1
+      }
+    ]
   },
   "line2S0": {
     "type": "holder",
@@ -171,8 +181,7 @@
     },
     "inheritFrom": {
       "line1S0": "*"
-    },
-    "linePosition": 0
+    }
   },
   "line2S1": {
     "type": "holder",
@@ -182,8 +191,7 @@
     "y": 60,
     "inheritFrom": {
       "line1S1": "*"
-    },
-    "linePosition": 1
+    }
   },
   "line3": {
     "inheritFrom": {
@@ -214,7 +222,29 @@
     },
     "lineWidth": 0,
     "autoSpaceStops": true,
-    "rotateStops": true
+    "rotateStops": true,
+    "stops": [
+      {
+        "widget": "line3S0",
+        "position": 0
+      },
+      {
+        "widget": "line3M0",
+        "position": 0.26
+      },
+      {
+        "widget": "line3M1",
+        "position": 0.5
+      },
+      {
+        "widget": "line3M2",
+        "position": 0.74
+      },
+      {
+        "widget": "line3S1",
+        "position": 1
+      }
+    ]
   },
   "line3S0": {
     "type": "holder",
@@ -228,8 +258,7 @@
     },
     "borderRadius": 8,
     "x": -10,
-    "y": 127,
-    "linePosition": 0
+    "y": 127
   },
   "line3S1": {
     "type": "holder",
@@ -237,7 +266,6 @@
     "parent": "line3",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 1,
     "id": "line3S1",
     "x": 312,
     "y": 126
@@ -248,7 +276,6 @@
     "parent": "line3",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.26,
     "id": "line3M0",
     "x": 63,
     "y": 55
@@ -259,7 +286,6 @@
     "parent": "line3",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.5,
     "id": "line3M1",
     "x": 151,
     "y": 25
@@ -270,7 +296,6 @@
     "parent": "line3",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.74,
     "id": "line3M2",
     "x": 239,
     "y": 55
@@ -310,7 +335,29 @@
       "line": "point2",
       "position": 0.5,
       "offset": 0
-    }
+    },
+    "stops": [
+      {
+        "widget": "line4S0",
+        "position": 0
+      },
+      {
+        "widget": "line4M0",
+        "position": 0.251
+      },
+      {
+        "widget": "line4M1",
+        "position": 0.495
+      },
+      {
+        "widget": "line4M2",
+        "position": 0.739
+      },
+      {
+        "widget": "line4S1",
+        "position": 1
+      }
+    ]
   },
   "line4S0": {
     "type": "holder",
@@ -327,7 +374,6 @@
     "dropTarget": {
       "type": false
     },
-    "linePosition": 0,
     "classes": "transparent",
     "x": -9
   },
@@ -339,8 +385,7 @@
     "x": 237,
     "y": 189,
     "movableInEdit": false,
-    "inheritFrom": "line4S0",
-    "linePosition": 1
+    "inheritFrom": "line4S0"
   },
   "point1": {
     "id": "point1",
@@ -384,7 +429,6 @@
       "value": 0,
       "explicit": false
     },
-    "linePosition": 0.251,
     "dropTarget": {
       "type": null
     },
@@ -396,7 +440,6 @@
     "parent": "line4",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.495,
     "id": "line4M1",
     "x": 109,
     "y": 106,
@@ -412,7 +455,6 @@
     "parent": "line4",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.739,
     "id": "line4M2",
     "x": 170,
     "y": 152,
@@ -454,8 +496,7 @@
     "x": 195,
     "y": -5,
     "movableInEdit": false,
-    "inheritFrom": "line1S0",
-    "linePosition": 1
+    "inheritFrom": "line1S0"
   },
   "line1S0": {
     "type": "holder",
@@ -472,8 +513,7 @@
     "dropOffsetY": 2,
     "dropTarget": {
       "type": null
-    },
-    "linePosition": 0
+    }
   },
   "line1": {
     "type": "line",
@@ -490,7 +530,17 @@
       "x": 215,
       "y": 15
     },
-    "z": 9734
+    "z": 9734,
+    "stops": [
+      {
+        "widget": "line1S0",
+        "position": 0
+      },
+      {
+        "widget": "line1S1",
+        "position": 1
+      }
+    ]
   },
   "line5": {
     "type": "line",
@@ -528,7 +578,33 @@
       "y": 118
     },
     "rotateStops": false,
-    "height": 154
+    "height": 154,
+    "stops": [
+      {
+        "widget": "line5S0",
+        "position": 0
+      },
+      {
+        "widget": "line5M0",
+        "position": 0.233
+      },
+      {
+        "widget": "line5M1",
+        "position": 0.463
+      },
+      {
+        "widget": "line5M2",
+        "position": 0.631
+      },
+      {
+        "widget": "line5M3",
+        "position": 0.785
+      },
+      {
+        "widget": "line5S1",
+        "position": 1
+      }
+    ]
   },
   "line5S0": {
     "type": "holder",
@@ -546,7 +622,6 @@
     "dropTarget": {
       "type": false
     },
-    "linePosition": 0,
     "classes": "transparent"
   },
   "line5S1": {
@@ -557,8 +632,7 @@
     "x": 24,
     "y": 123,
     "movableInEdit": false,
-    "inheritFrom": "line5S0",
-    "linePosition": 1
+    "inheritFrom": "line5S0"
   },
   "line5M0": {
     "type": "holder",
@@ -566,7 +640,6 @@
     "parent": "line5",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.233,
     "id": "line5M0",
     "x": 140,
     "y": 14,
@@ -578,7 +651,6 @@
     "parent": "line5",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.463,
     "id": "line5M1",
     "x": 90,
     "y": 38,
@@ -590,7 +662,6 @@
     "parent": "line5",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.631,
     "id": "line5M2",
     "x": 73,
     "y": 74,
@@ -602,7 +673,6 @@
     "parent": "line5",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.785,
     "id": "line5M3",
     "x": 66,
     "y": 110,
@@ -636,7 +706,29 @@
       "offset": 0
     },
     "height": 268,
-    "width": 238
+    "width": 238,
+    "stops": [
+      {
+        "widget": "line6S0",
+        "position": 0
+      },
+      {
+        "widget": "line6M0",
+        "position": 0.1
+      },
+      {
+        "widget": "line6M1",
+        "position": 0.4
+      },
+      {
+        "widget": "line6M2",
+        "position": 0.8
+      },
+      {
+        "widget": "line6S1",
+        "position": 1
+      }
+    ]
   },
   "line6S0": {
     "type": "holder",
@@ -652,7 +744,6 @@
     "dropTarget": {
       "type": false
     },
-    "linePosition": 0,
     "classes": "transparent",
     "x": 207,
     "y": 237
@@ -665,15 +756,13 @@
     "x": -9,
     "y": -9,
     "movableInEdit": false,
-    "inheritFrom": "line6S0",
-    "linePosition": 1
+    "inheritFrom": "line6S0"
   },
   "line6M0": {
     "type": "holder",
     "parent": "line6",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.1,
     "id": "line6M0",
     "icon": {
       "name": "star",
@@ -696,7 +785,6 @@
     "parent": "line6",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.4,
     "id": "line6M1",
     "x": 123,
     "y": 141
@@ -707,7 +795,6 @@
     "parent": "line6",
     "fixedParent": true,
     "movableInEdit": false,
-    "linePosition": 0.8,
     "id": "line6M2",
     "x": 37,
     "y": 43
