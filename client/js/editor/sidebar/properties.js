@@ -5589,9 +5589,13 @@ class PropertiesModule extends SidebarModule {
       renderStops();
     };
 
-    const acceptStops = addLineToggle('Drag widgets in to add stops', 'lineAcceptStops', 'Let a widget dragged onto the line in the room become a stop - during play as well as in edit mode');
-    this.addPropertyListener(widget, 'acceptStops', ()=>acceptStops.checked = !!widget.get('acceptStops'));
-    acceptStops.onchange = _=>lineEdit(`${acceptStops.checked ? 'enabled' : 'disabled'} dragging stops onto line ${widget.id}`, _=>widget.set('acceptStops', acceptStops.checked));
+    // the line takes widgets in like a holder does: the toggle switches its
+    // dropTarget between the default (the plain widgets stops usually are) and
+    // an empty list, which matches nothing. A more specific dropTarget can be
+    // written in the property list below, the same way a holder's is.
+    const acceptStops = addLineToggle('Drag widgets in to add stops', 'lineAcceptStops', 'Let a widget dragged onto the line become a stop of it - during play as well as in edit mode');
+    this.addPropertyListener(widget, 'dropTarget', ()=>acceptStops.checked = asArray(widget.get('dropTarget')).filter(t=>t).length > 0);
+    acceptStops.onchange = _=>lineEdit(`${acceptStops.checked ? 'enabled' : 'disabled'} dragging stops onto line ${widget.id}`, _=>widget.set('dropTarget', acceptStops.checked ? { type: null } : []));
 
     const removeStop = async stop=>{
       await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
@@ -5982,7 +5986,7 @@ class PropertiesModule extends SidebarModule {
     this.renderOtherPropertiesSection(widget, [
       'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
       'lineColor', 'lineDash', 'lineWidth', 'stops',
-      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops', 'acceptStops',
+      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
       'connectStart', 'connectEnd'
     ]);
   }

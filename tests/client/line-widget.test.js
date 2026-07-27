@@ -1,5 +1,6 @@
 import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
+import { compareDropTarget } from '../../client/js/main.js';
 
 import { removeWidget } from './client-util.js';
 
@@ -13,7 +14,10 @@ beforeAll(async () => {
   globalThis.batchStart = batchStart;
   globalThis.batchEnd = batchEnd;
   globalThis.flushDelta = flushDelta;
+  globalThis.compareDropTarget = compareDropTarget;
   globalThis.setDeltaCause = () => {};
+  globalThis.getMaxZ = () => 0;
+  globalThis.updateMaxZ = () => {};
   globalThis.playerName = 'jestPlayer';
   ({ Line } = await import('../../client/js/widgets/line.js'));
 });
@@ -514,9 +518,10 @@ describe('dragging a widget onto a line to make it a stop', () => {
 
   beforeEach(() => {
     line = createLine({ id: 'drop-line', x: 100, y: 100, width: 200, height: 40, autoSpaceStops: false,
-      lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 }, acceptStops: true });
+      lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 } });
     token = new Widget('drop-token');
-    addWidget({ id: 'drop-token', type: 'basic', x: 130, y: 80, width: 40, height: 40 }, token);
+    // a plain widget has no type, which is what the default dropTarget takes
+    addWidget({ id: 'drop-token', x: 130, y: 80, width: 40, height: 40 }, token);
     token.coordGlobalFromCoordLocal = coord => ({ x: token.get('x') + coord.x, y: token.get('y') + coord.y });
     // the candidate lines are collected once when the drag starts
     token.stopDropLines = [ line ];
@@ -540,10 +545,17 @@ describe('dragging a widget onto a line to make it a stop', () => {
     expect(token.lineStopDropTarget()).toBeNull();
   });
 
-  test('a line without acceptStops never takes a dropped widget', async () => {
-    await line.set('acceptStops', false);
+  test('a line whose dropTarget matches nothing never takes a dropped widget', async () => {
+    await line.set('dropTarget', []);
     expect(line.stopDropTarget(token, { x: 150, y: 100 })).toBeNull();
     expect(token.lineStopDropTarget()).toBeNull();
+  });
+
+  test('a line only takes what its dropTarget matches', async () => {
+    await line.set('dropTarget', { type: 'card' });
+    expect(line.stopDropTarget(token, { x: 150, y: 100 })).toBeNull();
+    await line.set('dropTarget', {});
+    expect(line.stopDropTarget(token, { x: 150, y: 100 })).not.toBeNull();
   });
 
   test('a drop aimed at a holder wins over the line below it', () => {
@@ -552,12 +564,34 @@ describe('dragging a widget onto a line to make it a stop', () => {
     token.hoverTarget = null;
   });
 
-  test('dropping attaches the widget and dragging it off detaches it again', async () => {
+  test('dropping puts the widget into the line and applies onEnter', async () => {
+    await line.set('onEnter', { classes: 'onTheLine' });
     await token.applyLineStopDrop(token.lineStopDropTarget());
     expect(line.stopList()).toEqual([ { widget: 'drop-token', position: 0.25 } ]);
+    // entering changes parentage like a holder does
+    expect(token.get('parent')).toBe('drop-line');
+    expect(token.get('classes')).toBe('onTheLine');
     // and it is snapped onto the path: center on the point, so half its size back
-    expect(token.get('x')).toBe(130);
-    expect(token.get('y')).toBe(80);
+    expect(token.get('x')).toBe(30);
+    expect(token.get('y')).toBe(-20);
+  });
+
+  test('dragging it off the line takes it out again and applies onLeave', async () => {
+    await line.set('onLeave', { classes: 'offTheLine' });
+    await token.applyLineStopDrop(token.lineStopDropTarget());
+
+    await token.set('y', 300);
+    await token.applyLineStopDrop(token.lineStopDropTarget());
+    expect(line.stopList()).toEqual([]);
+    expect(token.get('parent')).toBe(null);
+    expect(token.get('classes')).toBe('offTheLine');
+  });
+
+  test('a widget that cannot change parent rides on the line instead', async () => {
+    await token.set('fixedParent', true);
+    await token.applyLineStopDrop(token.lineStopDropTarget());
+    expect(line.stopList()).toEqual([ { widget: 'drop-token', position: 0.25 } ]);
+    expect(token.get('parent')).toBe(null);
 
     await token.set('y', 300);
     await token.applyLineStopDrop(token.lineStopDropTarget());
@@ -566,7 +600,7 @@ describe('dragging a widget onto a line to make it a stop', () => {
 
   test('a line that does not accept drops keeps its stops when one is dragged away', async () => {
     await line.addStop('drop-token', 0.5);
-    await line.set('acceptStops', false);
+    await line.set('dropTarget', []);
     await token.set('y', 300);
     await token.applyLineStopDrop(token.lineStopDropTarget());
     expect(line.stopList().length).toBe(1);

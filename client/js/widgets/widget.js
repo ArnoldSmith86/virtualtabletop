@@ -2444,9 +2444,9 @@ export class Widget extends StateManaged {
     await this.set('dragging', playerName);
 
     // Lines that take a widget dropped onto their path as a stop. Collected once
-    // like the drop targets below, but not restricted to edit mode or to widgets
-    // that can change their parent: a stop keeps its place in the tree.
-    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('acceptStops') && w.isVisible());
+    // like the drop targets below, but not restricted to widgets that can be
+    // dragged in play: a stop is usually placed in edit mode.
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
 
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
@@ -2500,7 +2500,7 @@ export class Widget extends StateManaged {
       // First, check for elements under the midpoint in order in which they were hit.
       for (let i = 0; i < hitElements.length; i++) {
         let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
-        if (hitElements[i].classList.contains('droppable') && widget) {
+        if (hitElements[i].classList.contains('droppable') && widget && widget.get('type') != 'line') {
           this.hoverTarget = widget;
           break;
         }
@@ -2509,6 +2509,10 @@ export class Widget extends StateManaged {
       if (!this.hoverTarget) {
         let targetDist = 99999;
         for(const t of this.dropTargets) {
+          // a line takes a drop close to its path, not anywhere in its bounding
+          // box, so it is hit tested by lineStopDropTarget() instead
+          if(t.get('type') == 'line')
+            continue;
           if(overlap(this.domElement, t.domElement)) {
             const tCursor = t.coordGlobalInside(coordGlobal);
             const tDist = distance(center(t.domElement), myCenter) / scale;
@@ -2595,14 +2599,37 @@ export class Widget extends StateManaged {
       line.domElement.classList.add('lineDropTarget');
   }
 
-  // Attach to (or detach from) a line that accepts dropped stops. Lines that do
-  // not have acceptStops set keep their stop lists, so a game can rely on them.
+  // The widget the drag took this one out of: dragging detaches it right away
+  // and only remembers where it came from in currentParent.
+  currentParentWidget() {
+    return this.currentParent || (widgets.has(this.get('parent')) ? widgets.get(this.get('parent')) : null);
+  }
+
+  // Attach to (or detach from) a line that takes dropped widgets. Entering and
+  // leaving one changes parentage just like a holder does, which applies the
+  // line's onEnter/onLeave and triggers its enterRoutine/leaveRoutine. Lines
+  // that take no drops keep their stop lists, so a game can rely on them.
   async applyLineStopDrop(target) {
-    for(const line of linesWithStop(this.id))
-      if(line != (target && target.line) && line.get('acceptStops'))
-        await line.removeStop(this.id);
-    if(target)
-      await target.line.addStop(this.id, target.position);
+    const line = target && target.line || null;
+    const from = this.currentParentWidget();
+
+    // a widget that only rides on a line - listed as a stop without being its
+    // child - is taken off that list when it is dragged away
+    for(const other of linesWithStop(this.id))
+      if(other != line && other != from && other.get('dropTarget') && compareDropTarget(this, other))
+        await other.removeStop(this.id);
+
+    if(line) {
+      await line.addStop(this.id, target.position);
+      // a widget that cannot change parent just rides on the line instead
+      if(!this.get('fixedParent'))
+        await this.moveToHolder(line);
+    } else if(from && from.get('type') == 'line' && !this.get('fixedParent')) {
+      // dropping it off the line hands it back to the room, which lets the line
+      // dispense it: onLeave is applied and the stop comes off the list
+      this.currentParent = from;
+      await this.checkParent(true);
+    }
   }
 
   async moveEnd(coordGlobal, localAnchor) {

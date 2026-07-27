@@ -31,10 +31,15 @@ export class Line extends Widget {
       rotateStops: true,
       autoSpaceStops: true,
 
-      // when enabled, a widget dragged onto the path in the room becomes a stop
-      // and a stop dragged off it is taken off the list again - during play as
-      // well as in edit mode
-      acceptStops: false,
+      // A line takes widgets in like a holder: what dropTarget matches becomes
+      // a stop when it is dropped onto the path - during play as well as in
+      // edit mode - and comes off the list again when it is dragged away. The
+      // default takes the plain widgets stops usually are, an empty list none.
+      dropTarget: { type: null },
+
+      // properties applied to a widget when it enters / leaves the line
+      onEnter: {},
+      onLeave: {},
 
       connectStart: null,
       connectEnd: null
@@ -442,7 +447,7 @@ export class Line extends Widget {
   // The range grows with the line and the dropped widget so a big token snaps on
   // as readily as a small one.
   stopDropTarget(widget, coordGlobal) {
-    if(!this.get('acceptStops') || widget == this || widget.get('type') == 'line' || this.isDescendantOf(widget))
+    if(!this.get('dropTarget') || !compareDropTarget(widget, this) || widget == this || widget.get('type') == 'line' || this.isDescendantOf(widget))
       return null;
     const range = Math.max(25, (+this.get('lineWidth') || 0)/2 + 10, Math.min(+widget.get('width') || 0, +widget.get('height') || 0)/2);
     const point = this.coordLocalFromCoordGlobal(coordGlobal);
@@ -597,14 +602,48 @@ export class Line extends Widget {
     await this.updateConnectedLines();
   }
 
+  // Entering the line works like entering a holder: the widget becomes a child
+  // of the line, gets the onEnter properties applied and triggers enterRoutine
+  // (which Widget.onPropertyChange does for every parent change).
   async onChildAdd(child, oldParentID) {
+    const entering = this != child.currentParent;
     await super.onChildAdd(child, oldParentID);
     // a rename re-adds the same stop under a new id; it carries no positioning
     // change, so skip the layout pass a real add/remove would trigger
     if(child.isBeingRenamed)
       return;
+    // whatever the line accepts becomes a stop where it landed on the path -
+    // a widget it does not accept is just a child, like a holder's children()
+    if(!this.stopList().some(entry=>entry.widget == child.id) && compareDropTarget(child, this))
+      await this.addStop(child.id, this.positionAtPoint(this.childCenter(child)));
     if(this.stopList().some(entry=>entry.widget == child.id))
       await this.layoutStops();
+    if(entering)
+      await this.applyEnterLeave(child, 'onEnter');
+  }
+
+  // the middle of a child in the line's own coordinate frame
+  childCenter(child) {
+    return { x: +child.get('x') + (+child.get('width') || 0)/2, y: +child.get('y') + (+child.get('height') || 0)/2 };
+  }
+
+  // Leaving the line again is the mirror of that: checkParent calls this hook -
+  // named after the holder method it stands in for - once a widget is really
+  // out, so the stop comes off the list and onLeave is applied. leaveRoutine is
+  // triggered by the parent change itself.
+  async dispenseCard(child) {
+    await this.removeStop(child.id);
+    await this.applyEnterLeave(child, 'onLeave');
+  }
+
+  // onEnter / onLeave hold properties to apply to the widget that entered or
+  // left, exactly like the ones a holder has
+  async applyEnterLeave(widget, property) {
+    if(property == 'onLeave' && widget.get('ignoreOnLeave'))
+      return;
+    const properties = this.get(property);
+    for(const p in properties)
+      await widget.set(p, properties[p]);
   }
 
   async onChildRemove(child) {
