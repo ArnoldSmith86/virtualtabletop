@@ -71,15 +71,42 @@ class Popup {
     this.cancelListeners = [];
   }
 
-  moveIntoView() {
-    const rect = this.domElement.getBoundingClientRect();
-    // keep clear of the module button strip on the right edge of the editor
+  // a popup that lets the user click widgets in the room must not cover the play
+  // area - the widgets it wants to select are in there
+  avoidsPlayArea() {
+    return false;
+  }
+
+  // the part of the screen the popup may use: everything except the module
+  // button strip on the right edge, minus the play area for widget pickers
+  placementLimits() {
     const sidebar = $('#editorSidebar');
-    const rightLimit = window.innerWidth - (sidebar ? sidebar.offsetWidth : 0) - 10;
-    if(rect.right > rightLimit)
-      this.domElement.style.left = `${Math.max(0, rightLimit - rect.width)}px`;
-    if(rect.bottom > window.innerHeight - 10)
-      this.domElement.style.top = `${Math.max(10, window.innerHeight - rect.height - 10)}px`;
+    const limits = { left: 0, top: 0, right: window.innerWidth - (sidebar ? sidebar.offsetWidth : 0), bottom: window.innerHeight };
+    const roomArea = this.avoidsPlayArea() && $('#roomArea');
+    if(!roomArea)
+      return limits;
+    // the play area sits along one edge (below the modules on a portrait phone,
+    // left of them on a wide screen), so use the biggest strip it leaves over
+    const room = roomArea.getBoundingClientRect();
+    const strips = [
+      Object.assign({}, limits, { bottom: Math.min(limits.bottom, room.top) }),
+      Object.assign({}, limits, { top: Math.max(limits.top, room.bottom) }),
+      Object.assign({}, limits, { right: Math.min(limits.right, room.left) }),
+      Object.assign({}, limits, { left: Math.max(limits.left, room.right) })
+    ].filter(s=>s.right-s.left >= 240 && s.bottom-s.top >= 160);
+    strips.sort((a, b)=>(b.right-b.left)*(b.bottom-b.top) - (a.right-a.left)*(a.bottom-a.top));
+    return strips[0] || limits; // no strip is usable: covering the room beats being unusable
+  }
+
+  moveIntoView() {
+    const limits = this.placementLimits();
+    // shrink into the available strip instead of hanging out of it
+    this.domElement.style.maxWidth = `${Math.min(window.innerWidth/2, limits.right-limits.left-20)}px`;
+    this.domElement.style.maxHeight = `${Math.min(window.innerHeight-20, limits.bottom-limits.top-20)}px`;
+    const rect = this.domElement.getBoundingClientRect();
+    const fit = (position, size, from, to)=>Math.min(Math.max(position, from+10), Math.max(from+10, to-10-size));
+    this.domElement.style.left = `${fit(rect.left, rect.width, limits.left, limits.right)}px`;
+    this.domElement.style.top = `${fit(rect.top, rect.height, limits.top, limits.bottom)}px`;
   }
 
   notifyChangeListeners(value) {
@@ -413,6 +440,10 @@ class RoutineNumberPopup extends RoutinePopup {
     this.options = options;
   }
 
+  avoidsPlayArea() {
+    return !!this.options.widgetType; // only then it offers the room picker
+  }
+
   setNewValue(value) {
     // for parameter alternatives like {fillTo,count} the last one is the normal
     // parameter and the ones before it override it in the engine, so clear those
@@ -430,7 +461,9 @@ class RoutineNumberPopup extends RoutinePopup {
     if(this.options.specialValues)
       for(const value of this.options.specialValues)
         button(valueContent, value, _=>this.setNewValue(value));
-    for(let i=1; i<=10; i++)
+    // starts at 0 because that is a meaningful value for most number parameters
+    // (move/flip/rotate none, x/y/angle 0); "use default" is what clears a value
+    for(let i=0; i<=10; i++)
       button(valueContent, i, _=>this.setNewValue(i));
 
     const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[this.parameterNames.length-1]] : null;
@@ -494,6 +527,10 @@ class RoutineWidgetIDPopup extends RoutinePopup {
     super();
     this.options = options;
     this.workingIDs = [];
+  }
+
+  avoidsPlayArea() {
+    return true;
   }
 
   show(showCollections=false) {

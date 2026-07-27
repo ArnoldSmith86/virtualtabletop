@@ -89,6 +89,21 @@ describe('routine operation metadata', () => {
     }
   });
 
+  test('properties the engine reads are declared instead of flagged as typos', () => {
+    // these were missing from the metadata, so the editor marked them with a red
+    // "!" ("the engine ignores it") and offered to delete working game logic
+    const engineSupported = { CALL: [ 'collection' ], CANVAS: [ 'count' ], INPUT: [ 'css', 'randomRotation' ], MOVEXY: [ 'z' ] };
+    for (const func in engineSupported) {
+      for (const name of engineSupported[func]) {
+        const operation = { func, [name]: 1 };
+        const editor = editorForOperation(operation);
+        editor.setOperationDetails({ state: {} }, operation, [], []);
+        expect(routineOperationMetadata[func].parameters[name]).toBeDefined();
+        expect(editor.unsupportedProperties()).not.toContain(name);
+      }
+    }
+  });
+
   test('operations resolve to the right editor', () => {
     expect(editorForOperation({ func: 'MOVE' })).toBeInstanceOf(RoutineOperationEditor);
     expect(editorForOperation({ func: 'IF' })).toBeInstanceOf(IfRoutineOperationEditor);
@@ -198,6 +213,82 @@ describe('operation rendering', () => {
     expect(editorForOperation({ func: 'CANVAS' }).ignoredParameters().collection).toBeUndefined();
   });
 
+  test('a widget parameter marks the collection it replaces as ignored', () => {
+    // the engine checks holder/label/timer/from first and never looks at collection then
+    const replaced = { COUNT: 'holder', FLIP: 'holder', LABEL: 'label', MOVE: 'from', ROTATE: 'holder', SHUFFLE: 'holder', SORT: 'holder', TIMER: 'timer' };
+    for(const func in replaced) {
+      const operation = { func, [replaced[func]]: 'w1', collection: 'stuff' };
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      expect(editor.ignoredParameters().collection).toMatch(new RegExp(replaced[func]));
+      expect(editorForOperation({ func }).ignoredParameters().collection).toBeUndefined();
+    }
+  });
+
+  test('FLIP marks face as ignored while the cycle picks a random one', () => {
+    const ignoredFor = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.ignoredParameters();
+    };
+    expect(ignoredFor({ func: 'FLIP', faceCycle: 'random' }).face).toMatch(/random/);
+    expect(ignoredFor({ func: 'FLIP', faceCycle: 'forward' }).face).toBeUndefined();
+    // an explicit face wins over the cycle, so then the cycle is the ignored one
+    const bothSet = ignoredFor({ func: 'FLIP', face: 1, faceCycle: 'random' });
+    expect(bothSet.faceCycle).toMatch(/target face/);
+    expect(bothSet.face).toBeUndefined();
+  });
+
+  test('parameters the mode of the operation does not read are marked as ignored', () => {
+    const ignoredFor = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.ignoredParameters();
+    };
+    // { operation: [ names that have no effect, names that do ] }
+    const cases = [
+      [ { func: 'AUDIO', silence: true }, [ 'source', 'maxVolume', 'length', 'count' ], [ 'player' ] ],
+      [ { func: 'CANVAS', mode: 'reset' }, [ 'x', 'y', 'color', 'value' ], [] ],
+      [ { func: 'CANVAS', mode: 'setPixel' }, [ 'color' ], [ 'x', 'y', 'value' ] ],
+      [ { func: 'CANVAS', mode: 'change' }, [ 'x', 'y' ], [ 'color', 'value' ] ],
+      [ { func: 'CANVAS', mode: 'inc' }, [ 'x', 'y', 'color' ], [ 'value' ] ],
+      [ { func: 'FOREACH', in: { a: 1 }, range: 3, collection: 'stuff' }, [ 'range', 'collection' ], [ 'in' ] ],
+      [ { func: 'FOREACH', range: 3, collection: 'stuff' }, [ 'collection' ], [ 'range' ] ],
+      [ { func: 'GET', aggregation: 'sum' }, [ 'skipMissing' ], [ 'property' ] ],
+      [ { func: 'GET', aggregation: 'array' }, [], [ 'skipMissing' ] ],
+      [ { func: 'SET', relation: '!' }, [ 'value' ], [ 'property' ] ],
+      [ { func: 'SHUFFLE', mode: 'reverse' }, [ 'modeValue' ], [] ],
+      [ { func: 'SHUFFLE', mode: 'seeded' }, [], [ 'modeValue' ] ],
+      [ { func: 'SORT', holder: 'h1' }, [ 'rearrange' ], [ 'key' ] ],
+      [ { func: 'SORT', collection: 'stuff' }, [], [ 'rearrange' ] ],
+      [ { func: 'TURN', turnCycle: 'random' }, [ 'turn' ], [ 'source' ] ]
+    ];
+    for(const [ operation, ignored, used ] of cases) {
+      const result = ignoredFor(operation);
+      for(const name of ignored)
+        expect([ operation.func, name, result[name] ]).toEqual([ operation.func, name, expect.stringContaining('ignored because') ]);
+      for(const name of used)
+        expect([ operation.func, name, result[name] ]).toEqual([ operation.func, name, undefined ]);
+    }
+  });
+
+  test('a 0 that means "unset" is marked as ignored, an unset parameter is not', () => {
+    const ignoredFor = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.ignoredParameters();
+    };
+    // the engine reads these with `a.x || fallback`, so 0 does exactly nothing
+    const zeroMeansUnset = { CANVAS: 'count', MOVE: 'fillTo', MOVEXY: 'z', TIMER: 'seconds' };
+    for(const func in zeroMeansUnset) {
+      const name = zeroMeansUnset[func];
+      const operation = func == 'TIMER' ? { func, mode: 'set' } : { func };
+      expect(ignoredFor(Object.assign({}, operation, { [name]: 0 }))[name]).toMatch(/0/);
+      expect(ignoredFor(Object.assign({}, operation, { [name]: 2 }))[name]).toBeUndefined();
+      expect(ignoredFor(operation)[name]).toBeUndefined(); // not set at all is not a mistake
+    }
+  });
+
   test('the list view shows custom properties the operation does not support', () => {
     const rendered = renderInListView({ func: 'FLIP', typo: 3, holder: 'h1' });
     const row = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('typo'));
@@ -262,6 +353,10 @@ describe('operation rendering', () => {
     expect(template({ func: 'FLIP', face: 1 })).toContain('to face {face}');
     expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('on {canvas}');
     expect(template({ func: 'CANVAS' })).toContain('on {collection}');
+    expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
+    expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
+    expect(template({ func: 'AUDIO', silence: true })).toContain('stop all sounds');
+    expect(template({ func: 'SET', relation: '!' })).toContain('the {relation} of its current value');
     expect(template({ func: 'MOVE', fillTo: 3 })).toContain('fill up to {fillTo}');
     expect(template({ func: 'SELECT', mode: 'add' })).toContain('{mode} to {collection}');
     expect(template({ func: 'SELECT' })).toContain('{mode} as {collection}');
@@ -488,6 +583,16 @@ describe('routine editor state handling', () => {
     expect(card.classList.contains('routine-editor-operation-selected')).toBe(true);
     card.dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
     expect(editor.selectedIndices.has(1)).toBe(false);
+  });
+
+  test('toggling the view of a selected operation keeps it looking selected', () => {
+    const editor = new RoutineEditor({ state: {} }, [ { func: 'MOVE', from: 'h1', to: 'h2' }, { func: 'FLIP' } ]);
+    editor.directChildCards()[0].dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
+    editor.directChildCards()[0].querySelector('.routine-editor-view-toggle').dispatchEvent(new Event('click'));
+    // the toggle replaces the card: without the selection class it looks
+    // unselected while a drag would still move it along with the next selection
+    expect(editor.selectedIndices.has(0)).toBe(true);
+    expect(editor.directChildCards()[0].classList.contains('routine-editor-operation-selected')).toBe(true);
   });
 
   test('a routine change clears the transient Ctrl-selection', () => {
@@ -726,6 +831,28 @@ describe('number popups with text values', () => {
     popup.show();
     expect(popup.domElement.querySelector('input[type=text]')).toBeNull();
     popup.hide();
+  });
+
+  test('offer 0 as a value - "use default" is what clears the parameter', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineNumberPopup({});
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'MOVEXY', x: 5 }, [ 'x' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+    const zero = [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == '0');
+    expect(zero).not.toBeUndefined();
+    zero.dispatchEvent(new Event('click'));
+    expect(value).toEqual({ x: 0 });
+    popup.hide();
+  });
+
+  test('no parameter offers null as a value, that is what "use default" does', () => {
+    for(const func in routineOperationMetadata)
+      for(const name in routineOperationMetadata[func].parameters)
+        expect(routineOperationMetadata[func].parameters[name].special || []).not.toContain(null);
   });
 });
 
@@ -991,6 +1118,45 @@ describe('variables in widget parameters', () => {
     popup.setNewCollectionValue('DEFAULT');
     expect(value).toEqual({ holder: undefined, collection: 'DEFAULT' });
     popup.hide();
+  });
+});
+
+describe('popups stay out of the play area', () => {
+  const withRoom = (room, callback) => {
+    const roomArea = document.getElementById('roomArea'); // jsdom has no layout, so fake the play area
+    const original = roomArea.getBoundingClientRect;
+    roomArea.getBoundingClientRect = () => room;
+    try {
+      callback();
+    } finally {
+      roomArea.getBoundingClientRect = original;
+    }
+  };
+
+  test('a widget picker is placed in the strip the play area leaves over', () => {
+    // portrait phone: the modules sit above the play area
+    withRoom({ left: 0, top: window.innerHeight/2, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineWidgetIDPopup({}).placementLimits().bottom).toBe(window.innerHeight/2);
+    });
+    // wide screen: the modules sit right of the play area
+    withRoom({ left: 0, top: 0, right: 500, bottom: window.innerHeight }, () => {
+      expect(new RoutineWidgetIDPopup({}).placementLimits().left).toBe(500);
+    });
+  });
+
+  test('popups without a room picker use the whole editor', () => {
+    withRoom({ left: 0, top: window.innerHeight/2, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineStringPopup().placementLimits().bottom).toBe(window.innerHeight);
+      expect(new RoutineNumberPopup({}).placementLimits().bottom).toBe(window.innerHeight);
+      // a number parameter that names a widget does offer the room picker
+      expect(new RoutineNumberPopup({ widgetType: 'seat' }).placementLimits().bottom).toBe(window.innerHeight/2);
+    });
+  });
+
+  test('a play area without a usable strip beside it does not squeeze the popup away', () => {
+    withRoom({ left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineWidgetIDPopup({}).placementLimits().bottom).toBe(window.innerHeight);
+    });
   });
 });
 
