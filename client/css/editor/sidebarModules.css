@@ -654,6 +654,26 @@
 .editorModule .lineToggle input:checked + .lineToggleSlider::before {
   transform: translateX(22px);
 }
+/* what the line takes in: the match dropdown and, for "Another property", its
+   property/value pair stay on the one row and only wrap when it gets too narrow */
+.editorModule .lineDropTargetRow > select {
+  flex: 1 1 120px;
+  min-width: 100px;
+  max-width: 100%;
+}
+.editorModule .lineDropTargetCustom {
+  display: none;
+  flex: 1 1 140px;
+  gap: 4px;
+  min-width: 0;
+}
+.editorModule .lineDropTargetCustom.open {
+  display: flex;
+}
+.editorModule .propertyInput.lineDropTargetRow .lineDropTargetCustom input[type=text] {
+  flex: 1 1 60px;
+  min-width: 50px;
+}
 /* deleting a stop is destructive, so it gets the shared red icon-button look
    (white glyph on dark red, darker on hover) from button[icon].red */
 .editorModule .lineStopList button.lineRemoveStop {

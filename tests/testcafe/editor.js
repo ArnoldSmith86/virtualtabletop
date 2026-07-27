@@ -246,6 +246,15 @@ test('Line widget in edit mode', async t => {
     .click('#editorModules .lineAddStopConfirm')
     .click(Selector('#editorModules .lineShapePreset').withAttribute('aria-label', 'Shallow curve'));
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
+
+  // "Takes in" writes the line's dropTarget - one entry per widget type, plus
+  // all / nothing / a free property-value pair
+  await t
+    .click('#editorModules .lineDropTargetMode')
+    .click(Selector('#editorModules .lineDropTargetMode option').withAttribute('value', 'type:card'));
+  const dropTarget = await ClientFunction(id => JSON.stringify(widgets.get(id).get('dropTarget')))(lineID);
+  await t.expect(dropTarget).eql('{"type":"card"}');
+
   await t
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-line')
@@ -267,5 +276,5 @@ test('Line widget in edit mode', async t => {
     .click('#editorToolbar > div > [icon=delete_forever]');
   // the added stop's id is derived from the existing stops instead of being
   // random, so the compared state no longer depends on the seeded rand() stream
-  await compareState(t, 'a82be0977ae859e03f353c51aa947db9');
+  await compareState(t, '350422926ed095dd0f84c7580c81a7c9');
 });

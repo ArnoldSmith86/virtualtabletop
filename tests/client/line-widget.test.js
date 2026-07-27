@@ -518,7 +518,7 @@ describe('dragging a widget onto a line to make it a stop', () => {
 
   beforeEach(() => {
     // a line takes nothing by default, so this one opts in with the dropTarget
-    // the editor's "Drag widgets in to add stops" toggle writes
+    // the editor's "Basic widgets" target writes
     line = createLine({ id: 'drop-line', x: 100, y: 100, width: 200, height: 40, autoSpaceStops: false,
       lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 }, dropTarget: { type: null } });
     token = new Widget('drop-token');

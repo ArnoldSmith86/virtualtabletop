@@ -5421,6 +5421,128 @@ class PropertiesModule extends SidebarModule {
     return { expandButton, popout };
   }
 
+  // One row for the line's dropTarget: a dropdown for the whole match plus, for
+  // "Another property", the property and its value next to it. Every entry
+  // writes a single-object dropTarget, which is what the shapes below mean:
+  //   nothing         []                a line that takes no drops (the default)
+  //   anything        {}                every widget matches an empty match
+  //   <widget type>   { type: 'card' }  a basic widget has no type, so it is null
+  //   <property>      { classes: 'x' }  any other single property/value pair
+  renderLineDropTargetRow(widget, lineEdit) {
+    const types = [
+      { value: null,         label: 'Basic widgets' },
+      { value: 'card',       label: 'Cards' },
+      { value: 'deck',       label: 'Decks' },
+      { value: 'dice',       label: 'Dice' },
+      { value: 'holder',     label: 'Holders' },
+      { value: 'pile',       label: 'Piles' },
+      { value: 'spinner',    label: 'Spinners' },
+      { value: 'label',      label: 'Labels' },
+      { value: 'button',     label: 'Buttons' },
+      { value: 'canvas',     label: 'Canvases' },
+      { value: 'scoreboard', label: 'Scoreboards' },
+      { value: 'seat',       label: 'Seats' },
+      { value: 'timer',      label: 'Timers' }
+    ];
+    const typeMode = type=>`type:${type === null ? '' : type}`;
+
+    const row = div(this.moduleDOM, 'propertyInput lineDropTargetRow');
+    const label = document.createElement('label');
+    label.textContent = 'Takes in:';
+    propertyInfoButton(label, html('Which widgets become a stop when they are dropped onto the line - during play as well as in edit mode. Matches with several entries or several properties are written in the JSON editor.'));
+    row.appendChild(label);
+
+    const select = document.createElement('select');
+    select.className = 'lineDropTargetMode';
+    const addOption = (value, text, group)=>{
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = text;
+      (group || select).appendChild(option);
+      return option;
+    };
+    addOption('none', 'Nothing');
+    addOption('all', 'Any widget');
+    const typeGroup = document.createElement('optgroup');
+    typeGroup.label = 'Only';
+    select.appendChild(typeGroup);
+    for(const type of types)
+      addOption(typeMode(type.value), type.label, typeGroup);
+    addOption('custom', 'Another property...');
+    // a dropTarget this row cannot express stays as it is until something else
+    // is picked, so opening the editor on it never silently rewrites it
+    const complexOption = addOption('complex', 'Several matches (JSON editor)');
+    complexOption.disabled = true;
+    row.appendChild(select);
+
+    const customGroup = div(row, 'lineDropTargetCustom');
+    const property = document.createElement('input');
+    property.type = 'text';
+    property.className = 'lineDropTargetProperty';
+    property.placeholder = 'property';
+    property.title = 'The widget property to match, e.g. classes';
+    const value = document.createElement('input');
+    value.type = 'text';
+    value.className = 'lineDropTargetValue';
+    value.placeholder = 'value';
+    value.title = 'The value that property has to have';
+    customGroup.appendChild(property);
+    customGroup.appendChild(value);
+
+    // the current dropTarget as this row shows it
+    const currentMatch = ()=>{
+      const dropTarget = widget.get('dropTarget');
+      const entries = dropTarget === null || dropTarget === undefined ? [] : asArray(dropTarget);
+      if(!entries.length)
+        return { mode: 'none' };
+      if(entries.length > 1 || !entries[0] || typeof entries[0] != 'object')
+        return { mode: 'complex' };
+      const keys = Object.keys(entries[0]);
+      if(!keys.length)
+        return { mode: 'all' };
+      if(keys.length > 1)
+        return { mode: 'complex' };
+      const match = entries[0][keys[0]];
+      if(keys[0] == 'type' && types.some(type=>type.value === (match === undefined ? null : match)))
+        return { mode: typeMode(match === undefined ? null : match) };
+      return { mode: 'custom', property: keys[0], value: match };
+    };
+
+    const update = ()=>{
+      const current = currentMatch();
+      complexOption.hidden = current.mode != 'complex';
+      select.value = current.mode;
+      customGroup.classList.toggle('open', current.mode == 'custom');
+      if(current.mode == 'custom' && document.activeElement != property && document.activeElement != value) {
+        property.value = current.property;
+        value.value = current.value === null || current.value === undefined ? '' : current.value;
+      }
+    };
+    this.addPropertyListener(widget, 'dropTarget', update);
+
+    const write = dropTarget=>lineEdit(`changed what line ${widget.id} takes in`, _=>widget.set('dropTarget', dropTarget));
+    const writeCustom = ()=>{
+      // an unnamed property would match every widget, which is what "Any
+      // widget" is for - so wait until there is one instead
+      if(property.value.trim())
+        write({ [property.value.trim()]: propertyInputNumberOrText(value.value) });
+    };
+    select.onchange = _=>{
+      if(select.value == 'none')
+        return write([]);
+      if(select.value == 'all')
+        return write({});
+      if(select.value == 'custom') {
+        customGroup.classList.add('open');
+        property.focus();
+        return writeCustom();
+      }
+      const type = select.value.slice('type:'.length);
+      write({ type: type === '' ? null : type });
+    };
+    property.onchange = value.onchange = writeCustom;
+  }
+
   renderForLine(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
@@ -5588,14 +5710,6 @@ class PropertiesModule extends SidebarModule {
       await lineEdit(`${autoSpaceStops.checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', autoSpaceStops.checked));
       renderStops();
     };
-
-    // the line takes widgets in like a holder does: the toggle switches its
-    // dropTarget between the plain widgets stops usually are and the default
-    // empty list, which matches nothing. A more specific dropTarget can be
-    // written in the property list below, the same way a holder's is.
-    const takeDrops = addLineToggle('Drag widgets in to add stops', 'lineTakeDrops', 'Let a widget dragged onto the line become a stop of it - during play as well as in edit mode');
-    this.addPropertyListener(widget, 'dropTarget', ()=>takeDrops.checked = asArray(widget.get('dropTarget')).filter(t=>t).length > 0);
-    takeDrops.onchange = _=>lineEdit(`${takeDrops.checked ? 'enabled' : 'disabled'} dragging stops onto line ${widget.id}`, _=>widget.set('dropTarget', takeDrops.checked ? { type: null } : []));
 
     const removeStop = async stop=>{
       await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
@@ -5983,11 +6097,20 @@ class PropertiesModule extends SidebarModule {
       this.addPropertyListener(widget, 'connect'+end, ()=>connectPopoutControls.refresh());
     }
 
+    // What a line takes in - a widget dropped on the path becomes a stop of it,
+    // the same match a holder does with its dropTarget. One line covers the
+    // shapes that are actually useful here: everything, nothing, one widget
+    // type or one property/value pair. A dropTarget with several entries or
+    // keys is only shown (and stays untouched) until it is picked over here;
+    // building one is the JSON editor's job.
+    this.addSubHeader('Target widgets');
+    this.renderLineDropTargetRow(widget, lineEdit);
+
     this.renderOtherPropertiesSection(widget, [
       'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
       'lineColor', 'lineDash', 'lineWidth', 'stops',
       'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
-      'connectStart', 'connectEnd'
+      'connectStart', 'connectEnd', 'dropTarget'
     ]);
   }
 
