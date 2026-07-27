@@ -120,6 +120,8 @@ body.aspectTooGood.hiddenToolbar {
       height: 100%;
 
       --toolbarColor: var(--VTTblue);
+      --toolbarTextColor: #fff;
+      --toolbarArrowSize: 24px;
       background: var(--toolbarColor);
       padding: 20px 0 10px 0;
     }
@@ -181,7 +183,7 @@ body.aspectTooGood.hiddenToolbar {
       padding: 0;
     }
 
-    body.horizontalToolbar.toolbarCompact2 #toolbar {
+    body.horizontalToolbar.toolbarCompact3 #toolbar {
       padding: 0 5px;
     }
 
@@ -216,7 +218,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     body.toolbarCompact2:not(.horizontalToolbar) #toolbar .divider,
-    body.horizontalToolbar.toolbarCompact3 #toolbar .divider {
+    body.horizontalToolbar.toolbarCompact4 #toolbar .divider {
       display: none;
     }
 
@@ -279,7 +281,7 @@ body.aspectTooGood.hiddenToolbar {
       padding: 2px;
     }
 
-    body.horizontalToolbar.toolbarCompact2 .toolbarButton:not(.toolbarTab) {
+    body.horizontalToolbar.toolbarCompact3 .toolbarButton:not(.toolbarTab) {
       padding: 2px;
       margin: 0;
     }
@@ -317,11 +319,16 @@ body.aspectTooGood.hiddenToolbar {
       height: 30px;
     }
 
-    body.horizontalToolbar:not(.toolbarCompact1) .toolbarTab::before {
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab::before {
       font-size: 24px;
     }
 
-    body.horizontalToolbar.toolbarCompact2 .toolbarTab {
+    /* the horizontal toolbar first shrinks the tab labels and only removes them one level later */
+    body.horizontalToolbar.toolbarCompact1:not(.toolbarCompact2) .toolbarTab {
+      padding: 0 10px;
+    }
+
+    body.horizontalToolbar.toolbarCompact3 .toolbarTab {
       padding: 0 8px;
     }
 
@@ -335,7 +342,7 @@ body.aspectTooGood.hiddenToolbar {
       font-size: 14px;
       border-radius: 4px;
       white-space: nowrap;
-      color: #fff;
+      color: var(--toolbarTextColor);
       background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
@@ -369,25 +376,29 @@ body.aspectTooGood.hiddenToolbar {
       bottom: 46px;
     }
 
-    body.horizontalToolbar:not(.toolbarCompact1) .toolbarTab .tooltip {
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
       box-shadow: unset;
       background: none;
     }
 
-    body.horizontalToolbar:not(.toolbarCompact1) .toolbarButton .tooltip {
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarButton .tooltip {
       margin-left: -4px;
       font-size: 12px;
     }
 
-    body.horizontalToolbar:not(.toolbarCompact1) .toolbarTab .tooltip {
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
       font-size: 20px;
     }
 
-    body.horizontalToolbar:not(.toolbarCompact1) .active.toolbarTab .tooltip {
+    body.horizontalToolbar.toolbarCompact1:not(.toolbarCompact2) .toolbarTab .tooltip {
+      font-size: 15px;
+    }
+
+    body.horizontalToolbar:not(.toolbarCompact2) .active.toolbarTab .tooltip {
       color: var(--toolbarColor);
     }
 
-    body.horizontalToolbar:not(.toolbarCompact1) .toolbarTab .tooltip {
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
       display: block;
       position: static;
       padding-right: 0;
@@ -477,73 +488,82 @@ body.aspectTooGood.hiddenToolbar {
       overflow-y: auto;
       overflow-x: clip;
       scrollbar-width: none;
+      padding-top: 0;
+      padding-bottom: 0;
+      /* scrolling comes to rest on a button instead of cutting one in half behind an arrow */
+      scroll-snap-type: y proximity;
+      scroll-padding: var(--toolbarArrowSize) 0;
     }
 
     body.horizontalToolbar.toolbarOverflow #toolbar {
       overflow-x: auto;
       overflow-y: clip;
+      padding-left: 0;
+      padding-right: 0;
+      scroll-snap-type: x proximity;
+      scroll-padding: 0 var(--toolbarArrowSize);
+    }
+
+    body.toolbarOverflow #toolbar > * {
+      scroll-snap-align: start;
     }
 
     body.toolbarOverflow #toolbar::-webkit-scrollbar {
       display: none;
     }
 
-    /* the arrows hint that scrolling reveals more buttons and scroll on click - the negative
-       margins keep them from taking up space of their own */
+    /* the arrows hint that scrolling reveals more buttons and scroll on click - they get a strip
+       of their own at both ends (which doubles as padding) so that they never cover a button;
+       they stay in place while the content scrolls underneath them and only turn invisible when
+       there is nothing left to scroll to, so that the buttons never jump */
     body.toolbarOverflow #toolbar::before,
     body.toolbarOverflow #toolbar::after {
-      display: none;
+      display: flex;
+      visibility: hidden;
       position: sticky;
+      flex-shrink: 0;
       align-items: center;
       justify-content: center;
       z-index: 3;
-      height: 24px;
+      height: var(--toolbarArrowSize);
       font-family: "Material Symbols";
-      font-size: 24px;
-      color: #fff;
+      font-size: var(--toolbarArrowSize);
+      color: var(--toolbarTextColor);
+      background: var(--toolbarColor);
       cursor: pointer;
     }
 
     body.toolbarOverflow #toolbar::before {
       content: 'keyboard_arrow_up';
       top: 0;
-      margin-bottom: -24px;
-      background: linear-gradient(to bottom, var(--toolbarColor) 70%, transparent);
     }
 
     body.toolbarOverflow #toolbar::after {
       content: 'keyboard_arrow_down';
       bottom: 0;
-      margin-top: -24px;
-      background: linear-gradient(to top, var(--toolbarColor) 70%, transparent);
     }
 
     body.horizontalToolbar.toolbarOverflow #toolbar::before,
     body.horizontalToolbar.toolbarOverflow #toolbar::after {
       top: auto;
       bottom: auto;
-      width: 24px;
+      width: var(--toolbarArrowSize);
       height: auto;
-      margin: 0;
     }
 
     body.horizontalToolbar.toolbarOverflow #toolbar::before {
       content: 'keyboard_arrow_left';
       left: 0;
-      margin-right: -24px;
-      background: linear-gradient(to right, var(--toolbarColor) 70%, transparent);
     }
 
     body.horizontalToolbar.toolbarOverflow #toolbar::after {
       content: 'keyboard_arrow_right';
       right: 0;
-      margin-left: -24px;
-      background: linear-gradient(to left, var(--toolbarColor) 70%, transparent);
     }
 
     body.toolbarOverflow.toolbarScrollBack #toolbar::before,
     body.toolbarOverflow.toolbarScrollForward #toolbar::after {
-      display: flex;
+      visibility: visible;
     }
 
     /* popups and tooltips reach outside of the toolbar and would be clipped by the scroll

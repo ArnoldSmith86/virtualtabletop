@@ -35,6 +35,15 @@ const scrollToolbarToEnd = ClientFunction(() => {
   toolbar.scrollTop = toolbar.scrollHeight;
 });
 
+const toolbarState = ClientFunction(() => {
+  const toolbar = document.querySelector('#toolbar');
+  const overlays = [];
+  for(const overlay of document.querySelectorAll('.overlay'))
+    if(getComputedStyle(overlay).display != 'none')
+      overlays.push(overlay.id);
+  return { position: toolbar.scrollLeft + toolbar.scrollTop, overlays: overlays.join(', ') };
+});
+
 test('The toolbar keeps all buttons reachable at every window size', async t => {
   await setRoomState();
   await ClientFunction(prepareClient)();
@@ -53,6 +62,28 @@ test('The toolbar keeps all buttons reachable at every window size', async t => 
       await t.expect(layout.outside).eql('', `${size}: buttons reach outside of the toolbar`);
     }
   }
+
+  await t.resizeWindow(1280, 800);
+});
+
+test('Clicking a toolbar scroll arrow scrolls instead of pressing the button underneath it', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+
+  await t.resizeWindow(500, 300).wait(300);
+  await t.expect((await toolbarLayout()).overflow).ok('500x300: the toolbar is expected to overflow');
+
+  await scrollToolbarToEnd();
+  await t.wait(300);
+  const before = await toolbarState();
+  await t.expect(before.position).gt(0, 'the toolbar did not scroll to its end');
+
+  // the back arrow is at the top left of the toolbar in every layout - clicking it has to scroll
+  // and must not reach whatever scrolled underneath it
+  await t.click('#toolbar', { offsetX: 12, offsetY: 12 }).wait(500);
+  const after = await toolbarState();
+  await t.expect(after.position).lt(before.position, 'clicking the back arrow did not scroll the toolbar');
+  await t.expect(after.overlays).eql(before.overlays, 'clicking the back arrow pressed the button underneath it');
 
   await t.resizeWindow(1280, 800);
 });

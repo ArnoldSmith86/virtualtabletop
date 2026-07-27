@@ -291,17 +291,26 @@ function updateToolbarScrolling() {
   positionToolbarTooltip();
 }
 
-// clicking one of the arrows (they are pseudo elements of the toolbar, so the click targets the
-// toolbar itself) scrolls by roughly one screen - a vertical mouse wheel does not scroll a
-// horizontally scrolling container, so that is translated in scrollToolbarByWheel below
+const toolbarArrowSize = 24; // --toolbarArrowSize in layout.css
+
+// clicking one of the arrows scrolls by roughly one screen and returns true - the arrows are
+// pseudo elements, so whether a click on one is reported on the toolbar or on a button that
+// scrolled underneath it depends on the scroll position, which is why the caller catches the
+// click in the capture phase. A vertical mouse wheel does not scroll a horizontally scrolling
+// container, so that is translated in scrollToolbarByWheel below.
 function scrollToolbarByArrow(e) {
+  const body = $('body').classList;
+  if(!body.contains('toolbarOverflow'))
+    return false;
+
   const toolbar = $('#toolbar');
   const rect = toolbar.getBoundingClientRect();
-  const horizontal = $('body').classList.contains('horizontalToolbar');
-  const back = horizontal ? e.clientX < rect.left + 24 : e.clientY < rect.top + 24;
-  const forward = horizontal ? e.clientX > rect.right - 24 : e.clientY > rect.bottom - 24;
+  const horizontal = body.contains('horizontalToolbar');
+  const back = body.contains('toolbarScrollBack') && (horizontal ? e.clientX < rect.left + toolbarArrowSize : e.clientY < rect.top + toolbarArrowSize);
+  const forward = body.contains('toolbarScrollForward') && (horizontal ? e.clientX > rect.right - toolbarArrowSize : e.clientY > rect.bottom - toolbarArrowSize);
   if(back || forward)
     scrollToolbarBy((horizontal ? toolbar.clientWidth : toolbar.clientHeight) * (back ? -0.8 : 0.8), 'smooth');
+  return back || forward;
 }
 
 function scrollToolbarByWheel(e) {
@@ -316,13 +325,16 @@ function scrollToolbarBy(amount, behavior) {
   $('#toolbar').scrollBy({ [horizontal ? 'left' : 'top']: amount, behavior });
 }
 
+const toolbarPopups = [ { popup: '#options', button: '#optionsButton' }, { popup: '#zoomControls', button: '#zoom2xButton' } ];
+
 // While the toolbar scrolls, it clips everything that reaches outside of it - so the sound and
 // zoom popups are positioned relative to the viewport instead of relative to their button.
 function positionToolbarPopups() {
   const overflow = $('body').classList.contains('toolbarOverflow');
   const horizontal = $('body').classList.contains('horizontalToolbar');
   const toolbarRect = $('#toolbar').getBoundingClientRect();
-  for(const popup of [ $('#options'), $('#zoomControls') ]) {
+  for(const { popup: selector } of toolbarPopups) {
+    const popup = $(selector);
     if(!overflow || popup.classList.contains('hidden')) {
       resetToolbarFlyout(popup);
       continue;
@@ -346,10 +358,21 @@ function positionToolbarTooltip() {
   positionedTooltip = null;
 
   const body = $('body').classList;
-  if(!hoveredToolbarButton || !body.contains('toolbarOverflow') || body.contains('wideToolbar'))
+  if(!hoveredToolbarButton || body.contains('wideToolbar'))
     return;
   const tooltip = $('.tooltip', hoveredToolbarButton);
   if(!tooltip)
+    return;
+
+  // the sound and zoom popups open exactly where the tooltip of their button goes
+  for(const { popup, button } of toolbarPopups) {
+    if(hoveredToolbarButton == $(button) && !$(popup).classList.contains('hidden')) {
+      positionedTooltip = tooltip;
+      tooltip.style.display = 'none';
+      return;
+    }
+  }
+  if(!body.contains('toolbarOverflow'))
     return;
 
   positionedTooltip = tooltip;
@@ -368,7 +391,7 @@ function positionToolbarFlyout(element, left, top) {
 }
 
 function resetToolbarFlyout(element) {
-  element.style.top = element.style.left = element.style.right = '';
+  element.style.top = element.style.left = element.style.right = element.style.display = '';
 }
 
 function getScale() {
@@ -693,11 +716,11 @@ onLoad(function() {
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
 
   on('#toolbar', 'scroll', updateToolbarScrolling);
-  on('#toolbar', 'click', function(e) {
-    if(e.target == this)
-      scrollToolbarByArrow(e);
-    positionToolbarPopups();
-  });
+  $('#toolbar').addEventListener('click', function(e) {
+    if(scrollToolbarByArrow(e))
+      e.stopPropagation(); // the arrow was clicked, not the button that scrolled underneath it
+  }, true);
+  on('#toolbar', 'click', _=>updateToolbarScrolling()); // a click may have toggled a popup
   on('#toolbar', 'wheel', scrollToolbarByWheel);
   on('#toolbar', 'mouseover', e=>{
     hoveredToolbarButton = e.target.closest('.toolbarButton');
