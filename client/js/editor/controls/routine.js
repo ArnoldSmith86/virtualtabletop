@@ -47,11 +47,12 @@ const routineOperationMetadata = {
       routine: { type: 'string', default: 'clickRoutine' },
       widget: { type: 'widgets', default: null, display: { 'null': 'this widget' } },
       variable: { type: 'string', default: 'result' },
+      collection: { type: 'collection', default: 'result' },
       'return': { type: 'enum', values: [ true, false ], default: true },
       arguments: { type: 'json', default: {} }
     },
     definesVariable: 'variable',
-    definesCollection: _=>[ 'result' ]
+    definesCollection: 'collection'
   },
   CANVAS: {
     template: v=>`{func}: {mode} on ${v('canvas') != null ? '{canvas}' : '{collection}'}[ using value {value}][ and color {color}]`,
@@ -67,6 +68,7 @@ const routineOperationMetadata = {
         with collection - and only collection works with the collections earlier operations define.
         </pre>
       ` },
+      count: { type: 'number', default: null, special: [ null ], display: { 'null': 'all' } },
       value: { type: 'number', default: 1 },
       color: { type: 'color', default: '#1F5CA6' },
       x: { type: 'number', default: 0 },
@@ -170,7 +172,9 @@ const routineOperationMetadata = {
       confirmButtonIcon: { type: 'icon', default: null },
       cancelButtonText: { type: 'string', default: 'Cancel' },
       cancelButtonIcon: { type: 'icon', default: null },
-      header: { type: 'string', default: '' }
+      header: { type: 'string', default: '' },
+      css: { type: 'string', default: '' },
+      randomRotation: { type: 'number', default: 0 }
     }
   },
   LABEL: {
@@ -201,6 +205,7 @@ const routineOperationMetadata = {
       from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
+      z: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } },
       snapToGrid: { type: 'enum', values: [ true, false ], default: true },
       resetOwner: { type: 'enum', values: [ true, false ], default: true }
@@ -1214,6 +1219,9 @@ class RoutineOperationEditor {
       const buttons = oldHeader && [ ...oldHeader.children ].find(c=>c.classList.contains('routine-editor-operation-buttons'));
       if(buttons)
         [ ...newDom.children ].find(c=>c.classList.contains('routine-editor-operation-header')).append(buttons);
+      // the routine editor still counts this operation as selected, so the new
+      // card has to look selected too - otherwise a later drag silently moves it
+      newDom.classList.toggle('routine-editor-operation-selected', oldDom.classList.contains('routine-editor-operation-selected'));
       oldDom.replaceWith(newDom);
     });
     return toggle;

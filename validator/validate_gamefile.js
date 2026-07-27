@@ -614,12 +614,14 @@ const operationProps = {
         'routine':   'routineProperty', 
         'widget':    'idArray', 
         'variable':  'string',
+        'collection': 'string',
         'return':    'boolean',
         'arguments': 'object'
     },
     'CANVAS': { 
         'canvas':     'idArray', 
         'collection': 'inCollection', 
+        'count':      'positiveNumber',
         'color':      v=>typeof v === 'string' && /^#[0-9A-Fa-f]{3,8}$/.test(v) || 'color expected (format: #RGB, #RGBA, #RRGGBB or #RRGGBBAA)',
         'mode':       getEnumValidator(['set', 'inc', 'dec', 'change', 'reset', 'setPixel']),
         'value':      'positiveNumber',
@@ -700,6 +702,7 @@ const operationProps = {
         'header': v=>typeof v === 'string',
         'fields': v=>Array.isArray(v) || 'fields must be an array',
         'css': v=>typeof v === 'string',
+        'randomRotation': 'number',
     },
     'LABEL': {
         'label': 'idArray',
@@ -720,6 +723,7 @@ const operationProps = {
         'count': 'countOrAll',
         'x': 'number',
         'y': 'number',
+        'z': 'number',
         'resetOwner': 'boolean',
         'face': 'positiveNumber',
         'snapToGrid': 'boolean'

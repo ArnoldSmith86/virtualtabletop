@@ -89,6 +89,21 @@ describe('routine operation metadata', () => {
     }
   });
 
+  test('properties the engine reads are declared instead of flagged as typos', () => {
+    // these were missing from the metadata, so the editor marked them with a red
+    // "!" ("the engine ignores it") and offered to delete working game logic
+    const engineSupported = { CALL: [ 'collection' ], CANVAS: [ 'count' ], INPUT: [ 'css', 'randomRotation' ], MOVEXY: [ 'z' ] };
+    for (const func in engineSupported) {
+      for (const name of engineSupported[func]) {
+        const operation = { func, [name]: 1 };
+        const editor = editorForOperation(operation);
+        editor.setOperationDetails({ state: {} }, operation, [], []);
+        expect(routineOperationMetadata[func].parameters[name]).toBeDefined();
+        expect(editor.unsupportedProperties()).not.toContain(name);
+      }
+    }
+  });
+
   test('operations resolve to the right editor', () => {
     expect(editorForOperation({ func: 'MOVE' })).toBeInstanceOf(RoutineOperationEditor);
     expect(editorForOperation({ func: 'IF' })).toBeInstanceOf(IfRoutineOperationEditor);
@@ -488,6 +503,16 @@ describe('routine editor state handling', () => {
     expect(card.classList.contains('routine-editor-operation-selected')).toBe(true);
     card.dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
     expect(editor.selectedIndices.has(1)).toBe(false);
+  });
+
+  test('toggling the view of a selected operation keeps it looking selected', () => {
+    const editor = new RoutineEditor({ state: {} }, [ { func: 'MOVE', from: 'h1', to: 'h2' }, { func: 'FLIP' } ]);
+    editor.directChildCards()[0].dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
+    editor.directChildCards()[0].querySelector('.routine-editor-view-toggle').dispatchEvent(new Event('click'));
+    // the toggle replaces the card: without the selection class it looks
+    // unselected while a drag would still move it along with the next selection
+    expect(editor.selectedIndices.has(0)).toBe(true);
+    expect(editor.directChildCards()[0].classList.contains('routine-editor-operation-selected')).toBe(true);
   });
 
   test('a routine change clears the transient Ctrl-selection', () => {
