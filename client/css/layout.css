@@ -749,6 +749,13 @@ body.aspectTooGood.hiddenToolbar {
   background: #00000022;
 }
 
+#clientErrorStack {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 40vh;
+  overflow: auto;
+}
+
 div[icon] {
   background: var(--roomColor);
   position: relative;

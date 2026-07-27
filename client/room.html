@@ -569,15 +569,16 @@
     </div>
 
     <div id="clientErrorOverlay" class="overlay">
-      <h1>Internal Error</h1>
+      <h1>Something went wrong in your browser</h1>
       <p>Your client just crashed. Sorry, this shouldn't happen.</p>
-      <p>How can we trigger the error ourselves so we can fix it?</p>
-      <p><textarea style="height: 150px; width: 100%"></textarea></p>
+      <p id="clientErrorQuestion"><label for="clientErrorDescription">How can we trigger the error ourselves so we can fix it?</label></p>
+      <p id="clientErrorInput"><textarea id="clientErrorDescription" placeholder="e.g. I dragged a card onto a deck and the screen froze" style="height: 150px; width: 100%"></textarea></p>
+      <p id="clientErrorStatus" style="display:none">The report could not be sent. Please copy the technical details below and report them on <a href="https://discord.gg/CEZz7wny9T">Discord</a> or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues">GitHub</a>.</p>
+      <p><button>Submit and Reload</button></p>
       <details>
         <summary>Technical Details</summary>
         <pre id="clientErrorStack"></pre>
       </details>
-      <p><button>Submit and Reload</button></p>
     </div>
 
     <div id="connectionLostOverlay" class="overlay" style="display:none;">

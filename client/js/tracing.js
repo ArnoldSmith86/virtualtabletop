@@ -68,6 +68,11 @@ onLoad(function() {
 
   onMessage('tracing', _=>tracingEnabled=true);
 
+  const showClientError = function(text) {
+    $('#clientErrorStack').textContent = text;
+    showOverlay('clientErrorOverlay');
+  }
+
   const reportError = function(description) {
     const details = {
       error: description,
@@ -89,10 +94,23 @@ onLoad(function() {
     };
     preventReconnect();
     connection.close();
+
+    const button = $('#clientErrorOverlay button');
+    // what the user typed is the most valuable part of the report - keep the textarea intact
+    // and put the reason for the failure into the technical details instead
+    const submitFailed = function(reason) {
+      button.disabled = false;
+      button.textContent = 'Try again';
+      $('#clientErrorStatus').style.display = '';
+      $('#clientErrorStack').textContent = `${details.error}\n\nSubmitting the report failed:\n${reason}`;
+    }
+
     $('#clientErrorOverlay textarea').value = '';
-    $('#clientErrorStack').textContent = details.error;
-    showOverlay('clientErrorOverlay');
-    $('#clientErrorOverlay button').addEventListener('click', async function() {
+    showClientError(details.error);
+    button.addEventListener('click', async function() {
+      button.disabled = true;
+      button.textContent = 'Submitting…';
+      $('#clientErrorStatus').style.display = 'none';
       try {
         details.message = $('#clientErrorOverlay textarea').value;
         const ancestors = [];
@@ -115,9 +133,9 @@ onLoad(function() {
         if(text.match(/^[a-z0-9]{8}$/))
           window.location.reload();
         else
-          $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.error + "\n\n" + text;
+          submitFailed(text);
       } catch(e) {
-        $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.error + "\n\n" + describeError(e, 'Unknown error');
+        submitFailed(describeError(e, 'Unknown error'));
       }
     });
   }
@@ -132,14 +150,21 @@ onLoad(function() {
       reportError(description);
     } catch(e) {
       // collecting the context failed, e.g. because the error happened before the room was set
-      // up - show the error itself anyway instead of leaving the user with a frozen page
-      $('#clientErrorStack').textContent = `${description}\n\nThe error reporter itself failed:\n${describeError(e, 'Unknown error')}`;
-      showOverlay('clientErrorOverlay');
+      // up - show the error itself anyway instead of leaving the user with a frozen page. there
+      // is nothing to submit in that case, so ask for a manual report and offer a plain reload.
+      $('#clientErrorQuestion').style.display = 'none';
+      $('#clientErrorInput').style.display = 'none';
+      $('#clientErrorStatus').style.display = '';
+      const button = $('#clientErrorOverlay button');
+      button.textContent = 'Reload';
+      button.addEventListener('click', _=>window.location.reload());
+      showClientError(`${description}\n\nThe error reporter itself failed:\n${describeError(e, 'Unknown error')}`);
     }
   }
 
   window.onerror = function(msg, url, line, col, err) {
-    errorHandler(err, `${msg}\n    at ${url}:${line}:${col}`);
+    // browsers report cross-origin errors without a location - 'at :0:0' would just look broken
+    errorHandler(err, `${msg}` + (url ? `\n    at ${url}:${line}:${col}` : ''));
   };
   window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
     errorHandler(promiseRejectionEvent.reason, 'Unhandled promise rejection');
