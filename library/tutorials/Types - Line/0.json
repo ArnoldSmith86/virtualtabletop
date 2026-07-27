@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1785120676909,
+      "lastUpdate": 1785188911327,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -54,7 +54,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "A line widget is available from the Add Widget overlay in the &quotDecorative&quot section. In most cases, players will not interact directly with lines (although they could). A line will be a graphical element that can be the parent for holders (usually) or other widgets that follow the line (or a curve) and whose connected points move together. Lines should be edited through the &quotEdit Widgets&quot tab in the right side toolbar in Edit Mode. Although the JSON can be edited directly, the graphical editor is designed to make the process easy."
+    "html": "A line widget is available from the Add Widget overlay in the &quotDecorative&quot section. Options include circles and lines with and without default stop holders. A line will be a graphical element that can be the parent for holders (usually) or other widgets that follow the line (or a curve) and whose connected points move together. The line itself can also act like a holder, which is especially useful when adding and removing stops."
   },
   "text1": {
     "id": "text1",
@@ -67,7 +67,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The line above is the basic line added to the room. The line contains 2 stop points (the white circles) which are holders that by default will hold anything (such as the red cube). Look in the JSON Editor and you will see two line-specific properties: <b>lineEnd</b> and <b>lineStart</b>, but these are relative to the line's x/y position. If you select the line in Edit Mode, you will see 2 blue circles. use your mouse to drag those around to resize the line. Changing <b>width</b> or <b>height</b> directly will not give the expected results.",
+    "html": "The line above is the basic line added to the room. The line contains 2 stop points (the white circles) which are holders that by default will hold anything (such as the red cube). The line itself does not act as a holder by default, but you can change the <b>dropTarget</b> and add widgets as stops. Look in the JSON Editor and you will see two line-specific properties: <b>lineEnd</b> and <b>lineStart</b>, but these are relative to the line's x/y position. If you select the line in Edit Mode, you will see 2 blue circles. Use your mouse to drag those around to resize the line. Changing <b>width</b> or <b>height</b> directly will not give the expected results.",
     "layer": -3
   },
   "text2": {
@@ -81,7 +81,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The line above contains several new properties all easily added through the &quotEdit Widgets&quot tab. <b>lineColor</b> and <b>lineWidth</b> are self-explanatory. <b>lineDash</b> follows the syntax for CSS stroke-dasharray where the first number is the length of the dash and the second number is the space between dashes (in pixels). <b>controlEnd</b> and <b>controlStart</b> are represented by the small orange squares connected by lines (only visible in edit mode) used to change the shape of the curve.",
+    "html": "The line above contains several new properties all easily added through the &quotEdit Widgets&quot tab. <b>lineColor</b> and <b>lineWidth</b> are self-explanatory. <b>lineDash</b> follows the syntax for CSS stroke-dasharray where the first number is the length of the dash and the second number is the space between dashes (in pixels). <b>controlEnd</b> and <b>controlStart</b> are represented by the small orange squares connected by lines (only visible in edit mode) used to change the shape of the curve.<br><br>The line above also has <b>dropTarget</b> set for any widget, so you can move the cubes onto the line.",
     "layer": -3
   },
   "text3": {
@@ -95,7 +95,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This line has a width of 0 so it is invisible. However, the holders that are attached to it follow the curve of the line. By default the stops are evenly spaced (<b>autoSpaceStops</b>:true) and will rotate (<b>rotateStops</b>:true) to follow the curve of the line. Move the end points, control points, and add and delete stops to see this in action. The line lists its stops in its <b>stops</b> property (<b>[ { \"widget\": ..., \"position\": 0..1 }, ... ]</b>); stops sometimes also get a <b>lineOriginalRotation</b> property. Both should be ignored and managed through the &quotEdit Widgets&quot tab.",
+    "html": "This line has a width of 0 so it is invisible. However, the holders that are attached to it follow the curve of the line. By default the stops are evenly spaced (<b>autoSpaceStops</b>: true) and will rotate (<b>rotateStops</b>: true) to follow the curve of the line. Move the end points, control points, and add and delete stops to see this in action. The line lists its attached stops in its <b>stops</b> property. You can manually add stops in the JSON Editor, by dragging and droppinig to a line with a widget that matches the line's <b>dropTarget</b> like the dashed blue one to the left, or use the &quotEdit Widgets&quot tab. Stops sometimes also get a <b>lineOriginalRotation</b> property which should be ignored as it is automatically mangaged as the line moves or changes shape.",
     "layer": -3
   },
   "text4": {
@@ -109,28 +109,8 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> to connect to basi widgets (the black circles). You can drag the circles around to see how the lines move together. The red line holders auto rotate to follow the shape of the line. The orange line holders do move, but not necessarily in a predictable way (more or less they try to stay perpendicular). The green line uses specific space and not automatic spacing between the holders.",
+    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> to connect to basic widgets (the black circles). You can drag the circles around to see how the lines move together. The red line holders auto rotate to follow the shape of the line. The landscape-oriented orange line holders do rotate, but not necessarily in a predictable way (more or less they try to stay perpendicular). The green line uses specific spacing and not automatic spacing between the holders.",
     "layer": -3
-  },
-  "qx7u": {
-    "x": 774,
-    "y": 218,
-    "width": 36,
-    "height": 40,
-    "color": "#ff0000",
-    "css": "border-radius: 50%/35%;",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "z": 256,
-    "id": "qx7u"
   },
   "line2": {
     "type": "line",
@@ -157,7 +137,6 @@
       "y": 13
     },
     "lineDash": "8 8",
-    "lineWidth": 5,
     "lineColor": "#0000ff",
     "stops": [
       {
@@ -168,7 +147,8 @@
         "widget": "line2S1",
         "position": 1
       }
-    ]
+    ],
+    "dropTarget": {}
   },
   "line2S0": {
     "type": "holder",
@@ -303,17 +283,17 @@
   "line4": {
     "type": "line",
     "id": "line4",
-    "x": 1285,
-    "y": 133,
-    "width": 268,
-    "height": 220,
+    "x": 1338,
+    "y": 158,
+    "width": 238,
+    "height": 219,
     "lineStart": {
       "x": 11,
       "y": 134
     },
     "lineEnd": {
-      "x": 257,
-      "y": 209
+      "x": 227,
+      "y": 208
     },
     "z": 9734,
     "lineColor": "#ff0000",
@@ -323,8 +303,8 @@
       "y": 11
     },
     "controlEnd": {
-      "x": 167,
-      "y": 149
+      "x": 137,
+      "y": 148
     },
     "connectStart": {
       "line": "point1",
@@ -351,7 +331,7 @@
       },
       {
         "widget": "line4M2",
-        "position": 0.739
+        "position": 0.738
       },
       {
         "widget": "line4S1",
@@ -382,41 +362,41 @@
     "id": "line4S1",
     "parent": "line4",
     "fixedParent": true,
-    "x": 237,
-    "y": 189,
+    "x": 207,
+    "y": 188,
     "movableInEdit": false,
     "inheritFrom": "line4S0"
   },
   "point1": {
     "id": "point1",
-    "x": 1286,
-    "y": 257,
+    "x": 1339,
+    "y": 282,
     "width": 20,
     "height": 20,
     "css": {
       "border": "1px solid black"
     },
     "borderRadius": 100,
-    "z": 259
+    "z": 289
   },
   "point2": {
     "id": "point2",
-    "x": 1532,
-    "y": 332,
+    "x": 1555,
+    "y": 356,
     "width": 20,
     "height": 20,
     "css": {
       "border": "1px solid black"
     },
     "borderRadius": 100,
-    "z": 260
+    "z": 290
   },
   "line4M0": {
     "type": "holder",
     "id": "line4M0",
     "parent": "line4",
     "fixedParent": true,
-    "x": 40,
+    "x": 32,
     "y": 76,
     "width": 45,
     "height": 17,
@@ -432,7 +412,7 @@
     "dropTarget": {
       "type": null
     },
-    "rotation": 3.4938684131494266
+    "rotation": 0.9728439748872469
   },
   "line4M1": {
     "type": "holder",
@@ -441,13 +421,13 @@
     "fixedParent": true,
     "movableInEdit": false,
     "id": "line4M1",
-    "x": 109,
-    "y": 106,
+    "x": 94,
+    "y": 107,
     "lineOriginalRotation": {
       "value": 0,
       "explicit": false
     },
-    "rotation": 33.81022010641653
+    "rotation": 38.61093885788359
   },
   "line4M2": {
     "type": "holder",
@@ -456,97 +436,31 @@
     "fixedParent": true,
     "movableInEdit": false,
     "id": "line4M2",
-    "x": 170,
-    "y": 152,
+    "x": 146,
+    "y": 153,
     "lineOriginalRotation": {
       "value": 0,
       "explicit": false
     },
-    "rotation": 38.401666996154944
-  },
-  "point3": {
-    "id": "point3",
-    "x": 1358,
-    "y": 464,
-    "width": 20,
-    "height": 20,
-    "css": {
-      "border": "1px solid black"
-    },
-    "borderRadius": 100,
-    "z": 261
+    "rotation": 41.35279403876538
   },
   "point4": {
     "id": "point4",
-    "x": 1142,
-    "y": 218,
+    "y": 217,
     "width": 20,
     "height": 20,
     "css": {
       "border": "1px solid black"
     },
     "borderRadius": 100,
-    "z": 249
-  },
-  "line1S1": {
-    "type": "holder",
-    "id": "line1S1",
-    "parent": "line1",
-    "fixedParent": true,
-    "x": 195,
-    "y": -5,
-    "movableInEdit": false,
-    "inheritFrom": "line1S0"
-  },
-  "line1S0": {
-    "type": "holder",
-    "id": "line1S0",
-    "parent": "line1",
-    "fixedParent": true,
-    "x": -5,
-    "y": -5,
-    "width": 40,
-    "height": 40,
-    "borderRadius": 20,
-    "movableInEdit": false,
-    "dropOffsetX": 2,
-    "dropOffsetY": 2,
-    "dropTarget": {
-      "type": null
-    }
-  },
-  "line1": {
-    "type": "line",
-    "id": "line1",
-    "x": 55,
-    "y": 290,
-    "width": 230,
-    "height": 30,
-    "lineStart": {
-      "x": 15,
-      "y": 15
-    },
-    "lineEnd": {
-      "x": 215,
-      "y": 15
-    },
-    "z": 9734,
-    "stops": [
-      {
-        "widget": "line1S0",
-        "position": 0
-      },
-      {
-        "widget": "line1S1",
-        "position": 1
-      }
-    ]
+    "z": 291,
+    "x": 1233
   },
   "line5": {
     "type": "line",
     "id": "line5",
-    "x": 1324,
-    "y": 331,
+    "x": 1347,
+    "y": 355,
     "width": 229,
     "lineStart": {
       "x": 218,
@@ -554,7 +468,7 @@
     },
     "lineEnd": {
       "x": 44,
-      "y": 143
+      "y": 153
     },
     "z": 9738,
     "lineColor": "#ffc800",
@@ -575,10 +489,9 @@
     },
     "controlEnd": {
       "x": 158,
-      "y": 118
+      "y": 128
     },
     "rotateStops": false,
-    "height": 154,
     "stops": [
       {
         "widget": "line5S0",
@@ -586,25 +499,30 @@
       },
       {
         "widget": "line5M0",
-        "position": 0.233
+        "position": 0.184
       },
       {
         "widget": "line5M1",
-        "position": 0.463
+        "position": 0.371
       },
       {
         "widget": "line5M2",
-        "position": 0.631
+        "position": 0.562
       },
       {
-        "widget": "line5M3",
-        "position": 0.785
+        "widget": "line5M4",
+        "position": 0.699
+      },
+      {
+        "widget": "line5M5",
+        "position": 0.822
       },
       {
         "widget": "line5S1",
         "position": 1
       }
-    ]
+    ],
+    "height": 164
   },
   "line5S0": {
     "type": "holder",
@@ -612,7 +530,6 @@
     "parent": "line5",
     "fixedParent": true,
     "x": 198,
-    "y": -9,
     "width": 40,
     "height": 40,
     "borderRadius": 20,
@@ -622,7 +539,8 @@
     "dropTarget": {
       "type": false
     },
-    "classes": "transparent"
+    "classes": "transparent",
+    "y": -9
   },
   "line5S1": {
     "type": "holder",
@@ -630,7 +548,7 @@
     "parent": "line5",
     "fixedParent": true,
     "x": 24,
-    "y": 123,
+    "y": 133,
     "movableInEdit": false,
     "inheritFrom": "line5S0"
   },
@@ -641,8 +559,8 @@
     "fixedParent": true,
     "movableInEdit": false,
     "id": "line5M0",
-    "x": 140,
-    "y": 14,
+    "x": 150,
+    "y": 11,
     "text": 1
   },
   "line5M1": {
@@ -652,61 +570,27 @@
     "fixedParent": true,
     "movableInEdit": false,
     "id": "line5M1",
-    "x": 90,
-    "y": 38,
+    "x": 106,
+    "y": 28,
     "text": 2
-  },
-  "line5M2": {
-    "type": "holder",
-    "inheritFrom": "line4M0",
-    "parent": "line5",
-    "fixedParent": true,
-    "movableInEdit": false,
-    "id": "line5M2",
-    "x": 73,
-    "y": 74,
-    "text": 3
-  },
-  "line5M3": {
-    "type": "holder",
-    "inheritFrom": "line4M0",
-    "parent": "line5",
-    "fixedParent": true,
-    "movableInEdit": false,
-    "id": "line5M3",
-    "x": 66,
-    "y": 110,
-    "text": 4
   },
   "line6": {
     "type": "line",
     "id": "line6",
-    "x": 1141,
-    "y": 217,
+    "x": 1232,
+    "y": 216,
     "lineStart": {
-      "x": 227,
-      "y": 257
+      "x": 159,
+      "y": 292
     },
     "lineEnd": {
       "x": 11,
       "y": 11
     },
-    "z": 9739,
+    "z": 9751,
     "lineColor": "#1eff00",
     "lineWidth": 2,
     "autoSpaceStops": false,
-    "connectStart": {
-      "line": "point3",
-      "position": 0.5,
-      "offset": 0
-    },
-    "connectEnd": {
-      "line": "point4",
-      "position": 0.5,
-      "offset": 0
-    },
-    "height": 268,
-    "width": 238,
     "stops": [
       {
         "widget": "line6S0",
@@ -728,7 +612,19 @@
         "widget": "line6S1",
         "position": 1
       }
-    ]
+    ],
+    "height": 303,
+    "width": 170,
+    "connectStart": {
+      "line": "point3",
+      "position": 0.5,
+      "offset": 0
+    },
+    "connectEnd": {
+      "line": "point4",
+      "position": 0.5,
+      "offset": 0
+    }
   },
   "line6S0": {
     "type": "holder",
@@ -745,8 +641,8 @@
       "type": false
     },
     "classes": "transparent",
-    "x": 207,
-    "y": 237
+    "x": 139,
+    "y": 272
   },
   "line6S1": {
     "type": "holder",
@@ -776,8 +672,8 @@
     "dropTarget": {
       "type": null
     },
-    "x": 188,
-    "y": 215
+    "x": 127,
+    "y": 246
   },
   "line6M1": {
     "type": "holder",
@@ -786,8 +682,8 @@
     "fixedParent": true,
     "movableInEdit": false,
     "id": "line6M1",
-    "x": 123,
-    "y": 141
+    "x": 82,
+    "y": 162
   },
   "line6M2": {
     "type": "holder",
@@ -796,7 +692,167 @@
     "fixedParent": true,
     "movableInEdit": false,
     "id": "line6M2",
-    "x": 37,
-    "y": 43
+    "x": 23,
+    "y": 50
+  },
+  "line1": {
+    "type": "line",
+    "id": "line1",
+    "x": 55,
+    "y": 290,
+    "width": 230,
+    "height": 30,
+    "lineStart": {
+      "x": 15,
+      "y": 15
+    },
+    "lineEnd": {
+      "x": 215,
+      "y": 15
+    },
+    "z": 9734,
+    "stops": [
+      {
+        "widget": "line1S0",
+        "position": 0
+      },
+      {
+        "widget": "line1S1",
+        "position": 1
+      }
+    ]
+  },
+  "line1S1": {
+    "type": "holder",
+    "id": "line1S1",
+    "parent": "line1",
+    "fixedParent": true,
+    "x": 195,
+    "y": -5,
+    "movableInEdit": false,
+    "inheritFrom": "line1S0"
+  },
+  "line1S0": {
+    "type": "holder",
+    "id": "line1S0",
+    "parent": "line1",
+    "fixedParent": true,
+    "x": -5,
+    "y": -5,
+    "width": 40,
+    "height": 40,
+    "borderRadius": 20,
+    "movableInEdit": false,
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "type": null
+    }
+  },
+  "cube1": {
+    "id": "cube1",
+    "x": 663,
+    "y": 210,
+    "width": 36,
+    "height": 40,
+    "z": 262,
+    "color": "#ff0000",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
+  },
+  "cube2": {
+    "id": "cube2",
+    "x": 699,
+    "y": 210,
+    "width": 36,
+    "height": 40,
+    "z": 262,
+    "color": "#f58231",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
+  },
+  "cube3": {
+    "id": "cube3",
+    "x": 735,
+    "y": 210,
+    "width": 36,
+    "height": 40,
+    "z": 262,
+    "color": "#4363d8",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
+  },
+  "line5M5": {
+    "type": "holder",
+    "id": "line5M5",
+    "parent": "line5",
+    "fixedParent": true,
+    "x": 61,
+    "y": 126,
+    "movableInEdit": false,
+    "inheritFrom": "line4M0",
+    "text": 5
+  },
+  "line5M4": {
+    "type": "holder",
+    "id": "line5M4",
+    "parent": "line5",
+    "fixedParent": true,
+    "x": 72,
+    "y": 97,
+    "movableInEdit": false,
+    "inheritFrom": "line4M0",
+    "text": 4
+  },
+  "line5M2": {
+    "type": "holder",
+    "id": "line5M2",
+    "parent": "line5",
+    "x": 78,
+    "y": 52,
+    "width": 40,
+    "height": 40,
+    "z": 9746,
+    "movable": true,
+    "text": 3
+  },
+  "point3": {
+    "id": "point3",
+    "x": 1381,
+    "y": 498,
+    "width": 20,
+    "height": 20,
+    "borderRadius": 100,
+    "z": 287,
+    "css": {
+      "border": "1px solid black"
+    }
   }
 }
