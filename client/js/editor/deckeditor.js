@@ -1410,6 +1410,7 @@ class DeckEditor {
 
     this.attachObjectHandlers();
     this.refreshTreePreviews();
+    this.updateSelectionOutline(); // the objects were just re-created, so the rectangle has to be re-measured
   }
 
   // The tree's object previews are clones of the card's rendered objects, so they follow every card refresh -
@@ -1529,7 +1530,61 @@ class DeckEditor {
     return faceDiv ? faceDiv.children[this.selectedObject] : null;
   }
 
+  // The selected object's orange rectangle. While the object stays well inside the card that rectangle is a CSS
+  // outline on the object itself (.deckEditorSelectedObject), which hugs it and follows its rotation. That
+  // outline is useless as soon as the object reaches the card's edge though: the face clips at its padding box,
+  // so the rectangle of an object covering the whole card - or reaching past it - lands in the clipped area and
+  // isn't drawn at all. For that case this puts a replacement rectangle into the card wrapper, outside the clip,
+  // at the object's box clamped to the card - i.e. just inside the card's outer edge - and turns the object's
+  // own outline off so only one rectangle is drawn.
+  updateSelectionOutline() {
+    const objectDiv = this.selectedObjectDiv();
+    const outline = this.selectionOutline;
+    if(!this.cardWrapper || !objectDiv) {
+      if(outline)
+        outline.style.display = 'none';
+      return;
+    }
+
+    const scale = this.cardScale || 1;
+    const rect = objectDiv.getBoundingClientRect();
+    // What the face still shows: its border box minus the (uniform) border, minus the corner radius - both eat
+    // into the rounded overflow: hidden clip. 0.5px of slack absorbs the subpixel rounding of the scaled card.
+    const faceDiv = objectDiv.parentNode;
+    const faceRect = faceDiv.getBoundingClientRect();
+    const inset = (faceDiv.clientLeft + (parseFloat(getComputedStyle(faceDiv).borderTopLeftRadius) || 0))*scale - 0.5;
+    const fits = rect.left >= faceRect.left + inset && rect.top >= faceRect.top + inset
+              && rect.right <= faceRect.right - inset && rect.bottom <= faceRect.bottom - inset;
+    objectDiv.classList.toggle('deckEditorClippedObject', !fits);
+    if(fits) {
+      if(outline)
+        outline.style.display = 'none';
+      return;
+    }
+
+    if(!this.selectionOutline || this.selectionOutline.parentNode != this.cardWrapper)
+      this.selectionOutline = div(this.cardWrapper, 'deckEditorSelectionOutline');
+    // Screen pixels back to the card's own design coordinates, so the rectangle rides along with pan and zoom.
+    const cardRect = this.cardWrapper.getBoundingClientRect();
+    const cardWidth = this.cardWrapper.offsetWidth;
+    const cardHeight = this.cardWrapper.offsetHeight;
+    const clamp = (v, max)=>Math.max(0, Math.min(max, v));
+    const left = clamp((rect.left - cardRect.left)/scale, cardWidth);
+    const top = clamp((rect.top - cardRect.top)/scale, cardHeight);
+    // An object dragged off the card entirely still leaves a sliver at the edge it left through, so it stays
+    // findable: the minimum is the two 3px edges of the rectangle itself (see .deckEditorSelectionOutline).
+    const minSize = 6/scale;
+    const width = Math.min(cardWidth, Math.max(clamp((rect.right - cardRect.left)/scale, cardWidth) - left, minSize));
+    const height = Math.min(cardHeight, Math.max(clamp((rect.bottom - cardRect.top)/scale, cardHeight) - top, minSize));
+    this.selectionOutline.style.display = '';
+    this.selectionOutline.style.left = Math.min(left, cardWidth-width) + 'px';
+    this.selectionOutline.style.top = Math.min(top, cardHeight-height) + 'px';
+    this.selectionOutline.style.width = width + 'px';
+    this.selectionOutline.style.height = height + 'px';
+  }
+
   updateDragToolbar() {
+    this.updateSelectionOutline();
     const toolbar = $('#deckEditorDragToolbar');
     const objectDiv = this.selectedObjectDiv();
     if(!objectDiv) {
@@ -1677,7 +1732,7 @@ class DeckEditor {
     const addPropertyRow = (target, onAdd, suggestions)=>{
       const listId = suggestions && suggestions.length ? `deckEditorPropSuggest${++this.suggestSeq}` : '';
       const list = listId ? `<datalist id=${listId}>${suggestions.map(s=>`<option value="${html(s)}">`).join('')}</datalist>` : '';
-      const row = div(target, 'deckEditorAddProperty', `<input placeholder="new property"${listId ? ` list=${listId}` : ''}>${list}<select><option value="text">text</option><option value="number">number</option><option value="true">true</option><option value="false">false</option><option value="object">object/array</option></select><button icon=add>Add</button>`);
+      const row = div(target, 'deckEditorAddProperty', `<input placeholder="new property"${listId ? ` list=${listId}` : ''}>${list}<select><option value="text">text</option><option value="number">number</option><option value="color">color</option><option value="true">true</option><option value="false">false</option><option value="object">object/array</option></select><button icon=add>Add</button>`);
       $('button', row).onclick = _=>{
         const property = $('input', row).value.trim();
         if(property)
@@ -2492,6 +2547,9 @@ class DeckEditor {
   initialValueForType(type) {
     switch(type) {
       case 'number': return 0;
+      // A text row whose value already looks like a color, so shouldOfferColorPicker puts the swatch on it
+      // right away even when the property isn't named after a color.
+      case 'color':  return '#000000';
       case 'true':   return true;
       case 'false':  return false;
       case 'object': return {};

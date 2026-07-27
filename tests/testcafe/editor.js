@@ -623,6 +623,27 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .typeText('.deckEditorAddBinding .objectProperty', 'color')
     .typeText('.deckEditorAddBinding .typeProperty', 'color')
     .click('.deckEditorAddBindingButton');
+  // The add-property type selector's "color" option seeds the row with a color value, so it gets the swatch +
+  // color picker right away even though the property is not named after a color.
+  const addObjectProperty = ClientFunction((name, type) => {
+    const add = document.querySelectorAll('#deckEditorSidebar .deckEditorAddProperty')[0];
+    if(!add)
+      return false;
+    add.querySelector('input').value = name;
+    add.querySelector('select').value = type;
+    add.querySelector('button').click();
+    return true;
+  });
+  const rowHasColorPicker = ClientFunction(label => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .genericInput');
+    for(let i = 0; i < rows.length; ++i)
+      if(rows[i].querySelector('label').textContent == label)
+        return rows[i].classList.contains('hasColorPicker');
+    return false;
+  });
+  await t.expect(addObjectProperty('background', 'color')).ok();
+  await t.expect(rowHasColorPicker('background')).ok();
+  await t.wait(700); // let the debounced faceTemplates commit fire
   await t.pressKey('esc'); // deselect the object -> the sidebar falls back to the object's face
   // The sidebar's tab bar follows the selection and switches the scope being edited: Escape just dropped the
   // face object, so Face is showing. Object stays selectable (it offers the add-object "+" even without a
@@ -662,7 +683,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.pressKey('esc');          // closes the deck editor - and only the deck editor
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
-  await compareState(t, '5a122712291686381f805ac9bad1376e');
+  await compareState(t, 'eb956b82d7fcbdea9ddeaeda95ece571');
 });
 
 test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {

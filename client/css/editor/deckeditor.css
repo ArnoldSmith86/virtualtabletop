@@ -904,23 +904,41 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: move;
 }
 
-/* Clip the big edit card to its bounds like the real card does, so an object dragged past the card's edge
-   is hidden instead of floating out over the editor. The object outlines below are drawn INSIDE the object
-   (negative outline-offset) so a full-card object's outline stays visible within the clip. */
+/* The big edit card clips to its bounds like the real card does, so an object dragged past the card's edge
+   is hidden instead of floating out over the editor. The outlines below are drawn INSIDE the object (negative
+   outline-offset) so they survive that clip as long as the object stays within the card; for the selected
+   object that stops working at the card's edge, which is what .deckEditorSelectionOutline is for. */
 /* before :hover and .deckEditorSelectedObject so those still win on the hovered/selected object */
 #deckEditorMain.deckEditorShowAllAreas .deckEditorCard .cardFaceObject {
-  outline: calc(2px / var(--deckEditorCardScale)) dotted var(--textHighlightColor2);
-  outline-offset: calc(-2px / var(--deckEditorCardScale));
+  outline: calc(2px / var(--deckEditorCardScale, 1)) dotted var(--textHighlightColor2);
+  outline-offset: calc(-2px / var(--deckEditorCardScale, 1));
 }
 
 #deckEditorMain .deckEditorCard .cardFaceObject:hover {
-  outline: calc(2px / var(--deckEditorCardScale)) dashed var(--textHighlightColor2);
-  outline-offset: calc(-2px / var(--deckEditorCardScale));
+  outline: calc(2px / var(--deckEditorCardScale, 1)) dashed var(--textHighlightColor2);
+  outline-offset: calc(-2px / var(--deckEditorCardScale, 1));
 }
 
 #deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject {
-  outline: calc(3px / var(--deckEditorCardScale)) solid var(--textHighlightColor2);
-  outline-offset: calc(-3px / var(--deckEditorCardScale));
+  outline: calc(3px / var(--deckEditorCardScale, 1)) solid var(--textHighlightColor2);
+  outline-offset: calc(-3px / var(--deckEditorCardScale, 1));
+}
+
+/* An object the face's clip would cut the rectangle off has it drawn as .deckEditorSelectionOutline below
+   instead, so drop every outline here - otherwise a second, clipped rectangle would be drawn over it. */
+#deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject.deckEditorClippedObject {
+  outline: none;
+}
+
+/* The stand-in rectangle for exactly those objects. It sits in the card wrapper rather than on the object,
+   i.e. outside the face's overflow: hidden, and updateSelectionOutline() clamps it to the card - so an object
+   that covers the whole card (or reaches beyond it) still shows its rectangle, just inside the card's edge. */
+#deckEditorMain .deckEditorCard .deckEditorSelectionOutline {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: calc(3px / var(--deckEditorCardScale, 1)) solid var(--textHighlightColor2);
+  z-index: 1000002; /* above the card (1000000) and the grid overlay (1000001) */
 }
 
 .deckEditorEmpty, .deckEditorHint {
