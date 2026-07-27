@@ -9,8 +9,8 @@
    background shows as a rounded cutout that reaches the parent's right border
    while the operation cards inside keep their normal size */
 .routine-editor .routine-editor {
-  margin: 4px -60px 4px 12px;
-  padding: 5px 25px 5px 5px;
+  margin: 4px -8px 4px 12px;
+  padding: 5px;
   background: var(--backgroundColor);
   border-radius: 10px 0 0 10px;
 }
@@ -20,9 +20,22 @@
   background: var(--backgroundHighlightColor1);
   border-left: 3px solid var(--VTTblue);
   border-radius: 4px 4px 4px 0;
-  padding: 5px 60px 5px 8px; /* room on the right for the move/delete icons */
+  padding: 5px 8px;
   line-height: 1.8;
   font-size: 13px;
+}
+
+/* the summary and the move/delete icons sit next to each other so the icons
+   never cover the text, however narrow the editor gets */
+.routine-editor-operation-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.routine-editor-operation-body {
+  flex: 1;
+  min-width: 0;
 }
 
 .routine-editor-operation-parameter {
@@ -120,11 +133,40 @@ body.edit.darkMode .routine-editor-parameter-widget {
   vertical-align: middle;
 }
 
-/* the raw-JSON button in the top right of an expanded operation */
+/* deprecated and unsupported parameters stay editable but carry an info button
+   explaining the problem - in the sentence view as well as in the list */
+.routine-editor-parameter-warning {
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.routine-editor-parameter-warning.deprecated {
+  color: orange;
+}
+
+.routine-editor-parameter-warning.unsupported {
+  color: var(--textHighlightColor3);
+}
+
+.routine-editor-parameter-warning:hover {
+  color: var(--VTTblue);
+}
+
+/* a custom property the operation does not know about: shown so it can be
+   found and removed, struck through because the engine ignores it */
+.routine-editor-parameter-unsupported .routine-editor-parameter-name,
+.routine-editor-parameter-unsupported .routine-editor-operation-parameter {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* the raw-JSON button next to the summary of an expanded operation */
 .routine-editor-operation-json {
-  position: absolute;
-  top: 5px;
-  right: 62px;
+  flex-shrink: 0;
+  margin-top: 3px;
   font-size: 15px;
   color: gray;
   cursor: pointer;
@@ -167,10 +209,12 @@ body.edit.darkMode .routine-editor-parameter-missing {
 }
 
 .routine-editor-operation-buttons {
-  position: absolute;
-  top: 5px;
-  right: 4px;
+  flex-shrink: 0;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 45%;
+  margin-top: 3px;
   gap: 3px;
 }
 
@@ -193,6 +237,49 @@ body.edit.darkMode .routine-editor-parameter-missing {
 
 .routine-editor-operation-buttons .routine-editor-block-arrow:hover {
   color: var(--VTTblue);
+}
+
+/* touch needs bigger, further apart targets than a mouse pointer */
+@media (pointer: coarse) {
+  .routine-editor-operation-buttons {
+    gap: 9px;
+  }
+
+  .routine-editor-operation-buttons .material-symbols,
+  .routine-editor-operation-buttons .routine-editor-block-arrow {
+    font-size: 19px;
+  }
+}
+
+/* drag-and-drop reordering: a grip to grab, Ctrl-click (long press on touch) to
+   select several cards; touch-action keeps a drag from scrolling the sidebar */
+.routine-editor-operation-buttons .routine-editor-drag-handle {
+  cursor: grab;
+  touch-action: none;
+}
+
+.routine-editor-operation-selected {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -1px;
+}
+
+.routine-editor-operation-dragging {
+  opacity: 0.4;
+}
+
+/* a blue line at the edge of the card the dragged operations would land next to */
+.routine-editor-drop-before {
+  box-shadow: 0 -3px 0 -1px var(--VTTblue);
+}
+
+.routine-editor-drop-after {
+  box-shadow: 0 3px 0 -1px var(--VTTblue);
+}
+
+/* dropping into a block that has no operation card to aim at yet */
+.routine-editor-drop-into {
+  outline: 2px dashed var(--VTTblue);
+  outline-offset: -2px;
 }
 
 .routine-editor-empty,

@@ -13,6 +13,21 @@
 // Parameter types decide which popup opens: number, enum (with values),
 // string, json, widgets (pick widgets in the room), collection (pick widgets
 // or a collection name).
+//
+// widgetType presets the picker's type filter for parameters that almost always
+// name a widget of one type (SHUFFLE holder is a holder, TIMER timer a timer).
+// It is only the initial value of the filter dropdown - the type can be changed
+// to any other one (or to "any type") in the picker.
+//
+// deprecated holds the explanation for a parameter the engine still supports but
+// that should not be used in new games: its chip gets an orange "!" info button
+// in both the sentence and the list view.
+//
+// ignored names the parameters the engine skips because of how another one is
+// set. They get a red "!" in the list view and are kept out of the summary: a
+// template should not word them into the sentence in the mode that ignores them
+// (that is what the template functions are for), and they are never appended as
+// an extra chip either.
 const routineOperationMetadata = {
   AUDIO: {
     template: '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
@@ -39,15 +54,25 @@ const routineOperationMetadata = {
     definesCollection: _=>[ 'result' ]
   },
   CANVAS: {
-    template: '{func}: {mode} on {collection}[ using value {value}][ and color {color}]',
+    template: v=>`{func}: {mode} on ${v('canvas') != null ? '{canvas}' : '{collection}'}[ using value {value}][ and color {color}]`,
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
-      collection: { type: 'collection', default: 'DEFAULT' },
+      collection: { type: 'collection', default: 'DEFAULT', widgetType: 'canvas' },
+      canvas: { type: 'widgets', default: null, widgetType: 'canvas', deprecated: `
+        <pre>
+        canvas is deprecated - please use collection instead.
+
+        It still works so old games keep running, but it silently replaces whatever collection says.
+        As collection also accepts a list of widget ids, everything canvas can do can be expressed
+        with collection - and only collection works with the collections earlier operations define.
+        </pre>
+      ` },
       value: { type: 'number', default: 1 },
       color: { type: 'color', default: '#1F5CA6' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 }
-    }
+    },
+    ignored: v=>v('canvas') != null ? { collection: 'ignored because the deprecated canvas parameter replaces it' } : {}
   },
   CLICK: {
     template: '{func} widgets in {collection}[ {count} time(s)][, mode {mode}]',
@@ -74,7 +99,7 @@ const routineOperationMetadata = {
     template: '{func} widgets[ owned by {owner}] in {holder,collection} and store as {variable}',
     parameters: {
       owner: { type: 'string', default: null, display: { 'null': 'anyone' } },
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       variable: { type: 'string', default: 'COUNT' }
     },
@@ -93,10 +118,16 @@ const routineOperationMetadata = {
     }
   },
   FLIP: {
-    template: v=>v('faceCycle') == 'random' ? '{func} {count} widgets from {holder,collection} a {faceCycle} face' : '{func} {count} widgets from {holder,collection}; cycle {faceCycle} by {face}',
+    template: v=>{
+      if(v('face') != null)
+        return '{func} {count} widgets from {holder,collection} to face {face}';
+      if(v('faceCycle') == 'random')
+        return '{func} {count} widgets from {holder,collection} a {faceCycle} face';
+      return '{func} {count} widgets from {holder,collection}; cycle {faceCycle}';
+    },
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
-      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'next' } },
       faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
@@ -145,7 +176,7 @@ const routineOperationMetadata = {
   LABEL: {
     template: v=>v('label') != null ? '{func}: {mode} {value} to {label}' : '{func}: {mode} {value} to labels in {collection}',
     parameters: {
-      label: { type: 'widgets', default: null },
+      label: { type: 'widgets', default: null, widgetType: 'label' },
       collection: { type: 'collection', default: 'DEFAULT' },
       value: { type: 'string', default: 0 },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'append' ], default: 'set' }
@@ -156,9 +187,9 @@ const routineOperationMetadata = {
     parameters: {
       fillTo: { type: 'number', default: null },
       count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ] },
-      from: { type: 'widgets', default: null, display: { 'null': '?' } },
+      from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
-      to: { type: 'widgets', default: null, display: { 'null': '?' } },
+      to: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } }
     },
     ignored: v=>v('fillTo') != null ? { count: 'ignored because "fill up to" is set' } : {}
@@ -167,7 +198,7 @@ const routineOperationMetadata = {
     template: '{func} {count} widgets from {from} to ({x}, {y})[; flip to face {face}]',
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
-      from: { type: 'widgets', default: null, display: { 'null': '?' } },
+      from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } },
@@ -178,7 +209,7 @@ const routineOperationMetadata = {
   RECALL: {
     template: '{func} cards that belong to {holder}[; include cards in hands {owned}][, only cards in holders {inHolder}][, excluding {excludeCollection}]',
     parameters: {
-      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       owned: { type: 'enum', values: [ true, false ], default: true },
       inHolder: { type: 'enum', values: [ true, false ], default: true },
       excludeCollection: { type: 'collection', default: null },
@@ -195,7 +226,7 @@ const routineOperationMetadata = {
     template: v=>v('mode') == 'set' ? '{func} {count} widgets in {holder,collection}; {mode} to {angle} degrees' : '{func} {count} widgets in {holder,collection}; {mode} {angle} degrees',
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       angle: { type: 'number', default: 90, special: [ 45, 60, 90, 135, 180 ] },
       mode: { type: 'enum', values: [ 'set', 'add' ], default: 'add' }
@@ -205,7 +236,7 @@ const routineOperationMetadata = {
     template: '{func}: get {property} in {seats}[; for round {round}][; use as {mode}][ with multiplier {value}]',
     parameters: {
       property: { type: 'string', default: 'score' },
-      seats: { type: 'widgets', default: null, display: { 'null': 'every seat' } },
+      seats: { type: 'widgets', default: null, display: { 'null': 'every seat' }, widgetType: 'seat' },
       round: { type: 'number', default: null, special: [ null ], display: { 'null': 'new round' } },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec' ], default: 'set' },
       value: { type: 'number', default: null, special: [ null ] }
@@ -247,7 +278,7 @@ const routineOperationMetadata = {
       return '{func} {holder,collection}'; // true random
     },
     parameters: {
-      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random' },
       modeValue: { type: 'number', default: 1 }
@@ -256,7 +287,7 @@ const routineOperationMetadata = {
   SORT: {
     template: '{func} {holder,collection} by {key}[; reverse {reverse}]',
     parameters: {
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       key: { type: 'json', default: 'value' },
       reverse: { type: 'enum', values: [ true, false ], default: false },
@@ -268,7 +299,7 @@ const routineOperationMetadata = {
   SWAPHANDS: {
     template: '{func} hands among players in {source}[, interval {interval}][, direction {direction}]',
     parameters: {
-      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' } },
+      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' }, widgetType: 'seat' },
       interval: { type: 'number', default: 1 },
       direction: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
     }
@@ -284,8 +315,8 @@ const routineOperationMetadata = {
       return `{func}: {mode} ${target}`; // pause/start/toggle/reset ignore the value
     },
     parameters: {
-      timer: { type: 'widgets', default: null },
-      collection: { type: 'collection', default: 'DEFAULT' },
+      timer: { type: 'widgets', default: null, widgetType: 'timer' },
+      collection: { type: 'collection', default: 'DEFAULT', widgetType: 'timer' },
       mode: { type: 'enum', values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ], default: 'toggle' },
       value: { type: 'number', default: 0, special: [ 'start', 'end' ], textHint: 'name of a timer property to read the time from' },
       seconds: { type: 'number', default: 0 }
@@ -309,9 +340,9 @@ const routineOperationMetadata = {
       return '{func} {turnCycle} by {turn}'; // forward / backward
     },
     parameters: {
-      turn: { type: 'number', default: 1, special: [ 'first', 'last' ], textHint: 'id of a seat (used with turnCycle seat)' },
+      turn: { type: 'number', default: 1, special: [ 'first', 'last' ], textHint: 'id of a seat (used with turnCycle seat)', widgetType: 'seat' },
       turnCycle: { type: 'enum', values: [ 'forward', 'backward', 'random', 'position', 'seat' ], default: 'forward' },
-      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' } },
+      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' }, widgetType: 'seat' },
       collection: { type: 'collection', default: 'TURN' }
     },
     definesCollection: 'collection'
@@ -359,6 +390,95 @@ function operationUIState(operation) {
   return routineEditorUIState.get(operation);
 }
 
+// The drag currently in progress, as { editor, indices }. It is module level so
+// a drop can move operations between routine levels: into a nested IF/FOREACH
+// block, back out into the parent routine or into a sibling block.
+let activeRoutineDrag = null;
+
+// every routine editor registers its container here so a point on the screen
+// can be resolved to the routine level that owns it
+const routineEditorsByElement = new WeakMap();
+
+function routineEditorAtPoint(x, y) {
+  let element = document.elementFromPoint(x, y);
+  while(element) {
+    if(routineEditorsByElement.has(element))
+      return routineEditorsByElement.get(element);
+    element = element.parentElement;
+  }
+  return null;
+}
+
+function routineDropTargetAtPoint(x, y) {
+  const editor = routineEditorAtPoint(x, y);
+  return editor && editor.acceptsActiveDrag() ? editor.dropTargetAtPoint(x, y) : null;
+}
+
+// highlights where the dragged operations would land: a line at the edge of the
+// hovered card, or the whole block when it has no cards to aim at
+function showRoutineDropIndicator(target) {
+  const shown = activeRoutineDrag && activeRoutineDrag.indicator;
+  if(shown && target && shown.card === target.card && shown.editor === target.editor && shown.after === target.after)
+    return;
+  clearRoutineDropIndicator();
+  if(!target || !activeRoutineDrag)
+    return;
+  if(target.card)
+    target.card.classList.add(target.after ? 'routine-editor-drop-after' : 'routine-editor-drop-before');
+  else
+    target.editor.domElement.classList.add('routine-editor-drop-into');
+  activeRoutineDrag.indicator = target;
+}
+
+function clearRoutineDropIndicator() {
+  const shown = activeRoutineDrag && activeRoutineDrag.indicator;
+  if(!shown)
+    return;
+  if(shown.card)
+    shown.card.classList.remove('routine-editor-drop-before', 'routine-editor-drop-after');
+  else
+    shown.editor.domElement.classList.remove('routine-editor-drop-into');
+  activeRoutineDrag.indicator = null;
+}
+
+// the drop listeners live on the document, so a drag is resolved once no matter
+// how many nested routine editors the event would bubble through
+function routineDragOver(e) {
+  const target = routineDropTargetAtPoint(e.clientX, e.clientY);
+  showRoutineDropIndicator(target);
+  if(!target)
+    return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+}
+
+function routineDrop(e) {
+  const target = routineDropTargetAtPoint(e.clientX, e.clientY);
+  clearRoutineDropIndicator();
+  if(target) {
+    e.preventDefault();
+    target.editor.performDrag(target.index, target.after);
+  }
+  endRoutineDrag();
+}
+
+function beginRoutineDrag(editor, indices, cards) {
+  activeRoutineDrag = { editor, indices, cards, indicator: null };
+  for(const card of cards)
+    card.classList.add('routine-editor-operation-dragging');
+  document.addEventListener('dragover', routineDragOver);
+  document.addEventListener('drop', routineDrop);
+}
+
+function endRoutineDrag() {
+  clearRoutineDropIndicator();
+  for(const card of (activeRoutineDrag && activeRoutineDrag.cards) || [])
+    card.classList.remove('routine-editor-operation-dragging');
+  document.removeEventListener('dragover', routineDragOver);
+  document.removeEventListener('drop', routineDrop);
+  activeRoutineDrag = null;
+}
+
 class RoutineEditor {
   constructor(widget, routine, variables=[], collections=[], options={}) {
     this.domElement = document.createElement('div');
@@ -369,7 +489,21 @@ class RoutineEditor {
     this.emptyHint = options.emptyHint || 'No operations yet.';
     // set for nested routines: hoists an operation out of this block into the parent
     this.onHoist = options.onHoist || null;
+    // set for nested routines: writes this level's array back into its operation.
+    // An empty block is not part of the operation JSON (see renderSubroutine), so
+    // operations dropped into one would land in an array nothing else can see.
+    this.attachRoutine = options.attachRoutine || null;
+    // the routine editor one level up, so a cross-level drag can re-render (and
+    // save) from the top instead of from a level that no longer owns the operation
+    this.parentEditor = options.parentEditor || null;
     this.changeListeners = [];
+    // indices (into this level's routine) of the operations selected for a
+    // multi-drag; reset whenever the routine changes structurally (see setRoutine)
+    this.selectedIndices = new Set();
+    routineEditorsByElement.set(this.domElement, this);
+    // drag-and-drop reordering lives on the stable container so it survives the
+    // per-operation DOM swaps the sentence/list view toggle does
+    this.setupDragAndDrop();
     // the caller clones at the widget-state boundary; nested editors share references
     this.setRoutine(routine);
   }
@@ -392,6 +526,15 @@ class RoutineEditor {
     this.changeListeners.push(listener);
   }
 
+  // the outermost routine editor: the only level that can safely re-render after
+  // operations moved between two routine levels
+  rootEditor() {
+    let editor = this;
+    while(editor.parentEditor)
+      editor = editor.parentEditor;
+    return editor;
+  }
+
   // called by nested editors and chips after they mutated the routine in place
   routineChanged() {
     this.notifyChangeListeners();
@@ -401,6 +544,8 @@ class RoutineEditor {
   setRoutine(routine) {
     this.routine = routine;
     this.operations = [];
+    // a structural change invalidates the transient Ctrl-selection (index based)
+    this.selectedIndices = new Set();
     let variables = [ ...this.variables ];
     let collections = [ ...this.collections ];
     for(const [ index, operation ] of this.routine.entries()) {
@@ -418,6 +563,7 @@ class RoutineEditor {
         this.routine.splice((at < 0 ? this.routine.length-1 : at) + 1, 0, op);
         this.routineChanged();
       };
+      editor.routineEditor = this;
 
       variables = [ ...new Set([ ...variables, ...editor.getDefinedVariables() ]) ];
       collections = [ ...new Set([ ...collections, ...editor.getDefinedCollections() ]) ];
@@ -435,9 +581,23 @@ class RoutineEditor {
     this.domElement.innerHTML = '';
     for(const [ index, operation ] of this.operations.entries()) {
       const operationDOM = operation.render();
+      if(this.selectedIndices.has(index))
+        operationDOM.classList.add('routine-editor-operation-selected');
 
       const buttonsDOM = document.createElement('span');
       buttonsDOM.className = 'routine-editor-operation-buttons';
+
+      // a grip that starts a drag; Ctrl-clicking (long pressing on touch) cards
+      // selects several to move at once
+      const dragHandle = document.createElement('span');
+      dragHandle.className = 'material-symbols routine-editor-drag-handle';
+      dragHandle.textContent = 'drag_indicator';
+      dragHandle.title = 'Drag into another position or into an IF/FOREACH block (Ctrl+click or long press operations to move several at once)';
+      dragHandle.draggable = true;
+      dragHandle.addEventListener('dragstart', e=>this.onOperationDragStart(e, dragHandle));
+      dragHandle.addEventListener('dragend', _=>endRoutineDrag());
+      dragHandle.addEventListener('pointerdown', e=>this.onDragHandlePointerDown(e, dragHandle));
+      buttonsDOM.append(dragHandle);
       const operationButton = (icon, title, onClick, glyphClass='material-symbols')=>{
         const buttonDOM = document.createElement('span');
         buttonDOM.className = glyphClass;
@@ -488,7 +648,7 @@ class RoutineEditor {
         this.routine.splice(index, 1);
         this.routineChanged();
       });
-      operationDOM.append(buttonsDOM);
+      ($('.routine-editor-operation-header', operationDOM) || operationDOM).append(buttonsDOM);
 
       this.domElement.append(operationDOM);
     }
@@ -514,6 +674,204 @@ class RoutineEditor {
 
     return this.domElement;
   }
+
+  // the operation cards that belong to THIS routine level (nested editors keep
+  // their own cards in their own container), in routine order
+  directChildCards() {
+    return [ ...this.domElement.children ].filter(c=>c.classList && c.classList.contains('routine-editor-operation'));
+  }
+
+  // the direct-child operation card the event happened in, or null
+  cardFromEvent(e) {
+    let el = e.target;
+    while(el && el.parentElement !== this.domElement)
+      el = el.parentElement;
+    return el && el.classList && el.classList.contains('routine-editor-operation') ? el : null;
+  }
+
+  // toggles a card of this level in and out of the multi-selection
+  toggleSelection(card) {
+    const index = this.directChildCards().indexOf(card);
+    if(index < 0)
+      return;
+    if(this.selectedIndices.has(index))
+      this.selectedIndices.delete(index);
+    else
+      this.selectedIndices.add(index);
+    card.classList.toggle('routine-editor-operation-selected', this.selectedIndices.has(index));
+  }
+
+  // the card of THIS level the event happened in, or null when a nested level
+  // owns it (events from nested cards bubble up here too)
+  ownCardFromEvent(e) {
+    const card = this.cardFromEvent(e);
+    return card && e.target.closest('.routine-editor-operation') === card ? card : null;
+  }
+
+  setupDragAndDrop() {
+    // Ctrl/Cmd-click a card to add it to the multi-selection (chips and buttons
+    // stopPropagation their own clicks, so this only fires on the card body)
+    this.domElement.addEventListener('click', e=>{
+      if(this.suppressClick) {
+        // the click that ends a long press must not also open a parameter popup
+        this.suppressClick = false;
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      if(!(e.ctrlKey || e.metaKey))
+        return;
+      const card = this.ownCardFromEvent(e);
+      if(!card)
+        return;
+      e.preventDefault();
+      e.stopPropagation(); // a Ctrl+click on a chip selects instead of editing it
+      this.toggleSelection(card);
+    }, true);
+
+    // touch has no Ctrl key, so a long press on a card toggles the selection
+    this.domElement.addEventListener('pointerdown', e=>{
+      if(e.pointerType == 'mouse' || e.target.closest('.routine-editor-drag-handle'))
+        return;
+      const card = this.ownCardFromEvent(e);
+      if(!card)
+        return;
+      const startX = e.clientX, startY = e.clientY;
+      const timer = setTimeout(_=>{
+        cancel();
+        this.suppressClick = true;
+        this.toggleSelection(card);
+      }, 500);
+      const move = ev=>{
+        if(Math.abs(ev.clientX-startX) > 10 || Math.abs(ev.clientY-startY) > 10)
+          cancel();
+      };
+      const cancel = _=>{
+        clearTimeout(timer);
+        document.removeEventListener('pointermove', move);
+        document.removeEventListener('pointerup', cancel);
+        document.removeEventListener('pointercancel', cancel);
+      };
+      document.addEventListener('pointermove', move);
+      document.addEventListener('pointerup', cancel);
+      document.addEventListener('pointercancel', cancel);
+    });
+  }
+
+  onOperationDragStart(e, handle) {
+    if(!this.beginDrag(handle))
+      return;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', 'routine-operation'); // Firefox needs data to start a drag
+    try { e.dataTransfer.setDragImage(handle.closest('.routine-editor-operation'), 12, 12); } catch(err) {}
+  }
+
+  // the browser does not turn a touch into a native drag, so follow the pointer
+  // ourselves and drop where it is released
+  onDragHandlePointerDown(e, handle) {
+    if(e.pointerType == 'mouse' || !this.beginDrag(handle))
+      return;
+    e.preventDefault();
+    try { handle.setPointerCapture(e.pointerId); } catch(err) {}
+    const move = ev=>{
+      ev.preventDefault();
+      showRoutineDropIndicator(routineDropTargetAtPoint(ev.clientX, ev.clientY));
+    };
+    const up = ev=>{
+      handle.removeEventListener('pointermove', move);
+      handle.removeEventListener('pointerup', up);
+      handle.removeEventListener('pointercancel', up);
+      const target = ev.type == 'pointerup' ? routineDropTargetAtPoint(ev.clientX, ev.clientY) : null;
+      clearRoutineDropIndicator();
+      if(target)
+        target.editor.performDrag(target.index, target.after);
+      endRoutineDrag();
+    };
+    handle.addEventListener('pointermove', move);
+    handle.addEventListener('pointerup', up);
+    handle.addEventListener('pointercancel', up);
+  }
+
+  // start dragging the card the handle belongs to; a selected card takes the
+  // whole selection along, an unselected one moves alone
+  beginDrag(handle) {
+    const cards = this.directChildCards();
+    const index = cards.indexOf(handle.closest('.routine-editor-operation'));
+    if(index < 0)
+      return false;
+    const indices = (this.selectedIndices.has(index) ? [ ...this.selectedIndices ] : [ index ]).sort((a, b)=>a-b);
+    beginRoutineDrag(this, indices, indices.map(i=>cards[i]).filter(Boolean));
+    return true;
+  }
+
+  // a block nested inside one of the dragged operations cannot receive them:
+  // that would detach the routine from the widget
+  acceptsActiveDrag() {
+    if(!activeRoutineDrag)
+      return false;
+    const containsThisRoutine = operation=>{
+      if(!operation || typeof operation != 'object')
+        return false;
+      for(const key of [ 'thenRoutine', 'elseRoutine', 'loopRoutine' ])
+        if(Array.isArray(operation[key]) && (operation[key] === this.routine || operation[key].some(containsThisRoutine)))
+          return true;
+      return false;
+    };
+    return !activeRoutineDrag.indices.some(i=>containsThisRoutine(activeRoutineDrag.editor.routine[i]));
+  }
+
+  // where a drop at this point would land in THIS routine: the hovered card and
+  // whether it goes after it; empty space below the cards appends at the end
+  dropTargetAtPoint(x, y) {
+    const cards = this.directChildCards();
+    let element = document.elementFromPoint(x, y);
+    while(element && element.parentElement !== this.domElement)
+      element = element.parentElement;
+    const card = element && element.classList && element.classList.contains('routine-editor-operation') ? element : null;
+    if(!card)
+      return { editor: this, card: cards[cards.length-1] || null, index: cards.length-1, after: true };
+    const rect = card.getBoundingClientRect();
+    return { editor: this, card, index: cards.indexOf(card), after: y > rect.top + rect.height/2 };
+  }
+
+  // move the dragged operations to before/after targetIndex of this routine. They
+  // are addressed by index so that duplicate primitive operations (comments, var
+  // statements) stay put, and they may come from another routine level.
+  performDrag(targetIndex, after, drag = activeRoutineDrag) {
+    if(!drag || !drag.indices.length)
+      return;
+    const source = drag.editor;
+    if(source === this) {
+      const moveSet = new Set(drag.indices);
+      if(moveSet.has(targetIndex) || targetIndex < 0)
+        return; // dropped onto one of the operations being moved: nothing to do
+      const moving = drag.indices.map(i=>this.routine[i]);
+      const result = [];
+      for(let i = 0; i < this.routine.length; i++) {
+        if(moveSet.has(i))
+          continue;
+        if(i === targetIndex && !after)
+          result.push(...moving);
+        result.push(this.routine[i]);
+        if(i === targetIndex && after)
+          result.push(...moving);
+      }
+      // keep the array reference: nested editors and change listeners hold onto it
+      this.routine.length = 0;
+      this.routine.push(...result);
+      this.routineChanged();
+      return;
+    }
+    const moving = drag.indices.map(i=>source.routine[i]);
+    for(const i of [ ...drag.indices ].sort((a, b)=>b-a))
+      source.routine.splice(i, 1);
+    this.routine.splice(targetIndex < 0 ? this.routine.length : targetIndex + (after ? 1 : 0), 0, ...moving);
+    if(this.attachRoutine)
+      this.attachRoutine();
+    source.selectedIndices = new Set();
+    // two levels changed, so only the outermost editor can re-render consistently
+    this.rootEditor().routineChanged();
+  }
 }
 
 class RoutineOperationEditor {
@@ -521,6 +879,7 @@ class RoutineOperationEditor {
     this.func = func;
     this.metadata = routineOperationMetadata[func] || { template: '{func}', parameters: {} };
     this.changeListeners = [];
+    this.subroutineEditors = {};
   }
 
   classifyParameter(parameterName, value) {
@@ -542,15 +901,23 @@ class RoutineOperationEditor {
 
   createPopup(parameterNames) {
     const spec = this.parameterSpec(parameterNames[parameterNames.length-1]);
+    // a chip can stand for alternative parameters ({holder,collection}), so the
+    // type preset of any of them applies to the picker the chip opens
+    const typedSpec = parameterNames.map(name=>this.parameterSpec(name)).find(s=>s && s.widgetType);
+    const pickerOptions = { widgetType: typedSpec && typedSpec.widgetType };
     if(parameterNames[0] == 'func')
       return new RoutineOperationPopup();
+    // a custom property has no declared type, so edit it as raw JSON - that also
+    // keeps the "use default" button, which is the way to remove it again
+    if(!spec && this.unsupportedProperties().indexOf(parameterNames[0]) != -1)
+      return new RoutineJSONPopup();
     if(parameterNames.length > 1 && spec && spec.type == 'collection')
-      return new RoutineHoldersOrCollectionSourcePopup();
+      return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
     switch(spec && spec.type) {
-      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, textHint: spec.textHint });
+      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values });
-      case 'widgets':    return new RoutineWidgetIDPopup();
-      case 'collection': return new RoutineHoldersOrCollectionSourcePopup();
+      case 'widgets':    return new RoutineWidgetIDPopup(pickerOptions);
+      case 'collection': return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
       case 'json':       return new RoutineJSONPopup();
       case 'color':      return new RoutineColorPopup();
       case 'icon':       return new RoutineIconPopup();
@@ -635,12 +1002,16 @@ class RoutineOperationEditor {
   }
 
   // parameters the handwritten template does not mention still get a chip in an
-  // optional segment so every option the operation supports stays editable
+  // optional segment so every option the operation supports stays editable -
+  // except the ones the engine currently ignores, because appending them to the
+  // summary would suggest they have an effect (the list view still shows them,
+  // with the red "!" that explains why they are ignored)
   withExtraParameters(template) {
     const referenced = (template.match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m=>m.slice(1, -1).split(','));
+    const ignored = this.ignoredParameters();
     let result = template;
     for(const name in this.metadata.parameters)
-      if(referenced.indexOf(name) == -1)
+      if(referenced.indexOf(name) == -1 && !Object.prototype.hasOwnProperty.call(ignored, name))
         result += `[, ${name} {${name}}]`;
     return result;
   }
@@ -678,15 +1049,22 @@ class RoutineOperationEditor {
     if(uiState.listView)
       dom.classList.add('list-view');
 
+    // the header holds the summary and, appended by the routine editor, the
+    // move/delete buttons: laid out side by side they can never overlap
+    const header = div(dom, 'routine-editor-operation-header');
+    const body = div(header, 'routine-editor-operation-body');
+
     if(uiState.listView)
-      this.renderListView(dom);
+      this.renderListView(body);
     else
-      this.renderSentenceView(dom);
+      this.renderSentenceView(body);
+
+    this.renderParameterWarnings(body);
 
     if(this.isExpandable())
-      ($('.routine-editor-parameter-row', dom) || dom).prepend(this.renderViewToggle());
+      ($('.routine-editor-parameter-row', body) || body).prepend(this.renderViewToggle());
 
-    // in the expanded view, a top-right button shows the operation as raw JSON
+    // in the expanded view, a button next to the summary shows the raw JSON
     if(uiState.listView && this.operation && typeof this.operation == 'object') {
       const jsonButton = document.createElement('span');
       jsonButton.className = 'material-symbols routine-editor-operation-json';
@@ -701,7 +1079,7 @@ class RoutineOperationEditor {
         if(values !== undefined)
           this.onNewValue(values);
       });
-      dom.append(jsonButton);
+      header.append(jsonButton);
     }
 
     for(const span of $a('span[data-parameter]', dom)) {
@@ -754,6 +1132,10 @@ class RoutineOperationEditor {
       const isIgnored = Object.prototype.hasOwnProperty.call(ignored, name);
       html += `<div class="routine-editor-parameter-row${isIgnored ? ' routine-editor-parameter-ignored' : ''}"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
     }
+    // custom properties the operation does not know about are listed last: the
+    // engine ignores them, but hiding them makes a typo impossible to spot
+    for(const name of this.unsupportedProperties())
+      html += `<div class="routine-editor-parameter-row routine-editor-parameter-unsupported"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
     dom.innerHTML = html;
     // a red "!" at the end of every ignored line explains why it has no effect
     for(const row of $a('.routine-editor-parameter-row.routine-editor-parameter-ignored', dom)) {
@@ -764,6 +1146,50 @@ class RoutineOperationEditor {
       warning.title = ignored[name];
       row.append(warning);
     }
+  }
+
+  // a clickable "!" behind every chip whose parameter needs a word of warning:
+  // orange for a deprecated one (in both views, because a deprecated parameter
+  // that is set must not be hidden behind the sentence/list toggle) and red for
+  // a custom property the operation does not support at all
+  renderParameterWarnings(dom) {
+    for(const span of $a('span[data-parameter]', dom)) {
+      const name = span.dataset.parameter;
+      const spec = this.parameterSpec(this.resolveParameter(name));
+      if(spec && spec.deprecated)
+        span.after(this.parameterWarningButton('deprecated', 'warning', spec.deprecated));
+      else if(!spec && this.unsupportedProperties().indexOf(name) != -1)
+        span.after(this.parameterWarningButton('unsupported', 'error', `
+          <pre>
+          ${escapeHTML(this.func)} does not support the property ${escapeHTML(name)}.
+
+          The engine ignores it - it is most likely a typo or a leftover from an older
+          version of the game. Click the value and use "use default" to remove it.
+          </pre>
+        `));
+    }
+  }
+
+  parameterWarningButton(kind, icon, infoHTML) {
+    const warning = infoButton(null, infoHTML);
+    warning.classList.add('routine-editor-parameter-warning', kind);
+    $('.material-symbols', warning).textContent = icon;
+    warning.title = `${kind} - click for details`;
+    return warning;
+  }
+
+  // nested routines are rendered by the operation editor itself, so they are
+  // neither parameters nor unsupported custom properties
+  subroutineProperties() {
+    return [];
+  }
+
+  // properties of the operation JSON that its func does not declare
+  unsupportedProperties() {
+    if(!this.operation || typeof this.operation != 'object')
+      return [];
+    const known = [ 'func', ...Object.keys(this.metadata.parameters), ...this.subroutineProperties() ];
+    return Object.keys(this.operation).filter(name=>known.indexOf(name) == -1);
   }
 
   // operations with parameters can expand from the sentence to the list view
@@ -783,10 +1209,11 @@ class RoutineOperationEditor {
       const oldDom = this.domElement;
       const newDom = this.render();
       // keep the move/delete buttons the routine editor appended to the old node
-      // (direct children only - nested operations have their own button clusters)
-      const buttons = [ ...oldDom.children ].find(c=>c.classList.contains('routine-editor-operation-buttons'));
+      // (own header only - nested operations have their own button clusters)
+      const oldHeader = [ ...oldDom.children ].find(c=>c.classList.contains('routine-editor-operation-header'));
+      const buttons = oldHeader && [ ...oldHeader.children ].find(c=>c.classList.contains('routine-editor-operation-buttons'));
       if(buttons)
-        newDom.append(buttons);
+        [ ...newDom.children ].find(c=>c.classList.contains('routine-editor-operation-header')).append(buttons);
       oldDom.replaceWith(newDom);
     });
     return toggle;
@@ -797,12 +1224,18 @@ class RoutineOperationEditor {
     const routine = Array.isArray(this.operation[property]) ? this.operation[property] : [];
     // hoisting out of a nested block means removing from here and asking the
     // parent routine (via the container editor) to re-insert after the container
-    options = { ...options, onHoist: op=>this.hoistIntoParent && this.hoistIntoParent(op) };
+    options = {
+      ...options,
+      onHoist: op=>this.hoistIntoParent && this.hoistIntoParent(op),
+      parentEditor: this.routineEditor,
+      attachRoutine: _=>{ this.operation[property] = routine; }
+    };
     const routineEditor = new RoutineEditor(this.widget, routine, this.variables, this.collections, options);
     routineEditor.registerChangeListener(v=>{
       this.operation[property] = v;
       this.notifyChangeListeners(this.operation);
     });
+    this.subroutineEditors[property] = routineEditor;
     dom.append(routineEditor.render());
   }
 
@@ -845,6 +1278,10 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
     return {};
   }
 
+  subroutineProperties() {
+    return [ 'thenRoutine', 'elseRoutine' ];
+  }
+
   render() {
     super.render();
     this.renderSubroutine(this.domElement, 'thenRoutine', { emptyHint: 'Add operations to run when the condition is true' });
@@ -874,6 +1311,10 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
     if(parameterNames.length > 1)
       return new RoutineForeachSourcePopup();
     return super.createPopup(parameterNames);
+  }
+
+  subroutineProperties() {
+    return [ 'loopRoutine' ];
   }
 
   render() {
@@ -972,6 +1413,11 @@ class UnknownRoutineOperationEditor extends RoutineOperationEditor {
 
   getDisplayedValue(property) {
     return JSON.stringify(this.operation);
+  }
+
+  // the whole operation is unknown, so singling out properties makes no sense
+  unsupportedProperties() {
+    return [];
   }
 
   onNewValue(values) {
