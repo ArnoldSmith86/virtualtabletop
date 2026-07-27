@@ -1,4 +1,4 @@
-import { describeError } from '../../client/js/tracing.js';
+import { describeError, isNonFatalError } from '../../client/js/tracing.js';
 
 describe("Scenarios: Describing a client error for the error report", () => {
   describe("Given an Error object", () => {
@@ -43,6 +43,26 @@ describe("Scenarios: Describing a client error for the error report", () => {
       cyclic.self = cyclic;
       expect(describeError(cyclic, 'Unhandled promise rejection')).toBe('Unhandled promise rejection\n[object Object]');
       expect(describeError(Symbol('nope'), 'Unhandled promise rejection')).toBe('Unhandled promise rejection\nSymbol(nope)');
+    });
+  });
+});
+
+describe("Scenarios: Deciding whether an error event should crash the client", () => {
+  describe("Given a browser event that does not indicate a broken client", () => {
+    test("Then it is treated as non-fatal", () => {
+      expect(isNonFatalError('ResizeObserver loop completed with undelivered notifications.')).toBe(true);
+      expect(isNonFatalError('ResizeObserver loop limit exceeded')).toBe(true);
+      expect(isNonFatalError('Script error.')).toBe(true);
+      expect(isNonFatalError('Script error')).toBe(true);
+    });
+  });
+
+  describe("Given a real error", () => {
+    test("Then it is reported even if the message looks harmless", () => {
+      expect(isNonFatalError('Uncaught TypeError: x is not a function')).toBe(false);
+      expect(isNonFatalError('Script error.', new Error('Script error.'))).toBe(false);
+      expect(isNonFatalError('ResizeObserver loop completed', new Error('boom'))).toBe(false);
+      expect(isNonFatalError(undefined)).toBe(false);
     });
   });
 });

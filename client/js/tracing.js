@@ -37,6 +37,13 @@ export function describeError(error, fallback) {
   return fallback + (error === undefined || error === null ? '' : '\n' + stringifyValue(error));
 }
 
+// some error events don't mean that the client is broken: a ResizeObserver loop is simply retried
+// on the next frame and a cross-origin 'Script error.' usually comes from a browser extension.
+// both are reported without an Error object, which is what tells them apart from a real crash.
+export function isNonFatalError(msg, error) {
+  return !error && /^(ResizeObserver loop|Script error\.?$)/.test(`${msg}`);
+}
+
 // a rejection reason is often a plain object like { status: 500 } - String() would turn that
 // into a useless [object Object], while JSON.stringify fails on cyclic values and BigInt
 function stringifyValue(value) {
@@ -76,7 +83,18 @@ onLoad(function() {
     showOverlay('clientErrorOverlay');
   }
 
+  // the status line asks the user to copy the technical details, so make sure they are visible
+  const askForManualReport = function() {
+    $('#clientErrorStatus').style.display = '';
+    $('#clientErrorOverlay details').open = true;
+  }
+
   const reportError = function(description) {
+    // close the connection before collecting the context: if that throws, the user still ends up
+    // with a terminal overlay over a terminated session instead of a still running one
+    preventReconnect();
+    connection.close();
+
     const details = {
       error: description,
       undoProtocol,
@@ -95,8 +113,6 @@ onLoad(function() {
       playerName,
       html: document.documentElement.outerHTML
     };
-    preventReconnect();
-    connection.close();
 
     const button = $('#clientErrorOverlay button');
     // what the user typed is the most valuable part of the report - keep the textarea intact
@@ -104,7 +120,7 @@ onLoad(function() {
     const submitFailed = function(reason) {
       button.disabled = false;
       button.textContent = 'Try again';
-      $('#clientErrorStatus').style.display = '';
+      askForManualReport();
       $('#clientErrorStack').textContent = `${details.error}\n\nSubmitting the report failed:\n${reason}`;
     }
 
@@ -158,7 +174,7 @@ onLoad(function() {
       // is nothing to submit in that case, so ask for a manual report and offer a plain reload.
       $('#clientErrorQuestion').style.display = 'none';
       $('#clientErrorInput').style.display = 'none';
-      $('#clientErrorStatus').style.display = '';
+      askForManualReport();
       const button = $('#clientErrorOverlay button');
       button.textContent = 'Reload';
       button.addEventListener('click', _=>window.location.reload());
@@ -167,8 +183,13 @@ onLoad(function() {
   }
 
   window.onerror = function(msg, url, line, col, err) {
-    // browsers report cross-origin errors without a location - 'at :0:0' would just look broken
-    errorHandler(err, `${msg}` + (url ? `\n    at ${url}:${line}:${col}` : ''));
+    // tearing the session down over a non-fatal event would be worse than ignoring it, which is
+    // what happened anyway before this handler learned to survive a missing Error object
+    if(isNonFatalError(msg, err))
+      return;
+    // when the browser has no real location it passes the document URL with line and column 0 -
+    // reporting 'at <page>:0:0' would just look like a truncation bug, so leave the line out
+    errorHandler(err, `${msg}` + (url && line ? `\n    at ${url}:${line}:${col}` : ''));
   };
   window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
     errorHandler(promiseRejectionEvent.reason, 'Unhandled promise rejection');
