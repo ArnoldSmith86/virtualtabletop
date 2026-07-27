@@ -316,12 +316,26 @@ export class Line extends Widget {
       return;
     Line.connectionUpdateInProgress.add(this.id);
     try {
+      // Both ends are positioned by converting between local and global
+      // coordinates, which reads the current CSS transforms. Inside a batch
+      // (every mouse event is one) those still show the state of the previous
+      // event, so the end points would be computed in a stale frame - and since
+      // this line then moves itself, that error feeds back and grows with every
+      // event until the line leaves the surface.
+      if(this.get('connectStart') || this.get('connectEnd'))
+        flushDelta();
+
       const connectionPoint = end=>{
         const connection = this.get('connect' + end);
         if(!connection || typeof connection != 'object' || !widgets.has(connection.line))
           return null;
         const target = widgets.get(connection.line);
-        if(target == this)
+        // A target that sits inside this line - a piece dropped into one of its
+        // stops, say - moves along with it, so gluing an end point to it would
+        // chase its own tail: the end point moves the line, the line moves the
+        // target, and the line runs off the surface. Keep the end point where
+        // it is until the target leaves the line again.
+        if(target == this || target.isDescendantOf(this))
           return null;
         const position = connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1);
         const targetIsLine = target.get('type') == 'line';

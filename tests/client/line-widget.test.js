@@ -1,4 +1,4 @@
-import { widgets, addWidget, batchStart, batchEnd, widgetFilter } from '../../client/js/serverstate.js';
+import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
 import { removeWidget } from './client-util.js';
@@ -12,6 +12,7 @@ beforeAll(async () => {
   globalThis.widgetFilter = widgetFilter;
   globalThis.batchStart = batchStart;
   globalThis.batchEnd = batchEnd;
+  globalThis.flushDelta = flushDelta;
   globalThis.setDeltaCause = () => {};
   globalThis.playerName = 'jestPlayer';
   ({ Line } = await import('../../client/js/widgets/line.js'));
@@ -333,6 +334,27 @@ describe('Line widget connections', () => {
     const depEndGlobal = { x: dep.get('x') + dep.pointProperty('lineEnd').x, y: dep.get('y') + dep.pointProperty('lineEnd').y };
     const targetStartGlobal = { x: target.get('x') + target.pointProperty('lineStart').x, y: target.get('y') + target.pointProperty('lineStart').y };
     expect(depEndGlobal).toEqual(targetStartGlobal);
+  });
+
+  test('an end point ignores a target that sits inside the line itself', async () => {
+    const line = createLine({ id: 'dep', x: 100, y: 100, width: 200, height: 40, autoSpaceStops: false,
+      lineStart: { x: 0, y: 20 }, lineEnd: { x: 200, y: 20 },
+      connectStart: { line: 'piece', position: 0.5 } });
+    const stop = new Widget('stop');
+    addWidget({ id: 'stop', type: 'basic', parent: line.id, linePosition: 0, width: 40, height: 40 }, stop);
+    // a piece dropped into that stop moves along with the line, so gluing the
+    // end point to it would chase its own tail and send the line off the surface
+    const piece = new Widget('piece');
+    addWidget({ id: 'piece', type: 'basic', parent: stop.id, x: 100, y: 0, width: 40, height: 40 }, piece);
+    piece.coordGlobalFromCoordLocal = p => ({ x: line.get('x')+stop.get('x')+piece.get('x')+p.x, y: line.get('y')+stop.get('y')+piece.get('y')+p.y });
+
+    const globalStart = () => { const p = line.coordGlobalFromCoordLocal(line.pointProperty('lineStart')); return { x: Math.round(p.x), y: Math.round(p.y) }; };
+    const before = globalStart();
+    await line.applyConnections();
+
+    expect(globalStart()).toEqual(before);
+    removeWidget('piece');
+    removeWidget('stop');
   });
 
   test('mutually connected lines terminate (no infinite recursion)', async () => {
