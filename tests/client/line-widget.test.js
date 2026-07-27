@@ -517,10 +517,12 @@ describe('dragging a widget onto a line to make it a stop', () => {
   let line, token;
 
   beforeEach(() => {
+    // a line takes nothing by default, so this one opts in with the dropTarget
+    // the editor's "Drag widgets in to add stops" toggle writes
     line = createLine({ id: 'drop-line', x: 100, y: 100, width: 200, height: 40, autoSpaceStops: false,
-      lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 } });
+      lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 }, dropTarget: { type: null } });
     token = new Widget('drop-token');
-    // a plain widget has no type, which is what the default dropTarget takes
+    // a plain widget has no type, which is what that dropTarget takes
     addWidget({ id: 'drop-token', x: 130, y: 80, width: 40, height: 40 }, token);
     token.coordGlobalFromCoordLocal = coord => ({ x: token.get('x') + coord.x, y: token.get('y') + coord.y });
     // the candidate lines are collected once when the drag starts
@@ -546,7 +548,9 @@ describe('dragging a widget onto a line to make it a stop', () => {
   });
 
   test('a line whose dropTarget matches nothing never takes a dropped widget', async () => {
-    await line.set('dropTarget', []);
+    // null is not storable, so this falls back to the default: an empty list
+    await line.set('dropTarget', null);
+    expect(line.get('dropTarget')).toEqual([]);
     expect(line.stopDropTarget(token, { x: 150, y: 100 })).toBeNull();
     expect(token.lineStopDropTarget()).toBeNull();
   });

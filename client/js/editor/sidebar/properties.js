@@ -5590,8 +5590,8 @@ class PropertiesModule extends SidebarModule {
     };
 
     // the line takes widgets in like a holder does: the toggle switches its
-    // dropTarget between the default (the plain widgets stops usually are) and
-    // an empty list, which matches nothing. A more specific dropTarget can be
+    // dropTarget between the plain widgets stops usually are and the default
+    // empty list, which matches nothing. A more specific dropTarget can be
     // written in the property list below, the same way a holder's is.
     const takeDrops = addLineToggle('Drag widgets in to add stops', 'lineTakeDrops', 'Let a widget dragged onto the line become a stop of it - during play as well as in edit mode');
     this.addPropertyListener(widget, 'dropTarget', ()=>takeDrops.checked = asArray(widget.get('dropTarget')).filter(t=>t).length > 0);

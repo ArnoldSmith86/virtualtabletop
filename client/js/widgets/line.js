@@ -34,7 +34,8 @@ export class Line extends Widget {
       // A line takes widgets in like a holder: what dropTarget matches becomes
       // a stop when it is dropped onto the path - during play as well as in
       // edit mode - and comes off the list again when it is dragged away. The
-      // default takes the plain widgets stops usually are, an empty list none.
+      // default empty list matches nothing, so a line takes drops only once it
+      // is given one - { type: null } for the plain widgets stops usually are.
       dropTarget: [],
 
       // properties applied to a widget when it enters / leaves the line
