@@ -5439,44 +5439,23 @@ class PropertiesModule extends SidebarModule {
     };
     this.addPropertyListener(widget, 'lineDash', updateDashButtons);
 
-    // color and width share one row below the style buttons
+    // color and width share one row below the style buttons; the color picker
+    // (the standard one with the game's colors and the palette) opens below the
+    // row so it does not push the width input around
     const appearanceRow = div(this.moduleDOM, 'propertyInlineRow lineAppearanceRow');
-    const colorWrap = div(appearanceRow, 'genericInput lineAppearanceColor');
-    const colorLabel = document.createElement('label');
-    colorLabel.innerText = 'Line color';
-    const color = document.createElement('input');
-    color.type = 'color';
-    color.className = 'lineColorPicker';
-    color.title = 'Line color';
-    colorWrap.appendChild(colorLabel);
-    colorWrap.appendChild(color);
-    const updateLineColor = ()=>{
-      const value = String(widget.get('lineColor') || '');
-      if(/^#[0-9a-f]{6}$/i.test(value))
-        color.value = value;
-    };
-    this.addPropertyListener(widget, 'lineColor', updateLineColor);
-    color.onchange = _=>lineEdit(`changed the color of line ${widget.id}`, _=>widget.set('lineColor', color.value));
-
-    const widthWrap = div(appearanceRow, 'genericInput lineAppearanceWidth');
-    const widthLabel = document.createElement('label');
-    widthLabel.innerText = 'Line width';
-    const width = document.createElement('input');
-    width.type = 'number';
-    width.min = 0;
-    width.max = 25;
-    width.step = 'any';
-    width.className = 'lineWidthValue';
-    width.title = 'Line width in pixels';
-    this.addPropertyListener(widget, 'lineWidth', ()=>width.value = Math.max(0, Math.min(25, +widget.get('lineWidth') || 0)));
-    width.onchange = _=>{
-      const value = Math.max(0, Math.min(25, +width.value || 0));
-      width.value = value;
-      lineEdit(`changed the width of line ${widget.id}`, _=>widget.set('lineWidth', value));
-    };
-    widthWrap.appendChild(widthLabel);
-    widthWrap.appendChild(width);
-    widthWrap.appendChild(document.createTextNode(' px'));
+    const appearancePickers = div(this.moduleDOM, 'lineAppearancePickers');
+    new ColorInput(this, widget, 'Line color', {
+      property: 'lineColor',
+      pickerTarget: appearancePickers,
+      setValue: value=>lineEdit(`changed the color of line ${widget.id}`, _=>widget.set('lineColor', value))
+    }).render(appearanceRow);
+    new NumberInput(this, widget, 'Line width', {
+      property: 'lineWidth',
+      min: 0,
+      max: 25,
+      unit: 'px',
+      setValue: value=>lineEdit(`changed the width of line ${widget.id}`, _=>widget.set('lineWidth', value))
+    }).render(appearanceRow);
 
     this.addSubHeader('Stops');
 

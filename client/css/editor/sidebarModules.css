@@ -463,27 +463,11 @@
 .editorModule .lineAppearanceRow {
   gap: 4px 12px;
 }
-.editorModule .lineAppearanceRow > .genericInput {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.editorModule .lineAppearanceColor > label,
-.editorModule .lineAppearanceWidth > label {
-  display: inline-block;
-  width: auto;
+.editorModule .lineAppearanceRow > .propertyInput > label {
   white-space: nowrap;
 }
-.editorModule .lineAppearanceColor input.lineColorPicker {
-  width: 48px;
-  min-width: 48px;
-  height: 26px;
-  padding: 1px;
-  vertical-align: middle;
-}
-.editorModule .lineAppearanceWidth input.lineWidthValue {
+.editorModule .lineAppearanceRow .numberInput input[type=number] {
   width: 52px;
-  min-width: 52px;
 }
 .editorModule .lineDashPresets {
   display: grid;

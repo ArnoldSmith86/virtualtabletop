@@ -1238,24 +1238,28 @@ function populateAddWidgetOverlay() {
     return id
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineVertical'), {
-    x: 1300,
-    y: 325,
-    width: 200,
-    height: 0,
-    borderRadius: "3px",
-
-    css: { "border": "3px solid #666" }
+  // The divider lines are plain line widgets (without stops), so they can be
+  // curved, restyled and connected like any other line
+  addWidgetToAddWidgetOverlay(new Line('add-divider-horizontal'), {
+    type: 'line',
+    x: 1290,
+    y: 315,
+    width: 220,
+    height: 20,
+    lineStart: { x: 10, y: 10 },
+    lineEnd: { x: 210, y: 10 },
+    lineWidth: 4
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
-    x: 1535,
-    y: 190,
-    width: 0,
-    height: 200,
-    borderRadius: "3px",
-
-    css: { "border": "3px solid #666" }
+  addWidgetToAddWidgetOverlay(new Line('add-divider-vertical'), {
+    type: 'line',
+    x: 1525,
+    y: 180,
+    width: 20,
+    height: 220,
+    lineStart: { x: 10, y: 10 },
+    lineEnd: { x: 10, y: 210 },
+    lineWidth: 4
   });
 }
 // end of JSON generators
