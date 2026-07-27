@@ -259,6 +259,23 @@ function updateToolbarLayout() {
   updateToolbarScrolling();
 }
 
+// Applying a compaction level resizes the toolbar, which is also the element that is observed
+// for resizes. Doing that from within the ResizeObserver callback makes the browser abort the
+// delivery loop and report "ResizeObserver loop completed with undelivered notifications" as an
+// error - which the client turns into a crash overlay - so observed resizes are handled in the
+// next frame instead, outside of the delivery loop.
+let toolbarLayoutIsScheduled = false;
+
+function scheduleToolbarLayoutUpdate() {
+  if(toolbarLayoutIsScheduled)
+    return;
+  toolbarLayoutIsScheduled = true;
+  requestAnimationFrame(_=>{
+    toolbarLayoutIsScheduled = false;
+    updateToolbarLayout();
+  });
+}
+
 function toolbarContentFits(toolbar) {
   const px = value => parseFloat(value) || 0;
   const horizontal = $('body').classList.contains('horizontalToolbar');
@@ -731,7 +748,7 @@ onLoad(function() {
     positionToolbarTooltip();
   });
   // catches everything that resizes the toolbar without a setScale, especially it becoming visible again
-  new ResizeObserver(updateToolbarLayout).observe($('#toolbar'));
+  new ResizeObserver(scheduleToolbarLayoutUpdate).observe($('#toolbar'));
   document.fonts.ready.then(_=>updateToolbarLayout()); // the icon font changes the button sizes
 
   on('.toolbarButton', 'click', function(e) {
