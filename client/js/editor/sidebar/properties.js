@@ -2041,6 +2041,7 @@ class PropertiesModule extends SidebarModule {
       const oCard = this.cardTypeCards[cardType];
       oCard.domElement.innerHTML = '';
       Object.assign(oCard.state, changes);
+      oCard.invalidateGetCache(); // the direct state write above bypasses set()/applyDelta, so evict the cached properties
       oCard.createFaces(deck.get('faceTemplates'));
       for (let i = 0; i < oCard.domElement.children.length; ++i) {
           oCard.domElement.children[i].classList.toggle('active', i == oCard.get('activeFace'));

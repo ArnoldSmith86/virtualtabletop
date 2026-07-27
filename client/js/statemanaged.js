@@ -7,23 +7,32 @@ export class StateManaged {
     this.defaults = {};
     this.state = {};
     this.unalteredState = {};
+    this.getCache = {};
+    this.getCacheVersion = StateManaged.getCacheVersion;
   }
 
   addDefaults(defaults) {
     Object.assign(this.defaults, defaults);
+    this.invalidateGetCache();
   }
 
   applyDelta(delta) {
     const deltaForDOM = {};
+    // First apply every state change, then invalidate, so that defaults resolved for
+    // removed (null) keys below see the fully-updated state instead of a stale value
+    // that another key in the same delta just replaced (e.g. a card's cardType).
     for(const i in delta) {
       if(delta[i] === null) {
         delete this.unalteredState[i];
         delete this.state[i];
-        deltaForDOM[i] = this.get(i);
       } else {
-        deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
+        this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
+    this.invalidateGetCache();
+
+    for(const i in delta)
+      deltaForDOM[i] = delta[i] === null ? this.get(i) : delta[i];
 
     this.applyDeltaToDOM(deltaForDOM);
 
@@ -54,15 +63,23 @@ export class StateManaged {
   }
 
   get(property) {
+    if(this.getCacheVersion != StateManaged.getCacheVersion) {
+      this.getCache = {};
+      this.getCacheVersion = StateManaged.getCacheVersion;
+    }
+    const cached = this.getCache[property];
+    if(cached !== undefined)
+      return cached;
+
     const value = this.state[property];
     if(value !== undefined) {
       if(property == 'x' || property == 'y' || property == 'z' || property == 'layer' || property == 'width' || property == 'height')
-        return +value;
+        return this.getCache[property] = +value;
       else
-        return value;
+        return this.getCache[property] = value;
     } else {
       const defaultValue = this.getDefaultValue(property);
-      return defaultValue !== undefined ? defaultValue : null;
+      return this.getCache[property] = defaultValue !== undefined ? defaultValue : null;
     }
   }
 
@@ -99,6 +116,13 @@ export class StateManaged {
       return properties.indexOf(key) != -1;
   }
 
+  // Any widget can indirectly affect another widget's defaults, so every state change starts a new cache generation.
+  invalidateGetCache() {
+    ++StateManaged.getCacheVersion;
+    this.getCache = {};
+    this.getCacheVersion = StateManaged.getCacheVersion;
+  }
+
   inheritFromUnregister() {
     for(const wID in StateManaged.inheritFromMapping)
       StateManaged.inheritFromMapping[wID] = StateManaged.inheritFromMapping[wID].filter(i=>i!=this);
@@ -125,6 +149,7 @@ export class StateManaged {
       delete this.state[property];
     else
       this.state[property] = JSON.parse(JSONvalue);
+    this.invalidateGetCache();
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 
@@ -152,3 +177,4 @@ export class StateManaged {
 
 StateManaged.globalUpdateListeners = {};
 StateManaged.inheritFromMapping = {};
+StateManaged.getCacheVersion = 0;

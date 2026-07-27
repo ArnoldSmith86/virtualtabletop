@@ -323,6 +323,7 @@ export class Widget extends StateManaged {
       else
         this.inheritedProperties[property] = true;
     }
+    this.getCache = {};
     this.applyDeltaToDOM(delta);
   }
 
@@ -364,6 +365,7 @@ export class Widget extends StateManaged {
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domElement);
+    this.invalidateGetCache(); // widgets inheriting from this one now fall back to their defaults
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
   }
@@ -2299,6 +2301,7 @@ export class Widget extends StateManaged {
   }
 
   get(property) {
+    // the results of computed read-only properties are not cached because they depend on other widgets (the parent chain)
     if(!readOnlyProperties.has(property)) {
       return super.get(property);
     } else {

@@ -371,6 +371,7 @@ export function formField(field, dom, id) {
         const widgetClone = widget.renderReadonlyCopy(propertyOverride, $('body'), field.visibleChildWidgets);
         const widgetDOM = widgetClone.domElement;
         widgetClone.state.scale = scale * (field.scale || 1);
+        widgetClone.invalidateGetCache(); // the direct state write above bypasses set()/applyDelta, so evict the cached scale
         widgetClone.domElement.style.cssText = mapAssetURLs(widgetClone.css());
         widgetDOM.dataset.source = widgetID;
         widgetDOM.dataset.face = face;
