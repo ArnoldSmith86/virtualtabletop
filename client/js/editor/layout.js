@@ -69,6 +69,7 @@ function initializeEditor(currentMetaData) {
     new UndoModule(),
     new JsonModule(),
     new WidgetsModule(),
+    new AiAssistantModule(),
     new DebugModule(),
     new AssetsModule(),
     new ToolboxModule(),
