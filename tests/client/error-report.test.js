@@ -32,6 +32,12 @@ describe("Scenarios: Describing a client error for the error report", () => {
       expect(describeError({ status: 500 }, 'Unhandled promise rejection')).toBe('Unhandled promise rejection\n{"status":500}');
     });
 
+    test("Then a value whose properties throw when read still describes the error", () => {
+      const hostile = new Proxy({}, { get() { throw new Error('getter exploded'); } });
+      expect(describeError(hostile, 'Unhandled promise rejection')).toBe('Unhandled promise rejection\n[object that could not be converted to text]');
+      expect(describeError({ get message() { throw new Error('nope'); } }, 'Unhandled promise rejection')).toBe('Unhandled promise rejection\n[object Object]');
+    });
+
     test("Then values that cannot be serialized still describe the error", () => {
       const cyclic = { a: 1 };
       cyclic.self = cyclic;

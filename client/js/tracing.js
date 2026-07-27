@@ -29,8 +29,11 @@ function sendUserTraceEvent() {
 // script errors from other origins and problems like ResizeObserver loops without one, and
 // `throw 'oops'` or Promise.reject() hand over whatever value was used
 export function describeError(error, fallback) {
-  if(error && (error.message !== undefined || error.stack !== undefined))
-    return [ error.message, error.stack ].filter(part=>part !== undefined).map(stringifyValue).join('\n');
+  // even reading a property can throw: a rejection reason may be a proxy or have getters
+  try {
+    if(error && (error.message !== undefined || error.stack !== undefined))
+      return [ error.message, error.stack ].filter(part=>part !== undefined).map(stringifyValue).join('\n');
+  } catch(e) {}
   return fallback + (error === undefined || error === null ? '' : '\n' + stringifyValue(error));
 }
 
@@ -145,8 +148,9 @@ onLoad(function() {
     if(errorReported)
       return; // the first error is the one that broke things - later ones are usually just fallout
     errorReported = true;
-    const description = describeError(error, fallback);
+    let description = fallback;
     try {
+      description = describeError(error, fallback);
       reportError(description);
     } catch(e) {
       // collecting the context failed, e.g. because the error happened before the room was set
