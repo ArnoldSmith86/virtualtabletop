@@ -30,8 +30,25 @@ function sendUserTraceEvent() {
 // `throw 'oops'` or Promise.reject() hand over whatever value was used
 export function describeError(error, fallback) {
   if(error && (error.message !== undefined || error.stack !== undefined))
-    return String(error.message) + '\n' + String(error.stack);
-  return fallback + (error === undefined || error === null ? '' : '\n' + String(error));
+    return [ error.message, error.stack ].filter(part=>part !== undefined).map(stringifyValue).join('\n');
+  return fallback + (error === undefined || error === null ? '' : '\n' + stringifyValue(error));
+}
+
+// a rejection reason is often a plain object like { status: 500 } - String() would turn that
+// into a useless [object Object], while JSON.stringify fails on cyclic values and BigInt
+function stringifyValue(value) {
+  try {
+    if(typeof value == 'object') {
+      const json = JSON.stringify(value);
+      if(json !== undefined)
+        return json;
+    }
+  } catch(e) {}
+  try {
+    return String(value);
+  } catch(e) {
+    return `[${typeof value} that could not be converted to text]`;
+  }
 }
 
 onLoad(function() {
@@ -51,13 +68,9 @@ onLoad(function() {
 
   onMessage('tracing', _=>tracingEnabled=true);
 
-  let errorReported = false;
-  const errorHandler = function(error, fallback) {
-    if(errorReported)
-      return; // the first error is the one that broke things - later ones are usually just fallout
-    errorReported = true;
+  const reportError = function(description) {
     const details = {
-      error: describeError(error, fallback),
+      error: description,
       undoProtocol,
       delta,
       mouseStatus: Object.fromEntries(Object.entries(mouseStatus).map(([id, ms]) => [id, {...ms, moveTarget: ms.moveTarget ? ms.moveTarget.get('id') : null}])),
@@ -108,6 +121,23 @@ onLoad(function() {
       }
     });
   }
+
+  let errorReported = false;
+  const errorHandler = function(error, fallback) {
+    if(errorReported)
+      return; // the first error is the one that broke things - later ones are usually just fallout
+    errorReported = true;
+    const description = describeError(error, fallback);
+    try {
+      reportError(description);
+    } catch(e) {
+      // collecting the context failed, e.g. because the error happened before the room was set
+      // up - show the error itself anyway instead of leaving the user with a frozen page
+      $('#clientErrorStack').textContent = `${description}\n\nThe error reporter itself failed:\n${describeError(e, 'Unknown error')}`;
+      showOverlay('clientErrorOverlay');
+    }
+  }
+
   window.onerror = function(msg, url, line, col, err) {
     errorHandler(err, `${msg}\n    at ${url}:${line}:${col}`);
   };
