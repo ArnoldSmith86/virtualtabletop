@@ -795,7 +795,8 @@ const operationProps = {
     'SWAPHANDS': {
         'interval': v=>typeof v === 'number' && Number.isInteger(v),
         'direction': getEnumValidator(['forward','backward','random']),
-        'source': 'inCollection'
+        'source': 'inCollection',
+        'keepOrder': 'boolean'
     },
     'TIMER': {
         'timer': 'idArray',

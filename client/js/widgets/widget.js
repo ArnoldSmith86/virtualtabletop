@@ -2054,7 +2054,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SWAPHANDS') {
-        setDefaults(a, { interval: 1, direction: 'forward', source: 'all' });
+        setDefaults(a, { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
         if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
           problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
           a.direction = 'forward'
@@ -2072,6 +2072,8 @@ export class Widget extends StateManaged {
               [c[i], c[rand]] = [c[rand], c[i]];
             }
           }
+          // all hands are collected before anything is moved so that a hand does not
+          // pick up the widgets an earlier seat just passed to it
           let moves = [];
           for (let i = 0; i < c.length; i++) {
             let source = c[i];
@@ -2082,26 +2084,51 @@ export class Widget extends StateManaged {
               let contents = widgets.get(hand).children().reduce(
                 function (collect, w) {
                   if (!perOwner || w.get('owner') == source.get('player')) {
-                    collect.unshift(w.get('id'));
+                    collect.unshift(w);
                   }
                   return collect
                 },
                 []
               );
-              moves.push({
-                func: "MOVE",
-                collection: contents,
-                to: target.get('id'),
-              });
+              moves.push({ source, contents, to: target.get('id') });
             }
           }
-          if(jeRoutineLogging) {
-            jeLoggingRoutineOperationStart("Moves", "Moves");
+          if(moves.length) {
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationStart("Moves", "Moves");
+            for(const move of moves) {
+              // the collection is named after the seat it comes from so that the
+              // generated MOVE reads like "from 'hand of seat1' to 'seat2'" in the log.
+              // a collection of the surrounding routine that happens to use the same
+              // name is shadowed only while its MOVE runs and then put back
+              const collection = `hand of ${move.source.get('id')}`;
+              const shadowed = collections[collection];
+              // the widgets are looked up right before their own MOVE so that one which
+              // a routine of an earlier MOVE removed is left alone, exactly like when
+              // the generated MOVE still received a list of IDs. keepOrder keeps the
+              // order of the hand, the default is the creation order because that is
+              // the order widgetFilter - and with it MOVE - used all along
+              collections[collection] = a.keepOrder
+                ? move.contents.filter(w=>!w.isBeingRemoved)
+                : widgetFilter(w=>move.contents.indexOf(w) != -1);
+              try {
+                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+              } finally {
+                if(shadowed === undefined)
+                  delete collections[collection];
+                else
+                  collections[collection] = shadowed;
+              }
+            }
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
-          await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging) {
-          jeLoggingRoutineOperationEnd([], variables, collections, false);
+            const how = a.direction == 'random' ? `hands in a random seat order by ${a.interval}` : `hands ${a.direction} by ${a.interval}`;
+            jeLoggingRoutineOperationSummary(moves.length ? `${how}${a.keepOrder ? ', keeping the card order' : ''}` : 'no seat with a player has a valid hand, nothing to swap');
           }
+        } else if(jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary('less than two seats with a player, nothing to swap');
         }
       }
 
