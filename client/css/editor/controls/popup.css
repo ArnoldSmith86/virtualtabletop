@@ -21,9 +21,53 @@
   border-bottom: 2px solid var(--VTTblue);
 }
 
+/* the current value as text, next to the button that drops it again */
+.inline-popup .popup-value-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.inline-popup .popup-value-row input {
+  flex: 1 1 120px;
+  min-width: 60px;
+  width: auto;
+  margin-top: 0;
+}
+
 .inline-popup .popup-use-default {
-  display: block;
-  margin: 0 0 6px 0;
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* "Property <name> of <widget>" with the widget picker button next to it */
+.inline-popup .popup-property-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.inline-popup .popup-property-row input {
+  flex: 1 1 70px;
+  min-width: 50px;
+  width: auto;
+  margin-top: 0;
+}
+
+.inline-popup .popup-property-label {
+  flex: 0 0 auto;
+  color: gray;
+}
+
+.inline-popup .popup-property-row .propertyExpandButton {
+  flex: 0 0 auto;
+}
+
+.inline-popup input::placeholder {
+  color: gray;
 }
 
 .inline-popup .popup-close {

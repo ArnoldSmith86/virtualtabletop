@@ -734,6 +734,16 @@ describe('resetting parameters to their default', () => {
     popup.hide();
   });
 
+  test('the use-default button sits next to the value input, above the sections', () => {
+    const popup = showPopup({ func: 'AUDIO', player: 'p1' }, [ 'player' ]);
+    const row = popup.domElement.querySelector('.popup-value-row');
+    expect(row.querySelector('.popup-value-input')).not.toBeNull();
+    expect(row.querySelector('.popup-use-default')).not.toBeNull();
+    // right after the title, before the first accordion section
+    expect(row.previousElementSibling.tagName).toBe('H1');
+    popup.hide();
+  });
+
   test('unsetting condition on IF restores the operand template', () => {
     const editor = editorForOperation({ func: 'IF', condition: '${x}', thenRoutine: [ { func: 'FLIP' } ] });
     const operation = { func: 'IF', condition: '${x}', thenRoutine: [ { func: 'FLIP' } ] };
@@ -754,6 +764,191 @@ describe('resetting parameters to their default', () => {
     const setEditor = editorForOperation({ func: 'SET', value: null });
     setEditor.setOperationDetails({ state: {} }, { func: 'SET', value: null }, [], []);
     expect(String(setEditor.getDisplayedValue('value'))).toBe('null'); // explicit null is a real value, rendered as-is
+  });
+});
+
+describe('the current value as editable text', () => {
+  function showPopup(PopupClass, operation, parameterNames, widget = { state: {} }) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new PopupClass({});
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, widget, [], []);
+    popup.show();
+    return popup;
+  }
+
+  const valueInput = popup => popup.domElement.querySelector('.popup-value-input');
+
+  test('the text input starts with the value the parameter has', () => {
+    const popup = showPopup(RoutineStringPopup, { func: 'LABEL', value: 'hello' }, [ 'value' ]);
+    expect(valueInput(popup).value).toBe('hello');
+    popup.hide();
+
+    const widgetPopup = showPopup(RoutineWidgetIDPopup, { func: 'MOVE', from: [ 'h1', 'h2' ] }, [ 'from' ]);
+    expect(valueInput(widgetPopup).value).toBe('["h1","h2"]'); // non-strings as JSON
+    widgetPopup.hide();
+  });
+
+  test('a text parameter keeps what was typed, other parameters read it as JSON', () => {
+    const string = showPopup(RoutineStringPopup, { func: 'LABEL' }, [ 'value' ]);
+    let value = null;
+    string.registerChangeListener(v => value = v);
+    valueInput(string).value = '42';
+    valueInput(string).dispatchEvent(new Event('change'));
+    expect(value).toEqual({ value: '42' });
+    string.hide();
+
+    const widgetPopup = showPopup(RoutineWidgetIDPopup, { func: 'MOVE' }, [ 'to' ]);
+    widgetPopup.registerChangeListener(v => value = v);
+    valueInput(widgetPopup).value = '[ "h1" ]';
+    valueInput(widgetPopup).dispatchEvent(new Event('change'));
+    expect(value).toEqual({ to: [ 'h1' ] });
+    // a bare word is a widget id, not broken JSON
+    valueInput(widgetPopup).value = '${PROPERTY parent}';
+    valueInput(widgetPopup).dispatchEvent(new Event('change'));
+    expect(value).toEqual({ to: '${PROPERTY parent}' });
+    widgetPopup.hide();
+  });
+
+  test('a var statement shows the part its chip stands for', () => {
+    const popup = showPopup(RoutineStringPopup, 'var score = 5 + 3', [ 'expression' ]);
+    expect(valueInput(popup).value).toBe('5 + 3');
+    popup.hide();
+
+    const unparsable = showPopup(RoutineStringPopup, '// a comment', [ 'expression' ]);
+    expect(valueInput(unparsable).value).toBe(''); // not "null"
+    unparsable.hide();
+  });
+
+  test('the JSON popup keeps its textarea instead of a second value input', () => {
+    const popup = showPopup(RoutineJSONPopup, { func: 'SELECT', sortBy: [ 'a' ] }, [ 'sortBy' ]);
+    expect(valueInput(popup)).toBeNull();
+    expect(popup.domElement.querySelector('textarea')).not.toBeNull();
+    expect(popup.domElement.querySelector('.popup-use-default')).not.toBeNull();
+    popup.hide();
+  });
+});
+
+describe('the widget property builder', () => {
+  function showPopup(operation, parameterNames, widget) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineStringPopup();
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, widget, [], []);
+    popup.show();
+    return popup;
+  }
+
+  const parts = popup => ({
+    name: popup.domElement.querySelector('.popup-property-name'),
+    widget: popup.domElement.querySelector('.popup-property-widget'),
+    suggestions: [...popup.domElement.querySelectorAll('.popup-property-row option')].map(o => o.value),
+    use: [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'use property')
+  });
+
+  const button1 = { id: 'button1', state: { id: 'button1', parent: 'holder1', score: 0 }, get: p => button1.state[p] };
+
+  beforeEach(() => {
+    widgets.clear();
+    widgets.set('button1', button1);
+    widgets.set('card1', { id: 'card1', state: { id: 'card1', owner: 'me' }, get: p => 'card1' });
+  });
+
+  afterEach(() => widgets.clear());
+
+  test('an empty widget field means the widget the routine belongs to', () => {
+    const popup = showPopup({ func: 'LABEL' }, [ 'value' ], button1);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const { name, widget, use } = parts(popup);
+    expect(widget.placeholder).toBe('this widget');
+    expect(widget.value).toBe('');
+    name.value = 'score';
+    use.dispatchEvent(new Event('click'));
+    expect(value).toEqual({ value: '${PROPERTY score}' });
+    popup.hide();
+  });
+
+  test('a target widget becomes the OF part', () => {
+    const popup = showPopup({ func: 'LABEL' }, [ 'value' ], button1);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const { name, widget, use } = parts(popup);
+    name.value = 'owner';
+    widget.value = 'card1';
+    use.dispatchEvent(new Event('click'));
+    expect(value).toEqual({ value: '${PROPERTY owner OF card1}' });
+    popup.hide();
+  });
+
+  test('the suggestions are the properties of the widget the value is read from', () => {
+    const popup = showPopup({ func: 'LABEL' }, [ 'value' ], button1);
+    expect(parts(popup).suggestions).toEqual([ 'id', 'parent', 'score' ]);
+    const widget = parts(popup).widget;
+    widget.value = 'card1';
+    widget.dispatchEvent(new Event('input'));
+    expect(parts(popup).suggestions).toEqual([ 'id', 'owner' ]);
+    popup.hide();
+  });
+
+  test('an existing property reference fills both fields', () => {
+    const popup = showPopup({ func: 'LABEL', value: '${PROPERTY owner OF card1}' }, [ 'value' ], button1);
+    expect(parts(popup).name.value).toBe('owner');
+    expect(parts(popup).widget.value).toBe('card1');
+    expect(parts(popup).suggestions).toEqual([ 'id', 'owner' ]); // for that widget
+    popup.hide();
+
+    const plain = showPopup({ func: 'LABEL', value: 'just text' }, [ 'value' ], button1);
+    expect(parts(plain).name.value).toBe('');
+    expect(parts(plain).widget.value).toBe('');
+    plain.hide();
+  });
+
+  test('names the engine syntax cannot hold verbatim are escaped', () => {
+    const popup = showPopup({ func: 'LABEL' }, [ 'value' ], button1);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const { name, use } = parts(popup);
+    name.value = 'my.property';
+    use.dispatchEvent(new Event('click'));
+    expect(value).toEqual({ value: '${PROPERTY my\\u002eproperty}' });
+    popup.hide();
+
+    // ...and read back into the field again
+    const reopened = showPopup({ func: 'LABEL', value: '${PROPERTY my\\u002eproperty}' }, [ 'value' ], button1);
+    expect(parts(reopened).name.value).toBe('my.property');
+    reopened.hide();
+  });
+
+  test('a name containing " OF " does not become the separator', () => {
+    const popup = showPopup({ func: 'LABEL' }, [ 'value' ], button1);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const { name, widget, use } = parts(popup);
+    name.value = 'points OF round';
+    widget.value = 'card1';
+    use.dispatchEvent(new Event('click'));
+    expect(value).toEqual({ value: '${PROPERTY points\\u0020OF round OF card1}' });
+    popup.hide();
+
+    const reopened = showPopup({ func: 'LABEL', value: value.value }, [ 'value' ], button1);
+    expect(parts(reopened).name.value).toBe('points OF round');
+    expect(parts(reopened).widget.value).toBe('card1');
+    reopened.hide();
+  });
+
+  test('an empty property name applies nothing', () => {
+    const popup = showPopup({ func: 'LABEL' }, [ 'value' ], button1);
+    let notified = false;
+    popup.registerChangeListener(() => notified = true);
+    const { name, use } = parts(popup);
+    name.value = '  ';
+    use.dispatchEvent(new Event('click'));
+    expect(notified).toBe(false);
+    expect(name.classList.contains('inputError')).toBe(true);
+    popup.hide();
   });
 });
 
@@ -822,14 +1017,37 @@ describe('number popups with text values', () => {
     popup.hide();
   });
 
-  test('no text input without a text hint', () => {
+  test('the text hint becomes the placeholder of the value input', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const withHint = new RoutineNumberPopup({ textHint: 'name of a timer property to read the time from' });
+    withHint.setSource(source);
+    withHint.setOperationDetails({ func: 'TIMER' }, [ 'value' ], { state: {} }, [], []);
+    withHint.show();
+    expect(withHint.domElement.querySelector('.popup-value-input').placeholder).toContain('timer property');
+    withHint.hide();
+
+    const plain = new RoutineNumberPopup({});
+    plain.setSource(source);
+    plain.setOperationDetails({ func: 'CLICK' }, [ 'count' ], { state: {} }, [], []);
+    plain.show();
+    expect(plain.domElement.querySelector('.popup-value-input').placeholder).toBe('value');
+    plain.hide();
+  });
+
+  test('a number typed into the value input stays a number', () => {
     const source = document.createElement('span');
     document.getElementById('editor').append(source);
     const popup = new RoutineNumberPopup({});
     popup.setSource(source);
     popup.setOperationDetails({ func: 'CLICK' }, [ 'count' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
     popup.show();
-    expect(popup.domElement.querySelector('input[type=text]')).toBeNull();
+    const input = popup.domElement.querySelector('.popup-value-input');
+    input.value = '42';
+    input.dispatchEvent(new Event('change'));
+    expect(value).toEqual({ count: 42 });
     popup.hide();
   });
 
@@ -1090,12 +1308,19 @@ describe('variables in widget parameters', () => {
 
   const buttonNamed = (popup, text) => [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == text);
 
+  // fills in the "Property <name> of <widget>" row and applies it
+  const useProperty = (popup, property, widgetID = '') => {
+    popup.domElement.querySelector('.popup-property-name').value = property;
+    popup.domElement.querySelector('.popup-property-widget').value = widgetID;
+    buttonNamed(popup, 'use property').dispatchEvent(new Event('click'));
+  };
+
   test('a widget parameter offers variables and widget properties', () => {
     const popup = showWidgetPopup({ func: 'MOVE', from: [ 'h1' ] }, [ 'to' ]);
     let value = null;
     popup.registerChangeListener(v => value = v);
     expect(buttonNamed(popup, 'myHolder')).toBeDefined();
-    buttonNamed(popup, 'parent').dispatchEvent(new Event('click'));
+    useProperty(popup, 'parent');
     expect(value).toEqual({ to: '${PROPERTY parent}' });
     popup.hide();
   });
@@ -1104,7 +1329,7 @@ describe('variables in widget parameters', () => {
     const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]);
     let value = null;
     popup.registerChangeListener(v => value = v);
-    buttonNamed(popup, 'parent').dispatchEvent(new Event('click'));
+    useProperty(popup, 'parent');
     expect(value.holder).toBe('${PROPERTY parent}');
     expect('collection' in value).toBe(true);
     expect(value.collection).toBeUndefined();

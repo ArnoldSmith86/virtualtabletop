@@ -245,6 +245,44 @@ const predefinedCollectionDescriptions = {
 
 const routineWidgetPickerKey = 'routineWidgets';
 
+let propertySuggestionListCounter = 0;
+
+// the identifier syntax ${PROPERTY name OF widget} accepts (see widget.js):
+// everything outside [A-Za-z0-9 _-] has to be escaped, and a leading $ makes the
+// engine read the name from a variable, so it is kept as it is
+const propertyIdentifier = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
+
+function escapePropertyIdentifier(name) {
+  const dollar = String(name).charAt(0) == '$' ? '$' : '';
+  return dollar + String(name).slice(dollar.length).split('').map(c=>{
+    if(c.match(/^[A-Za-z0-9 _-]$/))
+      return c;
+    return `\\u${('000' + c.charCodeAt(0).toString(16)).slice(-4)}`;
+  }).join('').replace(/^PROPERTY /, 'PROPERTY\\u0020').replace(/ OF /g, '\\u0020OF ');
+}
+
+function unescapePropertyIdentifier(name) {
+  return String(name).replace(/\\u([0-9a-fA-F]{4})/g, (_, code)=>String.fromCharCode(parseInt(code, 16)));
+}
+
+function propertyReference(property, widgetID) {
+  const of = widgetID ? ` OF ${escapePropertyIdentifier(widgetID)}` : '';
+  return `\$\{PROPERTY ${escapePropertyIdentifier(property)}${of}\}`;
+}
+
+// { property, widget } of a value that is nothing but a property reference, so
+// the property builder can start from the value the parameter already has
+function parsePropertyReference(value) {
+  if(typeof value != 'string')
+    return null;
+  // the name is matched lazily, exactly like the engine does, so the first " OF "
+  // ends it - which is why escapePropertyIdentifier escapes one inside a name
+  const match = value.match(new RegExp(`^\\$\\{PROPERTY (\\$?${propertyIdentifier}?)(?: OF (\\$?${propertyIdentifier}))?\\}$`));
+  if(!match)
+    return null;
+  return { property: unescapePropertyIdentifier(match[1]), widget: match[2] ? unescapePropertyIdentifier(match[2]) : '' };
+}
+
 class RoutinePopup extends Popup {
   constructor(source) {
     super(source);
@@ -260,8 +298,27 @@ class RoutinePopup extends Popup {
     super.hide();
   }
 
+  // the property builder's widget picker needs the room visible while it is open
+  avoidsPlayArea() {
+    return this.propertyPickerShown || this.needsRoomForPicker();
+  }
+
+  needsRoomForPicker() {
+    return false;
+  }
+
   offersUseDefault() {
     return true;
+  }
+
+  // every popup shows the raw value as editable text; the ones whose own input
+  // already is the whole value (JSON, the operation itself) do not need it twice
+  offersValueInput() {
+    return true;
+  }
+
+  valueInputHint() {
+    return null;
   }
 
   onClick(e) {
@@ -282,6 +339,166 @@ class RoutinePopup extends Popup {
     this.notifyChangeListeners({ [this.parameterNames[0]]: value });
   }
 
+  // the value the chip stands for: the parameter that is set (a chip can offer
+  // alternatives like {holder,collection}), otherwise the first one
+  currentValue() {
+    if(!this.operation || typeof this.operation != 'object')
+      return undefined;
+    const set = this.parameterNames.filter(p=>typeof this.operation[p] != 'undefined');
+    return this.operation[set.length ? set[0] : this.parameterNames[0]];
+  }
+
+  valueAsText(value) {
+    if(value === undefined)
+      return '';
+    return typeof value == 'string' ? value : JSON.stringify(value);
+  }
+
+  // a raw text edit means JSON where that is what was typed (numbers, booleans,
+  // arrays, objects) and a plain string otherwise - a bare word, and anything
+  // else that is not valid JSON, is almost always meant as text
+  parseValueText(text) {
+    try {
+      const value = JSON.parse(text);
+      return typeof value == 'string' ? text : value;
+    } catch(e) {
+      return text;
+    }
+  }
+
+  // what the text input does with an edit; the pickers collect it instead of
+  // applying it right away
+  applyValueInput(value) {
+    this.setNewValue(value);
+  }
+
+  syncValueInput(value) {
+    if(this.valueInput && document.activeElement !== this.valueInput)
+      this.valueInput.value = this.valueAsText(value);
+  }
+
+  // the current value as editable text next to the button that drops it again -
+  // the two things a parameter popup is opened for, above everything else
+  renderValueRow() {
+    this.valueInput = null;
+    const row = document.createElement('div');
+    row.className = 'popup-value-row';
+
+    if(this.offersValueInput()) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'popup-value-input';
+      input.value = this.valueAsText(this.currentValue());
+      input.placeholder = this.valueInputHint() || 'value';
+      input.title = 'The value of this parameter - edit it directly or use one of the sections below';
+      input.addEventListener('change', _=>this.applyValueInput(this.parseValueText(input.value)));
+      row.append(input);
+      this.valueInput = input;
+    }
+
+    // an explicitly set parameter (other than the operation type itself) can be
+    // reset to its default, which for IF.condition also restores the operand chips
+    if(this.offersUseDefault() && this.parameterNames[0] != 'func' && this.operation && typeof this.operation == 'object' && this.parameterNames.some(p=>typeof this.operation[p] != 'undefined')) {
+      const clear = button(row, 'use default', _=>{
+        const values = {};
+        for(const parameter of this.parameterNames)
+          values[parameter] = undefined;
+        this.notifyChangeListeners(values);
+      });
+      clear.className = 'popup-use-default';
+      clear.title = 'Remove the explicit value and go back to the default';
+    }
+
+    if(row.firstChild)
+      $('h1', this.domElement).after(row);
+  }
+
+  // "Property <name> of <widget>" instead of a plain list of properties: both
+  // parts are editable, the name field suggests the properties the chosen widget
+  // currently has (the way the CSS editor suggests selectors) and the widget
+  // field gets the picker the rest of the editor uses
+  renderPropertyBuilder(content) {
+    const parsed = parsePropertyReference(this.currentValue()) || { property: '', widget: '' };
+    // the shared picker's CSS is scoped to .editorModule
+    const host = div(content, 'editorModule');
+    const row = div(host, 'popup-property-row');
+
+    div(row, 'popup-property-label').textContent = 'Property';
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'popup-property-name';
+    nameInput.placeholder = 'name';
+    nameInput.value = parsed.property;
+    const listID = `routinePropertySuggestions${++propertySuggestionListCounter}`;
+    nameInput.setAttribute('list', listID);
+    const datalist = document.createElement('datalist');
+    datalist.id = listID;
+    row.append(nameInput, datalist);
+
+    div(row, 'popup-property-label').textContent = 'of';
+    const widgetInput = document.createElement('input');
+    widgetInput.type = 'text';
+    widgetInput.className = 'popup-property-widget';
+    widgetInput.placeholder = 'this widget'; // an empty target means the widget the routine is on
+    widgetInput.value = parsed.widget;
+    row.append(widgetInput);
+
+    // the suggestions are the properties of the widget the value is read from
+    const suggestionsFor = _=>{
+      const targetID = widgetInput.value.trim();
+      const target = targetID && typeof widgets != 'undefined' && widgets.get(targetID);
+      return Object.keys(((target || this.widget || {}).state) || {}).sort();
+    };
+    const updateSuggestions = _=>{
+      datalist.innerHTML = '';
+      for(const property of suggestionsFor()) {
+        const option = document.createElement('option');
+        option.value = property;
+        datalist.append(option);
+      }
+    };
+    updateSuggestions();
+    widgetInput.addEventListener('input', updateSuggestions);
+
+    const controls = renderWidgetSelectPopout(host, this.widget, {
+      title: 'Read the property from',
+      pickerKey: routineWidgetPickerKey,
+      allowSelf: true, // a routine regularly reads a property of its own widget
+      getSelectedIDs: _=>widgetInput.value.trim() ? [ widgetInput.value.trim() ] : [],
+      apply: widgetID=>{
+        widgetInput.value = widgetID;
+        updateSuggestions();
+      },
+      onClear: _=>{
+        widgetInput.value = '';
+        updateSuggestions();
+      },
+      clearLabel: 'This widget'
+    });
+    controls.expandButton.title = 'Pick the widget to read the property from';
+    widgetInput.after(controls.expandButton); // the popout stays below the row
+    const expand = controls.expandButton.onclick;
+    controls.expandButton.onclick = e=>{
+      expand(e);
+      // picking in the room only works while the popup does not cover it
+      this.propertyPickerShown = controls.popout.style.display != 'none';
+      this.moveIntoView();
+    };
+
+    const apply = _=>{
+      const property = nameInput.value.trim();
+      nameInput.classList.toggle('inputError', !property);
+      if(property)
+        this.setNewValue(propertyReference(property, widgetInput.value.trim()));
+    };
+    for(const input of [ nameInput, widgetInput ])
+      input.addEventListener('keydown', e=>{
+        if(e.key == 'Enter')
+          apply();
+      });
+    button(host, 'use property', apply);
+  }
+
   setOperationDetails(operation, parameterNames, widget, variables, collections) {
     this.operation = operation;
     this.parameterNames = parameterNames;
@@ -291,6 +508,7 @@ class RoutinePopup extends Popup {
   }
 
   show(showVariables=true, showCollections=true) {
+    this.propertyPickerShown = false;
     if(openRoutinePopup && openRoutinePopup !== this)
       openRoutinePopup.hide();
     openRoutinePopup = this;
@@ -299,19 +517,7 @@ class RoutinePopup extends Popup {
     commonInfoButton($('h1', this.domElement), this.operation && this.operation.func);
     $('h1', this.domElement).append(` - ${this.parameterNames.length > 1 ? 'parameters' : 'parameter'} ${this.parameterNames.join(' / ')}`);
 
-    // an explicitly set parameter (other than the operation type itself) can be
-    // reset to its default, which for IF.condition also restores the operand chips
-    if(this.offersUseDefault() && this.parameterNames[0] != 'func' && this.operation && typeof this.operation == 'object' && this.parameterNames.some(p=>typeof this.operation[p] != 'undefined')) {
-      const clear = button(this.domElement, 'use default', _=>{
-        const values = {};
-        for(const parameter of this.parameterNames)
-          values[parameter] = undefined;
-        this.notifyChangeListeners(values);
-      });
-      clear.className = 'popup-use-default';
-      clear.title = 'Remove the explicit value and go back to the default';
-      $('h1', this.domElement).after(clear);
-    }
+    this.renderValueRow();
 
     if(showVariables) {
       const [ variablesTitle, variablesContent ] = this.addAccordionSection('Variables');
@@ -335,9 +541,9 @@ class RoutinePopup extends Popup {
       infoButton(widgetPropertiesTitle, `
         Wherever you use a value in an operation, you can use a widget property of any widget instead.
         For example, you might want to put a score property on a card widget, then use that score in an operation.
+        Leave the widget empty to read the property from the widget this routine belongs to, or pick another one.
       `);
-      for(const property of Object.keys(this.widget.state).sort())
-        button(widgetPropertiesContent, property, _=>this.setNewValue(`\$\{PROPERTY ${property}\}`));
+      this.renderPropertyBuilder(widgetPropertiesContent);
     }
 
     if(showCollections) {
@@ -373,6 +579,10 @@ class RoutinePopup extends Popup {
 class RoutineOperationPopup extends RoutinePopup {
   constructor() {
     super();
+  }
+
+  offersValueInput() {
+    return false; // this popup picks an operation, not a value
   }
 
   setNewValue(newOperation) {
@@ -414,23 +624,24 @@ class RoutineStringPopup extends RoutinePopup {
     super();
   }
 
-  show() {
-    // the current value is the most likely thing to edit, so it comes first and open
-    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
-    infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
-    const input = document.createElement('input');
-    input.type = 'text';
-    let currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+  currentValue() {
     if(typeof this.operation == 'string') { // var statements and comments are strings
       const match = this.operation.match(/^var (\S+) = (.*)$/);
       const stringParts = { variable: match && match[1], expression: match && match[2], statement: this.operation, comment: this.operation.replace(/^\/\/\s?/, '') };
-      currentValue = stringParts[this.parameterNames[0]];
+      const part = stringParts[this.parameterNames[0]];
+      return part == null ? undefined : part;
     }
-    input.value = currentValue != null ? currentValue : '';
-    input.addEventListener('change', _=>this.setNewValue(input.value));
-    valueContent.append(input);
+    return super.currentValue();
+  }
+
+  parseValueText(text) {
+    return text; // a text parameter takes what was typed, quotes and all
+  }
+
+  show() {
     super.show(true, false);
-    input.focus();
+    if(this.valueInput)
+      this.valueInput.focus();
   }
 }
 
@@ -440,8 +651,13 @@ class RoutineNumberPopup extends RoutinePopup {
     this.options = options;
   }
 
-  avoidsPlayArea() {
+  needsRoomForPicker() {
     return !!this.options.widgetType; // only then it offers the room picker
+  }
+
+  // some number parameters also take strings, e.g. a property name or a seat id
+  valueInputHint() {
+    return this.options.textHint;
   }
 
   setNewValue(value) {
@@ -466,26 +682,6 @@ class RoutineNumberPopup extends RoutinePopup {
     for(let i=0; i<=10; i++)
       button(valueContent, i, _=>this.setNewValue(i));
 
-    const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[this.parameterNames.length-1]] : null;
-
-    const count = document.createElement('input');
-    count.type = 'number';
-    if(typeof currentValue == 'number')
-      count.value = currentValue;
-    count.addEventListener('change', _=>this.setNewValue(+count.value));
-    valueContent.append(count);
-
-    // some number parameters also take strings, e.g. a property name or a seat id
-    if(this.options.textHint) {
-      const text = document.createElement('input');
-      text.type = 'text';
-      text.placeholder = this.options.textHint;
-      if(typeof currentValue == 'string')
-        text.value = currentValue;
-      text.addEventListener('change', _=>this.setNewValue(text.value));
-      valueContent.append(text);
-    }
-
     // a few number parameters name a widget instead (TURN turn takes a seat id),
     // so offer the picker for those as well
     if(this.options.widgetType) {
@@ -498,7 +694,7 @@ class RoutineNumberPopup extends RoutinePopup {
         inline: true,
         allowSelf: true,
         typeFilter: this.options.widgetType,
-        getSelectedIDs: _=>typeof currentValue == 'string' ? [ currentValue ] : [],
+        getSelectedIDs: _=>typeof this.currentValue() == 'string' ? [ this.currentValue() ] : [],
         apply: widgetID=>this.setNewValue(widgetID)
       });
     }
@@ -529,7 +725,7 @@ class RoutineWidgetIDPopup extends RoutinePopup {
     this.workingIDs = [];
   }
 
-  avoidsPlayArea() {
+  needsRoomForPicker() {
     return true;
   }
 
@@ -619,6 +815,10 @@ class RoutineJSONPopup extends RoutinePopup {
     return this.operation[this.parameterNames[0]];
   }
 
+  offersValueInput() {
+    return false; // the textarea below already holds the whole value
+  }
+
   show() {
     // the current value is the most likely thing to edit, so it comes first and open
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
@@ -686,6 +886,15 @@ class RoutinePickerPopup extends RoutinePopup {
     return 'Use a fixed value that will always behave the same way.';
   }
 
+  // the picker only writes the parameter when the popup closes, so a raw text
+  // edit feeds the same working value instead of applying on its own
+  applyValueInput(value) {
+    this.workingValue = value;
+    this.workingChanged = true;
+    if(this.pickerInput && this.pickerInput.update)
+      this.pickerInput.update(value);
+  }
+
   hide() {
     // apply the picked value on close (before super.hide()'s cancel listener, so
     // its resolve(undefined) is ignored once we have resolved with the value).
@@ -701,6 +910,7 @@ class RoutinePickerPopup extends RoutinePopup {
   show() {
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
     infoButton(valueTitle, this.valueHint());
+    this.pickerInput = null;
     this.workingValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
 
     const InputClass = this.inputClass();
@@ -715,27 +925,20 @@ class RoutinePickerPopup extends RoutinePopup {
           this.workingValue = v;
           this.workingChanged = true;
           input.update(v);
+          this.syncValueInput(v);
         },
         clearable: false
       });
+      this.pickerInput = input;
       // the properties module's picker CSS is scoped to .editorModule, so render
       // into a matching wrapper to inherit the chip/picker sizing
       const host = div(valueContent, 'editorModule');
       input.render(host);
       if(input.openPicker)
         input.openPicker();
-    } else {
-      // fallback for environments without the properties module (e.g. jest)
-      const input = document.createElement('input');
-      input.type = 'text';
-      if(typeof this.workingValue == 'string')
-        input.value = this.workingValue;
-      input.addEventListener('change', _=>{
-        this.workingValue = input.value;
-        this.workingChanged = true;
-      });
-      valueContent.append(input);
     }
+    // without the properties module (e.g. jest) the value text input above is
+    // the whole editor for the parameter
 
     super.show(true, false);
   }
