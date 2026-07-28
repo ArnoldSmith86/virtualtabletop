@@ -286,10 +286,8 @@ function generateLineStop(id, lineID, index, x, y) {
   };
 }
 
-// every line offered in the add widget overlay is drawn in the VTT blue of
-// --VTTblue, which is what the sample shows and what the added widget keeps
-const overlayLineColor = '#1f5ca6';
-
+// every line offered in the add widget overlay is drawn in the VTT blue the
+// line widget defaults to, so none of them has to spell out a lineColor
 function generateLineWidgets(id, x, y) {
   const line = {
     type: 'line',
@@ -300,7 +298,6 @@ function generateLineWidgets(id, x, y) {
     height: 40,
     lineStart: { x: 10, y: 20 },
     lineEnd: { x: 210, y: 20 },
-    lineColor: overlayLineColor,
     stops: [ { widget: id+'S0', position: 0 }, { widget: id+'S1', position: 1 } ]
   };
 
@@ -320,7 +317,6 @@ function generateRingWidgets(id, x, y) {
     lineShape: 'ellipse',
     lineStart: { x: 15, y: 15 },
     lineEnd: { x: 115, y: 115 },
-    lineColor: overlayLineColor,
     stops: [ 0, 0.25, 0.5, 0.75 ].map((position, i)=>({ widget: `${id}S${i}`, position }))
   };
 
@@ -1270,8 +1266,7 @@ function populateAddWidgetOverlay() {
     height: 20,
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 210, y: 10 },
-    lineWidth: 4,
-    lineColor: overlayLineColor
+    lineWidth: 4
   });
 
   // a line without stops in its closed shape: a plain circle/oval outline
@@ -1284,8 +1279,7 @@ function populateAddWidgetOverlay() {
     lineShape: 'ellipse',
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 90, y: 90 },
-    lineWidth: 4,
-    lineColor: overlayLineColor
+    lineWidth: 4
   });
 
   // Add the composite ring widget (a closed line with stops all the way round)

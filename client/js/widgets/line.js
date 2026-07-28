@@ -19,7 +19,7 @@ export class Line extends Widget {
       controlStart: null,
       controlEnd: null,
       lineWidth: 5,
-      lineColor: '#666666',
+      lineColor: '#1f5ca6', // --VTTblue
       lineDash: null,
 
       // the widgets riding on this line, in chain order:
