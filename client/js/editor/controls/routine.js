@@ -1238,6 +1238,21 @@ class RoutineOperationEditor {
     for(const name of this.unsupportedProperties())
       html += `<div class="routine-editor-parameter-row routine-editor-parameter-unsupported"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
     dom.innerHTML = html;
+    // the wiki information the parameter popup offers is right here as well, so
+    // the expanded view explains itself without opening one: the operation text
+    // next to the operation, and each parameter's own description next to it
+    for(const row of $a('.routine-editor-parameter-row', dom)) {
+      const nameDOM = $('.routine-editor-parameter-name', row);
+      const info = nameDOM ? commonParameterInfoButton(null, this.func, nameDOM.textContent) : commonInfoButton(null, this.func);
+      if(!info)
+        continue;
+      info.classList.add('routine-editor-parameter-info');
+      info.title = nameDOM ? `information about ${nameDOM.textContent}` : `information about ${this.func}`;
+      if(nameDOM)
+        nameDOM.after(info);
+      else
+        row.append(info);
+    }
     // a red "!" at the end of every ignored line explains why it has no effect
     for(const row of $a('.routine-editor-parameter-row.routine-editor-parameter-ignored', dom)) {
       const name = $('.routine-editor-parameter-name', row).textContent;

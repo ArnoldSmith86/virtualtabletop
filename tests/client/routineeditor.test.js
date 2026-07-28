@@ -21,6 +21,7 @@ beforeAll(() => {
   window.startCustomSelection = () => {};
   window.endCustomSelection = () => {};
   window.widgets = new Map();
+  window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
 
@@ -43,7 +44,7 @@ beforeAll(() => {
     'EventsEditor', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
-    'handleWidgetPickerSelection'
+    'handleWidgetPickerSelection', 'operationUIState', 'commonInfoTopic', 'parameterInfoLine'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -764,6 +765,82 @@ describe('resetting parameters to their default', () => {
     const setEditor = editorForOperation({ func: 'SET', value: null });
     setEditor.setOperationDetails({ state: {} }, { func: 'SET', value: null }, [], []);
     expect(String(setEditor.getDisplayedValue('value'))).toBe('null'); // explicit null is a real value, rendered as-is
+  });
+});
+
+describe('information in the expanded view', () => {
+  function listView(operation) {
+    operationUIState(operation).listView = true;
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails({ state: {} }, operation, [], []);
+    const dom = editor.render();
+    document.getElementById('editor').append(dom);
+    return dom;
+  }
+
+  // clicks an info button and returns the text of the popup it opened
+  function infoTextOf(button) {
+    button.dispatchEvent(new Event('click'));
+    const popups = [...document.querySelectorAll('.inline-popup')];
+    const popup = popups[popups.length-1];
+    const text = popup.textContent;
+    popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
+    return text;
+  }
+
+  const rowNamed = (dom, name) => [...dom.querySelectorAll('.routine-editor-parameter-row')]
+    .find(r => (r.querySelector('.routine-editor-parameter-name') || {}).textContent == name);
+
+  test('every row of the expanded view has an info button, the operation included', () => {
+    const dom = listView({ func: 'MOVE', from: 'h1', to: 'h2' });
+    const rows = [...dom.querySelectorAll('.routine-editor-parameter-row')];
+    expect(rows.length).toBe(Object.keys(routineOperationMetadata.MOVE.parameters).length + 1); // + the func row
+    for(const row of rows)
+      expect(row.querySelector('.routine-editor-parameter-info')).not.toBeNull();
+    // the operation's own button is the one in the row without a parameter name
+    const operationRow = rows.find(r => !r.querySelector('.routine-editor-parameter-name'));
+    expect(infoTextOf(operationRow.querySelector('.routine-editor-parameter-info'))).toContain('This function moves widgets into a target');
+    dom.remove();
+  });
+
+  test('a parameter shows the line its operation describes it with', () => {
+    const dom = listView({ func: 'MOVE', from: 'h1' });
+    const text = infoTextOf(rowNamed(dom, 'count').querySelector('.routine-editor-parameter-info'));
+    expect(text).toContain('limits the amount of moved widgets');
+    expect(text).not.toContain('This function moves widgets into a target'); // just the parameter, not everything
+    expect(text).toContain('for the whole operation'); // ...which is one click away, as a topic link
+    expect(text).toContain('See MOVE');
+    dom.remove();
+  });
+
+  test('a parameter with a topic of its own uses that text', () => {
+    const dom = listView({ func: 'MOVE', from: 'h1' });
+    expect(infoTextOf(rowNamed(dom, 'from').querySelector('.routine-editor-parameter-info')))
+      .toContain('The from parameter specifies the widget(s) that contains the widgets to move');
+    dom.remove();
+  });
+
+  test('a custom property the operation does not support falls back to the operation text', () => {
+    const dom = listView({ func: 'MOVE', from: 'h1', typo: 1 });
+    expect(infoTextOf(rowNamed(dom, 'typo').querySelector('.routine-editor-parameter-info')))
+      .toContain('This function moves widgets into a target');
+    dom.remove();
+  });
+
+  test('every declared parameter of every operation is described somewhere', () => {
+    for(const func in routineOperationMetadata) {
+      const topic = commonInfoTopic(func);
+      expect(topic).toBeDefined();
+      for(const name in routineOperationMetadata[func].parameters)
+        expect(commonInfoTopic(`${func}.${name}`) || parameterInfoLine(topic.info, name)).toBeTruthy();
+    }
+  });
+
+  test('parameters listed together are found by each of their names', () => {
+    const line = parameterInfoLine('x / y: number - the target position.\nnope: something else.', 'y');
+    expect(line).toBe('x / y: number - the target position.');
+    expect(parameterInfoLine('x and y: number - the pixel coordinates.', 'x')).toContain('pixel coordinates');
+    expect(parameterInfoLine('count: number - how often.', 'unrelated')).toBeNull();
   });
 });
 

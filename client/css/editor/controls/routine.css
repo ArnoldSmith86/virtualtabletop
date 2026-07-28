@@ -119,6 +119,21 @@ body.edit.darkMode .routine-editor-parameter-widget {
   text-align: right;
 }
 
+/* the wiki information for the operation and for each of its parameters, right
+   next to the name in the expanded list view */
+.routine-editor-parameter-info {
+  flex-shrink: 0;
+  color: gray;
+}
+
+.routine-editor-parameter-info .material-symbols {
+  font-size: 15px;
+}
+
+.routine-editor-parameter-info:hover {
+  color: var(--VTTblue);
+}
+
 /* parameters the engine currently ignores are struck through but stay editable */
 .routine-editor-parameter-ignored .routine-editor-parameter-name,
 .routine-editor-parameter-ignored .routine-editor-operation-parameter {
