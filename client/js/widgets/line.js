@@ -114,19 +114,47 @@ export class Line extends Widget {
       const maxX = Math.round(Math.max(...points.map(p=>p.x)) + pad);
       const maxY = Math.round(Math.max(...points.map(p=>p.y)) + pad);
 
-      if(minX || minY) {
-        await this.set('x', this.get('x') + minX);
-        await this.set('y', this.get('y') + minY);
+      const width = maxX - minX;
+      const height = maxY - minY;
+      // how far the box has to travel for the path to stay put - read off the
+      // box it still has, so before any of the properties below are written
+      const offset = this.rebaseOffset(minX, minY, width, height);
+
+      if(offset.x)
+        await this.set('x', this.get('x') + offset.x);
+      if(offset.y)
+        await this.set('y', this.get('y') + offset.y);
+      if(minX || minY)
         for(const property of [ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd' ])
           if(capturedPoints[property])
             await this.set(property, { x: Math.round(capturedPoints[property].x) - minX, y: Math.round(capturedPoints[property].y) - minY });
-      }
-      await this.set('width', maxX - minX);
-      await this.set('height', maxY - minY);
+      await this.set('width', width);
+      await this.set('height', height);
     } finally {
       batchEnd();
       this.normalizingGeometry = false;
     }
+  }
+
+  // x/y place the box in the parent, but rotation and scale are applied around
+  // the box center, so shifting every local point by (dx, dy) - and resizing the
+  // box, which moves that center - reaches the parent rotated and scaled. Return
+  // the x/y correction that keeps the path exactly where it is. For an
+  // unrotated, unscaled line this is just (dx, dy), the way it always was.
+  rebaseOffset(dx, dy, width, height) {
+    const angle = (+this.get('rotation') || 0) * Math.PI/180;
+    const scale = +this.get('scale') || 1;
+    const originX = this.get('width')/2;
+    const originY = this.get('height')/2;
+    // the local vector from the old to the new transform origin
+    const vX = dx + width/2 - originX;
+    const vY = dy + height/2 - originY;
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return {
+      x: originX - width/2 + scale*(vX*cos - vY*sin),
+      y: originY - height/2 + scale*(vX*sin + vY*cos)
+    };
   }
 
   // sampled points along the line with cumulative arc length so widgets can be spaced evenly

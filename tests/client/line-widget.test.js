@@ -292,6 +292,50 @@ describe('Line widget geometry', () => {
     });
   });
 
+  describe('normalizeGeometry keeps rotated and scaled paths in place', () => {
+    // where a local point ends up in the parent, mirroring what the browser does
+    // with Widget.cssTransform(): translate(x, y) rotate(rotation) scale(scale)
+    // around the default transform origin, the center of the box
+    function toParent(line, point) {
+      const originX = line.get('width')/2;
+      const originY = line.get('height')/2;
+      const angle = (line.get('rotation') || 0) * Math.PI/180;
+      const scale = line.get('scale');
+      const dX = point.x - originX;
+      const dY = point.y - originY;
+      return {
+        x: line.get('x') + originX + scale*(dX*Math.cos(angle) - dY*Math.sin(angle)),
+        y: line.get('y') + originY + scale*(dX*Math.sin(angle) + dY*Math.cos(angle))
+      };
+    }
+
+    for(const [ name, transform ] of [
+      [ 'a rotated line', { rotation: 90 } ],
+      [ 'a scaled line', { scale: 2 } ],
+      [ 'a rotated and scaled line', { rotation: 37, scale: 0.75 } ]
+    ]) {
+      test(`the path of ${name} does not move`, async () => {
+        // integer points and an even lineWidth, so the rounding in normalizeGeometry is a no-op
+        const line = createLine({ id: 'normT', x: 500, y: 500, width: 10, height: 10,
+          lineStart: { x: -300, y: -200 }, lineEnd: { x: 40, y: 60 }, lineWidth: 10, ...transform });
+        const before = [ 'lineStart', 'lineEnd' ].map(p=>toParent(line, line.pointProperty(p)));
+
+        await line.normalizeGeometry();
+
+        const after = [ 'lineStart', 'lineEnd' ].map(p=>toParent(line, line.pointProperty(p)));
+        for(const i of [ 0, 1 ]) {
+          expect(near(after[i].x, before[i].x, 0.001)).toBe(true);
+          expect(near(after[i].y, before[i].y, 0.001)).toBe(true);
+        }
+        // the box still wraps the path with padding, as in the untransformed case
+        expect(line.get('width')).toBe((40 - -300) + 2 * 15);
+        expect(line.get('height')).toBe((60 - -200) + 2 * 15);
+
+        removeWidget('normT');
+      });
+    }
+  });
+
 });
 
 describe('Line widget closed shapes', () => {
