@@ -718,13 +718,31 @@
   margin-top: 2px;
   padding: 4px 8px 4px 4px;
 }
-/* the deck shortcuts above the matches: a wrapping row rather than the plain
-   inline flow the deck buttons were in before, so they stay one block that
-   belongs to the match list below it */
+/* The deck shortcuts under the matches. A deck preview is a picture of cards,
+   so at the full 150px above the list it read as a statement ("this holder
+   takes cards") rather than as a button - they are thumbnails now, dimmed
+   until their match is in the list above and checked when it is. */
+.editorModule .dropTargetDeckShortcuts {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #8888;
+}
 .editorModule .dropTargetDecks {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 6px;
+  gap: 6px;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton {
+  width: 70px;
+  min-width: 70px;
+  height: 70px;
+  margin: 0;
+  border-width: 2px;
+  opacity: .45;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton:hover,
+.editorModule .dropTargetDecks .widgetSelectionButton.selected {
+  opacity: 1;
 }
 /* deleting a stop is destructive, so it gets the shared red icon-button look
    (white glyph on dark red, darker on hover) from button[icon].red */

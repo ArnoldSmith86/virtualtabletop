@@ -8237,25 +8237,35 @@ class PropertiesModule extends SidebarModule {
         propertyInfoButton(label, html(options.hint));
       container.appendChild(label);
     }
+    const list = div(container, 'dropTargetMatches');
+
+    const save = _=>edit(`changed which widgets ${widget.id} accepts`, _=>widget.set('dropTarget', toDropTarget(matches)));
+
     // The decks of the room as clickable previews, for the case the match rows
     // are tedious about: a widget that takes the cards of one specific deck.
-    // They are a view onto the same match list, so a deck picked here shows up
-    // as a row below and a row typed below lights up its deck.
+    // They sit below the matches, small and dimmed until their match is in the
+    // list above, because a deck's picture is a card picture: shown big and
+    // above the list it read as "this holder takes cards" even when the list
+    // right under it said nothing is accepted.
     let refreshDeckButtons = _=>{};
     if(options.deckShortcuts) {
       const decks = widgetFilter(w=>w.get('type') == 'deck' && Object.keys(w.get('cardTypes')).length);
       if(decks.length) {
-        div(container, 'lineHint', 'Click a deck to take its cards, or build a match below.');
-        const deckRow = div(container, 'dropTargetDecks');
+        const deckSection = div(container, 'dropTargetDeckShortcuts');
+        div(deckSection, 'lineHint', 'Shortcut: click a deck to add or remove a match for its cards.');
+        const deckRow = div(deckSection, 'dropTargetDecks');
         const updaters = [];
         for(const deck of decks) {
           const deckCloneState = Object.assign({}, deck.state, { id: generateUniqueWidgetID() });
-          const button = this.renderWidgetButton(new Deck(deckCloneState.id), deckCloneState, deckRow);
-          button.title = `Accept the cards of deck ${deck.id}`;
+          const button = this.renderWidgetButton(new Deck(deckCloneState.id), deckCloneState, deckRow, { className: 'dropTargetDeck', maxSize: 60 });
           // lenient on purpose: a hand written { type: 'card', deck: 'd1' } is
           // this deck as much as the { deck: 'd1' } the button writes
           const isDeckMatch = match=>!('unsupported' in match) && match.conditions.some(c=>c.property == 'deck' && c.value == deck.id);
-          updaters.push(_=>button.classList.toggle('selected', matches.some(isDeckMatch)));
+          updaters.push(_=>{
+            const accepted = matches.some(isDeckMatch);
+            button.classList.toggle('selected', accepted);
+            button.title = accepted ? `Stop accepting the cards of deck ${deck.id}` : `Accept the cards of deck ${deck.id}`;
+          });
           button.onclick = _=>{
             if(matches.some(isDeckMatch)) {
               matches = matches.filter(match=>!isDeckMatch(match));
@@ -8272,10 +8282,6 @@ class PropertiesModule extends SidebarModule {
         refreshDeckButtons = _=>updaters.forEach(update=>update());
       }
     }
-
-    const list = div(container, 'dropTargetMatches');
-
-    const save = _=>edit(`changed which widgets ${widget.id} accepts`, _=>widget.set('dropTarget', toDropTarget(matches)));
 
     const iconButton = (parent, icon, title, onclick, className)=>{
       const button = document.createElement('button');
@@ -9239,9 +9245,12 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  renderWidgetButton(widget, state, target) {
+  // options: className (added to the button before it is measured, for a caller
+  // that sizes it differently) and maxSize (the box the preview is scaled into,
+  // matching that size)
+  renderWidgetButton(widget, state, target, options={}) {
     const button = document.createElement('button');
-    button.className = 'widgetSelectionButton';
+    button.className = 'widgetSelectionButton' + (options.className ? ' ' + options.className : '');
     target.appendChild(button);
 
     let deckDOM = null;
@@ -9269,9 +9278,10 @@ class PropertiesModule extends SidebarModule {
     if(deckDOM)
       deckDOM.remove();
 
+    const maxSize = options.maxSize || 140;
     const rect = getBoundingClientRectWithAbsoluteChildren(button.children[0]);
-    if(Math.max(rect.width, rect.height) > 140)
-      button.children[0].style.transform = `scale(${140/Math.max(rect.width, rect.height)})`;
+    if(Math.max(rect.width, rect.height) > maxSize)
+      button.children[0].style.transform = `scale(${maxSize/Math.max(rect.width, rect.height)})`;
     centerElementInClientRect(button.children[0], button.getBoundingClientRect());
 
     return button;
