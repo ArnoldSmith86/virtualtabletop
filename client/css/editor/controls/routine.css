@@ -36,6 +36,7 @@
 .routine-editor-operation-body {
   flex: 1;
   min-width: 0;
+  line-height: 1.4;
 }
 
 .routine-editor-operation-parameter {
@@ -108,7 +109,7 @@ body.edit.darkMode .routine-editor-parameter-widget {
 /* the expanded list view: one line per parameter, even undefined ones */
 .routine-editor-operation.list-view .routine-editor-parameter-row {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 6px;
 }
 
@@ -159,7 +160,8 @@ body.edit.darkMode .routine-editor-parameter-widget {
 }
 
 .routine-editor-parameter-warning.deprecated {
-  color: orange;
+  color: darkorange;
+  height: 1.2em;
 }
 
 .routine-editor-parameter-warning.unsupported {
