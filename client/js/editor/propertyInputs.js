@@ -1036,7 +1036,9 @@ class ImageInput extends PickerInput {
         div(results, 'propertyPickerEmpty', 'No results.');
     };
 
-    const frequentlyUsed = [...new Set(usedGameImages().concat(builtinGamePieceImages))].slice(0, 100);
+    // default (empty-search) results: a sample of commonly used library images instead of repeating the
+    // "Used in this game"/"Game pieces" sections already shown above
+    const frequentlyUsed = topUsedLibraryIcons.map(imageURLFromSymbol);
     showResults(frequentlyUsed);
 
     const showAll = document.createElement('button');
