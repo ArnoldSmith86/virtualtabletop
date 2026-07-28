@@ -7890,34 +7890,17 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
     // holders extend ImageWidget, so they render text / icon / image like a basic widget
     this.renderBasicContentSection(widget);
-    this.addSubHeader('Target widgets');
-    for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
-      if(!Object.keys(deck.get('cardTypes')).length)
-        continue;
-      const deckCloneState = Object.assign({}, deck.state, { id: generateUniqueWidgetID() });
-      const deckButton = this.renderWidgetButton(new Deck(deckCloneState.id), deckCloneState, this.moduleDOM);
-      this.addPropertyListener(widget, 'dropTarget', widget=>{
-        if(asArray(widget.get('dropTarget')).filter(t=>t.deck == deck.id).length)
-          deckButton.classList.add('selected');
-        else
-          deckButton.classList.remove('selected');
-      });
-      deckButton.onclick = async e=>{
-        let newDropTarget = asArray(widget.get('dropTarget'));
-        if(deckButton.classList.contains('selected'))
-          newDropTarget = newDropTarget.filter(t=>t.deck != deck.id);
-        else
-          newDropTarget = newDropTarget.filter(t=>t.type!='card').concat({ deck: deck.id });
-
-        if(newDropTarget.length == 1)
-          newDropTarget = newDropTarget[0];
-        else if(!newDropTarget.length)
-          newDropTarget = null;
-
-        widget.set('dropTarget', newDropTarget);
-      };
-    }
-
+    // What the holder takes in. The deck previews used to be the whole section,
+    // so a holder for anything else than the cards of one deck had to be set up
+    // in the JSON editor - the shared dropTarget editor (the one the line widget
+    // uses) says the same thing for every widget type, with the decks kept as
+    // the shortcut for the case they cover.
+    propertyInfoButton(this.addSubHeader('Target widgets'), html('Which widgets can be dropped into this holder'));
+    this.renderDropTargetEditor(widget, {
+      label: '',
+      emptyText: 'Nothing can be dropped into this holder - add a match to let widgets in.',
+      deckShortcuts: true
+    });
 
     this.addSubHeader('Appearance');
     const normal = this.renderWidgetButton(new Holder(), {
@@ -8164,9 +8147,10 @@ class PropertiesModule extends SidebarModule {
   //   { type: 'card' }                only cards
   //   { type: 'card', deck: 'd1' }    only cards of deck d1
   //   [ { deck: 'd1' }, { deck: 'd2' } ]  cards of either deck
-  // Nothing here is line specific - holders can render the same editor once
-  // their "Target widgets" section moves over from the deck buttons.
-  // options: edit (wraps the change for the history), label, hint, emptyText
+  // Nothing here is line specific - holders render the same editor for their
+  // "Target widgets" section.
+  // options: edit (wraps the change for the history), label, hint, emptyText,
+  // deckShortcuts (a row of deck previews above the matches)
   renderDropTargetEditor(widget, options={}) {
     const types = [
       { value: null,         label: 'Basic widgets' },
@@ -8248,6 +8232,42 @@ class PropertiesModule extends SidebarModule {
         propertyInfoButton(label, html(options.hint));
       container.appendChild(label);
     }
+    // The decks of the room as clickable previews, for the case the match rows
+    // are tedious about: a widget that takes the cards of one specific deck.
+    // They are a view onto the same match list, so a deck picked here shows up
+    // as a row below and a row typed below lights up its deck.
+    let refreshDeckButtons = _=>{};
+    if(options.deckShortcuts) {
+      const decks = widgetFilter(w=>w.get('type') == 'deck' && Object.keys(w.get('cardTypes')).length);
+      if(decks.length) {
+        div(container, 'lineHint', 'Click a deck to take its cards, or build a match below.');
+        const deckRow = div(container, 'dropTargetDecks');
+        const updaters = [];
+        for(const deck of decks) {
+          const deckCloneState = Object.assign({}, deck.state, { id: generateUniqueWidgetID() });
+          const button = this.renderWidgetButton(new Deck(deckCloneState.id), deckCloneState, deckRow);
+          button.title = `Accept the cards of deck ${deck.id}`;
+          // lenient on purpose: a hand written { type: 'card', deck: 'd1' } is
+          // this deck as much as the { deck: 'd1' } the button writes
+          const isDeckMatch = match=>!('unsupported' in match) && match.conditions.some(c=>c.property == 'deck' && c.value == deck.id);
+          updaters.push(_=>button.classList.toggle('selected', matches.some(isDeckMatch)));
+          button.onclick = _=>{
+            if(matches.some(isDeckMatch)) {
+              matches = matches.filter(match=>!isDeckMatch(match));
+            } else {
+              // a match that takes every card would swallow this one, so the
+              // deck replaces it - same as the deck buttons did before
+              matches = matches.filter(match=>'unsupported' in match || match.conditions.length || !match.hasType || match.type != 'card');
+              matches.push({ hasType: false, type: null, conditions: [ { property: 'deck', value: deck.id } ] });
+            }
+            render();
+            save();
+          };
+        }
+        refreshDeckButtons = _=>updaters.forEach(update=>update());
+      }
+    }
+
     const list = div(container, 'dropTargetMatches');
 
     const save = _=>edit(`changed which widgets ${widget.id} accepts`, _=>widget.set('dropTarget', toDropTarget(matches)));
@@ -8359,6 +8379,7 @@ class PropertiesModule extends SidebarModule {
         save();
       };
       list.appendChild(add);
+      refreshDeckButtons();
     };
     render();
 

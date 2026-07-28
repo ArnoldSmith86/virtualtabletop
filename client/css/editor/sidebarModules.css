@@ -718,6 +718,14 @@
   margin-top: 2px;
   padding: 4px 8px 4px 4px;
 }
+/* the deck shortcuts above the matches: a wrapping row rather than the plain
+   inline flow the deck buttons were in before, so they stay one block that
+   belongs to the match list below it */
+.editorModule .dropTargetDecks {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
 /* deleting a stop is destructive, so it gets the shared red icon-button look
    (white glyph on dark red, darker on hover) from button[icon].red */
 .editorModule .lineStopList button.lineRemoveStop {

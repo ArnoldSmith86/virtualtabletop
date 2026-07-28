@@ -143,6 +143,44 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
 });
 
+test('A holder picks what it accepts in the dropTarget editor', async t => {
+  await setRoomState({
+    deck:   { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const dropTarget = ClientFunction(() => JSON.stringify(widgets.get('holder').get('dropTarget')));
+
+  // a holder takes cards until it is told otherwise - the match rows say so
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_holder')
+    .expect(Selector('#editorModules .widgetHeaderType').innerText).contains('Holder')
+    .expect(Selector('#editorModules .dropTargetType').value).eql('type:card');
+
+  // the deck shortcut above the rows narrows that down to one deck, and shows
+  // up as a match row like any other
+  await t
+    .click(Selector('#editorModules .dropTargetDecks .widgetSelectionButton').nth(0))
+    .expect(dropTarget()).eql('{"deck":"deck"}')
+    .expect(Selector('#editorModules .dropTargetProperty').value).eql('deck');
+
+  // a second match lets something in that is not a card at all
+  await t
+    .click('#editorModules .dropTargetAddMatch')
+    .click(Selector('#editorModules .dropTargetType').nth(1))
+    .click(Selector('#editorModules .dropTargetType').nth(1).find('option').withAttribute('value', 'type:dice'))
+    .expect(dropTarget()).eql('[{"deck":"deck"},{"type":"dice"}]');
+
+  // clicking the selected deck again takes its match back out
+  await t
+    .click(Selector('#editorModules .dropTargetDecks .widgetSelectionButton').nth(0))
+    .expect(dropTarget()).eql('{"type":"dice"}');
+});
+
 test('A pile is edited through its handle, css through declaration rows', async t => {
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
