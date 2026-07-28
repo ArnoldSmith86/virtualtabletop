@@ -229,6 +229,531 @@ test('Create game using edit mode', async t => {
   await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
 });
 
+test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+  const getCardTypes = ClientFunction(deckID => JSON.stringify(widgets.get(deckID).get('cardTypes')));
+
+  const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
+  await t
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click('#deckEditorStripAdd')                     // add a card type
+    .click(deckNode)                                  // select the deck
+    .click('#deckEditorTreeAdd')                      // deck "+" adds a new (empty) face, now selected
+    .click('#deckEditorTreeAdd')                      // face "+" reveals the add-object controls
+    .click('#deckEditorAddMode input[value=dynamic]') // add per-card-type objects (seeds a card type property)
+    .click('#deckEditorAddText')                      // add the text object (auto-selected)
+    .pressKey('delete'); // deletes the object; its seeded card type property is deliberately KEPT (see below)
+  // Regression: deleting a face object's last visual binding must NOT auto-delete the card type property it
+  // used, since routines / SELECT / CSS can reference it independently of face rendering.
+  await t.expect(getCardTypes(deckID)).contains('"text":"Text"');
+  await t
+    .click(deckNode)                                  // select the deck again
+    .click('#deckEditorTreeAdd')                      // deck "+" adds another new face (now selected)
+    .setNativeDialogHandler(() => true)
+    .click('#deckEditorTreeDelete')                   // delete the just-added (current) face
+    .pressKey('esc') // closes the deck editor, since no face object is selected at this point
+    .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
+  await compareState(t, '3e20074150f78219095df84abeeb74dc');
+});
+
+test('Deck editor: symbol pickers and JSON fallback', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+  const getObjectTypeCounts = ClientFunction(deckID => {
+    const objects = widgets.get(deckID).get('faceTemplates').flatMap(face => face.objects || []);
+    return {
+      image: objects.filter(object => object.type == 'image').length,
+      icon: objects.filter(object => object.type == 'icon').length
+    };
+  });
+  const getJSONText = ClientFunction(() => document.querySelector('#jeText').textContent);
+
+  await t
+    .click('#topSurface', { offsetX: 10, offsetY: 10 })
+    .click('#editorToolbar [icon=style]')
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorAddImage')
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .click(Selector('#symbolList .gameicons').nth(0))
+    .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
+    .click('#deckEditorAddIcon')
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .click(Selector('#symbolList .material-symbols').nth(0))
+    .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 1 });
+
+  await t
+    .click('#editorSidebar [icon=data_object]')
+    .expect(getJSONText()).contains(deckID)
+    .click('#editorSidebar [icon=data_object]')
+    .pressKey('esc')
+    .pressKey('esc');
+  await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
+});
+
+test('Deck editor: breadcrumb undo and redo', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+
+  const editTextAndUndoImmediately = ClientFunction(() => {
+    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    let input = null;
+    for(let i=0; i<rows.length; ++i)
+      if(rows[i].querySelector('label').textContent == 'value')
+        input = rows[i].querySelector('input');
+    input.value = 'Changed before debounce';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('#deckEditorUndo').click();
+  });
+  const getHistoryLength = ClientFunction(() => document.querySelectorAll('#deckEditorBreadcrumb .deckEditorCrumb').length);
+  const getFirstObjectValue = ClientFunction(deckID => {
+    for(const face of widgets.get(deckID).get('faceTemplates'))
+      for(const object of face.objects || [])
+        if(object.type == 'text')
+          return object.value;
+    return null;
+  });
+
+  const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
+  await t
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click('#deckEditorStripAdd')  // step 1
+    .click(deckNode)                         // select the deck
+    .click('#deckEditorTreeAdd')             // step 2: deck "+" adds a face (now empty, selected)
+    .click('#deckEditorTreeAdd')             // reveal the add-object controls (UI only, not a history step)
+    .click('#deckEditorAddText');             // step 3
+  await t.expect(getHistoryLength()).eql(4);
+  await editTextAndUndoImmediately();         // flushes and undoes pending step 4, before its 500ms timer fires
+  await t
+    .expect(getFirstObjectValue(deckID)).eql('Text')
+    .click('#deckEditorUndo')                 // undo step 3 (the added object)
+    .click('#deckEditorRedo')                 // restore and then remove it again to exercise redo without changing the old final state
+    .click('#deckEditorUndo')
+    .pressKey('esc');
+  await compareState(t, '0fe0eb8554cd82ec74d0c2c99513dffa');
+});
+
+test('Deck editor: remote update preserves an unrelated pending edit', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+  const editAndReceiveRemoteChange = ClientFunction(deckID => {
+    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    let input = null;
+    for(let i=0; i<rows.length; ++i)
+      if(rows[i].querySelector('label').textContent == 'value')
+        input = rows[i].querySelector('input');
+    input.value = 'Pending local edit';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+
+    const cardTypes = JSON.parse(JSON.stringify(widgets.get(deckID).get('cardTypes')));
+    cardTypes['type 1'].receivedProperty = 'Remote value';
+    sendRawDelta({ s: { [deckID]: { cardTypes }}, c: 'Another player updated card types' });
+  });
+  const getEditedValues = ClientFunction(deckID => {
+    const deck = widgets.get(deckID);
+    let text = null;
+    for(const face of deck.get('faceTemplates'))
+      for(const object of face.objects || [])
+        if(object.type == 'text')
+          text = object.value;
+    return { text, receivedProperty: deck.get('cardTypes')['type 1'].receivedProperty };
+  });
+
+  const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
+  await t
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click('#deckEditorStripAdd')
+    .click(deckNode)
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorAddText');
+  await editAndReceiveRemoteChange(deckID);
+  await t
+    .expect(getEditedValues(deckID)).eql({ text: 'Pending local edit', receivedProperty: 'Remote value' })
+    .pressKey('esc');
+  await compareState(t, 'a2c9165768e325ccd6c8452f2194d314');
+});
+
+// Two different fields edited within one debounce window, then a structural action right after, must stay
+// three separate undo steps: undoing the added face must not revert the typed edits, and undoing once more
+// must revert only the second field.
+test('Deck editor: rapid cross-field edits stay separate undo steps', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+
+  const rapidEditsThenAddFace = ClientFunction(() => new Promise(resolve => {
+    const setField = (label, value) => {
+      const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+      for(const row of rows) {
+        if(row.querySelector('label').textContent == label) {
+          const input = row.querySelector('input');
+          input.value = value;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          return;
+        }
+      }
+    };
+    setField('value', 'RapidValue');
+    setTimeout(() => { // second field well within the first field's 500ms debounce window
+      setField('fontSize', '55');
+      setTimeout(() => { // structural action while the second field's commit is still pending
+        document.querySelector('#deckEditorTree .deckEditorTreeDeck').click(); // select the deck, then add a face
+        document.querySelector('#deckEditorTreeAdd').click();
+        setTimeout(resolve, 200);
+      }, 50);
+    }, 50);
+  }));
+  const getTextObject = ClientFunction(deckID => {
+    for(const face of widgets.get(deckID).get('faceTemplates'))
+      for(const object of face.objects || [])
+        if(object.type == 'text')
+          return { value: object.value, fontSize: object.fontSize };
+    return null;
+  });
+  const getFaceCount = ClientFunction(deckID => widgets.get(deckID).get('faceTemplates').length);
+
+  await t
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click('#deckEditorStripAdd')
+    .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(0)) // select the existing object
+    .click('#deckEditorTreeAdd')                                    // reveal the add-object controls
+    .click('#deckEditorAddText');
+  await rapidEditsThenAddFace();
+  await t
+    .expect(getFaceCount(deckID)).eql(3)
+    .click('#deckEditorUndo') // reverts only the added face
+    .expect(getFaceCount(deckID)).eql(2)
+    .expect(getTextObject(deckID)).eql({ value: 'RapidValue', fontSize: 55 })
+    .click('#deckEditorUndo') // reverts only the fontSize edit
+    .expect(getTextObject(deckID)).eql({ value: 'RapidValue', fontSize: 20 })
+    .pressKey('esc');
+  await compareState(t, '6e41185d918e1b8dfe69610ff6f74e77');
+});
+
+// Regression test for the crash reported on switching games while a deck was being edited (the previously
+// selected deck/card no longer exists when the new state arrives). TestCafe fails the test on any uncaught
+// client error, so simply performing the switch guards against the crash coming back.
+test('Deck editor: switching games while editing does not crash', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+
+  await t
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click('#deckEditorStripAdd'); // make a change, leaving the deck editor open
+
+  // Simulate switching to another game: replace the whole room state. The deck being edited disappears.
+  await setRoomState({ switchedLabel: { id: 'switchedLabel', type: 'label', x: 100, y: 100, text: 'Another game' } });
+
+  // The deck editor must have closed and the client must still be alive and interactive.
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await compareState(t, 'fa933ba639405309b6cf6aef448bfeb4');
+});
+
+// Covers creating a deck from the Properties tab radio option and the newer sidebar features: deleting all
+// faces and adding a color box to a faceless deck (auto-creates the face), one-click per-card-type
+// conversion, face border/radius editing, per-row property deletion and cardDefaults editing with undo.
+// Also guards against Escape leaking to the room editor behind the deck editor (it used to toggle the
+// sidebar tab and could exit edit mode entirely).
+test('Deck editor: create deck from scratch with color box, face and defaults', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // All sidebar sections share the same row markup; find a row by its section header and label text. Scan every
+  // sibling up to the next header (an image object puts its Upload button between the header and the rows).
+  const findRow = (header, label) => {
+    const headers = document.querySelectorAll('#deckEditorSidebar header');
+    for(let i = 0; i < headers.length; ++i) {
+      if(headers[i].querySelector('h2').textContent != header)
+        continue;
+      for(let el = headers[i].nextElementSibling; el && el.tagName != 'HEADER'; el = el.nextElementSibling) {
+        const rows = el.querySelectorAll('.genericInput');
+        for(let j = 0; j < rows.length; ++j)
+          if(rows[j].querySelector('label').textContent == label)
+            return rows[j];
+      }
+    }
+    return null;
+  };
+  // Card defaults rows are fixed-type inputs now (no per-row type dropdown); width/height are number fields.
+  const setField = ClientFunction((header, label, value) => {
+    const row = findRow(header, label);
+    if(!row)
+      return false;
+    const input = row.querySelector('input');
+    input.value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    return true;
+  }, { dependencies: { findRow } });
+  // The "Entire face" band uses plain number inputs (border/radius/enlarge), not the generic dropdown rows.
+  const setNumberField = ClientFunction((header, label, value) => {
+    const headers = document.querySelectorAll('#deckEditorSidebar header');
+    for(let i = 0; i < headers.length; ++i) {
+      if(headers[i].querySelector('h2').textContent != header)
+        continue;
+      const rows = headers[i].nextElementSibling.querySelectorAll('.deckEditorNumberInput');
+      for(let j = 0; j < rows.length; ++j)
+        if(rows[j].querySelector('label').textContent == label) {
+          const input = rows[j].querySelector('input');
+          input.value = value;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          return true;
+        }
+    }
+    return false;
+  });
+  const clickRowButton = ClientFunction((header, label, buttonSelector) => {
+    const row = findRow(header, label);
+    const button = row && row.querySelector(buttonSelector);
+    if(!button)
+      return false;
+    button.click();
+    return true;
+  }, { dependencies: { findRow } });
+  // Entire-face properties (border/radius/enlarge/custom) are rows only while present; add one via the section's
+  // "add property" control (the first .deckEditorAddProperty). border/radius are forced to numbers on the face.
+  const addFaceProperty = ClientFunction(name => {
+    const add = document.querySelectorAll('#deckEditorSidebar .deckEditorAddProperty')[0];
+    if(!add)
+      return false;
+    add.querySelector('input').value = name;
+    add.querySelector('button').click();
+    return true;
+  });
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#editor .noSelectionButton[icon=style]') // "Open deck editor": opens the empty editor (no auto-created deck)
+    .click('#deckEditorAddDeck')                     // Add New Deck submenu (defaults to the Empty deck option)
+    .click('#deckEditorNewDeckPanel button')         // "Create empty deck" -> creates a starter deck and opens it
+    .setNativeDialogHandler(() => true)
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete a face
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete the other -> faceless deck
+    .click('#deckEditorTreeAdd')                    // faceless deck: reveal the add-object controls
+    .click('#deckEditorAddColor');                  // no faces left: auto-creates the first face
+  // the color box is selected: bind its color to a new "color" card-type property via the Dynamic properties
+  // Link control (the per-row split button was removed; both sides are type-or-pick comboboxes)
+  await t
+    .typeText('.deckEditorAddBinding .objectProperty', 'color')
+    .typeText('.deckEditorAddBinding .typeProperty', 'color')
+    .click('.deckEditorAddBindingButton');
+  // The add-property type selector's "color" option seeds the row with a color value, so it gets the swatch +
+  // color picker right away even though the property is not named after a color.
+  const addObjectProperty = ClientFunction((name, type) => {
+    const add = document.querySelectorAll('#deckEditorSidebar .deckEditorAddProperty')[0];
+    if(!add)
+      return false;
+    add.querySelector('input').value = name;
+    add.querySelector('select').value = type;
+    add.querySelector('button').click();
+    return true;
+  });
+  const rowHasColorPicker = ClientFunction(label => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .genericInput');
+    for(let i = 0; i < rows.length; ++i)
+      if(rows[i].querySelector('label').textContent == label)
+        return rows[i].classList.contains('hasColorPicker');
+    return false;
+  });
+  await t.expect(addObjectProperty('background', 'color')).ok();
+  await t.expect(rowHasColorPicker('background')).ok();
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  await t.pressKey('esc'); // deselect the object -> the sidebar falls back to the object's face
+  // The sidebar's tab bar follows the selection and switches the scope being edited: Escape just dropped the
+  // face object, so Face is showing. Object stays selectable (it offers the add-object "+" even without a
+  // selection) and then only says that nothing is selected.
+  const sidebarTab = id => Selector(`#deckEditorTab_${id}`);
+  const sidebarHeaders = ClientFunction(() => {
+    const titles = [];
+    const headers = document.querySelectorAll('#deckEditorSidebar header h2');
+    for(let i = 0; i < headers.length; ++i)
+      titles.push(headers[i].textContent);
+    return titles;
+  });
+  await t
+    .expect(sidebarTab('face').hasClass('active')).ok()
+    .expect(sidebarTab('object').hasAttribute('disabled')).notOk()
+    .expect(sidebarHeaders()).eql([ 'Entire face properties' ])
+    .click(sidebarTab('object'))
+    .expect(sidebarHeaders()).eql([])
+    .expect(Selector('#deckEditorSidebar p.deckEditorSectionNote').exists).ok()
+    // add / copy / delete of the active scope are repeated at the top of the tab; without a selected object
+    // only the "+" is usable
+    .expect(Selector('#deckEditorSidebar .deckEditorSidebarToolbar button').nth(0).hasAttribute('disabled')).notOk()
+    .expect(Selector('#deckEditorSidebar .deckEditorSidebarToolbar button').nth(1).hasAttribute('disabled')).ok()
+    .click(sidebarTab('cardType'))
+    .expect(sidebarHeaders()).eql([ 'Card type properties' ])
+    .click(sidebarTab('face'));
+  await t.expect(addFaceProperty('radius')).ok(); // radius is a row only once added
+  await t.expect(setNumberField('Entire face properties', 'radius', 8)).ok();
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  // edit the card defaults, which live on the "All Cards" tab
+  await t.click(sidebarTab('defaults'));
+  await t.expect(setField('Card defaults', 'width', 120)).ok();
+  await t.wait(700); // let the debounced cardDefaults commit fire
+  await t.expect(clickRowButton('Card defaults', 'width', '.deckEditorDeleteProperty')).ok();
+  await t.click('#deckEditorUndo'); // restores the deleted width
+  await t.click('#deckEditorStripCopy'); // copies "type 1" (still current) including its color property
+  await t.pressKey('esc');          // closes the deck editor - and only the deck editor
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
+  await compareState(t, 'eb956b82d7fcbdea9ddeaeda95ece571');
+});
+
+test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck'); // the added deck is selected, so the toolbar button opens it
+
+  const toolbarButton = Selector('#editorToolbar .editorToolbarButton button[icon=style]');
+
+  // open via the toolbar toggle button
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.expect(toolbarButton.hasClass('active')).ok();
+  await t.expect(Selector('#deckEditorClose').exists).notOk(); // the old Close button is gone
+
+  // close via the same button
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(toolbarButton.hasClass('active')).notOk();
+
+  // reopen and turn "Card view" off: the card stage hides and the room shows through it, while the tree,
+  // property sidebar and card type strip stay on screen
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.click('#deckEditorCardView');
+  await t
+    .expect(Selector('body').hasClass('deckEditorRoomVisible')).ok()
+    .expect(Selector('#deckEditorCardView').hasClass('active')).notOk()
+    .expect(Selector('#deckEditorMain').visible).notOk()
+    .expect(Selector('#deckEditorSidebar').visible).ok();
+  await t.click('#deckEditorCardView');
+  await t
+    .expect(Selector('body').hasClass('deckEditorRoomVisible')).notOk()
+    .expect(Selector('#deckEditorCardView').hasClass('active')).ok()
+    .expect(Selector('#deckEditorMain').visible).ok();
+
+  // close with Escape -> the button must deactivate too
+  await t.pressKey('esc');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(toolbarButton.hasClass('active')).notOk();
+});
+
+// With no deck in the game, the toolbar button creates a starter deck (like the Properties tab option) and
+// opens it, instead of doing nothing.
+test('Deck editor: toolbar button opens an empty editor when the game has none', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const deckCount = ClientFunction(() => {
+    let count = 0;
+    widgets.forEach(w => { if(w.get('type') == 'deck') count++; });
+    return count;
+  });
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]'); // no deck exists yet
+  await t
+    .expect(Selector('body').hasClass('deckEditorActive')).ok()  // the editor opens...
+    .expect(deckCount()).eql(0)      // ...but no deck is auto-created
+    .pressKey('esc')
+    .expect(Selector('body').hasClass('deckEditorActive')).notOk();
+});
+
 test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();
