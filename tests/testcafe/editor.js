@@ -819,3 +819,61 @@ test('Line widget in edit mode', async t => {
   // random, so the compared state no longer depends on the seeded rand() stream
   await compareState(t, 'd35bd7362c7e87ea9ecb29895cc8d0b9');
 });
+
+// A stop does not have to be a child of the line, and one that is not gets
+// placed through global coordinates - which read the CSS transforms out of the
+// DOM. Moving the city the route is connected to moves the line's box in the
+// same batch, so without a flush the stops are laid out in the frame the line
+// had before the move and end up off the path by exactly that move.
+test('Line stops that are not children of the line', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    cityA: { id: 'cityA', type: 'basic', x: 100, y: 300, width: 40, height: 40 },
+    cityB: { id: 'cityB', type: 'basic', x: 600, y: 300, width: 40, height: 40 },
+    // the cars start out exactly where the line puts them: on the straight path
+    // from city to city, at 33% and 67% of its length
+    car1:  { id: 'car1',  type: 'basic', x: 255, y: 308, width: 60, height: 24, movable: false },
+    car2:  { id: 'car2',  type: 'basic', x: 425, y: 308, width: 60, height: 24, movable: false },
+    route: {
+      id: 'route', type: 'line', autoSpaceStops: false,
+      lineStart: { x: 120, y: 320 }, lineEnd: { x: 620, y: 320 },
+      connectStart: { line: 'cityA', position: 0.5 },
+      connectEnd: { line: 'cityB', position: 0.5 },
+      stops: [ { widget: 'car1', position: 0.33 }, { widget: 'car2', position: 0.67 } ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  // entering edit mode is what puts the engine on window for the checks below
+  await t.click('#editButton');
+
+  // every mouse event of a drag is one batch, so move the city as one: the delta
+  // - and with it the line's new box - only reaches the DOM once it ends
+  const moveCity = ClientFunction((dx, dy) => {
+    const city = widgets.get('cityA');
+    batchStart();
+    return city.set('x', city.get('x')+dx)
+      .then(_=>city.set('y', city.get('y')+dy))
+      .then(_=>batchEnd());
+  });
+
+  // how far the stops sit from where the line's own layout puts them - the whole
+  // point of a stop is that it rides on the path, so this has to stay 0
+  const stopsOffPath = ClientFunction(() => {
+    const line = widgets.get('route');
+    return Math.max(...line.stopList().map(entry => {
+      const stop = widgets.get(entry.widget);
+      const p = line.stopCoordInParentFrame(stop, line.pointAtPosition(entry.position));
+      return Math.max(
+        Math.abs(Math.round(p.x - stop.get('width')/2) - stop.get('x')),
+        Math.abs(Math.round(p.y - stop.get('height')/2) - stop.get('y'))
+      );
+    }));
+  });
+
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(120, -90);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(-120, 90);
+  await t.expect(stopsOffPath()).eql(0);
+});

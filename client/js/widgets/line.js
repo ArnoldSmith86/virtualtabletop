@@ -295,14 +295,28 @@ export class Line extends Widget {
     }
   }
 
+  // A stop outside the line is placed through global coordinates, which read the
+  // CSS transforms of this line and its parents. Inside a batch those still show
+  // the state of the previous event, so after normalizeGeometry moved the box -
+  // which is what positionAttachedWidgets runs on - every stop would land off
+  // the path by exactly that move. Same reason applyConnections flushes. Only a
+  // transform change can make them stale, so a re-space - which rewrites nothing
+  // but the stops and their own x/y - costs one flush instead of one per pass.
+  flushStaleTransforms() {
+    if(!this.hasExternalStops())
+      return;
+    const chain = [];
+    for(let w = this; w; w = widgets.get(w.get('parent')))
+      chain.push(w.id, ...w.cssTransformProperties().map(property=>w.get(property)));
+    const transforms = chain.join();
+    if(transforms == this.flushedTransforms)
+      return;
+    flushDelta();
+    this.flushedTransforms = transforms;
+  }
+
   async positionAttachedWidgets() {
-    // A stop outside the line is placed through global coordinates, which read
-    // this line's CSS transform. Inside a batch that still shows the state of
-    // the previous event, so after normalizeGeometry moved the box - which is
-    // what the layout below runs on - every stop would land off the path by
-    // exactly that move. Same reason applyConnections flushes.
-    if(this.hasExternalStops())
-      flushDelta();
+    this.flushStaleTransforms();
     for(const entry of this.stopList()) {
       const stop = widgets.get(entry.widget);
       const p = this.stopCoordInParentFrame(stop, this.pointAtPosition(entry.position));
