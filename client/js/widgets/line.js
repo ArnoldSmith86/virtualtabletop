@@ -298,40 +298,37 @@ export class Line extends Widget {
   // A stop outside the line is placed through global coordinates, which read the
   // CSS transforms of the frames it converts between. Inside a batch those show
   // the state of the previous event, so after normalizeGeometry moved the box -
-  // which is what positionAttachedWidgets runs on - every stop would land off
-  // the path by exactly that move. Same reason applyConnections flushes. Only a
-  // transform change can make them stale, so a re-space - which rewrites nothing
-  // but the stops and their own x/y - costs one flush instead of one per pass.
-  flushStaleTransforms() {
-    if(!this.hasExternalStops())
-      return;
-    const transforms = this.stopFrameTransforms();
-    if(transforms == this.flushedTransforms)
-      return;
-    flushDelta();
-    this.flushedTransforms = transforms;
+  // which is what positionAttachedWidgets runs on - the stop would land off the
+  // path by exactly that move. Same reason applyConnections flushes. Asking the
+  // DOM whether it still matches the state - rather than remembering what was
+  // flushed before - also covers a frame that was flushed by something else in
+  // the batch and changed again since, and still costs no flush at all for a
+  // re-space, which rewrites nothing but the stops and their own x/y.
+  flushStaleTransforms(stop) {
+    if(this.stopFrames(stop).some(frame=>frame.domElement.style.transform != frame.cssTransform()))
+      flushDelta();
   }
 
   // stopCoordInParentFrame converts through two chains of DOM transforms: this
-  // line up to the room, and the same for the parent each external stop is
-  // placed in. Either going stale inside a batch displaces the stop, so both
-  // sides go into the snapshot flushStaleTransforms compares against.
-  stopFrameTransforms() {
-    const frames = [ this, ...this.attachedWidgets().map(stop=>widgets.get(stop.get('parent'))) ];
-    const seen = new Set();
-    const chain = [];
-    for(const frame of frames)
-      for(let w = frame; w && !seen.has(w.id); w = widgets.get(w.get('parent'))) {
-        seen.add(w.id);
-        chain.push(w.id, ...w.cssTransformProperties().map(property=>w.get(property)));
-      }
-    return chain.join();
+  // line up to the room, and the same for the parent the stop is placed in.
+  // Either going stale inside a batch displaces the stop. A stop that is a child
+  // of the line is never converted, so it reads no transform at all.
+  stopFrames(stop) {
+    if(stop.get('parent') == this.id)
+      return [];
+    const frames = [];
+    for(const start of [ this, widgets.get(stop.get('parent')) ])
+      for(let w = start; w && !frames.includes(w); w = widgets.get(w.get('parent')))
+        frames.push(w);
+    return frames;
   }
 
   async positionAttachedWidgets() {
-    this.flushStaleTransforms();
     for(const entry of this.stopList()) {
       const stop = widgets.get(entry.widget);
+      // per stop, because the x/y this loop writes are themselves unflushed and
+      // one stop can be (inside) the frame another stop is placed in
+      this.flushStaleTransforms(stop);
       const p = this.stopCoordInParentFrame(stop, this.pointAtPosition(entry.position));
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
       await stop.set('y', Math.round(p.y - stop.get('height')/2));

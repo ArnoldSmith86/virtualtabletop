@@ -844,6 +844,15 @@ test('Line stops that are not children of the line', async t => {
       connectStart: { line: 'cityA', position: 0.5 },
       connectEnd: { line: 'cityB', position: 0.5 },
       stops: [ { widget: 'car1', position: 0.33 }, { widget: 'car3', position: 0.5 }, { widget: 'car2', position: 0.67 } ]
+    },
+    // a second line between the same two cities, without stops of its own: it is
+    // only here to flush the delta in the middle of a batch, the way every
+    // connected line does
+    route2: {
+      id: 'route2', type: 'line',
+      lineStart: { x: 120, y: 340 }, lineEnd: { x: 620, y: 340 },
+      connectStart: { line: 'cityA', position: 0.5 },
+      connectEnd: { line: 'cityB', position: 0.5 }
     }
   });
   await ClientFunction(prepareClient)();
@@ -888,6 +897,26 @@ test('Line stops that are not children of the line', async t => {
       .then(_=>batchEnd());
   });
 
+  // the same, except the frame ends the batch where it started - with another
+  // line flushing while it is displaced. Nothing about this line or the holder
+  // has changed by the time the stops are laid out, but the DOM now holds the
+  // displaced transform, so only asking the DOM catches it.
+  const displaceHolderAndLayOutStops = ClientFunction((dx, dy, rotate) => {
+    const holder = widgets.get('holder');
+    batchStart();
+    return holder.set('x', holder.get('x')+dx)
+      .then(_=>holder.set('y', holder.get('y')+dy))
+      .then(_=>widgets.get('route2').applyConnections())
+      .then(_=>holder.set('x', holder.get('x')-dx))
+      .then(_=>holder.set('y', holder.get('y')-dy))
+      .then(_=>widgets.get('route').set('rotateStops', rotate))
+      .then(_=>batchEnd());
+  });
+
+  // a stop can be the frame another stop is placed in, and then the transform
+  // car3 is converted through is one the same pass has just written
+  const holderBecomesAStop = ClientFunction(() => widgets.get('route').addStop('holder', 0.15));
+
   await t.expect(stopsOffPath()).eql(0);
   await moveCity(120, -90);
   await t.expect(stopsOffPath()).eql(0);
@@ -896,5 +925,13 @@ test('Line stops that are not children of the line', async t => {
   await moveHolderAndLayOutStops(70, -40, false);
   await t.expect(stopsOffPath()).eql(0);
   await moveHolderAndLayOutStops(-70, 40, true);
+  await t.expect(stopsOffPath()).eql(0);
+  await displaceHolderAndLayOutStops(60, -30, false);
+  await t.expect(stopsOffPath()).eql(0);
+  await displaceHolderAndLayOutStops(-60, 30, true);
+  await t.expect(stopsOffPath()).eql(0);
+  await holderBecomesAStop();
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(90, -60);
   await t.expect(stopsOffPath()).eql(0);
 });
