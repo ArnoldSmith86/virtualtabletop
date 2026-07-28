@@ -72,6 +72,23 @@ async function widgetExists(id) {
   return Object.keys(JSON.parse(await getState())).indexOf(id) != -1;
 }
 
+async function widgetPosition(id) {
+  const widget = JSON.parse(await getState())[id];
+  return [ widget.x, widget.y ];
+}
+
+// the click routine keeps running after the mouse button was released, so mouse
+// movements arriving while it waits must not be treated as a drag of the button
+function delayRoom() {
+  return {
+    delay: { id: 'delay', type: 'button', text: 'delay', x: 100, y: 100, width: 200, height: 100, movable: true, clickRoutine: [
+      { func: 'DELAY', milliseconds: 1000 },
+      { func: 'SET', collection: 'thisButton', property: 'marked', value: true }
+    ] },
+    far: { id: 'far', type: 'basic', x: 1200, y: 700, width: 200, height: 200 }
+  };
+}
+
 async function clickSwap(t, clickRoutine) {
   await setRoomState(swapHandsRoom(clickRoutine));
   await ClientFunction(prepareClient)();
@@ -113,4 +130,14 @@ test('SWAPHANDS does not pass on a card that a routine of an earlier move remove
   await expectEventually(t, ()=>widgetExists('doomed'), false);
   await expectEventually(t, ()=>cardsInHand('hand1'), []);
   await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+test('moving the mouse while a DELAY is running does not drag the clicked widget', async t => {
+  await setRoomState(delayRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_delay');
+  await t.hover('#w_far');
+  await expectEventually(t, markedWidgets, [ 'delay' ]);
+  await expectEventually(t, ()=>widgetPosition('delay'), [ 100, 100 ]);
 });

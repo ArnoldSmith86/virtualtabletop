@@ -60,16 +60,19 @@ async function inputHandler(name, e) {
   else if(name == 'mousemove' || name == 'mouseup')
     target = mouseTarget;
 
+  // The handlers below await routines which can run for a long time (DELAY,
+  // INPUT, ...). Forget the drag target right away so mouse movements arriving
+  // while such a routine is still running don't get treated as a drag.
+  if(name == 'mouseup')
+    mouseTarget = null;
+
   if(target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
     // A widget can be replaced while an input event is still in flight (for
     // example, immediately after its ID is renamed in the properties editor).
     // The saved mouse target then refers to a removed DOM node, not a widget.
-    if(!widget) {
-      if(name == 'mouseup')
-        mouseTarget = null;
+    if(!widget)
       return;
-    }
     batchStart();
     if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
       if(name == 'mousedown' || name == 'touchstart') {
@@ -103,6 +106,7 @@ async function inputHandler(name, e) {
       }
     } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
+      delete mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
       if(ms.status != 'initial' && ms.moveTarget) {
@@ -140,8 +144,7 @@ async function inputHandler(name, e) {
           }
         }
       }
-      delete mouseStatus[target.id];
-    } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
+    } else if((name == 'mousemove' || name == 'touchmove') && mouseStatus[target.id]) {
       setDeltaCause(`${playerName} dragged ${widget.id}`);
       if(mouseStatus[target.id].status == 'initial') {
         mouseStatus[target.id].status = 'moving';
@@ -156,9 +159,6 @@ async function inputHandler(name, e) {
     }
     batchEnd();
   }
-
-  if(name == 'mouseup')
-    mouseTarget = null;
 
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
