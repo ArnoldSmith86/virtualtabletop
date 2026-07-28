@@ -17,7 +17,10 @@
 //                   Be conservative: a false positive keeps the old (working) behavior, a
 //                   false negative breaks someone's game.
 //   label         - the checkbox caption in the Game Settings sidebar.
-//   description   - the HTML shown below the checkbox.
+//   summary       - one line, shown below the checkbox. What changed, in the fewest words.
+//   description   - the HTML shown when the reader opens the tile's Details disclosure. Keep
+//                   the vocabulary of the existing entries (Old behavior / New behavior /
+//                   Example) so the panel reads as one document.
 //
 // This module is imported by the server (server/fileupdater.mjs) as well as by the client
 // bundle, so it must stay free of browser globals.
@@ -29,10 +32,11 @@ export const LEGACY_MODES = {
     interactsWith: [ 'useOneAsDefaultForVarParameters' ],
     detect: state => /"var |COMPUTE/.test(JSON.stringify(state)),
     label: 'Convert numeric var parameters to numbers',
+    summary: 'Strings that consist of only digits become numbers in var expressions.',
     description: `
-      <b>Problem</b>: Whenever you used a string in a var expression that consisted of only digits, it was converted to a number.
+      <b>Old behavior</b>: Whenever you used a string in a var expression that consisted of only digits, it was converted to a number.
       <br><br>
-      A common pitfall was storing a widget <code>id</code> in an array and later trying to <code>SELECT</code> it using the stored <code>id</code>. Because <code>id</code>s are randomly generated alphanumeric strings, this would fail for some unlucky widgets that received an all numeric <code>id</code>.
+      <b>New behavior</b>: Such a string stays a string.
       <br><br>
       <b>Example:</b>
       <br>
@@ -40,8 +44,10 @@ export const LEGACY_MODES = {
       <br>
       <code>var a = push '1'</code>
       <br><br>
-      <b>Old result</b>: <code>[1]</code><br>
-      <b>New result</b>: <code>['1']</code>
+      Old result: <code>[1]</code><br>
+      New result: <code>['1']</code>
+      <br><br>
+      A common pitfall was storing a widget <code>id</code> in an array and later trying to <code>SELECT</code> it using the stored <code>id</code>. Because <code>id</code>s are randomly generated alphanumeric strings, this would fail for some unlucky widgets that received an all numeric <code>id</code>.
       `
   },
   useOneAsDefaultForVarParameters: {
@@ -50,15 +56,18 @@ export const LEGACY_MODES = {
     interactsWith: [ 'convertNumericVarParametersToNumbers' ],
     detect: state => /"var |COMPUTE/.test(JSON.stringify(state)),
     label: 'Use 1 as default for var parameters',
+    summary: 'Parameters you leave out of a var function call default to 1.',
     description: `
-      <b>Problem</b>: When you called a function in a var expression, every parameter not provided was set to <code>1</code>.
+      <b>Old behavior</b>: When you called a function in a var expression, every parameter not provided was set to <code>1</code>.
+      <br><br>
+      <b>New behavior</b>: A missing parameter is left empty and reported as an error.
       <br><br>
       <b>Example:</b>
       <br>
       <code>var a = +</code>
       <br><br>
-      <b>Old result</b>: <code>2</code><br>
-      <b>New result</b>: <code>0</code> and an error message
+      Old result: <code>2</code><br>
+      New result: <code>0</code> and an error message
       `
   },
   useIframeForHtmlCards: {
@@ -76,10 +85,11 @@ export const LEGACY_MODES = {
       return false;
     },
     label: 'Use iframes for card face HTML objects',
+    summary: 'HTML objects on card faces are rendered inside an iframe.',
     description: `
-      <b>Legacy Behavior</b>: Card face objects with <code>type: 'html'</code> are rendered in an iframe. This behavior is used for older games and can be enabled by checking this box.
+      <b>Old behavior</b>: Card face objects with <code>type: 'html'</code> are rendered in an iframe, which isolates their CSS but is slower.
       <br><br>
-      <b>Default Behavior</b>: These objects are rendered directly into the DOM which should be faster and easier to work with. This is the default for new games and is used when this box is unchecked.
+      <b>New behavior</b>: These objects are rendered directly into the DOM, which is faster and easier to work with. This is the default for new games.
       `
   },
   disableHolderImageWidget: {
@@ -96,11 +106,11 @@ export const LEGACY_MODES = {
       return false;
     },
     label: 'Disable holder image support',
+    summary: 'Holders ignore their image, icon and text properties.',
     description: `
-      <b>Problem</b>: Holders now support image, icon, and text properties natively, but some games manually implemented this functionality before it was supported and may break with the new behavior.
+      <b>Old behavior</b>: Holders did not display image, icon or text properties themselves, so games that wanted them built the look out of other widgets.
       <br><br>
-      <b>Old behavior</b>: Holders did not natively support image/icon/text properties, requiring manual workarounds.<br>
-      <b>New behavior</b>: Holders support image, icon, and text properties directly.
+      <b>New behavior</b>: Holders display image, icon and text properties directly. Games that built those manual workarounds can look broken because both are drawn at once.
       <br><br>
       This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
       `
