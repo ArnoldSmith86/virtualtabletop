@@ -47,8 +47,8 @@ onLoad(function() {
       error: String(error.message) + '\n' + String(error.stack),
       undoProtocol,
       delta,
-      mouseStatus,
-      mouseTarget,
+      mouseStatus: Object.fromEntries(Object.entries(mouseStatus).map(([id, ms]) => [id, {...ms, moveTarget: ms.moveTarget ? ms.moveTarget.get('id') : null}])),
+      mouseTarget: mouseTarget && mouseTarget.id ? unescapeID(mouseTarget.id.slice(2)) : null,
       jeLoggingData: typeof jeLoggingRoutineGetData == 'function' ? jeLoggingRoutineGetData() : null,
       lastExecutedOperation,
       bodyClass: $('body').className,
@@ -69,10 +69,21 @@ onLoad(function() {
     $('#clientErrorOverlay button').addEventListener('click', async function() {
       try {
         details.message = $('#clientErrorOverlay textarea').value;
+        const ancestors = [];
+        const body = JSON.stringify(details, function(key, value) {
+          if(typeof value != 'object' || value === null)
+            return value;
+          while(ancestors.length && ancestors[ancestors.length-1] != this)
+            ancestors.pop();
+          if(ancestors.includes(value))
+            return '[cyclic]';
+          ancestors.push(value);
+          return value;
+        });
         const res = await fetch('clientError', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(details)
+          body
         });
         const text = await res.text();
         if(text.match(/^[a-z0-9]{8}$/))

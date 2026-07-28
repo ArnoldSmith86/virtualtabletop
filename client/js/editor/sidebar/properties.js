@@ -772,6 +772,7 @@ const editorTypeNames = {
   dice: 'Dice',
   holder: 'Holder',
   label: 'Label',
+  line: 'Line',
   pile: 'Pile',
   scoreboard: 'Scoreboard',
   seat: 'Seat',
@@ -1024,6 +1025,7 @@ class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.widgetPicker = null;
+    this.renderedSelectionIDs = null;
     this.collapsibleStates = {};
     // CSS editor: sections switched to text editing, and the declarations
     // switched off with their checkbox (kept for the editing session only, so
@@ -1037,6 +1039,9 @@ class PropertiesModule extends SidebarModule {
     // per pile: the corner its handle had before it was pinned to the top left
     this.lastPileHandlePosition = new Map();
     this.sizeRatioLocks = new WeakMap();
+    // per line: the widget new stops inherit from. Kept outside the panel because
+    // picking a widget in the room re-selects the line and re-renders the panel.
+    this.lineStopInheritIDs = {};
   }
 
   startWidgetPicker(targetWidgetID, onPick, options = {}) {
@@ -1400,6 +1405,15 @@ class PropertiesModule extends SidebarModule {
     this.cssDisabledDeclarations.clear();
     this.cssPendingDeclarations.clear();
     this.cssPendingFocus = null;
+
+    // Re-rendering the very same widgets must not scroll the panel back to the
+    // top: picking a widget in the room re-selects the target, which lands here
+    // and would otherwise make the sidebar jump.
+    const selectionIDs = newSelection.map(widget=>widget.id).join(' ');
+    const keepScrollTop = selectionIDs === this.renderedSelectionIDs ? this.moduleDOM.scrollTop : null;
+    this.renderedSelectionIDs = selectionIDs;
+
+
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -1419,6 +1433,7 @@ class PropertiesModule extends SidebarModule {
         case 'dice':       this.renderForDice(widget);       break;
         case 'holder':     this.renderForHolder(widget);     break;
         case 'label':      this.renderForLabel(widget);      break;
+        case 'line':       this.renderForLine(widget);       break;
         case 'pile':       this.renderForPile(widget);       break;
         case 'scoreboard': this.renderForScoreboard(widget); break;
         case 'seat':       this.renderForSeat(widget);       break;
@@ -1432,6 +1447,9 @@ class PropertiesModule extends SidebarModule {
     } else {
       this.addDeck();
     }
+
+    if(keepScrollTop !== null)
+      this.moduleDOM.scrollTop = keepScrollTop;
   }
 
   // Merged editor for a multi-widget selection.
@@ -3733,21 +3751,15 @@ class PropertiesModule extends SidebarModule {
     ]);
   }
 
-  renderTypeHeader(widget) {
-    const type = widget.get('type') || 'basic';
-    // type in the header's accent color, id in the plain text color so the two
-    // are easy to tell apart
-    const header = div(this.moduleDOM, 'widgetHeader');
-    div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
-    const idArea = div(header, 'widgetHeaderId');
-    idArea.append('Widget id: ');
+  // Underlined, in-place rename affordance shared by the widget type header
+  // and any other place that needs to rename a widget by id (e.g. line stops).
+  createWidgetIdInput(widget, options = {}) {
     const idInput = document.createElement('input');
     idInput.type = 'text';
-    idInput.className = 'widgetHeaderIdInput';
+    idInput.className = options.className || 'widgetHeaderIdInput';
     idInput.value = widget.id;
-    idInput.title = 'Rename widget';
-    idInput.setAttribute('aria-label', 'Widget id');
-    idArea.appendChild(idInput);
+    idInput.title = options.title || 'Rename widget';
+    idInput.setAttribute('aria-label', options.ariaLabel || 'Widget id');
 
     idInput.onchange = async () => {
       const oldID = widget.id;
@@ -3775,8 +3787,8 @@ class PropertiesModule extends SidebarModule {
         state.id = newID;
         await updateWidgetId(state, oldID);
         const renamedWidget = widgets.get(newID);
-        if(renamedWidget)
-          setSelection([ renamedWidget ]);
+        if(renamedWidget && options.onRenamed)
+          options.onRenamed(renamedWidget);
       } catch(error) {
         alert(`Could not rename widget: ${error}`);
         idInput.value = oldID;
@@ -3792,6 +3804,36 @@ class PropertiesModule extends SidebarModule {
         idInput.blur();
       }
     };
+
+    return idInput;
+  }
+
+  renderTypeHeader(widget) {
+    const type = widget.get('type') || 'basic';
+    // type in the header's accent color, id in the plain text color so the two
+    // are easy to tell apart
+    const header = div(this.moduleDOM, 'widgetHeader');
+    div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
+    const idArea = div(header, 'widgetHeaderId');
+    idArea.append('Widget id: ');
+    const idInput = this.createWidgetIdInput(widget, {
+      onRenamed: renamedWidget => setSelection([ renamedWidget ])
+    });
+    idArea.appendChild(idInput);
+
+    // A line covered with stops is hard to click, so a widget attached to one
+    // gets a direct way back to the line it belongs to.
+    const parentID = widget.get('parent');
+    const parent = parentID && widgets.has(parentID) ? widgets.get(parentID) : null;
+    if(parent && parent.get('type') == 'line') {
+      const lineButton = document.createElement('button');
+      lineButton.className = 'widgetHeaderLineButton';
+      lineButton.setAttribute('icon', 'polyline');
+      lineButton.innerText = `Edit line ${parent.id}`;
+      lineButton.title = 'Select the line this widget is attached to';
+      lineButton.onclick = _=>setSelection([ parent ]);
+      div(header, 'widgetHeaderLine').appendChild(lineButton);
+    }
   }
 
   // A block whose body can be folded away by clicking the header.
@@ -7995,6 +8037,946 @@ class PropertiesModule extends SidebarModule {
           widget.applyDeltaToDOM({ css: widget.get('css') });
       }
     }).render(this.moduleDOM);
+  }
+
+  lineStopDefaults() {
+    return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: { type: null }, dropOffsetX: 2, dropOffsetY: 2 };
+  }
+
+  // The id for a stop about to be added at a position, derived from the stops
+  // already on the line by incrementing a trailing number the way the JSON
+  // editor does when it duplicates a widget. The two end stops are numbered
+  // separately from the intermediate ones, so inserting a stop in the middle
+  // never continues the end stops' series (and the other way round).
+  lineNextStopID(line, position) {
+    const stops = line.attachedWidgets();
+    const index = line.stopList().filter(entry=>entry.position <= position).length;
+    const isEndStop = index == 0 || index == stops.length;
+    const group = stops.filter((stop, i)=>(i == 0 || i == stops.length-1) == isEndStop);
+    const source = group.length ? group[group.length-1].id : null;
+    const match = source && source.match(/^(.*?)([0-9]+)([^0-9]*)$/);
+    const head = match ? match[1] : source || `${line.id}${isEndStop ? 'S' : 'M'}`;
+    const tail = match ? match[3] : '';
+    let number = match ? parseInt(match[2]) : 0;
+    let id = source || `${head}${number}${tail}`;
+    while(widgets.has(id))
+      id = `${head}${++number}${tail}`;
+    return id;
+  }
+
+  // move everything sitting on a stop back to the room so removing the stop doesn't delete it
+  async lineReleaseStopChildren(stop) {
+    for(const child of [ ...Widget.prototype.children.call(stop) ]) {
+      const x = Math.round(child.absoluteCoord('x'));
+      const y = Math.round(child.absoluteCoord('y'));
+      await child.set('parent', null);
+      await child.set('x', x);
+      await child.set('y', y);
+    }
+  }
+
+  // Inline popout (styled like the widget select popout) listing the saved
+  // widgets of the Widgets sidebar - server library and local storage - so one
+  // of them can be dropped onto the line as a stop. Placing goes through the
+  // sidebar's own code, so id remapping, deck/inheritFrom ordering and
+  // editorAddToRoomRoutine behave exactly as they do there.
+  renderLibraryStopPicker(wrap, line, lineEdit, onPlaced) {
+    const expandButton = document.createElement('button');
+    expandButton.className = 'propertyExpandButton';
+    expandButton.setAttribute('icon', 'expand_more');
+    expandButton.title = 'Select a saved widget';
+    wrap.appendChild(expandButton);
+
+    const popout = div(wrap, 'propertyPicker widgetSelectPopout');
+    popout.style.display = 'none';
+
+    let entries = null;
+    let searchTerm = '';
+
+    const place = async entry=>{
+      await lineEdit(`added stop from the library to line ${line.id}`, _=>placeSavedWidget(entry.id, entry.source, null, { line }));
+      popout.style.display = 'none';
+      onPlaced();
+    };
+
+    const renderPopout = _=>{
+      popout.innerHTML = '';
+      div(popout, 'propertyPickerSectionTitle', 'Add a saved widget as a stop');
+
+      const searchSection = div(popout, 'propertyPickerSection');
+      const search = document.createElement('input');
+      search.placeholder = 'Search by name...';
+      search.value = searchTerm;
+      searchSection.appendChild(search);
+
+      const list = div(searchSection, 'widgetPickerList lineLibraryStopList');
+      const showEntries = _=>{
+        list.innerHTML = '';
+        if(entries === null) {
+          div(list, 'widgetPickerEntry', 'Loading...');
+          return;
+        }
+        const term = searchTerm.trim().toLowerCase();
+        const matches = entries.filter(entry=>!term || String(entry.name || entry.id).toLowerCase().includes(term));
+        if(!matches.length) {
+          div(list, 'widgetPickerEntry', entries.length ? 'No match.' : 'No saved widgets yet.');
+          return;
+        }
+        for(const entry of matches.slice(0, 50)) {
+          const element = div(list, 'widgetPickerEntry lineLibraryStopEntry', `<span class=lineLibraryStopPreview>${renderSavedWidgetPreviewHTML(entry.preview)}</span><span>${html(entry.name || entry.id)}</span><span class=widgetPickerType>${html(entry.source)}</span>`);
+          element.onclick = _=>place(entry);
+        }
+      };
+      showEntries();
+
+      search.oninput = _=>{
+        searchTerm = search.value;
+        showEntries();
+      };
+
+      if(entries === null) {
+        Promise.all([ 'server', 'local' ].map(source=>getSavedWidgets(source).then(data=>data.widgets.map(w=>({ ...w, source })), _=>[])))
+          .then(results=>{
+            entries = results[0].concat(results[1]);
+            showEntries();
+          });
+      }
+    };
+
+    expandButton.onclick = _=>{
+      const show = popout.style.display == 'none';
+      popout.style.display = show ? '' : 'none';
+      expandButton.classList.toggle('open', show);
+      if(show)
+        renderPopout();
+    };
+
+    return { expandButton, popout };
+  }
+
+  // The full dropTarget of a widget that takes drops in: a list of matches
+  // (a widget is accepted when it matches ANY of them) with a list of
+  // property/value conditions each (it matches one when it has ALL of them).
+  // That is exactly the array/object shape the engine reads, so every
+  // dropTarget can be built and edited here instead of in the JSON editor:
+  //   []                              nothing is accepted
+  //   {}                              every widget matches an empty match
+  //   { type: 'card' }                only cards
+  //   { type: 'card', deck: 'd1' }    only cards of deck d1
+  //   [ { deck: 'd1' }, { deck: 'd2' } ]  cards of either deck
+  // Nothing here is line specific - holders can render the same editor once
+  // their "Target widgets" section moves over from the deck buttons.
+  // options: edit (wraps the change for the history), label, hint, emptyText
+  renderDropTargetEditor(widget, options={}) {
+    const types = [
+      { value: null,         label: 'Basic widgets' },
+      { value: 'card',       label: 'Cards' },
+      { value: 'deck',       label: 'Decks' },
+      { value: 'dice',       label: 'Dice' },
+      { value: 'holder',     label: 'Holders' },
+      { value: 'pile',       label: 'Piles' },
+      { value: 'spinner',    label: 'Spinners' },
+      { value: 'label',      label: 'Labels' },
+      { value: 'button',     label: 'Buttons' },
+      { value: 'canvas',     label: 'Canvases' },
+      { value: 'scoreboard', label: 'Scoreboards' },
+      { value: 'seat',       label: 'Seats' },
+      { value: 'timer',      label: 'Timers' }
+    ];
+    const typeMode = type=>`type:${type === null ? '' : type}`;
+    const edit = options.edit || ((cause, change)=>change());
+
+    // true/false are what the matched widget properties actually hold, so they
+    // are entered as booleans instead of being quoted into strings
+    const conditionValue = raw=>{
+      const text = String(raw).trim();
+      if(text == 'true')
+        return true;
+      if(text == 'false')
+        return false;
+      return propertyInputNumberOrText(raw);
+    };
+    const conditionText = value=>value === null || value === undefined ? '' : String(value);
+
+    // The rows as an editable model: a match the rows cannot express (an entry
+    // that is not an object) is kept verbatim so opening the editor on it never
+    // rewrites it, and a condition whose property is still empty lives here
+    // until it is named - it would match every widget otherwise.
+    const readMatches = ()=>{
+      const dropTarget = widget.get('dropTarget');
+      const entries = dropTarget === null || dropTarget === undefined ? [] : asArray(dropTarget);
+      return entries.map(entry=>{
+        if(!entry || typeof entry != 'object' || Array.isArray(entry))
+          return { unsupported: entry };
+        const match = { hasType: false, type: null, conditions: [] };
+        for(const [ property, value ] of Object.entries(entry)) {
+          if(property == 'type' && !match.hasType && types.some(t=>t.value === value)) {
+            match.hasType = true;
+            match.type = value;
+          } else {
+            match.conditions.push({ property, value });
+          }
+        }
+        return match;
+      });
+    };
+    const toDropTarget = matches=>{
+      const entries = matches.map(match=>{
+        if('unsupported' in match)
+          return match.unsupported;
+        const entry = {};
+        if(match.hasType)
+          entry.type = match.type;
+        for(const condition of match.conditions)
+          if(String(condition.property).trim())
+            entry[String(condition.property).trim()] = condition.value;
+        return entry;
+      });
+      return entries.length == 1 ? entries[0] : entries;
+    };
+
+    let matches = readMatches();
+
+    const container = div(this.moduleDOM, 'dropTargetEditor');
+    // an empty label leaves it out entirely, for a caller whose section header
+    // already names the property
+    const labelText = options.label === undefined ? 'Valid widgets:' : options.label;
+    if(labelText) {
+      const label = document.createElement('label');
+      label.textContent = labelText;
+      if(options.hint)
+        propertyInfoButton(label, html(options.hint));
+      container.appendChild(label);
+    }
+    const list = div(container, 'dropTargetMatches');
+
+    const save = _=>edit(`changed which widgets ${widget.id} accepts`, _=>widget.set('dropTarget', toDropTarget(matches)));
+
+    const iconButton = (parent, icon, title, onclick, className)=>{
+      const button = document.createElement('button');
+      button.className = className;
+      button.setAttribute('icon', icon);
+      button.title = title;
+      button.onclick = onclick;
+      parent.appendChild(button);
+      return button;
+    };
+
+    const renderCondition = (match, condition, conditions) => {
+      const row = div(conditions, 'dropTargetCondition');
+      row.appendChild(document.createTextNode('and'));
+      const property = document.createElement('input');
+      property.type = 'text';
+      property.className = 'dropTargetProperty';
+      property.placeholder = 'property';
+      property.title = 'The widget property to match, e.g. classes';
+      property.value = condition.property;
+      const value = document.createElement('input');
+      value.type = 'text';
+      value.className = 'dropTargetValue';
+      value.placeholder = 'value';
+      value.title = 'The value that property has to have';
+      value.value = conditionText(condition.value);
+      property.onchange = value.onchange = _=>{
+        condition.property = property.value;
+        condition.value = conditionValue(value.value);
+        save();
+      };
+      row.appendChild(property);
+      row.appendChild(value);
+      // only the outer button (removing a whole match) gets the red trash look,
+      // so the two nesting levels cannot be told apart by indentation alone
+      iconButton(row, 'close', 'Remove this condition', _=>{
+        match.conditions.splice(match.conditions.indexOf(condition), 1);
+        render();
+        save();
+      }, 'dropTargetRemoveCondition');
+    };
+
+    const renderMatch = (match, index)=>{
+      if(index)
+        div(list, 'dropTargetOr', 'or');
+      const matchDOM = div(list, 'dropTargetMatch');
+      const header = div(matchDOM, 'dropTargetMatchHeader');
+
+      if('unsupported' in match) {
+        // keep it visible (and untouched) so a hand written dropTarget entry
+        // this editor does not understand cannot silently disappear
+        div(header, 'dropTargetUnsupported', 'Custom match (JSON editor)');
+      } else {
+        const select = document.createElement('select');
+        select.className = 'dropTargetType';
+        const addOption = (value, text, group)=>{
+          const option = document.createElement('option');
+          option.value = value;
+          option.textContent = text;
+          (group || select).appendChild(option);
+        };
+        addOption('any', 'Any widget');
+        const typeGroup = document.createElement('optgroup');
+        typeGroup.label = 'Only';
+        select.appendChild(typeGroup);
+        for(const type of types)
+          addOption(typeMode(type.value), type.label, typeGroup);
+        select.value = match.hasType ? typeMode(match.type) : 'any';
+        select.onchange = _=>{
+          match.hasType = select.value != 'any';
+          match.type = match.hasType && select.value != 'type:' ? select.value.slice('type:'.length) : null;
+          save();
+        };
+        header.appendChild(select);
+        iconButton(header, 'add', 'Also require a property of the dropped widget', _=>{
+          match.conditions.push({ property: '', value: '' });
+          render();
+        }, 'dropTargetAddCondition');
+      }
+
+      iconButton(header, 'delete', 'Remove this match', _=>{
+        matches.splice(matches.indexOf(match), 1);
+        render();
+        save();
+      }, 'dropTargetRemoveMatch red');
+
+      if(!('unsupported' in match)) {
+        const conditions = div(matchDOM, 'dropTargetConditions');
+        for(const condition of match.conditions)
+          renderCondition(match, condition, conditions);
+      }
+    };
+
+    const render = ()=>{
+      list.innerHTML = '';
+      matches.forEach(renderMatch);
+      if(!matches.length)
+        div(list, 'dropTargetEmpty', options.emptyText || 'Nothing is accepted.');
+      const add = document.createElement('button');
+      add.className = 'dropTargetAddMatch';
+      add.setAttribute('icon', 'add');
+      add.innerText = matches.length ? 'Add another match' : 'Add a match';
+      add.onclick = _=>{
+        matches.push({ hasType: false, type: null, conditions: [] });
+        render();
+        save();
+      };
+      list.appendChild(add);
+    };
+    render();
+
+    // Only rebuild when the property changed somewhere else (undo, the JSON
+    // editor, a routine) - rebuilding on our own writes would throw away the
+    // condition row that is still being typed into.
+    this.addPropertyListener(widget, 'dropTarget', _=>{
+      const dropTarget = widget.get('dropTarget');
+      if(JSON.stringify(dropTarget === null || dropTarget === undefined ? [] : dropTarget) == JSON.stringify(toDropTarget(matches)))
+        return;
+      matches = readMatches();
+      render();
+    });
+  }
+
+  renderForLine(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+
+    // Every edit below goes through this so the history gets exactly one entry
+    // that says what happened: batching keeps the follow-up updates (stop
+    // spacing, connected lines, box re-fit) inside the same delta and the cause
+    // merges deltas that a single interaction splits up.
+    const lineEdit = async (cause, change)=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} ${cause} in editor`);
+      try {
+        await change();
+      } finally {
+        batchEnd();
+      }
+    };
+
+    this.addSubHeader('Appearance');
+    this.addAppearanceSubTitle('Line shape');
+
+    // An open line and a circle are two modes, not two curves: a closed shape
+    // has no Bezier control points and no start/end point to connect.
+    // The mode is its own segmented control so the curve presets below can stay
+    // where they are (greyed out) instead of the grid reflowing under the click.
+    const shapeSwitch = div(this.moduleDOM, 'segmented-control lineShapeSwitch');
+    const shapeModes = [
+      { value: 'line',    label: 'Open line',         title: 'A path from a start point to an end point' },
+      { value: 'ellipse', label: 'Circle or ellipse', title: 'A closed shape through the two points, without start and end' }
+    ];
+    const shapeModeButtons = shapeModes.map(mode=>{
+      const button = document.createElement('button');
+      button.className = 'sidebarButton lineShapeMode';
+      button.innerText = mode.label;
+      button.title = mode.title;
+      button.onclick = _=>lineEdit(`turned line ${widget.id} into ${mode.value == 'ellipse' ? 'a circle or ellipse' : 'an open line'}`, async _=>{
+        if(mode.value == 'ellipse') {
+          await widget.set('controlStart', null);
+          await widget.set('controlEnd', null);
+          await widget.set('lineShape', 'ellipse');
+          return;
+        }
+        await widget.set('lineShape', 'line');
+        await widget.normalizeGeometry();
+      });
+      shapeSwitch.appendChild(button);
+      return button;
+    });
+
+    const shapeWrap = div(this.moduleDOM, 'lineShapePresets');
+    const shapePresets = [
+      { name: 'Straight', path: 'M 4 20 L 76 20', controls: null },
+      { name: 'Shallow curve', path: 'M 4 30 C 24 8, 56 8, 76 30', controls: [ .33, .22, .67, .22 ] },
+      { name: 'Deep curve', path: 'M 4 34 C 20 0, 60 0, 76 34', controls: [ .25, .42, .75, .42 ] },
+      { name: 'Reverse curve', path: 'M 4 10 C 24 32, 56 32, 76 10', controls: [ .33, -.22, .67, -.22 ] },
+      { name: 'S curve', path: 'M 4 28 C 22 2, 58 38, 76 12', controls: [ .30, .30, .70, -.30 ] },
+      { name: 'Reverse S curve', path: 'M 4 12 C 22 38, 58 2, 76 28', controls: [ .30, -.30, .70, .30 ] }
+    ];
+    const presetControls = preset=>{
+      if(!preset.controls || widget.isEllipse())
+        return null;
+      const s = widget.pointProperty('lineStart');
+      const e = widget.pointProperty('lineEnd');
+      const dx = e.x-s.x, dy = e.y-s.y;
+      const length = Math.hypot(dx, dy) || 1;
+      const normal = { x: -dy/length, y: dx/length };
+      const [ f1, n1, f2, n2 ] = preset.controls;
+      return {
+        start: { x: Math.round(s.x+dx*f1+normal.x*length*n1), y: Math.round(s.y+dy*f1+normal.y*length*n1) },
+        end: { x: Math.round(s.x+dx*f2+normal.x*length*n2), y: Math.round(s.y+dy*f2+normal.y*length*n2) }
+      };
+    };
+    const shapeButtons = shapePresets.map(preset=>{
+      const button = document.createElement('button');
+      button.className = 'lineShapePreset';
+      button.title = preset.name;
+      button.setAttribute('aria-label', preset.name);
+      button.innerHTML = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="${preset.path}"/></svg>`;
+      shapeWrap.appendChild(button);
+      button.onclick = _=>lineEdit(`set the shape of line ${widget.id} to ${preset.name.toLowerCase()}`, async _=>{
+        await widget.set('lineShape', 'line');
+        const controls = presetControls(preset);
+        await widget.set('controlStart', controls ? controls.start : null);
+        await widget.set('controlEnd', controls ? controls.end : null);
+        await widget.normalizeGeometry();
+      });
+      return button;
+    });
+    const updateShapeButtons = widget=>{
+      const c1 = widget.pointProperty('controlStart');
+      const c2 = widget.pointProperty('controlEnd');
+      const ellipse = widget.isEllipse();
+      shapeModes.forEach((mode, i)=>shapeModeButtons[i].classList.toggle('active', ellipse == (mode.value == 'ellipse')));
+      shapePresets.forEach((preset, i)=>{
+        const controls = presetControls(preset);
+        const selected = ellipse ? false : controls ? c1 && c2 && c1.x == controls.start.x && c1.y == controls.start.y && c2.x == controls.end.x && c2.y == controls.end.y : !c1 && !c2;
+        shapeButtons[i].classList.toggle('selected', !!selected);
+        // a closed shape has no Bezier control points, so the curve presets do
+        // not apply - they stay in place, greyed out, so nothing jumps around
+        shapeButtons[i].disabled = ellipse;
+        shapeButtons[i].title = ellipse ? `${preset.name} - a circle or ellipse has no curve control points` : preset.name;
+      });
+    };
+    this.addPropertyListener(widget, 'controlStart', updateShapeButtons);
+    this.addPropertyListener(widget, 'controlEnd', updateShapeButtons);
+    this.addPropertyListener(widget, 'lineShape', updateShapeButtons);
+
+    const dashPresets = [
+      { name: 'Solid', value: null },
+      { name: 'Dotted', value: '2 10' },
+      { name: 'Short dashes', value: '8 8' },
+      { name: 'Dashed', value: '16 10' },
+      { name: 'Long dashes', value: '28 12' },
+      { name: 'Dash-dot', value: '20 8 3 8' }
+    ];
+    this.addAppearanceSubTitle('Line style');
+    const dashWrap = div(this.moduleDOM, 'lineDashPresets');
+    const dashButtons = dashPresets.map(preset=>{
+      const button = document.createElement('button');
+      button.className = 'lineDashPreset';
+      button.title = preset.name;
+      button.setAttribute('aria-label', preset.name);
+      const dash = preset.value ? ` stroke-dasharray="${preset.value}"` : '';
+      button.innerHTML = `<svg viewBox="0 0 80 16" aria-hidden="true"><path d="M 4 8 L 76 8"${dash}/></svg><span>${preset.name}</span>`;
+      button.onclick = _=>lineEdit(`set the style of line ${widget.id} to ${preset.name.toLowerCase()}`, _=>widget.set('lineDash', preset.value));
+      dashWrap.appendChild(button);
+      return button;
+    });
+    const updateDashButtons = ()=>{
+      const current = widget.get('lineDash') || null;
+      dashPresets.forEach((preset, i)=>dashButtons[i].classList.toggle('selected', preset.value === current));
+    };
+    this.addPropertyListener(widget, 'lineDash', updateDashButtons);
+
+    // color and width share one row below the style buttons; the color picker
+    // (the standard one with the game's colors and the palette) opens below the
+    // row so it does not push the width input around
+    const appearanceRow = div(this.moduleDOM, 'propertyInlineRow lineAppearanceRow');
+    const appearancePickers = div(this.moduleDOM, 'lineAppearancePickers');
+    new ColorInput(this, widget, 'Line color', {
+      property: 'lineColor',
+      pickerTarget: appearancePickers,
+      setValue: value=>lineEdit(`changed the color of line ${widget.id}`, _=>widget.set('lineColor', value))
+    }).render(appearanceRow);
+    new NumberInput(this, widget, 'Line width', {
+      property: 'lineWidth',
+      min: 0,
+      max: 25,
+      unit: 'px',
+      setValue: value=>lineEdit(`changed the width of line ${widget.id}`, _=>widget.set('lineWidth', value))
+    }).render(appearanceRow);
+
+    this.addSubHeader('Stops');
+
+    // the same switch the holder uses for "Align dropped widgets", so the panel
+    // speaks the sidebar's own toggle language
+    new CheckboxInput(this, widget, 'Turn stops to follow the line', {
+      listenTo: [ 'rotateStops', 'rotateAttachedWidgets' ],
+      hint: 'Landscape stops are rotated so they stay aligned with the line under them.',
+      getValue: _=>widget.shouldRotateStops(),
+      setValue: checked=>lineEdit(`${checked ? 'enabled' : 'disabled'} automatic stop rotation on line ${widget.id}`, async _=>{
+        // Remove the previous property when changing the setting in the tuner,
+        // so old line JSON cannot override the new rotateStops value.
+        await widget.set('rotateAttachedWidgets', null);
+        await widget.set('rotateStops', checked);
+      })
+    }).render(this.moduleDOM);
+
+    new CheckboxInput(this, widget, 'Distribute evenly', {
+      property: 'autoSpaceStops',
+      hint: 'Automatically distribute stops when line geometry changes.',
+      setValue: async checked=>{
+        await lineEdit(`${checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', checked));
+        renderStops();
+      }
+    }).render(this.moduleDOM);
+    // say once, for the whole list, why the percentage fields below are greyed
+    const autoSpaceHint = div(this.moduleDOM, 'lineHint', 'Positions are set automatically - turn this off to place stops by hand.');
+    this.addPropertyListener(widget, 'autoSpaceStops', _=>autoSpaceHint.style.display = widget.get('autoSpaceStops') ? '' : 'none');
+
+    const removeStop = async stop=>{
+      await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
+        // A stop the line owns is deleted with it; a widget that only rides on
+        // the line (it lives elsewhere in the room) is just taken off the list.
+        if(stop.get('parent') != widget.id) {
+          await widget.removeStop(stop.id);
+          return;
+        }
+        // release its contents to the room first so cards/tokens on the stop aren't deleted
+        await this.lineReleaseStopChildren(stop);
+        await removeWidgetLocal(stop.get('id'));
+      });
+      renderStops();
+    };
+
+    // one row per stop, each with its own percentage position field and remove
+    // button, so a designer can place and remove a *specific* stop the same way
+    // connections are positioned; the position sticks through reshaping
+    const stopList = div(this.moduleDOM, 'lineStopList');
+    const stopPreview = stop=>{
+      const preview = document.createElement('div');
+      preview.className = 'lineStopPreview';
+      preview.tabIndex = 0;
+      preview.title = `Select ${stop.get('id')}`;
+      const selectStop = event=>{
+        event.stopPropagation();
+        setSelection([stop]);
+      };
+      preview.onclick = selectStop;
+      preview.onkeydown = event=>{
+        if(event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          selectStop(event);
+        }
+      };
+      const clone = stop.domElement.cloneNode(true);
+      const sourceElements = [ stop.domElement, ...stop.domElement.querySelectorAll('*') ];
+      const cloneElements = [ clone, ...clone.querySelectorAll('*') ];
+      sourceElements.forEach((source, i)=>{
+        const computed = getComputedStyle(source);
+        for(let j = 0; j < computed.length; ++j) {
+          const property = computed[j];
+          cloneElements[i].style.setProperty(property, computed.getPropertyValue(property), computed.getPropertyPriority(property));
+        }
+      });
+      clone.removeAttribute('id');
+      for(const element of clone.querySelectorAll('[id]'))
+        element.removeAttribute('id');
+      clone.classList.remove('selectedInEdit');
+      const width = Math.max(1, +stop.get('width') || 1);
+      const height = Math.max(1, +stop.get('height') || 1);
+      const scale = Math.min(46/width, 32/height, 1);
+      clone.style.width = `${width}px`;
+      clone.style.height = `${height}px`;
+      clone.style.left = '50%';
+      clone.style.top = '50%';
+      clone.style.margin = '0';
+      clone.style.position = 'absolute';
+      clone.style.transformOrigin = 'center';
+      clone.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      clone.style.pointerEvents = 'none';
+      clone.style.zIndex = '0';
+      preview.appendChild(clone);
+      return preview;
+    };
+    const moveStop = async (index, direction)=>{
+      const stops = widget.attachedWidgets();
+      if(!stops[index] || !stops[index+direction])
+        return;
+      await lineEdit(`moved stop ${stops[index].id} ${direction < 0 ? 'up' : 'down'} on line ${widget.id}`, _=>widget.swapStops(index, direction));
+      renderStops();
+    };
+    const renderStops = ()=>{
+      stopList.innerHTML = '';
+      const stops = widget.attachedWidgets();
+      stops.forEach((stop, i)=>{
+        // the row reads picture, name, position, buttons; the groups keep those
+        // parts together when a narrow sidebar has to wrap the row
+        const row = div(stopList, 'genericInput');
+        row.appendChild(stopPreview(stop));
+        const idGroup = div(row, 'lineStopGroup lineStopIdGroup');
+        const positionGroup = div(row, 'lineStopGroup lineStopPositionGroup');
+        const buttonGroup = div(row, 'lineStopGroup lineStopButtonGroup');
+        const label = document.createElement('label');
+        // the picture is the obvious "select this stop" control, so its caption
+        // selects the stop as well - the id field next to it stays editable
+        const caption = document.createElement('span');
+        caption.className = 'lineStopSelect';
+        caption.innerText = `Stop ${i+1}`;
+        caption.title = `Select ${stop.get('id')} in the room`;
+        caption.onclick = _=>setSelection([ stop ]);
+        label.appendChild(caption);
+        // the label lays its parts out as a flex row, which collapses a plain
+        // space between two of them away - hence the non-breaking one
+        label.append(' (');
+        // renaming re-adds the same stop state under the new id, so it must not
+        // be treated like removing+adding a stop (see Line.onChildAdd/onChildRemove)
+        const idInput = this.createWidgetIdInput(stop, {
+          className: 'lineStopIdInput',
+          title: 'Rename this stop',
+          ariaLabel: `Stop ${i+1} id`
+        });
+        label.appendChild(idInput);
+        label.append(')');
+        const position = document.createElement('input');
+        position.type = 'number';
+        position.min = 0;
+        position.max = 100;
+        position.className = 'lineStopPosition';
+        position.value = Math.round(widget.stopPosition(stop)*100);
+        // with even distribution on, the line owns the positions - a typed value
+        // would be spaced away again right after, so don't offer the field
+        position.disabled = !!widget.get('autoSpaceStops');
+        position.title = position.disabled ? 'Positions are set by "Distribute evenly"' : 'Position along the line in percent';
+        position.onchange = _=>lineEdit(`moved stop ${stop.id} on line ${widget.id}`, _=>widget.setStopPosition(stop.id, Math.max(0, Math.min(100, +position.value || 0))/100));
+        // destructive, so it gets the shared red icon-button look
+        const remove = document.createElement('button');
+        remove.className = 'lineRemoveStop red';
+        remove.setAttribute('icon', 'delete');
+        remove.title = 'Remove this stop';
+        remove.onclick = _=>removeStop(stop);
+        const order = document.createElement('div');
+        order.className = 'lineStopOrder';
+        const up = document.createElement('button');
+        up.innerText = '▲';
+        up.title = 'Move this stop up the chain';
+        up.disabled = i == 0;
+        up.onclick = _=>moveStop(i, -1);
+        const down = document.createElement('button');
+        down.innerText = '▼';
+        down.title = 'Move this stop down the chain';
+        down.disabled = i == stops.length-1;
+        down.onclick = _=>moveStop(i, 1);
+        order.appendChild(up);
+        order.appendChild(down);
+        idGroup.appendChild(label);
+        positionGroup.appendChild(position);
+        positionGroup.appendChild(document.createTextNode('%'));
+        buttonGroup.appendChild(order);
+        buttonGroup.appendChild(remove);
+      });
+    };
+    renderStops();
+    // rebuild the list when the chain itself changes (the line's stops property)
+    // or when a stop changes in a way the rows show
+    this.addDeltaListener(delta=>{
+      const stops = widget.attachedWidgets();
+      if((delta[widget.id] && delta[widget.id].stops !== undefined) || stopList.childElementCount != stops.length || stops.some(stop=>delta[stop.id] && Object.keys(delta[stop.id]).some(property=>![ 'x', 'y', 'rotation' ].includes(property))))
+        renderStops();
+    });
+
+    // There are three ways to add a stop, so they live behind one "Add stop"
+    // button: it opens a menu of the three, and picking one replaces the menu
+    // with just that option's controls until it is closed again.
+    const addSection = div(this.moduleDOM, 'lineAddStopSection');
+    const addStopButton = document.createElement('button');
+    addStopButton.className = 'lineAddStop';
+    addStopButton.setAttribute('icon', 'add');
+    addStopButton.innerText = 'Add stop';
+    addSection.appendChild(addStopButton);
+    const addMenu = div(addSection, 'lineAddStopMenu');
+    const addOptions = div(addSection, 'lineAddStopOptions');
+
+    const optionRows = {};
+    const closeAddStop = _=>{
+      addMenu.classList.remove('open');
+      addStopButton.classList.remove('open');
+      for(const row of Object.values(optionRows))
+        row.classList.remove('open');
+    };
+    const openAddStopMenu = _=>{
+      closeAddStop();
+      addMenu.classList.add('open');
+      addStopButton.classList.add('open');
+    };
+    // pressing it again while one of the options is open goes back to the menu
+    // (the same thing the back arrow does); only the menu itself closes
+    addStopButton.onclick = _=>{
+      if(addMenu.classList.contains('open'))
+        closeAddStop();
+      else
+        openAddStopMenu();
+    };
+
+    // the shared frame of an option: a back arrow to the menu plus its own label
+    const addStopOption = (mode, className, label)=>{
+      const row = div(addOptions, `propertyInput lineAddStopOption ${className}`);
+      const back = document.createElement('button');
+      back.className = 'lineAddStopBack';
+      back.setAttribute('icon', 'arrow_back');
+      back.title = 'Back to the list of options';
+      back.onclick = _=>openAddStopMenu();
+      row.appendChild(back);
+      const caption = document.createElement('label');
+      caption.innerText = label;
+      row.appendChild(caption);
+      optionRows[mode] = row;
+      return row;
+    };
+
+    // 1) a new widget of its own that inherits its appearance from an existing
+    // one, so restyling that one restyles every stop on the line. The source can
+    // be typed or picked in the room; the chosen id lives in the module because
+    // picking re-selects the line and rebuilds this panel.
+    const inheritStore = this.lineStopInheritIDs;
+    const inheritRow = addStopOption('inherit', 'lineInheritRow', 'Inherit from:');
+    const inheritID = document.createElement('input');
+    inheritID.type = 'text';
+    inheritID.className = 'lineInheritID';
+    inheritID.placeholder = 'widget id';
+    inheritID.title = 'The new stop inherits its appearance from this widget';
+    const inheritTarget = ()=>String(inheritID.value || '').trim();
+    const firstAttachedWidget = widget.attachedWidgets()[0];
+    if(inheritStore[widget.id] === undefined)
+      inheritStore[widget.id] = firstAttachedWidget ? firstAttachedWidget.id : '';
+    inheritID.value = inheritStore[widget.id];
+    inheritID.oninput = _=>inheritStore[widget.id] = inheritTarget();
+    inheritRow.appendChild(inheritID);
+    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritRow, widget, {
+      title: 'Choose a widget for the new stop to inherit from',
+      pickerKey: 'lineInheritStop',
+      getSelectedIDs: ()=>inheritTarget() ? [ inheritTarget() ] : [],
+      apply: id=>{
+        inheritID.value = id;
+        inheritStore[widget.id] = id;
+      }
+    });
+    const inheritAddButton = document.createElement('button');
+    inheritAddButton.className = 'lineAddStopConfirm';
+    inheritAddButton.setAttribute('icon', 'add');
+    inheritAddButton.innerText = 'Add';
+    // the popout opens on its own row below, so the button has to precede it
+    inheritRow.insertBefore(inheritAddButton, inheritPopoutControls.popout);
+    inheritAddButton.onclick = async _=>{
+      const inheritID = inheritTarget();
+      const target = widgets.has(inheritID) ? widgets.get(inheritID) : null;
+      let template;
+      if(target) {
+        // inheritFrom keeps the new stop's appearance in sync with the chosen widget;
+        // it only carries its own type, parent and position (the rest is inherited)
+        template = { type: target.get('type'), inheritFrom: inheritID };
+      } else {
+        template = this.lineStopDefaults();
+      }
+      template.parent = widget.id;
+      template.fixedParent = true;
+      template.movableInEdit = false;
+      // Give manually positioned lines a sensible initial location. Automatic
+      // spacing immediately recalculates every stop after it is added.
+      const position = widget.nextStopPosition();
+      template.id = this.lineNextStopID(widget, position);
+      await lineEdit(`added stop ${template.id} to line ${widget.id}`, async _=>{
+        await addWidgetLocal(template);
+        await widget.addStop(template.id, position);
+      });
+      closeAddStop();
+      renderStops();
+    };
+
+    // 2) any widget already in the room can be made a stop by listing it - it
+    // does not have to be (or become) a child of the line.
+    const existingRow = addStopOption('existing', 'lineExistingStopRow', 'In the room:');
+    const existingControls = this.renderWidgetSelectPopout(existingRow, widget, {
+      title: 'Choose a widget in the room to ride on this line',
+      pickerKey: 'lineExistingStop',
+      getSelectedIDs: ()=>[],
+      apply: async id=>{
+        if(!widgets.has(id) || id == widget.id || widget.stopList().some(entry=>entry.widget == id))
+          return;
+        await lineEdit(`added stop ${id} to line ${widget.id}`, _=>widget.addStop(id, widget.nextStopPosition()));
+        closeAddStop();
+        renderStops();
+      }
+    });
+
+    // 3) ...and a saved widget from the library the Widgets sidebar shows can be
+    // placed straight onto the line as a stop
+    const libraryRow = addStopOption('library', 'lineLibraryStopRow', 'From the library:');
+    const libraryControls = this.renderLibraryStopPicker(libraryRow, widget, lineEdit, _=>{
+      closeAddStop();
+      renderStops();
+    });
+
+    // the two picker options are nothing but their popout, so open it right away
+    const addStopModes = [
+      { mode: 'inherit',  icon: 'content_copy', label: 'Copy an existing widget',      hint: 'A new stop that keeps the look of the widget you pick - restyle that one and every stop follows' },
+      { mode: 'existing', icon: 'my_location',  label: 'Use a widget from the room',   hint: 'Put a widget that is already in the room onto the line' },
+      { mode: 'library',  icon: 'library_add',  label: 'Pick from the widget library', hint: 'Place a saved widget from the widget library onto the line' }
+    ];
+    const openControls = { existing: existingControls, library: libraryControls };
+    for(const entry of addStopModes) {
+      const button = document.createElement('button');
+      button.className = 'lineAddStopMenuEntry';
+      button.setAttribute('icon', entry.icon);
+      button.innerHTML = `<span><span class=lineAddStopMenuLabel>${html(entry.label)}</span><span class=lineAddStopMenuHint>${html(entry.hint)}</span></span>`;
+      button.onclick = _=>{
+        closeAddStop();
+        optionRows[entry.mode].classList.add('open');
+        addStopButton.classList.add('open');
+        const controls = openControls[entry.mode];
+        if(controls && controls.popout.style.display == 'none')
+          controls.expandButton.click();
+      };
+      addMenu.appendChild(button);
+    }
+
+    // Connecting an end point glues it onto another widget at a chosen percentage.
+    // Line.applyConnections converts through global coordinates so targets under
+    // transformed parents stay in the correct frame.
+    // A closed shape has no start or end point, so its rows are replaced by one
+    // line that says so - the header stays put so nothing below it jumps
+    // (other lines can still connect *to* it, its perimeter is a path).
+    const connectSection = div(this.moduleDOM, 'lineConnectSection');
+    this.addSubHeader('Connect points', connectSection);
+    const connectClosedHint = div(connectSection, 'lineHint', 'A circle or ellipse has no start or end point.');
+    const connectRows = div(connectSection, 'lineConnectRows');
+    this.addPropertyListener(widget, 'lineShape', ()=>{
+      const ellipse = widget.isEllipse();
+      connectRows.style.display = ellipse ? 'none' : '';
+      connectClosedHint.style.display = ellipse ? '' : 'none';
+    });
+    for(const end of [ 'Start', 'End' ]) {
+      // first row: the target id, picked the same way as any other widget
+      // reference, with the end point's name as its (blue) label
+      const wrapper = div(connectRows, 'propertyInput lineConnectRow');
+      const label = document.createElement('label');
+      const endName = document.createElement('span');
+      endName.className = 'appearanceSubTitle';
+      endName.innerText = `${end} point`;
+      label.appendChild(endName);
+      label.append(' id:');
+      wrapper.appendChild(label);
+      const target = document.createElement('input');
+      target.type = 'text';
+      target.className = `lineConnect${end}ID`;
+      target.placeholder = 'widget id';
+      target.title = 'Type any widget id to connect to it';
+      wrapper.appendChild(target);
+
+      // second row: where on the target the end point sits. Indented and split
+      // into two flex groups so it reads as a sub-part of the end point above
+      // and wraps as a unit in a narrow sidebar.
+      const detailRow = div(connectRows, 'propertyInput lineConnectDetails');
+      const positionGroup = div(detailRow, 'lineConnectGroup');
+      const offsetGroup = div(detailRow, 'lineConnectGroup');
+      const position = document.createElement('input');
+      position.type = 'number';
+      position.min = 0;
+      position.max = 100;
+      position.className = 'lineConnectPosition';
+      position.title = 'Position on the other line in percent';
+      const offset = document.createElement('input');
+      offset.type = 'number';
+      offset.min = -25;
+      offset.max = 25;
+      offset.step = 'any';
+      offset.className = `lineConnect${end}Offset`;
+      offset.title = 'Perpendicular offset from the other line in pixels; positive is to its left from start to end';
+      positionGroup.appendChild(document.createTextNode('Connect at'));
+      positionGroup.appendChild(position);
+      positionGroup.appendChild(document.createTextNode('%'));
+      offsetGroup.appendChild(document.createTextNode('offset'));
+      offsetGroup.appendChild(offset);
+      offsetGroup.appendChild(document.createTextNode('px'));
+      // the most jargon-heavy row in the panel, so it says what it means
+      propertyInfoButton(offsetGroup, html(`Where on the widget above the ${end.toLowerCase()} point sits: 0% is the start of its path, 100% the end, 50% the middle. The offset then moves the point sideways off that path, in pixels - positive is to its left looking from start to end.`));
+
+      this.addPropertyListener(widget, 'connect'+end, widget=>{
+        const connection = widget.get('connect'+end);
+        target.value = connection && connection.line ? connection.line : '';
+        position.value = connection ? Math.round((connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1))*100) : (end == 'Start' ? 0 : 100);
+        offset.value = connection ? (+connection.offset || 0) : 0;
+        position.disabled = !connection;
+        offset.disabled = !connection;
+      });
+      const saveConnection = ()=>lineEdit(`connected the ${end.toLowerCase()} point of line ${widget.id}`, _=>widget.set('connect'+end, target.value ? {
+        line: target.value,
+        position: Math.max(0, Math.min(100, +position.value || 0))/100,
+        offset: +offset.value || 0
+      } : null));
+      const setDefaultPositionForTarget = _=>{
+        const targetWidget = widgets.get(target.value);
+        // A newly chosen non-line widget starts at its midpoint. Line targets
+        // retain the familiar start/end default.
+        position.value = targetWidget && targetWidget.get('type') != 'line' ? 50 : (end == 'Start' ? 0 : 100);
+        saveConnection();
+      };
+      target.onchange = setDefaultPositionForTarget;
+      position.onchange = offset.onchange = saveConnection;
+
+      const connectPopoutControls = this.renderWidgetSelectPopout(wrapper, widget, {
+        title: `Connect ${end.toLowerCase()} point to`,
+        pickerKey: 'connect'+end,
+        getSelectedIDs: ()=>{
+          const connection = widget.get('connect'+end);
+          return connection && connection.line ? [ connection.line ] : [];
+        },
+        apply: id=>{
+          target.value = id;
+          setDefaultPositionForTarget();
+        },
+        onClear: ()=>lineEdit(`disconnected the ${end.toLowerCase()} point of line ${widget.id}`, _=>widget.set('connect'+end, null)),
+        clearLabel: 'Disconnect'
+      });
+      this.addPropertyListener(widget, 'connect'+end, ()=>connectPopoutControls.refresh());
+    }
+
+    // What a line takes in - a widget dropped on the path becomes a stop of it,
+    // matched the same way a holder matches its dropTarget. One name for it:
+    // the section header carries the hint so the label does not repeat it.
+    propertyInfoButton(this.addSubHeader('Target widgets'), html('Which widgets become a stop when they are dropped onto the line'));
+    this.renderDropTargetEditor(widget, {
+      edit: lineEdit,
+      label: '',
+      emptyText: 'Nothing can be dropped onto the line itself - add a match to let widgets attach as stops.'
+    });
+
+    this.renderOtherPropertiesSection(widget, [
+      'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
+      'lineColor', 'lineDash', 'lineWidth', 'stops',
+      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
+      'connectStart', 'connectEnd', 'dropTarget'
+    ]);
   }
 
   renderForSpinner(widget) {

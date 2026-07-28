@@ -104,6 +104,7 @@ const COMMON_PROPERTIES = {
     gameStartRoutine: 'routine',
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
+    lineOriginalRotation: 'object',
     animatePropertyChange: 'any',
     resetProperties: 'object',
     clonedFrom: 'string',
@@ -134,6 +135,10 @@ const WIDGET_PROPERTIES = {
     Label: {
         ...COMMON_PROPERTIES,
         height: 'number', movable: 'boolean', layer: 'any', clickable: 'boolean', spellCheck: 'any', tabIndex: 'any', placeholderText: 'any', text: 'any', editable: 'any', twoRowBottomAlign: 'any'
+    },
+    Line: {
+        ...COMMON_PROPERTIES,
+        layer: 'any', movable: 'boolean', lineShape: v=>[ 'line', 'ellipse' ].includes(v) || 'lineShape must be "line" or "ellipse"', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', stops: v=>Array.isArray(v) && v.every(e=>e && typeof e === 'object' && typeof e.widget === 'string' && typeof e.position === 'number') || 'stops must be an array of { widget, position } objects', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', autoSpaceStops: 'boolean', dropTarget: 'any', onEnter: 'object', onLeave: 'object', connectStart: 'any', connectEnd: 'any'
     },
     Pile: {
         ...COMMON_PROPERTIES,
@@ -790,7 +795,8 @@ const operationProps = {
     'SWAPHANDS': {
         'interval': v=>typeof v === 'number' && Number.isInteger(v),
         'direction': getEnumValidator(['forward','backward','random']),
-        'source': 'inCollection'
+        'source': 'inCollection',
+        'keepOrder': 'boolean'
     },
     'TIMER': {
         'timer': 'idArray',

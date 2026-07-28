@@ -1115,6 +1115,21 @@
   background: var(--backgroundColor);
 }
 
+/* shortcut back to the line a widget is attached to, centered below the id */
+.editorModule .widgetHeader .widgetHeaderLine {
+  margin-top: 5px;
+}
+
+.editorModule .widgetHeader button.widgetHeaderLineButton {
+  display: inline-flex;
+  align-items: center;
+  max-width: 90%;
+  overflow-wrap: anywhere;
+  /* the label carries a widget id and ids are case sensitive, so the shared
+     button uppercasing would show "TDO6" for the line called tdo6 */
+  text-transform: none;
+}
+
 /* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
 .editorModule .obscurePropertyContainer {
   position: relative;

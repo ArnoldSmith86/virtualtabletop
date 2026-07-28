@@ -133,11 +133,13 @@ function applySelectionRectangle(addToSelection) {
 
   let newlySelected = [];
   if(s.right - s.left < 5 || s.bottom - s.top < 5) {
-    // parts a widget renders on top of its own box (the handle of a pile) have
-    // no widget id themselves - resolve them to the widget they belong to, so
-    // clicking the handle selects the pile instead of the card covering it
+    // resolve each element under the click to its owning widget: some widgets only
+    // expose an inner element for hit-testing while their own box has
+    // pointer-events:none (a line), and parts a widget renders on top of its own box
+    // (the handle of a pile) have no widget id themselves - so climb to the nearest
+    // ancestor carrying the widget id
     const clicked = document.elementsFromPoint(s.left, s.top)
-      .map(el => el.closest('[id]'))
+      .map(el => el.closest('[id^="w_"]'))
       .map(el => el && widgets.get(unescapeID(el.id.slice(2))))
       .filter(w => w);
     if(clicked.length)

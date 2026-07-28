@@ -7,6 +7,25 @@ import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
+// A stop is listed in the line's stops property, so it can be any widget in the
+// room - being a child of the line is the common shape, not a requirement. This
+// reads the raw property instead of stopList() because it runs for every line
+// in the room and only needs to know whether the id is listed.
+function lineListsStop(line, widgetID) {
+  const stops = line.get('stops');
+  return Array.isArray(stops) && stops.some(entry=>entry && entry.widget == widgetID);
+}
+
+// Every line that carries the given widget as a stop.
+function linesWithStop(widgetID) {
+  return widgetFilter(w=>w.get('type') == 'line' && lineListsStop(w, widgetID));
+}
+
+// Only lines care about another widget's geometry: an endpoint connected to it
+// has to follow, and a line carrying it as a stop has to re-space.
+const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
+const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ]);
+
 const readOnlyProperties = new Set([
   '_absoluteRotation',
   '_absoluteScale',
@@ -120,6 +139,9 @@ export class Widget extends StateManaged {
       globalUpdateRoutine: null,
       gameStartRoutine: null,
       hotkey: null,
+
+      // durable snapshot used while a line is automatically rotating this stop
+      lineOriginalRotation: null,
 
       animatePropertyChange: [],
       resetProperties: {},
@@ -2032,7 +2054,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SWAPHANDS') {
-        setDefaults(a, { interval: 1, direction: 'forward', source: 'all' });
+        setDefaults(a, { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
         if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
           problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
           a.direction = 'forward'
@@ -2050,6 +2072,8 @@ export class Widget extends StateManaged {
               [c[i], c[rand]] = [c[rand], c[i]];
             }
           }
+          // all hands are collected before anything is moved so that a hand does not
+          // pick up the widgets an earlier seat just passed to it
           let moves = [];
           for (let i = 0; i < c.length; i++) {
             let source = c[i];
@@ -2060,26 +2084,51 @@ export class Widget extends StateManaged {
               let contents = widgets.get(hand).children().reduce(
                 function (collect, w) {
                   if (!perOwner || w.get('owner') == source.get('player')) {
-                    collect.unshift(w.get('id'));
+                    collect.unshift(w);
                   }
                   return collect
                 },
                 []
               );
-              moves.push({
-                func: "MOVE",
-                collection: contents,
-                to: target.get('id'),
-              });
+              moves.push({ source, contents, to: target.get('id') });
             }
           }
-          if(jeRoutineLogging) {
-            jeLoggingRoutineOperationStart("Moves", "Moves");
+          if(moves.length) {
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationStart("Moves", "Moves");
+            for(const move of moves) {
+              // the collection is named after the seat it comes from so that the
+              // generated MOVE reads like "from 'hand of seat1' to 'seat2'" in the log.
+              // a collection of the surrounding routine that happens to use the same
+              // name is shadowed only while its MOVE runs and then put back
+              const collection = `hand of ${move.source.get('id')}`;
+              const shadowed = collections[collection];
+              // the widgets are looked up right before their own MOVE so that one which
+              // a routine of an earlier MOVE removed is left alone, exactly like when
+              // the generated MOVE still received a list of IDs. keepOrder keeps the
+              // order of the hand, the default is the creation order because that is
+              // the order widgetFilter - and with it MOVE - used all along
+              collections[collection] = a.keepOrder
+                ? move.contents.filter(w=>!w.isBeingRemoved)
+                : widgetFilter(w=>move.contents.indexOf(w) != -1);
+              try {
+                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+              } finally {
+                if(shadowed === undefined)
+                  delete collections[collection];
+                else
+                  collections[collection] = shadowed;
+              }
+            }
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
-          await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging) {
-          jeLoggingRoutineOperationEnd([], variables, collections, false);
+            const how = a.direction == 'random' ? `hands in a random seat order by ${a.interval}` : `hands ${a.direction} by ${a.interval}`;
+            jeLoggingRoutineOperationSummary(moves.length ? `${how}${a.keepOrder ? ', keeping the card order' : ''}` : 'no seat with a player has a valid hand, nothing to swap');
           }
+        } else if(jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary('less than two seats with a player, nothing to swap');
         }
       }
 
@@ -2433,6 +2482,11 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
 
+    // Lines that take a widget dropped onto their path as a stop. Collected once
+    // like the drop targets below, but not restricted to widgets that can be
+    // dragged in play: a stop is usually placed in edit mode.
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
+
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
@@ -2485,7 +2539,7 @@ export class Widget extends StateManaged {
       // First, check for elements under the midpoint in order in which they were hit.
       for (let i = 0; i < hitElements.length; i++) {
         let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
-        if (hitElements[i].classList.contains('droppable') && widget) {
+        if (hitElements[i].classList.contains('droppable') && widget && widget.get('type') != 'line') {
           this.hoverTarget = widget;
           break;
         }
@@ -2494,6 +2548,10 @@ export class Widget extends StateManaged {
       if (!this.hoverTarget) {
         let targetDist = 99999;
         for(const t of this.dropTargets) {
+          // a line takes a drop close to its path, not anywhere in its bounding
+          // box, so it is hit tested by lineStopDropTarget() instead
+          if(t.get('type') == 'line')
+            continue;
           if(overlap(this.domElement, t.domElement)) {
             const tCursor = t.coordGlobalInside(coordGlobal);
             const tDist = distance(center(t.domElement), myCenter) / scale;
@@ -2548,6 +2606,69 @@ export class Widget extends StateManaged {
         }
       }
     }
+
+    this.highlightStopDropLine(this.lineStopDropTarget());
+  }
+
+  // The line this widget would attach to as a stop if it were dropped where it
+  // is now, or null. A real drop target wins: a widget dropped into a holder
+  // that happens to sit on a line goes into the holder.
+  lineStopDropTarget() {
+    if(this.hoverTarget || !this.stopDropLines || !this.stopDropLines.length)
+      return null;
+    const center = this.coordGlobalFromCoordLocal({ x: +this.get('width')/2, y: +this.get('height')/2 });
+    let best = null;
+    for(const line of this.stopDropLines) {
+      const target = widgets.has(line.id) ? line.stopDropTarget(this, center) : null;
+      if(target && (!best || target.distance < best.distance))
+        best = target;
+    }
+    return best;
+  }
+
+  // make it visible during the drag which line a drop would attach this widget to
+  highlightStopDropLine(target) {
+    const line = target && target.line || null;
+    if(this.stopDropHighlight == line)
+      return;
+    if(this.stopDropHighlight && this.stopDropHighlight.domElement)
+      this.stopDropHighlight.domElement.classList.remove('lineDropTarget');
+    this.stopDropHighlight = line;
+    if(line)
+      line.domElement.classList.add('lineDropTarget');
+  }
+
+  // The widget the drag took this one out of: dragging detaches it right away
+  // and only remembers where it came from in currentParent.
+  currentParentWidget() {
+    return this.currentParent || (widgets.has(this.get('parent')) ? widgets.get(this.get('parent')) : null);
+  }
+
+  // Attach to (or detach from) a line that takes dropped widgets. Entering and
+  // leaving one changes parentage just like a holder does, which applies the
+  // line's onEnter/onLeave and triggers its enterRoutine/leaveRoutine. Lines
+  // that take no drops keep their stop lists, so a game can rely on them.
+  async applyLineStopDrop(target) {
+    const line = target && target.line || null;
+    const from = this.currentParentWidget();
+
+    // a widget that only rides on a line - listed as a stop without being its
+    // child - is taken off that list when it is dragged away
+    for(const other of linesWithStop(this.id))
+      if(other != line && other != from && other.get('dropTarget') && compareDropTarget(this, other))
+        await other.removeStop(this.id);
+
+    if(line) {
+      await line.addStop(this.id, target.position);
+      // a widget that cannot change parent just rides on the line instead
+      if(!this.get('fixedParent'))
+        await this.moveToHolder(line);
+    } else if(from && from.get('type') == 'line' && !this.get('fixedParent')) {
+      // dropping it off the line hands it back to the room, which lets the line
+      // dispense it: onLeave is applied and the stop comes off the list
+      this.currentParent = from;
+      await this.checkParent(true);
+    }
   }
 
   async moveEnd(coordGlobal, localAnchor) {
@@ -2556,6 +2677,12 @@ export class Widget extends StateManaged {
 
     await this.hideShadowWidget();
     await this.set('dragging', null);
+
+    // read where the drag ended before the drop into a holder below moves the widget
+    const stopDropTarget = this.lineStopDropTarget();
+    this.highlightStopDropLine(null);
+    delete this.stopDropLines;
+
     await this.set('hoverTarget', null);
 
     if(!this.get('fixedParent') && this.get('movable')) {
@@ -2572,6 +2699,8 @@ export class Widget extends StateManaged {
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
     }
+
+    await this.applyLineStopDrop(stopDropTarget);
 
     this.hideEnlarged();
     if(this.domElement.classList.contains('longtouch'))
@@ -2626,6 +2755,11 @@ export class Widget extends StateManaged {
 
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
+      // deleting a stop takes it off the lines that list it; a rename is a
+      // remove + re-add of the same state, so it keeps its place instead
+      if(this.isBeingRemoved && !this.isBeingRenamed)
+        for(const line of linesWithStop(this.id))
+          await line.removeStop(this.id);
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
@@ -2641,6 +2775,64 @@ export class Widget extends StateManaged {
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
     }
+
+    // x and y alone are written twice per mousemove of every drag, so bail out
+    // before the inheritance walk for everything a line cannot react to - and
+    // once more for the games (the vast majority) that contain no line at all
+    if(!lineRelevantProperties.has(property))
+      return;
+    const lines = widgetFilter(w=>w.get('type') == 'line');
+    if(!lines.length)
+      return;
+
+    for(const widget of this.widgetsInheritingProperty(property)) {
+      await widget.updateConnectedLineEndpoints(lines);
+
+      // a stop is listed in a line's stops property and does not have to be a
+      // child of it, so ask every line that lists it to re-space
+      if(stopLayoutProperties.has(property))
+        for(const line of lines)
+          if(lineListsStop(line, widget.id))
+            await line.onStopPropertyChange(widget);
+    }
+  }
+
+  // A source property can affect widgets that inherit it through more than one
+  // level. Return each effective inheritor once, plus the source widget itself.
+  widgetsInheritingProperty(property, result = new Set) {
+    if(result.has(this))
+      return result;
+    result.add(this);
+    for(const inheriting of StateManaged.inheritFromMapping[this.id] || []) {
+      const definition = inheriting.inheritFrom()[this.id] || [];
+      if(inheriting.state[property] === undefined && inheriting.inheritFromIsValid(definition, property))
+        inheriting.widgetsInheritingProperty(property, result);
+    }
+    return result;
+  }
+
+  // Connections are expressed against a target's global transform. A change
+  // to this widget can therefore move endpoints connected to it or any child.
+  // Collecting the descendants is the expensive half, so only do it once it is
+  // known that some line is connected to anything at all.
+  async updateConnectedLineEndpoints(lines) {
+    const connected = (lines || widgetFilter(w=>w.get('type') == 'line')).filter(line=>line.get('connectStart') || line.get('connectEnd'));
+    if(!connected.length)
+      return;
+    const targetIDs = new Set([ this.id ]);
+    let added = true;
+    while(added) {
+      added = false;
+      for(const widget of widgets.values()) {
+        if(!targetIDs.has(widget.id) && targetIDs.has(widget.get('parent'))) {
+          targetIDs.add(widget.id);
+          added = true;
+        }
+      }
+    }
+    for(const line of connected)
+      if([ line.get('connectStart'), line.get('connectEnd') ].some(connection=>connection && targetIDs.has(connection.line)))
+        await line.applyConnections();
   }
 
   readOnlyProperties() {
