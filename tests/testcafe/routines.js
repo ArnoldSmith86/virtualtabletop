@@ -49,12 +49,10 @@ function removeOnEnterRoom() {
 }
 
 async function expectEventually(t, get, expected, timeout=1000) {
-  let actual = null;
-  for(let wait=50; wait<timeout; wait*=2) {
-    actual = await get();
-    if(JSON.stringify(actual) == JSON.stringify(expected))
-      break;
+  let actual = await get();
+  for(let wait=50; wait<timeout && JSON.stringify(actual) != JSON.stringify(expected); wait*=2) {
     await new Promise(resolve=>setTimeout(resolve, wait));
+    actual = await get();
   }
   await t.expect(actual).eql(expected);
 }

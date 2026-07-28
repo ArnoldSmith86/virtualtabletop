@@ -25,12 +25,20 @@ async function inputHandler(name, e) {
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
 
+  // Releasing the button always ends the drag, even when one of the checks
+  // below returns early or when the click handler awaits a routine that runs
+  // for a long time (DELAY, INPUT, ...). Forget the drag target right away so
+  // that mouse movements arriving afterwards don't get treated as a drag.
+  const dragTarget = mouseTarget;
+  if(name == 'mouseup')
+    mouseTarget = null;
+
   if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
-  if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
+  if(!dragTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
 
@@ -58,13 +66,7 @@ async function inputHandler(name, e) {
   if(name == 'mousedown')
     mouseTarget = target;
   else if(name == 'mousemove' || name == 'mouseup')
-    target = mouseTarget;
-
-  // The handlers below await routines which can run for a long time (DELAY,
-  // INPUT, ...). Forget the drag target right away so mouse movements arriving
-  // while such a routine is still running don't get treated as a drag.
-  if(name == 'mouseup')
-    mouseTarget = null;
+    target = dragTarget;
 
   if(target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
