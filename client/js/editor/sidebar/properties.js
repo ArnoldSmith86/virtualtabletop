@@ -5935,12 +5935,14 @@ class PropertiesModule extends SidebarModule {
 
         const controls = div(rowDOM, 'faceOrderControls');
         const up = document.createElement('button');
-        up.setAttribute('icon', 'arrow_upward');
+        up.innerText = '▲';
+        up.title = 'Move this value up';
         up.disabled = index == 0;
         up.onclick = () => { const next = getArray(); next.splice(index - 1, 0, next.splice(index, 1)[0]); save(next); rebuild(); };
         controls.appendChild(up);
         const down = document.createElement('button');
-        down.setAttribute('icon', 'arrow_downward');
+        down.innerText = '▼';
+        down.title = 'Move this value down';
         down.disabled = index == arr.length - 1;
         down.onclick = () => { const next = getArray(); next.splice(index + 1, 0, next.splice(index, 1)[0]); save(next); rebuild(); };
         controls.appendChild(down);
@@ -7717,19 +7719,22 @@ class PropertiesModule extends SidebarModule {
   }
 
   // up/down buttons stacked in the actions column of a face row - no drag
-  // handle, so the row keeps as much width as possible for its values
+  // handle, so the row keeps as much width as possible for its values. The
+  // triangles are the ones the line stop rows use (.lineStopOrder), which read
+  // as one control of two halves rather than as two more icon buttons beside
+  // the delete one.
   renderFaceOrderControls(target, index, count, moveFace) {
     const controls = div(target, 'faceOrderControls');
 
     const up = document.createElement('button');
-    up.setAttribute('icon', 'arrow_upward');
+    up.innerText = '▲';
     up.title = 'Move this face up';
     up.disabled = index == 0;
     up.onclick = _=>moveFace(index, index - 1);
     controls.appendChild(up);
 
     const down = document.createElement('button');
-    down.setAttribute('icon', 'arrow_downward');
+    down.innerText = '▼';
     down.title = 'Move this face down';
     down.disabled = index == count - 1;
     down.onclick = _=>moveFace(index, index + 1);

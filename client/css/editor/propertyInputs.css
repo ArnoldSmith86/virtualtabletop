@@ -1358,10 +1358,22 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   gap: 2px;
 }
 
-/* same 24px glyph as the neighboring delete button, centered in its button */
-.editorModule .faceOrderControls button[icon] {
-  padding: 2px 5px;
+/* the triangle pair of the line stop rows (.lineStopOrder in sidebarModules.css)
+   - small enough to stack inside one row height, and dimmed rather than hidden
+   at the ends of the list */
+.editorModule .faceOrderControls button {
+  width: 26px;
+  min-width: 26px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  font-size: 11px;
+  line-height: 22px;
   justify-content: center;
+}
+
+.editorModule .faceOrderControls button:disabled {
+  opacity: .4;
 }
 
 .editorModule .diceSharedColors,
