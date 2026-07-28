@@ -247,7 +247,7 @@ test('Line widget in edit mode', async t => {
     .click(Selector('#editorModules .lineShapePreset').withAttribute('aria-label', 'Shallow curve'));
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
 
-  // "Valid widgets" writes the line's dropTarget: each match is a widget type
+  // "Target widgets" writes the line's dropTarget: each match is a widget type
   // plus any number of property/value conditions, several matches are an array
   await t
     .click('#editorModules .dropTargetAddMatch')
@@ -292,5 +292,5 @@ test('Line widget in edit mode', async t => {
     .click('#editorToolbar > div > [icon=delete_forever]');
   // the added stop's id is derived from the existing stops instead of being
   // random, so the compared state no longer depends on the seeded rand() stream
-  await compareState(t, 'd35bd7362c7e87ea9ecb29895cc8d0b9');
+  await compareState(t, 'e3300c398a60e98b6f0912d48ec073fe');
 });

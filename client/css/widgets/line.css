@@ -75,11 +75,14 @@ body.editorWidgetPicking .widget.line.selectedInEdit .lineHandle {
   pointer-events: none;
 }
 
-/* the two end points sit exactly where the stops at position 0 and 1 are, so
+/* The two end points sit exactly where the stops at position 0 and 1 are, so
    their handles are hollow rings instead of discs: the stop below stays visible
    and the clip path takes the middle out of the element, which is what makes
-   the stop clickable through the hole (hit testing follows the clip path) */
-.widget.line .lineHandle.end {
+   the stop clickable through the hole (hit testing follows the clip path).
+   The edge handles of a circle - which stretch one axis at a time - land on
+   stops just as often, so they are the same ring. */
+.widget.line .lineHandle.end,
+.widget.line .lineHandle.edge {
   left: -15px;
   top: -15px;
   width: 30px;
@@ -93,12 +96,6 @@ body.editorWidgetPicking .widget.line.selectedInEdit .lineHandle {
 .widget.line .lineHandle.control {
   border-radius: 4px;
   background: #b45309;
-}
-
-/* the edge handles of a closed shape stretch one axis at a time */
-.widget.line .lineHandle.edge {
-  border-radius: 4px;
-  background: #1f5ca6;
 }
 
 /* while a widget is dragged over a line - from the Widgets sidebar or across the

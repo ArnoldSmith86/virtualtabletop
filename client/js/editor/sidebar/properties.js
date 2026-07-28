@@ -5662,21 +5662,21 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader('Appearance');
     this.addAppearanceSubTitle('Line shape');
 
-    // An open line and a closed shape are two modes, not two curves: a closed
-    // shape has no Bezier control points and no start/end point to connect.
+    // An open line and a circle are two modes, not two curves: a closed shape
+    // has no Bezier control points and no start/end point to connect.
     // The mode is its own segmented control so the curve presets below can stay
     // where they are (greyed out) instead of the grid reflowing under the click.
     const shapeSwitch = div(this.moduleDOM, 'segmented-control lineShapeSwitch');
     const shapeModes = [
-      { value: 'line',    label: 'Open line',    title: 'A path from a start point to an end point' },
-      { value: 'ellipse', label: 'Closed shape', title: 'A circle or oval through the two points, without start and end' }
+      { value: 'line',    label: 'Open line',         title: 'A path from a start point to an end point' },
+      { value: 'ellipse', label: 'Circle or ellipse', title: 'A closed shape through the two points, without start and end' }
     ];
     const shapeModeButtons = shapeModes.map(mode=>{
       const button = document.createElement('button');
       button.className = 'sidebarButton lineShapeMode';
       button.innerText = mode.label;
       button.title = mode.title;
-      button.onclick = _=>lineEdit(`turned line ${widget.id} into ${mode.value == 'ellipse' ? 'a closed shape' : 'an open line'}`, async _=>{
+      button.onclick = _=>lineEdit(`turned line ${widget.id} into ${mode.value == 'ellipse' ? 'a circle or ellipse' : 'an open line'}`, async _=>{
         if(mode.value == 'ellipse') {
           await widget.set('controlStart', null);
           await widget.set('controlEnd', null);
@@ -5741,7 +5741,7 @@ class PropertiesModule extends SidebarModule {
         // a closed shape has no Bezier control points, so the curve presets do
         // not apply - they stay in place, greyed out, so nothing jumps around
         shapeButtons[i].disabled = ellipse;
-        shapeButtons[i].title = ellipse ? `${preset.name} - a closed shape has no curve control points` : preset.name;
+        shapeButtons[i].title = ellipse ? `${preset.name} - a circle or ellipse has no curve control points` : preset.name;
       });
     };
     this.addPropertyListener(widget, 'controlStart', updateShapeButtons);
@@ -5795,48 +5795,31 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader('Stops');
 
-    const addLineToggle = (text, className, title)=>{
-      const row = div(this.moduleDOM, `lineToggleRow ${className}`);
-      const caption = document.createElement('span');
-      caption.innerText = text;
-      const toggle = document.createElement('label');
-      toggle.className = 'lineToggle';
-      const input = document.createElement('input');
-      input.type = 'checkbox';
-      input.title = title;
-      const slider = document.createElement('span');
-      slider.className = 'lineToggleSlider';
-      toggle.appendChild(input);
-      toggle.appendChild(slider);
-      row.appendChild(caption);
-      row.appendChild(toggle);
-      return input;
-    };
+    // the same switch the holder uses for "Align dropped widgets", so the panel
+    // speaks the sidebar's own toggle language
+    new CheckboxInput(this, widget, 'Turn stops to follow the line', {
+      listenTo: [ 'rotateStops', 'rotateAttachedWidgets' ],
+      hint: 'Landscape stops are rotated so they stay aligned with the line under them.',
+      getValue: _=>widget.shouldRotateStops(),
+      setValue: checked=>lineEdit(`${checked ? 'enabled' : 'disabled'} automatic stop rotation on line ${widget.id}`, async _=>{
+        // Remove the previous property when changing the setting in the tuner,
+        // so old line JSON cannot override the new rotateStops value.
+        await widget.set('rotateAttachedWidgets', null);
+        await widget.set('rotateStops', checked);
+      })
+    }).render(this.moduleDOM);
 
-    const rotateStops = addLineToggle('Turn stops to follow the line', 'lineRotateStops', 'Landscape stops are rotated so they stay aligned with the line under them');
-    const updateRotateStops = ()=>rotateStops.checked = widget.shouldRotateStops();
-    this.addPropertyListener(widget, 'rotateStops', updateRotateStops);
-    this.addPropertyListener(widget, 'rotateAttachedWidgets', updateRotateStops);
-    rotateStops.onchange = _=>lineEdit(`${rotateStops.checked ? 'enabled' : 'disabled'} automatic stop rotation on line ${widget.id}`, async _=>{
-      // Remove the previous property when changing the setting in the tuner,
-      // so old line JSON cannot override the new rotateStops value.
-      await widget.set('rotateAttachedWidgets', null);
-      await widget.set('rotateStops', rotateStops.checked);
-    });
-
-    const autoSpaceStops = addLineToggle('Distribute evenly', 'lineAutoSpaceStops', 'Automatically distribute stops when line geometry changes');
+    new CheckboxInput(this, widget, 'Distribute evenly', {
+      property: 'autoSpaceStops',
+      hint: 'Automatically distribute stops when line geometry changes.',
+      setValue: async checked=>{
+        await lineEdit(`${checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', checked));
+        renderStops();
+      }
+    }).render(this.moduleDOM);
     // say once, for the whole list, why the percentage fields below are greyed
     const autoSpaceHint = div(this.moduleDOM, 'lineHint', 'Positions are set automatically - turn this off to place stops by hand.');
-    const updateAutoSpaceHint = ()=>autoSpaceHint.style.display = widget.get('autoSpaceStops') ? '' : 'none';
-    this.addPropertyListener(widget, 'autoSpaceStops', ()=>{
-      autoSpaceStops.checked = !!widget.get('autoSpaceStops');
-      updateAutoSpaceHint();
-    });
-    autoSpaceStops.onchange = async _=>{
-      await lineEdit(`${autoSpaceStops.checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', autoSpaceStops.checked));
-      updateAutoSpaceHint();
-      renderStops();
-    };
+    this.addPropertyListener(widget, 'autoSpaceStops', _=>autoSpaceHint.style.display = widget.get('autoSpaceStops') ? '' : 'none');
 
     const removeStop = async stop=>{
       await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
@@ -6152,7 +6135,7 @@ class PropertiesModule extends SidebarModule {
     // (other lines can still connect *to* it, its perimeter is a path).
     const connectSection = div(this.moduleDOM, 'lineConnectSection');
     this.addSubHeader('Connect points', connectSection);
-    const connectClosedHint = div(connectSection, 'lineHint', 'A closed shape has no start or end point.');
+    const connectClosedHint = div(connectSection, 'lineHint', 'A circle or ellipse has no start or end point.');
     const connectRows = div(connectSection, 'lineConnectRows');
     this.addPropertyListener(widget, 'lineShape', ()=>{
       const ellipse = widget.isEllipse();
@@ -6248,11 +6231,11 @@ class PropertiesModule extends SidebarModule {
     // What a line takes in - a widget dropped on the path becomes a stop of it,
     // matched the same way a holder matches its dropTarget. One name for it:
     // the section header carries the hint so the label does not repeat it.
-    propertyInfoButton(this.addSubHeader('Valid widgets'), html('Which widgets become a stop when they are dropped onto the line'));
+    propertyInfoButton(this.addSubHeader('Target widgets'), html('Which widgets become a stop when they are dropped onto the line'));
     this.renderDropTargetEditor(widget, {
       edit: lineEdit,
       label: '',
-      emptyText: 'Nothing can be dropped onto the line itself - add a match to let widgets become stops.'
+      emptyText: 'Nothing can be dropped onto the line itself - add a match to let widgets attach as stops.'
     });
 
     this.renderOtherPropertiesSection(widget, [

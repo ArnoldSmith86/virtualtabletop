@@ -654,51 +654,6 @@
   font-style: italic;
   opacity: .7;
 }
-.editorModule .lineToggleRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 30px;
-  margin: 4px 0;
-}
-.editorModule .lineToggle {
-  position: relative;
-  display: inline-block;
-  flex: 0 0 46px;
-  width: 46px;
-  height: 24px;
-}
-.editorModule .lineToggle input {
-  width: 0;
-  min-width: 0;
-  height: 0;
-  opacity: 0;
-}
-.editorModule .lineToggleSlider {
-  position: absolute;
-  inset: 0;
-  cursor: pointer;
-  border-radius: 24px;
-  background: #666;
-  transition: background .15s;
-}
-.editorModule .lineToggleSlider::before {
-  content: '';
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  left: 3px;
-  top: 3px;
-  border-radius: 50%;
-  background: white;
-  transition: transform .15s;
-}
-.editorModule .lineToggle input:checked + .lineToggleSlider {
-  background: var(--VTTblueDark);
-}
-.editorModule .lineToggle input:checked + .lineToggleSlider::before {
-  transform: translateX(22px);
-}
 /* dropTarget editor: one indented block per match, its widget type on the
    header row and the extra property/value conditions indented below it, with
    an "or" between the blocks to show that any one of them is enough */

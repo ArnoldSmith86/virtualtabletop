@@ -286,6 +286,10 @@ function generateLineStop(id, lineID, index, x, y) {
   };
 }
 
+// every line offered in the add widget overlay is drawn in the VTT blue of
+// --VTTblue, which is what the sample shows and what the added widget keeps
+const overlayLineColor = '#1f5ca6';
+
 function generateLineWidgets(id, x, y) {
   const line = {
     type: 'line',
@@ -296,6 +300,7 @@ function generateLineWidgets(id, x, y) {
     height: 40,
     lineStart: { x: 10, y: 20 },
     lineEnd: { x: 210, y: 20 },
+    lineColor: overlayLineColor,
     stops: [ { widget: id+'S0', position: 0 }, { widget: id+'S1', position: 1 } ]
   };
 
@@ -315,6 +320,7 @@ function generateRingWidgets(id, x, y) {
     lineShape: 'ellipse',
     lineStart: { x: 15, y: 15 },
     lineEnd: { x: 115, y: 115 },
+    lineColor: overlayLineColor,
     stops: [ 0, 0.25, 0.5, 0.75 ].map((position, i)=>({ widget: `${id}S${i}`, position }))
   };
 
@@ -1254,7 +1260,7 @@ function populateAddWidgetOverlay() {
     return id
   });
 
-  // The divider lines are plain line widgets (without stops), so they can be
+  // The divider line is a plain line widget (without stops), so it can be
   // curved, restyled and connected like any other line
   addWidgetToAddWidgetOverlay(new Line('add-divider-horizontal'), {
     type: 'line',
@@ -1264,18 +1270,8 @@ function populateAddWidgetOverlay() {
     height: 20,
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 210, y: 10 },
-    lineWidth: 4
-  });
-
-  addWidgetToAddWidgetOverlay(new Line('add-divider-vertical'), {
-    type: 'line',
-    x: 1525,
-    y: 180,
-    width: 20,
-    height: 220,
-    lineStart: { x: 10, y: 10 },
-    lineEnd: { x: 10, y: 210 },
-    lineWidth: 4
+    lineWidth: 4,
+    lineColor: overlayLineColor
   });
 
   // a line without stops in its closed shape: a plain circle/oval outline
@@ -1288,7 +1284,8 @@ function populateAddWidgetOverlay() {
     lineShape: 'ellipse',
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 90, y: 90 },
-    lineWidth: 4
+    lineWidth: 4,
+    lineColor: overlayLineColor
   });
 
   // Add the composite ring widget (a closed line with stops all the way round)
