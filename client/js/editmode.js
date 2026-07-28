@@ -287,7 +287,9 @@ function generateLineStop(id, lineID, index, x, y) {
 }
 
 // every line offered in the add widget overlay is drawn in the VTT blue the
-// line widget defaults to, so none of them has to spell out a lineColor
+// line widget defaults to, so none of them has to spell out a lineColor.
+// The same four lines are also in assets/widgets.json so that they show up in
+// the Widgets sidebar - keep both copies in sync when changing one of them.
 function generateLineWidgets(id, x, y) {
   const line = {
     type: 'line',
