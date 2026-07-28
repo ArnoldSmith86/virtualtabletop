@@ -3257,9 +3257,9 @@ function jePostProcessObject(o) {
 
 function jePostProcessText(t) {
   // Convert actual newlines within JSON strings back to \n escape sequences.
-  // Windows clipboards typically use CRLF, so ignore \r and let the following \n be escaped.
-  // Other control characters (tabs especially, since HTML pasted from an external editor is
-  // usually indented with them) are not valid inside JSON strings either, so escape them too.
+  // Windows clipboards typically use CRLF, so drop the \r of a CRLF and let the following \n be
+  // escaped. Other control characters (tabs especially, since HTML pasted from an external editor
+  // is usually indented with them) are not valid inside JSON strings either, so escape them too.
   let result = '';
   let inString = false;
   let escapeNext = false;
@@ -3285,7 +3285,7 @@ function jePostProcessText(t) {
       continue;
     }
     
-    if (inString && char === '\r')
+    if (inString && char === '\r' && t[i+1] === '\n')
       continue;
     else if (inString && char === '\n')
       result += '\\n';

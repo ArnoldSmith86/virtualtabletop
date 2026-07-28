@@ -333,16 +333,17 @@ test('JSON editor: paste HTML that is indented with tabs', async t => {
     .click('#w_target');
 
   // put into the editor what pasting HTML from an external editor puts there: tab indentation
-  // (and CRLF on Windows), neither of which is valid inside a JSON string
+  // (and CRLF on Windows), neither of which is valid inside a JSON string - plus a lone CR and a
+  // vertical tab, which have to survive as escapes instead of being dropped
   await ClientFunction(() => {
     const editor = document.querySelector('#jeText');
     editor.focus();
-    editor.textContent = editor.textContent.replace('<div>old</div>', '<div>\r\n\t<span>tabbed</span>\r\n</div>');
+    editor.textContent = editor.textContent.replace('<div>old</div>', '<div>\r\n\t<span>tab\vbed</span>\r<hr>\r\n</div>');
     editor.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'v' }));
   })();
 
   await t
-    .expect(ClientFunction(() => widgets.get('target').get('html'))()).eql('<div>\n\t<span>tabbed</span>\n</div>')
+    .expect(ClientFunction(() => widgets.get('target').get('html'))()).eql('<div>\n\t<span>tab\vbed</span>\r<hr>\n</div>')
     .expect(Selector('#jeCommands').textContent).notContains('SyntaxError')
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc');
