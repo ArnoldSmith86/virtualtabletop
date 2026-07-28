@@ -320,6 +320,44 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
   await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
 });
 
+test('JSON editor: paste HTML that is indented with tabs', async t => {
+  await setRoomState({
+    target: { id: 'target', type: 'basic', x: 200, y: 200, html: '<div>old</div>' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=data_object]')
+    .click('#w_target');
+
+  // HTML copied out of an external editor arrives with tab indentation (and CRLF on Windows),
+  // neither of which is valid inside a JSON string
+  await ClientFunction(() => {
+    const editor = document.querySelector('#jeText');
+    editor.focus();
+    const content = editor.textContent;
+    const start = content.indexOf('"html": "') + 9;
+    const range = document.createRange();
+    range.setStart(editor.firstChild, start);
+    range.setEnd(editor.firstChild, content.indexOf('"', start));
+    getSelection().removeAllRanges();
+    getSelection().addRange(range);
+
+    const clipboardData = new DataTransfer();
+    clipboardData.setData('text/plain', '<div>\r\n\t<span>tabbed</span>\r\n</div>');
+    editor.dispatchEvent(new ClipboardEvent('paste', { clipboardData, bubbles: true, cancelable: true }));
+    editor.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'v' }));
+  })();
+
+  await t
+    .expect(ClientFunction(() => widgets.get('target').get('html'))()).eql('<div>\n\t<span>tabbed</span>\n</div>')
+    .expect(Selector('#jeCommands').textContent).notContains('SyntaxError')
+    .click('#editorSidebar [icon=data_object]')
+    .pressKey('esc');
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
   await setRoomState();
   await ClientFunction(prepareClient)();
