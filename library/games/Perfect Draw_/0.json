@@ -287,7 +287,11 @@
                 "position": "absolute",
                 "left": "12px",
                 "top": "76px",
-                "width": "76px"
+                "width": "76px",
+                "height": "41px",
+                "line-height": "7px",
+                "overflow": "hidden",
+                "overflow-wrap": "break-word"
               },
               ".footer": {
                 "font-size": "6px",
@@ -919,7 +923,11 @@
                 "position": "absolute",
                 "left": "12px",
                 "top": "76px",
-                "width": "76px"
+                "width": "76px",
+                "height": "41px",
+                "line-height": "7px",
+                "overflow": "hidden",
+                "overflow-wrap": "break-word"
               },
               ".footer": {
                 "font-size": "6px",
@@ -2297,7 +2305,11 @@
                 "position": "absolute",
                 "left": "12px",
                 "top": "76px",
-                "width": "76px"
+                "width": "76px",
+                "height": "41px",
+                "line-height": "7px",
+                "overflow": "hidden",
+                "overflow-wrap": "break-word"
               },
               ".footer": {
                 "font-size": "6px",
@@ -2504,7 +2516,11 @@
                 "position": "absolute",
                 "left": "12px",
                 "top": "76px",
-                "width": "76px"
+                "width": "76px",
+                "height": "41px",
+                "line-height": "7px",
+                "overflow": "hidden",
+                "overflow-wrap": "break-word"
               },
               ".footer": {
                 "font-size": "6px",
