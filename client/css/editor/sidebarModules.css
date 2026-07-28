@@ -11,6 +11,12 @@
   padding-left: 20px;
 }
 
+/* the blue info icon would disappear on the blue section header */
+.editorModule h2 .info-button {
+  margin-left: 6px;
+  color: white;
+}
+
 .editorModule .buttonBar {
   text-align: right;
 }
@@ -428,6 +434,409 @@
 .editorModule .segmented-control button.active {
   background:var(--VTTblueDark);
   color:#fff;
+}
+
+/* open line vs closed shape is a mode, not a curve preset, so it gets the
+   sidebar's segmented control above the presets - and the presets below stay
+   in place (greyed out for a closed shape) instead of the grid reflowing */
+.editorModule .lineShapeSwitch {
+  margin: 6px 0;
+}
+.editorModule .lineShapeSwitch button {
+  flex: 1 1 50%;
+  height: 30px;
+}
+.editorModule .lineShapePresets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 8px 0;
+}
+.editorModule button.lineShapePreset {
+  min-width: 0;
+  height: 48px;
+  padding: 3px;
+  background: #3b3b3b;
+  color: white;
+}
+/* the glyphs are drawn with currentColor, so the text color has to darken with
+   the background or the icon all but disappears on hover */
+.editorModule button.lineShapePreset:hover:not(:disabled) {
+  background: #bbb;
+  color: #222;
+}
+.editorModule button.lineShapePreset:disabled {
+  background: #3b3b3b;
+  opacity: .35;
+  cursor: default;
+}
+.editorModule button.lineShapePreset svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.editorModule button.lineShapePreset path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.editorModule button.lineShapePreset.selected {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+/* line color and line width share one row below the style buttons */
+.editorModule .lineAppearanceRow {
+  gap: 4px 12px;
+}
+.editorModule .lineAppearanceRow > .propertyInput > label {
+  white-space: nowrap;
+}
+.editorModule .lineAppearanceRow .numberInput input[type=number] {
+  width: 52px;
+}
+.editorModule .lineDashPresets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 5px 0 8px;
+}
+.editorModule button.lineDashPreset {
+  min-width: 0;
+  padding: 5px 3px;
+  background: #3b3b3b;
+  color: white;
+}
+.editorModule button.lineDashPreset:hover {
+  background: #bbb;
+  color: #222;
+}
+.editorModule button.lineDashPreset svg {
+  display: block;
+  width: 100%;
+  height: 16px;
+}
+.editorModule button.lineDashPreset path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+}
+.editorModule button.lineDashPreset span {
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.editorModule button.lineDashPreset.selected {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.editorModule .lineStopList .genericInput {
+  display: flex;
+  align-items: center;
+  /* the row reads left to right as picture, name, position, buttons and is
+     built from groups so a narrow sidebar wraps them as units instead of
+     tearing e.g. the percentage away from its % sign */
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 7px;
+  padding: 6px;
+  border: 1px solid #777;
+  border-radius: 6px;
+}
+.editorModule .lineStopList .lineStopGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.editorModule .lineStopList .lineStopIdGroup {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.editorModule .lineStopList .genericInput > .lineStopGroup > label {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .lineStopList .genericInput input.lineStopPosition {
+  width: 42px;
+  min-width: 42px;
+}
+/* clicking the picture or the "Stop n" caption selects the stop in the room */
+.editorModule .lineStopList .lineStopSelect {
+  cursor: pointer;
+}
+.editorModule .lineStopList .lineStopSelect:hover {
+  text-decoration: underline;
+}
+/* same dashed-underline rename affordance as the widget header id; it starts at
+   the width of a generated stop id but grows into the row's free space so a
+   hand-given name like PiccadillyCircus stays readable */
+.editorModule .lineStopList input.lineStopIdInput {
+  color: inherit;
+  font: inherit;
+  flex: 1 1 75px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 190px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+}
+.editorModule .lineStopList input.lineStopIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+.editorModule .lineStopList input.lineStopIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
+.editorModule .lineStopPreview {
+  position: relative;
+  flex: 0 0 52px;
+  width: 52px;
+  height: 38px;
+  overflow: hidden;
+  border: 1px solid #777;
+  border-radius: 5px;
+  background: #fff1;
+  cursor: pointer;
+}
+.editorModule .lineStopPreview:hover,
+.editorModule .lineStopPreview:focus-visible {
+  border-color: var(--VTTblueDark);
+  outline: 1px solid var(--VTTblueDark);
+}
+.editorModule input.lineConnectPosition,
+.editorModule input.lineConnectStartOffset,
+.editorModule input.lineConnectEndOffset {
+  width: 52px;
+  min-width: 52px;
+}
+/* "<End> point id:" label, the id field and the widget picker caret on one line,
+   with the end point name keeping the blue sub-title look */
+.editorModule .propertyInput.lineConnectRow > label {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .propertyInput.lineConnectRow > label .appearanceSubTitle {
+  display: inline;
+  margin: 0;
+}
+.editorModule .propertyInput.lineConnectRow input[type=text] {
+  flex: 1 1 80px;
+  min-width: 60px;
+}
+/* the "Connect at ... offset ..." row belongs to the end point above it, so it
+   is indented; each half stays together when the sidebar gets narrow */
+.editorModule .lineConnectDetails {
+  margin-top: 0;
+  padding-left: 10px;
+}
+.editorModule .lineConnectGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+/* one italic line that explains a state of the section above it - the same look
+   the drop target editor uses for its empty state */
+.editorModule .lineHint {
+  margin: -2px 0 6px;
+  font-style: italic;
+  opacity: .7;
+}
+/* dropTarget editor: one indented block per match, its widget type on the
+   header row and the extra property/value conditions indented below it, with
+   an "or" between the blocks to show that any one of them is enough */
+.editorModule .dropTargetEditor {
+  margin: 4px 0;
+  padding-right: 6px;
+}
+.editorModule .dropTargetEditor > label {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.editorModule .dropTargetEditor > label .info-button {
+  margin-left: 4px;
+}
+.editorModule .dropTargetMatches {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.editorModule .dropTargetMatch {
+  border-left: 2px solid var(--VTTblueDark);
+  padding: 4px 0 4px 6px;
+  background: #ffffff0d;
+}
+.editorModule .dropTargetMatchHeader,
+.editorModule .dropTargetCondition {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.editorModule .dropTargetCondition {
+  margin-top: 4px;
+  padding-left: 10px;
+}
+.editorModule .dropTargetMatchHeader > select {
+  flex: 1 1 100px;
+  min-width: 80px;
+  max-width: 100%;
+}
+.editorModule .dropTargetCondition input[type=text] {
+  flex: 1 1 60px;
+  min-width: 50px;
+}
+.editorModule .dropTargetEditor button[icon] {
+  flex: 0 0 auto;
+  padding: 3px;
+  min-width: 0;
+}
+.editorModule .dropTargetOr,
+.editorModule .dropTargetEmpty,
+.editorModule .dropTargetUnsupported {
+  font-style: italic;
+  opacity: .7;
+}
+.editorModule .dropTargetUnsupported {
+  flex: 1 1 auto;
+}
+.editorModule button.dropTargetAddMatch {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 4px 8px 4px 4px;
+}
+/* deleting a stop is destructive, so it gets the shared red icon-button look
+   (white glyph on dark red, darker on hover) from button[icon].red */
+.editorModule .lineStopList button.lineRemoveStop {
+  display: inline-flex;
+  flex: 0 0 auto;
+  margin-left: 3px;
+  padding: 3px;
+  vertical-align: middle;
+}
+.editorModule .lineStopOrder {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+/* the two arrows stack, so each one keeps the sidebar's ~24px target size */
+.editorModule .lineStopOrder button {
+  width: 26px;
+  min-width: 26px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  font-size: 11px;
+  line-height: 22px;
+}
+.editorModule .lineStopOrder button:disabled {
+  opacity: .4;
+}
+/* the three ways to add a stop live behind one button: it opens the menu below
+   it, and picking an entry there swaps the menu for that option's own row */
+.editorModule .lineAddStopSection {
+  margin: 6px 0;
+}
+.editorModule button.lineAddStop {
+  width: 100%;
+  justify-content: center;
+  padding: 5px 8px 5px 4px;
+}
+.editorModule button.lineAddStop.open {
+  background: var(--VTTblueDark);
+}
+.editorModule .lineAddStopMenu,
+.editorModule .lineAddStopOptions > .lineAddStopOption {
+  display: none;
+}
+.editorModule .lineAddStopMenu.open {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 6px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+}
+.editorModule button.lineAddStopMenuEntry {
+  justify-content: flex-start;
+  width: 100%;
+  padding: 5px 8px 5px 4px;
+  text-align: left;
+}
+.editorModule .lineAddStopMenuLabel,
+.editorModule .lineAddStopMenuHint {
+  display: block;
+  white-space: normal;
+}
+.editorModule .lineAddStopMenuHint {
+  font-size: 11px;
+  line-height: 13px;
+  opacity: .75;
+  text-transform: none;
+}
+.editorModule .lineAddStopOptions > .lineAddStopOption.open {
+  display: flex;
+  margin-top: 4px;
+  padding: 6px 6px 0 6px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+}
+.editorModule .lineAddStopOption > label {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .lineAddStopOption input.lineInheritID {
+  flex: 1 1 60px;
+  min-width: 48px;
+}
+.editorModule .lineAddStopOption button.lineAddStopBack {
+  flex: 0 0 auto;
+  padding: 2px;
+  min-width: 30px;
+  justify-content: center;
+}
+.editorModule .lineAddStopOption button.lineAddStopConfirm {
+  flex: 0 0 auto;
+  padding: 4px 8px 4px 4px;
+  white-space: nowrap;
+}
+/* the picker options are nothing but their caret, so it goes to the far right */
+.editorModule .lineExistingStopRow > label,
+.editorModule .lineLibraryStopRow > label {
+  flex: 1 1 auto;
+}
+.editorModule .lineLibraryStopEntry .lineLibraryStopPreview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  overflow: hidden;
+}
+.editorModule .lineLibraryStopEntry .lineLibraryStopPreview * {
+  max-width: 100%;
+  max-height: 100%;
+  font-size: 24px;
 }
 
 .widgets.editorModule .buttonBar input[type=text]{
