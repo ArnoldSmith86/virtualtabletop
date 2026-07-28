@@ -296,7 +296,7 @@ export class Line extends Widget {
   }
 
   // A stop outside the line is placed through global coordinates, which read the
-  // CSS transforms of this line and its parents. Inside a batch those still show
+  // CSS transforms of the frames it converts between. Inside a batch those show
   // the state of the previous event, so after normalizeGeometry moved the box -
   // which is what positionAttachedWidgets runs on - every stop would land off
   // the path by exactly that move. Same reason applyConnections flushes. Only a
@@ -305,14 +305,27 @@ export class Line extends Widget {
   flushStaleTransforms() {
     if(!this.hasExternalStops())
       return;
-    const chain = [];
-    for(let w = this; w; w = widgets.get(w.get('parent')))
-      chain.push(w.id, ...w.cssTransformProperties().map(property=>w.get(property)));
-    const transforms = chain.join();
+    const transforms = this.stopFrameTransforms();
     if(transforms == this.flushedTransforms)
       return;
     flushDelta();
     this.flushedTransforms = transforms;
+  }
+
+  // stopCoordInParentFrame converts through two chains of DOM transforms: this
+  // line up to the room, and the same for the parent each external stop is
+  // placed in. Either going stale inside a batch displaces the stop, so both
+  // sides go into the snapshot flushStaleTransforms compares against.
+  stopFrameTransforms() {
+    const frames = [ this, ...this.attachedWidgets().map(stop=>widgets.get(stop.get('parent'))) ];
+    const seen = new Set();
+    const chain = [];
+    for(const frame of frames)
+      for(let w = frame; w && !seen.has(w.id); w = widgets.get(w.get('parent'))) {
+        seen.add(w.id);
+        chain.push(w.id, ...w.cssTransformProperties().map(property=>w.get(property)));
+      }
+    return chain.join();
   }
 
   async positionAttachedWidgets() {

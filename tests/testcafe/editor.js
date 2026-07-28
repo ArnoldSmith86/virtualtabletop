@@ -834,12 +834,16 @@ test('Line stops that are not children of the line', async t => {
     // from city to city, at 33% and 67% of its length
     car1:  { id: 'car1',  type: 'basic', x: 255, y: 308, width: 60, height: 24, movable: false },
     car2:  { id: 'car2',  type: 'basic', x: 425, y: 308, width: 60, height: 24, movable: false },
+    // a third car in a frame of its own: it is placed through the holder's
+    // transform instead of the room's, at 50% of the path
+    holder: { id: 'holder', type: 'basic', x: 200, y: 100, width: 400, height: 400, movable: false },
+    car3:  { id: 'car3',  type: 'basic', parent: 'holder', x: 140, y: 208, width: 60, height: 24, movable: false },
     route: {
       id: 'route', type: 'line', autoSpaceStops: false,
       lineStart: { x: 120, y: 320 }, lineEnd: { x: 620, y: 320 },
       connectStart: { line: 'cityA', position: 0.5 },
       connectEnd: { line: 'cityB', position: 0.5 },
-      stops: [ { widget: 'car1', position: 0.33 }, { widget: 'car2', position: 0.67 } ]
+      stops: [ { widget: 'car1', position: 0.33 }, { widget: 'car3', position: 0.5 }, { widget: 'car2', position: 0.67 } ]
     }
   });
   await ClientFunction(prepareClient)();
@@ -871,9 +875,26 @@ test('Line stops that are not children of the line', async t => {
     }));
   });
 
+  // a routine can move the frame a stop lives in and re-lay out the line in the
+  // same batch - then it is the holder's transform that is one event behind.
+  // rotateStops is the cheapest property to re-lay out the stops with: it does
+  // not touch the line's own geometry, so only the holder's frame goes stale.
+  const moveHolderAndLayOutStops = ClientFunction((dx, dy, rotate) => {
+    const holder = widgets.get('holder');
+    batchStart();
+    return holder.set('x', holder.get('x')+dx)
+      .then(_=>holder.set('y', holder.get('y')+dy))
+      .then(_=>widgets.get('route').set('rotateStops', rotate))
+      .then(_=>batchEnd());
+  });
+
   await t.expect(stopsOffPath()).eql(0);
   await moveCity(120, -90);
   await t.expect(stopsOffPath()).eql(0);
   await moveCity(-120, 90);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveHolderAndLayOutStops(70, -40, false);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveHolderAndLayOutStops(-70, 40, true);
   await t.expect(stopsOffPath()).eql(0);
 });
