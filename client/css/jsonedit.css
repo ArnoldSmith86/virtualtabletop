@@ -574,6 +574,20 @@ body.jsonEdit #toolbar {
   margin-top: 20px;
 }
 
+#jeLog > .jeLogRunning {
+  font-weight: bold;
+}
+
+#jeLog > .jeLogRunning .jeLogTime {
+  animation: jeLogRunning 1s infinite alternate;
+}
+
+@keyframes jeLogRunning {
+  to {
+    opacity: 0.3;
+  }
+}
+
 .jeLogSkipped { color: var(--textDimColor1); }
 .jeLogSummary { color: var(--textHighlightColor4); }
 .jeLogResult  { color: var(--textHighlightColor2); }
