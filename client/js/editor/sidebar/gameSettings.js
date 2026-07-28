@@ -3,9 +3,15 @@ class GameSettingsModule extends SidebarModule {
     super('settings', 'Game Settings', 'Settings like legacy modes and global game options.');
   }
 
-  addCheckbox(text, name, description, target) {
+  addLegacyModeCheckbox(name, target) {
     if(legacyMode(name) === undefined)
       return;
+
+    const mode = LEGACY_MODES[name];
+    const description = `${mode.description}
+      <br><br>
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/${mode.pr}">pull request #${mode.pr}</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
+      `;
 
     const tile = document.createElement('div');
     tile.className = 'settings-tile';
@@ -36,7 +42,7 @@ class GameSettingsModule extends SidebarModule {
 
     const label = document.createElement('label');
     label.htmlFor = name;
-    label.textContent = text;
+    label.textContent = mode.label;
     label.style.fontWeight = 'bold';
 
     header.append(checkbox, label);
@@ -337,51 +343,8 @@ class GameSettingsModule extends SidebarModule {
       target.append(p3);
     }
  
-    this.addCheckbox('Convert numeric var parameters to numbers', 'convertNumericVarParametersToNumbers', `
-      <b>Problem</b>: Whenever you used a string in a var expression that consisted of only digits, it was converted to a number.
-      <br><br>
-      A common pitfall was storing a widget <code>id</code> in an array and later trying to <code>SELECT</code> it using the stored <code>id</code>. Because <code>id</code>s are randomly generated alphanumeric strings, this would fail for some unlucky widgets that received an all numeric <code>id</code>.
-      <br><br>
-      <b>Example:</b>
-      <br>
-      <code>var a = []</code>
-      <br>
-      <code>var a = push '1'</code>
-      <br><br>
-      <b>Old result</b>: <code>[1]</code><br>
-      <b>New result</b>: <code>['1']</code>
-      <br><br>
-      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
-      `, target);
-    this.addCheckbox('Use 1 as default for var parameters', 'useOneAsDefaultForVarParameters', `
-      <b>Problem</b>: When you called a function in a var expression, every parameter not provided was set to <code>1</code>.
-      <br><br>
-      <b>Example:</b>
-      <br>
-      <code>var a = +</code>
-      <br><br>
-      <b>Old result</b>: <code>2</code><br>
-      <b>New result</b>: <code>0</code> and an error message
-      <br><br>
-      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
-      `, target);
-    this.addCheckbox('Use iframes for card face HTML objects', 'useIframeForHtmlCards', `
-      <b>Legacy Behavior</b>: Card face objects with <code>type: 'html'</code> are rendered in an iframe. This behavior is used for older games and can be enabled by checking this box.
-      <br><br>
-      <b>Default Behavior</b>: These objects are rendered directly into the DOM which should be faster and easier to work with. This is the default for new games and is used when this box is unchecked.
-      <br><br>
-      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2729">pull request #2729</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
-      `, target);
-    this.addCheckbox('Disable holder image support', 'disableHolderImageWidget', `
-      <b>Problem</b>: Holders now support image, icon, and text properties natively, but some games manually implemented this functionality before it was supported and may break with the new behavior.
-      <br><br>
-      <b>Old behavior</b>: Holders did not natively support image/icon/text properties, requiring manual workarounds.<br>
-      <b>New behavior</b>: Holders support image, icon, and text properties directly.
-      <br><br>
-      This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
-      <br><br>
-      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2634">pull request #2634</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
-      `, target);
+    for(const name in LEGACY_MODES)
+      this.addLegacyModeCheckbox(name, target);
 
     this.addSubHeader('UI Settings');
     this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of other players\' cursor indicators in the room.', [

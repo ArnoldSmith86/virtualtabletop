@@ -4,6 +4,8 @@ import crypto from 'crypto';
 
 import { diffString, diff } from 'json-diff';
 
+import { ALL_LEGACY_MODES, legacyModeCombinations } from '../../client/js/legacymoderegistry.js';
+
 const referenceDir = path.resolve() + '/save/testcafe-references';
 fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
@@ -51,6 +53,21 @@ export async function setLegacyMode(name, value) {
   await fetch(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
     method: 'PUT'
   });
+}
+
+// The tiers from the legacy-mode registry: modern (all off), legacy-all (all on), one entry
+// per mode alone and one per declared interaction. Linear in the number of modes.
+export const LEGACY_COMBOS = legacyModeCombinations();
+
+// setRoomState() keeps the room's gameSettings (see Room.setState), so a test that only ever
+// switches modes on leaks them into every test that runs after it in the same room. Setting
+// every mode explicitly - the false ones included - is what makes a combination reproducible.
+export async function applyLegacy(combo) {
+  const modes = typeof combo == 'string' ? LEGACY_COMBOS[combo] : combo;
+  if(!modes)
+    throw Error(`Unknown legacy mode combination '${combo}'.`);
+  for(const name of ALL_LEGACY_MODES)
+    await setLegacyMode(name, !!modes[name]);
 }
 
 export async function getState() {
