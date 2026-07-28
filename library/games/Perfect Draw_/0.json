@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "120",
       "attribution": "<div>Game name, design, text, and graphics by Nora Jean Haynes, Iris Cassandra Saintclaire, and Thunderderder. Published by Double Summon Games: https://doublesummon.itch.io/perfect-draw-ttrpg and https://www.fiverr.com/thunderderder. Approved for use on Virtualtabletop.io with permission from the rights holders.</div><div>\n</div><div>Additional graphics from https://game-icons.net/ available as listed on the About overlay.</div><div>\n</div><div>Urbanist Font by Corey Hu, available under SIL Open Font License, Version 1.1.</div><div><br></div><div>Room Layout by Littlemitten and released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1775692826812,
+      "lastUpdate": 1785221830748,
       "skill": "",
       "description": "\"Perfect Draw! is a tabletop role-playing game based on the Powered By The Apocalypse framework that combines Trading Card Games with collaborative storytelling - allowing you to tell stories similar to card game anime like Yu-Gi-Oh!, Duel Masters, and CardFight! Vanguard\"",
       "similarImage": "",
@@ -185,63 +185,124 @@
     "y": 36,
     "cardTypes": {
       "card1": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card2": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card3": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card4": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card5": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card6": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card7": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card8": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       }
     },
     "faceTemplates": [
       {
+        "border": false,
+        "radius": false,
         "objects": [
           {
             "type": "image",
-            "css": {
-              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-            },
-            "dynamicProperties": {
-              "value": "back",
-              "width": "width",
-              "height": "height"
-            }
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/-1569446033_3396"
           }
         ]
       },
       {
+        "border": false,
+        "radius": false,
         "objects": [
           {
             "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/1185280421_37356"
+          },
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "value": "<div class=name>${PROPERTY cardName}</div><img src=${PROPERTY cardImage} class=image><div class=text>${PROPERTY cardText}</div><div class=footer>${PROPERTY cardFooter}</div>",
+            "width": 100,
+            "height": 140,
             "css": {
-              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-            },
-            "dynamicProperties": {
-              "value": "face",
-              "width": "width",
-              "height": "height"
+              "body": {
+                "font-family": "Urbanist",
+                "text-align": "left",
+                "color": "#2F3433",
+                "font-size": "6px"
+              },
+              ".name": {
+                "font-family": "Urbanist-bold",
+                "position": "absolute",
+                "left": "12px",
+                "top": "4px",
+                "width": "76px"
+              },
+              ".text": {
+                "position": "absolute",
+                "left": "12px",
+                "top": "76px",
+                "width": "76px"
+              },
+              ".footer": {
+                "font-size": "6px",
+                "position": "absolute",
+                "left": "12px",
+                "top": "125px",
+                "width": "76px"
+              },
+              ".image": {
+                "position": "absolute",
+                "left": "8px",
+                "top": "16px",
+                "max-width": "84px",
+                "max-height": "55px"
+              }
             }
           }
         ]
@@ -249,18 +310,9 @@
     ],
     "z": 353,
     "cardDefaults": {
-      "width": 100,
       "height": 140,
-      "enlarge": 4,
-      "css": {
-        "--offsetX": "${PROPERTY offsetX}",
-        "--offsetY": "${PROPERTY offsetY}",
-        "--deckWidth": "${PROPERTY deckWidth}",
-        "--deckHeight": "${PROPERTY deckHeight}",
-        "--width": "${PROPERTY width}",
-        "--height": "${PROPERTY height}"
-      },
-      "back": "/assets/-1569446033_3396"
+      "width": 100,
+      "enlarge": 4
     },
     "parent": "xi12b"
   },
@@ -1304,6 +1356,7 @@
     "layer": 0
   },
   "epl1": {
+    "parent": null,
     "x": 14,
     "y": 481,
     "width": 506,
@@ -2143,63 +2196,124 @@
     "y": 36,
     "cardTypes": {
       "card1": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card2": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card3": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card4": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card5": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card6": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card7": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card8": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       }
     },
     "faceTemplates": [
       {
+        "border": false,
+        "radius": false,
         "objects": [
           {
             "type": "image",
-            "css": {
-              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-            },
-            "dynamicProperties": {
-              "value": "back",
-              "width": "width",
-              "height": "height"
-            }
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/-1569446033_3396"
           }
         ]
       },
       {
+        "border": false,
+        "radius": false,
         "objects": [
           {
             "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/1185280421_37356"
+          },
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "value": "<div class=name>${PROPERTY cardName}</div><img src=${PROPERTY cardImage} class=image><div class=text>${PROPERTY cardText}</div><div class=footer>${PROPERTY cardFooter}</div>",
+            "width": 100,
+            "height": 140,
             "css": {
-              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-            },
-            "dynamicProperties": {
-              "value": "face",
-              "width": "width",
-              "height": "height"
+              "body": {
+                "font-family": "Urbanist",
+                "text-align": "left",
+                "color": "#2F3433",
+                "font-size": "6px"
+              },
+              ".name": {
+                "font-family": "Urbanist-bold",
+                "position": "absolute",
+                "left": "12px",
+                "top": "4px",
+                "width": "76px"
+              },
+              ".text": {
+                "position": "absolute",
+                "left": "12px",
+                "top": "76px",
+                "width": "76px"
+              },
+              ".footer": {
+                "font-size": "6px",
+                "position": "absolute",
+                "left": "12px",
+                "top": "125px",
+                "width": "76px"
+              },
+              ".image": {
+                "position": "absolute",
+                "left": "8px",
+                "top": "16px",
+                "max-width": "84px",
+                "max-height": "55px"
+              }
             }
           }
         ]
@@ -2207,18 +2321,9 @@
     ],
     "z": 353,
     "cardDefaults": {
-      "width": 100,
       "height": 140,
-      "enlarge": 4,
-      "css": {
-        "--offsetX": "${PROPERTY offsetX}",
-        "--offsetY": "${PROPERTY offsetY}",
-        "--deckWidth": "${PROPERTY deckWidth}",
-        "--deckHeight": "${PROPERTY deckHeight}",
-        "--width": "${PROPERTY width}",
-        "--height": "${PROPERTY height}"
-      },
-      "back": "/assets/-1569446033_3396"
+      "width": 100,
+      "enlarge": 4
     },
     "parent": "xi13b"
   },
@@ -2298,63 +2403,124 @@
     "y": 36,
     "cardTypes": {
       "card1": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card2": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card3": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       },
       "card4": {
-        "face": "/assets/1185280421_37356",
-        "offsetX": 0,
-        "offsetY": 0,
-        "deckWidth": 1,
-        "deckHeight": 1
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card5": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card6": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card7": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card8": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
       }
     },
     "faceTemplates": [
       {
+        "border": false,
+        "radius": false,
         "objects": [
           {
             "type": "image",
-            "css": {
-              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-            },
-            "dynamicProperties": {
-              "value": "back",
-              "width": "width",
-              "height": "height"
-            }
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/-1569446033_3396"
           }
         ]
       },
       {
+        "border": false,
+        "radius": false,
         "objects": [
           {
             "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/1185280421_37356"
+          },
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "value": "<div class=name>${PROPERTY cardName}</div><img src=${PROPERTY cardImage} class=image><div class=text>${PROPERTY cardText}</div><div class=footer>${PROPERTY cardFooter}</div>",
+            "width": 100,
+            "height": 140,
             "css": {
-              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-            },
-            "dynamicProperties": {
-              "value": "face",
-              "width": "width",
-              "height": "height"
+              "body": {
+                "font-family": "Urbanist",
+                "text-align": "left",
+                "color": "#2F3433",
+                "font-size": "6px"
+              },
+              ".name": {
+                "font-family": "Urbanist-bold",
+                "position": "absolute",
+                "left": "12px",
+                "top": "4px",
+                "width": "76px"
+              },
+              ".text": {
+                "position": "absolute",
+                "left": "12px",
+                "top": "76px",
+                "width": "76px"
+              },
+              ".footer": {
+                "font-size": "6px",
+                "position": "absolute",
+                "left": "12px",
+                "top": "125px",
+                "width": "76px"
+              },
+              ".image": {
+                "position": "absolute",
+                "left": "8px",
+                "top": "16px",
+                "max-width": "84px",
+                "max-height": "55px"
+              }
             }
           }
         ]
@@ -2362,18 +2528,9 @@
     ],
     "z": 353,
     "cardDefaults": {
-      "width": 100,
       "height": 140,
-      "enlarge": 4,
-      "css": {
-        "--offsetX": "${PROPERTY offsetX}",
-        "--offsetY": "${PROPERTY offsetY}",
-        "--deckWidth": "${PROPERTY deckWidth}",
-        "--deckHeight": "${PROPERTY deckHeight}",
-        "--width": "${PROPERTY width}",
-        "--height": "${PROPERTY height}"
-      },
-      "back": "/assets/-1569446033_3396"
+      "width": 100,
+      "enlarge": 4
     },
     "parent": "xi15b"
   },
@@ -4060,8 +4217,8 @@
     "id": "45g3",
     "z": 1725,
     "parent": "b4pd",
-    "x": 0,
-    "y": 0
+    "x": null,
+    "y": null
   },
   "sdpx": {
     "deck": "xi9bD",
@@ -4070,8 +4227,8 @@
     "id": "sdpx",
     "z": 1727,
     "parent": "b4pd",
-    "x": 0,
-    "y": 0
+    "x": null,
+    "y": null
   },
   "b4pd": {
     "type": "pile",
@@ -4089,8 +4246,8 @@
     "id": "mjxq",
     "z": 1729,
     "parent": "b4pd",
-    "x": 0,
-    "y": 0
+    "x": null,
+    "y": null
   },
   "fn0s": {
     "deck": "xi9bD",
