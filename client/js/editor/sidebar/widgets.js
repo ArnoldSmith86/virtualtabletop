@@ -580,7 +580,7 @@ class WidgetsModule extends SidebarModule {
         list += `
           <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
               <div class="widget-group-header">
-                  <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
+                  ${collapseArrowHTML(isCollapsed)}
                   <input class="group-name-input" value="${html(group.name)}" readonly>
               </div>
               <div class="widget-grid" ${isCollapsed ? 'style="display: none;"' : ''}>
@@ -593,7 +593,7 @@ class WidgetsModule extends SidebarModule {
             <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
                 <div class="widget-group-header" draggable="${isEditing}">
                     <span class="drag-handle"></span>
-                    <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
+                    ${collapseArrowHTML(isCollapsed)}
                     <input class="group-name-input" value="${html(group.name)}" readonly>
                 </div>
                 <ul class="widget-group-body" ${isCollapsed ? 'style="display: none;"' : ''}>
@@ -654,7 +654,7 @@ class WidgetsModule extends SidebarModule {
       serverListHTML = `
         <div class="widget-list-container ${isServerListCollapsed ? 'collapsed' : ''}" data-list-key="server">
           <div class="widget-list-header">
-          <span class="collapse-arrow material-symbols">${isServerListCollapsed ? 'expand_less' : 'expand_more'}</span>
+          ${collapseArrowHTML(isServerListCollapsed)}
             <span class="widget-list-header-text">On The Server</span>
             <div class="widget-list-actions">
               ${config.allowPublicLibraryEdits ? `<button icon="upload" class="sidebarButton import-widgets" data-source="server"><span>Import Server-Wide</span></button>` : ''}
@@ -671,7 +671,7 @@ class WidgetsModule extends SidebarModule {
       ${serverListHTML}
       <div class="widget-list-container ${isLocalListCollapsed ? 'collapsed' : ''}" data-list-key="local">
         <div class="widget-list-header">
-          <span class="collapse-arrow material-symbols">${isLocalListCollapsed ? 'expand_less' : 'expand_more'}</span>
+          ${collapseArrowHTML(isLocalListCollapsed)}
           <span class="widget-list-header-text">In Local Storage</span>
           <div class="widget-list-actions">
             <div class="segmented-control sort-control">
@@ -716,8 +716,7 @@ class WidgetsModule extends SidebarModule {
         if (!listKey) return;
         const isCollapsed = container.classList.toggle('collapsed');
         localStorage.setItem(`vtt-widget-list-collapsed-${listKey}`, isCollapsed);
-        const arrow = header.querySelector('.collapse-arrow');
-        arrow.textContent = isCollapsed ? 'expand_less' : 'expand_more';
+        setCollapseArrow(header.querySelector('.collapseArrow'), isCollapsed);
       };
     }
 

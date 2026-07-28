@@ -3845,9 +3845,7 @@ class PropertiesModule extends SidebarModule {
     header.type = 'button';
     header.className = 'collapsibleHeader';
     header.setAttribute('aria-expanded', String(!collapsed));
-    const arrow = document.createElement('span');
-    arrow.className = 'collapseArrow';
-    header.appendChild(arrow);
+    const arrow = renderCollapseArrow(header, collapsed);
     const heading = document.createElement('span');
     heading.className = 'collapsibleTitle';
     heading.textContent = title;
@@ -3861,10 +3859,11 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(header);
     const body = div(wrap, 'collapsibleBody');
     header.onclick = _=>{
-      wrap.classList.toggle('collapsed');
-      header.setAttribute('aria-expanded', String(!wrap.classList.contains('collapsed')));
+      const nowCollapsed = wrap.classList.toggle('collapsed');
+      setCollapseArrow(arrow, nowCollapsed);
+      header.setAttribute('aria-expanded', String(!nowCollapsed));
       if(stateKey !== null)
-        this.collapsibleStates[stateKey] = wrap.classList.contains('collapsed');
+        this.collapsibleStates[stateKey] = nowCollapsed;
     };
     renderBody(body);
     return wrap;
@@ -6333,9 +6332,7 @@ class PropertiesModule extends SidebarModule {
     const info = div(toggle, 'faceRowInfo');
     div(info, 'faceRowTitle', `${html(`Face ${index + 1}`)}<span class=faceActiveTag>shown</span>`);
     div(info, 'faceRowSummary', html(faceSummary(face)));
-    const arrow = document.createElement('span');
-    arrow.className = 'collapseArrow';
-    toggle.appendChild(arrow);
+    renderCollapseArrow(toggle, !expanded);
 
     const actions = div(head, 'faceRowActions');
 

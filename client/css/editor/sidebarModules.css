@@ -1141,12 +1141,6 @@ body.darkMode .widget-group-header {
     padding: 1px;
 }
 
-.widget-group-header .collapse-arrow, .widget-list-header .collapse-arrow {
-    width: 1.2em;
-    height: 1em;
-    text-align: center;
-}
-
 .widget-list .new-group-drop-target {
   border: 2px dashed lightgray;
   color: lightgray;
@@ -1344,7 +1338,7 @@ div.widget-name {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='20' viewBox='0 0 10 20'%3E%3Cpath d='M1,3 H9 M1,7 H9 M1,11 H9 M1,15 H9' stroke='%23888' stroke-width='2'/%3E%3C/svg%3E");
 }
 
-.widget-group-header .collapse-arrow {
+.widget-group-header .collapseArrow {
   margin-right: 5px;
 }
 

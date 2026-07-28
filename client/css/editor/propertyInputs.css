@@ -637,13 +637,27 @@
   text-overflow: ellipsis;
 }
 
-.editorModule .collapseArrow::before {
-  content: 'expand_more';
+/* Every block in the editor that can be folded away draws the same arrow: an
+   empty <span class=collapseArrow> (collapseArrowHTML/renderCollapseArrow in
+   sidebarModule.js) that carries 'collapsed' while its block is folded. Keeping
+   the glyph out of the markup is what lets these few rules cover all of them -
+   the box is a fixed 1em square with the arrow centered in it, so a header
+   keeps its height and its layout when the arrow flips. */
+.editorModule .collapseArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 1em;
+  width: 1em;
   font-family: 'Material Symbols';
-  display: inline-block;
 }
 
-.editorModule .collapsibleSection.collapsed .collapseArrow::before {
+.editorModule .collapseArrow::before {
+  content: 'expand_more';
+}
+
+.editorModule .collapseArrow.collapsed::before {
   content: 'chevron_right';
 }
 
@@ -1511,14 +1525,6 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.editorModule .faceRow .collapseArrow::before {
-  content: 'chevron_right';
-}
-
-.editorModule .faceRow.expanded .collapseArrow::before {
-  content: 'expand_more';
 }
 
 /* scoped to .faceRow: the dice face rows share the .faceRowActions class */

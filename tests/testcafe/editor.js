@@ -200,9 +200,15 @@ test('A pile is edited through its handle, css through declaration rows', async 
     .typeText('.textInput input', 'chips', { replace: true })
     .expect(ClientFunction(() => widgets.get('pile').get('text'))()).eql('chips');
 
+  // every fold-away block draws the same arrow, which points sideways while
+  // the block is folded and down while it is open
+  const cssArrow = Selector('#editorModules .collapsibleHeader').withText('CSS').find('.collapseArrow');
+  await t.expect(cssArrow.hasClass('collapsed')).ok();
+
   // the handle colors are written into handleCSS, not into css
   await t
     .click(Selector('#editorModules .collapsibleHeader').withText('CSS'))
+    .expect(cssArrow.hasClass('collapsed')).notOk()
     .click(Selector('#editorModules .cssDeclarationAddRow input'))
     .typeText(Selector('#editorModules .cssDeclarationAddRow input'), 'opacity')
     .pressKey('enter')

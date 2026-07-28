@@ -1,3 +1,24 @@
+// The arrow of every block in the editor that can be folded away. The glyph
+// lives in CSS (.editorModule .collapseArrow), so the markup is the same empty
+// span everywhere and one rule sizes, centers and flips all of them - it points
+// down while the block is open and sideways while it carries 'collapsed'.
+function collapseArrowHTML(collapsed) {
+  return `<span class="collapseArrow${collapsed ? ' collapsed' : ''}"></span>`;
+}
+
+function renderCollapseArrow(target, collapsed) {
+  const arrow = document.createElement('span');
+  arrow.className = 'collapseArrow';
+  setCollapseArrow(arrow, collapsed);
+  if(target)
+    target.appendChild(arrow);
+  return arrow;
+}
+
+function setCollapseArrow(arrow, collapsed) {
+  arrow.classList.toggle('collapsed', !!collapsed);
+}
+
 class SidebarModule {
   constructor(icon, title, tooltip) {
     this.icon = icon;
