@@ -118,7 +118,8 @@ function handleWidgetPickerSelection(newSelection) {
 //   onClear        - when given, adds a button that removes the value
 //   clearLabel     - label of that button
 //   excludeIDs     - returns additional widget IDs to hide from the list
-//   allowSelf      - offer the widget the popout belongs to as well
+//   allowSelf      - offer the widget the popout belongs to as well, pinned to
+//                    the top of the list and marked as "this widget"
 //   resolveCovering - without a type filter, resolve a clicked card or pile to
 //                    the widget it lies on instead of picking it
 //   inline         - always show the list instead of hiding it behind an arrow
@@ -138,6 +139,10 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
 
   const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
   const excludedIDs = _=>(options.allowSelf ? [] : [ widget.id ]).concat(options.excludeIDs ? options.excludeIDs() : []);
+  // a click in the room cannot pick the widget the popout belongs to (it stays
+  // selected while picking, so such a click looks like the picker's own
+  // selection restore), which is why the list pins and marks it instead
+  const selfID = options.allowSelf ? widget.id : null;
 
   let typeFilter = options.typeFilter || '';
   let searchTerm = '';
@@ -233,11 +238,13 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
         .filter(w=>excluded.indexOf(w.id) == -1)
         .filter(w=>matchesTypeFilter(w))
         .filter(w=>!term || w.id.toLowerCase().includes(term))
-        // picked widgets come first so they stay visible (and removable) when
-        // the list is cut off below
-        .sort((a, b)=>(current.indexOf(b.id) != -1) - (current.indexOf(a.id) != -1) || a.id.localeCompare(b.id));
+        // the widget the popout belongs to comes first (it is the one a routine
+        // acts on most often), then the picked widgets so they stay visible (and
+        // removable) when the list is cut off below
+        .sort((a, b)=>(b.id == selfID) - (a.id == selfID) || (current.indexOf(b.id) != -1) - (current.indexOf(a.id) != -1) || a.id.localeCompare(b.id));
       for(const match of matches.slice(0, 50)) {
-        const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span><span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
+        const self = match.id == selfID ? '<span class=widgetPickerSelf>this widget</span>' : '';
+        const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span>${self}<span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
         entry.classList.toggle('selected', current.indexOf(match.id) != -1);
         entry.onclick = _=>{
           if(options.multiple) {

@@ -179,6 +179,31 @@ body.edit.darkMode .inline-popup button:hover {
   cursor: pointer;
 }
 
+/* the proposed property names of a parameter that takes one */
+.inline-popup .popup-property-list {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.inline-popup .popup-property-group {
+  font-weight: bold;
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 6px 2px 2px 2px;
+}
+
+.inline-popup .popup-property-empty {
+  color: gray;
+  font-style: italic;
+  margin: 4px 2px;
+}
+
+.inline-popup button.selected {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
 .inline-popup .popup-entry {
   margin-bottom: 4px;
 }

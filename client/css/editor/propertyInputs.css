@@ -412,6 +412,12 @@
   margin-left: auto;
 }
 
+/* the widget the picker belongs to - it cannot be clicked in the room */
+.editorModule .widgetPickerEntry .widgetPickerSelf {
+  color: var(--VTTblue);
+  font-size: 11px;
+}
+
 .editorModule .widgetPickerEntry.selected::before {
   content: 'check';
   font-family: 'Material Symbols';

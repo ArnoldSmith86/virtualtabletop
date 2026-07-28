@@ -645,6 +645,87 @@ class RoutineStringPopup extends RoutinePopup {
   }
 }
 
+// The property names to propose for a parameter that takes one, grouped by where
+// they come from: the widget the routine belongs to, the rest of the room, and
+// the standard properties the engine defines (the validator's tables are part of
+// the editor bundle). Every name appears in the first group that has it.
+function proposedPropertyGroups(widget) {
+  const groups = [];
+  const seen = new Set();
+  const addGroup = (title, names)=>{
+    const fresh = [ ...new Set(names) ].filter(name=>name && !seen.has(name)).sort();
+    for(const name of fresh)
+      seen.add(name);
+    if(fresh.length)
+      groups.push({ title, names: fresh });
+  };
+
+  addGroup('This widget', Object.keys((widget && widget.state) || {}));
+
+  const inRoom = [];
+  if(typeof widgets != 'undefined')
+    for(const other of widgets.values())
+      if(!widget || other.id != widget.id)
+        inRoom.push(...Object.keys(other.state || {}));
+  addGroup('Other widgets in this room', inRoom);
+
+  const standard = [];
+  if(typeof WIDGET_PROPERTIES != 'undefined')
+    for(const type in WIDGET_PROPERTIES)
+      standard.push(...Object.keys(WIDGET_PROPERTIES[type]));
+  addGroup('Other standard properties', standard);
+
+  return groups;
+}
+
+// Parameters that name a widget property (the property of GET/SET/SELECT/SCORE
+// and of RESET): the value section proposes the names instead of leaving them to
+// be typed from memory - which is where the typos in a routine usually are.
+class RoutinePropertyNamePopup extends RoutineStringPopup {
+  show() {
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
+    infoButton(valueTitle, `
+      This parameter takes the name of a widget property.
+      Any name works - a game can put its own properties on a widget - so the list is only a proposal:
+      the properties this widget has, the ones the other widgets in the room use and the ones the engine defines itself.
+    `);
+
+    const search = document.createElement('input');
+    search.className = 'popup-property-search';
+    search.placeholder = 'Search properties...';
+    valueContent.append(search);
+    const list = div(valueContent, 'popup-property-list');
+
+    const groups = proposedPropertyGroups(this.widget);
+    const showEntries = _=>{
+      list.innerHTML = '';
+      const term = search.value.trim().toLowerCase();
+      const current = this.currentValue();
+      let shown = 0;
+      let hidden = 0;
+      for(const group of groups) {
+        const matches = group.names.filter(name=>!term || name.toLowerCase().includes(term));
+        const visible = matches.slice(0, Math.max(0, 200 - shown));
+        hidden += matches.length - visible.length;
+        shown += visible.length;
+        if(!visible.length)
+          continue;
+        div(list, 'popup-property-group').textContent = group.title;
+        for(const name of visible)
+          button(list, name, _=>this.setNewValue(name)).classList.toggle('selected', name === current);
+      }
+      if(!shown)
+        div(list, 'popup-property-empty').textContent = 'No matching property.';
+      else if(hidden)
+        div(list, 'popup-property-empty').textContent = `${hidden} more - refine the search.`;
+    };
+    search.addEventListener('input', showEntries);
+    showEntries();
+
+    super.show();
+  }
+}
+
 class RoutineNumberPopup extends RoutinePopup {
   constructor(options={}) {
     super();

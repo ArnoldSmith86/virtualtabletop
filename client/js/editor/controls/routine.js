@@ -11,8 +11,8 @@
 // parameter values, so the wording can follow the operation's mode.
 //
 // Parameter types decide which popup opens: number, enum (with values),
-// string, json, widgets (pick widgets in the room), collection (pick widgets
-// or a collection name).
+// string, property (the name of a widget property), json, widgets (pick widgets
+// in the room), collection (pick widgets or a collection name).
 //
 // widgetType presets the picker's type filter for parameters that almost always
 // name a widget of one type (SHUFFLE holder is a holder, TIMER timer a timer).
@@ -201,7 +201,7 @@ const routineOperationMetadata = {
   GET: {
     template: v=>v('aggregation') == 'array' ? '{func} ({aggregation}) value of {property} in {collection} and store as {variable}' : '{func} ({aggregation}) of values of {property} in {collection} and store as {variable}',
     parameters: {
-      property: { type: 'string', default: 'id' },
+      property: { type: 'property', default: 'id' },
       collection: { type: 'collection', default: 'DEFAULT' },
       aggregation: { type: 'enum', values: [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ], default: 'first' },
       variable: { type: 'string', default: operation=>typeof operation.property == 'string' ? operation.property : 'id' },
@@ -289,7 +289,7 @@ const routineOperationMetadata = {
   RESET: {
     template: '{func} widgets using property {property}',
     parameters: {
-      property: { type: 'string', default: 'resetProperties' }
+      property: { type: 'property', default: 'resetProperties' }
     }
   },
   ROTATE: {
@@ -306,7 +306,7 @@ const routineOperationMetadata = {
   SCORE: {
     template: '{func}: get {property} in {seats}[; for round {round}][; use as {mode}][ with multiplier {value}]',
     parameters: {
-      property: { type: 'string', default: 'score' },
+      property: { type: 'property', default: 'score' },
       seats: { type: 'widgets', default: null, display: { 'null': 'every seat' }, widgetType: 'seat' },
       round: { type: 'number', default: null, display: { 'null': 'new round' } },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec' ], default: 'set' },
@@ -319,7 +319,7 @@ const routineOperationMetadata = {
       max: { type: 'number', default: 999999, special: [ 'all' ], display: { '999999': 'all' } },
       type: { type: 'enum', values: [ 'all', 'button', 'canvas', 'card', 'deck', 'dice', 'holder', 'label', 'pile', 'scoreboard', 'seat', 'spinner', 'timer' ], default: 'all', display: { 'all': 'widgets', 'button': 'buttons', 'canvas': 'canvases', 'card': 'cards', 'deck': 'decks', 'dice': 'dice', 'holder': 'holders', 'label': 'labels', 'pile': 'piles', 'scoreboard': 'scoreboards', 'seat': 'seats', 'spinner': 'spinners', 'timer': 'timers' } },
       source: { type: 'collection', default: 'all', display: { 'all': 'all widgets' } },
-      property: { type: 'string', default: 'parent' },
+      property: { type: 'property', default: 'parent' },
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>', 'in' ], default: '==' },
       value: { type: 'string', default: null },
       mode: { type: 'enum', values: [ 'set', 'add', 'remove', 'intersect' ], default: 'set' },
@@ -332,7 +332,7 @@ const routineOperationMetadata = {
   SET: {
     template: v=>v('relation') == '!' ? '{func} property {property} to the {relation} of its current value for all widgets in {collection}' : '{func} property {property} {relation} {value} for all widgets in {collection}',
     parameters: {
-      property: { type: 'string', default: 'parent' },
+      property: { type: 'property', default: 'parent' },
       collection: { type: 'collection', default: 'DEFAULT' },
       relation: { type: 'enum', values: [ '=', '+', '-', '*', '/', '!' ], default: '=' },
       value: { type: 'json', default: null }
@@ -1010,6 +1010,7 @@ class RoutineOperationEditor {
     switch(spec && spec.type) {
       case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values });
+      case 'property':   return new RoutinePropertyNamePopup();
       case 'widgets':    return new RoutineWidgetIDPopup(pickerOptions);
       case 'collection': return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
       case 'json':       return new RoutineJSONPopup();
@@ -1247,7 +1248,9 @@ class RoutineOperationEditor {
       if(!info)
         continue;
       info.classList.add('routine-editor-parameter-info');
-      info.title = nameDOM ? `information about ${nameDOM.textContent}` : `information about ${this.func}`;
+      // deliberately no title: a browser tooltip repeating "information about
+      // <parameter>" only reads like the information it is not - the popup the
+      // button opens on click is where the actual explanation is
       if(nameDOM)
         nameDOM.after(info);
       else

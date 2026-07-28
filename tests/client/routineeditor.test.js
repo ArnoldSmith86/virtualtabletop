@@ -24,6 +24,11 @@ beforeAll(() => {
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
+  // the validator tables are part of the editor bundle; the property proposals read them
+  window.WIDGET_PROPERTIES = {
+    BasicWidget: { id: 1, type: 1, parent: 1, text: 1, clickRoutine: 1 },
+    Holder: { id: 1, type: 1, parent: 1, dropTarget: 1, alignChildren: 1 }
+  };
 
   const editorDiv = document.createElement('div');
   editorDiv.id = 'editor';
@@ -41,7 +46,7 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup',
+    'EventsEditor', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'operationUIState', 'commonInfoTopic', 'parameterInfoLine'
@@ -1230,14 +1235,17 @@ describe('the shared widget picker', () => {
     expect(picked).toEqual([ 'h1', 'h2' ]);
   });
 
-  test('the widget the picker belongs to is only listed when allowed, never picked in the room', () => {
+  test('the widget the picker belongs to is listed first when allowed, never picked in the room', () => {
     room([ 'target', 'holder' ], [ 'h1', 'holder' ]);
     let picked = null;
-    const ids = controls => [...controls.popout.querySelectorAll('.widgetPickerEntry')].map(e => e.textContent.replace('holder', ''));
+    const ids = controls => [...controls.popout.querySelectorAll('.widgetPickerEntry')].map(e => e.textContent.replace(/holder|this widget/g, ''));
 
     expect(ids(pickInRoom({ apply: id => picked = id }))).toEqual([ 'h1' ]);
     stopWidgetPicker();
-    expect(ids(pickInRoom({ allowSelf: true, apply: id => picked = id }))).toEqual([ 'h1', 'target' ]);
+    // it cannot be clicked in the room, so it is pinned to the top and marked
+    const controls = pickInRoom({ allowSelf: true, apply: id => picked = id });
+    expect(ids(controls)).toEqual([ 'target', 'h1' ]);
+    expect(controls.popout.querySelector('.widgetPickerSelf').textContent).toBe('this widget');
 
     // the target is selected again after every pick, so clicking it in the room
     // cannot be told apart from that restore
@@ -1271,9 +1279,9 @@ describe('the shared widget picker', () => {
     popup.show();
 
     const entries = [...popup.domElement.querySelectorAll('.widgetPickerEntry')];
-    expect(entries.map(e => e.textContent.replace('holder', ''))).toEqual([ 'h1', 'h2', 'target' ]);
-    expect(entries[0].classList.contains('selected')).toBe(true); // seeded with the current value
-    entries[1].onclick();
+    expect(entries.map(e => e.textContent.replace(/holder|this widget/g, ''))).toEqual([ 'target', 'h1', 'h2' ]);
+    expect(entries[1].classList.contains('selected')).toBe(true); // seeded with the current value
+    entries[2].onclick();
     [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'Use these widgets').dispatchEvent(new Event('click'));
     expect(value).toEqual({ from: [ 'h1', 'h2' ] });
     popup.hide();
@@ -1557,6 +1565,45 @@ describe('popup parameter routing', () => {
     // picking a holder also clears the sibling collection so it can't re-surface
     expect('collection' in value).toBe(true);
     expect(value.collection).toBeUndefined();
+  });
+
+  test('a parameter that names a widget property proposes the names it could have', () => {
+    const editor = editorForOperation({ func: 'GET' });
+    expect(editor.createPopup([ 'property' ])).toBeInstanceOf(RoutinePropertyNamePopup);
+    expect(editor.createPopup([ 'variable' ])).not.toBeInstanceOf(RoutinePropertyNamePopup);
+
+    widgets.clear();
+    const target = { id: 'target', state: { id: 'target', type: 'button', myScore: 0 } };
+    const card = { id: 'c1', state: { id: 'c1', type: 'card', cardType: 'ace' } };
+    widgets.set('target', target);
+    widgets.set('c1', card);
+
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutinePropertyNamePopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'GET', property: 'myScore' }, [ 'property' ], target, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+
+    const names = _=>[...popup.domElement.querySelectorAll('.popup-property-list button')].map(b => b.textContent);
+    expect([...popup.domElement.querySelectorAll('.popup-property-group')].map(g => g.textContent))
+      .toEqual([ 'This widget', 'Other widgets in this room', 'Other standard properties' ]);
+    expect(names().slice(0, 4)).toEqual([ 'id', 'myScore', 'type', 'cardType' ]); // this widget first, then the room
+    expect(names()).toContain('dropTarget'); // a standard property no widget in the room uses
+    expect(names().filter(n => n == 'id')).toHaveLength(1); // every name appears in its first group only
+    expect([...popup.domElement.querySelectorAll('.popup-property-list button.selected')].map(b => b.textContent)).toEqual([ 'myScore' ]);
+
+    const search = popup.domElement.querySelector('.popup-property-search');
+    search.value = 'card';
+    search.dispatchEvent(new Event('input'));
+    expect(names()).toEqual([ 'cardType' ]);
+
+    popup.domElement.querySelector('.popup-property-list button').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ property: 'cardType' });
+    popup.hide();
+    widgets.clear();
   });
 
   test('FOREACH source popup clears competing parameters', () => {
