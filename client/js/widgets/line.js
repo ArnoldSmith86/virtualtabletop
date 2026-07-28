@@ -296,6 +296,13 @@ export class Line extends Widget {
   }
 
   async positionAttachedWidgets() {
+    // A stop outside the line is placed through global coordinates, which read
+    // this line's CSS transform. Inside a batch that still shows the state of
+    // the previous event, so after normalizeGeometry moved the box - which is
+    // what the layout below runs on - every stop would land off the path by
+    // exactly that move. Same reason applyConnections flushes.
+    if(this.hasExternalStops())
+      flushDelta();
     for(const entry of this.stopList()) {
       const stop = widgets.get(entry.widget);
       const p = this.stopCoordInParentFrame(stop, this.pointAtPosition(entry.position));
