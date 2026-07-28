@@ -6186,7 +6186,7 @@ class PropertiesModule extends SidebarModule {
       offsetGroup.appendChild(offset);
       offsetGroup.appendChild(document.createTextNode('px'));
       // the most jargon-heavy row in the panel, so it says what it means
-      propertyInfoButton(offsetGroup, html(`Where on the widget above the ${end.toLowerCase()} point sits: 0&nbsp;% is the start of its path, 100&nbsp;% the end, 50&nbsp;% the middle. The offset then moves the point sideways off that path, in pixels - positive is to its left looking from start to end.`));
+      propertyInfoButton(offsetGroup, html(`Where on the widget above the ${end.toLowerCase()} point sits: 0% is the start of its path, 100% the end, 50% the middle. The offset then moves the point sideways off that path, in pixels - positive is to its left looking from start to end.`));
 
       this.addPropertyListener(widget, 'connect'+end, widget=>{
         const connection = widget.get('connect'+end);
