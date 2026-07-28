@@ -108,6 +108,22 @@ function overlayRoom() {
   };
 }
 
+// taking a widget out of a holder runs that holder's leaveRoutine, so the drag
+// step that the first mouse movement starts can still be running when the button
+// is released - the release has to wait for it instead of racing it. this is
+// what a player does when they flick a card out of a holder into another one
+const leaveDuration = 2000;
+
+function leaveRoutineRoom() {
+  return {
+    source: { id: 'source', type: 'holder', x: 100, y: 100, width: 300, height: 300, leaveRoutine: [
+      { func: 'DELAY', milliseconds: leaveDuration }
+    ] },
+    holder: { id: 'holder', type: 'holder', x: 600, y: 100, width: 300, height: 300, dropTarget: {} },
+    card: { id: 'card', type: 'basic', width: 200, height: 200, movable: true, parent: 'source' }
+  };
+}
+
 // drag the card onto the holder without releasing the mouse button - the second
 // move is what a real drag delivers too, and only it sees the widget at its new
 // position and picks up the holder below it
@@ -176,6 +192,16 @@ test('moving the mouse while a DELAY is running does not drag the clicked widget
   await t.hover('#w_far');
   await expectEventually(t, markedWidgets, [ 'delay' ], 4*delayDuration);
   await expectEventually(t, ()=>widgetPosition('delay'), [ 100, 100 ]);
+});
+
+test('releasing the button while a leaveRoutine is running still drops the widget', async t => {
+  await setRoomState(leaveRoutineRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await expectEventually(t, ()=>widgetDragState('card'), [ 'source', null ]);
+  await startDrag();
+  await releaseDrag();
+  await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ], 4*leaveDuration);
 });
 
 test('releasing a dragged widget while an overlay is open still ends the drag', async t => {

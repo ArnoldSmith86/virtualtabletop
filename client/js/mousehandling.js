@@ -20,6 +20,13 @@ function eventCoords(name, e) {
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
+// Wait for the drag step that is currently in flight, if there is one. Errors
+// are reported by the handler that started the step - everything waiting here
+// only cares about not running before it is done.
+function afterDragStep(ms) {
+  return Promise.resolve(ms.pending).catch(()=>{});
+}
+
 // Finish a drag that the regular mouseup handling below never gets to see. The
 // widget would otherwise stay detached from its holder and flagged as being
 // dragged for every player until somebody picks it up again. The release is not
@@ -31,7 +38,14 @@ async function endDrag(target) {
   delete mouseStatus[target.id];
 
   // while the state is being replaced the dragged widget may already be gone
-  if(isLoading || ms.status == 'initial' || !ms.moveTarget || !widgets.has(unescapeID(target.id.slice(2))))
+  if(isLoading)
+    return;
+
+  // a drag step can still be waiting for moveStart()/move() - let it finish
+  // before the drag is ended, so the moves don't land after the release
+  await afterDragStep(ms);
+
+  if(ms.status == 'initial' || !ms.moveTarget || !widgets.has(unescapeID(target.id.slice(2))))
     return;
   batchStart();
   setDeltaCause(`${playerName} dragged ${ms.moveTarget.get('id')}`);
@@ -138,6 +152,10 @@ async function inputHandler(name, e) {
       delete mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
+      // a drag step started by an earlier mousemove can still be waiting for
+      // moveStart()/move() - it has to finish before the drag ends, otherwise it
+      // would move the widget again after the release
+      await afterDragStep(ms);
       if(ms.status != 'initial' && ms.moveTarget) {
         setDeltaCause(`${playerName} dragged ${widget.id}`);
         await ms.moveTarget.moveEnd(coords, ms.localAnchor);
@@ -174,17 +192,33 @@ async function inputHandler(name, e) {
         }
       }
     } else if((name == 'mousemove' || name == 'touchmove') && mouseStatus[target.id]) {
-      setDeltaCause(`${playerName} dragged ${widget.id}`);
-      if(mouseStatus[target.id].status == 'initial') {
-        mouseStatus[target.id].status = 'moving';
-        if(mouseStatus[target.id].moveTarget)
-          await mouseStatus[target.id].moveTarget.moveStart();
-      }
-      mouseStatus[target.id].coords = coords;
-      if(mouseStatus[target.id].moveTarget) {
+      // moveStart() can wait for a long time - it detaches the widget from its
+      // holder, which runs that holder's leaveRoutine. Keep the drag steps in a
+      // promise chain so that a later move (and the release, which waits for the
+      // chain as well) can't overtake it. Everything below works on the status
+      // object captured here because the entry is removed from mouseStatus as
+      // soon as the button is released.
+      const ms = mouseStatus[target.id];
+      const previousStep = afterDragStep(ms);
+      const startsMove = ms.status == 'initial';
+      ms.status = 'moving';
+      ms.coords = coords;
+      ms.pending = (async () => {
+        await previousStep;
+        if(!ms.moveTarget)
+          return;
         setDeltaCause(`${playerName} dragged ${widget.id}`);
-        await mouseStatus[target.id].moveTarget.move(coords, mouseStatus[target.id].localAnchor);
-      }
+        if(startsMove)
+          await ms.moveTarget.moveStart();
+        setDeltaCause(`${playerName} dragged ${widget.id}`);
+        await ms.moveTarget.move(coords, ms.localAnchor);
+        // finding the holder below the widget reads the CSS transforms, which
+        // only catch up when the delta is sent. That normally happens when the
+        // event's batch ends - a step that waited for an earlier one runs inside
+        // a batch that stays open, so send it here instead.
+        flushDelta();
+      })();
+      await ms.pending;
     }
     batchEnd();
   }
