@@ -20,21 +20,45 @@ function eventCoords(name, e) {
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
+// Finish a drag that the regular mouseup handling below never gets to see. The
+// widget would otherwise stay detached from its holder and flagged as being
+// dragged for every player until somebody picks it up again. The release is not
+// treated as a click because we don't know what it was released over.
+async function endDrag(target) {
+  const ms = target && mouseStatus[target.id];
+  if(!ms)
+    return;
+  delete mouseStatus[target.id];
+
+  // while the state is being replaced the dragged widget may already be gone
+  if(isLoading || ms.status == 'initial' || !ms.moveTarget || !widgets.has(unescapeID(target.id.slice(2))))
+    return;
+  batchStart();
+  setDeltaCause(`${playerName} dragged ${ms.moveTarget.get('id')}`);
+  await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
+  batchEnd();
+}
+
 async function inputHandler(name, e) {
   const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
 
-  // Releasing the button always ends the drag, even when one of the checks
+  // Releasing the mouse button always ends the drag, even when one of the checks
   // below returns early or when the click handler awaits a routine that runs
   // for a long time (DELAY, INPUT, ...). Forget the drag target right away so
-  // that mouse movements arriving afterwards don't get treated as a drag.
+  // that mouse movements arriving afterwards don't get treated as a drag. On
+  // touch devices mouseTarget is never set and clearing mouseStatus below does
+  // the same job.
   const dragTarget = mouseTarget;
   if(name == 'mouseup')
     mouseTarget = null;
 
-  if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
+  if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands') {
+    if(name == 'mouseup')
+      await endDrag(dragTarget);
     return;
+  }
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
@@ -49,8 +73,11 @@ async function inputHandler(name, e) {
   }
   let target = e.target;
   while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
-    if(target.id == 'editor')
+    if(target.id == 'editor') {
+      if(name == 'mouseup')
+        await endDrag(dragTarget);
       return;
+    }
     target = target.parentNode;
   }
 
