@@ -2,7 +2,9 @@
 // derives from this object: the Game Settings sidebar (labels + descriptions), the file
 // updater (detect + since) and the test matrix (interactsWith).
 //
-// Adding a legacy mode means adding one entry here - see docs/compat.md for the checklist.
+// Adding a legacy mode means adding one entry below and calling legacyMode('yourModeName') at
+// the code site whose behavior it switches. The sidebar checkbox, the classification of older
+// saves and the test matrix all follow from the entry; nothing else needs to know the name.
 //
 // Fields:
 //   since         - the file version that introduced the mode. The file updater enables the

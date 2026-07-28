@@ -9,7 +9,7 @@ import { compute_ops } from '../../../client/js/compute.js';
 import { dropTargets, getMaxZ, resetMaxZ, updateMaxZ } from '../../../client/js/main.js';
 import { addWidget, widgets } from '../../../client/js/serverstate.js';
 import { legacyMode } from '../../../client/js/legacymodes.js';
-import { ALL_LEGACY_MODES } from '../../../client/js/legacymoderegistry.js';
+import { fullLegacyCombination } from '../../../client/js/legacymoderegistry.js';
 import { Widget } from '../../../client/js/widgets/widget.js';
 import { Label } from '../../../client/js/widgets/label.js';
 
@@ -51,8 +51,8 @@ globalThis.DOMMatrix = globalThis.DOMMatrix || HarnessDOMMatrix;
 const widgetClasses = { widget: Widget, label: Label };
 
 export function setLegacyModes(modes) {
-  for(const name of ALL_LEGACY_MODES)
-    legacyMode(name, !!(modes || {})[name]);
+  for(const [ name, value ] of Object.entries(fullLegacyCombination(modes)))
+    legacyMode(name, value);
 }
 
 // Instantiate a state - an object of widget definitions keyed by id, like a save file without

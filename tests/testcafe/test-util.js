@@ -4,7 +4,7 @@ import crypto from 'crypto';
 
 import { diffString, diff } from 'json-diff';
 
-import { ALL_LEGACY_MODES, legacyModeCombinations } from '../../client/js/legacymoderegistry.js';
+import { fullLegacyCombination, legacyModeCombinations } from '../../client/js/legacymoderegistry.js';
 
 const referenceDir = path.resolve() + '/save/testcafe-references';
 fs.mkdirSync(referenceDir, { recursive: true });
@@ -17,9 +17,17 @@ const knownHashDrifts = {
   '7dbb198bba63663b41191432d8648492': 'bc511e7edd7e40b433f5620534775646'  // Chrome 150
 };
 
+// Every fixture starts from an empty room in the modern combination. Widgets are not the only
+// thing a test leaves behind: setRoomState() keeps the room's gameSettings (see Room.setState),
+// so without the reset a test that switches a legacy mode on hands it to every test that runs
+// after it - within the file and, because the whole suite shares one room, across files too.
 export function setupTestEnvironment() {
   server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
-  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
+  const reset = async _=>{
+    await setRoomState();
+    await applyLegacy('modern');
+  };
+  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(reset).after(reset);
 }
 
 export function prepareClient() {
@@ -59,15 +67,14 @@ export async function setLegacyMode(name, value) {
 // per mode alone and one per declared interaction. Linear in the number of modes.
 export const LEGACY_COMBOS = legacyModeCombinations();
 
-// setRoomState() keeps the room's gameSettings (see Room.setState), so a test that only ever
-// switches modes on leaks them into every test that runs after it in the same room. Setting
-// every mode explicitly - the false ones included - is what makes a combination reproducible.
+// setLegacyMode() only ever switches one mode, so a combination has to name the false modes as
+// well - fullLegacyCombination() does that - or the room keeps whatever the last caller set.
 export async function applyLegacy(combo) {
   const modes = typeof combo == 'string' ? LEGACY_COMBOS[combo] : combo;
   if(!modes)
     throw Error(`Unknown legacy mode combination '${combo}'.`);
-  for(const name of ALL_LEGACY_MODES)
-    await setLegacyMode(name, !!modes[name]);
+  for(const [ name, value ] of Object.entries(fullLegacyCombination(modes)))
+    await setLegacyMode(name, value);
 }
 
 export async function getState() {

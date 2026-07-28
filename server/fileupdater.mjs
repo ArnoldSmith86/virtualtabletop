@@ -82,14 +82,23 @@ function updateMeta(meta, v, state) {
 // it and whose state trips its detector. Both facts live in LEGACY_MODES, so a new mode needs
 // no change here - see client/js/legacymoderegistry.js.
 function updateLegacyModes(meta, v, state) {
-  if(v < 18 || !meta.gameSettings)
-    meta.gameSettings = { legacyModes: {} };
-  if(!meta.gameSettings.legacyModes)
-    meta.gameSettings.legacyModes = {};
+  // a pre-v18 save cannot carry legacy modes of its own, but it can carry sibling game settings
+  if(v < 18)
+    meta.gameSettings = Object.assign({}, meta.gameSettings, { legacyModes: {} });
 
   for(const [ name, mode ] of Object.entries(LEGACY_MODES))
     if(v < mode.since && mode.detect(state))
-      meta.gameSettings.legacyModes[name] = true;
+      legacyModesOf(meta)[name] = true;
+}
+
+// Created on demand so that a save which needs no legacy mode keeps the _meta shape it was
+// saved with. Missing objects are tolerated: hand-written saves and importer output do occur.
+function legacyModesOf(meta) {
+  if(!meta.gameSettings)
+    meta.gameSettings = {};
+  if(!meta.gameSettings.legacyModes)
+    meta.gameSettings.legacyModes = {};
+  return meta.gameSettings.legacyModes;
 }
 
 function updateProperties(properties, v, globalProperties) {

@@ -84,6 +84,11 @@ describe('legacy mode detection', () => {
     expect(flagsFor(state)).toEqual({});
   });
 
+  test('a current-version save without gameSettings has no modes', () => {
+    // the updater returns it untouched, so there is nothing to read the modes out of
+    expect(flagsFor(at(VERSION, { l: { id: 'l', type: 'label', text: 'hi' } }))).toEqual({});
+  });
+
   test('detectors do not invent modes the registry does not declare', () => {
     const state = at(17, {
       b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] },
@@ -151,6 +156,31 @@ describe('classification stability', () => {
       expect(Object.keys(flagsFor(state)).sort()).toEqual([ ...expected ].sort());
     });
   }
+});
+
+// The updater must not change the shape of _meta beyond the modes it sets: everything that
+// reads gameSettings treats a missing object and an empty one alike, but a save that gains keys
+// it did not have is a diff in every state file the server rewrites.
+describe('_meta shape', () => {
+  test('a post-v18 save that needs no mode keeps its _meta as it was', () => {
+    const updated = FileUpdater(at(19, { l: { id: 'l', type: 'label', text: 'hi' } }));
+    expect(updated._meta).toEqual({ version: VERSION });
+  });
+
+  test('a pre-v18 save keeps sibling game settings', () => {
+    const state = at(17, { l: { id: 'l', type: 'label', text: 'hi' } });
+    state._meta.gameSettings = { globalCss: 'body { color: red }' };
+    expect(FileUpdater(state)._meta.gameSettings).toEqual({ globalCss: 'body { color: red }', legacyModes: {} });
+  });
+
+  test('an existing legacyModes object is added to, not replaced', () => {
+    const state = at(20, { h: { id: 'h', type: 'holder', color: 'red' } });
+    state._meta.gameSettings = { legacyModes: { useIframeForHtmlCards: true } };
+    expect(FileUpdater(state)._meta.gameSettings.legacyModes).toEqual({
+      useIframeForHtmlCards: true,
+      disableHolderImageWidget: true
+    });
+  });
 });
 
 describe('idempotence', () => {
