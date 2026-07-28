@@ -1922,8 +1922,8 @@
   "h3": {
     "type": "holder",
     "id": "h3",
-    "x": 781,
-    "y": 90,
+    "x": 782,
+    "y": 91,
     "inheritFrom": "Holder Template",
     "route": 3,
     "rotation": -158,
@@ -1932,11 +1932,11 @@
   "h4": {
     "type": "holder",
     "id": "h4",
-    "x": 1001,
+    "x": 1004,
     "y": 165,
     "inheritFrom": "Holder Template",
     "route": 4,
-    "rotation": 14.46,
+    "rotation": 15.84,
     "parent": "Board"
   },
   "h5": {
@@ -1953,11 +1953,11 @@
   "h6": {
     "type": "holder",
     "id": "h6",
-    "x": 1234,
-    "y": 140,
+    "x": 1235,
+    "y": 141,
     "inheritFrom": "Holder Template",
     "route": 6,
-    "rotation": -130.39,
+    "rotation": -130.09,
     "parent": "Board"
   },
   "h7": {
@@ -1967,7 +1967,7 @@
     "y": 120,
     "inheritFrom": "Holder Template",
     "route": 7,
-    "rotation": -139.64,
+    "rotation": -139.82,
     "parent": "Board"
   },
   "h8": {
@@ -2005,30 +2005,30 @@
   "h11": {
     "type": "holder",
     "id": "h11",
-    "x": 1132,
+    "x": 1133,
     "y": 271,
     "inheritFrom": "Holder Template",
     "route": 11,
     "color": "#9EEFE5",
-    "rotation": 160.1,
+    "rotation": 159.78,
     "parent": "Board"
   },
   "h12": {
     "type": "holder",
     "id": "h12",
-    "x": 1092,
+    "x": 1090,
     "y": 304,
     "inheritFrom": "Holder Template",
     "route": 12,
     "color": "#058C42",
-    "rotation": 164.33,
+    "rotation": 164.43,
     "parent": "Board"
   },
   "h13": {
     "type": "holder",
     "id": "h13",
     "x": 1048,
-    "y": 268,
+    "y": 269,
     "inheritFrom": "Holder Template",
     "route": 13,
     "rotation": -93.75,
@@ -2059,29 +2059,29 @@
   "h16": {
     "type": "holder",
     "id": "h16",
-    "x": 865,
-    "y": 154,
+    "x": 871,
+    "y": 152,
     "inheritFrom": "Holder Template",
     "route": 16,
-    "rotation": -14.95,
+    "rotation": -14.61,
     "parent": "Board"
   },
   "h17": {
     "type": "holder",
     "id": "h17",
-    "x": 553,
-    "y": 48,
+    "x": 567,
+    "y": 40,
     "inheritFrom": "Holder Template",
     "route": 17,
     "color": "#648DE5",
-    "rotation": -30.78,
+    "rotation": -28.8,
     "parent": "Board"
   },
   "h18": {
     "type": "holder",
     "id": "h18",
-    "x": 659,
-    "y": 96,
+    "x": 658,
+    "y": 94,
     "inheritFrom": "Holder Template",
     "route": 18,
     "color": "#A300A0",
@@ -2155,7 +2155,7 @@
   "h25": {
     "type": "holder",
     "id": "h25",
-    "x": 132,
+    "x": 131,
     "y": 42,
     "inheritFrom": "Holder Template",
     "route": 25,
@@ -2178,18 +2178,18 @@
   "h27": {
     "type": "holder",
     "id": "h27",
-    "x": 423,
-    "y": 339,
+    "x": 424,
+    "y": 342,
     "inheritFrom": "Holder Template",
     "route": 27,
     "color": "#058C42",
-    "rotation": -105.82,
+    "rotation": -105.92,
     "parent": "Board"
   },
   "h28": {
     "type": "holder",
     "id": "h28",
-    "x": 584,
+    "x": 587,
     "y": 189,
     "inheritFrom": "Holder Template",
     "route": 28,
@@ -2247,8 +2247,8 @@
   "h33": {
     "type": "holder",
     "id": "h33",
-    "x": 397,
-    "y": 352,
+    "x": 401,
+    "y": 353,
     "inheritFrom": "Holder Template",
     "route": 33,
     "color": "#A30000",
@@ -2259,7 +2259,7 @@
   "h34": {
     "type": "holder",
     "id": "h34",
-    "x": 878,
+    "x": 879,
     "y": 480,
     "inheritFrom": "Holder Template",
     "route": 34,
@@ -2270,32 +2270,32 @@
   "h35": {
     "type": "holder",
     "id": "h35",
-    "x": 801,
-    "y": 638,
+    "x": 802,
+    "y": 639,
     "inheritFrom": "Holder Template",
     "route": 35,
     "color": "#058C42",
-    "rotation": 71.7,
+    "rotation": 71.77,
     "parent": "Board"
   },
   "h36": {
     "type": "holder",
     "id": "h36",
     "x": 638,
-    "y": 525,
+    "y": 524,
     "inheritFrom": "Holder Template",
     "route": 36,
-    "rotation": -100.24,
+    "rotation": -100.12,
     "parent": "Board"
   },
   "h37": {
     "type": "holder",
     "id": "h37",
     "x": 619,
-    "y": 530,
+    "y": 529,
     "inheritFrom": "Holder Template",
     "route": 37,
-    "rotation": -100.4,
+    "rotation": -100.19,
     "parent": "Board"
   },
   "h38": {
@@ -2321,8 +2321,8 @@
   "h40": {
     "type": "holder",
     "id": "h40",
-    "x": 669,
-    "y": 418,
+    "x": 670,
+    "y": 417,
     "inheritFrom": "Holder Template",
     "route": 40,
     "rotation": 115.74,
@@ -2331,8 +2331,8 @@
   "h41": {
     "type": "holder",
     "id": "h41",
-    "x": 652,
-    "y": 409,
+    "x": 653,
+    "y": 408,
     "inheritFrom": "Holder Template",
     "route": 41,
     "rotation": 115.74,
@@ -2341,45 +2341,45 @@
   "h42": {
     "type": "holder",
     "id": "h42",
-    "x": 627,
+    "x": 636,
     "y": 389,
     "inheritFrom": "Holder Template",
     "route": 42,
     "color": "#FF7700",
     "parent": "Board",
-    "rotation": -1.37
+    "rotation": -1.32
   },
   "h43": {
     "type": "holder",
     "id": "h43",
-    "x": 580,
-    "y": 372,
+    "x": 583,
+    "y": 371,
     "inheritFrom": "Holder Template",
     "route": 43,
     "color": "#A300A0",
     "parent": "Board",
-    "rotation": -1.03
+    "rotation": -1.1
   },
   "h44": {
     "type": "holder",
     "id": "h44",
-    "x": 567,
+    "x": 569,
     "y": 324,
     "inheritFrom": "Holder Template",
     "route": 44,
     "color": "#EF233C",
-    "rotation": -11.54,
+    "rotation": -11.26,
     "parent": "Board"
   },
   "h45": {
     "type": "holder",
     "id": "h45",
-    "x": 1099,
-    "y": 735,
+    "x": 1101,
+    "y": 742,
     "inheritFrom": "Holder Template",
     "route": 45,
     "color": "#EF233C",
-    "rotation": 77.34,
+    "rotation": 81.1,
     "parent": "Board"
   },
   "h46": {
@@ -2396,22 +2396,22 @@
   "h47": {
     "type": "holder",
     "id": "h47",
-    "x": 1066,
-    "y": 748,
+    "x": 1071,
+    "y": 753,
     "inheritFrom": "Holder Template",
     "route": 47,
     "color": "#A30000",
-    "rotation": -134.98,
+    "rotation": -134.69,
     "parent": "Board"
   },
   "h48": {
     "type": "holder",
     "id": "h48",
-    "x": 776,
+    "x": 777,
     "y": 681,
     "inheritFrom": "Holder Template",
     "route": 48,
-    "rotation": -5.95,
+    "rotation": -6.2,
     "parent": "Board"
   },
   "h49": {
@@ -2439,19 +2439,19 @@
   "h51": {
     "type": "holder",
     "id": "h51",
-    "x": 543,
+    "x": 549,
     "y": 615,
     "inheritFrom": "Holder Template",
     "route": 51,
     "color": "#A30000",
     "z": 234,
     "parent": "Board",
-    "rotation": -179.91
+    "rotation": 179.81
   },
   "h52": {
     "type": "holder",
     "id": "h52",
-    "x": 557,
+    "x": 558,
     "y": 680,
     "inheritFrom": "Holder Template",
     "route": 52,
@@ -2474,8 +2474,8 @@
   "h54": {
     "type": "holder",
     "id": "h54",
-    "x": 353,
-    "y": 596,
+    "x": 354,
+    "y": 597,
     "inheritFrom": "Holder Template",
     "route": 54,
     "rotation": -149.21,
@@ -2485,12 +2485,12 @@
   "h55": {
     "type": "holder",
     "id": "h55",
-    "x": 248,
+    "x": 249,
     "y": 598,
     "inheritFrom": "Holder Template",
     "route": 55,
     "color": "#A300A0",
-    "rotation": -162.53,
+    "rotation": -162.63,
     "z": 219,
     "parent": "Board"
   },
@@ -2521,7 +2521,7 @@
     "type": "holder",
     "id": "h58",
     "x": 413,
-    "y": 460,
+    "y": 461,
     "inheritFrom": "Holder Template",
     "route": 58,
     "rotation": 105.05,
@@ -2543,7 +2543,7 @@
   "h60": {
     "type": "holder",
     "id": "h60",
-    "x": 184,
+    "x": 185,
     "y": 336,
     "inheritFrom": "Holder Template",
     "route": 60,
@@ -2555,8 +2555,8 @@
   "h61": {
     "type": "holder",
     "id": "h61",
-    "x": 152,
-    "y": 471,
+    "x": 153,
+    "y": 470,
     "inheritFrom": "Holder Template",
     "route": 61,
     "rotation": 146.82,
@@ -2578,8 +2578,8 @@
   "h63": {
     "type": "holder",
     "id": "h63",
-    "x": 390,
-    "y": 369,
+    "x": 394,
+    "y": 370,
     "inheritFrom": "Holder Template",
     "route": 63,
     "color": "#F7F052",
@@ -2622,21 +2622,21 @@
   "h67": {
     "type": "holder",
     "id": "h67",
-    "x": 1036,
-    "y": 482,
+    "x": 1037,
+    "y": 481,
     "inheritFrom": "Holder Template",
     "route": 67,
-    "rotation": -32.48,
+    "rotation": -32.71,
     "parent": "Board"
   },
   "h68": {
     "type": "holder",
     "id": "h68",
-    "x": 1006,
-    "y": 521,
+    "x": 1005,
+    "y": 522,
     "inheritFrom": "Holder Template",
     "route": 68,
-    "rotation": -30.19,
+    "rotation": -30.31,
     "parent": "Board"
   },
   "h69": {
@@ -2667,14 +2667,14 @@
     "inheritFrom": "Holder Template",
     "route": 71,
     "color": "#A30000",
-    "rotation": 28.8,
+    "rotation": 28.82,
     "z": 43,
     "parent": "Board"
   },
   "h72": {
     "type": "holder",
     "id": "h72",
-    "x": 711,
+    "x": 713,
     "y": 507,
     "inheritFrom": "Holder Template",
     "route": 72,
@@ -2684,50 +2684,50 @@
   "h73": {
     "type": "holder",
     "id": "h73",
-    "x": 672,
-    "y": 269,
+    "x": 671,
+    "y": 270,
     "inheritFrom": "Holder Template",
     "route": 73,
-    "rotation": 126.65,
+    "rotation": 126.25,
     "parent": "Board"
   },
   "h74": {
     "type": "holder",
     "id": "h74",
     "x": 687,
-    "y": 280,
+    "y": 281,
     "inheritFrom": "Holder Template",
     "route": 74,
-    "rotation": 126.55,
+    "rotation": 126.33,
     "parent": "Board"
   },
   "h75": {
     "type": "holder",
     "id": "h75",
-    "x": 850,
-    "y": 283,
+    "x": 851,
+    "y": 284,
     "inheritFrom": "Holder Template",
     "route": 75,
     "color": "#A30000",
-    "rotation": -140.02,
+    "rotation": -139.48,
     "parent": "Board",
     "z": 226
   },
   "h76": {
     "type": "holder",
     "id": "h76",
-    "x": 840,
+    "x": 842,
     "y": 301,
     "inheritFrom": "Holder Template",
     "route": 76,
     "color": "#648DE5",
-    "rotation": -168.81,
+    "rotation": -168.45,
     "parent": "Board"
   },
   "h77": {
     "type": "holder",
     "id": "h77",
-    "x": 1011,
+    "x": 1013,
     "y": 316,
     "inheritFrom": "Holder Template",
     "route": 77,
@@ -2738,7 +2738,7 @@
   "h78": {
     "type": "holder",
     "id": "h78",
-    "x": 1010,
+    "x": 1012,
     "y": 297,
     "inheritFrom": "Holder Template",
     "route": 78,
@@ -2754,7 +2754,7 @@
     "inheritFrom": "Holder Template",
     "route": 79,
     "color": "#FF7700",
-    "rotation": 88.61,
+    "rotation": 88.4,
     "parent": "Board"
   },
   "h80": {
@@ -2765,14 +2765,14 @@
     "inheritFrom": "Holder Template",
     "route": 80,
     "color": "#A300A0",
-    "rotation": 88.04,
+    "rotation": 87.91,
     "parent": "Board"
   },
   "h81": {
     "type": "holder",
     "id": "h81",
-    "x": 1129,
-    "y": 358,
+    "x": 1132,
+    "y": 360,
     "inheritFrom": "Holder Template",
     "route": 81,
     "rotation": 33.8,
@@ -2781,8 +2781,8 @@
   "h82": {
     "type": "holder",
     "id": "h82",
-    "x": 1095,
-    "y": 433,
+    "x": 1094,
+    "y": 434,
     "inheritFrom": "Holder Template",
     "route": 82,
     "rotation": -40.21,
@@ -2791,8 +2791,8 @@
   "h83": {
     "type": "holder",
     "id": "h83",
-    "x": 1107,
-    "y": 448,
+    "x": 1106,
+    "y": 449,
     "inheritFrom": "Holder Template",
     "route": 83,
     "rotation": -40.21,
@@ -2802,7 +2802,7 @@
     "type": "holder",
     "id": "h84",
     "x": 398,
-    "y": 533,
+    "y": 532,
     "inheritFrom": "Holder Template",
     "route": 84,
     "rotation": -81.4,
@@ -2813,12 +2813,12 @@
     "type": "holder",
     "id": "h85",
     "x": 975,
-    "y": 412,
+    "y": 413,
     "inheritFrom": "Holder Template",
     "route": 85,
     "color": "#F7F052",
     "parent": "Board",
-    "rotation": -40.68
+    "rotation": -40.58
   },
   "h86": {
     "type": "holder",
@@ -2834,8 +2834,8 @@
   "h87": {
     "type": "holder",
     "id": "h87",
-    "x": 826,
-    "y": 381,
+    "x": 825,
+    "y": 382,
     "inheritFrom": "Holder Template",
     "route": 87,
     "color": "#9EEFE5",
@@ -2845,8 +2845,8 @@
   "h88": {
     "type": "holder",
     "id": "h88",
-    "x": 812,
-    "y": 368,
+    "x": 811,
+    "y": 369,
     "inheritFrom": "Holder Template",
     "route": 88,
     "color": "#058C42",
@@ -2899,8 +2899,8 @@
   "h93": {
     "type": "holder",
     "id": "h93",
-    "x": 874,
-    "y": 449,
+    "x": 877,
+    "y": 450,
     "inheritFrom": "Holder Template",
     "route": 93,
     "rotation": -150.82,
@@ -2921,12 +2921,12 @@
   "h95": {
     "type": "holder",
     "id": "h95",
-    "x": 548,
-    "y": 535,
+    "x": 550,
+    "y": 534,
     "inheritFrom": "Holder Template",
     "route": 95,
     "color": "#F7F052",
-    "rotation": -26.13,
+    "rotation": -26.29,
     "z": 72,
     "parent": "Board"
   },
@@ -2938,18 +2938,18 @@
     "inheritFrom": "Holder Template",
     "route": 96,
     "color": "#A30000",
-    "rotation": 129.89,
+    "rotation": 129.73,
     "parent": "Board"
   },
   "h97": {
     "type": "holder",
     "id": "h97",
-    "x": 562,
-    "y": 260,
+    "x": 570,
+    "y": 265,
     "inheritFrom": "Holder Template",
     "route": 97,
     "color": "#A30000",
-    "rotation": 27.97,
+    "rotation": 27.7,
     "parent": "Board"
   },
   "h98": {
@@ -2967,8 +2967,8 @@
   "h99": {
     "type": "holder",
     "id": "h99",
-    "x": 1057,
-    "y": 362,
+    "x": 1056,
+    "y": 355,
     "inheritFrom": "Holder Template",
     "route": 99,
     "rotation": 82.57,
@@ -2977,20 +2977,20 @@
   "h100": {
     "type": "holder",
     "id": "h100",
-    "x": 723,
-    "y": 548,
+    "x": 725,
+    "y": 545,
     "inheritFrom": "Holder Template",
     "route": 100,
-    "rotation": -46.44,
+    "rotation": -46.82,
     "parent": "Board"
   },
   "h101": {
     "inheritFrom": "h29",
     "id": "h101",
     "type": "holder",
-    "x": -12,
-    "y": 320,
-    "rotation": 81.92,
+    "x": -11,
+    "y": 328,
+    "rotation": 80.44,
     "parent": "Board",
     "z": 228
   },
@@ -2999,8 +2999,8 @@
     "id": "h102",
     "type": "holder",
     "x": -15,
-    "y": 273,
-    "rotation": 90.17,
+    "y": 277,
+    "rotation": 89.36,
     "parent": "Board",
     "z": 227
   },
@@ -3008,9 +3008,9 @@
     "inheritFrom": "h29",
     "id": "h103",
     "type": "holder",
-    "x": -1,
-    "y": 179,
-    "rotation": 107.05,
+    "x": 0,
+    "y": 176,
+    "rotation": 107.55,
     "parent": "Board",
     "z": 225
   },
@@ -3018,9 +3018,9 @@
     "inheritFrom": "h29",
     "id": "h104",
     "type": "holder",
-    "x": 16,
-    "y": 135,
-    "rotation": 114.79,
+    "x": 19,
+    "y": 128,
+    "rotation": 116.13,
     "parent": "Board",
     "z": 224
   },
@@ -3029,35 +3029,35 @@
     "id": "h105",
     "type": "holder",
     "x": 4,
-    "y": 276,
-    "rotation": 90.14,
+    "y": 280,
+    "rotation": 89.65,
     "parent": "Board"
   },
   "h106": {
     "inheritFrom": "h30",
     "id": "h106",
     "type": "holder",
-    "x": 7,
-    "y": 323,
-    "rotation": 82.23,
+    "x": 8,
+    "y": 331,
+    "rotation": 80.93,
     "parent": "Board"
   },
   "h107": {
     "inheritFrom": "h30",
     "id": "h107",
     "type": "holder",
-    "x": 18,
-    "y": 182,
-    "rotation": 107.05,
+    "x": 19,
+    "y": 179,
+    "rotation": 107.67,
     "parent": "Board"
   },
   "h108": {
     "inheritFrom": "h30",
     "id": "h108",
     "type": "holder",
-    "x": 35,
-    "y": 138,
-    "rotation": 114.82,
+    "x": 38,
+    "y": 131,
+    "rotation": 116.19,
     "parent": "Board"
   },
   "h109": {
@@ -3082,8 +3082,8 @@
     "inheritFrom": "h40",
     "id": "h111",
     "type": "holder",
-    "x": 649,
-    "y": 461,
+    "x": 648,
+    "y": 462,
     "parent": "Board",
     "rotation": 115.74
   },
@@ -3091,8 +3091,8 @@
     "inheritFrom": "h41",
     "id": "h112",
     "type": "holder",
-    "x": 632,
-    "y": 452,
+    "x": 631,
+    "y": 453,
     "parent": "Board",
     "rotation": 115.74
   },
@@ -3100,7 +3100,7 @@
     "inheritFrom": "h72",
     "id": "h113",
     "type": "holder",
-    "x": 665,
+    "x": 663,
     "y": 498,
     "parent": "Board",
     "rotation": -170.25
@@ -3118,35 +3118,35 @@
     "inheritFrom": "h100",
     "id": "h115",
     "type": "holder",
-    "x": 688,
-    "y": 580,
+    "x": 686,
+    "y": 582,
     "parent": "Board",
-    "rotation": -40.25
+    "rotation": -39.92
   },
   "h116": {
     "inheritFrom": "h37",
     "id": "h116",
     "type": "holder",
-    "x": 630,
+    "x": 631,
     "y": 576,
     "parent": "Board",
-    "rotation": -108.49
+    "rotation": -108.6
   },
   "h117": {
     "inheritFrom": "h36",
     "id": "h117",
     "type": "holder",
     "x": 649,
-    "y": 571,
+    "y": 572,
     "parent": "Board",
-    "rotation": -107.62
+    "rotation": -107.81
   },
   "h118": {
     "inheritFrom": "h88",
     "id": "h118",
     "type": "holder",
-    "x": 843,
-    "y": 332,
+    "x": 844,
+    "y": 331,
     "parent": "Board",
     "rotation": 131.75
   },
@@ -3154,8 +3154,8 @@
     "inheritFrom": "h87",
     "id": "h119",
     "type": "holder",
-    "x": 858,
-    "y": 345,
+    "x": 859,
+    "y": 344,
     "parent": "Board",
     "rotation": 132.09
   },
@@ -3163,7 +3163,7 @@
     "inheritFrom": "h76",
     "id": "h120",
     "type": "holder",
-    "x": 793,
+    "x": 794,
     "y": 295,
     "parent": "Board",
     "rotation": -176.34
@@ -3174,27 +3174,27 @@
     "type": "holder",
     "x": 745,
     "y": 295,
-    "rotation": 176.48,
+    "rotation": 176.17,
     "parent": "Board"
   },
   "h122": {
     "inheritFrom": "h76",
     "id": "h122",
     "type": "holder",
-    "x": 698,
+    "x": 696,
     "y": 301,
-    "rotation": 170.22,
+    "rotation": 169.96,
     "parent": "Board"
   },
   "h123": {
     "inheritFrom": "h75",
     "id": "h123",
     "type": "holder",
-    "x": 770,
-    "y": 231,
+    "x": 768,
+    "y": 230,
     "parent": "Board",
     "z": 224,
-    "rotation": -149.58
+    "rotation": -149.53
   },
   "h124": {
     "inheritFrom": "h75",
@@ -3210,28 +3210,28 @@
     "inheritFrom": "h74",
     "id": "h125",
     "type": "holder",
-    "x": 719,
+    "x": 720,
     "y": 244,
     "parent": "Board",
-    "rotation": 133.42
+    "rotation": 133.38
   },
   "h126": {
     "inheritFrom": "h73",
     "id": "h126",
     "type": "holder",
-    "x": 703,
-    "y": 233,
+    "x": 704,
+    "y": 232,
     "parent": "Board",
-    "rotation": 133.91
+    "rotation": 133.89
   },
   "h127": {
     "inheritFrom": "h48",
     "id": "h127",
     "type": "holder",
-    "x": 729,
+    "x": 728,
     "y": 679,
     "parent": "Board",
-    "rotation": 12.75,
+    "rotation": 13.38,
     "z": 230
   },
   "h128": {
@@ -3247,55 +3247,55 @@
     "inheritFrom": "h35",
     "id": "h129",
     "type": "holder",
-    "x": 768,
-    "y": 549,
+    "x": 767,
+    "y": 547,
     "parent": "Board",
-    "rotation": 66.82
+    "rotation": 66.71
   },
   "h130": {
     "inheritFrom": "h47",
     "id": "h130",
     "type": "holder",
-    "x": 994,
+    "x": 995,
     "y": 687,
-    "rotation": -147.83,
+    "rotation": -147.32,
     "parent": "Board"
   },
   "h131": {
     "inheritFrom": "h47",
     "id": "h131",
     "type": "holder",
-    "x": 951,
+    "x": 950,
     "y": 666,
-    "rotation": -162.23,
+    "rotation": -163.23,
     "parent": "Board"
   },
   "h132": {
     "inheritFrom": "h47",
     "id": "h132",
     "type": "holder",
-    "x": 904,
+    "x": 900,
     "y": 659,
-    "rotation": -178.39,
+    "rotation": 179.69,
     "parent": "Board"
   },
   "h133": {
     "inheritFrom": "h47",
     "id": "h133",
     "type": "holder",
-    "x": 857,
-    "y": 663,
-    "rotation": 169.37,
+    "x": 850,
+    "y": 664,
+    "rotation": 167.88,
     "parent": "Board"
   },
   "h134": {
     "inheritFrom": "h47",
     "id": "h134",
     "type": "holder",
-    "x": 1032,
-    "y": 715,
+    "x": 1035,
+    "y": 718,
     "parent": "Board",
-    "rotation": -138.89
+    "rotation": -138.3
   },
   "h135": {
     "inheritFrom": "h34",
@@ -3319,8 +3319,8 @@
     "inheritFrom": "h93",
     "id": "h137",
     "type": "holder",
-    "x": 832,
-    "y": 425,
+    "x": 829,
+    "y": 424,
     "parent": "Board",
     "rotation": -150.82
   },
@@ -3328,37 +3328,37 @@
     "inheritFrom": "h89",
     "id": "h138",
     "type": "holder",
-    "x": 834,
-    "y": 392,
+    "x": 829,
+    "y": 393,
     "parent": "Board",
-    "rotation": 162.65
+    "rotation": 163.05
   },
   "h139": {
     "inheritFrom": "h89",
     "id": "h139",
     "type": "holder",
-    "x": 879,
+    "x": 877,
     "y": 377,
     "parent": "Board",
-    "rotation": 159.75
+    "rotation": 159.89
   },
   "h140": {
     "inheritFrom": "h89",
     "id": "h140",
     "type": "holder",
-    "x": 967,
-    "y": 341,
+    "x": 969,
+    "y": 340,
     "parent": "Board",
-    "rotation": 156.79
+    "rotation": 156.76
   },
   "h141": {
     "inheritFrom": "h89",
     "id": "h141",
     "type": "holder",
-    "x": 1011,
-    "y": 322,
+    "x": 1015,
+    "y": 320,
     "parent": "Board",
-    "rotation": 156.79
+    "rotation": 156.86
   },
   "h142": {
     "inheritFrom": "h77",
@@ -3373,7 +3373,7 @@
     "inheritFrom": "h77",
     "id": "h143",
     "type": "holder",
-    "x": 916,
+    "x": 914,
     "y": 318,
     "parent": "Board",
     "rotation": -1.66
@@ -3391,7 +3391,7 @@
     "inheritFrom": "h78",
     "id": "h145",
     "type": "holder",
-    "x": 915,
+    "x": 913,
     "y": 299,
     "parent": "Board",
     "rotation": -1.66
@@ -3454,8 +3454,8 @@
     "inheritFrom": "h46",
     "id": "h152",
     "type": "holder",
-    "x": 1056,
-    "y": 700,
+    "x": 1057,
+    "y": 703,
     "parent": "Board",
     "rotation": 62.42
   },
@@ -3463,8 +3463,8 @@
     "inheritFrom": "h46",
     "id": "h153",
     "type": "holder",
-    "x": 1078,
-    "y": 742,
+    "x": 1081,
+    "y": 747,
     "parent": "Board",
     "rotation": 62.42
   },
@@ -3472,8 +3472,8 @@
     "inheritFrom": "h46",
     "id": "h154",
     "type": "holder",
-    "x": 1012,
-    "y": 616,
+    "x": 1011,
+    "y": 613,
     "parent": "Board",
     "rotation": 62.42
   },
@@ -3481,8 +3481,8 @@
     "inheritFrom": "h46",
     "id": "h155",
     "type": "holder",
-    "x": 990,
-    "y": 574,
+    "x": 987,
+    "y": 569,
     "parent": "Board",
     "rotation": 62.42
   },
@@ -3499,18 +3499,18 @@
     "inheritFrom": "h45",
     "id": "h157",
     "type": "holder",
-    "x": 1061,
-    "y": 601,
-    "rotation": 105.15,
+    "x": 1063,
+    "y": 595,
+    "rotation": 110.41,
     "parent": "Board"
   },
   "h158": {
     "inheritFrom": "h45",
     "id": "h158",
     "type": "holder",
-    "x": 1063,
-    "y": 648,
-    "rotation": 71.89,
+    "x": 1062,
+    "y": 646,
+    "rotation": 72.9,
     "parent": "Board",
     "z": 235
   },
@@ -3518,9 +3518,9 @@
     "inheritFrom": "h45",
     "id": "h159",
     "type": "holder",
-    "x": 1082,
-    "y": 691,
-    "rotation": 63.46,
+    "x": 1083,
+    "y": 693,
+    "rotation": 63.62,
     "parent": "Board"
   },
   "Waggon Pieces": {
@@ -3616,28 +3616,28 @@
     "inheritFrom": "h85",
     "id": "h160",
     "type": "holder",
-    "x": 1010,
-    "y": 380,
+    "x": 1011,
+    "y": 379,
     "parent": "Board",
-    "rotation": -46.92
+    "rotation": -47.08
   },
   "h161": {
     "inheritFrom": "h85",
     "id": "h161",
     "type": "holder",
-    "x": 1038,
-    "y": 341,
-    "rotation": -62.51,
+    "x": 1039,
+    "y": 340,
+    "rotation": -63.43,
     "parent": "Board"
   },
   "h162": {
     "inheritFrom": "h85",
     "id": "h162",
     "type": "holder",
-    "x": 940,
-    "y": 443,
+    "x": 938,
+    "y": 445,
     "parent": "Board",
-    "rotation": -42.42
+    "rotation": -42.7
   },
   "h163": {
     "inheritFrom": "h86",
@@ -3661,19 +3661,19 @@
     "inheritFrom": "h67",
     "id": "h165",
     "type": "holder",
-    "x": 995,
+    "x": 994,
     "y": 506,
     "parent": "Board",
-    "rotation": -30.53
+    "rotation": -30.56
   },
   "h166": {
     "inheritFrom": "h68",
     "id": "h166",
     "type": "holder",
-    "x": 1047,
+    "x": 1048,
     "y": 497,
     "parent": "Board",
-    "rotation": -32.92
+    "rotation": -33.22
   },
   "h167": {
     "inheritFrom": "h66",
@@ -3688,8 +3688,8 @@
     "inheritFrom": "h82",
     "id": "h168",
     "type": "holder",
-    "x": 1132,
-    "y": 402,
+    "x": 1133,
+    "y": 401,
     "parent": "Board",
     "rotation": -40.21
   },
@@ -3697,8 +3697,8 @@
     "inheritFrom": "h83",
     "id": "h169",
     "type": "holder",
-    "x": 1144,
-    "y": 417,
+    "x": 1145,
+    "y": 416,
     "parent": "Board",
     "rotation": -40.21
   },
@@ -3706,8 +3706,8 @@
     "inheritFrom": "h99",
     "id": "h170",
     "type": "holder",
-    "x": 1064,
-    "y": 410,
+    "x": 1065,
+    "y": 417,
     "parent": "Board",
     "rotation": 82.57
   },
@@ -3715,8 +3715,8 @@
     "inheritFrom": "h81",
     "id": "h171",
     "type": "holder",
-    "x": 1089,
-    "y": 332,
+    "x": 1086,
+    "y": 330,
     "parent": "Board",
     "rotation": 33.8
   },
@@ -3724,19 +3724,19 @@
     "inheritFrom": "h11",
     "id": "h172",
     "type": "holder",
-    "x": 1086,
-    "y": 285,
+    "x": 1085,
+    "y": 286,
     "parent": "Board",
-    "rotation": 164.64
+    "rotation": 164.73
   },
   "h173": {
     "inheritFrom": "h12",
     "id": "h173",
     "type": "holder",
-    "x": 1137,
-    "y": 290,
+    "x": 1139,
+    "y": 289,
     "parent": "Board",
-    "rotation": 160.61
+    "rotation": 160.47
   },
   "h174": {
     "inheritFrom": "h79",
@@ -3754,7 +3754,7 @@
     "x": 1183,
     "y": 349,
     "parent": "Board",
-    "rotation": 96.42
+    "rotation": 96.61
   },
   "h176": {
     "inheritFrom": "h8",
@@ -3763,7 +3763,7 @@
     "x": 1224,
     "y": 201,
     "parent": "Board",
-    "rotation": 129.31
+    "rotation": 129.23
   },
   "h177": {
     "inheritFrom": "h96",
@@ -3778,8 +3778,8 @@
     "inheritFrom": "h9",
     "id": "h178",
     "type": "holder",
-    "x": 1170,
-    "y": 226,
+    "x": 1171,
+    "y": 228,
     "parent": "Board",
     "rotation": 87.7
   },
@@ -3787,8 +3787,8 @@
     "inheritFrom": "h9",
     "id": "h179",
     "type": "holder",
-    "x": 1167,
-    "y": 131,
+    "x": 1166,
+    "y": 129,
     "parent": "Board",
     "rotation": 87.7
   },
@@ -3796,7 +3796,7 @@
     "inheritFrom": "h6",
     "id": "h180",
     "type": "holder",
-    "x": 1201,
+    "x": 1200,
     "y": 107,
     "parent": "Board",
     "rotation": -140.15
@@ -3806,7 +3806,7 @@
     "id": "h181",
     "type": "holder",
     "x": 1221,
-    "y": 153,
+    "y": 154,
     "parent": "Board",
     "rotation": -130.23
   },
@@ -3815,7 +3815,7 @@
     "id": "h182",
     "type": "holder",
     "x": 1044,
-    "y": 221,
+    "y": 220,
     "parent": "Board",
     "rotation": -93.75
   },
@@ -3850,7 +3850,7 @@
     "inheritFrom": "h14",
     "id": "h186",
     "type": "holder",
-    "x": 976,
+    "x": 977,
     "y": 233,
     "rotation": -24.6,
     "parent": "Board"
@@ -3913,10 +3913,10 @@
     "inheritFrom": "h4",
     "id": "h193",
     "type": "holder",
-    "x": 954,
-    "y": 156,
+    "x": 950,
+    "y": 155,
     "parent": "Board",
-    "rotation": 10.25
+    "rotation": 10.89
   },
   "h194": {
     "inheritFrom": "h16",
@@ -3931,53 +3931,53 @@
     "inheritFrom": "h16",
     "id": "h195",
     "type": "holder",
-    "x": 776,
-    "y": 186,
+    "x": 771,
+    "y": 189,
     "parent": "Board",
-    "rotation": -27.11
+    "rotation": -28.24
   },
   "h196": {
     "inheritFrom": "h5",
     "id": "h196",
     "type": "holder",
-    "x": 986,
-    "y": 90,
-    "rotation": 155.07,
+    "x": 983,
+    "y": 92,
+    "rotation": 154.16,
     "parent": "Board"
   },
   "h197": {
     "inheritFrom": "h5",
     "id": "h197",
     "type": "holder",
-    "x": 945,
-    "y": 114,
-    "rotation": 145.28,
+    "x": 939,
+    "y": 118,
+    "rotation": 143.87,
     "parent": "Board"
   },
   "h198": {
     "inheritFrom": "h5",
     "id": "h198",
     "type": "holder",
-    "x": 1077,
+    "x": 1080,
     "y": 68,
-    "rotation": 179.09,
+    "rotation": -179.65,
     "parent": "Board"
   },
   "h199": {
     "inheritFrom": "h5",
     "id": "h199",
     "type": "holder",
-    "x": 1124,
-    "y": 74,
-    "rotation": -164.38,
+    "x": 1130,
+    "y": 75,
+    "rotation": -162.32,
     "parent": "Board"
   },
   "h200": {
     "inheritFrom": "h18",
     "id": "h200",
     "type": "holder",
-    "x": 632,
-    "y": 57,
+    "x": 630,
+    "y": 52,
     "parent": "Board",
     "z": 224,
     "rotation": -124.17
@@ -3986,8 +3986,8 @@
     "inheritFrom": "h18",
     "id": "h201",
     "type": "holder",
-    "x": 686,
-    "y": 135,
+    "x": 687,
+    "y": 137,
     "parent": "Board",
     "z": 226,
     "rotation": -124.17
@@ -3996,8 +3996,8 @@
     "inheritFrom": "h18",
     "id": "h202",
     "type": "holder",
-    "x": 713,
-    "y": 174,
+    "x": 715,
+    "y": 179,
     "parent": "Board",
     "z": 227,
     "rotation": -124.17
@@ -4006,8 +4006,8 @@
     "inheritFrom": "h3",
     "id": "h203",
     "type": "holder",
-    "x": 737,
-    "y": 73,
+    "x": 736,
+    "y": 72,
     "parent": "Board",
     "rotation": -158
   },
@@ -4015,8 +4015,8 @@
     "inheritFrom": "h3",
     "id": "h204",
     "type": "holder",
-    "x": 825,
-    "y": 108,
+    "x": 829,
+    "y": 110,
     "parent": "Board",
     "rotation": -158
   },
@@ -4024,8 +4024,8 @@
     "inheritFrom": "h3",
     "id": "h205",
     "type": "holder",
-    "x": 869,
-    "y": 126,
+    "x": 875,
+    "y": 128,
     "parent": "Board",
     "rotation": -158
   },
@@ -4033,8 +4033,8 @@
     "inheritFrom": "h3",
     "id": "h206",
     "type": "holder",
-    "x": 693,
-    "y": 55,
+    "x": 689,
+    "y": 53,
     "parent": "Board",
     "rotation": -158
   },
@@ -4042,8 +4042,8 @@
     "inheritFrom": "h3",
     "id": "h207",
     "type": "holder",
-    "x": 649,
-    "y": 37,
+    "x": 643,
+    "y": 35,
     "parent": "Board",
     "rotation": -158
   },
@@ -4111,35 +4111,35 @@
     "inheritFrom": "h17",
     "id": "h208",
     "type": "holder",
-    "x": 513,
-    "y": 74,
+    "x": 517,
+    "y": 71,
     "parent": "Board",
-    "rotation": -34.74
+    "rotation": -34.43
   },
   "h209": {
     "inheritFrom": "h17",
     "id": "h209",
     "type": "holder",
-    "x": 474,
-    "y": 101,
+    "x": 470,
+    "y": 104,
     "parent": "Board",
-    "rotation": -35.86
+    "rotation": -35.81
   },
   "h210": {
     "inheritFrom": "h17",
     "id": "h210",
     "type": "holder",
-    "x": 436,
-    "y": 129,
+    "x": 422,
+    "y": 137,
     "parent": "Board",
-    "rotation": -34.11
+    "rotation": -32.87
   },
   "h211": {
     "inheritFrom": "h28",
     "id": "h211",
     "type": "holder",
-    "x": 631,
-    "y": 195,
+    "x": 641,
+    "y": 197,
     "parent": "Board",
     "rotation": -171.96
   },
@@ -4147,8 +4147,8 @@
     "inheritFrom": "h28",
     "id": "h212",
     "type": "holder",
-    "x": 678,
-    "y": 202,
+    "x": 695,
+    "y": 205,
     "parent": "Board",
     "rotation": -171.96
   },
@@ -4156,7 +4156,7 @@
     "inheritFrom": "h28",
     "id": "h213",
     "type": "holder",
-    "x": 536,
+    "x": 533,
     "y": 182,
     "z": 81,
     "parent": "Board",
@@ -4166,8 +4166,8 @@
     "inheritFrom": "h28",
     "id": "h214",
     "type": "holder",
-    "x": 489,
-    "y": 176,
+    "x": 479,
+    "y": 174,
     "z": 79,
     "parent": "Board",
     "rotation": -171.96
@@ -4176,8 +4176,8 @@
     "inheritFrom": "h28",
     "id": "h215",
     "type": "holder",
-    "x": 442,
-    "y": 169,
+    "x": 425,
+    "y": 166,
     "parent": "Board",
     "rotation": -171.96
   },
@@ -4185,10 +4185,10 @@
     "inheritFrom": "h97",
     "id": "h216",
     "type": "holder",
-    "x": 604,
-    "y": 282,
+    "x": 621,
+    "y": 290,
     "parent": "Board",
-    "rotation": 26.35
+    "rotation": 25.58
   },
   "h217": {
     "inheritFrom": "h97",
@@ -4203,145 +4203,145 @@
     "inheritFrom": "h97",
     "id": "h218",
     "type": "holder",
-    "x": 479,
-    "y": 214,
+    "x": 471,
+    "y": 210,
     "parent": "Board",
-    "rotation": 29.56
+    "rotation": 29.59
   },
   "h219": {
     "inheritFrom": "h97",
     "id": "h219",
     "type": "holder",
-    "x": 438,
-    "y": 191,
+    "x": 422,
+    "y": 182,
     "parent": "Board",
-    "rotation": 29.48
+    "rotation": 29.32
   },
   "h220": {
     "inheritFrom": "h27",
     "id": "h220",
     "type": "holder",
-    "x": 411,
-    "y": 293,
+    "x": 412,
+    "y": 294,
     "parent": "Board",
-    "rotation": -103.84
+    "rotation": -103.92
   },
   "h221": {
     "inheritFrom": "h27",
     "id": "h221",
     "type": "holder",
     "x": 400,
-    "y": 247,
+    "y": 246,
     "parent": "Board",
-    "rotation": -102.38
+    "rotation": -102.36
   },
   "h222": {
     "inheritFrom": "h27",
     "id": "h222",
     "type": "holder",
-    "x": 391,
-    "y": 200,
+    "x": 390,
+    "y": 197,
     "parent": "Board",
-    "rotation": -101.37
+    "rotation": -101.3
   },
   "h223": {
     "inheritFrom": "h44",
     "id": "h223",
     "type": "holder",
-    "x": 613,
-    "y": 316,
-    "rotation": -9.06,
+    "x": 621,
+    "y": 315,
+    "rotation": -8.93,
     "parent": "Board"
   },
   "h224": {
     "inheritFrom": "h44",
     "id": "h224",
     "type": "holder",
-    "x": 521,
-    "y": 336,
+    "x": 518,
+    "y": 337,
     "parent": "Board",
-    "rotation": -16.81
+    "rotation": -17.36
   },
   "h225": {
     "inheritFrom": "h44",
     "id": "h225",
     "type": "holder",
-    "x": 476,
-    "y": 353,
-    "rotation": -25.33,
+    "x": 469,
+    "y": 356,
+    "rotation": -27.32,
     "parent": "Board"
   },
   "h226": {
     "inheritFrom": "h43",
     "id": "h226",
     "type": "holder",
-    "x": 628,
+    "x": 637,
     "y": 370,
     "parent": "Board",
-    "rotation": -1.36
+    "rotation": -1.31
   },
   "h227": {
     "inheritFrom": "h43",
     "id": "h227",
     "type": "holder",
-    "x": 533,
+    "x": 530,
     "y": 372,
     "parent": "Board",
-    "rotation": 0.18
+    "rotation": 0.29
   },
   "h228": {
     "inheritFrom": "h43",
     "id": "h228",
     "type": "holder",
-    "x": 485,
+    "x": 476,
     "y": 371,
     "parent": "Board",
-    "rotation": 2.4
+    "rotation": 2.95
   },
   "h229": {
     "inheritFrom": "h42",
     "id": "h229",
     "type": "holder",
-    "x": 579,
-    "y": 391,
+    "x": 582,
+    "y": 390,
     "parent": "Board",
-    "rotation": -1.03
+    "rotation": -1.07
   },
   "h230": {
     "inheritFrom": "h42",
     "id": "h230",
     "type": "holder",
-    "x": 532,
+    "x": 529,
     "y": 391,
     "z": 38,
     "parent": "Board",
-    "rotation": 0.22
+    "rotation": 0.36
   },
   "h231": {
     "inheritFrom": "h42",
     "id": "h231",
     "type": "holder",
-    "x": 484,
+    "x": 475,
     "y": 390,
     "z": 37,
     "parent": "Board",
-    "rotation": 2.38
+    "rotation": 2.93
   },
   "h232": {
     "inheritFrom": "h71",
     "id": "h232",
     "type": "holder",
-    "x": 591,
-    "y": 470,
+    "x": 593,
+    "y": 472,
     "z": 42,
     "parent": "Board",
-    "rotation": 30.91
+    "rotation": 31.07
   },
   "h233": {
     "inheritFrom": "h71",
     "id": "h233",
     "type": "holder",
-    "x": 508,
+    "x": 507,
     "y": 424,
     "z": 41,
     "parent": "Board",
@@ -4351,38 +4351,38 @@
     "inheritFrom": "h71",
     "id": "h234",
     "type": "holder",
-    "x": 467,
-    "y": 400,
+    "x": 465,
+    "y": 398,
     "z": 39,
     "parent": "Board",
-    "rotation": 32.55
+    "rotation": 32.78
   },
   "h235": {
     "inheritFrom": "h98",
     "id": "h235",
     "type": "holder",
-    "x": 561,
+    "x": 575,
     "y": 497,
     "z": 45,
     "parent": "Board",
-    "rotation": 177.53
+    "rotation": 176.49
   },
   "h236": {
     "inheritFrom": "h98",
     "id": "h236",
     "type": "holder",
-    "x": 466,
+    "x": 452,
     "y": 497,
     "z": 47,
     "parent": "Board",
-    "rotation": -178.8
+    "rotation": -178.81
   },
   "h237": {
     "inheritFrom": "h58",
     "id": "h237",
     "type": "holder",
     "x": 425,
-    "y": 414,
+    "y": 413,
     "z": 48,
     "parent": "Board",
     "rotation": 105.05
@@ -4391,67 +4391,67 @@
     "inheritFrom": "h52",
     "id": "h238",
     "type": "holder",
-    "x": 465,
-    "y": 659,
+    "x": 461,
+    "y": 658,
     "z": 57,
-    "rotation": 20.47,
+    "rotation": 21.01,
     "parent": "Board"
   },
   "h239": {
     "inheritFrom": "h52",
     "id": "h239",
     "type": "holder",
-    "x": 422,
-    "y": 639,
+    "x": 416,
+    "y": 636,
     "z": 56,
-    "rotation": 28.96,
+    "rotation": 30.08,
     "parent": "Board"
   },
   "h240": {
     "inheritFrom": "h52",
     "id": "h240",
     "type": "holder",
-    "x": 605,
-    "y": 682,
+    "x": 608,
+    "y": 681,
     "z": 61,
-    "rotation": -2.26,
+    "rotation": -2.82,
     "parent": "Board"
   },
   "h241": {
     "inheritFrom": "h52",
     "id": "h241",
     "type": "holder",
-    "x": 652,
-    "y": 676,
+    "x": 658,
+    "y": 675,
     "z": 59,
-    "rotation": -11.13,
+    "rotation": -12.4,
     "parent": "Board"
   },
   "h242": {
     "inheritFrom": "h52",
     "id": "h242",
     "type": "holder",
-    "x": 510,
-    "y": 673,
+    "x": 509,
+    "y": 672,
     "z": 58,
-    "rotation": 13.08,
+    "rotation": 13.09,
     "parent": "Board"
   },
   "h243": {
     "inheritFrom": "h51",
     "id": "h243",
     "type": "holder",
-    "x": 590,
-    "y": 614,
+    "x": 607,
+    "y": 613,
     "z": 233,
     "parent": "Board",
-    "rotation": 177.16
+    "rotation": 175.75
   },
   "h244": {
     "inheritFrom": "h51",
     "id": "h244",
     "type": "holder",
-    "x": 495,
+    "x": 490,
     "y": 614,
     "z": 66,
     "parent": "Board",
@@ -4461,11 +4461,11 @@
     "inheritFrom": "h51",
     "id": "h245",
     "type": "holder",
-    "x": 448,
+    "x": 431,
     "y": 614,
     "z": 67,
     "parent": "Board",
-    "rotation": -179.79
+    "rotation": 179.49
   },
   "h246": {
     "inheritFrom": "h95",
@@ -4481,38 +4481,38 @@
     "inheritFrom": "h95",
     "id": "h247",
     "type": "holder",
-    "x": 462,
-    "y": 575,
+    "x": 461,
+    "y": 576,
     "z": 70,
     "parent": "Board",
-    "rotation": -24.93
+    "rotation": -25.02
   },
   "h248": {
     "inheritFrom": "h95",
     "id": "h248",
     "type": "holder",
-    "x": 420,
-    "y": 596,
+    "x": 417,
+    "y": 597,
     "z": 69,
     "parent": "Board",
-    "rotation": -27.75
+    "rotation": -27.97
   },
   "h249": {
     "inheritFrom": "h95",
     "id": "h249",
     "type": "holder",
-    "x": 590,
-    "y": 513,
+    "x": 593,
+    "y": 511,
     "z": 73,
     "parent": "Board",
-    "rotation": -30.17
+    "rotation": -30.46
   },
   "h250": {
     "inheritFrom": "h84",
     "id": "h250",
     "type": "holder",
     "x": 390,
-    "y": 579,
+    "y": 580,
     "z": 77,
     "parent": "Board",
     "rotation": -81.4
@@ -4561,7 +4561,7 @@
     "inheritFrom": "h2",
     "id": "h255",
     "type": "holder",
-    "x": 520,
+    "x": 523,
     "y": 8,
     "z": 228,
     "parent": "Board",
@@ -4571,7 +4571,7 @@
     "inheritFrom": "h2",
     "id": "h256",
     "type": "holder",
-    "x": 568,
+    "x": 572,
     "y": 15,
     "z": 229,
     "parent": "Board",
@@ -4581,7 +4581,7 @@
     "inheritFrom": "h2",
     "id": "h257",
     "type": "holder",
-    "x": 380,
+    "x": 377,
     "y": -13,
     "z": 102,
     "parent": "Board",
@@ -4591,7 +4591,7 @@
     "inheritFrom": "h2",
     "id": "h258",
     "type": "holder",
-    "x": 332,
+    "x": 328,
     "y": -20,
     "z": 94,
     "parent": "Board",
@@ -4601,7 +4601,7 @@
     "inheritFrom": "h1",
     "id": "h259",
     "type": "holder",
-    "x": 148,
+    "x": 141,
     "y": -27,
     "z": 105,
     "parent": "Board",
@@ -4611,7 +4611,7 @@
     "inheritFrom": "h1",
     "id": "h260",
     "type": "holder",
-    "x": 243,
+    "x": 250,
     "y": -26,
     "z": 107,
     "parent": "Board",
@@ -4631,7 +4631,7 @@
     "inheritFrom": "h20",
     "id": "h262",
     "type": "holder",
-    "x": 349,
+    "x": 350,
     "y": 149,
     "z": 111,
     "parent": "Board",
@@ -4655,7 +4655,7 @@
     "y": 77,
     "z": 115,
     "parent": "Board",
-    "rotation": -157.4
+    "rotation": -157.42
   },
   "h265": {
     "inheritFrom": "h20",
@@ -4671,8 +4671,8 @@
     "inheritFrom": "h26",
     "id": "h266",
     "type": "holder",
-    "x": 294,
-    "y": 271,
+    "x": 291,
+    "y": 276,
     "z": 119,
     "parent": "Board",
     "rotation": 128.75
@@ -4681,8 +4681,8 @@
     "inheritFrom": "h26",
     "id": "h267",
     "type": "holder",
-    "x": 354,
-    "y": 197,
+    "x": 357,
+    "y": 192,
     "z": 118,
     "parent": "Board",
     "rotation": 128.75
@@ -4701,7 +4701,7 @@
     "inheritFrom": "h25",
     "id": "h269",
     "type": "holder",
-    "x": 224,
+    "x": 225,
     "y": 22,
     "z": 133,
     "rotation": 158.52,
@@ -4781,8 +4781,8 @@
     "inheritFrom": "h33",
     "id": "h277",
     "type": "holder",
-    "x": 309,
-    "y": 315,
+    "x": 305,
+    "y": 314,
     "z": 145,
     "parent": "Board",
     "rotation": -157.62
@@ -4801,8 +4801,8 @@
     "inheritFrom": "h63",
     "id": "h279",
     "type": "holder",
-    "x": 302,
-    "y": 332,
+    "x": 298,
+    "y": 331,
     "z": 148,
     "parent": "Board",
     "rotation": -157.62
@@ -4811,7 +4811,7 @@
     "inheritFrom": "h59",
     "id": "h280",
     "type": "holder",
-    "x": 226,
+    "x": 227,
     "y": 306,
     "z": 152,
     "parent": "Board",
@@ -4841,7 +4841,7 @@
     "inheritFrom": "h59",
     "id": "h283",
     "type": "holder",
-    "x": 41,
+    "x": 40,
     "y": 349,
     "z": 162,
     "parent": "Board",
@@ -4851,7 +4851,7 @@
     "inheritFrom": "h60",
     "id": "h284",
     "type": "holder",
-    "x": 231,
+    "x": 232,
     "y": 325,
     "z": 157,
     "parent": "Board",
@@ -4871,7 +4871,7 @@
     "inheritFrom": "h60",
     "id": "h286",
     "type": "holder",
-    "x": 92,
+    "x": 91,
     "y": 357,
     "z": 163,
     "parent": "Board",
@@ -4881,7 +4881,7 @@
     "inheritFrom": "h60",
     "id": "h287",
     "type": "holder",
-    "x": 45,
+    "x": 44,
     "y": 368,
     "z": 164,
     "parent": "Board",
@@ -4891,28 +4891,28 @@
     "inheritFrom": "h62",
     "id": "h288",
     "type": "holder",
-    "x": 261,
-    "y": 346,
+    "x": 262,
+    "y": 344,
     "z": 171,
-    "rotation": -79.18,
+    "rotation": -79.75,
     "parent": "Board"
   },
   "h289": {
     "inheritFrom": "h62",
     "id": "h289",
     "type": "holder",
-    "x": 215,
-    "y": 426,
+    "x": 213,
+    "y": 428,
     "z": 169,
-    "rotation": -41.51,
+    "rotation": -40.99,
     "parent": "Board"
   },
   "h290": {
     "inheritFrom": "h61",
     "id": "h290",
     "type": "holder",
-    "x": 112,
-    "y": 496,
+    "x": 111,
+    "y": 497,
     "z": 172,
     "parent": "Board",
     "rotation": 146.82
@@ -4931,8 +4931,8 @@
     "inheritFrom": "h54",
     "id": "h292",
     "type": "holder",
-    "x": 271,
-    "y": 548,
+    "x": 270,
+    "y": 547,
     "z": 174,
     "parent": "Board",
     "rotation": -149.21
@@ -5012,7 +5012,7 @@
     "id": "h300",
     "type": "holder",
     "x": 25,
-    "y": 398,
+    "y": 397,
     "z": 196,
     "parent": "Board",
     "rotation": -112.01
@@ -5061,8 +5061,8 @@
     "inheritFrom": "h55",
     "id": "h305",
     "type": "holder",
-    "x": 203,
-    "y": 582,
+    "x": 202,
+    "y": 581,
     "z": 223,
     "rotation": -157.89,
     "parent": "Board"
@@ -5071,40 +5071,40 @@
     "inheritFrom": "h55",
     "id": "h306",
     "type": "holder",
-    "x": 160,
-    "y": 563,
+    "x": 156,
+    "y": 561,
     "z": 222,
-    "rotation": -153.97,
+    "rotation": -153.71,
     "parent": "Board"
   },
   "h307": {
     "inheritFrom": "h55",
     "id": "h307",
     "type": "holder",
-    "x": 294,
-    "y": 610,
+    "x": 298,
+    "y": 611,
     "z": 218,
-    "rotation": -168.31,
+    "rotation": -168.78,
     "parent": "Board"
   },
   "h308": {
     "inheritFrom": "h55",
     "id": "h308",
     "type": "holder",
-    "x": 118,
-    "y": 541,
+    "x": 112,
+    "y": 537,
     "z": 210,
-    "rotation": -150.43,
+    "rotation": -149.93,
     "parent": "Board"
   },
   "h309": {
     "inheritFrom": "h55",
     "id": "h309",
     "type": "holder",
-    "x": 341,
+    "x": 347,
     "y": 617,
     "z": 217,
-    "rotation": -176.44,
+    "rotation": -177.72,
     "parent": "Board"
   },
   "Player 1 - Seat": {
@@ -10598,7 +10598,7 @@
     "stops": [
       {
         "widget": "h260",
-        "position": 0.2539
+        "position": 0.2176
       },
       {
         "widget": "h1",
@@ -10606,7 +10606,7 @@
       },
       {
         "widget": "h259",
-        "position": 0.7461
+        "position": 0.7824
       }
     ]
   },
@@ -10640,27 +10640,27 @@
     "stops": [
       {
         "widget": "h258",
-        "position": 0.1281
+        "position": 0.1149
       },
       {
         "widget": "h257",
-        "position": 0.2769
+        "position": 0.2689
       },
       {
         "widget": "h254",
-        "position": 0.4256
+        "position": 0.423
       },
       {
         "widget": "h2",
-        "position": 0.5744
+        "position": 0.577
       },
       {
         "widget": "h255",
-        "position": 0.7231
+        "position": 0.7311
       },
       {
         "widget": "h256",
-        "position": 0.8719
+        "position": 0.8851
       }
     ]
   },
@@ -10694,27 +10694,27 @@
     "stops": [
       {
         "widget": "h205",
-        "position": 0.1354
+        "position": 0.1154
       },
       {
         "widget": "h204",
-        "position": 0.2812
+        "position": 0.2693
       },
       {
         "widget": "h3",
-        "position": 0.4271
+        "position": 0.4231
       },
       {
         "widget": "h203",
-        "position": 0.5729
+        "position": 0.5769
       },
       {
         "widget": "h206",
-        "position": 0.7188
+        "position": 0.7307
       },
       {
         "widget": "h207",
-        "position": 0.8646
+        "position": 0.8846
       }
     ]
   },
@@ -10748,11 +10748,11 @@
     "stops": [
       {
         "widget": "h193",
-        "position": 0.3296
+        "position": 0.3034
       },
       {
         "widget": "h4",
-        "position": 0.6704
+        "position": 0.6966
       }
     ],
     "controlStart": {
@@ -10794,11 +10794,11 @@
     "stops": [
       {
         "widget": "h199",
-        "position": 0.1601
+        "position": 0.1369
       },
       {
         "widget": "h198",
-        "position": 0.3301
+        "position": 0.3184
       },
       {
         "widget": "h5",
@@ -10806,11 +10806,11 @@
       },
       {
         "widget": "h196",
-        "position": 0.6699
+        "position": 0.6816
       },
       {
         "widget": "h197",
-        "position": 0.8399
+        "position": 0.8631
       }
     ],
     "controlStart": {
@@ -10852,11 +10852,11 @@
     "stops": [
       {
         "widget": "h181",
-        "position": 0.3039
+        "position": 0.2989
       },
       {
         "widget": "h7",
-        "position": 0.6961
+        "position": 0.7011
       }
     ],
     "controlStart": {
@@ -10898,11 +10898,11 @@
     "stops": [
       {
         "widget": "h6",
-        "position": 0.3052
+        "position": 0.2992
       },
       {
         "widget": "h180",
-        "position": 0.6948
+        "position": 0.7008
       }
     ],
     "controlStart": {
@@ -10944,11 +10944,11 @@
     "stops": [
       {
         "widget": "h96",
-        "position": 0.2987
+        "position": 0.298
       },
       {
         "widget": "h177",
-        "position": 0.7013
+        "position": 0.702
       }
     ],
     "controlStart": {
@@ -10990,11 +10990,11 @@
     "stops": [
       {
         "widget": "h176",
-        "position": 0.2988
+        "position": 0.298
       },
       {
         "widget": "h8",
-        "position": 0.7012
+        "position": 0.702
       }
     ],
     "controlStart": {
@@ -11036,7 +11036,7 @@
     "stops": [
       {
         "widget": "h179",
-        "position": 0.2272
+        "position": 0.2141
       },
       {
         "widget": "h9",
@@ -11044,7 +11044,7 @@
       },
       {
         "widget": "h178",
-        "position": 0.7728
+        "position": 0.7859
       }
     ]
   },
@@ -11128,11 +11128,11 @@
     "stops": [
       {
         "widget": "h173",
-        "position": 0.3166
+        "position": 0.3012
       },
       {
         "widget": "h12",
-        "position": 0.6834
+        "position": 0.6988
       }
     ],
     "controlStart": {
@@ -11174,11 +11174,11 @@
     "stops": [
       {
         "widget": "h11",
-        "position": 0.3154
+        "position": 0.3009
       },
       {
         "widget": "h172",
-        "position": 0.6846
+        "position": 0.6991
       }
     ],
     "controlStart": {
@@ -11220,11 +11220,11 @@
     "stops": [
       {
         "widget": "h13",
-        "position": 0.3057
+        "position": 0.2993
       },
       {
         "widget": "h182",
-        "position": 0.6943
+        "position": 0.7007
       }
     ]
   },
@@ -11258,19 +11258,19 @@
     "stops": [
       {
         "widget": "h187",
-        "position": 0.1665
+        "position": 0.1649
       },
       {
         "widget": "h185",
-        "position": 0.3888
+        "position": 0.3883
       },
       {
         "widget": "h186",
-        "position": 0.6112
+        "position": 0.6117
       },
       {
         "widget": "h14",
-        "position": 0.8335
+        "position": 0.8351
       }
     ],
     "controlStart": {
@@ -11366,7 +11366,7 @@
     "stops": [
       {
         "widget": "h195",
-        "position": 0.2465
+        "position": 0.2166
       },
       {
         "widget": "h194",
@@ -11374,7 +11374,7 @@
       },
       {
         "widget": "h16",
-        "position": 0.7535
+        "position": 0.7834
       }
     ],
     "controlStart": {
@@ -11416,19 +11416,19 @@
     "stops": [
       {
         "widget": "h210",
-        "position": 0.2317
+        "position": 0.1718
       },
       {
         "widget": "h209",
-        "position": 0.4106
+        "position": 0.3906
       },
       {
         "widget": "h208",
-        "position": 0.5894
+        "position": 0.6094
       },
       {
         "widget": "h17",
-        "position": 0.7683
+        "position": 0.8282
       }
     ],
     "controlStart": {
@@ -11470,19 +11470,19 @@
     "stops": [
       {
         "widget": "h202",
-        "position": 0.1898
+        "position": 0.1673
       },
       {
         "widget": "h201",
-        "position": 0.3966
+        "position": 0.3891
       },
       {
         "widget": "h18",
-        "position": 0.6034
+        "position": 0.6109
       },
       {
         "widget": "h200",
-        "position": 0.8102
+        "position": 0.8327
       }
     ]
   },
@@ -11562,27 +11562,27 @@
     "stops": [
       {
         "widget": "h262",
-        "position": 0.1156
+        "position": 0.114
       },
       {
         "widget": "h261",
-        "position": 0.2693
+        "position": 0.2684
       },
       {
         "widget": "h20",
-        "position": 0.4231
+        "position": 0.4228
       },
       {
         "widget": "h263",
-        "position": 0.5769
+        "position": 0.5772
       },
       {
         "widget": "h264",
-        "position": 0.7307
+        "position": 0.7316
       },
       {
         "widget": "h265",
-        "position": 0.8844
+        "position": 0.886
       }
     ],
     "controlStart": {
@@ -11760,19 +11760,19 @@
     "stops": [
       {
         "widget": "h270",
-        "position": 0.1682
+        "position": 0.1651
       },
       {
         "widget": "h269",
-        "position": 0.3894
+        "position": 0.3884
       },
       {
         "widget": "h268",
-        "position": 0.6106
+        "position": 0.6116
       },
       {
         "widget": "h25",
-        "position": 0.8318
+        "position": 0.8349
       }
     ],
     "controlStart": {
@@ -11814,7 +11814,7 @@
     "stops": [
       {
         "widget": "h267",
-        "position": 0.248
+        "position": 0.2168
       },
       {
         "widget": "h26",
@@ -11822,7 +11822,7 @@
       },
       {
         "widget": "h266",
-        "position": 0.752
+        "position": 0.7832
       }
     ]
   },
@@ -11856,19 +11856,19 @@
     "stops": [
       {
         "widget": "h27",
-        "position": 0.1809
+        "position": 0.1664
       },
       {
         "widget": "h220",
-        "position": 0.3936
+        "position": 0.3888
       },
       {
         "widget": "h221",
-        "position": 0.6064
+        "position": 0.6112
       },
       {
         "widget": "h222",
-        "position": 0.8191
+        "position": 0.8336
       }
     ],
     "controlStart": {
@@ -11910,27 +11910,27 @@
     "stops": [
       {
         "widget": "h212",
-        "position": 0.1678
+        "position": 0.1179
       },
       {
         "widget": "h211",
-        "position": 0.3007
+        "position": 0.2707
       },
       {
         "widget": "h28",
-        "position": 0.4336
+        "position": 0.4236
       },
       {
         "widget": "h213",
-        "position": 0.5664
+        "position": 0.5764
       },
       {
         "widget": "h214",
-        "position": 0.6993
+        "position": 0.7293
       },
       {
         "widget": "h215",
-        "position": 0.8322
+        "position": 0.8821
       }
     ]
   },
@@ -11964,11 +11964,11 @@
     "stops": [
       {
         "widget": "h108",
-        "position": 0.1637
+        "position": 0.1372
       },
       {
         "widget": "h107",
-        "position": 0.3318
+        "position": 0.3186
       },
       {
         "widget": "h30",
@@ -11976,11 +11976,11 @@
       },
       {
         "widget": "h105",
-        "position": 0.6682
+        "position": 0.6814
       },
       {
         "widget": "h106",
-        "position": 0.8363
+        "position": 0.8628
       }
     ],
     "controlStart": {
@@ -12022,11 +12022,11 @@
     "stops": [
       {
         "widget": "h104",
-        "position": 0.1637
+        "position": 0.1372
       },
       {
         "widget": "h103",
-        "position": 0.3319
+        "position": 0.3186
       },
       {
         "widget": "h29",
@@ -12034,11 +12034,11 @@
       },
       {
         "widget": "h102",
-        "position": 0.6681
+        "position": 0.6814
       },
       {
         "widget": "h101",
-        "position": 0.8363
+        "position": 0.8628
       }
     ],
     "controlStart": {
@@ -12080,7 +12080,7 @@
     "stops": [
       {
         "widget": "h31",
-        "position": 0.217
+        "position": 0.2128
       },
       {
         "widget": "h301",
@@ -12088,7 +12088,7 @@
       },
       {
         "widget": "h302",
-        "position": 0.783
+        "position": 0.7872
       }
     ],
     "controlStart": {
@@ -12130,7 +12130,7 @@
     "stops": [
       {
         "widget": "h32",
-        "position": 0.2172
+        "position": 0.2128
       },
       {
         "widget": "h299",
@@ -12138,7 +12138,7 @@
       },
       {
         "widget": "h300",
-        "position": 0.7828
+        "position": 0.7872
       }
     ],
     "controlStart": {
@@ -12180,7 +12180,7 @@
     "stops": [
       {
         "widget": "h63",
-        "position": 0.2416
+        "position": 0.216
       },
       {
         "widget": "h278",
@@ -12188,7 +12188,7 @@
       },
       {
         "widget": "h279",
-        "position": 0.7584
+        "position": 0.784
       }
     ]
   },
@@ -12222,7 +12222,7 @@
     "stops": [
       {
         "widget": "h33",
-        "position": 0.2416
+        "position": 0.216
       },
       {
         "widget": "h276",
@@ -12230,7 +12230,7 @@
       },
       {
         "widget": "h277",
-        "position": 0.7584
+        "position": 0.784
       }
     ]
   },
@@ -12264,7 +12264,7 @@
     "stops": [
       {
         "widget": "h136",
-        "position": 0.2153
+        "position": 0.2125
       },
       {
         "widget": "h135",
@@ -12272,7 +12272,7 @@
       },
       {
         "widget": "h34",
-        "position": 0.7847
+        "position": 0.7875
       }
     ],
     "controlStart": {
@@ -12314,7 +12314,7 @@
     "stops": [
       {
         "widget": "h129",
-        "position": 0.2244
+        "position": 0.2137
       },
       {
         "widget": "h128",
@@ -12322,7 +12322,7 @@
       },
       {
         "widget": "h35",
-        "position": 0.7756
+        "position": 0.7863
       }
     ],
     "controlStart": {
@@ -12364,11 +12364,11 @@
     "stops": [
       {
         "widget": "h116",
-        "position": 0.3029
+        "position": 0.2987
       },
       {
         "widget": "h37",
-        "position": 0.6971
+        "position": 0.7013
       }
     ],
     "controlStart": {
@@ -12410,11 +12410,11 @@
     "stops": [
       {
         "widget": "h117",
-        "position": 0.3039
+        "position": 0.2989
       },
       {
         "widget": "h36",
-        "position": 0.6961
+        "position": 0.7011
       }
     ],
     "controlStart": {
@@ -12524,11 +12524,11 @@
     "stops": [
       {
         "widget": "h40",
-        "position": 0.309
+        "position": 0.2998
       },
       {
         "widget": "h111",
-        "position": 0.691
+        "position": 0.7002
       }
     ]
   },
@@ -12562,11 +12562,11 @@
     "stops": [
       {
         "widget": "h41",
-        "position": 0.309
+        "position": 0.2998
       },
       {
         "widget": "h112",
-        "position": 0.691
+        "position": 0.7002
       }
     ]
   },
@@ -12600,19 +12600,19 @@
     "stops": [
       {
         "widget": "h228",
-        "position": 0.207
+        "position": 0.1692
       },
       {
         "widget": "h227",
-        "position": 0.4023
+        "position": 0.3897
       },
       {
         "widget": "h43",
-        "position": 0.5977
+        "position": 0.6103
       },
       {
         "widget": "h226",
-        "position": 0.793
+        "position": 0.8308
       }
     ],
     "controlStart": {
@@ -12654,19 +12654,19 @@
     "stops": [
       {
         "widget": "h231",
-        "position": 0.207
+        "position": 0.1692
       },
       {
         "widget": "h230",
-        "position": 0.4023
+        "position": 0.3897
       },
       {
         "widget": "h229",
-        "position": 0.5977
+        "position": 0.6103
       },
       {
         "widget": "h42",
-        "position": 0.793
+        "position": 0.8308
       }
     ],
     "controlStart": {
@@ -12708,19 +12708,19 @@
     "stops": [
       {
         "widget": "h225",
-        "position": 0.2017
+        "position": 0.1686
       },
       {
         "widget": "h224",
-        "position": 0.4006
+        "position": 0.3895
       },
       {
         "widget": "h44",
-        "position": 0.5994
+        "position": 0.6105
       },
       {
         "widget": "h223",
-        "position": 0.7983
+        "position": 0.8314
       }
     ],
     "controlStart": {
@@ -12762,19 +12762,19 @@
     "stops": [
       {
         "widget": "h157",
-        "position": 0.1956
+        "position": 0.168
       },
       {
         "widget": "h158",
-        "position": 0.3985
+        "position": 0.3893
       },
       {
         "widget": "h159",
-        "position": 0.6015
+        "position": 0.6107
       },
       {
         "widget": "h45",
-        "position": 0.8044
+        "position": 0.832
       }
     ],
     "controlStart": {
@@ -12816,11 +12816,11 @@
     "stops": [
       {
         "widget": "h155",
-        "position": 0.1563
+        "position": 0.1365
       },
       {
         "widget": "h154",
-        "position": 0.3282
+        "position": 0.3183
       },
       {
         "widget": "h46",
@@ -12828,11 +12828,11 @@
       },
       {
         "widget": "h152",
-        "position": 0.6718
+        "position": 0.6817
       },
       {
         "widget": "h153",
-        "position": 0.8437
+        "position": 0.8635
       }
     ]
   },
@@ -12866,27 +12866,27 @@
     "stops": [
       {
         "widget": "h47",
-        "position": 0.1388
+        "position": 0.1157
       },
       {
         "widget": "h134",
-        "position": 0.2833
+        "position": 0.2694
       },
       {
         "widget": "h130",
-        "position": 0.4278
+        "position": 0.4231
       },
       {
         "widget": "h131",
-        "position": 0.5722
+        "position": 0.5769
       },
       {
         "widget": "h132",
-        "position": 0.7167
+        "position": 0.7306
       },
       {
         "widget": "h133",
-        "position": 0.8612
+        "position": 0.8843
       }
     ],
     "controlStart": {
@@ -12928,11 +12928,11 @@
     "stops": [
       {
         "widget": "h127",
-        "position": 0.3072
+        "position": 0.2995
       },
       {
         "widget": "h48",
-        "position": 0.6928
+        "position": 0.7005
       }
     ],
     "controlStart": {
@@ -13058,19 +13058,19 @@
     "stops": [
       {
         "widget": "h243",
-        "position": 0.2346
+        "position": 0.1721
       },
       {
         "widget": "h51",
-        "position": 0.4115
+        "position": 0.3907
       },
       {
         "widget": "h244",
-        "position": 0.5885
+        "position": 0.6093
       },
       {
         "widget": "h245",
-        "position": 0.7654
+        "position": 0.8279
       }
     ],
     "controlStart": {
@@ -13112,27 +13112,27 @@
     "stops": [
       {
         "widget": "h239",
-        "position": 0.1347
+        "position": 0.1154
       },
       {
         "widget": "h238",
-        "position": 0.2808
+        "position": 0.2692
       },
       {
         "widget": "h242",
-        "position": 0.4269
+        "position": 0.4231
       },
       {
         "widget": "h52",
-        "position": 0.5731
+        "position": 0.5769
       },
       {
         "widget": "h240",
-        "position": 0.7192
+        "position": 0.7308
       },
       {
         "widget": "h241",
-        "position": 0.8653
+        "position": 0.8846
       }
     ],
     "controlStart": {
@@ -13174,7 +13174,7 @@
     "stops": [
       {
         "widget": "h294",
-        "position": 0.2157
+        "position": 0.2126
       },
       {
         "widget": "h293",
@@ -13182,7 +13182,7 @@
       },
       {
         "widget": "h53",
-        "position": 0.7843
+        "position": 0.7874
       }
     ]
   },
@@ -13216,7 +13216,7 @@
     "stops": [
       {
         "widget": "h54",
-        "position": 0.2205
+        "position": 0.2132
       },
       {
         "widget": "h291",
@@ -13224,7 +13224,7 @@
       },
       {
         "widget": "h292",
-        "position": 0.7795
+        "position": 0.7868
       }
     ]
   },
@@ -13258,27 +13258,27 @@
     "stops": [
       {
         "widget": "h309",
-        "position": 0.1358
+        "position": 0.1155
       },
       {
         "widget": "h307",
-        "position": 0.2815
+        "position": 0.2693
       },
       {
         "widget": "h55",
-        "position": 0.4272
+        "position": 0.4231
       },
       {
         "widget": "h305",
-        "position": 0.5728
+        "position": 0.5769
       },
       {
         "widget": "h306",
-        "position": 0.7185
+        "position": 0.7307
       },
       {
         "widget": "h308",
-        "position": 0.8642
+        "position": 0.8845
       }
     ],
     "controlStart": {
@@ -13420,11 +13420,11 @@
     "stops": [
       {
         "widget": "h237",
-        "position": 0.3073
+        "position": 0.2995
       },
       {
         "widget": "h58",
-        "position": 0.6927
+        "position": 0.7005
       }
     ]
   },
@@ -13458,11 +13458,11 @@
     "stops": [
       {
         "widget": "h284",
-        "position": 0.1414
+        "position": 0.1352
       },
       {
         "widget": "h60",
-        "position": 0.3207
+        "position": 0.3176
       },
       {
         "widget": "h285",
@@ -13470,11 +13470,11 @@
       },
       {
         "widget": "h286",
-        "position": 0.6793
+        "position": 0.6824
       },
       {
         "widget": "h287",
-        "position": 0.8586
+        "position": 0.8648
       }
     ]
   },
@@ -13508,11 +13508,11 @@
     "stops": [
       {
         "widget": "h280",
-        "position": 0.14
+        "position": 0.1351
       },
       {
         "widget": "h59",
-        "position": 0.32
+        "position": 0.3175
       },
       {
         "widget": "h281",
@@ -13520,11 +13520,11 @@
       },
       {
         "widget": "h282",
-        "position": 0.68
+        "position": 0.6825
       },
       {
         "widget": "h283",
-        "position": 0.86
+        "position": 0.8649
       }
     ]
   },
@@ -13558,11 +13558,11 @@
     "stops": [
       {
         "widget": "h61",
-        "position": 0.3089
+        "position": 0.2998
       },
       {
         "widget": "h290",
-        "position": 0.6911
+        "position": 0.7002
       }
     ]
   },
@@ -13596,7 +13596,7 @@
     "stops": [
       {
         "widget": "h289",
-        "position": 0.2238
+        "position": 0.2137
       },
       {
         "widget": "h62",
@@ -13604,7 +13604,7 @@
       },
       {
         "widget": "h288",
-        "position": 0.7762
+        "position": 0.7863
       }
     ],
     "controlStart": {
@@ -13800,11 +13800,11 @@
     "stops": [
       {
         "widget": "h165",
-        "position": 0.3077
+        "position": 0.2996
       },
       {
         "widget": "h67",
-        "position": 0.6923
+        "position": 0.7004
       }
     ],
     "controlStart": {
@@ -13846,11 +13846,11 @@
     "stops": [
       {
         "widget": "h68",
-        "position": 0.3066
+        "position": 0.2994
       },
       {
         "widget": "h166",
-        "position": 0.6934
+        "position": 0.7006
       }
     ],
     "controlStart": {
@@ -13964,19 +13964,19 @@
     "stops": [
       {
         "widget": "h234",
-        "position": 0.1774
+        "position": 0.166
       },
       {
         "widget": "h233",
-        "position": 0.3925
+        "position": 0.3887
       },
       {
         "widget": "h71",
-        "position": 0.6075
+        "position": 0.6113
       },
       {
         "widget": "h232",
-        "position": 0.8226
+        "position": 0.834
       }
     ],
     "controlStart": {
@@ -14018,11 +14018,11 @@
     "stops": [
       {
         "widget": "h72",
-        "position": 0.3171
+        "position": 0.3013
       },
       {
         "widget": "h113",
-        "position": 0.6829
+        "position": 0.6987
       }
     ]
   },
@@ -14056,11 +14056,11 @@
     "stops": [
       {
         "widget": "h125",
-        "position": 0.3088
+        "position": 0.2998
       },
       {
         "widget": "h74",
-        "position": 0.6912
+        "position": 0.7002
       }
     ],
     "controlStart": {
@@ -14102,11 +14102,11 @@
     "stops": [
       {
         "widget": "h126",
-        "position": 0.3098
+        "position": 0.3
       },
       {
         "widget": "h73",
-        "position": 0.6902
+        "position": 0.7
       }
     ],
     "controlStart": {
@@ -14148,7 +14148,7 @@
     "stops": [
       {
         "widget": "h75",
-        "position": 0.2253
+        "position": 0.2139
       },
       {
         "widget": "h124",
@@ -14156,7 +14156,7 @@
       },
       {
         "widget": "h123",
-        "position": 0.7747
+        "position": 0.7861
       }
     ],
     "controlStart": {
@@ -14198,19 +14198,19 @@
     "stops": [
       {
         "widget": "h76",
-        "position": 0.1745
+        "position": 0.1657
       },
       {
         "widget": "h120",
-        "position": 0.3915
+        "position": 0.3886
       },
       {
         "widget": "h121",
-        "position": 0.6085
+        "position": 0.6114
       },
       {
         "widget": "h122",
-        "position": 0.8255
+        "position": 0.8343
       }
     ],
     "controlStart": {
@@ -14252,7 +14252,7 @@
     "stops": [
       {
         "widget": "h145",
-        "position": 0.2255
+        "position": 0.2139
       },
       {
         "widget": "h144",
@@ -14260,7 +14260,7 @@
       },
       {
         "widget": "h78",
-        "position": 0.7745
+        "position": 0.7861
       }
     ]
   },
@@ -14294,7 +14294,7 @@
     "stops": [
       {
         "widget": "h143",
-        "position": 0.2255
+        "position": 0.2139
       },
       {
         "widget": "h142",
@@ -14302,7 +14302,7 @@
       },
       {
         "widget": "h77",
-        "position": 0.7745
+        "position": 0.7861
       }
     ]
   },
@@ -14336,11 +14336,11 @@
     "stops": [
       {
         "widget": "h80",
-        "position": 0.3017
+        "position": 0.2985
       },
       {
         "widget": "h175",
-        "position": 0.6983
+        "position": 0.7015
       }
     ],
     "controlStart": {
@@ -14382,11 +14382,11 @@
     "stops": [
       {
         "widget": "h79",
-        "position": 0.3014
+        "position": 0.2985
       },
       {
         "widget": "h174",
-        "position": 0.6986
+        "position": 0.7015
       }
     ],
     "controlStart": {
@@ -14428,11 +14428,11 @@
     "stops": [
       {
         "widget": "h171",
-        "position": 0.3328
+        "position": 0.304
       },
       {
         "widget": "h81",
-        "position": 0.6672
+        "position": 0.696
       }
     ]
   },
@@ -14466,11 +14466,11 @@
     "stops": [
       {
         "widget": "h82",
-        "position": 0.313
+        "position": 0.3005
       },
       {
         "widget": "h168",
-        "position": 0.687
+        "position": 0.6995
       }
     ]
   },
@@ -14504,11 +14504,11 @@
     "stops": [
       {
         "widget": "h83",
-        "position": 0.313
+        "position": 0.3005
       },
       {
         "widget": "h169",
-        "position": 0.687
+        "position": 0.6995
       }
     ]
   },
@@ -14542,11 +14542,11 @@
     "stops": [
       {
         "widget": "h250",
-        "position": 0.3027
+        "position": 0.2987
       },
       {
         "widget": "h84",
-        "position": 0.6973
+        "position": 0.7013
       }
     ]
   },
@@ -14580,19 +14580,19 @@
     "stops": [
       {
         "widget": "h162",
-        "position": 0.1741
+        "position": 0.1657
       },
       {
         "widget": "h85",
-        "position": 0.3914
+        "position": 0.3886
       },
       {
         "widget": "h160",
-        "position": 0.6086
+        "position": 0.6114
       },
       {
         "widget": "h161",
-        "position": 0.8259
+        "position": 0.8343
       }
     ],
     "controlStart": {
@@ -14684,11 +14684,11 @@
     "stops": [
       {
         "widget": "h119",
-        "position": 0.3105
+        "position": 0.3001
       },
       {
         "widget": "h87",
-        "position": 0.6895
+        "position": 0.6999
       }
     ]
   },
@@ -14722,11 +14722,11 @@
     "stops": [
       {
         "widget": "h118",
-        "position": 0.3095
+        "position": 0.2999
       },
       {
         "widget": "h88",
-        "position": 0.6905
+        "position": 0.7001
       }
     ]
   },
@@ -14760,11 +14760,11 @@
     "stops": [
       {
         "widget": "h141",
-        "position": 0.155
+        "position": 0.1364
       },
       {
         "widget": "h140",
-        "position": 0.3275
+        "position": 0.3182
       },
       {
         "widget": "h89",
@@ -14772,11 +14772,11 @@
       },
       {
         "widget": "h139",
-        "position": 0.6725
+        "position": 0.6818
       },
       {
         "widget": "h138",
-        "position": 0.845
+        "position": 0.8636
       }
     ],
     "controlStart": {
@@ -14818,11 +14818,11 @@
     "stops": [
       {
         "widget": "h110",
-        "position": 0.2995
+        "position": 0.2982
       },
       {
         "widget": "h91",
-        "position": 0.7005
+        "position": 0.7018
       }
     ]
   },
@@ -14932,11 +14932,11 @@
     "stops": [
       {
         "widget": "h93",
-        "position": 0.3272
+        "position": 0.303
       },
       {
         "widget": "h137",
-        "position": 0.6728
+        "position": 0.697
       }
     ]
   },
@@ -15024,11 +15024,11 @@
     "stops": [
       {
         "widget": "h248",
-        "position": 0.1476
+        "position": 0.1358
       },
       {
         "widget": "h247",
-        "position": 0.3238
+        "position": 0.3179
       },
       {
         "widget": "h246",
@@ -15036,11 +15036,11 @@
       },
       {
         "widget": "h95",
-        "position": 0.6762
+        "position": 0.6821
       },
       {
         "widget": "h249",
-        "position": 0.8524
+        "position": 0.8642
       }
     ],
     "controlStart": {
@@ -15082,11 +15082,11 @@
     "stops": [
       {
         "widget": "h219",
-        "position": 0.1985
+        "position": 0.1402
       },
       {
         "widget": "h218",
-        "position": 0.3492
+        "position": 0.3201
       },
       {
         "widget": "h217",
@@ -15094,11 +15094,11 @@
       },
       {
         "widget": "h97",
-        "position": 0.6508
+        "position": 0.6799
       },
       {
         "widget": "h216",
-        "position": 0.8015
+        "position": 0.8598
       }
     ],
     "controlStart": {
@@ -15140,7 +15140,7 @@
     "stops": [
       {
         "widget": "h235",
-        "position": 0.2854
+        "position": 0.2218
       },
       {
         "widget": "h98",
@@ -15148,7 +15148,7 @@
       },
       {
         "widget": "h236",
-        "position": 0.7146
+        "position": 0.7782
       }
     ],
     "controlStart": {
@@ -15190,11 +15190,11 @@
     "stops": [
       {
         "widget": "h99",
-        "position": 0.3537
+        "position": 0.3077
       },
       {
         "widget": "h170",
-        "position": 0.6463
+        "position": 0.6923
       }
     ]
   },
@@ -15228,11 +15228,11 @@
     "stops": [
       {
         "widget": "h115",
-        "position": 0.3267
+        "position": 0.3029
       },
       {
         "widget": "h100",
-        "position": 0.6733
+        "position": 0.6971
       }
     ],
     "controlStart": {
