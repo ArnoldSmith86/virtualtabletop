@@ -133,7 +133,13 @@ function applySelectionRectangle(addToSelection) {
 
   let newlySelected = [];
   if(s.right - s.left < 5 || s.bottom - s.top < 5) {
-    const clicked = document.elementsFromPoint(s.left, s.top).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w);
+    // resolve each element under the click to its owning widget: some widgets (e.g. a
+    // line) only expose an inner element for hit-testing while their own box has
+    // pointer-events:none, so climb to the nearest ancestor carrying the widget id
+    const clicked = document.elementsFromPoint(s.left, s.top)
+      .map(el => el.closest('[id^="w_"]'))
+      .map(el => el && widgets.get(unescapeID(el.id.slice(2))))
+      .filter(w => w);
     if(clicked.length)
       newlySelected = [ clicked[0] ];
   } else {

@@ -228,3 +228,69 @@ test('Create game using edit mode', async t => {
     .click('#w_bldn');
   await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
 });
+
+test('Line widget in edit mode', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorSidebar [icon=tune]')
+    // "Add stop" opens the menu of the three ways to add one; the first is a new
+    // widget inheriting from an existing stop, which the Add button then creates
+    .click('#editorModules .lineAddStop')
+    .click(Selector('#editorModules .lineAddStopMenuEntry').nth(0))
+    .click('#editorModules .lineAddStopConfirm')
+    .click(Selector('#editorModules .lineShapePreset').withAttribute('aria-label', 'Shallow curve'));
+  const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
+
+  // "Target widgets" writes the line's dropTarget: each match is a widget type
+  // plus any number of property/value conditions, several matches are an array
+  await t
+    .click('#editorModules .dropTargetAddMatch')
+    .click('#editorModules .dropTargetType')
+    .click(Selector('#editorModules .dropTargetType option').withAttribute('value', 'type:card'));
+  const dropTarget = await ClientFunction(id => JSON.stringify(widgets.get(id).get('dropTarget')))(lineID);
+  await t.expect(dropTarget).eql('{"type":"card"}');
+
+  // a second match, narrowed down with a condition, and true stays a boolean
+  await t
+    .click('#editorModules .dropTargetAddMatch')
+    .click(Selector('#editorModules .dropTargetAddCondition').nth(1))
+    .typeText(Selector('#editorModules .dropTargetProperty').nth(0), 'movable')
+    .typeText(Selector('#editorModules .dropTargetValue').nth(0), 'true')
+    .pressKey('tab');
+  const dropTargets = await ClientFunction(id => JSON.stringify(widgets.get(id).get('dropTarget')))(lineID);
+  await t.expect(dropTargets).eql('[{"type":"card"},{"movable":true}]');
+
+  await t.click(Selector('#editorModules .dropTargetRemoveMatch').nth(1));
+
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .typeText('#editorModules .lineConnectStartID', lineID)
+    .pressKey('tab');
+  const connectedLine = await ClientFunction(() => {
+    const connection = widgets.get(document.querySelector('.widget.line.selectedInEdit').id.slice(2)).get('connectStart');
+    return connection && connection.line;
+  })();
+  await t.expect(connectedLine).eql(lineID);
+
+  // dragging a handle moves it by browser-dependent pixels, so verify it in the
+  // DOM and delete the dragged line again to keep the compared state stable
+  // an end point handle is a ring with a hole in the middle (so the stop below
+  // it stays clickable), so the drag grabs its left edge instead of its centre
+  const endHandle = Selector('.widget.line.selectedInEdit .lineHandle').nth(1);
+  const transformBefore = await endHandle.getStyleProperty('transform');
+  const handleRect = await endHandle.boundingClientRect;
+  await t
+    .drag(endHandle, 90, 60, { offsetX: 1, offsetY: Math.round(handleRect.height/2) })
+    .expect(endHandle.getStyleProperty('transform')).notEql(transformBefore)
+    .click('#editorToolbar > div > [icon=delete_forever]');
+  // the added stop's id is derived from the existing stops instead of being
+  // random, so the compared state no longer depends on the seeded rand() stream
+  await compareState(t, 'd35bd7362c7e87ea9ecb29895cc8d0b9');
+});
