@@ -136,6 +136,12 @@ function applySelectionRectangle(addToSelection) {
     newlySelected = selectedWidgetsPreview;
   }
 
+  // in selection mode a click on a widget arrives here instead of as editClick,
+  // so this is where a running picker takes it - a selection change would not
+  // reach it for the widget the picker belongs to, which stays selected
+  if(!customSelection && newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
+    return;
+
   if(!addToSelection) {
     if(customSelection)
       setCustomSelection(newlySelected);
@@ -204,6 +210,11 @@ function endCustomSelection() {
 }
 
 export async function editClick(widget) {
+  // a running widget picker owns the clicks in the room; without this the click
+  // falls through to widget.click() for the widget the picker belongs to,
+  // because that one is selected the whole time the picker runs
+  if(handleWidgetPickerClick(widget))
+    return true;
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
     return true;

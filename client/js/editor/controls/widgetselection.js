@@ -49,6 +49,35 @@ function resolvePickedWidget(clickedWidget, picker) {
   return !picker.filter || picker.filter(pickedWidget) ? pickedWidget : null;
 }
 
+// A click on a widget in the room while a picker is running belongs to the
+// picker, never to the widget: in edit mode a click on an already selected
+// widget triggers it (that is how a button is tested without leaving the
+// editor), and the widget a picker belongs to is selected the whole time it
+// runs. Clicks are routed here before that happens, which is also what makes
+// that widget pickable at all - it never arrives as a selection change.
+function handleWidgetPickerClick(clickedWidget) {
+  const picker = getWidgetPicker();
+  if(!picker)
+    return false;
+
+  const targetWidget = widgets.get(picker.targetWidgetID);
+  if(!targetWidget) {
+    stopWidgetPicker();
+    return false;
+  }
+
+  const pickedWidget = clickedWidget && resolvePickedWidget(clickedWidget, picker);
+  if(pickedWidget) {
+    // a picker that collects several widgets stays active for the next click
+    if(!picker.multiple)
+      stopWidgetPicker();
+    picker.onPick(targetWidget, [ pickedWidget ]);
+  }
+  // the click was the picker's either way - a widget the filter rejects must not
+  // fall through and be clicked instead
+  return true;
+}
+
 // the picker restores the selection it started from after every pick, which must
 // not be mistaken for the player picking that widget
 let restoringWidgetPickerSelection = false;
@@ -81,8 +110,9 @@ function handleWidgetPickerSelection(newSelection) {
 
   const resolved = [];
   for(const clickedWidget of newSelection) {
-    // the target widget is selected again after every pick, so a click on it
-    // cannot be told apart from that - it is only pickable from the id list
+    // the target widget is selected again after every pick, so a selection
+    // change to it cannot be told apart from that - clicks on it arrive as a
+    // click (handleWidgetPickerClick) instead
     if(!clickedWidget || clickedWidget.id == targetWidget.id)
       continue;
     const pickedWidget = resolvePickedWidget(clickedWidget, picker);
@@ -139,9 +169,8 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
 
   const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
   const excludedIDs = _=>(options.allowSelf ? [] : [ widget.id ]).concat(options.excludeIDs ? options.excludeIDs() : []);
-  // a click in the room cannot pick the widget the popout belongs to (it stays
-  // selected while picking, so such a click looks like the picker's own
-  // selection restore), which is why the list pins and marks it instead
+  // the widget the popout belongs to is the one a routine acts on most often, so
+  // the list pins and marks it instead of hiding it among the other ids
   const selfID = options.allowSelf ? widget.id : null;
 
   let typeFilter = options.typeFilter || '';
@@ -238,9 +267,8 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
         .filter(w=>excluded.indexOf(w.id) == -1)
         .filter(w=>matchesTypeFilter(w))
         .filter(w=>!term || w.id.toLowerCase().includes(term))
-        // the widget the popout belongs to comes first (it is the one a routine
-        // acts on most often), then the picked widgets so they stay visible (and
-        // removable) when the list is cut off below
+        // the widget the popout belongs to comes first, then the picked widgets
+        // so they stay visible (and removable) when the list is cut off below
         .sort((a, b)=>(b.id == selfID) - (a.id == selfID) || (current.indexOf(b.id) != -1) - (current.indexOf(a.id) != -1) || a.id.localeCompare(b.id));
       for(const match of matches.slice(0, 50)) {
         const self = match.id == selfID ? '<span class=widgetPickerSelf>this widget</span>' : '';

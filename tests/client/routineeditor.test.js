@@ -49,7 +49,7 @@ beforeAll(() => {
     'EventsEditor', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
-    'handleWidgetPickerSelection', 'operationUIState', 'commonInfoTopic', 'parameterInfoLine'
+    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'operationUIState', 'commonInfoTopic', 'parameterInfoLine'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -1235,22 +1235,42 @@ describe('the shared widget picker', () => {
     expect(picked).toEqual([ 'h1', 'h2' ]);
   });
 
-  test('the widget the picker belongs to is listed first when allowed, never picked in the room', () => {
+  test('the widget the picker belongs to is listed first when allowed and pickable in the room', () => {
     room([ 'target', 'holder' ], [ 'h1', 'holder' ]);
     let picked = null;
     const ids = controls => [...controls.popout.querySelectorAll('.widgetPickerEntry')].map(e => e.textContent.replace(/holder|this widget/g, ''));
 
     expect(ids(pickInRoom({ apply: id => picked = id }))).toEqual([ 'h1' ]);
     stopWidgetPicker();
-    // it cannot be clicked in the room, so it is pinned to the top and marked
     const controls = pickInRoom({ allowSelf: true, apply: id => picked = id });
     expect(ids(controls)).toEqual([ 'target', 'h1' ]);
     expect(controls.popout.querySelector('.widgetPickerSelf').textContent).toBe('this widget');
 
-    // the target is selected again after every pick, so clicking it in the room
-    // cannot be told apart from that restore
+    // it stays selected while the picker runs, so a click on it never arrives as
+    // a selection change - only as a click
     handleWidgetPickerSelection([ widgets.get('target') ]);
     expect(picked).toBeNull();
+    expect(handleWidgetPickerClick(widgets.get('target'))).toBe(true);
+    expect(picked).toBe('target');
+  });
+
+  test('a click in the room belongs to the picker instead of the widget', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'l1', 'label' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+
+    // a widget the filter rejects is not picked, but the click is still the
+    // picker's: falling through would click the widget in the room
+    expect(handleWidgetPickerClick(get('l1'))).toBe(true);
+    expect(picked).toBeNull();
+    expect(isWidgetPickerActive()).toBe(true);
+
+    expect(handleWidgetPickerClick(get('h1'))).toBe(true);
+    expect(picked).toBe('h1');
+    expect(isWidgetPickerActive()).toBe(false); // a single pick ends the mode
+
+    // without a picker the click is none of its business
+    expect(handleWidgetPickerClick(get('h1'))).toBe(false);
   });
 
   test('a collection name is not mistaken for a widget id', () => {
