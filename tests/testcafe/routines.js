@@ -48,9 +48,9 @@ function removeOnEnterRoom() {
   return state;
 }
 
-async function expectEventually(t, get, expected) {
+async function expectEventually(t, get, expected, timeout=1000) {
   let actual = null;
-  for(let wait=50; wait<1000; wait*=2) {
+  for(let wait=50; wait<timeout; wait*=2) {
     actual = await get();
     if(JSON.stringify(actual) == JSON.stringify(expected))
       break;
@@ -78,11 +78,14 @@ async function widgetPosition(id) {
 }
 
 // the click routine keeps running after the mouse button was released, so mouse
-// movements arriving while it waits must not be treated as a drag of the button
+// movements arriving while it waits must not be treated as a drag of the button.
+// the delay has to outlast the hover that follows the click, even on slow CI
+const delayDuration = 3000;
+
 function delayRoom() {
   return {
     delay: { id: 'delay', type: 'button', text: 'delay', x: 100, y: 100, width: 200, height: 100, movable: true, clickRoutine: [
-      { func: 'DELAY', milliseconds: 1000 },
+      { func: 'DELAY', milliseconds: delayDuration },
       { func: 'SET', collection: 'thisButton', property: 'marked', value: true }
     ] },
     far: { id: 'far', type: 'basic', x: 1200, y: 700, width: 200, height: 200 }
@@ -138,6 +141,6 @@ test('moving the mouse while a DELAY is running does not drag the clicked widget
   await setName(t);
   await t.click('#w_delay');
   await t.hover('#w_far');
-  await expectEventually(t, markedWidgets, [ 'delay' ]);
+  await expectEventually(t, markedWidgets, [ 'delay' ], 4*delayDuration);
   await expectEventually(t, ()=>widgetPosition('delay'), [ 100, 100 ]);
 });
