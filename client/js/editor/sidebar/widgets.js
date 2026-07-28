@@ -50,6 +50,35 @@ function deepReplace(obj, idMap) {
   }
 }
 
+// Prepares one widget state of a saved widget for the drag image. Every id
+// reference is remapped to the temporary preview ids the same way
+// placeSavedWidgetFromBuffer does for the real placement, so references like
+// inheritFrom or a line's stops point at the preview copies instead of at the
+// library ids (or at an unrelated room widget that happens to use one of them).
+// Returns null for a card whose deck is not part of the preview.
+function remapPreviewState(state, tempId, idMap, minX, minY) {
+  if (state.deck && !idMap.has(state.deck)) {
+    return null;
+  }
+
+  const tempState = JSON.parse(JSON.stringify(state));
+  tempState.id = tempId;
+  deepReplace(tempState, Object.fromEntries(idMap));
+
+  // roots of the buffer are placed side by side in the drag image instead of
+  // keeping the coordinates they had in the library
+  if (!hasPreviewParent(state, idMap)) {
+    tempState.x = (state.x || 0) - minX;
+    tempState.y = (state.y || 0) - minY;
+  }
+
+  return tempState;
+}
+
+function hasPreviewParent(state, idMap) {
+  return !!state.parent && idMap.has(state.parent);
+}
+
 // The saved widget library, shared by the Widgets sidebar and by anything else
 // that offers to place one of them (e.g. adding a stop to a line).
 async function getSavedWidgets(source) {
@@ -866,25 +895,14 @@ class WidgetsModule extends SidebarModule {
               const previewWidget = tempWidgetInstances.get(tempId);
               widgets.set(tempId, previewWidget);
 
-              const tempState = JSON.parse(JSON.stringify(s));
-              tempState.id = tempId;
-
-              const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-              if (parentId) {
-                tempState.parent = parentId;
-              } else {
-                tempState.x = (s.x || 0) - minX;
-                tempState.y = (s.y || 0) - minY;
-              }
-              if (tempState.deck) {
-                if(!idMap.has(tempState.deck))
-                  continue;
-                tempState.deck = idMap.get(tempState.deck);
+              const tempState = remapPreviewState(s, tempId, idMap, minX, minY);
+              if (!tempState) {
+                continue;
               }
 
               previewWidget.applyInitialDelta(tempState);
 
-              if (!parentId) {
+              if (!hasPreviewParent(s, idMap)) {
                 scaleWrapper.appendChild(previewWidget.domElement);
               }
             }
@@ -1115,24 +1133,14 @@ class WidgetsModule extends SidebarModule {
             const previewWidget = tempWidgetInstances.get(tempId);
             widgets.set(tempId, previewWidget);
 
-            const tempState = JSON.parse(JSON.stringify(s));
-            tempState.id = tempId;
-            const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-            if (parentId) {
-              tempState.parent = parentId;
-            } else {
-              tempState.x = (s.x || 0) - minX;
-              tempState.y = (s.y || 0) - minY;
-            }
-            if (tempState.deck) {
-              if(!idMap.has(tempState.deck))
-                continue;
-              tempState.deck = idMap.get(tempState.deck);
+            const tempState = remapPreviewState(s, tempId, idMap, minX, minY);
+            if (!tempState) {
+              continue;
             }
 
             previewWidget.applyInitialDelta(tempState);
 
-            if (!parentId) {
+            if (!hasPreviewParent(s, idMap)) {
               scaleWrapper.appendChild(previewWidget.domElement);
             }
           }
