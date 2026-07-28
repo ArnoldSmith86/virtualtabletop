@@ -109,6 +109,14 @@ async function getSavedWidgets(source) {
   return { widgets: [], groups: [] };
 }
 
+// Entries can explain themselves in plain language through an optional
+// description. In grid view the name is all that is shown, so the tooltip is
+// the only place that can tell apart e.g. a line with stops from a plain one.
+function tooltipAttribute(state) {
+  const tooltip = [ state.name || state.id, state.description ].filter(t=>t).join('\n');
+  return ` title="${html(tooltip)}"`;
+}
+
 // Render preview markup from a URL or a Material Symbol reference like "symbol:heading"
 function renderSavedWidgetPreviewHTML(preview) {
   if (!preview) return '';
@@ -490,6 +498,9 @@ class WidgetsModule extends SidebarModule {
         if (!filter) return true;
         const nameMatch = (widgetData.name || widgetData.id || '').toLowerCase().includes(lowerCaseFilter);
         if (nameMatch) return true;
+        // the description doubles as the entry's tooltip, so searching it also
+        // finds a widget by what it does instead of just by its name
+        if ((widgetData.description || '').toLowerCase().includes(lowerCaseFilter)) return true;
         if (widgetData.widgets && Array.isArray(widgetData.widgets)) {
           return widgetData.widgets.some(subWidget =>
             (subWidget.type || 'basic').toLowerCase().includes(lowerCaseFilter)
@@ -1365,7 +1376,7 @@ class WidgetsModule extends SidebarModule {
     const widgetTypes = getWidgetTypesString(state);
     const hasAddToRoomRoutine = state.widgets.some(w => w.editorAddToRoomRoutine);
     return `
-          <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}" style="display: flex; align-items: center; margin-bottom: 5px;">
+          <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}"${tooltipAttribute(state)} style="display: flex; align-items: center; margin-bottom: 5px;">
               <span class="drag-handle"></span>
               <div class="widget-preview">
                 ${this.renderPreviewHTML(state.preview)}
@@ -1388,7 +1399,7 @@ class WidgetsModule extends SidebarModule {
 
   renderGridWidget(state, source, isEditing) {
     return `
-      <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true">
+      <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true"${tooltipAttribute(state)}>
         <div class="widget-preview">
           ${this.renderPreviewHTML(state.preview)}
           <button icon="add" class="sidebarButton add-to-room-grid"><span>Add widget to room</span></button>

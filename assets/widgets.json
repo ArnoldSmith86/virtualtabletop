@@ -3400,7 +3400,8 @@
       "preview": "symbol:format_h1"
     },
     {
-      "name": "Line",
+      "name": "Line (with stops)",
+      "description": "A straight line with a drop spot at each end - drop a piece onto a stop and it snaps to it. Move, curve or rotate the line and the stops follow.",
       "id": "line",
       "widgets": [
         {
@@ -3461,6 +3462,7 @@
     },
     {
       "name": "Divider",
+      "description": "A plain line without stops - the horizontal or vertical rule to separate areas of the table. Rotate it, curve it or restyle it however you like.",
       "id": "divider",
       "widgets": [
         {
@@ -3481,10 +3483,11 @@
           "lineWidth": 4
         }
       ],
-      "preview": "i/icons/remove.svg"
+      "preview": "i/icons/divider.svg"
     },
     {
       "name": "Circle",
+      "description": "A plain circle outline without stops - resize it into an oval or restyle it like any other line.",
       "id": "circle",
       "widgets": [
         {
@@ -3509,7 +3512,8 @@
       "preview": "i/icons/circle_hollow.svg"
     },
     {
-      "name": "Ring",
+      "name": "Ring (with stops)",
+      "description": "A circle with four drop spots spaced around it - drop a piece onto a stop and it snaps to it. Add or move stops to build a round track.",
       "id": "ring",
       "widgets": [
         {
@@ -4638,8 +4642,8 @@
       "widgets": [
         "heading",
         "label",
-        "line",
         "divider",
+        "line",
         "circle",
         "ring"
       ],
