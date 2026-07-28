@@ -29,6 +29,8 @@ jobs:
           - publiclibrary-4.js
           - routines.js
           - legacymatrix.js
+          - interactions.js
+          # domsnapshot.js deliberately runs in Chrome only - see testcafe-chrome.yml
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

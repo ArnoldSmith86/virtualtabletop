@@ -82,6 +82,24 @@ export async function getState() {
   return await response.text();
 }
 
+export async function getStateObject() {
+  return JSON.parse(await getState());
+}
+
+// Everything a test does arrives at the server asynchronously, so an assertion has to give the
+// delta time to show up. Polls until the value matches or the backoff runs out, then asserts
+// once - so a passing test is fast and a failing one still prints the last value it saw.
+export async function expectEventually(t, get, expected, message) {
+  let actual = null;
+  for(let wait=50; wait<1000; wait*=2) {
+    actual = await get();
+    if(JSON.stringify(actual) == JSON.stringify(expected))
+      break;
+    await new Promise(resolve=>setTimeout(resolve, wait));
+  }
+  await t.expect(actual).eql(expected, message);
+}
+
 export async function compareState(t, md5) {
   const refFile = `${referenceDir}/${md5}.json`;
   let hash = null;

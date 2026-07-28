@@ -17,6 +17,10 @@ import { Label } from '../../../client/js/widgets/label.js';
 // every client module into one scope. jsdom has no bundle, so wire it up once.
 globalThis.legacyMode = legacyMode;
 globalThis.compute_ops = compute_ops;
+// statemanaged.js resolves an inheritFrom chain through the widget map, and removing a widget
+// takes it out of the drop target map - both are bundle globals there
+globalThis.widgets = widgets;
+globalThis.dropTargets = dropTargets;
 globalThis.getMaxZ = getMaxZ;
 globalThis.resetMaxZ = resetMaxZ;
 globalThis.updateMaxZ = updateMaxZ;

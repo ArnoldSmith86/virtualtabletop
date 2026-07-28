@@ -29,6 +29,10 @@ jobs:
           - publiclibrary-4.js
           - routines.js
           - legacymatrix.js
+          - interactions.js
+          # the DOM baselines record computed styles and rounded boxes, which are browser
+          # specific, so they are recorded and checked in Chrome only
+          - domsnapshot.js
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
