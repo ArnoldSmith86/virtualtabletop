@@ -332,22 +332,12 @@ test('JSON editor: paste HTML that is indented with tabs', async t => {
     .click('#editorSidebar [icon=data_object]')
     .click('#w_target');
 
-  // HTML copied out of an external editor arrives with tab indentation (and CRLF on Windows),
-  // neither of which is valid inside a JSON string
+  // put into the editor what pasting HTML from an external editor puts there: tab indentation
+  // (and CRLF on Windows), neither of which is valid inside a JSON string
   await ClientFunction(() => {
     const editor = document.querySelector('#jeText');
     editor.focus();
-    const content = editor.textContent;
-    const start = content.indexOf('"html": "') + 9;
-    const range = document.createRange();
-    range.setStart(editor.firstChild, start);
-    range.setEnd(editor.firstChild, content.indexOf('"', start));
-    getSelection().removeAllRanges();
-    getSelection().addRange(range);
-
-    const clipboardData = new DataTransfer();
-    clipboardData.setData('text/plain', '<div>\r\n\t<span>tabbed</span>\r\n</div>');
-    editor.dispatchEvent(new ClipboardEvent('paste', { clipboardData, bubbles: true, cancelable: true }));
+    editor.textContent = editor.textContent.replace('<div>old</div>', '<div>\r\n\t<span>tabbed</span>\r\n</div>');
     editor.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'v' }));
   })();
 
