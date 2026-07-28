@@ -1,6 +1,6 @@
 import { ClientFunction } from 'testcafe';
 
-import { LEGACY_COMBOS, applyLegacy, getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { LEGACY_COMBOS, applyLegacy, getState, prepareClient, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -71,7 +71,9 @@ const probeState = {
 for(const [ name, modes ] of Object.entries(LEGACY_COMBOS)) {
   test(`Legacy matrix (${name})`, async t => {
     await ClientFunction(prepareClient)();
-    await setName(t);
+    // no setName(): nothing the probe computes depends on the player, and the players overlay
+    // is where the suite's known flake lives. Closing the states overlay is all that is needed.
+    await t.click('#activeGameButton');
     await applyLegacy(modes);
     await setRoomState(probeState);
     await t.click('#w_probeButton');
