@@ -223,6 +223,8 @@
   right: calc(var(--commandPaneWidth) + 1px);
   font-family: monospace;
   white-space: pre-wrap;
+  /* pasted HTML is usually indented with tabs - render them like the editor's own 2 space indent */
+  tab-size: 2;
   overflow-y: auto;
   overflow-wrap: break-word;
 }
@@ -235,18 +237,19 @@
   /* --linenumbers-digits gets set in jsonedit.js (jeColorize function) depending on the lines of the widget */
   width: calc(var(--linenumbers-digits) * 8px);
   text-align: right;
-  padding-right: 2px;
+  /* keep a gap so lines that start at column 0 don't touch the line number */
+  padding-right: 5px;
   color: var(--textDimColor1);
   vertical-align: top;
 }
 
 .jeLineContent {
   display: inline-block;
-  width: calc(100% - var(--linenumbers-digits) * 8px - 2px);
+  width: calc(100% - var(--linenumbers-digits) * 8px - 5px);
 }
 
 #jeText {
-  padding-left: calc(var(--linenumbers-digits) * 8px + 2px);
+  padding-left: calc(var(--linenumbers-digits) * 8px + 5px);
 }
 #jeText::selection {
   background-color: var(--backgroundHighlightColor1);

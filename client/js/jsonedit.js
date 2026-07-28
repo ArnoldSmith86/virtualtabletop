@@ -3351,17 +3351,22 @@ function jePreProcessText(t, returnValidJSON=true) {
   if(returnValidJSON)
     return t;
 
-  // Convert \n escape sequences within JSON strings to actual newlines for display
+  // Convert \n and \t escape sequences within JSON strings to actual newlines and tabs for
+  // display. jePostProcessText turns them back into escapes, so the round trip keeps HTML that
+  // was pasted with tab indentation readable instead of showing a literal \t at the start of
+  // every line.
   let result = '';
   let inString = false;
   let escapeNext = false;
-  
+
   for (let i = 0; i < t.length; i++) {
     const char = t[i];
-    
+
     if (escapeNext) {
       if (inString && char === 'n') {
         result += '\n';
+      } else if (inString && char === 't') {
+        result += '\t';
       } else {
         result += '\\' + char;
       }

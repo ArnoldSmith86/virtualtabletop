@@ -342,9 +342,16 @@ test('JSON editor: paste HTML that is indented with tabs', async t => {
     editor.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'v' }));
   })();
 
+  const getJSONText = ClientFunction(() => document.querySelector('#jeText').textContent);
+
   await t
     .expect(ClientFunction(() => widgets.get('target').get('html'))()).eql('<div>\n\t<span>tab\vbed</span>\r<hr>\n</div>')
     .expect(Selector('#jeCommands').textContent).notContains('SyntaxError')
+    // selecting the widget again has to show the tab indentation as an actual tab instead of a
+    // literal \t at the start of the line
+    .click('#topSurface', { offsetX: 10, offsetY: 10 })
+    .click('#w_target')
+    .expect(getJSONText()).contains('<div>\n\t<span>tab')
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc');
 });
