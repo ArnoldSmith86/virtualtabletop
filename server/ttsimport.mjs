@@ -26,6 +26,7 @@ const baseSize = {
 // colors that hand zones (and therefore VTT seats) are defined for.
 const diceSides = { Die_4: 4, Die_6: 6, Die_6_Rounded: 6, Die_8: 8, Die_10: 10, Die_12: 12, Die_20: 20, Die_Piecepack: 6 };
 const customDiceSides = [ 4, 6, 8, 10, 12, 20 ];
+const diceShapes = [ 2, 4, 6, 8, 10, 12, 20 ];
 const playerColors = {
   White:  '#ffffff',
   Brown:  '#703a16',
@@ -136,6 +137,17 @@ function transformOf(o) {
   };
 }
 
+// The faces of a rollable object, or null if it isn't one. Numeric labels stay
+// numbers so that they are rendered like the faces of a regular die.
+function rotationValues(o) {
+  if(!Array.isArray(o.RotationValues) || o.RotationValues.length < 2)
+    return null;
+  return o.RotationValues.map(r=>{
+    const value = String((r || {}).Value === undefined ? '' : r.Value).trim();
+    return value !== '' && !isNaN(+value) ? +value : value;
+  });
+}
+
 function isFaceDown(o) {
   const rotZ = (transformOf(o).rotZ % 360 + 360) % 360;
   return rotZ > 90 && rotZ < 270;
@@ -151,6 +163,10 @@ function toColor(color, fallback=null) {
 function contrastColor(hex) {
   const [ r, g, b ] = [ 1, 3, 5 ].map(i=>parseInt(hex.substr(i, 2), 16) || 0);
   return r*0.3 + g*0.6 + b*0.1 > 128 ? '#000000' : '#ffffff';
+}
+
+function shade(hex, factor) {
+  return '#' + [ 1, 3, 5 ].map(i=>clamp(Math.round((parseInt(hex.substr(i, 2), 16) || 0) * factor), 0, 255).toString(16).padStart(2, '0')).join('');
 }
 
 // Positions the widget where the object was on the TTS table: x/y are the center
@@ -313,50 +329,61 @@ async function addDeck(o, parent=null) {
   return widgets;
 }
 
-// A bag becomes a holder that is hidden until its button is clicked - and hides
-// itself again when it is clicked. Bags can hold anything in TTS, so unlike a
-// regular holder this one accepts every widget type.
+// A bag becomes a button in the shape of a bag that carries the bag's name, with
+// a holder for the contents inside it. Clicking the button toggles whether the
+// contents are shown. The holder is a child of the button so that the two always
+// stay together, and it accepts every widget type because bags can hold anything
+// in TTS.
 async function addBag(o, parent) {
-  const widgets = {};
   const id = getID(o);
+  const contents = await addRecursive(o.ContainedObjects, id);
+  if(!Object.keys(contents).length)
+    return null; // a bag that is empty after the import is nothing to play with
 
-  widgets[id] = place(o, {
-    id,
-    parent,
-    type: 'holder',
-    width: 120,
-    height: 170,
-    dropTarget: {},
-    owner: [],
-    clickable: true,
-    clickRoutine: [
-      {
-        func: 'SET',
-        collection: [ id ],
-        property: 'owner',
-        value: []
-      }
-    ]
-  });
+  const color = toColor(o.ColorDiffuse, '#a97e4b');
+  const bagID = `${id}-bag`;
+  const widgets = {};
 
-  widgets[`${id}-toggle`] = place(o, {
-    id: `${id}-toggle`,
+  widgets[bagID] = place(o, {
+    id: bagID,
     parent,
     type: 'button',
-    width: 120,
-    height: 40,
-    text: o.Nickname || 'Open\nBag',
+    width: 130,
+    height: 54,
+    text: String(o.Nickname || '').trim() || 'Bag',
+    backgroundColor: color,
+    borderColor: shade(color, 0.6),
+    textColor: contrastColor(color),
+    borderRadius: '20px 20px 6px 6px',
+    css: 'padding: 2px 4px; font-size: 11px; line-height: 1.15',
     clickRoutine: [
       {
-        func: 'SET',
-        collection: [ id ],
-        property: 'owner'
+        func: 'IF',
+        operand1: `\${PROPERTY owner OF ${id}}`,
+        relation: '==',
+        operand2: null,
+        thenRoutine: [ { func: 'SET', collection: [ id ], property: 'owner', value: [] } ],
+        elseRoutine: [ { func: 'SET', collection: [ id ], property: 'owner' } ]
       }
     ]
   });
 
-  if(o.ContainedObjects)
-    Object.assign(widgets, await addRecursive(o.ContainedObjects, id));
+  widgets[id] = {
+    id,
+    parent: bagID,
+    type: 'holder',
+    x: -4,
+    y: 50,
+    width: 130,
+    height: 190,
+    borderRadius: '0 0 6px 6px',
+    color: '#ffffffdd',
+    css: `border: 2px solid ${shade(color, 0.6)}`,
+    dropTarget: {},
+    owner: []
+  };
+
+  Object.assign(widgets, contents);
   return widgets;
 }
 
@@ -414,13 +441,23 @@ async function addImage(o, parent) {
 }
 
 function addDice(o, parent) {
-  let sides = diceSides[String(o.Name || '')];
-  if(o.CustomImage && o.CustomImage.CustomDice)
-    sides = customDiceSides[number(o.CustomImage.CustomDice.Type, 1)];
-  if(!(sides > 1))
-    sides = 6;
+  // TTS gives every object that can be rolled a RotationValues list: one entry per
+  // face with the value that is up in that rotation. That is the only way to know
+  // the faces of a die that is just a mesh (Custom_Model), and it also gives the
+  // real labels of dice that don't simply count from 1.
+  let faces = rotationValues(o);
+  if(!faces) {
+    let sides = diceSides[String(o.Name || '')];
+    if(o.CustomImage && o.CustomImage.CustomDice)
+      sides = customDiceSides[number(o.CustomImage.CustomDice.Type, 1)];
+    if(!(sides > 1))
+      sides = 6;
+    faces = Array.from({ length: sides }, (unused, i)=>i+1);
+  }
 
+  const hasLabels = faces.some(f=>typeof f == 'string');
   const size = clamp(Math.round(baseSize.dice * transformOf(o).scaleX), 40, 200);
+
   const widget = {
     id: getID(o),
     parent,
@@ -429,9 +466,17 @@ function addDice(o, parent) {
     height: size,
     movable: true,
     color: toColor(o.ColorDiffuse, 'white'),
-    faces: Array.from({ length: sides }, (unused, i)=>i+1),
-    shape3d: true
+    faces
   };
+
+  // the face font is sized for a single digit, so word labels like 'Blue' need a
+  // smaller one to stay inside the face
+  if(hasLabels)
+    widget.faceCSS = `font-size: ${Math.round(size/4)}px; overflow: hidden`;
+
+  // the 3D shapes only exist for these face counts - anything else stays flat
+  if(diceShapes.indexOf(faces.length) > -1)
+    widget.shape3d = true;
 
   return { [widget.id]: place(o, widget) };
 }
@@ -519,6 +564,8 @@ async function addObject(o, parent) {
     return await addRecursive(o.ContainedObjects, parent); // a stack of tokens/tiles or an unknown container
   if(o.CustomImage && o.CustomImage.ImageURL)
     return await addImage(o, parent);
+  if(rotationValues(o))
+    return addDice(o, parent); // a mesh that can be rolled, e.g. a Custom_Model die
   return addPiece(o, parent);
 }
 
