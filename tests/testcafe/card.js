@@ -15,7 +15,7 @@ function editableCardRoom() {
       faceTemplates: [
         { objects: [
           { type: 'text', x: 0, y: 5, width: 200, fontSize: 18, textAlign: 'center', dynamicProperties: { value: 'title' } },
-          { type: 'text', editable: true, placeholder: 'write here', x: 10, y: 40, width: 180, height: 90, fontSize: 14, dynamicProperties: { value: 'note' } }
+          { type: 'text', editable: true, placeholder: 'write here', spellCheck: true, x: 10, y: 40, width: 180, height: 90, fontSize: 14, dynamicProperties: { value: 'note' } }
         ] },
         { objects: [ { type: 'text', x: 0, y: 60, width: 200, fontSize: 18, textAlign: 'center', value: 'back' } ] }
       ]
@@ -98,6 +98,7 @@ test('An editable card text stores what is typed on the card and survives a relo
   const text = Selector('#w_card textarea');
   await t
     .expect(text.getAttribute('placeholder')).eql('write here')
+    .expect(text.getAttribute('spellcheck')).eql('true') // opt-in per object, like a label's spellCheck
     .typeText(text, 'hello card');
   await expectEventually(t, ()=>cardProperty('note'), 'hello card');
 
@@ -138,9 +139,50 @@ test('Locking a card text while it is on the table turns it into a plain text ob
 
   await t
     .expect(Selector('#w_card textarea').value).eql('written text')
+    .expect(Selector('#w_card textarea').getAttribute('spellcheck')).eql('false') // off unless asked for
     .click('#w_lock')
     .expect(Selector('#w_card textarea').exists).notOk()
     .expect(Selector('#w_card .cardFaceObject').textContent).eql('written text');
+});
+
+test('The deck editor shows a writable object as its placeholder and its list row edits that placeholder', async t => {
+  await setRoomState(editableCardRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_deck')                                            // selecting the deck opens the deck editor
+    .click('.deckEditorStripCard')                               // select the card type so the card is rendered
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)); // the face carrying the writable object
+
+  // the editor's card is a readonly copy (nothing typed there could be stored), so the writable object is
+  // plain text - and while the card property is empty that text is the placeholder, or it would be invisible
+  const object = Selector('#deckEditorMain .cardFace.active .cardFaceObject').nth(1);
+  await t
+    .expect(Selector('#deckEditorMain textarea').exists).notOk()
+    .expect(object.textContent).eql('write here')
+    .expect(object.hasClass('cardFacePlaceholder')).ok();
+
+  // what a player types is per card, so there is nothing for the creator to fill in: the object's list row
+  // edits its placeholder instead of the card type property the value is bound to
+  const listRow = Selector('#deckEditorTree .deckEditorObjectRow .deckEditorPreviewText').nth(1);
+  await t
+    .expect(listRow.value).eql('write here')
+    .click(listRow) // selects the object, which re-renders the tree - type into the row it is rebuilt as
+    .typeText(listRow, 'your plan', { replace: true });
+  await expectEventually(t, ClientFunction(()=>widgets.get('deck').get('faceTemplates')[0].objects[1].placeholder), 'your plan');
+  await t
+    .expect(await ClientFunction(()=>widgets.get('deck').get('cardTypes').note.note)()).eql('')
+    .expect(object.textContent).eql('your plan');
+
+  // a writable object always stores its text on the card, so it is only offered as a per-card-type object
+  await t
+    .click('#deckEditorTreeAdd')
+    .expect(Selector('#deckEditorAddWritable').visible).notOk()
+    .click('#deckEditorAddMode input[value=dynamic]')
+    .expect(Selector('#deckEditorAddWritable').visible).ok();
 });
 
 test('A card text bound to a property of the card widget itself is not editable', async t => {

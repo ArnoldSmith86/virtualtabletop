@@ -307,7 +307,7 @@ class DeckEditor {
       radio.onchange = _=>this.setAddMode(radio.value);
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
     // A writable text area only works when its value is bound to a card property (that is where the text
-    // players type is stored), so this one ignores the "Add to:" mode and always adds a bound object.
+    // players type is stored), so this button is only shown in the "Card Type" add mode (see the CSS).
     $('#deckEditorAddWritable').onclick = _=>this.addDynamicObject(this.writableTextTemplate(), 'note', '');
     $('#deckEditorAddImage').onclick = async _=>{
       const symbol = await pickSymbol('images');
@@ -1791,8 +1791,8 @@ class DeckEditor {
       div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
     // "editable" is just one more checkbox among the rows below, so say what it turns the object into, which
     // properties belong to it - and warn when it leaves the player too little card to grab.
-    if(object.editable !== undefined || (object.dynamicProperties || {}).editable !== undefined) {
-      div(sidebar, 'deckEditorSectionNote').textContent = 'Writable: players can type into this object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty.';
+    if(this.isWritableObject(object)) {
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Writable: players can type into this object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty, "spellCheck" turns the browser\'s spell checker on.';
       const cardWidth = this.mainCard ? this.mainCard.get('width') : 103;
       const cardHeight = this.mainCard ? this.mainCard.get('height') : 160;
       if((object.width || 0) * (object.height || 0) > cardWidth * cardHeight * 2/3)
@@ -2254,9 +2254,16 @@ class DeckEditor {
     this.updateTreeToolbar();
   }
 
+  // A text face object players can write on while playing - the same condition Card.editableProperty() uses
+  // (which additionally requires a usable value binding before the object really becomes writable).
+  isWritableObject(object) {
+    return (object.type === undefined || object.type == 'text')
+        && (!!object.editable || (object.dynamicProperties || {}).editable !== undefined);
+  }
+
   renderTreeObjectRow(tree, object, index, face = this.face) {
     // Same icon as the Write button for a writable text object, so a face with several text objects stays scannable.
-    const typeIcon = object.editable && (object.type || 'text') == 'text' ? 'edit_note' : { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
+    const typeIcon = this.isWritableObject(object) ? 'edit_note' : { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
     const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><span class=deckEditorTreeIcon icon=${typeIcon}></span><div class=deckEditorObjectPreview></div>`);
     const objSel = face === this.face && index === this.selectedObject;
     row.classList.toggle('selected', objSel && this.activeArea == 'tree');
@@ -2469,14 +2476,21 @@ class DeckEditor {
   // bound per card type — the current card type's property, committed with the same debounce as the sidebar.
   renderPreviewTextField(box, object, index, faceIndex = this.face) {
     box.classList.add('deckEditorPreviewTextBox');
-    const bound = object.dynamicProperties && object.dynamicProperties.value;
+    // A writable object's value is whatever a player types on that one card, so there is nothing for the
+    // creator to fill in here: the text they write on the object is its placeholder, so that is what the
+    // field edits instead - which is also what the card shows in the main area while it is still empty.
+    const writable = this.isWritableObject(object);
+    const objectProperty = writable ? 'placeholder' : 'value';
+    const bound = !writable && object.dynamicProperties && object.dynamicProperties.value;
     const editable = !bound || this.cardType !== null;
     const input = document.createElement('input');
     input.className = 'deckEditorPreviewText';
-    let current = bound ? (this.cardType !== null ? this.cardTypes[this.cardType][bound] : undefined) : object.value;
+    let current = bound ? (this.cardType !== null ? this.cardTypes[this.cardType][bound] : undefined) : object[objectProperty];
     input.value = current === undefined || current === null ? '' : current;
     input.disabled = !editable;
-    input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")` : 'Text on every card';
+    input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")`
+                        : writable ? 'Hint shown on every card until a player writes on it (placeholder)'
+                                   : 'Text on every card';
     // Clicking/dragging inside the field must not start a row drag, but should still select this field's
     // face object (and switch to its face) if it isn't already the selection.
     input.onmousedown = e=>e.stopPropagation();
@@ -2499,11 +2513,11 @@ class DeckEditor {
         this.scheduleCommit('cardTypes', ...args);
       } else {
         const args = [
-          `${getPlayerDetails().playerName} updated "value" of face object ${index+1} on face ${faceIndex} of deck ${this.deckID} in deck editor`,
-          `field:faceTemplates:${faceIndex}:${index}:value`
+          `${getPlayerDetails().playerName} updated "${objectProperty}" of face object ${index+1} on face ${faceIndex} of deck ${this.deckID} in deck editor`,
+          `field:faceTemplates:${faceIndex}:${index}:${objectProperty}`
         ];
         await this.flushPendingCommitForOtherField('faceTemplates', args[1]);
-        object.value = value;
+        object[objectProperty] = value;
         this.refreshMainCardFaces();
         this.scheduleCommit('faceTemplates', ...args);
       }
@@ -2981,8 +2995,9 @@ class DeckEditor {
     // free: a card can not be grabbed by its text area, so the player needs some card left to drag and flip.
     const margin = Math.round(Math.min(width, height)/8);
     // An empty text area is invisible, so it starts out with a placeholder - that is what tells a player the
-    // card can be written on at all, and it shows the creator the object right after adding it.
-    return { type: 'text', editable: true, placeholder: 'write here…', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
+    // card can be written on at all, and it shows the creator the object right after adding it. spellCheck is
+    // off like on a label, and is in the template so its checkbox is right there in the sidebar.
+    return { type: 'text', editable: true, placeholder: 'write here…', spellCheck: false, x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
   }
 
   renderDynamicProperties(sidebar, object) {

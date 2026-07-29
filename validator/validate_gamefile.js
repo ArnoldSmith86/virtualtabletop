@@ -47,7 +47,7 @@ const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
     icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
-    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign', 'editable', 'placeholder'],
+    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign', 'editable', 'placeholder', 'spellCheck'],
     html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
 };
 

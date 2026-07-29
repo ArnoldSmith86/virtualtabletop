@@ -1100,6 +1100,16 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_spellCheck',
+    name: 'spellCheck',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsTextFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
     id: 'je_dynamicProperties',
     name: 'dynamicProperties',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',

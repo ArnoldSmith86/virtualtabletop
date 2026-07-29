@@ -122,7 +122,6 @@ export class Card extends Widget {
 
           const makeTextarea = _=>{
             const textarea = document.createElement('textarea');
-            textarea.setAttribute('spellcheck', 'false');
             textarea.addEventListener('input', async _=>{
               const stored = this.get(editProperty);
               if(textarea.value === (stored === undefined || stored === null ? '' : String(stored)))
@@ -262,13 +261,20 @@ export class Card extends Widget {
               }
             } else if(editProperty) {
               const text = object.value === undefined || object.value === null ? '' : String(object.value);
+              const placeholder = object.placeholder === undefined || object.placeholder === null ? '' : String(object.placeholder);
               if(objectDiv.tagName == 'TEXTAREA') {
                 // don't touch the field while it is being typed into - that would move the cursor to the end
                 if(objectDiv.value !== text)
                   objectDiv.value = text;
-                objectDiv.placeholder = object.placeholder === undefined || object.placeholder === null ? '' : object.placeholder;
+                objectDiv.placeholder = placeholder;
+                objectDiv.setAttribute('spellcheck', object.spellCheck === true);
               } else {
-                objectDiv.textContent = text;
+                // A readonly copy (deck editor, card previews) is never typed into, so it shows the
+                // placeholder the same way the real card's text area does - otherwise an empty writable
+                // object is invisible there. A locked card shows nothing: it can not be written on anymore.
+                const showPlaceholder = this.isReadonlyCopy && text === '' && placeholder !== '';
+                objectDiv.textContent = showPlaceholder ? placeholder : text;
+                objectDiv.classList.toggle('cardFacePlaceholder', showPlaceholder);
               }
               objectDiv.style.color = object.color;
             } else {
