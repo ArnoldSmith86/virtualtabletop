@@ -3085,38 +3085,44 @@ export function jeLoggingRoutineEnd(variables, collections) {
     return; // defensive: unmatched End, should not happen since #2672
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
-  if(!jeLoggingDepth) {
-    $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
+  if(!jeLoggingDepth)
+    jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+}
 
-    // Make it so clicking on the arrows expands the subtree
-    const expanders = document.getElementsByClassName('jeExpander');
-    let i;
-    for (i=0; i < expanders.length; i++) {
-      expanders[i].addEventListener('click', function() {
-        this.classList.toggle('jeExpander-down');
-        this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
-        if(this.classList.contains('jeExpander-down')) {
-          this.classList.add('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
-        } else {
-          this.classList.remove('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
-        }
-      });
-    }
-    // Make expander arrows that are parents of nodes with problems show up red.
-    const problems = document.getElementsByClassName('jeLogHasProblems');
-    for (i=0; i<problems.length; i++) {
-      let node = problems[i];
-      while (node && node.id != 'jeLog') {
-        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
-          node.firstElementChild.classList.remove('jeExpander');
-          node.firstElementChild.classList.add('jeRedExpander')
-        }
-        node = node.parentNode;
+// Put the log into the panel. Everything that depends on the rendered DOM (the expander click
+// handlers and the filter) has to be applied again afterwards, so all rendering goes through here.
+function jeLoggingRenderLog(logHTML) {
+  $('#jeLog').innerHTML = logHTML;
+
+  // Make it so clicking on the arrows expands the subtree
+  const expanders = document.getElementsByClassName('jeExpander');
+  let i;
+  for (i=0; i < expanders.length; i++) {
+    expanders[i].addEventListener('click', function() {
+      this.classList.toggle('jeExpander-down');
+      this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
+      if(this.classList.contains('jeExpander-down')) {
+        this.classList.add('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+      } else {
+        this.classList.remove('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
       }
+    });
+  }
+  // Make expander arrows that are parents of nodes with problems show up red.
+  const problems = document.getElementsByClassName('jeLogHasProblems');
+  for (i=0; i<problems.length; i++) {
+    let node = problems[i];
+    while (node && node.id != 'jeLog') {
+      if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
+        node.firstElementChild.classList.remove('jeExpander');
+        node.firstElementChild.classList.add('jeRedExpander')
+      }
+      node = node.parentNode;
     }
   }
+
   if($('#jeLogFilter') && $('#jeLogFilter').value)
     jeLoggingFilterLog($('#jeLogFilter').value);
 }
@@ -3131,14 +3137,15 @@ export function jeLoggingRoutineNotLogged(widget, property) {
     jeLoggingHTML = '';
     jeRoutineResetOnNextLog = false;
   }
+  const routine = typeof property == 'string'
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> <span class="jeLogProperty">${html(property)}</span>`
+    : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
   jeLoggingHTML += `
     <div class="jeLog jeLogNote">
-      <span class="jeLogWidget">${html(widget.get('id'))}</span>
-      <span class="jeLogProperty">${html(typeof property == 'string' ? property : '--custom--')}</span>
-      was not logged because logging was enabled after it had already started.
+      ${routine} was already running when the Debug panel was opened, so it could not be recorded. Run it again to see its log.
     </div>
   `;
-  $('#jeLog').innerHTML = jeLoggingHTML;
+  jeLoggingRenderLog(jeLoggingHTML);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {

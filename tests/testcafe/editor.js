@@ -858,6 +858,6 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await t.expect(await ClientFunction(() => widgets.get('label').get('text'))()).eql('done');
   await t.expect(await ClientFunction(() => window.debugToggleErrors)()).eql([]);
   // the running routine can not be logged retroactively - the log explains the gap instead
-  await t.expect(Selector('#jeLog .jeLogNote').innerText).contains('was not logged');
+  await t.expect(Selector('#jeLog .jeLogNote').innerText).contains('could not be recorded');
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
