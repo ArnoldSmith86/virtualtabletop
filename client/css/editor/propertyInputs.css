@@ -549,6 +549,12 @@
   text-align: center;
 }
 
+/* a value that also occurs outside the attribute it was found in: the engine
+   replaces it as plain text, so it would be replaced there too */
+.editorModule .svgColorSwatch.ambiguous {
+  border-style: dashed;
+}
+
 /* a picker showing the applying default (no explicit value) is dimmed */
 .editorModule .propertyPreviewButton.usingDefault .propertyValueChip,
 .editorModule .propertyPickerValueText.usingDefault {
@@ -667,6 +673,12 @@
 
 .editorModule .collapsibleBody {
   padding: 4px 6px;
+}
+
+/* a block folded away inside another one (Snap grid and Drag limits sit inside
+   Position) - the body around it already keeps it away from the edge */
+.editorModule .collapsibleBody > .collapsibleSection {
+  margin-right: 0;
 }
 
 /* subsection titles inside the appearance section */

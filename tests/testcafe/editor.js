@@ -181,6 +181,59 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
     .expect(dropTarget()).eql('{"type":"dice"}');
 });
 
+test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
+  await setRoomState({
+    // an SVG written for svgReplaces: it uses placeholders in fill, stroke and
+    // stroke-width, plus an opacity of its own
+    checker: { id: 'checker', type: 'basic', x: 100, y: 100, width: 91, height: 91, image: '/i/game-pieces/2D/Checkers-2D.svg' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const nestedSection = Selector('#editorModules .collapsibleBody > .collapsibleSection > .collapsibleHeader .collapsibleTitle');
+  const dragLimit = ClientFunction(() => JSON.stringify(widgets.get('checker').state.dragLimit || null));
+  const svgReplaces = ClientFunction(() => JSON.stringify(widgets.get('checker').get('svgReplaces')));
+
+  // where a widget may end up is part of where it is, so both blocks sit
+  // inside Position rather than beside it
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_checker')
+    .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
+    .expect(nestedSection.withExactText('Snap grid').exists).ok()
+    .expect(nestedSection.withExactText('Drag limits').exists).ok();
+
+  const dragLimitBody = Selector('#editorModules .collapsibleHeader').withText('Drag limits').sibling('.collapsibleBody');
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Drag limits'))
+    .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
+    // the whole table minus the widget's own box
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":1509,"maxY":909}')
+    .typeText(dragLimitBody.find('.gridLimits input[type=number]').nth(1), '800', { replace: true })
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":800,"maxY":909}')
+    // the four sides only mean something together, so the switch drops all of
+    // them - and an empty rectangle is the default, i.e. no property at all
+    .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
+    .expect(dragLimit()).eql('null');
+
+  // the replacements are read out of the SVG: its stroke-width placeholder is
+  // offered as a replacement for a borderWidth, and gets a number input
+  const swatch = text => Selector('#editorModules .svgColorSwatch').withText(text);
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('SVG replacements'))
+    .expect(swatch('stroke-width: #borderWidth').exists).ok()
+    .click(swatch('stroke-width: #borderWidth'))
+    .expect(svgReplaces()).eql('{"#borderWidth":"borderWidth"}')
+    .expect(Selector('#editorModules .svgReplaceColorsHost .numberInput label').innerText).contains('Border Width');
+
+  // a fill becomes the widget's color and gets a color picker instead
+  await t
+    .click(swatch('fill: #primaryColor'))
+    .expect(svgReplaces()).eql('{"#borderWidth":"borderWidth","#primaryColor":"color"}')
+    .expect(Selector('#editorModules .svgReplaceColorsHost .colorInput').exists).ok();
+});
+
 test('A pile is edited through its handle, css through declaration rows', async t => {
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },

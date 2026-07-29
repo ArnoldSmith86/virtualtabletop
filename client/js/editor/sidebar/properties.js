@@ -116,31 +116,122 @@ function inheritModeFromSelection(mode, properties = []) {
   return selected;
 }
 
-// SVG replacements map a color found in an SVG to a widget property. Expose
-// only the conventional color properties, so arbitrary replacement
-// properties remain in the generic editor.
-function svgReplaceColorProperties(svgReplaces) {
-  if(!isObjectLike(svgReplaces))
-    return [];
-  return [...new Set(Object.values(svgReplaces).flat())]
-    .filter(property => typeof property == 'string' && /^(?:[A-Za-z]*Color\d*|color[A-Za-z]*\d*)$/.test(property));
+// The SVG attributes an svgReplaces entry usually swaps out, each with the
+// widget property proposed for it (the names games conventionally use) and the
+// input its values want. "stroke-width" is what SVG calls a border width.
+const svgReplaceAttributes = {
+  'stroke-width':   { property: 'borderWidth',   kind: 'number' },
+  'stroke-opacity': { property: 'borderOpacity', kind: 'opacity' },
+  'stroke':         { property: 'borderColor',   kind: 'color' },
+  'fill-opacity':   { property: 'fillOpacity',   kind: 'opacity' },
+  'fill':           { property: 'color',         kind: 'color' },
+  'stop-opacity':   { property: 'stopOpacity',   kind: 'opacity' },
+  'stop-color':     { property: 'color',         kind: 'color' },
+  'opacity':        { property: 'opacity',       kind: 'opacity' }
+};
+
+// matches both the attribute form (fill="#f00") and the declaration form
+// (style="fill:#f00", or a rule in a <style> block) of the attributes above
+const svgReplaceAttributePattern = new RegExp(`(?:^|[\\s;{"'])(${Object.keys(svgReplaceAttributes).join('|')})\\s*[:=]\\s*["']?\\s*([^"';}>\\s]+)`, 'g');
+
+// values that are not a literal to swap out: keywords and paint references
+const svgReplaceIgnoredValues = [ 'none', 'transparent', 'inherit', 'initial', 'unset', 'revert', 'context-fill', 'context-stroke' ];
+
+// The editor input a replacement wants: taken from the SVG attribute the value
+// was found in when the file is known, otherwise guessed from the property name
+// so a map typed by hand (or pointing at a file that is not loaded) still gets
+// more than a plain text field.
+function svgReplaceInputKind(property, attributes) {
+  for(const attribute of attributes || [])
+    if(svgReplaceAttributes[attribute])
+      return svgReplaceAttributes[attribute].kind;
+  if(/opacity|alpha/i.test(property))
+    return 'opacity';
+  if(/color/i.test(property))
+    return 'color';
+  if(/width|height|size|radius|scale|thickness/i.test(property))
+    return 'number';
+  return 'text';
 }
 
-function svgReplaceColorLabel(property) {
+const svgReplaceInputOptions = {
+  color: { kind: 'color' },
+  opacity: { kind: 'number', min: 0, max: 1, step: 0.05, placeholder: '1' },
+  number: { kind: 'number', min: 0, step: 1, placeholder: '0' },
+  text: { kind: 'text' }
+};
+
+function svgReplacePropertyForAttributes(attributes) {
+  for(const attribute of attributes || [])
+    if(svgReplaceAttributes[attribute])
+      return svgReplaceAttributes[attribute].property;
+  return 'color';
+}
+
+function svgReplacePropertyLabel(property) {
   if(property == 'color')
     return 'Color';
   return property.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/^./, char => char.toUpperCase());
 }
 
-// Colors actually present in an uploaded SVG (same extraction the JSON
-// editor's "Show colors in SVG image" button uses), so the svgReplaces
-// editor can suggest real colors instead of a made-up default.
-const svgImageColorsCache = {};
-async function fetchSvgColors(image) {
+// One input definition per property an svgReplaces map points at, in map order.
+// attributesBySelector (from the scan of the actual SVG below) decides which
+// input each of them gets.
+function svgReplaceInputDefs(svgReplaces, attributesBySelector = {}) {
+  const defs = [];
+  const seen = new Set();
+  if(!isObjectLike(svgReplaces))
+    return defs;
+  for(const [ selector, property ] of Object.entries(svgReplaces))
+    for(const single of [].concat(property)) {
+      if(typeof single != 'string' || !single || seen.has(single))
+        continue;
+      seen.add(single);
+      const kind = svgReplaceInputKind(single, attributesBySelector[selector]);
+      defs.push(Object.assign({ label: svgReplacePropertyLabel(single), property: single }, svgReplaceInputOptions[kind]));
+    }
+  return defs;
+}
+
+function svgReplaceProperties(svgReplaces) {
+  return svgReplaceInputDefs(svgReplaces).map(def => def.property);
+}
+
+// The values an SVG actually uses in those attributes, so a replacement can be
+// proposed from the file instead of a made-up #000 - one entry per distinct
+// value, remembering every attribute it appeared in.
+function svgReplaceCandidates(svgText) {
+  const text = String(svgText || '');
+  const byValue = new Map();
+  for(const match of text.matchAll(svgReplaceAttributePattern)) {
+    const value = match[2].trim();
+    if(!value || svgReplaceIgnoredValues.indexOf(value.toLowerCase()) != -1 || /^url\(/i.test(value))
+      continue;
+    if(!byValue.has(value))
+      byValue.set(value, { value, attributes: [], count: 0 });
+    const candidate = byValue.get(value);
+    if(candidate.attributes.indexOf(match[1]) == -1)
+      candidate.attributes.push(match[1]);
+    ++candidate.count;
+  }
+
+  const candidates = [ ...byValue.values() ];
+  for(const candidate of candidates)
+    // getSVG() replaces the key as a plain substring, so a value that also
+    // occurs outside these attributes (a "2" in path data is the usual one)
+    // would be replaced there too - worth warning about, not worth hiding
+    candidate.ambiguous = text.split(candidate.value).length - 1 > candidate.count;
+  // colors are what a replacement is usually about, so they come first
+  return candidates.filter(candidate => svgReplaceInputKind('', candidate.attributes) == 'color')
+    .concat(candidates.filter(candidate => svgReplaceInputKind('', candidate.attributes) != 'color'));
+}
+
+const svgImageCandidatesCache = {};
+async function fetchSvgReplaceCandidates(image) {
   if(typeof image != 'string' || !image)
     return [];
-  if(svgImageColorsCache[image])
-    return svgImageColorsCache[image];
+  if(svgImageCandidatesCache[image])
+    return svgImageCandidatesCache[image];
   try {
     const response = await fetch(mapAssetURLs(image));
     if(!response.ok)
@@ -148,9 +239,9 @@ async function fetchSvgColors(image) {
     const text = await response.text();
     if(!/<svg/i.test(text))
       return [];
-    const colors = [...new Set(Array.from(text.matchAll(/#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g), match => match[0]))];
-    svgImageColorsCache[image] = colors;
-    return colors;
+    const candidates = svgReplaceCandidates(text);
+    svgImageCandidatesCache[image] = candidates;
+    return candidates;
   } catch(e) {
     return [];
   }
@@ -207,6 +298,22 @@ function gridExtraValue(raw) {
 
 function gridExtraText(value) {
   return typeof value == 'string' ? value : JSON.stringify(value);
+}
+
+// --- drag limits ---
+
+// dragLimit is the rectangle move() keeps the widget's top left corner in.
+// The four sides are only meaningful together, so the editor adds and drops
+// them as a set; the engine reads a missing side as "no limit on that side".
+const dragLimitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
+
+function dragLimitValue(dragLimit, key) {
+  const value = isObjectLike(dragLimit) ? dragLimit[key] : undefined;
+  return value === undefined ? null : value;
+}
+
+function dragLimitIsSet(dragLimit) {
+  return dragLimitKeys.some(key => dragLimitValue(dragLimit, key) !== null);
 }
 
 function dicePreviewRotation(faceCount) {
@@ -799,10 +906,11 @@ const editorPropertyHints = {
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
   html: 'HTML content shown instead of the widget text, icon and image.',
-  svgReplaces: 'Maps a color found inside an uploaded SVG image (like #000 or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be recolored per widget.',
+  svgReplaces: 'Maps a value found inside an uploaded SVG image (a color like #000, a stroke width, or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be restyled per widget.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
+  dragLimit: 'A rectangle the widget\'s top left corner is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. It only limits dragging - a routine can still move the widget anywhere.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
   lineWidth: 'The brush width used for new canvas strokes.',
   activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
@@ -2718,7 +2826,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom', 'grid' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit' ].concat(extra);
   }
 
   isSizeRatioLockEnabled(widget) {
@@ -3885,14 +3993,15 @@ class PropertiesModule extends SidebarModule {
       this.renderPositionLocks(widget, body);
       this.renderLayerSelect(widget, body);
       this.renderRotationInput(widget, body);
+      // where the widget may end up is part of where it is, so both of these
+      // live inside Position rather than as sections of their own
+      this.renderGridSection(widget, body);
+      this.renderDragLimitSection(widget, body);
     }, null, `${widget.id}:position`, {
       renderSummary: summary => {
-        const update = w => {
-          const x = w.get('x'), y = w.get('y');
-          summary.textContent = `${propertyInputIsMulti(x) ? '—' : x}, ${propertyInputIsMulti(y) ? '—' : y}`;
-        };
-        this.addPropertyListener(widget, 'x', update);
-        this.addPropertyListener(widget, 'y', update);
+        const update = w => summary.textContent = this.positionSummary(w);
+        for(const property of [ 'x', 'y', 'grid', 'dragLimit' ])
+          this.addPropertyListener(widget, property, update);
       }
     });
 
@@ -3913,8 +4022,6 @@ class PropertiesModule extends SidebarModule {
         this.addPropertyListener(widget, 'height', update);
       }
     });
-
-    this.renderGridSection(widget);
 
     this.renderCollapsibleSection('Interaction & display', true, body=>{
       this.renderCheckbox(widget, 'Clickable', 'clickable', body, {
@@ -3938,6 +4045,19 @@ class PropertiesModule extends SidebarModule {
     });
 
     this.renderAssociatedWidgetsSection(widget);
+  }
+
+  // the coordinates plus, when they are set, the two things that constrain
+  // them - a plain widget still reads as just "100, 200"
+  positionSummary(widget) {
+    const x = widget.get('x'), y = widget.get('y');
+    const parts = [ `${propertyInputIsMulti(x) ? '—' : x}, ${propertyInputIsMulti(y) ? '—' : y}` ];
+    const entries = gridEntryList(widget.get('grid'));
+    if(entries.length)
+      parts.push(entries.length == 1 ? `grid ${entries[0].x} × ${entries[0].y}` : `${entries.length} grids`);
+    if(dragLimitIsSet(widget.get('dragLimit')))
+      parts.push('drag limited');
+    return parts.join(' · ');
   }
 
   // one line for the collapsed header, naming only what deviates from the
@@ -3967,7 +4087,7 @@ class PropertiesModule extends SidebarModule {
   // shape drawn on the board - so the section spells that box out, offers
   // ready-made square/hex grids computed from it, and can draw the resulting
   // lattice onto the board while you edit.
-  renderGridSection(widget) {
+  renderGridSection(widget, target) {
     // a grid is a per-widget array; merging arrays across a selection has no
     // safe common value, so this stays single-widget (like css/svgReplaces)
     if(widget.isMulti)
@@ -4020,7 +4140,7 @@ class PropertiesModule extends SidebarModule {
       });
       for(const property of [ 'width', 'height', 'parent' ])
         this.addPropertyListener(widget, property, _=>updatePreview());
-    }, null, `${widget.id}:grid`, {
+    }, target, `${widget.id}:grid`, {
       renderSummary: summary=>{
         this.addPropertyListener(widget, 'grid', w=>{
           const entries = gridEntryList(w.get('grid'));
@@ -4032,9 +4152,11 @@ class PropertiesModule extends SidebarModule {
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.grid));
 
     // the body is rendered even while the section is collapsed, so the board
-    // preview follows the header rather than appearing on every selection
-    updatePreview = _=>this.updateGridPreview(widget, this.gridPreviewEnabled !== false && !section.classList.contains('collapsed'));
-    $('.collapsibleHeader', section).addEventListener('click', _=>updatePreview());
+    // preview follows the headers rather than appearing on every selection -
+    // the Position section around it folds this one away just as well
+    updatePreview = _=>this.updateGridPreview(widget, this.gridPreviewEnabled !== false && !section.closest('.collapsibleSection.collapsed'));
+    for(let block = section; block; block = block.parentElement && block.parentElement.closest('.collapsibleSection'))
+      $('.collapsibleHeader', block).addEventListener('click', _=>updatePreview());
     updatePreview();
   }
 
@@ -4355,6 +4477,100 @@ class PropertiesModule extends SidebarModule {
       overlay.style.backgroundPosition =
         `${lineX - stepX / 2}px ${lineY - stepY / 2}px, ${lineX}px ${lineY}px, ${lineX}px ${lineY}px`;
     });
+  }
+
+  // --- drag limits ---
+
+  // Curated editor for "dragLimit": the rectangle move() keeps the widget's top
+  // left corner in while it is dragged. Like the grid limits the four sides
+  // only make sense together, so one checkbox adds or drops all of them.
+  renderDragLimitSection(widget, target) {
+    // a rectangle per widget - merging four numbers across a selection whose
+    // widgets sit in different places has no safe common value
+    if(widget.isMulti)
+      return;
+
+    const section = this.renderCollapsibleSection('Drag limits', true, body=>{
+      div(body, 'gridHelp', 'Keeps this widget inside a rectangle while it is dragged, so it cannot be dropped somewhere it is hard to get back from. The limits are measured on its top left corner, in the coordinates of its parent.');
+
+      const host = div(body, 'gridLimits');
+      // renderRebuildable: the four inputs listen to dragLimit, so the ones of
+      // a discarded generation have to stop listening with it
+      let rebuildLimits = _=>{};
+      this.renderRebuildable(rebuild=>{
+        rebuildLimits = rebuild;
+        host.innerHTML = '';
+        if(!dragLimitIsSet(widget.get('dragLimit')))
+          return;
+        const x = div(host, 'propertyInlineRow numberPairRow');
+        div(x, 'numberPairLabel', 'X from/to');
+        this.renderDragLimitNumber(widget, 'minX', 'min', x);
+        this.renderDragLimitNumber(widget, 'maxX', 'max', x);
+        const y = div(host, 'propertyInlineRow numberPairRow');
+        div(y, 'numberPairLabel', 'Y from/to');
+        this.renderDragLimitNumber(widget, 'minY', 'min', y);
+        this.renderDragLimitNumber(widget, 'maxY', 'max', y);
+      });
+
+      new CheckboxInput(this, widget, 'Limit where it can be dragged', {
+        listenTo: [ 'dragLimit' ],
+        getValue: _=>dragLimitIsSet(widget.get('dragLimit')),
+        setValue: value=>{
+          // the whole parent minus the widget's own box, i.e. the rectangle in
+          // which the widget stays fully visible - the same starting point the
+          // JSON editor's maxX/maxY commands offer
+          const parent = widgets.get(widget.get('parent'));
+          const areaWidth = parent ? +parent.get('width') || 1600 : 1600;
+          const areaHeight = parent ? +parent.get('height') || 1000 : 1000;
+          this.inputValueUpdated(widget, 'dragLimit', value ? {
+            minX: 0, minY: 0,
+            maxX: Math.max(0, areaWidth - (+widget.get('width') || 0)),
+            maxY: Math.max(0, areaHeight - (+widget.get('height') || 0))
+          // an empty object is the engine default, so unchecking drops the
+          // property rather than storing a rectangle that limits nothing
+          } : {});
+          rebuildLimits();
+        },
+        hint: 'Only the corner is limited, so a widget can still stick out of the rectangle by its own width and height. Clearing one of the four fields removes the limit on that side.'
+        // its own host so the label can take the size of the numberPairLabels
+        // of the X/Y rows below it instead of reading as a heading above them
+      }).render(div(body, 'gridLimitToggle'));
+      body.appendChild(host);
+
+      // resync on undo / remote updates while the section stays open
+      this.addPropertyListener(widget, 'dragLimit', _=>{
+        if(!body.contains(document.activeElement))
+          rebuildLimits();
+      });
+    }, target, `${widget.id}:dragLimit`, {
+      renderSummary: summary=>{
+        this.addPropertyListener(widget, 'dragLimit', w=>summary.textContent = dragLimitIsSet(w.get('dragLimit')) ? 'on' : 'off');
+      }
+    });
+    propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.dragLimit));
+  }
+
+  updateDragLimit(widget, change) {
+    const current = widget.get('dragLimit');
+    const limit = Object.assign({}, isObjectLike(current) ? current : {});
+    for(const key in change) {
+      if(change[key] === null)
+        delete limit[key];
+      else
+        limit[key] = change[key];
+    }
+    this.inputValueUpdated(widget, 'dragLimit', limit);
+  }
+
+  // A number input bound to one side of the rectangle.
+  renderDragLimitNumber(widget, key, label, target) {
+    return new NumberInput(this, widget, label, {
+      listenTo: [ 'dragLimit' ],
+      nullIfEmpty: true,
+      step: 1,
+      getValue: _=>dragLimitValue(widget.get('dragLimit'), key),
+      setValue: value=>this.updateDragLimit(widget, { [key]: value })
+    }).render(target);
   }
 
   renderInheritFromButton(widget, target = null, options = {}) {
@@ -4973,7 +5189,7 @@ class PropertiesModule extends SidebarModule {
       for(const def of sections[group] || [])
         if(def.property)
           properties.push(def.property);
-    properties.push(...svgReplaceColorProperties(widget.get('svgReplaces')));
+    properties.push(...svgReplaceProperties(widget.get('svgReplaces')));
     if(widget.defaults.svgReplaces !== undefined)
       properties.push('svgReplaces');
     return properties;
@@ -5620,16 +5836,17 @@ class PropertiesModule extends SidebarModule {
 
   // Curated editor for the raw svgReplaces map (only widget types built on
   // ImageWidget/Dice/Timer support it - see their addDefaults). Each entry
-  // maps a color found in an uploaded SVG (e.g. "#000" or "#borderColor") to
+  // maps a literal found in an uploaded SVG (e.g. "#000" or "#borderColor") to
   // the widget property whose value replaces it - see getSvgReplaces()/getImage()
-  // in imagewidget.js and the equivalent logic in dice.js/timer.js. Entries
-  // that point at a *Color-style property also get an actual color picker
-  // right below the "Add replacement" button.
+  // in imagewidget.js and the equivalent logic in dice.js/timer.js. The file is
+  // scanned for the values it uses in fill/stroke/stroke-width/opacity, so both
+  // the replacements offered and the inputs below the map come from the SVG
+  // itself instead of being guessed.
   renderSvgReplacesEditor(widget) {
     if(widget.defaults.svgReplaces === undefined)
       return;
 
-    let refreshColors = () => {};
+    let refreshInputs = () => {};
     let renderSwatches = () => {};
 
     // collapsed by default for widgets that don't use it yet, so first-time
@@ -5637,7 +5854,7 @@ class PropertiesModule extends SidebarModule {
     const existingMap = widget.get('svgReplaces');
     const hasReplaces = isObjectLike(existingMap) && Object.keys(existingMap).length > 0;
     const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
-      div(body, 'svgReplacesHelp', 'Map a color in your SVG file (like #000) to a widget property that supplies its value.');
+      div(body, 'svgReplacesHelp', 'Map a value in your SVG file - a color, a stroke width, an opacity - to a widget property that supplies it.');
 
       // widget types with an image property (ImageWidget-based) can point at
       // any file, not just an SVG - close the loop for a newcomer who lands
@@ -5661,15 +5878,15 @@ class PropertiesModule extends SidebarModule {
         const map = widget.get('svgReplaces');
         const rows = isObjectLike(map) ? Object.entries(map) : [];
         if(!rows.length)
-          div(list, 'propertyPickerEmpty', 'No SVG color replacements yet.');
+          div(list, 'propertyPickerEmpty', 'No SVG replacements yet.');
         for(const [ selector, property ] of rows) {
           const row = div(list, 'svgReplaceRow');
 
           const selectorInput = document.createElement('input');
           selectorInput.type = 'text';
           selectorInput.value = selector;
-          selectorInput.placeholder = '#color in the SVG';
-          selectorInput.title = 'The color inside the SVG file that gets replaced, e.g. #000 or a custom name like #borderColor.';
+          selectorInput.placeholder = 'value in the SVG';
+          selectorInput.title = 'The text inside the SVG file that gets replaced, e.g. a color like #000, a stroke width like 2, or a custom name like #borderColor.';
 
           const arrow = document.createElement('span');
           arrow.className = 'svgReplaceArrow';
@@ -5679,7 +5896,7 @@ class PropertiesModule extends SidebarModule {
           propertyInput.type = 'text';
           propertyInput.value = Array.isArray(property) ? property.join(', ') : (property || '');
           propertyInput.placeholder = 'widget property, e.g. color';
-          propertyInput.title = 'The widget property whose value is substituted for the color. A comma separated list applies a gradient (see the wiki).';
+          propertyInput.title = 'The widget property whose value is substituted for it. A comma separated list applies a gradient (see the wiki).';
 
           const commit = () => {
             const newSelector = selectorInput.value.trim();
@@ -5705,7 +5922,7 @@ class PropertiesModule extends SidebarModule {
             if(widget.applyDeltaToDOM)
               widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
             rebuild();
-            refreshColors();
+            refreshInputs();
             renderSwatches();
           };
           selectorInput.onchange = commit;
@@ -5722,7 +5939,7 @@ class PropertiesModule extends SidebarModule {
             if(widget.applyDeltaToDOM)
               widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
             rebuild();
-            refreshColors();
+            refreshInputs();
             renderSwatches();
           };
 
@@ -5734,59 +5951,83 @@ class PropertiesModule extends SidebarModule {
       };
       rebuild();
 
-      // suggests the colors actually found in the uploaded SVG (same
-      // extraction as the JSON editor's "Show colors in SVG image" button),
-      // so adding a replacement doesn't start from a guessed #000 - clicking
-      // a swatch adds a replacement keyed by that real color
-      const addReplacementFor = selector => {
+      // adding a replacement starts from the file rather than from a guessed
+      // #000: the value comes from the SVG and the property from the attribute
+      // it was used in (fill becomes color, stroke borderColor and so on)
+      const addReplacementFor = (selector, proposedProperty) => {
         const current = widget.get('svgReplaces');
         const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
         const existingProperties = new Set(Object.values(newMap).flat());
-        let property = 'newColor';
+        let property = proposedProperty;
         let j = 1;
         while(existingProperties.has(property))
-          property = `newColor${++j}`;
+          property = `${proposedProperty}${++j}`;
         newMap[selector] = property;
         this.inputValueUpdated(widget, 'svgReplaces', newMap);
         if(widget.applyDeltaToDOM)
           widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
         rebuild();
-        refreshColors();
+        refreshInputs();
         renderSwatches();
       };
 
-      let svgColors = [];
+      // the values the SVG uses in fill/stroke/stroke-width/opacity/..., one
+      // clickable suggestion each; also what tells the inputs below the map
+      // which kind of value each replacement stands for
+      let svgCandidates = [];
+      const attributesBySelector = () => {
+        const attributes = {};
+        for(const candidate of svgCandidates)
+          attributes[candidate.value] = candidate.attributes;
+        return attributes;
+      };
       const svgColorsHost = div(body, 'svgColorsList');
       renderSwatches = () => {
         svgColorsHost.innerHTML = '';
         const map = widget.get('svgReplaces');
-        const usedColors = new Set(isObjectLike(map) ? Object.keys(map) : []);
-        const suggestions = svgColors.filter(color => !usedColors.has(color));
+        const used = new Set(isObjectLike(map) ? Object.keys(map) : []);
+        const suggestions = svgCandidates.filter(candidate => !used.has(candidate.value));
         if(!suggestions.length)
           return;
-        div(svgColorsHost, 'svgColorsLabel', 'Colors found in the SVG - click to add a replacement:');
-        for(const color of suggestions) {
+        div(svgColorsHost, 'svgColorsLabel', 'Values found in the SVG - click to add a replacement:');
+        for(const candidate of suggestions) {
+          const property = svgReplacePropertyForAttributes(candidate.attributes);
+          // an SVG written for replacement uses a placeholder where a color
+          // goes (#borderColor), which paints nothing - those say which
+          // attribute they came from like the non-color ones do
+          const paints = svgReplaceInputKind('', candidate.attributes) == 'color' &&
+            (candidate.value == 'currentColor' || cssValueIsColor(candidate.value));
           const swatch = document.createElement('button');
           swatch.className = 'svgColorSwatch';
           swatch.type = 'button';
-          swatch.textContent = color;
-          swatch.style.backgroundColor = color == 'currentColor' ? 'black' : color;
-          swatch.style.color = color == 'currentColor' ? 'white' : contrastAnyColor(color, 1);
-          swatch.onclick = () => addReplacementFor(color);
+          swatch.textContent = `${candidate.ambiguous ? '⚠ ' : ''}${paints ? '' : `${candidate.attributes[0]}: `}${candidate.value}`;
+          if(paints) {
+            swatch.style.backgroundColor = candidate.value == 'currentColor' ? 'black' : candidate.value;
+            swatch.style.color = candidate.value == 'currentColor' ? 'white' : contrastAnyColor(candidate.value, 1);
+          }
+          swatch.title = `Used as ${candidate.attributes.join(', ')} in the SVG - replace it with the widget property "${property}".`;
+          if(candidate.ambiguous) {
+            // getSVG() replaces the value as a plain substring, so this one
+            // would also hit the places it appears in outside those attributes
+            swatch.classList.add('ambiguous');
+            swatch.title += `\n"${candidate.value}" also appears elsewhere in the file and would be replaced there too.`;
+          }
+          swatch.onclick = () => addReplacementFor(candidate.value, property);
           svgColorsHost.appendChild(swatch);
         }
       };
-      const loadSvgColors = () => {
-        fetchSvgColors(widget.get('image')).then(colors => {
+      const loadSvgCandidates = () => {
+        fetchSvgReplaceCandidates(widget.get('image')).then(candidates => {
           if(!svgColorsHost.isConnected)
             return;
-          svgColors = colors;
+          svgCandidates = candidates;
           renderSwatches();
+          refreshInputs();
         });
       };
-      loadSvgColors();
+      loadSvgCandidates();
       if(widget.defaults.image !== undefined)
-        this.addPropertyListener(widget, 'image', loadSvgColors);
+        this.addPropertyListener(widget, 'image', loadSvgCandidates);
 
       const addButton = document.createElement('button');
       addButton.setAttribute('icon', 'add');
@@ -5794,42 +6035,43 @@ class PropertiesModule extends SidebarModule {
       addButton.onclick = () => {
         const current = widget.get('svgReplaces');
         const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
-        const unused = svgColors.find(color => newMap[color] === undefined);
-        let selector = unused || '#000';
-        if(!unused) {
-          // fallback colors use a non-color-looking name (#color2, ...) rather
-          // than #0002, which reads as a 4-digit hex color that isn't really there
-          let i = 1;
-          while(newMap[selector] !== undefined)
-            selector = `#color${++i}`;
-        }
-        addReplacementFor(selector);
+        const unused = svgCandidates.find(candidate => newMap[candidate.value] === undefined);
+        if(unused)
+          return addReplacementFor(unused.value, svgReplacePropertyForAttributes(unused.attributes));
+        // without a file to read, fall back to a name that does not look like a
+        // color that isn't really there (#color2 rather than #0002)
+        let selector = '#000';
+        let i = 1;
+        while(newMap[selector] !== undefined)
+          selector = `#color${++i}`;
+        addReplacementFor(selector, 'color');
       };
       body.appendChild(addButton);
 
-      // quick color pickers for entries pointing at *Color-style properties;
-      // kept in a dedicated host so adding/renaming/removing a mapping can
-      // refresh just the pickers without re-rendering the whole section
-      const colorsHost = div(body, 'svgReplaceColorsHost');
-      refreshColors = () => {
-        colorsHost.innerHTML = '';
-        const properties = svgReplaceColorProperties(widget.get('svgReplaces'));
-        if(!properties.length)
-          return;
-        this.renderColorRow(widget, properties.map(property => ({
-          label: svgReplaceColorLabel(property),
-          property,
-          kind: 'color'
-        })), colorsHost);
-      };
-      refreshColors();
+      // one input per property the map points at, using the input its value
+      // wants - a color picker for a fill, a 0..1 number for an opacity, a
+      // plain number for a stroke width. Its own rebuildable host so adding,
+      // renaming or removing a mapping refreshes just these inputs (and drops
+      // the property listeners of the generation it replaces).
+      const inputsHost = div(body, 'svgReplaceColorsHost');
+      this.renderRebuildable(rebuildInputs => {
+        refreshInputs = rebuildInputs;
+        inputsHost.innerHTML = '';
+        const defs = svgReplaceInputDefs(widget.get('svgReplaces'), attributesBySelector());
+        const colors = defs.filter(def => def.kind == 'color');
+        if(colors.length)
+          this.renderColorRow(widget, colors, inputsHost);
+        const others = defs.filter(def => def.kind != 'color');
+        if(others.length)
+          this.renderInputs(widget, others, inputsHost);
+      });
 
       // resync on undo / remote updates - without this the rows can go stale
       // while the panel is open and re-editing a stale row against a newer map
       this.addPropertyListener(widget, 'svgReplaces', () => {
         if(!body.contains(document.activeElement)) {
           rebuild();
-          refreshColors();
+          refreshInputs();
           renderSwatches();
         }
       });

@@ -81,7 +81,14 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     associatedWidgetsSummary: PropertiesModule.prototype.associatedWidgetsSummary,
     interactionSummary: PropertiesModule.prototype.interactionSummary,
     basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
-    svgReplaceColorProperties,
+    svgReplaceProperties,
+    svgReplaceInputDefs,
+    svgReplaceInputKind,
+    svgReplaceCandidates,
+    svgReplacePropertyForAttributes,
+    dragLimitIsSet,
+    dragLimitValue,
+    positionSummary: PropertiesModule.prototype.positionSummary,
     dicePreviewRotation,
     dicePreviewActiveFace,
     textSymbolClass,
@@ -256,16 +263,83 @@ describe('css helpers', () => {
     expect(cssHelpers.textValueFromSymbol({ type: 'emoji-monochrome', symbol: '(🎲)' })).toBe('🎲');
   });
 
-  test('svg replacement colors use only declared conventional color properties', () => {
-    expect(cssHelpers.svgReplaceColorProperties({
+  test('svg replacements list every property they point at, once', () => {
+    expect(cssHelpers.svgReplaceProperties({
       '#primary': 'color',
-      '#accent': 'accentColor1',
-      '#outline': 'outlineColor2',
+      '#gradient': [ 'colorA', 'colorB' ],
+      '#again': 'color',
       '#border': 'borderColor',
-      '#empty': 'colorEmpty',
-      '#secondary': 'secondaryColor',
-      '#alsoIgnored': 'title'
-    })).toEqual([ 'color', 'accentColor1', 'outlineColor2', 'borderColor', 'colorEmpty', 'secondaryColor' ]);
+      '#other': 'title',
+      '#ignored': 42
+    })).toEqual([ 'color', 'colorA', 'colorB', 'borderColor', 'title' ]);
+    expect(cssHelpers.svgReplaceProperties(null)).toEqual([]);
+  });
+
+  test('svg replacement inputs follow the attribute the value was found in', () => {
+    const defs = cssHelpers.svgReplaceInputDefs({
+      '#f00': 'color',
+      '2': 'borderWidth',
+      '0.5': 'ghostOpacity',
+      'PLACEHOLDER': 'label'
+    }, {
+      '#f00': [ 'fill' ],
+      '2': [ 'stroke-width' ],
+      '0.5': [ 'fill-opacity' ]
+    });
+    // map order, in which "2" comes first: an integer-like key is one
+    expect(defs.map(def => [ def.property, def.kind ])).toEqual([
+      [ 'borderWidth', 'number' ],
+      [ 'color', 'color' ],
+      [ 'ghostOpacity', 'number' ],
+      [ 'label', 'text' ]
+    ]);
+    expect(defs[2].max).toBe(1);
+    expect(defs[1].label).toBe('Color');
+    expect(defs[0].label).toBe('Border Width');
+  });
+
+  test('svg replacement inputs fall back to the property name without a scanned file', () => {
+    expect(cssHelpers.svgReplaceInputKind('borderColor')).toBe('color');
+    expect(cssHelpers.svgReplaceInputKind('fillOpacity')).toBe('opacity');
+    expect(cssHelpers.svgReplaceInputKind('borderWidth')).toBe('number');
+    expect(cssHelpers.svgReplaceInputKind('title')).toBe('text');
+    // the scanned attribute wins over the name
+    expect(cssHelpers.svgReplaceInputKind('title', [ 'stroke' ])).toBe('color');
+  });
+
+  test('svg candidates are read from the attributes the engine can replace', () => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg">
+      <style>.frame { stroke: #00ff00; stroke-width: 4 }</style>
+      <rect fill="#ff0000" stroke="#00ff00" stroke-width="4" opacity="0.5"/>
+      <path d="M 4 4 L 8 8" style="fill:#ff0000;fill-opacity:0.25" stroke="none"/>
+      <circle fill="url(#gradient)"/>
+    </svg>`;
+    expect(cssHelpers.svgReplaceCandidates(svg).map(candidate => [ candidate.value, candidate.attributes ])).toEqual([
+      [ '#00ff00', [ 'stroke' ] ],
+      [ '#ff0000', [ 'fill' ] ],
+      [ '4', [ 'stroke-width' ] ],
+      [ '0.5', [ 'opacity' ] ],
+      [ '0.25', [ 'fill-opacity' ] ]
+    ]);
+    // "4" is also in the path data, so replacing it would hit that too
+    expect(cssHelpers.svgReplaceCandidates(svg).find(candidate => candidate.value == '4').ambiguous).toBe(true);
+    expect(cssHelpers.svgReplaceCandidates(svg).find(candidate => candidate.value == '#ff0000').ambiguous).toBe(false);
+  });
+
+  test('svg candidates propose the property their attribute is conventionally read from', () => {
+    expect(cssHelpers.svgReplacePropertyForAttributes([ 'fill' ])).toBe('color');
+    expect(cssHelpers.svgReplacePropertyForAttributes([ 'stroke' ])).toBe('borderColor');
+    expect(cssHelpers.svgReplacePropertyForAttributes([ 'stroke-width' ])).toBe('borderWidth');
+    expect(cssHelpers.svgReplacePropertyForAttributes([ 'fill-opacity' ])).toBe('fillOpacity');
+    expect(cssHelpers.svgReplacePropertyForAttributes([])).toBe('color');
+  });
+
+  test('drag limits count as set as soon as one side is given', () => {
+    expect(cssHelpers.dragLimitIsSet(null)).toBe(false);
+    expect(cssHelpers.dragLimitIsSet({})).toBe(false);
+    expect(cssHelpers.dragLimitIsSet({ maxY: 900 })).toBe(true);
+    expect(cssHelpers.dragLimitValue({ minX: 0 }, 'minX')).toBe(0);
+    expect(cssHelpers.dragLimitValue({ minX: 0 }, 'maxX')).toBe(null);
   });
 
   test('cssTextFromValue renders all value shapes', () => {
