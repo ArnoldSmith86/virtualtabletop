@@ -1,6 +1,7 @@
-import { ClientFunction, Selector } from 'testcafe';
+import { Selector } from 'testcafe';
 
-import { applyLegacy, getStateObject, prepareClient, setRoomState, setupTestEnvironment } from './test-util.js';
+import { getStateObject, setupTestEnvironment } from './test-util.js';
+import { boardScale, openRoom, stateWhen } from './interaction-util.js';
 
 setupTestEnvironment();
 
@@ -17,21 +18,8 @@ setupTestEnvironment();
 // difference between the two is a finding rather than a hash mismatch.
 const TIERS = [ 'modern', 'legacy-all' ];
 
-// The board is a fixed 1600x1000 space that the client scales to the window, so a drag in board
-// units has to be converted to the screen pixels TestCafe moves the pointer by.
-const boardScale = ClientFunction(_=>+getComputedStyle(document.documentElement).getPropertyValue('--scale'));
-
-async function openRoom(t, combo, state) {
-  await ClientFunction(prepareClient)();
-  // closing the states overlay is what makes the surface accept pointer events at all
-  await t.click('#activeGameButton');
-  // before setRoomState: a widget reads its legacy modes in the constructor
-  await applyLegacy(combo);
-  await setRoomState(state);
-  // a cold room takes a while to render on a loaded machine, and every assertion below is
-  // about what a pointer does to a widget that is already on screen
-  await t.expect(Selector(`#w_${Object.keys(state)[0]}`).exists).ok('the room renders its widgets', { timeout: 30000 });
-}
+// openRoom(), stateWhen() and the board-to-screen scale live in interaction-util.js, which
+// holderevents.js drives its event-ordering paths with as well.
 
 // A drag has to move more than 10 board units and take longer than 250ms, or mousehandling.js
 // counts it as a click as well - which would flip the card the test just dragged.
@@ -42,20 +30,6 @@ async function dragBy(t, id, dx, dy) {
 
 async function dragOnto(t, id, targetID) {
   await t.dragToElement(`#w_${id}`, `#w_${targetID}`, { speed: 0.4 });
-}
-
-// Poll the room state until it looks like the drag arrived, then hand it to the assertions.
-// Returning the last state seen (rather than asserting inside the loop) keeps the failure
-// message about the property the test cares about.
-async function stateWhen(predicate) {
-  let state = null;
-  for(let wait=50; wait<4000; wait*=2) {
-    state = await getStateObject();
-    if(predicate(state))
-      break;
-    await new Promise(resolve=>setTimeout(resolve, wait));
-  }
-  return state;
 }
 
 const select = id => ({ func: 'SELECT', property: 'id', value: id });
