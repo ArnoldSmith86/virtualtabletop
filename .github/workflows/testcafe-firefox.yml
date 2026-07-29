@@ -31,7 +31,11 @@ jobs:
           - legacymatrix.js
           - interactions.js
           - inheritfrom.js
-          # domsnapshot.js deliberately runs in Chrome only - see testcafe-chrome.yml
+          # domsnapshot.js needs a checked-in baseline per browser and only Chrome's is
+          # recorded so far, so it runs in Chrome only - see testcafe-chrome.yml.
+          # pixelsnapshot.js compares two captures from the same run and needs no baseline,
+          # so it is the half of Layer F that can run anywhere.
+          - pixelsnapshot.js
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

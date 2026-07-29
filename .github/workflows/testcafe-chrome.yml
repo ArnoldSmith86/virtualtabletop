@@ -39,6 +39,9 @@ jobs:
           # the DOM baselines record computed styles and rounded boxes, which are browser
           # specific, so they are recorded and checked in Chrome only
           - domsnapshot.js
+          # the pixel half compares two captures from the same run rather than a checked-in
+          # image, but a screenshot is still browser specific enough to keep in one browser
+          - pixelsnapshot.js
           - multiclient.js
         include:
           # a second browser window is the whole point of this file, and native automation mode

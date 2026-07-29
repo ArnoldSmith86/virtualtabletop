@@ -1,5 +1,3 @@
-import { Selector } from 'testcafe';
-
 import { getStateObject, setName, setupTestEnvironment } from './test-util.js';
 import { dragPath, openRoom, stateWhen } from './interaction-util.js';
 
