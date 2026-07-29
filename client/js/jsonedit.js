@@ -98,6 +98,12 @@ async function checkIfSVG(url) {
   }
 }
 
+// true while a face object of a deck is selected that displays text (the default when no type is given)
+function jeIsTextFaceObject() {
+  const object = jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]];
+  return object.type === undefined || object.type == 'text';
+}
+
 const jeCommands = [
   /* Just for editing convenience, the top (command) buttons are listed first */
   {
@@ -1000,6 +1006,27 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_editableTextTemplate',
+    name: 'editable text template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'text',
+        editable: true,
+        x: 0,
+        y: 0,
+        fontSize: 20,
+        textAlign: 'center',
+        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
+        height: 30,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
+      });
+      jeSetAndSelect('text');
+    }
+  },
+  {
     id: 'je_inputField',
     name: 'add field',
     context: '^.* ↦ \\(INPUT\\) ↦ fields',
@@ -1046,6 +1073,26 @@ const jeCommands = [
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].display = '###SELECT ME###';
       jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_editable',
+    name: 'editable',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsTextFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_placeholder',
+    name: 'placeholder',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsTextFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder = '###SELECT ME###';
+      jeSetAndSelect('');
     }
   },
   {

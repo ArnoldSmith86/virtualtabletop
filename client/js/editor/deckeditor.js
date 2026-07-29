@@ -306,6 +306,9 @@ class DeckEditor {
     for(const radio of $a('#deckEditorAddMode input[type=radio]'))
       radio.onchange = _=>this.setAddMode(radio.value);
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
+    // A writable text area only works when its value is bound to a card property (that is where the text
+    // players type is stored), so this one ignores the "Add to:" mode and always adds a bound object.
+    $('#deckEditorAddWritable').onclick = _=>this.addDynamicObject({ type: 'text', editable: true, x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', '');
     $('#deckEditorAddImage').onclick = async _=>{
       const symbol = await pickSymbol('images');
       if(symbol && symbol.url)

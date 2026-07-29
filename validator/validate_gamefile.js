@@ -47,7 +47,7 @@ const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
     icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
-    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
+    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign', 'editable', 'placeholder'],
     html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
 };
 
@@ -232,6 +232,16 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
+                        // An editable text object stores what the player types in the card property its
+                        // value is bound to - without that binding there is nowhere to keep the text.
+                        if(obj.editable && (!obj.dynamicProperties || typeof obj.dynamicProperties.value != 'string')) {
+                            problems.push({
+                                widget: p.widgetId,
+                                property: [...propertyPath, faceIndex, 'objects', objIndex, 'editable'],
+                                message: 'editable text objects need their value bound to a card property through dynamicProperties so the text players type can be stored'
+                            });
+                        }
+
                         const objType = (obj.type && String(obj.type).toLowerCase()) || '';
                         const validObjProps = FACE_OBJECT_VALID_PROPS[objType] || FACE_OBJECT_VALID_PROPS._common;
                         for(const prop of Object.keys(obj)) {

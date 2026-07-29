@@ -111,8 +111,22 @@ class Card extends Widget {
       if(Array.isArray(face.objects)) {
         for(const original of face.objects) {
           const useIframe = original.type == 'html' && legacyMode('useIframeForHtmlCards');
-          const objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
+          const editProperty = this.editableProperty(original);
+          const objectDiv = document.createElement(useIframe ? 'iframe' : editProperty ? 'textarea' : 'div');
           objectDiv.classList.add('cardFaceObject');
+
+          if(editProperty) {
+            objectDiv.setAttribute('spellcheck', 'false');
+            objectDiv.addEventListener('input', async _=>{
+              const stored = this.get(editProperty);
+              if(objectDiv.value === (stored === undefined || stored === null ? '' : String(stored)))
+                return;
+              batchStart();
+              setDeltaCause(`${playerName} typed into ${this.id}`);
+              await this.set(editProperty, objectDiv.value);
+              batchEnd();
+            });
+          }
 
           const setValue = _=>{
             const usedProperties = new Set();
@@ -223,6 +237,14 @@ class Card extends Widget {
 
                 if (inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
               }
+            } else if(editProperty) {
+              const text = object.value === undefined || object.value === null ? '' : String(object.value);
+              // don't touch the field while it is being typed into - that would move the cursor to the end
+              if(objectDiv.value !== text)
+                objectDiv.value = text;
+              objectDiv.readOnly = this.isReadonlyCopy || !object.editable;
+              objectDiv.placeholder = object.placeholder === undefined || object.placeholder === null ? '' : object.placeholder;
+              objectDiv.style.color = object.color;
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
@@ -256,6 +278,18 @@ class Card extends Widget {
     const p = super.cssProperties();
     p.push('deck');
     return p;
+  }
+
+  // Text objects of a face template can be marked "editable" to let players write on the card. What they
+  // type has to go somewhere, so such an object must have its value bound to a card property through
+  // dynamicProperties - that property is returned here (and null for every object that is not editable).
+  editableProperty(object) {
+    const dynamicProperties = typeof object.dynamicProperties == 'object' && object.dynamicProperties !== null ? object.dynamicProperties : {};
+    const isText = object.type === undefined || object.type == 'text';
+    const isEditable = object.editable || dynamicProperties.editable !== undefined;
+    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string')
+      return dynamicProperties.value;
+    return null;
   }
 
   async flip(setFlip, faceCycle) {
