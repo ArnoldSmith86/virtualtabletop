@@ -3072,6 +3072,8 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
 }
 
 export function jeLoggingRoutineEnd(variables, collections) {
+  if(!jeLoggingDepth)
+    return; // no matching jeLoggingRoutineStart (logging was enabled mid-routine)
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
@@ -3131,6 +3133,11 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
 
   const savedHTML = jeHTMLStack.shift();
+  if(!savedHTML) {
+    // No matching jeLoggingRoutineOperationStart (logging was enabled mid-routine). Nothing to close.
+    jeRoutineResult = '';
+    return;
+  }
   const original = savedHTML[1];
   const originalText = jeLoggingJSON(original);
   const applied = savedHTML[2];
