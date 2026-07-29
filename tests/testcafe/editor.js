@@ -819,3 +819,45 @@ test('Line widget in edit mode', async t => {
   // random, so the compared state no longer depends on the seeded rand() stream
   await compareState(t, 'd35bd7362c7e87ea9ecb29895cc8d0b9');
 });
+
+test('Enabling the Debug module while a routine waits for INPUT does not abort the routine', async t => {
+  await setRoomState({
+    button: {
+      id: 'button',
+      type: 'button',
+      clickRoutine: [
+        { func: 'LABEL', label: 'label', value: 'start' },
+        { func: 'INPUT', header: 'Continue?', fields: [ { type: 'string', variable: 'answer', value: 'yes' } ] },
+        { func: 'LABEL', label: 'label', value: 'done' }
+      ]
+    },
+    label: { id: 'label', type: 'label', y: 100, text: '' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await ClientFunction(() => {
+    window.debugToggleErrors = [];
+    window.addEventListener('error', event => window.debugToggleErrors.push(String(event.error || event.message)));
+    window.addEventListener('unhandledrejection', event => window.debugToggleErrors.push(String(event.reason)));
+  })();
+
+  // enter edit mode with the Debug module closed, then start the routine and let it suspend on INPUT
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorSidebar [icon=pest_control]').visible).ok(); // edit mode finished loading
+  await ClientFunction(() => {
+    widgets.get('button').evaluateRoutine('clickRoutine', {}, {});
+  })();
+  await t.expect(Selector('#buttonInputOverlay').visible).ok();
+
+  // opening Debug now switches routine logging on in the middle of the suspended routine (#2672)
+  await t
+    .click('#editorSidebar [icon=pest_control]')
+    .click('#buttonInputGo');
+
+  await t.expect(await ClientFunction(() => widgets.get('label').get('text'))()).eql('done');
+  await t.expect(await ClientFunction(() => window.debugToggleErrors)()).eql([]);
+  // the running routine can not be logged retroactively - the log explains the gap instead
+  await t.expect(Selector('#jeLog .jeLogNote').innerText).contains('could not be recorded');
+  await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
+});
