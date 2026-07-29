@@ -1007,14 +1007,16 @@ const jeCommands = [
   },
   {
     id: 'je_editableTextTemplate',
-    name: 'editable text template',
+    name: 'writable text template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: async function() {
       // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text area,
-      // so there has to be some card left around it for the player to grab
+      // so there has to be some card left around it for the player to grab. The placeholder is what tells a
+      // player the card can be written on - without it an empty text area is invisible.
       jeStateNow.faceTemplates[+jeContext[2]].objects.push({
         type: 'text',
         editable: true,
+        placeholder: 'write here…',
         x: 10,
         y: 10,
         fontSize: 14,

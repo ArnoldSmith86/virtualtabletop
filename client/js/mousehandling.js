@@ -33,8 +33,12 @@ async function inputHandler(name, e) {
   if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1) {
     // while editing, a click on the text field of a label or on the editable text of a card is not meant
     // to type but to reach the widget below it, so that it can be selected and moved
-    const widgetText = e.target.parentNode && e.target.parentNode.className.match(/label/) || String(e.target.className).match(/cardFaceObject/);
-    if(!editMovable || !widgetText)
+    const cardText = String(e.target.className).match(/cardFaceObject/);
+    const widgetText = e.target.parentNode && e.target.parentNode.className.match(/label/) || cardText;
+    // a locked card text area is never typed into, so its clicks always belong to the card - it still keeps
+    // its pointer events (unlike a display-only element) so overflowing text can be scrolled into view
+    const lockedCardText = cardText && e.target.readOnly;
+    if(!lockedCardText && (!editMovable || !widgetText))
       return;
   }
 

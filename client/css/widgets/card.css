@@ -38,9 +38,34 @@
   text-align: inherit;
   text-transform: inherit;
   resize: none;
+  /* A text area clips what does not fit instead of overflowing like a div, so the scrollbar is the only cue
+     that there is more text - keep it thin but in the object's own color so it shows on dark faces too. */
   scrollbar-width: thin;
+  scrollbar-color: currentColor transparent;
 }
 
+/* Written-on cards look exactly like static text, which leaves an empty one completely blank: hint at the
+   writable area while the pointer is over the card, in the text color so it works on any card background. */
+.card:hover > .cardFace > textarea.cardFaceObject:not(:read-only, :focus) {
+  outline: 1px dashed currentColor;
+  outline-offset: -1px;
+}
+
+.card > .cardFace > textarea.cardFaceObject:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -1px;
+}
+
+/* The placeholder is the only hint a player gets on an empty card, so it follows the object's color instead
+   of the browser's fixed grey (which is unreadable on a dark card face). */
+.card > .cardFace > textarea.cardFaceObject::placeholder {
+  color: currentColor;
+  opacity: 0.45;
+}
+
+/* A locked text area is not typed into, so it must not look like a text field - but it keeps its pointer
+   events so text too long for it can still be scrolled into view. mousehandling.js passes clicks and drags
+   on it through to the card, so a locked card can be picked up by its text like any other part of it. */
 .card > .cardFace > textarea.cardFaceObject:read-only {
-  pointer-events: none;
+  cursor: inherit;
 }

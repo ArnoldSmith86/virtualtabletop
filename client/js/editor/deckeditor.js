@@ -1789,6 +1789,15 @@ class DeckEditor {
     // Note below (not part of) the header, in the same style as the Dynamic properties note.
     if(object.type == 'html')
       div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
+    // "editable" is just one more checkbox among the rows below, so say what it turns the object into, which
+    // properties belong to it - and warn when it leaves the player too little card to grab.
+    if(object.editable !== undefined || (object.dynamicProperties || {}).editable !== undefined) {
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Writable: players can type into this object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty.';
+      const cardWidth = this.mainCard ? this.mainCard.get('width') : 103;
+      const cardHeight = this.mainCard ? this.mainCard.get('height') : 160;
+      if((object.width || 0) * (object.height || 0) > cardWidth * cardHeight * 2/3)
+        div(sidebar, 'deckEditorSectionNote deckEditorSectionWarning').textContent = 'This text area covers most of the card. A card can not be dragged or flipped by its text area, so leave some card around it for players to grab.';
+    }
 
     // One cause/actionId per edited field: a typing burst on one property of one object stays one
     // breadcrumb/undo step, but edits to another property or object become their own step.
@@ -2246,7 +2255,8 @@ class DeckEditor {
   }
 
   renderTreeObjectRow(tree, object, index, face = this.face) {
-    const typeIcon = { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
+    // Same icon as the Write button for a writable text object, so a face with several text objects stays scannable.
+    const typeIcon = object.editable && (object.type || 'text') == 'text' ? 'edit_note' : { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
     const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><span class=deckEditorTreeIcon icon=${typeIcon}></span><div class=deckEditorObjectPreview></div>`);
     const objSel = face === this.face && index === this.selectedObject;
     row.classList.toggle('selected', objSel && this.activeArea == 'tree');
@@ -2949,7 +2959,8 @@ class DeckEditor {
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
     const typeProperty = this.generateUniquePropertyName(propertyBaseName);
     // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
-    const cause = `${getPlayerDetails().playerName} added a per-card-type ${objectTemplate.type} object to deck ${this.deckID} in deck editor`;
+    const objectName = objectTemplate.editable ? 'writable text' : objectTemplate.type;
+    const cause = `${getPlayerDetails().playerName} added a per-card-type ${objectName} object to deck ${this.deckID} in deck editor`;
     const actionId = this.newAction();
     await this.seedCardTypeProperty(typeProperty, defaultValue, cause, actionId);
     const template = { ...objectTemplate, dynamicProperties: { [boundProperty]: typeProperty } };
@@ -2969,7 +2980,9 @@ class DeckEditor {
     // Roomy enough to write a few lines in, but with a margin around it and the lower half of the card left
     // free: a card can not be grabbed by its text area, so the player needs some card left to drag and flip.
     const margin = Math.round(Math.min(width, height)/8);
-    return { type: 'text', editable: true, x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
+    // An empty text area is invisible, so it starts out with a placeholder - that is what tells a player the
+    // card can be written on at all, and it shows the creator the object right after adding it.
+    return { type: 'text', editable: true, placeholder: 'write here…', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
   }
 
   renderDynamicProperties(sidebar, object) {

@@ -154,6 +154,13 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   white-space: nowrap;
 }
 
+/* "Write" is the one add button that ignores the mode above: every card keeps its own text, so it always adds
+   a per-card-type object. It therefore carries the amber accent permanently, also inside the blue group. */
+#deckEditorAddWritable {
+  background: #b26a00; /* the amber of .deckEditorScopeThisType, dark enough for the button's white label */
+  box-shadow: inset 0 0 0 1px #ffb300;
+}
+
 #deckEditorHistory {
   display: flex;
   align-items: center;
@@ -908,7 +915,6 @@ body.deckEditorPanning #deckEditorMain * {
    have to be selectable and draggable there like every other face object. */
 #deckEditorMain .deckEditorCard textarea.cardFaceObject {
   cursor: move;
-  pointer-events: auto;
 }
 
 /* The big edit card clips to its bounds like the real card does, so an object dragged past the card's edge
@@ -1206,6 +1212,12 @@ body.deckEditorPanning #deckEditorMain * {
   font-size: 12px;
   opacity: 0.85;
   margin: 2px 5px 8px;
+}
+
+/* A section note that points out a problem with the current object (e.g. a text area covering the whole card). */
+.deckEditorSectionWarning {
+  opacity: 1;
+  color: #ffb300;
 }
 
 /* Column headers over the binding rows; share the row layout but without the row's highlight background. */

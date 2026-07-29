@@ -24,6 +24,25 @@ function editableCardRoom() {
   };
 }
 
+// the same object, but locked through a dynamic "editable" that is false for this card type: the text can be
+// read but not typed into, and the card still behaves like a card even though the area covers the whole face
+function lockedCardRoom() {
+  return {
+    deck: {
+      id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 200, height: 140 },
+      cardTypes: { note: { note: 'locked text', unlocked: false } },
+      faceTemplates: [
+        { objects: [
+          { type: 'text', x: 10, y: 10, width: 180, height: 120, fontSize: 14, dynamicProperties: { value: 'note', editable: 'unlocked' } }
+        ] },
+        { objects: [ { type: 'text', x: 0, y: 60, width: 200, fontSize: 18, textAlign: 'center', value: 'back' } ] }
+      ]
+    },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'note', x: 400, y: 300 }
+  };
+}
+
 async function cardProperty(property) {
   return JSON.parse(await getState()).card[property];
 }
@@ -56,5 +75,22 @@ test('An editable card text stores what is typed on the card and survives a relo
 
   // clicking the card next to its text area still flips it
   await t.click('#w_card', { offsetX: 100, offsetY: 15 });
+  await expectEventually(t, ()=>cardProperty('activeFace'), 1);
+});
+
+test('A locked card text area can not be typed into but still passes clicks to the card', async t => {
+  await setRoomState(lockedCardRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const text = Selector('#w_card textarea');
+  // it keeps its pointer events (so text too long for the area can still be scrolled into view) - the click
+  // below therefore lands on the text area itself and has to reach the card anyway
+  const pointerEvents = ClientFunction(()=>getComputedStyle(document.querySelector('#w_card textarea')).pointerEvents);
+  await t
+    .expect(text.hasAttribute('readonly')).ok()
+    .expect(text.value).eql('locked text')
+    .expect(await pointerEvents()).notEql('none')
+    .click(text);
   await expectEventually(t, ()=>cardProperty('activeFace'), 1);
 });
