@@ -174,10 +174,17 @@ test('The deck editor shows a write object as its placeholder and its list row e
   // the editor's card is a readonly copy (nothing typed there could be stored), so the writable object is
   // plain text - and while the card property is empty that text is the placeholder, or it would be invisible
   const object = Selector('#deckEditorMain .cardFace.active .cardFaceObject').nth(1);
+  // only the hint itself is dimmed: the object keeps the backgroundColor and borderColor it was given at
+  // full strength, so what the deck editor shows is the color the game author picked
+  const placeholderStyle = ClientFunction(()=>{
+    const object = document.querySelectorAll('#deckEditorMain .cardFace.active .cardFaceObject')[1];
+    return [ getComputedStyle(object).opacity, getComputedStyle(object.firstElementChild).opacity, getComputedStyle(object).borderTopColor ];
+  });
   await t
     .expect(Selector('#deckEditorMain textarea').exists).notOk()
     .expect(object.textContent).eql('write here')
-    .expect(object.hasClass('cardFacePlaceholder')).ok();
+    .expect(object.hasClass('cardFacePlaceholder')).ok()
+    .expect(await placeholderStyle()).eql([ '1', '0.45', 'rgb(31, 92, 166)' ]);
 
   // what a player types is per card, so there is nothing for the creator to fill in: the object's list row
   // edits its placeholder instead of the card type property the value is bound to

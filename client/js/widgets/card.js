@@ -277,8 +277,18 @@ export class Card extends Widget {
                 // placeholder the same way the real card's text area does - otherwise an empty write
                 // object is invisible there. A locked card shows nothing: it can not be written on anymore.
                 const showPlaceholder = this.isReadonlyCopy && text === '' && placeholder !== '';
-                objectDiv.textContent = showPlaceholder ? placeholder : text;
                 objectDiv.classList.toggle('cardFacePlaceholder', showPlaceholder);
+                if(showPlaceholder) {
+                  // the hint is dimmed like a text area dims its ::placeholder - it goes into a span of its
+                  // own so that only the text fades, not the box: dimming the object itself would wash out
+                  // its backgroundColor and borderColor with no way for the game author to get them back
+                  objectDiv.textContent = '';
+                  const hint = document.createElement('span');
+                  hint.textContent = placeholder;
+                  objectDiv.appendChild(hint);
+                } else {
+                  objectDiv.textContent = text;
+                }
               }
               objectDiv.style.color = object.color;
               // The box a player writes in is part of the type, so its fill and outline are properties of

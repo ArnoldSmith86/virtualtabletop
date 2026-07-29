@@ -65,12 +65,13 @@ body:not(.edit) .card > .cardFace > textarea.cardFaceObject {
 
 /* The placeholder is the only hint a player gets on an empty card, so it follows the object's color instead
    of the browser's fixed grey (which is unreadable on a dark card face). The second rule is the same hint on
-   a readonly copy of the card (deck editor, card previews), which renders it as plain text. */
+   a readonly copy of the card (deck editor, card previews), which renders it as plain text inside a span -
+   only that span is dimmed, so backgroundColor and borderColor stay exactly the colors they were given. */
 .card > .cardFace > textarea.cardFaceObject::placeholder {
   color: currentColor;
   opacity: 0.45;
 }
 
-.card > .cardFace > .cardFaceObject.cardFacePlaceholder {
+.card > .cardFace > .cardFaceObject.cardFacePlaceholder > span {
   opacity: 0.45;
 }
