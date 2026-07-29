@@ -163,7 +163,7 @@ async function readStatesFromLink(linkAndPath, includeVariantNameList) {
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
   if(Object.keys(zip.files).filter(f=>f.match(/WorkshopUpload/)).length) {
-    return [ await TTS.fromZip(buffer) ];
+    return [ await TTS.fromZIP(buffer) ];
   } else if(zip.files['widgets.json']) {
     return [ await PCIO(buffer) ];
   } else {
