@@ -33,6 +33,9 @@ jobs:
           # holderevents.js drives its drags with synthetic mouse events whose timing against
           # the drop animation has only been measured in Chrome so far
           - holderevents.js
+          - keyboardzoom.js
+          - canvas.js
+          - inheritfrom.js
           # the DOM baselines record computed styles and rounded boxes, which are browser
           # specific, so they are recorded and checked in Chrome only
           - domsnapshot.js

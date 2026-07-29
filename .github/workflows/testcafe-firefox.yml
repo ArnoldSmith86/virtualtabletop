@@ -30,6 +30,7 @@ jobs:
           - routines.js
           - legacymatrix.js
           - interactions.js
+          - inheritfrom.js
           # domsnapshot.js deliberately runs in Chrome only - see testcafe-chrome.yml
     steps:
     - name: Checkout repository
