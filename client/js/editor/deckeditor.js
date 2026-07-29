@@ -306,9 +306,9 @@ class DeckEditor {
     for(const radio of $a('#deckEditorAddMode input[type=radio]'))
       radio.onchange = _=>this.setAddMode(radio.value);
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
-    // A writable text area only works when its value is bound to a card property (that is where the text
-    // players type is stored), so this button is only shown in the "Card Type" add mode (see the CSS).
-    $('#deckEditorAddWritable').onclick = _=>this.addDynamicObject(this.writableTextTemplate(), 'note', '');
+    // A "write" object only works when its value is bound to a card property (that is where the text players
+    // type is stored), so this button is only shown in the "Card Type" add mode (see the CSS).
+    $('#deckEditorAddWritable').onclick = _=>this.addDynamicObject(this.writeTemplate(), 'note', '');
     $('#deckEditorAddImage').onclick = async _=>{
       const symbol = await pickSymbol('images');
       if(symbol && symbol.url)
@@ -1789,10 +1789,10 @@ class DeckEditor {
     // Note below (not part of) the header, in the same style as the Dynamic properties note.
     if(object.type == 'html')
       div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
-    // "editable" is just one more checkbox among the rows below, so say what it turns the object into, which
-    // properties belong to it - and warn when it leaves the player too little card to grab.
+    // The rows below are just a list of properties, so say what this type is for and which of them belong to
+    // it - and warn when the object leaves the player too little card to grab.
     if(this.isWritableObject(object)) {
-      div(sidebar, 'deckEditorSectionNote').textContent = 'Writable: players can type into this object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty, "spellCheck" turns the browser\'s spell checker on.';
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Players can type into a "write" object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty, "spellCheck" turns the browser\'s spell checker on, "backgroundColor" and "borderColor" style the box itself, and "editable" (bound per card type) locks it again.';
       const cardWidth = this.mainCard ? this.mainCard.get('width') : 103;
       const cardHeight = this.mainCard ? this.mainCard.get('height') : 160;
       if((object.width || 0) * (object.height || 0) > cardWidth * cardHeight * 2/3)
@@ -2254,16 +2254,15 @@ class DeckEditor {
     this.updateTreeToolbar();
   }
 
-  // A text face object players can write on while playing - the same condition Card.editableProperty() uses
-  // (which additionally requires a usable value binding before the object really becomes writable).
+  // A face object players can write on while playing - Card.editableProperty() additionally requires a usable
+  // value binding before the object really becomes writable, which is what the Label button creates.
   isWritableObject(object) {
-    return (object.type === undefined || object.type == 'text')
-        && (!!object.editable || (object.dynamicProperties || {}).editable !== undefined);
+    return object.type == 'write';
   }
 
   renderTreeObjectRow(tree, object, index, face = this.face) {
-    // Same icon as the Write button for a writable text object, so a face with several text objects stays scannable.
-    const typeIcon = this.isWritableObject(object) ? 'edit_note' : { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
+    // Same icon as the Label button for a write object, so a face with several text objects stays scannable.
+    const typeIcon = { text: 'format_size', write: 'edit_note', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
     const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><span class=deckEditorTreeIcon icon=${typeIcon}></span><div class=deckEditorObjectPreview></div>`);
     const objSel = face === this.face && index === this.selectedObject;
     row.classList.toggle('selected', objSel && this.activeArea == 'tree');
@@ -2426,7 +2425,7 @@ class DeckEditor {
 
     // Text objects show the actual text in an inline editable field (like the right sidebar's value field):
     // clicking the field edits it, clicking the row around it selects the object.
-    if(type == 'text') {
+    if(type == 'text' || type == 'write') {
       this.renderPreviewTextField(box, object, index, faceIndex);
       return;
     }
@@ -2584,15 +2583,15 @@ class DeckEditor {
     }
   }
 
-  // The object's "type" as a dropdown of valid values (text/image/icon/html); changing it re-renders because
-  // the header and the image-only upload button depend on it. It has no make-dynamic or delete control.
+  // The object's "type" as a dropdown of valid values (text/write/image/icon/html); changing it re-renders
+  // because the header and the image-only upload button depend on it. It has no make-dynamic or delete control.
   renderObjectTypeRow(target, object) {
     const row = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
     labelEl.style.cssText = 'display:inline-block;width:100px';
     labelEl.textContent = 'type';
     const select = document.createElement('select');
-    for(const t of [ 'text', 'image', 'icon', 'html' ]) {
+    for(const t of [ 'text', 'write', 'image', 'icon', 'html' ]) {
       const opt = document.createElement('option');
       opt.value = opt.textContent = t;
       opt.selected = (object.type || 'text') == t;
@@ -2615,7 +2614,7 @@ class DeckEditor {
   objectFieldType(property) {
     if([ 'x', 'y', 'width', 'height', 'fontSize', 'size', 'strokeWidth', 'rotation' ].indexOf(property) != -1)
       return 'number';
-    if([ 'textAlign', 'color', 'value', 'strokeColor', 'type' ].indexOf(property) != -1)
+    if([ 'textAlign', 'color', 'value', 'strokeColor', 'type', 'placeholder', 'backgroundColor', 'borderColor' ].indexOf(property) != -1)
       return 'text';
     return undefined;
   }
@@ -2632,8 +2631,11 @@ class DeckEditor {
     }
     const wrapper = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
-    labelEl.style.cssText = 'display:inline-block;width:100px';
+    // The label column has a fixed width so the fields line up; a property name too long for it (backgroundColor,
+    // hoverStrokeWidth, …) is cut off with an ellipsis and spelled out in the tooltip instead of just ending.
+    labelEl.style.cssText = 'display:inline-block;width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle';
     labelEl.textContent = label;
+    labelEl.title = label;
     wrapper.append(labelEl);
     let input;
     if(fieldType == 'boolean') {
@@ -2973,8 +2975,7 @@ class DeckEditor {
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
     const typeProperty = this.generateUniquePropertyName(propertyBaseName);
     // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
-    const objectName = objectTemplate.editable ? 'writable text' : objectTemplate.type;
-    const cause = `${getPlayerDetails().playerName} added a per-card-type ${objectName} object to deck ${this.deckID} in deck editor`;
+    const cause =`${getPlayerDetails().playerName} added a per-card-type ${objectTemplate.type} object to deck ${this.deckID} in deck editor`;
     const actionId = this.newAction();
     await this.seedCardTypeProperty(typeProperty, defaultValue, cause, actionId);
     const template = { ...objectTemplate, dynamicProperties: { [boundProperty]: typeProperty } };
@@ -2988,16 +2989,17 @@ class DeckEditor {
     return { type: 'image', x: 0, y: 0, width, height, color: '#cccccc' };
   }
 
-  writableTextTemplate() {
+  writeTemplate() {
     const width = this.mainCard ? this.mainCard.get('width') : 103;
     const height = this.mainCard ? this.mainCard.get('height') : 160;
     // Roomy enough to write a few lines in, but with a margin around it and the lower half of the card left
     // free: a card can not be grabbed by its text area, so the player needs some card left to drag and flip.
     const margin = Math.round(Math.min(width, height)/8);
-    // An empty text area is invisible, so it starts out with a placeholder - that is what tells a player the
-    // card can be written on at all, and it shows the creator the object right after adding it. spellCheck is
-    // off like on a label, and is in the template so its checkbox is right there in the sidebar.
-    return { type: 'text', editable: true, placeholder: 'write here…', spellCheck: false, x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
+    // An empty text area is blank, so it starts out with a placeholder - that is what tells a player the card
+    // can be written on at all, and it shows the creator the object right after adding it. spellCheck (off,
+    // like on a label) and the two color properties carry their defaults so that their rows - and with them
+    // the color pickers - are right there in the sidebar instead of having to be added by name.
+    return { type: 'write', placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: '#1f5ca6', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
   }
 
   renderDynamicProperties(sidebar, object) {

@@ -31,7 +31,7 @@ async function inputHandler(name, e) {
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
   if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1) {
-    // while editing, a click on the text field of a label or on the writable text of a card is not meant
+    // while editing, a click on the text field of a label or on the write object of a card is not meant
     // to type but to reach the widget below it, so that it can be selected and moved
     const widgetText = e.target.parentNode && (e.target.parentNode.className.match(/label/) || String(e.target.className).match(/cardFaceObject/));
     if(!editMovable || !widgetText)

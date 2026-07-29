@@ -4,8 +4,8 @@ import { getState, prepareClient, setName, setRoomState, setupTestEnvironment } 
 
 setupTestEnvironment();
 
-// a deck whose card face has an editable text object: what players type into it is stored in the
-// card property the object's value is bound to ("note"), the second object is a plain text object
+// a deck whose card face has a "write" object: what players type into it is stored in the card
+// property the object's value is bound to ("note"), the first object is a plain text object
 function editableCardRoom() {
   return {
     deck: {
@@ -15,7 +15,7 @@ function editableCardRoom() {
       faceTemplates: [
         { objects: [
           { type: 'text', x: 0, y: 5, width: 200, fontSize: 18, textAlign: 'center', dynamicProperties: { value: 'title' } },
-          { type: 'text', editable: true, placeholder: 'write here', spellCheck: true, x: 10, y: 40, width: 180, height: 90, fontSize: 14, dynamicProperties: { value: 'note' } }
+          { type: 'write', placeholder: 'write here', spellCheck: true, x: 10, y: 40, width: 180, height: 90, fontSize: 14, dynamicProperties: { value: 'note' } }
         ] },
         { objects: [ { type: 'text', x: 0, y: 60, width: 200, fontSize: 18, textAlign: 'center', value: 'back' } ] }
       ]
@@ -35,7 +35,7 @@ function lockedCardRoom() {
       cardTypes: { note: { note: 'locked text that is much longer than the area reserved for it', unlocked: false } },
       faceTemplates: [
         { objects: [
-          { type: 'text', x: 10, y: 10, width: 180, height: 20, fontSize: 14, dynamicProperties: { value: 'note', editable: 'unlocked' } }
+          { type: 'write', backgroundColor: '#ffff00', borderColor: '#ff0000', x: 10, y: 10, width: 180, height: 20, fontSize: 14, dynamicProperties: { value: 'note', editable: 'unlocked' } }
         ] },
         { objects: [ { type: 'text', x: 0, y: 60, width: 200, fontSize: 18, textAlign: 'center', value: 'back' } ] }
       ]
@@ -55,9 +55,9 @@ function lockableCardRoom() {
   return room;
 }
 
-// objects that ask to be editable but are bound to properties the engine owns: writing to 'type' would
-// replace the card with a different widget and '_ancestor' is computed by the engine and refused to routines
-// as well, so both have to render as plain text objects instead
+// write objects bound to properties the engine owns: writing to 'type' would replace the card with a
+// different widget and '_ancestor' is computed by the engine and refused to routines as well, so both have
+// to render as plain text objects instead
 function reservedBindingCardRoom() {
   return {
     deck: {
@@ -66,8 +66,8 @@ function reservedBindingCardRoom() {
       cardTypes: { note: {} },
       faceTemplates: [
         { objects: [
-          { type: 'text', editable: true, x: 10, y: 10, width: 180, height: 40, fontSize: 14, dynamicProperties: { value: 'type' } },
-          { type: 'text', editable: true, x: 10, y: 60, width: 180, height: 40, fontSize: 14, dynamicProperties: { value: '_ancestor' } }
+          { type: 'write', x: 10, y: 10, width: 180, height: 40, fontSize: 14, dynamicProperties: { value: 'type' } },
+          { type: 'write', x: 10, y: 60, width: 180, height: 40, fontSize: 14, dynamicProperties: { value: '_ancestor' } }
         ] }
       ]
     },
@@ -90,15 +90,22 @@ async function expectEventually(t, get, expected) {
   await t.expect(actual).eql(expected);
 }
 
-test('An editable card text stores what is typed on the card and survives a reload', async t => {
+test('A write object stores what is typed on the card and survives a reload', async t => {
   await setRoomState(editableCardRoom());
   await ClientFunction(prepareClient)();
   await setName(t);
 
   const text = Selector('#w_card textarea');
+  // the box players write in is styled by the object's own properties, which default to a transparent fill
+  // and a VTTblue border - no css object needed to make the writable area visible
+  const boxStyle = ClientFunction(()=>{
+    const style = getComputedStyle(document.querySelector('#w_card textarea'));
+    return [ style.backgroundColor, style.borderTopColor, style.borderTopWidth ];
+  });
   await t
     .expect(text.getAttribute('placeholder')).eql('write here')
     .expect(text.getAttribute('spellcheck')).eql('true') // opt-in per object, like a label's spellCheck
+    .expect(await boxStyle()).eql([ 'rgba(0, 0, 0, 0)', 'rgb(31, 92, 166)', '1px' ])
     .typeText(text, 'hello card');
   await expectEventually(t, ()=>cardProperty('note'), 'hello card');
 
@@ -111,7 +118,7 @@ test('An editable card text stores what is typed on the card and survives a relo
   await expectEventually(t, ()=>cardProperty('activeFace'), 1);
 });
 
-test('A locked card text is shown as a plain text object that overflows instead of being clipped', async t => {
+test('A locked write object is shown as a plain text object that overflows instead of being clipped', async t => {
   await setRoomState(lockedCardRoom());
   await ClientFunction(prepareClient)();
   await setName(t);
@@ -123,16 +130,23 @@ test('A locked card text is shown as a plain text object that overflows instead 
     const object = document.querySelector('#w_card .cardFaceObject');
     return object.scrollHeight > object.clientHeight && getComputedStyle(object).overflow == 'visible';
   });
+  // the object keeps the look its own backgroundColor/borderColor give it, so locking a card does not
+  // suddenly change what it looks like on the table
+  const boxStyle = ClientFunction(()=>{
+    const style = getComputedStyle(document.querySelector('#w_card .cardFaceObject'));
+    return [ style.backgroundColor, style.borderTopColor ];
+  });
   await t
     .expect(Selector('#w_card textarea').exists).notOk()
     .expect(text.textContent).eql('locked text that is much longer than the area reserved for it')
     .expect(await overflowing()).ok()
+    .expect(await boxStyle()).eql([ 'rgb(255, 255, 0)', 'rgb(255, 0, 0)' ])
     .click(text);
   // and it is part of the card again, so clicking it flips the card
   await expectEventually(t, ()=>cardProperty('activeFace'), 1);
 });
 
-test('Locking a card text while it is on the table turns it into a plain text object', async t => {
+test('Locking a write object while it is on the table turns it into a plain text object', async t => {
   await setRoomState(lockableCardRoom());
   await ClientFunction(prepareClient)();
   await setName(t);
@@ -145,7 +159,7 @@ test('Locking a card text while it is on the table turns it into a plain text ob
     .expect(Selector('#w_card .cardFaceObject').textContent).eql('written text');
 });
 
-test('The deck editor shows a writable object as its placeholder and its list row edits that placeholder', async t => {
+test('The deck editor shows a write object as its placeholder and its list row edits that placeholder', async t => {
   await setRoomState(editableCardRoom());
   await ClientFunction(prepareClient)();
   await setName(t);
@@ -177,15 +191,22 @@ test('The deck editor shows a writable object as its placeholder and its list ro
     .expect(await ClientFunction(()=>widgets.get('deck').get('cardTypes').note.note)()).eql('')
     .expect(object.textContent).eql('your plan');
 
-  // a writable object always stores its text on the card, so it is only offered as a per-card-type object
+  // a write object always stores its text on the card, so it is only offered as a per-card-type object
   await t
     .click('#deckEditorTreeAdd')
     .expect(Selector('#deckEditorAddWritable').visible).notOk()
     .click('#deckEditorAddMode input[value=dynamic]')
-    .expect(Selector('#deckEditorAddWritable').visible).ok();
+    .expect(Selector('#deckEditorAddWritable').visible).ok()
+    .expect(Selector('#deckEditorAddWritable').textContent).eql('Label')
+    .click('#deckEditorAddWritable');
+  // the button adds an object of the "write" type, bound to a card type property of its own
+  await expectEventually(t, ClientFunction(()=>{
+    const object = widgets.get('deck').get('faceTemplates')[0].objects[2] || {};
+    return [ object.type, (object.dynamicProperties || {}).value ];
+  }), [ 'write', 'note2' ]);
 });
 
-test('A card text bound to a property of the card widget itself is not editable', async t => {
+test('A write object bound to a property of the card widget itself is not editable', async t => {
   await setRoomState(reservedBindingCardRoom());
   await ClientFunction(prepareClient)();
   await setName(t);

@@ -154,8 +154,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   white-space: nowrap;
 }
 
-/* A writable object always stores its text on the card, so it only exists as a per-card-type object: the
-   "Write" button is part of the amber Card Type group and is not offered in the blue All Cards one. */
+/* A write object always stores its text on the card, so it only exists as a per-card-type object: the
+   "Label" button is part of the amber Card Type group and is not offered in the blue All Cards one. */
 .deckEditorAddGroupStatic #deckEditorAddWritable {
   display: none;
 }
@@ -910,8 +910,8 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: move;
 }
 
-/* Editable text objects are read-only on the editor's card (it is not part of the room state), but they still
-   have to be selectable and draggable there like every other face object. */
+/* Write objects are read-only on the editor's card (it is not part of the room state), but they still have to
+   be selectable and draggable there like every other face object. */
 #deckEditorMain .deckEditorCard textarea.cardFaceObject {
   cursor: move;
 }

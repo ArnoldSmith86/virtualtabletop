@@ -98,10 +98,9 @@ async function checkIfSVG(url) {
   }
 }
 
-// true while a face object of a deck is selected that displays text (the default when no type is given)
-function jeIsTextFaceObject() {
-  const object = jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]];
-  return object.type === undefined || object.type == 'text';
+// true while a "write" face object of a deck is selected - a text area players can type into while playing
+function jeIsWriteFaceObject() {
+  return jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].type == 'write';
 }
 
 const jeCommands = [
@@ -1006,16 +1005,15 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_editableTextTemplate',
-    name: 'writable text template',
+    id: 'je_writeTemplate',
+    name: 'write template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: async function() {
       // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text area,
       // so there has to be some card left around it for the player to grab. The placeholder is what tells a
-      // player the card can be written on - without it an empty text area is invisible.
+      // player the card can be written on - without it an empty text area is blank.
       jeStateNow.faceTemplates[+jeContext[2]].objects.push({
-        type: 'text',
-        editable: true,
+        type: 'write',
         placeholder: 'write here…',
         x: 10,
         y: 10,
@@ -1027,7 +1025,7 @@ const jeCommands = [
           value: '###SELECT ME###'
         }
       });
-      jeSetAndSelect('text');
+      jeSetAndSelect('note');
     }
   },
   {
@@ -1083,7 +1081,7 @@ const jeCommands = [
     id: 'je_editable',
     name: 'editable',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
-    show: _=>jeIsTextFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable,
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable === undefined,
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable = '###SELECT ME###';
       jeSetAndSelect(true);
@@ -1093,7 +1091,7 @@ const jeCommands = [
     id: 'je_placeholder',
     name: 'placeholder',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
-    show: _=>jeIsTextFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder,
+    show: _=>jeIsWriteFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder,
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder = '###SELECT ME###';
       jeSetAndSelect('');
@@ -1103,10 +1101,30 @@ const jeCommands = [
     id: 'je_spellCheck',
     name: 'spellCheck',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
-    show: _=>jeIsTextFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck === undefined,
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck === undefined,
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck = '###SELECT ME###';
       jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_backgroundColor',
+    name: 'backgroundColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor = '###SELECT ME###';
+      jeSetAndSelect('transparent');
+    }
+  },
+  {
+    id: 'je_borderColor',
+    name: 'borderColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor = '###SELECT ME###';
+      jeSetAndSelect('#1f5ca6');
     }
   },
   {

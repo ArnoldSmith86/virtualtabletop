@@ -9,8 +9,8 @@ beforeAll(async () => {
   ({ Card } = await import('../../client/js/widgets/card.js'));
 });
 
-// a face object that asks to be editable and binds its value to the given card property
-const boundTo = property => ({ type: 'text', editable: true, dynamicProperties: { value: property } });
+// a write face object that binds its value to the given card property
+const boundTo = property => ({ type: 'write', dynamicProperties: { value: property } });
 
 describe('Card.editableProperty', () => {
   let card;
@@ -20,10 +20,10 @@ describe('Card.editableProperty', () => {
 
   test('returns the bound property of a game author', () => {
     expect(card.editableProperty(boundTo('note'))).toBe('note');
-    // an object without a type is rendered as text, and so is an editable one
-    expect(card.editableProperty({ editable: true, dynamicProperties: { value: 'note' } })).toBe('note');
-    // "editable" can be dynamic itself, which is how a card is locked while it is on the table
-    expect(card.editableProperty({ type: 'text', dynamicProperties: { value: 'note', editable: 'unlocked' } })).toBe('note');
+    // "editable" can be bound per card type, which is how a card is locked while it is on the table - the
+    // object stays a write object either way, it is just rendered as plain text while it is locked
+    expect(card.editableProperty({ type: 'write', dynamicProperties: { value: 'note', editable: 'unlocked' } })).toBe('note');
+    expect(card.editableProperty({ type: 'write', editable: false, dynamicProperties: { value: 'note' } })).toBe('note');
   });
 
   test('rejects the properties the engine owns, with and without a default', () => {
@@ -43,19 +43,20 @@ describe('Card.editableProperty', () => {
 
   test('rejects everything that has nowhere to store what is typed', () => {
     // a static value overrides the dynamic one, so the typed text would be invisible
-    expect(card.editableProperty({ type: 'text', editable: true, value: 'x', dynamicProperties: { value: 'note' } })).toBe(null);
-    expect(card.editableProperty({ type: 'text', editable: true })).toBe(null);
-    expect(card.editableProperty({ type: 'text', editable: true, dynamicProperties: { value: 42 } })).toBe(null);
+    expect(card.editableProperty({ type: 'write', value: 'x', dynamicProperties: { value: 'note' } })).toBe(null);
+    expect(card.editableProperty({ type: 'write' })).toBe(null);
+    expect(card.editableProperty({ type: 'write', dynamicProperties: { value: 42 } })).toBe(null);
   });
 
-  test('only makes text objects editable, matching the type case-sensitively', () => {
-    expect(card.editableProperty({ type: 'image', editable: true, dynamicProperties: { value: 'note' } })).toBe(null);
-    expect(card.editableProperty({ type: 'Text', editable: true, dynamicProperties: { value: 'note' } })).toBe(null);
+  test('only makes write objects editable, matching the type case-sensitively', () => {
+    expect(card.editableProperty({ type: 'image', dynamicProperties: { value: 'note' } })).toBe(null);
+    expect(card.editableProperty({ type: 'Write', dynamicProperties: { value: 'note' } })).toBe(null);
   });
 
-  test('leaves objects that do not ask to be editable alone', () => {
+  test('leaves text objects alone, including the ones asking to be editable', () => {
     expect(card.editableProperty({ type: 'text', dynamicProperties: { value: 'note' } })).toBe(null);
-    expect(card.editableProperty({ type: 'text', value: 'plain' })).toBe(null);
+    expect(card.editableProperty({ type: 'text', editable: true, dynamicProperties: { value: 'note' } })).toBe(null);
+    expect(card.editableProperty({ editable: true, dynamicProperties: { value: 'note' } })).toBe(null);
   });
 });
 

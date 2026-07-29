@@ -119,6 +119,8 @@ export class Card extends Widget {
           const editProperty = this.editableProperty(original);
           let objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
           objectDiv.classList.add('cardFaceObject');
+          if(original.type == 'write')
+            objectDiv.classList.add('write');
 
           const makeTextarea = _=>{
             const textarea = document.createElement('textarea');
@@ -134,7 +136,7 @@ export class Card extends Widget {
             return textarea;
           };
 
-          // An editable object is a textarea while it can be typed into and a plain div while it is locked:
+          // A write object is a textarea while it can be typed into and a plain div while it is locked:
           // a textarea clips text that does not fit and can then only be scrolled by typing in it, while a
           // div overflows like every other text object, so a locked note stays readable.
           const useTextarea = editable=>{
@@ -156,8 +158,10 @@ export class Card extends Widget {
                 if(object[dp] === undefined)
                   object[dp] = this.get(object.dynamicProperties[dp]);
 
+            // a write object is writable unless "editable" (usually bound per card) says otherwise, which is
+            // how a card is locked once it has been filled in
             if(editProperty)
-              useTextarea(!this.isReadonlyCopy && !!object.editable);
+              useTextarea(!this.isReadonlyCopy && !(object.editable !== undefined && object.editable !== null && !object.editable));
 
             const x = face.border ? object.x-face.border : object.x;
             const y = face.border ? object.y-face.border : object.y;
@@ -259,7 +263,7 @@ export class Card extends Widget {
 
                 if (inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
               }
-            } else if(editProperty) {
+            } else if(object.type == 'write') {
               const text = object.value === undefined || object.value === null ? '' : String(object.value);
               const placeholder = object.placeholder === undefined || object.placeholder === null ? '' : String(object.placeholder);
               if(objectDiv.tagName == 'TEXTAREA') {
@@ -270,13 +274,21 @@ export class Card extends Widget {
                 objectDiv.setAttribute('spellcheck', object.spellCheck === true);
               } else {
                 // A readonly copy (deck editor, card previews) is never typed into, so it shows the
-                // placeholder the same way the real card's text area does - otherwise an empty writable
+                // placeholder the same way the real card's text area does - otherwise an empty write
                 // object is invisible there. A locked card shows nothing: it can not be written on anymore.
                 const showPlaceholder = this.isReadonlyCopy && text === '' && placeholder !== '';
                 objectDiv.textContent = showPlaceholder ? placeholder : text;
                 objectDiv.classList.toggle('cardFacePlaceholder', showPlaceholder);
               }
               objectDiv.style.color = object.color;
+              // The box a player writes in is part of the type, so its fill and outline are properties of
+              // their own instead of something that has to be written as a css object. Only what the object
+              // actually sets is applied inline - the defaults (transparent, VTTblue) are in card.css, which
+              // keeps a css object on the object working for everything they do not name.
+              if(object.backgroundColor !== undefined)
+                objectDiv.style.backgroundColor = object.backgroundColor;
+              if(object.borderColor !== undefined)
+                objectDiv.style.borderColor = object.borderColor;
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
@@ -312,10 +324,10 @@ export class Card extends Widget {
     return p;
   }
 
-  // Properties the engine itself owns on a card - an editable text object must not be bound to one of these
-  // because every keystroke would overwrite it: a field bound to 'parent' makes the card vanish, one bound
-  // to 'type' replaces the card with a different widget. Every engine property has a default, except the
-  // handful listed above and the computed read-only ones, which routines are refused as well.
+  // Properties the engine itself owns on a card - a write object must not be bound to one of these because
+  // every keystroke would overwrite it: a field bound to 'parent' makes the card vanish, one bound to 'type'
+  // replaces the card with a different widget. Every engine property has a default, except the handful
+  // listed above and the computed read-only ones, which routines are refused as well.
   reservedProperties() {
     return [ ...Object.keys(this.defaults), ...enginePropertiesWithoutDefault, ...this.readOnlyProperties() ];
   }
@@ -326,14 +338,12 @@ export class Card extends Widget {
     return property.charAt(0) == '_' || this.reservedProperties().includes(property);
   }
 
-  // Text objects of a face template can be marked "editable" to let players write on the card. What they
-  // type has to go somewhere, so such an object must have its value bound to a card property through
-  // dynamicProperties - that property is returned here (and null for every object that is not editable).
+  // A "write" face object is a text object players can write on while playing. What they type has to go
+  // somewhere, so such an object must have its value bound to a card property through dynamicProperties -
+  // that property is returned here (and null for every object that can not be written on).
   editableProperty(object) {
     const dynamicProperties = typeof object.dynamicProperties == 'object' && object.dynamicProperties !== null ? object.dynamicProperties : {};
-    const isText = object.type === undefined || object.type == 'text';
-    const isEditable = object.editable || dynamicProperties.editable !== undefined;
-    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string' && !this.isReservedProperty(dynamicProperties.value))
+    if(object.type == 'write' && object.value === undefined && typeof dynamicProperties.value == 'string' && !this.isReservedProperty(dynamicProperties.value))
       return dynamicProperties.value;
     return null;
   }

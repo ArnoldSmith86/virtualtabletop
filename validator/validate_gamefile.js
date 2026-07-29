@@ -47,7 +47,8 @@ const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
     icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
-    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign', 'editable', 'placeholder', 'spellCheck'],
+    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
+    write: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign', 'editable', 'placeholder', 'spellCheck', 'backgroundColor', 'borderColor'],
     html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
 };
 
@@ -232,34 +233,33 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        // An editable text object stores what the player types in the card property its
-                        // value is bound to - without that binding there is nowhere to keep the text. The
-                        // conditions below mirror Card.editableProperty(): anything it rejects renders as a
-                        // plain, non-editable text object, so it has to be reported here.
+                        // A "write" object stores what the player types in the card property its value is
+                        // bound to - without that binding there is nowhere to keep the text. The conditions
+                        // below mirror Card.editableProperty(): anything it rejects renders as a plain,
+                        // read-only text object, so it has to be reported here.
                         const objDynamic = obj.dynamicProperties && typeof obj.dynamicProperties === 'object' ? obj.dynamicProperties : {};
-                        if(obj.editable || objDynamic.editable !== undefined) {
-                            if(obj.type !== undefined && obj.type !== 'text') {
-                                // any other type reports "editable" as an invalid property below anyway, so
-                                // only the spelling of a text object is worth a message of its own here
-                                if(String(obj.type).toLowerCase() === 'text')
-                                    problems.push({
-                                        widget: p.widgetId,
-                                        property: [...propertyPath, faceIndex, 'objects', objIndex, 'type'],
-                                        message: `a "${obj.type}" object is not editable - the type is matched case-sensitively, so only "text" makes the object writable`
-                                    });
-                            } else if(obj.value !== undefined || typeof objDynamic.value != 'string') {
+                        if(obj.type === 'write') {
+                            if(obj.value !== undefined || typeof objDynamic.value != 'string') {
                                 problems.push({
                                     widget: p.widgetId,
-                                    property: [...propertyPath, faceIndex, 'objects', objIndex, 'editable'],
-                                    message: 'editable text objects need their value bound to a card property through dynamicProperties (and no static value, which would override it) so the text players type can be stored'
+                                    property: [...propertyPath, faceIndex, 'objects', objIndex, 'type'],
+                                    message: 'write objects need their value bound to a card property through dynamicProperties (and no static value, which would override it) so the text players type can be stored'
                                 });
                             } else if(isReservedCardProperty(objDynamic.value)) {
                                 problems.push({
                                     widget: p.widgetId,
                                     property: [...propertyPath, faceIndex, 'objects', objIndex, 'dynamicProperties', 'value'],
-                                    message: `editable text objects can not be bound to '${objDynamic.value}' because the engine uses that property itself - bind it to a property of your own, e.g. 'note'`
+                                    message: `write objects can not be bound to '${objDynamic.value}' because the engine uses that property itself - bind it to a property of your own, e.g. 'note'`
                                 });
                             }
+                        } else if(obj.type !== undefined && String(obj.type).toLowerCase() === 'write') {
+                            // nothing else would catch this: the properties of a "Write" object are looked up
+                            // case-insensitively below, but the engine only renders "write" as a text area
+                            problems.push({
+                                widget: p.widgetId,
+                                property: [...propertyPath, faceIndex, 'objects', objIndex, 'type'],
+                                message: `a "${obj.type}" object can not be written on - the type is matched case-sensitively, so only "write" makes the object a text area`
+                            });
                         }
 
                         // a face object without a type is rendered as text, so it gets the text properties
@@ -282,7 +282,7 @@ const WIDGET_PROPERTIES = {
     }
 };
 
-// Properties the engine itself owns on a card, so an editable text object must not be bound to one of them:
+// Properties the engine itself owns on a card, so a write object must not be bound to one of them:
 // every keystroke would overwrite it, e.g. a field bound to 'parent' makes the card vanish and one bound to
 // 'type' replaces the card with a different widget. Card.reservedProperties() (room bundle) builds the same
 // set from the widget defaults, which carry the one property this table does not list.

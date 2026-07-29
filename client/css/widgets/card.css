@@ -28,9 +28,16 @@
   white-space: collapse;
 }
 
+/* A write object is a box a player types into, so it is outlined and filled: the defaults for its own
+   backgroundColor (transparent) and borderColor (VTTblue) properties live here, an object that sets either
+   of them overrides this rule inline. Both variants of the object carry the class - the text area while it
+   can be written on and the plain div once it is locked - so locking a card does not change its looks. */
+.card > .cardFace > .cardFaceObject.write {
+  background-color: transparent;
+  border: 1px solid var(--VTTblue);
+}
+
 .card > .cardFace > textarea.cardFaceObject {
-  border: none;
-  background: none;
   padding: 0;
   margin: 0;
   color: inherit;
@@ -45,17 +52,10 @@
 }
 
 /* .widget sets touch-action: none so that a drag moves the card. While playing, a card can not be dragged by
-   its writable text anyway, so let a vertical drag scroll the overflow there - on a touch device that is the
+   its write object anyway, so let a vertical drag scroll the overflow there - on a touch device that is the
    only way to reach it. In edit mode the same drag moves the card, so leave it alone. */
 body:not(.edit) .card > .cardFace > textarea.cardFaceObject {
   touch-action: pan-y;
-}
-
-/* Written-on cards look exactly like static text, which leaves an empty one completely blank: hint at the
-   writable area while the pointer is over the card, in the text color so it works on any card background. */
-.card:hover > .cardFace > textarea.cardFaceObject:not(:focus) {
-  outline: 1px dashed currentColor;
-  outline-offset: -1px;
 }
 
 .card > .cardFace > textarea.cardFaceObject:focus {
