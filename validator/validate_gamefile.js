@@ -254,11 +254,11 @@ const WIDGET_PROPERTIES = {
                             }
                         } else if(obj.type !== undefined && String(obj.type).toLowerCase() === 'write') {
                             // nothing else would catch this: the properties of a "Write" object are looked up
-                            // case-insensitively below, but the engine only renders "write" as a text area
+                            // case-insensitively below, but the engine only renders "write" as a writable object
                             problems.push({
                                 widget: p.widgetId,
                                 property: [...propertyPath, faceIndex, 'objects', objIndex, 'type'],
-                                message: `a "${obj.type}" object can not be written on - the type is matched case-sensitively, so only "write" makes the object a text area`
+                                message: `a "${obj.type}" object can not be written on - the type is matched case-sensitively, so only "write" makes the object writable`
                             });
                         }
 

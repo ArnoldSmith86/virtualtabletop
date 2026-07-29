@@ -1796,7 +1796,7 @@ class DeckEditor {
       const cardWidth = this.mainCard ? this.mainCard.get('width') : 103;
       const cardHeight = this.mainCard ? this.mainCard.get('height') : 160;
       if((object.width || 0) * (object.height || 0) > cardWidth * cardHeight * 2/3)
-        div(sidebar, 'deckEditorSectionNote deckEditorSectionWarning').textContent = 'This text area covers most of the card. A card can not be dragged or flipped by its text area, so leave some card around it for players to grab.';
+        div(sidebar, 'deckEditorSectionNote deckEditorSectionWarning').textContent = 'This text box covers most of the card. A card can not be dragged or flipped by its text box, so leave some card around it for players to grab.';
     }
 
     // One cause/actionId per edited field: a typing burst on one property of one object stays one
@@ -2993,13 +2993,13 @@ class DeckEditor {
     const width = this.mainCard ? this.mainCard.get('width') : 103;
     const height = this.mainCard ? this.mainCard.get('height') : 160;
     // Roomy enough to write a few lines in, but with a margin around it and the lower half of the card left
-    // free: a card can not be grabbed by its text area, so the player needs some card left to drag and flip.
+    // free: a card can not be grabbed by its text box, so the player needs some card left to drag and flip.
     const margin = Math.round(Math.min(width, height)/8);
-    // An empty text area is blank, so it starts out with a placeholder - that is what tells a player the card
+    // An empty text box is blank, so it starts out with a placeholder - that is what tells a player the card
     // can be written on at all, and it shows the creator the object right after adding it. spellCheck (off,
     // like on a label) and the two color properties carry their defaults so that their rows - and with them
     // the color pickers - are right there in the sidebar instead of having to be added by name.
-    return { type: 'write', placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: '#1f5ca6', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
+    return { type: 'write', placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: '#000000', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
   }
 
   renderDynamicProperties(sidebar, object) {

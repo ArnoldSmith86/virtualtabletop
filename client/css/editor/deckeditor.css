@@ -917,12 +917,6 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: move;
 }
 
-/* Write objects are read-only on the editor's card (it is not part of the room state), but they still have to
-   be selectable and draggable there like every other face object. */
-#deckEditorMain .deckEditorCard textarea.cardFaceObject {
-  cursor: move;
-}
-
 /* The big edit card clips to its bounds like the real card does, so an object dragged past the card's edge
    is hidden instead of floating out over the editor. The outlines below are drawn INSIDE the object (negative
    outline-offset) so they survive that clip as long as the object stays within the card; for the selected

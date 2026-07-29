@@ -24,7 +24,7 @@ export function getZoomLevel() {
 // A text field that has more text than fits (a writable card text, a label) owns the wheel: without this the
 // room zoom swallows the event and the overflow can only be reached with the caret keys or the scrollbar.
 function scrollableTextField(element) {
-  return element && element.tagName == 'TEXTAREA' && element.scrollHeight > element.clientHeight;
+  return element && (element.tagName == 'TEXTAREA' || element.isContentEditable) && element.scrollHeight > element.clientHeight;
 }
 
 function resetZoomAndPan() {
@@ -187,7 +187,7 @@ onLoad(function() {
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
-    if(e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT')
+    if(e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT' || e.target.isContentEditable)
       return; // paging inside a text field moves the caret, it does not zoom
     if(!overlayActive && !edit && !zoomLocked && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();

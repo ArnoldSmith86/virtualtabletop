@@ -3,6 +3,21 @@
 // Card.reservedProperties(). validate_gamefile.js builds the same set from its own property table.
 const enginePropertiesWithoutDefault = [ 'id', 'type', 'clonedFrom', 'editorGroup', 'editorAddToRoomRoutine' ];
 
+// contenteditable="plaintext-only" keeps everything a player types or pastes plain text. The few browsers
+// that don't know the value throw on the IDL setter and get plain contenteditable plus a paste handler.
+let plainTextEditableSupport = null;
+function plainTextEditable() {
+  if(plainTextEditableSupport === null) {
+    try {
+      document.createElement('div').contentEditable = 'plaintext-only';
+      plainTextEditableSupport = true;
+    } catch(e) {
+      plainTextEditableSupport = false;
+    }
+  }
+  return plainTextEditableSupport;
+}
+
 export class Card extends Widget {
   constructor(id) {
     super(id);
@@ -117,37 +132,50 @@ export class Card extends Widget {
         for(const original of face.objects) {
           const useIframe = original.type == 'html' && legacyMode('useIframeForHtmlCards');
           const editProperty = this.editableProperty(original);
-          let objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
+          const objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
           objectDiv.classList.add('cardFaceObject');
           if(original.type == 'write')
             objectDiv.classList.add('write');
 
-          const makeTextarea = _=>{
-            const textarea = document.createElement('textarea');
-            textarea.addEventListener('input', async _=>{
+          // Reads back what a player typed: the browser expresses their line breaks as newlines or as <br>
+          // depending on how it implements plain text editing, and it keeps an empty last line around that
+          // a card should not store. innerText would cover the line breaks too, but it returns what
+          // text-transform makes of the text rather than what was actually typed.
+          const typedText = _=>{
+            let text = '';
+            for(const node of objectDiv.childNodes)
+              text += node.nodeName == 'BR' ? '\n' : node.textContent;
+            return text.replace(/\n$/, '');
+          };
+          // What was last typed here, so that a card property arriving back from the server as the echo of
+          // it does not rewrite the text under the caret (see setValue below).
+          let lastTyped = null;
+
+          // A write object is made writable with contenteditable rather than being a text area, so that it
+          // stays the same div in all three of its states - writable, locked and the readonly copy the deck
+          // editor and the card previews render. That keeps the css a game author writes for it doing the
+          // same thing everywhere: a form control lays its text out itself, so e.g. flexbox alignment that
+          // works on every other face object type has no effect inside a text area.
+          if(editProperty) {
+            objectDiv.addEventListener('input', async _=>{
+              // the hint is gone as soon as there is something typed - also before reading the text back,
+              // because it is generated content and would otherwise be part of it
+              objectDiv.classList.remove('cardFacePlaceholder');
+              const typed = lastTyped = typedText();
               const stored = this.get(editProperty);
-              if(textarea.value === (stored === undefined || stored === null ? '' : String(stored)))
+              if(typed === (stored === undefined || stored === null ? '' : String(stored)))
                 return;
               batchStart();
               setDeltaCause(`${playerName} typed into ${this.id}`);
-              await this.set(editProperty, textarea.value);
+              await this.set(editProperty, typed);
               batchEnd();
             });
-            return textarea;
-          };
-
-          // A write object is a textarea while it can be typed into and a plain div while it is locked:
-          // a textarea clips text that does not fit and can then only be scrolled by typing in it, while a
-          // div overflows like every other text object, so a locked note stays readable.
-          const useTextarea = editable=>{
-            if(editable == (objectDiv.tagName == 'TEXTAREA'))
-              return;
-            const replacement = editable ? makeTextarea() : document.createElement('div');
-            replacement.className = objectDiv.className;
-            if(objectDiv.parentNode)
-              objectDiv.parentNode.replaceChild(replacement, objectDiv);
-            objectDiv = replacement;
-          };
+            if(!plainTextEditable())
+              objectDiv.addEventListener('paste', e=>{
+                e.preventDefault();
+                document.execCommand('insertText', false, e.clipboardData.getData('text/plain'));
+              });
+          }
 
           const setValue = _=>{
             const usedProperties = new Set();
@@ -157,11 +185,6 @@ export class Card extends Widget {
               for(const dp of Object.keys(object.dynamicProperties))
                 if(object[dp] === undefined)
                   object[dp] = this.get(object.dynamicProperties[dp]);
-
-            // a write object is writable unless "editable" (usually bound per card) says otherwise, which is
-            // how a card is locked once it has been filled in
-            if(editProperty)
-              useTextarea(!this.isReadonlyCopy && !(object.editable !== undefined && object.editable !== null && !object.editable));
 
             const x = face.border ? object.x-face.border : object.x;
             const y = face.border ? object.y-face.border : object.y;
@@ -266,34 +289,30 @@ export class Card extends Widget {
             } else if(object.type == 'write') {
               const text = object.value === undefined || object.value === null ? '' : String(object.value);
               const placeholder = object.placeholder === undefined || object.placeholder === null ? '' : String(object.placeholder);
-              if(objectDiv.tagName == 'TEXTAREA') {
-                // don't touch the field while it is being typed into - that would move the cursor to the end
-                if(objectDiv.value !== text)
-                  objectDiv.value = text;
-                objectDiv.placeholder = placeholder;
-                objectDiv.setAttribute('spellcheck', object.spellCheck === true);
-              } else {
-                // A readonly copy (deck editor, card previews) is never typed into, so it shows the
-                // placeholder the same way the real card's text area does - otherwise an empty write
-                // object is invisible there. A locked card shows nothing: it can not be written on anymore.
-                const showPlaceholder = this.isReadonlyCopy && text === '' && placeholder !== '';
-                objectDiv.classList.toggle('cardFacePlaceholder', showPlaceholder);
-                if(showPlaceholder) {
-                  // the hint is dimmed like a text area dims its ::placeholder - it goes into a span of its
-                  // own so that only the text fades, not the box: dimming the object itself would wash out
-                  // its backgroundColor and borderColor with no way for the game author to get them back
-                  objectDiv.textContent = '';
-                  const hint = document.createElement('span');
-                  hint.textContent = placeholder;
-                  objectDiv.appendChild(hint);
-                } else {
-                  objectDiv.textContent = text;
-                }
-              }
+              // writable unless "editable" (usually bound per card) says otherwise, which is how a card is
+              // locked once it has been filled in - and never on a readonly copy, whose card is not in the
+              // room, so nothing typed there could be stored anywhere
+              const writable = editProperty && !this.isReadonlyCopy && !(object.editable !== undefined && object.editable !== null && !object.editable);
+              if(writable)
+                objectDiv.setAttribute('contenteditable', plainTextEditable() ? 'plaintext-only' : 'true');
+              else
+                objectDiv.removeAttribute('contenteditable');
+              objectDiv.setAttribute('spellcheck', object.spellCheck === true);
+              // Don't rewrite the text while it is being typed into - that would move the caret to the end
+              // and drop the empty line a player just opened with Enter. Only what this player typed is left
+              // alone though: a change made by somebody else has to show up here, caret or not.
+              if(typedText() !== text && !(document.activeElement === objectDiv && text === lastTyped))
+                objectDiv.textContent = text;
+              // The hint an empty object shows: on the table while it can still be written on, and on a
+              // readonly copy always - the deck editor would otherwise show a blank box. A locked card shows
+              // nothing: what is on it is what it says, and it can not be written on anymore. It is drawn as
+              // generated content (see card.css) so that it can neither be typed into nor read back as text.
+              objectDiv.dataset.placeholder = placeholder;
+              objectDiv.classList.toggle('cardFacePlaceholder', text === '' && placeholder !== '' && (writable || this.isReadonlyCopy));
               objectDiv.style.color = object.color;
               // The box a player writes in is part of the type, so its fill and outline are properties of
               // their own instead of something that has to be written as a css object. Only what the object
-              // actually sets is applied inline - the defaults (transparent, VTTblue) are in card.css, which
+              // actually sets is applied inline - the defaults (transparent, black) are in card.css, which
               // keeps a css object on the object working for everything they do not name.
               if(object.backgroundColor !== undefined)
                 objectDiv.style.backgroundColor = object.backgroundColor;

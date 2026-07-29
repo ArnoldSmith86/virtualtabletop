@@ -98,7 +98,7 @@ async function checkIfSVG(url) {
   }
 }
 
-// true while a "write" face object of a deck is selected - a text area players can type into while playing
+// true while a "write" face object of a deck is selected - a box players can type into while playing
 function jeIsWriteFaceObject() {
   return jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].type == 'write';
 }
@@ -1009,9 +1009,9 @@ const jeCommands = [
     name: 'write template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: async function() {
-      // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text area,
+      // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text box,
       // so there has to be some card left around it for the player to grab. The placeholder is what tells a
-      // player the card can be written on - without it an empty text area is blank.
+      // player the card can be written on - without it an empty text box is blank.
       jeStateNow.faceTemplates[+jeContext[2]].objects.push({
         type: 'write',
         placeholder: 'write here…',
@@ -1124,7 +1124,7 @@ const jeCommands = [
     show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor === undefined,
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor = '###SELECT ME###';
-      jeSetAndSelect('#1f5ca6');
+      jeSetAndSelect('#000000');
     }
   },
   {
