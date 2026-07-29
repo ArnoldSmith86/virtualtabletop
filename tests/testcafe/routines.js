@@ -126,14 +126,23 @@ function leaveRoutineRoom() {
 
 // drag the card onto the holder without releasing the mouse button - the second
 // move is what a real drag delivers too, and only it sees the widget at its new
-// position and picks up the holder below it
-const startDrag = ClientFunction(() => {
+// position and picks up the holder below it. steps adds the positions in between
+// that a real drag delivers as well - they are outdated as soon as the next one
+// arrives, so the widget must not walk through them one by one
+const startDrag = ClientFunction(steps => {
   const card = document.querySelector('#w_card').getBoundingClientRect();
   const holder = document.querySelector('#w_holder').getBoundingClientRect();
-  const move = ()=>document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 1, clientX: holder.x + holder.width/2, clientY: holder.y + holder.height/2 }));
-  document.querySelector('#w_card').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, buttons: 1, clientX: card.x + card.width/2, clientY: card.y + card.height/2 }));
-  move();
-  return new Promise(resolve=>setTimeout(()=>{ move(); resolve(); }, 100));
+  const from = { x: card.x + card.width/2, y: card.y + card.height/2 };
+  const to = { x: holder.x + holder.width/2, y: holder.y + holder.height/2 };
+  const move = (x, y)=>document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 1, clientX: x, clientY: y }));
+  document.querySelector('#w_card').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, buttons: 1, clientX: from.x, clientY: from.y }));
+  move(to.x, to.y);
+  return new Promise(resolve=>setTimeout(()=>{
+    for(let step=1; step<=(steps||0); step++)
+      move(from.x + (to.x - from.x)*step/(steps+1), from.y + (to.y - from.y)*step/(steps+1));
+    move(to.x, to.y);
+    resolve();
+  }, 100));
 });
 
 const releaseDrag = ClientFunction(() => {
@@ -190,6 +199,9 @@ test('moving the mouse while a DELAY is running does not drag the clicked widget
   await setName(t);
   await t.click('#w_delay');
   await t.hover('#w_far');
+  // without this the test would pass without ever testing anything if the hover
+  // took longer than the DELAY, because the routine would already be over
+  await t.expect(await markedWidgets()).eql([]);
   await expectEventually(t, markedWidgets, [ 'delay' ], 4*delayDuration);
   await expectEventually(t, ()=>widgetPosition('delay'), [ 100, 100 ]);
 });
@@ -199,7 +211,10 @@ test('releasing the button while a leaveRoutine is running still drops the widge
   await ClientFunction(prepareClient)();
   await setName(t);
   await expectEventually(t, ()=>widgetDragState('card'), [ 'source', null ]);
-  await startDrag();
+  // the burst is what a real drag delivers while the routine is running: those
+  // positions are all outdated once it returns, and the widget has to end up
+  // where the button came up instead of walking through them
+  await startDrag(200);
   await releaseDrag();
   await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ], 4*leaveDuration);
 });
