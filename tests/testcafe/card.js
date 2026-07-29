@@ -55,8 +55,9 @@ function lockableCardRoom() {
   return room;
 }
 
-// an object that asks to be editable but is bound to a property the engine owns: writing to it would replace
-// the card with a different widget, so it has to render as a plain text object instead
+// objects that ask to be editable but are bound to properties the engine owns: writing to 'type' would
+// replace the card with a different widget and '_ancestor' is computed by the engine and refused to routines
+// as well, so both have to render as plain text objects instead
 function reservedBindingCardRoom() {
   return {
     deck: {
@@ -65,7 +66,8 @@ function reservedBindingCardRoom() {
       cardTypes: { note: {} },
       faceTemplates: [
         { objects: [
-          { type: 'text', editable: true, x: 10, y: 10, width: 180, height: 40, fontSize: 14, dynamicProperties: { value: 'type' } }
+          { type: 'text', editable: true, x: 10, y: 10, width: 180, height: 40, fontSize: 14, dynamicProperties: { value: 'type' } },
+          { type: 'text', editable: true, x: 10, y: 60, width: 180, height: 40, fontSize: 14, dynamicProperties: { value: '_ancestor' } }
         ] }
       ]
     },
@@ -146,9 +148,11 @@ test('A card text bound to a property of the card widget itself is not editable'
   await ClientFunction(prepareClient)();
   await setName(t);
 
-  // typing into it would set the card's type, which would replace it with a different widget
+  // typing into them would set the card's type, which would replace it with a different widget, or push a
+  // computed read-only property into the room state
   await t
     .expect(Selector('#w_card textarea').exists).notOk()
     .click('#w_card');
   await expectEventually(t, ()=>cardProperty('type'), 'card');
+  await expectEventually(t, ()=>cardProperty('_ancestor'), undefined);
 });

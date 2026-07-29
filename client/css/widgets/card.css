@@ -44,6 +44,13 @@
   scrollbar-color: currentColor transparent;
 }
 
+/* .widget sets touch-action: none so that a drag moves the card. While playing, a card can not be dragged by
+   its writable text anyway, so let a vertical drag scroll the overflow there - on a touch device that is the
+   only way to reach it. In edit mode the same drag moves the card, so leave it alone. */
+body:not(.edit) .card > .cardFace > textarea.cardFaceObject {
+  touch-action: pan-y;
+}
+
 /* Written-on cards look exactly like static text, which leaves an empty one completely blank: hint at the
    writable area while the pointer is over the card, in the text color so it works on any card background. */
 .card:hover > .cardFace > textarea.cardFaceObject:not(:focus) {

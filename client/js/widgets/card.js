@@ -3,7 +3,7 @@
 // Card.reservedProperties(). validate_gamefile.js builds the same set from its own property table.
 const enginePropertiesWithoutDefault = [ 'id', 'type', 'clonedFrom', 'editorGroup', 'editorAddToRoomRoutine' ];
 
-class Card extends Widget {
+export class Card extends Widget {
   constructor(id) {
     super(id);
 
@@ -309,9 +309,15 @@ class Card extends Widget {
   // Properties the engine itself owns on a card - an editable text object must not be bound to one of these
   // because every keystroke would overwrite it: a field bound to 'parent' makes the card vanish, one bound
   // to 'type' replaces the card with a different widget. Every engine property has a default, except the
-  // handful listed above.
+  // handful listed above and the computed read-only ones, which routines are refused as well.
   reservedProperties() {
-    return [ ...Object.keys(this.defaults), ...enginePropertiesWithoutDefault ];
+    return [ ...Object.keys(this.defaults), ...enginePropertiesWithoutDefault, ...this.readOnlyProperties() ];
+  }
+
+  // The engine names every computed property with a leading underscore, so reject that whole namespace
+  // rather than just today's list - that keeps the guard closed when a new computed property is added.
+  isReservedProperty(property) {
+    return property.charAt(0) == '_' || this.reservedProperties().includes(property);
   }
 
   // Text objects of a face template can be marked "editable" to let players write on the card. What they
@@ -321,7 +327,7 @@ class Card extends Widget {
     const dynamicProperties = typeof object.dynamicProperties == 'object' && object.dynamicProperties !== null ? object.dynamicProperties : {};
     const isText = object.type === undefined || object.type == 'text';
     const isEditable = object.editable || dynamicProperties.editable !== undefined;
-    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string' && !this.reservedProperties().includes(dynamicProperties.value))
+    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string' && !this.isReservedProperty(dynamicProperties.value))
       return dynamicProperties.value;
     return null;
   }

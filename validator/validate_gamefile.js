@@ -238,17 +238,26 @@ const WIDGET_PROPERTIES = {
                         // plain, non-editable text object, so it has to be reported here.
                         const objDynamic = obj.dynamicProperties && typeof obj.dynamicProperties === 'object' ? obj.dynamicProperties : {};
                         if(obj.editable || objDynamic.editable !== undefined) {
-                            if(obj.value !== undefined || typeof objDynamic.value != 'string') {
+                            if(obj.type !== undefined && obj.type !== 'text') {
+                                // any other type reports "editable" as an invalid property below anyway, so
+                                // only the spelling of a text object is worth a message of its own here
+                                if(String(obj.type).toLowerCase() === 'text')
+                                    problems.push({
+                                        widget: p.widgetId,
+                                        property: [...propertyPath, faceIndex, 'objects', objIndex, 'type'],
+                                        message: `a "${obj.type}" object is not editable - the type is matched case-sensitively, so only "text" makes the object writable`
+                                    });
+                            } else if(obj.value !== undefined || typeof objDynamic.value != 'string') {
                                 problems.push({
                                     widget: p.widgetId,
                                     property: [...propertyPath, faceIndex, 'objects', objIndex, 'editable'],
                                     message: 'editable text objects need their value bound to a card property through dynamicProperties (and no static value, which would override it) so the text players type can be stored'
                                 });
-                            } else if(RESERVED_CARD_PROPERTIES.includes(objDynamic.value)) {
+                            } else if(isReservedCardProperty(objDynamic.value)) {
                                 problems.push({
                                     widget: p.widgetId,
                                     property: [...propertyPath, faceIndex, 'objects', objIndex, 'dynamicProperties', 'value'],
-                                    message: `editable text objects can not be bound to '${objDynamic.value}' because the card widget uses that property itself - bind it to a property of your own, e.g. 'note'`
+                                    message: `editable text objects can not be bound to '${objDynamic.value}' because the engine uses that property itself - bind it to a property of your own, e.g. 'note'`
                                 });
                             }
                         }
@@ -278,6 +287,13 @@ const WIDGET_PROPERTIES = {
 // 'type' replaces the card with a different widget. Card.reservedProperties() (room bundle) builds the same
 // set from the widget defaults, which carry the one property this table does not list.
 const RESERVED_CARD_PROPERTIES = [ ...Object.keys(WIDGET_PROPERTIES.Card), 'typeClasses' ];
+
+// On top of those, the engine computes a handful of read-only properties (_ancestor, _absoluteX, ...) that
+// routines are refused as well. They are all named with a leading underscore, so reject that whole namespace
+// instead of a list that has to be kept in sync - Card.isReservedProperty() does the same on the engine side.
+function isReservedCardProperty(property) {
+    return property.charAt(0) === '_' || RESERVED_CARD_PROPERTIES.includes(property);
+}
 
 const SUPER_GLOBALS = {
     variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
@@ -1421,4 +1437,4 @@ function validateGameFile(data, checkMeta) {
 }
 
 // ES6 export for use in ES modules
-export { validateGameFile, getWidgetType, validateRoutine, getCustomPropertyUsage }; 
+export { validateGameFile, getWidgetType, validateRoutine, getCustomPropertyUsage, RESERVED_CARD_PROPERTIES, isReservedCardProperty };
