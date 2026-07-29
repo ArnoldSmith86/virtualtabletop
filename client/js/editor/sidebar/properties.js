@@ -897,8 +897,8 @@ class PropertiesModule extends SidebarModule {
   }
 
   // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
-  // (deckTraditional/deckGenerator/deckImages/deckImportTTS) now live in the deck editor's "Add New Deck"
-  // submenu, so this just points the user at the two starting actions.
+  // (deckTraditional/deckGenerator/deckImages/deckImagePairs/deckTextCards/deckImportTTS) now live in the
+  // deck editor's "Add New Deck" submenu, so this just points the user at the two starting actions.
   addDeck() {
     this.addHeader('Edit widgets');
 
@@ -1359,6 +1359,253 @@ class PropertiesModule extends SidebarModule {
       }
 
       await this.addDeckWithCards(deck, 'image', counts);
+    };
+  }
+
+  // Two bulk uploads - all the card fronts and all the card backs - matched into pairs by sorting both lists
+  // by file name, so front1.jpg gets back1.jpg as its back. Numbers are compared numerically so front2 sorts
+  // before front10. Unlike deckImages (one shared back for the whole deck) every card type carries its own
+  // back image, which the back face reads through a dynamic property.
+  deckImagePairs(target) {
+    const fronts = [];
+    const backs = [];
+
+    const intro = document.createElement('p');
+    intro.innerText = 'Upload all card fronts and all card backs. Both lists are sorted by file name and then matched up in that order, so front1.jpg is paired with back1.jpg. Upload a single back image to use it for every card.';
+    target.append(intro);
+
+    const addUploadSection = (title, list, label)=>{
+      this.addSubHeader(title, target);
+      const listDOM = div(target, 'imagePairList');
+      const bar = div(target, 'buttonBar', `<button icon=upload>${label}</button>`);
+      $('button', bar).onclick = _=>uploadAsset((imagePath, fileName)=>{
+        if(imagePath) {
+          list.push({ imagePath, fileName });
+          render();
+        }
+      });
+      return listDOM;
+    };
+
+    const frontList = addUploadSection('Card fronts', fronts, 'Upload fronts...');
+    const backList  = addUploadSection('Card backs',  backs,  'Upload backs...');
+
+    const status = div(target, 'imagePairStatus');
+    const options = div(target, 'imagePairOptions', 'Copies of each card: <input type=number min=1 max=99 value=1>');
+
+    div(target, 'goButton buttonBar', '<button icon=add class=green disabled>Add to game</button>');
+    const addButton = $('.goButton [icon=add]', target);
+
+    const renderList = (list, listDOM, pairedWith)=>{
+      listDOM.innerHTML = '';
+      for(const [ index, entry ] of list.entries()) {
+        const row = div(listDOM, 'imagePairEntry', `<b></b><img src="${mapAssetURLs(entry.imagePath)}"><span></span><button icon=delete title="Remove this image"></button>`);
+        $('b', row).innerText = `${index+1}.`;
+        $('span', row).innerText = entry.fileName;
+        if(pairedWith && pairedWith[index])
+          row.title = `Paired with ${pairedWith[index].fileName}`;
+        $('button', row).onclick = _=>{
+          list.splice(list.indexOf(entry), 1);
+          render();
+        };
+      }
+    };
+
+    // Both lists always render in the order they will be paired in, so the numbers in front of the file names
+    // are the pairing itself - no separate pair list needed.
+    const render = _=>{
+      for(const list of [ fronts, backs ])
+        list.sort((a, b)=>a.fileName.localeCompare(b.fileName, undefined, { numeric: true }));
+      const sharedBack = backs.length == 1;
+      const paired = fronts.length && backs.length && (sharedBack || fronts.length == backs.length);
+      renderList(fronts, frontList, sharedBack ? null : backs);
+      renderList(backs, backList, sharedBack ? null : fronts);
+      if(!fronts.length || !backs.length)
+        status.innerText = 'Upload at least one front image and one back image.';
+      else if(paired)
+        status.innerText = `${fronts.length} card${fronts.length == 1 ? '' : ' types'}${sharedBack ? ', all sharing the single back image' : ', each front paired with the back in the same position'}.`;
+      else
+        status.innerText = `${fronts.length} fronts but ${backs.length} backs - upload the same number of each, or a single back for all cards.`;
+      status.classList.toggle('imagePairMismatch', !!(fronts.length && backs.length && !paired));
+      addButton.disabled = !paired;
+    };
+    render();
+
+    addButton.onclick = async _=>{
+      const copies = Math.max(1, +$('input', options).value || 1);
+      const cardTypes = {};
+      const counts = {};
+      for(const [ index, front ] of fronts.entries()) {
+        const back = backs.length == 1 ? backs[0] : backs[index];
+        // Two files can share a name (they come from separate uploads); a "(2)" suffix rather than a plain
+        // number keeps the generated card ids apart from the "<card type> <copy number>" ids below.
+        const base = front.fileName.replace(/\.[^.]+$/, '') || `card ${index+1}`;
+        let cardType = base;
+        for(let i=2; cardTypes[cardType] !== undefined; ++i)
+          cardType = `${base} (${i})`;
+        cardTypes[cardType] = { image: front.imagePath, backImage: back.imagePath };
+        counts[cardType] = copies;
+      }
+
+      const deck = {
+        id: generateUniqueWidgetID(),
+        type: 'deck',
+        cardTypes,
+        faceTemplates: [
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "dynamicProperties": {
+                  "value": "backImage",
+                  "height": "height",
+                  "width": "width"
+                }
+              }
+            ]
+          },
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "dynamicProperties": {
+                  "value": "image",
+                  "height": "height",
+                  "width": "width"
+                }
+              }
+            ]
+          }
+        ]
+      };
+
+      // Keep the default card height and take the width from the first front image's aspect ratio, so the
+      // cards aren't distorted (same approach as the single-image flow above).
+      const firstFront = $('img', frontList);
+      const cardWidth = firstFront && firstFront.naturalHeight
+        ? Math.round(firstFront.naturalWidth / firstFront.naturalHeight * 160)
+        : 103;
+      if(cardWidth != 103)
+        deck.cardDefaults = { width: cardWidth };
+
+      await this.addDeckWithCards(deck, 'front/back image', counts);
+    };
+  }
+
+  // A deck of plain text cards in the shape of the "Cards Against Humanity" decks in the library: every typed
+  // line becomes a card type with a "text" property, the front face renders it through a dynamic property and
+  // the back face shows an optional deck label. Colors, font size and card size are the only design choices -
+  // everything beyond that is done afterwards in the deck editor.
+  deckTextCards(target) {
+    const intro = document.createElement('p');
+    intro.innerText = 'Type or paste the card texts, one card per line. Each line becomes a card type whose "text" property holds that line, so you can edit the wording later in the deck editor.';
+    target.append(intro);
+
+    this.addSubHeader('Card texts', target);
+    const textarea = document.createElement('textarea');
+    textarea.className = 'textCardsInput';
+    textarea.rows = 8;
+    textarea.placeholder = 'The first card\nThe second card\n...';
+    target.append(textarea);
+
+    this.addSubHeader('Card design', target);
+    const design = div(target, 'textCardsDesign', `
+      <label>Card color<input class=textCardsBackground type=color value="#000000"></label>
+      <label>Text color<input class=textCardsColor type=color value="#ffffff"></label>
+      <label>Font size<input class=textCardsFontSize type=number min=6 max=72 value=16></label>
+      <label>Card width<input class=textCardsWidth type=number min=20 max=600 value=150></label>
+      <label>Card height<input class=textCardsHeight type=number min=20 max=600 value=233></label>
+      <label>Copies of each card<input class=textCardsCopies type=number min=1 max=99 value=1></label>
+      <label class=textCardsLabelWrap>Deck label - shown on the card backs<input class=textCardsLabel type=text placeholder="optional, e.g. the deck name"></label>
+    `);
+
+    this.addSubHeader('Preview', target);
+    const preview = div(target, 'textCardsPreview');
+
+    div(target, 'goButton buttonBar', '<button icon=add class=green disabled>Add to game</button>');
+    const addButton = $('.goButton [icon=add]', target);
+
+    const cardTexts = _=>textarea.value.split('\n').map(line=>line.trim()).filter(line=>line.length);
+
+    const deckDefinition = (texts, id)=>{
+      const number = (selector, fallback)=>+$(selector, design).value || fallback;
+      const width    = number('.textCardsWidth', 150);
+      const height   = number('.textCardsHeight', 233);
+      const fontSize = number('.textCardsFontSize', 16);
+      const color    = $('.textCardsColor', design).value;
+      const label    = $('.textCardsLabel', design).value.trim();
+      const padding  = Math.max(4, Math.round(width/12));
+
+      const colorBox = _=>({ type: 'image', x: 0, y: 0, width, height, color: $('.textCardsBackground', design).value, value: '' });
+      const textObject = properties=>Object.assign({
+        type: 'text',
+        x: padding,
+        y: padding,
+        width: width - 2*padding,
+        height: height - 2*padding,
+        textAlign: 'left',
+        color,
+        css: { 'font-weight': 'bold', 'line-height': '1.25em' }
+      }, properties);
+
+      const cardTypes = {};
+      for(const [ index, text ] of texts.entries()) {
+        // Card type names end up in the card widget ids, so strip anything awkward there and keep them short;
+        // fall back to a running number when a line has nothing usable left (e.g. "______ + ______"). Repeated
+        // lines get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
+        const base = text.replace(/[^A-Za-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().substr(0, 30).trim() || `card ${index+1}`;
+        let cardType = base;
+        for(let i=2; cardTypes[cardType] !== undefined; ++i)
+          cardType = `${base} (${i})`;
+        cardTypes[cardType] = { text };
+      }
+
+      const back = { radius: 8, objects: [ colorBox() ] };
+      const front = { radius: 8, objects: [ colorBox(), textObject({ dynamicProperties: { value: 'text', fontSize: 'fontSize' } }) ] };
+      if(label) {
+        // The back is just the label at 1.5x, the front repeats it small along the bottom edge.
+        const footerSize = Math.max(6, Math.round(fontSize/2));
+        const footerHeight = Math.round(footerSize*1.4);
+        back.objects.push(textObject({ value: label, fontSize: Math.round(fontSize*1.5) }));
+        front.objects.push(textObject({ value: label, fontSize: footerSize, y: height - padding - footerHeight, height: footerHeight }));
+      }
+
+      return {
+        id,
+        type: 'deck',
+        cardDefaults: { width, height, fontSize },
+        cardTypes,
+        faceTemplates: [ back, front ]
+      };
+    };
+
+    // One id for every preview render: renderWidgetButton briefly registers the preview deck in "widgets", so
+    // it needs an id that is not in use, but generating a fresh one per keystroke would be wasteful.
+    const previewID = generateUniqueWidgetID();
+    const updatePreview = _=>{
+      const texts = cardTexts();
+      const deck = deckDefinition(texts.length ? texts.slice(0, 5) : [ 'Your card text goes here.' ], previewID);
+      preview.innerHTML = '';
+      this.renderWidgetButton(new Deck(deck.id), deck, preview);
+      addButton.disabled = !texts.length;
+    };
+    textarea.oninput = updatePreview;
+    for(const input of $a('input', design))
+      input.oninput = updatePreview;
+    updatePreview();
+
+    addButton.onclick = async _=>{
+      const texts = cardTexts();
+      if(!texts.length)
+        return;
+      const deck = deckDefinition(texts, generateUniqueWidgetID());
+      const copies = Math.max(1, +$('.textCardsCopies', design).value || 1);
+      const counts = {};
+      for(const cardType in deck.cardTypes)
+        counts[cardType] = copies;
+      await this.addDeckWithCards(deck, 'text', counts);
     };
   }
 

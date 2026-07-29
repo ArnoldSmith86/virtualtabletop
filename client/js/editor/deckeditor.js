@@ -3172,7 +3172,8 @@ class DeckEditor {
 
   // "Add New Deck" opens a small submenu offering every existing way to create a deck. Rather than
   // reinventing those flows, we reuse the ones the properties sidebar already implements (traditional,
-  // custom, image upload, TTS import) by rendering them, and the public-library and empty-deck flows.
+  // custom, image upload, front/back image upload, text cards, TTS import) by rendering them, and the
+  // public-library and empty-deck flows.
   openNewDeckOverlay() {
     if(!this.deckCreator)
       this.deckCreator = new PropertiesModule();
@@ -3188,9 +3189,9 @@ class DeckEditor {
     showOverlay();
   }
 
-  // Each mode renders its existing creation flow into the overlay's panel. traditional/custom/images/tts
-  // (and the library) add a fresh deck to the game; once that lands as a delta, deckEditorReceiveDelta
-  // switches the editor to it (this.pendingNewDeck). "empty" opens the new deck here directly.
+  // Each mode renders its existing creation flow into the overlay's panel. Every mode except "empty" adds a
+  // fresh deck to the game; once that lands as a delta, deckEditorReceiveDelta switches the editor to it
+  // (this.pendingNewDeck). "empty" opens the new deck here directly.
   renderNewDeckPanel(mode) {
     const panel = $('#deckEditorNewDeckPanel');
     panel.innerHTML = '';
@@ -3233,6 +3234,10 @@ class DeckEditor {
         this.deckCreator.deckGenerator(moduleDOM);
       else if(mode == 'images')
         this.deckCreator.deckImages(moduleDOM);
+      else if(mode == 'imagePairs')
+        this.deckCreator.deckImagePairs(moduleDOM);
+      else if(mode == 'text')
+        this.deckCreator.deckTextCards(moduleDOM);
       else if(mode == 'tts')
         this.deckCreator.deckImportTTS(moduleDOM);
     }

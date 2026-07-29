@@ -754,6 +754,37 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
 });
 
+// The "Add a new deck" wizard's text-cards section: every typed line becomes a card type with a "text"
+// property, the design inputs shape the two faces and the deck lands in a holder with cards, like the other
+// wizard sections. Card type names are derived from the text, deduplicated, and fall back to a running number
+// when a line has no usable characters (the "______" line below).
+test('Deck editor: add a deck of text cards from the new deck wizard', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckOverlay input[value=text]');
+
+  // A multi-line value in one go - typeText would send the newlines as key presses.
+  await ClientFunction(() => {
+    const textarea = document.querySelector('.textCardsInput');
+    textarea.value = 'A short one.\n______ + ______ = ______.\nA short one.';
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+  })();
+
+  await t
+    .typeText('.textCardsLabel', 'Test Deck')
+    .typeText('.textCardsFontSize', '20', { replace: true })
+    .typeText('.textCardsCopies', '2', { replace: true })
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+  await compareState(t, '42db3cfd13dc76fc8e79f6eac5be71d9');
+});
+
 test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

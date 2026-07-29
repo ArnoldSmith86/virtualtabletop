@@ -171,6 +171,93 @@
 }
 
 
+/* Front/back image upload: one row per uploaded file, numbered in the order the files are paired in. */
+.tune.editorModule .imagePairList {
+  margin-bottom: 5px;
+}
+
+.tune.editorModule .imagePairEntry {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .imagePairEntry b {
+  min-width: 25px;
+  text-align: right;
+}
+
+.tune.editorModule .imagePairEntry img {
+  width: 30px;
+  height: 40px;
+  object-fit: contain;
+  background: #0002;
+}
+
+.tune.editorModule .imagePairEntry span {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tune.editorModule .imagePairStatus {
+  margin: 5px 0;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairStatus.imagePairMismatch {
+  color: #ff8080;
+  opacity: 1;
+}
+
+.tune.editorModule .imagePairOptions [type=number] {
+  width: 50px;
+}
+
+
+/* Text cards: the text input, the design grid and the preview of the first few cards. */
+.tune.editorModule .textCardsInput {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+.tune.editorModule .textCardsDesign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 10px;
+  margin-bottom: 5px;
+}
+
+.tune.editorModule .textCardsDesign label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabelWrap {
+  grid-column: 1 / -1;
+}
+
+.tune.editorModule .textCardsDesign input {
+  width: 60px;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabel {
+  flex-grow: 1;
+  width: auto;
+  min-width: 0;
+}
+
+.tune.editorModule .textCardsPreview {
+  text-align: center;
+}
+
+
 .tune.editorModule .ttsImportLink {
   display: flex;
   gap: 5px;
