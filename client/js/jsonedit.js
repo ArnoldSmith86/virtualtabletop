@@ -1010,15 +1010,17 @@ const jeCommands = [
     name: 'editable text template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: async function() {
+      // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text area,
+      // so there has to be some card left around it for the player to grab
       jeStateNow.faceTemplates[+jeContext[2]].objects.push({
         type: 'text',
         editable: true,
-        x: 0,
-        y: 0,
-        fontSize: 20,
-        textAlign: 'center',
-        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
-        height: 30,
+        x: 10,
+        y: 10,
+        fontSize: 14,
+        textAlign: 'left',
+        width: (jeStateNow.cardDefaults && jeStateNow.cardDefaults.width || 103) - 20,
+        height: 60,
         dynamicProperties: {
           value: '###SELECT ME###'
         }

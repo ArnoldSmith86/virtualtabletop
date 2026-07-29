@@ -308,7 +308,7 @@ class DeckEditor {
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
     // A writable text area only works when its value is bound to a card property (that is where the text
     // players type is stored), so this one ignores the "Add to:" mode and always adds a bound object.
-    $('#deckEditorAddWritable').onclick = _=>this.addDynamicObject({ type: 'text', editable: true, x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', '');
+    $('#deckEditorAddWritable').onclick = _=>this.addDynamicObject(this.writableTextTemplate(), 'note', '');
     $('#deckEditorAddImage').onclick = async _=>{
       const symbol = await pickSymbol('images');
       if(symbol && symbol.url)
@@ -2961,6 +2961,15 @@ class DeckEditor {
     const width = this.mainCard ? this.mainCard.get('width') : 103;
     const height = this.mainCard ? this.mainCard.get('height') : 160;
     return { type: 'image', x: 0, y: 0, width, height, color: '#cccccc' };
+  }
+
+  writableTextTemplate() {
+    const width = this.mainCard ? this.mainCard.get('width') : 103;
+    const height = this.mainCard ? this.mainCard.get('height') : 160;
+    // Roomy enough to write a few lines in, but with a margin around it and the lower half of the card left
+    // free: a card can not be grabbed by its text area, so the player needs some card left to drag and flip.
+    const margin = Math.round(Math.min(width, height)/8);
+    return { type: 'text', editable: true, x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
   }
 
   renderDynamicProperties(sidebar, object) {

@@ -1,3 +1,8 @@
+// Properties the card widget itself uses - an editable text object must not be bound to one of these because
+// every keystroke would overwrite it, e.g. typing into a field bound to "parent" makes the card vanish.
+// Same list as DeckEditor.reservedCardTypeProperties() (editor bundle) and the validator - keep in sync.
+const reservedCardProperties = [ 'id', 'deck', 'cardType', 'activeFace', 'parent', 'owner', 'x', 'y', 'z', 'rotation', 'scale', 'layer', 'linkedToSeat', 'onlyVisibleForSeat' ];
+
 class Card extends Widget {
   constructor(id) {
     super(id);
@@ -287,7 +292,7 @@ class Card extends Widget {
     const dynamicProperties = typeof object.dynamicProperties == 'object' && object.dynamicProperties !== null ? object.dynamicProperties : {};
     const isText = object.type === undefined || object.type == 'text';
     const isEditable = object.editable || dynamicProperties.editable !== undefined;
-    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string')
+    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string' && !reservedCardProperties.includes(dynamicProperties.value))
       return dynamicProperties.value;
     return null;
   }

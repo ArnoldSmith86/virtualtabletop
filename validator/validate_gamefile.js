@@ -51,6 +51,10 @@ const FACE_OBJECT_VALID_PROPS = {
     html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
 };
 
+// Properties the card widget itself uses, so an editable text object must not write into one of them.
+// Same list as reservedCardProperties in client/js/widgets/card.js and DeckEditor.reservedCardTypeProperties().
+const RESERVED_CARD_PROPERTIES = ['id', 'deck', 'cardType', 'activeFace', 'parent', 'owner', 'x', 'y', 'z', 'rotation', 'scale', 'layer', 'linkedToSeat', 'onlyVisibleForSeat'];
+
 // Common properties for all widgets
 const COMMON_PROPERTIES = {
     id: 'string',
@@ -233,16 +237,28 @@ const WIDGET_PROPERTIES = {
                         }
                         
                         // An editable text object stores what the player types in the card property its
-                        // value is bound to - without that binding there is nowhere to keep the text.
-                        if(obj.editable && (!obj.dynamicProperties || typeof obj.dynamicProperties.value != 'string')) {
-                            problems.push({
-                                widget: p.widgetId,
-                                property: [...propertyPath, faceIndex, 'objects', objIndex, 'editable'],
-                                message: 'editable text objects need their value bound to a card property through dynamicProperties so the text players type can be stored'
-                            });
+                        // value is bound to - without that binding there is nowhere to keep the text. The
+                        // conditions below mirror Card.editableProperty(): anything it rejects renders as a
+                        // plain, non-editable text object, so it has to be reported here.
+                        const objDynamic = obj.dynamicProperties && typeof obj.dynamicProperties === 'object' ? obj.dynamicProperties : {};
+                        if(obj.editable || objDynamic.editable !== undefined) {
+                            if(obj.value !== undefined || typeof objDynamic.value != 'string') {
+                                problems.push({
+                                    widget: p.widgetId,
+                                    property: [...propertyPath, faceIndex, 'objects', objIndex, 'editable'],
+                                    message: 'editable text objects need their value bound to a card property through dynamicProperties (and no static value, which would override it) so the text players type can be stored'
+                                });
+                            } else if(RESERVED_CARD_PROPERTIES.includes(objDynamic.value)) {
+                                problems.push({
+                                    widget: p.widgetId,
+                                    property: [...propertyPath, faceIndex, 'objects', objIndex, 'dynamicProperties', 'value'],
+                                    message: `editable text objects can not be bound to '${objDynamic.value}' because the card widget uses that property itself - bind it to a property of your own, e.g. 'note'`
+                                });
+                            }
                         }
 
-                        const objType = (obj.type && String(obj.type).toLowerCase()) || '';
+                        // a face object without a type is rendered as text, so it gets the text properties
+                        const objType = (obj.type && String(obj.type).toLowerCase()) || 'text';
                         const validObjProps = FACE_OBJECT_VALID_PROPS[objType] || FACE_OBJECT_VALID_PROPS._common;
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
