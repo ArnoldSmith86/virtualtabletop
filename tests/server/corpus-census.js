@@ -41,8 +41,11 @@ for(const library of libraries) {
 
     const version = fileVersion(state);
     versions[version] = (versions[version] || 0) + 1;
-    for(const name of Object.keys(flagsOnDisk(state)))
-      onDisk[name] = (onDisk[name] || 0) + 1;
+    // truthy only, like the "at load" column below: the Game Settings panel writes an unticked
+    // box as `false`, and counting that as "on disk" would read as the updater removing a mode
+    for(const [ name, value ] of Object.entries(flagsOnDisk(state)))
+      if(value)
+        onDisk[name] = (onDisk[name] || 0) + 1;
 
     let assigned = null;
     try {

@@ -1,3 +1,4 @@
+import { VERSION } from '../../server/fileupdater.mjs';
 import { ALL_LEGACY_MODES, LEGACY_MODES } from '../../client/js/legacymoderegistry.js';
 import { flagsForGame } from './fileupdater-util.js';
 import { fileVersion, flagsOnDisk, libraryVariants, readVariant } from './corpus.js';
@@ -35,9 +36,10 @@ beforeAll(() => {
       const onDisk = flagsOnDisk(state);
       const assigned = flagsForGame(state);
       // the updated state is what the room keeps and hands to the next load, so a second pass
-      // over the result has to be a no-op
+      // over the result has to be a no-op. The version comes from the updater rather than a
+      // literal, or the next version bump quietly turns this into a migration check.
       const reUpdated = flagsForGame(Object.assign(JSON.parse(JSON.stringify(state)), {
-        _meta: Object.assign({}, state._meta, { version: 21, gameSettings: { legacyModes: assigned } })
+        _meta: Object.assign({}, state._meta, { version: VERSION, gameSettings: { legacyModes: assigned } })
       }));
       results.push({
         name, version, onDisk, assigned,

@@ -105,7 +105,10 @@ for(const combo of TIERS) {
     await openRoom(t, combo, tableState({ movable: false }));
     await dragBy(t, 'probe', 300, 150);
 
-    const state = await stateWhen(_=>false);
+    // there is nothing to poll for here - the assertion is that nothing arrives - so wait once
+    // rather than burning the whole stateWhen() backoff on a predicate that can never be true
+    await t.wait(500);
+    const state = await getStateObject();
     await t.expect(state.probe.x).eql(200, `x in combination ${combo}`);
     await t.expect(state.probe.y).eql(200, `y in combination ${combo}`);
   });

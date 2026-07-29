@@ -52,28 +52,30 @@ function selectedVariants() {
   return variants;
 }
 
-// Every button a player could press, in a fixed order so two runs are comparable.
-const clickableButtons = ClientFunction(_=>{
-  const ids = [];
-  for(const element of document.querySelectorAll('#topSurface .widget'))
-    if(element.id.substr(0, 2) == 'w_')
-      ids.push(element.id);
-  return ids.sort();
-});
-
 const engineException = message => /Cannot read|is not a function|is not defined|undefined is not|TypeError|ReferenceError/.test(message);
 
+// Every button a player could press, in a fixed order so two runs are comparable.
 const buttonIDsWithRoutine = state => Object.values(state)
   .filter(widget=>widget && widget.clickRoutine && widget.type != 'card')
   .map(widget=>widget.id)
   .sort();
 
-async function replay(t, variant, state, flags) {
+// overrideFlags replaces the modes the room derived, or null to replay the game as loaded.
+// errorsBefore is how many console errors the page had already produced: TestCafe accumulates
+// them for the lifetime of the page and this never navigates, so a second replay in the same
+// test would otherwise inherit the first one's errors.
+async function replay(t, state, overrideFlags, errorsBefore = 0) {
   await ClientFunction(prepareClient)();
   await t.click('#activeGameButton');
   await setRoomState({});
-  await applyLegacy(flags);
   await setRoomState(JSON.parse(JSON.stringify(state)));
+  // The room derives the modes from the file itself - Room.setState() runs FileUpdater for any
+  // state carrying _meta, which every library file does - so the asserted replay needs no call
+  // here, and a call *before* the load would be discarded by exactly that. Overriding them is
+  // therefore a step after the load; switching a mode re-broadcasts the state, so the widgets
+  // are rebuilt with the override in place, which is the path the Game Settings panel takes.
+  if(overrideFlags)
+    await applyLegacy(overrideFlags);
   await t.wait(1000);
 
   const buttons = buttonIDsWithRoutine(state);
@@ -93,8 +95,8 @@ async function replay(t, variant, state, flags) {
     }
   }
 
-  const messages = await t.getBrowserConsoleMessages();
-  return { clicked, errors: messages.error || [], state: await getStateObject() };
+  const messages = (await t.getBrowserConsoleMessages()).error || [];
+  return { clicked, errors: messages.slice(errorsBefore), errorsSeen: messages.length, state: await getStateObject() };
 }
 
 for(const variant of selectedVariants()) {
@@ -102,7 +104,7 @@ for(const variant of selectedVariants()) {
     const state = readVariant(variant);
     const flags = flagsForGame(state);
 
-    const withFlags = await replay(t, variant, state, flags);
+    const withFlags = await replay(t, state, null);
     const report = {
       game: `${variant.library}/${variant.game}`,
       variant: variant.variant,
@@ -115,7 +117,7 @@ for(const variant of selectedVariants()) {
     };
 
     if(process.env.CORPUS_FLAGS_OFF && Object.keys(flags).length) {
-      const withoutFlags = await replay(t, variant, state, {});
+      const withoutFlags = await replay(t, state, {}, withFlags.errorsSeen);
       report.flagsOffErrors = withoutFlags.errors;
       // a diagnostic, never a pass criterion: it says where a flag is load-bearing for a probe
       // that only clicks buttons, and says nothing about dragging, typing, drawing or timing

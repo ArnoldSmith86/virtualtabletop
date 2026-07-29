@@ -84,6 +84,20 @@ async function openRoom(t, combo, state) {
   await t.expect(Selector(`#w_${Object.keys(state)[0]}`).exists).ok('the room renders its widgets', { timeout: 30000 });
 }
 
+// A room that is still settling - a deferred layout, an asset that has not arrived - would
+// record a baseline nobody can reproduce, so read until two consecutive captures agree.
+async function settledSnapshot(t) {
+  let previous = await captureSnapshot(STYLE_PROPERTIES);
+  for(let wait=100; wait<2000; wait*=2) {
+    await t.wait(wait);
+    const snapshot = await captureSnapshot(STYLE_PROPERTIES);
+    if(diff(previous, snapshot) === undefined)
+      return snapshot;
+    previous = snapshot;
+  }
+  return previous;
+}
+
 // A fixture that renders identically in every combination keeps one baseline: the equality of
 // the trees is asserted separately, so a second copy would only be review noise.
 function goldenFile(fixture, combo) {
@@ -95,11 +109,16 @@ function goldenFile(fixture, combo) {
 async function compareToBaseline(t, fixture, combo, snapshot) {
   const file = goldenFile(fixture, combo);
   const name = fixture.name;
-  if(process.env.WRITE_DOM_SNAPSHOTS || !fs.existsSync(file)) {
+  if(process.env.WRITE_DOM_SNAPSHOTS) {
     fs.mkdirSync(snapshotDirectory, { recursive: true });
     fs.writeFileSync(file, JSON.stringify(snapshot, null, 2) + '\n');
     console.log(`recorded DOM baseline ${path.relative(path.resolve(), file)}`);
   }
+
+  // Recording a missing baseline on the fly and then comparing against it would always pass -
+  // and the checked-in reference is the entire value of this file, so a renamed fixture or a
+  // baseline lost in a merge has to go red rather than certify whatever it happens to see.
+  await t.expect(fs.existsSync(file)).ok(`no DOM baseline for ${name} in combination ${combo} (${path.relative(path.resolve(), file)}) - re-record with WRITE_DOM_SNAPSHOTS=1`);
 
   const baseline = JSON.parse(fs.readFileSync(file, 'utf8'));
   const difference = diff(baseline, snapshot);
@@ -205,7 +224,7 @@ for(const fixture of FIXTURES) {
     const snapshots = {};
     for(const combo of TIERS) {
       await openRoom(t, combo, fixture.state());
-      snapshots[combo] = await captureSnapshot(STYLE_PROPERTIES);
+      snapshots[combo] = await settledSnapshot(t);
       await compareToBaseline(t, fixture, combo, snapshots[combo]);
     }
 
