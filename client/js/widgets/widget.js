@@ -961,7 +961,9 @@ export class Widget extends StateManaged {
 
     // Capture the routine logging state once, at the start of the routine. Toggling the Debug
     // panel while the routine is suspended (e.g. waiting for an INPUT modal) would otherwise
-    // mismatch the jeLogging start/end calls and crash the client. (#2672)
+    // mismatch the jeLogging start/end calls and crash the client. (#2672) A routine that was
+    // already running when logging got enabled can not be logged retroactively - it adds a note
+    // to the log instead (see jeLoggingRoutineNotLogged at the end of this function).
     const routineLogging = jeRoutineLogging;
     if(routineLogging)
       jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
@@ -2308,7 +2310,10 @@ export class Widget extends StateManaged {
 
     } // End iterate over functions in routine
 
-    if(routineLogging) jeLoggingRoutineEnd(variables, collections);
+    if(routineLogging)
+      jeLoggingRoutineEnd(variables, collections);
+    else if(jeRoutineLogging)
+      jeLoggingRoutineNotLogged(this, property); // logging was enabled while this routine was running
 
     batchEnd();
 

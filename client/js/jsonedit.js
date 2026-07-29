@@ -3049,6 +3049,15 @@ let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
+// Empty the log. Operations of a routine that is currently running have the log so far saved on
+// jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
+// again and resurrects what was just cleared.
+function jeLoggingClear() {
+  jeLoggingHTML = '';
+  for(const entry of jeHTMLStack)
+    entry[0] = '';
+}
+
 function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
@@ -3073,7 +3082,7 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
 
 export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
-    return; // no matching jeLoggingRoutineStart (logging was enabled mid-routine)
+    return; // defensive: unmatched End, should not happen since #2672
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
@@ -3112,6 +3121,26 @@ export function jeLoggingRoutineEnd(variables, collections) {
     jeLoggingFilterLog($('#jeLogFilter').value);
 }
 
+// Called instead of jeLoggingRoutineEnd when logging was switched on while the routine was already
+// running (e.g. the Debug module was opened while the routine waited for an INPUT). That routine
+// cannot be logged retroactively, so leave a note explaining the gap instead of showing nothing.
+export function jeLoggingRoutineNotLogged(widget, property) {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
+    return;
+  if(jeRoutineResetOnNextLog) {
+    jeLoggingHTML = '';
+    jeRoutineResetOnNextLog = false;
+  }
+  jeLoggingHTML += `
+    <div class="jeLog jeLogNote">
+      <span class="jeLogWidget">${html(widget.get('id'))}</span>
+      <span class="jeLogProperty">${html(typeof property == 'string' ? property : '--custom--')}</span>
+      was not logged because logging was enabled after it had already started.
+    </div>
+  `;
+  $('#jeLog').innerHTML = jeLoggingHTML;
+}
+
 export function jeLoggingRoutineOperationStart(original, applied) {
   let fcn;
   if (typeof applied == 'string')
@@ -3134,7 +3163,7 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
 
   const savedHTML = jeHTMLStack.shift();
   if(!savedHTML) {
-    // No matching jeLoggingRoutineOperationStart (logging was enabled mid-routine). Nothing to close.
+    // defensive: unmatched End, should not happen since #2672. Nothing to close.
     jeRoutineResult = '';
     return;
   }
@@ -3901,7 +3930,7 @@ export function jeToggle() {
   }
   jeEnabled = !jeEnabled;
   setJEenabled(jeEnabled);
-  jeLoggingHTML = '';
+  jeLoggingClear();
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
