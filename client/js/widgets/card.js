@@ -1,7 +1,7 @@
-// Properties the card widget itself uses - an editable text object must not be bound to one of these because
-// every keystroke would overwrite it, e.g. typing into a field bound to "parent" makes the card vanish.
-// Same list as DeckEditor.reservedCardTypeProperties() (editor bundle) and the validator - keep in sync.
-const reservedCardProperties = [ 'id', 'deck', 'cardType', 'activeFace', 'parent', 'owner', 'x', 'y', 'z', 'rotation', 'scale', 'layer', 'linkedToSeat', 'onlyVisibleForSeat' ];
+// Engine properties that have no default: the ID, the widget type and the bookkeeping the editor keeps on a
+// widget. Together with the widget defaults they are every property the engine itself owns on a card - see
+// Card.reservedProperties(). validate_gamefile.js builds the same set from its own property table.
+const enginePropertiesWithoutDefault = [ 'id', 'type', 'clonedFrom', 'editorGroup', 'editorAddToRoomRoutine' ];
 
 class Card extends Widget {
   constructor(id) {
@@ -117,21 +117,36 @@ class Card extends Widget {
         for(const original of face.objects) {
           const useIframe = original.type == 'html' && legacyMode('useIframeForHtmlCards');
           const editProperty = this.editableProperty(original);
-          const objectDiv = document.createElement(useIframe ? 'iframe' : editProperty ? 'textarea' : 'div');
+          let objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
           objectDiv.classList.add('cardFaceObject');
 
-          if(editProperty) {
-            objectDiv.setAttribute('spellcheck', 'false');
-            objectDiv.addEventListener('input', async _=>{
+          const makeTextarea = _=>{
+            const textarea = document.createElement('textarea');
+            textarea.setAttribute('spellcheck', 'false');
+            textarea.addEventListener('input', async _=>{
               const stored = this.get(editProperty);
-              if(objectDiv.value === (stored === undefined || stored === null ? '' : String(stored)))
+              if(textarea.value === (stored === undefined || stored === null ? '' : String(stored)))
                 return;
               batchStart();
               setDeltaCause(`${playerName} typed into ${this.id}`);
-              await this.set(editProperty, objectDiv.value);
+              await this.set(editProperty, textarea.value);
               batchEnd();
             });
-          }
+            return textarea;
+          };
+
+          // An editable object is a textarea while it can be typed into and a plain div while it is locked:
+          // a textarea clips text that does not fit and can then only be scrolled by typing in it, while a
+          // div overflows like every other text object, so a locked note stays readable.
+          const useTextarea = editable=>{
+            if(editable == (objectDiv.tagName == 'TEXTAREA'))
+              return;
+            const replacement = editable ? makeTextarea() : document.createElement('div');
+            replacement.className = objectDiv.className;
+            if(objectDiv.parentNode)
+              objectDiv.parentNode.replaceChild(replacement, objectDiv);
+            objectDiv = replacement;
+          };
 
           const setValue = _=>{
             const usedProperties = new Set();
@@ -141,6 +156,9 @@ class Card extends Widget {
               for(const dp of Object.keys(object.dynamicProperties))
                 if(object[dp] === undefined)
                   object[dp] = this.get(object.dynamicProperties[dp]);
+
+            if(editProperty)
+              useTextarea(!this.isReadonlyCopy && !!object.editable);
 
             const x = face.border ? object.x-face.border : object.x;
             const y = face.border ? object.y-face.border : object.y;
@@ -244,11 +262,14 @@ class Card extends Widget {
               }
             } else if(editProperty) {
               const text = object.value === undefined || object.value === null ? '' : String(object.value);
-              // don't touch the field while it is being typed into - that would move the cursor to the end
-              if(objectDiv.value !== text)
-                objectDiv.value = text;
-              objectDiv.readOnly = this.isReadonlyCopy || !object.editable;
-              objectDiv.placeholder = object.placeholder === undefined || object.placeholder === null ? '' : object.placeholder;
+              if(objectDiv.tagName == 'TEXTAREA') {
+                // don't touch the field while it is being typed into - that would move the cursor to the end
+                if(objectDiv.value !== text)
+                  objectDiv.value = text;
+                objectDiv.placeholder = object.placeholder === undefined || object.placeholder === null ? '' : object.placeholder;
+              } else {
+                objectDiv.textContent = text;
+              }
               objectDiv.style.color = object.color;
             } else {
               objectDiv.textContent = object.value;
@@ -285,6 +306,14 @@ class Card extends Widget {
     return p;
   }
 
+  // Properties the engine itself owns on a card - an editable text object must not be bound to one of these
+  // because every keystroke would overwrite it: a field bound to 'parent' makes the card vanish, one bound
+  // to 'type' replaces the card with a different widget. Every engine property has a default, except the
+  // handful listed above.
+  reservedProperties() {
+    return [ ...Object.keys(this.defaults), ...enginePropertiesWithoutDefault ];
+  }
+
   // Text objects of a face template can be marked "editable" to let players write on the card. What they
   // type has to go somewhere, so such an object must have its value bound to a card property through
   // dynamicProperties - that property is returned here (and null for every object that is not editable).
@@ -292,7 +321,7 @@ class Card extends Widget {
     const dynamicProperties = typeof object.dynamicProperties == 'object' && object.dynamicProperties !== null ? object.dynamicProperties : {};
     const isText = object.type === undefined || object.type == 'text';
     const isEditable = object.editable || dynamicProperties.editable !== undefined;
-    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string' && !reservedCardProperties.includes(dynamicProperties.value))
+    if(isText && isEditable && object.value === undefined && typeof dynamicProperties.value == 'string' && !this.reservedProperties().includes(dynamicProperties.value))
       return dynamicProperties.value;
     return null;
   }

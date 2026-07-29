@@ -51,10 +51,6 @@ const FACE_OBJECT_VALID_PROPS = {
     html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
 };
 
-// Properties the card widget itself uses, so an editable text object must not write into one of them.
-// Same list as reservedCardProperties in client/js/widgets/card.js and DeckEditor.reservedCardTypeProperties().
-const RESERVED_CARD_PROPERTIES = ['id', 'deck', 'cardType', 'activeFace', 'parent', 'owner', 'x', 'y', 'z', 'rotation', 'scale', 'layer', 'linkedToSeat', 'onlyVisibleForSeat'];
-
 // Common properties for all widgets
 const COMMON_PROPERTIES = {
     id: 'string',
@@ -276,6 +272,12 @@ const WIDGET_PROPERTIES = {
         }
     }
 };
+
+// Properties the engine itself owns on a card, so an editable text object must not be bound to one of them:
+// every keystroke would overwrite it, e.g. a field bound to 'parent' makes the card vanish and one bound to
+// 'type' replaces the card with a different widget. Card.reservedProperties() (room bundle) builds the same
+// set from the widget defaults, which carry the one property this table does not list.
+const RESERVED_CARD_PROPERTIES = [ ...Object.keys(WIDGET_PROPERTIES.Card), 'typeClasses' ];
 
 const SUPER_GLOBALS = {
     variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
