@@ -30,6 +30,12 @@ export function setupTestEnvironment() {
   fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(reset).after(reset);
 }
 
+// The page every fixture starts on. A second client in the same room is a second window on the
+// same URL, which is what multiclient.js opens.
+export function roomURL() {
+  return `${server}/testcafe-testing`;
+}
+
 export function prepareClient() {
   // non random random
   window.customRandomSeed = 1;

@@ -39,6 +39,12 @@ jobs:
           # the DOM baselines record computed styles and rounded boxes, which are browser
           # specific, so they are recorded and checked in Chrome only
           - domsnapshot.js
+          - multiclient.js
+        include:
+          # a second browser window is the whole point of this file, and native automation mode
+          # refuses to open one
+          - testfile: multiclient.js
+            flags: --disable-native-automation
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -59,4 +65,4 @@ jobs:
       uses: DevExpress/testcafe-action@latest
       with:
         version: "3.7.3"
-        args: "chrome:headless tests/testcafe/${{ matrix.testfile }}"
+        args: "chrome:headless ${{ matrix.flags }} tests/testcafe/${{ matrix.testfile }}"
