@@ -2,6 +2,7 @@ import fs from 'fs';
 import JSZip from 'jszip';
 
 import Config from './config.mjs';
+import Logging from './logging.mjs';
 
 const pieceColors = {
   default: '#000000',
@@ -15,9 +16,34 @@ const pieceColors = {
   white:   '#ffffff'
 };
 
+// PCIO font IDs mapped onto the closest font VirtualTabletop ships
+const pcioFonts = {
+  'abbasy-calligraphy':  'Handwriting',
+  'fivecomputers':       'Gugi',
+  'iansui':              'Handwriting Casual',
+  'opensans-light':      'Roboto',
+  'opensans-regular':    'Roboto',
+  'opensans-semibold':   'Roboto',
+  'opensans-bold':       'Roboto',
+  'unquiet-spirits':     'Creepster',
+  'westminstergotisch':  'Metamorphous'
+};
+
 export default async function convertPCIO(content) {
   const zip = await JSZip.loadAsync(content);
   const widgets = JSON.parse(await zip.files['widgets.json'].async('string'));
+
+  // the file format version lives in its own zip member since PCIO schema 3
+  let schemaVersion = 0;
+  if(zip.files['schemaVersion'])
+    schemaVersion = +(await zip.files['schemaVersion'].async('string')) || 0;
+
+  // everything that could not be translated ends up in _meta.info.importerWarnings
+  const warnings = [];
+  function warn(text) {
+    if(warnings.indexOf(text) == -1)
+      warnings.push(text);
+  }
 
   const nameMap = {};
   try {
@@ -27,7 +53,12 @@ export default async function convertPCIO(content) {
   } catch(e) {}
 
   for(const filename in zip.files) {
-    if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
+    if(filename.match(/^\/?userassets/) && zip.files[filename]._data) {
+      // 10 MiB is the same limit that FileLoader applies to assets in .vtt files
+      if(zip.files[filename]._data.uncompressedSize >= 10485760) {
+        warn(`Asset ${filename} is bigger than 10 MiB and was not imported.`);
+        continue;
+      }
       const targetFile = zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
       nameMap['package://' + filename] = '/assets/' + targetFile;
       if(!Config.resolveAsset(targetFile))
@@ -51,8 +82,84 @@ export default async function convertPCIO(content) {
         const suit = match[1][0].toUpperCase();
         name = `/i/cards-default/${face}${suit}.svg`;
       }
+
+      const spanish = /https:\/\/playingcards\.io\/img\/cards-spanish\/(coins|cups|swords|clubs)-([0-9]+).svg/.exec(name);
+      if(spanish)
+        name = `/i/cards-spanish/${spanish[2]}${{coins:'Coin',cups:'Cup',swords:'Sword',clubs:'Club'}[spanish[1]]}.svg`;
+
+      const german = /https:\/\/playingcards\.io\/img\/cards-german\/(acorns|bells|hearts|leaves)-([0-9]+).svg/.exec(name);
+      if(german)
+        name = `/i/cards-german/${german[2]}${{acorns:'Acorn',bells:'Bell',hearts:'Heart',leaves:'Leaf'}[german[1]]}.svg`;
+
+      if(name.match(/^https:\/\/playingcards\.io\/img\//))
+        warn(`Images in ${name.replace(/^https:\/\/playingcards\.io|[^/]*$/g, '')} have no VirtualTabletop equivalent and stay linked to playingcards.io.`);
     }
     return nameMap[name] || name;
+  }
+
+  // PCIO fill object (solid colour or gradient) as a CSS background/color value
+  function pcioFill(fill) {
+    if(!fill || typeof fill != 'object')
+      return null;
+    if(fill.type == 'color')
+      return fill.color;
+    if(!Array.isArray(fill.stops) || !fill.stops.length)
+      return null;
+    const stops = fill.stops.map(function(stop, i, all) {
+      let position = stop.position !== undefined ? stop.position : stop.offset;
+      if(position === undefined)
+        position = all.length > 1 ? i/(all.length-1) : 0;
+      return `${stop.color} ${Math.round((position > 1 ? position/100 : position)*100)}%`;
+    }).join(', ');
+    if(fill.type == 'radialGradient')
+      return `radial-gradient(circle, ${stops})`;
+    if(fill.type == 'conicGradient')
+      return `conic-gradient(from ${fill.angle || 0}deg, ${stops})`;
+    return `linear-gradient(${(fill.angle || 0) + 180}deg, ${stops})`;
+  }
+
+  // PCIO applies mainBackground/mainOutlines/mainTextStyle/mainBorderRadius to
+  // holders, buttons, labels, counters and seats alike - translate them to CSS
+  function pcioStyle(widget, w, css=[]) {
+    const background = pcioFill((widget.mainBackground || {}).fill);
+    if(background && !(w.classes || '').match(/transparent/))
+      css.push(`background: ${background}`);
+
+    if(Array.isArray(widget.mainOutlines)) {
+      const outline = widget.mainOutlines.filter(o=>o && o.size && pcioFill(o.fill)).pop();
+      if(outline) {
+        css.push(`border: ${outline.size}px solid ${pcioFill(outline.fill)}`, 'box-sizing: border-box');
+        if(widget.mainOutlines.length > 1)
+          warn('Stacked outlines are not supported and were collapsed into a single border.');
+      } else if(!(w.classes || '').match(/transparent/)) {
+        css.push('border-color: transparent');
+      }
+    }
+
+    const text = widget.mainTextStyle;
+    if(text && typeof text == 'object') {
+      if(text.size)
+        css.push(`font-size: ${Math.round(text.size)}px`);
+      if(text.size && text.lineHeight)
+        css.push(`line-height: ${Math.round(text.size*text.lineHeight)}px`);
+      if(text.align)
+        css.push(`text-align: ${text.align}`);
+      const color = pcioFill(text.mainFill);
+      if(color)
+        css.push(`color: ${color}`);
+      if(text.font && pcioFonts[text.font])
+        css.push(`font-family: ${pcioFonts[text.font]}`);
+      else if(text.font)
+        warn(`Font ${text.font} is not available in VirtualTabletop.`);
+      if(Array.isArray(text.outlines) && text.outlines.length)
+        warn('Outlined text is not supported.');
+    }
+
+    if(typeof widget.mainBorderRadius == 'number')
+      w.borderRadius = widget.mainBorderRadius;
+    if(css.length)
+      w.css = (w.css ? w.css.replace(/;\s*$/, '') + '; ' : '') + css.join('; ');
+    return w;
   }
 
   function addDimensions(w, widget, defaultWidth=100, defaultHeight=100) {
@@ -63,36 +170,116 @@ export default async function convertPCIO(content) {
   }
 
   function importWidgetQuery(routine, args, legacySource, holdersParam, collectionParam, target) {
-    if(args.objects) {
-      if(args.objects.type == 'reference') {
-        target[collectionParam] = args.objects.questionId;
-      } else if(args.objects.collections && args.objects.collections.length) {
-        routine.push({
-          func: 'SELECT',
-          property: 'parent',
-          relation: 'in',
-          value: args.objects.holders,
-          type: 'card'
-        });
+    const objects = args.objects || args.customObjects;
+    if(objects && objects.type == 'reference') {
+      target[collectionParam] = objects.questionId;
+      return target;
+    }
+    if(objects && objects.type == 'literal' && Array.isArray(objects.value)) {
+      routine.push({
+        func: 'SELECT',
+        property: 'id',
+        relation: 'in',
+        value: objects.value
+      });
+      return target;
+    }
+    if(objects && objects.type == 'query') {
+      const holders = objects.holders || [];
+      const collections = objects.collections || [];
+      if(Array.isArray(objects.queryWidgetTypes) && objects.queryWidgetTypes.filter(t=>t != 'card' && t != 'piece').length)
+        warn(`An automation looks for ${objects.queryWidgetTypes.join('/')} but only cards and pieces are selected.`);
+      if(holders.length && !collections.length) {
+        target[holdersParam] = holders;
+        return target;
+      }
+      routine.push(holders.length ? {
+        func: 'SELECT',
+        property: 'parent',
+        relation: 'in',
+        value: holders,
+        type: 'card'
+      } : {
+        func: 'SELECT',
+        property: 'type',
+        value: 'card',
+        type: 'card'
+      });
+      // choosers are cards in VTT but PCIO never includes them in a query
+      const chooserDecks = widgets.filter(w=>w && w.type == 'cardDeck' && w.collectionType == 'choosers').map(w=>w.id);
+      if(chooserDecks.length) {
         routine.push({
           func: 'SELECT',
           source: 'DEFAULT',
           property: 'deck',
           relation: 'in',
-          value: args.objects.collections
+          value: chooserDecks,
+          mode: 'remove'
         });
-      } else {
-        target[holdersParam] = args.objects.holders;
       }
-    } else {
-      target[holdersParam] = args[legacySource].value;
+      if(collections.length) {
+        routine.push({
+          func: 'SELECT',
+          source: 'DEFAULT',
+          property: 'deck',
+          relation: 'in',
+          value: collections
+        });
+      }
+      return target;
     }
+    if(args[legacySource])
+      target[holdersParam] = args[legacySource].value;
     return target;
+  }
+
+  // ROTATE for one of PCIO's rotation modes, null if it has no equivalent
+  function rotateOperation(target, routine, mode, setRotation) {
+    if(mode == 'cw' || mode == 'ccw')
+      return Object.assign(target, { func: 'ROTATE', angle: mode == 'ccw' ? -90 : 90 });
+    if(mode == 'set')
+      return Object.assign(target, { func: 'ROTATE', angle: setRotation || 0, mode: 'set' });
+    if(mode == 'random') {
+      routine.push('var pcioRotation = randRange 0 360 45');
+      return Object.assign(target, { func: 'ROTATE', angle: '${pcioRotation}', mode: 'set' });
+    }
+    warn(`Rotating objects to "${mode}" (fit to holder) has no VirtualTabletop equivalent.`);
+    return null;
+  }
+
+  // PCIO stores the turn direction in the room while VTT's TURN takes it per
+  // call: a hidden label holds the direction so it can be read and reversed
+  function turnDirection() {
+    if(!output.pcioTurnDirection) {
+      output.pcioTurnDirection = {
+        id: 'pcioTurnDirection',
+        type: 'label',
+        text: 'forward',
+        x: -200,
+        y: -100,
+        movable: false,
+        movableInEdit: false
+      };
+    }
+    return 'pcioTurnDirection';
+  }
+
+  // PCIO renamed cardPile to holder in schema 6 without changing its properties
+  // and used 'rotation' before it became 'r' - normalize both so that the rest
+  // of the importer only has to deal with one spelling
+  for(const widget of widgets) {
+    if(!widget || typeof widget != 'object')
+      continue;
+    if(widget.type == 'holder')
+      widget.type = 'cardPile';
+    if(widget.r === undefined && typeof widget.rotation == 'number' && widget.type != 'spinner')
+      widget.r = widget.rotation;
   }
 
   const pileHasDeck = {};
   const pileOverlaps = {};
   const pileTransparent = {};
+  const turnAtSeat = {};
 
   for(const widget of widgets) {
     if(widget.type == 'cardDeck' && widget.parent)
@@ -161,6 +348,14 @@ export default async function convertPCIO(content) {
   }
 
   for(const widget of widgets) {
+    if(!widget || typeof widget != 'object')
+      continue;
+    if(!widget.type) {
+      // schema 6 files contain records that only carry styling for an attached label
+      warn(`Ignored a widget without a type (${widget.id}).`);
+      continue;
+    }
+
     const w = {};
 
     w.id = widget.id;
@@ -210,10 +405,53 @@ export default async function convertPCIO(content) {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
       addDimensions(w, widget);
     } else if(widget.type == 'dice') {
+      // PCIO dice are backed by a cardDeck whose cardTypes hold the faces
       w.type = 'dice';
+      const deck = byID[widget.deck];
+      if(deck && deck.cardTypes) {
+        const faces = Object.entries(deck.cardTypes);
+        const pips = faces.every(([ , face ], i)=>String(face.image || '').match(new RegExp(`/img/dice-basic/${i+1}.svg$`)));
+        if(!pips) {
+          w.faces = faces.map(function([ , face ]) {
+            if(face.image)
+              return { image: mapName(face.image) };
+            if(face.label !== undefined)
+              return { value: face.label };
+            return {};
+          });
+        }
+        w.width  = deck.cardWidth  || 50;
+        w.height = deck.cardHeight || 50;
+        const activeFace = faces.findIndex(([ key ])=>key == widget.diceValue);
+        if(activeFace > 0)
+          w.activeFace = activeFace;
+      }
+      addDimensions(w, widget, w.width || 50, w.height || 50);
+    } else if(widget.type == 'urlButton') {
+      // VTT cannot open a link from a button - show it so it can be copied
+      w.type = 'button';
+      w.text = widget.label || 'Open';
+      addDimensions(w, widget, 80, 80);
+      const url = widget.clickURL || widget.url;
+      if(url) {
+        w.clickRoutine = [
+          {
+            func: 'INPUT',
+            header: w.text,
+            fields: [
+              { type: 'text',   text: 'PlayingCards.io opened this link in a new tab:' },
+              { type: 'string', label: 'Link', value: url, variable: 'url' }
+            ]
+          }
+        ];
+      }
+      pcioStyle(widget, w);
+      warn('Webpage buttons cannot open a link in VirtualTabletop - they now show the link instead.');
     } else if(widget.type == 'hand') {
-      if(widget.enabled === false)
+      if(widget.enabled === false) {
+        warn('A disabled hand was not imported.');
         continue;
+      }
       w.type = 'holder';
       w.onEnter = { activeFace: 1 };
       w.onLeave = { activeFace: 0 };
@@ -230,6 +468,9 @@ export default async function convertPCIO(content) {
       w.childrenPerOwner = true;
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
+      if(widget.allowedDecks && widget.allowedDecks.length)
+        w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+      pcioStyle(widget, w);
     } else if(widget.type == 'cardPile') {
       w.type = 'holder';
       if(pileTransparent[w.id])
@@ -255,6 +496,13 @@ export default async function convertPCIO(content) {
         w.preventPiles = true;
       if(widget.layoutType == 'freeform')
         w.alignChildren = false;
+      if(widget.layoutType == 'grid') {
+        // VTT holders can only spread along one axis
+        w.alignChildren = false;
+        warn(`Holder ${widget.label || widget.id} uses PCIO's grid layout which has no VirtualTabletop equivalent - imported as freeform.`);
+      }
+      if(widget.spreadMulti == 'multi' && widget.layoutType == 'spread')
+        warn(`Holder ${widget.label || widget.id} spreads cards into multiple groups which VirtualTabletop cannot do - all cards are in one row.`);
 
       if(widget.layoutType == 'spread') {
         if(widget.spreadDirection == 'down') {
@@ -287,8 +535,10 @@ export default async function convertPCIO(content) {
       if(widget.layoutType != 'spread' && widget.layoutType != 'freeform')
         w.inheritChildZ = true;
 
+      pcioStyle(widget, w);
+
       if(widget.label) {
-        output[widget.id + '_label'] = {
+        output[widget.id + '_label'] = pcioStyle({ mainTextStyle: widget.mainTextStyle }, {
           id: widget.id + '_label',
           parent: widget.id,
           x: -(w.width || 111) * 0.1,
@@ -299,7 +549,7 @@ export default async function convertPCIO(content) {
           text: widget.label,
           twoRowBottomAlign: true,
           movableInEdit: false
-        };
+        });
         if(widget.allowPlayerEditLabel)
           output[widget.id + '_label'].editable = true;
       }
@@ -361,13 +611,22 @@ export default async function convertPCIO(content) {
         w.cardDefaults.height = widget.cardHeight;
       if(widget.enlarge)
         w.cardDefaults.enlarge = 3;
-      if(widget.cardOverlapH === 0)
+      if(widget.cardOverlapH === 0 && !widget.cardOverlapV)
         w.cardDefaults.overlap = false;
       if(widget.onRemoveFromHand === null)
         w.cardDefaults.ignoreOnLeave = true;
+      if(widget.allowPlayerMove === false)
+        w.cardDefaults.movable = false;
+      if(widget.allowPlayerClick === false)
+        w.cardDefaults.clickable = false;
+      if(Array.isArray(widget.snapAngles) && widget.snapAngles.length > 1)
+        warn('Card rotation snapping (snapAngles) has no VirtualTabletop equivalent.');
+      if(widget.showUnflipped)
+        warn('"Show unflipped side to owner" has no VirtualTabletop equivalent.');
 
       for(const face of w.faceTemplates) {
-        face.border = face.includeBorder ? 1 : false;
+        // includeBorder is a boolean in old files and light/heavy in new ones
+        face.border = face.includeBorder ? { light: 1, heavy: 1.5 }[face.includeBorder] || 1 : false;
         face.radius = face.includeRadius ? 8 : false;
         delete face.includeBorder;
         delete face.includeRadius;
@@ -378,6 +637,13 @@ export default async function convertPCIO(content) {
           object.height = object.h;
           delete object.w;
           delete object.h;
+          if(object.textFont) {
+            if(pcioFonts[object.textFont])
+              object.css = `font-family: ${pcioFonts[object.textFont]}`;
+            else
+              warn(`Font ${object.textFont} is not available in VirtualTabletop.`);
+            delete object.textFont;
+          }
         }
         face.objects.unshift({
           width:     w.cardDefaults.width  || 103,
@@ -527,9 +793,13 @@ export default async function convertPCIO(content) {
       w.y += 5;
       w.width = widget.width || 140;
       w.height = widget.height || 44;
-      w.css = 'font-size: 30px;';
       w.text = widget.counterValue;
       w.editable = true;
+      pcioStyle(widget, w, (widget.mainTextStyle || {}).size ? [] : [ 'font-size: 30px' ]);
+      if(widget.counterMin !== undefined && widget.counterMin !== null || widget.counterMax !== undefined && widget.counterMax !== null)
+        warn(`Counter ${widget.label || widget.id} has minimum/maximum bounds which are not enforced after the import.`);
+
+      const counterStep = Math.abs(+widget.counterStep) || 1;
 
       function addCounterButton(suffix, x, text, value) {
         output[widget.id + suffix] = {
@@ -550,8 +820,8 @@ export default async function convertPCIO(content) {
         if(x)
           output[widget.id + suffix].x += x;
       }
-      addCounterButton('_decrementButton', 0,                  '-', -1);
-      addCounterButton('_incrementButton', w.width - w.height, '+',  1);
+      addCounterButton('_decrementButton', 0,                  '-', -counterStep);
+      addCounterButton('_incrementButton', w.width - w.height, '+',  counterStep);
 
       if(widget.label) {
         output[widget.id + 'label'] = {
@@ -566,31 +836,41 @@ export default async function convertPCIO(content) {
       }
     } else if(widget.type == 'labelText') {
       const weight = widget.bold ? 'bold' : 'normal';
+      const style = widget.mainTextStyle || {};
+      const size = Math.round(style.size || widget.textSize || 18) - 2;
       w.type = 'label';
       w.text = widget.labelContent;
       w.css = {
         default: {
-          'line-height': `${widget.textSize-2}px`,
-          'font-size':   `${widget.textSize-2}px`,
+          'line-height': `${style.lineHeight ? Math.round(size*style.lineHeight) : size}px`,
+          'font-size':   `${size}px`,
           'font-weight': weight,
-          'text-align':  widget.textAlign
+          'text-align':  style.align || widget.textAlign
         },
         ' textarea': {
           'letter-spacing': '-1px'
         }
       };
+      const color = pcioFill(style.mainFill);
+      if(color)
+        w.css.default.color = color;
+      if(style.font && pcioFonts[style.font])
+        w.css.default['font-family'] = pcioFonts[style.font];
+      else if(style.font)
+        warn(`Font ${style.font} is not available in VirtualTabletop.`);
       addDimensions(w, widget, 100, 20);
-      w.height = widget.textSize * 3.5;
+      w.height = (size+2) * 3.5;
     } else if(widget.type == 'separator') {
       w.movable = false;
       w.layer = -1;
-      w.css = `background:#ddd`;
+      w.css = `background:${pcioFill((widget.mainBackground || {}).fill) || '#ddd'}`;
+      const thickness = widget.mainThickness || 1;
       if(widget.separatorType == 'horizontal') {
         w.width  = widget.width || 150;
-        w.height = 1;
+        w.height = thickness;
       } else {
         w.height = widget.height || 150;
-        w.width  = 1;
+        w.width  = thickness;
       }
     } else if(widget.type == 'seat') {
       w.type = 'seat';
@@ -599,6 +879,8 @@ export default async function convertPCIO(content) {
       w.hideWhenUnused = true;
       if(typeof widget.seatIndex == 'number')
         w.index = widget.seatIndex + 1;
+      if(widget.flipTableForSeated)
+        warn('"Flip table for seated player" has no VirtualTabletop equivalent.');
       w.x = (widget.x || 0) + 69;
       w.y = (widget.y || 0) - 38;
       w.height = 42;
@@ -801,6 +1083,8 @@ export default async function convertPCIO(content) {
         w.end = 0
       }
       w.milliseconds = widget.pauseTime||w.start
+      if(widget.timerStart)
+        w.paused = false
       var id = widget.id
       output[widget.id + 'P'] = {
         parent: id,
@@ -890,21 +1174,49 @@ export default async function convertPCIO(content) {
       }
 
       if(widget.type == 'turnButton') {
-        w.clickRoutine.push({
-          func: 'TURN'
-        });
+        if(widget.playersCanReverse || widget.turnCCW) {
+          if(widget.turnCCW)
+            output[turnDirection()].text = 'backward';
+          w.clickRoutine.push({
+            func: 'TURN',
+            turnCycle: `\${PROPERTY text OF ${turnDirection()}}`
+          });
+        } else {
+          w.clickRoutine.push({
+            func: 'TURN'
+          });
+        }
+        if(widget.currentTurn && byID[widget.currentTurn])
+          turnAtSeat[widget.currentTurn] = true;
+        if(widget.playersCanReverse)
+          warn('Players cannot reverse the turn direction by clicking the turn button - use the "Reverse turn direction" button that was added instead.');
       }
 
-      for(let c of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : []) {
+      const steps = [];
+      for(const step of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : [])
+        // PCIO wraps every step into { id, branches: [ { func, args } ] } since schema 6
+        for(const branch of step && step.branches || [ step ])
+          steps.push(branch);
+
+      for(let c of steps) {
+        if(!c || !c.func) {
+          warn('An automation step could not be read and was skipped.');
+          continue;
+        }
+        c = Object.assign({}, c, { args: c.args || {} });
+
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if((!c.args.from && !c.args.objects) || !c.args.to)
             continue;
+          const args = c.args;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
 
           let quantity = 1;
           if(c.args.quantity) {
             if(c.args.quantity.type == 'reference')
               quantity = '${' + c.args.quantity.questionId + '}';
+            else if(c.args.quantity.counterId && byID[c.args.quantity.counterId])
+              quantity = `\${PROPERTY text OF ${c.args.quantity.counterId}}`;
             else if(c.args.quantity.value == 'all')
               quantity = 0;
             else
@@ -933,6 +1245,26 @@ export default async function convertPCIO(content) {
           }
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
+
+          const toPosition = (args.toPosition || {}).value;
+          if(toPosition && toPosition != 'top')
+            warn(`Moving objects to "${toPosition}" is not supported - they end up on top of the destination.`);
+          if((args.startingOffset || {}).value)
+            warn('The starting holder offset of a move automation is not supported.');
+
+          // 'auto' (fit to holder) needs no operation: VTT children inherit the
+          // rotation of their holder
+          const changeRotation = (args.changeRotation || {}).value;
+          if(c.func == 'MOVE' && changeRotation && changeRotation != 'none' && changeRotation != 'auto') {
+            const rotate = rotateOperation({
+              holder: c.to,
+              count:  c.count !== undefined ? c.count : (c.fillTo !== undefined ? c.fillTo : 1)
+            }, w.clickRoutine, changeRotation, (args.setRotation || {}).value);
+            if(rotate) {
+              w.clickRoutine.push(c);
+              c = rotate;
+            }
+          }
         }
         if(c.func == 'RECALL_CARDS') {
           if(!c.args.decks)
@@ -1000,14 +1332,16 @@ export default async function convertPCIO(content) {
             c.holder = c.holder[0];
         }
         if(c.func == 'SORT_CARDS') {
-          if(!c.args.sources)
+          const sources = c.args.sources || c.args.holders;
+          const direction = c.args.direction || c.args.sortDirection;
+          if(!sources)
             continue;
-          const holders = c.args.sources.value.map(id=>byID[id].type == 'seat' ? 'hand' : id);
+          const holders = sources.value.map(id=>byID[id] && byID[id].type == 'seat' ? 'hand' : id);
           c = {
             func:   'SORT',
             holder: holders,
             key:    'sortingOrder',
-            reverse: !c.args.direction || c.args.direction.value != 'za'
+            reverse: !direction || direction.value != 'za'
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
@@ -1018,7 +1352,8 @@ export default async function convertPCIO(content) {
           if(!c.args.holders && !c.args.objects)
             continue;
           const flipFace = c.args.flipFace;
-
+          if((c.args.reverse || {}).value == 'reverse')
+            warn('Reversing the order of a pile while flipping it is not supported.');
 
           c = importWidgetQuery(w.clickRoutine, c.args, 'holders', 'holder', 'collection', {
             func:   'FLIP',
@@ -1028,8 +1363,12 @@ export default async function convertPCIO(content) {
             c.holder = c.holder[0];
           if(!c.count)
             delete c.count;
-          if(flipFace)
+          if(flipFace && (flipFace.value == 'faceUp' || flipFace.value == 'faceDown'))
             c.face = flipFace.value == 'faceDown' ? 0 : 1;
+          else if(flipFace && flipFace.value == 'random')
+            warn('Randomly flipping objects has no VirtualTabletop equivalent - they are flipped to the other side instead.');
+          else if(flipFace && flipFace.value == 'switch')
+            warn('Flipping all objects to the same side is not supported - each object is flipped individually.');
         }
         if(c.func == 'CHANGE_TIMER_STATE') {
           if(!c.args.timers)
@@ -1078,11 +1417,16 @@ export default async function convertPCIO(content) {
         if(c.func == 'CHANGE_COUNTER') {
           if(!c.args.counters)
             continue;
+          // PCIO used add/subtract before it settled on inc/dec
+          const changeMode = c.args.counterChangeMode || c.args.changeMode;
+          let value = c.args.changeNumber ? c.args.changeNumber.value : 0;
+          if(c.args.changeNumber && c.args.changeNumber.counterId && byID[c.args.changeNumber.counterId])
+            value = `\${PROPERTY text OF ${c.args.changeNumber.counterId}}`;
           c = {
             func: 'LABEL',
             label: c.args.counters.value,
-            mode:  c.args.changeMode ? c.args.changeMode.value : 'set',
-            value: c.args.changeNumber ? c.args.changeNumber.value : 0
+            mode:  { add: 'inc', subtract: 'dec' }[changeMode && changeMode.value] || (changeMode ? changeMode.value : 'set'),
+            value
           };
           if(c.label.length == 1)
             c.label = c.label[0];
@@ -1091,28 +1435,60 @@ export default async function convertPCIO(content) {
           if(c.value === 0)
             delete c.value;
         }
-        if(c.func == 'CHANGE_CHOOSER') {
-          if(!c.args.choosers)
+        if(c.func == 'CHANGE_CHOOSER' || c.func == 'ROLL_DICE') {
+          // "Roll / Change Dice" and "Change Chooser" both cycle the faces of
+          // the widgets they target
+          const isDice = c.func == 'ROLL_DICE';
+          const targets = isDice ? c.args.dice : c.args.choosers;
+          if(!targets)
             continue;
-          c = {
-            func: 'FLIP',
-            collection: c.args.choosers.value,
-            face: c.args.choice ? Object.keys(byID[byID[c.args.choosers.value[0]].deck].cardTypes).indexOf(c.args.choice.value) : null,
-            faceCycle: c.args.changeType == 'prev' ? 'backward' : null
-          };
-          if(c.face === null)
-            delete c.face;
-          if(c.faceCycle === null)
-            delete c.faceCycle;
-        }
-        if(c.func == 'ROLL_DICE') {
-          if(!c.args.dice)
-            continue;
-          c = {
-            note:       'Roll dice',
-            func:       'CLICK',
-            collection: c.args.dice.value
-          };
+          const changeType = (c.args.chooserChangeType || c.args.diceChangeType || c.args.changeType || {}).value;
+          const choice = c.args.chooserChoice || c.args.diceChoice || c.args.choice;
+          const deck = byID[targets.value[0]] && byID[byID[targets.value[0]].deck];
+          const faces = deck && deck.cardTypes ? Object.keys(deck.cardTypes) : [];
+
+          if(isDice && (!changeType || changeType == 'random')) {
+            c = {
+              note:       'Roll dice',
+              func:       'CLICK',
+              collection: targets.value
+            };
+          } else if(isDice) {
+            // dice have no flip(), their face is set directly - out of range
+            // values wrap around so +1/-1 cycles through the faces
+            w.clickRoutine.push({
+              func: 'SELECT',
+              property: 'id',
+              relation: 'in',
+              value: targets.value,
+              type: 'dice'
+            });
+            c = changeType == 'set' && choice && faces.indexOf(choice.value) != -1 ? {
+              note: 'Change dice',
+              func: 'SET',
+              property: 'activeFace',
+              value: faces.indexOf(choice.value)
+            } : {
+              note: 'Cycle dice',
+              func: 'SET',
+              property: 'activeFace',
+              relation: changeType == 'prev' ? '-' : '+',
+              value: 1
+            };
+          } else {
+            c = {
+              func: 'FLIP',
+              collection: targets.value
+            };
+            if(changeType == 'random' && faces.length) {
+              w.clickRoutine.push(`var pcioFace = randInt 0 ${faces.length-1}`);
+              c.face = '${pcioFace}';
+            } else if(changeType == 'set' && choice && faces.indexOf(choice.value) != -1) {
+              c.face = faces.indexOf(choice.value);
+            } else if(changeType == 'prev') {
+              c.faceCycle = 'backward';
+            }
+          }
         }
         if(c.func == 'SPIN_SPINNER') {
           if(!c.args.spinners)
@@ -1122,6 +1498,100 @@ export default async function convertPCIO(content) {
             func:       'CLICK',
             collection: c.args.spinners.value
           };
+        }
+        if(c.func == 'ROTATE_OBJECTS') {
+          const target = importWidgetQuery(w.clickRoutine, c.args, 'objects', 'holder', 'collection', {
+            count: (c.args.rotateMode || {}).value == 'top' ? 1 : 0
+          });
+          const rotate = rotateOperation(target, w.clickRoutine, (c.args.changeRotation || {}).value || 'auto', (c.args.setRotation || {}).value);
+          if(!rotate)
+            continue;
+          c = rotate;
+          if(c.holder && c.holder.length == 1)
+            c.holder = c.holder[0];
+        }
+        if(c.func == 'SHIFT_OBJECTS') {
+          // shift the contents of an ordered list of holders by one position,
+          // optionally wrapping the last one around to the first
+          const holders = c.args.holders ? c.args.holders.value : [];
+          if(holders.length < 2)
+            continue;
+          if(holders.filter(id=>!byID[id] || byID[id].type != 'cardPile').length) {
+            warn('Shifting objects between player seats has no VirtualTabletop equivalent and was skipped.');
+            continue;
+          }
+          const wrap = !c.args.moveMode || c.args.moveMode.value == 'wrap';
+          const order = (c.args.moveDirection || {}).value == 'reverse' ? holders.slice().reverse() : holders;
+          const count = (c.args.objectsMode || {}).value == 'top' ? 1 : 0;
+          const steps = Math.min(+((wrap ? c.args.stepsWrap : c.args.stepsEdge) || {}).value || 1, holders.length);
+          if((c.args.objectsMode || {}).value == 'custom')
+            warn('Shifting only a subset of the objects in a holder is not supported - all objects are shifted.');
+
+          if(wrap) {
+            output.pcioShiftTempHolder = {
+              id: 'pcioShiftTempHolder',
+              type: 'holder',
+              x: -200,
+              y: -300
+            };
+          }
+          for(let step=0; step<steps; ++step) {
+            if(wrap)
+              w.clickRoutine.push({ func: 'MOVE', from: order[order.length-1], to: 'pcioShiftTempHolder', count });
+            for(let i=order.length-2; i>=0; --i)
+              w.clickRoutine.push({ func: 'MOVE', from: order[i], to: order[i+1], count });
+            if(wrap)
+              w.clickRoutine.push({ func: 'MOVE', from: 'pcioShiftTempHolder', to: order[0], count });
+          }
+          continue;
+        }
+        if(c.func == 'STAND_UP_PLAYER') {
+          if(!c.args.seats)
+            continue;
+          w.clickRoutine.push({
+            func: 'SELECT',
+            property: 'id',
+            relation: 'in',
+            value: c.args.seats.value,
+            type: 'seat'
+          });
+          c = {
+            note: 'Stand up players',
+            func: 'SET',
+            property: 'player',
+            value: ''
+          };
+        }
+        if(c.func == 'NEXT_TURN') {
+          c = {
+            func: 'TURN',
+            turnCycle: `\${PROPERTY text OF ${turnDirection()}}`
+          };
+        }
+        if(c.func == 'REVERSE_TURN_DIRECTION') {
+          const direction = (c.args.turnDirection || {}).value;
+          const set = value=>[
+            { func: 'SELECT', property: 'id', value: turnDirection() },
+            { func: 'SET',    property: 'text', value }
+          ];
+          c = direction == 'cw' || direction == 'ccw' ? {
+            note: 'Set turn direction',
+            func: 'IF',
+            condition: true,
+            thenRoutine: set(direction == 'ccw' ? 'backward' : 'forward')
+          } : {
+            note: 'Reverse turn direction',
+            func: 'IF',
+            operand1: `\${PROPERTY text OF ${turnDirection()}}`,
+            operand2: 'forward',
+            thenRoutine: set('backward'),
+            elseRoutine: set('forward')
+          };
+        }
+
+        if(c.args) {
+          warn(`The automation step ${c.func} of "${widget.label || widget.id}" has no VirtualTabletop equivalent and was skipped.`);
+          continue;
         }
         w.clickRoutine.push(c);
       }
@@ -1134,6 +1604,7 @@ export default async function convertPCIO(content) {
         w.value = widget.value;
       addDimensions(w, widget, 110, 110);
     } else {
+      warn(`Widgets of type ${widget.type} cannot be imported.`);
       w.css = 'background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);';
     }
 
@@ -1142,5 +1613,17 @@ export default async function convertPCIO(content) {
 
     output[widget.id] = w;
   }
+
+  // whose turn it is - the seats are created after the turn button was read
+  for(const seatID in turnAtSeat)
+    if(output[seatID])
+      output[seatID].turn = true;
+
+  if(warnings.length) {
+    output._meta.info.importerWarnings = warnings;
+    Logging.log(`PCIO import (schema version ${schemaVersion || 'unknown'}): ${warnings.length} warnings: ${warnings.join(' ')}`);
+  }
+  output._meta.info.importerSchemaVersion = schemaVersion;
+
   return output;
 }
