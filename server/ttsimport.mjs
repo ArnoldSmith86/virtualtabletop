@@ -49,12 +49,18 @@ const pieceObjects = /^(Backgammon|Block|Checker|Chess|Chinese_Checkers_Piece|Ch
 const roundPieces = /^(Backgammon|Checker|Chip|Coin|PlayerPawn|go_game_piece|reversi)/;
 
 const imgSizeCache = {};
+// The fallback for an image whose dimensions could not be read is remembered for
+// the current import only - a host that times out once should not keep every later
+// import of that image pinned to a 1:1 aspect ratio.
+let imgSizeFailed = {};
 async function imgSize(url) {
-  if(imgSizeCache[url])
-    return imgSizeCache[url];
+  if(imgSizeCache[url] || imgSizeFailed[url])
+    return imgSizeCache[url] || imgSizeFailed[url];
 
   try {
-    const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' } });
+    // only the first few KB are needed, but a host may ignore the Range header and
+    // send the whole image - don't wait or buffer indefinitely for that
+    const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' }, signal: AbortSignal.timeout(15000), size: 20000000 });
     const buffer = await r.buffer();
     if(buffer.toString('ascii', 1, 4) == 'PNG')
       return imgSizeCache[url] = [ buffer.readUInt32BE(16), buffer.readUInt32BE(20) ];
@@ -66,12 +72,12 @@ async function imgSize(url) {
   } catch(e) {
     Logging.log(`TTS import: could not read the dimensions of ${url}: ${e.toString()}`);
   }
-  return imgSizeCache[url] = [ 1, 1 ];
+  return imgSizeFailed[url] = [ 1, 1 ];
 }
 
 function collectImageURLs(objects, urls=new Set()) {
   for(const o of objects || []) {
-    if(o && typeof o == 'object') {
+    if(o && typeof o == 'object' && !String(o.Name || '').match(invisibleObjects)) {
       for(const deck of Object.values(o.CustomDeck || {}))
         urls.add(processURL(deck.FaceURL));
       if(o.CustomImage && o.CustomImage.ImageURL)
@@ -94,8 +100,9 @@ async function prefetchImageSizes(objects) {
 }
 
 function processURL(url) {
-  const match = String(url || '').match(/\/ugc\/[0-9]+\/[0-9A-F]+\//);
-  return match ? `https://steamusercontent-a.akamaihd.net${match[0]}` : String(url || '').replace(/^http:/, 'https:');
+  const u = String(url || '');
+  const match = u.match(/\/ugc\/[0-9]+\/[0-9A-F]+\//);
+  return match ? `https://steamusercontent-a.akamaihd.net${match[0]}` : u.replace(/^http:/, 'https:');
 }
 
 let nextID = 1;
@@ -196,8 +203,10 @@ function place(o, widget) {
 
 async function addDeck(o, parent=null) {
   const cardIDs = (o.DeckIDs || [ o.CardID ]).map(extractNumber).filter(id=>!isNaN(+id) && o.CustomDeck[Math.floor(+id/100)]);
-  if(!cardIDs.length)
+  if(!cardIDs.length) {
+    Logging.log(`TTS import: skipping ${o.Name} (${o.GUID}): no card refers to an existing CustomDeck entry`);
     return null;
+  }
 
   const firstDeckID = Math.floor(cardIDs[0]/100);
 
@@ -309,7 +318,8 @@ async function addDeck(o, parent=null) {
     if(!isFaceDown(o))
       widgets[`${id}-${cardID}-${i}`].activeFace = 1;
   }
-  if(Object.keys(widgets).length > 2) {
+  // widgets only holds the cards at this point - two of them still need a pile
+  if(Object.keys(widgets).length > 1) {
     widgets[`${id}-pile`] = place(o, {
       id: `${id}-pile`,
       parent,
@@ -593,14 +603,17 @@ async function addRecursive(os, parent=null) {
 function moveIntoBounds(widgets, top, bottom) {
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
+  // Widgets that are not on the surface at all: children move with their parent,
+  // and a deck is invisible and has no position. Counting a deck as a widget at
+  // (0, 0) would pull the whole bounding box to the origin.
+  const placed = Object.values(widgets).filter(w=>!w.parent && w.x !== undefined);
+
   // 1. Find bounding box for all parent-less widgets
-  for(const widget of Object.values(widgets)) {
-    if(widget.parent)
-      continue;
-    minX = Math.min(minX, widget.x || 0);
-    minY = Math.min(minY, widget.y || 0);
-    maxX = Math.max(maxX, (widget.x || 0) + (widget.width  || 0));
-    maxY = Math.max(maxY, (widget.y || 0) + (widget.height || 0));
+  for(const widget of placed) {
+    minX = Math.min(minX, widget.x);
+    minY = Math.min(minY, widget.y);
+    maxX = Math.max(maxX, widget.x + (widget.width  || 0));
+    maxY = Math.max(maxY, widget.y + (widget.height || 0));
   }
   if(minX > maxX)
     return widgets;
@@ -612,11 +625,14 @@ function moveIntoBounds(widgets, top, bottom) {
   const offsetX =       (1600       - (maxX-minX)*scale)/2;
   const offsetY = top + (bottom-top - (maxY-minY)*scale)/2;
 
-  for(const widget of Object.values(widgets)) {
-    if(widget.parent)
-      continue;
-    widget.x = clamp(Math.round(((widget.x || 0) - minX)*scale + offsetX),   0, Math.max(0,   1600 - (widget.width  || 0)));
-    widget.y = clamp(Math.round(((widget.y || 0) - minY)*scale + offsetY), top, Math.max(top, bottom - (widget.height || 0)));
+  for(const widget of placed) {
+    // a widget that is higher than the band between the seats and the hand cannot
+    // be kept inside it - a full table board is allowed to use the whole surface
+    const fits = (widget.height || 0) <= bottom-top;
+    const lo = fits ? top    : 0;
+    const hi = fits ? bottom : 1000;
+    widget.x = clamp(Math.round((widget.x - minX)*scale + offsetX),  0, Math.max(0,  1600 - (widget.width  || 0)));
+    widget.y = clamp(Math.round((widget.y - minY)*scale + offsetY), lo, Math.max(lo, hi   - (widget.height || 0)));
   }
 
   return widgets;
@@ -635,9 +651,16 @@ async function convertTTS(content, linkContent) {
   }
 
   usedIDs = new Set();
+  imgSizeFailed = {};
   await prefetchImageSizes(json.ObjectStates);
 
-  const handColors = ((json.Hands || {}).HandTransforms || []).map(h=>String((h || {}).Color || '')).filter(c=>c);
+  // Older saves list the hand zones in Hands.HandTransforms, newer ones store them
+  // as HandTrigger objects with the player color in FogColor. VTT uses one hand for
+  // all players, so only the set of colors matters - they become the seats.
+  const handColors = [ ...new Set([
+    ...((json.Hands || {}).HandTransforms || []).map(h=>String((h || {}).Color || '')),
+    ...(json.ObjectStates || []).map(o=>o && String(o.Name || '') == 'HandTrigger' ? String(o.FogColor || '') : '')
+  ].filter(c=>c)) ];
   const hasHand = handColors.length || json.Hands && json.Hands.Enable;
 
   // leave room for the seats at the top and the hand at the bottom
@@ -674,16 +697,19 @@ async function convertTTS(content, linkContent) {
     };
   }
 
-  // TTS defines one hand zone per player color - VTT uses one hand for all
-  // players, so the colors become the seats that share it
+  // The seats share one row above the table, so they get narrower when a game has
+  // hand zones for many of the twelve TTS player colors instead of running off the
+  // right edge of the surface.
+  const seatPitch = Math.min(155, Math.floor(1580/(handColors.length || 1)));
+
   handColors.forEach((color, index)=>{
     widgets[`seat-${index+1}`] = {
       id: `seat-${index+1}`,
       type: 'seat',
       index: index+1,
-      x: 20 + index*155,
+      x: 20 + index*seatPitch,
       y: 5,
-      width: 150,
+      width: seatPitch - 5,
       height: 40,
       color: playerColors[color] || '#999999',
       colorEmpty: playerColors[color] || '#999999',
