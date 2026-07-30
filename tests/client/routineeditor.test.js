@@ -46,7 +46,7 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
+    'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'operationUIState', 'commonInfoTopic', 'parameterInfoLine'
@@ -650,47 +650,86 @@ describe('property automations', () => {
     return { widget, editor: new EventsEditor(widget, onChange) };
   }
 
-  test('holders get onEnter/onLeave cards, other widgets only resetProperties', () => {
-    const { editor } = makeEditor({ type: 'holder' });
-    const props = [...editor.domElement.querySelectorAll('.events-editor-property')].map(e => e.textContent);
-    expect(props).toEqual(expect.arrayContaining([ 'onEnter', 'onLeave', 'resetProperties' ]));
+  test('holders and lines get onEnter/onLeave cards, other widgets only resetProperties', () => {
+    for(const type of [ 'holder', 'line' ]) {
+      const { editor } = makeEditor({ type });
+      const props = [...editor.domElement.querySelectorAll('.events-editor-property')].map(e => e.textContent);
+      expect(props).toEqual(expect.arrayContaining([ 'onEnter', 'onLeave', 'resetProperties' ]));
+    }
     const { editor: buttonEditor } = makeEditor({ type: 'button' });
     const buttonProps = [...buttonEditor.domElement.querySelectorAll('.events-editor-property')].map(e => e.textContent);
     expect(buttonProps).toContain('resetProperties');
     expect(buttonProps).not.toContain('onEnter');
   });
 
-  test('automation cards are collapsed by default and expand to a JSON textarea', () => {
-    const { editor } = makeEditor({ type: 'holder', onEnter: { activeFace: 1 } });
-    expect(editor.domElement.querySelector('.events-editor-property-json')).toBeNull();
+  test('onEnter/onLeave are described with the stops of a line and the content of a holder', () => {
+    const onEnter = propertyAutomations.find(a => a.property == 'onEnter');
+    const onLeave = propertyAutomations.find(a => a.property == 'onLeave');
+    expect(onEnter.description('line')).toContain('stops');
+    expect(onEnter.description('holder')).toContain('holder');
+    expect(onLeave.description('line')).toContain('stops');
+    expect(onLeave.description('holder')).toContain('holder');
+  });
+
+  test('automation cards are collapsed by default and expand to one row per entry', () => {
+    const { editor } = makeEditor({ type: 'line', onEnter: { activeFace: 1, cardType: 'stop' } });
+    expect(editor.domElement.querySelector('.events-editor-property-set')).toBeNull();
     editor.expandedEvents.onEnter = true;
     editor.render();
-    const textarea = editor.domElement.querySelector('.events-editor-property-json');
-    expect(textarea).not.toBeNull();
-    expect(JSON.parse(textarea.value)).toEqual({ activeFace: 1 });
+    const keys = [...editor.domElement.querySelectorAll('.events-editor-property-key')].map(e => e.textContent);
+    expect(keys).toEqual([ 'activeFace', 'cardType' ]);
+    const values = [...editor.domElement.querySelectorAll('.events-editor-property-value')].map(e => e.value);
+    expect(values).toEqual([ '1', 'stop' ]);
   });
 
-  test('editing the JSON reports the parsed value', () => {
+  test('editing a value reports the whole set with that entry parsed', () => {
     let received = null;
-    const { editor } = makeEditor({ type: 'holder' }, (property, value) => received = { property, value });
+    const { editor } = makeEditor({ type: 'holder', onLeave: { activeFace: 1, cardType: 'x' } }, (property, value) => received = { property, value });
     editor.expandedEvents.onLeave = true;
     editor.render();
-    const textarea = editor.domElement.querySelector('.events-editor-property-json');
-    textarea.value = '{ "activeFace": 0 }';
-    textarea.dispatchEvent(new Event('change'));
-    expect(received).toEqual({ property: 'onLeave', value: { activeFace: 0 } });
+    const input = editor.domElement.querySelector('.events-editor-property-value');
+    input.value = '0';
+    input.dispatchEvent(new Event('change'));
+    expect(received).toEqual({ property: 'onLeave', value: { activeFace: 0, cardType: 'x' } });
+    // a value that is not JSON stays the text that was typed
+    const cardTypeInput = [...editor.domElement.querySelectorAll('.events-editor-property-value')][1];
+    cardTypeInput.value = 'stop';
+    cardTypeInput.dispatchEvent(new Event('change'));
+    expect(received.value.cardType).toBe('stop');
   });
 
-  test('invalid JSON is flagged and not reported', () => {
+  test('adding an entry names it, removing the last one removes the property', () => {
     let received = null;
-    const { editor } = makeEditor({ type: 'button' }, (property, value) => received = { property, value });
-    editor.expandedEvents.resetProperties = true;
+    const { widget, editor } = makeEditor({ type: 'line' }, (property, value) => {
+      received = { property, value };
+      if(value === undefined)
+        delete widget.state[property];
+      else
+        widget.state[property] = value;
+    });
+    editor.expandedEvents.onEnter = true;
     editor.render();
-    const textarea = editor.domElement.querySelector('.events-editor-property-json');
-    textarea.value = '{ broken';
-    textarea.dispatchEvent(new Event('change'));
-    expect(received).toBeNull();
-    expect(textarea.classList.contains('inputError')).toBe(true);
+    const nameInput = editor.domElement.querySelector('.events-editor-property-name');
+    nameInput.value = 'rotation';
+    [...editor.domElement.querySelectorAll('.events-editor-property-add-button')][0].dispatchEvent(new Event('click'));
+    expect(received).toEqual({ property: 'onEnter', value: { rotation: '' } });
+
+    editor.domElement.querySelector('.events-editor-property-row .events-editor-remove').dispatchEvent(new Event('click'));
+    expect(received).toEqual({ property: 'onEnter', value: undefined });
+  });
+
+  test('the add row proposes property names the room uses', () => {
+    widgets.set('otherWidget', { id: 'otherWidget', state: { id: 'otherWidget', cardType: 'a' } });
+    try {
+      const { editor } = makeEditor({ type: 'line' });
+      editor.expandedEvents.onEnter = true;
+      editor.render();
+      const options = [...editor.domElement.querySelectorAll('datalist option')].map(o => o.value);
+      expect(options).toContain('cardType');
+      expect(options).toContain('dropTarget'); // from the validator's property tables
+    } finally {
+      widgets.delete('otherWidget');
+    }
   });
 
   test('Record snapshots current state including positional defaults', () => {

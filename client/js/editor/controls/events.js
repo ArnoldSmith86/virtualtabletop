@@ -63,27 +63,58 @@ function describeEventProperty(property) {
   };
 }
 
-// object properties that automate widgets without a routine, edited as JSON
+// object properties that automate widgets without a routine: a set of
+// "property: value" pairs applied at a given moment. onEnter / onLeave belong to
+// the widget types that take other widgets in - a holder and a line, which makes
+// what is dropped on it one of its stops.
 const propertyAutomations = [
   {
     property: 'onEnter',
     label: 'set properties on enter',
-    types: [ 'holder' ],
-    description: 'Every property in this object is applied to a widget when it enters this holder. For example activeFace: 1 flips cards face up and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.'
+    types: [ 'holder', 'line' ],
+    keyHint: 'property to set on the widget',
+    description: type=>`Every property in this object is applied to a widget when it ${type == 'line' ? 'is dropped onto this line and becomes one of its stops' : 'enters this holder'}. For example activeFace: 1 flips cards face up and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.`
   },
   {
     property: 'onLeave',
     label: 'set properties on leave',
-    types: [ 'holder' ],
-    description: 'Every property in this object is applied to a widget when it leaves this holder. For example activeFace: 0 flips cards face down and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.'
+    types: [ 'holder', 'line' ],
+    keyHint: 'property to set on the widget',
+    description: type=>`Every property in this object is applied to a widget when it ${type == 'line' ? 'is dragged off this line and stops being one of its stops' : 'leaves this holder'}. For example activeFace: 0 flips cards face down and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.`
   },
   {
     property: 'resetProperties',
     label: 'reset properties',
     types: null,
-    description: 'Every property in this object is applied to this widget by the RESET function - typically used by a reset button to restore the initial game state. Play applies them right now. Record copies the widget\'s current values (including defaults like x, y and rotation) into the object so RESET will restore this exact state.'
+    keyHint: 'property to restore',
+    description: _=>'Every property in this object is applied to this widget by the RESET function - typically used by a reset button to restore the initial game state. Play applies them right now. Record copies the widget\'s current values (including defaults like x, y and rotation) into the object so RESET will restore this exact state.'
   }
 ];
+
+// A value typed into a property set: JSON where that is what was typed (numbers,
+// booleans, null, arrays, objects) and a plain string otherwise - the same rule
+// the routine editor's parameter inputs use.
+function parsePropertySetValue(text) {
+  try {
+    const value = JSON.parse(text);
+    return typeof value == 'string' ? text : value;
+  } catch(e) {
+    return text;
+  }
+}
+
+function propertySetValueText(value) {
+  return typeof value == 'string' ? value : JSON.stringify(value);
+}
+
+// The property names proposed for a new entry, from the same tables the routine
+// editor proposes for its property parameters: onEnter / onLeave set properties
+// on the widget that entered, so this widget's own ones lead nowhere there -
+// resetProperties restores exactly those.
+function propertySetSuggestions(widget, property, alreadySet) {
+  const groups = proposedPropertyGroups(widget, property == 'resetProperties');
+  return groups.flatMap(group=>group.names).filter(name=>alreadySet.indexOf(name) == -1);
+}
 
 class AddEventPopup extends Popup {
   constructor(source, existingProperties, callback, widgetType=null) {
@@ -101,8 +132,9 @@ class AddEventPopup extends Popup {
     this.setTitle('Add Routine');
 
     let available = predefinedEvents.filter(e=>this.existingProperties.indexOf(e.property) == -1);
-    // enter/leave events mostly matter for holders, so list them last elsewhere
-    if(this.widgetType != 'holder') {
+    // enter/leave events mostly matter for the widgets that take others in (a
+    // holder and a line), so list them last elsewhere
+    if([ 'holder', 'line' ].indexOf(this.widgetType) == -1) {
       const holderish = e=>[ 'enterRoutine', 'leaveRoutine' ].indexOf(e.property) != -1;
       available = [ ...available.filter(e=>!holderish(e)), ...available.filter(holderish) ];
     }
@@ -178,8 +210,8 @@ class EventsEditor {
     this.onChange = onChange; // called with (property, newValueOrUndefined)
     this.domElement = document.createElement('div');
     this.domElement.classList.add('events-editor');
-    const widgetID = typeof widget.get == 'function' ? widget.get('id') : widget.state.id;
-    this.expandedEvents = expandedEventsByWidget[widgetID] || (expandedEventsByWidget[widgetID] = {});
+    this.widgetID = typeof widget.get == 'function' ? widget.get('id') : widget.state.id;
+    this.expandedEvents = expandedEventsByWidget[this.widgetID] || (expandedEventsByWidget[this.widgetID] = {});
     this.routineEditors = {}; // kept across renders so folding and other UI state survive
     this.render();
   }
@@ -332,7 +364,17 @@ class EventsEditor {
       name.textContent = property;
       headerDOM.append(name);
 
-      infoButton(headerDOM, `<pre>${escapeHTML(automation.description)}</pre>`);
+      infoButton(headerDOM, `<pre>${escapeHTML(automation.description(widgetType))}</pre>`);
+
+      const jsonButton = document.createElement('span');
+      jsonButton.className = 'material-symbols events-editor-json';
+      jsonButton.textContent = 'data_object';
+      jsonButton.title = 'Open this property in the JSON editor';
+      jsonButton.addEventListener('click', e=>{
+        e.stopPropagation();
+        openWidgetJsonAtProperty(property);
+      });
+      headerDOM.append(jsonButton);
 
       if(isSet) {
         const removeButton = document.createElement('span');
@@ -359,20 +401,7 @@ class EventsEditor {
         const contentDOM = div(eventDOM, 'events-editor-event-content');
         contentDOM.addEventListener('click', e=>e.stopPropagation());
 
-        const textarea = document.createElement('textarea');
-        textarea.className = 'events-editor-property-json';
-        textarea.value = JSON.stringify(isSet ? this.widget.state[property] : {}, null, 2);
-        textarea.addEventListener('change', _=>{
-          try {
-            const value = JSON.parse(textarea.value);
-            textarea.classList.remove('inputError');
-            this.onChange(property, value);
-            this.render();
-          } catch(e) {
-            textarea.classList.add('inputError');
-          }
-        });
-        contentDOM.append(textarea);
+        this.renderPropertySet(contentDOM, automation);
 
         if(property == 'resetProperties') {
           const buttonsDOM = div(contentDOM, 'events-editor-property-buttons');
@@ -392,6 +421,88 @@ class EventsEditor {
         }
       }
     }
+  }
+
+  // The entries of a property set, one "property: value" row each, plus a row
+  // that adds one - typing raw JSON is what the JSON editor is for. The name of
+  // an entry is fixed once it is added (renaming it is removing and adding it),
+  // so it is a label and only the value is an input.
+  renderPropertySet(contentDOM, automation) {
+    const property = automation.property;
+    const list = div(contentDOM, 'events-editor-property-set');
+
+    const currentSet = _=>{
+      const value = this.widget.state[property];
+      return value && typeof value == 'object' && !Array.isArray(value) ? value : {};
+    };
+    // an empty set is no set: removing the last entry removes the property, the
+    // same as the card's delete button does
+    const save = next=>this.onChange(property, Object.keys(next).length ? next : undefined);
+
+    for(const key of Object.keys(currentSet())) {
+      const rowDOM = div(list, 'events-editor-property-row');
+
+      const keyDOM = div(rowDOM, 'events-editor-property-key');
+      keyDOM.textContent = key;
+      keyDOM.title = key;
+
+      const valueInput = document.createElement('input');
+      valueInput.type = 'text';
+      valueInput.className = 'events-editor-property-value';
+      valueInput.value = propertySetValueText(currentSet()[key]);
+      valueInput.placeholder = 'value';
+      valueInput.title = 'The value this property is set to. Anything that is valid JSON (a number, true, null, an object) is stored as such, everything else as text.';
+      // no re-render on an edit: it would take the focus out of the input
+      valueInput.addEventListener('change', _=>{
+        save(Object.assign({}, currentSet(), { [key]: parsePropertySetValue(valueInput.value) }));
+      });
+      rowDOM.append(valueInput);
+
+      const removeButton = document.createElement('span');
+      removeButton.className = 'material-symbols events-editor-remove';
+      removeButton.textContent = 'delete';
+      removeButton.title = `Remove ${key}`;
+      removeButton.addEventListener('click', _=>{
+        const next = Object.assign({}, currentSet());
+        delete next[key];
+        save(next);
+        this.render();
+      });
+      rowDOM.append(removeButton);
+    }
+
+    const addRow = div(list, 'events-editor-property-row events-editor-property-add');
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'events-editor-property-name';
+    nameInput.placeholder = automation.keyHint;
+
+    const suggestions = propertySetSuggestions(this.widget, property, Object.keys(currentSet()));
+    if(suggestions.length) {
+      const datalist = document.createElement('datalist');
+      datalist.id = `propertySet_${property}_${this.widgetID}`;
+      for(const name of suggestions) {
+        const option = document.createElement('option');
+        option.value = name;
+        datalist.append(option);
+      }
+      addRow.append(datalist);
+      nameInput.setAttribute('list', datalist.id);
+    }
+    addRow.append(nameInput);
+
+    const addEntry = _=>{
+      const key = nameInput.value.trim();
+      if(!key || typeof currentSet()[key] != 'undefined')
+        return;
+      save(Object.assign({}, currentSet(), { [key]: '' }));
+      this.render();
+    };
+    nameInput.addEventListener('keydown', e=>{
+      if(e.key == 'Enter')
+        addEntry();
+    });
+    button(addRow, 'add', addEntry).className = 'events-editor-property-add-button';
   }
 
   // snapshot the widget so RESET can restore its current state: the explicitly

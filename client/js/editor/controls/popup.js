@@ -649,7 +649,9 @@ class RoutineStringPopup extends RoutinePopup {
 // they come from: the widget the routine belongs to, the rest of the room, and
 // the standard properties the engine defines (the validator's tables are part of
 // the editor bundle). Every name appears in the first group that has it.
-function proposedPropertyGroups(widget) {
+// includeOwn=false leaves the widget's own properties out entirely (onEnter and
+// onLeave set properties on the widget that entered, not on this one).
+function proposedPropertyGroups(widget, includeOwn=true) {
   const groups = [];
   const seen = new Set();
   const addGroup = (title, names)=>{
@@ -660,7 +662,8 @@ function proposedPropertyGroups(widget) {
       groups.push({ title, names: fresh });
   };
 
-  addGroup('This widget', Object.keys((widget && widget.state) || {}));
+  if(includeOwn)
+    addGroup('This widget', Object.keys((widget && widget.state) || {}));
 
   const inRoom = [];
   if(typeof widgets != 'undefined')

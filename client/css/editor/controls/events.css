@@ -95,18 +95,64 @@ body.edit.darkMode .events-editor-property {
   margin: 0 6px;
 }
 
-.events-editor-property-json {
-  box-sizing: border-box;
-  width: calc(100% - 12px);
-  min-height: 80px;
+.events-editor-property-set {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   margin: 0 6px;
-  padding: 4px;
+}
+
+.events-editor-property-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.events-editor-property-key {
+  color: var(--VTTblue);
+  font-family: monospace;
+  font-size: 12px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.edit.darkMode .events-editor-property-key {
+  color: var(--textHighlightColor7);
+}
+
+.events-editor-property-value,
+.events-editor-property-name {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 2px 4px;
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 4px;
   background: var(--backgroundColor);
   color: var(--textColor);
   font-family: monospace;
   font-size: 12px;
+}
+
+.events-editor-property-name {
+  flex: 1;
+  width: auto;
+}
+
+.events-editor-property-add-button {
+  border: 1px dashed var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: none;
+  color: gray;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.events-editor-property-add-button:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
 }
 
 .events-editor-property-buttons {

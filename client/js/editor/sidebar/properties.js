@@ -4849,7 +4849,7 @@ class PropertiesModule extends SidebarModule {
       });
     });
 
-    // onEnter / onLeave stay in the generic property list (handled in PR #3034)
+    // onEnter / onLeave are edited in the Automations section below
     this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat' ]);
   }
 
@@ -5992,7 +5992,8 @@ class PropertiesModule extends SidebarModule {
         continue;
       if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
         continue; // edited in the Automations section above
-      if(property == 'resetProperties' || (widget.get('type') == 'holder' && [ 'onEnter', 'onLeave' ].indexOf(property) != -1))
+      // holders and lines take widgets in, so both apply onEnter / onLeave
+      if(property == 'resetProperties' || ([ 'holder', 'line' ].indexOf(widget.get('type')) != -1 && [ 'onEnter', 'onLeave' ].indexOf(property) != -1))
         continue; // edited in the Automations section above
 
       const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
