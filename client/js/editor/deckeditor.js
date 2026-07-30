@@ -1805,7 +1805,7 @@ class DeckEditor {
     // The rows below are just a list of properties, so say what this type is for and which of them belong to
     // it - and warn when the object leaves the player too little card to grab.
     if(this.isWritableObject(object)) {
-      div(sidebar, 'deckEditorSectionNote').textContent = 'Players can type into a "write" object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty, "spellCheck" turns the browser\'s spell checker on, "backgroundColor" and "borderColor" style the box itself, and "editable" (bound per card type) locks it again.';
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Players can type into a "write" object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty, "spellCheck" turns the browser\'s spell checker on, "backgroundColor" and "borderColor" style the box itself, and "editable" is the checkbox that decides whether it can still be written on - link it to a card property below to lock a card once it has been filled in.';
       const cardWidth = this.mainCard ? this.mainCard.get('width') : 103;
       const cardHeight = this.mainCard ? this.mainCard.get('height') : 160;
       if((object.width || 0) * (object.height || 0) > cardWidth * cardHeight * 2/3)
@@ -3009,10 +3009,11 @@ class DeckEditor {
     // free: a card can not be grabbed by its text box, so the player needs some card left to drag and flip.
     const margin = Math.round(Math.min(width, height)/8);
     // An empty text box is blank, so it starts out with a placeholder - that is what tells a player the card
-    // can be written on at all, and it shows the creator the object right after adding it. spellCheck (off,
-    // like on a label) and the two color properties carry their defaults so that their rows - and with them
-    // the color pickers - are right there in the sidebar instead of having to be added by name.
-    return { type: 'write', placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: '#000000', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
+    // can be written on at all, and it shows the creator the object right after adding it. editable, spellCheck
+    // (off, like on a label) and the two color properties carry their defaults so that their rows - the
+    // editable checkbox, the color pickers - are right there in the sidebar instead of having to be added by
+    // name. editable is also what the per-card lock is bound to, so it has to be offered without being typed.
+    return { type: 'write', editable: true, placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: '#000000', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
   }
 
   renderDynamicProperties(sidebar, object) {
@@ -3089,7 +3090,9 @@ class DeckEditor {
     // Add-binding control laid out on the same grid as the rows above. Both sides are editable comboboxes
     // (input + datalist): pick an existing property or just type a new one in the same box - no separate field.
     const bound = object.dynamicProperties || {};
-    const objectPropertyOptions = [...new Set([ 'value', 'color', 'width', 'height', 'display', ...Object.keys(object) ])]
+    // "editable" is suggested for a write object even when it does not carry it yet: binding it per card type
+    // is how a card is locked once it has been filled in, which is not something to have to know the name for.
+    const objectPropertyOptions = [...new Set([ 'value', 'color', 'width', 'height', 'display', ...(this.isWritableObject(object) ? [ 'editable' ] : []), ...Object.keys(object) ])]
       .filter(p=>p != 'type' && p != 'dynamicProperties' && bound[p] === undefined);
     const typePropertyOptions = this.knownCardTypeProperties();
     const addRow = div(container, 'deckEditorAddBinding', `

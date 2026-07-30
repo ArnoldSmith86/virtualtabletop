@@ -274,8 +274,21 @@ test('The deck editor shows a write object as its placeholder and its list row e
   // the button adds an object of the "write" type, bound to a card type property of its own
   await expectEventually(t, ClientFunction(()=>{
     const object = widgets.get('deck').get('faceTemplates')[0].objects[2] || {};
-    return [ object.type, (object.dynamicProperties || {}).value ];
-  }), [ 'write', 'note2' ]);
+    return [ object.type, object.editable, (object.dynamicProperties || {}).value ];
+  }), [ 'write', true, 'note2' ]);
+
+  // "editable" is one of the object's rows, as the checkbox that turns writing off again - and it is offered
+  // for a dynamic link even on the object above, which does not carry the property
+  const editableRow = Selector('.deckEditorObjectProperties .deckEditorTypedInput').withText('editable').find('input');
+  await t
+    .expect(editableRow.checked).ok()
+    .click(editableRow);
+  await expectEventually(t, ClientFunction(()=>widgets.get('deck').get('faceTemplates')[0].objects[2].editable), false);
+  // with it off the object is not written on any more, while the other write object still is
+  await t
+    .expect(Selector('#w_card [contenteditable]').count).eql(1)
+    .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(1))
+    .expect(Selector('#deckEditorObjPropList option').withAttribute('value', 'editable').exists).ok();
 });
 
 test('A write object bound to a property of the card widget itself is not editable', async t => {
