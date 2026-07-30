@@ -1521,10 +1521,10 @@ class DeckEditor {
         e.preventDefault();
         // Ctrl/Cmd or Shift picks up a second object instead of replacing the selection - and only changes the
         // selection, so a modifier click can't drag the objects around by accident.
+        if(e.shiftKey)
+          return this.extendObjectSelection(index, undefined, e.ctrlKey || e.metaKey);
         if(e.ctrlKey || e.metaKey)
           return this.toggleObjectSelection(index);
-        if(e.shiftKey)
-          return this.extendObjectSelection(index);
         if(!this.isObjectSelected(index))
           this.selectObject(index);
         this.startObjectDrag(name, e, index);
@@ -1615,14 +1615,17 @@ class DeckEditor {
     this.afterSelectionChanged();
   }
 
-  // Shift+click selects everything between the primary object and the clicked one, like a file list.
-  extendObjectSelection(index, face) {
+  // Shift+click selects everything between the primary object and the clicked one, like a file list: the range
+  // becomes the whole selection, so objects picked up earlier and left outside it are dropped. Ctrl+Shift+click
+  // is the additive version - it adds the range to what is already selected.
+  extendObjectSelection(index, face, additive) {
     if((face !== undefined && face !== this.face) || this.selectedObject === null)
       return this.selectObject(index, face);
     const range = [];
     for(let i=Math.min(this.selectedObject, index); i<=Math.max(this.selectedObject, index); ++i)
       range.push(i);
-    this._selectedObjects = [ ...this._selectedObjects.filter(i=>range.indexOf(i) == -1), ...range.filter(i=>i != index), index ];
+    const kept = additive ? this._selectedObjects.filter(i=>range.indexOf(i) == -1) : [];
+    this._selectedObjects = [ ...kept, ...range.filter(i=>i != index), index ]; // clicked object last = primary
     this.afterSelectionChanged();
   }
 
@@ -2044,7 +2047,7 @@ class DeckEditor {
       'deckEditorScopeEveryCard', 'Same on every card type');
     // Note below (not part of) the header, in the same style as the Dynamic properties note.
     if(multi)
-      div(sidebar, 'deckEditorSectionNote').textContent = 'Every row below changes all selected objects at once. A property the selected objects do not agree on shows as "(mixed)" until a new value is typed. Ctrl+click adds or removes an object, ctrl+A selects the whole face.';
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Every row below changes all selected objects at once. A property the selected objects do not agree on shows as "(mixed)" until a new value is typed. Ctrl+click adds or removes an object, shift+click selects a range of them, ctrl+A the whole face.';
     else if(object.type == 'html')
       div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
 
@@ -2533,10 +2536,10 @@ class DeckEditor {
     this.treeObjectPreviews.push({ box: previewBox, index, face });
     this.renderObjectPreview(previewBox, index, face);
     row.onclick = e=>{
+      if(e.shiftKey)
+        return this.extendObjectSelection(index, face, e.ctrlKey || e.metaKey);
       if(e.ctrlKey || e.metaKey)
         return this.toggleObjectSelection(index, face);
-      if(e.shiftKey)
-        return this.extendObjectSelection(index, face);
       this.selectObject(index, face);
     };
     // Drag-and-drop reordering, only within the current face (objects of other expanded faces are read-only here).
@@ -2757,10 +2760,10 @@ class DeckEditor {
       e.stopPropagation();
       // The field covers most of its row, so it has to offer the row's Ctrl/Shift multi-select too - otherwise
       // text objects could only ever be selected one at a time.
+      if(e.shiftKey)
+        return this.extendObjectSelection(index, faceIndex, e.ctrlKey || e.metaKey);
       if(e.ctrlKey || e.metaKey)
         return this.toggleObjectSelection(index, faceIndex);
-      if(e.shiftKey)
-        return this.extendObjectSelection(index, faceIndex);
       if(this.selectedObject !== index || this.face !== faceIndex)
         this.selectObject(index, faceIndex);
     };

@@ -854,7 +854,18 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
   const objects = JSON.parse(await faceObjects());
   await t
     .expect(objects.every(object => object.display === true)).ok() // booleans, not strings
-    .expect(fieldOf('display')).eql('checkbox:common')
+    .expect(fieldOf('display')).eql('checkbox:common');
+
+  // Shift+click makes the range the whole selection: an object picked up with ctrl before, but outside the
+  // range, is dropped. Ctrl+shift+click is the additive version that keeps it.
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(1), { modifiers: { shift: true } }) // range 2-4, so object 1 goes away
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(objectRow.nth(0).hasClass('selected')).notOk()
+    .click(objectRow.nth(0), { modifiers: { ctrl: true, shift: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4)
     .pressKey('esc');
   await compareState(t, '5dee75f5433a4bf336dc282d3ebb30cc');
 });
