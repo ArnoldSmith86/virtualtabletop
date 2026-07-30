@@ -183,6 +183,21 @@ test('widgets inheriting from each other do not lock up the client', async t => 
   await expectEventually(t, markedWidgets, [ 'go' ]);
 });
 
+test('a widget can still inherit the same widget through two different chains', async t => {
+  await setRoomState({
+    shared: { id: 'shared', type: 'basic', x: 600, y: 50, width: 111, height: 222 },
+    viaWidth: { id: 'viaWidth', type: 'basic', inheritFrom: { shared: [ 'width' ] } },
+    viaHeight: { id: 'viaHeight', type: 'basic', inheritFrom: { shared: [ 'height' ] } },
+    both: { id: 'both', type: 'basic', x: 50, y: 50, inheritFrom: { viaWidth: [ 'width' ], viaHeight: [ 'height' ] } }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // 'shared' is reached through two branches and has to be used by both of them
+  await t.expect(Selector('#w_both').getStyleProperty('width')).eql('111px');
+  await t.expect(Selector('#w_both').getStyleProperty('height')).eql('222px');
+});
+
 test('a value that contains itself is not written instead of crashing the client', async t => {
   await setRoomState({
     build: { id: 'build', type: 'button', text: 'build', x: 800, y: 400, clickRoutine: [
@@ -190,8 +205,7 @@ test('a value that contains itself is not written instead of crashing the client
       'var list = ${list} push ${list}',
       { func: 'SELECT', property: 'id', value: 'build' },
       { func: 'SET', property: 'result', value: '${list}' },
-      { func: 'SELECT', property: 'id', value: 'go' },
-      { func: 'SET', property: 'marked', value: true }
+      { func: 'CALL', widget: 'go', routine: 'clickRoutine' } // the value must not break passing variables on
     ] },
     go: markSelf
   });

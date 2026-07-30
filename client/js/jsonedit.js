@@ -1887,7 +1887,14 @@ async function jeApplyChanges() {
 }
 
 async function jeApplyChangesMulti() {
+  const parentCycles = [];
   const setValueIfNeeded = async function(widget, key, value) {
+    // putting a widget inside itself breaks it beyond repair, so refuse it here just like the
+    // single widget editor does
+    if(key == 'parent' && widget.wouldCreateParentCycle(value)) {
+      parentCycles.push(widget.get('id'));
+      return;
+    }
     if(widget.get(key) !== value)
       await widget.set(key, value);
   };
@@ -1919,6 +1926,8 @@ async function jeApplyChangesMulti() {
     }
     batchEnd();
     jeDeltaIsOurs = false;
+    if(parentCycles.length)
+      alert(`The parent of ${parentCycles.join(', ')} was not changed because that would put the widget inside itself.`);
   }
 }
 

@@ -1,7 +1,7 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, stringifyForDisplay } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, canBeStored, stringifyForDisplay } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
+import { batchStart, batchEnd, getBatchDepth, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -41,7 +41,8 @@ const readOnlyProperties = new Set([
 // Routines re-enter evaluateRoutine through CALL, CLICK, change routines and more, and none of
 // those paths bounded the nesting - a routine that (indirectly) triggers itself used to take the
 // client down with a stack overflow. Abort once the nesting gets absurd and report it as a problem
-// in the routine that caused it. (#1405, #1455)
+// in the routine that caused it. IF branches and LOOP bodies are evaluated the same way and use up
+// a level as well, so the budget is generous. (#1405, #1455)
 const maxRoutineDepth = 250;
 let routineDepth = 0;
 let routineDepthProblem = null;
@@ -375,15 +376,22 @@ export class Widget extends StateManaged {
     }
   }
 
-  // 'seen' keeps widgets that inherit from each other from being walked forever (#684, #833)
+  // 'seen' holds the widgets on the way down to the current one, so that widgets inheriting from
+  // each other are not walked forever. Entries are removed again on the way back up, so that a
+  // widget inherited from through two different branches is still visited in both. (#684, #833)
   applyInheritedValuesToDOM(inheritFrom, pushasArray, seen = new Set([ this.id ])) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
       if(widgets.has(id) && !seen.has(id)) {
-        seen.add(id);
         const w = widgets.get(id);
-        if(w.state.inheritFrom)
-          this.applyInheritedValuesToDOM(w.inheritFrom(), false, seen);
+        if(w.state.inheritFrom) {
+          seen.add(id);
+          try {
+            this.applyInheritedValuesToDOM(w.inheritFrom(), false, seen);
+          } finally {
+            seen.delete(id);
+          }
+        }
         this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
@@ -883,15 +891,21 @@ export class Widget extends StateManaged {
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
     if(routineDepth >= maxRoutineDepth) {
-      routineDepthProblem = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')}: more than ${maxRoutineDepth} routines are running inside each other. A routine is probably calling itself.`;
+      routineDepthProblem = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')}: more than ${maxRoutineDepth} routines, IF branches and LOOP bodies are nested inside each other. A routine is probably calling itself.`;
       return { variable: null, collection: [] };
     }
 
+    // An operation throwing must not leave the batch that the routine opened behind, because that
+    // would keep the client from sending any further delta at all.
+    const batchDepthBefore = getBatchDepth();
     ++routineDepth;
     try {
       return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference);
     } finally {
-      --routineDepth;
+      while(getBatchDepth() > batchDepthBefore)
+        batchEnd();
+      if(!--routineDepth)
+        routineDepthProblem = null;
     }
   }
 
@@ -1177,7 +1191,20 @@ export class Widget extends StateManaged {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
             // make sure everything is passed in a way that the variables and collections of this routine won't be changed
-            const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.arguments);
+            const inheritVariables = {};
+            for(const [ key, value ] of Object.entries(variables)) {
+              let json;
+              try {
+                json = JSON.stringify(value);
+              } catch(e) {
+                // a variable can contain itself and can then not be copied at all (#1415)
+                problems.push(`Variable ${key} contains itself and is not passed on to ${a.routine}.`);
+                continue;
+              }
+              if(json !== undefined)
+                inheritVariables[key] = JSON.parse(json);
+            }
+            Object.assign(inheritVariables, a.arguments);
             const inheritCollections = {};
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
@@ -2034,6 +2061,8 @@ export class Widget extends StateManaged {
                 const newValue = await compute(a.relation, null, w.get(String(a.property)), a.value);
                 if(a.property == 'parent' && w.wouldCreateParentCycle(newValue))
                   problems.push(`Skipping parent change of ${w.id} to ${newValue} because that would put ${w.id} inside itself.`);
+                else if(!canBeStored(newValue))
+                  problems.push(`Skipping ${a.property} of ${w.id} because the value contains itself and can not be stored.`);
                 else
                   await w.set(String(a.property), newValue);
               }

@@ -315,6 +315,10 @@ export function batchStart() {
   ++batchDepth;
 }
 
+export function getBatchDepth() {
+  return batchDepth;
+}
+
 export function batchEnd() {
   --batchDepth;
   sendDelta();

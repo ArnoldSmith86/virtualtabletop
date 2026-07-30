@@ -114,8 +114,19 @@ export function regexEscape(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
 }
 
-// Routines can build values that contain themselves (#1415). Displaying such a value must never
-// throw - showing the error in its place is what makes the situation debuggable at all.
+// Routines can build values that contain themselves (#1415). Such a value can neither be stored in
+// a property nor be sent to the server.
+export function canBeStored(value) {
+  try {
+    JSON.stringify(value);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+
+// Displaying a value that contains itself must never throw - showing the error in its place is what
+// makes the situation debuggable at all. (#1415)
 export function stringifyForDisplay(value, indent) {
   try {
     return JSON.stringify(value, null, indent);
