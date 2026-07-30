@@ -1546,6 +1546,21 @@ function uploadWidget(preset) {
   });
 }
 
+// Returns the reason why the new parent cannot be used, or null. Callers that update many widgets
+// at once (the macro command) use it to collect the problems instead of alerting once per widget.
+// The widget is looked up by its previous id because renaming it keeps its children pointing at it.
+function widgetParentProblem(widget, previousState) {
+  if(widget.parent === undefined || widget.parent === null)
+    return null;
+  if(!widgets.has(widget.parent))
+    return `Parent widget ${widget.parent} does not exist.`;
+  if(widget.parent == widget.id)
+    return `A widget cannot be its own parent.`;
+  if(widgets.has(previousState.id) && widgets.get(previousState.id).wouldCreateParentCycle(widget.parent))
+    return `Widget ${widget.parent} is inside ${widget.id}, so using it as the parent would create a loop.`;
+  return null;
+}
+
 async function updateWidget(currentState, oldState, applyChangesFromUI) {
   batchStart();
 
@@ -1563,15 +1578,9 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     if(widget[key] === null)
       delete widget[key];
 
-  if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-    alert(`Parent widget ${widget.parent} does not exist.`);
-    batchEnd();
-    return;
-  }
-
-  // the widget is looked up by its previous id because renaming it keeps its children pointing at it
-  if(widget.parent !== undefined && widgets.has(previousState.id) && widgets.get(previousState.id).wouldCreateParentCycle(widget.parent)) {
-    alert(`Widget ${widget.parent} is inside ${widget.id}, so using it as the parent would create a loop.`);
+  const problem = widgetParentProblem(widget, previousState);
+  if(problem) {
+    alert(`${problem} Nothing was saved.`);
     batchEnd();
     return;
   }

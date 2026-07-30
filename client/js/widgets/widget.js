@@ -43,9 +43,13 @@ const readOnlyProperties = new Set([
 // client down with a stack overflow. Abort once the nesting gets absurd and report it as a problem
 // in the routine that caused it. IF branches and LOOP bodies are evaluated the same way and use up
 // a level as well, so the budget is generous. (#1405, #1455)
+// The problem is reported twice: once in the innermost routine, which is where it happened, and
+// once in the outermost one, which is the only place the user can realistically find it - the
+// innermost one is hundreds of collapsed levels deep in the routine log.
 const maxRoutineDepth = 250;
 let routineDepth = 0;
 let routineDepthProblem = null;
+let routineDepthProblemForOutermost = null;
 
 function inputFieldValueForPlayer(value, player, playerIndex) {
   if(!value || typeof value != 'object' || Array.isArray(value))
@@ -891,7 +895,7 @@ export class Widget extends StateManaged {
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
     if(routineDepth >= maxRoutineDepth) {
-      routineDepthProblem = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')}: more than ${maxRoutineDepth} routines, IF branches and LOOP bodies are nested inside each other. A routine is probably calling itself.`;
+      routineDepthProblem = routineDepthProblemForOutermost = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')}: more than ${maxRoutineDepth} routines, IF branches and LOOP bodies are nested inside each other. A routine is probably calling itself.`;
       return { variable: null, collection: [] };
     }
 
@@ -905,7 +909,7 @@ export class Widget extends StateManaged {
       while(getBatchDepth() > batchDepthBefore)
         batchEnd();
       if(!--routineDepth)
-        routineDepthProblem = null;
+        routineDepthProblem = routineDepthProblemForOutermost = null;
     }
   }
 
@@ -1152,7 +1156,7 @@ export class Widget extends StateManaged {
                 variables[variable][index] = result;
               else
                 variables[variable] = result;
-              if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+              if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], stringifyForDisplay(result));
             } else {
               problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
             }
@@ -1221,7 +1225,7 @@ export class Widget extends StateManaged {
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
                   `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
-                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
+                  `${stringifyForDisplay(variables[a.variable])}; ${returnCollection}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
@@ -1286,13 +1290,13 @@ export class Widget extends StateManaged {
 
         if(routineLogging) {
           if(a.mode == 'set')
-            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${JSON.stringify(a.value)}`)
+            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${stringifyForDisplay(a.value)}`)
           else if(a.mode == 'change')
-            jeLoggingRoutineOperationSummary(`index ${JSON.stringify(a.value)} of ${phrase}`, `${JSON.stringify(a.color)}`)
+            jeLoggingRoutineOperationSummary(`index ${stringifyForDisplay(a.value)} of ${phrase}`, `${stringifyForDisplay(a.color)}`)
           else if(a.mode == 'reset')
             jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `0`)
           else if(a.mode == 'setPixel')
-            jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${JSON.stringify(a.value)}`, `${JSON.stringify(a.color)}`)
+            jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${stringifyForDisplay(a.value)}`, `${stringifyForDisplay(a.color)}`)
         }
       }
 
@@ -1331,7 +1335,7 @@ export class Widget extends StateManaged {
           }
           collections[a.collection]=c;
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`);
+            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${stringifyForDisplay(a.collection)}'`);
         }
       }
 
@@ -1380,7 +1384,7 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(routineLogging)
-          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
+          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${stringifyForDisplay(variables[a.variable])}`)
 
       }
 
@@ -1469,7 +1473,7 @@ export class Widget extends StateManaged {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
+            jeLoggingRoutineOperationSummary( `elements in '${stringifyForDisplay(a.in)}'`);
         } else if(a.range) {
           let range = [...asArray(a.range)];
 
@@ -1481,13 +1485,13 @@ export class Widget extends StateManaged {
             range.unshift(1);
           let start = parseFloat(range[0]);
           if(isNaN(start)) {
-            problems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
+            problems.push(`Invalid start of range ${stringifyForDisplay(range[0])}, 1 used`);
             start = 1;
           }
 
           let end = parseFloat(range[1]);
           if(isNaN(end)) {
-            problems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
+            problems.push(`Invalid end of range ${stringifyForDisplay(range[1])}, 1 used`);
             end = 1;
           }
 
@@ -1496,7 +1500,7 @@ export class Widget extends StateManaged {
           let step = parseFloat(range[2]);
           if(isNaN(step) || step == 0) {
             step = end > start ? 1 : -1;
-            problems.push(`Invalid step value ${JSON.stringify(range[2])}, ${step} used`);
+            problems.push(`Invalid step value ${stringifyForDisplay(range[2])}, ${step} used`);
           }
 
           if(start>end && step>0 || start<end && step<0) {
@@ -1507,7 +1511,7 @@ export class Widget extends StateManaged {
           for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
             await callWithAdditionalValues({ value: index });
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
+            jeLoggingRoutineOperationSummary( `values in range '${stringifyForDisplay(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
@@ -1567,7 +1571,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${stringifyForDisplay(variables[a.variable])}`);
         }
       }
 
@@ -1586,9 +1590,9 @@ export class Widget extends StateManaged {
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           if(routineLogging) {
             if (a.condition === undefined)
-              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
+              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${stringifyForDisplay(condition)}`)
             else
-              jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${JSON.stringify(condition)}`)
+              jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${stringifyForDisplay(condition)}`)
           }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
@@ -1658,7 +1662,7 @@ export class Widget extends StateManaged {
             a.fields.forEach(f=>{
               if(f.variable) {
                 varList.push(f.variable);
-                valueList.push(JSON.stringify(variables[f.variable]));
+                valueList.push(stringifyForDisplay(variables[f.variable]));
               }
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
@@ -1955,9 +1959,9 @@ export class Widget extends StateManaged {
           const phrase = round===null ? 'new round' : `round ${a.round}`;
           const seatIds = seats.map(w => w.get('id'));
           if(a.mode == 'inc' || a.mode == 'dec')
-            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${stringifyForDisplay(seatIds)} by ${a.value}`)
           else
-            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
+            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${stringifyForDisplay(seatIds)} to ${a.value}`)
         }
       }
 
@@ -2015,7 +2019,7 @@ export class Widget extends StateManaged {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
-            jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${stringifyForDisplay(a.value)} from '${a.source}'`, `${a.mode} ${stringifyForDisplay(a.collection)} = ${selectedWidgets}`);
           }
         }
       }
@@ -2059,10 +2063,12 @@ export class Widget extends StateManaged {
                 problems.push(`null value being appended, SET ignored`);
               } else {
                 const newValue = await compute(a.relation, null, w.get(String(a.property)), a.value);
-                if(a.property == 'parent' && w.wouldCreateParentCycle(newValue))
-                  problems.push(`Skipping parent change of ${w.id} to ${newValue} because that would put ${w.id} inside itself.`);
+                if(a.property == 'parent' && newValue == w.id)
+                  problems.push(`Skipping parent change of ${w.id} to itself.`);
+                else if(a.property == 'parent' && w.wouldCreateParentCycle(newValue))
+                  problems.push(`Skipping parent change of ${w.id} to ${newValue}: ${newValue} is inside ${w.id}.`);
                 else if(!canBeStored(newValue))
-                  problems.push(`Skipping ${a.property} of ${w.id} because the value contains itself and can not be stored.`);
+                  problems.push(`Skipping ${a.property} of ${w.id}: the value contains itself and can not be stored.`);
                 else
                   await w.set(String(a.property), newValue);
               }
@@ -2070,7 +2076,7 @@ export class Widget extends StateManaged {
           }
         }
         if(routineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
+          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${stringifyForDisplay(a.value)} for widgets in '${a.collection}'`);
       }
 
       if(a.func == 'SHUFFLE') {
@@ -2275,7 +2281,7 @@ export class Widget extends StateManaged {
         } else {
           variables[a.variable] = uploadedAsset;
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${stringifyForDisplay(variables[a.variable])}`);
         }
       }
 
@@ -2353,7 +2359,7 @@ export class Widget extends StateManaged {
             if (target) {
               const indexList = c.map(w => w.get('index'));
               const turn = target.get('index');
-              jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+              jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${stringifyForDisplay(indexList)}`);
             } else {
               jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
             }
@@ -2367,13 +2373,19 @@ export class Widget extends StateManaged {
           variables[key] = value;
 
         if(routineLogging) {
-          jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
+          jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${stringifyForDisplay(e[1])}`).join(', ')}`);
         }
       }
 
       if(routineDepthProblem) {
         problems.push(routineDepthProblem);
         routineDepthProblem = null;
+      }
+
+      // repeat it in the outermost routine so that it is visible without expanding the whole nesting
+      if(routineDepthProblemForOutermost && routineDepth == 1) {
+        problems.push(routineDepthProblemForOutermost);
+        routineDepthProblemForOutermost = null;
       }
 
       if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);

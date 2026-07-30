@@ -144,12 +144,20 @@ const jeCommands = [
         try {
           const macro = new Function(`"use strict";return (function(w, v) {${jeGetEditorContent()}})`)();
           const variableState = {};
+          const macroProblems = [];
           for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
             const s = JSON.stringify(w.state);
             const newState = JSON.parse(s);
             macro(newState, variableState);
-            await updateWidget(JSON.stringify(newState), s);
+            // updateWidget would show one modal alert per widget, so collect the problems instead
+            const problem = widgetParentProblem(newState, JSON.parse(s));
+            if(problem)
+              macroProblems.push(`${w.id}: ${problem}`);
+            else
+              await updateWidget(JSON.stringify(newState), s);
           }
+          if(macroProblems.length)
+            jeJSONerror = `${macroProblems.length} widget(s) were not updated:\n${macroProblems.join('\n')}`;
         } catch(e) {
           jeJSONerror = e;
         }
@@ -1886,6 +1894,22 @@ async function jeApplyChanges() {
   }
 }
 
+// The live counterpart of the parent check in jeApplyChangesMulti below, so that the multi widget
+// editor reports a parent that would create a loop while it is typed instead of only afterwards.
+function jeMultiParentProblem(state) {
+  if(state.parent === undefined || state.parent === null)
+    return null;
+  const cycles = [];
+  for(const id of state.widgets) {
+    let value = state.parent;
+    if(typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!state.widgets.includes(k)).length)
+      value = value[id];
+    if(value !== undefined && widgets.has(id) && widgets.get(id).wouldCreateParentCycle(value))
+      cycles.push(id);
+  }
+  return cycles.length ? `The given parent is inside ${cycles.join(', ')} itself, so using it would create a loop.` : null;
+}
+
 async function jeApplyChangesMulti() {
   const parentCycles = [];
   const setValueIfNeeded = async function(widget, key, value) {
@@ -1927,7 +1951,7 @@ async function jeApplyChangesMulti() {
     batchEnd();
     jeDeltaIsOurs = false;
     if(parentCycles.length)
-      alert(`The parent of ${parentCycles.join(', ')} was not changed because that would put the widget inside itself.`);
+      alert(`The parent of ${parentCycles.join(', ')} was not changed: the given parent is inside the widget itself, so using it would create a loop.`);
   }
 }
 
@@ -2708,14 +2732,17 @@ function jeGetContext() {
   try {
     jeStateNow = JSON.parse(jePostProcessText(v));
 
+    let parentProblem;
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
     else if(typeof jeStateNow.id != 'string')
       jeJSONerror = 'ID has to be a string.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
-    else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))
-      jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
+    // the same check that the editor runs when the JSON is applied, so that a parent that would
+    // create a loop is reported while typing instead of only in the alert afterwards
+    else if(parentProblem = widgetParentProblem(jeStateNow, JSON.parse(jeStateBefore)))
+      jeJSONerror = parentProblem;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
     else if(jeStateNow.type == 'card' && !widgets.get(jeStateNow.deck).get('cardTypes'))
@@ -2786,7 +2813,7 @@ function jeGetContext() {
       if(!Array.isArray(jeStateNow.widgets))
         jeJSONerror = 'Key widgets is not an array.';
       else
-        jeJSONerror = null;
+        jeJSONerror = jeMultiParentProblem(jeStateNow);
     } catch(e) {
       jeStateNow = null;
       jeJSONerror = e;
@@ -3190,12 +3217,14 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
   const opFunction = savedHTML[3];
   const startTime = savedHTML[4];
 
+  // Problems start expanded - the red arrow is the only hint that something is wrong, so hiding the
+  // explanation behind another click is how it gets missed.
   const opProblems = problems.length ?
        `<div class="jeLogDetails">
-          <div class="jeExpander">
+          <div class="jeExpander jeExpander-down">
             <span class="jeLogName">Problems</span>
           </div>
-          <div class="jeLogNested">
+          <div class="jeLogNested active">
             <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
           </div>
         </div>` : '';

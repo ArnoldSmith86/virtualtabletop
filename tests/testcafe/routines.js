@@ -216,3 +216,48 @@ test('a value that contains itself is not written instead of crashing the client
   await expectEventually(t, markedWidgets, [ 'go' ]);
   await expectEventually(t, ()=>widgetProperty('build', 'result'), null);
 });
+
+// The routine log formats every value it shows, so the Debug module used to be the one place where
+// a value that contains itself still took the client down. (#1415)
+test('the routine log shows a value that contains itself instead of crashing', async t => {
+  await setRoomState({
+    build: { id: 'build', type: 'button', text: 'build', x: 800, y: 400, clickRoutine: [
+      'var list = []',
+      'var list = ${list} push ${list}',
+      { func: 'SELECT', property: 'id', value: 'build' },
+      { func: 'SET', property: 'result', value: '${list}' }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('build').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  await t.expect(Selector('#clientErrorOverlay').visible).notOk();
+  await t.expect(Selector('#jeLog').innerText).contains('<contains itself>');
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('the value contains itself and can not be stored');
+});
+
+// The routine that hits the limit is hundreds of collapsed levels deep in the log, so the problem
+// is reported in the outermost routine as well. (#1405, #1455)
+test('the recursion limit is reported in the routine that was clicked', async t => {
+  await setRoomState({
+    loop: { id: 'loop', type: 'button', text: 'loop', x: 800, y: 400, clickRoutine: [ { func: 'CALL' } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('loop').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  // the problem has to be on the operation of the outermost routine, not only hundreds of levels
+  // down in the one that hit the limit
+  await t.expect(Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems').innerText).contains('nested inside each other');
+});
