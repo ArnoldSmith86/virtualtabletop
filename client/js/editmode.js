@@ -1569,6 +1569,12 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     return;
   }
 
+  if(widget.parent !== undefined && widgets.has(widget.id) && widgets.get(widget.id).wouldCreateParentCycle(widget.parent)) {
+    alert(`Widget ${widget.parent} is inside ${widget.id}, so using it as the parent would create a loop.`);
+    batchEnd();
+    return;
+  }
+
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 

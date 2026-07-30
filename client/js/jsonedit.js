@@ -3059,7 +3059,7 @@ function jeLoggingClear() {
 }
 
 function jeLoggingJSON(obj) {
-  return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
+  return html(stringifyForDisplay(obj, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
 export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {

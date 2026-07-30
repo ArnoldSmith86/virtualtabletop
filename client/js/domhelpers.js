@@ -114,6 +114,16 @@ export function regexEscape(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
 }
 
+// Routines can build values that contain themselves (#1415). Displaying such a value must never
+// throw - showing the error in its place is what makes the situation debuggable at all.
+export function stringifyForDisplay(value, indent) {
+  try {
+    return JSON.stringify(value, null, indent);
+  } catch(e) {
+    return JSON.stringify({ error: e.toString() }, null, indent);
+  }
+}
+
 export function setText(node, text) {
   if(node.classList.contains('emoji-monochrome'))
     text = toNotoMonochrome(text);

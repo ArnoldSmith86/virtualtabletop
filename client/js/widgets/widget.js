@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, stringifyForDisplay } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -37,6 +37,14 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteX',
   '_localOriginAbsoluteY'
 ]);
+
+// Routines re-enter evaluateRoutine through CALL, CLICK, change routines and more, and none of
+// those paths bounded the nesting - a routine that (indirectly) triggers itself used to take the
+// client down with a stack overflow. Abort once the nesting gets absurd and report it as a problem
+// in the routine that caused it. (#1405, #1455)
+const maxRoutineDepth = 250;
+let routineDepth = 0;
+let routineDepthProblem = null;
 
 function inputFieldValueForPlayer(value, player, playerIndex) {
   if(!value || typeof value != 'object' || Array.isArray(value))
@@ -316,10 +324,19 @@ export class Widget extends StateManaged {
       this.isDraggable = delta.movable;
     }
 
-    for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
-      const inheritedDelta = {};
-      this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
-      inheriting.applyInheritedDeltaToDOM(inheritedDelta);
+    // Widgets can inherit from each other in a circle, so a delta must not be handed on to a widget
+    // that is already passing it around - that never comes back. (#684, #833)
+    if(!StateManaged.inheritPropagations.has(this)) {
+      StateManaged.inheritPropagations.add(this);
+      try {
+        for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
+          const inheritedDelta = {};
+          this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
+          inheriting.applyInheritedDeltaToDOM(inheritedDelta);
+        }
+      } finally {
+        StateManaged.inheritPropagations.delete(this);
+      }
     }
 
     // inherit properties again when overriding ones are removed
@@ -349,18 +366,24 @@ export class Widget extends StateManaged {
   }
 
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
-    for(const key in sourceDelta)
+    for(const key in sourceDelta) {
+      // inheriting the parent of a descendant would make the target its own ancestor (#684)
+      if(key == 'parent' && targetWidget.wouldCreateParentCycle(sourceDelta[key]))
+        continue;
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
         targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
+    }
   }
 
-  applyInheritedValuesToDOM(inheritFrom, pushasArray) {
+  // 'seen' keeps widgets that inherit from each other from being walked forever (#684, #833)
+  applyInheritedValuesToDOM(inheritFrom, pushasArray, seen = new Set([ this.id ])) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
-      if(widgets.has(id)) {
+      if(widgets.has(id) && !seen.has(id)) {
+        seen.add(id);
         const w = widgets.get(id);
         if(w.state.inheritFrom)
-          this.applyInheritedValuesToDOM(w.inheritFrom());
+          this.applyInheritedValuesToDOM(w.inheritFrom(), false, seen);
         this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
@@ -859,6 +882,20 @@ export class Widget extends StateManaged {
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+    if(routineDepth >= maxRoutineDepth) {
+      routineDepthProblem = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')}: more than ${maxRoutineDepth} routines are running inside each other. A routine is probably calling itself.`;
+      return { variable: null, collection: [] };
+    }
+
+    ++routineDepth;
+    try {
+      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference);
+    } finally {
+      --routineDepth;
+    }
+  }
+
+  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -1076,7 +1113,7 @@ export class Widget extends StateManaged {
             variables[variable][index] = await getValue(variables[variable][index]);
           else
             variables[variable] = await getValue(variables[variable]);
-          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
+          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), stringifyForDisplay(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
           if (comment) {
@@ -1991,10 +2028,15 @@ export class Widget extends StateManaged {
 
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
-              if(a.relation == '+' && a.value == null)
+              if(a.relation == '+' && a.value == null) {
                 problems.push(`null value being appended, SET ignored`);
-              else
-                await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
+              } else {
+                const newValue = await compute(a.relation, null, w.get(String(a.property)), a.value);
+                if(a.property == 'parent' && w.wouldCreateParentCycle(newValue))
+                  problems.push(`Skipping parent change of ${w.id} to ${newValue} because that would put ${w.id} inside itself.`);
+                else
+                  await w.set(String(a.property), newValue);
+              }
             }
           }
         }
@@ -2300,6 +2342,11 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(routineDepthProblem) {
+        problems.push(routineDepthProblem);
+        routineDepthProblem = null;
+      }
+
       if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
       if(!routineLogging && problems.length)
@@ -2358,6 +2405,14 @@ export class Widget extends StateManaged {
           return super.get(property);
       }
     }
+  }
+
+  getDefaultValue(property) {
+    const value = super.getDefaultValue(property);
+    // inheriting the parent of a descendant would make this widget its own ancestor (#684)
+    if(property == 'parent' && typeof value == 'string' && this.wouldCreateParentCycle(value))
+      return this.defaults[property];
+    return value;
   }
 
   getWithPropertyReplacements(property, valueOverride) {
@@ -2425,11 +2480,24 @@ export class Widget extends StateManaged {
   }
 
   isDescendantOf(widget) {
-    if (this.get('parent') == widget.get('id')) {
-      return true;
+    const seen = new Set();
+    for(let w = this; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+      seen.add(w);
+      if(w.get('parent') == widget.get('id'))
+        return true;
     }
-    if (widgets.has(this.get('parent'))) {
-      return widgets.get(this.get('parent')).isDescendantOf(widget);
+    return false;
+  }
+
+  // A widget that ends up as its own ancestor cannot be rendered (appendChild refuses to nest an
+  // element into itself) and sends every walk up the parent chain into infinite recursion. MOVE
+  // has always refused such a move, SET and the JSON editor did not. (#1414, #684)
+  wouldCreateParentCycle(newParentID) {
+    const seen = new Set();
+    for(let id = newParentID; id && !seen.has(id); id = widgets.has(id) ? widgets.get(id).get('parent') : null) {
+      if(id == this.id)
+        return true;
+      seen.add(id);
     }
     return false;
   }
