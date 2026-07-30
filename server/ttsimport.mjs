@@ -927,12 +927,12 @@ async function storeThumbnail(url) {
 }
 
 // Workshop descriptions are BBCode and can be pages long: keep the text, drop the
-// markup and cut it down to something that fits into the game details. Some of them
-// contain plain HTML as well, which the game details show as text.
+// markup and cut it down to something that fits into the game details. The plain
+// HTML that some of them contain is left alone: the game details write the
+// description with innerText, so it is shown as the text it is.
 function plainText(text) {
   const result = String(text || '')
     .replace(/\[\/?(b|i|u|h[1-3]|strike|spoiler|noparse|quote|code|list|olist|table|tr|td|th|img|url|previewyoutube|hr|carousel|nolinebreak|sub|sup|size|color|center)(=[^\]]*)?\]/gi, '')
-    .replace(/<\/?(br|p|div|span|b|i|u|strong|em|ul|ol|li|a|img|font|hr|h[1-6]|table|tr|td|th)\b[^>]*>/gi, '')
     .replace(/\[\*\]/g, '- ')
     .replace(/\r/g, '')
     .replace(/\n{3,}/g, '\n\n')
