@@ -237,20 +237,33 @@ class DeckEditor {
     return $('body').classList.contains('deckEditorActive');
   }
 
+  // The symbol picker and the public library's deck browser are room overlays that plain edit mode uses too,
+  // so the deck editor only borrows them while it is open: the picker into the card view so it doesn't cover
+  // the tree, strip and sidebar, the deck browser into #editor so it shows above the whole editor.
+  borrowRoomOverlays() {
+    $('#deckEditorMainCol').append($('#symbolPickerOverlay'));
+    $('#editor').append($('#libraryDecksOverlay'));
+  }
+
+  // Closing hands them back to the room, because that is where they fit the play area (an overlay fills its
+  // host) and stack correctly. Left behind in the editor they cover the whole window and lose to both the
+  // room and the JSON editor, which buries the picker when it is opened from there.
+  returnRoomOverlays() {
+    $('#roomArea').append($('#symbolPickerOverlay'));
+    $('#roomArea').append($('#libraryDecksOverlay'));
+  }
+
   initializeDOM() {
     if(this.dragToolbarButtons)
       return;
 
     // Editor overlays are normally hosted in #roomArea, which sits below the full-screen deck editor's
-    // stacking context. Move these into #editor so opening them from the deck editor is actually visible.
+    // stacking context. Move the deck editor's own ones into #editor so opening them from the deck editor is
+    // actually visible. The overlays it shares with plain edit mode are only borrowed while it's open, see
+    // borrowRoomOverlays()/returnRoomOverlays().
     $('#editor').append($('#deckEditorExportOverlay'));
     $('#editor').append($('#deckEditorImportOverlay'));
     $('#editor').append($('#deckEditorNewDeckOverlay'));
-    $('#editor').append($('#symbolPickerOverlay'));
-    // Move the shared public-library overlay into #editor too, so "Browse the public library" from the deck
-    // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
-    // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
-    $('#editor').append($('#libraryDecksOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -843,7 +856,7 @@ class DeckEditor {
     this.resetHistory();
 
     $('body').classList.add('deckEditorActive');
-    $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
+    this.borrowRoomOverlays();
     // If a sidebar module (e.g. the deck's text Properties panel this editor is opened from) is open, close it
     // so the visual editor owns the full width instead of sharing the screen with the panel it replaces. Only
     // when the editor actually opens though: switching decks inside it must leave a panel the user opened
@@ -909,7 +922,7 @@ class DeckEditor {
     this.panY = 0;
     this.resetHistory();
     $('body').classList.add('deckEditorActive');
-    $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
+    this.borrowRoomOverlays();
     if(!wasOpen) {
       const activeModuleButton = $('#editorSidebar button.active');
       if(activeModuleButton)
@@ -968,7 +981,7 @@ class DeckEditor {
     const deck = this.deck();
     this.selectedObject = null;
     $('body').classList.remove('deckEditorActive');
-    $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
+    this.returnRoomOverlays();
     $('#deckEditorDragToolbar').classList.remove('active');
     this.setRoomVisible(false); // hand the whole play area back to the room
     this.syncToolbarButton();
@@ -1019,7 +1032,7 @@ class DeckEditor {
     this.history = [];
     this.historyIndex = -1;
     $('body').classList.remove('deckEditorActive');
-    $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
+    this.returnRoomOverlays();
     $('#deckEditorDragToolbar').classList.remove('active');
     this.setRoomVisible(false);
     this.syncToolbarButton();
@@ -3259,8 +3272,9 @@ class DeckEditor {
         this.addDeck(id || undefined, deckEditorCardSizes[picked ? +picked.value : 0]);
       };
     } else if(mode == 'library') {
-      // Keep the deck editor open: the library overlay is moved into #editor (see initializeDOM) so it shows
-      // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added.
+      // Keep the deck editor open: the library overlay is borrowed into #editor while it is (see
+      // borrowRoomOverlays) so it shows above the editor, and pendingNewDeck makes the picked deck open in
+      // the editor once it is added.
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
       $('button', bar).onclick = _=>openLibraryDecksOverlay();
     } else {

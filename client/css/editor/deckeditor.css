@@ -470,11 +470,11 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 20;
 }
 
-/* While the deck editor is closed those overlays are parked in #editor (see initializeDOM), which is not a
-   stacking context of its own - so without a z-index they lose to #roomArea (z-index: 1) and to the JSON
-   editor (z-index: 2), and opening the symbol picker from the JSON editor buries it behind the room. */
-#editor > .overlay {
-  z-index: 3;
+/* The public library's deck browser is borrowed into #editor while the deck editor is open (see
+   borrowRoomOverlays), and #editor is not a stacking context of its own - so without a z-index it ends up
+   behind the very editor it is opened from (#deckEditor is z-index: 1, the sidebar 2, the toolbar 3). */
+#editor > #libraryDecksOverlay {
+  z-index: 4;
 }
 
 #deckEditorExportOverlay {
