@@ -782,7 +782,69 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
     .typeText('.textCardsCopies', '2', { replace: true })
     .click('#deckEditorNewDeckPanel .goButton [icon=add]')
     .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
-  await compareState(t, '42db3cfd13dc76fc8e79f6eac5be71d9');
+  await compareState(t, 'e5bc265b4af231b7f838092b4fc2c825');
+});
+
+// The wizard's front/back image section: both uploads are sorted by file name - numerically, so front2 comes
+// before front10 - and then matched up position by position, giving every card type its own back image. The
+// card size comes from the aspect ratio of the first front image.
+test('Deck editor: pair front and back images in the new deck wizard', async t => {
+  // 40x60 SVGs, one per file name so the pairing is visible in the resulting cardTypes.
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = [ 'front10.png', 'front2.png', 'front1.png' ];
+  const backs  = [ 'back2.png', 'back10.png', 'back1.png' ];
+  const fileNameOfAsset = {};
+  for(const fileName of [ ...fronts, ...backs ])
+    fileNameOfAsset[asset(fileName)] = fileName;
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
+
+  // The uploads go through a file picker that can't be driven from a test, so uploadAsset is replaced by a
+  // stub handing the wizard the asset paths the server would have returned for the files below.
+  const stubUploadOf = ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  });
+  const uploadButton = Selector('#deckEditorNewDeckPanel [icon=upload]');
+
+  await stubUploadOf(fronts.map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(0));
+  await stubUploadOf(backs.map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(1));
+
+  // The card width is read from the first front image, so wait until the browser knows its size.
+  const firstFrontHeight = ClientFunction(() => document.querySelector('.imagePairList img').naturalHeight);
+  await t.expect(firstFrontHeight()).eql(60);
+
+  await t
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return {
+      width: deck.get('cardDefaults').width,
+      pairs: Object.entries(deck.get('cardTypes')).map(([ cardType, c ])=>`${cardType}: ${fileNameOfAsset[c.image]} + ${fileNameOfAsset[c.backImage]}`)
+    };
+  }, { dependencies: { fileNameOfAsset } })();
+
+  await t.expect(deck.pairs).eql([
+    'front1: front1.png + back1.png',
+    'front2: front2.png + back2.png',
+    'front10: front10.png + back10.png'
+  ]);
+  await t.expect(deck.width).eql(107); // 40x60 fronts at the default card height of 160
 });
 
 test('Line widget in edit mode', async t => {

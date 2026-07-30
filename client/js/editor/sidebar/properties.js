@@ -1362,6 +1362,13 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
+  // "min"/"max" on a number input only constrain its spinner - a typed or pasted value is passed through
+  // unchanged. The copy counts multiply with the number of card types, so clamp them to the declared range
+  // before they reach the card-creation loop.
+  copiesFromInput(input) {
+    return Math.min(+input.max || Infinity, Math.max(+input.min || 1, Math.round(+input.value) || 1));
+  }
+
   // Two bulk uploads - all the card fronts and all the card backs - matched into pairs by sorting both lists
   // by file name, so front1.jpg gets back1.jpg as its back. Numbers are compared numerically so front2 sorts
   // before front10. Unlike deckImages (one shared back for the whole deck) every card type carries its own
@@ -1418,8 +1425,11 @@ class PropertiesModule extends SidebarModule {
         list.sort((a, b)=>a.fileName.localeCompare(b.fileName, undefined, { numeric: true }));
       const sharedBack = backs.length == 1;
       const paired = fronts.length && backs.length && (sharedBack || fronts.length == backs.length);
-      renderList(fronts, frontList, sharedBack ? null : backs);
-      renderList(backs, backList, sharedBack ? null : fronts);
+      // Only claim a pairing in the tooltips while the counts actually match - otherwise the rows would
+      // promise pairs that "Add to game" is refusing to create.
+      const showPairs = paired && !sharedBack;
+      renderList(fronts, frontList, showPairs ? backs : null);
+      renderList(backs, backList, showPairs ? fronts : null);
       if(!fronts.length || !backs.length)
         status.innerText = 'Upload at least one front image and one back image.';
       else if(paired)
@@ -1432,7 +1442,7 @@ class PropertiesModule extends SidebarModule {
     render();
 
     addButton.onclick = async _=>{
-      const copies = Math.max(1, +$('input', options).value || 1);
+      const copies = this.copiesFromInput($('input', options));
       const cardTypes = {};
       const counts = {};
       for(const [ index, front ] of fronts.entries()) {
@@ -1441,7 +1451,7 @@ class PropertiesModule extends SidebarModule {
         // number keeps the generated card ids apart from the "<card type> <copy number>" ids below.
         const base = front.fileName.replace(/\.[^.]+$/, '') || `card ${index+1}`;
         let cardType = base;
-        for(let i=2; cardTypes[cardType] !== undefined; ++i)
+        for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
           cardType = `${base} (${i})`;
         cardTypes[cardType] = { image: front.imagePath, backImage: back.imagePath };
         counts[cardType] = copies;
@@ -1537,6 +1547,10 @@ class PropertiesModule extends SidebarModule {
       const color    = $('.textCardsColor', design).value;
       const label    = $('.textCardsLabel', design).value.trim();
       const padding  = Math.max(4, Math.round(width/12));
+      // With a deck label the front gets a small footer along its bottom edge, so the card text has to stop
+      // above it - text objects don't clip, a long text would just run over the label.
+      const footerSize   = Math.max(6, Math.round(fontSize/2));
+      const footerHeight = label ? Math.round(footerSize*1.4) : 0;
 
       const colorBox = _=>({ type: 'image', x: 0, y: 0, width, height, color: $('.textCardsBackground', design).value, value: '' });
       const textObject = properties=>Object.assign({
@@ -1557,17 +1571,15 @@ class PropertiesModule extends SidebarModule {
         // lines get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
         const base = text.replace(/[^A-Za-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().substr(0, 30).trim() || `card ${index+1}`;
         let cardType = base;
-        for(let i=2; cardTypes[cardType] !== undefined; ++i)
+        for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
           cardType = `${base} (${i})`;
         cardTypes[cardType] = { text };
       }
 
       const back = { radius: 8, objects: [ colorBox() ] };
-      const front = { radius: 8, objects: [ colorBox(), textObject({ dynamicProperties: { value: 'text', fontSize: 'fontSize' } }) ] };
+      const front = { radius: 8, objects: [ colorBox(), textObject({ height: height - 2*padding - footerHeight, dynamicProperties: { value: 'text', fontSize: 'fontSize' } }) ] };
       if(label) {
         // The back is just the label at 1.5x, the front repeats it small along the bottom edge.
-        const footerSize = Math.max(6, Math.round(fontSize/2));
-        const footerHeight = Math.round(footerSize*1.4);
         back.objects.push(textObject({ value: label, fontSize: Math.round(fontSize*1.5) }));
         front.objects.push(textObject({ value: label, fontSize: footerSize, y: height - padding - footerHeight, height: footerHeight }));
       }
@@ -1588,7 +1600,8 @@ class PropertiesModule extends SidebarModule {
       const texts = cardTexts();
       const deck = deckDefinition(texts.length ? texts.slice(0, 5) : [ 'Your card text goes here.' ], previewID);
       preview.innerHTML = '';
-      this.renderWidgetButton(new Deck(deck.id), deck, preview);
+      // Keep the card types in their typed order - a shuffled preview would jump around on every keystroke.
+      this.renderWidgetButton(new Deck(deck.id), deck, preview, false);
       addButton.disabled = !texts.length;
     };
     textarea.oninput = updatePreview;
@@ -1601,7 +1614,7 @@ class PropertiesModule extends SidebarModule {
       if(!texts.length)
         return;
       const deck = deckDefinition(texts, generateUniqueWidgetID());
-      const copies = Math.max(1, +$('.textCardsCopies', design).value || 1);
+      const copies = this.copiesFromInput($('.textCardsCopies', design));
       const counts = {};
       for(const cardType in deck.cardTypes)
         counts[cardType] = copies;
@@ -1692,6 +1705,12 @@ class PropertiesModule extends SidebarModule {
   }
 
   async addDeckWithCards(deck, type, counts) {
+    // Every card becomes a widget of its own inside a single batch, so a long list of card types multiplied
+    // by a high copy count can keep the client busy for a long time - ask before creating a whole lot of them.
+    const totalCards = Object.keys(deck.cardTypes || {}).reduce((sum, cardType)=>sum + (counts ? counts[cardType] || 0 : 1), 0);
+    if(totalCards > 500 && !confirm(`This creates ${totalCards} cards. Adding that many at once takes a while and makes the game harder to work with.\n\nCreate them anyway?`))
+      return;
+
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
 
@@ -6555,7 +6574,7 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  renderWidgetButton(widget, state, target) {
+  renderWidgetButton(widget, state, target, shuffleCardTypes=true) {
     const button = document.createElement('button');
     button.className = 'widgetSelectionButton';
     target.appendChild(button);
@@ -6568,7 +6587,8 @@ class PropertiesModule extends SidebarModule {
       const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
       const faceTemplates = widget.get('faceTemplates');
       widgets.set(widget.id, widget);
-      for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
+      const cardTypeNames = Object.keys(widget.get('cardTypes'));
+      for(const cardType of (shuffleCardTypes ? shuffleArray(cardTypeNames) : cardTypeNames).slice(0, 5)) {
         new Card().renderReadonlyCopyRaw(Object.assign({
           deck: widget.id,
           cardType,
