@@ -64,8 +64,130 @@ describe('PCIO importer', () => {
     ], 8);
 
     expect(state.button.clickRoutine).toEqual([
-      { func: 'MOVE', from: 'source', to: 'target', count: 3, face: 1 },
+      // PCIO deals one card after the other unless it is told to move the pile
+      { note: 'Deal one at a time', func: 'FOREACH', range: [ 1, 3 ], loopRoutine: [
+        { func: 'MOVE', from: 'source', to: 'target', count: 1, face: 1 }
+      ] },
       { func: 'SORT', holder: 'target', key: 'sortingOrder' }
+    ]);
+  });
+
+  it('runs the alternatives of a step as an IF chain over the results of its read steps', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 1 },
+      {
+        id: 'button', type: 'automationButton', label: 'Coin', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'roll', branches: [ { func: 'RANDOM_NUMBER', args: {
+            minimum: { type: 'literal', value: 1 },
+            maximum: { type: 'literal', value: 6 },
+            step:    { type: 'literal', value: 1 }
+          } } ] },
+          { id: 'high', branches: [ { func: 'COMPARE_NUMBERS', args: {
+            numberA:            { type: 'variable', callId: 'roll' },
+            comparisonOperator: { type: 'literal', value: 'gt' },
+            numberB:            { type: 'query', counters: [ 'counter' ] }
+          } } ] },
+          { id: 'change', branches: [
+            { func: 'CHANGE_COUNTER', condition: { type: 'variable', callId: 'high' }, args: {
+              counters:          { type: 'literal', value: [ 'counter' ] },
+              counterChangeMode: { type: 'literal', value: 'set' },
+              changeNumber:      { type: 'variable', callId: 'roll' }
+            } },
+            { func: 'CHANGE_COUNTER', args: {
+              counters:          { type: 'literal', value: [ 'counter' ] },
+              counterChangeMode: { type: 'literal', value: 'inc' },
+              changeNumber:      { type: 'literal', value: 1 }
+            } }
+          ] }
+        ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      'var pcioroll = randRange 1 7 1',
+      'var pcioNumber1 = parseFloat ${PROPERTY text OF counter}',
+      'var pciohigh = ${pcioroll} > ${pcioNumber1}',
+      {
+        func: 'IF',
+        condition: '${pciohigh}',
+        thenRoutine: [ { func: 'LABEL', label: 'counter', value: '${pcioroll}' } ],
+        elseRoutine: [ { func: 'LABEL', label: 'counter', mode: 'inc', value: 1 } ]
+      }
+    ]);
+  });
+
+  it('keeps a counter within its bounds wherever it is changed', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 9, counterMin: 0, counterMax: 5, counterStep: 2 },
+      {
+        id: 'button', type: 'automationButton', label: 'Add', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'CHANGE_COUNTER', args: {
+          counters:          { type: 'literal', value: [ 'counter' ] },
+          counterChangeMode: { type: 'literal', value: 'inc' },
+          changeNumber:      { type: 'literal', value: 4 }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(state.counter.text).toBe(5);
+    expect(state.counter_incrementButton.clickRoutine).toEqual([
+      'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+      'var pcioCounter = ${pcioCounter} + 2',
+      'var pcioCounter = max ${pcioCounter} 0',
+      'var pcioCounter = min ${pcioCounter} 5',
+      { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
+    ]);
+    expect(state.button.clickRoutine).toEqual([
+      'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+      'var pcioCounter = ${pcioCounter} + 4',
+      'var pcioCounter = max ${pcioCounter} 0',
+      'var pcioCounter = min ${pcioCounter} 5',
+      { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
+    ]);
+  });
+
+  it('turns a whole pile over: every card to the same side and the order reversed', async () => {
+    const state = await importWidgets([
+      { id: 'holder', type: 'holder', x: 0, y: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Flip', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'FLIP_CARDS', args: {
+          objects:  { type: 'query', queryWidgetTypes: [ 'card', 'piece' ], holders: [ 'holder' ] },
+          flipMode: { type: 'literal', value: 'pile' },
+          flipFace: { type: 'literal', value: 'switch' },
+          reverse:  { type: 'literal', value: 'reverse' }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      { func: 'SELECT', property: 'parent', relation: 'in', value: [ 'holder' ], type: 'card', collection: 'pcioPile', sortBy: 'z' },
+      { func: 'GET', collection: 'pcioPile', property: 'activeFace', aggregation: 'last', variable: 'pcioFace' },
+      'var pcioFace = 1 - ${pcioFace}',
+      { func: 'FLIP', collection: 'pcioPile', face: '${pcioFace}' },
+      { note: 'Reverse the pile', func: 'SHUFFLE', collection: 'pcioPile', mode: 'reverse' }
+    ]);
+  });
+
+  it('passes the hands of the players on when objects are shifted between seats', async () => {
+    const state = await importWidgets([
+      { id: 'seat1', type: 'seat', seatIndex: 0, x: 0, y: 0 },
+      { id: 'seat2', type: 'seat', seatIndex: 1, x: 100, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 400 },
+      {
+        id: 'button', type: 'automationButton', label: 'Pass', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'SHIFT_OBJECTS', args: {
+          holders:   { type: 'literal', value: [ 'seat1', 'seat2' ] },
+          moveMode:  { type: 'literal', value: 'wrap' },
+          stepsWrap: { type: 'literal', value: 1 }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      { func: 'SELECT', property: 'id', relation: 'in', value: [ 'seat1', 'seat2' ], type: 'seat', collection: 'pcioSeats' },
+      { note: 'Pass the hands on', func: 'SWAPHANDS', source: 'pcioSeats', interval: 1, direction: 'forward', keepOrder: true }
     ]);
   });
 

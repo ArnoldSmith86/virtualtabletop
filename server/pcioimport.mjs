@@ -126,11 +126,13 @@ export default async function convertPCIO(content) {
       css.push(`background: ${background}`);
 
     if(Array.isArray(widget.mainOutlines)) {
-      const outline = widget.mainOutlines.filter(o=>o && o.size && pcioFill(o.fill)).pop();
-      if(outline) {
-        css.push(`border: ${outline.size}px solid ${pcioFill(outline.fill)}`, 'box-sizing: border-box');
-        if(widget.mainOutlines.length > 1)
-          warn('Stacked outlines are not supported and were collapsed into a single border.');
+      // PCIO draws every outline as a ring around the widget at its own offset:
+      // the innermost one becomes the border, the ones around it box-shadows
+      const outlines = widget.mainOutlines.filter(o=>o && o.size && pcioFill(o.fill)).sort((a, b)=>(a.offset || 0) - (b.offset || 0));
+      if(outlines.length) {
+        css.push(`border: ${outlines[0].size}px solid ${pcioFill(outlines[0].fill)}`, 'box-sizing: border-box');
+        if(outlines.length > 1)
+          css.push('box-shadow: ' + outlines.slice(1).map(o=>`0 0 0 ${(o.offset || 0) + o.size}px ${pcioFill(o.fill)}`).join(', '));
       } else if(!(w.classes || '').match(/transparent/)) {
         css.push('border-color: transparent');
       }
@@ -151,8 +153,10 @@ export default async function convertPCIO(content) {
         css.push(`font-family: ${pcioFonts[text.font]}`);
       else if(text.font)
         warn(`Font ${text.font} is not available in VirtualTabletop.`);
-      if(Array.isArray(text.outlines) && text.outlines.length)
-        warn('Outlined text is not supported.');
+      // a stroke painted behind the glyphs is what PCIO's text outline looks like
+      const textOutline = (text.outlines || []).filter(o=>o && o.size && pcioFill(o.fill)).pop();
+      if(textOutline)
+        css.push(`-webkit-text-stroke: ${textOutline.size*2}px ${pcioFill(textOutline.fill)}`, 'paint-order: stroke fill');
     }
 
     if(typeof widget.mainBorderRadius == 'number')
@@ -169,14 +173,20 @@ export default async function convertPCIO(content) {
       w.height = widget.height;
   }
 
-  function importWidgetQuery(routine, args, legacySource, holdersParam, collectionParam, target) {
+  // The objects an automation works on: either a holder parameter on the
+  // operation itself or a SELECT into a collection. Returns null for a query
+  // that matches nothing so that the caller can skip the whole step, which is
+  // what PCIO does with it.
+  function importWidgetQuery(routine, args, legacySource, holdersParam, collectionParam, target, options={}) {
     const objects = args.objects || args.customObjects;
+    const collection = options.collection;
+    const into = ops=>routine.push(Object.assign(ops, collection ? { collection } : {}, options.sortBy ? { sortBy: options.sortBy } : {}));
     if(objects && objects.type == 'reference') {
       target[collectionParam] = objects.questionId;
       return target;
     }
     if(objects && objects.type == 'literal' && Array.isArray(objects.value)) {
-      routine.push({
+      into({
         func: 'SELECT',
         property: 'id',
         relation: 'in',
@@ -187,13 +197,17 @@ export default async function convertPCIO(content) {
     if(objects && objects.type == 'query') {
       const holders = objects.holders || [];
       const collections = objects.collections || [];
-      if(Array.isArray(objects.queryWidgetTypes) && objects.queryWidgetTypes.filter(t=>t != 'card' && t != 'piece').length)
+      // PCIO finds nothing when a query is restricted to neither a holder nor a
+      // deck and nothing when it does not name the widget types it looks for
+      if(!holders.length && !collections.length || !Array.isArray(objects.queryWidgetTypes))
+        return null;
+      if(objects.queryWidgetTypes.filter(t=>t != 'card' && t != 'piece').length)
         warn(`An automation looks for ${objects.queryWidgetTypes.join('/')} but only cards and pieces are selected.`);
-      if(holders.length && !collections.length) {
+      if(holders.length && !collections.length && !collection) {
         target[holdersParam] = holders;
         return target;
       }
-      routine.push(holders.length ? {
+      into(holders.length ? {
         func: 'SELECT',
         property: 'parent',
         relation: 'in',
@@ -208,9 +222,9 @@ export default async function convertPCIO(content) {
       // choosers are cards in VTT but PCIO never includes them in a query
       const chooserDecks = widgets.filter(w=>w && w.type == 'cardDeck' && w.collectionType == 'choosers').map(w=>w.id);
       if(chooserDecks.length) {
-        routine.push({
+        into({
           func: 'SELECT',
-          source: 'DEFAULT',
+          source: collection || 'DEFAULT',
           property: 'deck',
           relation: 'in',
           value: chooserDecks,
@@ -218,9 +232,9 @@ export default async function convertPCIO(content) {
         });
       }
       if(collections.length) {
-        routine.push({
+        into({
           func: 'SELECT',
-          source: 'DEFAULT',
+          source: collection || 'DEFAULT',
           property: 'deck',
           relation: 'in',
           value: collections
@@ -228,9 +242,11 @@ export default async function convertPCIO(content) {
       }
       return target;
     }
-    if(args[legacySource])
+    if(args[legacySource]) {
       target[holdersParam] = args[legacySource].value;
-    return target;
+      return target;
+    }
+    return null;
   }
 
   // ROTATE for one of PCIO's rotation modes, null if it has no equivalent
@@ -243,7 +259,11 @@ export default async function convertPCIO(content) {
       routine.push('var pcioRotation = randRange 0 360 45');
       return Object.assign(target, { func: 'ROTATE', angle: '${pcioRotation}', mode: 'set' });
     }
-    warn(`Rotating objects to "${mode}" (fit to holder) has no VirtualTabletop equivalent.`);
+    // "fit to holder": a widget in a holder is drawn at the rotation of that
+    // holder, so aligning it with its holder means rotating it back to 0
+    if(mode == 'auto')
+      return Object.assign(target, { func: 'ROTATE', angle: 0, mode: 'set' });
+    warn(`Rotating objects to "${mode}" has no VirtualTabletop equivalent.`);
     return null;
   }
 
@@ -280,6 +300,30 @@ export default async function convertPCIO(content) {
   const pileOverlaps = {};
   const pileTransparent = {};
   const turnAtSeat = {};
+
+  // PCIO keeps every counter inside its bounds while a VTT label just counts on,
+  // so a counter with bounds gets them applied wherever its value is changed
+  const counterBounds = {};
+  for(const widget of widgets) {
+    if(widget && widget.type == 'counter' && (widget.counterMin != null || widget.counterMax != null)) {
+      const min = widget.counterMin != null ? +widget.counterMin : -9999;
+      counterBounds[widget.id] = {
+        min,
+        max: Math.max(widget.counterMax != null ? +widget.counterMax : 9999, min+1)
+      };
+    }
+  }
+
+  // the operations that keep a variable within the bounds of a counter
+  function clampCounter(id, variable) {
+    const bounds = counterBounds[id];
+    if(!bounds)
+      return [];
+    return [
+      `var ${variable} = max \${${variable}} ${bounds.min}`,
+      `var ${variable} = min \${${variable}} ${bounds.max}`
+    ];
+  }
 
   for(const widget of widgets) {
     if(widget.type == 'cardDeck' && widget.parent)
@@ -487,8 +531,8 @@ export default async function convertPCIO(content) {
 
         for(const allowed of w.dropTarget) {
           if(byID[allowed.deck]) {
-            dropOffsetX = Math.round(Math.min(dropOffsetX, (widget.width  - (byID[allowed.deck].cardWidth  || 103))/2));
-            dropOffsetY = Math.round(Math.min(dropOffsetY, (widget.height - (byID[allowed.deck].cardHeight || 160))/2));
+            dropOffsetX = Math.round(Math.min(dropOffsetX, ((widget.width  || 111) - (byID[allowed.deck].cardWidth  || 103))/2));
+            dropOffsetY = Math.round(Math.min(dropOffsetY, ((widget.height || 168) - (byID[allowed.deck].cardHeight || 160))/2));
           }
         }
       }
@@ -637,10 +681,10 @@ export default async function convertPCIO(content) {
           object.height = object.h;
           delete object.w;
           delete object.h;
-          if(object.textFont) {
+          if(object.textFont !== undefined) {
             if(pcioFonts[object.textFont])
               object.css = `font-family: ${pcioFonts[object.textFont]}`;
-            else
+            else if(object.textFont)
               warn(`Font ${object.textFont} is not available in VirtualTabletop.`);
             delete object.textFont;
           }
@@ -768,7 +812,8 @@ export default async function convertPCIO(content) {
           delete pile.y;
         pile.width = byID[w.deck].cardWidth || 103;
         pile.height = byID[w.deck].cardHeight || 160;
-        pile.parent = widget.parent;
+        if(widget.parent)
+          pile.parent = widget.parent;
 
         delete w.x;
         delete w.y;
@@ -793,11 +838,13 @@ export default async function convertPCIO(content) {
       w.y += 5;
       w.width = widget.width || 140;
       w.height = widget.height || 44;
-      w.text = widget.counterValue;
-      w.editable = true;
+      const bounds = counterBounds[widget.id];
+      w.text = bounds ? Math.min(Math.max(+widget.counterValue || 0, bounds.min), bounds.max) : widget.counterValue;
+      if(widget.allowPlayerEditValue !== false)
+        w.editable = true;
       pcioStyle(widget, w, (widget.mainTextStyle || {}).size ? [] : [ 'font-size: 30px' ]);
-      if(widget.counterMin !== undefined && widget.counterMin !== null || widget.counterMax !== undefined && widget.counterMax !== null)
-        warn(`Counter ${widget.label || widget.id} has minimum/maximum bounds which are not enforced after the import.`);
+      if(bounds && widget.allowPlayerEditValue !== false)
+        warn(`Typing a value into counter ${widget.label || widget.id} is not restricted to its range of ${bounds.min} to ${bounds.max} - its buttons and the automations that change it are.`);
 
       const counterStep = Math.abs(+widget.counterStep) || 1;
 
@@ -813,15 +860,22 @@ export default async function convertPCIO(content) {
           movableInEdit: false,
           text,
 
-          clickRoutine: [
+          clickRoutine: bounds ? [
+            `var pcioCounter = parseFloat \${PROPERTY text OF ${widget.id}}`,
+            `var pcioCounter = \${pcioCounter} + ${value}`,
+            ...clampCounter(widget.id, 'pcioCounter'),
+            { func: 'LABEL', label: widget.id, value: '${pcioCounter}' }
+          ] : [
             { func: 'LABEL', label: widget.id, mode: 'inc', value }
           ]
         };
         if(x)
           output[widget.id + suffix].x += x;
       }
-      addCounterButton('_decrementButton', 0,                  '-', -counterStep);
-      addCounterButton('_incrementButton', w.width - w.height, '+',  counterStep);
+      if(widget.counterShowButtons !== false) {
+        addCounterButton('_decrementButton', 0,                  '-', -counterStep);
+        addCounterButton('_incrementButton', w.width - w.height, '+',  counterStep);
+      }
 
       if(widget.label) {
         output[widget.id + 'label'] = {
@@ -1192,43 +1246,180 @@ export default async function convertPCIO(content) {
           warn('Players cannot reverse the turn direction by clicking the turn button - use the "Reverse turn direction" button that was added instead.');
       }
 
-      const steps = [];
-      for(const step of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : [])
-        // PCIO wraps every step into { id, branches: [ { func, args } ] } since schema 6
-        for(const branch of step && step.branches || [ step ])
-          steps.push(branch);
+      // PCIO wraps every step into { id, branches: [ { func, args } ] } since
+      // schema 6. The branches of one step are alternatives of which the first
+      // one whose condition holds runs, so they import as a chain of IFs. The
+      // condition is the result of an earlier step that calls a "read" function;
+      // arguments can reference those results the same way. Every result is kept
+      // in a variable named after the step that produced it.
+      const readValues = {};
+      const numberLists = {};
+      const readDefaults = { COMPARE_NUMBERS: false, IS_EQUAL: false, MATH: 0, RANDOM_NUMBER: 0, SUM_LIST: 0 };
+      let temporaries = 0;
 
-      for(let c of steps) {
+      function readVariable(stepID) {
+        return 'pcio' + String(stepID).replace(/[^A-Za-z0-9_]/g, '');
+      }
+
+      function importSteps(steps, routine) {
+        for(const step of steps || []) {
+          const branches = step && step.branches || [ step ];
+          // a read step with alternatives may not run at all, in which case PCIO
+          // sees its result as empty
+          if(branches.length > 1 && readDefaults[(branches[0] || {}).func] !== undefined)
+            routine.push(`var ${readVariable(step.id)} = ${readDefaults[branches[0].func]}`);
+          importBranches(branches, routine, step && step.id);
+        }
+      }
+
+      function importBranches(branches, routine, stepID) {
+        const branch = branches[0];
+        if(!branch)
+          return;
+        const condition = branch.condition && branch.condition.callId;
+        if(condition && !readValues[condition]) {
+          warn(`The condition of an automation step of "${widget.label || widget.id}" could not be imported - that alternative was skipped.`);
+          importBranches(branches.slice(1), routine, stepID);
+          return;
+        }
+        if(!condition) {
+          // an alternative without a condition always runs: PCIO never looks at
+          // the ones behind it
+          importBranch(branch, routine, stepID);
+          return;
+        }
+        const thenRoutine = [];
+        importBranch(branch, thenRoutine, stepID);
+        const elseRoutine = [];
+        importBranches(branches.slice(1), elseRoutine, stepID);
+        if(!thenRoutine.length && !elseRoutine.length)
+          return;
+        const operation = { func: 'IF', condition: `\${${readValues[condition]}}`, thenRoutine };
+        if(elseRoutine.length)
+          operation.elseRoutine = elseRoutine;
+        routine.push(operation);
+      }
+
+      // a number argument is a fixed value, an answer from the popup, the result
+      // of an earlier read step or a query that adds up counters or card fields
+      function numberArgument(routine, argument, fallback) {
+        if(!argument || typeof argument != 'object')
+          return fallback;
+        if(argument.type == 'literal')
+          return argument.value === null || argument.value === undefined ? fallback : argument.value;
+        if(argument.type == 'reference' && argument.questionId)
+          return `\${${argument.questionId}}`;
+        if(argument.type == 'variable')
+          return readValues[argument.callId] ? `\${${readValues[argument.callId]}}` : fallback;
+        if(argument.type == 'query') {
+          const counters = (argument.counters || []).filter(id=>byID[id]);
+          const variable = `pcioNumber${++temporaries}`;
+          if(counters.length) {
+            routine.push(...addUpCounters(counters, variable));
+            return `\${${variable}}`;
+          }
+          const field = (argument.collectionFieldSelectors || [])[0];
+          if(field && field.fieldId && importWidgetQuery(routine, { objects: argument }, '', '', '', {}, { collection: variable })) {
+            // PCIO adds up one field of the card type of everything it finds
+            routine.push({ func: 'GET', collection: variable, property: field.fieldId, aggregation: 'sum', variable, skipMissing: true });
+            return `\${${variable}}`;
+          }
+        }
+        return fallback;
+      }
+
+      function addUpCounters(counters, variable) {
+        return counters.map((counter, i)=>i
+          ? `var ${variable} = \${${variable}} + \${PROPERTY text OF ${counter}}`
+          : `var ${variable} = parseFloat \${PROPERTY text OF ${counter}}`);
+      }
+
+      // the read functions: their result goes into the variable of their step
+      function importReadStep(c, routine, stepID) {
+        const variable = readVariable(stepID);
+        const args = c.args;
+        if(c.func == 'FIND_CARDS_PIECES') {
+          // returns the ID of an object, which none of PCIO's own automations can
+          // do anything with - importing the step would have no effect
+          return true;
+        }
+        if(c.func == 'NUMBERS_FROM_COUNTERS') {
+          // a list of counter values, which only SUM_LIST consumes
+          numberLists[stepID] = ((args.counters || {}).value || []).filter(id=>byID[id]);
+          return true;
+        }
+        if(c.func == 'SUM_LIST') {
+          const counters = numberLists[(args.list || {}).callId] || [];
+          routine.push(...(counters.length ? addUpCounters(counters, variable) : [ `var ${variable} = 0` ]));
+        } else if(c.func == 'MATH') {
+          const operator = (args.mathOperator || {}).value || 'add';
+          const infix = { add: '+', subtract: '-', multiply: '*', divide: '/', remainder: '%', exponent: '**' }[operator];
+          const prefix = { absolute: 'abs', round: 'round', ceiling: 'ceil', floor: 'floor' }[operator];
+          const a = numberArgument(routine, args.numberA, 1);
+          if(infix)
+            routine.push(`var ${variable} = ${a} ${infix} ${numberArgument(routine, args.numberB, 1)}`);
+          else if(prefix)
+            routine.push(`var ${variable} = ${prefix} ${a}`);
+          else
+            return false;
+        } else if(c.func == 'RANDOM_NUMBER') {
+          const min = numberArgument(routine, args.minimum, 1);
+          const step = numberArgument(routine, args.step, 1);
+          let max = numberArgument(routine, args.maximum, 10);
+          // randRange stops short of its endpoint while PCIO includes the maximum
+          if(typeof max == 'number' && typeof step == 'number') {
+            max += step;
+          } else {
+            const endpoint = `pcioNumber${++temporaries}`;
+            routine.push(`var ${endpoint} = ${max} + ${step}`);
+            max = `\${${endpoint}}`;
+          }
+          routine.push(`var ${variable} = randRange ${min} ${max} ${step}`);
+        } else if(c.func == 'COMPARE_NUMBERS' || c.func == 'IS_EQUAL') {
+          const relation = c.func == 'IS_EQUAL' ? '==' : { eq: '==', gt: '>', lt: '<', gte: '>=', lte: '<=' }[(args.comparisonOperator || {}).value] || '==';
+          const a = numberArgument(routine, args.numberA, 1);
+          routine.push(`var ${variable} = ${a} ${relation} ${numberArgument(routine, args.numberB, 1)}`);
+        } else {
+          return false;
+        }
+        readValues[stepID] = variable;
+        return true;
+      }
+
+      function importBranch(c, routine, stepID) {
         if(!c || !c.func) {
           warn('An automation step could not be read and was skipped.');
-          continue;
+          return;
         }
         c = Object.assign({}, c, { args: c.args || {} });
 
+        if(importReadStep(c, routine, stepID))
+          return;
+
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if((!c.args.from && !c.args.objects) || !c.args.to)
-            continue;
+            return;
           const args = c.args;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
 
-          let quantity = 1;
-          if(c.args.quantity) {
-            if(c.args.quantity.type == 'reference')
-              quantity = '${' + c.args.quantity.questionId + '}';
-            else if(c.args.quantity.counterId && byID[c.args.quantity.counterId])
-              quantity = `\${PROPERTY text OF ${c.args.quantity.counterId}}`;
-            else if(c.args.quantity.value == 'all')
-              quantity = 0;
-            else
-              quantity = c.args.quantity.value;
-          }
+          const quantity = args.quantity && args.quantity.counterId && byID[args.quantity.counterId]
+            ? `\${PROPERTY text OF ${args.quantity.counterId}}`
+            : numberArgument(routine, args.quantity, 1);
+          const fill = args.fillAdd && args.fillAdd.value == 'fill' && quantity !== 'all';
 
-          c = importWidgetQuery(w.clickRoutine, c.args, 'from', 'from', 'collection', {
+          // PCIO starts dealing at the n-th of its destinations
+          const destinations = args.to.value.slice();
+          if(destinations.length)
+            destinations.push(...destinations.splice(0, (+(args.startingOffset || {}).value || 0) % destinations.length));
+
+          c = importWidgetQuery(routine, args, 'from', 'from', 'collection', {
             func:  'MOVE',
             count: quantity,
-            to:    c.args.to.value,
-            fillTo: c.args.fillAdd && c.args.fillAdd.value == 'fill' ? quantity : null
+            to:    destinations,
+            fillTo: fill ? quantity : null
           });
+          if(!c)
+            return;
           if(c.from && c.from.length == 1)
             c.from = c.from[0];
           if(c.count == 1)
@@ -1246,11 +1437,31 @@ export default async function convertPCIO(content) {
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
 
+          // PCIO can put the objects below the ones already in the destination.
+          // VTT always moves onto the top, so the ones that are there are parked
+          // in a hidden holder and put back on top afterwards.
           const toPosition = (args.toPosition || {}).value;
-          if(toPosition && toPosition != 'top')
+          const toBottom = toPosition == 'bottom' && c.func == 'MOVE' && typeof c.to == 'string' && byID[c.to] && byID[c.to].type == 'cardPile';
+          if(toBottom) {
+            output.pcioMoveTempHolder = {
+              id: 'pcioMoveTempHolder',
+              type: 'holder',
+              x: -200,
+              y: -500
+            };
+            routine.push({ func: 'MOVE', from: c.to, to: 'pcioMoveTempHolder', count: 'all' });
+          } else if(toPosition && toPosition != 'top') {
             warn(`Moving objects to "${toPosition}" is not supported - they end up on top of the destination.`);
-          if((args.startingOffset || {}).value)
-            warn('The starting holder offset of a move automation is not supported.');
+          }
+
+          // PCIO hands out one object after the other, going around the
+          // destinations, which leaves them in the opposite order of moving the
+          // whole pile at once. Only a move out of a holder has an order to keep:
+          // a collection is moved in the order it was selected in.
+          if((args.moveMethod || {}).value != 'all' && c.func == 'MOVE' && c.from && !fill && typeof quantity == 'number' && quantity > 1 && quantity <= 100)
+            routine.push({ note: 'Deal one at a time', func: 'FOREACH', range: [ 1, quantity ], loopRoutine: [ Object.assign({}, c, { count: 1 }) ] });
+          else
+            routine.push(c);
 
           // 'auto' (fit to holder) needs no operation: VTT children inherit the
           // rotation of their holder
@@ -1259,16 +1470,18 @@ export default async function convertPCIO(content) {
             const rotate = rotateOperation({
               holder: c.to,
               count:  c.count !== undefined ? c.count : (c.fillTo !== undefined ? c.fillTo : 1)
-            }, w.clickRoutine, changeRotation, (args.setRotation || {}).value);
-            if(rotate) {
-              w.clickRoutine.push(c);
-              c = rotate;
-            }
+            }, routine, changeRotation, (args.setRotation || {}).value);
+            if(rotate)
+              routine.push(rotate);
           }
+
+          if(toBottom)
+            routine.push({ func: 'MOVE', from: 'pcioMoveTempHolder', to: c.to, count: 'all' });
+          return;
         }
         if(c.func == 'RECALL_CARDS') {
           if(!c.args.decks)
-            continue;
+            return;
 
           for(const deckID of c.args.decks.value) {
             if(!byID[deckID].parent) {
@@ -1277,22 +1490,22 @@ export default async function convertPCIO(content) {
                 type: 'holder',
                 x: -200
               };
-              w.clickRoutine.push({
+              routine.push({
                 func: 'SELECT',
                 property: 'deck',
                 value: deckID
               });
-              w.clickRoutine.push({
+              routine.push({
                 func: 'SET',
                 property: 'parent',
                 value: 'tempHolderForDeckRecall'
               });
-              w.clickRoutine.push({
+              routine.push({
                 func: 'MOVEXY',
                 from: 'tempHolderForDeckRecall',
                 x: byID[deckID].x + (86-(byID[deckID].cardWidth ||103))/2,
                 y: byID[deckID].y + (86-(byID[deckID].cardHeight||160))/2,
-                count: 0
+                count: 'all'
               });
             }
           }
@@ -1312,7 +1525,7 @@ export default async function convertPCIO(content) {
           if(c.inHolder)
             delete c.inHolder;
           if(!flip || flip.value != 'none') {
-            w.clickRoutine.push(c);
+            routine.push(c);
             c = {
               func:   'FLIP',
               holder: holders,
@@ -1322,7 +1535,7 @@ export default async function convertPCIO(content) {
         }
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
-            continue;
+            return;
           const holders = c.args.holders.value.map(id=>byID[id].type == 'seat' ? 'hand' : id);
           c = {
             func:   'SHUFFLE',
@@ -1335,7 +1548,7 @@ export default async function convertPCIO(content) {
           const sources = c.args.sources || c.args.holders;
           const direction = c.args.direction || c.args.sortDirection;
           if(!sources)
-            continue;
+            return;
           const holders = sources.value.map(id=>byID[id] && byID[id].type == 'seat' ? 'hand' : id);
           c = {
             func:   'SORT',
@@ -1350,29 +1563,56 @@ export default async function convertPCIO(content) {
         }
         if(c.func == "FLIP_CARDS") {
           if(!c.args.holders && !c.args.objects)
-            continue;
-          const flipFace = c.args.flipFace;
-          if((c.args.reverse || {}).value == 'reverse')
-            warn('Reversing the order of a pile while flipping it is not supported.');
+            return;
+          const args = c.args;
+          // "switch" is PCIO's default: every object ends up on the side opposite
+          // to the one the object on top currently shows
+          const flipFace = (args.flipFace || {}).value || 'switch';
+          const wholePile = (args.flipMode || {}).value == 'pile';
+          // turning a whole pile over also reverses its order unless that is
+          // switched off - reversing and flipping to the side of the top object
+          // both need the objects in a collection ordered bottom to top
+          const reverse = wholePile && (args.reverse || {}).value != 'none';
+          const ordered = wholePile && (reverse || flipFace == 'switch');
 
-          c = importWidgetQuery(w.clickRoutine, c.args, 'holders', 'holder', 'collection', {
-            func:   'FLIP',
-            count:  !c.args.flipMode || c.args.flipMode.value != 'pile' ? 1 : 0
-          });
+          c = importWidgetQuery(routine, args, 'holders', 'holder', 'collection', {
+            func:  'FLIP',
+            count: wholePile ? 0 : 1
+          }, ordered ? { collection: 'pcioPile', sortBy: 'z' } : {});
+          if(!c)
+            return;
           if(c.holder && c.holder.length == 1)
             c.holder = c.holder[0];
           if(!c.count)
             delete c.count;
-          if(flipFace && (flipFace.value == 'faceUp' || flipFace.value == 'faceDown'))
-            c.face = flipFace.value == 'faceDown' ? 0 : 1;
-          else if(flipFace && flipFace.value == 'random')
-            warn('Randomly flipping objects has no VirtualTabletop equivalent - they are flipped to the other side instead.');
-          else if(flipFace && flipFace.value == 'switch')
-            warn('Flipping all objects to the same side is not supported - each object is flipped individually.');
+          if(ordered) {
+            if(c.holder) {
+              routine.push({ func: 'SELECT', property: 'parent', relation: 'in', value: [].concat(c.holder), type: 'card', collection: 'pcioPile', sortBy: 'z' });
+              delete c.holder;
+            }
+            c.collection = c.collection || 'pcioPile';
+          }
+          if(flipFace == 'faceUp' || flipFace == 'faceDown') {
+            c.face = flipFace == 'faceDown' ? 0 : 1;
+          } else if(flipFace == 'random') {
+            // flip() rolls a face of its own for every object it is given
+            c.faceCycle = 'random';
+          } else if(ordered) {
+            routine.push({ func: 'GET', collection: c.collection, property: 'activeFace', aggregation: 'last', variable: 'pcioFace' });
+            routine.push('var pcioFace = 1 - ${pcioFace}');
+            c.face = '${pcioFace}';
+          } else if(flipFace == 'switch' && (Array.isArray(c.holder) || c.collection)) {
+            // flipping the top object of one pile that way is just flipping it
+            warn('Flipping the top objects of several piles all to the same side is not supported - each of them is flipped to its other side instead.');
+          }
+          if(reverse) {
+            routine.push(c);
+            c = { note: 'Reverse the pile', func: 'SHUFFLE', collection: c.collection, mode: 'reverse' };
+          }
         }
         if(c.func == 'CHANGE_TIMER_STATE') {
           if(!c.args.timers)
-            continue;
+            return;
           if ((c.args.playState && c.args.playState.value)=="switch"){
             var mode = "toggle"
           } else if ((c.args.playState && c.args.playState.value)=="pause"){
@@ -1391,7 +1631,7 @@ export default async function convertPCIO(content) {
         }
         if(c.func == 'CHANGE_TIMER_TIME') {
           if(!c.args.timers)
-            continue;
+            return;
           if ((c.args.changeType && c.args.changeType.value)=='add'){
             var mode = 'inc'
           } else if ((c.args.changeType && c.args.changeType.value)=='subtract'){
@@ -1405,7 +1645,7 @@ export default async function convertPCIO(content) {
             func: 'TIMER',
             timer: c.args.timers.value,
             mode: mode,
-            seconds: c.args.seconds && c.args.seconds.value
+            seconds: numberArgument(routine, c.args.seconds, 30)
           };
           if(c.timer.length == 1)
             c.timer = c.timer[0];
@@ -1416,20 +1656,35 @@ export default async function convertPCIO(content) {
         }
         if(c.func == 'CHANGE_COUNTER') {
           if(!c.args.counters)
-            continue;
+            return;
           // PCIO used add/subtract before it settled on inc/dec
           const changeMode = c.args.counterChangeMode || c.args.changeMode;
-          let value = c.args.changeNumber ? c.args.changeNumber.value : 0;
-          if(c.args.changeNumber && c.args.changeNumber.counterId && byID[c.args.changeNumber.counterId])
-            value = `\${PROPERTY text OF ${c.args.changeNumber.counterId}}`;
+          const value = c.args.changeNumber && c.args.changeNumber.counterId && byID[c.args.changeNumber.counterId]
+            ? `\${PROPERTY text OF ${c.args.changeNumber.counterId}}`
+            : numberArgument(routine, c.args.changeNumber, 0);
+          const mode = { add: 'inc', subtract: 'dec' }[changeMode && changeMode.value] || (changeMode ? changeMode.value : 'set');
+
+          // a counter with bounds is not simply counted on but calculated and
+          // clamped for every counter it is applied to
+          for(const counter of c.args.counters.value.filter(id=>counterBounds[id])) {
+            routine.push(mode == 'set'
+              ? `var pcioCounter = ${value} + 0`
+              : `var pcioCounter = parseFloat \${PROPERTY text OF ${counter}}`);
+            if(mode != 'set')
+              routine.push(`var pcioCounter = \${pcioCounter} ${mode == 'dec' ? '-' : '+'} ${value}`);
+            routine.push(...clampCounter(counter, 'pcioCounter'));
+            routine.push({ func: 'LABEL', label: counter, value: '${pcioCounter}' });
+          }
+
+          const counters = c.args.counters.value.filter(id=>!counterBounds[id]);
+          if(!counters.length)
+            return;
           c = {
             func: 'LABEL',
-            label: c.args.counters.value,
-            mode:  { add: 'inc', subtract: 'dec' }[changeMode && changeMode.value] || (changeMode ? changeMode.value : 'set'),
+            label: counters.length == 1 ? counters[0] : counters,
+            mode,
             value
           };
-          if(c.label.length == 1)
-            c.label = c.label[0];
           if(c.mode == 'set')
             delete c.mode;
           if(c.value === 0)
@@ -1441,7 +1696,7 @@ export default async function convertPCIO(content) {
           const isDice = c.func == 'ROLL_DICE';
           const targets = isDice ? c.args.dice : c.args.choosers;
           if(!targets)
-            continue;
+            return;
           const changeType = (c.args.chooserChangeType || c.args.diceChangeType || c.args.changeType || {}).value;
           const choice = c.args.chooserChoice || c.args.diceChoice || c.args.choice;
           const deck = byID[targets.value[0]] && byID[byID[targets.value[0]].deck];
@@ -1456,7 +1711,7 @@ export default async function convertPCIO(content) {
           } else if(isDice) {
             // dice have no flip(), their face is set directly - out of range
             // values wrap around so +1/-1 cycles through the faces
-            w.clickRoutine.push({
+            routine.push({
               func: 'SELECT',
               property: 'id',
               relation: 'in',
@@ -1481,7 +1736,7 @@ export default async function convertPCIO(content) {
               collection: targets.value
             };
             if(changeType == 'random' && faces.length) {
-              w.clickRoutine.push(`var pcioFace = randInt 0 ${faces.length-1}`);
+              routine.push(`var pcioFace = randInt 0 ${faces.length-1}`);
               c.face = '${pcioFace}';
             } else if(changeType == 'set' && choice && faces.indexOf(choice.value) != -1) {
               c.face = faces.indexOf(choice.value);
@@ -1492,7 +1747,7 @@ export default async function convertPCIO(content) {
         }
         if(c.func == 'SPIN_SPINNER') {
           if(!c.args.spinners)
-            continue;
+            return;
           c = {
             note:       'Spin spinners',
             func:       'CLICK',
@@ -1500,12 +1755,14 @@ export default async function convertPCIO(content) {
           };
         }
         if(c.func == 'ROTATE_OBJECTS') {
-          const target = importWidgetQuery(w.clickRoutine, c.args, 'objects', 'holder', 'collection', {
-            count: (c.args.rotateMode || {}).value == 'top' ? 1 : 0
+          const target = importWidgetQuery(routine, c.args, 'objects', 'holder', 'collection', {
+            count: (c.args.rotateMode || {}).value == 'top' ? 1 : 'all'
           });
-          const rotate = rotateOperation(target, w.clickRoutine, (c.args.changeRotation || {}).value || 'auto', (c.args.setRotation || {}).value);
+          if(!target)
+            return;
+          const rotate = rotateOperation(target, routine, (c.args.changeRotation || {}).value || 'auto', (c.args.setRotation || {}).value);
           if(!rotate)
-            continue;
+            return;
           c = rotate;
           if(c.holder && c.holder.length == 1)
             c.holder = c.holder[0];
@@ -1515,17 +1772,43 @@ export default async function convertPCIO(content) {
           // optionally wrapping the last one around to the first
           const holders = c.args.holders ? c.args.holders.value : [];
           if(holders.length < 2)
-            continue;
-          if(holders.filter(id=>!byID[id] || byID[id].type != 'cardPile').length) {
-            warn('Shifting objects between player seats has no VirtualTabletop equivalent and was skipped.');
-            continue;
-          }
+            return;
+          const reversed = (c.args.moveDirection || {}).value == 'reverse';
           const wrap = !c.args.moveMode || c.args.moveMode.value == 'wrap';
-          const order = (c.args.moveDirection || {}).value == 'reverse' ? holders.slice().reverse() : holders;
-          const count = (c.args.objectsMode || {}).value == 'top' ? 1 : 0;
+          const order = reversed ? holders.slice().reverse() : holders;
+          const count = (c.args.objectsMode || {}).value == 'top' ? 1 : 'all';
           const steps = Math.min(+((wrap ? c.args.stepsWrap : c.args.stepsEdge) || {}).value || 1, holders.length);
           if((c.args.objectsMode || {}).value == 'custom')
             warn('Shifting only a subset of the objects in a holder is not supported - all objects are shifted.');
+
+          const seats = holders.filter(id=>byID[id] && byID[id].type == 'seat');
+          if(seats.length && seats.length < holders.length) {
+            warn('Shifting objects between a mix of holders and player seats has no VirtualTabletop equivalent and was skipped.');
+            return;
+          }
+          if(seats.length) {
+            // a hand is one holder per room in VTT and it is the owner that makes
+            // its cards a player's own, which is exactly what SWAPHANDS shifts
+            if(!wrap)
+              warn('Passing the hands of the players on towards the last seat instead of around the table is not supported - they wrap around.');
+            routine.push({
+              func: 'SELECT',
+              property: 'id',
+              relation: 'in',
+              value: seats,
+              type: 'seat',
+              collection: 'pcioSeats'
+            });
+            routine.push({
+              note: 'Pass the hands on',
+              func: 'SWAPHANDS',
+              source: 'pcioSeats',
+              interval: steps,
+              direction: reversed ? 'backward' : 'forward',
+              keepOrder: true
+            });
+            return;
+          }
 
           if(wrap) {
             output.pcioShiftTempHolder = {
@@ -1537,18 +1820,18 @@ export default async function convertPCIO(content) {
           }
           for(let step=0; step<steps; ++step) {
             if(wrap)
-              w.clickRoutine.push({ func: 'MOVE', from: order[order.length-1], to: 'pcioShiftTempHolder', count });
+              routine.push({ func: 'MOVE', from: order[order.length-1], to: 'pcioShiftTempHolder', count });
             for(let i=order.length-2; i>=0; --i)
-              w.clickRoutine.push({ func: 'MOVE', from: order[i], to: order[i+1], count });
+              routine.push({ func: 'MOVE', from: order[i], to: order[i+1], count });
             if(wrap)
-              w.clickRoutine.push({ func: 'MOVE', from: 'pcioShiftTempHolder', to: order[0], count });
+              routine.push({ func: 'MOVE', from: 'pcioShiftTempHolder', to: order[0], count });
           }
-          continue;
+          return;
         }
         if(c.func == 'STAND_UP_PLAYER') {
           if(!c.args.seats)
-            continue;
-          w.clickRoutine.push({
+            return;
+          routine.push({
             func: 'SELECT',
             property: 'id',
             relation: 'in',
@@ -1591,10 +1874,12 @@ export default async function convertPCIO(content) {
 
         if(c.args) {
           warn(`The automation step ${c.func} of "${widget.label || widget.id}" has no VirtualTabletop equivalent and was skipped.`);
-          continue;
+          return;
         }
-        w.clickRoutine.push(c);
+        routine.push(c);
       }
+
+      importSteps(widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : [], w.clickRoutine);
 
     } else if(widget.type == 'spinner') {
       w.type = widget.type;
