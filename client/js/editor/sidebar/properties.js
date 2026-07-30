@@ -770,9 +770,11 @@ class PropertiesModule extends SidebarModule {
           break;
       }
 
-      // every widget can have routines, so the section is always there - piles are
-      // the exception because they are temporary and not editable
-      if(widget.get('type') != 'pile')
+      // every widget can have routines, so the section is always there - piles
+      // are the exception because they are temporary and not editable, and a
+      // deck hands the module over to the deck editor, leaving no DOM to render
+      // into (its routines are edited there)
+      if(widget.get('type') != 'pile' && this.moduleDOM)
         this.renderEvents(widget);
     }
 
