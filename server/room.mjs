@@ -157,11 +157,12 @@ export default class Room {
             this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
           else if(type != 'link' || meta.importerTemp)
             delete this.state._meta.states[stateID].variants[newVariantID].link;
-          // the import report belongs to the game, not to one of its variants
-          if(meta.importerWarnings) {
-            const notes = this.state._meta.states[stateID].importerWarnings || [];
-            this.state._meta.states[stateID].importerWarnings = [ ...new Set(notes.concat(meta.importerWarnings)) ];
-          }
+          // The import report belongs to the game, not to one of its variants.
+          // stateID comes from the request, so it must not be able to reach
+          // Object.prototype through the states object.
+          const gameMeta = Object.prototype.hasOwnProperty.call(this.state._meta.states, stateID) && this.state._meta.states[stateID];
+          if(gameMeta && meta.importerWarnings)
+            gameMeta.importerWarnings = [ ...new Set((gameMeta.importerWarnings || []).concat(meta.importerWarnings)) ];
           if(!this.state._meta.states[stateID].attribution)
             this.state._meta.states[stateID].attribution = meta.attribution;
           if(meta.attribution && meta.attribution != this.state._meta.states[stateID].attribution)
