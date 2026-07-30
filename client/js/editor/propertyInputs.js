@@ -161,10 +161,13 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   const picker = $('#symbolPickerOverlay');
   const pickerParent = picker.parentNode;
   hostOverlay.parentNode.appendChild(picker);
-  const symbol = await pickSymbol(type, true, false);
-  pickerParent.appendChild(picker);
-  showOverlay(hostOverlay.id);
-  return symbol;
+  try {
+    // even when the picker fails to open (loadSymbolPicker fetches), the user must get their dialog back
+    return await pickSymbol(type, true, false);
+  } finally {
+    pickerParent.appendChild(picker);
+    showOverlay(hostOverlay.id);
+  }
 }
 
 // Renders a small preview for an icon property value (same formats as getIconDetails).

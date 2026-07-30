@@ -61,12 +61,16 @@ function centerElementInClientRect(element, boundingClientRect) {
 function parseRankRange(rankRange) {
   const rankArray = [];
   // Ranks are typed as a comma separated list, so spaces around them are the user separating the list, not part
-  // of a rank ("2-10, J, Q" must not produce a rank called " J").
-  const rankElements = rankRange.split(',').map(rankElement=>rankElement.trim());
+  // of a rank ("2-10, J, Q" must not produce a rank called " J"). Empty entries are a comma the user has not
+  // typed a rank behind yet ("2-10,J,") and would otherwise become a card type called " of hearts".
+  const rankElements = rankRange.split(',').map(rankElement=>rankElement.trim()).filter(rankElement=>rankElement !== '');
 
   rankElements.forEach(rankElement => {
-    if(rankElement.match(/-?[0-9]+--?[0-9]+/)) {
-      const [start, end] = rankElement.split('-').map(Number);
+    // A range is the whole entry, and splitting it on '-' would cut a negative bound in half ("-3--1"), so read
+    // both bounds from the match instead. Anything else - "J", "Sun", "2b" - is a rank of its own.
+    const range = rankElement.match(/^(-?[0-9]+)-(-?[0-9]+)$/);
+    if(range) {
+      const [ start, end ] = range.slice(1).map(Number);
       for(let i = start; i <= end; i++)
         rankArray.push(i);
     } else {
@@ -587,6 +591,13 @@ const DECK_GENERATOR_COURT_SUITS = {
   'skoll/spades':   'S'
 };
 
+// A plain lookup would also find inherited members ("constructor" as an icon value), so only own entries count.
+function courtSuitLetter(icon, suitIndex) {
+  if(Object.prototype.hasOwnProperty.call(DECK_GENERATOR_COURT_SUITS, icon))
+    return DECK_GENERATOR_COURT_SUITS[icon];
+  return 'DHCS'[suitIndex % 4];
+}
+
 // Colors offered to a suit whose icon+color combination is already taken, so adding the same icon twice (red
 // hearts and purple hearts) results in two visibly different suits without having to pick a color first.
 const DECK_GENERATOR_SUIT_COLORS = [ '#e50932', '#000000', '#0062ff', '#00a651', '#8b00ff', '#ff8c00', '#00a8a8', '#a8006c' ];
@@ -1083,7 +1094,7 @@ class PropertiesModule extends SidebarModule {
         // than one suit, that is what tells the rows apart. Game icons are single-color silhouettes, so their
         // image is turned into a mask over the color; font icons and emoji just take it as their text color.
         const showIconInSuitColor = _=>{
-          const chip = $('.propertyPreviewButton .propertyValueChip', row);
+          const chip = $('.propertyValueChip', iconInput.dom);
           if(!chip)
             return;
           chip.style.color = suit.color;
@@ -1232,7 +1243,11 @@ class PropertiesModule extends SidebarModule {
 
       for(const [ suitIndex, suit ] of suits.entries()) {
         for(const rank of parseRankRange(suit.ranks)) {
-          const cT = `${rank} of ${suitNames[suitIndex]}`;
+          // A rank listed twice in the same suit ("2-10,10") would overwrite its own card type: number the
+          // repeats, the same way suits left at the same name are numbered above.
+          let cT = `${rank} of ${suitNames[suitIndex]}`;
+          for(let i = 2; cardTypes[cT]; ++i)
+            cT = `${rank} of ${suitNames[suitIndex]} ${i}`;
           cardTypes[cT] = {
             suit: suit.icon,
             suitColor: suit.color,
@@ -1259,9 +1274,10 @@ class PropertiesModule extends SidebarModule {
             setPips(rank >= 18,                                                         ['S11', 'S13', 'S41', 'S43']);
           }
           // Middle picture of the playing-card design: the court cards use the matching face image, ranks
-          // without a pip layout (jokers, tarot trumps, words, ...) use the suit icon.
-          if(design.rankPictures && rank && 'JQK'.includes(rank))
-            cardTypes[cT].rankImage = `/i/cards-default/${rank}${DECK_GENERATOR_COURT_SUITS[suit.icon] || 'DHCS'[suitIndex % 4]}-face.svg`;
+          // without a pip layout (jokers, tarot trumps, words, ...) use the suit icon. Only the single letters
+          // J, Q and K have a face image - a multi-letter rank like "JQ" would ask for one that does not exist.
+          if(design.rankPictures && String(rank).length == 1 && 'JQK'.includes(rank))
+            cardTypes[cT].rankImage = `/i/cards-default/${rank}${courtSuitLetter(suit.icon, suitIndex)}-face.svg`;
           else if(design.rankPictures && !hasPipLayout)
             cardTypes[cT].rankIcon = suit.icon;
         }

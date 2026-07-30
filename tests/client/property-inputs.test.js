@@ -57,7 +57,10 @@ const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `
     dicePreviewRotation,
     dicePreviewActiveFace,
     textSymbolClass,
-    textValueFromSymbol
+    textValueFromSymbol,
+    parseRankRange,
+    defaultSuitName,
+    courtSuitLetter
   };
 `)(class {}, testWidgets);
 
@@ -208,6 +211,42 @@ describe('timer time helpers', () => {
   test('formatTimerMs and parseTimerInput round-trip', () => {
     for(const ms of [ 0, 1000, 61000, 5500, 3600000, -90000 ])
       expect(cssHelpers.parseTimerInput(cssHelpers.formatTimerMs(ms))).toBe(ms);
+  });
+});
+
+describe('deck generator helpers', () => {
+  test('parseRankRange expands ranges and ignores list whitespace', () => {
+    expect(cssHelpers.parseRankRange('2-10,J,Q,K,A')).toEqual([ 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A' ]);
+    expect(cssHelpers.parseRankRange('2-10, J, Q')).toEqual([ 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q' ]);
+    expect(cssHelpers.parseRankRange('-3--1')).toEqual([ -3, -2, -1 ]);
+    expect(cssHelpers.parseRankRange('Sun,Moon')).toEqual([ 'Sun', 'Moon' ]);
+  });
+
+  test('parseRankRange drops the empty entries of a half-typed list', () => {
+    // a trailing comma would otherwise produce a card type called " of hearts"
+    expect(cssHelpers.parseRankRange('2-4,J,')).toEqual([ 2, 3, 4, 'J' ]);
+    expect(cssHelpers.parseRankRange('A, ,K')).toEqual([ 'A', 'K' ]);
+    expect(cssHelpers.parseRankRange('')).toEqual([]);
+    expect(cssHelpers.parseRankRange(',')).toEqual([]);
+  });
+
+  test('defaultSuitName uses the readable part of an icon value', () => {
+    expect(cssHelpers.defaultSuitName('skoll/hearts')).toBe('hearts');
+    expect(cssHelpers.defaultSuitName('casino')).toBe('casino');
+    expect(cssHelpers.defaultSuitName('[die_face_6]')).toBe('die_face_6');
+    expect(cssHelpers.defaultSuitName('(🎲)')).toBe('🎲');
+    expect(cssHelpers.defaultSuitName('/i/game-icons.net/lorc/star.svg')).toBe('star');
+    // uploads and links have no readable name, so those suits fall back to a generic one
+    expect(cssHelpers.defaultSuitName('/assets/-1234567890')).toBe('');
+    expect(cssHelpers.defaultSuitName('https://example.com/hearts.svg')).toBe('');
+    expect(cssHelpers.defaultSuitName(null)).toBe('');
+  });
+
+  test('court card pictures fall back by suit position, ignoring inherited names', () => {
+    expect(cssHelpers.courtSuitLetter('skoll/hearts', 3)).toBe('H');
+    expect(cssHelpers.courtSuitLetter('lorc/biohazard', 0)).toBe('D');
+    expect(cssHelpers.courtSuitLetter('lorc/biohazard', 5)).toBe('H');
+    expect(cssHelpers.courtSuitLetter('constructor', 2)).toBe('C');
   });
 });
 
