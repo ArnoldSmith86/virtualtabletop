@@ -62,7 +62,12 @@ let symbolData = null;
 export async function loadSymbolPicker() {
   if(symbolData === null) {
     symbolData = 'loading';
-    symbolData = await (await fetch('i/fonts/symbols.json')).json();
+    try {
+      symbolData = await (await fetch('i/fonts/symbols.json')).json();
+    } catch(e) {
+      symbolData = null; // a failed fetch must not leave the picker stuck in 'loading' for the whole session
+      throw e;
+    }
     let list = '';
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category == 'Emoji - Flags')

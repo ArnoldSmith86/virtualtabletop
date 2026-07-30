@@ -81,6 +81,17 @@ function parseRankRange(rankRange) {
   return rankArray;
 }
 
+// The line above the card design gallery. A suit list without suits or without any rank is a normal state while
+// the deck is being typed, but it has no cards to show designs of - and a design tile renders a real card, which
+// throws without a card type. Say what is missing instead, so the gallery can be skipped.
+function deckGeneratorDesignHint(suitCount, cardCount) {
+  if(!suitCount)
+    return 'Add at least one suit above to see the card designs.';
+  if(!cardCount)
+    return 'Add at least one rank above to see the card designs.';
+  return `${cardCount} card${cardCount == 1 ? '' : 's'} from ${suitCount} suit${suitCount == 1 ? '' : 's'}. Pick how they look:`;
+}
+
 async function setCardCount(deck, cardType, count) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} updated card count of deck ${deck.id} (card type ${cardType}) in editor`);
@@ -1218,7 +1229,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     const designHint = document.createElement('div');
-    designHint.className = 'deckGeneratorHint';
+    designHint.className = 'deckGeneratorHint deckGeneratorDesignHint';
     const designSelectionDiv = div(null, 'deckGeneratorDesigns');
     const updateDesignPreview = _=>{
       const oldScrollTop = this.moduleDOM.scrollTop;
@@ -1226,20 +1237,24 @@ class PropertiesModule extends SidebarModule {
       const oldSelectedButtonIndex = oldSelectedButton ? oldSelectedButton.dataset.index : -1;
       designSelectionDiv.innerHTML = '';
 
-      if(!suits.length) {
-        designHint.textContent = 'Add at least one suit above to see the card designs.';
+      // Designs that need the same card type properties share one set of card types (the design only adds faces
+      // and card defaults around them), so a preview refresh builds them once instead of nine times.
+      const cardTypesByProperties = {};
+      const cardTypesFor = design=>{
+        const key = `${design.pips ? 'pips' : ''} ${design.rankPictures ? 'pictures' : ''}`;
+        return cardTypesByProperties[key] = cardTypesByProperties[key] || getCardTypes(design);
+      };
+
+      // The card count is the same for every design; only the properties differ.
+      const cardCount = suits.length ? Object.keys(cardTypesFor(designs[0])).length : 0;
+      designHint.textContent = deckGeneratorDesignHint(suits.length, cardCount);
+      if(!cardCount) {
         createButton.disabled = true;
         return;
       }
 
-      // Designs that need the same card type properties share one set of card types (the design only adds faces
-      // and card defaults around them), so a preview refresh builds them once instead of nine times.
-      const cardTypesByProperties = {};
-      let cardCount = 0;
       for(const [ index, design ] of designs.entries()) {
-        const key = `${design.pips ? 'pips' : ''} ${design.rankPictures ? 'pictures' : ''}`;
-        const cardTypes = cardTypesByProperties[key] = cardTypesByProperties[key] || getCardTypes(design);
-        cardCount = Object.keys(cardTypes).length; // the same for every design; only the properties differ
+        const cardTypes = cardTypesFor(design);
         const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes });
         const tile = div(designSelectionDiv, 'deckDesignTile');
         // One card per tile - the same one in every design, so they can actually be compared - instead of a
@@ -1258,7 +1273,6 @@ class PropertiesModule extends SidebarModule {
           createButton.disabled = false;
         };
       }
-      designHint.textContent =`${cardCount} card${cardCount == 1 ? '' : 's'} from ${suits.length} suit${suits.length == 1 ? '' : 's'}. Pick how they look:`;
       createButton.disabled = !$a('.selected.deckDesignButton', designSelectionDiv).length;
       this.moduleDOM.scrollTop = oldScrollTop;
     };

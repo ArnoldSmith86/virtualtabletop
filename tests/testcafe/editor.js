@@ -754,6 +754,48 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
 });
 
+// A rank list is empty while it is being retyped: the design gallery has no card to show then and must say so
+// instead of rendering a card without a card type (which throws and leaves the Add button as it was).
+test('Deck editor: the custom deck wizard survives an empty rank list', async t => {
+  await t.resizeWindow(1280, 900);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // typed into the shared ranks field, which "Same ranks for each suit" copies to every suit
+  const setSharedRanks = ClientFunction(ranks => {
+    const input = document.querySelector('.deckGeneratorSuitRanks');
+    input.value = ranks;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const designs = Selector('.deckDesignButton');
+  const hint = Selector('.deckGeneratorDesignHint');
+  const addToGame = Selector('#deckEditorNewDeckPanel button.green');
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]')
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckOverlay input[value=custom]')
+    .expect(designs.count).gt(0)
+    .expect(hint.textContent).eql('52 cards from 4 suits. Pick how they look:')
+    .click(designs.nth(0))
+    .expect(addToGame.hasAttribute('disabled')).notOk();
+
+  await setSharedRanks('');
+  await t
+    .expect(hint.textContent).eql('Add at least one rank above to see the card designs.')
+    .expect(designs.count).eql(0)
+    .expect(addToGame.hasAttribute('disabled')).ok();
+
+  // and it comes back once there is a rank again
+  await setSharedRanks('A');
+  await t
+    .expect(hint.textContent).eql('4 cards from 4 suits. Pick how they look:')
+    .expect(designs.count).gt(0)
+    .pressKey('esc');
+});
+
 test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

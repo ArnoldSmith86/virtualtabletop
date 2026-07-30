@@ -164,14 +164,29 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   // Where it lands has no stacking rule of its own, so it would end up behind the deck editor: the class
   // floats it over the whole editor (see deckeditor.css) for as long as it is parked here.
   picker.classList.add('symbolPickerAboveEditor');
+
+  // Whatever happens, the user must get their dialog back: the picker's symbol list is fetched, so it can also
+  // fail to open. Keep that failure here - unhandled it would reach the global error handler, which replaces
+  // the dialog with the client error overlay.
+  let symbol = null;
+  let error = null;
   try {
-    // even when the picker fails to open (loadSymbolPicker fetches), the user must get their dialog back
-    return await pickSymbol(type, true, false);
-  } finally {
-    picker.classList.remove('symbolPickerAboveEditor');
-    pickerParent.appendChild(picker);
-    showOverlay(hostOverlay.id);
+    symbol = await pickSymbol(type, true, false);
+  } catch(e) {
+    error = e;
   }
+
+  picker.classList.remove('symbolPickerAboveEditor');
+  pickerParent.appendChild(picker);
+  // showOverlay toggles, so it would hide the dialog that is still up when the picker never opened at all:
+  // only bring the dialog back when the picker actually took its place.
+  if(hostOverlay.style.display == 'none')
+    showOverlay(hostOverlay.id);
+  if(error) {
+    console.error(error);
+    alert('The symbol picker could not be loaded. Please try again.');
+  }
+  return symbol;
 }
 
 // Renders a small preview for an icon property value (same formats as getIconDetails).

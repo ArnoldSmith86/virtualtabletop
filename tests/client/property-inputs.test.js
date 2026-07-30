@@ -60,7 +60,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `
     textValueFromSymbol,
     parseRankRange,
     defaultSuitName,
-    courtSuitLetter
+    courtSuitLetter,
+    deckGeneratorDesignHint
   };
 `)(class {}, testWidgets);
 
@@ -248,6 +249,14 @@ describe('deck generator helpers', () => {
     expect(cssHelpers.courtSuitLetter('lorc/biohazard', 5)).toBe('H');
     expect(cssHelpers.courtSuitLetter('constructor', 2)).toBe('C');
   });
+
+  test('the design gallery names what is missing instead of previewing zero cards', () => {
+    // a design tile renders a real card, which needs a card type: with no suit or no rank there is none
+    expect(cssHelpers.deckGeneratorDesignHint(0, 0)).toBe('Add at least one suit above to see the card designs.');
+    expect(cssHelpers.deckGeneratorDesignHint(4, 0)).toBe('Add at least one rank above to see the card designs.');
+    expect(cssHelpers.deckGeneratorDesignHint(4, 52)).toBe('52 cards from 4 suits. Pick how they look:');
+    expect(cssHelpers.deckGeneratorDesignHint(1, 1)).toBe('1 card from 1 suit. Pick how they look:');
+  });
 });
 
 describe('property input helpers', () => {
@@ -347,5 +356,64 @@ describe('property input helpers', () => {
 
     expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
     expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
+  });
+});
+
+// pickSymbolKeepingOverlay moves the symbol picker next to the dialog it was opened from and reaches for a few
+// room globals doing so: build it with a tiny fake DOM, so both outcomes - a picked symbol and a picker that
+// fails to load - can be exercised.
+function symbolPickerFixture(pickSymbolBehavior) {
+  const editor = { children: [] };
+  const pickerParent = { children: [] };
+  for(const parent of [ editor, pickerParent ])
+    parent.appendChild = child => { child.parentNode = parent; parent.children.push(child); };
+
+  const picker = { id: 'symbolPickerOverlay', style: { display: 'none' }, classes: new Set() };
+  picker.classList = { add: c => picker.classes.add(c), remove: c => picker.classes.delete(c) };
+  pickerParent.appendChild(picker);
+
+  const hostOverlay = { id: 'hostOverlay', style: { display: 'flex' }, parentNode: editor };
+  const overlays = { symbolPickerOverlay: picker, hostOverlay };
+  // the real one (client/js/main.js) toggles: showing an overlay that is already visible hides it
+  const showOverlay = id => {
+    for(const [ key, overlay ] of Object.entries(overlays))
+      if(key != id)
+        overlay.style.display = 'none';
+    overlays[id].style.display = overlays[id].style.display !== 'none' ? 'none' : 'flex';
+  };
+
+  const alerts = [];
+  const pickSymbolKeepingOverlay = new Function('$', 'showOverlay', 'pickSymbol', 'alert', 'console', inputsSource + `;
+    return pickSymbolKeepingOverlay;
+  `)(_ => picker, showOverlay, _ => pickSymbolBehavior(showOverlay), message => alerts.push(message), { error: _ => null });
+
+  return { picker, pickerParent, hostOverlay, alerts, call: _ => pickSymbolKeepingOverlay({ closest: _ => hostOverlay }) };
+}
+
+describe('the symbol picker opened from a dialog', () => {
+  test('is parked next to the dialog and gives the dialog back afterwards', async () => {
+    const fixture = symbolPickerFixture(showOverlay => {
+      expect(fixture.picker.parentNode).not.toBe(fixture.pickerParent);
+      expect(fixture.picker.classes.has('symbolPickerAboveEditor')).toBe(true);
+      showOverlay('symbolPickerOverlay'); // what pickSymbol does once the picker is loaded - hides the dialog
+      return Promise.resolve({ symbol: 'casino' });
+    });
+
+    await expect(fixture.call()).resolves.toEqual({ symbol: 'casino' });
+    expect(fixture.hostOverlay.style.display).toBe('flex');
+    expect(fixture.picker.parentNode).toBe(fixture.pickerParent);
+    expect(fixture.picker.classes.size).toBe(0);
+  });
+
+  test('leaves the dialog open and says so when it fails to load', async () => {
+    // loadSymbolPicker fetches, so pickSymbol can reject before it ever hides the dialog: reopening it then
+    // would toggle the still visible dialog off and leave an empty editor behind
+    const fixture = symbolPickerFixture(_ => Promise.reject(new Error('fetch failed')));
+
+    await expect(fixture.call()).resolves.toBe(null); // nothing picked, and no error to the global handler
+    expect(fixture.alerts).toEqual([ 'The symbol picker could not be loaded. Please try again.' ]);
+    expect(fixture.hostOverlay.style.display).toBe('flex');
+    expect(fixture.picker.parentNode).toBe(fixture.pickerParent);
+    expect(fixture.picker.classes.size).toBe(0);
   });
 });
