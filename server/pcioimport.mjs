@@ -143,7 +143,9 @@ export default async function convertPCIO(content) {
   } catch(e) {}
 
   for(const filename in zip.files) {
-    if(filename.match(/^\/?userassets/) && zip.files[filename]._data) {
+    // a .pcio carries a folder entry for its assets, which has no content: it
+    // would be written out as an empty "undefined_undefined" asset
+    if(filename.match(/^\/?userassets/) && !zip.files[filename].dir && zip.files[filename]._data) {
       // 10 MiB is the same limit that FileLoader applies to assets in .vtt files
       if(zip.files[filename]._data.uncompressedSize >= 10485760) {
         warn(`Asset ${filename} is bigger than 10 MiB and was not imported.`);

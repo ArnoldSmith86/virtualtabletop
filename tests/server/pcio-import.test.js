@@ -8,7 +8,7 @@ async function importWidgets(widgets, schemaVersion, files={}) {
   if(schemaVersion !== undefined)
     zip.file('schemaVersion', String(schemaVersion));
   for(const [ name, content ] of Object.entries(files))
-    zip.file(name, content);
+    content === null ? zip.folder(name) : zip.file(name, content);
   return await convertPCIO(await zip.generateAsync({ type: 'nodebuffer' }));
 }
 
@@ -882,6 +882,16 @@ describe('PCIO importer', () => {
     ], 8, { 'asset-map.json': JSON.stringify({ '1234_5678': 'userassets/board.png' }) });
 
     expect(state.board.image).toBe('/assets/1234_5678');
+  });
+
+  it('ignores the folder entry that a .pcio carries for its assets', async () => {
+    const state = await importWidgets([
+      { id: 'board', type: 'board', x: 0, y: 0, width: 100, height: 100, boardImage: 'package://userassets/' }
+    ], 8, { 'userassets': null });
+
+    // it has no content, so it used to become an empty "undefined_undefined" asset
+    expect(state.board.image).toBe('package://userassets/');
+    expect(state._meta.info.importerWarnings).toBeUndefined();
   });
 
   it('skips an asset that is bigger than the limit for .vtt assets', async () => {
