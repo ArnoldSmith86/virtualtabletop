@@ -692,8 +692,8 @@ export default async function convertPCIO(content) {
           w.dropOffsetY = dropOffsetY;
 
         if(pileOverlaps[w.id]) {
-          w.x += 4;
-          w.y += 4;
+          w.x = (w.x || 0) + 4;
+          w.y = (w.y || 0) + 4;
           w.width = (w.width || 111) - 8;
           w.height = (w.height || 168) - 8;
           w.dropOffsetX = 0;
@@ -964,7 +964,7 @@ export default async function convertPCIO(content) {
         w.owner = widget.owner;
     } else if(widget.type == 'counter') {
       w.type = 'label';
-      w.y += 5;
+      w.y = (w.y || 0) + 5;
       w.width = widget.width || 140;
       w.height = widget.height || 44;
       const bounds = counterBounds[widget.id];
@@ -1399,7 +1399,7 @@ export default async function convertPCIO(content) {
       // in a variable named after the step that produced it.
       const readValues = {};
       const numberLists = {};
-      const readDefaults = { COMPARE_NUMBERS: false, IS_EQUAL: false, MATH: 0, RANDOM_NUMBER: 0, SUM_LIST: 0 };
+      const readDefaults = { COMPARE_NUMBERS: false, IS_EQUAL: false, MATH: 0, NUMBERS_FROM_COUNTERS: 0, RANDOM_NUMBER: 0, SUM_LIST: 0 };
       let temporaries = 0;
 
       function readVariable(stepID) {
@@ -1494,13 +1494,19 @@ export default async function convertPCIO(content) {
           return true;
         }
         if(c.func == 'NUMBERS_FROM_COUNTERS') {
-          // a list of counter values, which only SUM_LIST consumes
-          numberLists[stepID] = ((args.counters || {}).value || []).filter(id=>byID[id]);
+          // A list of counter values which only SUM_LIST consumes, so the sum is
+          // all that has to survive. PCIO reads the counters when this step runs,
+          // so it is captured here and not where the sum is used - the counters
+          // may well change in between, and a step that runs in one alternative
+          // only must not leak its counters into the others.
+          const counters = ((args.counters || {}).value || []).filter(id=>byID[id]);
+          routine.push(...(counters.length ? addUpCounters(counters, variable) : [ `var ${variable} = 0` ]));
+          numberLists[stepID] = variable;
           return true;
         }
         if(c.func == 'SUM_LIST') {
-          const counters = numberLists[(args.list || {}).callId] || [];
-          routine.push(...(counters.length ? addUpCounters(counters, variable) : [ `var ${variable} = 0` ]));
+          const list = numberLists[(args.list || {}).callId];
+          routine.push(`var ${variable} = ${list ? `\${${list}}` : 0}`);
         } else if(c.func == 'MATH') {
           const operator = (args.mathOperator || {}).value || 'add';
           const infix = { add: '+', subtract: '-', multiply: '*', divide: '/', remainder: '%', exponent: '**' }[operator];

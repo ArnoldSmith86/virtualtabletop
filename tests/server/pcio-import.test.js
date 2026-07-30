@@ -42,6 +42,14 @@ describe('PCIO importer', () => {
     expect(state._meta.info.importerSchemaVersion).toBe(0);
   });
 
+  it('keeps the position of a counter that sits at the very top of the table', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 3 }
+    ], 8);
+    expect(state.counter.y).toBe(5);
+    expect(state.counter.x).toBeUndefined();
+  });
+
   it('reads automation steps wrapped in branches and translates their arguments', async () => {
     const state = await importWidgets([
       { id: 'source', type: 'holder', x: 0, y: 0 },
@@ -345,6 +353,91 @@ describe('PCIO importer', () => {
       'var pcioroll = 0',
       { func: 'IF', condition: '${pcioask}', thenRoutine: [ 'var pcioroll = randRange 1 7 1' ] },
       { func: 'LABEL', label: 'counter', value: '${pcioroll}' }
+    ]);
+  });
+
+  it('adds up the counters of a number list when that step runs, not where the sum is used', async () => {
+    const state = await importWidgets([
+      { id: 'a', type: 'counter', x: 0, y: 0, counterValue: 1 },
+      { id: 'b', type: 'counter', x: 100, y: 0, counterValue: 2 },
+      { id: 'total', type: 'counter', x: 200, y: 0, counterValue: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Total', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'list', branches: [ { func: 'NUMBERS_FROM_COUNTERS', args: {
+            counters: { type: 'literal', value: [ 'a', 'b' ] }
+          } } ] },
+          // PCIO sums the values the list step saw, so this must not change the result
+          { id: 'bump', branches: [ { func: 'CHANGE_COUNTER', args: {
+            counters:          { type: 'literal', value: [ 'a' ] },
+            counterChangeMode: { type: 'literal', value: 'inc' },
+            changeNumber:      { type: 'literal', value: 10 }
+          } } ] },
+          { id: 'sum', branches: [ { func: 'SUM_LIST', args: {
+            list: { type: 'variable', callId: 'list' }
+          } } ] },
+          { id: 'set', branches: [ { func: 'CHANGE_COUNTER', args: {
+            counters:          { type: 'literal', value: [ 'total' ] },
+            counterChangeMode: { type: 'literal', value: 'set' },
+            changeNumber:      { type: 'variable', callId: 'sum' }
+          } } ] }
+        ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      'var pciolist = parseFloat ${PROPERTY text OF a}',
+      'var pciolist = ${pciolist} + ${PROPERTY text OF b}',
+      { func: 'LABEL', label: 'a', mode: 'inc', value: 10 },
+      'var pciosum = ${pciolist}',
+      { func: 'LABEL', label: 'total', value: '${pciosum}' }
+    ]);
+  });
+
+  it('picks the counters of the number list alternative that actually runs', async () => {
+    const state = await importWidgets([
+      { id: 'a', type: 'counter', x: 0, y: 0, counterValue: 1 },
+      { id: 'b', type: 'counter', x: 100, y: 0, counterValue: 2 },
+      { id: 'total', type: 'counter', x: 200, y: 0, counterValue: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Total', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'first', branches: [ { func: 'IS_EQUAL', args: {
+            numberA: { type: 'query', counters: [ 'a' ] },
+            numberB: { type: 'literal', value: 1 }
+          } } ] },
+          { id: 'list', branches: [
+            { func: 'NUMBERS_FROM_COUNTERS', condition: { type: 'variable', callId: 'first' }, args: {
+              counters: { type: 'literal', value: [ 'a' ] }
+            } },
+            { func: 'NUMBERS_FROM_COUNTERS', args: {
+              counters: { type: 'literal', value: [ 'b' ] }
+            } }
+          ] },
+          { id: 'sum', branches: [ { func: 'SUM_LIST', args: {
+            list: { type: 'variable', callId: 'list' }
+          } } ] },
+          { id: 'set', branches: [ { func: 'CHANGE_COUNTER', args: {
+            counters:          { type: 'literal', value: [ 'total' ] },
+            counterChangeMode: { type: 'literal', value: 'set' },
+            changeNumber:      { type: 'variable', callId: 'sum' }
+          } } ] }
+        ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      'var pcioNumber1 = parseFloat ${PROPERTY text OF a}',
+      'var pciofirst = ${pcioNumber1} == 1',
+      'var pciolist = 0',
+      {
+        func: 'IF',
+        condition: '${pciofirst}',
+        thenRoutine: [ 'var pciolist = parseFloat ${PROPERTY text OF a}' ],
+        elseRoutine: [ 'var pciolist = parseFloat ${PROPERTY text OF b}' ]
+      },
+      'var pciosum = ${pciolist}',
+      { func: 'LABEL', label: 'total', value: '${pciosum}' }
     ]);
   });
 
