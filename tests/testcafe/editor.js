@@ -286,6 +286,70 @@ test('A pile is edited through its handle, css through declaration rows', async 
     .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
 });
 
+test('The Automations section lists the routines and curates the property sets', async t => {
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 300, y: 200, onEnter: { activeFace: 1, rotation: 0 }, enterRoutine: [] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const state = ClientFunction(property => JSON.stringify(widgets.get('holder').state[property] === undefined ? null : widgets.get('holder').state[property]));
+  const routineButton = Selector('#editorModules .automationOpen');
+  const section = title => Selector('#editorModules .automationsSection .collapsibleHeader').withText(title);
+
+  // a routine is a program, so the section lists the ones the widget has and
+  // hands each one to the JSON editor - clickRoutine is offered even unset
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_holder')
+    .expect(routineButton.count).eql(2)
+    .expect(routineButton.nth(0).innerText).eql('clickRoutine')
+    .expect(routineButton.nth(1).innerText).eql('enterRoutine');
+
+  // a name typed into the add row gets the suffix the engine needs
+  await t
+    .typeText('#editorModules .automationAddRow input', 'dealCards')
+    .click('#editorModules .automationAddRow button[icon=add]')
+    .expect(state('dealCardsRoutine')).eql('[]')
+    .expect(routineButton.count).eql(3);
+
+  // the button opens the JSON editor with the cursor inside that routine, so the
+  // context sensitive buttons beside it offer routine operations
+  await t
+    .click(routineButton.withExactText('dealCardsRoutine'))
+    .expect(Selector('#jeContextButtons .context').withText('dealCardsRoutine').exists).ok()
+    .expect(Selector('#jeContextButtons button').withExactText('SHUFFLE').exists).ok()
+    .click('#editorSidebar [icon=tune]');
+
+  // onEnter is only a set of "property: value" pairs, so it is edited here
+  await t
+    .click(section('Set properties on enter'))
+    .expect(Selector('#editorModules .automationPropertySet .gridExtraRow').count).eql(2)
+    .typeText(Selector('#editorModules .automationPropertySet .gridExtraRow').nth(1).find('input').nth(1), '90', { replace: true })
+    .pressKey('tab')
+    .expect(state('onEnter')).eql('{"activeFace":1,"rotation":90}')
+    // renaming an entry keeps its place in the set
+    .typeText(Selector('#editorModules .automationPropertySet .gridExtraRow').nth(1).find('input').nth(0), 'scale', { replace: true })
+    .pressKey('tab')
+    .expect(state('onEnter')).eql('{"activeFace":1,"scale":90}')
+    // and an empty set is no set at all
+    .click(Selector('#editorModules .automationPropertySet button[icon=delete]').nth(0))
+    .click(Selector('#editorModules .automationPropertySet button[icon=delete]').nth(0))
+    .expect(state('onEnter')).eql('null');
+
+  // resetProperties records what RESET should put back, including where the
+  // widget sits even though that is not in its own state
+  await t
+    .click(section('Reset properties'))
+    .click(Selector('#editorModules .automationRecord'))
+    .expect(state('resetProperties')).eql('{"x":300,"y":200,"z":0,"rotation":0,"parent":null,"owner":null}');
+  await ClientFunction(() => widgets.get('holder').set('x', 900))();
+  await t
+    .click(Selector('#editorModules .automationApply'))
+    .expect(ClientFunction(() => widgets.get('holder').get('x'))()).eql(300);
+});
+
 test('Create game using edit mode', async t => {
   console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);

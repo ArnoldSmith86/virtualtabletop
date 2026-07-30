@@ -96,8 +96,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     classesWithSymbolClass,
     gridEntryList,
     gridExtraProperties,
-    gridExtraValue,
-    gridExtraText,
+    propertySetValue,
+    propertySetText,
     squareGridForSize,
     hexGridForSize,
     diceFaces: PropertiesModule.prototype.diceFaces,
@@ -112,7 +112,14 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     activeFaceIndex,
     widgetOwnValue,
     faceNewPropertyValue: PropertiesModule.prototype.faceNewPropertyValue,
-    removeFace: PropertiesModule.prototype.removeFace
+    removeFace: PropertiesModule.prototype.removeFace,
+    editorRoutineProperties,
+    editorPropertyAutomations,
+    describeRoutineProperty,
+    widgetRoutineProperties,
+    routinePropertyName,
+    propertySetSuggestions,
+    recordedResetProperties
   };
 `)(class {}, testWidgets);
 
@@ -468,13 +475,13 @@ describe('snap grid helpers', () => {
     expect(cssHelpers.gridExtraProperties(undefined)).toEqual([]);
   });
 
-  test('typed snap-point values become numbers/booleans when they look like JSON', () => {
-    expect(cssHelpers.gridExtraValue('90')).toBe(90);
-    expect(cssHelpers.gridExtraValue(' true ')).toBe(true);
-    expect(cssHelpers.gridExtraValue('cards/back.svg')).toBe('cards/back.svg');
-    expect(cssHelpers.gridExtraValue('')).toBe('');
-    expect(cssHelpers.gridExtraText('a.svg')).toBe('a.svg');
-    expect(cssHelpers.gridExtraText(90)).toBe('90');
+  test('typed property-set values become numbers/booleans when they look like JSON', () => {
+    expect(cssHelpers.propertySetValue('90')).toBe(90);
+    expect(cssHelpers.propertySetValue(' true ')).toBe(true);
+    expect(cssHelpers.propertySetValue('cards/back.svg')).toBe('cards/back.svg');
+    expect(cssHelpers.propertySetValue('')).toBe('');
+    expect(cssHelpers.propertySetText('a.svg')).toBe('a.svg');
+    expect(cssHelpers.propertySetText(90)).toBe('90');
   });
 
   test('a square grid is the widget box', () => {
@@ -940,5 +947,77 @@ describe('multi-selection helpers', () => {
     expect(inputHelpers.replaceExclusiveProperties({ pips: 3, color: '#fff' }, [ 'pips', 'text', 'icon', 'image' ], 'text', 'hi'))
       .toEqual({ color: '#fff', text: 'hi' });
     expect(inputHelpers.replaceExclusiveProperties(null, [ 'pips' ], 'pips', 2)).toEqual({ pips: 2 });
+  });
+});
+
+describe('automations section helpers', () => {
+  test('routine properties are listed with the predefined ones first and the rest alphabetically', () => {
+    const widget = { state: {
+      zzzRoutine: [], clickRoutine: [], aaaRoutine: [], changeRoutine: [],
+      text: 'not a routine', notARoutine: 'x', textRoutine: 'a string, not a routine'
+    } };
+    expect(cssHelpers.widgetRoutineProperties(widget)).toEqual([ 'clickRoutine', 'changeRoutine', 'aaaRoutine', 'zzzRoutine' ]);
+  });
+
+  test('every predefined routine explains itself, and the derived forms name their property', () => {
+    for(const routine of cssHelpers.editorRoutineProperties) {
+      expect(routine.property).toMatch(/Routine$/);
+      expect(routine.hint.length).toBeGreaterThan(20);
+      expect(cssHelpers.describeRoutineProperty(routine.property)).toBe(routine);
+    }
+    expect(cssHelpers.describeRoutineProperty('scoreChangeRoutine').label).toBe('score changed');
+    expect(cssHelpers.describeRoutineProperty('scoreGlobalUpdateRoutine').label).toBe('score changed anywhere');
+    expect(cssHelpers.describeRoutineProperty('dealCardsRoutine').hint).toContain('CALL');
+  });
+
+  test('a typed routine name gets the suffix the engine needs, and rubbish is refused', () => {
+    expect(cssHelpers.routinePropertyName('dealCards')).toBe('dealCardsRoutine');
+    expect(cssHelpers.routinePropertyName('dealCardsRoutine')).toBe('dealCardsRoutine');
+    expect(cssHelpers.routinePropertyName('deal cards!')).toBe('dealcardsRoutine');
+    expect(cssHelpers.routinePropertyName('  ')).toBe('');
+    expect(cssHelpers.routinePropertyName('Routine')).toBe('');
+  });
+
+  test('onEnter/onLeave belong to the widget types that take widgets in, resetProperties to all', () => {
+    const forType = type => cssHelpers.editorPropertyAutomations
+      .filter(automation => !automation.types || automation.types.indexOf(type) != -1)
+      .map(automation => automation.property);
+    expect(forType('holder')).toEqual([ 'onEnter', 'onLeave', 'resetProperties' ]);
+    expect(forType('line')).toEqual([ 'onEnter', 'onLeave', 'resetProperties' ]);
+    expect(forType('basic')).toEqual([ 'resetProperties' ]);
+    expect(forType('card')).toEqual([ 'resetProperties' ]);
+  });
+
+  test('onEnter/onLeave are explained with the stops of a line and the contents of a holder', () => {
+    for(const property of [ 'onEnter', 'onLeave' ]) {
+      const automation = cssHelpers.editorPropertyAutomations.find(a => a.property == property);
+      expect(automation.hint('line')).toContain('stops');
+      expect(automation.hint('holder')).toContain('holder');
+      expect(automation.hint('holder')).toContain(property);
+    }
+  });
+
+  test('the property names proposed come from the room and the engine, without the widget\'s own for onEnter', () => {
+    testWidgets.clear();
+    testWidgets.set('other', { id: 'other', state: { id: 'other', cardType: 'a', type: 'card' } });
+    const widget = { id: 'w1', state: { id: 'w1', type: 'holder', ownProperty: 1 } };
+    expect(cssHelpers.propertySetSuggestions(widget, true)).toEqual([ 'cardType', 'ownProperty' ]);
+    expect(cssHelpers.propertySetSuggestions(widget, false)).toEqual([ 'cardType' ]);
+    testWidgets.clear();
+  });
+
+  test('Record snapshots the widget including positional defaults, but not its automations', () => {
+    const defaults = { x: 100, y: 50, z: 2, rotation: 0, parent: null, owner: null, activeFace: 1 };
+    const widget = {
+      state: { id: 'w1', type: 'card', clickRoutine: [ { func: 'FLIP' } ], onEnter: { activeFace: 1 }, resetProperties: { x: 1 }, customProp: 'v' },
+      get(property) { return property in defaults ? defaults[property] : this.state[property]; }
+    };
+    expect(cssHelpers.recordedResetProperties(widget)).toEqual(Object.assign({ customProp: 'v' }, defaults));
+  });
+
+  test('Record keeps a null parent/owner but drops the positional properties a widget does not have', () => {
+    const defaults = { x: 400, y: 100, z: 0, rotation: 0, parent: null, owner: null, activeFace: null };
+    const widget = { state: { id: 'b1', type: 'button', text: 'Press me' }, get(property) { return property in defaults ? defaults[property] : this.state[property]; } };
+    expect(cssHelpers.recordedResetProperties(widget)).toEqual({ x: 400, y: 100, z: 0, rotation: 0, parent: null, owner: null, text: 'Press me' });
   });
 });

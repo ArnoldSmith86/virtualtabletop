@@ -1603,7 +1603,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 /* separated from the property list (or the "changes nothing yet" hint) above
    it, so it reads as an action rather than as more of that text */
-.editorModule .faceAddPropertyRow {
+.editorModule .faceAddPropertyRow,
+.editorModule .automationAddRow {
   display: flex;
   gap: 4px;
   margin-top: 8px;
@@ -1611,9 +1612,40 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   border-top: 1px solid var(--backgroundHighlightColor1);
 }
 
-.editorModule .faceAddPropertyRow > input {
+.editorModule .faceAddPropertyRow > input,
+.editorModule .automationAddRow > input {
   flex: 1 1 auto;
   min-width: 0;
+}
+
+/* Automations: one row per routine, whose button carries the property name and
+   opens the JSON editor at it, plus the curated property sets below them. */
+.editorModule .automationInput > label {
+  font-size: 13px;
+}
+
+.editorModule .automationOpen {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: monospace;
+  /* the button carries the property name, which the uppercasing of a button
+     label would turn from clickRoutine into something ungreppable */
+  text-transform: none;
+}
+
+/* a routine the widget does not have yet, offered so it can be created */
+.editorModule .automationOpen.automationUnset {
+  opacity: 0.6;
+}
+
+.editorModule .automationButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
 }
 
 /* snap grid editor */

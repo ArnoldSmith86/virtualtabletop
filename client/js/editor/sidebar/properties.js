@@ -282,10 +282,11 @@ function hexGridForSize(width, height, hexType) {
   ];
 }
 
-// Parse a value typed for an extra snap-point property: JSON when it looks
-// like JSON (numbers, true, objects), a plain string otherwise - so both
-// "rotation: 90" and "image: foo.svg" do the obvious thing.
-function gridExtraValue(raw) {
+// Parse a value typed into a "property: value" row - the extra snap-point
+// properties and the automation property sets: JSON when it looks like JSON
+// (numbers, true, objects), a plain string otherwise, so both "rotation: 90"
+// and "image: foo.svg" do the obvious thing.
+function propertySetValue(raw) {
   const text = String(raw).trim();
   if(text === '')
     return '';
@@ -296,7 +297,7 @@ function gridExtraValue(raw) {
   }
 }
 
-function gridExtraText(value) {
+function propertySetText(value) {
   return typeof value == 'string' ? value : JSON.stringify(value);
 }
 
@@ -955,6 +956,147 @@ const editorPropertyHints = {
   end: 'Optional timer end value in milliseconds.',
   milliseconds: 'The timer\'s current value in milliseconds.'
 };
+
+// --- automations ---
+
+// The routines the engine runs by itself, in the order the Automations section
+// lists them. Anything else ending in "Routine" is a custom one that only runs
+// when another routine CALLs it.
+const editorRoutineProperties = [
+  { property: 'clickRoutine',        label: 'Click',              hint: 'Runs when a player clicks the widget, as long as it is clickable. The CLICK function and the key in the hotkey property trigger it too.' },
+  { property: 'doubleClickRoutine',  label: 'Double click',       hint: 'Runs when a player clicks the widget twice within 350 milliseconds. While this exists, a click routine on the same widget waits 350 milliseconds for a possible second click.' },
+  { property: 'changeRoutine',       label: 'Property changed',   hint: 'Runs whenever any property of this widget changes and gets the variables property, oldValue and value. Name a routine fooChangeRoutine to only react to changes of the property foo.' },
+  { property: 'enterRoutine',        label: 'Widget enters',      hint: 'Runs when another widget becomes a child of this widget. It gets the collection child and the variable oldParentID.' },
+  { property: 'leaveRoutine',        label: 'Widget leaves',      hint: 'Runs when a child widget is removed from this widget and gets the collection child. It can run more than once for a single move.' },
+  { property: 'gameStartRoutine',    label: 'Game starts',        hint: 'Runs once when a player loads the game fresh from the game shelf or the public library, but not when a saved game is continued.' },
+  { property: 'globalUpdateRoutine', label: 'Any widget changed', hint: 'Runs when any property of any widget changes. It gets the variables widgetID, property, oldValue and value plus the collection widget. Name a routine fooGlobalUpdateRoutine to only react to changes of the property foo.' }
+];
+
+// Label and explanation of a routine property, including the fooChangeRoutine /
+// fooGlobalUpdateRoutine forms the engine derives from a property name.
+function describeRoutineProperty(property) {
+  const predefined = editorRoutineProperties.find(routine => routine.property == property);
+  if(predefined)
+    return predefined;
+
+  let match;
+  if(match = property.match(/^(.+)ChangeRoutine$/))
+    return { property, label: `${match[1]} changed`, hint: `Runs whenever the ${match[1]} property of this widget changes and gets the variables oldValue and value.` };
+  if(match = property.match(/^(.+)GlobalUpdateRoutine$/))
+    return { property, label: `${match[1]} changed anywhere`, hint: `Runs whenever the ${match[1]} property of any widget changes. It gets the variables widgetID, oldValue and value plus the collection widget.` };
+  return { property, label: property.replace(/Routine$/, ''), hint: 'A custom routine. It does not run on its own - call it from another routine with the CALL function, using this name as the routine parameter.' };
+}
+
+// The routine properties a widget has: the array valued ones whose name ends in
+// "Routine", the predefined ones first and the rest alphabetically.
+function widgetRoutineProperties(widget) {
+  const order = editorRoutineProperties.map(routine => routine.property);
+  const rank = property => order.indexOf(property) == -1 ? order.length : order.indexOf(property);
+  return Object.keys(widget.state)
+    .filter(property => property.match(/Routine$/) && Array.isArray(widget.state[property]))
+    .sort((a, b) => rank(a) - rank(b) || (a < b ? -1 : 1));
+}
+
+// The engine only treats a property as a routine when its name ends in Routine.
+function routinePropertyName(name) {
+  const clean = name.replace(/[^a-zA-Z0-9_]/g, '');
+  return clean && !clean.match(/^Routine$/) ? (clean.match(/Routine$/) ? clean : `${clean}Routine`) : '';
+}
+
+// The automations that are not a program but a set of "property: value" pairs
+// the engine applies at a given moment. onEnter / onLeave belong to the widget
+// types that take other widgets in - a holder and a line, which makes a widget
+// dropped onto it one of its stops.
+const editorPropertyAutomations = [
+  {
+    property: 'onEnter',
+    label: 'Set properties on enter',
+    types: [ 'holder', 'line' ],
+    ownProperties: false,
+    keyHint: 'property to set, e.g. activeFace',
+    hint: type => `onEnter: every property in this set is applied to a widget when it ${type == 'line' ? 'is dropped onto this line and becomes one of its stops' : 'enters this holder'}. For example activeFace: 1 flips cards face up and rotation: 0 straightens them. Custom properties work too - react to them in your routines.`
+  },
+  {
+    property: 'onLeave',
+    label: 'Set properties on leave',
+    types: [ 'holder', 'line' ],
+    ownProperties: false,
+    keyHint: 'property to set, e.g. activeFace',
+    hint: type => `onLeave: every property in this set is applied to a widget when it ${type == 'line' ? 'is dragged off this line and stops being one of its stops' : 'leaves this holder'}. For example activeFace: 0 flips cards face down and rotation: 0 straightens them. Custom properties work too - react to them in your routines.`
+  },
+  {
+    property: 'resetProperties',
+    label: 'Reset properties',
+    types: null,
+    ownProperties: true,
+    keyHint: 'property to restore, e.g. x',
+    hint: _ => 'resetProperties: every property in this set is applied to this widget by the RESET function, which a reset button typically uses to restore the initial game state. "Apply now" does it right away; "Record current state" copies the widget\'s current values (including defaults like x, y and rotation) into the set, so RESET restores exactly this state.'
+  }
+];
+
+// Property names to propose in a property set: what the room already uses plus
+// the ones the engine defines (the validator's tables are part of the editor
+// bundle). onEnter / onLeave apply their set to the widget that entered, so this
+// widget's own properties lead nowhere there - resetProperties restores those.
+function propertySetSuggestions(widget, includeOwn) {
+  const names = new Set();
+  if(includeOwn)
+    for(const property in widget.state)
+      names.add(property);
+  for(const other of widgets.values())
+    if(other.id != widget.id)
+      for(const property in other.state)
+        names.add(property);
+  if(typeof WIDGET_PROPERTIES != 'undefined')
+    for(const type in WIDGET_PROPERTIES)
+      for(const property in WIDGET_PROPERTIES[type])
+        names.add(property);
+  return [ ...names ].filter(property => [ 'id', 'type' ].indexOf(property) == -1).sort();
+}
+
+// A snapshot of the widget for RESET to restore: the properties it has set plus
+// the positional ones even at their default values, because where a widget sits
+// is most of what a reset button is expected to put back. Routines and the
+// automation sets themselves are left out - restoring a widget's behavior to
+// what it already is only bloats the game file.
+function recordedResetProperties(widget) {
+  const snapshot = {};
+  for(const property of [ 'x', 'y', 'z', 'rotation', 'parent', 'owner', 'activeFace' ]) {
+    const value = widget.get(property);
+    // null is worth recording for parent and owner ("back on the table",
+    // "nobody's"); for the rest it only says the widget never had the property
+    if(value !== undefined && (value !== null || [ 'parent', 'owner' ].indexOf(property) != -1))
+      snapshot[property] = value;
+  }
+  for(const property in widget.state)
+    if([ 'id', 'type' ].concat(editorPropertyAutomations.map(automation => automation.property)).indexOf(property) == -1 && !property.match(/Routine$/))
+      snapshot[property] = widget.state[property];
+  return JSON.parse(JSON.stringify(snapshot));
+}
+
+// Hand a property of the selected widget over to the JSON editor: open that
+// module and put its text cursor on the property's value, the way clicking a
+// validation problem in the Debug module does. Landing on the value instead of
+// at the top of the widget also points the editor's context sensitive buttons
+// at it.
+function openPropertyInJSONeditor(property) {
+  const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
+  if(!jsonModuleButton)
+    return;
+  // the sidebar button toggles its module, so clicking it while the JSON editor
+  // is already open would close it instead of showing the property
+  if(!jsonModuleButton.classList.contains('active'))
+    jsonModuleButton.click();
+  if(jeMode != 'widget' || !jeStateNow || jeStateNow[property] === undefined)
+    return;
+  const value = jeStateNow[property];
+  jeStateNow[property] = '###SELECT ME###';
+  jeSetAndSelect(value);
+  jeStateNow[property] = value;
+  // the buttons beside the editor are context sensitive, so they only offer what
+  // fits inside the property once the context has caught up with the new cursor
+  jeGetContext();
+}
 
 // Curated per-type inputs, rendered by renderInputs. Per type:
 // content = what the widget shows, colors/hover/appearance = subsections of
@@ -4382,7 +4524,7 @@ class PropertiesModule extends SidebarModule {
         name.placeholder = 'property';
         const value = document.createElement('input');
         value.type = 'text';
-        value.value = gridExtraText(entry[key]);
+        value.value = propertySetText(entry[key]);
         value.placeholder = 'value';
 
         const commit = _=>{
@@ -4391,7 +4533,7 @@ class PropertiesModule extends SidebarModule {
             rebuildExtras();
             return;
           }
-          const change = { [newKey]: gridExtraValue(value.value) };
+          const change = { [newKey]: propertySetValue(value.value) };
           if(newKey != key)
             change[key] = null;
           this.updateGridEntry(widget, index, change);
@@ -6097,29 +6239,208 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, exclude);
   }
 
+  // Everything that makes a widget act on its own. A routine is a program, so
+  // the JSON editor stays the place to write one - what was missing here was the
+  // list of the routines a widget has (the raw property list buried them among
+  // the rest) and a way into the editor at the right one. The other automations
+  // are only sets of "property: value" pairs, so those are curated here.
+  // Returns the properties it takes care of, so the raw list leaves them out.
   renderAutomationsSection(widget) {
-    const playerRoutines = [ 'clickRoutine', 'doubleClickRoutine', 'changeRoutine', 'enterRoutine', 'leaveRoutine' ]
-      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined);
-    if(!playerRoutines.length)
-      return [];
+    const type = widget.get('type') || 'basic';
+    const automations = editorPropertyAutomations.filter(automation => !automation.types || automation.types.indexOf(type) != -1);
 
     this.addSubHeader('Automations');
-    for(const property of playerRoutines) {
-      const row = div(this.moduleDOM, 'propertyInput automationInput');
+    const section = div(this.moduleDOM, 'automationsSection');
+
+    const rebuild = _=>{
+      section.innerHTML = '';
+      this.renderRoutineList(widget, section);
+      for(const automation of automations)
+        this.renderPropertyAutomation(widget, automation, section);
+    };
+    rebuild();
+
+    // a delta listener rather than property listeners: a routine added by
+    // another player, by the JSON editor or by the add row below is a property
+    // that did not exist when the section was rendered
+    this.addDeltaListener(deltaS => {
+      const changed = deltaS[widget.id];
+      // only a field being typed into may not be replaced under the caret - a
+      // button that was just clicked keeps the focus, so waiting for it to lose
+      // it would leave the section showing the state from before the click
+      const active = document.activeElement;
+      if(!changed || (section.contains(active) && active.matches('input, textarea, select')))
+        return;
+      if(Object.keys(changed).some(property => property.match(/Routine$/) || automations.some(automation => automation.property == property)))
+        rebuild();
+    });
+
+    return widgetRoutineProperties(widget).concat(automations.map(automation => automation.property));
+  }
+
+  renderRoutineList(widget, target) {
+    const properties = widgetRoutineProperties(widget);
+    // clickRoutine is offered even when it does not exist yet: making a widget
+    // do something is the first thing a game needs from this section
+    if(properties.indexOf('clickRoutine') == -1)
+      properties.unshift('clickRoutine');
+
+    for(const property of properties) {
+      const routine = describeRoutineProperty(property);
+      const isSet = widget.state[property] !== undefined;
+      const row = div(target, 'propertyInput automationInput');
+
       const label = document.createElement('label');
-      label.textContent = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
+      label.textContent = routine.label;
+      propertyInfoButton(label, html(routine.hint));
       row.appendChild(label);
-      const button = document.createElement('button');
-      button.setAttribute('icon', 'data_object');
-      button.textContent = `Edit ${property} in JSON editor`;
-      button.onclick = () => {
-        const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
-        if(jsonModuleButton)
-          jsonModuleButton.click();
+
+      const open = document.createElement('button');
+      open.className = 'automationOpen' + (isSet ? '' : ' automationUnset');
+      open.setAttribute('icon', 'data_object');
+      open.textContent = property;
+      open.title = isSet ? `Open ${property} in the JSON editor` : `Add ${property} and open it in the JSON editor`;
+      open.onclick = async _=>{
+        // the editor can only jump to a property that is there, so an offered
+        // but unset routine is created as an empty one first
+        if(widget.state[property] === undefined)
+          await widget.set(property, []);
+        openPropertyInJSONeditor(property);
       };
-      row.appendChild(button);
+      row.appendChild(open);
+
+      if(isSet) {
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.title = `Remove ${property}`;
+        remove.onclick = _=>{
+          if(confirm(`Remove ${property} and all of its operations from ${widget.id}?`))
+            this.inputValueUpdated(widget, property, null);
+        };
+        row.appendChild(remove);
+      }
     }
-    return playerRoutines;
+
+    this.renderSuggestionAddRow(target, 'automationAddRow', {
+      placeholder: 'routine to add, e.g. changeRoutine',
+      title: 'Add a routine',
+      suggestions: editorRoutineProperties.map(routine => routine.property).filter(property => properties.indexOf(property) == -1),
+      onAdd: name => {
+        const property = routinePropertyName(name);
+        if(!property || widget.state[property] !== undefined)
+          return false;
+        this.inputValueUpdated(widget, property, []);
+      }
+    });
+  }
+
+  // onEnter / onLeave / resetProperties: a set of "property: value" pairs rather
+  // than a program, so it gets one row per entry - the same shape as the extra
+  // properties of a snap grid.
+  renderPropertyAutomation(widget, automation, target) {
+    const property = automation.property;
+    const currentSet = _=>isObjectLike(widget.state[property]) ? widget.state[property] : {};
+    // an empty set is no set: removing the last entry removes the property
+    const save = next=>this.inputValueUpdated(widget, property, Object.keys(next).length ? next : null);
+    const entryCount = Object.keys(currentSet()).length;
+
+    const section = this.renderCollapsibleSection(automation.label, true, body => {
+      const host = div(body, 'automationPropertySet');
+      for(const entryKey of Object.keys(currentSet())) {
+        let key = entryKey;
+        const row = div(host, 'gridExtraRow');
+
+        const name = document.createElement('input');
+        name.type = 'text';
+        name.value = key;
+        name.placeholder = 'property';
+        const value = document.createElement('input');
+        value.type = 'text';
+        value.value = propertySetText(currentSet()[key]);
+        value.placeholder = 'value';
+        value.title = 'Anything that is valid JSON (a number, true, null, an object) is stored as such, everything else as text.';
+
+        const commit = _=>{
+          const current = currentSet();
+          const newKey = name.value.trim();
+          if(!newKey || (newKey != key && current[newKey] !== undefined)) {
+            name.value = key; // an empty name, or one the set already has, would drop an entry
+            return;
+          }
+          // rebuilt by hand rather than by assigning, so a renamed entry keeps
+          // its place in the set instead of moving to the end
+          const next = {};
+          for(const existing in current)
+            next[existing == key ? newKey : existing] = existing == key ? propertySetValue(value.value) : current[existing];
+          key = newKey;
+          save(next);
+        };
+        name.onchange = commit;
+        value.onchange = commit;
+
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.title = `Remove ${key}`;
+        remove.onclick = _=>{
+          const next = Object.assign({}, currentSet());
+          delete next[key];
+          save(next);
+        };
+
+        row.appendChild(name);
+        row.appendChild(value);
+        row.appendChild(remove);
+      }
+
+      this.renderSuggestionAddRow(body, 'automationAddRow', {
+        placeholder: automation.keyHint,
+        title: 'Add a property to this set',
+        suggestions: propertySetSuggestions(widget, automation.ownProperties).filter(name => currentSet()[name] === undefined),
+        onAdd: name => {
+          if(currentSet()[name] !== undefined)
+            return false;
+          save(Object.assign({}, currentSet(), { [name]: '' }));
+        }
+      });
+
+      if(property == 'resetProperties')
+        this.renderResetPropertiesButtons(widget, body, currentSet, save);
+    }, target, `${widget.id}:${property}`, {
+      renderSummary: summary => summary.textContent = entryCount ? `${entryCount} ${entryCount == 1 ? 'property' : 'properties'}` : 'not set'
+    });
+
+    propertyInfoButton($('.collapsibleHeader', section), html(automation.hint(widget.get('type') || 'basic')));
+  }
+
+  renderResetPropertiesButtons(widget, target, currentSet, save) {
+    const buttons = div(target, 'automationButtons');
+
+    if(Object.keys(currentSet()).length) {
+      const apply = document.createElement('button');
+      apply.className = 'automationApply';
+      apply.setAttribute('icon', 'play_arrow');
+      apply.textContent = 'Apply now';
+      apply.title = 'Set these properties on the widget right now, the way the RESET function does';
+      apply.onclick = async _=>{
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} applied the reset properties of ${widget.id} in editor`);
+        for(const [ key, value ] of Object.entries(currentSet()))
+          // the guard RESET itself applies: a parent or deck that is gone would
+          // put the widget nowhere
+          if([ 'parent', 'deck' ].indexOf(key) == -1 || value === null || widgets.has(value))
+            await widget.set(key, value);
+        batchEnd();
+      };
+      buttons.appendChild(apply);
+    }
+
+    const record = document.createElement('button');
+    record.className = 'automationRecord';
+    record.setAttribute('icon', 'save');
+    record.textContent = 'Record current state';
+    record.title = 'Copy the widget\'s current properties into the set, so RESET restores exactly this state';
+    record.onclick = _=>save(recordedResetProperties(widget));
+    buttons.appendChild(record);
   }
 
   // --- shared curated inputs ---
