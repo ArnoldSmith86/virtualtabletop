@@ -5,7 +5,7 @@ function positionElementsInArc(elements, radius, arcAngle, container) {
   const middleIndex = Math.floor(n / 2);
 
   for (let i = 0; i < n; i++) {
-    const angle = (arcAngle / (n - 1)) * (i - middleIndex);
+    const angle = n > 1 ? (arcAngle / (n - 1)) * (i - middleIndex) : 0;
     const radians = (Math.PI / 180) * angle;
     const x = container.clientWidth / 2 + radius * Math.sin(radians) - elements[i].offsetWidth / 2;
     const y = container.clientHeight / 2 + (radius - elements[i].offsetHeight / 2) * (1 - Math.cos(radians));
@@ -602,6 +602,20 @@ function courtSuitLetter(icon, suitIndex) {
 // hearts and purple hearts) results in two visibly different suits without having to pick a color first.
 const DECK_GENERATOR_SUIT_COLORS = [ '#e50932', '#000000', '#0062ff', '#00a651', '#8b00ff', '#ff8c00', '#00a8a8', '#a8006c' ];
 
+// Shows an icon chip in a suit color: the previews the icon picker renders are generic, but the color is what
+// tells two suits with the same icon apart. Game icons are single-color silhouettes, so their image is turned
+// into a mask over the color; font icons and emoji just take it as their text color.
+function tintIconChip(chip, icon, color) {
+  if(!chip)
+    return;
+  chip.style.color = color;
+  const image = $('img', chip);
+  if(image && iconValueType(icon) == 'game-icons') {
+    div(chip, 'deckGeneratorSuitTint').style.setProperty('--mask', `url("${image.src}")`);
+    image.remove();
+  }
+}
+
 // Name a suit gets as long as the user does not type one: the readable part of its icon value ("skoll/hearts"
 // becomes "hearts"). Uploaded images and links have no readable name, so those suits get a generic one.
 function defaultSuitName(icon) {
@@ -1009,15 +1023,15 @@ class PropertiesModule extends SidebarModule {
   // the playing-card design needs the pip layout (suit-P.../suit-S...) and the court card pictures.
   deckGenerator(target) {
     const designs = [
-      { label: 'Playing cards', build: deck=>this.deckTemplate_standard(deck), pips: true, rankPictures: true },
-      { label: 'Rainbow',       build: deck=>this.deckTemplate_colors(deck)      },
-      { label: 'Bold color',    build: deck=>this.deckTemplate_simple(deck)      },
-      { label: 'Skinny',        build: deck=>this.deckTemplate_skinny(deck)      },
-      { label: 'Icon shape',    build: deck=>this.deckTemplate_transparent(deck) },
-      { label: 'Minimal',       build: deck=>this.deckTemplate_minimal(deck)     },
-      { label: 'Corner index',  build: deck=>this.deckTemplate_corners(deck)     },
-      { label: 'Round token',   build: deck=>this.deckTemplate_token(deck)       },
-      { label: 'Square tile',   build: deck=>this.deckTemplate_tile(deck)        }
+      { label: 'Playing cards', description: 'The classic look: pips in the middle, a picture for J, Q and K.',      build: deck=>this.deckTemplate_standard(deck), pips: true, rankPictures: true },
+      { label: 'Rainbow',       description: 'Card in the suit color, suit icon in a white circle, rank in two corners.', build: deck=>this.deckTemplate_colors(deck)      },
+      { label: 'Bold color',    description: 'Card in the suit color with a big white rank and a faint suit icon.',  build: deck=>this.deckTemplate_simple(deck)      },
+      { label: 'Skinny',        description: 'Narrow 80 wide card: rank on top, suit icon below.',                   build: deck=>this.deckTemplate_skinny(deck)      },
+      { label: 'Icon shape',    description: 'No card frame - the suit icon itself is the card, rank on top.',       build: deck=>this.deckTemplate_transparent(deck) },
+      { label: 'Minimal',       description: 'Plain white card with the rank on top and the suit icon below.',       build: deck=>this.deckTemplate_minimal(deck)     },
+      { label: 'Corner index',  description: 'Rank and suit in two corners, works with any rank names.',             build: deck=>this.deckTemplate_corners(deck)     },
+      { label: 'Round token',   description: 'Round chip in the suit color with the rank on it, for counters.',      build: deck=>this.deckTemplate_token(deck)       },
+      { label: 'Square tile',   description: 'Square tile framed in the suit color, rank top left, suit bottom right.', build: deck=>this.deckTemplate_tile(deck)        }
     ];
 
     // One entry per suit: { icon, color, name, ranks }. A list rather than a map from icon to properties, so the
@@ -1028,15 +1042,12 @@ class PropertiesModule extends SidebarModule {
     const suitInputWidget = new BasicWidget();
 
     this.addSubHeader('Suits', target);
-    div(target, 'deckGeneratorHint', 'Every suit has its own icon, name, color and ranks. Card types are named after the suit name ("7 of hearts"), so the same icon can be used for several suits.');
+    div(target, 'deckGeneratorHint', 'Every suit has its own icon, name, color and ranks. Ranks are separated by commas, and "2-10" is short for the whole range. The deck gets one card per suit and rank, named after both ("7 of hearts").');
 
     const suitList = div(target, 'deckGeneratorSuits');
-    // The icon and color pickers expand below the list instead of inside the row, so opening one does not push
-    // the other suits around; sharing one group keeps only one of them open at a time.
-    const pickerGroup = { target: div(target, 'deckGeneratorSuitPickers'), current: null };
-
-    const addBar = div(target, 'deckGeneratorSuitAdd');
-    div(addBar, 'deckGeneratorSuitAddLabel', 'Add a suit:');
+    // Each row's icon and color picker expands right below that row (see rowPickers), so it is always obvious
+    // which suit is being edited; sharing one group keeps only one of them open at a time.
+    const pickerGroup = { current: null };
 
     const linkedRanksLabel = document.createElement('label');
     linkedRanksLabel.className = 'deckGeneratorLinkedRanks';
@@ -1054,6 +1065,9 @@ class PropertiesModule extends SidebarModule {
     };
     linkedRanksLabel.append(linkedRanksToggle, 'Same ranks for each suit');
     target.append(linkedRanksLabel);
+
+    const addBar = div(target, 'deckGeneratorSuitAdd');
+    div(addBar, 'deckGeneratorSuitAddLabel', 'Add a suit:');
 
     // A new suit gets the traditional color of its icon; if that icon already exists in that color, the first
     // unused color of the palette is used instead so the two suits can be told apart right away.
@@ -1081,32 +1095,41 @@ class PropertiesModule extends SidebarModule {
     // rows are in the same order as the suits.
     const rankInputs = new Map();
 
+    // Suits left at the same name are numbered apart in the card type names ("7 of hearts 2"). Show that on the
+    // rows it affects, so the numbering is not a surprise once the cards are on the table.
+    const nameInputs = new Map();
+    const showResolvedSuitNames = _=>{
+      const names = uniqueSuitNames();
+      for(const [ index, suit ] of suits.entries()) {
+        const input = nameInputs.get(suit);
+        const typed = suit.name.trim();
+        input.placeholder = names[index];
+        input.classList.toggle('deckGeneratorSuitRenamed', !!typed && typed != names[index]);
+        input.title = typed && typed != names[index]
+          ? `Another suit is already called "${typed}", so this one's cards are named "7 of ${names[index]}".`
+          : `Name of this suit: its cards are named "7 of ${names[index]}".`;
+      }
+    };
+
     const renderSuits = _=>{
       suitList.innerHTML = '';
-      pickerGroup.target.innerHTML = '';
       pickerGroup.current = null;
       rankInputs.clear();
+      nameInputs.clear();
+
+      if(suits.length)
+        div(suitList, 'deckGeneratorSuitHeader', '<span>Icon</span><span>Name</span><span>Color</span><span>Ranks</span><span></span>');
 
       for(const suit of suits) {
         const row = div(suitList, 'deckGeneratorSuit');
+        // The pickers of this row render here rather than inside the row, so opening one does not push the
+        // row's own inputs around - but still right below the suit they belong to.
+        const rowPickers = div(suitList, 'deckGeneratorSuitPickers');
 
-        // The picker's preview is generic, so show it in the suit color here: with the same icon used for more
-        // than one suit, that is what tells the rows apart. Game icons are single-color silhouettes, so their
-        // image is turned into a mask over the color; font icons and emoji just take it as their text color.
-        const showIconInSuitColor = _=>{
-          const chip = $('.propertyValueChip', iconInput.dom);
-          if(!chip)
-            return;
-          chip.style.color = suit.color;
-          const image = $('img', chip);
-          if(image && iconValueType(suit.icon) == 'game-icons') {
-            div(chip, 'deckGeneratorSuitTint').style.setProperty('--mask', `url("${image.src}")`);
-            image.remove();
-          }
-        };
+        const showIconInSuitColor = _=>tintIconChip($('.propertyValueChip', iconInput.dom), suit.icon, suit.color);
 
         const iconInput = new IconInput(this, suitInputWidget, null, {
-          listenTo: [], clearable: false, pickerGroup,
+          listenTo: [], clearable: false, pickerGroup, pickerTarget: rowPickers,
           getValue: _=>suit.icon,
           setValue: value=>{
             if(!propertyInputValueSet(value))
@@ -1126,14 +1149,16 @@ class PropertiesModule extends SidebarModule {
 
         const nameInput = document.createElement('input');
         nameInput.className = 'deckGeneratorSuitName';
-        nameInput.placeholder = 'Suit name';
-        nameInput.title = 'Name of this suit, used to name its card types.';
         nameInput.value = suit.name;
-        nameInput.oninput = _=>suit.name = nameInput.value;
+        nameInputs.set(suit, nameInput);
+        nameInput.oninput = _=>{
+          suit.name = nameInput.value;
+          showResolvedSuitNames();
+        };
         row.append(nameInput);
 
         const colorInput = new ColorInput(this, suitInputWidget, null, {
-          listenTo: [], clearable: false, pickerGroup,
+          listenTo: [], clearable: false, pickerGroup, pickerTarget: rowPickers,
           getValue: _=>suit.color,
           setValue: value=>{
             if(!propertyInputValueSet(value))
@@ -1150,7 +1175,7 @@ class PropertiesModule extends SidebarModule {
         const ranksInput = document.createElement('input');
         ranksInput.className = 'deckGeneratorSuitRanks';
         ranksInput.placeholder = '2-10,J,Q,K,A';
-        ranksInput.title = 'Ranks of this suit: single ranks and number ranges, separated by commas.';
+        ranksInput.title = 'Ranks of this suit, separated by commas. "2-10" is short for the range 2,3,4,5,6,7,8,9,10.';
         ranksInput.value = suit.ranks;
         rankInputs.set(suit, ranksInput);
         ranksInput.oninput = _=>{
@@ -1165,6 +1190,7 @@ class PropertiesModule extends SidebarModule {
         row.append(ranksInput);
 
         const removeButton = document.createElement('button');
+        removeButton.className = 'deckGeneratorSuitRemove';
         removeButton.setAttribute('icon', 'delete');
         removeButton.title = 'Remove this suit';
         removeButton.onclick = _=>{
@@ -1174,9 +1200,26 @@ class PropertiesModule extends SidebarModule {
         };
         row.append(removeButton);
       }
+      showResolvedSuitNames();
+      renderAddBarChips();
     };
 
-    const designSelectionDiv = document.createElement('div');
+    // The chips are shown in the color the suit they add would get, so the shortcut does not look like it adds
+    // a black hearts suit. That color depends on which suits exist, hence a refresh per render.
+    const renderAddBarChips = _=>{
+      for(const chip of $a('.propertyValueChip', addBar))
+        chip.remove();
+      for(const icon of DECK_GENERATOR_SUIT_ICONS) {
+        const chip = renderIconChip(icon, addBar);
+        chip.title = `Add a ${defaultSuitName(icon)} suit in this color`;
+        tintIconChip(chip, icon, colorForNewSuit(icon));
+        chip.onclick = _=>addSuit(icon);
+      }
+    };
+
+    const designHint = document.createElement('div');
+    designHint.className = 'deckGeneratorHint';
+    const designSelectionDiv = div(null, 'deckGeneratorDesigns');
     const updateDesignPreview = _=>{
       const oldScrollTop = this.moduleDOM.scrollTop;
       const oldSelectedButton = $('.selected.deckDesignButton', designSelectionDiv);
@@ -1184,6 +1227,7 @@ class PropertiesModule extends SidebarModule {
       designSelectionDiv.innerHTML = '';
 
       if(!suits.length) {
+        designHint.textContent = 'Add at least one suit above to see the card designs.';
         createButton.disabled = true;
         return;
       }
@@ -1191,24 +1235,30 @@ class PropertiesModule extends SidebarModule {
       // Designs that need the same card type properties share one set of card types (the design only adds faces
       // and card defaults around them), so a preview refresh builds them once instead of nine times.
       const cardTypesByProperties = {};
+      let cardCount = 0;
       for(const [ index, design ] of designs.entries()) {
         const key = `${design.pips ? 'pips' : ''} ${design.rankPictures ? 'pictures' : ''}`;
         const cardTypes = cardTypesByProperties[key] = cardTypesByProperties[key] || getCardTypes(design);
+        cardCount = Object.keys(cardTypes).length; // the same for every design; only the properties differ
         const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes });
-        const designButton = this.renderWidgetButton(new Deck(deck.id), deck, designSelectionDiv);
+        const tile = div(designSelectionDiv, 'deckDesignTile');
+        // One card per tile - the same one in every design, so they can actually be compared - instead of a
+        // fan of five, which at this size is a pile of overlapping slivers.
+        const designButton = this.renderWidgetButton(new Deck(deck.id), deck, tile, [ previewCardType(cardTypes) ]);
         designButton.classList.add('deckDesignButton');
         designButton.dataset.index = index;
-        designButton.title = design.label;
-        div(designButton, 'deckDesignLabel', html(design.label));
+        designButton.title = `${design.label} - ${design.description}`;
+        div(tile, 'deckDesignLabel', html(design.label));
         designButton.classList.toggle('selected', oldSelectedButtonIndex == index);
+        // Single choice like the mode radios above, so clicking the selected design does not silently
+        // deselect it and re-disable the Add button.
         designButton.onclick = e=>{
           for(const button of $a('.deckDesignButton', designSelectionDiv))
-            if(button != designButton)
-              button.classList.remove('selected');
-          designButton.classList.toggle('selected');
-          createButton.disabled = !$a('.selected.deckDesignButton', designSelectionDiv).length;
+            button.classList.toggle('selected', button == designButton);
+          createButton.disabled = false;
         };
       }
+      designHint.textContent =`${cardCount} card${cardCount == 1 ? '' : 's'} from ${suits.length} suit${suits.length == 1 ? '' : 's'}. Pick how they look:`;
       createButton.disabled = !$a('.selected.deckDesignButton', designSelectionDiv).length;
       this.moduleDOM.scrollTop = oldScrollTop;
     };
@@ -1286,6 +1336,13 @@ class PropertiesModule extends SidebarModule {
       return cardTypes;
     };
 
+    // The one card every design tile previews. A numeric rank shows the playing-card design's pip layout, so
+    // prefer one over a court card or a word rank - but any deck has at least a first card type.
+    const previewCardType = cardTypes=>{
+      const keys = Object.keys(cardTypes);
+      return keys.find(key=>String(cardTypes[key].rank).match(/^([5-9]|10)$/)) || keys[0];
+    };
+
     const createButton = document.createElement('button');
     createButton.innerText = 'Add to game';
     createButton.className = 'green';
@@ -1294,23 +1351,19 @@ class PropertiesModule extends SidebarModule {
     createButton.onclick = async e=>{
       const design = designs[+$('.selected.deckDesignButton', designSelectionDiv).dataset.index];
       const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes: getCardTypes(design) });
-      createButton.disabled = true; // adding a card at a time takes a moment; a second click would add a 2nd deck
+      // Adding a card at a time takes a moment: say so, and make a second click impossible while it runs.
+      createButton.disabled = true;
+      createButton.innerText = 'Adding…';
       try {
         await this.addDeckWithCards(deck, 'custom');
       } finally {
+        createButton.innerText = 'Add to game';
         createButton.disabled = false;
       }
     };
 
-    for(const icon of DECK_GENERATOR_SUIT_ICONS) {
-      const chip = renderIconChip(icon, addBar);
-      chip.title = `Add a suit with the ${defaultSuitName(icon)} icon`;
-      chip.onclick = _=>addSuit(icon);
-    }
-
     this.addSubHeader('Card design', target);
-    target.append(designSelectionDiv);
-    target.append(createButton);
+    target.append(designHint, designSelectionDiv, createButton);
 
     for(const icon of DECK_GENERATOR_SUIT_ICONS.slice(0, 4))
       addSuit(icon, false); // one render pass for the four suits a custom deck starts with
@@ -6723,7 +6776,9 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  renderWidgetButton(widget, state, target) {
+  // sampleCardTypes: which card types a deck preview fans out. Defaults to five random ones; pass a single one
+  // to get a preview of just that card, big enough to actually read (the card design gallery does that).
+  renderWidgetButton(widget, state, target, sampleCardTypes) {
     const button = document.createElement('button');
     button.className = 'widgetSelectionButton';
     target.appendChild(button);
@@ -6739,7 +6794,7 @@ class PropertiesModule extends SidebarModule {
       // must come back out even when rendering a card throws (the faces can come straight from user input).
       widgets.set(widget.id, widget);
       try {
-        for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
+        for(const cardType of sampleCardTypes || shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
           new Card().renderReadonlyCopyRaw(Object.assign({
             deck: widget.id,
             cardType,

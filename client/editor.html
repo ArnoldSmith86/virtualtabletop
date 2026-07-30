@@ -240,9 +240,10 @@
         <label><input type="radio" name="deckEditorNewDeckMode" value="tts">Import from Tabletop Simulator</label>
       </div>
       <div class="deckEditorNewDeckOptions">
-        <span class="deckEditorNewDeckOptionsLabel">Add along with the deck</span>
-        <label title="A holder in the middle of the table that the deck and all its cards are put into."><input type="checkbox" id="deckEditorNewDeckHolder" checked>Holder for the deck, with the cards in it</label>
-        <label title="A button below the holder that recalls all cards into it, flips them to their back and shuffles them."><input type="checkbox" id="deckEditorNewDeckResetButton" checked>Reset button that recalls, flips to back and shuffles</label>
+        <span class="deckEditorNewDeckOptionsLabel">Added to the table with every new deck</span>
+        <label title="A holder in the middle of the table that the deck and all its cards are put into. Without it, the cards go into a pile in the middle of the table instead."><input type="checkbox" id="deckEditorNewDeckHolder" checked>Card holder on the table, holding all the cards</label>
+        <label title="A button below the holder that gathers all cards back into it, turns them face-down and shuffles them."><input type="checkbox" id="deckEditorNewDeckResetButton" checked>Reset button that gathers all cards back, turns them face-down and shuffles</label>
+        <span class="deckEditorNewDeckOptionsHint">Without a holder, the cards go into a pile in the middle of the table.</span>
       </div>
       <div id="deckEditorNewDeckPanel"></div>
     </div>

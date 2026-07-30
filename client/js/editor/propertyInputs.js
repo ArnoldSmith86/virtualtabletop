@@ -161,10 +161,14 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   const picker = $('#symbolPickerOverlay');
   const pickerParent = picker.parentNode;
   hostOverlay.parentNode.appendChild(picker);
+  // Where it lands has no stacking rule of its own, so it would end up behind the deck editor: the class
+  // floats it over the whole editor (see deckeditor.css) for as long as it is parked here.
+  picker.classList.add('symbolPickerAboveEditor');
   try {
     // even when the picker fails to open (loadSymbolPicker fetches), the user must get their dialog back
     return await pickSymbol(type, true, false);
   } finally {
+    picker.classList.remove('symbolPickerAboveEditor');
     pickerParent.appendChild(picker);
     showOverlay(hostOverlay.id);
   }
