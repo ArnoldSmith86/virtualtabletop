@@ -1363,10 +1363,18 @@ class PropertiesModule extends SidebarModule {
   }
 
   // "min"/"max" on a number input only constrain its spinner - a typed or pasted value is passed through
-  // unchanged. The copy counts multiply with the number of card types, so clamp them to the declared range
-  // before they reach the card-creation loop.
-  copiesFromInput(input) {
-    return Math.min(+input.max || Infinity, Math.max(+input.min || 1, Math.round(+input.value) || 1));
+  // unchanged, so everything read back from one goes through here and is clamped to the range the input
+  // itself declares. An emptied or unparsable field falls back to the minimum, which also keeps the defaults
+  // in the HTML templates from having to be repeated in the code that reads them.
+  numberFromInput(input) {
+    const min = +input.min || 1;
+    return Math.min(+input.max || Infinity, Math.max(min, Math.round(+input.value) || min));
+  }
+
+  // Card type names end up in the card widget ids, so strip anything awkward there and keep them short; the
+  // caller's fallback is used when a name has nothing usable left (e.g. a "______ + ______" card text).
+  cardTypeName(name, fallback) {
+    return name.replace(/[^A-Za-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().substr(0, 30).trim() || fallback;
   }
 
   // Two bulk uploads - all the card fronts and all the card backs - matched into pairs by sorting both lists
@@ -1402,7 +1410,14 @@ class PropertiesModule extends SidebarModule {
       const bar = div(columns, 'buttonBar', `<button icon=upload>${label}</button>`);
       $('button', bar).onclick = _=>uploadAsset((imagePath, fileName)=>{
         if(imagePath) {
-          list.push({ imagePath, fileName });
+          const entry = { imagePath, fileName };
+          list.push(entry);
+          // The card size is derived from the first front image's aspect ratio, and naturalWidth/naturalHeight
+          // stay 0 until the browser has decoded it - so measure the image as soon as it is available instead
+          // of whenever "Add to game" happens to be clicked.
+          const probe = new Image();
+          probe.onload = _=>entry.aspectRatio = probe.naturalWidth / probe.naturalHeight;
+          probe.src = mapAssetURLs(imagePath);
           render();
         }
       });
@@ -1454,14 +1469,14 @@ class PropertiesModule extends SidebarModule {
     render();
 
     addButton.onclick = async _=>{
-      const copies = this.copiesFromInput($('input', options));
+      const copies = this.numberFromInput($('input', options));
       const cardTypes = {};
       const counts = {};
       for(const [ index, front ] of fronts.entries()) {
         const back = backs.length == 1 ? backs[0] : backs[index];
         // Two files can share a name (they come from separate uploads); a "(2)" suffix rather than a plain
         // number keeps the generated card ids apart from the "<card type> <copy number>" ids below.
-        const base = front.fileName.replace(/\.[^.]+$/, '') || `card ${index+1}`;
+        const base = this.cardTypeName(front.fileName.replace(/\.[^.]+$/, ''), `card ${index+1}`);
         let cardType = base;
         for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
           cardType = `${base} (${i})`;
@@ -1504,11 +1519,10 @@ class PropertiesModule extends SidebarModule {
       };
 
       // Keep the default card height and take the width from the first front image's aspect ratio, so the
-      // cards aren't distorted (same approach as the single-image flow above).
-      const firstFront = $('img', frontList);
-      const cardWidth = firstFront && firstFront.naturalHeight
-        ? Math.round(firstFront.naturalWidth / firstFront.naturalHeight * 160)
-        : 103;
+      // cards aren't distorted (same approach as the single-image flow above). Falls back to the default card
+      // size while the image hasn't been decoded yet.
+      const aspectRatio = fronts[0].aspectRatio;
+      const cardWidth = aspectRatio ? Math.round(aspectRatio*160) : 103;
       if(cardWidth != 103)
         deck.cardDefaults = { width: cardWidth };
 
@@ -1559,10 +1573,10 @@ class PropertiesModule extends SidebarModule {
     const cardTexts = _=>textarea.value.split('\n').map(line=>line.trim()).filter(line=>line.length);
 
     const deckDefinition = (texts, id)=>{
-      const number = (selector, fallback)=>+$(selector, design).value || fallback;
-      const width    = number('.textCardsWidth', 150);
-      const height   = number('.textCardsHeight', 233);
-      const fontSize = number('.textCardsFontSize', 16);
+      const number = selector=>this.numberFromInput($(selector, design));
+      const width    = number('.textCardsWidth');
+      const height   = number('.textCardsHeight');
+      const fontSize = number('.textCardsFontSize');
       const color    = $('.textCardsColor', design).value;
       const label    = $('.textCardsLabel', design).value.trim();
       const padding  = Math.max(4, Math.round(width/12));
@@ -1587,10 +1601,8 @@ class PropertiesModule extends SidebarModule {
 
       const cardTypes = {};
       for(const [ index, text ] of texts.entries()) {
-        // Card type names end up in the card widget ids, so strip anything awkward there and keep them short;
-        // fall back to a running number when a line has nothing usable left (e.g. "______ + ______"). Repeated
-        // lines get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
-        const base = text.replace(/[^A-Za-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().substr(0, 30).trim() || `card ${index+1}`;
+        // Repeated lines get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
+        const base = this.cardTypeName(text, `card ${index+1}`);
         let cardType = base;
         for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
           cardType = `${base} (${i})`;
@@ -1642,7 +1654,7 @@ class PropertiesModule extends SidebarModule {
 
       // Spell out what "Add to game" will create: the copies multiplier is easy to miss, and it decides
       // whether addDeckWithCards asks for confirmation.
-      const copies = this.copiesFromInput($('.textCardsCopies', design));
+      const copies = this.numberFromInput($('.textCardsCopies', design));
       const cards = texts.length * copies;
       status.innerText = texts.length
         ? `${texts.length} card type${texts.length == 1 ? '' : 's'} × ${copies} = ${cards} card${cards == 1 ? '' : 's'}.`
@@ -1659,7 +1671,7 @@ class PropertiesModule extends SidebarModule {
       if(!texts.length)
         return;
       const deck = deckDefinition(texts, generateUniqueWidgetID());
-      const copies = this.copiesFromInput($('.textCardsCopies', design));
+      const copies = this.numberFromInput($('.textCardsCopies', design));
       const counts = {};
       for(const cardType in deck.cardTypes)
         counts[cardType] = copies;
@@ -6636,8 +6648,7 @@ class PropertiesModule extends SidebarModule {
       const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
       const faceTemplates = widget.get('faceTemplates');
       widgets.set(widget.id, widget);
-      const cardTypeNames = Object.keys(widget.get('cardTypes'));
-      for(const cardType of shuffleArray(cardTypeNames).slice(0, 5)) {
+      for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
         new Card().renderReadonlyCopyRaw(Object.assign({
           deck: widget.id,
           cardType,

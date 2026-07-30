@@ -776,6 +776,17 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
     textarea.dispatchEvent(new Event('input', { bubbles: true }));
   })();
 
+  // A typed value ignores the input's "min"/"max", so an out-of-range card width must be clamped to the
+  // declared range (20-600) rather than reaching the deck - here visible on the real-size preview card.
+  const setDesignValue = ClientFunction((selector, value) => {
+    const input = document.querySelector(selector);
+    input.value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await setDesignValue('.textCardsWidth', '-50');
+  await t.expect(Selector('.textCardsPreviewCard').getStyleProperty('width')).eql('20px');
+  await setDesignValue('.textCardsWidth', '150');
+
   await t
     .typeText('.textCardsLabel', 'Test Deck')
     .typeText('.textCardsFontSize', '20', { replace: true })
@@ -845,6 +856,60 @@ test('Deck editor: pair front and back images in the new deck wizard', async t =
     'front10: front10.png + back10.png'
   ]);
   await t.expect(deck.width).eql(107); // 40x60 fronts at the default card height of 160
+});
+
+// The other states of the same section: unequal numbers of fronts and backs keep "Add to game" disabled until
+// the lists are made to match again by deleting an image, and a single back image is shared by every card.
+test('Deck editor: mismatched and shared card backs in the new deck wizard', async t => {
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
+
+  const stubUploadOf = ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  });
+  const uploadButton = Selector('#deckEditorNewDeckPanel [icon=upload]');
+  const addButton = Selector('#deckEditorNewDeckPanel .goButton [icon=add]');
+  const status = Selector('.imagePairStatus');
+  const backs = Selector('.imagePairList').nth(1).find('.imagePairEntry');
+
+  await stubUploadOf([ 'front1.png', 'front2.png', 'front3.png' ].map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(0));
+  await stubUploadOf([ 'back1.png', 'back2.png' ].map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(1));
+
+  await t
+    .expect(status.innerText).contains('3 fronts but 2 backs')
+    .expect(status.hasClass('imagePairMismatch')).ok()
+    .expect(addButton.hasAttribute('disabled')).ok();
+
+  // Deleting one of the two backs leaves a single back image, which is shared by all three cards.
+  await t
+    .click(backs.nth(1).find('[icon=delete]'))
+    .expect(backs.count).eql(1)
+    .expect(status.innerText).contains('all sharing the single back image')
+    .expect(addButton.hasAttribute('disabled')).notOk();
+
+  await t
+    .click(addButton)
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+
+  await t.expect(await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return Object.values(deck.get('cardTypes')).map(c=>c.backImage);
+  })()).eql(Array(3).fill(asset('back1.png')));
 });
 
 // The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
