@@ -339,7 +339,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
   const deckID = await getDeckID();
 
   const editTextAndUndoImmediately = ClientFunction(() => {
-    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
     let input = null;
     for(let i=0; i<rows.length; ++i)
       if(rows[i].querySelector('label').textContent == 'value')
@@ -394,7 +394,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   });
   const deckID = await getDeckID();
   const editAndReceiveRemoteChange = ClientFunction(deckID => {
-    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
     let input = null;
     for(let i=0; i<rows.length; ++i)
       if(rows[i].querySelector('label').textContent == 'value')
@@ -454,7 +454,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
 
   const rapidEditsThenAddFace = ClientFunction(() => new Promise(resolve => {
     const setField = (label, value) => {
-      const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+      const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
       for(const row of rows) {
         if(row.querySelector('label').textContent == label) {
           const input = row.querySelector('input');
@@ -752,6 +752,78 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(deckCount()).eql(0)      // ...but no deck is auto-created
     .pressKey('esc')
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
+});
+
+// Several face objects can be selected at once (Ctrl/Shift+click on the card or in the tree). A property row
+// then writes to all of them - showing "(mixed)" while they disagree - and the top bar's align/distribute
+// buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget
+// sidebar uses, which is what the group/summary expectations below check.
+test('Deck editor: multi-selected face objects share property edits and alignment', async t => {
+  await setRoomState({
+    multiDeck: {
+      id: 'multiDeck', type: 'deck', x: 20, y: 20,
+      cardTypes: { plain: {} },
+      faceTemplates: [ { objects: [
+        { type: 'text', x: 4,  y: 10,  width: 40, height: 20, fontSize: 14, value: 'one',   color: '#000000' },
+        { type: 'text', x: 30, y: 60,  width: 60, height: 20, fontSize: 14, value: 'two',   color: '#000000' },
+        { type: 'text', x: 12, y: 120, width: 50, height: 20, fontSize: 14, value: 'three', color: '#333333' }
+      ] } ]
+    },
+    multiCard: { id: 'multiCard', type: 'card', deck: 'multiDeck', cardType: 'plain', x: 300, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
+  const groupTitles = ClientFunction(() => {
+    const titles = [];
+    const groups = document.querySelectorAll('#deckEditorSidebar .deckEditorGroupTitle');
+    for(let i = 0; i < groups.length; ++i)
+      titles.push(groups[i].textContent);
+    return titles;
+  });
+  const setSharedField = ClientFunction((label, value) => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
+    for(let i = 0; i < rows.length; ++i) {
+      if(rows[i].querySelector('label').textContent == label) {
+        const input = rows[i].querySelector('input');
+        const placeholder = input.placeholder;
+        input.value = value;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        return placeholder;
+      }
+    }
+    return null;
+  });
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_multiDeck') // selecting the deck opens the deck editor on it
+    .click(objectRow.nth(0));
+  // one object: the properties are sorted into the same blocks the Edit Widget sidebar uses
+  await t
+    .expect(groupTitles()).eql([ 'Content', 'Position', 'Size', 'Colors', 'Appearance' ])
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).ok(); // needs a second object
+
+  await t
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(Selector('#deckEditorMain .deckEditorSelectedObject').count).eql(3)
+    .expect(Selector('#deckEditorSidebar header h2').innerText).eql('3 face objects selected')
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).notOk()
+    .expect(Selector('#deckEditorDistributeV').hasAttribute('disabled')).notOk();
+
+  // the three objects disagree about their color, so the row says so - and typing gives all of them the value
+  await t.expect(setSharedField('color', '#cc0000')).eql('(mixed)');
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  await t
+    .click('#deckEditorAlignLeft')
+    .click('#deckEditorDistributeV')
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3) // the selection survives
+    .pressKey('esc');
+  await compareState(t, 'fd906b0fb1237f2c7ecca4657535fbb3');
 });
 
 test('Line widget in edit mode', async t => {
