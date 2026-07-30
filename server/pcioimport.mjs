@@ -29,6 +29,58 @@ const pcioFonts = {
   'westminstergotisch':  'Metamorphous'
 };
 
+// the names PCIO's own editor uses - a warning that says MOVE_CARDS_BETWEEN_HOLDERS
+// or labelText does not help anyone looking for the thing in playingcards.io
+const pcioFuncNames = {
+  CHANGE_CHOOSER:             'Change Chooser',
+  CHANGE_COUNTER:             'Change Counter',
+  CHANGE_TIMER_STATE:         'Start / Pause Timer',
+  CHANGE_TIMER_TIME:          'Change Timer',
+  COMPARE_NUMBERS:            'Compare Numbers',
+  FIND_CARDS_PIECES:          'Find Cards & Pieces',
+  FLIP_CARDS:                 'Flip Objects',
+  IS_EQUAL:                   'Is Equal',
+  MATH:                       'Math',
+  MOVE_CARDS_BETWEEN_HOLDERS: 'Move Objects',
+  NEXT_TURN:                  'Finish Turn',
+  NUMBERS_FROM_COUNTERS:      'Numbers from Counters',
+  RANDOM_NUMBER:              'Random Number',
+  RECALL_CARDS:               'Recall Objects',
+  REVERSE_TURN_DIRECTION:     'Reverse Turn Direction',
+  ROLL_DICE:                  'Roll / Change Dice',
+  ROTATE_OBJECTS:             'Rotate Objects',
+  SHIFT_OBJECTS:              'Shift Objects',
+  SHUFFLE_CARDS:              'Shuffle Objects',
+  SORT_CARDS:                 'Sort Objects',
+  SPIN_SPINNER:               'Spin Spinners',
+  STAND_UP_PLAYER:            'Stand Up Players',
+  SUM_LIST:                   'Sum'
+};
+
+const pcioTypeNames = {
+  automationButton: 'Button',
+  board:            'Board',
+  card:             'Card',
+  cardDeck:         'Collection',
+  cardPile:         'Holder',
+  chooser:          'Chooser',
+  counter:          'Counter',
+  dice:             'Dice',
+  hand:             'Hand',
+  holder:           'Holder',
+  labelText:        'Label Text',
+  piece:            'Piece',
+  seat:             'Player Seat',
+  separator:        'Separator',
+  spinner:          'Spinner',
+  timer:            'Timer',
+  turnButton:       'Turn Button',
+  urlButton:        'URL Button'
+};
+
+// the newest PCIO file format this importer was written against
+const knownSchemaVersion = 8;
+
 export default async function convertPCIO(content) {
   const zip = await JSZip.loadAsync(content);
   // a null entry in widgets.json must not break the loops that follow
@@ -44,6 +96,32 @@ export default async function convertPCIO(content) {
   function warn(text) {
     if(warnings.indexOf(text) == -1)
       warnings.push(text);
+  }
+
+  // how a widget is called in a warning - the label the user gave it if it has one
+  function widgetName(widget) {
+    return `"${(widget || {}).label || (widget || {}).id || 'unnamed'}"`;
+  }
+
+  // a list of widget names, shortened so that a room full of them stays readable
+  function widgetNames(names) {
+    if(names.length > 3)
+      return `${names.slice(0, 3).join(', ')} and ${names.length-3} more`;
+    return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length-1]}` : names[0];
+  }
+
+  // A warning that names the widget it is about would repeat itself once per
+  // widget, so the same problem on several widgets is collected under one key
+  // and turned into a single line listing them once everything was imported.
+  const groupedWarnings = {};
+  function warnAbout(key, widget, message) {
+    const group = groupedWarnings[key] = groupedWarnings[key] || { names: [], message };
+    if(group.names.indexOf(widgetName(widget)) == -1)
+      group.names.push(widgetName(widget));
+  }
+
+  function warnFont(font, widget) {
+    warnAbout(`font ${font}`, widget, (names, count)=>`The font ${font} is not available in VirtualTabletop - ${names} ${count > 1 ? 'use' : 'uses'} the default font instead.`);
   }
 
   const nameMap = {};
@@ -120,8 +198,14 @@ export default async function convertPCIO(content) {
   }
 
   // PCIO applies mainBackground/mainOutlines/mainTextStyle/mainBorderRadius to
-  // holders, buttons, labels, counters and seats alike - translate them to CSS
-  function pcioStyle(widget, w, css=[]) {
+  // holders, buttons, labels, counters and seats alike - translate them to CSS.
+  // Whatever the importer generates inside such a widget (a holder's label and
+  // shuffle button, a counter's caption and +/- buttons) is VirtualTabletop
+  // chrome that PCIO does not style, so it must not inherit the text style:
+  // options.noTextStyle drops it (PCIO ignores it for holders and hands as well)
+  // and options.textSelector keeps it on the element that shows the text.
+  function pcioStyle(widget, w, css=[], options={}) {
+    const textCSS = Object.assign({}, options.text);
     const background = pcioFill((widget.mainBackground || {}).fill);
     if(background && !(w.classes || '').match(/transparent/))
       css.push(`background: ${background}`);
@@ -139,32 +223,53 @@ export default async function convertPCIO(content) {
       }
     }
 
-    const text = widget.mainTextStyle;
+    const text = options.noTextStyle ? null : widget.mainTextStyle;
     if(text && typeof text == 'object') {
       if(text.size)
-        css.push(`font-size: ${Math.round(text.size)}px`);
+        textCSS['font-size'] = `${Math.round(text.size)}px`;
       if(text.size && text.lineHeight)
-        css.push(`line-height: ${Math.round(text.size*text.lineHeight)}px`);
+        textCSS['line-height'] = `${Math.round(text.size*text.lineHeight)}px`;
       if(text.align)
-        css.push(`text-align: ${text.align}`);
+        textCSS['text-align'] = text.align;
       const color = pcioFill(text.mainFill);
       if(color)
-        css.push(`color: ${color}`);
+        textCSS['color'] = color;
       if(text.font && pcioFonts[text.font])
-        css.push(`font-family: ${pcioFonts[text.font]}`);
+        textCSS['font-family'] = pcioFonts[text.font];
       else if(text.font)
-        warn(`Font ${text.font} is not available in VirtualTabletop.`);
-      // a stroke painted behind the glyphs is what PCIO's text outline looks like
+        warnFont(text.font, widget);
+      // a stroke painted behind the glyphs is what PCIO's text outline looks
+      // like - it strokes twice the size so that the fill covers the inner half
       const textOutline = (text.outlines || []).filter(o=>o && o.size && pcioFill(o.fill)).pop();
-      if(textOutline)
-        css.push(`-webkit-text-stroke: ${textOutline.size*2}px ${pcioFill(textOutline.fill)}`, 'paint-order: stroke fill');
+      if(textOutline) {
+        textCSS['-webkit-text-stroke'] = `${textOutline.size*2}px ${pcioFill(textOutline.fill)}`;
+        textCSS['paint-order'] = 'stroke fill';
+      }
     }
 
     if(typeof widget.mainBorderRadius == 'number')
       w.borderRadius = widget.mainBorderRadius;
-    if(css.length)
-      w.css = (w.css ? w.css.replace(/;\s*$/, '') + '; ' : '') + css.join('; ');
+
+    const textDeclarations = Object.entries(textCSS).map(([ property, value ])=>`${property}: ${value}`);
+    if(options.textSelector && textDeclarations.length) {
+      const style = {};
+      if(w.css || css.length)
+        style.default = (w.css ? w.css.replace(/;\s*$/, '') + '; ' : '') + css.join('; ');
+      style[options.textSelector] = textCSS;
+      w.css = style;
+    } else if(css.length || textDeclarations.length) {
+      w.css = (w.css ? w.css.replace(/;\s*$/, '') + '; ' : '') + css.concat(textDeclarations).join('; ');
+    }
     return w;
+  }
+
+  // how far the outlines of a widget reach beyond its width and height - PCIO
+  // paints them outside the widget as well, so whatever the importer puts next
+  // to the widget has to keep that distance to stay readable
+  function outlineExtent(widget) {
+    if(!Array.isArray(widget.mainOutlines))
+      return 0;
+    return widget.mainOutlines.reduce((extent, o)=>Math.max(extent, o && o.size ? (o.offset || 0) + o.size : 0), 0);
   }
 
   function addDimensions(w, widget, defaultWidth=100, defaultHeight=100) {
@@ -264,7 +369,7 @@ export default async function convertPCIO(content) {
     // holder, so aligning it with its holder means rotating it back to 0
     if(mode == 'auto')
       return Object.assign(target, { func: 'ROTATE', angle: 0, mode: 'set' });
-    warn(`Rotating objects to "${mode}" has no VirtualTabletop equivalent.`);
+    warn(`Rotating objects to "${mode}" has no VirtualTabletop equivalent - that step was skipped.`);
     return null;
   }
 
@@ -312,7 +417,7 @@ export default async function convertPCIO(content) {
     if(min == -Infinity && max == Infinity)
       continue;
     if(max < min)
-      warn(`Counter ${widget.label || widget.id} has a maximum below its minimum - its value is kept at ${max}.`);
+      warn(`Counter ${widgetName(widget)} has a maximum below its minimum - its value is kept at ${max}.`);
     counterBounds[widget.id] = { min, max };
   }
 
@@ -477,6 +582,11 @@ export default async function convertPCIO(content) {
         }
         w.width  = deck.cardWidth  || 50;
         w.height = deck.cardHeight || 50;
+        // a face default-prints at almost the size of the die, which only fits a
+        // single character - scale a word down so that it stays on the face
+        const longestFace = (w.faces || []).reduce((longest, face)=>Math.max(longest, String(face.value === undefined ? '' : face.value).length), 0);
+        if(longestFace > 1)
+          w.css = `--fontSize: ${Math.round(Math.min(w.width, w.height)/(0.6*longestFace))}px`;
         const activeFace = faces.findIndex(([ key ])=>key == widget.diceValue);
         if(activeFace > 0)
           w.activeFace = activeFace;
@@ -493,18 +603,22 @@ export default async function convertPCIO(content) {
           {
             func: 'INPUT',
             header: w.text,
+            // a single honest button: nothing here navigates anywhere
+            confirmButtonText: 'Close',
+            cancelButtonText: null,
+            cancelButtonIcon: null,
             fields: [
-              { type: 'text',   text: 'PlayingCards.io opened this link in a new tab:' },
-              { type: 'string', label: 'Link', value: url, variable: 'url' }
+              { type: 'text',   text: 'On PlayingCards.io this button opened a webpage. VirtualTabletop cannot open links, so here is the address:' },
+              { type: 'text',   text: url }
             ]
           }
         ];
       }
       pcioStyle(widget, w);
-      warn('Webpage buttons cannot open a link in VirtualTabletop - they now show the link instead.');
+      warnAbout('urlButton', widget, (names, count)=>`Webpage buttons cannot open a link in VirtualTabletop - the button${count > 1 ? 's' : ''} ${names} now show${count > 1 ? '' : 's'} the address instead.`);
     } else if(widget.type == 'hand') {
       if(widget.enabled === false) {
-        warn('A disabled hand was not imported.');
+        warn(`The disabled hand ${widgetName(widget)} was not imported.`);
         continue;
       }
       w.type = 'holder';
@@ -525,7 +639,7 @@ export default async function convertPCIO(content) {
       w.height = widget.height || 180;
       if(widget.allowedDecks && widget.allowedDecks.length)
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
-      pcioStyle(widget, w);
+      pcioStyle(widget, w, [], { noTextStyle: true });
     } else if(widget.type == 'cardPile') {
       w.type = 'holder';
       if(pileTransparent[w.id])
@@ -554,10 +668,10 @@ export default async function convertPCIO(content) {
       if(widget.layoutType == 'grid') {
         // VTT holders can only spread along one axis
         w.alignChildren = false;
-        warn(`Holder ${widget.label || widget.id} uses PCIO's grid layout which has no VirtualTabletop equivalent - imported as freeform.`);
+        warnAbout('gridLayout', widget, (names, count)=>`PlayingCards.io's grid layout has no VirtualTabletop equivalent - the holder${count > 1 ? 's' : ''} ${names} ${count > 1 ? 'were' : 'was'} imported as freeform.`);
       }
       if(widget.spreadMulti == 'multi' && widget.layoutType == 'spread')
-        warn(`Holder ${widget.label || widget.id} spreads cards into multiple groups which VirtualTabletop cannot do - all cards are in one row.`);
+        warnAbout('spreadMulti', widget, (names, count)=>`Spreading cards into multiple groups is not something VirtualTabletop can do - the cards in the holder${count > 1 ? 's' : ''} ${names} are all in one row.`);
 
       if(widget.layoutType == 'spread') {
         if(widget.spreadDirection == 'down') {
@@ -590,21 +704,22 @@ export default async function convertPCIO(content) {
       if(widget.layoutType != 'spread' && widget.layoutType != 'freeform')
         w.inheritChildZ = true;
 
-      pcioStyle(widget, w);
+      pcioStyle(widget, w, [], { noTextStyle: true });
 
+      const outlines = outlineExtent(widget);
       if(widget.label) {
-        output[widget.id + '_label'] = pcioStyle({ mainTextStyle: widget.mainTextStyle }, {
+        output[widget.id + '_label'] = {
           id: widget.id + '_label',
           parent: widget.id,
           x: -(w.width || 111) * 0.1,
-          y: -40,
+          y: -40 - outlines,
           width: (w.width || 111) * 1.2,
           height: 40,
           type: 'label',
           text: widget.label,
           twoRowBottomAlign: true,
           movableInEdit: false
-        });
+        };
         if(widget.allowPlayerEditLabel)
           output[widget.id + '_label'].editable = true;
       }
@@ -635,11 +750,14 @@ export default async function convertPCIO(content) {
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
           parent: widget.id,
-          y: 1.02*(w.height || 168),
+          y: 1.02*(w.height || 168) + outlines,
           width: w.width || 111,
           height: 32,
           type: 'button',
-          text: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
+          // PCIO shortens the label the same way below 60px - a smaller font is
+          // what keeps the long one on one line in a holder-wide button
+          text: (w.width || 111) < 60 ? 'R & S' : 'Recall & Shuffle',
+          css: 'font-size: 13px',
           movableInEdit: false,
 
           clickRoutine: recallConfirmation([
@@ -675,9 +793,9 @@ export default async function convertPCIO(content) {
       if(widget.allowPlayerClick === false)
         w.cardDefaults.clickable = false;
       if(Array.isArray(widget.snapAngles) && widget.snapAngles.length > 1)
-        warn('Card rotation snapping (snapAngles) has no VirtualTabletop equivalent.');
+        warnAbout('snapAngles', widget, (names, count)=>`The "Rotation Snapping" of the collection${count > 1 ? 's' : ''} ${names} has no VirtualTabletop equivalent - those objects rotate freely.`);
       if(widget.showUnflipped)
-        warn('"Show unflipped side to owner" has no VirtualTabletop equivalent.');
+        warnAbout('showUnflipped', widget, (names, count)=>`"Show Unflipped Side To Owner" of the collection${count > 1 ? 's' : ''} ${names} has no VirtualTabletop equivalent.`);
 
       for(const face of w.faceTemplates) {
         // includeBorder is a boolean in old files and light/heavy in new ones
@@ -696,7 +814,7 @@ export default async function convertPCIO(content) {
             if(pcioFonts[object.textFont])
               object.css = `font-family: ${pcioFonts[object.textFont]}`;
             else if(object.textFont)
-              warn(`Font ${object.textFont} is not available in VirtualTabletop.`);
+              warnFont(object.textFont, widget);
             delete object.textFont;
           }
         }
@@ -853,9 +971,15 @@ export default async function convertPCIO(content) {
       w.text = bounds ? Math.min(Math.max(+widget.counterValue || 0, bounds.min), bounds.max) : widget.counterValue;
       if(widget.allowPlayerEditValue !== false)
         w.editable = true;
-      pcioStyle(widget, w, (widget.mainTextStyle || {}).size ? [] : [ 'font-size: 30px' ]);
+      // the text style belongs on the value, not on the caption and +/- buttons
+      pcioStyle(widget, w, [], {
+        textSelector: ' > textarea',
+        text: (widget.mainTextStyle || {}).size ? {} : { 'font-size': '30px' }
+      });
+      if(bounds && !isNaN(parseFloat(widget.counterValue)) && w.text != parseFloat(widget.counterValue))
+        warn(`Counter ${widgetName(widget)} was outside its ${boundsText(bounds)} and starts at ${w.text} instead of ${widget.counterValue}.`);
       if(bounds && widget.allowPlayerEditValue !== false)
-        warn(`Typing a value into counter ${widget.label || widget.id} is not restricted to its ${boundsText(bounds)} - its buttons and the automations that change it are.`);
+        warnAbout(`bounds ${boundsText(bounds)}`, widget, (names, count)=>`Typing a value into the counter${count > 1 ? 's' : ''} ${names} is not restricted to ${count > 1 ? 'their' : 'its'} ${boundsText(bounds)} - the buttons and the automations that change ${count > 1 ? 'them' : 'it'} are.`);
 
       const counterStep = Math.abs(+widget.counterStep) || 1;
 
@@ -889,8 +1013,8 @@ export default async function convertPCIO(content) {
       }
 
       if(widget.label) {
-        output[widget.id + 'label'] = {
-          id: widget.id + 'label',
+        output[widget.id + '_label'] = {
+          id: widget.id + '_label',
           parent: widget.id,
           movableInEdit: false,
           y: -28,
@@ -922,9 +1046,14 @@ export default async function convertPCIO(content) {
       if(style.font && pcioFonts[style.font])
         w.css.default['font-family'] = pcioFonts[style.font];
       else if(style.font)
-        warn(`Font ${style.font} is not available in VirtualTabletop.`);
+        warnFont(style.font, widget);
       addDimensions(w, widget, 100, 20);
-      w.height = (size+2) * 3.5;
+      // a PCIO label text is always 60px high and lets longer text overflow it -
+      // VirtualTabletop scrolls instead, so grow the box for text that wraps
+      const lineHeight = style.lineHeight ? Math.round(size*style.lineHeight) : size;
+      const charsPerLine = Math.max(1, Math.floor((w.width || widget.width || 200) / (size*0.55)));
+      const rows = String(w.text || '').split('\n').reduce((sum, line)=>sum + Math.max(1, Math.ceil(line.length/charsPerLine)), 0);
+      w.height = Math.max(60, rows*lineHeight + 6);
     } else if(widget.type == 'separator') {
       w.movable = false;
       w.layer = -1;
@@ -945,7 +1074,7 @@ export default async function convertPCIO(content) {
       if(typeof widget.seatIndex == 'number')
         w.index = widget.seatIndex + 1;
       if(widget.flipTableForSeated)
-        warn('"Flip table for seated player" has no VirtualTabletop equivalent.');
+        warnAbout('flipTable', widget, (names, count)=>`"Flip Table For Seated Player" of the player seat${count > 1 ? 's' : ''} ${names} has no VirtualTabletop equivalent - the table looks the same for everyone.`);
       w.x = (widget.x || 0) + 69;
       w.y = (widget.y || 0) - 38;
       w.height = 42;
@@ -1199,8 +1328,12 @@ export default async function convertPCIO(content) {
       if(widget.label !== '')
         w.text = widget.label;
 
-      if(widget.type == 'turnButton')
-        widget.height = widget.width = 64;
+      // a PCIO turn button cannot be resized - it is always 162x66, which is
+      // also what its label was written for
+      if(widget.type == 'turnButton') {
+        widget.width = 162;
+        widget.height = 66;
+      }
       addDimensions(w, widget, 80, 80);
       pcioStyle(widget, w);
 
@@ -1255,7 +1388,7 @@ export default async function convertPCIO(content) {
         if(widget.currentTurn && byID[widget.currentTurn])
           turnAtSeat[widget.currentTurn] = true;
         if(widget.playersCanReverse)
-          warn('Players cannot reverse the turn direction by clicking the turn button - use the "Reverse turn direction" button that was added instead.');
+          warn('The turn button has no arrows to reverse the turn direction - clicking it always advances in the current direction, which only a "Reverse Turn Direction" automation can turn around.');
       }
 
       // PCIO wraps every step into { id, branches: [ { func, args } ] } since
@@ -1290,7 +1423,7 @@ export default async function convertPCIO(content) {
           return;
         const condition = branch.condition && branch.condition.callId;
         if(condition && !readValues[condition]) {
-          warn(`The condition of an automation step of "${widget.label || widget.id}" could not be imported - that alternative was skipped.`);
+          warn(`The condition of an automation step of ${widgetName(widget)} could not be imported - that alternative was skipped.`);
           importBranches(branches.slice(1), routine, stepID);
           return;
         }
@@ -1405,7 +1538,7 @@ export default async function convertPCIO(content) {
 
       function importBranch(c, routine, stepID) {
         if(!c || !c.func) {
-          warn('An automation step could not be read and was skipped.');
+          warn(`An automation step of ${widgetName(widget)} could not be read and was skipped.`);
           return;
         }
         c = Object.assign({}, c, { args: c.args || {} });
@@ -1468,7 +1601,7 @@ export default async function convertPCIO(content) {
             };
             routine.push({ func: 'MOVE', from: c.to, to: 'pcioMoveTempHolder', count: 'all' });
           } else if(toPosition && toPosition != 'top') {
-            warn(`Moving objects to "${toPosition}" is not supported - they end up on top of the destination.`);
+            warn(`Moving objects to "${toPosition}" is not supported - the objects ${widgetName(widget)} moves end up on top of the destination.`);
           }
 
           // PCIO hands out one object after the other, going around the
@@ -1493,7 +1626,7 @@ export default async function convertPCIO(content) {
             });
           } else {
             if(oneAtATime && typeof quantity == 'number' && quantity > 100)
-              warn(`"${widget.label || widget.id}" moves up to ${quantity} objects in one go instead of one after the other - they can end up in the opposite order.`);
+              warn(`${widgetName(widget)} moves up to ${quantity} objects in one go instead of one after the other - they can end up in the opposite order.`);
             routine.push(c);
           }
 
@@ -1640,7 +1773,7 @@ export default async function convertPCIO(content) {
             c.face = '${pcioFace}';
           } else if(flipFace == 'switch' && (Array.isArray(c.holder) || c.collection)) {
             // flipping the top object of one pile that way is just flipping it
-            warn('Flipping the top objects of several piles all to the same side is not supported - each of them is flipped to its other side instead.');
+            warn(`Flipping the top objects of several piles all to the same side is not supported - ${widgetName(widget)} flips each of them to its other side instead.`);
           }
           if(reverse) {
             routine.push(c);
@@ -1816,18 +1949,18 @@ export default async function convertPCIO(content) {
           const count = (c.args.objectsMode || {}).value == 'top' ? 1 : 'all';
           const steps = Math.min(+((wrap ? c.args.stepsWrap : c.args.stepsEdge) || {}).value || 1, holders.length);
           if((c.args.objectsMode || {}).value == 'custom')
-            warn('Shifting only a subset of the objects in a holder is not supported - all objects are shifted.');
+            warn(`Shifting only a subset of the objects in a holder is not supported - ${widgetName(widget)} shifts all of them.`);
 
           const seats = holders.filter(id=>byID[id] && byID[id].type == 'seat');
           if(seats.length && seats.length < holders.length) {
-            warn('Shifting objects between a mix of holders and player seats has no VirtualTabletop equivalent and was skipped.');
+            warn(`Shifting objects between a mix of holders and player seats has no VirtualTabletop equivalent - the step of ${widgetName(widget)} was skipped.`);
             return;
           }
           if(seats.length) {
             // a hand is one holder per room in VTT and it is the owner that makes
             // its cards a player's own, which is exactly what SWAPHANDS shifts
             if(!wrap)
-              warn('Passing the hands of the players on towards the last seat instead of around the table is not supported - they wrap around.');
+              warn(`Passing the hands of the players on towards the last seat instead of around the table is not supported - ${widgetName(widget)} wraps them around.`);
             routine.push({
               func: 'SELECT',
               property: 'id',
@@ -1910,7 +2043,7 @@ export default async function convertPCIO(content) {
         }
 
         if(c.args) {
-          warn(`The automation step ${c.func} of "${widget.label || widget.id}" has no VirtualTabletop equivalent and was skipped.`);
+          warn(`The automation step "${pcioFuncNames[c.func] || c.func}" of ${widgetName(widget)} has no VirtualTabletop equivalent and was skipped.`);
           return;
         }
         routine.push(c);
@@ -1926,8 +2059,15 @@ export default async function convertPCIO(content) {
         w.value = widget.value;
       addDimensions(w, widget, 110, 110);
     } else {
-      warn(`Widgets of type ${widget.type} cannot be imported.`);
-      w.css = 'background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);';
+      // keep the size and say what is missing instead of leaving a nameless
+      // striped block where the widget used to be
+      const typeName = pcioTypeNames[widget.type] || widget.type;
+      w.width = widget.width || 100;
+      w.height = widget.height || 100;
+      w.type = 'label';
+      w.text = `${typeName} not imported`;
+      w.css ='background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px); color: white; text-shadow: 0 0 4px black;';
+      warn(`Widgets of type "${typeName}" cannot be imported - the striped placeholder at ${Math.round(widget.x || 0)},${Math.round(widget.y || 0)} marks where ${widgetName(widget)} was.`);
     }
 
     if(w.image)
@@ -1940,6 +2080,12 @@ export default async function convertPCIO(content) {
   for(const seatID in turnAtSeat)
     if(output[seatID])
       output[seatID].turn = true;
+
+  for(const group of Object.values(groupedWarnings))
+    warn(group.message(widgetNames(group.names), group.names.length));
+
+  if(schemaVersion > knownSchemaVersion)
+    warnings.unshift(`This file uses PlayingCards.io format ${schemaVersion} while the importer only knows up to ${knownSchemaVersion} - anything newer than that is missing.`);
 
   if(warnings.length) {
     output._meta.info.importerWarnings = warnings;

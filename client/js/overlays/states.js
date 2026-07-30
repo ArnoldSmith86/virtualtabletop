@@ -476,6 +476,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' savedGame';
     if(state.usesAIImagery)
       entry.className += ' has-ai-badge';
+    if(Array.isArray(state.importerWarnings) && state.importerWarnings.length)
+      entry.className += ' hasImportNotes';
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
@@ -677,6 +679,19 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   loadGameFromURLproperties(states);
 }
 
+// everything an importer could not translate - one line per note so that a long
+// report scans instead of reading as one wall of text
+function fillImportNotes(warnings) {
+  warnings = Array.isArray(warnings) ? warnings : [];
+  $('#importNotesHeading').textContent = warnings.length ? `Import notes (${warnings.length})` : 'Import notes';
+  $('#importNotes').innerHTML = '';
+  for(const warning of warnings) {
+    const li = document.createElement('li');
+    li.textContent = warning;
+    $('#importNotes').appendChild(li);
+  }
+}
+
 function fillStateDetails(states, state, dom) {
   toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
   if(!detailsInSidebar)
@@ -689,6 +704,7 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
+  fillImportNotes(state.importerWarnings);
   const sn = typeof state.showName === 'undefined' ? true : state.showName;
   $('#showName').checked = sn === true || sn === 'only main';
   $('#showNameSimilar').checked = sn === true || sn === 'only similar';

@@ -211,7 +211,7 @@ describe('PCIO importer', () => {
       { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
     ]);
     expect(state._meta.info.importerWarnings).toEqual([
-      'Typing a value into counter counter is not restricted to its maximum of 10 - its buttons and the automations that change it are.'
+      'Typing a value into the counter "counter" is not restricted to its maximum of 10 - the buttons and the automations that change it are.'
     ]);
   });
 
@@ -460,10 +460,122 @@ describe('PCIO importer', () => {
     ], 8);
 
     expect(state._meta.info.importerWarnings).toEqual([
-      'Widgets of type somethingNew cannot be imported.',
+      'Widgets of type "somethingNew" cannot be imported - the striped placeholder at 0,0 marks where "unknown" was.',
       'Ignored a widget without a type (noType).',
-      'The automation step FUTURE_STEP of "Shift" has no VirtualTabletop equivalent and was skipped.'
+      'The automation step "FUTURE_STEP" of "Shift" has no VirtualTabletop equivalent and was skipped.'
     ]);
     expect(state.button.clickRoutine).toEqual([]);
+  });
+
+  it('keeps the size of a widget it cannot import and says what it was', async () => {
+    const state = await importWidgets([
+      { id: 'unknown', type: 'videoPlayer', x: 200, y: 400, width: 180, height: 100 }
+    ], 8);
+
+    expect(state.unknown.width).toBe(180);
+    expect(state.unknown.height).toBe(100);
+    expect(state.unknown.text).toBe('videoPlayer not imported');
+  });
+
+  it('does not put the text style of a holder on the chrome it generates', async () => {
+    const textStyle = { size: 22, font: 'unquiet-spirits', mainFill: { type: 'color', color: '#ffffff' } };
+    const state = await importWidgets([
+      { id: 'holder', type: 'holder', x: 0, y: 0, width: 111, height: 168, label: 'Draw Pile', hasShuffleButton: true,
+        mainTextStyle: textStyle,
+        mainOutlines: [ { size: 2, offset: 0, fill: { type: 'color', color: '#000000' } }, { size: 4, offset: 4, fill: { type: 'color', color: '#ff0000' } } ] },
+      deck
+    ], 8);
+
+    // PCIO renders a holder label at a fixed size and ignores mainTextStyle there
+    expect(state.holder.css).toBe('border: 2px solid #000000; box-sizing: border-box; box-shadow: 0 0 0 8px #ff0000');
+    expect(state.holder_label.css).toBeUndefined();
+    // the outlines reach 8px beyond the holder, so label and button move aside
+    expect(state.holder_label.y).toBe(-48);
+    expect(state.holder_shuffleButton.y).toBe(1.02*168 + 8);
+  });
+
+  it('styles the value of a counter without styling its caption and buttons', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 0, label: 'Score', counterValue: 3,
+        mainBackground: { fill: { type: 'color', color: '#dcedc8' } },
+        mainTextStyle: { size: 26, mainFill: { type: 'color', color: '#1b5e20' } } }
+    ], 8);
+
+    expect(state.counter.css).toEqual({
+      default: 'background: #dcedc8',
+      ' > textarea': { 'font-size': '26px', color: '#1b5e20' }
+    });
+    expect(state.counter_label.css).toBeUndefined();
+    expect(state.counter_incrementButton.css).toBeUndefined();
+  });
+
+  it('reports the same problem on several widgets as one line', async () => {
+    const state = await importWidgets([
+      { id: 'a', type: 'holder', x: 0,   y: 0, label: 'One',   layoutType: 'grid' },
+      { id: 'b', type: 'holder', x: 200, y: 0, label: 'Two',   layoutType: 'grid' },
+      { id: 'c', type: 'holder', x: 400, y: 0, label: 'Three', layoutType: 'grid' },
+      { id: 'd', type: 'holder', x: 600, y: 0, label: 'Four',  layoutType: 'grid' }
+    ], 8);
+
+    expect(state._meta.info.importerWarnings).toEqual([
+      `PlayingCards.io's grid layout has no VirtualTabletop equivalent - the holders "One", "Two", "Three" and 1 more were imported as freeform.`
+    ]);
+  });
+
+  it('warns about a file format that is newer than the importer', async () => {
+    const state = await importWidgets([ { id: 'holder', type: 'holder', x: 0, y: 0 } ], 9);
+
+    expect(state._meta.info.importerWarnings[0]).toBe('This file uses PlayingCards.io format 9 while the importer only knows up to 8 - anything newer than that is missing.');
+  });
+
+  it('shows the address of a webpage button without pretending to open it', async () => {
+    const state = await importWidgets([
+      { id: 'link', type: 'urlButton', x: 0, y: 0, label: 'Rules', clickURL: 'https://example.com/rules' }
+    ], 8);
+
+    expect(state.link.clickRoutine).toEqual([ {
+      func: 'INPUT',
+      header: 'Rules',
+      confirmButtonText: 'Close',
+      cancelButtonText: null,
+      cancelButtonIcon: null,
+      fields: [
+        { type: 'text', text: 'On PlayingCards.io this button opened a webpage. VirtualTabletop cannot open links, so here is the address:' },
+        { type: 'text', text: 'https://example.com/rules' }
+      ]
+    } ]);
+  });
+
+  it('gives a label text the height PCIO gives it and grows it for wrapping text', async () => {
+    const state = await importWidgets([
+      { id: 'short', type: 'labelText', x: 0, y: 0,   width: 400, height: 60, labelContent: 'One line',
+        mainTextStyle: { size: 30 } },
+      { id: 'long',  type: 'labelText', x: 0, y: 100, width: 200, height: 60, mainTextStyle: { size: 30 },
+        labelContent: 'A label with quite a lot of text in it that has to wrap several times to fit' }
+    ], 8);
+
+    expect(state.short.height).toBe(60);
+    expect(state.long.height).toBeGreaterThan(60);
+  });
+
+  it('imports a turn button at the size PCIO gives it', async () => {
+    const state = await importWidgets([
+      { id: 'turn', type: 'turnButton', x: 0, y: 0, label: 'End Turn', clickRoutine: { steps: [] } }
+    ], 8);
+
+    expect(state.turn.width).toBe(162);
+    expect(state.turn.height).toBe(66);
+  });
+
+  it('scales a die face down so that a word fits on it', async () => {
+    const state = await importWidgets([
+      { id: 'dd', type: 'cardDeck', x: 0, y: 0, collectionType: 'dice', cardWidth: 50, cardHeight: 50,
+        cardTypes: { one: { label: 'Yes' }, two: { label: 'No' }, three: { label: 'Maybe' } },
+        faceTemplate: { objects: [] } },
+      { id: 'die', type: 'dice', deck: 'dd', x: 0, y: 0 }
+    ], 8);
+
+    expect(state.die.faces).toEqual([ { value: 'Yes' }, { value: 'No' }, { value: 'Maybe' } ]);
+    expect(state.die.css).toBe('--fontSize: 17px');
   });
 });
