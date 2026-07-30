@@ -870,6 +870,19 @@ body.zoom2x.edit.spacePanActive.panning #roomArea {
   --foreign:true;
 }
 
+/* a drop the target turned down - a pile that is at its dropLimit, a line that
+   carries all the stops it takes - flashes the widget that said no, so that a
+   refusal never looks like nothing happened. Added only for the length of the
+   animation, so a game's own filter is back right after. */
+@keyframes dropRefused {
+  0%, 60% { filter: drop-shadow(0 0 6px #b3261e) drop-shadow(0 0 6px #b3261e); }
+  100%    { filter: none; }
+}
+
+.widget.dropRefused {
+  animation: dropRefused 1s ease-out;
+}
+
 body:not(.edit) .widget.foreign, body:not(.edit) .widget.hidden {
   display: none !important;
 }

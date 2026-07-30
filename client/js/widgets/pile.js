@@ -45,7 +45,7 @@ class Pile extends Widget {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
-    if(this.handle && delta.text !== undefined)
+    if(this.handle && (delta.text !== undefined || delta.dropLimit !== undefined))
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
       if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
@@ -80,7 +80,9 @@ class Pile extends Widget {
     if(!await super.click(mode)) {
 
       const childCount = this.children().length;
-      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${childCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
+      const dropLimit = this.get('dropLimit');
+      const cardCount = dropLimit > -1 ? `${childCount} of ${dropLimit} cards` : `${childCount} cards`;
+      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${cardCount}</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
 
 
       const buttonBar1 = document.createElement('div');
@@ -269,9 +271,15 @@ class Pile extends Widget {
     return false;
   }
 
+  // The handle shows how many cards the pile holds. A pile that only takes so
+  // many says so as "2/3" - otherwise the limit is invisible until a drop is
+  // refused, and the player has no way of telling why.
   updateText() {
     const text = this.get('text');
-    this.handle.textContent = text === null ? this.childCount : text;
+    const limit = this.get('dropLimit');
+    const showLimit = text === null && limit > -1;
+    this.handle.classList.toggle('withLimit', showLimit);
+    this.handle.textContent = text !== null ? text : showLimit ? `${this.childCount}/${limit}` : this.childCount;
   }
 
   validDropTargets() {

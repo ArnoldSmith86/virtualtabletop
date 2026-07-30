@@ -370,6 +370,7 @@ const editorPropertyHints = {
   pipColor: 'The color used for the pips or the face symbol of the dice.',
   dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
+  dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries. Leave empty for no limit.',
   preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
   childrenPerOwner: 'Keep a separate set of held widgets for each player.',
   dropOffsetX: 'Horizontal starting position for widgets aligned inside the holder.',
@@ -3669,6 +3670,8 @@ class PropertiesModule extends SidebarModule {
   typeSectionProperties(widget) {
     const sections = this.typeSections(widget);
     const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
+    if(this.takesDrops(widget))
+      properties.push('dropLimit');
     for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
       for(const def of sections[group] || [])
         if(def.property)
@@ -3988,10 +3991,32 @@ class PropertiesModule extends SidebarModule {
 
   renderBehaviorSection(widget, title = 'Behavior') {
     const defs = this.typeSections(widget).behavior || [];
-    if(!defs.length)
+    if(!defs.length && !this.takesDrops(widget))
       return;
     this.addSubHeader(title);
     this.renderInputs(widget, defs);
+    if(this.takesDrops(widget))
+      this.renderDropLimitInput(widget);
+  }
+
+  // dropLimit says nothing on a widget nothing can be dropped into, so its
+  // input only shows up once the widget takes drops at all
+  takesDrops(widget) {
+    return asArray(widget.get('dropTarget') || []).length > 0;
+  }
+
+  // -1 is how "no limit" is stored, but an empty field says it better
+  renderDropLimitInput(widget, options = {}) {
+    new NumberInput(this, widget, options.label || 'Drop limit', {
+      listenTo: [ 'dropLimit' ],
+      min: 0,
+      step: 1,
+      nullIfEmpty: true,
+      placeholder: 'no limit',
+      hint: editorPropertyHints.dropLimit,
+      getValue: _=>widget.get('dropLimit') > -1 ? widget.get('dropLimit') : null,
+      setValue: options.setValue || (value=>this.inputValueUpdated(widget, 'dropLimit', value === null ? -1 : value))
+    }).render(options.target || this.moduleDOM);
   }
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
@@ -5636,6 +5661,12 @@ class PropertiesModule extends SidebarModule {
         await widget.set('rotateStops', checked);
       })
     }).render(this.moduleDOM);
+
+    if(this.takesDrops(widget))
+      this.renderDropLimitInput(widget, {
+        label: 'Maximum stops',
+        setValue: value=>lineEdit(`changed the stop limit of line ${widget.id}`, _=>widget.set('dropLimit', value === null ? -1 : value))
+      });
 
     new CheckboxInput(this, widget, 'Distribute evenly', {
       property: 'autoSpaceStops',

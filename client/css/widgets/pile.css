@@ -25,6 +25,15 @@
   font-size: calc(var(--phSize)/4);
 }
 
+/* "2/3" needs more room in the circle than a plain count does */
+.pile .handle.withLimit {
+  font-size: calc(var(--phSize)/3.5);
+}
+
+.pile .handle.small.withLimit {
+  font-size: calc(var(--phSize)/7);
+}
+
 .pile .handle.right {
   left: unset;
   right: var(--phPosition);

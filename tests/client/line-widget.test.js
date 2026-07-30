@@ -704,20 +704,32 @@ describe('dragging a widget onto a line to make it a stop', () => {
     test('a line takes no more stops than its dropLimit', async () => {
       await line.set('dropLimit', 1);
       // with room for one stop the drop is still on
-      expect(token.lineStopDropTarget()).not.toBeNull();
+      expect(token.lineStopDropTarget().full).toBe(false);
 
       await line.addStop('drop-other', 0.75);
-      expect(token.lineStopDropTarget()).toBeNull();
+      expect(token.lineStopDropTarget().full).toBe(true);
+    });
+
+    test('a full line refuses the drop instead of taking the widget', async () => {
+      await line.set('dropLimit', 1);
+      await line.addStop('drop-other', 0.75);
+
+      const target = token.lineStopDropTarget();
+      await token.applyLineStopDrop(target);
+      expect(line.stopList()).toEqual([ { widget: 'drop-other', position: 0.75 } ]);
+      expect(token.get('parent')).toBe(null);
+      // and it remembers who said no, so the drop can be undone visibly
+      expect(token.dropRefusedBy).toBe(line);
     });
 
     test('a stop the line already carries can be dropped back onto the path', async () => {
       await line.set('dropLimit', 1);
       await line.addStop('drop-token', 0.75);
-      expect(token.lineStopDropTarget().line).toBe(line);
+      expect(token.lineStopDropTarget().full).toBe(false);
 
       // even a line that is already over its limit hands nothing back
       await line.addStop('drop-other', 0.9);
-      expect(token.lineStopDropTarget().line).toBe(line);
+      expect(token.lineStopDropTarget().full).toBe(false);
     });
 
     test('the limit counts stops, not children', async () => {
@@ -726,13 +738,30 @@ describe('dragging a widget onto a line to make it a stop', () => {
       await other.set('fixedParent', true);
       await line.addStop('drop-other', 0.75);
       expect(line.children().length).toBe(0);
-      expect(token.lineStopDropTarget()).toBeNull();
+      expect(token.lineStopDropTarget().full).toBe(true);
     });
 
     test('the default of -1 places no limit', async () => {
       await line.addStop('drop-other', 0.75);
       expect(line.get('dropLimit')).toBe(-1);
-      expect(token.lineStopDropTarget()).not.toBeNull();
+      expect(token.lineStopDropTarget().full).toBe(false);
+    });
+
+    test('a line with room wins over a closer one that is full', async () => {
+      const full = createLine({ id: 'full-line', x: 100, y: 100, width: 200, height: 40, autoSpaceStops: false,
+        lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 }, dropTarget: { type: null }, dropLimit: 0 });
+      const roomy = createLine({ id: 'roomy-line', x: 100, y: 110, width: 200, height: 40, autoSpaceStops: false,
+        lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 }, dropTarget: { type: null } });
+      token.stopDropLines = [ full, roomy ];
+
+      // the full line is the closer one, but only the other can take the drop
+      expect(token.lineStopDropTarget().line).toBe(roomy);
+
+      await roomy.set('dropLimit', 0);
+      expect(token.lineStopDropTarget().full).toBe(true);
+
+      removeWidget('full-line');
+      removeWidget('roomy-line');
     });
   });
 });
