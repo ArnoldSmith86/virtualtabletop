@@ -4247,8 +4247,10 @@ class PropertiesModule extends SidebarModule {
     add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
     add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
     add('hidePlayerCursors', 'cursors', value=>value ? 'cursors hidden' : null);
-    // a seat's display is its text, never false - so this never fires for one
-    add('display', 'display', value=>value === false ? 'edit mode only' : null);
+    // a seat's display is the text it shows, which the section does not offer -
+    // so it does not summarize it either
+    if(!this.selectionIncludesType(widget, 'seat'))
+      add('display', 'display', value=>value === false ? 'edit mode only' : null);
 
     return parts.join(' · ');
   }
@@ -7538,7 +7540,6 @@ class PropertiesModule extends SidebarModule {
     // border radius + CSS editor
     this.renderAppearanceSection(widget);
 
-    // a team map is only named in the Seats section, not editable there, so it
     // 'seats' is curated by the Seats section in all three of its shapes
     this.renderOtherPropertiesSection(widget, [
       'seats', 'scoreProperty', 'showTotals', 'totalsLabel', 'currentRound',
