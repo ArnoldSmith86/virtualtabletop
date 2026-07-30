@@ -668,9 +668,11 @@ function v22SeatedColorFromCSS(properties) {
     return;
 
   // without !important the inline player color won anyway, so nothing to move
-  if(!/!important\s*$/i.test(seated['--color']))
+  const important = '!important';
+  const raw = seated['--color'].trimEnd();
+  if(!raw.toLowerCase().endsWith(important))
     return;
-  const value = seated['--color'].replace(/\s*!important\s*$/i, '').trim();
+  const value = raw.slice(0, -important.length).trim();
 
   // the preset pointed at the seat's own empty color; anything else dynamic is
   // left alone because seatedColor is used verbatim, not evaluated
