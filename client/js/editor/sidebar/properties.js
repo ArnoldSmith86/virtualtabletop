@@ -4541,7 +4541,10 @@ class PropertiesModule extends SidebarModule {
       button.title = label;
 
       // the presets differ in more than just css now, so compare every key they touch
-      const signature = state => JSON.stringify(Array.from(styleKeys).sort().map(k => state(k) ?? null));
+      const signature = state => JSON.stringify(Array.from(styleKeys).sort().map(k => {
+        const value = state(k);
+        return value === undefined ? null : value;
+      }));
       // a key the preset does not set is reset to null, i.e. back to the widget default
       const presetSignature = signature(k => k in preset ? preset[k] : widget.defaults[k]);
       const update = () => button.classList.toggle('selected', signature(k => widget.get(k)) === presetSignature);
@@ -4553,9 +4556,25 @@ class PropertiesModule extends SidebarModule {
         setDeltaCause(`${getPlayerDetails().playerName} applied the ${label} seat preset to ${widget.id} in editor`);
         for(const key of styleKeys)
           await widget.set(key, key in preset ? preset[key] : null);
+        this.applySeatedColor(widget);
         batchEnd();
       };
     }
+  }
+
+  // A seat's color is written when a player sits down, so changing seatedColor
+  // while somebody is already sitting there would otherwise only show up the
+  // next time the seat is taken.
+  applySeatedColor(widget) {
+    const player = widget.get('player');
+    if(!player)
+      return;
+    const seatedColor = widget.get('seatedColor');
+    const { activePlayers, activeColors } = getPlayerDetails();
+    const color = !seatedColor || seatedColor == 'playerColor'
+      ? activeColors[activePlayers.indexOf(player)] : seatedColor;
+    if(color)
+      this.inputValueUpdated(widget, 'color', color);
   }
 
   // "Use player color" toggle: it edits the seatedColor property, whose special
@@ -4568,10 +4587,11 @@ class PropertiesModule extends SidebarModule {
     };
     const usesPlayerColor = () => readColor() === null;
     const write = value => {
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} changed the seated color of ${widget.id} in editor`);
       this.inputValueUpdated(widget, 'seatedColor', value === null ? 'playerColor' : value);
-      // a fixed color applies right away to a seat that is already occupied
-      if(value !== null && widget.get('player'))
-        this.inputValueUpdated(widget, 'color', value);
+      this.applySeatedColor(widget);
+      batchEnd();
     };
 
     new CheckboxInput(this, widget, 'Use player color', {

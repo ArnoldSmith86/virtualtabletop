@@ -616,40 +616,92 @@ function v22RenameSeatOnlyNames(json) {
   return json.replace(/\bdisplayEmpty\b/g, 'emptyText').replace(/\bcolorEmpty\b/g, 'emptyColor');
 }
 
+// "${PROPERTY display}" without "OF" reads the widget the expression is written
+// on, so within a seat it can be renamed too.
+function v22RenameOwnPropertyDisplay(json) {
+  return json.replace(/(PROPERTY )display(\})/g, '$1seatedText$2');
+}
+
+function v22RenameKey(object, from, to) {
+  if(object[from] !== undefined) {
+    object[to] = object[from];
+    delete object[from];
+  }
+}
+
 function v22SeatProperties(properties) {
+  const isSeat = properties.type == 'seat';
+
   for(const key in properties) {
     const value = properties[key];
-    if(typeof value == 'string' || (typeof value == 'object' && value !== null)) {
-      const json = JSON.stringify(value);
-      if(json !== undefined && /displayEmpty|colorEmpty/.test(json))
-        properties[key] = JSON.parse(v22RenameSeatOnlyNames(json));
-    }
+    if(typeof value != 'string' && (typeof value != 'object' || value === null))
+      continue;
+    const json = JSON.stringify(value);
+    if(json === undefined)
+      continue;
+    let updated = v22RenameSeatOnlyNames(json);
+    if(isSeat)
+      updated = v22RenameOwnPropertyDisplay(updated);
+    if(updated !== json)
+      properties[key] = JSON.parse(updated);
   }
 
-  if(properties.displayEmpty !== undefined) {
-    properties.emptyText = properties.displayEmpty;
-    delete properties.displayEmpty;
-  }
-  if(properties.colorEmpty !== undefined) {
-    properties.emptyColor = properties.colorEmpty;
-    delete properties.colorEmpty;
-  }
+  v22RenameKey(properties, 'displayEmpty', 'emptyText');
+  v22RenameKey(properties, 'colorEmpty', 'emptyColor');
 
   // "display" is a boolean on every other widget, so it is only renamed on seats
-  if(properties.type == 'seat' && properties.display !== undefined) {
-    properties.seatedText = properties.display;
-    delete properties.display;
+  if(isSeat) {
+    v22RenameKey(properties, 'display', 'seatedText');
+    if(properties.dynamicProperties && typeof properties.dynamicProperties == 'object')
+      v22RenameKey(properties.dynamicProperties, 'display', 'seatedText');
+    v22SeatedColorFromCSS(properties);
   }
+}
+
+// Before seatedColor existed, the editor's "Fixed color" preset pinned the color
+// of an occupied seat with a ".seated { --color: <color> !important }" rule that
+// beat the color the engine writes inline when someone sits down. seatedColor
+// does that job now, so the rule moves into the property.
+function v22SeatedColorFromCSS(properties) {
+  const seated = properties.css && typeof properties.css == 'object' ? properties.css['.seated'] : null;
+  if(!seated || typeof seated != 'object' || typeof seated['--color'] != 'string')
+    return;
+
+  // without !important the inline player color won anyway, so nothing to move
+  if(!/!important\s*$/i.test(seated['--color']))
+    return;
+  const value = seated['--color'].replace(/\s*!important\s*$/i, '').trim();
+
+  // the preset pointed at the seat's own empty color; anything else dynamic is
+  // left alone because seatedColor is used verbatim, not evaluated
+  const color = /^\$\{PROPERTY emptyColor\}$/.test(value) ? (properties.emptyColor || '#999999') : value;
+  if(!color || color.indexOf('${') != -1)
+    return;
+
+  properties.seatedColor = color;
+  // a seat that is occupied right now showed the fixed color through the
+  // override, so keep it there instead of falling back to the player color
+  if(properties.player)
+    properties.color = color;
+
+  delete seated['--color'];
+  if(!Object.keys(seated).length)
+    delete properties.css['.seated'];
 }
 
 function v22SeatRoutine(routine, globalProperties) {
   const seatIDs = globalProperties.v22SeatIDs || [];
   const seatIDPattern = seatIDs.map(id => id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
   // ${PROPERTY display OF <seat>} can be renamed safely because the widget it
-  // reads from is known to be a seat. A plain SET/GET of "display" cannot be
-  // resolved statically, so only the two seat placeholders give it away.
+  // reads from is known to be a seat (the ID in that syntax is a literal that
+  // runs up to the closing brace)
   const propertyOfSeat = seatIDPattern
-    ? new RegExp(`(PROPERTY\\s+)display(\\s+OF\\s+'?(?:${seatIDPattern})'?\\b)`, 'g') : null;
+    ? new RegExp(`(PROPERTY )display( OF (?:${seatIDPattern})\\})`, 'g') : null;
+
+  // A plain SET/GET of "display" cannot be resolved statically. It is only
+  // renamed when the collection it works on provably holds nothing but seats,
+  // or when the value uses a placeholder that only a seat text understands.
+  const seatOnly = {};
 
   for(const key in routine) {
     const json = JSON.stringify(routine[key]);
@@ -662,9 +714,31 @@ function v22SeatRoutine(routine, globalProperties) {
       routine[key] = JSON.parse(updated);
 
     const operation = routine[key];
-    if(operation && typeof operation == 'object' && operation.func == 'SET' && operation.property == 'display'
-       && typeof operation.value == 'string' && /\b(playerName|seatIndex)\b/.test(operation.value)) {
-      operation.property = 'seatedText';
+    if(!operation || typeof operation != 'object')
+      continue;
+    const collection = operation.collection || 'DEFAULT';
+
+    if(operation.func == 'SELECT') {
+      const selectsSeats = operation.type == 'seat';
+      const mode = operation.mode || 'set';
+      if(mode == 'set')
+        seatOnly[collection] = selectsSeats;
+      else if(mode == 'add')
+        seatOnly[collection] = seatOnly[collection] && selectsSeats;
+      else if(mode == 'intersect')
+        seatOnly[collection] = seatOnly[collection] || selectsSeats;
+      // 'remove' can never bring non-seats into the collection
+      if(selectsSeats && operation.property == 'display')
+        operation.property = 'seatedText';
+    } else if(operation.func == 'CLONE') {
+      delete seatOnly[collection];
+    } else if(operation.func == 'CALL' || operation.func == 'FOREACH' || operation.func == 'IF') {
+      // these run routines of their own which can refill any collection
+      for(const name in seatOnly)
+        delete seatOnly[name];
+    } else if((operation.func == 'SET' || operation.func == 'GET') && operation.property == 'display') {
+      if(seatOnly[collection] || (typeof operation.value == 'string' && /\b(playerName|seatIndex)\b/.test(operation.value)))
+        operation.property = 'seatedText';
     }
   }
 }

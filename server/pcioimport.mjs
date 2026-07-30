@@ -594,7 +594,7 @@ export default async function convertPCIO(content) {
       }
     } else if(widget.type == 'seat') {
       w.type = 'seat';
-      w.display = 'seatIndex';
+      w.seatedText = 'seatIndex';
       w.emptyText = 'seatIndex';
       w.hideWhenUnused = true;
       if(typeof widget.seatIndex == 'number')
