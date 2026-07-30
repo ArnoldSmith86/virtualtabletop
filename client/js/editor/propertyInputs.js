@@ -42,14 +42,30 @@ function propertyInputValueSet(value) {
   return value !== undefined && value !== null && value !== '';
 }
 
-// Walks the state of all widgets and calls callback(key, value) for every string value.
+function numericInputValue(rawValue, min, max) {
+  if(rawValue === '' || rawValue === null || rawValue === undefined)
+    return null;
+
+  const value = Number(rawValue);
+  if(!Number.isFinite(value))
+    return null;
+
+  if(typeof min === 'number')
+    return Math.max(min, typeof max === 'number' ? Math.min(max, value) : value);
+  if(typeof max === 'number')
+    return Math.min(max, value);
+  return value;
+}
+
+// Walks the state of all widgets and calls callback(key, value, path, object)
+// for every string value.
 function forEachStringInGameState(callback) {
-  function walk(obj) {
+  function walk(obj, path = []) {
     for(const [ key, value ] of Object.entries(obj)) {
       if(typeof value == 'string')
-        callback(key, value);
+        callback(key, value, path.concat(key), obj);
       else if(typeof value == 'object' && value !== null)
-        walk(value);
+        walk(value, path.concat(key));
     }
   }
   for(const widget of widgets.values())
@@ -58,8 +74,8 @@ function forEachStringInGameState(callback) {
 
 function usedValuesInGame(callback) {
   const counts = {};
-  forEachStringInGameState((key, value)=>{
-    const match = callback(key, value);
+  forEachStringInGameState((key, value, path, object)=>{
+    const match = callback(key, value, path, object);
     if(match)
       counts[match] = (counts[match] || 0) + 1;
   });
@@ -70,21 +86,30 @@ function usedGameColors() {
   return usedValuesInGame((key, value)=>value == 'transparent' || value.match(/^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$|^(?:rgb|hsl)a?\(.*\)$/) ? value : null);
 }
 
-function usedGameIcons() {
-  return usedValuesInGame((key, value)=>{
-    // game-icons paths are unambiguous enough under any icon-ish key
-    // (icon properties, deck suits, symbol lists, face template values)
-    if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/) && [ 'icon', 'suit', 'name', 'value' ].indexOf(key) != -1)
+function usedGameIconValue(key, value, path = [], object = {}) {
+  // game-icons paths need context: generic `name` and `value` fields occur
+  // throughout routines, so only accept them when they are part of an icon
+  // value (an icon object or an icon face-template object).
+  if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/)) {
+    if(key == 'icon' || key == 'suit')
       return value;
-    if(key != 'icon')
-      return null;
-    // all other formats getIconDetails accepts for the icon property
-    if(value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/) || value.match(/^\/assets\/|^https?:\/\//))
-      return value;
-    if(value && !value.match(/^[\x00-\x7F]*$/)) // non-ASCII: emoji icons
+    if((key == 'name' && path.slice(0, -1).indexOf('icon') != -1) ||
+      ((key == 'name' || key == 'value') && object.type == 'icon'))
       return value;
     return null;
-  });
+  }
+  if(key != 'icon')
+    return null;
+  // all other formats getIconDetails accepts for the icon property
+  if(value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/) || value.match(/^\/assets\/|^https?:\/\//))
+    return value;
+  if(value && !value.match(/^[\x00-\x7F]*$/)) // non-ASCII: emoji icons
+    return value;
+  return null;
+}
+
+function usedGameIcons() {
+  return usedValuesInGame(usedGameIconValue);
 }
 
 function usedGameImages() {
@@ -92,6 +117,35 @@ function usedGameImages() {
     const match = value.match(/^(?:\/(?:assets\/-?[0-9]+_[0-9]+|i\/[^\s"']+\.(?:svg|png|jpe?g|webp|gif))|https?:\/\/[^\s"']+)$/);
     return match ? value : null;
   });
+}
+
+const iconPickerTypes = [
+  { type: 'game-icons',       label: 'Game Icons',  title: 'Include icons from Game-icons.net' },
+  { type: 'material-symbols', label: 'Material',    title: 'Include Google\'s Material Symbols' },
+  { type: 'emoji-color',      label: 'Color Emoji', title: 'Include color emoji' },
+  { type: 'emoji-monochrome', label: 'Mono Emoji',  title: 'Include monochrome emoji' },
+  { type: 'vtt-symbols',      label: 'VTT',         title: 'Include VTT symbols' }
+];
+
+function iconValueType(value) {
+  if(typeof value != 'string')
+    return null;
+  if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/))
+    return 'game-icons';
+  if(value.match(/^\[/))
+    return 'vtt-symbols';
+  if(value.match(/^[a-z0-9][a-z0-9_]*(_NOFILL)?$/))
+    return 'material-symbols';
+  if(value.match(/^\(.*\)$/))
+    return 'emoji-monochrome';
+  if(value && !value.match(/^[\x00-\x7F]*$/))
+    return 'emoji-color';
+  return null;
+}
+
+function iconTypeEnabled(value, enabledTypes) {
+  const type = iconValueType(value);
+  return !type || enabledTypes.has(type);
 }
 
 // Renders a small preview for an icon property value (same formats as getIconDetails).
@@ -137,7 +191,6 @@ function renderImageChip(value, target) {
 
 function renderColorChip(value, target) {
   const chip = div(target, 'propertyValueChip propertyColorChip');
-  chip.title = value;
   chip.style.setProperty('--chipColor', value);
   return chip;
 }
@@ -156,20 +209,20 @@ function loadIconSearchIndex() {
         for(let [ symbol, keywords ] of Object.entries(symbols)) {
           if(symbol.includes('/')) {
             keywords = keywords.slice(1); // first entry is the spritesheet index
-            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true });
+            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true, type: 'game-icons' });
           } else {
             const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
             symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
             const allKeywords = `${symbol},${keywords.join()}`.toLowerCase();
             if(symbol.match(/^\[/) || symbol.match(/^[a-z0-9_]+$/)) {
-              index.push({ value: symbol, keywords: allKeywords, image: false }); // VTT/material symbol font
+              index.push({ value: symbol, keywords: allKeywords, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
               if(hasNoFillVariant)
-                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false });
+                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false, type: 'material-symbols' });
             } else {
               // emoji: offer both the color image and the monochrome font variant
-              index.push({ value: symbol, keywords: allKeywords, image: true });
+              index.push({ value: symbol, keywords: allKeywords, image: true, type: 'emoji-color' });
               if(!skipForNotoMonochrome(symbol))
-                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false });
+                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false, type: 'emoji-monochrome' });
             }
           }
         }
@@ -182,27 +235,36 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
-// Interleave font-style and image-style matches so both are represented in the
-// top results even when one kind (usually game-icons) dominates the matches.
-function searchIconIndex(query, limit=42) {
+// Keep matches in symbols.json order so related icon families stay together.
+function searchIconIndex(query, limit=100, enabledTypes=null) {
   const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  const fonts = [];
-  const images = [];
-  for(const entry of iconSearchIndex || []) {
-    if(terms.every(term=>entry.keywords.includes(term)))
-      (entry.image ? images : fonts).push(entry.value);
-  }
-  const results = [];
-  for(let i=0; results.length < limit && (i < fonts.length || i < images.length); i++) {
-    if(i < fonts.length)  results.push(fonts[i]);
-    if(i < images.length) results.push(images[i]);
-  }
-  return results.slice(0, limit);
+  return (iconSearchIndex || [])
+    .filter(entry => terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
+    .slice(0, limit)
+    .map(entry => entry.value);
 }
+
+function imageURLFromSymbol(symbol) {
+  if(symbol.includes('/'))
+    return `/i/game-icons.net/${symbol}.svg`;
+  const filename = [...symbol].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
+  return `/i/noto-emoji/emoji_u${filename}.svg`;
+}
+
+function searchImageIndex(query, limit=100) {
+  const terms = query.toLowerCase().split(/\s+/).filter(term => term);
+  return (iconSearchIndex || [])
+    .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
+    .slice(0, limit)
+    .map(entry => imageURLFromSymbol(entry.value));
+}
+
+let activePropertyInfoPopup = null;
 
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup
-// closes with its close button, a click outside of it or Escape.
+// opens on hover or click. Hovered popups close when leaving the icon; clicked
+// popups stay open until an outside click or Escape.
 // Named propertyInfoButton (not infoButton) because controls/popup.js
 // declares its own top-level infoButton(); both files land in the editor
 // bundle whenever this PR and the routine editor are merged together (e.g.
@@ -210,9 +272,17 @@ function searchIconIndex(query, limit=42) {
 // module throw "Identifier has already been declared".
 function propertyInfoButton(appendTo, infoHTML) {
   const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
-  dom.addEventListener('click', e=>{
-    e.stopPropagation();
-    const popup = div($('#editor'), 'inline-popup', `<button class=popup-close icon=close title=Close></button><div class=content></div>`);
+  let closePopup = null;
+  let pinned = false;
+  const open = stick=>{
+    if(closePopup) {
+      pinned = pinned || stick;
+      return;
+    }
+    if(activePropertyInfoPopup)
+      activePropertyInfoPopup();
+    const popup = div($('#editor'), 'inline-popup', '<div class=content></div>');
+    let outsideClickTimer = null;
     $('.content', popup).innerHTML = infoHTML;
 
     const sourceRect = dom.getBoundingClientRect();
@@ -225,9 +295,13 @@ function propertyInfoButton(appendTo, infoHTML) {
       popup.style.top = `${Math.max(10, window.innerHeight - rect.height - 10)}px`;
 
     const close = _=>{
+      clearTimeout(outsideClickTimer);
       document.removeEventListener('click', onOutsideClick);
       document.removeEventListener('keydown', onKeyDown, true);
       popup.remove();
+      closePopup = null;
+      if(activePropertyInfoPopup == close)
+        activePropertyInfoPopup = null;
     };
     const onOutsideClick = e=>{
       if(!popup.contains(e.target))
@@ -240,10 +314,24 @@ function propertyInfoButton(appendTo, infoHTML) {
         close();
       }
     };
-    $('.popup-close', popup).onclick = close;
+    pinned = stick;
+    closePopup = close;
+    activePropertyInfoPopup = close;
     document.addEventListener('keydown', onKeyDown, true);
     // defer so the click that opened the popup doesn't immediately close it
-    setTimeout(_=>document.addEventListener('click', onOutsideClick), 0);
+    outsideClickTimer = setTimeout(_=>{
+      if(closePopup == close)
+        document.addEventListener('click', onOutsideClick);
+    }, 0);
+  };
+  dom.addEventListener('mouseenter', _=>open(false));
+  dom.addEventListener('mouseleave', _=>{
+    if(!pinned && closePopup)
+      closePopup();
+  });
+  dom.addEventListener('click', e=>{
+    e.stopPropagation();
+    open(true);
   });
   return dom;
 }
@@ -292,10 +380,12 @@ class PropertyInput {
         icon.className = `${this.options.labelIconNoFill ? 'material-symbols-nofill' : 'material-symbols'} labelIcon`;
         icon.textContent = this.options.labelIcon;
         label.appendChild(icon);
-        label.title = this.labelText;
+        label.dataset.label = this.labelText;
         label.classList.add('iconOnly');
       } else {
         label.textContent = this.labelText;
+        if(this.showLabelTitle())
+          label.title = this.labelText;
       }
       if(this.options.hint)
         propertyInfoButton(label, html(this.options.hint));
@@ -313,6 +403,10 @@ class PropertyInput {
     return '';
   }
 
+  showLabelTitle() {
+    return true;
+  }
+
   renderControl(target) {
   }
 
@@ -322,7 +416,7 @@ class PropertyInput {
 
 class TextInput extends PropertyInput {
   cssClass() {
-    return this.options.multiline ? 'textInput multiline' : 'textInput';
+    return `${this.options.multiline ? 'textInput multiline' : 'textInput'}${this.options.compact ? ' compactInput' : ''}`;
   }
 
   renderControl(target) {
@@ -380,14 +474,15 @@ class NumberInput extends PropertyInput {
       this.setValue(null);
       return;
     }
-    const value = +rawValue;
-    if(Number.isFinite(value)) {
-      this.setValue(value);
-      if(this.slider && document.activeElement !== this.slider)
-        this.slider.value = value;
-      if(document.activeElement !== this.input)
-        this.input.value = value;
-    }
+    const value = numericInputValue(rawValue, this.options.min, this.options.max);
+    if(value === null)
+      return;
+
+    this.setValue(value);
+    if(this.slider && document.activeElement !== this.slider)
+      this.slider.value = value;
+    if(document.activeElement !== this.input || String(rawValue) !== String(value))
+      this.input.value = value;
   }
 
   update(value) {
@@ -403,11 +498,10 @@ class NumberInput extends PropertyInput {
   }
 }
 
-// Accepts either a number (editable by text or slider) or a CSS-like string.
-// The slider is disabled while a string value such as "50%" is in use.
+// Accepts either a number or a CSS-like string such as "50%".
 class NumberOrTextInput extends PropertyInput {
   cssClass() {
-    return 'numberInput numberOrTextInput';
+    return `numberInput numberOrTextInput${this.options.compact ? ' compactInput' : ''}`;
   }
 
   renderControl(target) {
@@ -416,24 +510,12 @@ class NumberOrTextInput extends PropertyInput {
     if(this.options.placeholder !== undefined) this.input.placeholder = this.options.placeholder;
     this.input.oninput = _=>this.setValue(propertyInputNumberOrText(this.input.value, this.options.nullIfEmpty));
     target.appendChild(this.input);
-
-    this.slider = document.createElement('input');
-    this.slider.type = 'range';
-    this.slider.min = this.options.min !== undefined ? this.options.min : 0;
-    this.slider.max = this.options.max !== undefined ? this.options.max : 100;
-    this.slider.step = this.options.step !== undefined ? this.options.step : 1;
-    this.slider.oninput = _=>this.setValue(+this.slider.value);
-    target.appendChild(this.slider);
   }
 
   update(value) {
-    const numeric = typeof value == 'number' && Number.isFinite(value);
     this.input.placeholder = this.options.placeholder || 'e.g. 8, 8px, 50%';
     if(document.activeElement !== this.input)
       this.input.value = value === null ? '' : value;
-    this.slider.disabled = !numeric;
-    if(numeric && document.activeElement !== this.slider)
-      this.slider.value = value;
   }
 }
 
@@ -555,6 +637,9 @@ class PickerInput extends PropertyInput {
       this.expandButton.classList.add('open');
     this.previewButton.classList.add('open');
     this.updatePicker(this.getValue());
+    const search = this.pickerDOM.querySelector('input[placeholder^="Search "]');
+    if(search)
+      search.focus();
   }
 
   closePicker() {
@@ -608,9 +693,38 @@ class PickerInput extends PropertyInput {
   }
 
   updatePreview() {
+    const rawValue = this.getValue();
+    const previewValue = this.previewValue();
     this.previewButton.innerHTML = '';
-    this.renderChip(this.previewButton, this.previewValue());
-    this.previewButton.classList.toggle('usingDefault', this.dimDefault() && !propertyInputValueSet(this.getValue()));
+    this.renderChip(this.previewButton, previewValue);
+    const isEmpty = !propertyInputValueSet(previewValue);
+    const emptyLabel = this.emptyLabel();
+    this.previewButton.classList.toggle('usingDefault', this.dimDefault() && !propertyInputValueSet(rawValue));
+    this.previewButton.classList.toggle('emptyValue', isEmpty);
+    const title = this.previewTitle(isEmpty, emptyLabel);
+    if(title)
+      this.previewButton.title = title;
+    else
+      this.previewButton.removeAttribute('title');
+    this.previewButton.setAttribute('aria-label', isEmpty && emptyLabel ? emptyLabel : 'Edit value');
+  }
+
+  previewTitle(isEmpty, emptyLabel) {
+    return isEmpty && emptyLabel ? emptyLabel : 'Click to edit';
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || null;
+  }
+
+  renderEmptyChip(target) {
+    const chip = div(target, 'propertyValueChip propertyEmptyChip');
+    const label = this.emptyLabel();
+    if(label) {
+      chip.classList.add('propertyEmptyChipLabel');
+      chip.textContent = label;
+    }
+    return chip;
   }
 
   updatePicker(value) {
@@ -705,6 +819,14 @@ class ColorInput extends PickerInput {
     return false;
   }
 
+  previewTitle() {
+    return null;
+  }
+
+  showLabelTitle() {
+    return false;
+  }
+
   renderChip(target, value) {
     return renderColorChip(propertyInputValueSet(value) ? value : 'transparent', target);
   }
@@ -795,7 +917,11 @@ class IconInput extends PickerInput {
   renderChip(target, value) {
     if(propertyInputValueSet(value))
       return renderIconChip(value, target);
-    return div(target, 'propertyValueChip propertyEmptyChip');
+    return this.renderEmptyChip(target);
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || 'Choose icon';
   }
 
   renderPickerContent(target, value) {
@@ -805,7 +931,7 @@ class IconInput extends PickerInput {
     const search = document.createElement('input');
     search.placeholder = 'Search icons...';
     searchSection.appendChild(search);
-    const results = div(searchSection, 'propertyPickerChips');
+    const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
 
     const showResults = values=>{
       results.innerHTML = '';
@@ -819,13 +945,52 @@ class IconInput extends PickerInput {
         div(results, 'propertyPickerEmpty', 'No results.');
     };
 
-    const frequentlyUsed = [...new Set(usedGameIcons().concat(topUsedLibraryIcons))].slice(0, 42);
-    showResults(frequentlyUsed);
-
-    search.oninput = async _=>{
-      await loadIconSearchIndex().catch(_=>null);
-      showResults(search.value.trim() ? searchIconIndex(search.value.trim()) : frequentlyUsed);
+    const frequentlyUsed = _=>[...new Set(usedGameIcons().concat(topUsedLibraryIcons))]
+      .filter(icon => iconTypeEnabled(icon, enabledTypes))
+      .slice(0, 100);
+    const updateResults = async _=>{
+      const query = search.value.trim();
+      if(query)
+        await loadIconSearchIndex().catch(_=>null);
+      showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
     };
+
+    const typeToggles = div(searchSection, 'iconPickerFilterChips');
+    div(typeToggles, 'iconPickerFilterTitle', 'Libraries:');
+    for(const iconType of iconPickerTypes) {
+      const toggle = document.createElement('label');
+      toggle.className = 'iconPickerFilterChip';
+      toggle.title = iconType.title;
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = true;
+      checkbox.title = iconType.title;
+      checkbox.onchange = _=>{
+        if(checkbox.checked)
+          enabledTypes.add(iconType.type);
+        else
+          enabledTypes.delete(iconType.type);
+        updateResults();
+      };
+      toggle.appendChild(checkbox);
+      toggle.append(iconType.label);
+      typeToggles.appendChild(toggle);
+    }
+
+    const results = div(searchSection, 'propertyPickerChips');
+    showResults(frequentlyUsed());
+
+    const showAll = document.createElement('button');
+    showAll.setAttribute('icon', 'apps');
+    showAll.textContent = 'Show all';
+    showAll.onclick = async _=>{
+      const symbol = await pickSymbol();
+      if(symbol)
+        this.setValue(symbol.symbol);
+    };
+    searchSection.appendChild(showAll);
+
+    search.oninput = updateResults;
     loadIconSearchIndex().catch(_=>null);
   }
 }
@@ -842,12 +1007,55 @@ class ImageInput extends PickerInput {
   renderChip(target, value) {
     if(propertyInputValueSet(value))
       return renderImageChip(value, target);
-    return div(target, 'propertyValueChip propertyEmptyChip');
+    return this.renderEmptyChip(target);
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || 'Choose image';
   }
 
   renderPickerContent(target, value) {
     this.addChipList(target, 'Used in this game', usedGameImages(), value, renderImageChip);
     this.addChipList(target, 'Game pieces', builtinGamePieceImages, value, renderImageChip);
+
+    const searchSection = div(target, 'propertyPickerSection');
+    const search = document.createElement('input');
+    search.placeholder = 'Search images...';
+    searchSection.appendChild(search);
+    const results = div(searchSection, 'propertyPickerChips');
+
+    const showResults = values=>{
+      results.innerHTML = '';
+      for(const imageValue of values) {
+        const chip = renderImageChip(imageValue, results);
+        chip.dataset.value = imageValue;
+        chip.classList.toggle('selected', imageValue == this.getValue());
+        chip.onclick = _=>this.setValue(imageValue);
+      }
+      if(!values.length)
+        div(results, 'propertyPickerEmpty', 'No results.');
+    };
+
+    // default (empty-search) results: a sample of commonly used library images instead of repeating the
+    // "Used in this game"/"Game pieces" sections already shown above
+    const frequentlyUsed = topUsedLibraryIcons.map(imageURLFromSymbol);
+    showResults(frequentlyUsed);
+
+    const showAll = document.createElement('button');
+    showAll.setAttribute('icon', 'apps');
+    showAll.textContent = 'Show all';
+    showAll.onclick = async _=>{
+      const symbol = await pickSymbol('images');
+      if(symbol)
+        this.setValue(symbol.url);
+    };
+    searchSection.appendChild(showAll);
+
+    search.oninput = async _=>{
+      await loadIconSearchIndex().catch(_=>null);
+      showResults(search.value.trim() ? searchImageIndex(search.value.trim()) : frequentlyUsed);
+    };
+    loadIconSearchIndex().catch(_=>null);
 
     const section = div(target, 'propertyPickerSection');
     const upload = document.createElement('button');

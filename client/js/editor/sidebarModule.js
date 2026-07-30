@@ -15,6 +15,12 @@ class SidebarModule {
     const h = document.createElement('h2');
     h.innerText = text;
     (target || this.moduleDOM).append(h);
+    return h;
+  }
+
+  addLineBreak(target) {
+    const h = document.createElement('br');
+    (target || this.moduleDOM).append(h);
   }
 
   addLineBreak(target) {

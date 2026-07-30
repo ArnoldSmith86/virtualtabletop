@@ -153,11 +153,11 @@ export function shuffleArray(array) {
 }
 
 export function mapAssetURLs(str) {
-  return String(str).replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
+  return String(str).replaceAll(/(^|["' (=])\/(assets|i)\//g, '$1$2/');
 }
 
 export function unmapAssetURLs(str) {
-  return String(str).replaceAll(/(^|["' (])(assets|i)\//g, '$1/$2/');
+  return String(str).replaceAll(/(^|["' (=])(assets|i)\//g, '$1/$2/');
 }
 
 export function escapeID(id) {

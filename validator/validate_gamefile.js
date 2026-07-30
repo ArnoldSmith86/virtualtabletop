@@ -98,12 +98,13 @@ const COMMON_PROPERTIES = {
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
-    enterRoutine: getRoutineValidator({}, {'child': 1}),
+    enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
+    lineOriginalRotation: 'object',
     animatePropertyChange: 'any',
     resetProperties: 'object',
     clonedFrom: 'string',
@@ -134,6 +135,10 @@ const WIDGET_PROPERTIES = {
     Label: {
         ...COMMON_PROPERTIES,
         height: 'number', movable: 'boolean', layer: 'any', clickable: 'boolean', spellCheck: 'any', tabIndex: 'any', placeholderText: 'any', text: 'any', editable: 'any', twoRowBottomAlign: 'any'
+    },
+    Line: {
+        ...COMMON_PROPERTIES,
+        layer: 'any', movable: 'boolean', lineShape: v=>[ 'line', 'ellipse' ].includes(v) || 'lineShape must be "line" or "ellipse"', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', stops: v=>Array.isArray(v) && v.every(e=>e && typeof e === 'object' && typeof e.widget === 'string' && typeof e.position === 'number') || 'stops must be an array of { widget, position } objects', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', autoSpaceStops: 'boolean', dropTarget: 'any', onEnter: 'object', onLeave: 'object', connectStart: 'any', connectEnd: 'any'
     },
     Pile: {
         ...COMMON_PROPERTIES,
@@ -533,8 +538,12 @@ function validateRoutine(routine, context, propertyPath = []) {
             for(const field of operation.fields) {
                 if(typeof field.variable === 'string')
                     context.validVariables[field.variable] = 1;
-                if(field.type === 'choose')
-                    context.validCollections[field.collection || 'DEFAULT'] = 1;
+                if(field.type === 'choose') {
+                    const outputCollections = field.collection && typeof field.collection === 'object' && !Array.isArray(field.collection) ? Object.values(field.collection) : [field.collection || 'DEFAULT'];
+                    for(const collection of outputCollections)
+                        if(typeof collection === 'string')
+                            context.validCollections[collection] = 1;
+                }
             }
         }
         if(func === 'SELECT')
@@ -702,6 +711,8 @@ const operationProps = {
         'header': v=>typeof v === 'string',
         'fields': v=>Array.isArray(v) || 'fields must be an array',
         'css': v=>typeof v === 'string',
+        'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
+        'block':     'boolean',
         'randomRotation': 'number',
     },
     'LABEL': {
@@ -788,7 +799,8 @@ const operationProps = {
     'SWAPHANDS': {
         'interval': v=>typeof v === 'number' && Number.isInteger(v),
         'direction': getEnumValidator(['forward','backward','random']),
-        'source': 'inCollection'
+        'source': 'inCollection',
+        'keepOrder': 'boolean'
     },
     'TIMER': {
         'timer': 'idArray',
@@ -825,7 +837,8 @@ function customRoutineChecks(operation, problems, context, operationPath) {
 function customWidgetChecks(widget, widgets, problems) {
     if(widget.type === 'deck') {
         for(const prop of ['width', 'height', 'movable', 'layer', 'clickable']) {
-            if(widget[prop] !== undefined) {
+            const matchingCardDefaultSet = ['width', 'height'].includes(prop) && widget.cardDefaults && widget.cardDefaults[prop] !== undefined;
+            if(widget[prop] !== undefined && !matchingCardDefaultSet) {
                 problems.push({
                     widget: widget.id,
                     property: [prop],
