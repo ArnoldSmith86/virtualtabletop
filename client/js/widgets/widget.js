@@ -837,7 +837,9 @@ export class Widget extends StateManaged {
 
     const displayError = (field, error) => {
       const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
-      div(dom.parentElement, 'inputError', error);
+      // the message carries what the field defines (regexHint, min, max, regex),
+      // so it goes into the DOM as text and not as HTML
+      div(dom.parentElement, 'inputError').textContent = error;
     };
 
     for(const field of o.fields || []) {
