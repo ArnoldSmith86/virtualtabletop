@@ -764,9 +764,10 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
       id: 'multiDeck', type: 'deck', x: 20, y: 20,
       cardTypes: { plain: {} },
       faceTemplates: [ { objects: [
-        { type: 'text', x: 4,  y: 10,  width: 40, height: 20, fontSize: 14, value: 'one',   color: '#000000' },
-        { type: 'text', x: 30, y: 60,  width: 60, height: 20, fontSize: 14, value: 'two',   color: '#000000' },
-        { type: 'text', x: 12, y: 120, width: 50, height: 20, fontSize: 14, value: 'three', color: '#333333' }
+        { type: 'text', x: 4,   y: 10,  width: 40, height: 20, fontSize: 14, value: 'one',    color: '#000000' },
+        { type: 'text', x: 30,  y: 60,  width: 60, height: 20, fontSize: 14, value: 'two',    color: '#000000' },
+        { type: 'text', x: 12,  y: 120, width: 50, height: 20, fontSize: 14, value: 'three',  color: '#333333' },
+        { type: 'text', x: 200, y: 200, width: 50, height: 20, fontSize: 14, value: 'hidden', color: '#333333', display: false }
       ] } ]
     },
     multiCard: { id: 'multiCard', type: 'card', deck: 'multiDeck', cardType: 'plain', x: 300, y: 100 }
@@ -781,6 +782,19 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     for(let i = 0; i < groups.length; ++i)
       titles.push(groups[i].textContent);
     return titles;
+  });
+  const faceObjects = ClientFunction(() => JSON.stringify(widgets.get('multiDeck').get('faceTemplates')[0].objects));
+  // What kind of field a property row got, and whether it says the objects disagree - a "(mixed)" row has to
+  // keep the type of the property (a checkbox stays a checkbox) instead of falling back to a text field.
+  const fieldOf = ClientFunction(label => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
+    for(let i = 0; i < rows.length; ++i) {
+      if(rows[i].querySelector('label').textContent == label) {
+        const input = rows[i].querySelector('input, textarea');
+        return `${input.type || input.tagName.toLowerCase()}:${input.indeterminate || input.placeholder == '(mixed)' ? 'mixed' : 'common'}`;
+      }
+    }
+    return null;
   });
   const setSharedField = ClientFunction((label, value) => {
     const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
@@ -822,8 +836,27 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     .click('#deckEditorAlignLeft')
     .click('#deckEditorDistributeV')
     .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3) // the selection survives
+    .pressKey('ctrl+a') // ...and Ctrl+A picks up the whole face, including the hidden object
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // a hidden object has no box on screen, so aligning must leave it where it is instead of moving it to where
+  // its zero-sized rectangle appears to be
+  await t.click('#deckEditorAlignLeft');
+  await t.expect(JSON.parse(await faceObjects())[3].x).eql(200);
+
+  // display is set on the hidden object only, so its row is a "(mixed)" checkbox - not a text field, which
+  // would write the string "false"/"true" into every object
+  await t.expect(fieldOf('display')).eql('checkbox:mixed');
+  const displayRow = Selector('#deckEditorSidebar .deckEditorObjectProperties .genericInput')
+    .filter(node => node.querySelector('label').textContent == 'display');
+  await t.click(displayRow.find('input'));
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  const objects = JSON.parse(await faceObjects());
+  await t
+    .expect(objects.every(object => object.display === true)).ok() // booleans, not strings
+    .expect(fieldOf('display')).eql('checkbox:common')
     .pressKey('esc');
-  await compareState(t, 'fd906b0fb1237f2c7ecca4657535fbb3');
+  await compareState(t, '5dee75f5433a4bf336dc282d3ebb30cc');
 });
 
 test('Line widget in edit mode', async t => {

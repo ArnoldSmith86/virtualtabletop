@@ -262,9 +262,14 @@ class DeckEditor {
     return [...this._selectedObjects].sort((a,b)=>a-b);
   }
 
-  selectedObjectTemplates() {
+  // The shown face's object array, or an empty one while there is no face (yet).
+  faceObjects() {
     const face = this.faceTemplates[this.face];
-    const objects = face && Array.isArray(face.objects) ? face.objects : [];
+    return face && Array.isArray(face.objects) ? face.objects : [];
+  }
+
+  selectedObjectTemplates() {
+    const objects = this.faceObjects();
     return this.selectedObjectIndices().map(index=>objects[index]).filter(object=>object);
   }
 
@@ -870,7 +875,9 @@ class DeckEditor {
         return this.redo();
       }
       // Ctrl/Cmd+A selects every face object of the shown face, ready for a shared property edit or an alignment.
-      if(key == 'a' && [ 'TEXTAREA', 'INPUT', 'SELECT' ].indexOf(e.target.tagName) == -1 && !e.target.isContentEditable) {
+      // Not while one of the editor's overlays (export, import, new deck, ...) is up though: there the browser's
+      // own "select all" is what the user means.
+      if(key == 'a' && !isOverlayActive() && [ 'TEXTAREA', 'INPUT', 'SELECT' ].indexOf(e.target.tagName) == -1 && !e.target.isContentEditable) {
         e.preventDefault();
         return this.selectAllObjects();
       }
@@ -1547,6 +1554,7 @@ class DeckEditor {
 
     // Dragging one object of a multi-selection moves the whole selection, so a group keeps its arrangement.
     const dragged = this.startPositions(this.faceTemplates[this.face].objects[index]);
+    const collapseOnClick = this._selectedObjects.length > 1; // see up() below
     const startCoords = eventCoords(name, e);
     let moved = false;
 
@@ -1574,6 +1582,11 @@ class DeckEditor {
       if(moved) {
         await this.commit('faceTemplates', this.objectActionCause('moved', dragged.length));
         this.renderSidebar();
+      } else if(collapseOnClick) {
+        // A plain click on a member of a multi-selection keeps the group while the mouse is down (so it can
+        // drag the whole group) but falls back to just this object when it turns out to be a click - the same
+        // as clicking its row in the tree, and what keeps the next property edit from hitting all of them.
+        this.selectObject(index);
       }
     };
     for(const event of [ 'mousemove', 'touchmove' ])
@@ -1667,22 +1680,31 @@ class DeckEditor {
     return faceDiv ? faceDiv.children[this.selectedObject] : null;
   }
 
-  // The rendered nodes of the selected objects, in the same order as selectedObjectTemplates/dragObjects.
+  // The rendered nodes of the selected objects, in the same order as selectedObjectTemplates/dragObjects - so
+  // the same indices are dropped here as there and entry i always belongs to object i.
   selectedObjectDivs() {
+    const objects = this.faceObjects();
     const faceDiv = this.mainCard ? $a('.cardFace', this.mainCard.domElement)[this.face] : null;
     if(!faceDiv)
       return [];
-    return this.selectedObjectIndices().map(index=>faceDiv.children[index] || null);
+    return this.selectedObjectIndices().filter(index=>objects[index]).map(index=>faceDiv.children[index] || null);
   }
 
   // Align / distribute work on what is actually drawn (getBoundingClientRect, so rotated objects and auto-sized
   // icons line up by their visible box) and write the result back in the card's own coordinates - the same
   // approach the room editor's align toolbar takes with widgets.
+  // Each object is paired with its own rendered node by index (not by position in two separately filtered
+  // lists), and objects without a visible box are left out: a "display: false" object renders as display:none,
+  // whose rect is all zeros, so aligning to it would teleport it by the card's offset on screen.
   alignItems() {
-    const divs = this.selectedObjectDivs();
-    return this.selectedObjectTemplates()
-      .map((object, i)=>({ object, rect: divs[i] ? divs[i].getBoundingClientRect() : null }))
-      .filter(item=>item.rect);
+    const objects = this.faceObjects();
+    const faceDiv = this.mainCard ? $a('.cardFace', this.mainCard.domElement)[this.face] : null;
+    if(!faceDiv)
+      return [];
+    return this.selectedObjectIndices()
+      .filter(index=>objects[index] && faceDiv.children[index])
+      .map(index=>({ object: objects[index], rect: faceDiv.children[index].getBoundingClientRect() }))
+      .filter(item=>item.rect.width || item.rect.height);
   }
 
   async alignObjects(property, lowerBound, upperBound, factor) {
@@ -1714,7 +1736,7 @@ class DeckEditor {
       object[property] = Math.round((object[property] || 0) - (rect[lowerBound] - start - offset)/this.cardScale);
       offset += gap + rect[upperBound] - rect[lowerBound];
     }
-    await this.finishAlignment(items.length, 'evenly spaced');
+    await this.finishAlignment(items.length, 'distributed');
   }
 
   async finishAlignment(count, verb) {
@@ -1731,9 +1753,15 @@ class DeckEditor {
   // isn't drawn at all. For that case this puts a replacement rectangle into the card wrapper, outside the clip,
   // at the object's box clamped to the card - i.e. just inside the card's outer edge - and turns the object's
   // own outline off so only one rectangle is drawn.
+  // Only the primary object can carry that replacement rectangle, so every other object gets the class taken
+  // off again first - ctrl+clicking a second object makes it the new primary, and the old one would otherwise
+  // keep an outline that is turned off with no rectangle standing in for it.
   updateSelectionOutline() {
     const objectDiv = this.selectedObjectDiv();
     const outline = this.selectionOutline;
+    for(const clipped of $a('.deckEditorClippedObject', this.mainCard && this.mainCard.domElement))
+      if(clipped != objectDiv)
+        clipped.classList.remove('deckEditorClippedObject');
     if(!this.cardWrapper || !objectDiv) {
       if(outline)
         outline.style.display = 'none';
@@ -2014,9 +2042,11 @@ class DeckEditor {
       if(property == 'type')
         return this.renderObjectTypeRow(objectProps, objects, objectFieldArgs('type'));
       // Known object properties get a fixed field type (number or text) with no type selector; the value's
-      // JS type decides for anything custom.
-      const fieldType = this.objectFieldType(property);
+      // JS type decides for anything custom. A "(mixed)" row has no value to read that type from, so it is
+      // taken from the first object that has the property set - otherwise a mixed checkbox/JSON row would
+      // fall back to a text field and write a string ("false") where a boolean belongs.
       const common = this.commonPropertyValue(objects, property);
+      const fieldType = this.objectFieldType(property) || this.valueFieldType(common.sample);
       const onValueChanged = v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
         for(const selected of objects)
@@ -2831,11 +2861,14 @@ class DeckEditor {
 
   // The value a property has across the selected objects: the shared one, or mixed = true as soon as they
   // disagree - the row then shows an empty "(mixed)" field that only writes once something is typed into it.
+  // A mixed row still needs a field type though (a checkbox has to stay a checkbox), and value is blank in that
+  // case, so sample carries the first value actually set - what the row's type is then read from.
   commonPropertyValue(objects, property) {
     const key = value=>JSON.stringify(value === undefined ? null : value);
     const first = objects.length ? objects[0][property] : undefined;
     const mixed = objects.some(object=>key(object[property]) !== key(first));
-    return { value: mixed ? undefined : first, mixed };
+    const set = objects.find(object=>object[property] !== undefined);
+    return { value: mixed ? undefined : first, mixed, sample: set ? set[property] : undefined };
   }
 
   // The blocks the sidebar sorts property rows into, mirroring the Edit Widget sidebar so both read the same
@@ -2865,8 +2898,11 @@ class DeckEditor {
       for(const property of inGroup)
         remaining.splice(remaining.indexOf(property), 1);
 
+      // Position/Size start folded only for a face object, where x/y/width/height are usually changed by
+      // dragging the object around. On the other tabs those same names are the point of the tab (All Cards is
+      // mostly width/height) or an arbitrary game-defined property, so there they start open.
       const key = `${stateKey}:${group.id}`;
-      const collapsed = this.groupCollapsed[key] !== undefined ? this.groupCollapsed[key] : !!group.collapsed;
+      const collapsed = this.groupCollapsed[key] !== undefined ? this.groupCollapsed[key] : (stateKey == 'object' && !!group.collapsed);
       const wrap = div(target, `deckEditorGroup${collapsed ? ' collapsed' : ''}`);
       const header = document.createElement('button');
       header.type = 'button';
@@ -2898,17 +2934,25 @@ class DeckEditor {
     return undefined;
   }
 
+  // The field a value asks for when nothing forces a type: numbers get a number field, booleans a checkbox,
+  // arrays/objects a JSON textarea, everything else a text field.
+  valueFieldType(value) {
+    if(typeof value === 'number')
+      return 'number';
+    if(typeof value === 'boolean')
+      return 'boolean';
+    if(value !== null && typeof value === 'object')
+      return 'object';
+    return 'text';
+  }
+
   // A property row with a fixed input type and NO type selector — matches addInput's return shape ({ dom }) so
   // the make-dynamic / delete buttons attach the same way. fieldType may be forced (number/text/boolean/object)
   // or left undefined to follow the value's JS type. mixed marks a row whose selected objects disagree about
   // the value: the field starts empty and says so, and only writes to them once something is entered.
   addTypedInput(label, value, onValueChanged, target, fieldType, emptyIsZero, mixed) {
-    if(!fieldType) {
-      if(typeof value === 'number') fieldType = 'number';
-      else if(typeof value === 'boolean') fieldType = 'boolean';
-      else if(value !== null && typeof value === 'object') fieldType = 'object';
-      else fieldType = 'text';
-    }
+    if(!fieldType)
+      fieldType = this.valueFieldType(value);
     const wrapper = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
     labelEl.style.cssText = 'display:inline-block;width:100px';
