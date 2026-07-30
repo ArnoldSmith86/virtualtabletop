@@ -631,20 +631,58 @@ async function addRecursive(os, parent=null) {
   return widgets;
 }
 
+// How much room a widget really takes up, as a box relative to its x/y. That is
+// not simply width x height: a widget rotated by 90 degrees is as high as it is
+// wide, and an opened bag reaches far below its button because the holder holding
+// the contents is a child of it. Both rotate and scale happen around the center of
+// the widget, so the box can start left of / above x/y and extend past width/height.
+function widgetExtent(widget, byParent) {
+  let x0 = 0, y0 = 0, x1 = widget.width || 0, y1 = widget.height || 0;
+
+  for(const child of byParent[widget.id] || []) {
+    const box = widgetExtent(child, byParent);
+    x0 = Math.min(x0, (child.x || 0) + box.x0);
+    y0 = Math.min(y0, (child.y || 0) + box.y0);
+    x1 = Math.max(x1, (child.x || 0) + box.x1);
+    y1 = Math.max(y1, (child.y || 0) + box.y1);
+  }
+
+  if(widget.rotation) {
+    const rad = widget.rotation*Math.PI/180;
+    const cos = Math.abs(Math.cos(rad)), sin = Math.abs(Math.sin(rad));
+    // rotate the box around the center of the widget and take the upright box
+    // around the result - that is what the surface has to have room for
+    const cx = (widget.width || 0)/2, cy = (widget.height || 0)/2;
+    const mx = (x0+x1)/2 - cx,        my = (y0+y1)/2 - cy;
+    const hw = (x1-x0)/2,             hh = (y1-y0)/2;
+    const rx = cx + Math.cos(rad)*mx - Math.sin(rad)*my;
+    const ry = cy + Math.sin(rad)*mx + Math.cos(rad)*my;
+    x0 = rx - (hw*cos + hh*sin); x1 = rx + (hw*cos + hh*sin);
+    y0 = ry - (hw*sin + hh*cos); y1 = ry + (hw*sin + hh*cos);
+  }
+
+  return { x0, y0, x1, y1 };
+}
+
 function moveIntoBounds(widgets, top, bottom) {
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+  const byParent = {};
+  for(const widget of Object.values(widgets))
+    if(widget.parent)
+      (byParent[widget.parent] = byParent[widget.parent] || []).push(widget);
 
   // Widgets that are not on the surface at all: children move with their parent,
   // and a deck is invisible and has no position. Counting a deck as a widget at
   // (0, 0) would pull the whole bounding box to the origin.
-  const placed = Object.values(widgets).filter(w=>!w.parent && w.x !== undefined);
+  const placed = Object.values(widgets).filter(w=>!w.parent && w.x !== undefined).map(w=>({ widget: w, box: widgetExtent(w, byParent) }));
 
   // 1. Find bounding box for all parent-less widgets
-  for(const widget of placed) {
-    minX = Math.min(minX, widget.x);
-    minY = Math.min(minY, widget.y);
-    maxX = Math.max(maxX, widget.x + (widget.width  || 0));
-    maxY = Math.max(maxY, widget.y + (widget.height || 0));
+  for(const { widget, box } of placed) {
+    minX = Math.min(minX, widget.x + box.x0);
+    minY = Math.min(minY, widget.y + box.y0);
+    maxX = Math.max(maxX, widget.x + box.x1);
+    maxY = Math.max(maxY, widget.y + box.y1);
   }
   if(minX > maxX)
     return widgets;
@@ -656,26 +694,28 @@ function moveIntoBounds(widgets, top, bottom) {
   const offsetX =       (1600       - (maxX-minX)*scale)/2;
   const offsetY = top + (bottom-top - (maxY-minY)*scale)/2;
 
-  for(const widget of placed) {
-    const width  = widget.width  || 0;
-    const height = widget.height || 0;
+  for(const { widget, box } of placed) {
+    const width  = box.x1 - box.x0;
+    const height = box.y1 - box.y0;
 
     // The objects are scaled along with the distances between them - scaling only
     // the positions would let everything overlap on a table bigger than the surface.
-    // The scale property keeps the center of a widget in place, so its position is
-    // derived from the center as well, and x/y stay the top left corner of the
-    // unscaled widget: the visible box is centered inside it.
-    const inset = (1-scale)/2;
-    const left = (widget.x + width /2 - minX)*scale + offsetX - width *scale/2;
-    const topY = (widget.y + height/2 - minY)*scale + offsetY - height*scale/2;
+    const left = (widget.x + box.x0 + width /2 - minX)*scale + offsetX - width *scale/2;
+    const topY = (widget.y + box.y0 + height/2 - minY)*scale + offsetY - height*scale/2;
 
     // a widget that is higher than the band between the seats and the hand cannot
     // be kept inside it - a full table board is allowed to use the whole surface
     const fits = height*scale <= bottom-top;
     const lo = fits ? top    : 0;
     const hi = fits ? bottom : 1000;
-    widget.x = Math.round(clamp(left, 0,  Math.max(0,  1600 - width *scale)) - width *inset);
-    widget.y = Math.round(clamp(topY, lo, Math.max(lo, hi   - height*scale)) - height*inset);
+
+    // From the top left corner of the visible box back to x/y: the center of the
+    // widget stays in place while the box shrinks towards it, so x/y stay the top
+    // left corner of the unscaled, unrotated widget - which is not where it is seen.
+    const anchorX = (widget.width  || 0)/2*(1-scale) + box.x0*scale;
+    const anchorY = (widget.height || 0)/2*(1-scale) + box.y0*scale;
+    widget.x = Math.round(clamp(left, 0,  Math.max(0,  1600 - width *scale)) - anchorX);
+    widget.y = Math.round(clamp(topY, lo, Math.max(lo, hi   - height*scale)) - anchorY);
     if(scale < 1)
       widget.scale = scale;
   }

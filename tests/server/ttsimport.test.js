@@ -23,8 +23,8 @@ function objects(...ObjectStates) {
   return { SaveName: 'test', ObjectStates };
 }
 
-function die(GUID, posX) {
-  return { Name: 'Die_6', GUID, Transform: { posX, posZ: 0 } };
+function die(GUID, posX, posZ=0) {
+  return { Name: 'Die_6', GUID, Transform: { posX, posZ } };
 }
 
 function deck(GUID, DeckIDs) {
@@ -39,6 +39,43 @@ function deck(GUID, DeckIDs) {
 
 function typed(widgets, type) {
   return Object.values(widgets).filter(w=>(w.type || 'basic') == type);
+}
+
+// The corners a widget ends up covering, the way the client renders it: a widget is
+// a rectangle at x/y, and every widget in its parent chain scales and rotates its
+// contents around its own center (`translate() rotate() scale()` with the default
+// transform-origin). So x/y is not necessarily the top left corner on screen.
+function corners(widget, widgets) {
+  let points = [ [ 0, 0 ], [ widget.width || 0, 0 ], [ widget.width || 0, widget.height || 0 ], [ 0, widget.height || 0 ] ];
+
+  for(let node = widget; node; node = widgets[node.parent]) {
+    const cx = (node.width || 0)/2, cy = (node.height || 0)/2;
+    const rad = (node.rotation || 0)*Math.PI/180, scale = node.scale || 1;
+    points = points.map(([ x, y ])=>{
+      const dx = (x - cx)*scale, dy = (y - cy)*scale;
+      return [
+        (node.x || 0) + cx + dx*Math.cos(rad) - dy*Math.sin(rad),
+        (node.y || 0) + cy + dx*Math.sin(rad) + dy*Math.cos(rad)
+      ];
+    });
+  }
+
+  return points;
+}
+
+// Every widget of the room has to be reachable, children included: the surface is
+// overflow: hidden, so anything outside of it cannot be clicked at all.
+function expectOnSurface(widgets, bottom=1000) {
+  for(const widget of Object.values(widgets)) {
+    if(widget.id == 'hand' || widget.x === undefined && !widget.parent)
+      continue;
+    for(const [ x, y ] of corners(widget, widgets)) {
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(1600);
+      expect(y).toBeLessThanOrEqual(bottom);
+    }
+  }
 }
 
 describe('TTS import: dice', () => {
@@ -136,18 +173,36 @@ describe('TTS import: layout', () => {
       ObjectStates: [ die('a', -40), die('b', 40), { Name: 'Custom_Board', GUID: 'board', Locked: true, Transform: { posX: 0, posZ: 0, scaleX: 8, scaleZ: 8 }, CustomImage: { ImageURL: png(1600, 1000) } } ]
     });
 
-    // x/y are the corner of the unscaled widget, the visible box is centered in it
-    for(const widget of Object.values(widgets)) {
-      if(widget.parent || widget.x === undefined)
-        continue;
-      const scale = widget.scale || 1;
-      const left = widget.x + (widget.width  || 0)*(1-scale)/2;
-      const top  = widget.y + (widget.height || 0)*(1-scale)/2;
-      expect(left).toBeGreaterThanOrEqual(0);
-      expect(top).toBeGreaterThanOrEqual(0);
-      expect(left + (widget.width  || 0)*scale).toBeLessThanOrEqual(1600);
-      expect(top  + (widget.height || 0)*scale).toBeLessThanOrEqual(1000);
-    }
+    expectOnSurface(widgets);
+  });
+
+  it('fits a rotated object by the space it really covers', async () => {
+    const board = rotY=>({ Name: 'Custom_Board', GUID: 'board', Transform: { posX: 0, posZ: 0, rotY, scaleX: 2, scaleZ: 2 }, CustomImage: { ImageURL: png(1600, 100) } });
+    const flat = await convert(objects(board(0)));
+    const upright = await convert(objects(board(90)));
+
+    // 1200x75 fits as it is, but turned by 90 degrees the same board is 1200px high
+    expect(flat.board.width).toBe(1200);
+    expect(flat.board.scale).toBe(undefined);
+    expect(upright.board.rotation).toBe(90);
+    expect(upright.board.scale).toBeLessThan(1);
+    expectOnSurface(upright);
+  });
+
+  it('leaves room for the holder of a bag at the bottom of the layout', async () => {
+    const widgets = await convert({
+      SaveName: 'test',
+      Hands: { Enable: true, HandTransforms: [ { Color: 'Red' } ] },
+      ObjectStates: [
+        die('top', 0, 6),
+        { Name: 'Bag', GUID: 'bag', Transform: { posX: 0, posZ: -6 }, ContainedObjects: [ deck('inBag', [ 100, 101 ]) ] }
+      ]
+    });
+
+    // the holder is only visible while the bag is open, but it still has to fit into
+    // the band between the seats and the hand instead of being cut off by the surface
+    expect(widgets.bag.parent).toBe('bag-bag');
+    expectOnSurface(widgets, 810);
   });
 
   it('scales the objects along with the distances between them', async () => {
