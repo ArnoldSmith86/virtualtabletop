@@ -231,6 +231,17 @@ describe('deck generator helpers', () => {
     expect(cssHelpers.parseRankRange(',')).toEqual([]);
   });
 
+  test('parseRankRange stops expanding a range that would freeze the editor', () => {
+    // a mistyped "2-100000" would otherwise build 100000 ranks per suit on every keystroke
+    const huge = cssHelpers.parseRankRange('2-100000');
+    expect(huge.length).toBe(200);
+    expect(huge[0]).toBe(2);
+    expect(huge[199]).toBe(201);
+    // the cap is on the whole list, not on the single range
+    expect(cssHelpers.parseRankRange('2-201,J').length).toBe(200);
+    expect(cssHelpers.parseRankRange('2-201,J')).not.toContain('J');
+  });
+
   test('defaultSuitName uses the readable part of an icon value', () => {
     expect(cssHelpers.defaultSuitName('skoll/hearts')).toBe('hearts');
     expect(cssHelpers.defaultSuitName('casino')).toBe('casino');
@@ -256,6 +267,8 @@ describe('deck generator helpers', () => {
     expect(cssHelpers.deckGeneratorDesignHint(4, 0)).toBe('Add at least one rank above to see the card designs.');
     expect(cssHelpers.deckGeneratorDesignHint(4, 52)).toBe('52 cards from 4 suits. Pick how they look:');
     expect(cssHelpers.deckGeneratorDesignHint(1, 1)).toBe('1 card from 1 suit. Pick how they look:');
+    // and it says so when a rank list hit the cap, so the missing ranks are not a surprise
+    expect(cssHelpers.deckGeneratorDesignHint(1, 200, true)).toBe('200 cards from 1 suit. Only the first 200 ranks of a suit are used. Pick how they look:');
   });
 });
 

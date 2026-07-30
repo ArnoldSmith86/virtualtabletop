@@ -788,11 +788,19 @@ test('Deck editor: the custom deck wizard survives an empty rank list', async t 
     .expect(designs.count).eql(0)
     .expect(addToGame.hasAttribute('disabled')).ok();
 
-  // and it comes back once there is a rank again
+  // and it comes back once there is a rank again - with the design that was picked before still picked, so the
+  // deck can be added without noticing that the gallery was rebuilt in between
   await setSharedRanks('A');
   await t
     .expect(hint.textContent).eql('4 cards from 4 suits. Pick how they look:')
     .expect(designs.count).gt(0)
+    .expect(designs.nth(0).hasClass('selected')).ok()
+    .expect(addToGame.hasAttribute('disabled')).notOk();
+
+  // a range that would build a card type per rank on every keystroke is cut off, and the hint says so
+  await setSharedRanks('2-100000');
+  await t
+    .expect(hint.textContent).eql('800 cards from 4 suits. Only the first 200 ranks of a suit are used. Pick how they look:')
     .pressKey('esc');
 });
 

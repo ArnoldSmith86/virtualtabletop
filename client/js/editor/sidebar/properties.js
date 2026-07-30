@@ -58,6 +58,11 @@ function centerElementInClientRect(element, boundingClientRect) {
   element.style.transform = `translate(${translateX}px, ${translateY}px) ${element.style.transform}`;
 }
 
+// A range is expanded rank by rank and every rank becomes a card type, on every keystroke of the ranks field -
+// so a mistyped "2-100000" would build 100000 ranks per suit and freeze the tab. Stop at a deck size that is
+// still a deck; the hint above the design gallery says when a list was cut off here.
+const DECK_GENERATOR_MAX_RANKS = 200;
+
 function parseRankRange(rankRange) {
   const rankArray = [];
   // Ranks are typed as a comma separated list, so spaces around them are the user separating the list, not part
@@ -66,12 +71,14 @@ function parseRankRange(rankRange) {
   const rankElements = rankRange.split(',').map(rankElement=>rankElement.trim()).filter(rankElement=>rankElement !== '');
 
   rankElements.forEach(rankElement => {
+    if(rankArray.length >= DECK_GENERATOR_MAX_RANKS)
+      return;
     // A range is the whole entry, and splitting it on '-' would cut a negative bound in half ("-3--1"), so read
     // both bounds from the match instead. Anything else - "J", "Sun", "2b" - is a rank of its own.
     const range = rankElement.match(/^(-?[0-9]+)-(-?[0-9]+)$/);
     if(range) {
       const [ start, end ] = range.slice(1).map(Number);
-      for(let i = start; i <= end; i++)
+      for(let i = start; i <= end && rankArray.length < DECK_GENERATOR_MAX_RANKS; i++)
         rankArray.push(i);
     } else {
       rankArray.push(rankElement);
@@ -84,12 +91,13 @@ function parseRankRange(rankRange) {
 // The line above the card design gallery. A suit list without suits or without any rank is a normal state while
 // the deck is being typed, but it has no cards to show designs of - and a design tile renders a real card, which
 // throws without a card type. Say what is missing instead, so the gallery can be skipped.
-function deckGeneratorDesignHint(suitCount, cardCount) {
+function deckGeneratorDesignHint(suitCount, cardCount, ranksCapped) {
   if(!suitCount)
     return 'Add at least one suit above to see the card designs.';
   if(!cardCount)
     return 'Add at least one rank above to see the card designs.';
-  return `${cardCount} card${cardCount == 1 ? '' : 's'} from ${suitCount} suit${suitCount == 1 ? '' : 's'}. Pick how they look:`;
+  const capped = ranksCapped ? ` Only the first ${DECK_GENERATOR_MAX_RANKS} ranks of a suit are used.` : '';
+  return `${cardCount} card${cardCount == 1 ? '' : 's'} from ${suitCount} suit${suitCount == 1 ? '' : 's'}.${capped} Pick how they look:`;
 }
 
 async function setCardCount(deck, cardType, count) {
@@ -1231,10 +1239,14 @@ class PropertiesModule extends SidebarModule {
     const designHint = document.createElement('div');
     designHint.className = 'deckGeneratorHint deckGeneratorDesignHint';
     const designSelectionDiv = div(null, 'deckGeneratorDesigns');
+    // The picked design is remembered here instead of being read back off the tiles: the gallery is emptied
+    // whenever the suits have no card to preview (a ranks field being retyped), and a selection that lives only
+    // in the DOM would be forgotten with it. The design list itself never changes, so the index stays valid.
+    let selectedDesign = -1;
+    // Nothing can be added without a design, and there is no design to add while the gallery is empty.
+    const updateCreateButton = _=>createButton.disabled = selectedDesign < 0 || !designSelectionDiv.children.length;
     const updateDesignPreview = _=>{
       const oldScrollTop = this.moduleDOM.scrollTop;
-      const oldSelectedButton = $('.selected.deckDesignButton', designSelectionDiv);
-      const oldSelectedButtonIndex = oldSelectedButton ? oldSelectedButton.dataset.index : -1;
       designSelectionDiv.innerHTML = '';
 
       // Designs that need the same card type properties share one set of card types (the design only adds faces
@@ -1247,9 +1259,10 @@ class PropertiesModule extends SidebarModule {
 
       // The card count is the same for every design; only the properties differ.
       const cardCount = suits.length ? Object.keys(cardTypesFor(designs[0])).length : 0;
-      designHint.textContent = deckGeneratorDesignHint(suits.length, cardCount);
+      const ranksCapped = suits.some(suit=>parseRankRange(suit.ranks).length >= DECK_GENERATOR_MAX_RANKS);
+      designHint.textContent = deckGeneratorDesignHint(suits.length, cardCount, ranksCapped);
       if(!cardCount) {
-        createButton.disabled = true;
+        updateCreateButton();
         return;
       }
 
@@ -1261,19 +1274,19 @@ class PropertiesModule extends SidebarModule {
         // fan of five, which at this size is a pile of overlapping slivers.
         const designButton = this.renderWidgetButton(new Deck(deck.id), deck, tile, [ previewCardType(cardTypes) ]);
         designButton.classList.add('deckDesignButton');
-        designButton.dataset.index = index;
         designButton.title = `${design.label} - ${design.description}`;
         div(tile, 'deckDesignLabel', html(design.label));
-        designButton.classList.toggle('selected', oldSelectedButtonIndex == index);
+        designButton.classList.toggle('selected', selectedDesign == index);
         // Single choice like the mode radios above, so clicking the selected design does not silently
         // deselect it and re-disable the Add button.
         designButton.onclick = e=>{
+          selectedDesign = index;
           for(const button of $a('.deckDesignButton', designSelectionDiv))
             button.classList.toggle('selected', button == designButton);
-          createButton.disabled = false;
+          updateCreateButton();
         };
       }
-      createButton.disabled = !$a('.selected.deckDesignButton', designSelectionDiv).length;
+      updateCreateButton();
       this.moduleDOM.scrollTop = oldScrollTop;
     };
 
@@ -1363,7 +1376,7 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
-      const design = designs[+$('.selected.deckDesignButton', designSelectionDiv).dataset.index];
+      const design = designs[selectedDesign];
       const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes: getCardTypes(design) });
       // Adding a card at a time takes a moment: say so, and make a second click impossible while it runs.
       createButton.disabled = true;
@@ -1372,7 +1385,9 @@ class PropertiesModule extends SidebarModule {
         await this.addDeckWithCards(deck, 'custom');
       } finally {
         createButton.innerText = 'Add to game';
-        createButton.disabled = false;
+        // The ranks can have been cleared while the cards were added, which empties the gallery: re-enabling
+        // the button unconditionally would offer to add a deck that no longer has a design or a card.
+        updateCreateButton();
       }
     };
 
@@ -1634,12 +1649,12 @@ class PropertiesModule extends SidebarModule {
     const deckHeight = deck.height || cardHeight;
     const holderWidth  = cardWidth  + 8;
     const holderHeight = cardHeight + 11;
-    // Without a holder that id is never added, so it does not reserve the pile's id: check for that one too,
-    // like the public-library flow does for all of its suffixes.
+    // generateUniqueWidgetID only guarantees the holder id itself is free, while the reset button and the pile
+    // are derived from it: check for those too, like the public-library flow does for all of its suffixes.
     let holderID = null;
     do {
       holderID = generateUniqueWidgetID();
-    } while(widgets.has(holderID+'P'));
+    } while([ 'B', 'P' ].some(suffix=>widgets.has(holderID+suffix)));
     const pileID = holderID+'P';
 
     if(placement.holder) {
