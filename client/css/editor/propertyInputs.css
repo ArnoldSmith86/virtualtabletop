@@ -1630,6 +1630,19 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   color: #cc7722;
 }
 
+/* says what every input below it writes to, so it sits above the first
+   section rather than reading as part of one */
+.editorModule .pileTemplateMode {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin: 4px 0 8px 0;
+}
+
+.editorModule .pileTemplateMode .pileHelp:last-child {
+  margin-bottom: 0;
+}
+
 .editorModule .gridEntry {
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 6px;

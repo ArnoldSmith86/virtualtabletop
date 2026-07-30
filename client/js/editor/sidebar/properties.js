@@ -447,6 +447,84 @@ function widgetOwnValue(widget, property) {
   return defaultValue !== undefined ? defaultValue : null;
 }
 
+// What a pile template must never carry. updatePiles builds a new pile from
+// the card it is made of and then applies the template over it, so a template
+// holding these would drop every pile of that deck in the same place, at the
+// same size, in the same parent - id and type would break it outright.
+const pileTemplateExcludedProperties = [ 'id', 'type', 'parent', 'fixedParent', 'x', 'y', 'z', 'width', 'height', 'owner', 'dropShadowOwner', 'onPileCreation' ];
+
+// One property written into a copy of a pile template. A pile that has no
+// value of its own still looks like the default one, so a value equal to the
+// default drops the key instead of pinning the current default into the game.
+function pileTemplateWith(pile, template, property, value) {
+  const result = Object.assign({}, template);
+  const defaultValue = typeof pile.getDefaultValue == 'function' ? pile.getDefaultValue(property) : undefined;
+  if(JSON.stringify(value === undefined ? null : value) === JSON.stringify(defaultValue === undefined ? null : defaultValue))
+    delete result[property];
+  else
+    result[property] = JSON.parse(JSON.stringify(value));
+  return result;
+}
+
+// Whether any css rule that applies to the widget reads a custom property.
+// Which rules read one is nothing the widget knows: the built-in piece classes
+// (classes.css), the room's own css and the widget's own css property all can.
+// Asking the stylesheets which of their rules both mention the variable and
+// match the widget covers all three without listing any of them.
+function domUsesCssVariable(element, name) {
+  if(!element)
+    return false;
+  const usesVariable = new RegExp(`var\\(\\s*--${name}\\s*[,)]`);
+  // a flat css property lands in the element's own style attribute
+  if(usesVariable.test(element.getAttribute('style') || ''))
+    return true;
+
+  // a rule for ::before/::after still paints this element, so match without it
+  const matchesElement = selector=>{
+    try {
+      return element.matches(selector.replace(/::[\w-]+(\([^)]*\))?/g, '').replace(/:(before|after|first-line|first-letter)\b/g, ''));
+    } catch(e) {
+      return false;
+    }
+  };
+  // a style rule carries its own declarations in .style and, since css
+  // nesting, a .cssRules of its own - so both have to be looked at, and a
+  // media/supports block only has the latter
+  const search = rules=>{
+    for(const rule of rules) {
+      if(rule.selectorText && usesVariable.test(rule.style ? rule.style.cssText : rule.cssText) && matchesElement(rule.selectorText))
+        return true;
+      if(rule.cssRules && search(rule.cssRules))
+        return true;
+    }
+    return false;
+  };
+  for(const sheet of document.styleSheets) {
+    try {
+      if(search(sheet.cssRules))
+        return true;
+    } catch(e) {
+      // a stylesheet from another origin does not expose its rules
+    }
+  }
+  return false;
+}
+
+// "color" on a basic widget is the color its icon is drawn in
+// (getDefaultIconColor) and the value it publishes as the --color css variable
+// (BasicWidget.css()). Where neither is read - no icon, no svgReplaces
+// pointing at it, no rule using var(--color) - setting it paints nothing, so
+// the Appearance chip offering it is hidden.
+function basicColorIsUsed(widget) {
+  if(widget.isMulti)
+    return widget.widgets.some(basicColorIsUsed);
+  if(widget.get('icon'))
+    return true;
+  if(svgReplaceProperties(widget.get('svgReplaces')).indexOf('color') != -1)
+    return true;
+  return domUsesCssVariable(widget.domElement, 'color');
+}
+
 // where an index ends up after the entry at "from" was moved to "to"
 function indexAfterReorder(index, from, to) {
   if(index == from)
@@ -971,7 +1049,10 @@ const editorTypeSections = {
       { label: 'Text',          kind: 'color', labelIcon: 'format_color_text', cssKey: 'color' },
       { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background' },
       { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' },
-      { label: 'Icon/Symbol',   property: 'color', kind: 'color', labelIcon: 'category', hint: null }
+      // only shown where it paints something - see basicColorIsUsed
+      { label: 'Icon/Symbol',   property: 'color', kind: 'color', labelIcon: 'category',
+        hint: 'Color of the icon on this widget. It is also the widget\'s --color css variable, which the built-in piece classes and your own css paint with.',
+        available: basicColorIsUsed, availableListenTo: [ 'icon', 'classes', 'css', 'svgReplaces' ] }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
@@ -1146,6 +1227,12 @@ class PropertiesModule extends SidebarModule {
     this.cssPendingFocus = null;
     // per pile: the corner its handle had before it was pinned to the top left
     this.lastPileHandlePosition = new Map();
+    // per pile: the handle text it had before it went back to the card count
+    this.lastPileHandleText = new Map();
+    // Editing a pile writes to the pile template of its cards' deck as well -
+    // a pile itself is gone as soon as it holds a single card, so an edit that
+    // only reaches it does not survive. Off means "this pile only".
+    this.pileEditsTemplate = true;
     this.sizeRatioLocks = new WeakMap();
     // per line: the widget new stops inherit from. Kept outside the panel because
     // picking a widget in the room re-selects the line and re-renders the panel.
@@ -1452,7 +1539,7 @@ class PropertiesModule extends SidebarModule {
       return;
     }
     if(widgetStillExists(widget))
-      widget.set(property, newValue);
+      this.setAndMirrorToPileTemplate(widget, property, newValue);
   }
 
   // like inputValueUpdated, but computes the new value from each widget's own
@@ -1475,7 +1562,54 @@ class PropertiesModule extends SidebarModule {
       return;
     }
     if(widgetStillExists(widget))
-      widget.set(property, transform(widgetOwnValue(widget, property)));
+      this.setAndMirrorToPileTemplate(widget, property, transform(widgetOwnValue(widget, property)));
+  }
+
+  // Write one property of one widget, and - for a pile - the same property
+  // into the pile template it came from. A pile is temporary: it disappears as
+  // soon as it holds a single card, and the next one is built from the
+  // "onPileCreation" of the cards' deck (see updatePiles in widget.js). So an
+  // edit that only reaches the pile in front of you is gone with it, which is
+  // why the editor writes both unless the "this pile only" switch says not to.
+  setAndMirrorToPileTemplate(widget, property, value) {
+    const decks = this.pileTemplateDecksFor(widget, property);
+    if(!decks.length) {
+      widget.set(property, value);
+      return;
+    }
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} set ${property} on pile ${widget.id} and its pile template in editor`);
+    widget.set(property, value);
+    for(const deck of decks) {
+      const cardDefaults = deck.get('cardDefaults') || {};
+      deck.set('cardDefaults', Object.assign({}, cardDefaults, {
+        onPileCreation: pileTemplateWith(widget, isObjectLike(cardDefaults.onPileCreation) ? cardDefaults.onPileCreation : {}, property, value)
+      }));
+    }
+    batchEnd();
+  }
+
+  // The decks an edit of this property has to be mirrored into: none unless a
+  // pile is being edited with the template switch on, and none for the
+  // properties that only describe this one pile.
+  pileTemplateDecksFor(widget, property) {
+    if(!this.pileEditsTemplate || widget.isMulti || widget.get('type') != 'pile')
+      return [];
+    if(pileTemplateExcludedProperties.indexOf(property) != -1)
+      return [];
+    return this.pileDecks(widget);
+  }
+
+  // The decks whose cards are in this pile. A pile can hold cards of more than
+  // one deck, and updatePiles only lets cards form a pile when their templates
+  // are identical - so every deck involved gets the same template, or the
+  // cards of these decks would stop piling together at all.
+  pileDecks(widget) {
+    if(!widgetStillExists(widget) || widget.get('type') != 'pile')
+      return [];
+    return [ ...new Set(widget.children().filter(child => child.get('type') == 'card').map(card => card.get('deck'))) ]
+      .map(deckID => widgets.get(deckID))
+      .filter(deck => deck && deck.get('type') == 'deck');
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -5172,7 +5306,16 @@ class PropertiesModule extends SidebarModule {
         Object.assign(options, cssValueOptions(this, widget, def.cssKey, def.cssProperty || 'css', 'default', { effectiveSelector: def.effectiveSelector }));
       if(def.propertyOrCss)
         Object.assign(options, propertyOrCssOptions(this, widget, def.property, def.propertyOrCss));
-      new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
+      const dom = new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
+      // a def can say when it is worth offering at all, so an input that
+      // cannot change anything about this particular widget stays out of the
+      // way instead of reading as broken
+      if(def.available) {
+        const update = _=>dom.style.display = def.available(widget) ? '' : 'none';
+        for(const property of def.availableListenTo || [])
+          this.addPropertyListener(widget, property, update);
+        update();
+      }
     }
   }
 
@@ -5187,7 +5330,9 @@ class PropertiesModule extends SidebarModule {
     const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
     for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
       for(const def of sections[group] || [])
-        if(def.property)
+        // an input that is not being offered leaves its property to the
+        // generic "Other properties" list, so a value it has stays reachable
+        if(def.property && (!def.available || def.available(widget)))
           properties.push(def.property);
     properties.push(...svgReplaceProperties(widget.get('svgReplaces')));
     if(widget.defaults.svgReplaces !== undefined)
@@ -6098,12 +6243,21 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderAutomationsSection(widget) {
+    // A pile is temporary, so a routine that only lives on it goes with it -
+    // the one that lasts is the one in the pile template. With the template
+    // switch on, that is where these buttons point.
+    const templateDecks = this.pileTemplateDecksFor(widget, 'clickRoutine');
+    const templates = templateDecks.map(deck => (deck.get('cardDefaults') || {}).onPileCreation).filter(isObjectLike);
+
     const playerRoutines = [ 'clickRoutine', 'doubleClickRoutine', 'changeRoutine', 'enterRoutine', 'leaveRoutine' ]
-      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined);
+      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined || templates.some(template => template[property] !== undefined));
     if(!playerRoutines.length)
       return [];
 
     this.addSubHeader('Automations');
+    if(templateDecks.length)
+      div(this.moduleDOM, 'pileHelp', `A routine on this pile disappears with it, so these open the pile template in <b>${html(templateDecks.map(deck => deck.id).join(', '))}</b> instead - the "onPileCreation" every new pile of these cards is built from.`);
+
     for(const property of playerRoutines) {
       const row = div(this.moduleDOM, 'propertyInput automationInput');
       const label = document.createElement('label');
@@ -6111,15 +6265,42 @@ class PropertiesModule extends SidebarModule {
       row.appendChild(label);
       const button = document.createElement('button');
       button.setAttribute('icon', 'data_object');
-      button.textContent = `Edit ${property} in JSON editor`;
-      button.onclick = () => {
-        const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
-        if(jsonModuleButton)
-          jsonModuleButton.click();
-      };
+      button.textContent = templateDecks.length ? `Edit ${property} of the pile template` : `Edit ${property} in JSON editor`;
+      button.onclick = () => templateDecks.length
+        ? this.openInJsonEditor(templateDecks[0], [ 'cardDefaults', 'onPileCreation', property ])
+        : this.openInJsonEditor(null, []);
       row.appendChild(button);
     }
     return playerRoutines;
+  }
+
+  // Bring up the JSON editor, optionally on another widget and with the caret
+  // on one of its properties - a button pointing at a routine deep inside a
+  // deck lands on it instead of at the top of a long widget.
+  openInJsonEditor(widget, path) {
+    const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
+    if(jsonModuleButton)
+      jsonModuleButton.click();
+    if(widget)
+      setSelection([ widget ]);
+    if(!path || !path.length)
+      return;
+
+    // walk the keys in order through the formatted JSON and select the last
+    // one that is there - a template without the routine yet lands on the
+    // object it has to be added to
+    const text = $('#jeText') ? $('#jeText').textContent : '';
+    let index = -1;
+    let key = null;
+    for(const step of path) {
+      const found = text.indexOf(`"${step}"`, index == -1 ? 0 : index);
+      if(found == -1)
+        break;
+      index = found;
+      key = step;
+    }
+    if(index != -1)
+      jeSelect(index, index + key.length + 2, true);
   }
 
   // --- shared curated inputs ---
@@ -6996,18 +7177,13 @@ class PropertiesModule extends SidebarModule {
 
   renderForPile(widget) {
     this.renderTypeHeader(widget);
+    this.renderPileTemplateMode(widget);
     this.renderBasicSection(widget);
 
     this.addSubHeader('Handle');
     div(this.moduleDOM, 'pileHelp', 'The badge on the pile: it counts the cards and drags the whole stack. The pile itself is invisible - what you see on the table are its cards.');
 
-    new TextInput(this, widget, 'Text', {
-      property: 'text',
-      nullIfEmpty: true,
-      placeholder: 'number of cards',
-      hint: 'Text shown on the handle. Empty means the number of cards in the pile, which is what most piles want.'
-    }).render(this.moduleDOM);
-
+    this.renderPileHandleText(widget);
     this.renderPileHandlePosition(widget);
     this.renderPileHandleSize(widget);
 
@@ -7032,6 +7208,71 @@ class PropertiesModule extends SidebarModule {
     this.renderPileTemplateSection(widget);
 
     this.renderOtherPropertiesSection(widget, [ 'text', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition' ]);
+  }
+
+  // Sits above everything else, because it says what every input below it
+  // writes to: this pile plus the template new piles of these cards are built
+  // from, or - with the switch on - this one pile only.
+  renderPileTemplateMode(widget) {
+    const block = div(this.moduleDOM, 'pileTemplateMode');
+    const decks = this.pileDecks(widget);
+    const deckNames = html(decks.map(deck => deck.id).join(', '));
+
+    if(!decks.length) {
+      div(block, 'pileHelp warning', 'A pile is temporary: it disappears as soon as it holds a single card, and new piles are built from the pile template of the cards in them. This pile holds no cards of a deck, so there is no template to write to - everything below applies to this pile only and is gone with it.');
+      return;
+    }
+
+    if(this.pileEditsTemplate)
+      div(block, 'pileHelp', `A pile is temporary: it disappears as soon as it holds a single card. Every change below is therefore written to <b>this pile and to the pile template</b> of ${deckNames}, which every new pile of those cards is built from - so it also applies to the piles that come after this one.`);
+    else
+      div(block, 'pileHelp warning', `Changes below apply to <b>this pile only</b>. A pile disappears as soon as it holds a single card, so they are gone with it unless you also store them in the pile template of ${deckNames} at the bottom of this panel.`);
+
+    const modeSwitch = new CheckboxInput(this, widget, 'Edit this pile only', {
+      listenTo: [],
+      getValue: _=>!this.pileEditsTemplate,
+      setValue: value=>{
+        this.pileEditsTemplate = !value;
+        // the switch changes what this block and the Automations section say
+        // and where their buttons point, so the panel is drawn again - the
+        // selection is unchanged, so it keeps its scroll position and folds
+        this.onSelectionChangedWhileActive([ widget ]);
+      },
+      hint: 'Leave the pile template alone and change nothing but the pile in front of you - for a pile that is meant to look different from the other piles of its deck. While a game is being built, the template is what you want.'
+    });
+    modeSwitch.render(block);
+    // listenTo is empty (this is not a widget property), so nothing fires the
+    // initial update the switch would otherwise get from a property listener
+    modeSwitch.update(modeSwitch.getValue());
+  }
+
+  // The handle shows the number of cards unless "text" gives it something
+  // else, which is what almost every pile wants. As an empty field with a grey
+  // "number of cards" in it that read like a placeholder for a text the pile
+  // shows literally - so it is a choice of two now, and the field only appears
+  // for the one that needs it.
+  renderPileHandleText(widget) {
+    new SelectInput(this, widget, 'Handle shows', {
+      listenTo: [ 'text' ],
+      choices: [
+        { value: 'count', text: 'The number of cards in the pile' },
+        { value: 'text',  text: 'A fixed text' }
+      ],
+      getValue: _=>widgetOwnValue(widget, 'text') === null ? 'count' : 'text',
+      setValue: value=>this.inputValueUpdated(widget, 'text', value == 'count' ? null : (this.lastPileHandleText.get(widget.id) || 'Pile')),
+      hint: 'The handle counts the cards of the pile and keeps counting as cards come and go. A fixed text replaces that count and stays the same however many cards are in the pile.'
+    }).render(this.moduleDOM);
+
+    // no nullIfEmpty: clearing the field would switch back to the card count
+    // and hide the input the user is typing in
+    const textInput = new TextInput(this, widget, 'Text', { property: 'text' });
+    textInput.render(this.moduleDOM);
+    this.addPropertyListener(widget, 'text', w=>{
+      const fixed = widgetOwnValue(w, 'text') !== null;
+      textInput.dom.style.display = fixed ? '' : 'none';
+      if(fixed)
+        this.lastPileHandleText.set(widget.id, String(widgetOwnValue(w, 'text')));
+    });
   }
 
   // handlePosition is a free string the pile matches "bottom"/"middle" (y) and
@@ -7111,18 +7352,11 @@ class PropertiesModule extends SidebarModule {
   // for a deck lives in its cardDefaults - so the pile in front of you is a
   // preview of a template that is edited somewhere else entirely.
   renderPileTemplateSection(widget) {
-    const cards = widget.children().filter(child => child.get('type') == 'card');
-    // a pile can hold cards of more than one deck, and updatePiles only lets
-    // cards form a pile when their templates are identical - so every deck
-    // involved has to get the same template, or saving would stop the cards of
-    // these decks from piling together at all
-    const decks = [ ...new Set(cards.map(card => card.get('deck'))) ]
-      .map(deckID => widgets.get(deckID))
-      .filter(deck => deck && deck.get('type') == 'deck');
+    const decks = this.pileDecks(widget);
 
     this.addSubHeader('Pile template');
     div(this.moduleDOM, 'pileHelp', decks.length
-      ? 'Piles come and go with the cards in them: this one disappears as soon as it holds a single card. New piles are built from the pile template of the cards\' deck, so store the settings above there to keep them.'
+      ? 'The "onPileCreation" of the cards\' deck, which every new pile of those cards is built from. The switch at the top of this panel decides whether the settings above are written into it as you make them.'
       : 'Piles come and go with the cards in them: a pile that holds a single card disappears. New piles are built from the "onPileCreation" template of the cards that form them.');
     if(!decks.length)
       return;
@@ -7143,31 +7377,28 @@ class PropertiesModule extends SidebarModule {
     if(overriddenDecks.length)
       div(this.moduleDOM, 'pileHelp warning', `${overriddenDecks.map(deck => deck.id).join(', ')} sets "onPileCreation" in a card type or face template. That wins over the deck-wide template below, so those cards keep building their piles the way they do now.`);
 
+    // the whole set at once, for a pile that was set up with the switch off or
+    // before the template existed - an edit made with it on is already there
     const templateProperties = [ 'text', 'css', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition', 'pileSnapRange', 'alignChildren', 'inheritChildZ', 'borderRadius', 'classes' ];
-    const buttonText = `Save as the pile template of ${deckNames}`;
+    const buttonText = `Copy every setting of this pile into ${deckNames}`;
     const save = document.createElement('button');
     save.setAttribute('icon', 'content_copy');
     save.textContent = buttonText;
     save.title = `Copy the pile settings above into ${decks.length > 1 ? 'these decks' : 'the deck'}, so every pile made from ${decks.length > 1 ? 'their' : 'its'} cards looks like this one.`;
     save.onclick = _=>{
       batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} saved pile ${widget.id} as the pile template of ${deckNames} in editor`);
       for(const deck of decks) {
         const cardDefaultsNow = deck.get('cardDefaults') || {};
         // only the settings this editor curates are replaced - whatever else
         // the template sets on a new pile (a clickRoutine, movable, ...) stays
-        const template = Object.assign({}, isObjectLike(cardDefaultsNow.onPileCreation) ? cardDefaultsNow.onPileCreation : {});
-        for(const property of templateProperties) {
-          // what the pile shows, not what is in its state: a pile that has no
-          // handlePosition of its own still looks like the default one, so the
-          // template has to drop the property instead of keeping an old value
-          const value = widget.get(property);
-          const defaultValue = widget.getDefaultValue(property);
-          if(JSON.stringify(value === undefined ? null : value) === JSON.stringify(defaultValue === undefined ? null : defaultValue))
-            delete template[property];
-          else
-            template[property] = JSON.parse(JSON.stringify(value));
-        }
-        this.inputValueUpdated(deck, 'cardDefaults', Object.assign({}, cardDefaultsNow, { onPileCreation: template }));
+        let template = isObjectLike(cardDefaultsNow.onPileCreation) ? cardDefaultsNow.onPileCreation : {};
+        // what the pile shows, not what is in its state: a pile that has no
+        // handlePosition of its own still looks like the default one, so the
+        // template has to drop the property instead of keeping an old value
+        for(const property of templateProperties)
+          template = pileTemplateWith(widget, template, property, widget.get(property));
+        deck.set('cardDefaults', Object.assign({}, cardDefaultsNow, { onPileCreation: template }));
       }
       batchEnd();
       save.textContent = `Saved to ${deckNames}`;
@@ -7594,14 +7825,22 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader(`Card type`);
-    this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
-    div(this.moduleDOM, '', `
-      <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
-      <div class=buttonBar>
-        <button icon=style>Open deck</button>
-      </div>
-    `);
-    $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ widgets.get(widget.get('deck')) ]);
+    // a card can outlive its deck - a game can name one that does not exist,
+    // and the deck can be deleted while the card is selected. Everything below
+    // reads the deck, so say so instead of rendering half a section.
+    const deck = widgets.get(widget.get('deck'));
+    if(!deck || deck.get('type') != 'deck') {
+      div(this.moduleDOM, 'pileHelp warning', `This card points at the deck <code>${html(widget.get('deck'))}</code>, which does not exist in this game. Without it the card has no card types and no faces to draw.`);
+    } else {
+      this.renderCardTypes(deck, widget.get('cardType'));
+      div(this.moduleDOM, '', `
+        <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
+        <div class=buttonBar>
+          <button icon=style>Open deck</button>
+        </div>
+      `);
+      $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ deck ]);
+    }
     this.renderAppearanceSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'deck', 'cardType', 'z' ]);
   }

@@ -56,7 +56,10 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
     .click('#editButton')
     .click('#editorSidebar [icon=tune]')
     .click('#w_old')
+    // the icon color only paints something once there is an icon (or a class
+    // or css reading --color), so its chip is not offered on a plain widget
     .expect(Selector('.colorFlexRow label.iconOnly').count).eql(4)
+    .expect(Selector('.colorFlexRow label.iconOnly').filterVisible().count).eql(3)
     .expect(Selector('[aria-label="Widget id"]').exists).ok()
     .typeText('[aria-label="Widget id"]', 'new', { replace: true })
     .pressKey('enter')
@@ -73,7 +76,9 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
     { label: null, swatch: null, info: false },
     { label: null, swatch: null, info: false },
     { label: null, swatch: null, info: false },
-    { label: null, swatch: null, info: false }
+    // the icon color says what it paints, since it is the one chip that is
+    // only there for some widgets
+    { label: null, swatch: null, info: true }
   ]);
 
   const result = await ClientFunction(() => {
@@ -244,14 +249,30 @@ test('A pile is edited through its handle, css through declaration rows', async 
   await ClientFunction(prepareClient)();
   await setName(t);
 
+  const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
+
   // the handle is the only part of a pile the cards do not cover
   await t
     .click('#editButton')
     .click('#editorSidebar [icon=tune]')
     .click(Selector('#w_pile .handle'))
     .expect(Selector('.widgetHeaderType').innerText).contains('Pile')
-    .typeText('.textInput input', 'chips', { replace: true })
-    .expect(ClientFunction(() => widgets.get('pile').get('text'))()).eql('chips');
+    // a pile is temporary, so the panel says up front that it edits the
+    // template of the cards' deck along with the pile
+    .expect(Selector('.pileTemplateMode').innerText).contains('pile template');
+
+  // the handle counts the cards unless it is told to show a text, so the two
+  // are a choice and the text field only exists for the second one
+  const handleShows = Selector('#editorModules .selectInput').withText('Handle shows').find('select');
+  await t
+    .expect(handleShows.value).eql('"count"')
+    .expect(Selector('#editorModules .textInput input').filterVisible().count).eql(0)
+    .click(handleShows)
+    .click(handleShows.find('option').withText('A fixed text'))
+    .typeText(Selector('#editorModules .textInput input').filterVisible(), 'chips', { replace: true })
+    .expect(ClientFunction(() => widgets.get('pile').get('text'))()).eql('chips')
+    // and the same edit landed in the pile template
+    .expect(pileTemplate()).eql('{"text":"chips"}');
 
   // every fold-away block draws the same arrow, which points sideways while
   // the block is folded and down while it is open
@@ -275,7 +296,16 @@ test('A pile is edited through its handle, css through declaration rows', async 
     // unset css falls back to the default of the property, an empty string
     .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css') || null))()).eql('null')
     .click(Selector('#editorModules .cssDeclarationToggle').nth(0))
-    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}');
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}')
+    .expect(pileTemplate()).eql('{"text":"chips","css":{"opacity":"0.5"}}');
+
+  // with the opt-out switch on, an edit stops at the pile in front of you
+  await t
+    .click(Selector('#editorModules .pileTemplateMode .switchbox[for]'))
+    .expect(Selector('.pileTemplateMode').innerText).contains('this pile only')
+    .typeText(Selector('#editorModules .textInput input').filterVisible(), 'stack', { replace: true })
+    .expect(ClientFunction(() => widgets.get('pile').get('text'))()).eql('stack')
+    .expect(pileTemplate()).eql('{"text":"chips","css":{"opacity":"0.5"}}');
 
   // a pile removes itself as soon as it holds a single card - the editor has to
   // drop it from the selection, or the next keystroke in one of its inputs
@@ -283,6 +313,37 @@ test('A pile is edited through its handle, css through declaration rows', async 
   await ClientFunction(() => widgets.get('card2').set('parent', null))();
   await t
     .expect(ClientFunction(() => widgets.has('pile'))()).eql(false)
+    .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
+});
+
+test('Loading another game with a widget still selected does not break the client', async t => {
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await ClientFunction(() => {
+    window.stateLoadErrors = [];
+    window.addEventListener('error', event => window.stateLoadErrors.push(String(event.error || event.message)));
+  })();
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_card')
+    .expect(Selector('.widgetHeaderType').innerText).contains('Card');
+
+  // the selection survives leaving edit mode, and a new state replaces every
+  // widget in the room - so re-rendering the editor for the card would look up
+  // a deck that is gone
+  await t.click('#editorToolbar [icon=close]');
+  await setRoomState({ other: { id: 'other', type: 'basic', x: 200, y: 200 } });
+
+  await t
+    .expect(Selector('#w_other').exists).ok()
+    .expect(Selector('#w_card').exists).notOk()
+    .expect(ClientFunction(() => window.stateLoadErrors)()).eql([])
     .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
 });
 

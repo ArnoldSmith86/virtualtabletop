@@ -202,11 +202,15 @@ export function editorReceiveDelta(delta) {
 }
 
 function receiveStateFromServer(state) {
-  for(const module of sidebarModules) {
-    module.onSelectionChanged(selectedWidgets, []);
-    module.onStateReceived(state);
-  }
+  // A new state replaces every widget in the room, so anything still selected
+  // points at a widget object that is gone by the time this runs. Clearing the
+  // selection first is the same notification the modules got before - just
+  // with the dead widgets already dropped, so nothing re-renders an editor for
+  // one of them and follows its dangling links (a card looks up its deck).
+  // The selection survives leaving edit mode, so this happens while playing too.
   setSelection([]);
+  for(const module of sidebarModules)
+    module.onStateReceived(state);
 }
 
 function registerSelectionEventHandlers() {
