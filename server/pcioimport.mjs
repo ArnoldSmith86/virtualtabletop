@@ -31,7 +31,8 @@ const pcioFonts = {
 
 export default async function convertPCIO(content) {
   const zip = await JSZip.loadAsync(content);
-  const widgets = JSON.parse(await zip.files['widgets.json'].async('string'));
+  // a null entry in widgets.json must not break the loops that follow
+  const widgets = JSON.parse(await zip.files['widgets.json'].async('string')).filter(widget=>widget && typeof widget == 'object');
 
   // the file format version lives in its own zip member since PCIO schema 3
   let schemaVersion = 0;
@@ -220,7 +221,7 @@ export default async function convertPCIO(content) {
         type: 'card'
       });
       // choosers are cards in VTT but PCIO never includes them in a query
-      const chooserDecks = widgets.filter(w=>w && w.type == 'cardDeck' && w.collectionType == 'choosers').map(w=>w.id);
+      const chooserDecks = widgets.filter(w=>w.type == 'cardDeck' && w.collectionType == 'choosers').map(w=>w.id);
       if(chooserDecks.length) {
         into({
           func: 'SELECT',
@@ -288,8 +289,6 @@ export default async function convertPCIO(content) {
   // and used 'rotation' before it became 'r' - normalize both so that the rest
   // of the importer only has to deal with one spelling
   for(const widget of widgets) {
-    if(!widget || typeof widget != 'object')
-      continue;
     if(widget.type == 'holder')
       widget.type = 'cardPile';
     if(widget.r === undefined && typeof widget.rotation == 'number' && widget.type != 'spinner')
@@ -302,27 +301,39 @@ export default async function convertPCIO(content) {
   const turnAtSeat = {};
 
   // PCIO keeps every counter inside its bounds while a VTT label just counts on,
-  // so a counter with bounds gets them applied wherever its value is changed
+  // so a counter with bounds gets them applied wherever its value is changed. A
+  // counter can be bounded on one side only, which stays unbounded here as well.
   const counterBounds = {};
   for(const widget of widgets) {
-    if(widget && widget.type == 'counter' && (widget.counterMin != null || widget.counterMax != null)) {
-      const min = widget.counterMin != null ? +widget.counterMin : -9999;
-      counterBounds[widget.id] = {
-        min,
-        max: Math.max(widget.counterMax != null ? +widget.counterMax : 9999, min+1)
-      };
-    }
+    if(widget.type != 'counter')
+      continue;
+    const min = isNaN(parseFloat(widget.counterMin)) ? -Infinity : parseFloat(widget.counterMin);
+    const max = isNaN(parseFloat(widget.counterMax)) ?  Infinity : parseFloat(widget.counterMax);
+    if(min == -Infinity && max == Infinity)
+      continue;
+    if(max < min)
+      warn(`Counter ${widget.label || widget.id} has a maximum below its minimum - its value is kept at ${max}.`);
+    counterBounds[widget.id] = { min, max };
+  }
+
+  // how a range of a counter reads in a warning
+  function boundsText(bounds) {
+    if(bounds.min == -Infinity)
+      return `maximum of ${bounds.max}`;
+    if(bounds.max == Infinity)
+      return `minimum of ${bounds.min}`;
+    return `range of ${bounds.min} to ${bounds.max}`;
   }
 
   // the operations that keep a variable within the bounds of a counter
   function clampCounter(id, variable) {
-    const bounds = counterBounds[id];
-    if(!bounds)
-      return [];
-    return [
-      `var ${variable} = max \${${variable}} ${bounds.min}`,
-      `var ${variable} = min \${${variable}} ${bounds.max}`
-    ];
+    const bounds = counterBounds[id] || { min: -Infinity, max: Infinity };
+    const operations = [];
+    if(bounds.min > -Infinity)
+      operations.push(`var ${variable} = max \${${variable}} ${bounds.min}`);
+    if(bounds.max < Infinity)
+      operations.push(`var ${variable} = min \${${variable}} ${bounds.max}`);
+    return operations;
   }
 
   for(const widget of widgets) {
@@ -392,8 +403,6 @@ export default async function convertPCIO(content) {
   }
 
   for(const widget of widgets) {
-    if(!widget || typeof widget != 'object')
-      continue;
     if(!widget.type) {
       // schema 6 files contain records that only carry styling for an attached label
       warn(`Ignored a widget without a type (${widget.id}).`);
@@ -454,7 +463,9 @@ export default async function convertPCIO(content) {
       const deck = byID[widget.deck];
       if(deck && deck.cardTypes) {
         const faces = Object.entries(deck.cardTypes);
-        const pips = faces.every(([ , face ], i)=>String(face.image || '').match(new RegExp(`/img/dice-basic/${i+1}.svg$`)));
+        // only the six standard pip faces are what a VTT dice widget shows by
+        // default - a die with fewer of them needs its faces spelled out
+        const pips = faces.length == 6 && faces.every(([ , face ], i)=>String(face.image || '').match(new RegExp(`/img/dice-basic/${i+1}.svg$`)));
         if(!pips) {
           w.faces = faces.map(function([ , face ]) {
             if(face.image)
@@ -844,7 +855,7 @@ export default async function convertPCIO(content) {
         w.editable = true;
       pcioStyle(widget, w, (widget.mainTextStyle || {}).size ? [] : [ 'font-size: 30px' ]);
       if(bounds && widget.allowPlayerEditValue !== false)
-        warn(`Typing a value into counter ${widget.label || widget.id} is not restricted to its range of ${bounds.min} to ${bounds.max} - its buttons and the automations that change it are.`);
+        warn(`Typing a value into counter ${widget.label || widget.id} is not restricted to its ${boundsText(bounds)} - its buttons and the automations that change it are.`);
 
       const counterStep = Math.abs(+widget.counterStep) || 1;
 
@@ -1191,6 +1202,7 @@ export default async function convertPCIO(content) {
       if(widget.type == 'turnButton')
         widget.height = widget.width = 64;
       addDimensions(w, widget, 80, 80);
+      pcioStyle(widget, w);
 
       w.clickRoutine = [];
 
@@ -1264,9 +1276,9 @@ export default async function convertPCIO(content) {
       function importSteps(steps, routine) {
         for(const step of steps || []) {
           const branches = step && step.branches || [ step ];
-          // a read step with alternatives may not run at all, in which case PCIO
-          // sees its result as empty
-          if(branches.length > 1 && readDefaults[(branches[0] || {}).func] !== undefined)
+          // a read step that only runs under a condition may not run at all, in
+          // which case PCIO sees its result as empty
+          if((branches[0] || {}).condition && readDefaults[branches[0].func] !== undefined)
             routine.push(`var ${readVariable(step.id)} = ${readDefaults[branches[0].func]}`);
           importBranches(branches, routine, step && step.id);
         }
@@ -1319,10 +1331,15 @@ export default async function convertPCIO(content) {
             return `\${${variable}}`;
           }
           const field = (argument.collectionFieldSelectors || [])[0];
-          if(field && field.fieldId && importWidgetQuery(routine, { objects: argument }, '', '', '', {}, { collection: variable })) {
-            // PCIO adds up one field of the card type of everything it finds
-            routine.push({ func: 'GET', collection: variable, property: field.fieldId, aggregation: 'sum', variable, skipMissing: true });
-            return `\${${variable}}`;
+          if(field && field.fieldId) {
+            // PCIO adds up one field of the card type of everything it finds.
+            // The objects may already be a collection of a popup question, in
+            // which case the query selects nothing of its own.
+            const target = importWidgetQuery(routine, { objects: argument }, '', '', 'collection', {}, { collection: variable });
+            if(target) {
+              routine.push({ func: 'GET', collection: target.collection || variable, property: field.fieldId, aggregation: 'sum', variable, skipMissing: true });
+              return `\${${variable}}`;
+            }
           }
         }
         return fallback;
@@ -1458,10 +1475,27 @@ export default async function convertPCIO(content) {
           // destinations, which leaves them in the opposite order of moving the
           // whole pile at once. Only a move out of a holder has an order to keep:
           // a collection is moved in the order it was selected in.
-          if((args.moveMethod || {}).value != 'all' && c.func == 'MOVE' && c.from && !fill && typeof quantity == 'number' && quantity > 1 && quantity <= 100)
-            routine.push({ note: 'Deal one at a time', func: 'FOREACH', range: [ 1, quantity ], loopRoutine: [ Object.assign({}, c, { count: 1 }) ] });
-          else
+          const oneAtATime = (args.moveMethod || {}).value != 'all' && c.func == 'MOVE' && c.from && !fill;
+          const dealLoop = ()=>({ func: 'FOREACH', range: [ 1, quantity ], loopRoutine: [ Object.assign({}, c, { count: 1 }) ] });
+          if(oneAtATime && typeof quantity == 'number' && quantity > 1 && quantity <= 100) {
+            routine.push(Object.assign({ note: 'Deal one at a time' }, dealLoop()));
+          } else if(oneAtATime && typeof quantity == 'string') {
+            // the quantity is only known when the button is clicked and a range
+            // ending below its start would count down, so dealing nothing at all
+            // has to skip the loop
+            routine.push({
+              note: 'Deal one at a time',
+              func: 'IF',
+              operand1: quantity,
+              relation: '>',
+              operand2: 0,
+              thenRoutine: [ dealLoop() ]
+            });
+          } else {
+            if(oneAtATime && typeof quantity == 'number' && quantity > 100)
+              warn(`"${widget.label || widget.id}" moves up to ${quantity} objects in one go instead of one after the other - they can end up in the opposite order.`);
             routine.push(c);
+          }
 
           // 'auto' (fit to holder) needs no operation: VTT children inherit the
           // rotation of their holder
@@ -1598,6 +1632,9 @@ export default async function convertPCIO(content) {
             // flip() rolls a face of its own for every object it is given
             c.faceCycle = 'random';
           } else if(ordered) {
+            // GET leaves the variable alone for an empty pile, which nothing is
+            // flipped in anyway - the default keeps it from becoming NaN
+            routine.push('var pcioFace = 0');
             routine.push({ func: 'GET', collection: c.collection, property: 'activeFace', aggregation: 'last', variable: 'pcioFace' });
             routine.push('var pcioFace = 1 - ${pcioFace}');
             c.face = '${pcioFace}';
