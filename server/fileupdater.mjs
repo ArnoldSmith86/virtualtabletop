@@ -1,4 +1,4 @@
-export const VERSION = 21;
+export const VERSION = 22;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -38,6 +38,9 @@ function computeGlobalProperties(state, v) {
   }
 
   v<20 && v20WhiteSpacePreWrapRoutineCheck(state, globalProperties);
+
+  if(v < 22)
+    globalProperties.v22SeatIDs = Object.keys(state).filter(id => state[id] && state[id].type == 'seat');
 
   return globalProperties;
 }
@@ -111,6 +114,7 @@ function updateProperties(properties, v, globalProperties) {
   v<15 && v15SkipTurnProperty(properties);
   v<17 && v17MaterialSymbols(properties);
   v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
+  v<22 && v22SeatProperties(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -136,6 +140,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<22 && v22SeatRoutine(routine, globalProperties);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -598,6 +603,70 @@ function v20WhiteSpacePreWrap(properties, globalProperties) {
 
   if(!properties.type && (hasMultipleWhitespaceOrNewline(String(properties.html)) || String(JSON.stringify(properties.inheritFrom)).match(/"html"/)) || (typeof properties.html == 'string' && globalProperties.v20WhiteSpacePreWrapForAllHtml) && !cssHasWhiteSpace(properties.css))
     properties.css = addWhiteSpacePreWrapToCss(properties.css);
+}
+
+// v22 renamed the seat's text/color properties so that "display" is free for the
+// generic show/hide boolean every other widget has:
+//   display      -> seatedText   (only on seats, "display" means something else everywhere else)
+//   displayEmpty -> emptyText
+//   colorEmpty   -> emptyColor
+// displayEmpty and colorEmpty are seat-only names, so they can be renamed
+// wherever they appear (properties, css, dynamic expressions, routines).
+function v22RenameSeatOnlyNames(json) {
+  return json.replace(/\bdisplayEmpty\b/g, 'emptyText').replace(/\bcolorEmpty\b/g, 'emptyColor');
+}
+
+function v22SeatProperties(properties) {
+  for(const key in properties) {
+    const value = properties[key];
+    if(typeof value == 'string' || (typeof value == 'object' && value !== null)) {
+      const json = JSON.stringify(value);
+      if(json !== undefined && /displayEmpty|colorEmpty/.test(json))
+        properties[key] = JSON.parse(v22RenameSeatOnlyNames(json));
+    }
+  }
+
+  if(properties.displayEmpty !== undefined) {
+    properties.emptyText = properties.displayEmpty;
+    delete properties.displayEmpty;
+  }
+  if(properties.colorEmpty !== undefined) {
+    properties.emptyColor = properties.colorEmpty;
+    delete properties.colorEmpty;
+  }
+
+  // "display" is a boolean on every other widget, so it is only renamed on seats
+  if(properties.type == 'seat' && properties.display !== undefined) {
+    properties.seatedText = properties.display;
+    delete properties.display;
+  }
+}
+
+function v22SeatRoutine(routine, globalProperties) {
+  const seatIDs = globalProperties.v22SeatIDs || [];
+  const seatIDPattern = seatIDs.map(id => id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  // ${PROPERTY display OF <seat>} can be renamed safely because the widget it
+  // reads from is known to be a seat. A plain SET/GET of "display" cannot be
+  // resolved statically, so only the two seat placeholders give it away.
+  const propertyOfSeat = seatIDPattern
+    ? new RegExp(`(PROPERTY\\s+)display(\\s+OF\\s+'?(?:${seatIDPattern})'?\\b)`, 'g') : null;
+
+  for(const key in routine) {
+    const json = JSON.stringify(routine[key]);
+    if(json === undefined)
+      continue;
+    let updated = v22RenameSeatOnlyNames(json);
+    if(propertyOfSeat)
+      updated = updated.replace(propertyOfSeat, '$1seatedText$2');
+    if(updated !== json)
+      routine[key] = JSON.parse(updated);
+
+    const operation = routine[key];
+    if(operation && typeof operation == 'object' && operation.func == 'SET' && operation.property == 'display'
+       && typeof operation.value == 'string' && /\b(playerName|seatIndex)\b/.test(operation.value)) {
+      operation.property = 'seatedText';
+    }
+  }
 }
 
 function v21DisableHolderImageWidget(meta, state) {

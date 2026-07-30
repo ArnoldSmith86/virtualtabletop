@@ -12,14 +12,15 @@ class Seat extends Widget {
       turn: false,
       skipTurn: false,
       player: '',
-      display: 'playerName',
-      displayEmpty: 'click to sit',
+      seatedText: 'playerName',
+      emptyText: 'click to sit',
       hideTurn: false,
       hideWhenUnused: false,
       hand: 'hand',
 
       color: '#999999',
-      colorEmpty: '#999999',
+      seatedColor: 'playerColor',
+      emptyColor: '#999999',
       layer: -1,
       borderRadius: 5
     });
@@ -27,9 +28,9 @@ class Seat extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
-      const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
-      let displayedText = String(display || '')
+    if(delta.index !== undefined || delta.player !== undefined || delta.seatedText !== undefined || delta.emptyText !== undefined) {
+      const text = this.get('player') != '' ? this.get('seatedText') : this.get('emptyText');
+      let displayedText = String(text || '')
       displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
@@ -90,14 +91,22 @@ class Seat extends Widget {
     return p;
   }
 
+  // The color a seated player gives the seat: the special value 'playerColor'
+  // (the default) means "use the color of whoever sits down", anything else is
+  // used verbatim as the seat's color.
+  seatedColorFor(playerColor) {
+    const seatedColor = this.get('seatedColor');
+    return !seatedColor || seatedColor == 'playerColor' ? playerColor : seatedColor;
+  }
+
   //need to add a condition here to change the turn if the turn is in a seat that is empty
   async setPlayer() {
     if(this.get('player') == '') {
       await this.set('player', playerName);
-      await this.set('color', playerColor);
+      await this.set('color', this.seatedColorFor(playerColor));
     } else {
       await this.set('player', null);
-      await this.set('color', this.get('colorEmpty'));
+      await this.set('color', this.get('emptyColor'));
     }
   }
 
