@@ -1,3 +1,4 @@
+import JSZip from 'jszip';
 import { BSON } from 'bson';
 
 import TTS from '../../server/ttsimport.mjs';
@@ -63,17 +64,28 @@ function corners(widget, widgets) {
   return points;
 }
 
+// A widget nobody owns - the holder of a closed bag - and everything inside it is
+// hidden until a routine shows it.
+function isHidden(widget, widgets) {
+  for(let node = widget; node; node = widgets[node.parent])
+    if(Array.isArray(node.owner) && !node.owner.length)
+      return true;
+  return false;
+}
+
 // Every widget of the room has to be reachable, children included: the surface is
-// overflow: hidden, so anything outside of it cannot be clicked at all.
+// overflow: hidden, so anything outside of it cannot be clicked at all. What is
+// visible right away also has to stay inside the band that is left for the table.
 function expectOnSurface(widgets, bottom=1000) {
   for(const widget of Object.values(widgets)) {
     if(widget.id == 'hand' || widget.x === undefined && !widget.parent)
       continue;
+    const limit = isHidden(widget, widgets) ? 1000 : bottom;
     for(const [ x, y ] of corners(widget, widgets)) {
       expect(x).toBeGreaterThanOrEqual(0);
       expect(y).toBeGreaterThanOrEqual(0);
       expect(x).toBeLessThanOrEqual(1600);
-      expect(y).toBeLessThanOrEqual(bottom);
+      expect(y).toBeLessThanOrEqual(limit);
     }
   }
 }
@@ -145,6 +157,56 @@ describe('TTS import: bags', () => {
   });
 });
 
+describe('TTS import: decks', () => {
+  it('turns the cards of a deck lying face up face up', async () => {
+    const up = await convert(objects(deck('up', [ 100, 101 ])));
+    expect(typed(up, 'card').map(c=>c.activeFace)).toEqual([ 1, 1 ]);
+
+    // rotZ 180 is a deck lying on the table upside down, which is the default face
+    const down = await convert(objects(Object.assign(deck('down', [ 100, 101 ]), { Transform: { posX: 0, posZ: 0, rotZ: 180 } })));
+    expect(typed(down, 'card').map(c=>c.activeFace)).toEqual([ undefined, undefined ]);
+  });
+});
+
+describe('TTS import: stacks', () => {
+  it('puts the objects of a stack where the stack is', async () => {
+    const widgets = await convert(objects(
+      { Name: 'Custom_Tile', GUID: 'stack', Transform: { posX: 6, posZ: 0 }, CustomImage: { ImageURL: png(100, 100) }, ContainedObjects: [ die('one', 0), die('two', -6) ] },
+      die('reference', 6)
+    ));
+
+    // the transforms stored with the objects inside a stack are frequently the ones
+    // they had before they were stacked - going by them scatters the stack
+    expect(widgets.one.x).toBe(widgets.reference.x);
+    expect(widgets.two.x).toBe(widgets.reference.x);
+  });
+});
+
+describe('TTS import: files', () => {
+  it('converts a save from a workshop upload zip', async () => {
+    const zip = new JSZip();
+    zip.file('WorkshopUpload', '');
+    zip.file('save.json', JSON.stringify(objects(die('a', 0))));
+
+    const widgets = await TTS.fromZIP(await zip.generateAsync({ type: 'nodebuffer' }));
+    expect(widgets.a.type).toBe('dice');
+    expect(widgets._meta.info.importerTemp).toBe('TTS');
+  });
+
+  it('keeps the widget IDs of two imports that run at the same time apart', async () => {
+    // two objects with the same GUID: the second one has to get an ID of its own
+    const twins = SaveName=>({ SaveName, ObjectStates: [ die('twin', -2), die('twin', 2) ] });
+
+    const alone = await convert(twins('alone'));
+    const [ first, second ] = await Promise.all([ convert(twins('first')), convert(twins('second')) ]);
+
+    // an import may not take IDs away from another one that is still running
+    expect(Object.keys(alone)).toEqual([ 'twin', 'twin-1' ]);
+    expect(Object.keys(first)).toEqual(Object.keys(alone));
+    expect(Object.keys(second)).toEqual(Object.keys(alone));
+  });
+});
+
 describe('TTS import: layout', () => {
   it('gives a two card deck a pile but places a single card directly', async () => {
     const two = await convert(objects(deck('two', [ 100, 101 ])));
@@ -183,9 +245,8 @@ describe('TTS import: layout', () => {
 
     // 1200x75 fits as it is, but turned by 90 degrees the same board is 1200px high
     expect(flat.board.width).toBe(1200);
-    expect(flat.board.scale).toBe(undefined);
     expect(upright.board.rotation).toBe(90);
-    expect(upright.board.scale).toBeLessThan(1);
+    expect(upright.board.width).toBeLessThan(1200);
     expectOnSurface(upright);
   });
 
@@ -205,23 +266,52 @@ describe('TTS import: layout', () => {
     expectOnSurface(widgets, 810);
   });
 
-  it('scales the objects along with the distances between them', async () => {
+  it('makes the objects smaller along with the distances between them', async () => {
     const widgets = await convert(objects(die('a', -40), die('b', 40)));
 
     // 80 TTS units are 4000px and have to fit into 1500
-    expect(widgets.a.scale).toBeCloseTo(1500/4050, 2);
-    expect(widgets.b.scale).toBe(widgets.a.scale);
+    const factor = Math.round(1500/4050*1000)/1000;
+    expect(widgets.a.width).toBe(Math.round(50*factor));
+    expect(widgets.b.width).toBe(widgets.a.width);
+    // the widget itself is smaller instead of being rendered scaled down: a card
+    // dragged out of a scaled pile would jump to full size
+    expect(widgets.a.scale).toBe(undefined);
 
     // the dice keep touching the left and the right end of the layout
     const center = w=>w.x + w.width/2;
-    expect(center(widgets.b) - center(widgets.a)).toBeCloseTo(4000*widgets.a.scale, 0);
-    expect(center(widgets.a) + center(widgets.b)).toBe(1600);
+    expect(center(widgets.b) - center(widgets.a)).toBeCloseTo(4000*factor, 0);
+    expect(center(widgets.a) + center(widgets.b)).toBeCloseTo(1600, -1);
+  });
+
+  it('gives the cards of a shrunk deck the size of their pile', async () => {
+    const widgets = await convert(objects(deck('d', [ 100, 101 ]), die('far', 40)));
+
+    // the cards are children of the pile and have to shrink with it - and they keep
+    // that size when a player drags one out onto the table
+    expect(widgets.d.cardDefaults.width).toBeLessThan(120);
+    expect(widgets.d.cardDefaults.width).toBe(widgets['d-pile'].width);
+    expect(widgets.d.cardDefaults.height).toBe(widgets['d-pile'].height);
   });
 
   it('leaves a layout that fits alone', async () => {
     const widgets = await convert(objects(die('a', -2), die('b', 2)));
     expect(widgets.a.scale).toBe(undefined);
+    expect(widgets.a.width).toBe(50);
     expect(widgets.a.x).toBe(675);
+  });
+
+  it('does not shrink the layout for the holder of a closed bag', async () => {
+    const board = { Name: 'Custom_Board', GUID: 'board', Transform: { posX: 0, posZ: 0, scaleX: 2, scaleZ: 2 }, CustomImage: { ImageURL: png(600, 600) } };
+    const bag = { Name: 'Bag', GUID: 'bag', Transform: { posX: 0, posZ: -6 }, ContainedObjects: [ die('inBag', 0) ] };
+    const table = (...ObjectStates)=>({ SaveName: 'test', Hands: { Enable: true, HandTransforms: [ { Color: 'Red' } ] }, ObjectStates });
+
+    const withoutBag = await convert(table(board));
+    const withBag = await convert(table(board, bag));
+
+    // the holder is not on the screen until the bag is opened, so it must not make
+    // the whole table smaller - but it does have to stay reachable once it is
+    expect(withBag.board.width).toBe(withoutBag.board.width);
+    expectOnSurface(withBag, 810);
   });
 });
 

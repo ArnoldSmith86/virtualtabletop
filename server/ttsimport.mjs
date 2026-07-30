@@ -52,19 +52,29 @@ const invisibleObjects = /Trigger$|^(Fog|Custom_PDF|Custom_Audio|Tileset_)/;
 const pieceObjects = /^(Backgammon|Block|Checker|Chess|Chinese_Checkers_Piece|Chip|Coin|Domino|Figurine|Mahjong|Pawn|PlayerPawn|go_game_piece|reversi)/;
 const roundPieces = /^(Backgammon|Checker|Chip|Coin|PlayerPawn|go_game_piece|reversi)/;
 
+// Everything that has to stay unique or be remembered for the length of one
+// conversion. This cannot be module state: a conversion waits for images, so two
+// players importing a save at the same time would hand out the same widget IDs.
+function newImport() {
+  return {
+    usedIDs: new Set(),
+    nextID: 1,
+    // The fallback for an image whose dimensions could not be read is remembered for
+    // the current import only - a host that times out once should not keep every later
+    // import of that image pinned to a 1:1 aspect ratio.
+    failedImages: {}
+  };
+}
+
 const imgSizeCache = {};
-// The fallback for an image whose dimensions could not be read is remembered for
-// the current import only - a host that times out once should not keep every later
-// import of that image pinned to a 1:1 aspect ratio.
-let imgSizeFailed = {};
-async function imgSize(url) {
-  if(imgSizeCache[url] || imgSizeFailed[url])
-    return imgSizeCache[url] || imgSizeFailed[url];
+async function imgSize(url, imp) {
+  if(imgSizeCache[url] || imp.failedImages[url])
+    return imgSizeCache[url] || imp.failedImages[url];
 
   try {
     // only the first few KB are needed, but a host may ignore the Range header and
     // send the whole image - don't wait or buffer indefinitely for that
-    const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' }, signal: AbortSignal.timeout(15000), size: 20000000 });
+    const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' }, signal: AbortSignal.timeout(15000), size: 1000000 });
     const buffer = await r.buffer();
     if(buffer.toString('ascii', 1, 4) == 'PNG')
       return imgSizeCache[url] = [ buffer.readUInt32BE(16), buffer.readUInt32BE(20) ];
@@ -76,7 +86,7 @@ async function imgSize(url) {
   } catch(e) {
     Logging.log(`TTS import: could not read the dimensions of ${url}: ${e.toString()}`);
   }
-  return imgSizeFailed[url] = [ 1, 1 ];
+  return imp.failedImages[url] = [ 1, 1 ];
 }
 
 function collectImageURLs(objects, urls=new Set()) {
@@ -95,11 +105,11 @@ function collectImageURLs(objects, urls=new Set()) {
 // The images are only downloaded for their dimensions - a game can reference
 // hundreds of them, so fill the cache with a couple of parallel requests instead
 // of blocking the conversion of every single object on its own request.
-async function prefetchImageSizes(objects) {
+async function prefetchImageSizes(objects, imp) {
   const queue = [ ...collectImageURLs(objects) ].filter(url=>url && !imgSizeCache[url]);
   await Promise.all(Array.from({ length: 16 }, async _=>{
     while(queue.length)
-      await imgSize(queue.shift());
+      await imgSize(queue.shift(), imp);
   }));
 }
 
@@ -109,13 +119,11 @@ function processURL(url) {
   return match ? `https://steamusercontent-a.akamaihd.net${match[0]}` : u.replace(/^http:/, 'https:');
 }
 
-let nextID = 1;
-let usedIDs = new Set();
-function getID(o) {
-  let id = String(o.GUID || nextID++);
-  while(usedIDs.has(id))
-    id = `${id}-${nextID++}`;
-  usedIDs.add(id);
+function getID(o, imp) {
+  let id = String(o.GUID || imp.nextID++);
+  while(imp.usedIDs.has(id))
+    id = `${id}-${imp.nextID++}`;
+  imp.usedIDs.add(id);
   return id;
 }
 
@@ -176,8 +184,10 @@ function contrastColor(hex) {
   return r*0.3 + g*0.6 + b*0.1 > 128 ? '#000000' : '#ffffff';
 }
 
+// The html property of a widget goes through the property replacements, so a $ has
+// to be escaped as well to show a text that happens to contain ${...} as it is.
 function escapeHTML(text) {
-  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\$/g, '&#36;');
 }
 
 function shade(hex, factor) {
@@ -209,7 +219,7 @@ function place(o, widget) {
   return widget;
 }
 
-async function addDeck(o, parent=null) {
+async function addDeck(o, imp, parent=null) {
   const cardIDs = (o.DeckIDs || [ o.CardID ]).map(extractNumber).filter(id=>!isNaN(+id) && o.CustomDeck[Math.floor(+id/100)]);
   if(!cardIDs.length) {
     Logging.log(`TTS import: skipping ${o.Name} (${o.GUID}): no card refers to an existing CustomDeck entry`);
@@ -218,7 +228,7 @@ async function addDeck(o, parent=null) {
 
   const firstDeckID = Math.floor(cardIDs[0]/100);
 
-  let [ deckWidth, deckHeight ] = await imgSize(processURL(o.CustomDeck[firstDeckID].FaceURL));
+  let [ deckWidth, deckHeight ] = await imgSize(processURL(o.CustomDeck[firstDeckID].FaceURL), imp);
 
   const cardsPerRow = extractNumber(o.CustomDeck[firstDeckID].NumWidth)  || 10;
   const cardsPerCol = extractNumber(o.CustomDeck[firstDeckID].NumHeight) ||  7;
@@ -236,7 +246,7 @@ async function addDeck(o, parent=null) {
   cardHeight *= scale;
 
   const widgets = {};
-  const id = getID(o);
+  const id = getID(o, imp);
   const deck = {
     id,
     parent,
@@ -352,9 +362,9 @@ async function addDeck(o, parent=null) {
 // the button toggles whether the contents are shown. The holder is a child of the
 // button so that the two always stay together, and it accepts every widget type
 // because bags can hold anything in TTS.
-async function addBag(o, parent) {
-  const id = getID(o);
-  const contents = await addRecursive(o.ContainedObjects, id);
+async function addBag(o, imp, parent) {
+  const id = getID(o, imp);
+  const contents = await addRecursive(o.ContainedObjects, imp, id);
   // the cards of a stack live in its pile and a deck is invisible: what a player
   // gets out of the bag are the widgets that sit in the holder itself
   const children = Object.values(contents).filter(w=>w.parent == id && w.type != 'deck');
@@ -376,7 +386,9 @@ async function addBag(o, parent) {
     borderColor: shade(color, 0.6),
     textColor: contrastColor(color),
     borderRadius: '20px 20px 6px 6px',
-    css: 'padding: 2px 4px; font-size: 12px; line-height: 1.15',
+    // the border width is spelled out because the holder below is positioned inside
+    // it: both have to shrink by the same factor when the layout is scaled down
+    css: 'padding: 2px 4px; font-size: 12px; line-height: 1.15; border-width: 4px',
     clickRoutine: [
       {
         func: 'IF',
@@ -415,7 +427,7 @@ async function addBag(o, parent) {
   return widgets;
 }
 
-async function addImage(o, parent) {
+async function addImage(o, imp, parent) {
   const name = String(o.Name || '');
   const image = processURL(o.CustomImage.ImageURL);
   const back = o.CustomImage.ImageSecondaryURL ? processURL(o.CustomImage.ImageSecondaryURL) : null;
@@ -429,11 +441,11 @@ async function addImage(o, parent) {
   else if(name.match(/^Figurine/))
     base = baseSize.figurine * number(o.CustomImage.ImageScalar, 1);
 
-  const [ imageWidth, imageHeight ] = await imgSize(image);
+  const [ imageWidth, imageHeight ] = await imgSize(image, imp);
   const aspect = imageWidth && imageHeight ? imageWidth/imageHeight : 1;
 
   const widget = {
-    id: getID(o),
+    id: getID(o, imp),
     parent,
     width:  clamp(Math.round(base * t.scaleX * (aspect < 1 ? aspect : 1)), 8, 1600),
     height: clamp(Math.round(base * t.scaleZ / (aspect > 1 ? aspect : 1)), 8, 1000),
@@ -467,7 +479,7 @@ async function addImage(o, parent) {
   return { [widget.id]: place(o, widget) };
 }
 
-function addDice(o, parent) {
+function addDice(o, imp, parent) {
   // TTS gives every object that can be rolled a RotationValues list: one entry per
   // face with the value that is up in that rotation. That is the only way to know
   // the faces of a die that is just a mesh (Custom_Model), and it also gives the
@@ -486,7 +498,7 @@ function addDice(o, parent) {
   const size = clamp(Math.round(baseSize.dice * transformOf(o).scaleX), 40, 200);
 
   const widget = {
-    id: getID(o),
+    id: getID(o, imp),
     parent,
     type: 'dice',
     width: size,
@@ -512,7 +524,7 @@ function addDice(o, parent) {
   return { [widget.id]: place(o, widget) };
 }
 
-function addText(o, parent) {
+function addText(o, imp, parent) {
   const text = String((o.Text || {}).Text || '').trim();
   if(!text)
     return null;
@@ -520,7 +532,7 @@ function addText(o, parent) {
   const lines = text.split('\n');
   const fontSize = clamp(Math.round(number((o.Text || {}).fontSize, 64) * 0.35 * transformOf(o).scaleX), 10, 72);
   const widget = {
-    id: getID(o),
+    id: getID(o, imp),
     parent,
     type: 'label',
     text,
@@ -534,7 +546,7 @@ function addText(o, parent) {
 
 // A notecard holds as much text as its author typed, so the card grows with it
 // instead of cutting the text off at a fixed height. Its title is the heading.
-function addNotecard(o, parent) {
+function addNotecard(o, imp, parent) {
   const title = String(o.Nickname || '').trim();
   const body = String(o.Description || '').trim();
   const paragraphs = (title ? [ title ] : []).concat(body ? body.split('\n') : []);
@@ -545,7 +557,7 @@ function addNotecard(o, parent) {
   // is followed by an empty line
   const rows = paragraphs.reduce((sum, p)=>sum + Math.max(1, Math.ceil(p.length/38)), title && body ? 1 : 0);
   const widget = {
-    id: getID(o),
+    id: getID(o, imp),
     parent,
     width: 240,
     height: clamp(rows*15 + 16, 60, 500),
@@ -560,7 +572,7 @@ function addNotecard(o, parent) {
 // Meshes, asset bundles and the built-in 3D pieces have no 2D representation at
 // all, so they become plain colored pieces carrying their name. Unnamed ones are
 // usually decoration of the 3D table and are left out.
-function addPiece(o, parent) {
+function addPiece(o, imp, parent) {
   const name = String(o.Name || '');
   const text = String(o.Nickname || '').trim();
   if(!text && !name.match(pieceObjects))
@@ -569,7 +581,7 @@ function addPiece(o, parent) {
   const size = clamp(Math.round(baseSize.piece * transformOf(o).scaleX), 40, 400);
   const color = toColor(o.ColorDiffuse, '#cccccc');
   const widget = {
-    id: getID(o),
+    id: getID(o, imp),
     parent,
     width: size,
     height: size,
@@ -586,38 +598,49 @@ function addPiece(o, parent) {
   return { [widget.id]: place(o, widget) };
 }
 
-async function addObject(o, parent) {
+async function addObject(o, imp, parent) {
   const name = String(o.Name || '');
 
   if(name.match(invisibleObjects))
     return null;
   if(o.CustomDeck)
-    return await addDeck(o, parent);
+    return await addDeck(o, imp, parent);
   if(name.match(/Bag$/))
-    return await addBag(o, parent);
+    return await addBag(o, imp, parent);
   if(name == 'Custom_Dice' || name.match(/^Die_/))
-    return addDice(o, parent);
+    return addDice(o, imp, parent);
   if(name == '3DText')
-    return addText(o, parent);
+    return addText(o, imp, parent);
   if(name == 'Notecard')
-    return addNotecard(o, parent);
+    return addNotecard(o, imp, parent);
   if(Array.isArray(o.ContainedObjects) && o.ContainedObjects.length)
-    return await addRecursive(o.ContainedObjects, parent); // a stack of tokens/tiles or an unknown container
+    return await addRecursive(stackedAt(o), imp, parent); // a stack of tokens/tiles or an unknown container
   if(o.CustomImage && o.CustomImage.ImageURL)
-    return await addImage(o, parent);
+    return await addImage(o, imp, parent);
   if(rotationValues(o))
-    return addDice(o, parent); // a mesh that can be rolled, e.g. a Custom_Model die
-  return addPiece(o, parent);
+    return addDice(o, imp, parent); // a mesh that can be rolled, e.g. a Custom_Model die
+  return addPiece(o, imp, parent);
 }
 
-async function addRecursive(os, parent=null) {
+// The objects of a stack are all in the same spot on the TTS table, and the
+// transforms that are stored with them inside the stack are often the ones they had
+// before they were stacked - so they are put where the stack is instead of where
+// they claim to be, one above the other.
+function stackedAt(o) {
+  const t = transformOf(o);
+  return o.ContainedObjects.map((contained, index)=>contained && typeof contained == 'object' ? Object.assign({}, contained, {
+    Transform: Object.assign({}, transformOf(contained), { posX: t.posX, posY: t.posY + index/100, posZ: t.posZ, rotY: t.rotY })
+  }) : contained);
+}
+
+async function addRecursive(os, imp, parent=null) {
   const widgets = {};
 
   for(const o of os || []) {
     if(!o || typeof o != 'object')
       continue;
     try {
-      for(const widget of Object.values(await addObject(o, parent) || {})) {
+      for(const widget of Object.values(await addObject(o, imp, parent) || {})) {
         if(!widget.parent)
           delete widget.parent; // no parent is the default - don't spell it out
         widgets[widget.id] = widget;
@@ -634,13 +657,17 @@ async function addRecursive(os, parent=null) {
 // How much room a widget really takes up, as a box relative to its x/y. That is
 // not simply width x height: a widget rotated by 90 degrees is as high as it is
 // wide, and an opened bag reaches far below its button because the holder holding
-// the contents is a child of it. Both rotate and scale happen around the center of
-// the widget, so the box can start left of / above x/y and extend past width/height.
-function widgetExtent(widget, byParent) {
+// the contents is a child of it. The rotation happens around the center of the
+// widget, so the box can start left of / above x/y and extend past width/height.
+// Widgets nobody owns are hidden until a routine shows them - the holder of a bag
+// is only included when the room that an opened bag needs is being asked for.
+function widgetExtent(widget, byParent, includeHidden) {
   let x0 = 0, y0 = 0, x1 = widget.width || 0, y1 = widget.height || 0;
 
   for(const child of byParent[widget.id] || []) {
-    const box = widgetExtent(child, byParent);
+    if(!includeHidden && Array.isArray(child.owner) && !child.owner.length)
+      continue;
+    const box = widgetExtent(child, byParent, includeHidden);
     x0 = Math.min(x0, (child.x || 0) + box.x0);
     y0 = Math.min(y0, (child.y || 0) + box.y0);
     x1 = Math.max(x1, (child.x || 0) + box.x1);
@@ -664,6 +691,37 @@ function widgetExtent(widget, byParent) {
   return { x0, y0, x1, y1 };
 }
 
+// Every length the importer writes into a css string is a px value of its own
+// making, so scaling them all keeps fonts, paddings and borders in proportion with
+// the widget they belong to.
+function scaleLengths(css, factor) {
+  return String(css).replace(/(-?[0-9.]+)px/g, (all, length)=>`${Math.round(length*factor*100)/100}px`);
+}
+
+// Shrinking the layout makes the widgets themselves smaller instead of setting the
+// scale property on the top level ones: a card dragged out of a pile or a token
+// taken out of a bag becomes a top level widget itself, and would jump to full size
+// if the scale it is rendered with belonged to its former parent.
+function scaleWidget(widget, factor, keepPosition) {
+  for(const property of keepPosition ? [ 'width', 'height' ] : [ 'width', 'height', 'x', 'y' ])
+    if(typeof widget[property] == 'number')
+      widget[property] = Math.round(widget[property]*factor);
+
+  for(const property of [ 'css', 'faceCSS', 'borderRadius' ])
+    if(typeof widget[property] == 'string')
+      widget[property] = scaleLengths(widget[property], factor);
+    else if(typeof widget[property] == 'number')
+      widget[property] = Math.round(widget[property]*factor*100)/100;
+
+  if(widget.cardDefaults) {
+    widget.cardDefaults.width  = Math.round(widget.cardDefaults.width *factor);
+    widget.cardDefaults.height = Math.round(widget.cardDefaults.height*factor);
+    // enlarge is a multiple of the size of the card, which is smaller now: keep
+    // showing a card that is looked at as big as one of a native VTT game
+    widget.cardDefaults.enlarge = Math.round(clamp(4/factor, 4, 40));
+  }
+}
+
 function moveIntoBounds(widgets, top, bottom) {
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
@@ -674,8 +732,10 @@ function moveIntoBounds(widgets, top, bottom) {
 
   // Widgets that are not on the surface at all: children move with their parent,
   // and a deck is invisible and has no position. Counting a deck as a widget at
-  // (0, 0) would pull the whole bounding box to the origin.
-  const placed = Object.values(widgets).filter(w=>!w.parent && w.x !== undefined).map(w=>({ widget: w, box: widgetExtent(w, byParent) }));
+  // (0, 0) would pull the whole bounding box to the origin. The box of a widget is
+  // measured twice: as it is seen now, and as it is once a bag in it is opened.
+  const placed = Object.values(widgets).filter(w=>!w.parent && w.x !== undefined)
+    .map(w=>({ widget: w, box: widgetExtent(w, byParent, false), full: widgetExtent(w, byParent, true) }));
 
   // 1. Find bounding box for all parent-less widgets
   for(const { widget, box } of placed) {
@@ -694,30 +754,29 @@ function moveIntoBounds(widgets, top, bottom) {
   const offsetX =       (1600       - (maxX-minX)*scale)/2;
   const offsetY = top + (bottom-top - (maxY-minY)*scale)/2;
 
-  for(const { widget, box } of placed) {
-    const width  = box.x1 - box.x0;
-    const height = box.y1 - box.y0;
+  // 3. Make every widget smaller by that factor, children included: their x/y is
+  //    relative to their parent and shrinks with the rest of the layout.
+  if(scale < 1)
+    for(const widget of Object.values(widgets))
+      scaleWidget(widget, scale, !widget.parent);
 
-    // The objects are scaled along with the distances between them - scaling only
-    // the positions would let everything overlap on a table bigger than the surface.
-    const left = (widget.x + box.x0 + width /2 - minX)*scale + offsetX - width *scale/2;
-    const topY = (widget.y + box.y0 + height/2 - minY)*scale + offsetY - height*scale/2;
+  // 4. Put the top level widgets where the scaled down layout has them
+  for(const { widget, box, full } of placed) {
+    const left = (widget.x + box.x0 - minX)*scale + offsetX;
+    const topY = (widget.y + box.y0 - minY)*scale + offsetY;
 
-    // a widget that is higher than the band between the seats and the hand cannot
-    // be kept inside it - a full table board is allowed to use the whole surface
-    const fits = height*scale <= bottom-top;
-    const lo = fits ? top    : 0;
-    const hi = fits ? bottom : 1000;
+    // What is visible stays inside the band between the seats and the hand. What is
+    // only there once a bag has been opened just has to stay on the surface, which
+    // is where a player can reach it - outside of it, overflow: hidden swallows it.
+    const loX =        (box.x0 - full.x0)*scale;
+    const hiX = 1600 - (full.x1 - box.x0)*scale;
+    const loY = Math.max(top,               (box.y0 - full.y0)*scale);
+    const hiY = Math.min(bottom - (box.y1 - box.y0)*scale, 1000 - (full.y1 - box.y0)*scale);
 
-    // From the top left corner of the visible box back to x/y: the center of the
-    // widget stays in place while the box shrinks towards it, so x/y stay the top
-    // left corner of the unscaled, unrotated widget - which is not where it is seen.
-    const anchorX = (widget.width  || 0)/2*(1-scale) + box.x0*scale;
-    const anchorY = (widget.height || 0)/2*(1-scale) + box.y0*scale;
-    widget.x = Math.round(clamp(left, 0,  Math.max(0,  1600 - width *scale)) - anchorX);
-    widget.y = Math.round(clamp(topY, lo, Math.max(lo, hi   - height*scale)) - anchorY);
-    if(scale < 1)
-      widget.scale = scale;
+    // x/y is the top left corner of the unrotated widget, which is not where its box
+    // begins - a rotated widget sticks out of it on the side it turned towards.
+    widget.x = Math.round(clamp(left, loX, Math.max(loX, hiX)) - box.x0*scale);
+    widget.y = Math.round(clamp(topY, loY, Math.max(loY, hiY)) - box.y0*scale);
   }
 
   return widgets;
@@ -735,9 +794,8 @@ async function convertTTS(content, linkContent, workshop={}) {
         json = JSON.parse(await zip.files[file].async('string'));
   }
 
-  usedIDs = new Set();
-  imgSizeFailed = {};
-  await prefetchImageSizes(json.ObjectStates);
+  const imp = newImport();
+  await prefetchImageSizes(json.ObjectStates, imp);
 
   // Older saves list the hand zones in Hands.HandTransforms, newer ones store them
   // as HandTrigger objects with the player color in FogColor. VTT uses one hand for
@@ -749,7 +807,7 @@ async function convertTTS(content, linkContent, workshop={}) {
   const hasHand = handColors.length || json.Hands && json.Hands.Enable;
 
   // leave room for the seats at the top and the hand at the bottom
-  const widgets = moveIntoBounds(await addRecursive(json.ObjectStates), handColors.length ? 50 : 0, hasHand ? 810 : 1000);
+  const widgets = moveIntoBounds(await addRecursive(json.ObjectStates, imp), handColors.length ? 50 : 0, hasHand ? 810 : 1000);
 
   if(json.TableURL) {
     widgets.back = {
@@ -869,10 +927,12 @@ async function storeThumbnail(url) {
 }
 
 // Workshop descriptions are BBCode and can be pages long: keep the text, drop the
-// markup and cut it down to something that fits into the game details.
+// markup and cut it down to something that fits into the game details. Some of them
+// contain plain HTML as well, which the game details show as text.
 function plainText(text) {
   const result = String(text || '')
-    .replace(/\[\/?(b|i|u|h[1-3]|strike|spoiler|noparse|quote|code|list|olist|table|tr|td|th|img|url|previewyoutube)(=[^\]]*)?\]/gi, '')
+    .replace(/\[\/?(b|i|u|h[1-3]|strike|spoiler|noparse|quote|code|list|olist|table|tr|td|th|img|url|previewyoutube|hr|carousel|nolinebreak|sub|sup|size|color|center)(=[^\]]*)?\]/gi, '')
+    .replace(/<\/?(br|p|div|span|b|i|u|strong|em|ul|ol|li|a|img|font|hr|h[1-6]|table|tr|td|th)\b[^>]*>/gi, '')
     .replace(/\[\*\]/g, '- ')
     .replace(/\r/g, '')
     .replace(/\n{3,}/g, '\n\n')
