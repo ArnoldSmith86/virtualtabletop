@@ -6,7 +6,7 @@ class ToolboxModule extends SidebarModule {
   async button_circleAlign() {
     // Check if there are enough selected widgets to form a circle
     if (selectedWidgets.length < 3) {
-      alert('Please select at least 3 widgets to align in a circle.');
+      alert(translate('Please select at least 3 widgets to align in a circle.'));
       return;
     }
 
@@ -56,7 +56,7 @@ class ToolboxModule extends SidebarModule {
     const duplicates = widgetBuffer.filter(state=>widgets.has(state.id)).map(state=>state.id);
     if (duplicates.length) {
       const duplicatesList = duplicates.join(', ');
-      const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
+      const overwriteAll = confirm(translate('The following widget IDs already exist: {list}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.').replace('{list}', duplicatesList));
       if (!overwriteAll) return;
     }
     batchStart();
@@ -68,7 +68,7 @@ class ToolboxModule extends SidebarModule {
         delete state.y;
       }
       if(state.type == 'card' && !widgetBuffer.filter(w=>w.id==state.deck).length && !widgets.has(state.deck))
-        alert(`Widget ${state.id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.`);
+        alert(translate('Widget {id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.').replace('{id}', state.id));
       else
         await addWidgetLocal(state);
     }
@@ -93,7 +93,7 @@ class ToolboxModule extends SidebarModule {
     try {
       regex = new RegExp(regex, flags);
     } catch(e) {
-      alert('Invalid regular expression');
+      alert(translate('Invalid regular expression'));
       return;
     }
 
@@ -105,7 +105,7 @@ class ToolboxModule extends SidebarModule {
       try {
         newState = JSON.stringify(JSON.parse(newState));
       } catch(e) {
-        alert('Replacement resulted in invalid JSON. This feauture is working on the JSON level, so make sure the replacement is valid JSON.');
+        alert(translate('Replacement resulted in invalid JSON. This feauture is working on the JSON level, so make sure the replacement is valid JSON.'));
         batchEnd();
         return;
       }

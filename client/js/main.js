@@ -1,4 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
+import { translate, getLanguage, translateSubtree, translateOnChange } from './i18n.js';
 import { startWebSocket, toServer } from './connection.js';
 
 
@@ -510,6 +511,7 @@ async function loadEditMode() {
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
       asArray, compute_ops,
+      translate, getLanguage, translateSubtree, translateOnChange,
       eventCoords,
       getCurrentGameSettings, legacyMode, getEnabledLegacyModes
     });

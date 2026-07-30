@@ -1466,7 +1466,7 @@ async function addLibraryDeckToGame(entry) {
   try {
     details = await getLibraryDeckDetails(entry);
   } catch(e) {
-    alert('Loading the deck failed. Please try again.');
+    alert(translate('Loading the deck failed. Please try again.'));
     return;
   }
 
@@ -1564,7 +1564,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       delete widget[key];
 
   if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-    alert(`Parent widget ${widget.parent} does not exist.`);
+    alert(translate('Parent widget {id} does not exist.').replace('{id}', widget.parent));
     batchEnd();
     return;
   }
@@ -1735,6 +1735,11 @@ export function initializeEditMode(currentMetaData) {
   jeInitEventListeners();
   initializeTraceViewer();
   initializeEditor(currentMetaData);
+
+  // the editor DOM did not exist when the page was translated on load; the
+  // sidebar modules keep recreating their content, so keep translating those
+  translateSubtree($('body'));
+  translateOnChange($('#editor'));
 
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
@@ -2079,7 +2084,7 @@ export function initializeEditMode(currentMetaData) {
         delete widget[key];
 
     if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-      alert(`Parent widget ${widget.parent} does not exist.`);
+      alert(translate('Parent widget {id} does not exist.').replace('{id}', widget.parent));
       return;
     }
 

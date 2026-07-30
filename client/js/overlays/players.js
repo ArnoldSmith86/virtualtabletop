@@ -1,4 +1,5 @@
 import { asArray, onLoad, rand } from '../domhelpers.js';
+import { translate } from '../i18n.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -67,7 +68,7 @@ function fillPlayerList(players, active) {
       addPlayerCursor(player, players[player]);
   }
   if(activePlayers.length < 2){
-    document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
+    document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", `<div class='nothingtoshow'>${translate('There are no other players at this table.')}</div>`);
   }
   updatePlayerCountDisplay();
 }
@@ -77,7 +78,7 @@ function updatePlayerCountDisplay() {
   const playerCount = activePlayers.length;
 
   const tooltip = $('.tooltip', playersButton);
-  if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
+  if (tooltip) tooltip.textContent = translate('Players: {count}').replace('{count}', playerCount);
 
   [playersButton, tooltip].forEach(element => element.classList.add('playerChange'));
   

@@ -92,7 +92,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   try {
     zip = await JSZip.loadAsync(sourceFile);
   } catch(e) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
+    alert(translate('{name} is not a valid VTT, VTTC, VTTS or PCIO file.').replace('{name}', sourceFile.name));
     return;
   }
 
@@ -114,7 +114,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   }
 
   if(json === null) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
+    alert(translate('{name} is not a valid VTT, VTTC, VTTS or PCIO file.').replace('{name}', sourceFile.name));
     return;
   } else if(Array.isArray(json)) {
     metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
@@ -217,11 +217,11 @@ async function addState(e, type, src, id, addAsVariant) {
       alert(`${e.target.status}: ${e.target.response}`);
     status(initialStatus);
   };
-  req.upload.onprogress = e=>status(`Uploading (${Math.floor(e.loaded/e.total*100)}%)...`);
+  req.upload.onprogress = e=>status(translate('Uploading ({percent}%)...').replace('{percent}', Math.floor(e.loaded/e.total*100)));
 
   req.open('PUT', url, true);
   req.setRequestHeader('Content-type', 'application/octet-stream');
-  status('Starting upload...');
+  status(translate('Starting upload...'));
   req.send(blob);
 }
 
@@ -239,7 +239,7 @@ async function saveState(e) {
       toServer('saveState', { players: $('#stateSaveOverlay input').value });
       showStatesOverlay('statesOverlay');
     } else {
-      alert('Please enter active players or a different identifier.');
+      alert(translate('Please enter active players or a different identifier.'));
     }
   };
   $('#stateSaveOverlay [icon=undo]').onclick = $('#stateSaveOverlay [icon=close]').onclick = _=>showStatesOverlay('statesOverlay');
@@ -255,9 +255,9 @@ function updateEmptyLibraryHint() {
   const hasPublicLibrary = Object.keys(config.libraries || {}).length > 0;
   $('#emptyLibrary').style.display = isEmpty ? 'block' : 'none';
   if(isEmpty) {
-    $('#emptyLibrary').innerHTML = hasPublicLibrary
-      ? 'Your personal game library is currently empty.<br>Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.'
-      : 'Your personal game library is currently empty.<br>Use the "Add game" button above or drag VTT files here.';
+    $('#emptyLibrary').innerHTML = translate('Your personal game library is currently empty.') + '<br>' + translate(hasPublicLibrary
+      ? 'Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.'
+      : 'Use the "Add game" button above or drag VTT files here.');
   }
   $('#emptyLibraryByFilter').style.display = $('#statesList > div:nth-of-type(2) .visible.roomState') || isEmpty ? 'none' : 'block';
 }
@@ -368,9 +368,9 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
     $('.linked', dom).textContent = 'save';
     $('h4', dom).textContent = `${savePlayers}`;
     $('h4', dom).innerHTML += `<br><br>`;
-    $('h4', dom).append(`${date.toLocaleString("en-US", { month: "long" })} ${date.getDate()}, ${date.getFullYear()}`);
+    $('h4', dom).append(`${date.toLocaleString(getLanguage(), { month: "long" })} ${date.getDate()}, ${date.getFullYear()}`);
   } else {
-    $('h4', dom).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
+    $('h4', dom).textContent = similarName && name != similarName ? translate('Similar to {name}').replace('{name}', similarName) : '';
   }
   emojis2images(dom);
 }
@@ -527,7 +527,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.addEventListener('click', async function(e) {
         let loadGame = $('#stateDetailsOverlay.notEditing');
         if(!loadGame) {
-          loadGame = await confirmOverlay('Discard changes', `Are you sure you want to discard any changes you made to ${$('#mainDetails h1').innerText}?`, 'Discard', 'Keep', 'delete', 'undo', 'red');
+          loadGame = await confirmOverlay(translate('Discard changes'), translate('Are you sure you want to discard any changes you made to {name}?').replace('{name}', $('#mainDetails h1').innerText), translate('Discard'), translate('Keep'), 'delete', 'undo', 'red');
           if(loadGame)
             disableEditing($('#stateDetailsOverlay'), state);
           showStatesOverlay('statesOverlay');
@@ -590,7 +590,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const libraryTypeKeys = Object.keys(config.libraries);
   for(const [ title, category ] of Object.entries(categories)) {
     const displayTitle = (title === 'Public Library' && libraryTypeKeys.length === 1) ? libraryTypeKeys[0] : title;
-    $('.title', category).prepend(displayTitle);
+    $('.title', category).prepend(translate(displayTitle));
     $('#statesList').appendChild(category);
   }
 
@@ -622,7 +622,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('#filterByType').dataset.initialized = 'true';
   let typeHTML = `<option value="" ${previousType === '' ? 'selected' : ''}></option>`;
   for(const typeOption of libraryTypes)
-    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${html(typeOption)}</option>`;
+    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${html(translate(typeOption))}</option>`;
   $('#filterByType').innerHTML = typeHTML;
 
   if(libraryTypes.length > 1) {
@@ -630,7 +630,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     for(const typeOption of libraryTypes) {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.textContent = typeOption;
+      btn.textContent = translate(typeOption);
       btn.dataset.type = typeOption;
       if(previousType === typeOption)
         btn.classList.add('active');
@@ -644,13 +644,13 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   }
 
   const previousLanguage = $('#filterByLanguage').value;
-  let languageHTML = '<option>Any</option>';
+  let languageHTML = `<option value="Any">${html(translate('Any'))}</option>`;
   for(const languageOption of Object.keys(languageOptions).sort())
-    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${html(languageOption)}">${html(languageOption.replace(/^$/, 'None'))}</option>`;
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${html(languageOption)}">${html(languageOption.replace(/^$/, translate('None')).replace(/None$/, translate('None')))}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
   const previousMode = $('#filterByMode').value;
-  let modeHTML = '<option>Any</option>';
+  let modeHTML = `<option value="Any">${html(translate('Any'))}</option>`;
   for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
     modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${html(modeOption)}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
@@ -743,7 +743,7 @@ function fillStateDetails(states, state, dom) {
 
   const createTempState = async function(e, operation, variantID, buttons) {
     const previousText = e.target.innerText;
-    e.target.innerText = 'Copying active game...';
+    e.target.innerText = translate('Copying active game...');
     for(const button of buttons)
       button.disabled = true;
     variantOperationQueue.push({
@@ -784,9 +784,9 @@ function fillStateDetails(states, state, dom) {
 
       if(widgets.size) {
         if(state.savePlayers)
-          loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to switch games? You will lose all unsaved progress in the current game.', ' Load in-progress game', 'Return to active game', 'play_arrow', 'undo');
+          loadNewState = await confirmOverlay(translate('Switch game'), translate('Are you sure you want to switch games? You will lose all unsaved progress in the current game.'), ' ' + translate('Load in-progress game'), translate('Return to active game'), 'play_arrow', 'undo');
         else
-          loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Return to active game', 'play_arrow', 'undo');
+          loadNewState = await confirmOverlay(translate('Switch game'), translate('Are you sure you want to load a new game? You will lose all unsaved progress in the current game.'), translate('Load new game'), translate('Return to active game'), 'play_arrow', 'undo');
         switchToActiveGame = loadNewState !== null;
       }
 
@@ -939,9 +939,9 @@ function fillStateDetails(states, state, dom) {
   shareButton($('#shareLinkOverlay button[icon=share]'), _=>$('#shareLinkOverlay input').value);
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
-    const type     = state.savePlayers ? 'saved game'        : 'game';
-    const category = state.savePlayers ? 'in-progress games' : 'game shelf';
-    if(await confirmOverlay(`Delete ${type}`, `Are you sure you want to completely remove this ${type} from your ${category}?`, 'Delete', 'Keep', 'delete', 'undo', 'red')) {
+    const title = state.savePlayers ? translate('Delete saved game') : translate('Delete game');
+    const text  = state.savePlayers ? translate('Are you sure you want to completely remove this saved game from your in-progress games?') : translate('Are you sure you want to completely remove this game from your game shelf?');
+    if(await confirmOverlay(title, text, translate('Delete'), translate('Keep'), 'delete', 'undo', 'red')) {
       toServer('removeState', state.id);
       removeFromDOM(dom);
       updateEmptyLibraryHint();
@@ -975,12 +975,12 @@ function fillStateDetails(states, state, dom) {
     const button = document.createElement('button');
     button.setAttribute('icon', 'upload');
     if (state.publicLibrary) {
-      button.textContent = `Move to ${category}`;
+      button.textContent = translate('Move to {category}').replace('{category}', category);
       button.onclick = function() {
         toServer('moveStateWithinPublicLibrary', { id: state.id, newLibrary: folder, newCategory: category });
       };
     } else {
-      button.textContent = `Add to public library: ${category}`;
+      button.textContent = translate('Add to public library: {category}').replace('{category}', category);
       button.onclick = function() {
         toServer('addStateToPublicLibrary', { id: state.id, library: folder, category: category });
       };
@@ -1010,7 +1010,7 @@ function fillStateDetails(states, state, dom) {
       uploadButton.onclick = async function() {
         const isVariantImage = uploadButton.parentNode.classList.contains('variantEdit');
         $('#statesButton').dataset.overlay = 'updateImageOverlay';
-        let newURL = await updateImage(uploadButton.value, isVariantImage ? 'Use state image' : null);
+        let newURL = await updateImage(uploadButton.value, isVariantImage ? translate('Use state image') : null);
         if(!newURL && isVariantImage)
           newURL = state.image;
 
@@ -1028,7 +1028,7 @@ function fillStateDetails(states, state, dom) {
   };
   $('#discardDetails').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
-    if(await confirmOverlay('Discard changes', "Are you sure you want to discard any changes you made to this game's variants and metadata?", 'Discard', 'Keep', 'delete', 'undo', 'red')) {
+    if(await confirmOverlay(translate('Discard changes'), translate("Are you sure you want to discard any changes you made to this game's variants and metadata?"), translate('Discard'), translate('Keep'), 'delete', 'undo', 'red')) {
       disableEditing($('#stateDetailsOverlay'), state);
       showStatesOverlay('statesOverlay');
       dom.click();
@@ -1100,7 +1100,7 @@ async function updateImage(currentImage, noImageText) {
     $('img.current', o).src = mapAssetURLs(currentImage);
     $('input.current', o).value = currentImage;
 
-    $('button[icon=image_not_supported]', o).innerText = noImageText || 'Use no image';
+    $('button[icon=image_not_supported]', o).innerText = noImageText || translate('Use no image');
 
     $('button[icon=upload]', o).onclick = async function() {
       $('input', o).value = await uploadAsset();
@@ -1213,7 +1213,7 @@ onLoad(function() {
     if($('#stateAddOverlay input').value.match(/^http/))
       addState(e, 'link', $('#stateAddOverlay input').value);
     else
-      alert('Please enter a link.');
+      alert(translate('Please enter a link.'));
   });
 
   window.addEventListener('resize', function() {

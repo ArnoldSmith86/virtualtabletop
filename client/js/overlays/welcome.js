@@ -40,8 +40,8 @@ function checkForGameURL() {
         $('#welcomePlayerName').value = playerName;
         $('#welcomeGameName').innerText = state.name;
         emojis2images($('#welcomeGameName'));
-        $('#welcomeGameType').innerText = gameDetails.category || 'game';
-        $('#welcomeGameTypeHint').innerText = gameDetails.category == 'tutorial' ? 'check it out' : 'start playing it';
+        $('#welcomeGameType').innerText = translate(gameDetails.category || 'game');
+        $('#welcomeGameTypeHint').innerText = translate(gameDetails.category == 'tutorial' ? 'check it out' : 'start playing it');
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
         toggleClass($('#linkDetailsOverlay .star'),               'hidden',       gameDetails.type == 'user' || !state.stars);
         toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden',       gameDetails.type == 'public');
@@ -54,18 +54,18 @@ function checkForGameURL() {
 
         showOverlay('linkDetailsOverlay');
       } else {
-        checkForGameURL_showError('Game not found!');
+        checkForGameURL_showError(translate('Game not found!'));
       }
     });
   } else if(location.href.includes('/game/') || location.href.includes('/tutorial/') || location.href.includes('/library/')) {
-    checkForGameURL_showError('Invalid game name!');
+    checkForGameURL_showError(translate('Invalid game name!'));
   }
 }
 
 function checkForGameURL_showError(text) {
   $('#loadingRoomIndicator').innerText = text;
   div($('#topSurface'), '', `
-    <button icon=close>Create an empty room</button>
+    <button icon=close>${translate('Create an empty room')}</button>
   `);
   $('#topSurface button').onclick = _=>location.href = getBaseURL();
 }
@@ -73,12 +73,12 @@ function checkForGameURL_showError(text) {
 async function playButtonClick(updateProgress) {
   const share = parseGameURL();
 
-  updateProgress('Joining room...');
+  updateProgress(translate('Joining room...'));
   if(!$('#welcomeJoinRoom').value.match(/^[A-Za-z0-9_-]+$/))
     throw new Error('Invalid room name');
   lastOverlay = 'linkDetailsOverlay';
   await joinRoom($('#welcomeJoinRoom').value);
-  updateProgress('Adding game...');
+  updateProgress(translate('Adding game...'));
   toServer('rename', { oldName: playerName, newName: $('#welcomePlayerName').value });
   const stateID = await addSharedGame(share.id);
   $('#statesButton').click();

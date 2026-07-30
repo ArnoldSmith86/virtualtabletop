@@ -46,6 +46,7 @@ export default async function minifyHTML() {
     'node_modules/dompurify/dist/purify.js',
 
     'client/js/domhelpers.js',
+    'client/js/i18n.js',
     'client/js/connection.js',
     'client/js/serverstate.js',
     'client/js/legacymodes.js',

@@ -133,6 +133,16 @@ label.ui-line::before{
   font-weight: bold;
 }
 
+#languageSettings select{
+  font-size: 1rem;
+  padding: 0.25em 0.5em;
+  margin-top: 0.5em;
+  color: var(--VTTblue);
+  background: white;
+  border: 1px solid rgb(31, 92, 166);
+  border-radius: 0.25em;
+}
+
 .overlay .heading{
   display: flex;
   align-items: flex-start;
