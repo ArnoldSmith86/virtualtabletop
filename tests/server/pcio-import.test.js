@@ -2,11 +2,13 @@ import JSZip from 'jszip';
 
 import convertPCIO from '../../server/pcioimport.mjs';
 
-async function importWidgets(widgets, schemaVersion) {
+async function importWidgets(widgets, schemaVersion, files={}) {
   const zip = new JSZip();
   zip.file('widgets.json', JSON.stringify(widgets));
   if(schemaVersion !== undefined)
     zip.file('schemaVersion', String(schemaVersion));
+  for(const [ name, content ] of Object.entries(files))
+    zip.file(name, content);
   return await convertPCIO(await zip.generateAsync({ type: 'nodebuffer' }));
 }
 
@@ -872,6 +874,25 @@ describe('PCIO importer', () => {
 
     expect(state._meta.info.importerWarnings.length).toBe(101);
     expect(state._meta.info.importerWarnings[100]).toBe('50 more notes are not listed here.');
+  });
+
+  it('points an asset at the copy the client already uploaded', async () => {
+    const state = await importWidgets([
+      { id: 'board', type: 'board', x: 0, y: 0, width: 100, height: 100, boardImage: 'package://userassets/board.png' }
+    ], 8, { 'asset-map.json': JSON.stringify({ '1234_5678': 'userassets/board.png' }) });
+
+    expect(state.board.image).toBe('/assets/1234_5678');
+  });
+
+  it('skips an asset that is bigger than the limit for .vtt assets', async () => {
+    const state = await importWidgets([
+      { id: 'board', type: 'board', x: 0, y: 0, width: 100, height: 100, boardImage: 'package://userassets/huge.png' }
+    ], 8, { 'userassets/huge.png': Buffer.alloc(10485760) });
+
+    expect(state.board.image).toBe('package://userassets/huge.png');
+    expect(state._meta.info.importerWarnings).toEqual([
+      'Asset userassets/huge.png is bigger than 10 MiB and was not imported.'
+    ]);
   });
 
   it('imports a file whose schema version is missing or unreadable', async () => {
