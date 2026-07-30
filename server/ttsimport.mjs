@@ -176,6 +176,10 @@ function contrastColor(hex) {
   return r*0.3 + g*0.6 + b*0.1 > 128 ? '#000000' : '#ffffff';
 }
 
+function escapeHTML(text) {
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function shade(hex, factor) {
   return '#' + [ 1, 3, 5 ].map(i=>clamp(Math.round((parseInt(hex.substr(i, 2), 16) || 0) * factor), 0, 255).toString(16).padStart(2, '0')).join('');
 }
@@ -343,15 +347,18 @@ async function addDeck(o, parent=null) {
   return widgets;
 }
 
-// A bag becomes a button in the shape of a bag that carries the bag's name, with
-// a holder for the contents inside it. Clicking the button toggles whether the
-// contents are shown. The holder is a child of the button so that the two always
-// stay together, and it accepts every widget type because bags can hold anything
-// in TTS.
+// A bag becomes a button in the shape of a bag that carries the bag's name and the
+// number of objects inside it, with a holder for the contents inside it. Clicking
+// the button toggles whether the contents are shown. The holder is a child of the
+// button so that the two always stay together, and it accepts every widget type
+// because bags can hold anything in TTS.
 async function addBag(o, parent) {
   const id = getID(o);
   const contents = await addRecursive(o.ContainedObjects, id);
-  if(!Object.keys(contents).length)
+  // the cards of a stack live in its pile and a deck is invisible: what a player
+  // gets out of the bag are the widgets that sit in the holder itself
+  const children = Object.values(contents).filter(w=>w.parent == id && w.type != 'deck');
+  if(!children.length)
     return null; // a bag that is empty after the import is nothing to play with
 
   const color = toColor(o.ColorDiffuse, '#a97e4b');
@@ -364,12 +371,12 @@ async function addBag(o, parent) {
     type: 'button',
     width: 130,
     height: 54,
-    text: String(o.Nickname || '').trim() || 'Bag',
+    text: `${String(o.Nickname || '').trim() || 'Bag'} (${children.length})`,
     backgroundColor: color,
     borderColor: shade(color, 0.6),
     textColor: contrastColor(color),
     borderRadius: '20px 20px 6px 6px',
-    css: 'padding: 2px 4px; font-size: 11px; line-height: 1.15',
+    css: 'padding: 2px 4px; font-size: 12px; line-height: 1.15',
     clickRoutine: [
       {
         func: 'IF',
@@ -382,14 +389,21 @@ async function addBag(o, parent) {
     ]
   });
 
+  // the contents stack in one spot, so the holder only has to be big enough for the
+  // largest of them instead of being a mostly empty panel
+  const largest = property=>Math.max(...children.map(w=>w[property] || 0), 60);
+  const width = clamp(largest('width') + 24, 130, 340);
+
   widgets[id] = {
     id,
     parent: bagID,
     type: 'holder',
-    x: -4,
+    // the button positions its children inside its 4px border, and a holder that is
+    // wider than the button hangs over both of its sides evenly
+    x: Math.round(-4 + (130-width)/2),
     y: 50,
-    width: 130,
-    height: 190,
+    width,
+    height: clamp(largest('height') + 24, 80, 340),
     borderRadius: '0 0 6px 6px',
     color: '#ffffffdd',
     css: `border: 2px solid ${shade(color, 0.6)}`,
@@ -423,7 +437,6 @@ async function addImage(o, parent) {
     parent,
     width:  clamp(Math.round(base * t.scaleX * (aspect < 1 ? aspect : 1)), 8, 1600),
     height: clamp(Math.round(base * t.scaleZ / (aspect > 1 ? aspect : 1)), 8, 1000),
-    color: 'transparent',
     image
   };
 
@@ -479,14 +492,18 @@ function addDice(o, parent) {
     width: size,
     height: size,
     movable: true,
-    color: toColor(o.ColorDiffuse, 'white'),
+    color: toColor(o.ColorDiffuse, '#f0f0f0'),
     faces
   };
 
   // the face font is sized for a single digit, so word labels like 'Blue' need a
-  // smaller one to stay inside the face
-  if(hasLabels)
-    widget.faceCSS = `font-size: ${Math.round(size/4)}px; overflow: hidden`;
+  // smaller one: derived from the longest word so that a face like 'Black (Joker)'
+  // wraps into readable lines instead of being cut off
+  if(hasLabels) {
+    const longestWord = Math.max(...faces.map(f=>Math.max(...String(f).split(/\s+/).map(w=>w.length))), 2);
+    const fontSize = clamp(Math.round(size*1.4/longestWord), 6, Math.round(size/4));
+    widget.faceCSS = `font-size: ${fontSize}px; line-height: 1.1; word-break: break-word`;
+  }
 
   // the 3D shapes only exist for these face counts - anything else stays flat
   if(diceShapes.indexOf(faces.length) > -1)
@@ -515,17 +532,26 @@ function addText(o, parent) {
   return { [widget.id]: place(o, widget) };
 }
 
+// A notecard holds as much text as its author typed, so the card grows with it
+// instead of cutting the text off at a fixed height. Its title is the heading.
 function addNotecard(o, parent) {
-  const text = [ String(o.Nickname || '').trim(), String(o.Description || '').trim() ].filter(t=>t).join('\n\n');
+  const title = String(o.Nickname || '').trim();
+  const body = String(o.Description || '').trim();
+  const paragraphs = (title ? [ title ] : []).concat(body ? body.split('\n') : []);
+  if(!paragraphs.length)
+    return null;
+
+  // ~38 characters of the 13px font fit into a line of the 240px card, and the title
+  // is followed by an empty line
+  const rows = paragraphs.reduce((sum, p)=>sum + Math.max(1, Math.ceil(p.length/38)), title && body ? 1 : 0);
   const widget = {
     id: getID(o),
     parent,
-    type: 'label',
-    text,
     width: 240,
-    height: 160,
+    height: clamp(rows*15 + 16, 60, 500),
     movable: true,
-    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px'
+    html: (title ? `<b>${escapeHTML(title)}</b><br>${body ? '<br>' : ''}` : '') + escapeHTML(body).replace(/\n/g, '<br>'),
+    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden'
   };
 
   return { [widget.id]: place(o, widget) };
@@ -547,10 +573,11 @@ function addPiece(o, parent) {
     parent,
     width: size,
     height: size,
-    color,
     borderRadius: name.match(roundPieces) ? '50%' : 8,
     text,
-    css: `font-size: 10px; overflow: hidden; border: 1px solid #0006; color: ${contrastColor(color)}`
+    // a plain widget is not painted with its color property, and its text starts in
+    // the top left corner - which a round piece clips away
+    css: `background-color: ${color}; border: 1px solid #0006; color: ${contrastColor(color)}; font-size: 10px; line-height: 1.1; display: flex; align-items: center; justify-content: center; text-align: center; word-break: break-word; overflow: hidden`
   };
 
   if(o.Locked)
@@ -625,18 +652,32 @@ function moveIntoBounds(widgets, top, bottom) {
   // 2. Shrink the layout until it fits onto the surface and center it there. The
   //    layout is never stretched: objects that are next to each other in TTS
   //    should stay next to each other instead of being spread over the table.
-  const scale = Math.min(1, 1500/(maxX-minX || 1), (bottom-top-40)/(maxY-minY || 1));
+  const scale = Math.round(Math.min(1, 1500/(maxX-minX || 1), (bottom-top-40)/(maxY-minY || 1))*1000)/1000;
   const offsetX =       (1600       - (maxX-minX)*scale)/2;
   const offsetY = top + (bottom-top - (maxY-minY)*scale)/2;
 
   for(const widget of placed) {
+    const width  = widget.width  || 0;
+    const height = widget.height || 0;
+
+    // The objects are scaled along with the distances between them - scaling only
+    // the positions would let everything overlap on a table bigger than the surface.
+    // The scale property keeps the center of a widget in place, so its position is
+    // derived from the center as well, and x/y stay the top left corner of the
+    // unscaled widget: the visible box is centered inside it.
+    const inset = (1-scale)/2;
+    const left = (widget.x + width /2 - minX)*scale + offsetX - width *scale/2;
+    const topY = (widget.y + height/2 - minY)*scale + offsetY - height*scale/2;
+
     // a widget that is higher than the band between the seats and the hand cannot
     // be kept inside it - a full table board is allowed to use the whole surface
-    const fits = (widget.height || 0) <= bottom-top;
+    const fits = height*scale <= bottom-top;
     const lo = fits ? top    : 0;
     const hi = fits ? bottom : 1000;
-    widget.x = clamp(Math.round((widget.x - minX)*scale + offsetX),  0, Math.max(0,  1600 - (widget.width  || 0)));
-    widget.y = clamp(Math.round((widget.y - minY)*scale + offsetY), lo, Math.max(lo, hi   - (widget.height || 0)));
+    widget.x = Math.round(clamp(left, 0,  Math.max(0,  1600 - width *scale)) - width *inset);
+    widget.y = Math.round(clamp(topY, lo, Math.max(lo, hi   - height*scale)) - height*inset);
+    if(scale < 1)
+      widget.scale = scale;
   }
 
   return widgets;
@@ -694,6 +735,7 @@ async function convertTTS(content, linkContent, workshop={}) {
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
+      text: 'Hand', // an empty holder is a blank band otherwise
       x: 50,
       y: 820,
       width: 1500,
@@ -701,19 +743,20 @@ async function convertTTS(content, linkContent, workshop={}) {
     };
   }
 
-  // The seats share one row above the table, so they get narrower when a game has
-  // hand zones for many of the twelve TTS player colors instead of running off the
-  // right edge of the surface.
+  // The seats share one centered row above the table, so they get narrower when a
+  // game has hand zones for many of the twelve TTS player colors instead of running
+  // off the right edge of the surface.
   const seatPitch = Math.min(155, Math.floor(1580/(handColors.length || 1)));
+  const seatOffset = Math.round((1600 - handColors.length*seatPitch)/2);
 
   handColors.forEach((color, index)=>{
     widgets[`seat-${index+1}`] = {
       id: `seat-${index+1}`,
       type: 'seat',
       index: index+1,
-      x: 20 + index*seatPitch,
+      x: seatOffset + index*seatPitch,
       y: 5,
-      width: seatPitch - 5,
+      width: seatPitch - 10,
       height: 40,
       color: playerColors[color] || '#999999',
       colorEmpty: playerColors[color] || '#999999',

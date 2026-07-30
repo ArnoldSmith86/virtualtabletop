@@ -93,7 +93,8 @@ describe('TTS import: bags', () => {
     }));
 
     expect(widgets['bag-bag'].type).toBe('button');
-    expect(widgets['bag-bag'].text).toBe('Tokens');
+    // the number of objects a player gets out of the bag is part of its label
+    expect(widgets['bag-bag'].text).toBe('Tokens (1)');
     expect(widgets.bag.type).toBe('holder');
     expect(widgets.bag.parent).toBe('bag-bag');
     expect(widgets.bag.owner).toEqual([]);
@@ -135,14 +136,37 @@ describe('TTS import: layout', () => {
       ObjectStates: [ die('a', -40), die('b', 40), { Name: 'Custom_Board', GUID: 'board', Locked: true, Transform: { posX: 0, posZ: 0, scaleX: 8, scaleZ: 8 }, CustomImage: { ImageURL: png(1600, 1000) } } ]
     });
 
+    // x/y are the corner of the unscaled widget, the visible box is centered in it
     for(const widget of Object.values(widgets)) {
       if(widget.parent || widget.x === undefined)
         continue;
-      expect(widget.x).toBeGreaterThanOrEqual(0);
-      expect(widget.y).toBeGreaterThanOrEqual(0);
-      expect(widget.x + (widget.width  || 0)).toBeLessThanOrEqual(1600);
-      expect(widget.y + (widget.height || 0)).toBeLessThanOrEqual(1000);
+      const scale = widget.scale || 1;
+      const left = widget.x + (widget.width  || 0)*(1-scale)/2;
+      const top  = widget.y + (widget.height || 0)*(1-scale)/2;
+      expect(left).toBeGreaterThanOrEqual(0);
+      expect(top).toBeGreaterThanOrEqual(0);
+      expect(left + (widget.width  || 0)*scale).toBeLessThanOrEqual(1600);
+      expect(top  + (widget.height || 0)*scale).toBeLessThanOrEqual(1000);
     }
+  });
+
+  it('scales the objects along with the distances between them', async () => {
+    const widgets = await convert(objects(die('a', -40), die('b', 40)));
+
+    // 80 TTS units are 4000px and have to fit into 1500
+    expect(widgets.a.scale).toBeCloseTo(1500/4050, 2);
+    expect(widgets.b.scale).toBe(widgets.a.scale);
+
+    // the dice keep touching the left and the right end of the layout
+    const center = w=>w.x + w.width/2;
+    expect(center(widgets.b) - center(widgets.a)).toBeCloseTo(4000*widgets.a.scale, 0);
+    expect(center(widgets.a) + center(widgets.b)).toBe(1600);
+  });
+
+  it('leaves a layout that fits alone', async () => {
+    const widgets = await convert(objects(die('a', -2), die('b', 2)));
+    expect(widgets.a.scale).toBe(undefined);
+    expect(widgets.a.x).toBe(675);
   });
 });
 
