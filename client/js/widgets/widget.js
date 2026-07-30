@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -19,24 +19,6 @@ function lineListsStop(line, widgetID) {
 // Every line that carries the given widget as a stop.
 function linesWithStop(widgetID) {
   return widgetFilter(w=>w.get('type') == 'line' && lineListsStop(w, widgetID));
-}
-
-// Would adding count more widgets to this target go past its dropLimit? Drags
-// into a holder are checked in getValidDropTargets(), but lines take drops on
-// their path and piles are formed by updatePiles(), so both bypass that check
-// and have to ask here instead.
-function exceedsDropLimit(target, count, currentCount) {
-  const limit = target.get('dropLimit');
-  if(!(limit > -1))
-    return false;
-  return (currentCount !== undefined ? currentCount : target.children().length) + count > limit;
-}
-
-// A line is full once it lists dropLimit stops. The dragged widget itself does
-// not count: dropping it back onto a line it is already on leaves the number of
-// stops unchanged.
-function lineTakesDrop(line, widget) {
-  return !exceedsDropLimit(line, 1, line.stopList().filter(entry=>entry.widget != widget.get('id')).length);
 }
 
 // Only lines care about another widget's geometry: an endpoint connected to it
@@ -2513,7 +2495,7 @@ export class Widget extends StateManaged {
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
     // dragged in play: a stop is usually placed in edit mode.
-    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible() && lineTakesDrop(w, this));
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
 
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
@@ -2703,6 +2685,12 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, localAnchor });
 
+    // dropLimit constrains manual drops only, and every pile this widget can
+    // still form from here on is one. Dropping into a holder reparents it,
+    // which runs updatePiles() before the call at the end of this method, so
+    // the marker has to cover the whole drop rather than just that call.
+    this.pileUpdateFromDrag = true;
+
     await this.hideShadowWidget();
     await this.set('dragging', null);
 
@@ -2735,6 +2723,7 @@ export class Widget extends StateManaged {
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+    delete this.pileUpdateFromDrag;
   }
 
   async hideShadowWidget() {
@@ -3198,6 +3187,12 @@ export class Widget extends StateManaged {
     const thisOwner = this.get('owner');
     const thisOnPileCreation = this.get('onPileCreation');
     const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
+
+    // A pile that is already at its dropLimit takes no more cards - but only
+    // when this update comes from a drag. Everything else that piles cards up
+    // (a MOVE or CLONE in a routine, "Split the pile", the JSON editor) ignores
+    // dropLimit elsewhere too, and games rely on that, so it stays ignored here.
+    const isFull = (pile, count) => this.pileUpdateFromDrag && exceedsDropLimit(pile, count);
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -3219,7 +3214,7 @@ export class Widget extends StateManaged {
           // the pile that would be created is bound by the dropLimit it would
           // be created with, so a limit below 2 rules the pile out entirely
           const newPileDropLimit = thisOnPileCreation && thisOnPileCreation.dropLimit;
-          if(newPileDropLimit > -1 && newPileDropLimit < 2)
+          if(this.pileUpdateFromDrag && newPileDropLimit > -1 && newPileDropLimit < 2)
             continue;
           const pile = Object.assign({
             type: 'pile',
@@ -3240,7 +3235,7 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(thisType == 'pile' && widgetType == 'pile') {
-          if(exceedsDropLimit(widget, this.children().length))
+          if(isFull(widget, this.children().length))
             continue;
           for(const w of this.children().reverse()) {
             await w.set('parent', widget.get('id'));
@@ -3251,7 +3246,7 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
         if(thisType == 'pile' && widgetType == 'card') {
-          if(exceedsDropLimit(this, 1))
+          if(isFull(this, 1))
             continue;
           for(const w of this.children().reverse())
             await w.bringToFront();
@@ -3263,7 +3258,7 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
         if(thisType == 'card' && widgetType == 'pile') {
-          if(exceedsDropLimit(widget, 1))
+          if(isFull(widget, 1))
             continue;
           await this.bringToFront();
           await this.set('parent', widget.get('id'));

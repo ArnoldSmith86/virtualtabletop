@@ -36,17 +36,26 @@ export function compareDropTarget(widget, t, exclude){
   return false;
 }
 
+// How dropLimit is read wherever it is enforced: a target holding currentCount
+// widgets takes count more only while that stays within the limit. currentCount
+// has to leave out the widget being dropped - putting one back where it already
+// is does not add to the count. Lines pass their number of stops instead of the
+// default children count, because that is what a line's limit bounds.
+export function exceedsDropLimit(target, count = 1, currentCount = target.children().length) {
+  const limit = target.get('dropLimit');
+  return limit > -1 && currentCount + count > limit;
+}
+
 function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
       continue;
 
-    // if the holder has a drop limit and it's reached, skip the holder
-    if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
-      // don't skip it if the dragged widget is already its child
-      if(t.children().indexOf(widget) == -1)
-        continue;
+    // if the holder has a drop limit and it's reached, skip the holder -
+    // unless the dragged widget is already its child and just goes back in
+    if(t.children().indexOf(widget) == -1 && exceedsDropLimit(t))
+      continue;
 
     let isValid = compareDropTarget(widget, t);
 
