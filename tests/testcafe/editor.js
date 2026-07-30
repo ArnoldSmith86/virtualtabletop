@@ -347,6 +347,101 @@ test('Loading another game with a widget still selected does not break the clien
     .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
 });
 
+test('Basic curates the stacking, scale and visibility switches, the scoreboard its seats', async t => {
+  await setRoomState({
+    block: { id: 'block', type: 'basic', x: 100, y: 100 },
+    seat1: { id: 'seat1', type: 'seat', x: 100, y: 400, index: 1 },
+    seat2: { id: 'seat2', type: 'seat', x: 300, y: 400, index: 2 },
+    board: { id: 'board', type: 'scoreboard', x: 600, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const value = ClientFunction((id, property) => JSON.stringify(widgets.get(id).get(property)));
+
+  // where a widget ends up in the stacking order belongs to Position, and the
+  // factor it is drawn at to Size
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_block')
+    .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
+    .click('#inheritChildZ_block')
+    .expect(value('block', 'inheritChildZ')).eql('true');
+
+  const sizeBody = Selector('#editorModules .collapsibleHeader').withText('Size').sibling('.collapsibleBody');
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Size'))
+    .typeText(sizeBody.find('.numberOrTextInput input'), '2', { replace: true })
+    .expect(value('block', 'scale')).eql('2')
+    // the collapsed headers name what is set
+    .expect(Selector('#editorModules .collapsibleHeader').withText('Size').find('.collapsibleSummary').innerText).contains('×2');
+
+  // "display" is a switch the other way round: ticking it takes the widget out
+  // of the room for the players
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Interaction & display'))
+    .click('#hidePlayerCursors_block')
+    .expect(value('block', 'hidePlayerCursors')).eql('true')
+    .expect(Selector('#display_block').checked).notOk()
+    .click('#display_block')
+    .expect(value('block', 'display')).eql('false');
+
+  // the seat block holds what a widget dragged onto this one is shown as
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText("Widget's links"))
+    .click(Selector('#editorModules button').withExactText('Add seat'))
+    .click('#hoverInheritVisibleForSeat_block')
+    .expect(value('block', 'hoverInheritVisibleForSeat')).eql('false');
+
+  // a seat's "display" is the text it shows, so it never gets that switch
+  await t
+    .click('#w_seat1')
+    .click(Selector('#editorModules .collapsibleHeader').withText('Interaction & display'))
+    .expect(Selector('#hidePlayerCursors_seat1').exists).ok()
+    .expect(Selector('#display_seat1').exists).notOk();
+
+  // the scoreboard shows every seat unless it is given a list of them
+  const seatsMode = Selector('#editorModules select.scoreboardSeatsMode');
+  await t
+    .click('#w_board')
+    .expect(seatsMode.value).eql('all')
+    .click(seatsMode)
+    .click(seatsMode.find('option').withExactText('Chosen seats'))
+    .expect(value('board', 'seats')).eql('["seat1","seat2"]')
+    .typeText(Selector('#editorModules .seatReferenceInput').filterVisible(), 'seat1', { replace: true })
+    .pressKey('tab')
+    .expect(value('board', 'seats')).eql('"seat1"');
+
+  // teams are the third shape of the same property: one column each, adding up
+  // the seats given to it
+  await t
+    .click(seatsMode)
+    .click(seatsMode.find('option').withExactText('Teams'))
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"]}')
+    .click(Selector('#editorModules .scoreboardTeams button').withText(/add team/i))
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"],"Team 2":[]}');
+
+  const secondRow = Selector('#editorModules .scoreboardTeamRow').nth(1);
+  await t
+    .typeText(secondRow.find('.scoreboardTeamName'), 'Reds', { replace: true })
+    .pressKey('tab')
+    // renaming keeps the team where it was, which is the order of the columns
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"],"Reds":[]}')
+    .typeText(Selector('#editorModules .scoreboardTeamRow').nth(1).find('.scoreboardTeamSeats'), 'seat2', { replace: true })
+    .pressKey('tab')
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"],"Reds":["seat2"]}')
+    .expect(Selector('#w_board').innerText).contains('Reds');
+
+  await t
+    .click(Selector('#editorModules .scoreboardTeamRow').nth(1).find('button[icon=delete]'))
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"]}')
+    // and back to every seat, which is the property being unset
+    .click(seatsMode)
+    .click(seatsMode.find('option').withExactText('All seats'))
+    .expect(value('board', 'seats')).eql('null');
+});
+
 test('Create game using edit mode', async t => {
   console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);

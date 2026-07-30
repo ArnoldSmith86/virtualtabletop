@@ -1013,6 +1013,7 @@ const editorPropertyHints = {
   showTotals: 'Add a total across all recorded rounds.',
   showAllRounds: 'Keep completed rounds visible rather than showing only the current round.',
   showAllSeats: 'Include seats that currently have no player.',
+  seats: 'Whose scores the table shows: every seat of the room, a chosen list of them, or teams whose seats are added up into one column each.',
   currentRound: 'The zero-based round currently being entered.',
   sortField: 'The scoreboard field used to order players.',
   sortAscending: 'Sort the chosen field from low to high instead of high to low.',
@@ -1118,9 +1119,9 @@ const editorTypeSections = {
     behavior: [
       { label: 'Snap range', property: 'pileSnapRange', kind: 'number', min: 0, step: 1 },
       { label: 'Stack cards on top of each other', property: 'alignChildren', kind: 'checkbox',
-        hint: 'Put every card of the pile in the same spot. Without it, cards keep the offset they were dropped with.' },
-      { label: 'Cards follow the pile layer', property: 'inheritChildZ', kind: 'checkbox',
-        hint: 'Keep the cards of the pile directly above it in the stacking order, so nothing slips in between.' }
+        hint: 'Put every card of the pile in the same spot. Without it, cards keep the offset they were dropped with.' }
+      // inheritChildZ - on by default for a pile - is curated for every widget
+      // in the Position section
     ],
     // the handle is styled through handleCSS, the pile box through css
     cssProperties: [ 'css', 'handleCSS' ]
@@ -2960,7 +2961,13 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit' ].concat(extra);
+  }
+
+  // whether the edited widget - or, for a multi-selection, any of the widgets
+  // it stands for - is of the given type
+  selectionIncludesType(widget, type) {
+    return (widget.isMulti ? widget.widgets : [ widget ]).some(w => (w.get('type') || 'basic') == type);
   }
 
   isSizeRatioLockEnabled(widget) {
@@ -3820,6 +3827,7 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.type = 'text';
+    input.className = 'seatReferenceInput';
     input.style.width = '180px';
     input.value = this.formatSeatReference(widget.get(property));
     wrap.appendChild(input);
@@ -3830,10 +3838,11 @@ class PropertiesModule extends SidebarModule {
     if(options.enablePicker) {
       // widget selection popout with the type filter preset to seats
       popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
-        title: 'Choose seats',
+        title: options.pickerTitle || 'Choose seats',
         pickerKey,
         typeFilter: 'seat',
         multiple: true,
+        clearLabel: options.clearLabel,
         getSelectedIDs: () => this.seatReferenceToArray(widget.get(property)),
         apply: seatIDs => this.inputValueUpdated(widget, property, this.seatReferenceFromArray(seatIDs)),
         onClear: () => this.inputValueUpdated(widget, property, null)
@@ -4126,6 +4135,11 @@ class PropertiesModule extends SidebarModule {
       });
       this.renderPositionLocks(widget, body);
       this.renderLayerSelect(widget, body);
+      // inheritChildZ is where the widget ends up in the stacking order, so it
+      // belongs next to layer rather than in the type's Behavior list
+      this.renderCheckbox(widget, 'Rise to the topmost child', 'inheritChildZ', body, {
+        infoText: 'Give the widget the highest layer and z of the widgets inside it, so it and its content sit at one height in the stacking order. A button lying on top of a holder ends up behind the cards that are dropped into it.'
+      });
       this.renderRotationInput(widget, body);
       // where the widget may end up is part of where it is, so both of these
       // live inside Position rather than as sections of their own
@@ -4146,14 +4160,26 @@ class PropertiesModule extends SidebarModule {
         target: body
       });
       this.renderSizeRatioLock(widget, body);
+      // scale draws the same width/height bigger or smaller, so it sits with
+      // them rather than in Appearance
+      new NumberOrTextInput(this, widget, 'Scale', {
+        property: 'scale',
+        compact: true,
+        nullIfEmpty: true,
+        placeholder: '1',
+        hint: 'Draw the widget at this factor of its width and height, around its center. Everything inside it follows, so a hand scaled by 2 shows its cards at twice their size. "-1,1" flips it horizontally, "1,-1" vertically.'
+      }).render(body);
     }, null, `${widget.id}:size`, {
       renderSummary: summary => {
         const update = w => {
           const width = w.get('width'), height = w.get('height');
-          summary.textContent = `${propertyInputIsMulti(width) ? '—' : width} × ${propertyInputIsMulti(height) ? '—' : height}`;
+          const scale = w.get('scale');
+          const box = `${propertyInputIsMulti(width) ? '—' : width} × ${propertyInputIsMulti(height) ? '—' : height}`;
+          summary.textContent = propertyInputIsMulti(scale) ? `${box} · scale —`
+            : scale !== null && scale !== 1 ? `${box} · ×${scale}` : box;
         };
-        this.addPropertyListener(widget, 'width', update);
-        this.addPropertyListener(widget, 'height', update);
+        for(const property of [ 'width', 'height', 'scale' ])
+          this.addPropertyListener(widget, property, update);
       }
     });
 
@@ -4170,10 +4196,21 @@ class PropertiesModule extends SidebarModule {
       this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body, {
         infoText: 'Keep the widget at its own size while the rest of the room is zoomed in or out.'
       });
+      this.renderCheckbox(widget, 'Hide other players\' cursors', 'hidePlayerCursors', body, {
+        infoText: 'Stop showing where the other players point while their cursor is over this widget or over anything inside it.'
+      });
+      // a seat's "display" is the text it shows while it is taken, so the one
+      // widget type that has it never gets this switch
+      if(!this.selectionIncludesType(widget, 'seat'))
+        this.renderCheckbox(widget, 'Only visible in edit mode', 'display', body, {
+          invert: true,
+          default: true,
+          infoText: 'Take the widget out of the room for the players: it is still there and routines keep working on it, but nobody can see or use it. In edit mode the eye button of the toolbar shows and hides those widgets.'
+        });
     }, null, `${widget.id}:generic`, {
       renderSummary: summary => {
         const update = w => summary.textContent = this.interactionSummary(w);
-        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom' ])
+        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom', 'hidePlayerCursors', 'display' ])
           this.addPropertyListener(widget, property, update);
       }
     });
@@ -4209,6 +4246,9 @@ class PropertiesModule extends SidebarModule {
     add('clickable', 'clickable', value=>value ? null : 'not clickable');
     add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
     add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
+    add('hidePlayerCursors', 'cursors', value=>value ? 'cursors hidden' : null);
+    // a seat's display is its text, never false - so this never fires for one
+    add('display', 'display', value=>value === false ? 'edit mode only' : null);
 
     return parts.join(' · ');
   }
@@ -5174,7 +5214,8 @@ class PropertiesModule extends SidebarModule {
 
   renderAssociatedWidgetsSection(widget) {
     const hasLinks = [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ]
-      .some(property => this.isOnDemandPropertyValueSet(widget.get(property))) || widget.get('fixedParent') === true;
+      .some(property => this.isOnDemandPropertyValueSet(widget.get(property)))
+      || widget.get('fixedParent') === true || widget.get('hoverInheritVisibleForSeat') === false;
 
     this.renderCollapsibleSection("Widget's links", !hasLinks, body => {
       this.renderAssociatedWidgetsSectionBody(widget, body);
@@ -5183,7 +5224,7 @@ class PropertiesModule extends SidebarModule {
         const update = w => {
           summary.textContent = this.associatedWidgetsSummary(w);
         };
-        for(const property of [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ])
+        for(const property of [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom' ])
           this.addPropertyListener(widget, property, update);
       }
     });
@@ -5215,6 +5256,9 @@ class PropertiesModule extends SidebarModule {
       if(seats)
         parts.push(seats);
     }
+
+    if(widget.get('hoverInheritVisibleForSeat') === false)
+      parts.push('dragged widgets stay visible');
 
     const inheritFrom = widget.get('inheritFrom');
     if(propertyInputIsMulti(inheritFrom)) {
@@ -5249,7 +5293,7 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
-    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
+    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat' ], container => {
       const seatSection = this.createOnDemandSectionStructure(container);
 
       this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {
@@ -5263,14 +5307,25 @@ class PropertiesModule extends SidebarModule {
       }, seatSection.contentWrapper, {
         buttonHost: seatSection.newPropertiesWrapper
       });
+
+      this.renderCheckbox(widget, 'Hide widgets dragged over this one', 'hoverInheritVisibleForSeat', seatSection.contentWrapper, {
+        default: true,
+        infoText: 'While a widget is being dragged onto this one it is only shown to the seats this widget is visible to, so a card on its way into a private area is not revealed to everyone until it is dropped. Turn it off to keep the dragged widget visible to all.'
+      });
     }, linksSection.contentWrapper, {
       buttonHost: linksSection.newPropertiesWrapper,
       removeTitle: 'Remove seat links',
+      // hoverInheritVisibleForSeat is on by default, so only an explicit "off"
+      // counts as a reason to open the section
+      isPropertySet: (property, value) => property == 'hoverInheritVisibleForSeat'
+        ? value === false
+        : this.isOnDemandPropertyValueSet(value),
       onRemove: () => {
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} removed seat links of widget ${widget.id} in editor`);
         widget.set('linkedToSeat', null);
         widget.set('onlyVisibleForSeat', null);
+        widget.set('hoverInheritVisibleForSeat', null);
         batchEnd();
       }
     });
@@ -7421,6 +7476,11 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader('Scoreboard');
 
+    // --- Seats: whose scores the table shows ---
+    this.addAppearanceSubTitle('Seats');
+    this.renderScoreboardSeats(widget);
+    new CheckboxInput(this, widget, 'Include empty seats', { property: 'showAllSeats', hint: editorPropertyHints.showAllSeats }).render(this.moduleDOM);
+
     // --- Score: where scores come from and how they total up ---
     this.addAppearanceSubTitle('Score');
     new TextInput(this, widget, 'Score property', { property: 'scoreProperty', hint: editorPropertyHints.scoreProperty }).render(this.moduleDOM);
@@ -7467,7 +7527,6 @@ class PropertiesModule extends SidebarModule {
 
     // --- Advanced: less common tweaks, collapsed, last inside Scoreboard ---
     this.renderAdvancedSection(widget, body => {
-      new CheckboxInput(this, widget, 'Include empty seats', { property: 'showAllSeats', hint: editorPropertyHints.showAllSeats }).render(body);
       new CheckboxInput(this, widget, 'Autosize columns', { property: 'autosizeColumns', hint: editorPropertyHints.autosizeColumns }).render(body);
       const firstColInput = new NumberInput(this, widget, 'First column width', { property: 'firstColWidth', min: 10, max: 500, step: 1, hint: editorPropertyHints.firstColWidth });
       firstColInput.render(body);
@@ -7479,14 +7538,188 @@ class PropertiesModule extends SidebarModule {
     // border radius + CSS editor
     this.renderAppearanceSection(widget);
 
-    // 'seats' stays in the generic list: it can be a seat list or a team map,
-    // which the generic JSON input handles safely
+    // a team map is only named in the Seats section, not editable there, so it
+    // 'seats' is curated by the Seats section in all three of its shapes
     this.renderOtherPropertiesSection(widget, [
-      'scoreProperty', 'showTotals', 'totalsLabel', 'currentRound',
+      'seats', 'scoreProperty', 'showTotals', 'totalsLabel', 'currentRound',
       'roundLabel', 'rounds', 'showAllRounds',
       'playersInColumns', 'sortField', 'sortAscending', 'showPlayerColors', 'verticalHeader',
       'showAllSeats', 'autosizeColumns', 'firstColWidth', 'editPaneTitle'
     ]);
+  }
+
+  // "seats" is null for every seat in the room, a seat id or an array of them
+  // for a fixed list, and a { team: [ seatID, ... ] } map for teams.
+  scoreboardSeatsMode(widget) {
+    const seats = widget.get('seats');
+    if(seats === null || seats === undefined)
+      return 'all';
+    if(typeof seats == 'string' || Array.isArray(seats))
+      return 'pick';
+    return 'teams';
+  }
+
+  // Every seat in the room (the default), a picked list of them, or teams -
+  // the three shapes the one property has, as one dropdown plus the editor the
+  // chosen shape needs.
+  renderScoreboardSeats(widget) {
+    const modeRow = div(this.moduleDOM, 'propertyInput selectInput');
+    const label = document.createElement('label');
+    label.textContent = 'Seats';
+    propertyInfoButton(label, html(editorPropertyHints.seats));
+    modeRow.appendChild(label);
+
+    const modeSelect = document.createElement('select');
+    modeSelect.className = 'scoreboardSeatsMode';
+    modeSelect.innerHTML = `
+      <option value="all">All seats</option>
+      <option value="pick">Chosen seats</option>
+      <option value="teams">Teams</option>
+    `;
+    modeRow.appendChild(modeSelect);
+
+    const pickerWrap = div(this.moduleDOM);
+    this.renderSeatReferenceInput(widget, 'seats', 'Shown seats:', pickerWrap, {
+      enablePicker: true,
+      pickerKey: 'seats',
+      pickerTitle: 'Choose the seats of this scoreboard',
+      clearLabel: 'All seats'
+    });
+
+    const teamsWrap = div(this.moduleDOM, 'scoreboardTeams');
+    this.renderScoreboardTeams(widget, teamsWrap);
+
+    // the seats the scoreboard shows now, whichever shape they are in - so
+    // switching the mode keeps them instead of starting from an empty table
+    const currentSeats = _=>{
+      const seats = widget.get('seats');
+      if(isObjectLike(seats) && !Array.isArray(seats))
+        return [ ...new Set(Object.values(seats).flatMap(team=>asArray(team || [])).filter(id=>id)) ];
+      const picked = this.seatReferenceToArray(seats);
+      return picked.length ? picked : this.getSeatWidgetIDs();
+    };
+
+    modeSelect.onchange = () => {
+      if(modeSelect.value == 'all')
+        this.inputValueUpdated(widget, 'seats', null);
+      else if(modeSelect.value == 'pick')
+        this.inputValueUpdated(widget, 'seats', this.seatReferenceFromArray(currentSeats()) || []);
+      else
+        this.inputValueUpdated(widget, 'seats', { 'Team 1': currentSeats() });
+    };
+
+    this.addPropertyListener(widget, 'seats', w => {
+      const mode = this.scoreboardSeatsMode(w);
+      modeSelect.value = mode;
+      pickerWrap.style.display = mode == 'pick' ? '' : 'none';
+      teamsWrap.style.display = mode == 'teams' ? '' : 'none';
+    });
+  }
+
+  // One row per team: its name and the seats whose scores are added up for it.
+  // Only rendered while "seats" is a team map.
+  renderScoreboardTeams(widget, target) {
+    div(target, 'scoreboardTeamsHelp', 'Every team is one column (or row) of the table, adding up the scores of its seats. Sorting and player colors are not used for teams.');
+    const list = div(target, 'listEditorList');
+
+    const getTeams = _=>{
+      const seats = widget.get('seats');
+      return isObjectLike(seats) && !Array.isArray(seats) ? JSON.parse(JSON.stringify(seats)) : {};
+    };
+    const save = teams => this.inputValueUpdated(widget, 'seats', teams);
+    // rebuilding the object keeps the team order, which is the order the
+    // scoreboard shows them in - a plain assignment would move a renamed team
+    // to the end
+    const renameTeam = (teams, oldName, newName) => Object.fromEntries(
+      Object.entries(teams).map(([ name, members ]) => [ name == oldName ? newName : name, members ])
+    );
+
+    const rebuild = _=>{
+      list.innerHTML = '';
+      const teams = getTeams();
+      for(const [ name, members ] of Object.entries(teams)) {
+        const row = div(list, 'listEditorRow scoreboardTeamRow');
+
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.className = 'scoreboardTeamName';
+        nameInput.value = name;
+        nameInput.title = 'Team name';
+        // on change rather than on input: renaming rewrites the key, so every
+        // keystroke would rebuild the row under the caret
+        nameInput.onchange = _=>{
+          const newName = nameInput.value.trim();
+          const next = getTeams();
+          if(!newName || (newName != name && next[newName] !== undefined)) {
+            nameInput.value = name;
+            return;
+          }
+          save(renameTeam(next, name, newName));
+          rebuild();
+        };
+        row.appendChild(nameInput);
+
+        const seatsInput = document.createElement('input');
+        seatsInput.type = 'text';
+        seatsInput.className = 'scoreboardTeamSeats';
+        seatsInput.value = asArray(members || []).join(', ');
+        seatsInput.title = 'The seats of this team';
+        seatsInput.onchange = _=>{
+          const next = getTeams();
+          next[name] = seatsInput.value.split(',').map(id=>id.trim()).filter(id=>id.length);
+          save(next);
+        };
+        row.appendChild(seatsInput);
+
+        // the popout is the last child of the row, which wraps - so it opens on
+        // its own line below the inputs instead of squeezing them
+        const popoutControls = this.renderWidgetSelectPopout(row, widget, {
+          title: `Choose the seats of ${name}`,
+          pickerKey: `seats:${name}`,
+          typeFilter: 'seat',
+          multiple: true,
+          getSelectedIDs: _=>asArray(getTeams()[name] || []),
+          apply: seatIDs => {
+            const next = getTeams();
+            next[name] = seatIDs;
+            save(next);
+            seatsInput.value = seatIDs.join(', ');
+          }
+        });
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.title = 'Remove this team';
+        remove.onclick = _=>{
+          const next = getTeams();
+          delete next[name];
+          save(next);
+          rebuild();
+        };
+        row.insertBefore(remove, popoutControls.popout);
+      }
+
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.textContent = 'Add team';
+      addButton.onclick = _=>{
+        const next = getTeams();
+        let index = Object.keys(next).length + 1;
+        while(next[`Team ${index}`] !== undefined)
+          index++;
+        next[`Team ${index}`] = [];
+        save(next);
+        rebuild();
+      };
+      list.appendChild(addButton);
+    };
+
+    rebuild();
+    this.addPropertyListener(widget, 'seats', _=>{
+      // replacing the rows while one of them is being typed in or has its seat
+      // picker open would throw the caret out and close the picker
+      if(!list.contains(document.activeElement) && !$('.propertyExpandButton.open', list))
+        rebuild();
+    });
   }
 
   renderForSeat(widget) {
@@ -9882,6 +10115,8 @@ class PropertiesModule extends SidebarModule {
     return wrapper;
   }
 
+  // options.invert ticks the box for a falsy value ("only visible in edit
+  // mode" for display:false), options.default is what an unset property means
   renderCheckbox(widget, title, property, target = null, options = {}) {
     const wrap = div(target || this.moduleDOM);
     const input = document.createElement('input');
@@ -9890,7 +10125,8 @@ class PropertiesModule extends SidebarModule {
     const updateChecked = w => {
       const value = w.get(property);
       input.indeterminate = propertyInputIsMulti(value);
-      input.checked = propertyInputIsMulti(value) ? false : !!value;
+      const boolValue = value === null || value === undefined ? !!options.default : !!value;
+      input.checked = propertyInputIsMulti(value) ? false : (options.invert ? !boolValue : boolValue);
     };
     updateChecked(widget);
     const label = document.createElement('label');
@@ -9904,7 +10140,7 @@ class PropertiesModule extends SidebarModule {
       wrap.appendChild(infoIcon);
     }
 
-    input.onchange = () => this.inputValueUpdated(widget, property, input.checked);
+    input.onchange = () => this.inputValueUpdated(widget, property, options.invert ? !input.checked : input.checked);
     this.addPropertyListener(widget, property, updateChecked);
     return wrap;
   }

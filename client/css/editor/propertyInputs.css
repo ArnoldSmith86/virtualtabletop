@@ -1231,6 +1231,22 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   gap: 2px;
 }
 
+/* scoreboard teams: one row per team, its seat picker opening below it */
+.editorModule .scoreboardTeamsHelp {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.editorModule .scoreboardTeamRow {
+  flex-wrap: wrap;
+}
+
+.editorModule .scoreboardTeamRow input.scoreboardTeamName {
+  flex: 0 1 90px;
+  min-width: 50px;
+}
+
 /* seat style preset preview buttons */
 .editorModule .seatPresetRow {
   display: flex;
