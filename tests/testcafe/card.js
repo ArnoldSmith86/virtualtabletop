@@ -126,8 +126,16 @@ test('A write object stores what is typed on the card and survives a reload', as
     .expect(text.hasClass('cardFacePlaceholder')).ok()
     .expect(text.getAttribute('data-placeholder')).eql('write here')
     .expect(text.getAttribute('spellcheck')).eql('true') // opt-in per object, like a label's spellCheck
-    .expect(await boxStyle()).eql([ 'rgba(0, 0, 0, 0)', 'rgb(0, 0, 0)', '1px' ])
-    // typeText emulates typing into a form control and does not reach a contenteditable object reliably
+    .expect(await boxStyle()).eql([ 'rgba(0, 0, 0, 0)', 'rgb(0, 0, 0)', '1px' ]);
+
+  // What a player types can only be checked in Chrome: TestCafe (3.7.3) can not drive a contenteditable
+  // element in Firefox - a click on one that is contenteditable="plaintext-only" never returns and pressKey
+  // throws for any of them - while Firefox itself types into the object just fine.
+  if(t.browser.name == 'Firefox')
+    return;
+
+  // typeText emulates typing into a form control and does not reach a contenteditable object reliably
+  await t
     .click(text)
     .pressKey('h e l l o space c a r d');
   await expectEventually(t, ()=>cardProperty('note'), 'hello card');
