@@ -118,21 +118,71 @@
 }
 
 
-.tune.editorModule .suitProperties {
-  height: 160px;
+/* custom deck: one compact row per suit (icon, name, color, ranks, remove) */
+
+.tune.editorModule .deckGeneratorHint {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  opacity: 0.7;
 }
 
-.tune.editorModule .suitProperties > button.widgetSelectionButton {
-  position: absolute;
+.tune.editorModule .deckGeneratorSuit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
 }
 
-.tune.editorModule .suitProperties > div {
-  margin-left: 170px;
+.tune.editorModule .deckGeneratorSuit > .propertyInput {
+  flex: 0 0 auto;
+  margin: 0;
 }
 
-.tune.editorModule .suitProperties label {
-  display: inline-block;
-  width: 60px;
+/* the row's icon in the suit's color (see showIconInSuitColor): the icon masks the color */
+.tune.editorModule .deckGeneratorSuit .deckGeneratorSuitTint {
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+
+.tune.editorModule .deckGeneratorSuitName {
+  flex: 1 1 80px;
+  min-width: 60px;
+}
+
+.tune.editorModule .deckGeneratorSuitRanks {
+  flex: 2 1 130px;
+  min-width: 80px;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.tune.editorModule .deckGeneratorSuitAddLabel {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip {
+  cursor: pointer;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip:hover {
+  outline: 2px solid var(--VTTblue);
+}
+
+.tune.editorModule .deckGeneratorLinkedRanks {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
 }
 
 
@@ -182,7 +232,9 @@
   min-width: 0;
 }
 
-.tune.editorModule .ttsDeckButton .deckCardCount {
+/* caption bar of a preview tile: the card count of a TTS deck, the name of a card design */
+.tune.editorModule .ttsDeckButton .deckCardCount,
+.tune.editorModule .deckDesignButton .deckDesignLabel {
   position: absolute;
   bottom: 0;
   left: 0;

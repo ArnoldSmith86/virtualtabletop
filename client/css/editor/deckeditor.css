@@ -707,6 +707,32 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   cursor: pointer;
 }
 
+/* Applies to every mode: what gets added around the new deck. */
+.deckEditorNewDeckOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 16px 0;
+  padding-top: 12px;
+  border-top: 1px solid #0002;
+}
+
+.deckEditorNewDeckOptionsLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+.deckEditorNewDeckOptions label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
 #deckEditorNewDeckPanel:not(:empty) {
   border-top: 1px solid #0002;
   padding-top: 16px;

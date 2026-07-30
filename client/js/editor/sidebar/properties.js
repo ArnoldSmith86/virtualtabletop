@@ -60,7 +60,9 @@ function centerElementInClientRect(element, boundingClientRect) {
 
 function parseRankRange(rankRange) {
   const rankArray = [];
-  const rankElements = rankRange.split(',');
+  // Ranks are typed as a comma separated list, so spaces around them are the user separating the list, not part
+  // of a rank ("2-10, J, Q" must not produce a rank called " J").
+  const rankElements = rankRange.split(',').map(rankElement=>rankElement.trim());
 
   rankElements.forEach(rankElement => {
     if(rankElement.match(/-?[0-9]+--?[0-9]+/)) {
@@ -569,6 +571,34 @@ const SEAT_PRESET_FIXED = {
   }
 };
 
+// Suit icons offered as one-click chips in the custom deck dialog. Any other icon can be chosen per suit with
+// the icon picker, so this is just a shortcut for the ones decks use most often.
+const DECK_GENERATOR_SUIT_ICONS = [
+  'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades',
+  'delapouite/round-star', 'delapouite/flower-emblem', 'delapouite/plain-circle', 'lorc/biohazard', 'lorc/fluffy-trefoil'
+];
+
+// The four suits a custom deck starts with, and the letter of the court card pictures (/i/cards-default) that
+// belong to them. Suits with any other icon fall back to these pictures in the order they are listed here.
+const DECK_GENERATOR_COURT_SUITS = {
+  'skoll/diamonds': 'D',
+  'skoll/hearts':   'H',
+  'skoll/clubs':    'C',
+  'skoll/spades':   'S'
+};
+
+// Colors offered to a suit whose icon+color combination is already taken, so adding the same icon twice (red
+// hearts and purple hearts) results in two visibly different suits without having to pick a color first.
+const DECK_GENERATOR_SUIT_COLORS = [ '#e50932', '#000000', '#0062ff', '#00a651', '#8b00ff', '#ff8c00', '#00a8a8', '#a8006c' ];
+
+// Name a suit gets as long as the user does not type one: the readable part of its icon value ("skoll/hearts"
+// becomes "hearts"). Uploaded images and links have no readable name, so those suits get a generic one.
+function defaultSuitName(icon) {
+  if(typeof icon != 'string' || icon.match(/^\/assets\/|^https?:\/\//))
+    return '';
+  return icon.replace(/^.*\//, '').replace(/\.svg$/, '').replace(/^[[(]|[\])]$/g, '');
+}
+
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
@@ -963,188 +993,282 @@ class PropertiesModule extends SidebarModule {
     target.append(createButton);
   }
 
+  // Custom deck: the user defines the suits (any icon, any color, any name, any set of ranks) and picks a card
+  // design. A design declares which card type properties it actually reads, so a deck only carries those: only
+  // the playing-card design needs the pip layout (suit-P.../suit-S...) and the court card pictures.
   deckGenerator(target) {
-    const deckTemplates = [ this.deckTemplate_standard, this.deckTemplate_colors, this.deckTemplate_simple, this.deckTemplate_skinny, this.deckTemplate_transparent ];
+    const designs = [
+      { label: 'Playing cards', build: deck=>this.deckTemplate_standard(deck), pips: true, rankPictures: true },
+      { label: 'Rainbow',       build: deck=>this.deckTemplate_colors(deck)      },
+      { label: 'Bold color',    build: deck=>this.deckTemplate_simple(deck)      },
+      { label: 'Skinny',        build: deck=>this.deckTemplate_skinny(deck)      },
+      { label: 'Icon shape',    build: deck=>this.deckTemplate_transparent(deck) },
+      { label: 'Minimal',       build: deck=>this.deckTemplate_minimal(deck)     },
+      { label: 'Corner index',  build: deck=>this.deckTemplate_corners(deck)     },
+      { label: 'Round token',   build: deck=>this.deckTemplate_token(deck)       },
+      { label: 'Square tile',   build: deck=>this.deckTemplate_tile(deck)        }
+    ];
 
-    const defaultRanks = [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades' ];
+    // One entry per suit: { icon, color, name, ranks }. A list rather than a map from icon to properties, so the
+    // same icon can be used for more than one suit (e.g. red hearts and purple hearts).
+    const suits = [];
+    // Dummy widget for the reused icon and color property inputs: both read and write the suit through their
+    // getValue/setValue options, so the widget itself is never touched.
+    const suitInputWidget = new BasicWidget();
 
-    const suitDivs = {};
-    const colors = {};
-    const ranks = {};
+    this.addSubHeader('Suits', target);
+    div(target, 'deckGeneratorHint', 'Every suit has its own icon, name, color and ranks. Card types are named after the suit name ("7 of hearts"), so the same icon can be used for several suits.');
 
-    this.addSubHeader('Suit symbols', target);
+    const suitList = div(target, 'deckGeneratorSuits');
+    // The icon and color pickers expand below the list instead of inside the row, so opening one does not push
+    // the other suits around; sharing one group keeps only one of them open at a time.
+    const pickerGroup = { target: div(target, 'deckGeneratorSuitPickers'), current: null };
 
-    const suitCustomizeDiv = document.createElement('div');
-    this.addSubHeader('Suit properties', suitCustomizeDiv);
+    const addBar = div(target, 'deckGeneratorSuitAdd');
+    div(addBar, 'deckGeneratorSuitAddLabel', 'Add a suit:');
 
-    const linkedRanksToggleDiv = document.createElement('div');
     const linkedRanksLabel = document.createElement('label');
-    linkedRanksLabel.textContent = 'Same ranks for each suit:';
+    linkedRanksLabel.className = 'deckGeneratorLinkedRanks';
     const linkedRanksToggle = document.createElement('input');
     linkedRanksToggle.type = 'checkbox';
     linkedRanksToggle.checked = true;
-    linkedRanksLabel.htmlFor = linkedRanksToggle.id = 'sameRanksToggle';
-
-    linkedRanksToggleDiv.appendChild(linkedRanksLabel);
-    linkedRanksToggleDiv.appendChild(linkedRanksToggle);
-    suitCustomizeDiv.append(linkedRanksToggleDiv);
-
-    const updateLinkedRanks = (symbol, newRanks) => {
-      for(const otherSymbol in ranks)
-        if(linkedRanksToggle.checked && otherSymbol !== symbol)
-          $('.ranks input', suitDivs[otherSymbol]).value = ranks[otherSymbol] = newRanks;
+    // Ticking the box again unifies what is there now, so it never claims ranks are shared while they differ.
+    linkedRanksToggle.onchange = _=>{
+      if(!linkedRanksToggle.checked || !suits.length)
+        return;
+      for(const suit of suits)
+        suit.ranks = suits[0].ranks;
+      renderSuits();
+      updateDesignPreview();
     };
+    linkedRanksLabel.append(linkedRanksToggle, 'Same ranks for each suit');
+    target.append(linkedRanksLabel);
+
+    // A new suit gets the traditional color of its icon; if that icon already exists in that color, the first
+    // unused color of the palette is used instead so the two suits can be told apart right away.
+    const colorForNewSuit = icon=>{
+      const traditional = [ 'skoll/diamonds', 'skoll/hearts' ].includes(icon) ? '#e50932' : '#000000';
+      if(!suits.some(suit=>suit.icon == icon && suit.color == traditional))
+        return traditional;
+      return DECK_GENERATOR_SUIT_COLORS.find(color=>!suits.some(suit=>suit.icon == icon && suit.color == color)) || traditional;
+    };
+
+    const addSuit = (icon, render=true)=>{
+      suits.push({
+        icon,
+        color: colorForNewSuit(icon),
+        name: defaultSuitName(icon),
+        ranks: suits.length && linkedRanksToggle.checked ? suits[0].ranks : '2-10,J,Q,K,A'
+      });
+      if(render) {
+        renderSuits();
+        updateDesignPreview();
+      }
+    };
+
+    // Each suit's ranks input, so the "same ranks" option can write into the others without assuming that the
+    // rows are in the same order as the suits.
+    const rankInputs = new Map();
+
+    const renderSuits = _=>{
+      suitList.innerHTML = '';
+      pickerGroup.target.innerHTML = '';
+      pickerGroup.current = null;
+      rankInputs.clear();
+
+      for(const suit of suits) {
+        const row = div(suitList, 'deckGeneratorSuit');
+
+        // The picker's preview is generic, so show it in the suit color here: with the same icon used for more
+        // than one suit, that is what tells the rows apart. Game icons are single-color silhouettes, so their
+        // image is turned into a mask over the color; font icons and emoji just take it as their text color.
+        const showIconInSuitColor = _=>{
+          const chip = $('.propertyPreviewButton .propertyValueChip', row);
+          if(!chip)
+            return;
+          chip.style.color = suit.color;
+          const image = $('img', chip);
+          if(image && iconValueType(suit.icon) == 'game-icons') {
+            div(chip, 'deckGeneratorSuitTint').style.setProperty('--mask', `url("${image.src}")`);
+            image.remove();
+          }
+        };
+
+        const iconInput = new IconInput(this, suitInputWidget, null, {
+          listenTo: [], clearable: false, pickerGroup,
+          getValue: _=>suit.icon,
+          setValue: value=>{
+            if(!propertyInputValueSet(value))
+              return;
+            // A name the user did not type stays in sync with the icon.
+            if(suit.name == defaultSuitName(suit.icon))
+              $('.deckGeneratorSuitName', row).value = suit.name = defaultSuitName(value);
+            suit.icon = value;
+            iconInput.update();
+            showIconInSuitColor();
+            updateDesignPreview();
+          }
+        });
+        iconInput.render(row);
+        iconInput.update();
+        showIconInSuitColor();
+
+        const nameInput = document.createElement('input');
+        nameInput.className = 'deckGeneratorSuitName';
+        nameInput.placeholder = 'Suit name';
+        nameInput.title = 'Name of this suit, used to name its card types.';
+        nameInput.value = suit.name;
+        nameInput.oninput = _=>suit.name = nameInput.value;
+        row.append(nameInput);
+
+        const colorInput = new ColorInput(this, suitInputWidget, null, {
+          listenTo: [], clearable: false, pickerGroup,
+          getValue: _=>suit.color,
+          setValue: value=>{
+            if(!propertyInputValueSet(value))
+              return;
+            suit.color = value;
+            colorInput.update();
+            showIconInSuitColor();
+            updateDesignPreviewSoon(); // the native color picker fires this per pointer move
+          }
+        });
+        colorInput.render(row);
+        colorInput.update();
+
+        const ranksInput = document.createElement('input');
+        ranksInput.className = 'deckGeneratorSuitRanks';
+        ranksInput.placeholder = '2-10,J,Q,K,A';
+        ranksInput.title = 'Ranks of this suit: single ranks and number ranges, separated by commas.';
+        ranksInput.value = suit.ranks;
+        rankInputs.set(suit, ranksInput);
+        ranksInput.oninput = _=>{
+          for(const other of linkedRanksToggle.checked ? suits : [ suit ]) {
+            other.ranks = ranksInput.value;
+            const input = rankInputs.get(other);
+            if(input && input != ranksInput)
+              input.value = ranksInput.value;
+          }
+          updateDesignPreviewSoon();
+        };
+        row.append(ranksInput);
+
+        const removeButton = document.createElement('button');
+        removeButton.setAttribute('icon', 'delete');
+        removeButton.title = 'Remove this suit';
+        removeButton.onclick = _=>{
+          suits.splice(suits.indexOf(suit), 1);
+          renderSuits();
+          updateDesignPreview();
+        };
+        row.append(removeButton);
+      }
+    };
+
     const designSelectionDiv = document.createElement('div');
     const updateDesignPreview = _=>{
       const oldScrollTop = this.moduleDOM.scrollTop;
-      const oldSelectedButton = $('.selected.deckTemplateButton', target);
+      const oldSelectedButton = $('.selected.deckDesignButton', designSelectionDiv);
       const oldSelectedButtonIndex = oldSelectedButton ? oldSelectedButton.dataset.index : -1;
-      for(const button of $a('.deckTemplateButton', target))
-        button.remove();
+      designSelectionDiv.innerHTML = '';
 
-      if(Object.keys(colors).length == 0) {
+      if(!suits.length) {
         createButton.disabled = true;
         return;
       }
 
-      const deck = getDeckDefinition(true);
-      for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
-        const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
-        templateButton.classList.add('deckTemplateButton');
-        templateButton.dataset.index = index;
-        templateButton.classList.toggle('selected', oldSelectedButtonIndex == index);
-        templateButton.onclick = e=>{
-          for(const button of $a('.deckTemplateButton', target))
-            if(button != templateButton)
+      // Designs that need the same card type properties share one set of card types (the design only adds faces
+      // and card defaults around them), so a preview refresh builds them once instead of nine times.
+      const cardTypesByProperties = {};
+      for(const [ index, design ] of designs.entries()) {
+        const key = `${design.pips ? 'pips' : ''} ${design.rankPictures ? 'pictures' : ''}`;
+        const cardTypes = cardTypesByProperties[key] = cardTypesByProperties[key] || getCardTypes(design);
+        const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes });
+        const designButton = this.renderWidgetButton(new Deck(deck.id), deck, designSelectionDiv);
+        designButton.classList.add('deckDesignButton');
+        designButton.dataset.index = index;
+        designButton.title = design.label;
+        div(designButton, 'deckDesignLabel', html(design.label));
+        designButton.classList.toggle('selected', oldSelectedButtonIndex == index);
+        designButton.onclick = e=>{
+          for(const button of $a('.deckDesignButton', designSelectionDiv))
+            if(button != designButton)
               button.classList.remove('selected');
-          templateButton.classList.toggle('selected');
-          createButton.disabled = !$a('.selected.deckTemplateButton', target).length;
+          designButton.classList.toggle('selected');
+          createButton.disabled = !$a('.selected.deckDesignButton', designSelectionDiv).length;
         };
-        deck.id = generateUniqueWidgetID();
       }
+      createButton.disabled = !$a('.selected.deckDesignButton', designSelectionDiv).length;
       this.moduleDOM.scrollTop = oldScrollTop;
     };
 
-    for(const symbol of [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades', 'delapouite/round-star', 'delapouite/flower-emblem', 'delapouite/plain-circle', 'lorc/biohazard', 'lorc/fluffy-trefoil' ]) {
-      const symbolButton = this.renderWidgetButton(new BasicWidget(), {
-        image: `/i/game-icons.net/${symbol}.svg`,
-        color: '#000',
-        svgReplaces: { '#000': 'color' }
-      }, target);
-      symbolButton.dataset.symbol = symbol;
-      symbolButton.classList.add('deckGeneratorSymbol');
-      symbolButton.onclick = async e=>{
-        symbolButton.classList.toggle('selected');
-        if(symbolButton.classList.contains('selected')) {
-          colors[symbol] = [ 'skoll/diamonds', 'skoll/hearts' ].includes(symbol) ? '#e50932' : '#000000';
-          ranks[symbol] = '2-10,J,Q,K,A';
+    // Rebuilding the previews renders real cards, so coalesce the events that fire while typing a rank list or
+    // dragging a color picker into one refresh.
+    let previewTimer = null;
+    const updateDesignPreviewSoon = _=>{
+      clearTimeout(previewTimer);
+      // ... and skip it entirely when the panel was replaced in the meantime (another dialog mode was picked).
+      previewTimer = setTimeout(_=>designSelectionDiv.isConnected && updateDesignPreview(), 250);
+    };
 
-          suitDivs[symbol] = document.createElement('div');
-          suitDivs[symbol].classList.add('suitProperties');
-          const suitWidget = new BasicWidget();
-          this.renderWidgetButton(suitWidget, {
-            image: `/i/game-icons.net/${symbol}.svg`,
-            color: colors[symbol],
-            svgReplaces: { '#000': 'color' }
-          }, suitDivs[symbol]);
+    // Suits left at the same name get a number appended, so every card type of the deck stays unique.
+    const uniqueSuitNames = _=>{
+      const used = new Set();
+      return suits.map((suit, index)=>{
+        const base = suit.name.trim() || defaultSuitName(suit.icon) || `suit ${index+1}`;
+        let name = base;
+        for(let i = 2; used.has(name); ++i)
+          name = `${base} ${i}`;
+        used.add(name);
+        return name;
+      });
+    };
 
-          const colorPickerDiv = document.createElement('div');
-          const colorPickerLabel = document.createElement('label');
-          colorPickerLabel.textContent = 'Color:';
-          const colorPicker = document.createElement('input');
-          colorPicker.type = 'color';
-          colorPicker.value = colors[symbol];
-          colorPicker.onchange = e=>{
-            colors[symbol] = colorPicker.value;
-            suitWidget.applyDelta({ color: colorPicker.value });
-            updateDesignPreview();
-          };
-          colorPickerDiv.appendChild(colorPickerLabel);
-          colorPickerDiv.appendChild(colorPicker);
-          suitDivs[symbol].append(colorPickerDiv);
-
-          const rankInputDiv = document.createElement('div');
-          const rankInputLabel = document.createElement('label');
-          rankInputDiv.classList.add('ranks');
-          rankInputLabel.textContent = 'Ranks:';
-          const rankInput = document.createElement('input');
-          rankInput.value = ranks[symbol];
-
-          rankInput.onkeyup = e => {
-            updateLinkedRanks(symbol, ranks[symbol] = rankInput.value);
-            updateDesignPreview();
-          };
-
-          rankInputDiv.appendChild(rankInputLabel);
-          rankInputDiv.appendChild(rankInput);
-          suitDivs[symbol].append(rankInputDiv);
-
-          suitCustomizeDiv.append(suitDivs[symbol]);
-        } else {
-          suitDivs[symbol].remove();
-          delete suitDivs[symbol];
-          delete colors[symbol];
-          delete ranks[symbol];
-        }
-        updateDesignPreview();
-      };
-
-      if(defaultRanks.includes(symbol))
-        symbolButton.click();
-    }
-    target.append(suitCustomizeDiv);
-
-    function getDeckDefinition(standardDeck) {
-      const id = generateUniqueWidgetID();
+    // The card types of all suits, with the properties the given design reads: suit, suitColor and rank always,
+    // plus the pip layout and the middle pictures for the playing-card design.
+    const getCardTypes = design=>{
       const cardTypes = {};
-      let suitIndex = 0;
+      const suitNames = uniqueSuitNames();
 
-      for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        const suitURL = suitSymbol;
-        for(const rank of parseRankRange(ranks[suitSymbol])) {
-          const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
+      for(const [ suitIndex, suit ] of suits.entries()) {
+        for(const rank of parseRankRange(suit.ranks)) {
+          const cT = `${rank} of ${suitNames[suitIndex]}`;
           cardTypes[cT] = {
-            suit: suitURL,
-            suitColor,
+            suit: suit.icon,
+            suitColor: suit.color,
             rank
           };
-          const setCardTypes = (conditions, cardTypesKeys) => {
+
+          const hasPipLayout = String(rank).match(/^[0-9]+$/) && rank <= 21;
+          const setPips = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                if(standardDeck)
-                  cardTypes[cT][`suit-${key}`] = suitURL;
+                cardTypes[cT][`suit-${key}`] = suit.icon;
           };
-          if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
-            setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
-            setCardTypes(rank     >= 12 || rank == 2 || rank == 3, ['P12', 'P52']);
-            setCardTypes(rank     ==  7 || rank == 8,              ['P22']);
-            setCardTypes(rank     >= 16 || rank >= 6 && rank <= 8, ['P31', 'P33']);
-            setCardTypes(rank % 2 ==  1 && rank != 7,              ['P32']);
-            setCardTypes(rank     ==  8,                           ['P42']);
+          if(design.pips && hasPipLayout) {
+            setPips(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
+            setPips(rank     >= 12 || rank == 2 || rank == 3, ['P12', 'P52']);
+            setPips(rank     ==  7 || rank == 8,              ['P22']);
+            setPips(rank     >= 16 || rank >= 6 && rank <= 8, ['P31', 'P33']);
+            setPips(rank % 2 ==  1 && rank != 7,              ['P32']);
+            setPips(rank     ==  8,                           ['P42']);
 
-            setCardTypes(rank >= 9,                                                          ['S21', 'S23', 'S31', 'S33']);
-            setCardTypes(rank >= 20 || rank == 10 || rank == 11 || rank >= 14 && rank <= 17, ['S12', 'S42']);
-            setCardTypes(rank >= 12,                                                         ['S22', 'S32']);
-            setCardTypes(rank >= 18,                                                         ['S11', 'S13', 'S41', 'S43']);
+            setPips(rank >= 9,                                                          ['S21', 'S23', 'S31', 'S33']);
+            setPips(rank >= 20 || rank == 10 || rank == 11 || rank >= 14 && rank <= 17, ['S12', 'S42']);
+            setPips(rank >= 12,                                                         ['S22', 'S32']);
+            setPips(rank >= 18,                                                         ['S11', 'S13', 'S41', 'S43']);
           }
-          if('JQK'.includes(rank)) {
-            let defaultRanksuit = defaultRanks[suitIndex % 4].substr(6, 1).toUpperCase();
-            if(defaultRanks.includes(suitSymbol))
-              defaultRanksuit = suitSymbol.substr(6, 1).toUpperCase();
-            cardTypes[cT].rankImage = `/i/cards-default/${rank}${defaultRanksuit}-face.svg`;
-          } else if(!String(rank).match(/^[0-9]+$/) || rank > 21) {
-            cardTypes[cT].rankImage = `/i/game-icons.net/${suitSymbol}.svg`;
-          }
+          // Middle picture of the playing-card design: the court cards use the matching face image, ranks
+          // without a pip layout (jokers, tarot trumps, words, ...) use the suit icon.
+          if(design.rankPictures && rank && 'JQK'.includes(rank))
+            cardTypes[cT].rankImage = `/i/cards-default/${rank}${DECK_GENERATOR_COURT_SUITS[suit.icon] || 'DHCS'[suitIndex % 4]}-face.svg`;
+          else if(design.rankPictures && !hasPipLayout)
+            cardTypes[cT].rankIcon = suit.icon;
         }
-        suitIndex += 1;
       }
 
-      return {
-        type: 'deck',
-        id,
-        cardTypes
-      };
-    }
+      return cardTypes;
+    };
 
     const createButton = document.createElement('button');
     createButton.innerText = 'Add to game';
@@ -1152,67 +1276,30 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
-      let standardDeck = false;
-      const deckTemplateButton = document.querySelectorAll('.deckTemplateButton')[0];
-      if (deckTemplateButton && deckTemplateButton.classList.contains('selected'))
-        standardDeck = true
-      batchStart();
-      const deck = getDeckDefinition(standardDeck);
-      setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
-      const finalDeck = deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck);
-
-      // Same holder/button/pile structure as addDeckWithCards, so custom decks aren't spread out either.
-      const cardWidth  = finalDeck.cardDefaults && finalDeck.cardDefaults.width  || finalDeck.width  || 103;
-      const cardHeight = finalDeck.cardDefaults && finalDeck.cardDefaults.height || finalDeck.height || 160;
-      const deckWidth  = finalDeck.width  || cardWidth;
-      const deckHeight = finalDeck.height || cardHeight;
-      const holderWidth  = cardWidth  + 8;
-      const holderHeight = cardHeight + 11;
-      const holderID = generateUniqueWidgetID();
-      await addWidgetLocal({
-        type: 'holder', id: holderID,
-        x: Math.round(800 - holderWidth/2), y: Math.round(500 - holderHeight/2),
-        width: holderWidth, height: holderHeight, dropTarget: { type: 'card' }
-      });
-      await addWidgetLocal({
-        id: holderID+'B', parent: holderID, fixedParent: true, y: holderHeight,
-        width: holderWidth, height: 40, type: 'button', text: 'Recall & Shuffle', movableInEdit: false,
-        clickRoutine: [
-          { func: 'RECALL',  holder: '${PROPERTY parent}' },
-          { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-          { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-        ]
-      });
-      await addWidgetLocal(Object.assign({}, finalDeck, {
-        parent: holderID,
-        x: Math.round((holderWidth -deckWidth )/2),
-        y: Math.round((holderHeight-deckHeight)/2)
-      }));
-      await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
-
-      for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        for(const rank of parseRankRange(ranks[suitSymbol])) {
-          const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
-          await addWidgetLocal({
-            type: 'card',
-            id: `${deck.id} ${cT}`,
-            deck: deck.id,
-            cardType: cT,
-            parent: holderID+'P',
-            activeFace: 1
-          });
-        }
+      const design = designs[+$('.selected.deckDesignButton', designSelectionDiv).dataset.index];
+      const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes: getCardTypes(design) });
+      createButton.disabled = true; // adding a card at a time takes a moment; a second click would add a 2nd deck
+      try {
+        await this.addDeckWithCards(deck, 'custom');
+      } finally {
+        createButton.disabled = false;
       }
-
-      batchEnd();
     };
 
-    target.append(suitCustomizeDiv);
+    for(const icon of DECK_GENERATOR_SUIT_ICONS) {
+      const chip = renderIconChip(icon, addBar);
+      chip.title = `Add a suit with the ${defaultSuitName(icon)} icon`;
+      chip.onclick = _=>addSuit(icon);
+    }
 
     this.addSubHeader('Card design', target);
     target.append(designSelectionDiv);
-    updateDesignPreview();
     target.append(createButton);
+
+    for(const icon of DECK_GENERATOR_SUIT_ICONS.slice(0, 4))
+      addSuit(icon, false); // one render pass for the four suits a custom deck starts with
+    renderSuits();
+    updateDesignPreview();
   }
 
   deckImages(target) {
@@ -1423,6 +1510,7 @@ class PropertiesModule extends SidebarModule {
 
     addButton.onclick = async _=>{
       addButton.disabled = true;
+      const placement = this.deckPlacement(); // one import adds every selected deck the same way
       try {
         for(const { button, deck, cardCounts } of foundDecks) {
           if(!button.classList.contains('selected'))
@@ -1433,7 +1521,7 @@ class PropertiesModule extends SidebarModule {
           delete newDeck.y;
           delete newDeck.z;
           newDeck.id = generateUniqueWidgetID();
-          await this.addDeckWithCards(newDeck, 'TTS', cardCounts);
+          await this.addDeckWithCards(newDeck, 'TTS', cardCounts, placement);
           button.classList.remove('selected');
         }
       } catch(e) {
@@ -1444,7 +1532,14 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
-  async addDeckWithCards(deck, type, counts) {
+  // What to add around a new deck. The "Add New Deck" dialog sets newDeckPlacement on the module instance it
+  // renders these flows into (see openNewDeckOverlay), so they follow its checkboxes; the properties sidebar's
+  // own instance has none, so its decks come with a holder and a reset button as they always did.
+  deckPlacement() {
+    return this.newDeckPlacement ? this.newDeckPlacement() : deckPlacementDefault;
+  }
+
+  async addDeckWithCards(deck, type, counts, placement=this.deckPlacement()) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
 
@@ -1456,39 +1551,40 @@ class PropertiesModule extends SidebarModule {
     const deckHeight = deck.height || cardHeight;
     const holderWidth  = cardWidth  + 8;
     const holderHeight = cardHeight + 11;
-    const holderID = generateUniqueWidgetID();
+    // Without a holder that id is never added, so it does not reserve the pile's id: check for that one too,
+    // like the public-library flow does for all of its suffixes.
+    let holderID = null;
+    do {
+      holderID = generateUniqueWidgetID();
+    } while(widgets.has(holderID+'P'));
+    const pileID = holderID+'P';
 
-    await addWidgetLocal({
-      type: 'holder',
-      id: holderID,
-      x: Math.round(800 - holderWidth/2),
-      y: Math.round(500 - holderHeight/2),
-      width: holderWidth,
-      height: holderHeight,
-      dropTarget: { type: 'card' }
-    });
-    await addWidgetLocal({
-      id: holderID+'B',
-      parent: holderID,
-      fixedParent: true,
-      y: holderHeight,
-      width: holderWidth,
-      height: 40,
-      type: 'button',
-      text: 'Recall & Shuffle',
-      movableInEdit: false,
-      clickRoutine: [
-        { func: 'RECALL',  holder: '${PROPERTY parent}' },
-        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-      ]
-    });
-    await addWidgetLocal(Object.assign({}, deck, {
+    if(placement.holder) {
+      await addWidgetLocal({
+        type: 'holder',
+        id: holderID,
+        x: Math.round(800 - holderWidth/2),
+        y: Math.round(500 - holderHeight/2),
+        width: holderWidth,
+        height: holderHeight,
+        dropTarget: { type: 'card' }
+      });
+      if(placement.resetButton)
+        await addWidgetLocal(deckResetButton(holderID, holderWidth, holderHeight));
+    }
+    // Without a holder the cards still go into a pile in the middle of the table, and the deck widget (which is
+    // invisible outside edit mode) is placed next to it instead of below it.
+    await addWidgetLocal(Object.assign({}, deck, placement.holder ? {
       parent: holderID,
       x: Math.round((holderWidth -deckWidth )/2),
       y: Math.round((holderHeight-deckHeight)/2)
+    } : {
+      x: Math.round(800 - cardWidth/2 - deckWidth - 10),
+      y: Math.round(500 - deckHeight/2)
     }));
-    await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
+    await addWidgetLocal(placement.holder
+      ? { type: 'pile', id: pileID, parent: holderID, width: cardWidth, height: cardHeight }
+      : { type: 'pile', id: pileID, x: Math.round(800 - cardWidth/2), y: Math.round(500 - cardHeight/2), width: cardWidth, height: cardHeight });
 
     for(const cardType in deck.cardTypes) {
       const count = counts ? counts[cardType] || 0 : 1;
@@ -1498,7 +1594,7 @@ class PropertiesModule extends SidebarModule {
           id: `${deck.id} ${cardType}${count > 1 ? ' '+i : ''}`,
           deck: deck.id,
           cardType: cardType,
-          parent: holderID+'P',
+          parent: pileID,
           activeFace: 1
         });
     }
@@ -1506,9 +1602,304 @@ class PropertiesModule extends SidebarModule {
     batchEnd();
   }
 
-  deckTemplate_colors(deck) {
+  // Adapted from the simple suit/rank decks of the public library (Feta, Escrime): a white card with the rank on
+  // top in the suit color and the suit icon below it.
+  deckTemplate_minimal(deck) {
+    deck.faceTemplates = [
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg"
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "text",
+            "y": 12,
+            "fontSize": 44,
+            "textAlign": "center",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 21.5,
+            "y": 75,
+            "size": 60,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          }
+        ],
+        "border": 1
+      }
+    ];
+    return deck;
+  }
+
+  // Playing card look without the pip layout: rank and suit in two opposite corners and one big suit icon in the
+  // middle, so it works for any set of ranks (words, high numbers, ...) and any icon.
+  deckTemplate_corners(deck) {
+    deck.faceTemplates = [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "icon",
+            "x": 21.5,
+            "y": 50,
+            "size": 60,
+            "opacity": 0.85,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 1,
+            "y": 28,
+            "size": 23,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "rotation": 180,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 79,
+            "y": 110,
+            "size": 23,
+            "rotation": 180,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          }
+        ]
+      }
+    ];
+    return deck;
+  }
+
+  // Adapted from the round decks of the public library (CONTEST, District Development): a colored disc with the
+  // suit as a watermark and the rank on top.
+  deckTemplate_token(deck) {
     deck.cardDefaults = {
+      width: 100,
+      height: 100
     };
+    deck.faceTemplates = [
+      {
+        "radius": 50,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "#333333"
+          },
+          {
+            "type": "image",
+            "x": 18,
+            "y": 18,
+            "width": 64,
+            "height": 64,
+            "color": "#ffffff22",
+            "css": {
+              "border-radius": "50%"
+            }
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 50,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 20,
+            "y": 35,
+            "size": 60,
+            "color": "#ffffff55",
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 22,
+            "fontSize": 46,
+            "textAlign": "center",
+            "color": "white",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ],
+        "border": 1
+      }
+    ];
+    return deck;
+  }
+
+  // Adapted from the square tile decks of the public library (Scotland Hills): a tile framed in the suit color,
+  // with the rank in the top left and a small suit icon in the bottom right.
+  deckTemplate_tile(deck) {
+    deck.cardDefaults = {
+      width: 80,
+      height: 80
+    };
+    deck.faceTemplates = [
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 8,
+            "width": 64,
+            "height": 64,
+            "color": "transparent",
+            "value": "/i/game-icons.net/viscious-speed/abstract-111.svg"
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 70,
+            "height": 70,
+            "color": "#ffffff",
+            "css": {
+              "border-radius": "12px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 2,
+            "fontSize": 34,
+            "textAlign": "left",
+            "width": 48,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 46,
+            "y": 42,
+            "size": 28,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          }
+        ]
+      }
+    ];
+    return deck;
+  }
+
+  deckTemplate_colors(deck) {
     deck.faceTemplates = [
       {
         "radius": 10,
@@ -1609,8 +2000,6 @@ class PropertiesModule extends SidebarModule {
   }
 
   deckTemplate_simple(deck) {
-    deck.cardDefaults = {
-    };
     deck.faceTemplates = [
       {
         "objects": [
@@ -1798,6 +2187,16 @@ class PropertiesModule extends SidebarModule {
             },
             "css": {
               "background-size": "100% 100%"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 25,
+            "y": 53,
+            "size": 53,
+            "dynamicProperties": {
+              "value": "rankIcon",
+              "color": "suitColor"
             }
           },
           {
@@ -6320,15 +6719,20 @@ class PropertiesModule extends SidebarModule {
     if(widget.get('type') == 'deck') {
       const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
       const faceTemplates = widget.get('faceTemplates');
+      // The preview deck has to be in the widget map for its sample cards to find it. It is a throwaway, so it
+      // must come back out even when rendering a card throws (the faces can come straight from user input).
       widgets.set(widget.id, widget);
-      for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
-        new Card().renderReadonlyCopyRaw(Object.assign({
-          deck: widget.id,
-          cardType,
-          activeFace: Array.isArray(faceTemplates) && faceTemplates.length > 1 ? 1 : 0
-        }, state), parent);
+      try {
+        for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
+          new Card().renderReadonlyCopyRaw(Object.assign({
+            deck: widget.id,
+            cardType,
+            activeFace: Array.isArray(faceTemplates) && faceTemplates.length > 1 ? 1 : 0
+          }, state), parent);
+        }
+      } finally {
+        widgets.delete(widget.id);
       }
-      widgets.delete(widget.id, widget);
       if (parent.children[0]) 
         positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {

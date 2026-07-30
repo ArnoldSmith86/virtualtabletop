@@ -266,6 +266,8 @@ class DeckEditor {
     $('#deckEditorNewDeckClose').onclick = _=>this.closeNewDeckOverlay();
     for(const radio of $a('#deckEditorNewDeckOverlay input[name=deckEditorNewDeckMode]'))
       radio.onchange = _=>this.renderNewDeckPanel(radio.value);
+    // A reset button recalls the cards into the holder, so it is only offered together with one.
+    $('#deckEditorNewDeckHolder').onchange = _=>$('#deckEditorNewDeckResetButton').disabled = !$('#deckEditorNewDeckHolder').checked;
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorCardView').onclick = _=>this.setRoomVisible(!this.roomVisible);
@@ -3159,13 +3161,13 @@ class DeckEditor {
     this.render();
   }
 
-  async addDeck(deckID, size) {
+  async addDeck(deckID, size, placement) {
     if(deckID && widgets.has(deckID)) {
       alert(`A widget with the id "${deckID}" already exists. Please choose a different deck id.`);
       return;
     }
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    await this.open(await createStarterDeck(deckID, size));
+    await this.open(await createStarterDeck(deckID, size, placement));
     this.treeLevel = 'deck';
     this.render();
   }
@@ -3174,11 +3176,18 @@ class DeckEditor {
   // reinventing those flows, we reuse the ones the properties sidebar already implements (traditional,
   // custom, image upload, TTS import) by rendering them, and the public-library and empty-deck flows.
   openNewDeckOverlay() {
-    if(!this.deckCreator)
+    if(!this.deckCreator) {
       this.deckCreator = new PropertiesModule();
-    // Always start on the "empty deck" default so the submenu is predictable each time it opens.
+      // The flows this instance renders are the dialog's, so they follow its placement checkboxes.
+      this.deckCreator.newDeckPlacement = newDeckPlacement;
+    }
+    // Always start on the "empty deck" default with both placement options on, so the submenu is predictable
+    // each time it opens.
     const empty = $('#deckEditorNewDeckOverlay input[value=empty]');
     empty.checked = true;
+    $('#deckEditorNewDeckHolder').checked = true;
+    $('#deckEditorNewDeckResetButton').checked = true;
+    $('#deckEditorNewDeckResetButton').disabled = false;
     this.renderNewDeckPanel('empty');
     showOverlay('deckEditorNewDeckOverlay');
   }
@@ -3213,14 +3222,16 @@ class DeckEditor {
           return;
         }
         const picked = $('input[name=deckEditorNewDeckSize]:checked', sizes);
+        const placement = newDeckPlacement(); // read before closing the dialog the checkboxes live in
         this.closeNewDeckOverlay();
-        this.addDeck(id || undefined, deckEditorCardSizes[picked ? +picked.value : 0]);
+        this.addDeck(id || undefined, deckEditorCardSizes[picked ? +picked.value : 0], placement);
       };
     } else if(mode == 'library') {
       // Keep the deck editor open: the library overlay is moved into #editor (see initializeDOM) so it shows
-      // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added.
+      // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added. The
+      // dialog is hidden while browsing, so the placement options are read now rather than at the click.
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
-      $('button', bar).onclick = _=>openLibraryDecksOverlay();
+      $('button', bar).onclick = _=>openLibraryDecksOverlay(newDeckPlacement());
     } else {
       // Render the existing PropertiesModule deck-creation flow inside a container carrying the same classes
       // the sidebar uses ("tune editorModule"), so its scoped CSS (preview tiles, suit editors, TTS input)
@@ -3571,36 +3582,15 @@ const deckEditorCardSizes = [
   { label: 'Token',       width:  50, height:  50 }
 ];
 
-// Creates a minimal deck to start designing from scratch (holder + deck with one card type, a colored back
-// and a white front, plus one card) and returns the deck's id. Shared by the toolbar button (when the game
-// has no deck yet) and the properties module's "Design a deck in the deck editor" option.
-// deckID: optional id for the deck widget itself (from the "Add New Deck" dialog); the holder and button
-// still get generated ids. Defaults to the holder id + 'D' when not given.
-// size: one of deckEditorCardSizes; the cards, the holder and its button are all built at that size.
-async function createStarterDeck(deckID, size) {
-  batchStart();
-  const id = generateUniqueWidgetID();
-  const dID = deckID || id+'D';
-  const cardWidth = size && size.width || 103;
-  const cardHeight = size && size.height || 160;
-  const holderWidth = cardWidth + 8;   // the holder has always been 8 larger than the card it holds
-  const holderHeight = cardHeight + 8;
-  setDeltaCause(`${getPlayerDetails().playerName} created deck ${dID} for the deck editor`);
-  const holder = { type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } };
-  // Spelled out only when they differ from the holder's own defaults, so a default-sized starter deck is
-  // still exactly the deck this has always created.
-  if(holderWidth != 111 || holderHeight != 168) {
-    holder.width = holderWidth;
-    holder.height = holderHeight;
-  }
-  await addWidgetLocal(holder);
-  // Recall & Shuffle button on the holder, matching the add-widget overlay's deck composite.
-  await addWidgetLocal({
-    id: id+'B',
-    parent: id,
+// The "Recall & Shuffle" button all deck creation flows put below their holder: it recalls the deck's cards,
+// flips them to their back and shuffles them. Offered as an option by the "Add New Deck" wizard.
+function deckResetButton(holderID, width, y) {
+  return {
+    id: holderID+'B',
+    parent: holderID,
     fixedParent: true,
-    y: holderHeight + 3.36,
-    width: holderWidth,
+    y,
+    width,
     height: 40,
     type: 'button',
     text: 'Recall & Shuffle',
@@ -3610,21 +3600,66 @@ async function createStarterDeck(deckID, size) {
       { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
       { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
     ]
-  });
-  await addWidgetLocal({
+  };
+}
+
+// The two options of the "Add New Deck" dialog: whether the new deck gets a holder to put its cards in, and a
+// reset button on that holder. The creation flows the dialog reuses live in three different modules, so it hands
+// each of them this reader (the boxes stay togglable while a flow is on screen). Everywhere else - the properties
+// sidebar, the add widget overlay's library deck browser - deckPlacementDefault applies, which is what those
+// flows have always done.
+function newDeckPlacement() {
+  const holder = $('#deckEditorNewDeckHolder').checked;
+  return { holder, resetButton: holder && $('#deckEditorNewDeckResetButton').checked };
+}
+
+const deckPlacementDefault = { holder: true, resetButton: true };
+
+// Creates a minimal deck to start designing from scratch (holder + deck with one card type, a colored back
+// and a white front, plus one card) and returns the deck's id. Used by the "Empty deck" option of the
+// "Add New Deck" dialog.
+// deckID: optional id for the deck widget itself (from the dialog); the holder and button still get generated
+// ids. Defaults to the holder id + 'D' when not given.
+// size: one of deckEditorCardSizes; the cards, the holder and its button are all built at that size.
+// placement: what to add besides the deck itself, read from the dialog before it closes (see
+// newDeckPlacement); holder and reset button when not given.
+async function createStarterDeck(deckID, size, placement) {
+  placement = placement || deckPlacementDefault;
+  batchStart();
+  const id = generateUniqueWidgetID();
+  const dID = deckID || id+'D';
+  const cardWidth = size && size.width || 103;
+  const cardHeight = size && size.height || 160;
+  const holderWidth = cardWidth + 8;   // the holder has always been 8 larger than the card it holds
+  const holderHeight = cardHeight + 8;
+  setDeltaCause(`${getPlayerDetails().playerName} created deck ${dID} for the deck editor`);
+  if(placement.holder) {
+    const holder = { type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } };
+    // Spelled out only when they differ from the holder's own defaults, so a default-sized starter deck is
+    // still exactly the deck this has always created.
+    if(holderWidth != 111 || holderHeight != 168) {
+      holder.width = holderWidth;
+      holder.height = holderHeight;
+    }
+    await addWidgetLocal(holder);
+    if(placement.resetButton)
+      await addWidgetLocal(deckResetButton(id, holderWidth, holderHeight + 3.36));
+  }
+  // Without a holder the card is placed where the holder would have been and the deck widget (invisible outside
+  // edit mode) next to it, so both are reachable.
+  await addWidgetLocal(Object.assign({
     type: 'deck',
-    id: dID,
-    parent: id,
-    x: 12,
-    y: 41,
+    id: dID
+  }, placement.holder ? { parent: id, x: 12, y: 41 } : { x: 748 - 96, y: 400 }, {
     cardDefaults: { width: cardWidth, height: cardHeight },
     cardTypes: { 'type 1': {} },
     faceTemplates: [
       { objects: [ { type: 'image', x: 0, y: 0, width: cardWidth, height: cardHeight, color: VTTblue } ] },
       { objects: [ { type: 'image', x: 0, y: 0, width: cardWidth, height: cardHeight, color: '#ffffff' } ] }
     ]
-  });
-  await addWidgetLocal({ type: 'card', deck: dID, cardType: 'type 1', parent: id, activeFace: 1 });
+  }));
+  await addWidgetLocal(Object.assign({ type: 'card', deck: dID, cardType: 'type 1' },
+    placement.holder ? { parent: id } : { x: 752, y: 404 }, { activeFace: 1 }));
   batchEnd();
   return dID;
 }

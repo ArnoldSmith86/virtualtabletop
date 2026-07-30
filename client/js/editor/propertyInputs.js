@@ -148,6 +148,25 @@ function iconTypeEnabled(value, enabledTypes) {
   return !type || enabledTypes.has(type);
 }
 
+// The full symbol picker is an overlay of its own, so opening it from a picker that sits inside another overlay
+// (e.g. the deck editor's "Add New Deck" dialog) hides that one. Bring that overlay - the one the given element
+// lives in - back afterwards, instead of leaving the user without the dialog they were working in.
+async function pickSymbolKeepingOverlay(element, type='all') {
+  const hostOverlay = element.closest('.overlay');
+  if(!hostOverlay)
+    return await pickSymbol(type);
+
+  // The deck editor parks the symbol picker inside its card view (see DeckEditor.open), which is not where a
+  // dialog floating above the editor wants it: show it where the dialog is and put it back afterwards.
+  const picker = $('#symbolPickerOverlay');
+  const pickerParent = picker.parentNode;
+  hostOverlay.parentNode.appendChild(picker);
+  const symbol = await pickSymbol(type, true, false);
+  pickerParent.appendChild(picker);
+  showOverlay(hostOverlay.id);
+  return symbol;
+}
+
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
@@ -984,7 +1003,7 @@ class IconInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbol();
+      const symbol = await pickSymbolKeepingOverlay(showAll);
       if(symbol)
         this.setValue(symbol.symbol);
     };
@@ -1045,7 +1064,7 @@ class ImageInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbol('images');
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'images');
       if(symbol)
         this.setValue(symbol.url);
     };
