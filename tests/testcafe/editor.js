@@ -820,6 +820,122 @@ test('Line widget in edit mode', async t => {
   await compareState(t, 'd35bd7362c7e87ea9ecb29895cc8d0b9');
 });
 
+// A stop does not have to be a child of the line, and one that is not gets
+// placed through global coordinates - which read the CSS transforms out of the
+// DOM. Moving the city the route is connected to moves the line's box in the
+// same batch, so without a flush the stops are laid out in the frame the line
+// had before the move and end up off the path by exactly that move.
+test('Line stops that are not children of the line', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    cityA: { id: 'cityA', type: 'basic', x: 100, y: 300, width: 40, height: 40 },
+    cityB: { id: 'cityB', type: 'basic', x: 600, y: 300, width: 40, height: 40 },
+    // the cars start out exactly where the line puts them: on the straight path
+    // from city to city, at 33% and 67% of its length
+    car1:  { id: 'car1',  type: 'basic', x: 255, y: 308, width: 60, height: 24, movable: false },
+    car2:  { id: 'car2',  type: 'basic', x: 425, y: 308, width: 60, height: 24, movable: false },
+    // a third car in a frame of its own: it is placed through the holder's
+    // transform instead of the room's, at 50% of the path
+    holder: { id: 'holder', type: 'basic', x: 200, y: 100, width: 400, height: 400, movable: false },
+    car3:  { id: 'car3',  type: 'basic', parent: 'holder', x: 140, y: 208, width: 60, height: 24, movable: false },
+    route: {
+      id: 'route', type: 'line', autoSpaceStops: false,
+      lineStart: { x: 120, y: 320 }, lineEnd: { x: 620, y: 320 },
+      connectStart: { line: 'cityA', position: 0.5 },
+      connectEnd: { line: 'cityB', position: 0.5 },
+      stops: [ { widget: 'car1', position: 0.33 }, { widget: 'car3', position: 0.5 }, { widget: 'car2', position: 0.67 } ]
+    },
+    // a second line between the same two cities, without stops of its own: it is
+    // only here to flush the delta in the middle of a batch, the way every
+    // connected line does
+    route2: {
+      id: 'route2', type: 'line',
+      lineStart: { x: 120, y: 340 }, lineEnd: { x: 620, y: 340 },
+      connectStart: { line: 'cityA', position: 0.5 },
+      connectEnd: { line: 'cityB', position: 0.5 }
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  // entering edit mode is what puts the engine on window for the checks below
+  await t.click('#editButton');
+
+  // every mouse event of a drag is one batch, so move the city as one: the delta
+  // - and with it the line's new box - only reaches the DOM once it ends
+  const moveCity = ClientFunction((dx, dy) => {
+    const city = widgets.get('cityA');
+    batchStart();
+    return city.set('x', city.get('x')+dx)
+      .then(_=>city.set('y', city.get('y')+dy))
+      .then(_=>batchEnd());
+  });
+
+  // how far the stops sit from where the line's own layout puts them - the whole
+  // point of a stop is that it rides on the path, so this has to stay 0
+  const stopsOffPath = ClientFunction(() => {
+    const line = widgets.get('route');
+    return Math.max(...line.stopList().map(entry => {
+      const stop = widgets.get(entry.widget);
+      const p = line.stopCoordInParentFrame(stop, line.pointAtPosition(entry.position));
+      return Math.max(
+        Math.abs(Math.round(p.x - stop.get('width')/2) - stop.get('x')),
+        Math.abs(Math.round(p.y - stop.get('height')/2) - stop.get('y'))
+      );
+    }));
+  });
+
+  // a routine can move the frame a stop lives in and re-lay out the line in the
+  // same batch - then it is the holder's transform that is one event behind.
+  // rotateStops is the cheapest property to re-lay out the stops with: it does
+  // not touch the line's own geometry, so only the holder's frame goes stale.
+  const moveHolderAndLayOutStops = ClientFunction((dx, dy, rotate) => {
+    const holder = widgets.get('holder');
+    batchStart();
+    return holder.set('x', holder.get('x')+dx)
+      .then(_=>holder.set('y', holder.get('y')+dy))
+      .then(_=>widgets.get('route').set('rotateStops', rotate))
+      .then(_=>batchEnd());
+  });
+
+  // the same, except the frame ends the batch where it started - with another
+  // line flushing while it is displaced. Nothing about this line or the holder
+  // has changed by the time the stops are laid out, but the DOM now holds the
+  // displaced transform, so only asking the DOM catches it.
+  const displaceHolderAndLayOutStops = ClientFunction((dx, dy, rotate) => {
+    const holder = widgets.get('holder');
+    batchStart();
+    return holder.set('x', holder.get('x')+dx)
+      .then(_=>holder.set('y', holder.get('y')+dy))
+      .then(_=>widgets.get('route2').applyConnections())
+      .then(_=>holder.set('x', holder.get('x')-dx))
+      .then(_=>holder.set('y', holder.get('y')-dy))
+      .then(_=>widgets.get('route').set('rotateStops', rotate))
+      .then(_=>batchEnd());
+  });
+
+  // a stop can be the frame another stop is placed in, and then the transform
+  // car3 is converted through is one the same pass has just written
+  const holderBecomesAStop = ClientFunction(() => widgets.get('route').addStop('holder', 0.15));
+
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(120, -90);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(-120, 90);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveHolderAndLayOutStops(70, -40, false);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveHolderAndLayOutStops(-70, 40, true);
+  await t.expect(stopsOffPath()).eql(0);
+  await displaceHolderAndLayOutStops(60, -30, false);
+  await t.expect(stopsOffPath()).eql(0);
+  await displaceHolderAndLayOutStops(-60, 30, true);
+  await t.expect(stopsOffPath()).eql(0);
+  await holderBecomesAStop();
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(90, -60);
+  await t.expect(stopsOffPath()).eql(0);
+});
+
 test('Enabling the Debug module while a routine waits for INPUT does not abort the routine', async t => {
   await setRoomState({
     button: {
