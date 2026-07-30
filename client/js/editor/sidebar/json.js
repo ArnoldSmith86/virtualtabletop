@@ -89,7 +89,7 @@ class DebugModule extends SidebarModule {
   }
 
   button_clearButton() {
-    jeLoggingHTML = '';
+    jeLoggingClear();
     $('#jeLog').innerHTML = '';
   }
 
@@ -98,7 +98,7 @@ class DebugModule extends SidebarModule {
 
     $('#clearLogButton').disabled = $('#autoClearLog').checked;
     if($('#clearLogButton').disabled)
-      jeLoggingHTML = '';
+      jeLoggingClear();
   }
 
   button_filter() {

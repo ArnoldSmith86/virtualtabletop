@@ -534,10 +534,6 @@ body.jsonEdit #toolbar {
   white-space: normal;
 }
 
-#jeLog {
-  margin-left: -40px;
-}
-
 @media (max-width: 1000px) {
   #jeLog {
     right: var(--commandPaneWidth);
@@ -572,6 +568,22 @@ body.jsonEdit #toolbar {
 }
 #jeLog > .jeLog + .jeLog {
   margin-top: 20px;
+}
+
+/* a message about the log itself rather than a logged routine, so make it a readable callout */
+.jeLogNote {
+  color: var(--textColor);
+  background-color: var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--textHighlightColor2);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin: 10px 0 10px 20px;
+  font-family: Arial, sans-serif;
+}
+.jeLogNote .jeLogWidget,
+.jeLogNote .jeLogProperty {
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .jeLogSkipped { color: var(--textDimColor1); }
