@@ -91,11 +91,22 @@ export default async function convertPCIO(content) {
   if(zip.files['schemaVersion'])
     schemaVersion = +(await zip.files['schemaVersion'].async('string')) || 0;
 
-  // everything that could not be translated ends up in _meta.info.importerWarnings
+  // everything that could not be translated ends up in _meta.info.importerWarnings.
+  // A broken file can have a note per widget, so the report is capped: it is
+  // shown in the interface and stored in the room, which nobody is served by
+  // filling with thousands of lines.
+  const maxWarnings = 100;
   const warnings = [];
+  const warned = new Set();
+  let suppressedWarnings = 0;
   function warn(text) {
-    if(warnings.indexOf(text) == -1)
+    if(warned.has(text))
+      return;
+    warned.add(text);
+    if(warnings.length < maxWarnings)
       warnings.push(text);
+    else
+      ++suppressedWarnings;
   }
 
   // how a widget is called in a warning - the label the user gave it if it has one
@@ -145,7 +156,7 @@ export default async function convertPCIO(content) {
     }
   }
 
-  function mapName(name) {
+  function mapName(name, silent) {
     if(name.match(/^\/img\//)) {
       name = 'https://playingcards.io' + name;
 
@@ -170,7 +181,7 @@ export default async function convertPCIO(content) {
       if(german)
         name = `/i/cards-german/${german[2]}${{acorns:'Acorn',bells:'Bell',hearts:'Heart',leaves:'Leaf'}[german[1]]}.svg`;
 
-      if(name.match(/^https:\/\/playingcards\.io\/img\//))
+      if(!silent && name.match(/^https:\/\/playingcards\.io\/img\//))
         warn(`Images in ${name.replace(/^https:\/\/playingcards\.io|[^/]*$/g, '')} have no VirtualTabletop equivalent and stay linked to playingcards.io.`);
     }
     return nameMap[name] || name;
@@ -290,6 +301,12 @@ export default async function convertPCIO(content) {
     if(objects && objects.type == 'reference') {
       target[collectionParam] = objects.questionId;
       return target;
+    }
+    if(objects && objects.type == 'variable') {
+      // the object a "Find Cards & Pieces" step looked up - VirtualTabletop
+      // automations have nothing to select it by
+      warn(`An automation step works on the object that a "${pcioFuncNames.FIND_CARDS_PIECES}" step looked up, which has no VirtualTabletop equivalent - that step was skipped.`);
+      return null;
     }
     if(objects && objects.type == 'literal' && Array.isArray(objects.value)) {
       into({
@@ -430,6 +447,23 @@ export default async function convertPCIO(content) {
     return `range of ${bounds.min} to ${bounds.max}`;
   }
 
+  // a player can clear a counter or type text into it, which parses to NaN and
+  // would stick forever once it is calculated with - LABEL's own inc/dec mode
+  // falls back to 0 the same way
+  function readCounter(id, variable) {
+    return [
+      `var ${variable} = parseFloat \${PROPERTY text OF ${id}}`,
+      `var ${variable} = \${${variable}} || 0`
+    ];
+  }
+
+  // LABEL rounds an increment to the decimals of the value and the step while
+  // plain float arithmetic turns 0.1+0.2 into 0.30000000000000004
+  function roundCounter(variable, step) {
+    const decimals = typeof step == 'number' ? (String(step).split('.')[1] || '').length : 0;
+    return decimals ? [ `var ${variable} = \${${variable}} toFixed ${decimals}` ] : [];
+  }
+
   // the operations that keep a variable within the bounds of a counter
   function clampCounter(id, variable) {
     const bounds = counterBounds[id] || { min: -Infinity, max: Infinity };
@@ -474,6 +508,22 @@ export default async function convertPCIO(content) {
   const byID = {};
   for(const widget of widgets)
     byID[widget.id] = widget;
+
+  // PCIO backs its dice with a cardDeck. A deck that holds exactly the six
+  // standard pip faces and is only used by dice is rendered by VirtualTabletop's
+  // own dice widget, so those images never reach the table and reporting them as
+  // "stays linked to playingcards.io" would be untrue.
+  function isStandardPipDeck(deck) {
+    const faces = deck && deck.cardTypes ? Object.entries(deck.cardTypes) : [];
+    return faces.length == 6 && faces.every(([ , face ], i)=>String((face || {}).image || '').match(new RegExp(`/img/dice-basic/${i+1}.svg$`)));
+  }
+  const nativeDiceDecks = {};
+  for(const widget of widgets)
+    if(widget.type == 'dice' && isStandardPipDeck(byID[widget.deck]))
+      nativeDiceDecks[widget.deck] = true;
+  for(const widget of widgets)
+    if(widget.type == 'card' || widget.type == 'piece' || widget.type == 'chooser')
+      delete nativeDiceDecks[widget.deck];
 
   const cardsPerCoordinates = {};
   for(const widget of widgets) {
@@ -570,7 +620,7 @@ export default async function convertPCIO(content) {
         const faces = Object.entries(deck.cardTypes);
         // only the six standard pip faces are what a VTT dice widget shows by
         // default - a die with fewer of them needs its faces spelled out
-        const pips = faces.length == 6 && faces.every(([ , face ], i)=>String(face.image || '').match(new RegExp(`/img/dice-basic/${i+1}.svg$`)));
+        const pips = isStandardPipDeck(deck);
         if(!pips) {
           w.faces = faces.map(function([ , face ]) {
             if(face.image)
@@ -915,7 +965,7 @@ export default async function convertPCIO(content) {
       let sortingOrder = 0;
       for(const type in w.cardTypes) {
         for(const key in w.cardTypes[type])
-          w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
+          w.cardTypes[type][key] = mapName(w.cardTypes[type][key], nativeDiceDecks[widget.id]);
         w.cardTypes[type].sortingOrder = ++sortingOrder;
       }
     } else if(widget.type == 'card' || widget.type == 'piece' || widget.type == 'chooser') {
@@ -996,9 +1046,10 @@ export default async function convertPCIO(content) {
           text,
 
           clickRoutine: bounds ? [
-            `var pcioCounter = parseFloat \${PROPERTY text OF ${widget.id}}`,
+            ...readCounter(widget.id, 'pcioCounter'),
             `var pcioCounter = \${pcioCounter} + ${value}`,
             ...clampCounter(widget.id, 'pcioCounter'),
+            ...roundCounter('pcioCounter', value),
             { func: 'LABEL', label: widget.id, value: '${pcioCounter}' }
           ] : [
             { func: 'LABEL', label: widget.id, mode: 'inc', value }
@@ -1406,13 +1457,24 @@ export default async function convertPCIO(content) {
         return 'pcio' + String(stepID).replace(/[^A-Za-z0-9_]/g, '');
       }
 
+      // an automation can name a widget that is no longer in the file, which
+      // would import as an operation on something that does not exist
+      function knownIDs(ids) {
+        const known = (ids || []).filter(id=>byID[id]);
+        if(known.length < (ids || []).length)
+          warn(`An automation step of ${widgetName(widget)} works on a widget that is not part of the file - that widget was left out.`);
+        return known;
+      }
+
       function importSteps(steps, routine) {
         for(const step of steps || []) {
           const branches = step && step.branches || [ step ];
-          // a read step that only runs under a condition may not run at all, in
-          // which case PCIO sees its result as empty
-          if((branches[0] || {}).condition && readDefaults[branches[0].func] !== undefined)
-            routine.push(`var ${readVariable(step.id)} = ${readDefaults[branches[0].func]}`);
+          // a read step whose alternatives are conditional - or which is only one
+          // of several alternatives - may not run at all, in which case PCIO sees
+          // its result as empty
+          const read = branches.find(branch=>branch && readDefaults[branch.func] !== undefined);
+          if(read && (read !== branches[0] || branches[0].condition))
+            routine.push(`var ${readVariable(step.id)} = ${readDefaults[read.func]}`);
           importBranches(branches, routine, step && step.id);
         }
       }
@@ -1445,17 +1507,20 @@ export default async function convertPCIO(content) {
         routine.push(operation);
       }
 
-      // a number argument is a fixed value, an answer from the popup, the result
-      // of an earlier read step or a query that adds up counters or card fields
+      // a number argument is a fixed value, the value of a counter, an answer
+      // from the popup, the result of an earlier read step or a query that adds
+      // up counters or card fields
       function numberArgument(routine, argument, fallback) {
         if(!argument || typeof argument != 'object')
           return fallback;
+        if(argument.counterId)
+          return byID[argument.counterId] ? `\${PROPERTY text OF ${argument.counterId}}` : unknownNumber(fallback);
         if(argument.type == 'literal')
           return argument.value === null || argument.value === undefined ? fallback : argument.value;
         if(argument.type == 'reference' && argument.questionId)
           return `\${${argument.questionId}}`;
         if(argument.type == 'variable')
-          return readValues[argument.callId] ? `\${${readValues[argument.callId]}}` : fallback;
+          return readValues[argument.callId] ? `\${${readValues[argument.callId]}}` : unknownNumber(fallback);
         if(argument.type == 'query') {
           const counters = (argument.counters || []).filter(id=>byID[id]);
           const variable = `pcioNumber${++temporaries}`;
@@ -1475,6 +1540,13 @@ export default async function convertPCIO(content) {
             }
           }
         }
+        return unknownNumber(fallback);
+      }
+
+      // a number the importer cannot calculate would silently turn into whatever
+      // the fallback is, which can make a comparison always true
+      function unknownNumber(fallback) {
+        warn(`A number an automation step of ${widgetName(widget)} calculates with could not be imported - it uses ${fallback} instead.`);
         return fallback;
       }
 
@@ -1491,6 +1563,7 @@ export default async function convertPCIO(content) {
         if(c.func == 'FIND_CARDS_PIECES') {
           // returns the ID of an object, which none of PCIO's own automations can
           // do anything with - importing the step would have no effect
+          warn(`The automation step "${pcioFuncNames.FIND_CARDS_PIECES}" of ${widgetName(widget)} was skipped - VirtualTabletop automations cannot work with the object it looks up.`);
           return true;
         }
         if(c.func == 'NUMBERS_FROM_COUNTERS') {
@@ -1558,9 +1631,7 @@ export default async function convertPCIO(content) {
           const args = c.args;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
 
-          const quantity = args.quantity && args.quantity.counterId && byID[args.quantity.counterId]
-            ? `\${PROPERTY text OF ${args.quantity.counterId}}`
-            : numberArgument(routine, args.quantity, 1);
+          const quantity = numberArgument(routine, args.quantity, 1);
           const fill = args.fillAdd && args.fillAdd.value == 'fill' && quantity !== 'all';
 
           // PCIO starts dealing at the n-th of its destinations
@@ -1615,10 +1686,17 @@ export default async function convertPCIO(content) {
           // whole pile at once. Only a move out of a holder has an order to keep:
           // a collection is moved in the order it was selected in.
           const oneAtATime = (args.moveMethod || {}).value != 'all' && c.func == 'MOVE' && c.from && !fill;
+          const sources = [].concat(c.from);
           const dealLoop = ()=>({ func: 'FOREACH', range: [ 1, quantity ], loopRoutine: [ Object.assign({}, c, { count: 1 }) ] });
-          if(oneAtATime && typeof quantity == 'number' && quantity > 1 && quantity <= 100) {
+          if(oneAtATime && quantity === 'all' && sources.every(id=>byID[id])) {
+            // "all objects" has no number to count up to, so the loop runs once
+            // per object that is in the source when the button is clicked
+            const collection = `pcioDeal${++temporaries}`;
+            routine.push({ func: 'SELECT', type: 'card', property: 'parent', relation: 'in', value: sources, collection });
+            routine.push({ note: 'Deal one at a time', func: 'FOREACH', collection, loopRoutine: [ Object.assign({}, c, { count: 1 }) ] });
+          } else if(oneAtATime && typeof quantity == 'number' && quantity > 1 && quantity <= 100) {
             routine.push(Object.assign({ note: 'Deal one at a time' }, dealLoop()));
-          } else if(oneAtATime && typeof quantity == 'string') {
+          } else if(oneAtATime && typeof quantity == 'string' && quantity !== 'all') {
             // the quantity is only known when the button is clicked and a range
             // ending below its start would count down, so dealing nothing at all
             // has to skip the loop
@@ -1631,8 +1709,8 @@ export default async function convertPCIO(content) {
               thenRoutine: [ dealLoop() ]
             });
           } else {
-            if(oneAtATime && typeof quantity == 'number' && quantity > 100)
-              warn(`${widgetName(widget)} moves up to ${quantity} objects in one go instead of one after the other - they can end up in the opposite order.`);
+            if(oneAtATime && (quantity === 'all' || typeof quantity == 'number' && quantity > 100))
+              warn(`${widgetName(widget)} moves ${quantity === 'all' ? 'all objects' : `up to ${quantity} objects`} in one go instead of one after the other - they can end up in the opposite order.`);
             routine.push(c);
           }
 
@@ -1655,8 +1733,11 @@ export default async function convertPCIO(content) {
         if(c.func == 'RECALL_CARDS') {
           if(!c.args.decks)
             return;
+          const decks = knownIDs(c.args.decks.value);
+          if(!decks.length)
+            return;
 
-          for(const deckID of c.args.decks.value) {
+          for(const deckID of decks) {
             if(!byID[deckID].parent) {
               output.tempHolderForDeckRecall = {
                 id: 'tempHolderForDeckRecall',
@@ -1683,7 +1764,7 @@ export default async function convertPCIO(content) {
             }
           }
 
-          const holders = c.args.decks.value.map(d=>byID[d].parent).filter(d=>d);
+          const holders = decks.map(d=>byID[d].parent).filter(d=>d);
           const flip = c.args.flip;
           c = {
             func:     'RECALL',
@@ -1709,7 +1790,9 @@ export default async function convertPCIO(content) {
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
             return;
-          const holders = c.args.holders.value.map(id=>byID[id].type == 'seat' ? 'hand' : id);
+          const holders = knownIDs(c.args.holders.value).map(id=>byID[id].type == 'seat' ? 'hand' : id);
+          if(!holders.length)
+            return;
           c = {
             func:   'SHUFFLE',
             holder: holders
@@ -1798,9 +1881,11 @@ export default async function convertPCIO(content) {
           };
           c = {
             func: 'TIMER',
-            timer: c.args.timers.value,
+            timer: knownIDs(c.args.timers.value),
             mode: mode
           };
+          if(!c.timer.length)
+            return;
 
           if(c.timer.length == 1)
             c.timer = c.timer[0];
@@ -1819,10 +1904,12 @@ export default async function convertPCIO(content) {
           };
           c = {
             func: 'TIMER',
-            timer: c.args.timers.value,
+            timer: knownIDs(c.args.timers.value),
             mode: mode,
             seconds: numberArgument(routine, c.args.seconds, 30)
           };
+          if(!c.timer.length)
+            return;
           if(c.timer.length == 1)
             c.timer = c.timer[0];
           if(c.seconds === undefined)
@@ -1835,20 +1922,23 @@ export default async function convertPCIO(content) {
             return;
           // PCIO used add/subtract before it settled on inc/dec
           const changeMode = c.args.counterChangeMode || c.args.changeMode;
-          const value = c.args.changeNumber && c.args.changeNumber.counterId && byID[c.args.changeNumber.counterId]
-            ? `\${PROPERTY text OF ${c.args.changeNumber.counterId}}`
-            : numberArgument(routine, c.args.changeNumber, 0);
+          const value = numberArgument(routine, c.args.changeNumber, 0);
           const mode = { add: 'inc', subtract: 'dec' }[changeMode && changeMode.value] || (changeMode ? changeMode.value : 'set');
 
           // a counter with bounds is not simply counted on but calculated and
           // clamped for every counter it is applied to
           for(const counter of c.args.counters.value.filter(id=>counterBounds[id])) {
-            routine.push(mode == 'set'
-              ? `var pcioCounter = ${value} + 0`
-              : `var pcioCounter = parseFloat \${PROPERTY text OF ${counter}}`);
-            if(mode != 'set')
+            if(mode == 'set') {
+              routine.push(`var pcioCounter = ${value} + 0`);
+              if(typeof value != 'number')
+                routine.push('var pcioCounter = ${pcioCounter} || 0');
+            } else {
+              routine.push(...readCounter(counter, 'pcioCounter'));
               routine.push(`var pcioCounter = \${pcioCounter} ${mode == 'dec' ? '-' : '+'} ${value}`);
+            }
             routine.push(...clampCounter(counter, 'pcioCounter'));
+            if(mode != 'set')
+              routine.push(...roundCounter('pcioCounter', value));
             routine.push({ func: 'LABEL', label: counter, value: '${pcioCounter}' });
           }
 
@@ -1946,7 +2036,7 @@ export default async function convertPCIO(content) {
         if(c.func == 'SHIFT_OBJECTS') {
           // shift the contents of an ordered list of holders by one position,
           // optionally wrapping the last one around to the first
-          const holders = c.args.holders ? c.args.holders.value : [];
+          const holders = knownIDs(c.args.holders ? c.args.holders.value : []);
           if(holders.length < 2)
             return;
           const reversed = (c.args.moveDirection || {}).value == 'reverse';
@@ -2089,6 +2179,9 @@ export default async function convertPCIO(content) {
 
   for(const group of Object.values(groupedWarnings))
     warn(group.message(widgetNames(group.names), group.names.length));
+
+  if(suppressedWarnings)
+    warnings.push(`${suppressedWarnings} more note${suppressedWarnings > 1 ? 's are' : ' is'} not listed here.`);
 
   if(schemaVersion > knownSchemaVersion)
     warnings.unshift(`This file uses PlayingCards.io format ${schemaVersion} while the importer only knows up to ${knownSchemaVersion} - anything newer than that is missing.`);

@@ -192,6 +192,7 @@ describe('PCIO importer', () => {
     expect(state.counter.text).toBe(5);
     expect(state.counter_incrementButton.clickRoutine).toEqual([
       'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+      'var pcioCounter = ${pcioCounter} || 0',
       'var pcioCounter = ${pcioCounter} + 2',
       'var pcioCounter = max ${pcioCounter} 0',
       'var pcioCounter = min ${pcioCounter} 5',
@@ -199,6 +200,7 @@ describe('PCIO importer', () => {
     ]);
     expect(state.button.clickRoutine).toEqual([
       'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+      'var pcioCounter = ${pcioCounter} || 0',
       'var pcioCounter = ${pcioCounter} + 4',
       'var pcioCounter = max ${pcioCounter} 0',
       'var pcioCounter = min ${pcioCounter} 5',
@@ -214,6 +216,7 @@ describe('PCIO importer', () => {
     expect(state.counter.text).toBe(3);
     expect(state.counter_incrementButton.clickRoutine).toEqual([
       'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+      'var pcioCounter = ${pcioCounter} || 0',
       'var pcioCounter = ${pcioCounter} + 1',
       'var pcioCounter = min ${pcioCounter} 10',
       { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
@@ -670,5 +673,213 @@ describe('PCIO importer', () => {
 
     expect(state.die.faces).toEqual([ { value: 'Yes' }, { value: 'No' }, { value: 'Maybe' } ]);
     expect(state.die.css).toBe('--fontSize: 17px');
+  });
+
+  it('deals all objects one at a time, once per object that is there', async () => {
+    const state = await importWidgets([
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'target', type: 'holder', x: 200, y: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Recall', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+          from:     { type: 'literal', value: [ 'source' ] },
+          to:       { type: 'literal', value: [ 'target' ] },
+          quantity: { type: 'literal', value: 'all' }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      { func: 'SELECT', type: 'card', property: 'parent', relation: 'in', value: [ 'source' ], collection: 'pcioDeal1' },
+      { note: 'Deal one at a time', func: 'FOREACH', collection: 'pcioDeal1', loopRoutine: [
+        { func: 'MOVE', from: 'source', to: 'target', count: 1 }
+      ] }
+    ]);
+    expect(state._meta.info.importerWarnings).toBeUndefined();
+  });
+
+  it('moves all objects in one go when PCIO does not deal them one by one', async () => {
+    const state = await importWidgets([
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'target', type: 'holder', x: 200, y: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Dump', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+          from:       { type: 'literal', value: [ 'source' ] },
+          to:         { type: 'literal', value: [ 'target' ] },
+          quantity:   { type: 'literal', value: 'all' },
+          moveMethod: { type: 'literal', value: 'all' }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([ { func: 'MOVE', from: 'source', to: 'target', count: 'all' } ]);
+  });
+
+  it('puts objects under the ones a pile already holds, starting at the given destination', async () => {
+    const state = await importWidgets([
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'left',   type: 'holder', x: 200, y: 0 },
+      { id: 'right',  type: 'holder', x: 400, y: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Under', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+          from:           { type: 'literal', value: [ 'source' ] },
+          to:             { type: 'literal', value: [ 'left', 'right' ] },
+          quantity:       { type: 'literal', value: 1 },
+          startingOffset: { type: 'literal', value: 1 },
+          toPosition:     { type: 'literal', value: 'bottom' }
+        } } ] } ] }
+      }
+    ], 8);
+
+    // a bottom move only works on a single pile, so the two destinations keep it
+    // at the top and are dealt starting at the second one
+    expect(state.button.clickRoutine).toEqual([ { func: 'MOVE', from: 'source', to: [ 'right', 'left' ] } ]);
+    expect(state._meta.info.importerWarnings).toEqual([
+      'Moving objects to "bottom" is not supported - the objects "Under" moves end up on top of the destination.'
+    ]);
+  });
+
+  it('recovers a bounded counter that a player cleared and keeps fractional steps clean', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 0, counterMin: 0, counterMax: 1, counterStep: 0.1 }
+    ], 8);
+
+    expect(state.counter_incrementButton.clickRoutine).toEqual([
+      'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+      'var pcioCounter = ${pcioCounter} || 0',
+      'var pcioCounter = ${pcioCounter} + 0.1',
+      'var pcioCounter = max ${pcioCounter} 0',
+      'var pcioCounter = min ${pcioCounter} 1',
+      'var pcioCounter = ${pcioCounter} toFixed 1',
+      { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
+    ]);
+  });
+
+  it('gives a step its read default when the read function is not its first alternative', async () => {
+    const state = await importWidgets([
+      { id: 'holder', type: 'holder', x: 0, y: 0 },
+      { id: 'counter', type: 'counter', x: 100, y: 0, counterValue: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Mixed', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'ask', branches: [ { func: 'IS_EQUAL', args: {
+            numberA: { type: 'literal', value: 1 },
+            numberB: { type: 'literal', value: 1 }
+          } } ] },
+          { id: 'mix', branches: [
+            { func: 'SHUFFLE_CARDS', condition: { type: 'variable', callId: 'ask' }, args: {
+              holders: { type: 'literal', value: [ 'holder' ] }
+            } },
+            { func: 'MATH', args: {
+              mathOperator: { type: 'literal', value: 'add' },
+              numberA:      { type: 'literal', value: 2 },
+              numberB:      { type: 'literal', value: 3 }
+            } }
+          ] },
+          { id: 'set', branches: [ { func: 'CHANGE_COUNTER', args: {
+            counters:          { type: 'literal', value: [ 'counter' ] },
+            counterChangeMode: { type: 'literal', value: 'set' },
+            changeNumber:      { type: 'variable', callId: 'mix' }
+          } } ] }
+        ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      'var pcioask = 1 == 1',
+      'var pciomix = 0',
+      {
+        func: 'IF',
+        condition: '${pcioask}',
+        thenRoutine: [ { func: 'SHUFFLE', holder: 'holder' } ],
+        elseRoutine: [ 'var pciomix = 2 + 3' ]
+      },
+      { func: 'LABEL', label: 'counter', value: '${pciomix}' }
+    ]);
+  });
+
+  it('reads a counter wherever a number is expected and reports one it cannot', async () => {
+    const state = await importWidgets([
+      { id: 'a', type: 'counter', x: 0, y: 0, counterValue: 2 },
+      { id: 'total', type: 'counter', x: 100, y: 0, counterValue: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Double', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'calc', branches: [ { func: 'MATH', args: {
+            mathOperator: { type: 'literal', value: 'multiply' },
+            numberA:      { counterId: 'a' },
+            numberB:      { type: 'somethingNew' }
+          } } ] },
+          { id: 'set', branches: [ { func: 'CHANGE_COUNTER', args: {
+            counters:          { type: 'literal', value: [ 'total' ] },
+            counterChangeMode: { type: 'literal', value: 'set' },
+            changeNumber:      { type: 'variable', callId: 'calc' }
+          } } ] }
+        ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([
+      'var pciocalc = ${PROPERTY text OF a} * 1',
+      { func: 'LABEL', label: 'total', value: '${pciocalc}' }
+    ]);
+    expect(state._meta.info.importerWarnings).toEqual([
+      'A number an automation step of "Double" calculates with could not be imported - it uses 1 instead.'
+    ]);
+  });
+
+  it('reports an automation that works on a widget which is not in the file', async () => {
+    const state = await importWidgets([
+      { id: 'holder', type: 'holder', x: 0, y: 0 },
+      {
+        id: 'button', type: 'automationButton', label: 'Shuffle', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'a', branches: [ { func: 'SHUFFLE_CARDS', args: {
+            holders: { type: 'literal', value: [ 'holder', 'deletedHolder' ] }
+          } } ] },
+          { id: 'b', branches: [ { func: 'RECALL_CARDS', args: {
+            decks: { type: 'literal', value: [ 'deletedDeck' ] }
+          } } ] }
+        ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([ { func: 'SHUFFLE', holder: 'holder' } ]);
+    expect(state._meta.info.importerWarnings).toEqual([
+      'An automation step of "Shuffle" works on a widget that is not part of the file - that widget was left out.'
+    ]);
+  });
+
+  it('does not report the images of a die that VirtualTabletop draws itself', async () => {
+    const pips = Object.fromEntries([ 1, 2, 3, 4, 5, 6 ].map(i=>[ String(i), { image: `/img/dice-basic/${i}.svg` } ]));
+    const state = await importWidgets([
+      { id: 'dd', type: 'cardDeck', x: 0, y: 0, collectionType: 'dice', cardWidth: 50, cardHeight: 50,
+        cardTypes: pips, faceTemplate: { objects: [] } },
+      { id: 'die', type: 'dice', deck: 'dd', x: 0, y: 0 }
+    ], 8);
+
+    expect(state.die.faces).toBeUndefined();
+    expect(state._meta.info.importerWarnings).toBeUndefined();
+  });
+
+  it('caps the report instead of storing a note per widget', async () => {
+    const broken = [];
+    for(let i=0; i<150; ++i)
+      broken.push({ id: `v${i}`, type: 'videoPlayer', x: i, y: 0, width: 10, height: 10 });
+    const state = await importWidgets(broken, 8);
+
+    expect(state._meta.info.importerWarnings.length).toBe(101);
+    expect(state._meta.info.importerWarnings[100]).toBe('50 more notes are not listed here.');
+  });
+
+  it('imports a file whose schema version is missing or unreadable', async () => {
+    for(const version of [ undefined, '', 'seven' ]) {
+      const state = await importWidgets([ { id: 'holder', type: 'holder', x: 0, y: 0 } ], version);
+      expect(state.holder.type).toBe('holder');
+      expect(state._meta.info.importerSchemaVersion).toBe(0);
+      expect(state._meta.info.importerWarnings).toBeUndefined();
+    }
   });
 });
