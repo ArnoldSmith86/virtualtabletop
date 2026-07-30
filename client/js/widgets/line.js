@@ -505,9 +505,7 @@ export class Line extends Widget {
   // Where a widget dropped at the given global point would attach, or null when
   // the line does not take dropped stops or the drop is not aimed at its path.
   // The range grows with the line and the dropped widget so a big token snaps on
-  // as readily as a small one. A line that is at its dropLimit still reports the
-  // hit, marked full: the drop is refused, but the drag has to be able to show
-  // that the line said no instead of looking like there is nothing there.
+  // as readily as a small one.
   stopDropTarget(widget, coordGlobal) {
     if(!this.get('dropTarget') || !compareDropTarget(widget, this) || widget == this || widget.get('type') == 'line' || this.isDescendantOf(widget))
       return null;
@@ -521,11 +519,12 @@ export class Line extends Widget {
     // Something the line already carries can always be dropped back onto the
     // path - that keeps the number of stops as it is, even above the limit.
     const stops = this.stopList();
-    const full = !stops.some(entry=>entry.widget == widget.id) && exceedsDropLimit(this, 1, stops.length);
+    if(!stops.some(entry=>entry.widget == widget.id) && exceedsDropLimit(this, 1, stops.length))
+      return null;
     const position = this.positionAtPoint(point);
     const onPath = this.pointAtPosition(position);
     const distance = Math.hypot(onPath.x-point.x, onPath.y-point.y);
-    return distance <= range ? { line: this, position, distance, full } : null;
+    return distance <= range ? { line: this, position, distance } : null;
   }
 
   // Keep existing line definitions working while the property name changes.

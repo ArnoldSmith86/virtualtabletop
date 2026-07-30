@@ -104,10 +104,3 @@ body.editorWidgetPicking .widget.line.selectedInEdit .lineHandle {
 .widget.line.lineDropTarget .linePath {
   filter: drop-shadow(0 0 6px #1f5ca6) drop-shadow(0 0 6px #1f5ca6);
 }
-
-/* the same glow in the refusal color while the line already carries as many
-   stops as its dropLimit allows: the drop is aimed at the line, the line just
-   does not take it - which has to look different from "nothing here" */
-.widget.line.lineDropTargetFull .linePath {
-  filter: drop-shadow(0 0 6px #b3261e) drop-shadow(0 0 6px #b3261e);
-}

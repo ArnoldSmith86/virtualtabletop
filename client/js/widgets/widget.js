@@ -2492,10 +2492,6 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
 
-    // where the drag picked this widget up, so a drop that gets refused can put
-    // it back instead of leaving it lying on whatever turned it down
-    this.dragStartPosition = { parent: this.get('parent'), x: this.get('x'), y: this.get('y') };
-
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
     // dragged in play: a stop is usually placed in edit mode.
@@ -2634,59 +2630,22 @@ export class Widget extends StateManaged {
     let best = null;
     for(const line of this.stopDropLines) {
       const target = widgets.has(line.id) ? line.stopDropTarget(this, center) : null;
-      if(!target)
-        continue;
-      // a line that still has room wins over one that is full, however close
-      // the full one is: it is the only one the drop can actually go to
-      const better = !best || (!!best.full != !!target.full ? best.full : target.distance < best.distance);
-      if(better)
+      if(target && (!best || target.distance < best.distance))
         best = target;
     }
     return best;
   }
 
-  // make it visible during the drag which line a drop would attach this widget
-  // to - or, for a line at its dropLimit, that it would be turned down there
+  // make it visible during the drag which line a drop would attach this widget to
   highlightStopDropLine(target) {
     const line = target && target.line || null;
-    const highlight = line && (target.full ? 'lineDropTargetFull' : 'lineDropTarget') || null;
-    if(this.stopDropHighlight == line && this.stopDropHighlightClass == highlight)
+    if(this.stopDropHighlight == line)
       return;
     if(this.stopDropHighlight && this.stopDropHighlight.domElement)
-      this.stopDropHighlight.domElement.classList.remove('lineDropTarget', 'lineDropTargetFull');
+      this.stopDropHighlight.domElement.classList.remove('lineDropTarget');
     this.stopDropHighlight = line;
-    this.stopDropHighlightClass = highlight;
     if(line)
-      line.domElement.classList.add(highlight);
-  }
-
-  // A short visual "no" on the widget that refused a drop. Purely a cue: the
-  // class comes off again as soon as the animation is over, so it never becomes
-  // part of the widget state.
-  flashDropRefused() {
-    if(!this.domElement)
-      return;
-    this.domElement.classList.remove('dropRefused');
-    void this.domElement.offsetWidth; // restart the animation on a quick second refusal
-    this.domElement.classList.add('dropRefused');
-    setTimeout(_=>this.domElement.classList.remove('dropRefused'), 1000);
-  }
-
-  // A drop that was refused - a line at its stop limit, a pile that takes no
-  // more cards - must not end up looking like it worked. The widget that said
-  // no flashes, and the dropped widget goes back where the drag picked it up.
-  // That last part only applies while it is still where it started out: once
-  // the drop put it somewhere else (into a holder, say), that move stands and
-  // only the merge was refused.
-  async applyDropRefusal() {
-    const refusedBy = this.dropRefusedBy;
-    delete this.dropRefusedBy;
-    if(!refusedBy || !widgets.has(refusedBy.get('id')))
-      return;
-    refusedBy.flashDropRefused();
-    const from = this.dragStartPosition;
-    if(from && from.parent == this.get('parent') && (from.x != this.get('x') || from.y != this.get('y')))
-      await this.setPosition(from.x, from.y, this.get('z'));
+      line.domElement.classList.add('lineDropTarget');
   }
 
   // The widget the drag took this one out of: dragging detaches it right away
@@ -2700,11 +2659,7 @@ export class Widget extends StateManaged {
   // line's onEnter/onLeave and triggers its enterRoutine/leaveRoutine. Lines
   // that take no drops keep their stop lists, so a game can rely on them.
   async applyLineStopDrop(target) {
-    // a line at its dropLimit reports the hit so the drag can show the refusal,
-    // but it takes nothing: the drop ends up on the table like any other miss
-    if(target && target.full)
-      this.dropRefusedBy = target.line;
-    const line = target && !target.full ? target.line : null;
+    const line = target && target.line || null;
     const from = this.currentParentWidget();
 
     // a widget that only rides on a line - listed as a stop without being its
@@ -2767,12 +2722,8 @@ export class Widget extends StateManaged {
     if(this.domElement.classList.contains('longtouch'))
       this.domElement.classList.remove('longtouch');
 
-    // something taking the widget after all overrides an earlier refusal
-    if(await this.updatePiles())
-      delete this.dropRefusedBy;
-    await this.applyDropRefusal();
+    await this.updatePiles();
     delete this.pileUpdateFromDrag;
-    delete this.dragStartPosition;
   }
 
   async hideShadowWidget() {
@@ -3222,8 +3173,6 @@ export class Widget extends StateManaged {
     this.domElement.className = this.classes();
   }
 
-  // Merges this widget with the cards and piles around it, and returns true
-  // when one of them took it in.
   async updatePiles() {
     const thisType = this.get('type');
     if(thisType != 'card' && thisType != 'pile')
@@ -3243,15 +3192,7 @@ export class Widget extends StateManaged {
     // when this update comes from a drag. Everything else that piles cards up
     // (a MOVE or CLONE in a routine, "Split the pile", the JSON editor) ignores
     // dropLimit elsewhere too, and games rely on that, so it stays ignored here.
-    // Refusing remembers who said no so the drop can be undone visibly instead
-    // of leaving a card lying on a pile that did not take it.
-    let refusedBy = null;
-    const isFull = (pile, count) => {
-      if(!this.pileUpdateFromDrag || !exceedsDropLimit(pile, count))
-        return false;
-      refusedBy = pile;
-      return true;
-    };
+    const isFull = (pile, count) => this.pileUpdateFromDrag && exceedsDropLimit(pile, count);
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -3273,10 +3214,8 @@ export class Widget extends StateManaged {
           // the pile that would be created is bound by the dropLimit it would
           // be created with, so a limit below 2 rules the pile out entirely
           const newPileDropLimit = thisOnPileCreation && thisOnPileCreation.dropLimit;
-          if(this.pileUpdateFromDrag && newPileDropLimit > -1 && newPileDropLimit < 2) {
-            refusedBy = widget;
+          if(this.pileUpdateFromDrag && newPileDropLimit > -1 && newPileDropLimit < 2)
             continue;
-          }
           const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
@@ -3291,7 +3230,7 @@ export class Widget extends StateManaged {
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);
-          return true;
+          break;
         }
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
@@ -3302,7 +3241,7 @@ export class Widget extends StateManaged {
             await w.set('parent', widget.get('id'));
             await w.bringToFront();
           }
-          return true;
+          break;
         }
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
@@ -3314,7 +3253,7 @@ export class Widget extends StateManaged {
           await this.set('x', widget.get('x'));
           await this.set('y', widget.get('y'));
           await widget.set('parent', this.get('id'));
-          return true;
+          break;
         }
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
@@ -3323,12 +3262,10 @@ export class Widget extends StateManaged {
             continue;
           await this.bringToFront();
           await this.set('parent', widget.get('id'));
-          return true;
+          break;
         }
       }
     }
-    if(refusedBy)
-      this.dropRefusedBy = refusedBy;
   }
 
   validDropTargets() {
