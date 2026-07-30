@@ -265,7 +265,11 @@ class DeckEditor {
     $('#deckEditorAddDeck').onclick = _=>this.openNewDeckOverlay();
     $('#deckEditorNewDeckClose').onclick = _=>this.closeNewDeckOverlay();
     for(const radio of $a('#deckEditorNewDeckOverlay input[name=deckEditorNewDeckMode]'))
-      radio.onchange = _=>this.renderNewDeckPanel(radio.value);
+      radio.onchange = _=>{
+        this.renderNewDeckPanel(radio.value);
+        this.setNewDeckModesCollapsed(true);
+      };
+    $('#deckEditorNewDeckChangeMode').onclick = _=>this.setNewDeckModesCollapsed(false);
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorCardView').onclick = _=>this.setRoomVisible(!this.roomVisible);
@@ -3181,7 +3185,17 @@ class DeckEditor {
     const empty = $('#deckEditorNewDeckOverlay input[value=empty]');
     empty.checked = true;
     this.renderNewDeckPanel('empty');
+    this.setNewDeckModesCollapsed(false);
     showOverlay('deckEditorNewDeckOverlay');
+  }
+
+  // All eight ways to create a deck are on offer while the dialog opens; picking one collapses the list to
+  // the chosen entry so the panel doing the actual work isn't pushed off the bottom of the dialog.
+  setNewDeckModesCollapsed(collapsed) {
+    const modes = $('#deckEditorNewDeckOverlay .deckEditorNewDeckModes');
+    for(const label of $a('label', modes))
+      label.classList.toggle('deckEditorNewDeckModeSelected', $('input', label).checked);
+    modes.classList.toggle('deckEditorNewDeckModesCollapsed', collapsed);
   }
 
   closeNewDeckOverlay() {

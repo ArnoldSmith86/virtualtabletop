@@ -707,9 +707,38 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   cursor: pointer;
 }
 
+/* Once a mode has been picked the list of options has done its job, so it collapses to the chosen one and
+   leaves the ~250px it occupies to the panel the user is now filling in. "Change" brings it back. */
+.deckEditorNewDeckModesCollapsed label:not(.deckEditorNewDeckModeSelected) {
+  display: none;
+}
+
+#deckEditorNewDeckChangeMode {
+  display: none;
+  align-self: flex-start;
+  padding: 2px 8px;
+}
+
+.deckEditorNewDeckModesCollapsed #deckEditorNewDeckChangeMode {
+  display: inline-flex;
+}
+
 #deckEditorNewDeckPanel:not(:empty) {
   border-top: 1px solid #0002;
   padding-top: 16px;
+}
+
+/* The dialog itself is the scroll container, so pinning the action row to its bottom edge keeps the primary
+   action reachable no matter how tall the panel above it grows. The negative offset and the matching padding
+   make it cover the dialog's own bottom padding, so nothing scrolls through the gap below it. */
+#deckEditorNewDeckPanel .goButton,
+.deckEditorNewDeckButtonBar {
+  position: sticky;
+  bottom: -20px;
+  z-index: 1;
+  margin-top: 8px;
+  padding: 8px 0 20px;
+  background: var(--modalBackgroundColor);
 }
 
 /* Card sizes for a new empty deck: a wrapping row of radio chips, the first (the size decks have always been
@@ -766,6 +795,12 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   display: block;
   background: transparent;
   color: inherit;
+}
+
+/* The sidebar's "overflow-x: hidden" would make this module a scroll container of its own, which would stop
+   the sticky action row below from sticking to the dialog (the actual scroll container). */
+.deckEditorNewDeckModule.tune.editorModule {
+  overflow: visible;
 }
 
 @media (max-width: 700px) {

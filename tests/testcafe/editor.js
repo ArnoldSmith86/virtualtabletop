@@ -782,7 +782,7 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
     .typeText('.textCardsCopies', '2', { replace: true })
     .click('#deckEditorNewDeckPanel .goButton [icon=add]')
     .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
-  await compareState(t, 'e5bc265b4af231b7f838092b4fc2c825');
+  await compareState(t, '94d9f0542c71541a5e20ae14a37499b1');
 });
 
 // The wizard's front/back image section: both uploads are sorted by file name - numerically, so front2 comes

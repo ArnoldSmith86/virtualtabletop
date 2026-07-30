@@ -1381,26 +1381,38 @@ class PropertiesModule extends SidebarModule {
     intro.innerText = 'Upload all card fronts and all card backs. Both lists are sorted by file name and then matched up in that order, so front1.jpg is paired with back1.jpg. Upload a single back image to use it for every card.';
     target.append(intro);
 
-    const addUploadSection = (title, list, label)=>{
-      this.addSubHeader(title, target);
-      const listDOM = div(target, 'imagePairList');
-      const bar = div(target, 'buttonBar', `<button icon=upload>${label}</button>`);
+    // Fronts and backs go into a two-column grid, filled row by row (both headers, both hints, both lists,
+    // both upload buttons) so that row n of the fronts and row n of the backs - the pair - are on one line.
+    const columns = div(target, 'imagePairColumns');
+    this.addSubHeader('Card fronts', columns);
+    this.addSubHeader('Card backs', columns);
+    div(columns, 'imagePairHint', 'One image per card.');
+    // The single-back shortcut is only worth knowing before you upload, not after it has turned into a mismatch.
+    div(columns, 'imagePairHint', 'One per card, or a single one for every card.');
+
+    const addList = (emptyHint)=>{
+      const listDOM = div(columns, 'imagePairList');
+      listDOM.dataset.emptyHint = emptyHint;
+      return listDOM;
+    };
+    const frontList = addList('No front images yet');
+    const backList  = addList('No back images yet');
+
+    for(const [ list, label ] of [ [ fronts, 'Upload fronts...' ], [ backs, 'Upload backs...' ] ]) {
+      const bar = div(columns, 'buttonBar', `<button icon=upload>${label}</button>`);
       $('button', bar).onclick = _=>uploadAsset((imagePath, fileName)=>{
         if(imagePath) {
           list.push({ imagePath, fileName });
           render();
         }
       });
-      return listDOM;
-    };
+    }
 
-    const frontList = addUploadSection('Card fronts', fronts, 'Upload fronts...');
-    const backList  = addUploadSection('Card backs',  backs,  'Upload backs...');
+    const options = div(target, 'imagePairOptions', '<label>Copies of each card<input type=number min=1 max=99 value=1></label>');
 
-    const status = div(target, 'imagePairStatus');
-    const options = div(target, 'imagePairOptions', 'Copies of each card: <input type=number min=1 max=99 value=1>');
-
-    div(target, 'goButton buttonBar', '<button icon=add class=green disabled>Add to game</button>');
+    // The status explains why "Add to game" is disabled, so it belongs right next to it.
+    div(target, 'goButton buttonBar', '<span class=imagePairStatus></span><button icon=add class=green disabled>Add to game</button>');
+    const status = $('.imagePairStatus', target);
     const addButton = $('.goButton [icon=add]', target);
 
     const renderList = (list, listDOM, pairedWith)=>{
@@ -1510,7 +1522,7 @@ class PropertiesModule extends SidebarModule {
   // everything beyond that is done afterwards in the deck editor.
   deckTextCards(target) {
     const intro = document.createElement('p');
-    intro.innerText = 'Type or paste the card texts, one card per line. Each line becomes a card type whose "text" property holds that line, so you can edit the wording later in the deck editor.';
+    intro.innerText = 'Type or paste the card texts, one card per line. Each line becomes a card type - one distinct card design, of which the copies below are duplicates - whose "text" property holds that line, so you can edit the wording later in the deck editor.';
     target.append(intro);
 
     this.addSubHeader('Card texts', target);
@@ -1520,21 +1532,28 @@ class PropertiesModule extends SidebarModule {
     textarea.placeholder = 'The first card\nThe second card\n...';
     target.append(textarea);
 
-    this.addSubHeader('Card design', target);
-    const design = div(target, 'textCardsDesign', `
+    // Design inputs and preview side by side: the preview is exactly what you want to look at while changing
+    // the font size and the colors, so it must not be pushed below the fold by the inputs that drive it.
+    const columns = div(target, 'textCardsColumns');
+    const designColumn = div(columns, 'textCardsColumn');
+    this.addSubHeader('Card design', designColumn);
+    const design = div(designColumn, 'textCardsDesign', `
       <label>Card color<input class=textCardsBackground type=color value="#000000"></label>
       <label>Text color<input class=textCardsColor type=color value="#ffffff"></label>
-      <label>Font size<input class=textCardsFontSize type=number min=6 max=72 value=16></label>
-      <label>Card width<input class=textCardsWidth type=number min=20 max=600 value=150></label>
-      <label>Card height<input class=textCardsHeight type=number min=20 max=600 value=233></label>
+      <label>Font size<input class=textCardsFontSize type=number min=6 max=72 value=16>px</label>
+      <label>Card width<input class=textCardsWidth type=number min=20 max=600 value=150>px</label>
+      <label>Card height<input class=textCardsHeight type=number min=20 max=600 value=233>px</label>
       <label>Copies of each card<input class=textCardsCopies type=number min=1 max=99 value=1></label>
-      <label class=textCardsLabelWrap>Deck label - shown on the card backs<input class=textCardsLabel type=text placeholder="optional, e.g. the deck name"></label>
+      <label class=textCardsLabelWrap>Deck label<input class=textCardsLabel type=text placeholder="optional, e.g. the deck name"></label>
+      <span class=textCardsHint>The deck label is shown large on the card backs and small along the bottom edge of the fronts.</span>
     `);
 
-    this.addSubHeader('Preview', target);
-    const preview = div(target, 'textCardsPreview');
+    const previewColumn = div(columns, 'textCardsColumn textCardsPreviewColumn');
+    this.addSubHeader('Preview (first card)', previewColumn);
+    const preview = div(previewColumn, 'textCardsPreview');
 
-    div(target, 'goButton buttonBar', '<button icon=add class=green disabled>Add to game</button>');
+    div(target, 'goButton buttonBar', '<span class=textCardsStatus></span><button icon=add class=green disabled>Add to game</button>');
+    const status = $('.textCardsStatus', target);
     const addButton = $('.goButton [icon=add]', target);
 
     const cardTexts = _=>textarea.value.split('\n').map(line=>line.trim()).filter(line=>line.length);
@@ -1561,7 +1580,9 @@ class PropertiesModule extends SidebarModule {
         height: height - 2*padding,
         textAlign: 'left',
         color,
-        css: { 'font-weight': 'bold', 'line-height': '1.25em' }
+        // Clip instead of spilling over the rounded card edge (or over the deck label) when a text is longer
+        // than the box it was given at the chosen font size.
+        css: { 'font-weight': 'bold', 'line-height': '1.25em', 'overflow': 'hidden' }
       }, properties);
 
       const cardTypes = {};
@@ -1593,15 +1614,39 @@ class PropertiesModule extends SidebarModule {
       };
     };
 
-    // One id for every preview render: renderWidgetButton briefly registers the preview deck in "widgets", so
-    // it needs an id that is not in use, but generating a fresh one per keystroke would be wasteful.
+    // One id for every preview render: the preview deck is briefly registered in "widgets" so the preview card
+    // can read its faces from it, which needs an id that is not in use - but generating a fresh one on every
+    // keystroke would be wasteful.
     const previewID = generateUniqueWidgetID();
     const updatePreview = _=>{
       const texts = cardTexts();
-      const deck = deckDefinition(texts.length ? texts.slice(0, 5) : [ 'Your card text goes here.' ], previewID);
+      const deck = deckDefinition([ texts.length ? texts[0] : 'Your card text goes here.' ], previewID);
+      const { width, height } = deck.cardDefaults;
+      // A single upright card at (up to) its real size - the fanned five-card thumbnail renderWidgetButton
+      // draws is far too small to judge the font size, the colors or where the text wraps, which is the only
+      // reason to look at a preview here. Scaling happens on a wrapper so the card keeps its own transform.
+      const scale = Math.min(1, 200/Math.max(width, height));
       preview.innerHTML = '';
-      // Keep the card types in their typed order - a shuffled preview would jump around on every keystroke.
-      this.renderWidgetButton(new Deck(deck.id), deck, preview, false);
+      preview.style.width = `${Math.round(width*scale)}px`;
+      preview.style.height = `${Math.round(height*scale)}px`;
+      const box = div(preview, 'textCardsPreviewCard');
+      box.style.width = `${width}px`;
+      box.style.height = `${height}px`;
+      box.style.transform = `scale(${scale})`;
+
+      const previewDeck = new Deck(previewID);
+      previewDeck.renderReadonlyCopyRaw(JSON.parse(JSON.stringify(deck)), box).domElement.remove();
+      widgets.set(previewID, previewDeck);
+      new Card().renderReadonlyCopyRaw({ deck: previewID, cardType: Object.keys(deck.cardTypes)[0], activeFace: 1 }, box);
+      widgets.delete(previewID);
+
+      // Spell out what "Add to game" will create: the copies multiplier is easy to miss, and it decides
+      // whether addDeckWithCards asks for confirmation.
+      const copies = this.copiesFromInput($('.textCardsCopies', design));
+      const cards = texts.length * copies;
+      status.innerText = texts.length
+        ? `${texts.length} card type${texts.length == 1 ? '' : 's'} × ${copies} = ${cards} card${cards == 1 ? '' : 's'}.`
+        : 'Type or paste at least one line of text above.';
       addButton.disabled = !texts.length;
     };
     textarea.oninput = updatePreview;
@@ -6574,7 +6619,7 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  renderWidgetButton(widget, state, target, shuffleCardTypes=true) {
+  renderWidgetButton(widget, state, target) {
     const button = document.createElement('button');
     button.className = 'widgetSelectionButton';
     target.appendChild(button);
@@ -6588,7 +6633,7 @@ class PropertiesModule extends SidebarModule {
       const faceTemplates = widget.get('faceTemplates');
       widgets.set(widget.id, widget);
       const cardTypeNames = Object.keys(widget.get('cardTypes'));
-      for(const cardType of (shuffleCardTypes ? shuffleArray(cardTypeNames) : cardTypeNames).slice(0, 5)) {
+      for(const cardType of shuffleArray(cardTypeNames).slice(0, 5)) {
         new Card().renderReadonlyCopyRaw(Object.assign({
           deck: widget.id,
           cardType,
