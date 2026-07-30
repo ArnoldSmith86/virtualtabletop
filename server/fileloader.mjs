@@ -43,7 +43,7 @@ async function downloadLink(link) {
     currentLinkStatus.etag = response.headers.get('etag');
     let states = null;
     if(TTS.isTTSlink(link)) {
-      states = await TTS.fromBSON(await response.buffer());
+      states = await TTS.fromBSON(await response.buffer(), link);
     } else {
       states = await readStatesFromBuffer(await response.buffer(), true);
     }

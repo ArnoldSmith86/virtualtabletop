@@ -1,7 +1,11 @@
+import fs from 'fs';
+
+import CRC32 from 'crc-32';
 import JSZip from 'jszip';
 import fetch from 'node-fetch';
 import { BSON } from 'bson';
 
+import Config from './config.mjs';
 import Logging from './logging.mjs';
 
 // A TTS unit is about an inch, which is 50px on the VTT surface (a poker card is
@@ -638,7 +642,7 @@ function moveIntoBounds(widgets, top, bottom) {
   return widgets;
 }
 
-async function convertTTS(content, linkContent) {
+async function convertTTS(content, linkContent, workshop={}) {
   let json = {};
 
   if(linkContent) {
@@ -717,22 +721,23 @@ async function convertTTS(content, linkContent) {
     };
   });
 
-  widgets._meta = {
-    info: {
-      name: json.SaveName,
-      importerTemp: 'TTS',
-      importerTime: +new Date()
-    },
-    version: 5
-  };
+  const info = Object.assign({}, workshop, {
+    importerTemp: 'TTS',
+    importerTime: +new Date()
+  });
+  // the name of the save wins over the title of the workshop item it came from
+  if(json.SaveName)
+    info.name = String(json.SaveName);
+
+  widgets._meta = { info, version: 5 };
 
   return widgets;
 }
 
-async function fromBSON(content) {
+async function fromBSON(content, link) {
   return {
     TTS: {
-      '0.json': await convertTTS(null, content)
+      '0.json': await convertTTS(null, content, link ? await workshopMeta(link) : {})
     }
   };
 }
@@ -745,17 +750,107 @@ function isTTSlink(link) {
   return link.match(/\?id=([0-9]+)/);
 }
 
+async function publishedFileDetails(id) {
+  return (await (await fetch('http://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `itemcount=1&publishedfileids[0]=${id}`
+  })).json()).response.publishedfiledetails[0];
+}
+
 async function resolveLink(link) {
   const id = isTTSlink(link);
   if(!id)
     return link;
 
   Logging.log(`resolving TTS link with ID ${id[1]}`);
-  return (await (await fetch('http://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `itemcount=1&publishedfileids[0]=${id[1]}`
-  })).json()).response.publishedfiledetails[0].file_url;
+  return (await publishedFileDetails(id[1])).file_url;
+}
+
+// The workshop thumbnail becomes the image of the imported game. It is stored as an
+// asset like an uploaded image so that the game keeps its picture even when the
+// workshop item disappears - and asked for at 400px because the full size preview is
+// a multi-megapixel PNG.
+async function storeThumbnail(url) {
+  try {
+    const request = `${url}${url.indexOf('?') > -1 ? '&' : '?'}imw=400&imh=400&ima=fit&impolicy=Letterbox`;
+    const content = Buffer.from(await (await fetch(request, { signal: AbortSignal.timeout(15000), size: 20000000 })).arrayBuffer());
+    const asset = `${CRC32.buf(content)}_${content.length}`;
+    if(!Config.resolveAsset(asset))
+      fs.writeFileSync(`${Config.directory('assets')}/${asset}`, content);
+    return `/assets/${asset}`;
+  } catch(e) {
+    Logging.log(`TTS import: could not store the workshop thumbnail ${url}: ${e.toString()}`);
+    return null;
+  }
+}
+
+// Workshop descriptions are BBCode and can be pages long: keep the text, drop the
+// markup and cut it down to something that fits into the game details.
+function plainText(text) {
+  const result = String(text || '')
+    .replace(/\[\/?(b|i|u|h[1-3]|strike|spoiler|noparse|quote|code|list|olist|table|tr|td|th|img|url|previewyoutube)(=[^\]]*)?\]/gi, '')
+    .replace(/\[\*\]/g, '- ')
+    .replace(/\r/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return result.length > 800 ? `${result.substr(0, 800).replace(/\s+\S*$/, '')}…` : result;
+}
+
+function numericTags(tags, pattern) {
+  return [ ...new Set(tags.map(t=>(t.match(pattern) || [])[1]).filter(n=>n !== undefined).map(Number)) ].sort((a, b)=>a-b);
+}
+
+function range(values, asSpan) {
+  const last = values[values.length-1];
+  if(values[0] == last)
+    return String(last);
+  return asSpan ? `${values[0]}-${last}` : values.join(',');
+}
+
+// The workshop page of a game knows things that its save file does not: a thumbnail,
+// a description and tags for the player count ('2', '4+') and the playing time
+// ('30 minutes'). They become the metadata that the game shelf shows and filters by.
+async function workshopMeta(link) {
+  const id = isTTSlink(link);
+  if(!id)
+    return {};
+
+  let details;
+  try {
+    details = await publishedFileDetails(id[1]) || {};
+  } catch(e) {
+    Logging.log(`TTS import: could not read the workshop details of ${link}: ${e.toString()}`);
+    return {};
+  }
+
+  const meta = { attribution: `Imported from the Tabletop Simulator Steam Workshop:\nhttps://steamcommunity.com/sharedfiles/filedetails/?id=${id[1]}` };
+  const tags = (details.tags || []).map(t=>String((t || {}).tag || ''));
+
+  if(details.title)
+    meta.name = String(details.title);
+
+  if(details.preview_url) {
+    const image = await storeThumbnail(String(details.preview_url).replace(/^http:/, 'https:'));
+    if(image)
+      meta.image = image;
+  }
+
+  const description = plainText(details.description);
+  if(description)
+    meta.description = description;
+
+  // the player counts are tagged one by one and can be open ended ('4+'), the playing
+  // times are the ends of a span
+  const players = numericTags(tags, /^([0-9]+)\+?$/);
+  if(players.length)
+    meta.players = tags.some(t=>t.match(/^[0-9]+\+$/)) ? `${players[0]}+` : range(players, players[players.length-1]-players[0]+1 == players.length);
+
+  const minutes = numericTags(tags, /^([0-9]+)\+? minutes$/);
+  if(minutes.length)
+    meta.time = range(minutes, true);
+
+  return meta;
 }
 
 export default {
