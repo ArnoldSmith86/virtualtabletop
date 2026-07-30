@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, canBeStored, stringifyForDisplay } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, getBatchDepth, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -899,15 +899,20 @@ export class Widget extends StateManaged {
       return { variable: null, collection: [] };
     }
 
+    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
+      return;
+
     // An operation throwing must not leave the batch that the routine opened behind, because that
-    // would keep the client from sending any further delta at all.
-    const batchDepthBefore = getBatchDepth();
+    // would keep the client from sending any further delta at all. The batch is opened here and
+    // closed exactly once so that this stays true while routines overlap: two routines suspended
+    // in DELAY or INPUT share the batch counter, so closing everything down to a depth remembered
+    // at entry would close the batch of whichever routine started in between.
     ++routineDepth;
+    batchStart();
     try {
       return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference);
     } finally {
-      while(getBatchDepth() > batchDepthBefore)
-        batchEnd();
+      batchEnd();
       if(!--routineDepth)
         routineDepthProblem = routineDepthProblemForOutermost = null;
     }
@@ -1003,11 +1008,6 @@ export class Widget extends StateManaged {
       for(const a of widgetFilter(w=>asArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
-
-    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
-      return;
-
-    batchStart();
 
     let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
 
@@ -2402,8 +2402,6 @@ export class Widget extends StateManaged {
       jeLoggingRoutineEnd(variables, collections);
     else if(jeRoutineLogging)
       jeLoggingRoutineNotLogged(this, property); // logging was enabled while this routine was running
-
-    batchEnd();
 
     if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
       const hexColor = toHex(variables.playerColor);

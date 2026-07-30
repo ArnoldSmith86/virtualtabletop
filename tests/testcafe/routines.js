@@ -261,3 +261,37 @@ test('the recursion limit is reported in the routine that was clicked', async t 
   // down in the one that hit the limit
   await t.expect(Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems').innerText).contains('nested inside each other');
 });
+
+// Routines that overlap - one starts while another one is waiting in DELAY or INPUT - share the
+// client's batch counter, so every routine has to close exactly the batch it opened. Closing
+// everything down to the depth it saw when it started would close the batch of the routine that
+// began in between, leaving the counter negative and the client unable to send anything at all.
+test('a routine finishing while another one is waiting keeps the client sending', async t => {
+  function delayThenMark(id, milliseconds) {
+    return { id, type: 'button', text: id, x: 800, y: 200, clickRoutine: [
+      { func: 'DELAY', milliseconds },
+      { func: 'SELECT', property: 'id', value: id },
+      { func: 'SET', property: 'marked', value: true }
+    ] };
+  }
+  await setRoomState({
+    first: delayThenMark('first', 200),
+    second: delayThenMark('second', 600),
+    go: { id: 'go', type: 'basic', x: 800, y: 50 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+
+  // 'second' starts while 'first' is waiting and is still waiting when 'first' is done
+  await ClientFunction(() => {
+    widgets.get('first').evaluateRoutine('clickRoutine', {}, {});
+    setTimeout(_=>widgets.get('second').evaluateRoutine('clickRoutine', {}, {}), 100);
+    return true;
+  })();
+  await t.wait(1000);
+
+  // a write outside of any routine still has to reach the server
+  await ClientFunction(() => widgets.get('go').set('marked', true).then(_=>true))();
+  await expectEventually(t, markedWidgets, [ 'first', 'go', 'second' ]);
+});
