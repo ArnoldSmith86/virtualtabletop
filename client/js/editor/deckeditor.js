@@ -345,19 +345,6 @@ class DeckEditor {
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
       $('#deckEditorMain').classList.toggle('deckEditorShowAllAreas', this.showAllAreas);
     };
-    // Align / distribute the selected face objects (top bar). They need a multi-selection, which
-    // updateAlignToolbar enables them for.
-    for(const [ id, run ] of [
-      [ 'deckEditorAlignLeft',   _=>this.alignObjects('x', 'left', 'right', 0) ],
-      [ 'deckEditorAlignCenter', _=>this.alignObjects('x', 'left', 'right', 0.5) ],
-      [ 'deckEditorAlignRight',  _=>this.alignObjects('x', 'left', 'right', 1) ],
-      [ 'deckEditorAlignTop',    _=>this.alignObjects('y', 'top', 'bottom', 0) ],
-      [ 'deckEditorAlignMiddle', _=>this.alignObjects('y', 'top', 'bottom', 0.5) ],
-      [ 'deckEditorAlignBottom', _=>this.alignObjects('y', 'top', 'bottom', 1) ],
-      [ 'deckEditorDistributeH', _=>this.distributeObjects('x', 'left', 'right') ],
-      [ 'deckEditorDistributeV', _=>this.distributeObjects('y', 'top', 'bottom') ]
-    ])
-      $(`#${id}`).onclick = run;
 
     $('#deckEditorExport').onclick = _=>this.openExportOverlay();
     $('#deckEditorExportClose').onclick = _=>this.closeExportOverlay();
@@ -1805,12 +1792,47 @@ class DeckEditor {
     this.selectionOutline.style.height = height + 'px';
   }
 
-  // Aligning needs two objects, spreading them out evenly needs three. The buttons stay visible below that (and
-  // say what they would do) instead of appearing and disappearing with the selection.
+  // What the Object tab's align row offers, with the number of selected objects each one needs: aligning takes
+  // two, spreading them out evenly takes three.
+  alignActions() {
+    return [
+      [ 'deckEditorAlignLeft',   'align_horizontal_left',   'Align the selected face objects to the left',   2, _=>this.alignObjects('x', 'left', 'right', 0) ],
+      [ 'deckEditorAlignCenter', 'align_horizontal_center', 'Align the selected face objects to the center', 2, _=>this.alignObjects('x', 'left', 'right', 0.5) ],
+      [ 'deckEditorAlignRight',  'align_horizontal_right',  'Align the selected face objects to the right',  2, _=>this.alignObjects('x', 'left', 'right', 1) ],
+      [ 'deckEditorAlignTop',    'align_vertical_top',      'Align the selected face objects to the top',    2, _=>this.alignObjects('y', 'top', 'bottom', 0) ],
+      [ 'deckEditorAlignMiddle', 'align_vertical_center',   'Align the selected face objects to the middle', 2, _=>this.alignObjects('y', 'top', 'bottom', 0.5) ],
+      [ 'deckEditorAlignBottom', 'align_vertical_bottom',   'Align the selected face objects to the bottom', 2, _=>this.alignObjects('y', 'top', 'bottom', 1) ],
+      [ 'deckEditorDistributeH', 'horizontal_distribute',   'Equalize the horizontal spacing between the selected face objects', 3, _=>this.distributeObjects('x', 'left', 'right') ],
+      [ 'deckEditorDistributeV', 'vertical_distribute',     'Equalize the vertical spacing between the selected face objects',   3, _=>this.distributeObjects('y', 'top', 'bottom') ]
+    ];
+  }
+
+  // The align row of the Object tab's toolbar, right above the selection it acts on. It stays visible with too
+  // few objects selected (disabled, and saying what it would do) instead of appearing and disappearing.
+  renderAlignToolbar(sidebar) {
+    const bar = document.createElement('menu');
+    bar.className = 'deckEditorSidebarToolbar deckEditorAlignToolbar';
+    div(bar, 'deckEditorAlignLabel').textContent = 'Align:';
+    for(const [ id, icon, title, minSelected, run ] of this.alignActions()) {
+      // A disabled button receives no pointer events, so its own tooltip never opens - which is exactly the
+      // state in which it needs to explain itself. The tooltip therefore sits on a wrapper around it instead.
+      const wrapper = div(bar, 'deckEditorAlignButton');
+      wrapper.title = `${title}. Needs ${minSelected} or more selected: ctrl+click objects on the card or in the list, or ctrl+A to take the whole face.`;
+      const button = document.createElement('button');
+      button.id = id;
+      button.setAttribute('icon', icon);
+      button.dataset.minSelected = minSelected;
+      button.onclick = run;
+      wrapper.append(button);
+    }
+    sidebar.append(bar);
+    this.updateAlignToolbar();
+  }
+
   updateAlignToolbar() {
     const selected = this._selectedObjects.length;
-    for(const button of $a('#deckEditorAlignToolbar button'))
-      button.disabled = selected < (button.classList.contains('deckEditorDistributeButton') ? 3 : 2);
+    for(const button of $a('.deckEditorAlignToolbar button'))
+      button.disabled = selected < +button.dataset.minSelected;
   }
 
   updateDragToolbar() {
@@ -2004,22 +2026,25 @@ class DeckEditor {
     if(!object) {
       const note = document.createElement('p');
       note.className = 'deckEditorSectionNote';
-      note.textContent = 'No face object is selected. Add one with the + above, or click an object on the card or in the list to the left to edit it.';
+      note.textContent = 'No face object is selected. Add one with the + above, or click an object on the card or in the list to the left to edit it. Ctrl+click picks several at once (ctrl+A takes the whole face) to edit or align them together.';
       sidebar.append(note);
       this.renderObjectHint();
       return;
     }
 
     // With more than one object selected every row edits all of them at once, so the header counts them instead
-    // of naming one. The caption spells out what the rows below do, so the contrast with the amber "different
-    // per card type" Dynamic properties section further down is stated, not just colored.
+    // of naming one - but it still lists which ones (as the tree numbers them), so the selection can be checked
+    // without looking away. The caption spells out what the rows below do, so the contrast with the amber
+    // "different per card type" Dynamic properties section further down is stated, not just colored.
     const objects = this.selectedObjectTemplates();
     const multi = objects.length > 1;
-    addHeader(multi ? `${objects.length} face objects selected` : `Face object ${this.selectedObject+1} (${object.type || 'text'})`,
+    const numbers = this.selectedObjectIndices().map(index=>index+1);
+    const listed = numbers.length > 8 ? `${numbers.slice(0, 8).join(', ')}, …` : numbers.join(', ');
+    addHeader(multi ? `${objects.length} face objects selected (${listed})` : `Face object ${this.selectedObject+1} (${object.type || 'text'})`,
       'deckEditorScopeEveryCard', 'Same on every card type');
     // Note below (not part of) the header, in the same style as the Dynamic properties note.
     if(multi)
-      div(sidebar, 'deckEditorSectionNote').textContent = 'Every row below changes all selected objects at once. A property the selected objects do not agree on shows as "(mixed)" until a new value is typed.';
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Every row below changes all selected objects at once. A property the selected objects do not agree on shows as "(mixed)" until a new value is typed. Ctrl+click adds or removes an object, ctrl+A selects the whole face.';
     else if(object.type == 'html')
       div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
 
@@ -2087,9 +2112,9 @@ class DeckEditor {
     }));
 
     // Bindings are per object (they name the card type property each one reads), so they stay a single-object
-    // affair - with several objects selected the section would have nothing meaningful to show.
-    if(!multi)
-      this.renderDynamicProperties(sidebar, object);
+    // affair. The section keeps its header with several objects selected and says so, instead of silently
+    // disappearing - a whole panel vanishing on a ctrl+click reads as a bug.
+    this.renderDynamicProperties(sidebar, multi ? null : object);
 
     // No "Delete object" button here — objects are deleted from the left face-object list (or Delete key).
     this.renderObjectHint();
@@ -2113,7 +2138,7 @@ class DeckEditor {
       // Selecting an object is not required to open this tab: without one it still offers the + that adds a
       // face object, so an empty face can be filled without going through the tree.
       { id: 'object', label: 'Object', icon: 'category', scope: 'deckEditorScopeEveryCard', available: !!face,
-        title: this._selectedObjects.length > 1 ? `${this._selectedObjects.length} face objects of ${this.faceLabel(this.face).toLowerCase()} - every property here is set on all of them`
+        title: this._selectedObjects.length > 1 ? `${this._selectedObjects.length} face objects of ${this.faceLabel(this.face).toLowerCase()} — every property here is set on all of them`
              : object ? `Face object ${this.selectedObject+1} of ${this.faceLabel(this.face).toLowerCase()}`
                       : 'Add a face object, or click one on the card or in the list to the left to edit it' }
     ];
@@ -2178,6 +2203,9 @@ class DeckEditor {
       buttons[0].onclick = _=>this.openAddSectionIn(host, 'sidebar');
       if(this.addSectionOpen && this.addSectionHost == 'sidebar')
         host.append($('#deckEditorAddSection')); // it was open here before this rebuild: put it back
+      // Align / distribute act on the face-object selection, so they live with the selection's other actions
+      // here rather than in the top bar, which is about the deck as a whole.
+      this.renderAlignToolbar(sidebar);
     } else if(this.addSectionHost == 'sidebar') {
       this.addSectionOpen = false; // the submenu belongs to the Object tab only
       this.addSectionHost = 'tree';
@@ -2290,7 +2318,11 @@ class DeckEditor {
     for(const property of boundProperties)
       if(typeof typeProperties[property] === 'undefined' && [ 'cardType', 'id' ].indexOf(property) == -1)
         typePropertyNames.push(property);
-    this.renderPropertyGroups(sidebar, typePropertyNames, 'cardType', addTypeInput);
+    // No property groups here: every property of a card type is defined by the game, so sorting them by the
+    // engine's names would put "name" under Content and "cost" under Custom purely by coincidence of naming.
+    const typeProps = div(sidebar, 'deckEditorProperties');
+    for(const property of typePropertyNames)
+      addTypeInput(property, typeProps);
     addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
       if(typeProperties[property] !== undefined)
         return;
@@ -2830,7 +2862,7 @@ class DeckEditor {
     const common = this.commonPropertyValue(objects, 'type');
     const row = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
-    labelEl.style.cssText = 'display:inline-block;width:100px';
+    labelEl.className = 'deckEditorPropertyLabel';
     labelEl.textContent = 'type';
     const select = document.createElement('select');
     if(common.mixed) {
@@ -2891,16 +2923,29 @@ class DeckEditor {
   // tab for the session, so a scope the user works in stays open while switching objects.
   renderPropertyGroups(target, properties, stateKey, renderRow, extraClass = '') {
     const remaining = properties.slice();
+    const groups = [];
     for(const group of this.propertyGroups()) {
       const inGroup = group.properties ? group.properties.filter(property=>remaining.indexOf(property) != -1) : remaining.slice();
       if(!inGroup.length)
         continue;
       for(const property of inGroup)
         remaining.splice(remaining.indexOf(property), 1);
+      groups.push({ group, inGroup });
+    }
 
+    // A single block is pure chrome: its header would just repeat the rows below it, and there is nothing to
+    // tell them apart from. Such a list is drawn ungrouped, the way it was before there were groups.
+    if(groups.length < 2) {
+      const body = div(target, `deckEditorProperties ${extraClass}`.trim());
+      for(const property of groups.length ? groups[0].inGroup : [])
+        renderRow(property, body);
+      return;
+    }
+
+    for(const { group, inGroup } of groups) {
       // Position/Size start folded only for a face object, where x/y/width/height are usually changed by
-      // dragging the object around. On the other tabs those same names are the point of the tab (All Cards is
-      // mostly width/height) or an arbitrary game-defined property, so there they start open.
+      // dragging the object around. On the All Cards tab width/height are the point of the tab, so there
+      // every block starts open.
       const key = `${stateKey}:${group.id}`;
       const collapsed = this.groupCollapsed[key] !== undefined ? this.groupCollapsed[key] : (stateKey == 'object' && !!group.collapsed);
       const wrap = div(target, `deckEditorGroup${collapsed ? ' collapsed' : ''}`);
@@ -2955,8 +3000,9 @@ class DeckEditor {
       fieldType = this.valueFieldType(value);
     const wrapper = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
-    labelEl.style.cssText = 'display:inline-block;width:100px';
+    labelEl.className = 'deckEditorPropertyLabel';
     labelEl.textContent = label;
+    labelEl.title = label; // game-defined names can be longer than the label column, which cuts them
     wrapper.append(labelEl);
     let input;
     if(fieldType == 'boolean') {
@@ -2964,6 +3010,10 @@ class DeckEditor {
       input.type = 'checkbox';
       input.checked = !!value;
       input.indeterminate = !!mixed;
+      // A checkbox has no placeholder to put "(mixed)" into: the dash in the box is all it can show, so what
+      // that dash means - and what ticking it does to the other objects - is said in the tooltip.
+      if(mixed)
+        input.title = 'Mixed — the selected objects disagree about this. Clicking sets one value on all of them.';
       input.onchange = _=>onValueChanged(input.checked);
     } else if(fieldType == 'object') {
       input = document.createElement('textarea');
@@ -2991,8 +3041,10 @@ class DeckEditor {
         }
       };
     }
-    if(mixed && input.type != 'checkbox')
+    if(mixed && input.type != 'checkbox') {
       input.placeholder = '(mixed)';
+      input.classList.add('deckEditorMixedValue'); // italic, so it can't be read as a value someone typed
+    }
     wrapper.append(input);
     return { dom: wrapper };
   }
@@ -3321,6 +3373,11 @@ class DeckEditor {
     sidebar.append(header);
 
     const container = div(sidebar, 'deckEditorDynamicProperties deckEditorScopeThisType');
+    // object == null: several objects are selected, and each one's bindings name its own card type properties.
+    if(!object) {
+      div(container, 'deckEditorSectionNote').textContent = 'Dynamic properties are per object. Select a single object to edit them.';
+      return;
+    }
     div(container, 'deckEditorSectionNote').textContent = 'These specify a different face object for each card type.';
 
     // The already-active bindings: each row is a live "object property ← card type property" with a red trash.

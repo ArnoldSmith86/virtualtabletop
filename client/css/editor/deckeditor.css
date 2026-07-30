@@ -181,24 +181,6 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   flex-shrink: 0;
 }
 
-/* Align / distribute for a multi-selection of face objects, next to the history controls. Icon-only buttons in
-   one block, disabled (not hidden) while fewer objects than they need are selected. */
-#deckEditorAlignToolbar {
-  display: flex;
-  gap: 2px;
-  flex-shrink: 0;
-}
-
-#deckEditorAlignToolbar button {
-  padding: 3px 6px;
-  margin: 0;
-}
-
-#deckEditorAlignToolbar button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
 #deckEditorHistoryLabel {
   font-size: 11px;
   font-weight: bold;
@@ -1074,6 +1056,32 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: default;
 }
 
+/* Align / distribute for a multi-selection of face objects: the Object tab's second toolbar row, right where
+   the selection is made. Icon-only buttons, disabled (not hidden) while fewer objects than they need are
+   selected - each in a wrapper that carries the tooltip, since a disabled button gets no pointer events. */
+.deckEditorAlignToolbar {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.deckEditorAlignButton {
+  display: flex;
+}
+
+.deckEditorAlignLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  margin-right: 4px;
+}
+
+.deckEditorAlignToolbar button {
+  padding: 3px 6px;
+}
+
 /* Holds the shared "Add to: All Cards / Card Type" submenu while the Object tab's "+" has it open. */
 .deckEditorSidebarAddHost:not(:empty) {
   display: block;
@@ -1236,6 +1244,12 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: pointer;
 }
 
+/* Focus ring like the Edit Widget sidebar's collapsible headers (propertyInputs.css), which this mirrors. */
+.deckEditorGroupHeader:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
 .deckEditorGroupTitle {
   flex-shrink: 0;
 }
@@ -1264,7 +1278,7 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 .deckEditorGroupBody {
-  padding: 6px 6px 0;
+  padding: 4px 6px;
 }
 
 .deckEditorGroup.collapsed .deckEditorGroupBody {
@@ -1341,6 +1355,25 @@ body.deckEditorPanning #deckEditorMain * {
 
 #deckEditorSidebar .deckEditorProperties .genericInput label {
   flex-shrink: 0;
+}
+
+/* The property name in front of the field. A fixed column so every field starts at the same x - but a
+   game-defined name can be longer than it, so it ends in an ellipsis (and its full text in the tooltip)
+   instead of being cut mid-word right against the field. */
+.deckEditorPropertyLabel {
+  display: inline-block;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* "(mixed)" stands in for a value the selected objects disagree about, so it must not read as a value someone
+   typed - which the color alone doesn't manage in dark mode, where placeholders are drawn in the same white
+   as real text (layout.css). */
+.deckEditorMixedValue::placeholder {
+  font-style: italic;
+  opacity: 0.6;
 }
 
 /* Property rows: a small red trash to delete the property. The glyph size lives on ::before (button[icon]

@@ -755,7 +755,7 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
 });
 
 // Several face objects can be selected at once (Ctrl/Shift+click on the card or in the tree). A property row
-// then writes to all of them - showing "(mixed)" while they disagree - and the top bar's align/distribute
+// then writes to all of them - showing "(mixed)" while they disagree - and the Object tab's align/distribute
 // buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget
 // sidebar uses, which is what the group/summary expectations below check.
 test('Deck editor: multi-selected face objects share property edits and alignment', async t => {
@@ -825,7 +825,7 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     .click(objectRow.nth(2), { modifiers: { ctrl: true } })
     .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
     .expect(Selector('#deckEditorMain .deckEditorSelectedObject').count).eql(3)
-    .expect(Selector('#deckEditorSidebar header h2').innerText).eql('3 face objects selected')
+    .expect(Selector('#deckEditorSidebar header h2').innerText).eql('3 face objects selected (1, 2, 3)')
     .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).notOk()
     .expect(Selector('#deckEditorDistributeV').hasAttribute('disabled')).notOk();
 
