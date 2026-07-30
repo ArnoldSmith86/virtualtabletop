@@ -847,6 +847,45 @@ test('Deck editor: pair front and back images in the new deck wizard', async t =
   await t.expect(deck.width).eql(107); // 40x60 fronts at the default card height of 160
 });
 
+// The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
+// strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
+test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = [ 'card1.png', 'card2.png', 'card3.png', 'card4.png' ];
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckOverlay input[value=images]');
+
+  // The file picker can't be driven from a test - hand the wizard the asset paths the server would return.
+  await ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  })(fronts.map(fileName=>[ fileName, asset(fileName) ]));
+
+  // Declining a confirmation would abort the whole deck, so this asserts twice: no dialog, and the cards exist.
+  await t
+    .setNativeDialogHandler(() => false)
+    .click('#deckEditorNewDeckPanel #frontsButton')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(4); // the wizard's deck is now open
+
+  await t.expect(await t.getNativeDialogHistory()).eql([]);
+  await t.expect(await ClientFunction(() => {
+    let cards = 0;
+    widgets.forEach(w => { if(w.get('type') == 'card') ++cards; });
+    return cards;
+  })()).eql(4);
+});
+
 test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

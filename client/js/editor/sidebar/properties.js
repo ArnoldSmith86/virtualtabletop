@@ -1750,9 +1750,13 @@ class PropertiesModule extends SidebarModule {
   }
 
   async addDeckWithCards(deck, type, counts) {
+    // Some callers fill counts straight from a number input, where .value is a string - coerce so that the
+    // counts are summed rather than concatenated.
+    const copiesOf = cardType => counts ? Number(counts[cardType]) || 0 : 1;
+
     // Every card becomes a widget of its own inside a single batch, so a long list of card types multiplied
     // by a high copy count can keep the client busy for a long time - ask before creating a whole lot of them.
-    const totalCards = Object.keys(deck.cardTypes || {}).reduce((sum, cardType)=>sum + (counts ? counts[cardType] || 0 : 1), 0);
+    const totalCards = Object.keys(deck.cardTypes || {}).reduce((sum, cardType)=>sum + copiesOf(cardType), 0);
     if(totalCards > 500 && !confirm(`This creates ${totalCards} cards. Adding that many at once takes a while and makes the game harder to work with.\n\nCreate them anyway?`))
       return;
 
@@ -1802,7 +1806,7 @@ class PropertiesModule extends SidebarModule {
     await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
 
     for(const cardType in deck.cardTypes) {
-      const count = counts ? counts[cardType] || 0 : 1;
+      const count = copiesOf(cardType);
       for(let i=1; i<=count; ++i)
         await addWidgetLocal({
           type: 'card',
