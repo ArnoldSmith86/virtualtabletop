@@ -21,6 +21,24 @@ function linesWithStop(widgetID) {
   return widgetFilter(w=>w.get('type') == 'line' && lineListsStop(w, widgetID));
 }
 
+// Would adding count more widgets to this target go past its dropLimit? Drags
+// into a holder are checked in getValidDropTargets(), but lines take drops on
+// their path and piles are formed by updatePiles(), so both bypass that check
+// and have to ask here instead.
+function exceedsDropLimit(target, count, currentCount) {
+  const limit = target.get('dropLimit');
+  if(!(limit > -1))
+    return false;
+  return (currentCount !== undefined ? currentCount : target.children().length) + count > limit;
+}
+
+// A line is full once it lists dropLimit stops. The dragged widget itself does
+// not count: dropping it back onto a line it is already on leaves the number of
+// stops unchanged.
+function lineTakesDrop(line, widget) {
+  return !exceedsDropLimit(line, 1, line.stopList().filter(entry=>entry.widget != widget.get('id')).length);
+}
+
 // Only lines care about another widget's geometry: an endpoint connected to it
 // has to follow, and a line carrying it as a stop has to re-space.
 const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
@@ -2495,7 +2513,7 @@ export class Widget extends StateManaged {
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
     // dragged in play: a stop is usually placed in edit mode.
-    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible() && lineTakesDrop(w, this));
 
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
@@ -3198,6 +3216,11 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
+          // the pile that would be created is bound by the dropLimit it would
+          // be created with, so a limit below 2 rules the pile out entirely
+          const newPileDropLimit = thisOnPileCreation && thisOnPileCreation.dropLimit;
+          if(newPileDropLimit > -1 && newPileDropLimit < 2)
+            continue;
           const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
@@ -3217,6 +3240,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(thisType == 'pile' && widgetType == 'pile') {
+          if(exceedsDropLimit(widget, this.children().length))
+            continue;
           for(const w of this.children().reverse()) {
             await w.set('parent', widget.get('id'));
             await w.bringToFront();
@@ -3226,6 +3251,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
         if(thisType == 'pile' && widgetType == 'card') {
+          if(exceedsDropLimit(this, 1))
+            continue;
           for(const w of this.children().reverse())
             await w.bringToFront();
           await this.set('x', widget.get('x'));
@@ -3236,6 +3263,8 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
         if(thisType == 'card' && widgetType == 'pile') {
+          if(exceedsDropLimit(widget, 1))
+            continue;
           await this.bringToFront();
           await this.set('parent', widget.get('id'));
           break;
