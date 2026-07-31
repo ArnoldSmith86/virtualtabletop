@@ -493,10 +493,16 @@
 /* the color chip lives inside the Icon block's contentMediaBlock, whose 200px
    media-preview sizing (see .contentMediaBlock .propertyPreviewButton above)
    would otherwise blow this up to the same size as the icon/image previews -
-   keep it the same small swatch the Colors subsection of Appearance uses */
-.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton {
+   keep it the same small swatch the Colors subsection of Appearance uses.
+   Repeats .emptyValue explicitly (rather than relying on .propertyPreviewButton
+   alone) so this wins on specificity over .contentMediaBlock .propertyPreviewButton
+   .emptyValue too - without it, an unset color fell back to that rule's 79px
+   sizing, which read as a big empty (and, focused, blue) box. */
+.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton,
+.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton.emptyValue {
   min-width: 36px;
   min-height: 36px;
+  padding: 2px;
 }
 
 .editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton .propertyValueChip {

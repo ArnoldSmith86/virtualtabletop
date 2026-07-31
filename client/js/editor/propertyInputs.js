@@ -1159,9 +1159,12 @@ class IconInput extends PickerInput {
   // section (properties.js) rather than inside the transient picker popout,
   // so they stay visible after picking an icon instead of disappearing once
   // the popout closes or the widget is reselected.
-  renderIconOptionControls(target, value) {
+  // pickerGroup is shared with the icon/image pickers above (rendered at the
+  // full width of the Content row) rather than a group of its own confined to
+  // this narrow inline-options column, so its popout is not squeezed into a
+  // narrow band - https://github.com/ArnoldSmith86/virtualtabletop/pull/3049
+  renderIconOptionControls(target, value, pickerGroup) {
     const row = div(target, 'iconBasicOptionsRow colorFlexRow');
-    const pickerArea = div(target, 'contentMediaPickers');
 
     // same chip + hex-field control as the Colors subsection of Appearance -
     // clearing the hex field already resets to the widget's default color, so
@@ -1172,7 +1175,7 @@ class IconInput extends PickerInput {
       setValue: v=>this.setValue(iconWithOption(this.getValue(), 'color', v)),
       listenTo: [ this.options.property ],
       default: defaultColor || '#000000',
-      pickerGroup: { target: pickerArea, current: null }
+      pickerGroup: pickerGroup || { target: div(target, 'contentMediaPickers'), current: null }
     }).render(row);
 
     const scaleWrap = div(row, 'iconBasicOption');

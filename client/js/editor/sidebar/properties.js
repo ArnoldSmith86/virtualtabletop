@@ -6519,7 +6519,7 @@ class PropertiesModule extends SidebarModule {
       if(!iconSupportsBasicOptions(value))
         return;
       div(iconOptionsBlock, 'appearanceSubTitle', 'Icon color & scale');
-      iconInput.renderIconOptionControls(iconOptionsBlock, value);
+      iconInput.renderIconOptionControls(iconOptionsBlock, value, pickerGroup);
     };
     this.addPropertyListener(widget, 'icon', renderIconOptions);
     renderIconOptions();
@@ -6657,7 +6657,9 @@ class PropertiesModule extends SidebarModule {
       const faces = this.basicFaces(widget);
       // pointless with one face, but never hide a value the widget actually has
       cycleHost.style.display = faces.length > 1 || widget.state.faceCycle !== undefined ? '' : 'none';
-      if(faces.length)
+      // a single face is the widget itself - nothing to pick between, so the
+      // row (which can only ever be "Face 1") is noise; keep just the add button
+      if(faces.length > 1)
         faces.forEach((face, index)=>this.renderFaceRow(widget, index, list, rebuildRows));
       this.updateActiveFaceMarkers(widget, list, note);
       this.moduleDOM.scrollTop = scrollTop;
