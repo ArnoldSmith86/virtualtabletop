@@ -620,10 +620,25 @@ const v22SeatOnlyNames = { displayEmpty: 'emptyText', colorEmpty: 'emptyColor' }
 // routine operation fields that hold a widget property name
 const v22PropertyNameFields = { GET: 'property', SELECT: 'property', SET: 'property', RESET: 'property', SCORE: 'property', SORT: 'key' };
 
-// "${PROPERTY <name>}" / "${PROPERTY <name> OF <id>}" - the identifier syntax
-// matches what evaluateVariables() accepts. The "$variable" forms are left out
-// on purpose: what they point at cannot be known here.
-const v22PropertyExpression = /\$\{PROPERTY ([a-zA-Z0-9 _-]+?)(?: OF ([a-zA-Z0-9 _-]+))?\}/g;
+// "${PROPERTY <name>}" / "${PROPERTY <name> OF <id>}". The content is captured
+// in one piece and split afterwards: spelling the two identifiers out in the
+// pattern lets it backtrack quadratically on a crafted game file.
+const v22PropertyExpression = /\$\{PROPERTY ([^{}]*)\}/g;
+const v22PropertyIdentifier = /^[a-zA-Z0-9 _-]+$/;
+
+// name and target of a property expression, or null when it is not the plain
+// form evaluateVariables() resolves statically (a "$variable" indirection or an
+// identifier with characters it does not accept)
+function v22ParsePropertyExpression(content) {
+  // identifiers may contain spaces, so the first " OF " wins - the engine
+  // matches the name lazily and gets the same split
+  const of = content.indexOf(' OF ');
+  const name = of == -1 ? content : content.substr(0, of);
+  const ofID = of == -1 ? undefined : content.substr(of + 4);
+  if(!v22PropertyIdentifier.test(name) || ofID !== undefined && !v22PropertyIdentifier.test(ofID))
+    return null;
+  return { name, ofID };
+}
 
 // The replacement for a property name, or null to keep it. "display" is a real
 // property on every widget, so it is only renamed where the widget it is read
@@ -653,9 +668,10 @@ function v22RenameSeatOnlyName(name) {
 // property -> name). Nothing else is touched.
 function v22RenameNames(value, ownIsSeat, seatIDs) {
   if(typeof value == 'string')
-    return value.replace(v22PropertyExpression, (match, name, ofID) => {
-      const renamed = v22SeatPropertyName(name, ofID, ownIsSeat, seatIDs);
-      return renamed ? `\${PROPERTY ${renamed}${ofID === undefined ? '' : ` OF ${ofID}`}}` : match;
+    return value.replace(v22PropertyExpression, (match, content) => {
+      const expression = v22ParsePropertyExpression(content);
+      const renamed = expression && v22SeatPropertyName(expression.name, expression.ofID, ownIsSeat, seatIDs);
+      return renamed ? `\${PROPERTY ${renamed}${expression.ofID === undefined ? '' : ` OF ${expression.ofID}`}}` : match;
     });
 
   if(!value || typeof value != 'object')

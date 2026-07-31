@@ -228,3 +228,29 @@ describe('v22 fixed seat color', () => {
     expect(updateWidgets({ seat: { type: 'seat', css } })).toEqual({ seat: { type: 'seat', css } });
   });
 });
+
+describe('v22 property expressions', () => {
+  test('leaves expressions it cannot resolve statically alone', () => {
+    const clickRoutine = [
+      { func: 'LABEL', value: '${PROPERTY $variable}' },
+      { func: 'LABEL', value: '${PROPERTY colorEmpty OF $variable}' },
+      { func: 'LABEL', value: '${PROPERTY colorEmpty!}' },
+      { func: 'LABEL', value: 'colorEmpty ${PROPERTY colorEmpty' }
+    ];
+    expect(updateWidgets({ button: { type: 'button', clickRoutine: JSON.parse(JSON.stringify(clickRoutine)) } }).button.clickRoutine).toEqual(clickRoutine);
+  });
+
+  test('splits the name from the target the way the engine does', () => {
+    expect(updateWidgets({
+      seat: { type: 'seat' },
+      button: { type: 'button', clickRoutine: [ { func: 'LABEL', value: '${PROPERTY colorEmpty OF a OF b}' } ] }
+    }).button.clickRoutine[0].value).toBe('${PROPERTY emptyColor OF a OF b}');
+  });
+
+  test('a long run of " OF " does not take forever', () => {
+    const value = '${PROPERTY ' + ' OF '.repeat(20000);
+    const started = Date.now();
+    updateWidgets({ button: { type: 'button', clickRoutine: [ { func: 'LABEL', value } ] } });
+    expect(Date.now() - started).toBeLessThan(1000);
+  });
+});
