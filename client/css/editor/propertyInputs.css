@@ -773,6 +773,15 @@
   padding-right: 0;
 }
 
+.editorModule .compactStyledText .placeholderChipRow {
+  display: flex;
+  gap: 6px;
+  /* full row below the input, indented to the width of the label column so the
+     text/color/size controls above stay aligned with the placeholder-less rows */
+  flex: 1 0 100%;
+  margin-left: 138px;
+}
+
 .editorModule .compactStyledText .placeholderChip {
   font-family: monospace;
   font-size: 11px;
@@ -934,4 +943,18 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+.editorModule .seatPresetCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* the preset name below the preview instead of inside the sample seat, where
+   longer names wrapped and crowded the box */
+.editorModule .seatPresetCell .seatPresetLabel {
+  font-size: 12px;
+  text-align: center;
+  max-width: 156px;
 }

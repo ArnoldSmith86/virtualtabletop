@@ -390,7 +390,7 @@ const editorPropertyHints = {
   firstColWidth: 'Fixed width of the first scoreboard column when autosizing is off.',
   player: 'The player currently seated here. Setting it also stores their color.',
   index: 'Seat order used by turn and scoreboard logic.',
-  display: 'The seat property whose value is displayed as the seat text.',
+  display: 'Whether the widget is shown at all. A hidden widget stays in the game and can be brought back by a routine.',
   hand: 'ID of the holder used as this seat\'s private hand.',
   turn: 'Marks this seat as currently taking its turn.',
   skipTurn: 'Skip this seat when routines advance turns.',
@@ -545,11 +545,13 @@ const SEAT_PRESET_BACKGROUND = {
   }
 };
 
+// the empty color stays neutral so a free seat is still recognizable as free -
+// with the same red on both sides, taken and free seats look identical
 const SEAT_PRESET_FIXED = {
   "width": 172,
   "height": 48,
   "borderRadius": 8,
-  "emptyColor": "#ff0000",
+  "emptyColor": "#999999",
   "seatedColor": "#ff0000",
   "css": {
     "default": {
@@ -1938,7 +1940,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'display', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
   }
 
   isSizeRatioLockEnabled(widget) {
@@ -3097,6 +3099,7 @@ class PropertiesModule extends SidebarModule {
     });
 
     this.renderCollapsibleSection('Generic', true, body=>{
+      this.renderCheckbox(widget, 'Visible', 'display', body, editorPropertyHints.display);
       this.renderCheckbox(widget, 'Clickable', 'clickable', body);
       this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, { min: 0, step: 1, slider: false });
       this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body);
@@ -4497,7 +4500,17 @@ class PropertiesModule extends SidebarModule {
 
     this.addAppearanceSubTitle('When empty');
     this.renderCompactStyledTextInput(widget, 'Text', 'emptyText', 'default');
-    new ColorInput(this, widget, 'Inactive color', { property: 'emptyColor', hint: 'The border color while no player sits here.' }).render(this.moduleDOM);
+    new ColorInput(this, widget, 'Color', {
+      property: 'emptyColor',
+      hint: 'The seat\'s color while nobody sits here.',
+      setValue: value => {
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} changed the empty color of ${widget.id} in editor`);
+        this.inputValueUpdated(widget, 'emptyColor', value);
+        this.applySeatColor(widget);
+        batchEnd();
+      }
+    }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide when unused', { property: 'hideWhenUnused', hint: editorPropertyHints.hideWhenUnused }).render(this.moduleDOM);
 
     this.addAppearanceSubTitle('When seated');
@@ -4528,6 +4541,13 @@ class PropertiesModule extends SidebarModule {
     for(const { preset } of Object.values(presets))
       Object.keys(preset).forEach(k => styleKeys.add(k));
 
+    // the colors are edited right below the preset row and are meant to be
+    // customized, so the highlight compares the structural keys exactly and
+    // reduces seatedColor to what actually tells the presets apart: the seated
+    // player's color vs a fixed one
+    const structuralKeys = Array.from(styleKeys).filter(k => k != 'emptyColor' && k != 'seatedColor').sort();
+    const usesPlayerColor = value => !value || value == 'playerColor';
+
     const row = div(this.moduleDOM, 'seatPresetRow');
     for(const [ presetKey, { label, preset } ] of Object.entries(presets)) {
       // a unique id per preview keeps each seat's scoped css (#w_<id>.seated ...)
@@ -4535,16 +4555,18 @@ class PropertiesModule extends SidebarModule {
       // the state - renderReadonlyCopyRaw deletes state.id)
       const previewSeat = new Seat(`seatPreview_${widget.id}_${presetKey}`);
       // a sample color so "Background color" shows a colored seat; "Fixed color"
-      // overrides it with its own seatedColor
-      const previewColor = preset.seatedColor && preset.seatedColor != 'playerColor' ? preset.seatedColor : '#1e88e5';
-      const button = this.renderWidgetButton(previewSeat, Object.assign({ type: 'seat', player: label, color: previewColor, width: 150, height: 44 }, preset), row);
+      // overrides it with its own seatedColor. The size is forced after the
+      // preset so a wider preset still fits the preview button.
+      const previewColor = usesPlayerColor(preset.seatedColor) ? '#1e88e5' : preset.seatedColor;
+      const cell = div(row, 'seatPresetCell');
+      const button = this.renderWidgetButton(previewSeat, Object.assign({ type: 'seat' }, preset, { player: 'Player', color: previewColor, width: 150, height: 44 }), cell);
       button.title = label;
+      div(cell, 'seatPresetLabel').textContent = label;
 
-      // the presets differ in more than just css now, so compare every key they touch
-      const signature = state => JSON.stringify(Array.from(styleKeys).sort().map(k => {
+      const signature = state => JSON.stringify(structuralKeys.map(k => {
         const value = state(k);
         return value === undefined ? null : value;
-      }));
+      }).concat(usesPlayerColor(state('seatedColor'))));
       // a key the preset does not set is reset to null, i.e. back to the widget default
       const presetSignature = signature(k => k in preset ? preset[k] : widget.defaults[k]);
       const update = () => button.classList.toggle('selected', signature(k => widget.get(k)) === presetSignature);
@@ -4556,19 +4578,23 @@ class PropertiesModule extends SidebarModule {
         setDeltaCause(`${getPlayerDetails().playerName} applied the ${label} seat preset to ${widget.id} in editor`);
         for(const key of styleKeys)
           await widget.set(key, key in preset ? preset[key] : null);
-        this.applySeatedColor(widget);
+        this.applySeatColor(widget);
         batchEnd();
       };
     }
   }
 
-  // A seat's color is written when a player sits down, so changing seatedColor
-  // while somebody is already sitting there would otherwise only show up the
-  // next time the seat is taken.
-  applySeatedColor(widget) {
+  // A seat's color is only written when a player sits down or stands up, so
+  // editing seatedColor/emptyColor would otherwise only show up the next time
+  // the seat changes hands. Applies whichever of the two currently applies.
+  applySeatColor(widget) {
     const player = widget.get('player');
-    if(!player)
+    if(!player) {
+      const emptyColor = widget.get('emptyColor');
+      if(emptyColor)
+        this.inputValueUpdated(widget, 'color', emptyColor);
       return;
+    }
     const seatedColor = widget.get('seatedColor');
     const { activePlayers, activeColors } = getPlayerDetails();
     const color = !seatedColor || seatedColor == 'playerColor'
@@ -4590,18 +4616,18 @@ class PropertiesModule extends SidebarModule {
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} changed the seated color of ${widget.id} in editor`);
       this.inputValueUpdated(widget, 'seatedColor', value === null ? 'playerColor' : value);
-      this.applySeatedColor(widget);
+      this.applySeatColor(widget);
       batchEnd();
     };
 
     new CheckboxInput(this, widget, 'Use player color', {
-      hint: 'On: the seat shows the seated player\'s color. Off: it always uses the fixed color below.',
+      hint: 'On: the seatedColor property stays at its special value "playerColor", so the seat takes the color of whoever sits down. Off: the fixed color below is used instead.',
       getValue: () => usesPlayerColor(),
       setValue: on => write(on ? null : (readColor() || widget.get('emptyColor') || '#999999')),
       listenTo: [ 'seatedColor' ]
     }).render(this.moduleDOM);
 
-    const colorInput = new ColorInput(this, widget, 'Seat color', {
+    const colorInput = new ColorInput(this, widget, 'Color', {
       hint: 'Fixed color used for this seat while a player is sitting in it.',
       getValue: () => readColor() || widget.get('emptyColor') || '#999999',
       setValue: value => write(value || '#999999'),
@@ -4628,6 +4654,9 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(this.renderColorInput(widget, null, 'color', '#222222', 'css', cssClass));
     wrap.appendChild(this.renderNumberInput(widget, null, 'font-size', { step: 1, min: 0 }, '25px', 'css', cssClass));
 
+    // the chips go on their own line so the text/color/size columns line up
+    // with the rows that have no placeholders
+    const chipRow = (options.placeholders || []).length ? div(wrap, 'placeholderChipRow') : null;
     for(const placeholder of options.placeholders || []) {
       const chip = document.createElement('button');
       chip.className = 'placeholderChip';
@@ -4638,7 +4667,7 @@ class PropertiesModule extends SidebarModule {
         input.value = input.value.slice(0, at) + placeholder + input.value.slice(at);
         this.inputValueUpdated(widget, textProperty, input.value);
       };
-      wrap.appendChild(chip);
+      chipRow.appendChild(chip);
     }
 
     this.addPropertyListener(widget, textProperty, w => {
@@ -6489,7 +6518,7 @@ class PropertiesModule extends SidebarModule {
     return wrapper;
   }
 
-  renderCheckbox(widget, title, property, target = null) {
+  renderCheckbox(widget, title, property, target = null, hint = null) {
     const wrap = div(target || this.moduleDOM);
     const input = document.createElement('input');
     input.type = 'checkbox';
@@ -6500,6 +6529,8 @@ class PropertiesModule extends SidebarModule {
     label.textContent = title || property;
     wrap.appendChild(input);
     wrap.appendChild(label);
+    if(hint)
+      propertyInfoButton(label, html(hint));
 
     input.onchange = () => this.inputValueUpdated(widget, property, input.checked);
     this.addPropertyListener(widget, property, w => { input.checked = !!w.get(property); });
