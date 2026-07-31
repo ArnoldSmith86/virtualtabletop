@@ -158,7 +158,7 @@ class DebugModule extends SidebarModule {
         <button id="runValidationButton" icon=data_check>Run Validation</button>
         <span class="validation-time"></span>
       </div>
-      <div class="success">No validation problems found!</div>
+      <div class="success">No validation problems found in the game file.</div>
       <table class="validation-table">
         <thead>
           <tr>

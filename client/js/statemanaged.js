@@ -46,10 +46,19 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
-    if(this.inheritedProperties)
-      for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
-          return widgets.get(id).get(key);
+    // Widgets can inherit from each other in a circle, in which case the value is not defined
+    // anywhere in the chain - fall back to the local default instead of recursing until the stack
+    // overflows. (#684, #833)
+    if(this.inheritedProperties && !StateManaged.inheritLookups.has(this)) {
+      StateManaged.inheritLookups.add(this);
+      try {
+        for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+          if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+            return widgets.get(id).get(key);
+      } finally {
+        StateManaged.inheritLookups.delete(this);
+      }
+    }
     return this.defaults[key];
   }
 
@@ -108,7 +117,16 @@ export class StateManaged {
     if(tracingEnabled && property == 'activeFace')
       sendTraceEvent('set activeFace', { w: this.get('id'), property, value, stack: new Error().stack });
 
-    const JSONvalue = JSON.stringify(value);
+    let JSONvalue;
+    try {
+      JSONvalue = JSON.stringify(value);
+    } catch(e) {
+      // A routine can build a value that contains itself (e.g. "var a = ${a} push ${a}"). Such a
+      // value can neither be stored nor sent to the server, so refuse the write instead of letting
+      // the exception tear down the client. (#1415)
+      console.log(`Not setting ${property} of ${this.get('id')}: ${e.toString()}`);
+      return;
+    }
     if(!this.state.inheritFrom && JSONvalue === JSON.stringify(this.getDefaultValue(property)))
       value = null;
     if(this.state[property] === undefined && value === null || JSON.stringify(this.state[property]) === JSONvalue)
@@ -152,3 +170,5 @@ export class StateManaged {
 
 StateManaged.globalUpdateListeners = {};
 StateManaged.inheritFromMapping = {};
+StateManaged.inheritLookups = new Set();
+StateManaged.inheritPropagations = new Set();

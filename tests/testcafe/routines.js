@@ -1,4 +1,4 @@
-import { ClientFunction } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 
 import { getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
@@ -72,6 +72,17 @@ async function widgetExists(id) {
   return Object.keys(JSON.parse(await getState())).indexOf(id) != -1;
 }
 
+async function widgetProperty(id, property) {
+  const widget = JSON.parse(await getState())[id];
+  return widget && widget[property] !== undefined ? widget[property] : null;
+}
+
+// a button that marks itself, so that a test can tell whether the client still reacts
+const markSelf = { id: 'go', type: 'button', text: 'go', x: 800, y: 50, clickRoutine: [
+  { func: 'SELECT', property: 'id', value: 'go' },
+  { func: 'SET', property: 'marked', value: true }
+] };
+
 async function clickSwap(t, clickRoutine) {
   await setRoomState(swapHandsRoom(clickRoutine));
   await ClientFunction(prepareClient)();
@@ -113,4 +124,197 @@ test('SWAPHANDS does not pass on a card that a routine of an earlier move remove
   await expectEventually(t, ()=>widgetExists('doomed'), false);
   await expectEventually(t, ()=>cardsInHand('hand1'), []);
   await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+// A widget that ends up as its own ancestor or that inherits in a circle used to take the whole
+// client down (#1414, #684, #833), as did a routine calling itself (#1405, #1455) or building a
+// value that contains itself (#1415). All of those have to end up as a reported problem instead.
+
+test('SET parent refuses to put a widget inside itself', async t => {
+  await setRoomState({
+    outer: { id: 'outer', type: 'holder', x: 50, y: 50, width: 400, height: 400 },
+    inner: { id: 'inner', type: 'holder', parent: 'outer', width: 200, height: 200 },
+    swap: { id: 'swap', type: 'button', text: 'swap', x: 800, y: 400, clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'outer' },
+      { func: 'SET', property: 'parent', value: 'inner' }, // into its own child
+      { func: 'SELECT', property: 'id', value: 'inner' },
+      { func: 'SET', property: 'parent', value: 'inner' }, // into itself
+      { func: 'SELECT', property: 'id', value: 'go' },
+      { func: 'SET', property: 'marked', value: true }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_swap');
+
+  // the routine goes on after the refused write and the widget tree is unchanged
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+  await expectEventually(t, ()=>widgetProperty('outer', 'parent'), null);
+  await expectEventually(t, ()=>widgetProperty('inner', 'parent'), 'outer');
+});
+
+// returning pieces to their starting holder is what resetProperties is for, so a parent in there
+// pointing at a descendant is not exotic - it used to overflow the stack the same way SET did
+test('RESET refuses to put a widget inside itself', async t => {
+  await setRoomState({
+    outer: { id: 'outer', type: 'holder', x: 50, y: 50, width: 400, height: 400, resetProperties: { parent: 'inner' } },
+    inner: { id: 'inner', type: 'holder', parent: 'outer', width: 200, height: 200, resetProperties: { parent: 'inner' } },
+    reset: { id: 'reset', type: 'button', text: 'reset', x: 800, y: 400, clickRoutine: [
+      { func: 'RESET' },
+      { func: 'SELECT', property: 'id', value: 'go' },
+      { func: 'SET', property: 'marked', value: true }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_reset');
+
+  // the routine goes on after the refused writes and the widget tree is unchanged
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+  await expectEventually(t, ()=>widgetProperty('outer', 'parent'), null);
+  await expectEventually(t, ()=>widgetProperty('inner', 'parent'), 'outer');
+});
+
+test('a routine calling itself is aborted instead of freezing the client', async t => {
+  await setRoomState({
+    loop: { id: 'loop', type: 'button', text: 'loop', x: 800, y: 400, clickRoutine: [ { func: 'CALL' } ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_loop');
+
+  // the client is still there and reacts to the next click
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+});
+
+test('widgets inheriting from each other do not lock up the client', async t => {
+  await setRoomState({
+    left: { id: 'left', type: 'basic', x: 50, inheritFrom: { right: [ 'y' ] } },
+    right: { id: 'right', type: 'basic', x: 300, inheritFrom: { left: [ 'y' ] } },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.expect(Selector('#w_left').exists).ok();
+  await t.expect(Selector('#w_right').exists).ok();
+
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+});
+
+test('a widget can still inherit the same widget through two different chains', async t => {
+  await setRoomState({
+    shared: { id: 'shared', type: 'basic', x: 600, y: 50, width: 111, height: 222 },
+    viaWidth: { id: 'viaWidth', type: 'basic', inheritFrom: { shared: [ 'width' ] } },
+    viaHeight: { id: 'viaHeight', type: 'basic', inheritFrom: { shared: [ 'height' ] } },
+    both: { id: 'both', type: 'basic', x: 50, y: 50, inheritFrom: { viaWidth: [ 'width' ], viaHeight: [ 'height' ] } }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // 'shared' is reached through two branches and has to be used by both of them
+  await t.expect(Selector('#w_both').getStyleProperty('width')).eql('111px');
+  await t.expect(Selector('#w_both').getStyleProperty('height')).eql('222px');
+});
+
+test('a value that contains itself is not written instead of crashing the client', async t => {
+  await setRoomState({
+    build: { id: 'build', type: 'button', text: 'build', x: 800, y: 400, clickRoutine: [
+      'var list = []',
+      'var list = ${list} push ${list}',
+      { func: 'SELECT', property: 'id', value: 'build' },
+      { func: 'SET', property: 'result', value: '${list}' },
+      { func: 'CALL', widget: 'go', routine: 'clickRoutine' } // the value must not break passing variables on
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_build');
+
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+  await expectEventually(t, ()=>widgetProperty('build', 'result'), null);
+});
+
+// The routine log formats every value it shows, so the Debug module used to be the one place where
+// a value that contains itself still took the client down. (#1415)
+test('the routine log shows a value that contains itself instead of crashing', async t => {
+  await setRoomState({
+    build: { id: 'build', type: 'button', text: 'build', x: 800, y: 400, clickRoutine: [
+      'var list = []',
+      'var list = ${list} push ${list}',
+      { func: 'SELECT', property: 'id', value: 'build' },
+      { func: 'SET', property: 'result', value: '${list}' }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('build').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  await t.expect(Selector('#clientErrorOverlay').visible).notOk();
+  await t.expect(Selector('#jeLog').innerText).contains('<contains itself>');
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('the value contains itself and can not be stored');
+});
+
+// The routine that hits the limit is hundreds of collapsed levels deep in the log, so the problem
+// is reported in the outermost routine as well. (#1405, #1455)
+test('the recursion limit is reported in the routine that was clicked', async t => {
+  await setRoomState({
+    loop: { id: 'loop', type: 'button', text: 'loop', x: 800, y: 400, clickRoutine: [ { func: 'CALL' } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('loop').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  // the problem has to be on the operation of the outermost routine, not only hundreds of levels
+  // down in the one that hit the limit
+  await t.expect(Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems').innerText).contains('nested inside each other');
+});
+
+// Routines that overlap - one starts while another one is waiting in DELAY or INPUT - share the
+// client's batch counter, so every routine has to close exactly the batch it opened. Closing
+// everything down to the depth it saw when it started would close the batch of the routine that
+// began in between, leaving the counter negative and the client unable to send anything at all.
+test('a routine finishing while another one is waiting keeps the client sending', async t => {
+  function delayThenMark(id, milliseconds) {
+    return { id, type: 'button', text: id, x: 800, y: 200, clickRoutine: [
+      { func: 'DELAY', milliseconds },
+      { func: 'SELECT', property: 'id', value: id },
+      { func: 'SET', property: 'marked', value: true }
+    ] };
+  }
+  await setRoomState({
+    first: delayThenMark('first', 200),
+    second: delayThenMark('second', 600),
+    go: { id: 'go', type: 'basic', x: 800, y: 50 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+
+  // 'second' starts while 'first' is waiting and is still waiting when 'first' is done
+  await ClientFunction(() => {
+    widgets.get('first').evaluateRoutine('clickRoutine', {}, {});
+    setTimeout(_=>widgets.get('second').evaluateRoutine('clickRoutine', {}, {}), 100);
+    return true;
+  })();
+  await t.wait(1000);
+
+  // a write outside of any routine still has to reach the server
+  await ClientFunction(() => widgets.get('go').set('marked', true).then(_=>true))();
+  await expectEventually(t, markedWidgets, [ 'first', 'go', 'second' ]);
 });

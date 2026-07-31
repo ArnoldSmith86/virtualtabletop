@@ -977,3 +977,38 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await t.expect(Selector('#jeLog .jeLogNote').innerText).contains('could not be recorded');
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
+
+// A parent that would put a widget inside itself is refused when the JSON is applied, but the JSON
+// editor reports every other structural problem while it is typed, so this one does too. (#1414)
+test('The JSON editor reports a parent that would create a loop while typing', async t => {
+  await setRoomState({
+    outer: { id: 'outer', type: 'holder', x: 500, y: 100, width: 400, height: 400 },
+    inner: { id: 'inner', type: 'holder', parent: 'outer', width: 200, height: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorSidebar [icon=data_object]').visible).ok(); // edit mode finished loading
+  await t
+    .click('#editorSidebar [icon=data_object]')
+    .click('#w_outer')
+    .expect(Selector('#jeText').innerText).contains('"id": "outer"');
+
+  for(const [ json, message ] of [
+    [ '{"id":"outer","type":"holder","parent":"inner"}', 'would create a loop' ],
+    [ '{"id":"outer","type":"holder","parent":"outer"}', 'A widget cannot be its own parent.' ]
+  ]) {
+    await t
+      .typeText('#jeText', json, { replace: true })
+      .expect(Selector('#jeCommands .error').innerText).contains(message);
+    // the refused parent is not written while the message is shown
+    await t.expect(await ClientFunction(() => widgets.get('outer').get('parent'))()).eql(null);
+  }
+
+  // a valid change from the same editor still goes through
+  await t
+    .typeText('#jeText', '{"id":"outer","type":"holder","x":123}', { replace: true })
+    .expect(Selector('#jeCommands .error').exists).notOk();
+  await t.expect(await ClientFunction(() => widgets.get('outer').get('x'))()).eql(123);
+});

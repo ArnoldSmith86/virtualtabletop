@@ -2661,7 +2661,7 @@ class PropertiesModule extends SidebarModule {
       return `There is no widget with ID "${parentID}".`;
     if(newParent == widget)
       return 'A widget cannot be its own parent.';
-    if(newParent && newParent.isDescendantOf(widget))
+    if(newParent && widget.wouldCreateParentCycle(newParent.id))
       return `Widget ${newParent.id} is inside ${widget.id}, so using it as the parent would create a loop.`;
 
     const global = { x: widget.get('_absoluteX'), y: widget.get('_absoluteY') };
