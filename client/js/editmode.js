@@ -1552,10 +1552,12 @@ function uploadWidget(preset) {
 function widgetParentProblem(widget, previousState) {
   if(widget.parent === undefined || widget.parent === null)
     return null;
-  if(!widgets.has(widget.parent))
-    return `Parent widget ${widget.parent} does not exist.`;
+  // the self-parent case first: renaming a widget and pointing parent at the new id would otherwise
+  // be reported as a parent that does not exist, which is true but not the useful half
   if(widget.parent == widget.id)
     return `A widget cannot be its own parent.`;
+  if(!widgets.has(widget.parent))
+    return `Parent widget ${widget.parent} does not exist.`;
   if(widgets.has(previousState.id) && widgets.get(previousState.id).wouldCreateParentCycle(widget.parent))
     return `Widget ${widget.parent} is inside ${widget.id}, so using it as the parent would create a loop.`;
   return null;

@@ -51,6 +51,11 @@ let routineDepth = 0;
 let routineDepthProblem = null;
 let routineDepthProblemForOutermost = null;
 
+// wouldCreateParentCycle reads the parent of every widget it walks, which can come back into
+// getDefaultValue for a widget whose inherited parent is still being resolved. StateManaged's own
+// inheritance guard is released by then, so the check keeps its own re-entrancy set. (#684)
+const parentDefaultLookups = new Set();
+
 function inputFieldValueForPlayer(value, player, playerIndex) {
   if(!value || typeof value != 'object' || Array.isArray(value))
     return value;
@@ -913,8 +918,16 @@ export class Widget extends StateManaged {
       return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference);
     } finally {
       batchEnd();
-      if(!--routineDepth)
+      if(!--routineDepth) {
+        // Nothing is left that could report it - that happens when the routine that hit the limit
+        // was aborted by an exception, or when it ran next to another routine that was suspended in
+        // DELAY or INPUT. The message names the routine it came from, so the console still tells
+        // the whole story.
+        for(const problem of [ routineDepthProblem, routineDepthProblemForOutermost ])
+          if(problem)
+            console.log(problem);
         routineDepthProblem = routineDepthProblemForOutermost = null;
+      }
     }
   }
 
@@ -1883,6 +1896,10 @@ export class Widget extends StateManaged {
           for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
             if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
               problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
+            } else if(key == 'parent' && value == widget.id) {
+              problems.push(`Skipping parent change of ${widget.id} to itself.`);
+            } else if(key == 'parent' && widget.wouldCreateParentCycle(value)) {
+              problems.push(`Skipping parent change of ${widget.id} to ${value}: ${value} is inside ${widget.id}.`);
             } else {
               await widget.set(key, value);
             }
@@ -2449,8 +2466,15 @@ export class Widget extends StateManaged {
   getDefaultValue(property) {
     const value = super.getDefaultValue(property);
     // inheriting the parent of a descendant would make this widget its own ancestor (#684)
-    if(property == 'parent' && typeof value == 'string' && this.wouldCreateParentCycle(value))
-      return this.defaults[property];
+    if(property == 'parent' && typeof value == 'string' && !parentDefaultLookups.has(this)) {
+      parentDefaultLookups.add(this);
+      try {
+        if(this.wouldCreateParentCycle(value))
+          return this.defaults[property];
+      } finally {
+        parentDefaultLookups.delete(this);
+      }
+    }
     return value;
   }
 
@@ -3002,6 +3026,18 @@ export class Widget extends StateManaged {
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
     else
       await this.set('rotation', degrees);
+  }
+
+  // The parent invariant is enforced here so that every writer is safe by construction: a widget
+  // that becomes its own ancestor cannot be rendered and sends every walk up the parent chain into
+  // infinite recursion. The call sites a user can reach check first so that they can report a
+  // problem in their own wording, this is the backstop for the ones that do not. (#1414, #684)
+  async set(property, value) {
+    if(property == 'parent' && typeof value == 'string' && this.wouldCreateParentCycle(value)) {
+      console.log(`Not setting parent of ${this.id} to ${value}: ${value} is inside ${this.id}.`);
+      return;
+    }
+    return await super.set(property, value);
   }
 
   setHighlighted(isHighlighted) {

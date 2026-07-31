@@ -154,6 +154,29 @@ test('SET parent refuses to put a widget inside itself', async t => {
   await expectEventually(t, ()=>widgetProperty('inner', 'parent'), 'outer');
 });
 
+// returning pieces to their starting holder is what resetProperties is for, so a parent in there
+// pointing at a descendant is not exotic - it used to overflow the stack the same way SET did
+test('RESET refuses to put a widget inside itself', async t => {
+  await setRoomState({
+    outer: { id: 'outer', type: 'holder', x: 50, y: 50, width: 400, height: 400, resetProperties: { parent: 'inner' } },
+    inner: { id: 'inner', type: 'holder', parent: 'outer', width: 200, height: 200, resetProperties: { parent: 'inner' } },
+    reset: { id: 'reset', type: 'button', text: 'reset', x: 800, y: 400, clickRoutine: [
+      { func: 'RESET' },
+      { func: 'SELECT', property: 'id', value: 'go' },
+      { func: 'SET', property: 'marked', value: true }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_reset');
+
+  // the routine goes on after the refused writes and the widget tree is unchanged
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+  await expectEventually(t, ()=>widgetProperty('outer', 'parent'), null);
+  await expectEventually(t, ()=>widgetProperty('inner', 'parent'), 'outer');
+});
+
 test('a routine calling itself is aborted instead of freezing the client', async t => {
   await setRoomState({
     loop: { id: 'loop', type: 'button', text: 'loop', x: 800, y: 400, clickRoutine: [ { func: 'CALL' } ] },
