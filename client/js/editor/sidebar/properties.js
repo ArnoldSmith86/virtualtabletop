@@ -4068,6 +4068,13 @@ class PropertiesModule extends SidebarModule {
       this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body, {
         infoText: 'Keep the widget at its own size while the rest of the room is zoomed in or out.'
       });
+      this.renderCheckbox(widget, 'Overlap siblings', 'overlap', body, {
+        default: true,
+        infoText: 'Allow this widget to sit on top of its siblings when a holder or pile arranges them. Turn it off to make the holder space them out by this widget\'s full width/height instead of its normal stack offset.'
+      });
+      this.renderCheckbox(widget, 'Ignore "on leave" properties', 'ignoreOnLeave', body, {
+        infoText: 'Skip the holder\'s "on leave" properties when this widget is taken out of it, so leaving does not change it (e.g. flipping a card face down).'
+      });
       this.renderCheckbox(widget, 'Hide other players\' cursors', 'hidePlayerCursors', body, {
         infoText: 'Stop showing where the other players point while their cursor is over this widget or over anything inside it.'
       });
@@ -4082,7 +4089,7 @@ class PropertiesModule extends SidebarModule {
     }, null, `${widget.id}:generic`, {
       renderSummary: summary => {
         const update = w => summary.textContent = this.interactionSummary(w);
-        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom', 'hidePlayerCursors', 'display' ])
+        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
           this.addPropertyListener(widget, property, update);
       }
     });
@@ -4118,6 +4125,8 @@ class PropertiesModule extends SidebarModule {
     add('clickable', 'clickable', value=>value ? null : 'not clickable');
     add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
     add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
+    add('overlap', 'overlap', value=>value === false ? 'no overlap' : null);
+    add('ignoreOnLeave', 'ignore on leave', value=>value ? 'ignores on leave' : null);
     add('hidePlayerCursors', 'cursors', value=>value ? 'cursors hidden' : null);
     // a seat's display is the text it shows, which the section does not offer -
     // so it does not summarize it either
@@ -5947,21 +5956,6 @@ class PropertiesModule extends SidebarModule {
     const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
       div(body, 'svgReplacesHelp', 'Map a value in your SVG file - a color, a stroke width, an opacity - to a widget property that supplies it.');
 
-      // widget types with an image property (ImageWidget-based) can point at
-      // any file, not just an SVG - close the loop for a newcomer who lands
-      // here without one selected, so the section connects to something
-      // visible on the widget instead of reading as unexplained jargon
-      if(widget.defaults.image !== undefined) {
-        const noSvgHint = div(body, 'svgReplacesHelp', 'This only affects an uploaded SVG image - choose one under Content → Image first.');
-        const updateHint = () => {
-          const image = widget.get('image');
-          const isSvg = typeof image == 'string' && /\.svg(\?|#|$)/i.test(image);
-          noSvgHint.style.display = isSvg ? 'none' : '';
-        };
-        this.addPropertyListener(widget, 'image', updateHint);
-        updateHint();
-      }
-
       const list = div(body, 'svgReplacesList');
 
       const rebuild = () => {
@@ -6168,6 +6162,22 @@ class PropertiesModule extends SidebarModule {
       });
     }, null, `${widget.id}:svgReplacesEditor`);
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.svgReplaces));
+
+    // only worth showing once there's an SVG to map values from - a plain
+    // bitmap or unset image has nothing for this editor to act on. Keep it
+    // visible if replacements already exist so an existing setup doesn't
+    // vanish out from under the user (e.g. while the image is briefly cleared).
+    if(widget.defaults.image !== undefined) {
+      const updateVisibility = () => {
+        const image = widget.get('image');
+        const isSvg = typeof image == 'string' && /\.svg(\?|#|$)/i.test(image);
+        const stillHasReplaces = isObjectLike(widget.get('svgReplaces')) && Object.keys(widget.get('svgReplaces')).length > 0;
+        section.style.display = (isSvg || stillHasReplaces) ? '' : 'none';
+      };
+      this.addPropertyListener(widget, 'image', updateVisibility);
+      this.addPropertyListener(widget, 'svgReplaces', updateVisibility);
+      updateVisibility();
+    }
   }
 
   renderBehaviorSection(widget, title = 'Behavior') {
@@ -10131,7 +10141,7 @@ class PropertiesModule extends SidebarModule {
   // options.invert ticks the box for a falsy value ("only visible in edit
   // mode" for display:false), options.default is what an unset property means
   renderCheckbox(widget, title, property, target = null, options = {}) {
-    const wrap = div(target || this.moduleDOM);
+    const wrap = div(target || this.moduleDOM, 'checkboxRow');
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.id = `${property}_${widget.id}`;
@@ -10148,8 +10158,11 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(input);
     wrap.appendChild(label);
     if(options.infoText) {
+      // the icon is pinned to this row's bottom-right corner (see CSS) rather
+      // than flowing inline after the label - glued inline it has nowhere to
+      // go but a line of its own once a long label already wraps to fill the
+      // row's width.
       const infoIcon = this.renderInfoIcon(options.infoText, { size: '18px' });
-      infoIcon.style.marginLeft = '4px';
       wrap.appendChild(infoIcon);
     }
 

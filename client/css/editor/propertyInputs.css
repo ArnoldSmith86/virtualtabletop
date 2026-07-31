@@ -27,17 +27,28 @@
   box-sizing: border-box;
 }
 
-/* fixed label column so the inputs line up across rows; block flow so the
-   (i) hint stays glued to the last word even when the label wraps */
+/* fixed label column so the inputs line up across rows; the right edge is
+   reserved for the (i) hint (see below) so wrapped text never claims the
+   full width and strands the hint alone on its own line. */
 .editorModule .propertyInput > label {
   width: 132px;
   min-width: 132px;
   overflow-wrap: anywhere;
   display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  padding-right: 22px;
 }
 
-.editorModule .propertyInput > label .info-button {
-  margin-left: 4px;
+/* pinned to the label's bottom-right corner instead of flowing inline with
+   the text - an inline hint glued after the last word has nowhere to go but
+   a line of its own once that word already fills the label's width. The
+   icon-only label (colorFlexRow swatches below) lays its hint out itself via
+   flex order and keeps it out of this rule. */
+.editorModule .propertyInput > label:not(.iconOnly) .info-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .editorModule .propertyInput input[type=text],
@@ -80,6 +91,26 @@
 
 .editorModule .checkboxInput > label {
   cursor: pointer;
+}
+
+/* plain checkbox + label rows (renderCheckbox helper): reserve room on the
+   right for the optional hint icon and pin it to the row's bottom-right
+   corner instead of letting it flow inline after the label - inline it has
+   nowhere to go but a line of its own once a long label already wraps. */
+.editorModule .checkboxRow {
+  position: relative;
+  padding-right: 22px;
+  margin: 4px 0;
+}
+
+.editorModule .checkboxRow label {
+  cursor: pointer;
+}
+
+.editorModule .checkboxRow .info-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 /* checkbox rendered as a compact switch: 40x24 track with a 20px knob.
@@ -302,6 +333,7 @@
 .editorModule .colorFlexRow .propertyInput > label {
   width: auto;
   min-width: 0;
+  padding-right: 0;
 }
 
 /* Color symbols are compact, but their names make the control clear to a
@@ -869,6 +901,7 @@
 .editorModule .propertyInlineRow .propertyInput > label:not(.switchbox) {
   width: auto;
   min-width: 0;
+  padding-right: 22px;
 }
 
 .editorModule .propertyInlineRow .propertyInput input[type=text],
