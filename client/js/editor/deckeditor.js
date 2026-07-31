@@ -1698,10 +1698,12 @@ class DeckEditor {
   }
 
   async alignObjects(property, lowerBound, upperBound, factor) {
+    // Flush first, measure afterwards: besides not absorbing a pending typed edit into this action, flushing
+    // can run a queued field edit that moves an object - the rects below have to describe the result of that.
+    await this.flushPendingCommits();
     const items = this.alignItems();
     if(items.length < 2)
       return;
-    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     const lower = Math.min(...items.map(item=>item.rect[lowerBound]));
     const target = lower + (Math.max(...items.map(item=>item.rect[upperBound])) - lower) * factor;
     for(const { object, rect } of items) {
@@ -1712,10 +1714,10 @@ class DeckEditor {
   }
 
   async distributeObjects(property, lowerBound, upperBound) {
+    await this.flushPendingCommits(); // flush before measuring, see alignObjects
     const items = this.alignItems();
     if(items.length < 3)
       return;
-    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     const sorted = [...items].sort((a,b)=>a.rect[lowerBound] - b.rect[lowerBound]);
     const start = sorted[0].rect[lowerBound];
     const span = Math.max(...items.map(item=>item.rect[upperBound])) - start;
@@ -1820,7 +1822,7 @@ class DeckEditor {
       // A disabled button receives no pointer events, so its own tooltip never opens - which is exactly the
       // state in which it needs to explain itself. The tooltip therefore sits on a wrapper around it instead.
       const wrapper = div(bar, 'deckEditorAlignButton');
-      wrapper.title = `${title}. Needs ${minSelected} or more selected: ctrl+click objects on the card or in the list, or ctrl+A to take the whole face.`;
+      wrapper.title = `${title}. Needs ${minSelected} or more visible objects selected: ctrl+click objects on the card or in the list, or ctrl+A to take the whole face.`;
       const button = document.createElement('button');
       button.id = id;
       button.setAttribute('icon', icon);
@@ -1832,10 +1834,16 @@ class DeckEditor {
     this.updateAlignToolbar();
   }
 
+  // Enabled from what align/distribute can actually act on, not from the raw selection: alignItems() leaves out
+  // objects without a visible box ("display: false"), so counting the selection would leave a button clickable
+  // that then does nothing - e.g. one visible object plus a hidden one.
   updateAlignToolbar() {
-    const selected = this._selectedObjects.length;
-    for(const button of $a('.deckEditorAlignToolbar button'))
-      button.disabled = selected < +button.dataset.minSelected;
+    const buttons = $a('.deckEditorAlignToolbar button');
+    if(!buttons.length)
+      return;
+    const usable = this.alignItems().length;
+    for(const button of buttons)
+      button.disabled = usable < +button.dataset.minSelected;
   }
 
   updateDragToolbar() {
@@ -2754,12 +2762,21 @@ class DeckEditor {
     input.disabled = !editable;
     input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")` : 'Text on every card';
     // Clicking/dragging inside the field must not start a row drag, but should still select this field's
-    // face object (and switch to its face) if it isn't already the selection.
-    input.onmousedown = e=>e.stopPropagation();
+    // face object (and switch to its face) if it isn't already the selection. The browser focuses the field on
+    // mousedown, so whether the user was already typing in it has to be remembered from before that.
+    let wasFocused = false;
+    input.onmousedown = e=>{
+      wasFocused = document.activeElement == input;
+      e.stopPropagation();
+    };
     input.onclick = e=>{
       e.stopPropagation();
       // The field covers most of its row, so it has to offer the row's Ctrl/Shift multi-select too - otherwise
-      // text objects could only ever be selected one at a time.
+      // text objects could only ever be selected one at a time. Inside the field the user is currently typing
+      // in, though, those clicks belong to the text: shift+click extends the caret selection there, and taking
+      // it over would rebuild the tree (afterSelectionChanged) and destroy the field mid-edit.
+      if(wasFocused && (e.shiftKey || e.ctrlKey || e.metaKey))
+        return;
       if(e.shiftKey)
         return this.extendObjectSelection(index, faceIndex, e.ctrlKey || e.metaKey);
       if(e.ctrlKey || e.metaKey)
@@ -2793,8 +2810,10 @@ class DeckEditor {
     box.append(input);
   }
 
-  // Copies every selected object, appending the copies after the last one so a copied group stays a group -
-  // and selects the copies, so the next drag moves them off their originals.
+  // Copies every selected object, putting the copies together right after the last one - so they stay a block
+  // that the next drag (they are the new selection) moves off the originals as a whole. A non-contiguous
+  // selection therefore comes back contiguous: the copies are drawn next to each other rather than each one
+  // right on top of its original.
   async copySelectedObject() {
     const face = this.faceTemplates[this.face];
     const indices = this.selectedObjectIndices();
@@ -2820,10 +2839,17 @@ class DeckEditor {
     if(!face || !Array.isArray(face.objects) || from === to || to < 0 || to >= face.objects.length)
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    const wasSelected = this.selectedObject === from;
     const [ object ] = face.objects.splice(from, 1);
     face.objects.splice(to, 0, object);
-    this.selectedObject = wasSelected ? to : null; // keep the dragged object selected if it was
+    // The whole selection follows the splice, so reordering one row doesn't drop objects that were picked up
+    // with ctrl+click: the dragged object lands on "to", everything it moved past shifts by one, the rest stays.
+    this._selectedObjects = this._selectedObjects.map(i=>{
+      if(i === from)
+        return to;
+      if(from < to)
+        return i > from && i <= to ? i-1 : i;
+      return i >= to && i < from ? i+1 : i;
+    });
     this.refreshMainCardFaces();
     await this.commit('faceTemplates', `${getPlayerDetails().playerName} reordered a face object of deck ${this.deckID} in deck editor`);
     this.render();
@@ -3034,7 +3060,9 @@ class DeckEditor {
       input.oninput = input.onchange = _=>{
         if(fieldType == 'number') {
           if(input.value.trim() === '') {
-            if(emptyIsZero) // face object properties: an erased number reads as 0
+            // Face object properties: an erased number reads as 0 - except in a "(mixed)" field, where empty is
+            // the state it started in, so clearing it again is "never mind" and must not write 0 to everything.
+            if(emptyIsZero && !mixed)
               onValueChanged(0);
             return; // otherwise a momentarily-empty field shouldn't commit 0 over the real value
           }

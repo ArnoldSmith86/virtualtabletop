@@ -796,6 +796,15 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     }
     return null;
   });
+  // A shift+click on the text field of a row that is already being typed in - focused first, so the click sees
+  // the field the way it does mid-edit. Returns whether the field kept the focus.
+  const shiftClickFocusedField = ClientFunction(row => {
+    const input = document.querySelectorAll('#deckEditorTree .deckEditorObjectRow')[row].querySelector('.deckEditorPreviewText');
+    input.focus();
+    input.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, shiftKey: true }));
+    input.dispatchEvent(new MouseEvent('click', { bubbles: true, shiftKey: true }));
+    return document.activeElement == input;
+  });
   const setSharedField = ClientFunction((label, value) => {
     const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
     for(let i = 0; i < rows.length; ++i) {
@@ -835,14 +844,32 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
   await t
     .click('#deckEditorAlignLeft')
     .click('#deckEditorDistributeV')
-    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3) // the selection survives
-    .pressKey('ctrl+a') // ...and Ctrl+A picks up the whole face, including the hidden object
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3); // the selection survives
+  await t.wait(700); // let the alignment's commit reach the server
+  const aligned = JSON.parse(await faceObjects());
+  await t
+    .expect(aligned[0].x).eql(aligned[1].x) // aligned left: one x for all three
+    .expect(aligned[1].x).eql(aligned[2].x)
+    // distributed vertically: equal gaps, i.e. equal steps since the three are equally tall (±1 for rounding)
+    .expect(Math.abs((aligned[1].y - aligned[0].y) - (aligned[2].y - aligned[1].y)) <= 1).ok()
+    .pressKey('ctrl+a') // Ctrl+A picks up the whole face, including the hidden object
     .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
 
   // a hidden object has no box on screen, so aligning must leave it where it is instead of moving it to where
   // its zero-sized rectangle appears to be
   await t.click('#deckEditorAlignLeft');
   await t.expect(JSON.parse(await faceObjects())[3].x).eql(200);
+
+  // ...and with nothing but that hidden object next to a single visible one there is nothing to align at all,
+  // so the button has to be disabled instead of being clickable and doing nothing
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(2)
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).ok()
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } }) // back to the whole face for the rows below
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
 
   // display is set on the hidden object only, so its row is a "(mixed)" checkbox - not a text field, which
   // would write the string "false"/"true" into every object
@@ -865,9 +892,25 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
     .expect(objectRow.nth(0).hasClass('selected')).notOk()
     .click(objectRow.nth(0), { modifiers: { ctrl: true, shift: true } })
-    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4)
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // Inside the text field that is currently being typed in, shift+click is the field's own "extend the caret
+  // selection" gesture: it must leave the object selection (and the focus) alone instead of rebuilding the tree.
+  await t
+    .click(objectRow.nth(1))
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(shiftClickFocusedField(3)).ok() // the field keeps the focus...
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3); // ...and the selection stands
+
+  // dragging one of the rows to a new position reorders the objects and carries the whole selection along
+  // instead of dropping it
+  await t
+    .dragToElement(objectRow.nth(3), objectRow.nth(0))
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
     .pressKey('esc');
-  await compareState(t, '5dee75f5433a4bf336dc282d3ebb30cc');
+  await compareState(t, '101012d22e8e8d136d73d75bc4d4a5f7');
 });
 
 test('Line widget in edit mode', async t => {
