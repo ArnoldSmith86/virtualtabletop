@@ -6,6 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
+import { facingRotation, resolveSeatOverrides, scheduleSeatViewRefresh, seatViewCurrentGeneration, seatViewMarkUsed, viewingPlayerName } from '../seatview.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
 // room - being a child of the line is the common shape, not a requirement. This
@@ -25,6 +26,15 @@ function linesWithStop(widgetID) {
 // has to follow, and a line carrying it as a stop has to re-space.
 const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
 const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ]);
+
+// Properties that can change which per-seat presentation a widget resolves to.
+// Anything else only needs the widget's own cached overrides re-applied, which
+// the normal delta path already does.
+const seatViewRelevantProperties = new Set([ 'counterRotate', 'facing', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'seatOverrides' ]);
+
+// Using any of these anywhere in the room switches the per-seat view machinery
+// on for this client.
+const seatViewEnablingProperties = new Set([ 'facing', 'seatOverrides', 'viewOverrides', 'viewRotation' ]);
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -130,6 +140,10 @@ export class Widget extends StateManaged {
       linkedToSeat: null,
       onlyVisibleForSeat: null,
       hoverInheritVisibleForSeat: true,
+
+      facing: null,
+      seatOverrides: null,
+      counterRotate: true,
 
       clickRoutine: null,
       doubleClickRoutine: null,
@@ -238,13 +252,20 @@ export class Widget extends StateManaged {
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
     }
 
+    for(const key in delta) {
+      if(seatViewEnablingProperties.has(key) && delta[key] !== null)
+        seatViewMarkUsed();
+      if(seatViewRelevantProperties.has(key))
+        scheduleSeatViewRefresh();
+    }
+
     this.applyCSS(delta);
     
     if(delta.z !== undefined)
       this.applyZ(true);
 
     if(delta.movable !== undefined)
-      this.isDraggable = delta.movable;
+      this.isDraggable = this.getView('movable');
 
     if(newParent !== undefined) {
       if(this.parent)
@@ -396,6 +417,32 @@ export class Widget extends StateManaged {
     this.applyRemove();
   }
 
+  // Second pass of a seat view refresh: fold in the rotation contributed by
+  // ancestors (which needed every widget's own overrides resolved first) and
+  // render if the presentation actually changed.
+  applySeatView(force) {
+    const previous = this.seatView;
+    const overrides = this.seatViewResolved || {};
+
+    this.seatViewRotationDelta = this.seatViewExtraRotation() - this.seatViewOwnRotation + this.seatViewFacing;
+
+    // A widget this client draws somewhere else must not be dragged: the drag
+    // would write the personal coordinates into the shared state and move it
+    // for everybody. Its children are unaffected - they are positioned inside
+    // it, so they keep dragging in the widget's own coordinate system.
+    if(overrides.x !== undefined || overrides.y !== undefined)
+      overrides.movable = false;
+
+    this.seatView = Object.keys(overrides).length ? overrides : null;
+    if(force || this.seatViewRotationDelta != this.appliedSeatViewRotationDelta || JSON.stringify(previous) !== JSON.stringify(this.seatView)) {
+      this.appliedSeatViewRotationDelta = this.seatViewRotationDelta;
+      this.domElement.className = this.classes();
+      this.domElement.style.cssText = mapAssetURLs(this.css());
+      this.targetTransform = this.domElement.style.transform;
+      this.isDraggable = this.getView('movable');
+    }
+  }
+
   applyZ(force) {
     if(force || this.get('inheritChildZ')) {
       this.domElement.style.zIndex = this.calculateZ();
@@ -440,12 +487,13 @@ export class Widget extends StateManaged {
   }
 
   classes(includeTemporary = true) {
-    let className = this.get('typeClasses') + ' ' + this.get('classes');
+    let className = this.get('typeClasses') + ' ' + this.getView('classes');
+    const viewer = viewingPlayerName();
 
     const owner = this.get('owner');
-    if(Array.isArray(owner) && owner.indexOf(playerName) == -1)
+    if(Array.isArray(owner) && owner.indexOf(viewer) == -1)
       className += ' foreign';
-    if(typeof owner == 'string' && owner != playerName)
+    if(typeof owner == 'string' && owner != viewer)
       className += ' foreign';
 
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
@@ -457,7 +505,7 @@ export class Widget extends StateManaged {
 
     let invisible = onlyVisibleForSeat !== null;
     for(const seatID of asArray(onlyVisibleForSeat) || []) {
-      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+      if(widgets.has(seatID) && widgets.get(seatID).get('player') == viewer) {
         invisible = false;
         break;
       }
@@ -466,7 +514,7 @@ export class Widget extends StateManaged {
       className += ' foreign';
 
     const linkedToSeat = this.get('linkedToSeat');
-    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == viewer).length)
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
@@ -482,16 +530,16 @@ export class Widget extends StateManaged {
     if (this.get('dropShadowOwner'))
       className += ' dragging-shadow';
 
-    if(this.get('clickable'))
+    if(this.getView('clickable'))
       className += ' clickable';
 
-    if(this.get('movable') )
+    if(this.getView('movable') )
       className += ' movable';
 
     if(this.get('enlarge'))
       className += ' enlarge';
 
-    if(!this.get('display') && this.get('type') != 'seat') // seats already have a display property that does something else
+    if(!this.getView('display') && this.get('type') != 'seat') // seats already have a display property that does something else
       className += ' hidden';
 
     if(this.isHighlighted)
@@ -577,12 +625,26 @@ export class Widget extends StateManaged {
     }
   }
 
-  coordGlobalFromCoordLocal(coord) {
-    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
+  // First pass of a seat view refresh: resolve this widget's own overrides.
+  computeSeatView() {
+    this.seatViewResolved = resolveSeatOverrides(this);
+    // Only an explicit rotation override re-orients a container, so only that
+    // is what descendants counter-rotate against. facing is left out on
+    // purpose: turning the content is exactly what it is for.
+    this.seatViewOwnRotation = this.seatViewResolved.rotation !== undefined ? this.seatViewResolved.rotation - this.get('rotation') : 0;
+    this.seatViewFacing = facingRotation(this);
   }
-  coordGlobalFromCoordParent(coord) {
+
+  // shared == true measures in the room's shared coordinate system, ignoring
+  // any per-seat presentation. Reads that game logic can observe use it; the
+  // drag and drop code deliberately does not, so dropping lands where it looks
+  // like it lands.
+  coordGlobalFromCoordLocal(coord, shared = false) {
+    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord, shared), shared);
+  }
+  coordGlobalFromCoordParent(coord, shared = false) {
     const p = this.get('parent');
-    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
+    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord, shared) : coord;
   }
   coordGlobalInside(coord) {
     const coordLocal = this.coordLocalFromCoordGlobal(coord);
@@ -603,8 +665,8 @@ export class Widget extends StateManaged {
     const p = this.get('parent');
     return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
-  coordParentFromCoordLocal(coord) {
-    const transform = getElementTransform(this.domElement);
+  coordParentFromCoordLocal(coord, shared = false) {
+    const transform = getElementTransform(this.domElement, shared ? this.sharedTransform() : null);
     return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
   }
 
@@ -626,12 +688,12 @@ export class Widget extends StateManaged {
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     const usedProperties = new Set();
-    let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
+    let css = this.cssReplaceProperties(this.cssAsText(this.getView('css'), usedProperties), usedProperties);
     this.propertiesUsedInProperty['css'] = Array.from(usedProperties);
 
     css = this.cssBorderRadius() + css;
-    css += '; width:'  + this.get('width')  + 'px';
-    css += '; height:' + this.get('height') + 'px';
+    css += '; width:'  + this.getView('width')  + 'px';
+    css += '; height:' + this.getView('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
 
@@ -653,7 +715,7 @@ export class Widget extends StateManaged {
   }
 
   cssBorderRadius() {
-    let br = this.get('borderRadius');
+    let br = this.getView('borderRadius');
     switch(typeof(br)) {
       case 'number':
         if(br >= 0)
@@ -714,10 +776,11 @@ export class Widget extends StateManaged {
     return this.cssAsText(css.inline || '', usedProperties);
   }
 
-  cssTransform() {
-    let x = this.get('x');
-    let y = this.get('y');
-    let scaleValue = this.get('scale');
+  cssTransform(shared = false) {
+    let x = shared ? this.get('x') : this.getView('x');
+    let y = shared ? this.get('y') : this.getView('y');
+    let scaleValue = shared ? this.get('scale') : this.getView('scale');
+    const rotation = shared ? this.get('rotation') : this.getView('rotation') + (this.seatViewRotationDelta || 0);
 
     if(this.get('ignoreZoom')) {
       const computedStyle = getComputedStyle(document.documentElement);
@@ -739,8 +802,8 @@ export class Widget extends StateManaged {
 
     let transform = `translate(${x}px, ${y}px)`;
 
-    if(this.get('rotation'))
-      transform += ` rotate(${this.get('rotation')}deg)`;
+    if(rotation)
+      transform += ` rotate(${rotation}deg)`;
     if(scaleValue != 1)
       transform += ` scale(${scaleValue})`;
 
@@ -2341,23 +2404,32 @@ export class Widget extends StateManaged {
         case '_absoluteScale':
           return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
         case '_absoluteX':
-          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')}, true)['x'];
         case '_absoluteY':
-          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')}, true)['y'];
         case '_ancestor':
           return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
         case '_centerAbsoluteX':
-          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2}, true)['x'];
         case '_centerAbsoluteY':
-          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2}, true)['y'];
         case '_localOriginAbsoluteX':
-          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+          return this.coordGlobalFromCoordLocal({x:0,y:0}, true)['x'];
         case '_localOriginAbsoluteY':
-          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+          return this.coordGlobalFromCoordLocal({x:0,y:0}, true)['y'];
         default:
           return super.get(property);
       }
     }
+  }
+
+  // The value this client renders with. Identical to get() unless a seat view
+  // overrides the property - and get() is what everything else keeps using, so
+  // the override can never reach a routine, the delta stream or a save file.
+  getView(property) {
+    if(this.seatView && this.seatView[property] !== undefined)
+      return this.seatView[property];
+    return this.get(property);
   }
 
   getWithPropertyReplacements(property, valueOverride) {
@@ -2940,6 +3012,38 @@ export class Widget extends StateManaged {
         await this.set('text', text);
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
+  }
+
+  // How much extra rotation this widget passes down to its children. Only an
+  // explicit per-seat rotation override counts, plus whatever this widget had
+  // to undo for its own ancestors.
+  seatViewExtraRotation() {
+    const own = this.seatViewOwnRotation || 0;
+    if(this.get('counterRotate') === false)
+      return own;
+    return own - this.seatViewInheritedRotation();
+  }
+
+  seatViewInheritedRotation() {
+    if(this.seatViewGeneration === seatViewCurrentGeneration())
+      return this.seatViewInherited;
+
+    // set before recursing so a parent cycle terminates instead of hanging
+    this.seatViewGeneration = seatViewCurrentGeneration();
+    this.seatViewInherited = 0;
+
+    const p = this.get('parent');
+    if(p && widgets.has(p)) {
+      const parent = widgets.get(p);
+      this.seatViewInherited = parent.seatViewInheritedRotation() + parent.seatViewExtraRotation();
+    }
+    return this.seatViewInherited;
+  }
+
+  // The transform this widget would have without any per-seat presentation,
+  // or null when there is nothing to undo.
+  sharedTransform() {
+    return this.seatView || this.seatViewRotationDelta ? this.cssTransform(true) : null;
   }
 
   showEnlarged(event, delta) {

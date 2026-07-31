@@ -21,6 +21,7 @@ function initializeEditor(currentMetaData) {
     new SelectModeButton(),
     new ZoomOutButton(),
     new ToggleDisplayButton(),
+    new SeatViewButton(),
 
     new ToolbarDivider(),
 

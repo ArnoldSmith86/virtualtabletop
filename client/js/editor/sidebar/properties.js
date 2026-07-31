@@ -356,6 +356,8 @@ const editorPropertyHints = {
   totalsLabel: 'Heading shown for the totals.',
   editPaneTitle: 'Title of the pane that opens when entering a score.',
   borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
+  facing: 'Turns the widget so it reads upright from a chosen chair, using that seat\'s view rotation. Everybody else keeps seeing it at its normal rotation. This only changes how it looks - the stored rotation never changes.',
+  viewRotation: 'How far content has to be turned to read upright from this seat, e.g. 180 for a seat at the far side of the table. Leave empty to use the seat widget\'s own rotation.',
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
@@ -3599,7 +3601,7 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
-    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
+    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat', 'facing' ], container => {
       const seatSection = this.createOnDemandSectionStructure(container);
 
       this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {
@@ -3607,6 +3609,16 @@ class PropertiesModule extends SidebarModule {
         pickerKey: 'linkedToSeat',
         infoText: 'Widgets linked to a seats are only visible when a player ocupies that seat. Use this to decluster the board when fewer players are present.'
       });
+
+      new SelectInput(this, widget, 'Reads upright for', {
+        property: 'facing',
+        hint: editorPropertyHints.facing,
+        choices: [
+          { value: null, text: 'nobody in particular' },
+          { value: 'owner', text: 'the seat it belongs to' },
+          { value: 'viewer', text: 'whoever is looking at it' }
+        ]
+      }).render(seatSection.contentWrapper);
 
       this.renderOnDemandSection(widget, 'change visibility', [ 'onlyVisibleForSeat' ], nestedContainer => {
         this.renderSeatVisibilityInput(widget, nestedContainer);
@@ -3621,6 +3633,7 @@ class PropertiesModule extends SidebarModule {
         setDeltaCause(`${getPlayerDetails().playerName} removed seat links of widget ${widget.id} in editor`);
         widget.set('linkedToSeat', null);
         widget.set('onlyVisibleForSeat', null);
+        widget.set('facing', null);
         batchEnd();
       }
     });
@@ -4493,6 +4506,7 @@ class PropertiesModule extends SidebarModule {
     new CheckboxInput(this, widget, 'Has the turn', { property: 'turn', hint: 'This is a temporary value that can be changed by automations in the game.' }).render(indexRow);
 
     this.renderSeatHandInput(widget);
+    new NumberOrTextInput(this, widget, 'View rotation', { property: 'viewRotation', hint: editorPropertyHints.viewRotation }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Ignore this seat in turns', { property: 'skipTurn', hint: editorPropertyHints.skipTurn }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
 
@@ -4507,7 +4521,7 @@ class PropertiesModule extends SidebarModule {
     });
     this.renderSeatColorMode(widget);
 
-    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'color', 'colorEmpty' ]);
+    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'color', 'colorEmpty', 'viewRotation' ]);
   }
 
   // Style presets for seats: "Classic" is the plain default seat; "Background

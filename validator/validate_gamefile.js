@@ -41,7 +41,10 @@ const validators = {
     any: v=>true
 };
 
-const FACE_OBJECT_COMMON_PROPS = ['type', 'x', 'y', 'width', 'height', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'value', 'note'];
+// Non-seat-id keys of seatOverrides, mirroring seatViewKeys in client/js/seatview.js
+const SEAT_VIEW_KEYS = [ 'all', 'others', 'owner', 'noSeat' ];
+
+const FACE_OBJECT_COMMON_PROPS =['type', 'x', 'y', 'width', 'height', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'value', 'note'];
 
 const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
@@ -95,6 +98,9 @@ const COMMON_PROPERTIES = {
     linkedToSeat: 'idArray',
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
+    facing: v=>v === null || v === 'owner' || v === 'viewer' || 'facing must be "owner" or "viewer"',
+    seatOverrides: getSeatOverridesValidator(),
+    counterRotate: 'boolean',
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
@@ -150,7 +156,8 @@ const WIDGET_PROPERTIES = {
     },
     Seat: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', movable: 'boolean', index: 'any', turn: 'any', skipTurn: 'any', player: 'any', display: 'any', displayEmpty: 'any', hideTurn: 'any', hideWhenUnused: 'any', hand: 'id', color: 'any', colorEmpty: 'any', layer: 'any', borderRadius: 'any'
+        typeClasses: 'any', movable: 'boolean', index: 'any', turn: 'any', skipTurn: 'any', player: 'any', display: 'any', displayEmpty: 'any', hideTurn: 'any', hideWhenUnused: 'any', hand: 'id', color: 'any', colorEmpty: 'any', layer: 'any', borderRadius: 'any',
+        viewRotation: v=>v === null || typeof v === 'number' || 'number expected', viewOverrides: getSeatOverridesValidator(true)
     },
     Spinner: {
         ...COMMON_PROPERTIES,
@@ -562,6 +569,38 @@ function validateRoutine(routine, context, propertyPath = []) {
 
 function getEnumValidator(values) {
     return v=>values.includes(v) || `'${v}' is not in the allowed list of values: ${values.join(', ')}`;
+}
+
+// Presentation-only properties a seat may override. Kept in sync with
+// seatViewProperties in client/js/seatview.js - anything a routine reads has to
+// stay out of it, otherwise clients would disagree about the game state.
+const SEAT_VIEW_PROPERTIES = [ 'x', 'y', 'rotation', 'scale', 'width', 'height', 'borderRadius', 'css', 'classes', 'display', 'movable', 'clickable' ];
+
+// seatOverrides maps a seat selector to overrides, viewOverrides (on a seat)
+// maps a widget id to overrides. The shape is the same, only the keys differ.
+function getSeatOverridesValidator(keysAreWidgetIDs = false) {
+    return (v, context, propertyPath = [])=>{
+        if(v === null)
+            return true;
+        if(typeof v !== 'object' || Array.isArray(v))
+            return 'object expected';
+
+        const problems = [];
+        for(const [ key, overrides ] of Object.entries(v)) {
+            if(keysAreWidgetIDs && !context.widgets[key] && !String(key).includes('$'))
+                problems.push({ widget: context.widgetId, property: [ ...propertyPath, key ], message: `Widget "${key}" not found` });
+            if(!keysAreWidgetIDs && !SEAT_VIEW_KEYS.includes(key) && !String(key).match(/^[-+][0-9]+$/) && !context.widgets[key] && !String(key).includes('$'))
+                problems.push({ widget: context.widgetId, property: [ ...propertyPath, key ], message: `"${key}" is neither a seat widget id nor one of ${SEAT_VIEW_KEYS.join(', ')} or a seat offset like +1` });
+            if(typeof overrides !== 'object' || overrides === null || Array.isArray(overrides)) {
+                problems.push({ widget: context.widgetId, property: [ ...propertyPath, key ], message: 'object of property overrides expected' });
+                continue;
+            }
+            for(const property in overrides)
+                if(!SEAT_VIEW_PROPERTIES.includes(property))
+                    problems.push({ widget: context.widgetId, property: [ ...propertyPath, key, property ], message: `'${property}' cannot be overridden per seat. Allowed: ${SEAT_VIEW_PROPERTIES.join(', ')}` });
+        }
+        return problems.length ? problems : true;
+    };
 }
 
 function getRoutineValidator(variables, collections, isolateContext = true) {

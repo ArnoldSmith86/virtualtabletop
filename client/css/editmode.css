@@ -290,3 +290,9 @@
   flex-flow: row wrap;
   column-gap: 0.7em;
 }
+
+/* "Preview as seat" is a personal view of a shared room - make that obvious */
+body.seatViewPreview #room {
+  outline: 4px dashed #e8a33d;
+  outline-offset: -4px;
+}

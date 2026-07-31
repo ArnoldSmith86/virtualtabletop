@@ -51,6 +51,11 @@
   display: block;
 }
 
+/* a tooltip hangs below the toolbar and must not swallow clicks on what is under it */
+#editorToolbar button span, #editorDragToolbar button span {
+  pointer-events: none;
+}
+
 #editorToolbar .divider, #editorDragToolbar .divider {
   border-left: 1px solid #fff8;
   margin: 5px;
@@ -91,4 +96,21 @@ body.compactEditorToolbar #editorToolbar button::before {
 .saveContent {
   display: flex;
   flex-direction: column;
+}
+
+.seatViewContent {
+  display: flex;
+  flex-direction: column;
+  max-height: 50vh;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+
+.seatViewContent button.active {
+  font-weight: bold;
+}
+
+.seatViewEmpty {
+  padding: 5px;
+  font-style: italic;
 }

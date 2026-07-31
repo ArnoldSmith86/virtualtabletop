@@ -1845,6 +1845,16 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
               jeStateNow[property] = '###SELECT ME###';
               jeSetAndSelect({});
             }
+        : property == 'facing' ? // Special case: null is a valid value but a useless starting point
+            async function() {
+              jeStateNow.facing = '###SELECT ME###';
+              jeSetAndSelect('owner');
+            }
+        : property == 'seatOverrides' || property == 'viewOverrides' ? // Special case: insert a skeleton instead of null
+            async function() {
+              jeStateNow[property] = { '###SELECT ME###': {} };
+              jeSetAndSelect(property == 'seatOverrides' ? 'others' : 'widgetID');
+            }
         : async function() {
              jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
            },

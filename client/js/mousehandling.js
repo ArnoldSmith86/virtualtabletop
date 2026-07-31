@@ -87,12 +87,14 @@ async function inputHandler(name, e) {
         moveTarget: widget
       };
       const ms = mouseStatus[target.id];
-      let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+      // getView so a per-seat "movable" override applies to this client's input
+      // only - routines and the shared state keep seeing the real value
+      let movable = editMovable ? ms.moveTarget.get('movableInEdit') : ms.moveTarget.getView('movable');
       while (ms.moveTarget && !movable) {
         let parent = ms.moveTarget.get('parent');
         if(parent && widgets.has(parent)) {
           ms.moveTarget = widgets.get(parent);
-          movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+          movable = editMovable ? ms.moveTarget.get('movableInEdit') : ms.moveTarget.getView('movable');
         } else {
           ms.moveTarget = null;
           movable = false;
@@ -116,7 +118,10 @@ async function inputHandler(name, e) {
         else if(jeEnabled && !isMiddleMouseButton)
           editClickHandled = await jeClick(widget, e);
 
-        if(!editClickHandled) {
+        // a per-seat clickable override gates this client's input only; a
+        // routine calling click() keeps seeing the shared value
+        const seatViewBlocksClick = widget.get('clickable') && !widget.getView('clickable');
+        if(!editClickHandled && !seatViewBlocksClick) {
           if(!target.classList.contains('longtouch')) {
             if(!widget.get('doubleClickRoutine')) {
               setDeltaCause(`${playerName} clicked ${widget.id}`);

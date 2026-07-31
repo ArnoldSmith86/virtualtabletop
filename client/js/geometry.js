@@ -60,7 +60,10 @@ export function getTransformOrigin(elem) {
   return {x: lengths[0], y: lengths[1]};
 }
 
-export function getElementTransform(elem) {
+// transformOverride replaces the element's rendered transform with a CSS
+// transform list of the caller's choosing. Per-seat views use it to measure in
+// the room's shared coordinate system instead of the personal one.
+export function getElementTransform(elem, transformOverride = null) {
   let transform = new DOMMatrix();
   const computedStyle = getComputedStyle(elem);
   const computedPerspective = computedStyle.perspective;
@@ -72,11 +75,11 @@ export function getElementTransform(elem) {
     transform.multiplySelf(new DOMMatrix([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -1/perspective, 0, 0, 0, 1]));
     transform.translateSelf(-perspectiveOrigin[0], -perspectiveOrigin[1]);
   }
-  const computedTransform = computedStyle.transform;
-  if (computedTransform !='none') {
+  const computedTransform = transformOverride !== null ? transformOverride : computedStyle.transform;
+  if (computedTransform !='none' && computedTransform != '') {
     const transformOrigin = parseLengths(computedStyle.transformOrigin);
     transform.translateSelf(transformOrigin[0], transformOrigin[1]);
-    transform.multiplySelf(new DOMMatrix(computedStyle.transform));
+    transform.multiplySelf(new DOMMatrix(computedTransform));
     transform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
   }
   transform.translateSelf(elem.offsetLeft, elem.offsetTop);
