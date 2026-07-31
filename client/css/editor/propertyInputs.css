@@ -1377,6 +1377,29 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   min-width: auto;
 }
 
+/* The options have the same controls as a basic-widget icon, but no repeated
+   section title: they belong to one compact dice face row. */
+.editorModule .diceFaceIconOptions .iconBasicOptionsRow {
+  gap: 6px;
+}
+
+.editorModule .diceFaceCssToggle {
+  white-space: nowrap;
+}
+
+.editorModule .diceFaceCSS {
+  margin-top: 4px;
+}
+
+.editorModule .diceFaceCSS textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editorModule .diceImageScale {
+  margin: 4px 0;
+}
+
 /* per-face color pickers open below the row instead of inside it */
 .editorModule .diceFacePickers:not(:empty) {
   margin-top: 4px;

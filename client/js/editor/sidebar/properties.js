@@ -6164,9 +6164,6 @@ class PropertiesModule extends SidebarModule {
   renderOtherPropertiesSection(widget, extraExclude = []) {
     const automationProperties = this.renderAutomationsSection(widget);
     const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
-    const remaining = Object.keys(widget.state).filter(property => [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1);
-    if(!remaining.length)
-      return;
     this.addSubHeader('Other properties');
     this.renderGenericProperties(widget, exclude);
   }
@@ -7978,9 +7975,11 @@ class PropertiesModule extends SidebarModule {
   // Appearance color row of a basic widget
   diceFaceColorDefs() {
     return [
-      { key: 'color',       label: 'Background', labelIcon: 'format_color_fill' },
-      { key: 'pipColor',    label: 'Pips/icon',  labelIcon: 'format_color_text' },
-      { key: 'borderColor', label: 'Border',     labelIcon: 'border_color' }
+      // These roles are immediately clear from their labels and swatches, so
+      // do not add the generic color-property help icon to every dice face.
+      { key: 'color',       label: 'Background', labelIcon: 'format_color_fill', hint: null },
+      { key: 'pipColor',    label: 'Pips/icon',  labelIcon: 'format_color_text', hint: null },
+      { key: 'borderColor', label: 'Border',     labelIcon: 'border_color', hint: null }
     ];
   }
 
@@ -8044,7 +8043,7 @@ class PropertiesModule extends SidebarModule {
       sharedColors.innerHTML = '';
       const shared = colorDefs.filter(def=>locks[def.key]);
       if(shared.length)
-        this.renderColorRow(widget, shared.map(def=>({ kind: 'color', label: def.label, labelIcon: def.labelIcon, property: def.key })), sharedColors);
+        this.renderColorRow(widget, shared.map(def=>({ kind: 'color', label: def.label, labelIcon: def.labelIcon, property: def.key, hint: def.hint })), sharedColors);
       else
         div(sharedColors, 'diceFaceHint', 'Every face has its own colors below.');
     };
@@ -8108,6 +8107,37 @@ class PropertiesModule extends SidebarModule {
     });
     for(const p of [ 'shape3d', 'color', 'pipColor', 'borderColor', 'pipSymbols' ])
       this.addPropertyListener(widget, p, _=>this.refreshDiceFacePreviews(widget, facesContainer));
+
+    // imageScale is the default that every image face inherits. It is kept
+    // next to the list so a designer can make all image faces the same size
+    // without opening each one; setting it clears face-specific overrides.
+    const imageScale = div(this.moduleDOM, 'diceImageScale');
+    const imageScaleInput = new NumberInput(this, widget, 'Image scale', {
+      min: 0.1,
+      max: 5,
+      step: 0.05,
+      getValue: _=>widgetOwnValue(widget, 'imageScale'),
+      setValue: value=>{
+        const faces = this.diceFaces(widget);
+        let hadOverrides = false;
+        for(const face of faces)
+          if(isObjectLike(face) && face.imageScale !== undefined) {
+            delete face.imageScale;
+            hadOverrides = true;
+          }
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} set image scale of every face of dice ${widget.id} in editor`);
+        widget.set('imageScale', value);
+        if(hadOverrides)
+          widget.set('faces', faces);
+        batchEnd();
+      },
+      hint: 'Scale used by every image face. A face can override it with its own Scale below.'
+    });
+    imageScaleInput.render(imageScale);
+    const updateImageScaleVisibility = _=>imageScale.style.display = this.diceFaces(widget).some(face=>this.diceFaceType(widget, face) == 'image') ? '' : 'none';
+    this.addPropertyListener(widget, 'faces', updateImageScaleVisibility);
+    updateImageScaleVisibility();
   }
 
   renderDiceFacePreview(widget, index, target) {
@@ -8198,10 +8228,41 @@ class PropertiesModule extends SidebarModule {
       new NumberInput(this, widget, 'Pips', { min: 0, max: 9, step: 1, listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
     else if(type == 'text')
       new TextInput(this, widget, 'Text', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
-    else if(type == 'icon')
-      new IconInput(this, widget, 'Icon', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
-    else if(type == 'image')
+    else if(type == 'icon') {
+      const iconInput = new IconInput(this, widget, 'Icon', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue });
+      iconInput.render(controls);
+
+      // Dice icons use the same object form as the main icon property. Keep
+      // its color/scale controls beside the face's picker, without repeating
+      // the larger Content-section heading used by basic widgets.
+      const iconOptions = div(controls, 'diceFaceIconOptions');
+      const renderIconOptions = _=>{
+        if(iconOptions.contains(document.activeElement))
+          return;
+        iconOptions.innerHTML = '';
+        const value = getFaceValue();
+        if(iconSupportsBasicOptions(value))
+          iconInput.renderIconOptionControls(iconOptions, value);
+      };
+      this.addPropertyListener(widget, 'faces', renderIconOptions);
+      renderIconOptions();
+    } else if(type == 'image') {
       new ImageInput(this, widget, 'Image', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+
+      new NumberInput(this, widget, 'Scale', {
+        min: 0.1,
+        max: 5,
+        step: 0.05,
+        nullIfEmpty: true,
+        placeholder: String(widgetOwnValue(widget, 'imageScale') || 0.8),
+        listenTo: [ 'faces', 'imageScale' ],
+        getValue: _=>{
+          const face = this.diceFaces(widget)[index];
+          return isObjectLike(face) && face.imageScale !== undefined ? face.imageScale : null;
+        },
+        setValue: value=>this.setDiceFaceProperty(widget, index, 'imageScale', value)
+      }).render(controls);
+    }
 
     // per-face colors for whichever properties are unlocked, as the same
     // compact icon swatches as the Appearance color row; their pickers open
@@ -8218,16 +8279,64 @@ class PropertiesModule extends SidebarModule {
           const face = this.diceFaces(widget)[index];
           return (typeof face == 'object' && face !== null && face[def.key] !== undefined) ? face[def.key] : null;
         },
-        setValue: v=>{
-          const faces = this.diceFaces(widget);
-          if(typeof faces[index] != 'object' || faces[index] === null)
-            faces[index] = this.buildDiceFace(this.diceFaceType(widget, faces[index]), this.diceFaceValue(widget, faces[index], this.diceFaceType(widget, faces[index])), faces[index]);
-          if(v == null) delete faces[index][def.key];
-          else faces[index][def.key] = v;
-          this.setFacesProperty(widget, faces);
-        }
+        setValue: v=>this.setDiceFaceProperty(widget, index, def.key, v)
       }).render(colorRow);
     }
+
+    const cssToggle = document.createElement('button');
+    cssToggle.setAttribute('icon', 'css');
+    cssToggle.className = 'diceFaceCssToggle';
+    cssToggle.textContent = 'Face CSS';
+    cssToggle.title = 'Add or edit CSS declarations for this face';
+    controls.appendChild(cssToggle);
+
+    const cssHost = div(row, 'diceFaceCSS');
+    const renderFaceCSS = visible=>{
+      cssHost.innerHTML = '';
+      if(!visible)
+        return;
+      const wrap = div(cssHost, 'facePropertyStructured');
+      const label = document.createElement('label');
+      label.textContent = 'Face CSS';
+      wrap.appendChild(label);
+      const textarea = document.createElement('textarea');
+      textarea.placeholder = 'property: value;';
+      const getValue = _=>{
+        const face = this.diceFaces(widget)[index];
+        return isObjectLike(face) ? face.faceCSS : null;
+      };
+      const update = _=>{
+        if(document.activeElement === textarea)
+          return;
+        textarea.value = cssTextFromValue(getValue());
+        textarea.rows = Math.max(2, Math.min(8, textarea.value.split('\n').length));
+        textarea.classList.remove('inputError');
+      };
+      textarea.oninput = _=>{
+        const current = getValue();
+        if(isObjectLike(current)) {
+          if(textarea.value.trim() && !cssStringRoundTrips(textarea.value)) {
+            textarea.classList.add('inputError');
+            return;
+          }
+          textarea.classList.remove('inputError');
+          this.setDiceFaceProperty(widget, index, 'faceCSS', cssStringToObject(textarea.value));
+        } else {
+          this.setDiceFaceProperty(widget, index, 'faceCSS', textarea.value);
+        }
+      };
+      wrap.appendChild(textarea);
+      this.addPropertyListener(widget, 'faces', update);
+      update();
+    };
+    let cssOpen = isObjectLike(this.diceFaces(widget)[index]) && this.diceFaces(widget)[index].faceCSS !== undefined;
+    cssToggle.onclick = _=>{
+      cssOpen = !cssOpen;
+      cssToggle.classList.toggle('selected', cssOpen);
+      renderFaceCSS(cssOpen);
+    };
+    cssToggle.classList.toggle('selected', cssOpen);
+    renderFaceCSS(cssOpen);
 
     const remove = document.createElement('button');
     remove.setAttribute('icon', 'delete');
@@ -8235,6 +8344,23 @@ class PropertiesModule extends SidebarModule {
     remove.title = 'Remove this face';
     remove.onclick = _=>this.removeFace(widget, this.diceFaces(widget), index, (faces, activeFace)=>this.setFacesProperty(widget, faces, activeFace));
     actions.appendChild(remove);
+  }
+
+  // Add or clear one non-content property of a dice face while retaining the
+  // original pips/text/icon/image value if that face was previously compact.
+  setDiceFaceProperty(widget, index, property, value) {
+    const faces = this.diceFaces(widget);
+    if(index < 0 || index >= faces.length)
+      return;
+    if(!isObjectLike(faces[index])) {
+      const type = this.diceFaceType(widget, faces[index]);
+      faces[index] = this.buildDiceFace(type, this.diceFaceValue(widget, faces[index], type), faces[index]);
+    }
+    if(value === null || value === undefined)
+      delete faces[index][property];
+    else
+      faces[index][property] = value;
+    this.setFacesProperty(widget, faces);
   }
 
   // Remove one face and keep the widget showing the same one: every face
@@ -9709,6 +9835,22 @@ class PropertiesModule extends SidebarModule {
 
       this.inputUpdaters[widget.id][property].push(input.setValue);
     }
+
+    // The generic editor used to appear only after a game already had an
+    // uncategorized property, which made it a dead end for adding one. Start
+    // a text value; its own type selector immediately offers the same values
+    // (number, boolean, null, object/array) as every existing generic row.
+    this.renderSuggestionAddRow(this.moduleDOM, 'genericAddPropertyRow', {
+      placeholder: 'new property',
+      title: 'Add property',
+      suggestions: [],
+      onAdd: property=>{
+        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
+          return false;
+        this.inputValueUpdated(widget, property, '');
+        this.onSelectionChangedWhileActive([ widget ]);
+      }
+    });
   }
 
     renderObscureProperties(widget, specs) {

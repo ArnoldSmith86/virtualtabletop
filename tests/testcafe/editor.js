@@ -102,6 +102,50 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   await t.expect(result.y).notEql(200);
 });
 
+test('Dice faces have their own icon, image scale and CSS controls', async t => {
+  await setRoomState({
+    die: {
+      id: 'die', type: 'dice', x: 200, y: 200, width: 100, height: 100,
+      faces: [ { icon: 'casino' }, { image: '/i/game-pieces/2D/Checkers-2D.svg', imageScale: 1.4 } ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const diceState = ClientFunction(() => JSON.stringify(widgets.get('die').state));
+  const setAllImageScale = ClientFunction(() => {
+    const input = document.querySelector('#editorModules .diceImageScale input');
+    input.value = '0.7';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const rows = Selector('#editorModules .diceFaceRow');
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_die')
+    // Background, pips/icon and border no longer repeat generic color help.
+    .expect(Selector('#editorModules .diceSharedColors .info-button').count).eql(0)
+    // An icon face gets the compact object-form color/scale controls.
+    .expect(rows.nth(0).find('.diceFaceIconOptions input[type=color]').exists).ok()
+    .typeText(rows.nth(0).find('.diceFaceIconOptions input[type=number]'), '1.5', { replace: true })
+    .expect(diceState()).contains('{"icon":{"name":"casino","scale":1.5}}')
+    // An image face has a local override, while the all-faces control removes
+    // it and writes the shared dice property.
+    .expect(rows.nth(1).find('.numberInput input').value).eql('1.4');
+  await setAllImageScale();
+  await t
+    .expect(diceState()).contains('"imageScale":0.7')
+    .expect(diceState()).notContains('"image":"/i/game-pieces/2D/Checkers-2D.svg","imageScale"')
+    // Face CSS stays on the one face, not on the dice as a whole.
+    .click(rows.nth(0).find('.diceFaceCssToggle'))
+    .typeText(rows.nth(0).find('.diceFaceCSS textarea'), 'opacity: 0.5')
+    .expect(diceState()).contains('"faceCSS":"opacity: 0.5"')
+    // Other properties is always present and can seed a new generic row.
+    .typeText('#editorModules .genericAddPropertyRow input', 'customValue')
+    .pressKey('enter')
+    .expect(diceState()).contains('"customValue":""');
+});
+
 test('Space does not interrupt an active edit-mode widget drag', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({

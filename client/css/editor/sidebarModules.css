@@ -238,6 +238,17 @@
   vertical-align: top;
 }
 
+.editorModule .genericAddPropertyRow {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.editorModule .genericAddPropertyRow input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 /* validation */
 
 
