@@ -109,13 +109,19 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
   await setRoomState({
     die: {
       id: 'die', type: 'dice', x: 200, y: 200, width: 100, height: 100,
-      faces: [ { icon: 'casino' }, { image: '/i/game-pieces/2D/Checkers-2D.svg', imageScale: 1.4 } ]
+      faces: [ { icon: 'casino' }, { image: '/i/game-pieces/2D/Checkers-2D.svg', imageScale: 1.4 }, { text: 'A' } ]
     }
   });
   await ClientFunction(prepareClient)();
   await setName(t);
 
   const diceState = ClientFunction(() => JSON.stringify(widgets.get('die').state));
+  const matchingFaceValueWidths = ClientFunction(() => {
+    const rows = document.querySelectorAll('#editorModules .diceFaceRow');
+    const iconScale = rows[0].querySelector('.numberInput input');
+    const text = rows[2].querySelector('.textInput input');
+    return Math.abs(iconScale.getBoundingClientRect().width - text.getBoundingClientRect().width) < 1;
+  });
   const setAllImageScale = ClientFunction(() => {
     const input = document.querySelector('#editorModules .diceImageScale input');
     input.value = '0.7';
@@ -128,9 +134,16 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     .click('#w_die')
     // Background, pips/icon and border no longer repeat generic color help.
     .expect(Selector('#editorModules .diceSharedColors .info-button').count).eql(0)
-    // Every face uses the same Background/Pips-icon/Border swatches; the
-    // icon itself only adds its compact per-icon scale.
-    .expect(rows.nth(0).find('.colorFlexRow .propertyInput').count).eql(3)
+    // Shared face colors live once above the list. Turning one off gives
+    // every face its own matching swatch instead of repeating all three.
+    .expect(Selector('#editorModules .diceSharedColors .colorFlexRow .propertyInput').count).eql(3)
+    .expect(rows.nth(0).find('.colorFlexRow .propertyInput').count).eql(0)
+    .click(Selector('#editorModules .diceColorLockChecks label.switchbox').nth(0))
+    .expect(Selector('#editorModules .diceSharedColors .colorFlexRow .propertyInput').count).eql(2)
+    .expect(rows.nth(0).find('.colorFlexRow .propertyInput').count).eql(1)
+    .expect(matchingFaceValueWidths()).ok()
+    .expect(rows.nth(0).find('.diceFaceCssToggle .collapseArrow').exists).ok()
+    .expect(rows.nth(0).find('.diceFaceCssToggle').textContent).eql('CSS')
     .typeText(rows.nth(0).find('.numberInput input[type=number]'), '1.5', { replace: true })
     .expect(diceState()).contains('{"icon":{"name":"casino","scale":1.5}}')
     // An image face has a local override, while the all-faces control removes
@@ -146,7 +159,8 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     .typeText(rows.nth(0).find('.diceFaceCSS textarea'), 'opacity: 0.5')
     .expect(diceState()).contains('"faceCSS":"opacity: 0.5"')
     // Other properties is always present and can seed a new generic row.
-    .expect(Selector('#editorModules .genericAddPropertyRow .suggestionListButton').exists).ok()
+    .expect(Selector('#editorModules .genericAddPropertyRow .suggestionInput .suggestionListButton').exists).ok()
+    .expect(ClientFunction(() => [ ...document.querySelectorAll('#editorModules .genericAddPropertyRow option') ].some(option => /Routine$/.test(option.value)))()).notOk()
     .typeText('#editorModules .genericAddPropertyRow input', 'customValue')
     .pressKey('enter')
     .expect(diceState()).contains('"customValue":""');

@@ -260,6 +260,30 @@
   min-width: 0;
 }
 
+/* Keep the suggestion arrow within the new-property field, like the type
+   expander on existing generic-property value fields. */
+.editorModule .genericAddPropertyRow .suggestionInput {
+  position: relative;
+  flex: 0 1 140px;
+  width: 140px;
+  min-width: 0;
+}
+
+.editorModule .genericAddPropertyRow .suggestionInput input {
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 30px;
+}
+
+.editorModule .genericAddPropertyRow .suggestionInput .suggestionListButton {
+  position: absolute;
+  right: 1px;
+  top: 50%;
+  height: calc(100% - 2px);
+  min-height: 0;
+  transform: translateY(-50%);
+}
+
 .editorModule .genericAddPropertyRow button,
 .editorModule .suggestionListButton {
   width: 28px;

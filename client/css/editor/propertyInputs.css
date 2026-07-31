@@ -1379,17 +1379,19 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 /* Dice text is deliberately short: faces are labels, not paragraphs. */
-.editorModule .diceFaceControls .textInput input[type=text] {
-  flex: 0 1 7ch;
-  min-width: 5ch;
-  width: 7ch;
+.editorModule .diceFaceControls .textInput input {
+  flex: 0 0 5.5ch;
+  min-width: 5.5ch;
+  width: 5.5ch;
 }
 
 .editorModule .diceFaceCssToggle {
   flex: 0 0 auto;
-  min-width: 28px;
-  width: 28px;
-  padding: 2px;
+  gap: 2px;
+  min-width: 0;
+  width: auto;
+  padding: 2px 5px;
+  text-transform: none;
 }
 
 .editorModule .diceFaceCSS {

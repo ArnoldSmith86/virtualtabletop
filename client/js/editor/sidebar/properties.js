@@ -5865,7 +5865,8 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.placeholder = options.placeholder;
-    row.appendChild(input);
+    const inputTarget = options.suggestionButtonInsideInput ? div(row, 'suggestionInput') : row;
+    inputTarget.appendChild(input);
 
     if(options.suggestions.length) {
       const listID = editorDomID('suggestions');
@@ -5880,9 +5881,8 @@ class PropertiesModule extends SidebarModule {
       input.setAttribute('list', listID);
 
       // A datalist accepts custom property names as well as its suggestions,
-      // but its browser-provided affordance is easy to miss. Give the generic
-      // "Other properties" row (and the other suggesting rows) a visible
-      // arrow which opens that same native suggestion list.
+      // but its browser-provided affordance is easy to miss. This opens the
+      // native list; callers can keep it inside a compact input field.
       const suggestions = document.createElement('button');
       suggestions.setAttribute('icon', 'arrow_drop_down');
       suggestions.className = 'suggestionListButton';
@@ -5892,7 +5892,7 @@ class PropertiesModule extends SidebarModule {
         if(typeof input.showPicker == 'function')
           input.showPicker();
       };
-      row.appendChild(suggestions);
+      inputTarget.appendChild(suggestions);
     }
 
     const submit = _=>{
@@ -8042,10 +8042,9 @@ class PropertiesModule extends SidebarModule {
     };
     this.moduleDOM.appendChild(addFace);
 
-    // A locked color lives on the dice (and its swatch on every row changes
-    // all faces); an unlocked color lives on each face. Keep the controls on
-    // every face either way, so icon/image rows use exactly the same color UI
-    // as number/text rows instead of growing a second icon-color control.
+    // A locked color lives on the dice; an unlocked color lives on each face.
+    // Keep the shared swatches beside their switches, and show a face swatch
+    // only when that particular color has been unlocked.
     this.addAppearanceSubTitle('Face colors');
     const colorDefs = this.diceFaceColorDefs();
     const locks = {};
@@ -8056,6 +8055,19 @@ class PropertiesModule extends SidebarModule {
       locks[def.key] = !this.diceFaces(widget).some(f=>isObjectLike(f) &&
         (f[def.key] !== undefined || (def.key == 'pipColor' && iconOption(f.icon, 'color') !== undefined))
       );
+
+    const sharedColors = div(this.moduleDOM, 'diceSharedColors');
+    const renderSharedColors = _=>{
+      sharedColors.innerHTML = '';
+      const shared = colorDefs.filter(def=>locks[def.key]);
+      if(shared.length)
+        this.renderColorRow(widget, shared.map(def=>({
+          kind: 'color', label: def.label, labelIcon: def.labelIcon, property: def.key, hint: def.hint
+        })), sharedColors);
+      else
+        div(sharedColors, 'diceFaceHint', 'Every face has its own colors below.');
+    };
+    renderSharedColors();
 
     const lockRow = div(this.moduleDOM, 'diceColorLocks');
     const lockTitle = div(lockRow, 'propSetTitle', 'Same for all faces');
@@ -8088,6 +8100,7 @@ class PropertiesModule extends SidebarModule {
             widget.set('faces', faces);
             batchEnd();
           }
+          renderSharedColors();
           rebuild();
           this.moduleDOM.scrollTop = scrollTop;
         },
@@ -8275,18 +8288,18 @@ class PropertiesModule extends SidebarModule {
       }).render(controls);
     }
 
-    // All face types always expose the same color swatches. A locked swatch
-    // edits the shared dice color; an unlocked one edits this face only.
-    const colorRow = div(controls, 'colorFlexRow');
-    const pickerGroup = { target: div(row, 'diceFacePickers'), current: null };
-    for(const def of this.diceFaceColorDefs()) {
+    // An unlocked swatch belongs to this face. Its corresponding shared
+    // swatch stays above the list while locked, so it is not repeated on
+    // every face row.
+    const perFaceColors = this.diceFaceColorDefs().filter(def=>!locks[def.key]);
+    const colorRow = perFaceColors.length ? div(controls, 'colorFlexRow') : null;
+    const pickerGroup = perFaceColors.length ? { target: div(row, 'diceFacePickers'), current: null } : null;
+    for(const def of perFaceColors) {
       new ColorInput(this, widget, def.label, {
         labelIcon: def.labelIcon,
         pickerGroup,
-        listenTo: locks[def.key] ? [ def.key ] : [ 'faces' ],
+        listenTo: [ 'faces' ],
         getValue: _=>{
-          if(locks[def.key])
-            return widgetOwnValue(widget, def.key);
           const face = this.diceFaces(widget)[index];
           if(typeof face != 'object' || face === null)
             return null;
@@ -8294,36 +8307,14 @@ class PropertiesModule extends SidebarModule {
             return face[def.key];
           return def.key == 'pipColor' ? iconOption(face.icon, 'color') : null;
         },
-        setValue: v=>{
-          if(locks[def.key]) {
-            // Move the short-lived icon-object color form onto the shared
-            // pipColor before applying it, otherwise the old object value
-            // would keep winning over the swatch the editor now shows.
-            const faces = this.diceFaces(widget);
-            const changedIcons = def.key == 'pipColor' && faces.some(face=>
-              isObjectLike(face) && iconOption(face.icon, 'color') !== undefined
-            );
-            if(changedIcons) {
-              for(const face of faces)
-                if(isObjectLike(face) && iconOption(face.icon, 'color') !== undefined)
-                  face.icon = iconWithOption(face.icon, 'color', null);
-              batchStart();
-              widget.set(def.key, v);
-              widget.set('faces', faces);
-              batchEnd();
-            } else {
-              widget.set(def.key, v);
-            }
-          }
-          else
-            this.setDiceFaceProperty(widget, index, def.key, v);
-        }
+        setValue: v=>this.setDiceFaceProperty(widget, index, def.key, v)
       }).render(colorRow);
     }
 
     const cssToggle = document.createElement('button');
-    cssToggle.setAttribute('icon', 'css');
     cssToggle.className = 'diceFaceCssToggle';
+    const cssArrow = renderCollapseArrow(cssToggle, true);
+    cssToggle.append('CSS');
     cssToggle.title = 'Add or edit CSS declarations for this face';
     controls.appendChild(cssToggle);
 
@@ -8372,9 +8363,12 @@ class PropertiesModule extends SidebarModule {
     cssToggle.onclick = _=>{
       cssOpen = !cssOpen;
       cssToggle.classList.toggle('selected', cssOpen);
+      setCollapseArrow(cssArrow, !cssOpen);
+      cssToggle.setAttribute('aria-expanded', String(cssOpen));
       renderFaceCSS(cssOpen);
     };
     cssToggle.classList.toggle('selected', cssOpen);
+    cssToggle.setAttribute('aria-expanded', String(cssOpen));
     renderFaceCSS(cssOpen);
 
     const remove = document.createElement('button');
@@ -9889,8 +9883,10 @@ class PropertiesModule extends SidebarModule {
       placeholder: 'new property',
       title: 'Add property',
       suggestions: Object.keys(widget.defaults || {}).filter(property=>
-        [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 && !Object.hasOwn(widget.state, property)
+        [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 &&
+        !/Routine$/.test(property) && !Object.hasOwn(widget.state, property)
       ).sort(),
+      suggestionButtonInsideInput: true,
       onAdd: property=>{
         if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
           return false;
