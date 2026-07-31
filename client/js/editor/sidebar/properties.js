@@ -4596,9 +4596,9 @@ class PropertiesModule extends SidebarModule {
       return;
     }
     const seatedColor = widget.get('seatedColor');
-    const { activePlayers, activeColors } = getPlayerDetails();
+    // playerColors covers players who are no longer connected but still seated
     const color = !seatedColor || seatedColor == 'playerColor'
-      ? activeColors[activePlayers.indexOf(player)] : seatedColor;
+      ? getPlayerDetails().playerColors[player] : seatedColor;
     if(color)
       this.inputValueUpdated(widget, 'color', color);
   }

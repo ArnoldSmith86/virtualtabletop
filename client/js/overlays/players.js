@@ -6,6 +6,8 @@ let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(rand
 let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
+// every player the room knows, connected or not, mapped to their color
+let playerColors = {};
 let mouseCoords = [];
 localStorage.setItem('playerName', playerName);
 
@@ -14,6 +16,7 @@ export {
   playerColor,
   activePlayers,
   activeColors,
+  playerColors,
   mouseCoords
 }
 
@@ -23,6 +26,7 @@ function getPlayerDetails() {
     playerColor,
     activePlayers,
     activeColors,
+    playerColors,
     mouseCoords
   };
 }
@@ -38,6 +42,7 @@ function addPlayerCursor(playerName, playerColor) {
 }
 
 function fillPlayerList(players, active) {
+  playerColors = players;
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');

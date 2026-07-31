@@ -28,30 +28,64 @@ describe('v22 seat property rename', () => {
     expect(updateFromV21({})._meta.version).toBe(VERSION);
   });
 
-  test('renames the seat-only names wherever they appear', () => {
+  test('renames the seat-only names wherever a property name is expected', () => {
     expect(updateWidgets({
       label: {
         type: 'label',
         css: { color: '${PROPERTY colorEmpty OF seat}' },
-        dynamicProperties: { text: [ { func: 'GET', property: 'displayEmpty' } ] }
+        inheritFrom: { seat: [ 'colorEmpty', '!displayEmpty' ], other: '*' },
+        svgReplaces: { '#fill': 'colorEmpty' },
+        clickRoutine: [ { func: 'SET', property: 'displayEmpty', value: 'x' } ]
       }
     })).toEqual({
       label: {
         type: 'label',
         css: { color: '${PROPERTY emptyColor OF seat}' },
-        dynamicProperties: { text: [ { func: 'GET', property: 'emptyText' } ] }
+        inheritFrom: { seat: [ 'emptyColor', '!emptyText' ], other: '*' },
+        svgReplaces: { '#fill': 'emptyColor' },
+        clickRoutine: [ { func: 'SET', property: 'emptyText', value: 'x' } ]
       }
     });
   });
 
-  test('renames a dynamicProperties key on a seat but not on other widgets', () => {
+  test('leaves the seat-only names alone where they are not property names', () => {
+    const state = {
+      label: {
+        type: 'label',
+        parent: 'colorEmpty',
+        text: 'show displayEmpty here',
+        classes: 'colorEmpty',
+        html: '<div class="displayEmpty">colorEmpty</div>',
+        clickRoutine: [ { func: 'LABEL', label: 'colorEmpty', value: 'displayEmpty' } ]
+      },
+      colorEmpty: { type: 'holder', displayEmpty: 'kept as a property' }
+    };
+    const updated = updateWidgets(JSON.parse(JSON.stringify(state)));
+    expect(updated.label).toEqual(state.label);
+    expect(updated.colorEmpty).toEqual({ type: 'holder', emptyText: 'kept as a property' });
+  });
+
+  test('renames a face object dynamicProperties value but not its key', () => {
     expect(updateWidgets({
-      seat: { type: 'seat', dynamicProperties: { display: [ { func: 'VAR' } ] } },
-      card: { type: 'card', dynamicProperties: { display: [ { func: 'VAR' } ] } }
+      deck: { type: 'deck', faceTemplates: [ { objects: [ { type: 'text', display: true, dynamicProperties: { display: 'colorEmpty' } } ] } ] }
     })).toEqual({
-      seat: { type: 'seat', dynamicProperties: { seatedText: [ { func: 'VAR' } ] } },
-      card: { type: 'card', dynamicProperties: { display: [ { func: 'VAR' } ] } }
+      deck: { type: 'deck', faceTemplates: [ { objects: [ { type: 'text', display: true, dynamicProperties: { display: 'emptyColor' } } ] } ] }
     });
+  });
+
+  test('keeps the variable name a GET derived from the property it read', () => {
+    expect(updateWidgets({
+      button: {
+        type: 'button',
+        clickRoutine: [
+          { func: 'GET', property: 'colorEmpty' },
+          { func: 'SET', property: 'color', value: '${colorEmpty}' }
+        ]
+      }
+    }).button.clickRoutine).toEqual([
+      { func: 'GET', property: 'emptyColor', variable: 'colorEmpty' },
+      { func: 'SET', property: 'color', value: '${colorEmpty}' }
+    ]);
   });
 
   test('renames ${PROPERTY display OF <seat>} but not the same for other widgets', () => {
@@ -115,6 +149,30 @@ describe('v22 seat property rename', () => {
       { func: 'SELECT', type: 'card', collection: 'cards' },
       { func: 'SET', property: 'display', value: '', collection: 'cards' }
     ]);
+  });
+
+  test('leaves display alone on a collection that provably holds no seats', () => {
+    expect(updateWidgets({
+      button: {
+        type: 'button',
+        clickRoutine: [
+          { func: 'SELECT', type: 'label' },
+          { func: 'SET', property: 'display', value: '${playerName}' }
+        ]
+      }
+    }).button.clickRoutine[1]).toEqual({ func: 'SET', property: 'display', value: '${playerName}' });
+  });
+
+  test('still renames display after a SELECT that could have picked seats', () => {
+    expect(updateWidgets({
+      button: {
+        type: 'button',
+        clickRoutine: [
+          { func: 'SELECT', property: 'player', value: '${playerName}' },
+          { func: 'SET', property: 'display', value: '${playerName}' }
+        ]
+      }
+    }).button.clickRoutine[1]).toEqual({ func: 'SET', property: 'seatedText', value: '${playerName}' });
   });
 
   test('forgets what a collection holds once a nested routine could have refilled it', () => {
