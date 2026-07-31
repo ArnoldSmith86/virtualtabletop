@@ -1056,22 +1056,22 @@
   "i0": {
     "id": "i0",
     "type": "basic",
-    "x": 90,
-    "y": 55,
-    "width": 118,
-    "height": 118,
+    "x": 160,
+    "y": 125,
+    "width": 92,
+    "height": 92,
     "z": 0,
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
     "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
     "iconColor": "#ffffff",
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 26px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:46px;background-position:center 12px"
+    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
   },
   "s0": {
     "id": "s0",
@@ -1092,32 +1092,13 @@
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "harbour",
-    "amount": 0,
-    "harbourOf": 1,
-    "landed": 0,
-    "landedChangeRoutine": [
-      "var si = ${PROPERTY harbourOf}",
-      "var bi = ${si} - 1",
-      "var bi = ${bi} * 7",
-      "var hb = 'b' + ${bi}",
-      "var ind = 'landInd' + ${si}",
-      {
-        "func": "SET",
-        "collection": [
-          "${hb}",
-          "${ind}"
-        ],
-        "property": "text",
-        "value": "${value}"
-      }
-    ]
+    "kind": "entrance"
   },
   "b0": {
     "id": "b0",
     "type": "basic",
-    "x": 83,
-    "y": 48,
+    "x": 153,
+    "y": 118,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -1169,7 +1150,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 3
+    "amount": 2
   },
   "b1": {
     "id": "b1",
@@ -1184,7 +1165,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
+    "text": "2",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i2": {
@@ -1369,7 +1350,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 2
+    "amount": 1
   },
   "b5": {
     "id": "b5",
@@ -1384,7 +1365,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
+    "text": "1",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i6": {
@@ -1432,22 +1413,22 @@
   "i7": {
     "id": "i7",
     "type": "basic",
-    "x": 862,
-    "y": 55,
-    "width": 118,
-    "height": 118,
+    "x": 792,
+    "y": 125,
+    "width": 92,
+    "height": 92,
     "z": 0,
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
     "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
     "iconColor": "#ffffff",
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#0072b2;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 26px #0072b2aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:46px;background-position:center 12px"
+    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
   },
   "s7": {
     "id": "s7",
@@ -1468,32 +1449,13 @@
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "harbour",
-    "amount": 0,
-    "harbourOf": 2,
-    "landed": 0,
-    "landedChangeRoutine": [
-      "var si = ${PROPERTY harbourOf}",
-      "var bi = ${si} - 1",
-      "var bi = ${bi} * 7",
-      "var hb = 'b' + ${bi}",
-      "var ind = 'landInd' + ${si}",
-      {
-        "func": "SET",
-        "collection": [
-          "${hb}",
-          "${ind}"
-        ],
-        "property": "text",
-        "value": "${value}"
-      }
-    ]
+    "kind": "entrance"
   },
   "b7": {
     "id": "b7",
     "type": "basic",
-    "x": 947,
-    "y": 48,
+    "x": 785,
+    "y": 118,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -1545,7 +1507,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 2
+    "amount": 1
   },
   "b8": {
     "id": "b8",
@@ -1560,7 +1522,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
+    "text": "1",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i9": {
@@ -1745,7 +1707,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 3
+    "amount": 2
   },
   "b12": {
     "id": "b12",
@@ -1760,7 +1722,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
+    "text": "2",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i13": {
@@ -1808,22 +1770,22 @@
   "i14": {
     "id": "i14",
     "type": "basic",
-    "x": 862,
-    "y": 827,
-    "width": 118,
-    "height": 118,
+    "x": 792,
+    "y": 757,
+    "width": 92,
+    "height": 92,
     "z": 0,
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
     "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
     "iconColor": "#ffffff",
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#009e73;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 26px #009e73aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:46px;background-position:center 12px"
+    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
   },
   "s14": {
     "id": "s14",
@@ -1844,32 +1806,13 @@
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "harbour",
-    "amount": 0,
-    "harbourOf": 3,
-    "landed": 0,
-    "landedChangeRoutine": [
-      "var si = ${PROPERTY harbourOf}",
-      "var bi = ${si} - 1",
-      "var bi = ${bi} * 7",
-      "var hb = 'b' + ${bi}",
-      "var ind = 'landInd' + ${si}",
-      {
-        "func": "SET",
-        "collection": [
-          "${hb}",
-          "${ind}"
-        ],
-        "property": "text",
-        "value": "${value}"
-      }
-    ]
+    "kind": "entrance"
   },
   "b14": {
     "id": "b14",
     "type": "basic",
-    "x": 947,
-    "y": 912,
+    "x": 785,
+    "y": 750,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -1921,7 +1864,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 4
+    "amount": 3
   },
   "b15": {
     "id": "b15",
@@ -1936,7 +1879,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "4",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i16": {
@@ -2121,7 +2064,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 1
+    "amount": 0
   },
   "b19": {
     "id": "b19",
@@ -2136,7 +2079,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "1",
+    "text": "0",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i20": {
@@ -2184,22 +2127,22 @@
   "i21": {
     "id": "i21",
     "type": "basic",
-    "x": 90,
-    "y": 827,
-    "width": 118,
-    "height": 118,
+    "x": 160,
+    "y": 757,
+    "width": 92,
+    "height": 92,
     "z": 0,
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
     "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
     "iconColor": "#ffffff",
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#cc79a7;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 26px #cc79a7aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:46px;background-position:center 12px"
+    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
   },
   "s21": {
     "id": "s21",
@@ -2220,32 +2163,13 @@
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "harbour",
-    "amount": 0,
-    "harbourOf": 4,
-    "landed": 0,
-    "landedChangeRoutine": [
-      "var si = ${PROPERTY harbourOf}",
-      "var bi = ${si} - 1",
-      "var bi = ${bi} * 7",
-      "var hb = 'b' + ${bi}",
-      "var ind = 'landInd' + ${si}",
-      {
-        "func": "SET",
-        "collection": [
-          "${hb}",
-          "${ind}"
-        ],
-        "property": "text",
-        "value": "${value}"
-      }
-    ]
+    "kind": "entrance"
   },
   "b21": {
     "id": "b21",
     "type": "basic",
-    "x": 83,
-    "y": 912,
+    "x": 153,
+    "y": 750,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -2297,7 +2221,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 1
+    "amount": 0
   },
   "b22": {
     "id": "b22",
@@ -2312,7 +2236,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "1",
+    "text": "0",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i23": {
@@ -2497,7 +2421,7 @@
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 4
+    "amount": 3
   },
   "b26": {
     "id": "b26",
@@ -2512,7 +2436,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "4",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i27": {
@@ -3921,7 +3845,7 @@
               {
                 "func": "IF",
                 "operand1": "${kind}",
-                "operand2": "harbour",
+                "operand2": "entrance",
                 "thenRoutine": [
                   {
                     "func": "IF",
@@ -3994,7 +3918,17 @@
           }
         ]
       },
-      "var target = 's' + ${pos}",
+      {
+        "func": "IF",
+        "operand1": "${docked}",
+        "operand2": 1,
+        "thenRoutine": [
+          "var target = 'dock' + ${sidx}"
+        ],
+        "elseRoutine": [
+          "var target = 's' + ${pos}"
+        ]
+      },
       {
         "func": "SELECT",
         "property": "id",
@@ -4336,9 +4270,7 @@
     "unloadRoutine": [
       "var sidx = ${PROPERTY seatIdx OF $ship}",
       "var cargo = ${PROPERTY cargo OF $ship}",
-      "var home = ${sidx} - 1",
-      "var home = ${home} * 7",
-      "var hs = 's' + ${home}",
+      "var hs = 'dock' + ${sidx}",
       "var landed = ${PROPERTY landed OF $hs}",
       "var landed = ${landed} + ${cargo}",
       {
@@ -4489,7 +4421,7 @@
               {
                 "func": "IF",
                 "operand1": "${tkind}",
-                "operand2": "harbour",
+                "operand2": "entrance",
                 "thenRoutine": [
                   "var tp = ${tp} - 1",
                   "var tp = ${tp} + 28",
@@ -4581,7 +4513,7 @@
               {
                 "func": "IF",
                 "operand1": "${nkind}",
-                "operand2": "harbour",
+                "operand2": "entrance",
                 "thenRoutine": [
                   "var np = ${np} + 1",
                   "var np = ${np} % 28"
@@ -4592,7 +4524,7 @@
               {
                 "func": "IF",
                 "operand1": "${nkind}",
-                "operand2": "harbour",
+                "operand2": "entrance",
                 "thenRoutine": [
                   "var np = ${np} + 1",
                   "var np = ${np} % 28"
@@ -4603,7 +4535,7 @@
               {
                 "func": "IF",
                 "operand1": "${nkind}",
-                "operand2": "harbour",
+                "operand2": "entrance",
                 "thenRoutine": [
                   "var np = ${np} + 1",
                   "var np = ${np} % 28"
@@ -4614,7 +4546,7 @@
               {
                 "func": "IF",
                 "operand1": "${nkind}",
-                "operand2": "harbour",
+                "operand2": "entrance",
                 "thenRoutine": [
                   "var np = ${np} + 1",
                   "var np = ${np} % 28"
@@ -4731,7 +4663,7 @@
                   "var si = ${PROPERTY seatIdx OF $saved}",
                   "var hm = ${si} - 1",
                   "var hm = ${hm} * 7",
-                  "var hs = 's' + ${hm}",
+                  "var hs = 'dock' + ${si}",
                   {
                     "func": "SELECT",
                     "property": "id",
@@ -4812,7 +4744,7 @@
           "var seatId = 'seat' + ${value}",
           "var hm = ${value} - 1",
           "var hm = ${hm} * 7",
-          "var hs = 's' + ${hm}",
+          "var hs = 'dock' + ${value}",
           {
             "func": "SET",
             "collection": [
@@ -4906,5 +4838,245 @@
         "turnCycle": "random"
       }
     ]
+  },
+  "dock1": {
+    "id": "dock1",
+    "type": "holder",
+    "x": 160,
+    "y": 125,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "isShip": true
+    },
+    "dropOffsetX": 12,
+    "dropOffsetY": 46,
+    "stackOffsetX": 34,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 1,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ]
+  },
+  "dock2": {
+    "id": "dock2",
+    "type": "holder",
+    "x": 792,
+    "y": 125,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "isShip": true
+    },
+    "dropOffsetX": 12,
+    "dropOffsetY": 46,
+    "stackOffsetX": 34,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 2,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ]
+  },
+  "dock3": {
+    "id": "dock3",
+    "type": "holder",
+    "x": 792,
+    "y": 757,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "isShip": true
+    },
+    "dropOffsetX": 12,
+    "dropOffsetY": 46,
+    "stackOffsetX": 34,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 3,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ]
+  },
+  "dock4": {
+    "id": "dock4",
+    "type": "holder",
+    "x": 160,
+    "y": 757,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "isShip": true
+    },
+    "dropOffsetX": 12,
+    "dropOffsetY": 46,
+    "stackOffsetX": 34,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 4,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ]
+  },
+  "entArt1": {
+    "id": "entArt1",
+    "type": "basic",
+    "x": 90,
+    "y": 55,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "entArt2": {
+    "id": "entArt2",
+    "type": "basic",
+    "x": 862,
+    "y": 55,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "entArt3": {
+    "id": "entArt3",
+    "type": "basic",
+    "x": 862,
+    "y": 827,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "entArt4": {
+    "id": "entArt4",
+    "type": "basic",
+    "x": 90,
+    "y": 827,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
   }
 }
