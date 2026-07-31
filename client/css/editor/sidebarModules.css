@@ -222,31 +222,49 @@
 }
 
 
-.genericInput input, .genericInput textarea {
-  width: 200px;
-  min-width: 200px;
+.editorModule .genericInput {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 4px 0;
 }
-.genericInput textarea {
+.editorModule .genericInput input, .editorModule .genericInput textarea {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 120px;
+}
+.editorModule .genericInput textarea {
   height: 200px;
 }
-.genericInputLabel {
-  display: inline-block;
+.editorModule .genericInputLabel {
+  flex: 0 1 132px;
   width: 132px;
   overflow-wrap: anywhere;
 }
-.genericInput > * {
-  vertical-align: top;
+.editorModule .genericInput select {
+  flex: 0 0 auto;
+  max-width: 100%;
 }
 
 .editorModule .genericAddPropertyRow {
   display: flex;
+  align-items: center;
   gap: 4px;
   margin-top: 6px;
 }
 
 .editorModule .genericAddPropertyRow input {
-  flex: 1 1 auto;
+  flex: 0 1 140px;
+  width: 140px;
   min-width: 0;
+}
+
+.editorModule .genericAddPropertyRow button,
+.editorModule .suggestionListButton {
+  width: 28px;
+  min-width: 28px;
+  padding: 2px;
 }
 
 /* validation */

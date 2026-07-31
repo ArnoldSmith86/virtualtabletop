@@ -5878,6 +5878,21 @@ class PropertiesModule extends SidebarModule {
       }
       row.appendChild(datalist);
       input.setAttribute('list', listID);
+
+      // A datalist accepts custom property names as well as its suggestions,
+      // but its browser-provided affordance is easy to miss. Give the generic
+      // "Other properties" row (and the other suggesting rows) a visible
+      // arrow which opens that same native suggestion list.
+      const suggestions = document.createElement('button');
+      suggestions.setAttribute('icon', 'arrow_drop_down');
+      suggestions.className = 'suggestionListButton';
+      suggestions.title = 'Show suggestions';
+      suggestions.onclick = _=>{
+        input.focus();
+        if(typeof input.showPicker == 'function')
+          input.showPicker();
+      };
+      row.appendChild(suggestions);
     }
 
     const submit = _=>{
@@ -8027,27 +8042,20 @@ class PropertiesModule extends SidebarModule {
     };
     this.moduleDOM.appendChild(addFace);
 
-    // locked = the property lives on the dice widget (same for all faces);
-    // unlocked = each face gets its own value in the faces array. Shown
-    // above the face rows (rather than below) so the cause (a lock toggle)
-    // sits before its effect (a swatch appearing on every row).
+    // A locked color lives on the dice (and its swatch on every row changes
+    // all faces); an unlocked color lives on each face. Keep the controls on
+    // every face either way, so icon/image rows use exactly the same color UI
+    // as number/text rows instead of growing a second icon-color control.
     this.addAppearanceSubTitle('Face colors');
     const colorDefs = this.diceFaceColorDefs();
     const locks = {};
     for(const def of colorDefs)
-      // default locked unless a face already defines a per-face value
-      locks[def.key] = !this.diceFaces(widget).some(f=>isObjectLike(f) && f[def.key] !== undefined);
-
-    const sharedColors = div(this.moduleDOM, 'diceSharedColors');
-    const renderSharedColors = _=>{
-      sharedColors.innerHTML = '';
-      const shared = colorDefs.filter(def=>locks[def.key]);
-      if(shared.length)
-        this.renderColorRow(widget, shared.map(def=>({ kind: 'color', label: def.label, labelIcon: def.labelIcon, property: def.key, hint: def.hint })), sharedColors);
-      else
-        div(sharedColors, 'diceFaceHint', 'Every face has its own colors below.');
-    };
-    renderSharedColors();
+      // default locked unless a face already defines a per-face value. Icon
+      // color was briefly stored on the icon object; count it as pipColor so
+      // existing faces continue in the same per-face mode when edited here.
+      locks[def.key] = !this.diceFaces(widget).some(f=>isObjectLike(f) &&
+        (f[def.key] !== undefined || (def.key == 'pipColor' && iconOption(f.icon, 'color') !== undefined))
+      );
 
     const lockRow = div(this.moduleDOM, 'diceColorLocks');
     const lockTitle = div(lockRow, 'propSetTitle', 'Same for all faces');
@@ -8063,18 +8071,23 @@ class PropertiesModule extends SidebarModule {
             // move any per-face value onto the widget and clear from faces
             const faces = this.diceFaces(widget);
             let moved = null;
-            for(const f of faces)
-              if(isObjectLike(f) && f[def.key] !== undefined) {
-                moved = moved === null ? f[def.key] : moved;
+            for(const f of faces) {
+              if(!isObjectLike(f))
+                continue;
+              const oldIconColor = def.key == 'pipColor' ? iconOption(f.icon, 'color') : undefined;
+              if(f[def.key] !== undefined || oldIconColor !== undefined) {
+                moved = moved === null ? (f[def.key] !== undefined ? f[def.key] : oldIconColor) : moved;
                 delete f[def.key];
+                if(oldIconColor !== undefined)
+                  f.icon = iconWithOption(f.icon, 'color', null);
               }
+            }
             batchStart();
             setDeltaCause(`${getPlayerDetails().playerName} locked ${def.label.toLowerCase()} of dice ${widget.id} in editor`);
             if(moved !== null) widget.set(def.key, moved);
             widget.set('faces', faces);
             batchEnd();
           }
-          renderSharedColors();
           rebuild();
           this.moduleDOM.scrollTop = scrollTop;
         },
@@ -8232,20 +8245,18 @@ class PropertiesModule extends SidebarModule {
       const iconInput = new IconInput(this, widget, 'Icon', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue });
       iconInput.render(controls);
 
-      // Dice icons use the same object form as the main icon property. Keep
-      // its color/scale controls beside the face's picker, without repeating
-      // the larger Content-section heading used by basic widgets.
-      const iconOptions = div(controls, 'diceFaceIconOptions');
-      const renderIconOptions = _=>{
-        if(iconOptions.contains(document.activeElement))
-          return;
-        iconOptions.innerHTML = '';
-        const value = getFaceValue();
-        if(iconSupportsBasicOptions(value))
-          iconInput.renderIconOptionControls(iconOptions, value);
-      };
-      this.addPropertyListener(widget, 'faces', renderIconOptions);
-      renderIconOptions();
+      // The icon object has its own scale, but its color is pipColor. That
+      // lets every face type share the Background/Pips-icon swatches below.
+      new NumberInput(this, widget, 'Scale', {
+        min: 0.1,
+        max: 5,
+        step: 0.05,
+        nullIfEmpty: true,
+        placeholder: '1',
+        listenTo: [ 'faces' ],
+        getValue: _=>iconOption(getFaceValue(), 'scale'),
+        setValue: value=>setFaceValue(iconWithOption(getFaceValue(), 'scale', value))
+      }).render(controls);
     } else if(type == 'image') {
       new ImageInput(this, widget, 'Image', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
 
@@ -8264,29 +8275,55 @@ class PropertiesModule extends SidebarModule {
       }).render(controls);
     }
 
-    // per-face colors for whichever properties are unlocked, as the same
-    // compact icon swatches as the Appearance color row; their pickers open
-    // below the row so opening one does not reshuffle the controls
-    const perFaceColors = this.diceFaceColorDefs().filter(def=>!locks[def.key]);
-    const colorRow = perFaceColors.length ? div(controls, 'colorFlexRow') : null;
-    const pickerGroup = perFaceColors.length ? { target: div(row, 'diceFacePickers'), current: null } : null;
-    for(const def of perFaceColors) {
+    // All face types always expose the same color swatches. A locked swatch
+    // edits the shared dice color; an unlocked one edits this face only.
+    const colorRow = div(controls, 'colorFlexRow');
+    const pickerGroup = { target: div(row, 'diceFacePickers'), current: null };
+    for(const def of this.diceFaceColorDefs()) {
       new ColorInput(this, widget, def.label, {
         labelIcon: def.labelIcon,
         pickerGroup,
-        listenTo: [ 'faces' ],
+        listenTo: locks[def.key] ? [ def.key ] : [ 'faces' ],
         getValue: _=>{
+          if(locks[def.key])
+            return widgetOwnValue(widget, def.key);
           const face = this.diceFaces(widget)[index];
-          return (typeof face == 'object' && face !== null && face[def.key] !== undefined) ? face[def.key] : null;
+          if(typeof face != 'object' || face === null)
+            return null;
+          if(face[def.key] !== undefined)
+            return face[def.key];
+          return def.key == 'pipColor' ? iconOption(face.icon, 'color') : null;
         },
-        setValue: v=>this.setDiceFaceProperty(widget, index, def.key, v)
+        setValue: v=>{
+          if(locks[def.key]) {
+            // Move the short-lived icon-object color form onto the shared
+            // pipColor before applying it, otherwise the old object value
+            // would keep winning over the swatch the editor now shows.
+            const faces = this.diceFaces(widget);
+            const changedIcons = def.key == 'pipColor' && faces.some(face=>
+              isObjectLike(face) && iconOption(face.icon, 'color') !== undefined
+            );
+            if(changedIcons) {
+              for(const face of faces)
+                if(isObjectLike(face) && iconOption(face.icon, 'color') !== undefined)
+                  face.icon = iconWithOption(face.icon, 'color', null);
+              batchStart();
+              widget.set(def.key, v);
+              widget.set('faces', faces);
+              batchEnd();
+            } else {
+              widget.set(def.key, v);
+            }
+          }
+          else
+            this.setDiceFaceProperty(widget, index, def.key, v);
+        }
       }).render(colorRow);
     }
 
     const cssToggle = document.createElement('button');
     cssToggle.setAttribute('icon', 'css');
     cssToggle.className = 'diceFaceCssToggle';
-    cssToggle.textContent = 'Face CSS';
     cssToggle.title = 'Add or edit CSS declarations for this face';
     controls.appendChild(cssToggle);
 
@@ -8329,7 +8366,9 @@ class PropertiesModule extends SidebarModule {
       this.addPropertyListener(widget, 'faces', update);
       update();
     };
-    let cssOpen = isObjectLike(this.diceFaces(widget)[index]) && this.diceFaces(widget)[index].faceCSS !== undefined;
+    // CSS is advanced and can be tall. Keep it folded even when this face has
+    // CSS already; the button remains selected only while this editor is open.
+    let cssOpen = false;
     cssToggle.onclick = _=>{
       cssOpen = !cssOpen;
       cssToggle.classList.toggle('selected', cssOpen);
@@ -8356,6 +8395,12 @@ class PropertiesModule extends SidebarModule {
       const type = this.diceFaceType(widget, faces[index]);
       faces[index] = this.buildDiceFace(type, this.diceFaceValue(widget, faces[index], type), faces[index]);
     }
+    // Per-icon color used to be written inside { icon: { color } }. Dice
+    // already render pipColor for icons, and keeping two sources meant its
+    // Background/Pips-icon picker could appear to do nothing. Normalize it
+    // as soon as this face's pip/icon color is edited.
+    if(property == 'pipColor' && iconOption(faces[index].icon, 'color') !== undefined)
+      faces[index].icon = iconWithOption(faces[index].icon, 'color', null);
     if(value === null || value === undefined)
       delete faces[index][property];
     else
@@ -9843,7 +9888,9 @@ class PropertiesModule extends SidebarModule {
     this.renderSuggestionAddRow(this.moduleDOM, 'genericAddPropertyRow', {
       placeholder: 'new property',
       title: 'Add property',
-      suggestions: [],
+      suggestions: Object.keys(widget.defaults || {}).filter(property=>
+        [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 && !Object.hasOwn(widget.state, property)
+      ).sort(),
       onAdd: property=>{
         if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
           return false;

@@ -1334,8 +1334,9 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 .editorModule .diceFaceMain {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: start;
   gap: 8px;
 }
 
@@ -1365,10 +1366,10 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 .editorModule .diceFaceControls {
-  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px 6px;
   align-items: center;
 }
 
@@ -1377,14 +1378,18 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   min-width: auto;
 }
 
-/* The options have the same controls as a basic-widget icon, but no repeated
-   section title: they belong to one compact dice face row. */
-.editorModule .diceFaceIconOptions .iconBasicOptionsRow {
-  gap: 6px;
+/* Dice text is deliberately short: faces are labels, not paragraphs. */
+.editorModule .diceFaceControls .textInput input[type=text] {
+  flex: 0 1 7ch;
+  min-width: 5ch;
+  width: 7ch;
 }
 
 .editorModule .diceFaceCssToggle {
-  white-space: nowrap;
+  flex: 0 0 auto;
+  min-width: 28px;
+  width: 28px;
+  padding: 2px;
 }
 
 .editorModule .diceFaceCSS {
@@ -1398,6 +1403,12 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 .editorModule .diceImageScale {
   margin: 4px 0;
+}
+
+/* Face scales are usually 0.8 or 1.25; a full-width numeric field made the
+   compact row expand just to accommodate unnecessary decimal places. */
+.editorModule .diceFaceControls .numberInput input[type=number] {
+  width: 5.5ch;
 }
 
 /* per-face color pickers open below the row instead of inside it */
@@ -1466,6 +1477,27 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 .editorModule .diceFaceHint {
   font-size: 0.9em;
   opacity: 0.8;
+}
+
+@media (max-width: 360px) {
+  .editorModule .diceFaceMain {
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    gap: 4px;
+  }
+
+  .editorModule .diceFacePreview {
+    width: 36px;
+    height: 36px;
+  }
+
+  .editorModule .diceFaceControls {
+    gap: 3px;
+  }
+
+  .editorModule .diceFaceRow .faceOrderControls button {
+    width: 22px;
+    min-width: 22px;
+  }
 }
 
 /* per-face editor of basic widgets */

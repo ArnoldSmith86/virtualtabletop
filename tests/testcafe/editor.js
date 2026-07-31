@@ -103,6 +103,9 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
 });
 
 test('Dice faces have their own icon, image scale and CSS controls', async t => {
+  // Keep this at the narrow layout from the review so the controls remain
+  // useful in the smallest supported properties sidebar.
+  await t.resizeWindow(410, 845);
   await setRoomState({
     die: {
       id: 'die', type: 'dice', x: 200, y: 200, width: 100, height: 100,
@@ -125,9 +128,10 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     .click('#w_die')
     // Background, pips/icon and border no longer repeat generic color help.
     .expect(Selector('#editorModules .diceSharedColors .info-button').count).eql(0)
-    // An icon face gets the compact object-form color/scale controls.
-    .expect(rows.nth(0).find('.diceFaceIconOptions input[type=color]').exists).ok()
-    .typeText(rows.nth(0).find('.diceFaceIconOptions input[type=number]'), '1.5', { replace: true })
+    // Every face uses the same Background/Pips-icon/Border swatches; the
+    // icon itself only adds its compact per-icon scale.
+    .expect(rows.nth(0).find('.colorFlexRow .propertyInput').count).eql(3)
+    .typeText(rows.nth(0).find('.numberInput input[type=number]'), '1.5', { replace: true })
     .expect(diceState()).contains('{"icon":{"name":"casino","scale":1.5}}')
     // An image face has a local override, while the all-faces control removes
     // it and writes the shared dice property.
@@ -136,11 +140,13 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
   await t
     .expect(diceState()).contains('"imageScale":0.7')
     .expect(diceState()).notContains('"image":"/i/game-pieces/2D/Checkers-2D.svg","imageScale"')
-    // Face CSS stays on the one face, not on the dice as a whole.
+    // Face CSS starts folded and stays on the one face, not on the dice as a whole.
+    .expect(rows.nth(0).find('.diceFaceCSS textarea').exists).notOk()
     .click(rows.nth(0).find('.diceFaceCssToggle'))
     .typeText(rows.nth(0).find('.diceFaceCSS textarea'), 'opacity: 0.5')
     .expect(diceState()).contains('"faceCSS":"opacity: 0.5"')
     // Other properties is always present and can seed a new generic row.
+    .expect(Selector('#editorModules .genericAddPropertyRow .suggestionListButton').exists).ok()
     .typeText('#editorModules .genericAddPropertyRow input', 'customValue')
     .pressKey('enter')
     .expect(diceState()).contains('"customValue":""');
