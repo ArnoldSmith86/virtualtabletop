@@ -484,41 +484,27 @@
   width: 60px;
 }
 
-.editorModule .iconBasicOption input[type=color] {
-  width: 32px;
-  height: 24px;
-  padding: 0;
-  margin: 0;
-}
-
-/* dim the swatch/field while it's showing the inherited default rather than
-   an explicitly set value, so the two states aren't visually identical */
-.editorModule .iconBasicOption.usingDefault input[type=color],
+/* dim the field while it's showing the default rather than an explicitly set
+   value, so the two states aren't visually identical */
 .editorModule .iconBasicOption.usingDefault input[type=number] {
   opacity: 0.5;
 }
 
-/* the reset buttons revert to a default rather than perform a primary
-   action, so they shouldn't compete in weight with the value controls they
-   reset (full-size solid-blue buttons made them look like the main action) */
-.editorModule .iconBasicOption button[icon] {
-  background: transparent;
-  color: var(--textDimColor1, #777);
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  /* the swatch and the reset button are the same size - keep them apart
-     enough that the reset isn't hit while aiming for the value */
-  margin-left: 4px;
+/* the color chip lives inside the Icon block's contentMediaBlock, whose 200px
+   media-preview sizing (see .contentMediaBlock .propertyPreviewButton above)
+   would otherwise blow this up to the same size as the icon/image previews -
+   keep it the same small swatch the Colors subsection of Appearance uses */
+.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton {
+  min-width: 36px;
+  min-height: 36px;
 }
 
-.editorModule .iconBasicOption button[icon]::before {
-  margin: 0;
-}
-
-.editorModule .iconBasicOption button[icon]:hover {
-  background: var(--backgroundHighlightColor1);
-  color: var(--VTTblue);
+.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton .propertyValueChip {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 4px;
+  font-size: inherit;
 }
 
 /* stay within the icon preview's width so the block reads as belonging to the
@@ -1227,7 +1213,6 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 .editorModule .numberPairRow .numberPairLabel {
   flex: 0 0 auto;
   min-width: 80px;
-  font-size: 13px;
 }
 
 /* list editor (spinner wheel options) */

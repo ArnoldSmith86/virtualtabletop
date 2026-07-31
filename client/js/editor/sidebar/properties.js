@@ -4068,13 +4068,6 @@ class PropertiesModule extends SidebarModule {
       this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body, {
         infoText: 'Keep the widget at its own size while the rest of the room is zoomed in or out.'
       });
-      this.renderCheckbox(widget, 'Overlap siblings', 'overlap', body, {
-        default: true,
-        infoText: 'Allow this widget to sit on top of its siblings when a holder or pile arranges them. Turn it off to make the holder space them out by this widget\'s full width/height instead of its normal stack offset.'
-      });
-      this.renderCheckbox(widget, 'Ignore "on leave" properties', 'ignoreOnLeave', body, {
-        infoText: 'Skip the holder\'s "on leave" properties when this widget is taken out of it, so leaving does not change it (e.g. flipping a card face down).'
-      });
       this.renderCheckbox(widget, 'Hide other players\' cursors', 'hidePlayerCursors', body, {
         infoText: 'Stop showing where the other players point while their cursor is over this widget or over anything inside it.'
       });
@@ -4086,6 +4079,13 @@ class PropertiesModule extends SidebarModule {
           default: true,
           infoText: 'Take the widget out of the room for the players: it is still there and routines keep working on it, but nobody can see or use it. In edit mode the eye button of the toolbar shows and hides those widgets.'
         });
+      this.renderCheckbox(widget, 'In holder, overlap siblings', 'overlap', body, {
+        default: true,
+        infoText: 'Allow this widget to sit on top of its siblings when a holder or pile arranges them. Turn it off to make the holder space them out by this widget\'s full width/height instead of its normal stack offset.'
+      });
+      this.renderCheckbox(widget, 'In holder, ignore "on leave" properties', 'ignoreOnLeave', body, {
+        infoText: 'Skip the holder\'s "on leave" properties when this widget is taken out of it, so leaving does not change it (e.g. flipping a card face down).'
+      });
     }, null, `${widget.id}:generic`, {
       renderSummary: summary => {
         const update = w => summary.textContent = this.interactionSummary(w);
@@ -6596,7 +6596,6 @@ class PropertiesModule extends SidebarModule {
 
   renderFacesEditor(widget) {
     this.addSubHeader('Faces');
-    div(this.moduleDOM, 'facesHint', 'A face is a set of properties that override the widget\'s own ones while that face is shown. Clicking the widget flips to the next face.');
 
     // the engine only reads a list of faces; refuse to edit (and so overwrite)
     // anything else that ended up in the property
@@ -6658,11 +6657,7 @@ class PropertiesModule extends SidebarModule {
       const faces = this.basicFaces(widget);
       // pointless with one face, but never hide a value the widget actually has
       cycleHost.style.display = faces.length > 1 || widget.state.faceCycle !== undefined ? '' : 'none';
-      if(!faces.length)
-        div(list, 'facesHint', 'This widget has no faces at all. Add one to give it properties of its own.');
-      else if(faces.length == 1 && !Object.keys(faceObject(faces[0])).length)
-        div(list, 'facesHint', 'This widget has a single face. Add a second one to make it flip - between a front and a back image, for example.');
-      else
+      if(faces.length)
         faces.forEach((face, index)=>this.renderFaceRow(widget, index, list, rebuildRows));
       this.updateActiveFaceMarkers(widget, list, note);
       this.moduleDOM.scrollTop = scrollTop;
