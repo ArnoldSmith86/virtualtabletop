@@ -25,6 +25,23 @@
   display: inline-flex;
 }
 
+/* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
+   text color so the intro is readable in both themes (white on the dark editor theme, dark in light mode). */
+.editorModule .noSelectionIntro {
+  color: var(--textColor);
+  margin: 10px 5px 15px;
+}
+
+.editorModule .noSelectionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  justify-content: center;
+}
+
 /* properties */
 
 .editorModule .widgetSelectionButton {
@@ -180,14 +197,12 @@
 
 
 .tune.editorModule .cardTypeEdit {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
+  width: fit-content;
+  margin: 10px auto;
   padding: 10px;
-}
-.tune.editorModule .cardCountDiv {
-  float: left;
 }
 .tune.editorModule .cardCountDiv button {
   display: inline-flex;
@@ -200,22 +215,10 @@
 .tune.editorModule .renderedWidget {
   margin: 5px;
 }
-.tune.editorModule .cardCountDivEditing {
-  background: var(--backgroundHighlightColor1);
-  border: 1px solid var(--textColor);
-  border-radius: 5px;
-}
-.tune.editorModule .cardCountDivEditing [icon=create] {
-  display: none;
-}
-.tune.editorModule .cardTypeProperties {
-  padding: 10px;
-}
-.tune.editorModule .cardTypeProperties .buttonBar {
-  margin-top: 10px;
-}
-.tune.editorModule .cardTypeEdit:not(.cardCountDivEditing) .cardTypeProperties {
-  display: none;
+.tune.editorModule .cardDeckButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
 }
 
 

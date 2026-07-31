@@ -199,6 +199,7 @@ export function editorReceiveDelta(delta) {
 
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
+  deckEditorReceiveDelta(delta);
 }
 
 function receiveStateFromServer(state) {
@@ -208,6 +209,7 @@ function receiveStateFromServer(state) {
   // with the dead widgets already dropped, so nothing re-renders an editor for
   // one of them and follows its dangling links (a card looks up its deck).
   // The selection survives leaving edit mode, so this happens while playing too.
+  deckEditorStateReplaced();
   setSelection([]);
   for(const module of sidebarModules)
     module.onStateReceived(state);

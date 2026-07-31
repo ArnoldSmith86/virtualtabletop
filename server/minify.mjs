@@ -91,6 +91,7 @@ export default async function minifyHTML() {
     'client/css/editor/sidebarModules.css',
     'client/css/editor/sidebarProperties.css',
     'client/css/editor/propertyInputs.css',
+    'client/css/editor/deckeditor.css',
 
     'client/css/editmode.css',
     'client/css/jsonedit.css',
@@ -115,6 +116,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/align.js',
     'client/js/editor/toolbar/group.js',
     'client/js/editor/toolbar/grid.js',
+    'client/js/editor/toolbar/deckeditor.js',
     'client/js/editor/toolbar/tutorials.js',
     'client/js/editor/toolbar/wiki.js',
     'client/js/editor/dragButton.js',
@@ -134,6 +136,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/toolbox.js',
     'client/js/editor/sidebar/gameSettings.js',
     'client/js/editor/sidebar/widgets.js',
+    'client/js/editor/deckeditor.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',

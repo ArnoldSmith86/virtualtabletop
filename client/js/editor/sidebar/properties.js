@@ -1794,74 +1794,26 @@ class PropertiesModule extends SidebarModule {
   }
 
   addDeck() {
-    this.addHeader('Add deck');
+    this.addHeader('Edit widgets');
 
-    const browseButton = document.createElement('button');
-    browseButton.innerText = 'Browse public library decks';
-    browseButton.setAttribute('icon', 'style');
-    browseButton.className = 'libraryDecksBrowseButton';
-    browseButton.onclick = _=>openLibraryDecksOverlay();
-    this.moduleDOM.append(browseButton);
+    const intro = document.createElement('p');
+    intro.className = 'noSelectionIntro';
+    intro.innerText = 'You do not have a widget selected. To get started, click on one to the left or:';
+    this.moduleDOM.append(intro);
 
-    this.addSubHeader('Or create a new deck');
+    const addWidgetButton = document.createElement('button');
+    addWidgetButton.innerText = 'Add a new widget';
+    addWidgetButton.setAttribute('icon', 'add');
+    addWidgetButton.className = 'noSelectionButton';
+    addWidgetButton.onclick = _=>{ setSelection([]); showOverlay('addOverlay'); };
+    this.moduleDOM.append(addWidgetButton);
 
-    function createRadioButtons(target, name, options, callback) {
-      let html = '';
-      Object.keys(options).forEach((key, index) => {
-        const option = options[key];
-        html += `
-          <div>
-            <input type="radio" id="${name}${index}" name="${name}" value="${key}">
-            <label for="${name}${index}"><strong>${option.header}</strong><div>${option.description}</div></label>
-          </div>
-        `;
-      });
-
-      const radioButtonsHTML = `<div class=headerRadioButtons>${html}</div>`;
-      const container = document.createElement('div');
-      container.innerHTML = radioButtonsHTML;
-      target.append(container);
-
-      Object.keys(options).forEach((_, index) => {
-        const radioButton = container.querySelector(`#${name}${index}`);
-        radioButton.addEventListener('change', (event) => {
-          callback(event.target.value);
-        });
-      });
-
-      return container;
-    }
-
-    createRadioButtons(this.moduleDOM, 'deckType', {
-      traditional: {
-        header: 'Traditional deck',
-        description: 'Add a ready-made deck: standard playing cards, Spanish, German or Swiss suited cards, tarot, hanafuda, mahjong tiles or dominoes'
-      },
-      custom: {
-        header: 'Custom deck of cards',
-        description: 'Generate a deck by defining suits (symbols and colors) and ranks for each suit'
-      },
-      images: {
-        header: 'Upload one image per card or tiled images with multiple cards',
-        description: 'Generate a deck by uploading images that cover the whole card. You may need to remove gaps or margins for tiled images in an image editor.'
-      },
-      tts: {
-        header: 'Import from Tabletop Simulator',
-        description: 'Enter the link of a TTS Steam Workshop item, preview the decks it contains and import the ones you want'
-      }
-    }, v=>{
-      options.innerHTML = '';
-      if(v == 'traditional')
-        this.deckTraditional(options);
-      if(v == 'custom')
-        this.deckGenerator(options);
-      if(v == 'images')
-      this.deckImages(options);
-      if(v == 'tts')
-        this.deckImportTTS(options);
-    });
-
-    const options = div(this.moduleDOM);
+    const deckEditorButton = document.createElement('button');
+    deckEditorButton.innerText = 'Open deck editor';
+    deckEditorButton.setAttribute('icon', 'style');
+    deckEditorButton.className = 'noSelectionButton';
+    deckEditorButton.onclick = _=>deckEditor.openBestDeck();
+    this.moduleDOM.append(deckEditorButton);
   }
 
   async deckTraditional(target) {
@@ -2101,11 +2053,38 @@ class PropertiesModule extends SidebarModule {
       batchStart();
       const deck = getDeckDefinition(standardDeck);
       setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
-      await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
+      const finalDeck = deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck);
 
-      let suitIndex = 0;
+      // Same holder/button/pile structure as addDeckWithCards, so custom decks aren't spread out either.
+      const cardWidth  = finalDeck.cardDefaults && finalDeck.cardDefaults.width  || finalDeck.width  || 103;
+      const cardHeight = finalDeck.cardDefaults && finalDeck.cardDefaults.height || finalDeck.height || 160;
+      const deckWidth  = finalDeck.width  || cardWidth;
+      const deckHeight = finalDeck.height || cardHeight;
+      const holderWidth  = cardWidth  + 8;
+      const holderHeight = cardHeight + 11;
+      const holderID = generateUniqueWidgetID();
+      await addWidgetLocal({
+        type: 'holder', id: holderID,
+        x: Math.round(800 - holderWidth/2), y: Math.round(500 - holderHeight/2),
+        width: holderWidth, height: holderHeight, dropTarget: { type: 'card' }
+      });
+      await addWidgetLocal({
+        id: holderID+'B', parent: holderID, fixedParent: true, y: holderHeight,
+        width: holderWidth, height: 40, type: 'button', text: 'Recall & Shuffle', movableInEdit: false,
+        clickRoutine: [
+          { func: 'RECALL',  holder: '${PROPERTY parent}' },
+          { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+          { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
+        ]
+      });
+      await addWidgetLocal(Object.assign({}, finalDeck, {
+        parent: holderID,
+        x: Math.round((holderWidth -deckWidth )/2),
+        y: Math.round((holderHeight-deckHeight)/2)
+      }));
+      await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
+
       for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        let x = 0;
         for(const rank of parseRankRange(ranks[suitSymbol])) {
           const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
           await addWidgetLocal({
@@ -2113,13 +2092,10 @@ class PropertiesModule extends SidebarModule {
             id: `${deck.id} ${cT}`,
             deck: deck.id,
             cardType: cT,
-            x,
-            y: suitIndex * 160,
+            parent: holderID+'P',
             activeFace: 1
           });
-          x += 103;
         }
-        suitIndex += 1;
       }
 
       batchEnd();
@@ -2365,29 +2341,60 @@ class PropertiesModule extends SidebarModule {
   async addDeckWithCards(deck, type, counts) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
-    await addWidgetLocal(deck);
 
-    const cardWidth = deck.cardDefaults && deck.cardDefaults.width || 103;
-    let x = 0;
-    let y = 0;
+    // Match the public-library flow: a holder sized to the cards, a Recall & Shuffle button, the deck
+    // centered in it and the cards stacked in a pile - rather than spreading loose cards across the table.
+    const cardWidth  = deck.cardDefaults && deck.cardDefaults.width  || deck.width  || 103;
+    const cardHeight = deck.cardDefaults && deck.cardDefaults.height || deck.height || 160;
+    const deckWidth  = deck.width  || cardWidth;
+    const deckHeight = deck.height || cardHeight;
+    const holderWidth  = cardWidth  + 8;
+    const holderHeight = cardHeight + 11;
+    const holderID = generateUniqueWidgetID();
+
+    await addWidgetLocal({
+      type: 'holder',
+      id: holderID,
+      x: Math.round(800 - holderWidth/2),
+      y: Math.round(500 - holderHeight/2),
+      width: holderWidth,
+      height: holderHeight,
+      dropTarget: { type: 'card' }
+    });
+    await addWidgetLocal({
+      id: holderID+'B',
+      parent: holderID,
+      fixedParent: true,
+      y: holderHeight,
+      width: holderWidth,
+      height: 40,
+      type: 'button',
+      text: 'Recall & Shuffle',
+      movableInEdit: false,
+      clickRoutine: [
+        { func: 'RECALL',  holder: '${PROPERTY parent}' },
+        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
+      ]
+    });
+    await addWidgetLocal(Object.assign({}, deck, {
+      parent: holderID,
+      x: Math.round((holderWidth -deckWidth )/2),
+      y: Math.round((holderHeight-deckHeight)/2)
+    }));
+    await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
+
     for(const cardType in deck.cardTypes) {
       const count = counts ? counts[cardType] || 0 : 1;
-      for(let i=1; i<=count; ++i) {
+      for(let i=1; i<=count; ++i)
         await addWidgetLocal({
           type: 'card',
           id: `${deck.id} ${cardType}${count > 1 ? ' '+i : ''}`,
           deck: deck.id,
           cardType: cardType,
-          x,
-          y: y * 160,
+          parent: holderID+'P',
           activeFace: 1
         });
-        x += cardWidth;
-        if(x+cardWidth > 1600) {
-          y += 1;
-          x = 0;
-        }
-      }
     }
 
     batchEnd();
@@ -2777,81 +2784,11 @@ class PropertiesModule extends SidebarModule {
     return deck;
   }
 
-  faceObjectInputValueUpdated(deck, face, object, property, value, card, removeObjects) {
-    if(typeof value === undefined)
-      delete this.faceTemplates[face].objects[object][property];
-    else
-      this.faceTemplates[face].objects[object][property] = value;
-
-    //card.applyDeltaToDOM({ deck: card.get('deck') });
-    for(let objectCard=object; objectCard<this.cardLayerCards[face].length; ++objectCard) {
-      const oCard = this.cardLayerCards[face][objectCard];
-      oCard.domElement.innerHTML = '';
-      oCard.createFaces(this.faceTemplates);
-      for(let i=0; i<oCard.domElement.children.length; ++i)
-        oCard.domElement.children[i].classList.toggle('active', i == oCard.get('activeFace'));
-      removeObjects(oCard, objectCard);
-    }
-  }
-
-  async applyFaceTemplateChanges(deck) {
-    batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} updated face templates of deck ${deck.id} in editor`);
-    await deck.set('faceTemplates', JSON.parse(JSON.stringify(this.faceTemplates)));
-    batchEnd();
-  }
-
-  renderCardLayers(deck) {
-    const card = new Card();
-    card.state.deck = deck.id;
-    card.state.cardType = Object.keys(deck.get('cardTypes'))[0];
-    const faceTemplates = this.faceTemplates = JSON.parse(JSON.stringify(deck.get('faceTemplates')));
-
-    this.cardLayerCards = [];
-
-    for(const face in faceTemplates) {
-      this.cardLayerCards[face] = [];
-
-      if(face == 0)
-        this.addHeader('Back face');
-      else if(face == 1)
-        this.addHeader('Front face');
-      else
-        this.addHeader(`Face ${face}`);
-
-      for(const object in faceTemplates[face].objects) {
-        const objectDiv = document.createElement('div');
-        objectDiv.className = 'faceTemplateEdit';
-
-        const cardClone = this.cardLayerCards[face][object] = card.renderReadonlyCopy({ activeFace: face }, objectDiv);
-        const removeObjects = function(card, object) {
-          for(const objectDOM of $a(`.active.cardFace .cardFaceObject:nth-child(n+${+object+2})`, card.domElement))
-            objectDOM.remove();
-        };
-        removeObjects(cardClone, object);
-        const propsDiv = document.createElement('div');
-        propsDiv.className = 'faceTemplateProperty';
-        for(const prop in faceTemplates[face].objects[object])
-          this.addInput(prop, faceTemplates[face].objects[object][prop], v=>this.faceObjectInputValueUpdated(deck, face, object, prop, v, card, removeObjects), propsDiv);
-        objectDiv.appendChild(propsDiv);
-        this.moduleDOM.appendChild(objectDiv);
-      }
-    }
-
-    const applyButton = document.createElement('button');
-    applyButton.innerText = 'Apply changes';
-    applyButton.setAttribute('icon', 'check');
-    applyButton.onclick = e=>this.applyFaceTemplateChanges(deck);
-    this.moduleDOM.appendChild(applyButton);
-  }
-
   renderCardTypes(deck, onlyCardType=null) {
     const card = new Card();
     card.state.deck = deck.id;
     card.deck = deck;
-    const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
-
-    this.cardTypeCards = [];
+    const cardTypes = deck.get('cardTypes');
 
     for(const cardType in cardTypes) {
       if(onlyCardType !== null && onlyCardType != cardType)
@@ -2863,26 +2800,13 @@ class PropertiesModule extends SidebarModule {
           <button icon=add></button>
         </div>
         <div class=renderedWidget></div>
-        <button icon=create>Edit</button>
-        <div class=cardTypeProperties>
-          <div></div>
-          <div class=buttonBar>
-            <button icon=close class=red>Discard changes</button>
-            <button icon=check class=green>Apply changes</button>
-          </div>
-        </div>
       `);
-      $('[icon=create]', cardTypeDiv).onclick = _=>this.renderCardTypes_editProperties(deck, cardType, cardTypeDiv);
-
-      this.cardTypeCards[cardType] = [];
 
       const cardClone = new Card();
       const newState = {...card.state};
       newState.activeFace = card.getFaceCount()>1?1:0;
       newState.cardType = cardType;
       cardClone.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
-
-      this.cardTypeCards[cardType] = cardClone;
 
       let cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
       const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), $('.cardCountDiv', cardTypeDiv), 'number');
@@ -2906,58 +2830,6 @@ class PropertiesModule extends SidebarModule {
       $('.cardCountDiv', cardTypeDiv).insertBefore($('input', input.dom), $('[icon=add]', cardTypeDiv));
       input.dom.remove();
     }
-  }
-
-  renderCardTypes_editProperties(deck, cardType, cardTypeDiv) {
-    $('.cardTypeProperties > div', cardTypeDiv).innerHTML = '';
-    cardTypeDiv.classList.add('cardCountDivEditing');
-
-    const cardTypeProperties = JSON.parse(JSON.stringify(deck.get('cardTypes')))[cardType];
-
-    const addPropertyInput = (property, value)=>{
-      this.addInput(property, value, v=>{
-        if(typeof v === undefined)
-          delete cardTypeProperties[property];
-        else
-          cardTypeProperties[property] = v;
-        this.renderCardTypes_updateCardVisualization(deck, cardType, { [property]: v });
-      }, $('.cardTypeProperties > div', cardTypeDiv));
-    };
-
-    for(const [ property, value ] of Object.entries(cardTypeProperties))
-      addPropertyInput(property, value);
-
-    for(const face of deck.get('faceTemplates'))
-      for(const object of face.objects || [])
-        for(const prop of Object.values(object.dynamicProperties || {}))
-          if(typeof cardTypeProperties[prop] === 'undefined' && [ 'cardType', 'id' ].indexOf(prop) == -1)
-            addPropertyInput(prop, cardTypeProperties[prop]);
-
-    $('[icon=check]', cardTypeDiv).onclick = async _=>{
-      cardTypeDiv.classList.remove('cardCountDivEditing');
-
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated card types of deck ${deck.id} in editor`);
-      const cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
-      cardTypes[cardType] = cardTypeProperties;
-      await deck.set('cardTypes', cardTypes);
-      batchEnd();
-    };
-
-    $('[icon=close]', cardTypeDiv).onclick = _=>{
-      cardTypeDiv.classList.remove('cardCountDivEditing');
-      this.renderCardTypes_updateCardVisualization(deck, cardType, deck.get('cardTypes')[cardType]);
-    };
-  }
-
-  renderCardTypes_updateCardVisualization(deck, cardType, changes) {
-      const oCard = this.cardTypeCards[cardType];
-      oCard.domElement.innerHTML = '';
-      Object.assign(oCard.state, changes);
-      oCard.createFaces(deck.get('faceTemplates'));
-      for (let i = 0; i < oCard.domElement.children.length; ++i) {
-          oCard.domElement.children[i].classList.toggle('active', i == oCard.get('activeFace'));
-      }
   }
 
   basicPropertyExcludeList(extra = []) {
@@ -8067,67 +7939,20 @@ class PropertiesModule extends SidebarModule {
       div(this.moduleDOM, 'pileHelp warning', `This card points at the deck <code>${html(widget.get('deck'))}</code>, which does not exist in this game. Without it the card has no card types and no faces to draw.`);
     } else {
       this.renderCardTypes(deck, widget.get('cardType'));
-      div(this.moduleDOM, '', `
-        <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
-        <div class=buttonBar>
-          <button icon=style>Open deck</button>
-        </div>
+      const deckButtons = div(this.moduleDOM, 'cardDeckButton', `
+        <button icon=style>Edit Cards and Deck</button>
       `);
-      $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ deck ]);
+      $('button', deckButtons).onclick = _=>deckEditor.openAtCardType(deck.id, widget.get('cardType'));
     }
     this.renderAppearanceSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'deck', 'cardType', 'z' ]);
   }
 
   renderForDeck(widget) {
-    this.renderTypeHeader(widget);
-    this.renderBasicSection(widget);
-    this.addSubHeader(`Card types`);
-    div(this.moduleDOM, 'buttonBar', `
-      <button icon=remove class=removeAll>All</button>
-      <button icon=add class=addAll>All</button>
-    `);
-    this.renderCardTypes(widget);
-    $('.removeAll', this.moduleDOM).onclick = async _=>{
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} removed one card of each type from deck ${widget.id} in editor`);
-      for(const cardType in widget.get('cardTypes')) {
-        const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
-        if(cards.length)
-          await setCardCount(widget, cardType, cards.length - 1);
-      }
-      batchEnd();
-    };
-    $('.addAll', this.moduleDOM).onclick = async _=>{
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} added one card of each type to deck ${widget.id} in editor`);
-      for(const cardType in widget.get('cardTypes')) {
-        const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
-        await setCardCount(widget, cardType, cards.length + 1);
-      }
-      batchEnd();
-    };
-
-    this.addSubHeader(`Card layers`);
-    if(Object.values(widget.get('cardTypes')).length)
-      this.renderCardLayers(widget);
-    else
-      div(this.moduleDOM, '', `<p>Please add a cardType first.</p>`);
-
-    this.addSubHeader(`Card default properties`);
-    for(const [ prop, value ] of Object.entries(widget.get('cardDefaults'))) {
-      this.addInput(prop, value, v=>{
-        const defaults = JSON.parse(JSON.stringify(widget.get('cardDefaults')));
-        defaults[prop] = v;
-        widget.set('cardDefaults', defaults);
-      });
-    }
-
-    this.addSubHeader(`Deck properties`);
-    div(this.moduleDOM, '', `
-      <p>These are properties acting on the deck widget itself which has no influence on gameplay. These properties do not apply to the cards. Which is why this section is usually empty.</p>
-    `);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'cardTypes', 'faceTemplates', 'cardDefaults', 'z' ]));
+    // Selecting a deck in the Properties module now opens the full deck editor directly instead of the old
+    // minimalist deck view that used to live here. The guard avoids re-opening while it is already up.
+    if(!deckEditor.isOpen())
+      deckEditor.open(widget.id);
   }
 
   // --- dice face editor ---
