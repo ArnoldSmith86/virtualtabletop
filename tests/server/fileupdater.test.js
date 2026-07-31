@@ -163,6 +163,29 @@ describe('v22 seat property rename', () => {
     }).button.clickRoutine[1]).toEqual({ func: 'SET', property: 'display', value: '${playerName}' });
   });
 
+  test('tracks whether add and intersect collections can contain seats', () => {
+    expect(updateWidgets({
+      button: {
+        type: 'button',
+        clickRoutine: [
+          { func: 'SELECT', type: 'label', collection: 'added' },
+          { func: 'SELECT', type: 'all', collection: 'added', mode: 'add' },
+          { func: 'SET', property: 'display', value: '${playerName}', collection: 'added' },
+          { func: 'SELECT', type: 'all', collection: 'intersected' },
+          { func: 'SELECT', type: 'label', collection: 'intersected', mode: 'intersect' },
+          { func: 'SET', property: 'display', value: '${playerName}', collection: 'intersected' }
+        ]
+      }
+    }).button.clickRoutine).toEqual([
+      { func: 'SELECT', type: 'label', collection: 'added' },
+      { func: 'SELECT', type: 'all', collection: 'added', mode: 'add' },
+      { func: 'SET', property: 'seatedText', value: '${playerName}', collection: 'added' },
+      { func: 'SELECT', type: 'all', collection: 'intersected' },
+      { func: 'SELECT', type: 'label', collection: 'intersected', mode: 'intersect' },
+      { func: 'SET', property: 'display', value: '${playerName}', collection: 'intersected' }
+    ]);
+  });
+
   test('still renames display after a SELECT that could have picked seats', () => {
     expect(updateWidgets({
       button: {

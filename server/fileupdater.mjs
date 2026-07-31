@@ -823,11 +823,11 @@ function v22SelectsSeats(operation) {
 }
 
 function v22Union(a, b) {
-  return a === true && b === true ? true : (a === false || b === false ? false : undefined);
+  return a === true && b === true ? true : (a === false && b === false ? false : undefined);
 }
 
 function v22Intersection(a, b) {
-  return a === true || b === true ? true : (a === false && b === false ? false : undefined);
+  return a === false || b === false ? false : (a === true || b === true ? true : undefined);
 }
 
 // only a seat text understands these placeholders, so a value using one was
