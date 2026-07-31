@@ -1,0 +1,218 @@
+/* Plain language routine builder in the Automations section of Edit Widgets. */
+
+.tune.editorModule .routineBuilderHeader {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.tune.editorModule .routineBuilderProperty {
+  flex: 1;
+  font-family: monospace;
+  font-size: 11px;
+  color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tune.editorModule .routineBuilderHeader button {
+  padding: 0;
+  min-width: 22px;
+  border: 0;
+  background: transparent;
+  color: #7c7c7c;
+  cursor: pointer;
+}
+
+.tune.editorModule .routineBuilderHeader button:hover {
+  color: #333;
+}
+
+.tune.editorModule .routineStepList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tune.editorModule .routineEmpty {
+  font-size: 12px;
+  color: #888;
+  padding: 4px 0;
+}
+
+.tune.editorModule .routineStep {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tune.editorModule .routineStepHeader {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tune.editorModule .routineStepIndex {
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: #ddd;
+  color: #555;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.tune.editorModule .routineStepTitle {
+  flex: 1;
+  font-size: 12px;
+  font-weight: bold;
+  color: #444;
+}
+
+.tune.editorModule .routineStepControls {
+  display: flex;
+  gap: 2px;
+}
+
+.tune.editorModule .routineStepControls button,
+.tune.editorModule .routineClauseControls button {
+  padding: 0;
+  min-width: 20px;
+  border: 0;
+  background: transparent;
+  color: #7c7c7c;
+  cursor: pointer;
+}
+
+.tune.editorModule .routineStepControls button:hover,
+.tune.editorModule .routineClauseControls button:hover {
+  color: #333;
+}
+
+.tune.editorModule .routineStepControls button:disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+/* The sentence itself wraps over as many lines as the narrow sidebar needs. */
+.tune.editorModule .routineSentence {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.tune.editorModule .routineChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tune.editorModule .routineTextInput {
+  font-size: 12px;
+  padding: 1px 4px;
+  min-width: 0;
+  width: 90px;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tune.editorModule .routineCountInput {
+  width: 50px;
+}
+
+.tune.editorModule .routineSelect,
+.tune.editorModule .routineVerb,
+.tune.editorModule .routineAddClause,
+.tune.editorModule .routineAddStep,
+.tune.editorModule .routineAddAutomation {
+  font-size: 12px;
+  padding: 1px 2px;
+  max-width: 100%;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tune.editorModule .routineVerb {
+  align-self: flex-start;
+}
+
+.tune.editorModule .routineClause {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 12px;
+  border-left: 2px solid #ddd;
+}
+
+.tune.editorModule .routineNoteInput {
+  flex: 1;
+  font-size: 12px;
+  font-style: italic;
+  padding: 1px 4px;
+  min-width: 0;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tune.editorModule .routineAddClause,
+.tune.editorModule .routineAddStep,
+.tune.editorModule .routineAddAutomation {
+  align-self: flex-start;
+  max-width: 240px;
+  color: #666;
+}
+
+.tune.editorModule .routineAdvanced button {
+  align-self: flex-start;
+}
+
+.tune.editorModule .routineBuilderFooter {
+  margin-top: 6px;
+}
+
+.tune.editorModule .routineAddAutomation {
+  margin: 4px 0 10px 0;
+}
+
+.tune.editorModule .routineAdvanced {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tune.editorModule .routineAdvancedHint {
+  font-size: 11px;
+  color: #888;
+}
+
+.tune.editorModule .routineAdvancedJSON {
+  margin: 0;
+  padding: 4px;
+  font-family: monospace;
+  font-size: 11px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  max-height: 160px;
+  overflow: auto;
+}
+
+.tune.editorModule .routineStepPopouts:empty {
+  display: none;
+}

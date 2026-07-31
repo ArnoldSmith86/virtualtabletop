@@ -4004,29 +4004,68 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, exclude);
   }
 
+  // Every routine the widget has, each one built from plain language step cards
+  // (see routineTemplates.js / routineBuilder.js). The JSON editor stays the
+  // power tool - both views edit the very same array.
   renderAutomationsSection(widget) {
-    const playerRoutines = [ 'clickRoutine', 'doubleClickRoutine', 'changeRoutine', 'enterRoutine', 'leaveRoutine' ]
-      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined);
-    if(!playerRoutines.length)
-      return [];
+    const routineProperties = Object.keys(widget.state)
+      .filter(property => /Routine$/.test(property) && Array.isArray(widget.state[property]))
+      .sort((a, b) => routineBuilderRoutineOrder(a) - routineBuilderRoutineOrder(b) || a.localeCompare(b));
 
     this.addSubHeader('Automations');
-    for(const property of playerRoutines) {
-      const row = div(this.moduleDOM, 'propertyInput automationInput');
-      const label = document.createElement('label');
-      label.textContent = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
-      row.appendChild(label);
-      const button = document.createElement('button');
-      button.setAttribute('icon', 'data_object');
-      button.textContent = `Edit ${property} in JSON editor`;
-      button.onclick = () => {
-        const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
-        if(jsonModuleButton)
-          jsonModuleButton.click();
-      };
-      row.appendChild(button);
+    for(const property of routineProperties) {
+      this.renderCollapsibleSection(routineBuilderRoutineLabel(property), routineProperties.length > 1, body => {
+        const header = div(body, 'routineBuilderHeader');
+        div(header, 'routineBuilderProperty', html(property));
+        const jsonButton = document.createElement('button');
+        jsonButton.setAttribute('icon', 'data_object');
+        jsonButton.title = routineBuilderText('ui.editInJSON');
+        jsonButton.onclick = () => routineBuilderOpenJSONEditor();
+        header.appendChild(jsonButton);
+        const removeButton = document.createElement('button');
+        removeButton.setAttribute('icon', 'delete');
+        removeButton.title = routineBuilderText('ui.deleteRoutine');
+        removeButton.onclick = () => {
+          this.inputValueUpdated(widget, property, null);
+          this.onSelectionChangedWhileActive(selectedWidgets);
+        };
+        header.appendChild(removeButton);
+
+        new RoutineBuilder(this, widget, property, body);
+      }, null, `${widget.id}:${property}`, {
+        renderSummary: summary => this.addPropertyListener(widget, property, w => {
+          const steps = Array.isArray(w.get(property)) ? w.get(property).length : 0;
+          summary.textContent = steps == 1
+            ? routineBuilderText('ui.stepCountOne')
+            : routineBuilderText('ui.stepCount', { count: steps });
+        })
+      });
     }
-    return playerRoutines;
+
+    const missing = routineBuilderStandardRoutines.filter(property => routineProperties.indexOf(property) == -1);
+    const addSelect = document.createElement('select');
+    addSelect.className = 'routineAddAutomation';
+    addSelect.innerHTML = `<option value="">+ ${html(routineBuilderText('ui.addAutomation'))}</option>` +
+      missing.map(property => `<option value="${html(property)}">${html(routineBuilderRoutineLabel(property))}</option>`).join('') +
+      `<option value="__custom">${html(routineBuilderText('ui.customRoutine'))}</option>`;
+    addSelect.onchange = () => {
+      let property = addSelect.value;
+      addSelect.value = '';
+      if(!property)
+        return;
+      if(property == '__custom') {
+        const name = prompt(routineBuilderText('ui.customRoutinePrompt'), 'myAction');
+        if(!name)
+          return;
+        property = name.replace(/Routine$/, '') + 'Routine';
+      }
+      if(!Array.isArray(widget.state[property]))
+        this.inputValueUpdated(widget, property, []);
+      this.onSelectionChangedWhileActive(selectedWidgets);
+    };
+    this.moduleDOM.appendChild(addSelect);
+
+    return routineProperties;
   }
 
   // --- shared curated inputs ---
