@@ -4000,7 +4000,10 @@ class PropertiesModule extends SidebarModule {
   }
 
   // dropLimit says nothing on a widget nothing can be dropped into, so its
-  // input only shows up once the widget takes drops at all
+  // input only shows up once the widget takes drops at all. Piles are the one
+  // thing that takes drops without a dropTarget (they snap cards in through
+  // pileSnapRange) - their limit lives in the deck editor's Piles section,
+  // because a pile is temporary and only its deck can carry the setting.
   takesDrops(widget) {
     return asArray(widget.get('dropTarget') || []).length > 0;
   }
@@ -4418,7 +4421,7 @@ class PropertiesModule extends SidebarModule {
   renderForPile(widget) {
     this.renderTypeHeader(widget);
     div(this.moduleDOM, '', `
-      <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
+      <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here. The deck editor's <b>Card defaults</b> tab has a <b>Piles</b> section for the drop limit and the handle's limit display.</p>
     `);
     const card = widget.children().find(child => child.get('type') == 'card');
     const deck = card && widgets.get(card.get('deck'));
