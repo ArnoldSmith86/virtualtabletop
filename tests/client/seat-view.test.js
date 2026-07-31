@@ -179,6 +179,19 @@ describe('counter-rotation', function() {
     expect(piece.seatViewRotationDelta).toBe(0);
   });
 
+  test('children recalculate after a shared parent rotation changes', async function() {
+    createSeat('north', { player: 'Alice' });
+    const board = createWidget({ id: 'board', seatOverrides: { all: { rotation: 180 } } });
+    const label = createWidget({ id: 'label', parent: 'board' });
+
+    refreshAs('north');
+    expect(label.seatViewRotationDelta).toBe(-180);
+
+    await board.set('rotation', 90);
+    await new Promise(resolve => setTimeout(resolve));
+    expect(label.seatViewRotationDelta).toBe(-90);
+  });
+
   test('facing does not make children counter-rotate', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
     createWidget({ id: 'mat', owner: 'Alice', facing: 'owner' });

@@ -30,7 +30,7 @@ const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ])
 // Properties that can change which per-seat presentation a widget resolves to.
 // Anything else only needs the widget's own cached overrides re-applied, which
 // the normal delta path already does.
-const seatViewRelevantProperties = new Set([ 'counterRotate', 'facing', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'seatOverrides' ]);
+const seatViewRelevantProperties = new Set([ 'counterRotate', 'facing', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'rotation', 'seatOverrides' ]);
 
 // Using any of these anywhere in the room switches the per-seat view machinery
 // on for this client.

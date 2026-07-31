@@ -118,25 +118,24 @@ async function inputHandler(name, e) {
         else if(jeEnabled && !isMiddleMouseButton)
           editClickHandled = await jeClick(widget, e);
 
-        // a per-seat clickable override gates this client's input only; a
-        // routine calling click() keeps seeing the shared value
-        const seatViewBlocksClick = widget.get('clickable') && !widget.getView('clickable');
-        if(!editClickHandled && !seatViewBlocksClick) {
+        // A per-seat clickable override controls this client's input only;
+        // routines calling click() continue to use the shared value.
+        if(!editClickHandled && widget.getView('clickable')) {
           if(!target.classList.contains('longtouch')) {
             if(!widget.get('doubleClickRoutine')) {
               setDeltaCause(`${playerName} clicked ${widget.id}`);
-              await widget.click();
+              await widget.click('ignoreClickable');
             } else if(doubleClickTimeout) {
               clearTimeout(doubleClickTimeout);
               doubleClickTimeout = null;
               setDeltaCause(`${playerName} double clicked ${widget.id}`);
-              await widget.doubleClick();
+              await widget.doubleClick('ignoreClickable');
             } else {
               doubleClickTimeout = setTimeout(async () => {
                 doubleClickTimeout = null;
                 batchStart();
                 setDeltaCause(`${playerName} clicked ${widget.id}`);
-                await widget.click();
+                await widget.click('ignoreClickable');
                 batchEnd();
               }, 350);
             }

@@ -1,4 +1,4 @@
-import { ClientFunction } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 
 import { getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
@@ -21,6 +21,25 @@ function swapHandsRoom(clickRoutine) {
   for(const [ card, z ] of Object.entries(cardZ))
     state[card] = { id: card, type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand1', z };
   return state;
+}
+
+function seatViewClickRoom() {
+  return {
+    seat: { id: 'seat', type: 'seat', index: 1, player: 'TestCafe' },
+    button: {
+      id: 'button',
+      type: 'button',
+      x: 100,
+      y: 100,
+      clickable: false,
+      seatOverrides: { noSeat: { clickable: true } },
+      clickRoutine: [
+        { func: 'SELECT', property: 'id', value: 'witness' },
+        { func: 'SET', property: 'marked', value: true }
+      ]
+    },
+    witness: { id: 'witness', type: 'basic', x: 300, y: 100 }
+  };
 }
 
 // three seats, and the middle hand removes the only card of the last hand as soon as
@@ -84,6 +103,15 @@ async function clickSwap(t, clickRoutine) {
 test('SWAPHANDS passes the cards on in widget creation order', async t => {
   await clickSwap(t, [ { func: 'SWAPHANDS' } ]);
   await expectEventually(t, ()=>cardsInHand('hand2'), creationOrder);
+});
+
+test('a seat view can enable clicking a shared non-clickable widget', async t => {
+  await setRoomState(seatViewClickRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.expect(Selector('#w_button').hasClass('clickable')).ok();
+  await t.click('#w_button');
+  await expectEventually(t, markedWidgets, [ 'witness' ]);
 });
 
 test('SWAPHANDS with keepOrder passes the cards on in the order of the hand', async t => {
