@@ -5865,8 +5865,7 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.placeholder = options.placeholder;
-    const inputTarget = options.suggestionButtonInsideInput ? div(row, 'suggestionInput') : row;
-    inputTarget.appendChild(input);
+    row.appendChild(input);
 
     if(options.suggestions.length) {
       const listID = editorDomID('suggestions');
@@ -5880,19 +5879,22 @@ class PropertiesModule extends SidebarModule {
       row.appendChild(datalist);
       input.setAttribute('list', listID);
 
-      // A datalist accepts custom property names as well as its suggestions,
-      // but its browser-provided affordance is easy to miss. This opens the
-      // native list; callers can keep it inside a compact input field.
-      const suggestions = document.createElement('button');
-      suggestions.setAttribute('icon', 'arrow_drop_down');
-      suggestions.className = 'suggestionListButton';
-      suggestions.title = 'Show suggestions';
-      suggestions.onclick = _=>{
-        input.focus();
-        if(typeof input.showPicker == 'function')
-          input.showPicker();
-      };
-      inputTarget.appendChild(suggestions);
+      // A datalist accepts custom property names as well as its suggestions.
+      // Most add rows get a separate, explicit button because the native
+      // affordance is easy to miss; the generic-property input keeps only the
+      // native arrow because it is already visible inside that compact field.
+      if(!options.nativeSuggestionButtonOnly) {
+        const suggestions = document.createElement('button');
+        suggestions.setAttribute('icon', 'arrow_drop_down');
+        suggestions.className = 'suggestionListButton';
+        suggestions.title = 'Show suggestions';
+        suggestions.onclick = _=>{
+          input.focus();
+          if(typeof input.showPicker == 'function')
+            input.showPicker();
+        };
+        row.appendChild(suggestions);
+      }
     }
 
     const submit = _=>{
@@ -8312,7 +8314,7 @@ class PropertiesModule extends SidebarModule {
     }
 
     const cssToggle = document.createElement('button');
-    cssToggle.className = 'diceFaceCssToggle';
+    cssToggle.className = 'collapsibleHeader diceFaceCssToggle';
     const cssArrow = renderCollapseArrow(cssToggle, true);
     cssToggle.append('CSS');
     cssToggle.title = 'Add or edit CSS declarations for this face';
@@ -9886,7 +9888,7 @@ class PropertiesModule extends SidebarModule {
         [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 &&
         !/Routine$/.test(property) && !Object.hasOwn(widget.state, property)
       ).sort(),
-      suggestionButtonInsideInput: true,
+      nativeSuggestionButtonOnly: true,
       onAdd: property=>{
         if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
           return false;

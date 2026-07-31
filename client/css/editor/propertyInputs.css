@@ -1328,6 +1328,7 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 .editorModule .diceFaceRow {
+  --diceFacePreviewSize: 44px;
   padding: 4px;
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 6px;
@@ -1335,15 +1336,16 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 .editorModule .diceFaceMain {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) auto;
+  grid-template-columns: var(--diceFacePreviewSize) minmax(0, 1fr) auto;
   align-items: start;
   gap: 8px;
 }
 
 .editorModule .diceFacePreview {
+  align-self: center;
   flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  width: var(--diceFacePreviewSize);
+  height: var(--diceFacePreviewSize);
   position: relative;
   overflow: hidden;
 }
@@ -1383,6 +1385,24 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   flex: 0 0 5.5ch;
   min-width: 5.5ch;
   width: 5.5ch;
+}
+
+/* The icon/image chooser and the face preview are peers in this row. Keep
+   their clickable tiles the same size instead of letting image inputs use the
+   larger picker preview intended for the main Content section. */
+.editorModule .diceFaceControls .iconInput .propertyPreviewButton,
+.editorModule .diceFaceControls .imageInput .propertyPreviewButton {
+  width: var(--diceFacePreviewSize);
+  height: var(--diceFacePreviewSize);
+  min-width: var(--diceFacePreviewSize);
+  min-height: var(--diceFacePreviewSize);
+}
+
+.editorModule .diceFaceControls .iconInput .propertyPreviewButton .propertyValueChip,
+.editorModule .diceFaceControls .imageInput .propertyPreviewButton .propertyValueChip {
+  width: calc(var(--diceFacePreviewSize) - 6px);
+  height: calc(var(--diceFacePreviewSize) - 6px);
+  min-width: calc(var(--diceFacePreviewSize) - 6px);
 }
 
 .editorModule .diceFaceCssToggle {
@@ -1482,14 +1502,12 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 @media (max-width: 360px) {
-  .editorModule .diceFaceMain {
-    grid-template-columns: 36px minmax(0, 1fr) auto;
-    gap: 4px;
+  .editorModule .diceFaceRow {
+    --diceFacePreviewSize: 36px;
   }
 
-  .editorModule .diceFacePreview {
-    width: 36px;
-    height: 36px;
+  .editorModule .diceFaceMain {
+    gap: 4px;
   }
 
   .editorModule .diceFaceControls {

@@ -122,6 +122,22 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     const text = rows[2].querySelector('.textInput input');
     return Math.abs(iconScale.getBoundingClientRect().width - text.getBoundingClientRect().width) < 1;
   });
+  const compactFaceLayout = ClientFunction(() => {
+    const rows = document.querySelectorAll('#editorModules .diceFaceRow');
+    const preview = rows[0].querySelector('.diceFacePreview').getBoundingClientRect();
+    const icon = rows[0].querySelector('.propertyPreviewButton').getBoundingClientRect();
+    const image = rows[1].querySelector('.propertyPreviewButton').getBoundingClientRect();
+    const main = rows[0].querySelector('.diceFaceMain').getBoundingClientRect();
+    const toggle = rows[0].querySelector('.diceFaceCssToggle');
+    const genericInput = document.querySelector('#editorModules .genericAddPropertyRow input');
+    return {
+      previewsMatch: [ icon, image ].every(rect => Math.abs(rect.width - preview.width) < 1 && Math.abs(rect.height - preview.height) < 1),
+      previewCentered: Math.abs((preview.top + preview.height / 2) - (main.top + main.height / 2)) < 1,
+      cssUsesSectionHeader: toggle.classList.contains('collapsibleHeader'),
+      nativeSuggestionList: !!genericInput.getAttribute('list'),
+      extraSuggestionButtons: document.querySelectorAll('#editorModules .genericAddPropertyRow .suggestionListButton').length
+    };
+  });
   const setAllImageScale = ClientFunction(() => {
     const input = document.querySelector('#editorModules .diceImageScale input');
     input.value = '0.7';
@@ -144,6 +160,13 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     .expect(matchingFaceValueWidths()).ok()
     .expect(rows.nth(0).find('.diceFaceCssToggle .collapseArrow').exists).ok()
     .expect(rows.nth(0).find('.diceFaceCssToggle').textContent).eql('CSS')
+    .expect(compactFaceLayout()).eql({
+      previewsMatch: true,
+      previewCentered: true,
+      cssUsesSectionHeader: true,
+      nativeSuggestionList: true,
+      extraSuggestionButtons: 0
+    })
     .typeText(rows.nth(0).find('.numberInput input[type=number]'), '1.5', { replace: true })
     .expect(diceState()).contains('{"icon":{"name":"casino","scale":1.5}}')
     // An image face has a local override, while the all-faces control removes
@@ -159,7 +182,6 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     .typeText(rows.nth(0).find('.diceFaceCSS textarea'), 'opacity: 0.5')
     .expect(diceState()).contains('"faceCSS":"opacity: 0.5"')
     // Other properties is always present and can seed a new generic row.
-    .expect(Selector('#editorModules .genericAddPropertyRow .suggestionInput .suggestionListButton').exists).ok()
     .expect(ClientFunction(() => [ ...document.querySelectorAll('#editorModules .genericAddPropertyRow option') ].some(option => /Routine$/.test(option.value)))()).notOk()
     .typeText('#editorModules .genericAddPropertyRow input', 'customValue')
     .pressKey('enter')
