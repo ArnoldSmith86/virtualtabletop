@@ -93,24 +93,20 @@
   cursor: pointer;
 }
 
-/* plain checkbox + label rows (renderCheckbox helper): reserve room on the
-   right for the optional hint icon and pin it to the row's bottom-right
-   corner instead of letting it flow inline after the label - inline it has
-   nowhere to go but a line of its own once a long label already wraps. */
+/* plain checkbox + label rows (renderCheckbox helper): the hint sits right
+   after the label text, same as the Content section's HTML toggle row -
+   pinning it to the row's far right edge instead left a few hundred pixels
+   of empty space between a hint and the label it explains on a full-width row. */
 .editorModule .checkboxRow {
-  position: relative;
-  padding-right: 22px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
   margin: 4px 0;
 }
 
 .editorModule .checkboxRow label {
   cursor: pointer;
-}
-
-.editorModule .checkboxRow .info-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
 }
 
 /* checkbox rendered as a compact switch: 40x24 track with a 20px knob.
@@ -336,15 +332,28 @@
   padding-right: 0;
 }
 
+/* a plain-text (non icon-only) label in this row that does carry a hint still
+   needs the 22px the base rule above reserves for it - collapsing every label
+   to its text width regardless left the (i) drawn on top of the last
+   characters (e.g. "Col(i)r", "Border Col(i)r") */
+.editorModule .colorFlexRow .propertyInput > label.hasHint:not(.iconOnly) {
+  padding-right: 22px;
+}
+
 /* Color symbols are compact, but their names make the control clear to a
    first-time editor. Keep an attached hint after the text rather than between
    the icon and its swatch. */
+/* the hint slot is reserved (padding-bottom) on every swatch, whether or not
+   it actually has one, so a single hinted entry (e.g. "Icon/Symbol") doesn't
+   grow taller than its siblings and break the row's shared baseline */
 .editorModule .colorFlexRow .propertyInput > label.iconOnly {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   text-align: center;
+  position: relative;
+  padding-bottom: 18px;
 }
 
 .editorModule .colorFlexRow .propertyInput > label.iconOnly::after {
@@ -359,7 +368,10 @@
 }
 
 .editorModule .colorFlexRow .propertyInput > label.iconOnly .info-button {
-  order: 3;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   margin-left: 0;
 }
 
@@ -460,7 +472,7 @@
 }
 
 .editorModule .propertyPickerEmpty {
-  color: var(--textDimColor1, #777);
+  color: var(--textHelpColor, #666);
   font-style: italic;
 }
 
@@ -526,7 +538,7 @@
 }
 
 .editorModule .svgReplacesHelp {
-  color: var(--textDimColor1, #777);
+  color: var(--textHelpColor, #666);
   font-size: 12px;
   margin-bottom: 6px;
 }
@@ -558,7 +570,7 @@
 }
 
 .editorModule .svgColorsLabel {
-  color: var(--textDimColor1, #777);
+  color: var(--textHelpColor, #666);
   font-size: 12px;
   margin-bottom: 2px;
 }
@@ -613,7 +625,7 @@
 }
 
 .editorModule .widgetPickerEntry .widgetPickerType {
-  color: var(--textDimColor1, #777);
+  color: var(--textHelpColor, #666);
   font-size: 11px;
   margin-left: auto;
 }
@@ -700,9 +712,30 @@
 }
 
 /* a block folded away inside another one (Snap grid and Drag limits sit inside
-   Position) - the body around it already keeps it away from the edge */
+   Position, More options inside those) - the body around it already keeps it
+   away from the edge. Every level below the top draws the same lighter
+   header (no fill, just a bottom rule), a slightly smaller/normal-weight
+   title, and a left inset with a rule running down its body, so nesting
+   reads as depth instead of every level drawing the identical grey pill. */
 .editorModule .collapsibleBody > .collapsibleSection {
   margin-right: 0;
+  margin-left: 10px;
+  border: 0;
+  border-left: 2px solid var(--backgroundHighlightColor1, #ddd);
+  border-radius: 0;
+}
+
+.editorModule .collapsibleBody > .collapsibleSection > .collapsibleHeader {
+  background: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--backgroundHighlightColor1, #ddd);
+  font-weight: normal;
+  font-size: 0.95em;
+  padding-left: 8px;
+}
+
+.editorModule .collapsibleBody > .collapsibleSection > .collapsibleBody {
+  padding-left: 8px;
 }
 
 /* subsection titles inside the appearance section */
@@ -799,6 +832,13 @@
   border: 1px solid var(--backgroundHighlightColor1);
   background: none;
   box-sizing: border-box;
+}
+
+/* declarations without a colour still reserve the swatch's slot, invisibly,
+   so the value column lines up across every row */
+.editorModule .cssDeclarationRow .cssDeclarationSwatch.placeholder {
+  visibility: hidden;
+  border: 0;
 }
 
 /* a color with transparency: shown over white (the row sets the color itself
@@ -1093,7 +1133,7 @@
 /* comment-style list of classes currently triggered by widget properties */
 .editorModule .cssTriggeredClasses {
   font-size: 12px;
-  color: var(--textDimColor1, #777);
+  color: var(--textHelpColor, #666);
   font-style: italic;
   margin: 4px 0;
 }
@@ -1137,7 +1177,7 @@
 /* what "— multiple —" and the striped chips below mean - the one thing about
    editing a selection that can't be inferred from the controls themselves */
 .editorModule .widgetHeader .multiSelectionHint {
-  color: var(--textDimColor1, #777);
+  color: var(--textHelpColor, #666);
   font-size: 0.85em;
   margin-top: 4px;
 }
@@ -1328,15 +1368,29 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 /* align / distribute / order are separate operations: a wider gap and a
    divider between the groups so nine icons don't read as one flat row */
+.editorModule .arrangeGroupWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.editorModule .arrangeGroupWrap + .arrangeGroupWrap {
+  border-left: 1px solid var(--backgroundHighlightColor1);
+  padding-left: 14px;
+}
+
+.editorModule .arrangeGroupLabel {
+  font-weight: bold;
+  font-size: 11px;
+  color: var(--VTTblue);
+}
+
 .editorModule .arrangeGroup {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 4px;
-}
-
-.editorModule .arrangeGroup + .arrangeGroup {
-  border-left: 1px solid var(--backgroundHighlightColor1);
-  padding-left: 14px;
 }
 
 /* dice per-face editor */
@@ -1784,13 +1838,13 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 /* which point of the widget box lands on a grid line */
 .editorModule .gridAnchors {
   display: grid;
-  grid-template-columns: repeat(3, 14px);
+  grid-template-columns: repeat(3, 20px);
   gap: 2px;
 }
 
 .editorModule .gridAnchor {
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   min-width: 0;
   padding: 0;
   border: 1px solid var(--backgroundHighlightColor1);

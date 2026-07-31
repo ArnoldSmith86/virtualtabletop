@@ -413,7 +413,7 @@ function faceValueSummary(value) {
 function faceSummary(face) {
   const entries = Object.entries(faceObject(face));
   if(!entries.length)
-    return 'shows the widget unchanged';
+    return 'no overrides yet - click to add one';
   return entries.map(([ property, value ]) => {
     const summary = faceValueSummary(value);
     return summary === null ? property : `${property}: ${summary}`;
@@ -1117,7 +1117,7 @@ const editorTypeSections = {
   label: {},
   pile: {
     behavior: [
-      { label: 'Snap range', property: 'pileSnapRange', kind: 'number', min: 0, step: 1 },
+      { label: 'Snap range', property: 'pileSnapRange', kind: 'number', min: 0, step: 1, unit: 'px' },
       { label: 'Stack cards on top of each other', property: 'alignChildren', kind: 'checkbox',
         hint: 'Put every card of the pile in the same spot. Without it, cards keep the offset they were dropped with.' }
       // inheritChildZ - on by default for a pile - is curated for every widget
@@ -1712,7 +1712,12 @@ class PropertiesModule extends SidebarModule {
     // here instead of leaving it to be inferred from the striping
     div(header, 'multiSelectionHint', '<i>— multiple —</i> and striped <i>mixed</i> chips mark what these widgets disagree on. Anything you set applies to all of them.');
 
-    this.renderBasicSection(facade, { arrangeButtons: true });
+    // acts on the selection itself, not on a property - kept with the header
+    // that already explains the selection instead of inside "Basic", which
+    // otherwise contains only property rows for every other kind of selection
+    this.renderArrangeButtons();
+
+    this.renderBasicSection(facade);
 
     if(types.length == 1) {
       const type = types[0];
@@ -1763,18 +1768,20 @@ class PropertiesModule extends SidebarModule {
   // toolbar button instances so the arranging logic is not duplicated.
   renderArrangeButtons() {
     // aligning, distributing and re-stacking are three different operations -
-    // kept in separate groups so the row doesn't read as nine unrelated icons
+    // kept in separate groups (each with its own caption, styled like the
+    // "Colors"/"Style" sub-titles) so a newcomer sees three named tools
+    // instead of nine near-identical blue glyphs
     const groups = [
-      [ 'align_horizontal_left', 'align_horizontal_center', 'align_horizontal_right',
-        'align_vertical_top', 'align_vertical_center', 'align_vertical_bottom' ],
-      [ 'horizontal_distribute', 'vertical_distribute' ],
-      [ 'auto_awesome_motion' ]
+      [ 'Align', [ 'align_horizontal_left', 'align_horizontal_center', 'align_horizontal_right',
+        'align_vertical_top', 'align_vertical_center', 'align_vertical_bottom' ] ],
+      [ 'Distribute', [ 'horizontal_distribute', 'vertical_distribute' ] ],
+      [ 'Order', [ 'auto_awesome_motion' ] ]
     ];
     const available = (typeof toolbarButtons !== 'undefined' && Array.isArray(toolbarButtons)) ? toolbarButtons : [];
     const bar = div(this.moduleDOM, 'arrangeButtons');
-    for(const group of groups) {
+    for(const [ name, icons ] of groups) {
       const groupDOM = div(null, 'arrangeGroup');
-      for(const icon of group) {
+      for(const icon of icons) {
         const toolbarButton = available.find(b=>b.icon == icon);
         if(!toolbarButton)
           continue;
@@ -1788,8 +1795,11 @@ class PropertiesModule extends SidebarModule {
         button.onclick = _=>toolbarButton.onClick();
         groupDOM.appendChild(button);
       }
-      if(groupDOM.children.length)
-        bar.appendChild(groupDOM);
+      if(groupDOM.children.length) {
+        const groupWrap = div(bar, 'arrangeGroupWrap');
+        div(groupWrap, 'arrangeGroupLabel', name);
+        groupWrap.appendChild(groupDOM);
+      }
     }
   }
 
@@ -3992,10 +4002,8 @@ class PropertiesModule extends SidebarModule {
     return wrap;
   }
 
-  renderBasicSection(widget, options = {}) {
+  renderBasicSection(widget) {
     this.addSubHeader('Basic');
-    if(options.arrangeButtons)
-      this.renderArrangeButtons();
 
     // position and size are usually changed with the drag toolbar, so they
     // start collapsed and only get expanded for active tweaking
@@ -4296,8 +4304,8 @@ class PropertiesModule extends SidebarModule {
     div(spacing, 'numberPairLabel', 'Spacing');
     // x/y are the only required keys of an entry, so they never clear to null.
     // step stays "any" because a calculated grid (hex) has fractional spacing.
-    this.renderGridNumber(widget, index, 'x', 'X', spacing, { min: 1, nullIfEmpty: false });
-    this.renderGridNumber(widget, index, 'y', 'Y', spacing, { min: 1, nullIfEmpty: false });
+    this.renderGridNumber(widget, index, 'x', 'X', spacing, { min: 1, nullIfEmpty: false, unit: 'px' });
+    this.renderGridNumber(widget, index, 'y', 'Y', spacing, { min: 1, nullIfEmpty: false, unit: 'px' });
     const useBox = document.createElement('button');
     useBox.setAttribute('icon', 'fit_screen');
     useBox.title = 'Use the widget box as the spacing';
@@ -4310,8 +4318,8 @@ class PropertiesModule extends SidebarModule {
       const offset = div(body, 'propertyInlineRow numberPairRow');
       const offsetLabel = div(offset, 'numberPairLabel', 'Offset');
       propertyInfoButton(offsetLabel, 'Shifts the whole lattice by this many pixels, so the first snap point does not have to sit in the top left corner of the parent.');
-      this.renderGridNumber(widget, index, 'offsetX', 'X', offset, { placeholder: '0' });
-      this.renderGridNumber(widget, index, 'offsetY', 'Y', offset, { placeholder: '0' });
+      this.renderGridNumber(widget, index, 'offsetX', 'X', offset, { placeholder: '0', unit: 'px' });
+      this.renderGridNumber(widget, index, 'offsetY', 'Y', offset, { placeholder: '0', unit: 'px' });
 
       // the same alignX/alignY the 3x3 picker above sets, for the rare grid
       // that wants a snap point between the nine positions it offers
@@ -4393,12 +4401,12 @@ class PropertiesModule extends SidebarModule {
         return;
       const x = div(host, 'propertyInlineRow numberPairRow');
       div(x, 'numberPairLabel', 'X from/to');
-      this.renderGridNumber(widget, index, 'minX', 'min', x);
-      this.renderGridNumber(widget, index, 'maxX', 'max', x);
+      this.renderGridNumber(widget, index, 'minX', 'min', x, { unit: 'px' });
+      this.renderGridNumber(widget, index, 'maxX', 'max', x, { unit: 'px' });
       const y = div(host, 'propertyInlineRow numberPairRow');
       div(y, 'numberPairLabel', 'Y from/to');
-      this.renderGridNumber(widget, index, 'minY', 'min', y);
-      this.renderGridNumber(widget, index, 'maxY', 'max', y);
+      this.renderGridNumber(widget, index, 'minY', 'min', y, { unit: 'px' });
+      this.renderGridNumber(widget, index, 'maxY', 'max', y, { unit: 'px' });
     });
 
     new CheckboxInput(this, widget, 'Only in part of the parent', {
@@ -5768,6 +5776,10 @@ class PropertiesModule extends SidebarModule {
           $('input', addRow).focus();
       };
 
+      // the swatch slot is reserved on every row, colour or not - only some
+      // declarations show one, and letting the rest skip it entirely shifted
+      // their value column out of line with the ones that do (devtools keeps
+      // this column fixed regardless of the property).
       if(cssValueIsColor(declaration.value)) {
         const hasAlpha = cssColorHasAlpha(declaration.value);
         const hex = hasAlpha ? null : cssColorHexValue(declaration.value);
@@ -5791,6 +5803,8 @@ class PropertiesModule extends SidebarModule {
           };
           row.appendChild(swatch);
         }
+      } else {
+        div(row, 'cssDeclarationSwatch placeholder');
       }
 
       row.appendChild(value);
@@ -6213,12 +6227,14 @@ class PropertiesModule extends SidebarModule {
 
     for(const property of playerRoutines) {
       const row = div(this.moduleDOM, 'propertyInput automationInput');
+      const plainName = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
       const label = document.createElement('label');
-      label.textContent = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
+      label.textContent = plainName;
       row.appendChild(label);
       const button = document.createElement('button');
       button.setAttribute('icon', 'data_object');
-      button.textContent = templateDecks.length ? `Edit ${property} of the pile template` : `Edit ${property} in JSON editor`;
+      button.textContent = templateDecks.length ? 'Edit in the pile template' : 'Edit in the JSON editor';
+      button.title = `${property}${templateDecks.length ? ` (in the pile template of ${templateDecks.map(deck => deck.id).join(', ')})` : ''}`;
       button.onclick = () => templateDecks.length
         ? this.openInJsonEditor(templateDecks[0], [ 'cardDefaults', 'onPileCreation', property ])
         : this.openInJsonEditor(null, []);
@@ -6701,11 +6717,14 @@ class PropertiesModule extends SidebarModule {
     };
     head.appendChild(toggle);
 
+    // at the row's left edge rather than after the title/summary, where it
+    // used to land right next to the eye/up/down/delete button cluster and
+    // read as one of them instead of as the row's own expand toggle
+    renderCollapseArrow(toggle, !expanded);
     this.renderFacePreview(widget, index, toggle);
     const info = div(toggle, 'faceRowInfo');
     div(info, 'faceRowTitle', `${html(`Face ${index + 1}`)}<span class=faceActiveTag>shown</span>`);
     div(info, 'faceRowSummary', html(faceSummary(face)));
-    renderCollapseArrow(toggle, !expanded);
 
     const actions = div(head, 'faceRowActions');
 
@@ -7168,15 +7187,23 @@ class PropertiesModule extends SidebarModule {
     const decks = this.pileDecks(widget);
     const deckNames = html(decks.map(deck => deck.id).join(', '));
 
+    // the "pile is temporary" mechanic behind all of this is background, not
+    // the rule a newcomer needs first - it moves into the (i) hint so the
+    // bold line above it can say what matters right now: where an edit goes
+    const temporaryHint = 'A pile is temporary: it disappears as soon as it holds a single card, and new piles are built from the pile template of the cards in them.';
+
     if(!decks.length) {
-      div(block, 'pileHelp warning', 'A pile is temporary: it disappears as soon as it holds a single card, and new piles are built from the pile template of the cards in them. This pile holds no cards of a deck, so there is no template to write to - everything below applies to this pile only and is gone with it.');
+      const rule = div(block, 'pileHelp warning', 'This pile holds no cards of a deck, so there is no template to write to - everything below applies to <b>this pile only</b> and is gone with it.');
+      propertyInfoButton(rule, temporaryHint);
       return;
     }
 
-    if(this.pileEditsTemplate)
-      div(block, 'pileHelp', `A pile is temporary: it disappears as soon as it holds a single card. Every change below is therefore written to <b>this pile and to the pile template</b> of ${deckNames}, which every new pile of those cards is built from - so it also applies to the piles that come after this one.`);
-    else
-      div(block, 'pileHelp warning', `Changes below apply to <b>this pile only</b>. A pile disappears as soon as it holds a single card, so they are gone with it unless you also store them in the pile template of ${deckNames} at the bottom of this panel.`);
+    const rule = this.pileEditsTemplate
+      ? div(block, 'pileHelp', `Changes below apply to <b>this pile and to the pile template</b> of ${deckNames}.`)
+      : div(block, 'pileHelp warning', `Changes below apply to <b>this pile only</b>.`);
+    propertyInfoButton(rule, this.pileEditsTemplate
+      ? `${temporaryHint} That template is what this pile - and every pile of ${deckNames} that comes after it - is built from.`
+      : `${temporaryHint} They are gone with it unless you also store them in the pile template of ${deckNames} at the bottom of this panel.`);
 
     const modeSwitch = new CheckboxInput(this, widget, 'Edit this pile only', {
       listenTo: [],
@@ -7294,6 +7321,7 @@ class PropertiesModule extends SidebarModule {
       // the pile builds "--phPosition:-<offset>px", so a negative offset is
       // not a css value at all and the handle loses its position
       min: 0,
+      unit: 'px',
       hint: 'How far the handle sticks out over the corner of the pile, in pixels.'
     }).render(this.moduleDOM);
   }
@@ -10155,10 +10183,6 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(input);
     wrap.appendChild(label);
     if(options.infoText) {
-      // the icon is pinned to this row's bottom-right corner (see CSS) rather
-      // than flowing inline after the label - glued inline it has nowhere to
-      // go but a line of its own once a long label already wraps to fill the
-      // row's width.
       const infoIcon = this.renderInfoIcon(options.infoText, { size: '18px' });
       wrap.appendChild(infoIcon);
     }

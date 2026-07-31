@@ -617,8 +617,8 @@ describe('basic widget faces', () => {
   });
 
   test('the face summary lists properties and only short values', () => {
-    expect(cssHelpers.faceSummary({})).toBe('shows the widget unchanged');
-    expect(cssHelpers.faceSummary(5)).toBe('shows the widget unchanged');
+    expect(cssHelpers.faceSummary({})).toBe('no overrides yet - click to add one');
+    expect(cssHelpers.faceSummary(5)).toBe('no overrides yet - click to add one');
     expect(cssHelpers.faceSummary({ text: 'back', color: '#cc4422' })).toBe('text: back · color: #cc4422');
     expect(cssHelpers.faceSummary({ image: '/assets/1675039910_1323' })).toBe('image');
     expect(cssHelpers.faceSummary({ css: { color: 'red' }, clickRoutine: [] })).toBe('css · clickRoutine');

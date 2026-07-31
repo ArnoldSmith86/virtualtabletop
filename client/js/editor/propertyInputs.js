@@ -481,8 +481,12 @@ class PropertyInput {
         // popup of the (i) button sitting inside the same label
         label.textContent = this.labelText;
       }
-      if(this.options.hint)
+      if(this.options.hint) {
         propertyInfoButton(label, html(this.options.hint));
+        // colorFlexRow collapses non-icon labels to their text width - this
+        // marks the ones that still need the reserved hint-icon space
+        label.classList.add('hasHint');
+      }
       this.dom.appendChild(label);
     } else if(this.options.hint) {
       propertyInfoButton(this.dom, html(this.options.hint));
@@ -611,7 +615,10 @@ class NumberOrTextInput extends PropertyInput {
   update(value) {
     const multi = propertyInputIsMulti(value);
     this.dom.classList.toggle('multiDiffers', multi);
-    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || 'e.g. 8, 8px, 50%');
+    // the compact width this input is normally used at (~70px) truncates the
+    // old "e.g. 8, 8px, 50%" placeholder down to "e.g. 8," - reading like a
+    // typo rather than a hint
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || '8px');
     if(document.activeElement !== this.input)
       this.input.value = (value === null || multi) ? '' : value;
   }
