@@ -79,6 +79,7 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     normalizeSeatReference: PropertiesModule.prototype.normalizeSeatReference,
     seatReferenceToArray: PropertiesModule.prototype.seatReferenceToArray,
     associatedWidgetsSummary: PropertiesModule.prototype.associatedWidgetsSummary,
+    selectionIncludesType: PropertiesModule.prototype.selectionIncludesType,
     interactionSummary: PropertiesModule.prototype.interactionSummary,
     basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
     svgReplaceProperties,
@@ -446,6 +447,7 @@ describe('css helpers', () => {
     expect(summaryOf({ clickable: false })).toBe('not clickable');
     expect(summaryOf({ clickable: true, enlarge: 2, ignoreZoom: true })).toBe('enlarge ×2 · ignores zoom');
     expect(summaryOf({ clickable: cssHelpers.MULTI_DIFFERENT, enlarge: cssHelpers.MULTI_DIFFERENT })).toBe('clickable — · enlarge —');
+    expect(summaryOf({ type: 'seat', clickable: true, display: false })).toBe('');
   });
 
   test('the size-ratio lock stays local while honoring a legacy false value', () => {
