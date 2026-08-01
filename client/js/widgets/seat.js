@@ -1,4 +1,4 @@
-class Seat extends Widget {
+export class Seat extends Widget {
   constructor(id) {
     super(id);
 
@@ -33,8 +33,9 @@ class Seat extends Widget {
     super.applyDeltaToDOM(delta);
 
     // everybody's personal view is derived from the seats, so any of these can
-    // change what this client renders
-    if(delta.index !== undefined || delta.player !== undefined || delta.rotation !== undefined || delta.viewRotation !== undefined)
+    // change what this client renders - including a custom property some
+    // rotateForViewer reads its angle from, which only the view itself knows
+    if(delta.index !== undefined || delta.player !== undefined || delta.rotation !== undefined || isSeatViewRotationDelta(delta))
       scheduleSeatViewRefresh();
 
     // the editor's seat list shows who sits where, so it has to follow along

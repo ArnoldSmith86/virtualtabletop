@@ -33,6 +33,12 @@ let inUse = false;
 // per widget - a 1000 widget room would otherwise sort the seat list 1000 times.
 let sweepCache = null;
 
+// Which seat properties the view is read from. rotateForViewer may name any
+// property of a seat, so this is only known once one has actually been read -
+// every sweep records the names it used, and a change to one of them has to
+// refresh the view just like a change to viewRotation does.
+let rotationProperties = new Set([ 'viewRotation' ]);
+
 // The editor's seat list has to be rebuilt when somebody sits down while it is
 // open, which nothing else in the client would notice.
 let seatsChangedCallback = null;
@@ -51,7 +57,16 @@ export function resetSeatViews() {
   seatViewPreview = null;
   inUse = false;
   sweepCache = null;
+  rotationProperties = new Set([ 'viewRotation' ]);
   seatsChanged();
+}
+
+// Does a change to these seat properties change what this client sees?
+export function isSeatViewRotationDelta(delta) {
+  for(const key in delta)
+    if(rotationProperties.has(key))
+      return true;
+  return false;
 }
 
 export function onSeatsChanged(callback) {
@@ -164,6 +179,7 @@ function orderedSeats() {
 // front of the player sitting there. Defaults to the seat widget's own rotation,
 // which designers already set to point a seat at its side of the table.
 export function seatRotation(seat, property = 'viewRotation') {
+  rotationProperties.add(property);
   if(!seat)
     return 0;
   const value = seat.get(property);

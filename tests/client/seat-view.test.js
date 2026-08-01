@@ -1,9 +1,34 @@
-import { widgets } from '../../client/js/serverstate.js';
-import { refreshSeatViews, setSeatViewPreview } from '../../client/js/seatview.js';
+import { addWidget, widgets, widgetFilter } from '../../client/js/serverstate.js';
+import { isSeatViewRotationDelta, refreshSeatViews, scheduleSeatViewRefresh, seatsChanged, setSeatViewPreview } from '../../client/js/seatview.js';
+import { Widget } from '../../client/js/widgets/widget.js';
+import { setText } from '../../client/js/domhelpers.js';
 import { createWidget, removeWidget } from './client-util.js';
 
+// seat.js relies on the concatenated global scope of the shipped bundle rather
+// than on imports, so expose the identifiers it references before importing it.
+let Seat;
+beforeAll(async function() {
+  globalThis.Widget = Widget;
+  globalThis.widgets = widgets;
+  globalThis.widgetFilter = widgetFilter;
+  globalThis.setText = setText;
+  globalThis.scheduleSeatViewRefresh = scheduleSeatViewRefresh;
+  globalThis.isSeatViewRotationDelta = isSeatViewRotationDelta;
+  globalThis.seatsChanged = seatsChanged;
+  globalThis.viewingPlayerName = _=>'jestPlayer';
+  ({ Seat } = await import('../../client/js/widgets/seat.js'));
+});
+
 function createSeat(id, properties) {
-  return createWidget(Object.assign({ id, type: 'seat', player: '', index: 1 }, properties));
+  const definition = Object.assign({ id, type: 'seat', player: '', index: 1 }, properties);
+  const seat = new Seat(id);
+  addWidget(definition, seat);
+  return seat;
+}
+
+// a seat change refreshes the view at the end of the tick, not right away
+function settle() {
+  return new Promise(resolve=>setTimeout(resolve, 0));
 }
 
 // look at the room through a given seat, the way the editor preview does
@@ -45,6 +70,21 @@ describe('rotateForViewer', function() {
 
     viewAs('north');
     expect(table.seatViewDelta).toBe(-90);
+  });
+
+  test('follows a change to that custom property', async function() {
+    const seat = createSeat('north', { player: 'Alice', rotation: 0, sideRotation: 90 });
+    const table = createWidget({ id: 'table', rotateForViewer: 'sideRotation' });
+
+    viewAs('north');
+    expect(table.seatViewDelta).toBe(-90);
+    await settle(); // the sweep building the room scheduled
+
+    // the refresh is scheduled for the end of the tick, the way every other
+    // seat change is, so the whole room is swept once instead of per property
+    seat.applyDelta({ sideRotation: 180 });
+    await settle();
+    expect(table.seatViewDelta).toBe(-180);
   });
 
   test('children ride along instead of being turned a second time', function() {
