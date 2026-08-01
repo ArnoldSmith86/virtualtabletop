@@ -44,13 +44,13 @@ beforeAll(() => {
   const exposed = [
     'RoutineEditor', 'RoutineOperationEditor', 'IfRoutineOperationEditor', 'ForeachRoutineOperationEditor',
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
-    'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
+    'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'RoutineVariantMenu',
     'routineOperationVariantChoices', 'operationVariantValues', 'RoutineOperationPopup', 'RoutineClausePopup',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
-    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'operationUIState', 'commonInfoTopic', 'parameterInfoLine'
+    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -64,22 +64,32 @@ describe('routine operation metadata', () => {
     }
   });
 
-  test('simple operation recipes reference valid operations', () => {
-    expect(simpleRoutineOperationExamples.length).toBeGreaterThan(3);
-    for (const { example, newOperation } of simpleRoutineOperationExamples) {
+  test('every operation is offered when one is added, each with its name', () => {
+    const offered = routineOperationExamples();
+    for (const func in routineOperationMetadata)
+      expect(offered.map(e => e.func)).toContain(func);
+    expect(offered.map(e => e.func)).toEqual(expect.arrayContaining([ 'var', '//' ]));
+    for (const { func, example } of offered) {
+      expect(typeof func).toBe('string');
       expect(typeof example).toBe('string');
-      expect(routineOperationMetadata[newOperation.func]).toBeDefined();
-      for (const key in newOperation)
-        if (key != 'func')
-          expect(routineOperationMetadata[newOperation.func].parameters[key]).toBeDefined();
     }
   });
 
-  test('common operations include SELECT and one MOVE, and drop AUDIO', () => {
-    const funcs = simpleRoutineOperationExamples.map(e => e.newOperation.func);
-    expect(funcs).toContain('SELECT');
-    expect(funcs.filter(f => f == 'MOVE')).toHaveLength(1);
-    expect(funcs).not.toContain('AUDIO');
+  test('the phrase a sentence starts with tells the ways an operation can work apart', () => {
+    for (const func in routineOperationMetadata) {
+      const leads = routineOperationVariantChoices({ func }).map(choice => choice.lead);
+      expect(new Set(leads).size).toBe(leads.length); // a drop-down with two identical entries picks nothing
+      for (const lead of leads) {
+        expect(lead.length).toBeGreaterThan(2);
+        expect(lead[0]).toBe(lead[0].toUpperCase());
+      }
+    }
+  });
+
+  test('the lead is the words before the first parameter, without the joining punctuation', () => {
+    expect(templateLead('Select widgets: {max} {type}')).toBe('Select widgets: ');
+    expect(leadLabel('Select widgets: ')).toBe('Select widgets');
+    expect(templateLead('{json}')).toBe('');
   });
 
   test('every declared parameter is reachable as a chip or by picking another variant', () => {
@@ -91,7 +101,7 @@ describe('routine operation metadata', () => {
       const fixed = editor.currentVariant().fixed || [];
       for (const name in routineOperationMetadata[func].parameters)
         if (name in ignored)
-          expect(referenced).not.toContain(name); // ignored parameters stay out of the summary, the list view still offers them
+          expect(referenced).not.toContain(name); // an ignored parameter is neither worded nor offered as an option
         else if (fixed.includes(name))
           expect(routineOperationVariantChoices({ func }).length).toBeGreaterThan(1); // changed by picking another way to work
         else
@@ -173,31 +183,28 @@ describe('operation rendering', () => {
     expect(dom.textContent).toContain('<img src=x onerror=alert(1)>');
   });
 
-  test('the sentence hides default-valued segments and the arrow expands to a list view', () => {
-    const { editor, dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
+  test('the sentence hides default-valued segments and nothing expands into a parameter list', () => {
+    const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
     expect(dom.querySelector('[data-parameter="face"]')).toBeNull(); // face at its default stays hidden
-    const toggle = dom.querySelector('.routine-editor-view-toggle');
-    expect(toggle).not.toBeNull();
-    expect(dom.querySelector('.routine-editor-operation-body').firstChild).toBe(toggle); // the arrow sits at the start of the operation
-    toggle.dispatchEvent(new Event('click'));
-    expect(editor.domElement.classList.contains('list-view')).toBe(true);
-    const rows = editor.domElement.querySelectorAll('.routine-editor-parameter-row');
-    expect(rows.length).toBe(1 + Object.keys(routineOperationMetadata.MOVE.parameters).length);
-  });
-
-  test('operations without parameters get no view toggle', () => {
-    const { dom } = renderOperation('// hello');
     expect(dom.querySelector('.routine-editor-view-toggle')).toBeNull();
+    expect(dom.querySelector('.routine-editor-parameter-row')).toBeNull();
   });
 
-  test('the IF list view includes the condition parameter and keeps nested routines', () => {
-    const { editor, dom } = renderOperation({ func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' } ] });
-    const toggle = dom.querySelector('.routine-editor-view-toggle');
-    expect(toggle).not.toBeNull();
-    toggle.dispatchEvent(new Event('click'));
-    const names = [...editor.domElement.querySelectorAll(':scope > .routine-editor-operation-header > .routine-editor-operation-body > .routine-editor-parameter-row .routine-editor-parameter-name')].map(e => e.textContent);
-    expect(names).toEqual([ 'condition', 'operand1', 'relation', 'operand2' ]);
-    expect(editor.domElement.querySelector('.routine-editor')).not.toBeNull(); // nested routines stay visible
+  test('the operation name is a line of its own above the sentence and changes the operation', () => {
+    const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
+    const body = dom.querySelector('.routine-editor-operation-body');
+    expect(body.firstChild.className).toBe('routine-editor-operation-func');
+    expect(body.firstChild.textContent).toContain('MOVE');
+    expect(body.querySelector('.routine-editor-func-name').dataset.parameter).toBe('func');
+    expect(body.children[1].className).toBe('routine-editor-sentence');
+    expect(body.children[1].textContent).not.toContain('MOVE'); // the sentence itself speaks English
+  });
+
+  test('the sentence of a comment is the note, the // above it says what it is', () => {
+    const { dom } = renderOperation('// hello');
+    expect(dom.querySelector('.routine-editor-operation-func').textContent).toContain('//');
+    expect(dom.querySelector('.routine-editor-sentence').textContent).toBe('hello');
+    expect(dom.querySelector('.routine-editor-func-name').dataset.parameter).toBeUndefined();
   });
 
   test('shows optional segments when their parameter is explicitly set', () => {
@@ -205,14 +212,12 @@ describe('operation rendering', () => {
     expect(dom.querySelector('[data-parameter="face"]')).not.toBeNull();
   });
 
-  test('the list view strikes ignored parameters and explains why', () => {
+  test('an ignored parameter is neither in the sentence nor offered as an option', () => {
     const move = editorForOperation({ func: 'MOVE', fillTo: 3, count: 2 });
     move.setOperationDetails({ state: {} }, { func: 'MOVE', fillTo: 3, count: 2 }, [], []);
     expect(move.ignoredParameters().count).toMatch(/fill up to/);
-    const rendered = renderInListView({ func: 'MOVE', fillTo: 3, count: 2 });
-    const countRow = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('count'));
-    expect(countRow.classList.contains('routine-editor-parameter-ignored')).toBe(true);
-    expect(countRow.querySelector('.routine-editor-parameter-ignored-warning').title).toMatch(/fill up to/);
+    expect(move.clauses().map(clause => clause.id)).not.toContain('count');
+    expect(move.render().querySelector('[data-parameter="count"]')).toBeNull();
   });
 
   test('the sentence leaves out parameters the engine ignores', () => {
@@ -231,25 +236,17 @@ describe('operation rendering', () => {
     expect(move.querySelector('[data-parameter="count"]')).toBeNull();
   });
 
-  test('the deprecated CANVAS canvas parameter is editable in both views', () => {
-    const sentence = renderOperation({ func: 'CANVAS', canvas: 'c1' }).dom;
-    expect(sentence.querySelector('[data-parameter="canvas"]')).not.toBeNull();
-    const list = renderInListView({ func: 'CANVAS' });
-    const canvasRow = [...list.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('canvas'));
-    expect(canvasRow).not.toBeNull(); // available even when the operation does not set it
-  });
-
-  test('a deprecated parameter gets a warning info button in both views', () => {
-    for(const dom of [ renderOperation({ func: 'CANVAS', canvas: 'c1' }).dom, renderInListView({ func: 'CANVAS', canvas: 'c1' }) ]) {
-      const warning = dom.querySelector('.routine-editor-parameter-warning.deprecated');
-      expect(warning).not.toBeNull();
-      expect(warning.previousSibling.dataset.parameter).toBe('canvas');
-      warning.dispatchEvent(new Event('click'));
-      const popup = document.querySelector('.inline-popup');
-      expect(popup.textContent).toMatch(/deprecated/);
-      expect(popup.textContent).toMatch(/collection/);
-      popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
-    }
+  test('a deprecated parameter is editable in the sentence and warns about itself', () => {
+    const dom = renderOperation({ func: 'CANVAS', canvas: 'c1' }).dom;
+    expect(dom.querySelector('[data-parameter="canvas"]')).not.toBeNull();
+    const warning = dom.querySelector('.routine-editor-parameter-warning.deprecated');
+    expect(warning).not.toBeNull();
+    expect(warning.previousSibling.dataset.parameter).toBe('canvas');
+    warning.dispatchEvent(new Event('click'));
+    const popup = document.querySelector('.inline-popup');
+    expect(popup.textContent).toMatch(/deprecated/);
+    expect(popup.textContent).toMatch(/collection/);
+    popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
   });
 
   test('CANVAS marks collection as ignored while canvas is set', () => {
@@ -335,18 +332,17 @@ describe('operation rendering', () => {
     }
   });
 
-  test('the list view shows custom properties the operation does not support', () => {
-    const rendered = renderInListView({ func: 'FLIP', typo: 3, holder: 'h1' });
-    const row = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('typo'));
-    expect(row).not.toBeNull();
-    expect(row.classList.contains('routine-editor-parameter-unsupported')).toBe(true);
-    expect(row.querySelector('[data-parameter="typo"]').textContent).toBe('3');
-    const warning = row.querySelector('.routine-editor-parameter-warning.unsupported');
+  test('the sentence shows custom properties the operation does not support', () => {
+    const { dom } = renderOperation({ func: 'FLIP', typo: 3, holder: 'h1' });
+    expect(dom.querySelector('[data-parameter="typo"]').textContent).toBe('3');
+    const warning = dom.querySelector('.routine-editor-parameter-warning.unsupported');
     expect(warning).not.toBeNull();
     warning.dispatchEvent(new Event('click'));
     const popup = document.querySelector('.inline-popup');
     expect(popup.textContent).toContain('FLIP does not support the property typo');
     popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
+    // and it has the x every other option has, so a typo can be removed
+    expect([...dom.querySelectorAll('.routine-editor-clause-remove')].map(r => r.dataset.clause)).toContain('typo');
   });
 
   test('nested routines are not reported as unsupported properties', () => {
@@ -374,18 +370,9 @@ describe('operation rendering', () => {
     expect(Object.keys(ifOp.ignoredParameters())).toEqual([ 'operand1', 'relation', 'operand2' ]);
   });
 
-  function renderInListView(operation) {
-    const editor = editorForOperation(operation);
-    editor.setOperationDetails({ state: {} }, operation, [], []);
-    const dom = editor.render();
-    const toggle = dom.querySelector('.routine-editor-view-toggle');
-    toggle.dispatchEvent(new Event('click'));
-    return editor.domElement;
-  }
-
-  test('the expanded view offers a raw-JSON button', () => {
-    const dom = renderInListView({ func: 'MOVE', from: 'h1' });
-    expect(dom.querySelector('.routine-editor-operation-json')).not.toBeNull();
+  test('every operation offers a raw-JSON button', () => {
+    expect(renderOperation({ func: 'MOVE', from: 'h1' }).dom.querySelector('.routine-editor-operation-json')).not.toBeNull();
+    expect(renderOperation('// a note').dom.querySelector('.routine-editor-operation-json')).toBeNull(); // a string has no JSON of its own
   });
 
   test('the sentence follows the way the operation works', () => {
@@ -395,31 +382,36 @@ describe('operation rendering', () => {
       return editor.getTemplate();
     };
     expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('to the {faceCycle} face');
-    expect(template({ func: 'FLIP', face: 0 })).toContain('face up');
-    expect(template({ func: 'FLIP', face: 1 })).toContain('face down');
-    expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
-    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('reset {canvas}');
-    expect(template({ func: 'CANVAS' })).toContain('reset {collection}');
+    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn face up');
+    expect(template({ func: 'FLIP', face: 1 })).toContain('Turn face down');
+    expect(template({ func: 'FLIP', face: 3 })).toContain('Turn to the face {face}');
+    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas {canvas}');
+    expect(template({ func: 'CANVAS' })).toContain('Clear the canvas {collection}');
     expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
     expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
-    expect(template({ func: 'AUDIO', silence: true })).toContain('stop all sounds');
+    expect(template({ func: 'AUDIO', silence: true })).toContain('Stop all sounds');
     expect(template({ func: 'SET', relation: '!' })).toContain('on or off');
     expect(template({ func: 'MOVE', fillTo: 3 })).toContain('until it holds {fillTo}');
-    expect(template({ func: 'SELECT', mode: 'add' })).toContain('add them to {collection}');
-    expect(template({ func: 'SELECT' })).toContain('call them {collection}');
-    expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('add {seconds} seconds');
-    expect(template({ func: 'TIMER' })).toContain('pause it if it is running');
-    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('reverse the order');
+    expect(template({ func: 'SELECT', mode: 'add' })).toContain('Add widgets to the selection');
+    expect(template({ func: 'SELECT' })).toContain('Select widgets');
+    expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('{seconds} seconds');
+    expect(template({ func: 'TIMER' })).toContain('Start or pause the timer');
+    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Reverse the order');
     expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('a random seat');
     expect(template({ func: 'LABEL', label: 'l1' })).toContain('{label,collection}');
-    expect(template({ func: 'LABEL', mode: 'append' })).toContain('append {value}');
+    expect(template({ func: 'LABEL', mode: 'append' })).toContain('Append {value}');
   });
 
   test('classifies parameter chips for color coding', () => {
-    const { dom } = renderOperation({ func: 'SELECT', value: '${myVar}', collection: 'stuff' });
-    expect(dom.querySelector('.routine-editor-parameter-func')).not.toBeNull();
+    const { dom } = renderOperation({ func: 'SELECT', value: '${myVar}', collection: 'stuff', property: 'owner' });
     expect(dom.querySelector('.routine-editor-parameter-variable')).not.toBeNull();
     expect(dom.querySelector('.routine-editor-parameter-collection')).not.toBeNull();
+    expect(dom.querySelector('.routine-editor-parameter-property')).not.toBeNull();
+    const { dom: move } = renderOperation({ func: 'MOVE', from: 'h1', to: '${PROPERTY parent}', count: 2 });
+    expect(move.querySelector('.routine-editor-parameter-widget')).not.toBeNull();
+    expect(move.querySelector('.routine-editor-parameter-number')).not.toBeNull();
+    // a value read from a widget is a property, not a variable that happens to look like one
+    expect(move.querySelector('[data-parameter="to"]').classList.contains('routine-editor-parameter-property')).toBe(true);
   });
 
   test('shows verbose labels for predefined variables', () => {
@@ -458,7 +450,7 @@ describe('operation rendering', () => {
 
   test('complex var statements fall back to raw editing', () => {
     const { editor } = renderOperation('var $dynamic.${key} = 1 + 2');
-    expect(editor.getTemplate()).toBe('variable {variable} gets value {expression}');
+    expect(editor.getTemplate()).toBe('Variable {variable} gets the value {expression}');
     const { editor: raw } = renderOperation('var x'); // no " = ", unrepresentable
     expect(raw.getTemplate()).toBe('{statement}');
   });
@@ -483,19 +475,45 @@ describe('picking how an operation works and which options it uses', () => {
   }
 
   test('the sentence reads as the variant the operation matches', () => {
-    expect(renderOperation({ func: 'SET', relation: '+', property: 'x' }).dom.textContent).toContain('increase the property');
-    expect(renderOperation({ func: 'SET', property: 'x' }).dom.textContent).toContain('set the property');
-    expect(renderOperation({ func: 'SHUFFLE', mode: 'riffle' }).dom.textContent).toContain('riffle shuffle');
+    expect(renderOperation({ func: 'SET', relation: '+', property: 'x' }).dom.textContent).toContain('Increase the property');
+    expect(renderOperation({ func: 'SET', property: 'x' }).dom.textContent).toContain('Set the property');
+    expect(renderOperation({ func: 'SHUFFLE', mode: 'riffle' }).dom.textContent).toContain('Riffle shuffle');
   });
 
-  test('the operation chip offers the other ways it can work with the sentence each would read as', () => {
+  test('the phrase the sentence starts with offers the other ways it can work', () => {
     const operation = { func: 'FLIP', holder: 'deck1' };
     const choices = routineOperationVariantChoices(operation);
-    expect(choices.map(c => c.label)).toEqual([ 'Turn face up', 'Turn face down', 'Turn to a specific face', 'Flip to the next face' ]);
+    expect(choices.map(c => c.lead)).toEqual([ 'Turn face up', 'Turn face down', 'Turn to the face', 'Flip' ]);
     expect(choices[0].example).toContain('deck1');
-    expect(choices[0].example).toContain('face up');
+    expect(choices[0].example).toContain('Turn face up');
     // operations with only one way to work offer nothing to pick
     expect(routineOperationVariantChoices({ func: 'DELAY' })).toEqual([]);
+  });
+
+  test('the sentence starts with a drop-down of the ways to work, plain text when there is one', () => {
+    const flip = renderOperation({ func: 'FLIP', holder: 'deck1', face: 0 }).dom;
+    const lead = flip.querySelector('.routine-editor-variant');
+    expect(lead.textContent).toContain('Turn face up');
+    expect(lead.classList.contains('routine-editor-variant-menu')).toBe(true);
+    const delay = renderOperation({ func: 'DELAY' }).dom;
+    expect(delay.querySelector('.routine-editor-variant').textContent).toBe('Wait for');
+    expect(delay.querySelector('.routine-editor-variant-menu')).toBeNull();
+  });
+
+  test('the drop-down picks another way to work without a popup around it', async () => {
+    const { editor, dom } = renderOperation({ func: 'FLIP', holder: 'deck1', face: 0 });
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    dom.querySelector('.routine-editor-variant-menu').dispatchEvent(new Event('click'));
+    const menu = document.querySelector('.inline-popup.popup-menu');
+    expect(menu).not.toBeNull();
+    expect(menu.querySelector('h1')).toBeNull(); // a menu, not one of the parameter popups
+    expect(menu.querySelector('.popup-close')).toBeNull();
+    expect([...menu.querySelectorAll('button')].map(b => b.textContent)).toEqual([ 'Turn face up', 'Turn face down', 'Turn to the face', 'Flip' ]);
+    expect(menu.querySelector('button.selected').textContent).toBe('Turn face up');
+    [...menu.querySelectorAll('button')].find(b => b.textContent == 'Turn face down').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(result.face).toBe(1);
   });
 
   test('picking another way to work rewrites exactly the parameters that tell them apart', () => {
@@ -504,20 +522,25 @@ describe('picking how an operation works and which options it uses', () => {
     expect(down.values).toEqual({ func: 'FLIP', holder: 'deck1', faceCycle: undefined, face: 1 });
   });
 
-  test('the operation popup lists the ways to work, the current one marked', () => {
+  test('adding an operation offers every one of them right away, searchable', () => {
     const source = document.createElement('span');
     document.getElementById('editor').append(source);
     const popup = new RoutineOperationPopup();
     popup.setSource(source);
-    popup.setOperationDetails({ func: 'SELECT', mode: 'add' }, [ 'func' ], { state: {} }, [], []);
+    popup.setOperationDetails({}, [ 'func' ], { state: {} }, [], []);
     popup.show();
-    const section = [...popup.domElement.querySelectorAll('.accordion-section h3')].find(h => h.textContent.startsWith('What this operation does')).parentElement;
-    expect(section).toBeDefined();
-    expect(section.querySelector('button.selected').textContent).toBe('Add widgets to a collection');
+    // no "common actions" shortlist hiding the rest behind a second click
+    expect(popup.domElement.querySelector('.accordion-section')).toBeNull();
+    const names = () => [...popup.domElement.querySelectorAll('.popup-operation-func')].map(e => e.textContent);
+    expect(names().length).toBe(Object.keys(routineOperationMetadata).length + 2); // + var and //
+    expect(names()).toContain('AUDIO');
+    popup.domElement.querySelector('.popup-property-search').value = 'shuffle';
+    popup.domElement.querySelector('.popup-property-search').dispatchEvent(new Event('input'));
+    expect(names()).toEqual([ 'SHUFFLE' ]);
     let value = null;
     popup.registerChangeListener(v => value = v);
-    [...section.querySelectorAll('button')].find(b => b.textContent == 'Select widgets').dispatchEvent(new Event('click'));
-    expect(value.mode).toBeUndefined(); // back to the default mode instead of a second parameter to understand
+    popup.domElement.querySelector('.popup-operation').dispatchEvent(new Event('click'));
+    expect(value.func).toBe('SHUFFLE');
     popup.hide();
   });
 
@@ -526,7 +549,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(withoutFace.querySelector('[data-parameter="face"]')).toBeNull();
     expect(withoutFace.querySelector('.routine-editor-add-clause')).not.toBeNull();
     const withFace = renderOperation({ func: 'MOVE', from: 'a', to: 'b', face: 0 }).dom;
-    expect(withFace.textContent).toContain('turn them to face');
+    expect(withFace.textContent).toContain('and turn them to face');
     expect(withFace.querySelector('.routine-editor-clause-remove')).not.toBeNull();
   });
 
@@ -718,16 +741,6 @@ describe('routine editor state handling', () => {
     expect(card.classList.contains('routine-editor-operation-selected')).toBe(true);
     card.dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
     expect(editor.selectedIndices.has(1)).toBe(false);
-  });
-
-  test('toggling the view of a selected operation keeps it looking selected', () => {
-    const editor = new RoutineEditor({ state: {} }, [ { func: 'MOVE', from: 'h1', to: 'h2' }, { func: 'FLIP' } ]);
-    editor.directChildCards()[0].dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
-    editor.directChildCards()[0].querySelector('.routine-editor-view-toggle').dispatchEvent(new Event('click'));
-    // the toggle replaces the card: without the selection class it looks
-    // unselected while a drag would still move it along with the next selection
-    expect(editor.selectedIndices.has(0)).toBe(true);
-    expect(editor.directChildCards()[0].classList.contains('routine-editor-operation-selected')).toBe(true);
   });
 
   test('a routine change clears the transient Ctrl-selection', () => {
@@ -962,10 +975,35 @@ describe('the values a parameter popup offers', () => {
 
   test('the values are grouped by where they come from, predefined ones included', () => {
     const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
-    const groups = [...popup.domElement.querySelectorAll('.popup-value-group')].map(g => g.textContent);
-    expect(groups).toEqual([ 'Values earlier operations remember', 'Groups of widgets earlier operations select', 'Available in every routine' ]);
+    const groups = [...popup.domElement.querySelectorAll('.popup-value-group')];
+    expect(groups.map(g => g.textContent)).toEqual([
+      'Values earlier operations remember', 'Groups of widgets earlier operations select',
+      'Available in every routine', 'Groups available in every routine'
+    ]);
+    // and each group says by its color what it produces, the way the sentence does
+    expect(groups.map(g => g.dataset.kind)).toEqual([ 'variable', 'collection', 'variable', 'collection' ]);
     // and the picker that comes first: widgets are chosen in the room, not typed
     expect(sectionTitles(popup)[0]).toBe('Widgets in the room');
+    popup.hide();
+  });
+
+  test('the sections are colored by what they produce and only one is open', () => {
+    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    const sections = [...popup.domElement.querySelectorAll('.accordion-section')];
+    expect(sections.map(s => s.dataset.kind)).toEqual([ 'widget', 'variable', 'property' ]);
+    expect(sections.filter(s => s.classList.contains('open'))).toHaveLength(1);
+    expect(sections[0].classList.contains('open')).toBe(true);
+    sections[1].querySelector('h3').dispatchEvent(new Event('click'));
+    expect(sections.filter(s => s.classList.contains('open'))).toHaveLength(1);
+    expect(sections[1].classList.contains('open')).toBe(true);
+    popup.hide();
+  });
+
+  test('what an entry is stays a hover tip instead of a line of its own', () => {
+    const popup = showPopup(RoutineStringPopup, { func: 'LABEL' }, [ 'value' ], [ 'cards' ]);
+    expect(popup.domElement.querySelector('.popup-entry-description')).toBeNull();
+    const playerName = [...popup.domElement.querySelectorAll('.popup-entry button')].find(b => b.textContent == 'playerName');
+    expect(playerName.title).toBe('name of the player who started the routine');
     popup.hide();
   });
 
@@ -993,63 +1031,70 @@ describe('the values a parameter popup offers', () => {
   });
 });
 
-describe('information in the expanded view', () => {
-  function listView(operation) {
-    operationUIState(operation).listView = true;
-    const editor = editorForOperation(operation);
-    editor.setOperationDetails({ state: {} }, operation, [], []);
-    const dom = editor.render();
-    document.getElementById('editor').append(dom);
-    return dom;
-  }
-
-  // clicks an info button and returns the text of the popup it opened
+describe('information about an operation and its parameters', () => {
+  // hovers an info button and returns the text of the tip it opened
   function infoTextOf(button) {
-    button.dispatchEvent(new Event('click'));
+    button.dispatchEvent(new Event('mouseenter'));
     const popups = [...document.querySelectorAll('.inline-popup')];
     const popup = popups[popups.length-1];
     const text = popup.textContent;
-    popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
+    popup.remove();
     return text;
   }
 
-  const rowNamed = (dom, name) => [...dom.querySelectorAll('.routine-editor-parameter-row')]
-    .find(r => (r.querySelector('.routine-editor-parameter-name') || {}).textContent == name);
+  // the info tip of the popup a parameter chip opens
+  function parameterInfo(operation, parameterNames) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineStringPopup();
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, { state: {} }, [], []);
+    popup.show();
+    const text = infoTextOf(popup.domElement.querySelector('h1 .info-button'));
+    popup.hide();
+    return text;
+  }
 
-  test('every row of the expanded view has an info button, the operation included', () => {
-    const dom = listView({ func: 'MOVE', from: 'h1', to: 'h2' });
-    const rows = [...dom.querySelectorAll('.routine-editor-parameter-row')];
-    expect(rows.length).toBe(Object.keys(routineOperationMetadata.MOVE.parameters).length + 1); // + the func row
-    for(const row of rows)
-      expect(row.querySelector('.routine-editor-parameter-info')).not.toBeNull();
-    // the operation's own button is the one in the row without a parameter name
-    const operationRow = rows.find(r => !r.querySelector('.routine-editor-parameter-name'));
-    expect(infoTextOf(operationRow.querySelector('.routine-editor-parameter-info'))).toContain('This function moves widgets into a target');
+  test('an info tip opens by hovering it, without a second one stacking up', () => {
+    for(const stale of document.querySelectorAll('.inline-popup'))
+      stale.remove();
+    const dom = document.createElement('div');
+    document.getElementById('editor').append(dom);
+    const info = infoButton(dom, 'a short explanation');
+    info.dispatchEvent(new Event('mouseenter'));
+    expect([...document.querySelectorAll('.inline-popup')].pop().textContent).toContain('a short explanation');
+    info.dispatchEvent(new Event('mouseenter')); // hovering again does not stack a second one
+    expect(document.querySelectorAll('.inline-popup')).toHaveLength(1);
+    for(const popup of document.querySelectorAll('.inline-popup'))
+      popup.remove();
     dom.remove();
   });
 
-  test('a parameter shows the line its operation describes it with', () => {
-    const dom = listView({ func: 'MOVE', from: 'h1' });
-    const text = infoTextOf(rowNamed(dom, 'count').querySelector('.routine-editor-parameter-info'));
+  test('the operation name carries the text of the whole operation', () => {
+    const editor = editorForOperation({ func: 'MOVE', from: 'h1' });
+    editor.setOperationDetails({ state: {} }, { func: 'MOVE', from: 'h1' }, [], []);
+    const dom = editor.render();
+    document.getElementById('editor').append(dom);
+    expect(infoTextOf(dom.querySelector('.routine-editor-func-info'))).toContain('This function moves widgets into a target');
+    dom.remove();
+  });
+
+  test('a parameter popup shows the line its operation describes the parameter with', () => {
+    const text = parameterInfo({ func: 'MOVE', from: 'h1' }, [ 'count' ]);
     expect(text).toContain('limits the amount of moved widgets');
     expect(text).not.toContain('This function moves widgets into a target'); // just the parameter, not everything
-    expect(text).toContain('for the whole operation'); // ...which is one click away, as a topic link
+    expect(text).toContain('for the whole operation'); // ...which is one hover away, as a topic link
     expect(text).toContain('See MOVE');
-    dom.remove();
   });
 
   test('a parameter with a topic of its own uses that text', () => {
-    const dom = listView({ func: 'MOVE', from: 'h1' });
-    expect(infoTextOf(rowNamed(dom, 'from').querySelector('.routine-editor-parameter-info')))
+    expect(parameterInfo({ func: 'MOVE', from: 'h1' }, [ 'from' ]))
       .toContain('The from parameter specifies the widget(s) that contains the widgets to move');
-    dom.remove();
   });
 
   test('a custom property the operation does not support falls back to the operation text', () => {
-    const dom = listView({ func: 'MOVE', from: 'h1', typo: 1 });
-    expect(infoTextOf(rowNamed(dom, 'typo').querySelector('.routine-editor-parameter-info')))
+    expect(parameterInfo({ func: 'MOVE', from: 'h1', typo: 1 }, [ 'typo' ]))
       .toContain('This function moves widgets into a target');
-    dom.remove();
   });
 
   test('every declared parameter of every operation is described somewhere', () => {

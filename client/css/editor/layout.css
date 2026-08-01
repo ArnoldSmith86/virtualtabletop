@@ -14,6 +14,18 @@ body {
 
   --textDimColor1: #ccc;
 
+  /* The routine editor colors every value by what it is, in the sentence as well
+     as in the popup it is picked from, so a color always means the same thing:
+     blue the operation itself, purple a widget, green a group of widgets, orange
+     a value the routine remembers, pink a widget property, teal a number. A
+     plain text or JSON value stays in the normal text color. */
+  --routineOperationColor: #1f5ca6;
+  --routineWidgetColor: purple;
+  --routineCollectionColor: green;
+  --routineVariableColor: #b25b00;
+  --routinePropertyColor: #c2185b;
+  --routineNumberColor: darkcyan;
+
   color-scheme: light;
   --gridSize: 25px;
   --gridColor: #c0c0c0;
@@ -35,6 +47,13 @@ body.edit.darkMode {
   --textHighlightColor7: #40e0d0;
 
   --textDimColor1: #606060;
+
+  --routineOperationColor: #7ab7ff;
+  --routineWidgetColor: #dda0dd;
+  --routineCollectionColor: #7ed07e;
+  --routineVariableColor: orange;
+  --routinePropertyColor: #ff8fb1;
+  --routineNumberColor: #40e0d0;
 
   color-scheme: dark;
 }

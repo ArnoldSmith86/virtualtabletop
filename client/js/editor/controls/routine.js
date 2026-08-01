@@ -8,12 +8,15 @@
 //
 //   variants - the ways the operation can work, i.e. what it does at all. The
 //     first variant whose match() fits the operation is the one it is shown as,
-//     so the last one is the fallback. Picking another variant in the operation
-//     chip's popup runs its apply() and rewrites the parameters that tell the
-//     variants apart together with the sentence, so nobody has to know that
-//     "turn face up" means face 0 and "flip to the next face" means faceCycle.
-//     fixed names the parameters a variant decides: they are changed by picking
-//     another variant, never as an option of their own.
+//     so the last one is the fallback. Every sentence starts with the words that
+//     say what the operation does ("Turn face up", "Move widgets from"); those
+//     words are the drop-down that switches between the variants, so word every
+//     template so that what tells the variants apart comes before the first
+//     parameter. Picking another entry runs that variant's apply() and rewrites
+//     the parameters that tell the variants apart together with the sentence, so
+//     nobody has to know that "turn face up" means face 0 and "flip to the next
+//     face" means faceCycle. fixed names the parameters a variant decides: they
+//     are changed by picking another variant, never as an option of their own.
 //
 //   clauses - the optional parts of the sentence. A clause is shown while one of
 //     its parameters is set and disappears with them, so a card only words what
@@ -22,12 +25,13 @@
 //     it again. Parameters no variant and no clause mentions become a clause of
 //     their own, so nothing an operation supports is unreachable.
 //
-// Template syntax: {name} is a clickable parameter chip; {a,b} shows the first
-// alternative that is explicitly set (or whose default is not null); {{clause}}
-// is where that clause goes if it is switched on (clauses without a place of
-// their own follow the sentence). A template can also be a function receiving an
-// accessor for the effective parameter values, so the wording can follow values
-// that do not warrant a variant of their own.
+// Template syntax: the words before the first parameter are the variant's lead,
+// rendered as the drop-down described above; {name} is a clickable parameter
+// chip; {a,b} shows the first alternative that is explicitly set (or whose
+// default is not null); {{clause}} is where that clause goes if it is switched
+// on (clauses without a place of their own follow the sentence). A template can
+// also be a function receiving an accessor for the effective parameter values,
+// so the wording can follow values that do not warrant a variant of their own.
 //
 // Parameter types decide which popup opens: number, enum (with values),
 // string, property (the name of a widget property), json, widgets (pick widgets
@@ -86,12 +90,12 @@ const routineOperationMetadata = {
         id: 'silence', label: 'Stop all sounds', fixed: [ 'silence' ],
         match: v=>v('silence'),
         apply: operation=>{ operation.silence = true; },
-        template: '{func} stop all sounds'
+        template: 'Stop all sounds'
       },
       {
         id: 'play', label: 'Play a sound', fixed: [ 'silence' ],
         apply: operation=>{ delete operation.silence; },
-        template: '{func} play {source} at volume {maxVolume}'
+        template: 'Play the sound {source} at volume {maxVolume}'
       }
     ],
     clauses: [
@@ -116,7 +120,7 @@ const routineOperationMetadata = {
   },
   CALL: {
     variants: [
-      { id: 'call', label: 'Run another routine', template: '{func} run the routine {routine} of {widget}' }
+      { id: 'call', label: 'Run another routine', template: 'Run the routine {routine} of {widget}' }
     ],
     clauses: [
       { id: 'variable', label: 'store the value it returns', template: ' and store the result as {variable}' },
@@ -139,22 +143,22 @@ const routineOperationMetadata = {
     variants: [
       { id: 'reset', label: 'Reset a canvas', fixed: [ 'mode' ], match: v=>v('mode') == 'reset',
         apply: operation=>{ operation.mode = 'reset'; },
-        template: v=>`{func} reset ${canvasTarget(v)}` },
+        template: v=>`Clear the canvas ${canvasTarget(v)}` },
       { id: 'set', label: 'Set the value of canvas fields', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: v=>`{func} set the value of ${canvasTarget(v)} to {value}` },
+        template: v=>`Set the value of ${canvasTarget(v)} to {value}` },
       { id: 'inc', label: 'Increase the value of canvas fields', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
-        template: v=>`{func} increase the value of ${canvasTarget(v)} by {value}` },
+        template: v=>`Increase the value of ${canvasTarget(v)} by {value}` },
       { id: 'dec', label: 'Decrease the value of canvas fields', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: v=>`{func} decrease the value of ${canvasTarget(v)} by {value}` },
+        template: v=>`Decrease the value of ${canvasTarget(v)} by {value}` },
       { id: 'change', label: 'Recolor a value on a canvas', fixed: [ 'mode' ], match: v=>v('mode') == 'change',
         apply: operation=>{ operation.mode = 'change'; },
-        template: v=>`{func} change the color of value {value} on ${canvasTarget(v)} to {color}` },
+        template: v=>`Recolor the value {value} on ${canvasTarget(v)} to {color}` },
       { id: 'setPixel', label: 'Set a single pixel', fixed: [ 'mode' ], match: v=>v('mode') == 'setPixel',
         apply: operation=>{ operation.mode = 'setPixel'; },
-        template: v=>`{func} set the pixel ({x}, {y}) of ${canvasTarget(v)} to value {value}` }
+        template: v=>`Set one pixel of ${canvasTarget(v)} at ({x}, {y}) to the value {value}` }
     ],
     clauses: [
       { id: 'count', label: 'only some of the widgets', template: ', for {count} widgets', add: { count: 1 } }
@@ -192,7 +196,7 @@ const routineOperationMetadata = {
   },
   CLICK: {
     variants: [
-      { id: 'click', label: 'Click widgets', template: '{func} click the widgets in {collection}' }
+      { id: 'click', label: 'Click widgets', template: 'Click the widgets in {collection}' }
     ],
     clauses: [
       { id: 'count', label: 'click them more than once', template: ', {count} time(s)' },
@@ -206,7 +210,7 @@ const routineOperationMetadata = {
   },
   CLONE: {
     variants: [
-      { id: 'clone', label: 'Copy widgets', template: '{func} copy the widgets in {source} {count} time(s)' }
+      { id: 'clone', label: 'Copy widgets', template: 'Copy the widgets in {source} {count} time(s)' }
     ],
     clauses: [
       { id: 'offset', label: 'place the copies elsewhere', template: ', offset by ({xOffset}, {yOffset})' },
@@ -229,10 +233,10 @@ const routineOperationMetadata = {
     variants: [
       { id: 'holder', label: 'Count what is in a holder', match: (v, isSet)=>isSet('holder'),
         apply: operation=>{ if(operation.holder === undefined) operation.holder = null; },
-        template: '{func} count the widgets in {holder}{{owner}} and store the number as {variable}' },
+        template: 'Count what the holder {holder} contains{{owner}} and store the number as {variable}' },
       { id: 'collection', label: 'Count the widgets of a collection', fixed: [ 'holder' ],
         apply: operation=>{ delete operation.holder; },
-        template: '{func} count the widgets in {collection}{{owner}} and store the number as {variable}' }
+        template: 'Count the widgets of {collection}{{owner}} and store the number as {variable}' }
     ],
     clauses: [
       { id: 'owner', label: 'only what one player owns', template: ' owned by {owner}', add: { owner: '' } }
@@ -248,7 +252,7 @@ const routineOperationMetadata = {
   },
   DELAY: {
     variants: [
-      { id: 'delay', label: 'Wait', template: '{func} wait for {milliseconds} milliseconds' }
+      { id: 'delay', label: 'Wait', template: 'Wait for {milliseconds} milliseconds' }
     ],
     parameters: {
       milliseconds: { type: 'number', default: 0 }
@@ -256,7 +260,7 @@ const routineOperationMetadata = {
   },
   DELETE: {
     variants: [
-      { id: 'delete', label: 'Delete widgets', template: '{func} delete the widgets in {collection}' }
+      { id: 'delete', label: 'Delete widgets', template: 'Delete the widgets in {collection}' }
     ],
     parameters: {
       collection: { type: 'collection', default: 'DEFAULT' }
@@ -266,16 +270,16 @@ const routineOperationMetadata = {
     variants: [
       { id: 'up', label: 'Turn face up', fixed: [ 'face', 'faceCycle' ], match: v=>v('face') === 0,
         apply: operation=>{ delete operation.faceCycle; operation.face = 0; },
-        template: '{func} turn {count} widgets in {holder,collection} face up' },
+        template: 'Turn face up {count} widgets in {holder,collection}' },
       { id: 'down', label: 'Turn face down', fixed: [ 'face', 'faceCycle' ], match: v=>v('face') === 1,
         apply: operation=>{ delete operation.faceCycle; operation.face = 1; },
-        template: '{func} turn {count} widgets in {holder,collection} face down' },
+        template: 'Turn face down {count} widgets in {holder,collection}' },
       { id: 'toFace', label: 'Turn to a specific face', fixed: [ 'faceCycle' ], match: v=>typeof v('face') == 'number',
         apply: operation=>{ delete operation.faceCycle; if(typeof operation.face != 'number' || operation.face < 2) operation.face = 2; },
-        template: '{func} turn {count} widgets in {holder,collection} to face {face}' },
+        template: 'Turn to the face {face}, {count} widgets in {holder,collection}' },
       { id: 'cycle', label: 'Flip to the next face', fixed: [ 'face' ],
         apply: operation=>{ delete operation.face; },
-        template: '{func} turn {count} widgets in {holder,collection} to the {faceCycle} face' }
+        template: 'Flip {count} widgets in {holder,collection} to the {faceCycle} face' }
     ],
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
@@ -297,13 +301,13 @@ const routineOperationMetadata = {
     variants: [
       { id: 'list', label: 'For each entry of a list', match: v=>v('in') != null,
         apply: operation=>{ delete operation.range; delete operation.collection; if(operation['in'] === undefined) operation['in'] = []; },
-        template: '{func} for each entry of {in,range,collection}' },
+        template: 'For each entry of {in,range,collection}' },
       { id: 'range', label: 'For each number of a range', match: v=>v('range') != null,
         apply: operation=>{ delete operation['in']; delete operation.collection; if(operation.range === undefined) operation.range = [ 1, 10, 1 ]; },
-        template: '{func} for each number of {in,range,collection}' },
+        template: 'For each number of {in,range,collection}' },
       { id: 'collection', label: 'For each widget of a collection',
         apply: operation=>{ delete operation['in']; delete operation.range; },
-        template: '{func} for each widget of {in,range,collection}' }
+        template: 'For each widget of {in,range,collection}' }
     ],
     parameters: {
       'in': { type: 'json', default: null },
@@ -323,16 +327,16 @@ const routineOperationMetadata = {
     variants: [
       { id: 'first', label: 'Read the value of the first widget', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'first',
         apply: operation=>{ operation.aggregation = 'first'; },
-        template: '{func} read {property} of the first widget in {collection} and store it as {variable}' },
+        template: 'Take the first widget in {collection} and store its {property} as {variable}' },
       { id: 'last', label: 'Read the value of the last widget', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'last',
         apply: operation=>{ operation.aggregation = 'last'; },
-        template: '{func} read {property} of the last widget in {collection} and store it as {variable}' },
+        template: 'Take the last widget in {collection} and store its {property} as {variable}' },
       { id: 'array', label: 'Collect the values of all widgets', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'array',
         apply: operation=>{ operation.aggregation = 'array'; },
-        template: '{func} collect {property} of all widgets in {collection} and store it as {variable}' },
+        template: 'Collect a list of {property} from the widgets in {collection} and store it as {variable}' },
       { id: 'combine', label: 'Combine the values (sum, average, ...)',
         apply: operation=>{ if([ 'average', 'median', 'min', 'max', 'sum' ].indexOf(operation.aggregation) == -1) operation.aggregation = 'sum'; },
-        template: '{func} store the {aggregation} of {property} of the widgets in {collection} as {variable}' }
+        template: 'Combine {property} of the widgets in {collection} with {aggregation} and store the result as {variable}' }
     ],
     clauses: [
       { id: 'skipMissing', label: 'skip widgets without the property', template: ', skipping widgets that do not have it: {skipMissing}', add: { skipMissing: true } }
@@ -352,10 +356,10 @@ const routineOperationMetadata = {
     variants: [
       { id: 'condition', label: 'Check a written condition', match: (v, isSet)=>isSet('condition'),
         apply: operation=>{ if(operation.condition === undefined) operation.condition = ''; },
-        template: '{func} if {condition}' },
+        template: 'If this expression is true: {condition}' },
       { id: 'compare', label: 'Compare two values', fixed: [ 'condition' ],
         apply: operation=>{ delete operation.condition; },
-        template: '{func} if {operand1} {relation} {operand2}' }
+        template: 'If the value {operand1} {relation} {operand2}' }
     ],
     parameters: {
       condition: { type: 'string', default: null },
@@ -366,7 +370,7 @@ const routineOperationMetadata = {
   },
   INPUT: {
     variants: [
-      { id: 'input', label: 'Ask the player', template: '{func} ask the player, showing the fields {fields}' }
+      { id: 'input', label: 'Ask the player', template: 'Ask the player to fill in {fields}' }
     ],
     clauses: [
       { id: 'header', label: 'give the dialog a title', template: ', titled {header}' },
@@ -392,16 +396,16 @@ const routineOperationMetadata = {
     variants: [
       { id: 'set', label: 'Set the text', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: '{func} set the text of {label,collection} to {value}' },
+        template: 'Set the text of {label,collection} to {value}' },
       { id: 'inc', label: 'Increase the number', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
-        template: '{func} increase the number in {label,collection} by {value}' },
+        template: 'Increase the number in {label,collection} by {value}' },
       { id: 'dec', label: 'Decrease the number', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: '{func} decrease the number in {label,collection} by {value}' },
+        template: 'Decrease the number in {label,collection} by {value}' },
       { id: 'append', label: 'Append text', fixed: [ 'mode' ], match: v=>v('mode') == 'append',
         apply: operation=>{ operation.mode = 'append'; },
-        template: '{func} append {value} to the text of {label,collection}' }
+        template: 'Append {value} to the text of {label,collection}' }
     ],
     parameters: {
       label: { type: 'widgets', default: null, widgetType: 'label' },
@@ -415,10 +419,10 @@ const routineOperationMetadata = {
     variants: [
       { id: 'fillTo', label: 'Fill a holder up', match: v=>v('fillTo'),
         apply: operation=>{ delete operation.count; if(!operation.fillTo) operation.fillTo = 1; },
-        template: '{func} move widgets from {from,collection} to {to} until it holds {fillTo}' },
+        template: 'Top up {to} from {from,collection} until it holds {fillTo}' },
       { id: 'move', label: 'Move widgets', fixed: [ 'fillTo' ],
         apply: operation=>{ delete operation.fillTo; },
-        template: '{func} move {count} widgets from {from,collection} to {to}' }
+        template: 'Move {count} widgets from {from,collection} to {to}' }
     ],
     clauses: [
       { id: 'face', label: 'turn them to a face', template: ' and turn them to face {face}', add: { face: 0 } }
@@ -442,7 +446,7 @@ const routineOperationMetadata = {
   },
   MOVEXY: {
     variants: [
-      { id: 'movexy', label: 'Move widgets to a position', template: '{func} move {count} widgets from {from} to ({x}, {y})' }
+      { id: 'movexy', label: 'Move widgets to a position', template: 'Move {count} widgets from {from} to the position ({x}, {y})' }
     ],
     clauses: [
       { id: 'z', label: 'put them on a layer', template: ' on layer {z}', add: { z: 1 } },
@@ -464,7 +468,7 @@ const routineOperationMetadata = {
   },
   RECALL: {
     variants: [
-      { id: 'recall', label: 'Recall cards', template: '{func} bring the cards that belong to {holder} back into it' }
+      { id: 'recall', label: 'Recall cards', template: 'Bring the cards that belong to {holder} back into it' }
     ],
     clauses: [
       { id: 'owned', label: 'leave the cards players hold', template: ', taking the cards players own: {owned}', add: { owned: false } },
@@ -482,7 +486,7 @@ const routineOperationMetadata = {
   },
   RESET: {
     variants: [
-      { id: 'reset', label: 'Reset widgets', template: '{func} reset the widgets using their property {property}' }
+      { id: 'reset', label: 'Reset widgets', template: 'Reset the widgets listed in their property {property}' }
     ],
     parameters: {
       property: { type: 'property', default: 'resetProperties' }
@@ -492,10 +496,10 @@ const routineOperationMetadata = {
     variants: [
       { id: 'set', label: 'Turn widgets to an angle', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: '{func} turn {count} widgets in {holder,collection} to {angle} degrees' },
+        template: 'Turn {count} widgets in {holder,collection} to {angle} degrees' },
       { id: 'add', label: 'Turn widgets by an angle', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: '{func} turn {count} widgets in {holder,collection} by {angle} degrees' }
+        template: 'Rotate {count} widgets in {holder,collection} by {angle} degrees' }
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
@@ -510,13 +514,13 @@ const routineOperationMetadata = {
     variants: [
       { id: 'inc', label: 'Add to the score', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
-        template: '{func} add {value} to the {property} of {seats}{{round}}' },
+        template: 'Add {value} to the {property} of {seats}{{round}}' },
       { id: 'dec', label: 'Subtract from the score', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: '{func} subtract {value} from the {property} of {seats}{{round}}' },
+        template: 'Subtract {value} from the {property} of {seats}{{round}}' },
       { id: 'set', label: 'Set the score', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: '{func} set the {property} of {seats}{{round}} to {value}' }
+        template: 'Set the {property} of {seats}{{round}} to {value}' }
     ],
     clauses: [
       { id: 'round', label: 'a round of its own', template: ' in round {round}', add: { round: 1 } }
@@ -533,16 +537,16 @@ const routineOperationMetadata = {
     variants: [
       { id: 'add', label: 'Add widgets to a collection', fixed: [ 'mode' ], match: v=>v('mode') == 'add',
         apply: operation=>{ operation.mode = 'add'; },
-        template: '{func} select {max} {type} from {source}{{where}}{{random}}{{sortBy}} and add them to {collection}' },
+        template: 'Add widgets to the selection: {max} {type} from {source}{{where}}{{random}}{{sortBy}}, added to {collection}' },
       { id: 'remove', label: 'Remove widgets from a collection', fixed: [ 'mode' ], match: v=>v('mode') == 'remove',
         apply: operation=>{ operation.mode = 'remove'; },
-        template: '{func} select {max} {type} from {source}{{where}}{{random}}{{sortBy}} and remove them from {collection}' },
+        template: 'Remove widgets from the selection: {max} {type} from {source}{{where}}{{random}}{{sortBy}}, removed from {collection}' },
       { id: 'intersect', label: 'Narrow a collection down', fixed: [ 'mode' ], match: v=>v('mode') == 'intersect',
         apply: operation=>{ operation.mode = 'intersect'; },
-        template: '{func} select {max} {type} from {source}{{where}}{{random}}{{sortBy}} and keep only those also in {collection}' },
+        template: 'Narrow the selection down: keep {max} {type} from {source}{{where}}{{random}}{{sortBy}} that are also in {collection}' },
       { id: 'set', label: 'Select widgets', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: '{func} select {max} {type} from {source}{{where}}{{random}}{{sortBy}} and call them {collection}' }
+        template: 'Select widgets: {max} {type} from {source}{{where}}{{random}}{{sortBy}}, called {collection}' }
     ],
     clauses: [
       { id: 'where', label: 'only widgets with a certain property', template: ' where {property} {relation} {value}' },
@@ -567,22 +571,22 @@ const routineOperationMetadata = {
     variants: [
       { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], match: v=>v('relation') == '+',
         apply: operation=>{ operation.relation = '+'; },
-        template: '{func} increase the property {property} of the widgets in {collection} by {value}' },
+        template: 'Increase the property {property} of the widgets in {collection} by {value}' },
       { id: 'subtract', label: 'Decrease a property', fixed: [ 'relation' ], match: v=>v('relation') == '-',
         apply: operation=>{ operation.relation = '-'; },
-        template: '{func} decrease the property {property} of the widgets in {collection} by {value}' },
+        template: 'Decrease the property {property} of the widgets in {collection} by {value}' },
       { id: 'multiply', label: 'Multiply a property', fixed: [ 'relation' ], match: v=>v('relation') == '*',
         apply: operation=>{ operation.relation = '*'; },
-        template: '{func} multiply the property {property} of the widgets in {collection} by {value}' },
+        template: 'Multiply the property {property} of the widgets in {collection} by {value}' },
       { id: 'divide', label: 'Divide a property', fixed: [ 'relation' ], match: v=>v('relation') == '/',
         apply: operation=>{ operation.relation = '/'; },
-        template: '{func} divide the property {property} of the widgets in {collection} by {value}' },
+        template: 'Divide the property {property} of the widgets in {collection} by {value}' },
       { id: 'toggle', label: 'Switch a property on or off', fixed: [ 'relation' ], match: v=>v('relation') == '!',
         apply: operation=>{ operation.relation = '!'; },
-        template: '{func} switch the property {property} of the widgets in {collection} on or off' },
+        template: 'Switch the property {property} of the widgets in {collection} on or off' },
       { id: 'set', label: 'Set a property', fixed: [ 'relation' ],
         apply: operation=>{ delete operation.relation; },
-        template: '{func} set the property {property} of the widgets in {collection} to {value}' }
+        template: 'Set the property {property} of the widgets in {collection} to {value}' }
     ],
     parameters: {
       property: { type: 'property', default: 'parent' },
@@ -597,19 +601,19 @@ const routineOperationMetadata = {
     variants: [
       { id: 'reverse', label: 'Reverse the order', fixed: [ 'mode' ], match: v=>v('mode') == 'reverse',
         apply: operation=>{ operation.mode = 'reverse'; },
-        template: '{func} reverse the order of the widgets in {holder,collection}' },
+        template: 'Reverse the order of the widgets in {holder,collection}' },
       { id: 'overhand', label: 'Shuffle overhand', fixed: [ 'mode' ], match: v=>v('mode') == 'overhand',
         apply: operation=>{ operation.mode = 'overhand'; },
-        template: '{func} shuffle {holder,collection} overhand {modeValue} times' },
+        template: 'Shuffle overhand {holder,collection}, {modeValue} times' },
       { id: 'riffle', label: 'Riffle shuffle', fixed: [ 'mode' ], match: v=>v('mode') == 'riffle',
         apply: operation=>{ operation.mode = 'riffle'; },
-        template: '{func} riffle shuffle {holder,collection} {modeValue} times' },
+        template: 'Riffle shuffle {holder,collection}, {modeValue} times' },
       { id: 'seeded', label: 'Shuffle the same way every time', fixed: [ 'mode' ], match: v=>v('mode') == 'seeded',
         apply: operation=>{ operation.mode = 'seeded'; },
-        template: '{func} shuffle {holder,collection} with the seed {modeValue}' },
+        template: 'Shuffle the same way every time: {holder,collection} with the seed {modeValue}' },
       { id: 'random', label: 'Shuffle', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: '{func} shuffle {holder,collection}' }
+        template: 'Shuffle {holder,collection}' }
     ],
     parameters: {
       holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
@@ -627,7 +631,7 @@ const routineOperationMetadata = {
   },
   SORT: {
     variants: [
-      { id: 'sort', label: 'Sort widgets', template: '{func} sort the widgets in {holder,collection} by {key}' }
+      { id: 'sort', label: 'Sort widgets', template: 'Sort the widgets in {holder,collection} by {key}' }
     ],
     clauses: [
       { id: 'reverse', label: 'sort the other way round', template: ', in reverse: {reverse}', add: { reverse: true } },
@@ -654,7 +658,7 @@ const routineOperationMetadata = {
   },
   SWAPHANDS: {
     variants: [
-      { id: 'swaphands', label: 'Swap the hands of the players', template: '{func} swap the hands of the players in {source}' }
+      { id: 'swaphands', label: 'Swap the hands of the players', template: 'Swap the hands of the players in {source}' }
     ],
     clauses: [
       { id: 'interval', label: 'pass them further than one seat', template: ', {interval} seats onwards' },
@@ -670,25 +674,25 @@ const routineOperationMetadata = {
     variants: [
       { id: 'start', label: 'Start a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'start',
         apply: operation=>{ operation.mode = 'start'; },
-        template: '{func} start {timer,collection}' },
+        template: 'Start the timer {timer,collection}' },
       { id: 'pause', label: 'Pause a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'pause',
         apply: operation=>{ operation.mode = 'pause'; },
-        template: '{func} pause {timer,collection}' },
+        template: 'Pause the timer {timer,collection}' },
       { id: 'reset', label: 'Reset a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'reset',
         apply: operation=>{ operation.mode = 'reset'; },
-        template: '{func} reset {timer,collection}' },
+        template: 'Reset the timer {timer,collection}' },
       { id: 'set', label: 'Set the time', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: v=>`{func} set the time of {timer,collection} to ${timerTime(v)}` },
+        template: v=>`Set the time of {timer,collection} to ${timerTime(v)}` },
       { id: 'inc', label: 'Add time', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
-        template: v=>`{func} add ${timerTime(v)} to the time of {timer,collection}` },
+        template: v=>`Add time to the timer {timer,collection}: ${timerTime(v)}` },
       { id: 'dec', label: 'Take time away', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: v=>`{func} take ${timerTime(v)} off the time of {timer,collection}` },
+        template: v=>`Take time off the timer {timer,collection}: ${timerTime(v)}` },
       { id: 'toggle', label: 'Start or pause a timer', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: '{func} start {timer,collection} if it is paused, pause it if it is running' }
+        template: 'Start or pause the timer {timer,collection}' }
     ],
     parameters: {
       timer: { type: 'widgets', default: null, widgetType: 'timer' },
@@ -714,19 +718,19 @@ const routineOperationMetadata = {
     variants: [
       { id: 'random', label: 'Give the turn to a random seat', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'random',
         apply: operation=>{ operation.turnCycle = 'random'; },
-        template: '{func} give the turn to a random seat' },
+        template: 'Give the turn to a random seat' },
       { id: 'position', label: 'Give the turn to a seat by its position', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'position',
         apply: operation=>{ operation.turnCycle = 'position'; },
-        template: '{func} give the turn to the seat at position {turn}' },
+        template: 'Give the turn to the seat at position {turn}' },
       { id: 'seat', label: 'Give the turn to a specific seat', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'seat',
         apply: operation=>{ operation.turnCycle = 'seat'; },
-        template: '{func} give the turn to the seat {turn}' },
+        template: 'Give the turn to the seat {turn}' },
       { id: 'backward', label: 'Pass the turn backwards', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'backward',
         apply: operation=>{ operation.turnCycle = 'backward'; },
-        template: '{func} pass the turn back by {turn} seat(s)' },
+        template: 'Pass the turn back by {turn} seat(s)' },
       { id: 'forward', label: 'Pass the turn on', fixed: [ 'turnCycle' ],
         apply: operation=>{ delete operation.turnCycle; },
-        template: '{func} pass the turn on by {turn} seat(s)' }
+        template: 'Pass the turn on by {turn} seat(s)' }
     ],
     clauses: [
       { id: 'source', label: 'only some of the seats', template: ', among the seats in {source}' },
@@ -744,7 +748,7 @@ const routineOperationMetadata = {
   },
   UPLOAD: {
     variants: [
-      { id: 'upload', label: 'Ask the player for a file', template: '{func} ask the player for a file and store its name as {variable}' }
+      { id: 'upload', label: 'Ask the player for a file', template: 'Ask the player for a file and store its name as {variable}' }
     ],
     clauses: [
       { id: 'fileTypes', label: 'only accept some file types', template: ', accepting {fileTypes}' }
@@ -757,7 +761,7 @@ const routineOperationMetadata = {
   },
   VAR: {
     variants: [
-      { id: 'var', label: 'Set variables', template: '{func} set the variables {variables}' }
+      { id: 'var', label: 'Set variables', template: 'Set the variables {variables}' }
     ],
     parameters: {
       variables: { type: 'json', default: {} }
@@ -774,6 +778,20 @@ function timerTime(v) {
   return v('seconds') ? '{seconds} seconds' : '{value} milliseconds';
 }
 
+// the words a sentence starts with: everything before its first parameter. They
+// are what tells the ways an operation can work apart, so they are what the
+// drop-down at the start of the sentence offers.
+function templateLead(template) {
+  return String(template).match(/^[^{]*/)[0];
+}
+
+// the same phrase as a menu entry: capitalized, without the punctuation that
+// only joins it to the rest of the sentence
+function leadLabel(lead) {
+  const trimmed = lead.replace(/[\s,:;]+$/, '');
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+}
+
 // how predefined variables are displayed in the operation summaries
 const predefinedVariableLabels = {
   '${playerName}': 'player clicking the widget',
@@ -786,19 +804,6 @@ const predefinedVariableLabels = {
   '${activeColors}': 'all player colors',
   '${activeSeats}': 'occupied seat ids'
 };
-
-// per-operation UI state (folded blocks, revealed default parameters), keyed by
-// the operation object so it survives re-renders as long as the routine is not
-// replaced from the outside
-const routineEditorUIState = new WeakMap();
-
-function operationUIState(operation) {
-  if(typeof operation != 'object' || operation === null)
-    return {};
-  if(!routineEditorUIState.has(operation))
-    routineEditorUIState.set(operation, {});
-  return routineEditorUIState.get(operation);
-}
 
 // The drag currently in progress, as { editor, indices }. It is module level so
 // a drop can move operations between routine levels: into a nested IF/FOREACH
@@ -1287,7 +1292,7 @@ class RoutineEditor {
 class RoutineOperationEditor {
   constructor(func) {
     this.func = func;
-    this.metadata = routineOperationMetadata[func] || { variants: [ { id: 'default', label: func, template: '{func}' } ], parameters: {} };
+    this.metadata = routineOperationMetadata[func] || { variants: [ { id: 'default', label: func, template: String(func || '') } ], parameters: {} };
     this.changeListeners = [];
     this.subroutineEditors = {};
   }
@@ -1295,11 +1300,15 @@ class RoutineOperationEditor {
   classifyParameter(parameterName, value) {
     if(parameterName == 'func')
       return 'func';
+    const spec = this.parameterSpec(parameterName);
+    // a property is its own kind of value: the name of one (GET property) as
+    // well as a reference reading one (${PROPERTY score OF card1})
+    if((spec && spec.type == 'property') || (typeof value == 'string' && value.match(/^\$\{PROPERTY /)))
+      return 'property';
     if(typeof value == 'string' && value.match(/\$\{[^}]+\}/))
       return 'variable';
     if(parameterName == 'variable')
       return 'variable';
-    const spec = this.parameterSpec(parameterName);
     if(spec && spec.type == 'collection')
       return 'collection';
     if(spec && spec.type == 'widgets')
@@ -1387,10 +1396,10 @@ class RoutineOperationEditor {
   // the sentence with the values the operation currently has, used to offer the
   // operations and their variants in a popup. Optional parts stay out: an
   // example is what the operation says once it is added, not everything it could.
-  getExampleWithDefaults(variant, funcText) {
+  getExampleWithDefaults(variant) {
     return this.resolveTemplate((variant || this.currentVariant()).template)
       .replace(/\{\{[a-zA-Z0-9]+\}\}/g, '')
-      .replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>p == 'func' && funcText !== undefined ? funcText : this.getDisplayedValue(p))
+      .replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p))
       .trim();
   }
 
@@ -1410,7 +1419,12 @@ class RoutineOperationEditor {
   currentVariant() {
     const variants = this.variants();
     const matching = variants.find(variant=>!variant.match || variant.match(name=>this.parameterValue(name), name=>this.parameterIsSet(name)));
-    return matching || variants[variants.length-1] || { id: 'default', label: this.func, template: '{func}' };
+    return matching || variants[variants.length-1] || { id: 'default', label: this.func, template: String(this.func || '') };
+  }
+
+  // the words the sentence starts with - the phrase the drop-down offers
+  variantLead(variant) {
+    return templateLead(this.resolveTemplate((variant || this.currentVariant()).template));
   }
 
   // templates may be functions of the effective parameter values, so that
@@ -1440,6 +1454,11 @@ class RoutineOperationEditor {
     for(const name in this.metadata.parameters)
       if(!spokenFor.has(name) && !Object.prototype.hasOwnProperty.call(ignored, name))
         clauses.push({ id: name, label: name, template: `, ${name} {${name}}`, generated: true });
+    // a custom property the operation does not know about is always part of the
+    // sentence: the engine ignores it, but hiding it makes a typo impossible to
+    // spot - and its x is how it is removed again
+    for(const name of this.unsupportedProperties())
+      clauses.push({ id: name, label: name, template: `, ${name} {${name}}`, generated: true, unsupported: true });
     return clauses;
   }
 
@@ -1552,27 +1571,20 @@ class RoutineOperationEditor {
     const dom = document.createElement('div');
     this.domElement = dom;
     dom.classList.add('routine-editor-operation');
-    const uiState = operationUIState(this.operation);
-    if(uiState.listView)
-      dom.classList.add('list-view');
 
     // the header holds the summary and, appended by the routine editor, the
     // move/delete buttons: laid out side by side they can never overlap
     const header = div(dom, 'routine-editor-operation-header');
     const body = div(header, 'routine-editor-operation-body');
 
-    if(uiState.listView)
-      this.renderListView(body);
-    else
-      this.renderSentenceView(body);
+    this.renderFunctionName(body);
+    this.renderSentenceView(div(body, 'routine-editor-sentence'));
 
     this.renderParameterWarnings(body);
 
-    if(this.isExpandable())
-      ($('.routine-editor-parameter-row', body) || body).prepend(this.renderViewToggle());
-
-    // in the expanded view, a button next to the summary shows the raw JSON
-    if(uiState.listView && this.operation && typeof this.operation == 'object') {
+    // the escape hatch for everything the sentence cannot say: the raw JSON of
+    // the whole operation, in the corner opposite the move/delete buttons
+    if(this.operation && typeof this.operation == 'object') {
       const jsonButton = document.createElement('span');
       jsonButton.className = 'material-symbols routine-editor-operation-json';
       jsonButton.textContent = 'data_object';
@@ -1611,33 +1623,84 @@ class RoutineOperationEditor {
     const category = this.classifyParameter(resolved, rawValue);
     const displayed = this.getDisplayedValue(spec);
     const missing = displayed === '?' ? ' routine-editor-parameter-missing' : '';
-    const categoryNames = { func: 'operation', variable: 'variable', collection: 'collection', widget: 'widget', number: 'number', value: 'value' };
-    // the operation chip is also where the ways it can work are picked, so its
-    // tooltip names the one the sentence shows instead of repeating "func"
-    const title = category == 'func'
-      ? `${this.func || 'operation'}${this.variants().length > 1 ? ` - ${this.currentVariant().label}` : ''} - click to change the operation or how it works`
-      : `${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}`;
+    const categoryNames = { func: 'operation', variable: 'variable', collection: 'group of widgets', widget: 'widget', property: 'widget property', number: 'number', value: 'value' };
+    const title = `${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}`;
     return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="${escapeHTML(title)}">${escapeHTML(displayed)}</span>`;
+  }
+
+  // the name of the operation, on a line of its own above the sentence: the
+  // sentence itself avoids the engine's vocabulary, so this is the one place
+  // that keeps the link to what the routine actually stores - and clicking it
+  // is how the operation is exchanged for another one
+  renderFunctionName(dom) {
+    const line = div(dom, 'routine-editor-operation-func');
+    const known = Boolean(routineOperationMetadata[this.func]);
+    const name = document.createElement('span');
+    name.className = 'routine-editor-func-name';
+    name.textContent = this.func || 'JSON';
+    if(known) {
+      name.dataset.parameter = 'func';
+      name.title = `${this.func} - click to use another operation here`;
+    }
+    line.append(name);
+    const info = commonInfoButton(null, this.func);
+    if(info) {
+      info.classList.add('routine-editor-func-info');
+      line.append(info);
+    }
+    return line;
   }
 
   renderTemplateText(template) {
     return this.resolveTemplate(template).replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>this.renderParameterChip(spec));
   }
 
+  // the phrase the sentence starts with. With more than one way to work it is
+  // the drop-down that switches between them, so it carries the arrow that says
+  // so; with only one it is simply the words the sentence begins with.
+  renderVariantLead(lead) {
+    const text = lead.replace(/\s+$/, '');
+    const trailingSpace = lead.slice(text.length);
+    if(!text)
+      return lead;
+    if(this.variants().length < 2)
+      return `<span class="routine-editor-variant">${escapeHTML(text)}</span>${trailingSpace}`;
+    const title = `${leadLabel(text)} - click to pick another way for ${this.func} to work`;
+    return `<span class="routine-editor-variant routine-editor-variant-menu" title="${escapeHTML(title)}">${escapeHTML(text)}<span class="material-symbols">arrow_drop_down</span></span>${trailingSpace}`;
+  }
+
   // the sentence of the current variant, plus the options that are switched on -
   // each with the x that removes it again - and the button offering the rest
   renderSentenceView(dom) {
     let html = '';
-    for(const part of this.sentenceParts()) {
-      if(!part.clause) {
-        html += this.renderTemplateText(part.template);
-      } else if(this.clauseIsActive(part.clause)) {
-        html += `<span class="routine-editor-clause">${this.renderTemplateText(part.template)}<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Remove this option">close</span></span>`;
+    for(const [ index, part ] of this.sentenceParts().entries()) {
+      if(part.clause) {
+        if(this.clauseIsActive(part.clause))
+          html += `<span class="routine-editor-clause">${this.renderTemplateText(part.template)}<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Remove this option">close</span></span>`;
+        continue;
       }
+      let template = this.resolveTemplate(part.template);
+      if(index === 0) {
+        const lead = templateLead(template);
+        html += this.renderVariantLead(lead);
+        template = template.slice(lead.length);
+      }
+      html += this.renderTemplateText(template);
     }
     if(this.clauses().some(clause=>!this.clauseIsActive(clause)))
-      html += `<span class="routine-editor-add-clause" title="Add one of the options this operation offers">+ option</span>`;
+      html += `<span class="routine-editor-add-clause" title="Add one of the options this operation offers"><span class="material-symbols">add</span>option</span>`;
     dom.innerHTML = html;
+
+    const variantMenu = $('.routine-editor-variant-menu', dom);
+    if(variantMenu)
+      variantMenu.addEventListener('click', async e=>{
+        e.stopPropagation();
+        const popup = new RoutineVariantMenu(routineOperationVariantChoices(this.operation), this.currentVariant().id);
+        popup.setSource(variantMenu);
+        const values = await newRoutineValues(popup);
+        if(values !== undefined)
+          this.onNewValue(values);
+      });
 
     for(const remove of $a('.routine-editor-clause-remove', dom))
       remove.addEventListener('click', e=>{
@@ -1677,51 +1740,9 @@ class RoutineOperationEditor {
     }).trim().replace(/^[,;]\s*/, '');
   }
 
-  // one line per declared parameter, including the ones the operation does not define
-  renderListView(dom) {
-    const ignored = this.ignoredParameters();
-    let html = `<div class="routine-editor-parameter-row">${this.renderParameterChip('func')}</div>`;
-    for(const name in this.metadata.parameters) {
-      const isIgnored = Object.prototype.hasOwnProperty.call(ignored, name);
-      html += `<div class="routine-editor-parameter-row${isIgnored ? ' routine-editor-parameter-ignored' : ''}"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
-    }
-    // custom properties the operation does not know about are listed last: the
-    // engine ignores them, but hiding them makes a typo impossible to spot
-    for(const name of this.unsupportedProperties())
-      html += `<div class="routine-editor-parameter-row routine-editor-parameter-unsupported"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
-    dom.innerHTML = html;
-    // the wiki information the parameter popup offers is right here as well, so
-    // the expanded view explains itself without opening one: the operation text
-    // next to the operation, and each parameter's own description next to it
-    for(const row of $a('.routine-editor-parameter-row', dom)) {
-      const nameDOM = $('.routine-editor-parameter-name', row);
-      const info = nameDOM ? commonParameterInfoButton(null, this.func, nameDOM.textContent) : commonInfoButton(null, this.func);
-      if(!info)
-        continue;
-      info.classList.add('routine-editor-parameter-info');
-      // deliberately no title: a browser tooltip repeating "information about
-      // <parameter>" only reads like the information it is not - the popup the
-      // button opens on click is where the actual explanation is
-      if(nameDOM)
-        nameDOM.after(info);
-      else
-        row.append(info);
-    }
-    // a red "!" at the end of every ignored line explains why it has no effect
-    for(const row of $a('.routine-editor-parameter-row.routine-editor-parameter-ignored', dom)) {
-      const name = $('.routine-editor-parameter-name', row).textContent;
-      const warning = document.createElement('span');
-      warning.className = 'material-symbols routine-editor-parameter-ignored-warning';
-      warning.textContent = 'error';
-      warning.title = ignored[name];
-      row.append(warning);
-    }
-  }
-
   // a clickable "!" behind every chip whose parameter needs a word of warning:
-  // orange for a deprecated one (in both views, because a deprecated parameter
-  // that is set must not be hidden behind the sentence/list toggle) and red for
-  // a custom property the operation does not support at all
+  // orange for a deprecated one and red for a custom property the operation does
+  // not support at all
   renderParameterWarnings(dom) {
     for(const span of $a('span[data-parameter]', dom)) {
       const name = span.dataset.parameter;
@@ -1760,36 +1781,6 @@ class RoutineOperationEditor {
       return [];
     const known = [ 'func', ...Object.keys(this.metadata.parameters), ...this.subroutineProperties() ];
     return Object.keys(this.operation).filter(name=>known.indexOf(name) == -1);
-  }
-
-  // operations with parameters can expand from the sentence to the list view
-  isExpandable() {
-    return Object.keys(this.metadata.parameters).length > 0;
-  }
-
-  renderViewToggle() {
-    const uiState = operationUIState(this.operation);
-    const toggle = document.createElement('span');
-    toggle.className = 'material-symbols routine-editor-view-toggle';
-    toggle.textContent = uiState.listView ? 'expand_more' : 'chevron_right';
-    toggle.title = 'Toggle between the sentence and the parameter list view';
-    toggle.addEventListener('click', e=>{
-      e.stopPropagation();
-      uiState.listView = !uiState.listView;
-      const oldDom = this.domElement;
-      const newDom = this.render();
-      // keep the move/delete buttons the routine editor appended to the old node
-      // (own header only - nested operations have their own button clusters)
-      const oldHeader = [ ...oldDom.children ].find(c=>c.classList.contains('routine-editor-operation-header'));
-      const buttons = oldHeader && [ ...oldHeader.children ].find(c=>c.classList.contains('routine-editor-operation-buttons'));
-      if(buttons)
-        [ ...newDom.children ].find(c=>c.classList.contains('routine-editor-operation-header')).append(buttons);
-      // the routine editor still counts this operation as selected, so the new
-      // card has to look selected too - otherwise a later drag silently moves it
-      newDom.classList.toggle('routine-editor-operation-selected', oldDom.classList.contains('routine-editor-operation-selected'));
-      oldDom.replaceWith(newDom);
-    });
-    return toggle;
   }
 
   renderSubroutine(dom, property, options={}) {
@@ -1897,7 +1888,7 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   currentVariant() {
     // fall back to raw editing for statements the simple form cannot represent
     return this.isSimple()
-      ? { id: 'simple', label: 'var', template: 'variable {variable} gets value {expression}' }
+      ? { id: 'simple', label: 'var', template: 'Variable {variable} gets the value {expression}' }
       : { id: 'raw', label: 'var', template: '{statement}' };
   }
 
@@ -1920,7 +1911,7 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   getExampleWithDefaults() {
-    return 'variable x gets value 1';
+    return 'Variable x gets the value 1';
   }
 
   isSimple() {
@@ -1945,7 +1936,9 @@ class CommentRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   currentVariant() {
-    return { id: 'comment', label: '//', template: '// {comment}' };
+    // the // line above the sentence already says what this is, so the sentence
+    // is nothing but the note itself
+    return { id: 'comment', label: '//', template: '{comment}' };
   }
 
   createPopup(parameterNames) {
@@ -2008,26 +2001,17 @@ function editorForOperation(operation) {
   return new UnknownRoutineOperationEditor();
 }
 
-// pre-filled simple versions of common operations, offered first when adding one
-const simpleRoutineOperationExamples = [
-  { example: 'MOVE cards from a to b', newOperation: { func: 'MOVE', count: 1, from: null, to: null } },
-  { example: 'FLIP the top card of a holder', newOperation: { func: 'FLIP', count: 1, holder: null } },
-  { example: 'SHUFFLE a holder', newOperation: { func: 'SHUFFLE', holder: null } },
-  { example: 'RECALL all cards to their holder', newOperation: { func: 'RECALL', holder: null } },
-  { example: 'SELECT widgets into a collection', newOperation: { func: 'SELECT' } },
-  { example: 'TURN moves to the next player', newOperation: { func: 'TURN' } }
-];
-
-// the choices offered when adding an operation or switching its type
+// the choices offered when adding an operation or switching its type: every
+// operation there is, each with the sentence it would read as
 function routineOperationExamples() {
   const examples = [];
   for(const func in routineOperationMetadata) {
     const editor = editorForOperation({ func });
     editor.setOperationDetails(null, { func }, [], []);
-    examples.push({ example: editor.getExampleWithDefaults(), newOperation: { func } });
+    examples.push({ func, example: editor.getExampleWithDefaults(), newOperation: { func } });
   }
-  examples.push({ example: 'variable x gets value 1', newOperation: 'var x = 1' });
-  examples.push({ example: '// comment', newOperation: '// comment' });
+  examples.push({ func: 'var', example: 'Variable x gets the value 1', newOperation: 'var x = 1' });
+  examples.push({ func: '//', example: 'A note for whoever reads the routine', newOperation: '// comment' });
   return examples;
 }
 
@@ -2045,9 +2029,10 @@ function operationVariantValues(operation, variant) {
   return values;
 }
 
-// the ways the operation can work, each with the sentence it would read as -
-// what the operation chip offers besides the other operations. Operations with
-// only one way to work (DELAY, INPUT, ...) have nothing to choose here.
+// the ways the operation can work, each worded as the phrase its sentence would
+// start with - that is what the drop-down at the start of the sentence offers.
+// Operations with only one way to work (DELAY, INPUT, ...) have nothing to
+// choose here, so their phrase is plain text instead of a drop-down.
 function routineOperationVariantChoices(operation) {
   const metadata = routineOperationMetadata[operation && operation.func];
   if(!metadata || (metadata.variants || []).length < 2)
@@ -2058,6 +2043,6 @@ function routineOperationVariantChoices(operation) {
       variant.apply(preview);
     const editor = editorForOperation(preview);
     editor.setOperationDetails(null, preview, [], []);
-    return { id: variant.id, label: variant.label, example: editor.getExampleWithDefaults(variant, ''), values: operationVariantValues(operation, variant) };
+    return { id: variant.id, lead: leadLabel(editor.variantLead(variant)), label: variant.label, example: editor.getExampleWithDefaults(variant), values: operationVariantValues(operation, variant) };
   });
 }

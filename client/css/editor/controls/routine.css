@@ -18,11 +18,16 @@
 .routine-editor-operation {
   position: relative;
   background: var(--backgroundHighlightColor1);
-  border-left: 3px solid var(--VTTblue);
+  border-left: 3px solid var(--routineOperationColor);
   border-radius: 4px 4px 4px 0;
   padding: 5px 8px;
   line-height: 1.8;
   font-size: 13px;
+}
+
+/* the sentence below the operation name, with room for the chips it contains */
+.routine-editor-sentence {
+  line-height: 1.9;
 }
 
 /* the summary and the move/delete icons sit next to each other so the icons
@@ -39,10 +44,69 @@
   line-height: 1.4;
 }
 
+/* the name of the operation, on a line of its own above the sentence: the link
+   to what the routine stores for advanced users, and the way to exchange the
+   operation for another one */
+.routine-editor-operation-func {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  color: var(--routineOperationColor);
+}
+
+.routine-editor-func-name[data-parameter] {
+  cursor: pointer;
+}
+
+.routine-editor-func-name[data-parameter]:hover {
+  text-decoration: underline;
+}
+
+.routine-editor-func-info {
+  color: gray;
+}
+
+.routine-editor-func-info .material-symbols {
+  font-size: 14px;
+}
+
+.routine-editor-func-info:hover {
+  color: var(--routineOperationColor);
+}
+
+/* the words the sentence starts with: they say what the operation does, so with
+   more than one way to work they are the drop-down that switches between them */
+.routine-editor-variant {
+  color: var(--routineOperationColor);
+  font-weight: bold;
+}
+
+.routine-editor-variant-menu {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 2px 0 4px;
+  margin-left: -4px;
+  background: var(--backgroundColor);
+}
+
+.routine-editor-variant-menu .material-symbols {
+  font-size: 16px;
+  vertical-align: -3px;
+  margin-left: -2px;
+}
+
+.routine-editor-variant-menu:hover {
+  outline: 1px solid var(--routineOperationColor);
+}
+
 .routine-editor-operation-parameter {
   display: inline-block;
   background: var(--backgroundColor);
-  color: var(--VTTblue);
+  color: var(--textColor);
   font-weight: bold;
   border-radius: 4px;
   padding: 0 5px;
@@ -55,102 +119,34 @@
   vertical-align: bottom;
 }
 
-body.edit.darkMode .routine-editor-operation-parameter {
-  color: var(--textHighlightColor7);
-}
-
 .routine-editor-operation-parameter:hover {
-  outline: 1px solid var(--VTTblue);
+  outline: 1px solid var(--routineOperationColor);
 }
 
-/* color coding by what kind of value the parameter holds; the darkMode rules
-   repeat the categories because the darkMode base rule above outweighs a
-   single class, and the theme orange is too light on the white chips */
+/* color coding by what kind of value the parameter holds - the same colors the
+   popup a value is picked from uses for its sections */
 .routine-editor-parameter-variable {
-  color: #b25b00;
+  color: var(--routineVariableColor);
 }
 
 .routine-editor-parameter-collection {
-  color: var(--textHighlightColor4);
+  color: var(--routineCollectionColor);
 }
 
 .routine-editor-parameter-widget {
-  color: var(--textHighlightColor5);
+  color: var(--routineWidgetColor);
+}
+
+.routine-editor-parameter-property {
+  color: var(--routinePropertyColor);
 }
 
 .routine-editor-parameter-number {
-  color: var(--textHighlightColor7);
-}
-
-body.edit.darkMode .routine-editor-parameter-variable {
-  color: var(--textHighlightColor2);
-}
-
-body.edit.darkMode .routine-editor-parameter-collection {
-  color: var(--textHighlightColor4);
-}
-
-body.edit.darkMode .routine-editor-parameter-widget {
-  color: var(--textHighlightColor5);
-}
-
-.routine-editor-view-toggle {
-  cursor: pointer;
-  color: gray;
-  font-size: 16px;
-  vertical-align: middle;
-  margin-right: 2px;
-}
-
-.routine-editor-view-toggle:hover {
-  color: var(--VTTblue);
-}
-
-/* the expanded list view: one line per parameter, even undefined ones */
-.routine-editor-operation.list-view .routine-editor-parameter-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.routine-editor-parameter-name {
-  color: gray;
-  font-size: 12px;
-  min-width: 110px;
-  text-align: right;
-}
-
-/* the wiki information for the operation and for each of its parameters, right
-   next to the name in the expanded list view */
-.routine-editor-parameter-info {
-  flex-shrink: 0;
-  color: gray;
-}
-
-.routine-editor-parameter-info .material-symbols {
-  font-size: 15px;
-}
-
-.routine-editor-parameter-info:hover {
-  color: var(--VTTblue);
-}
-
-/* parameters the engine currently ignores are struck through but stay editable */
-.routine-editor-parameter-ignored .routine-editor-parameter-name,
-.routine-editor-parameter-ignored .routine-editor-operation-parameter {
-  text-decoration: line-through;
-  opacity: 0.7;
-}
-
-.routine-editor-parameter-ignored-warning {
-  color: var(--textHighlightColor3);
-  font-size: 15px;
-  cursor: help;
-  vertical-align: middle;
+  color: var(--routineNumberColor);
 }
 
 /* deprecated and unsupported parameters stay editable but carry an info button
-   explaining the problem - in the sentence view as well as in the list */
+   explaining the problem */
 .routine-editor-parameter-warning {
   display: inline-block;
   font-size: 15px;
@@ -172,15 +168,7 @@ body.edit.darkMode .routine-editor-parameter-widget {
   color: var(--VTTblue);
 }
 
-/* a custom property the operation does not know about: shown so it can be
-   found and removed, struck through because the engine ignores it */
-.routine-editor-parameter-unsupported .routine-editor-parameter-name,
-.routine-editor-parameter-unsupported .routine-editor-operation-parameter {
-  text-decoration: line-through;
-  opacity: 0.7;
-}
-
-/* the raw-JSON button next to the summary of an expanded operation */
+/* the raw-JSON button in the corner of an operation */
 .routine-editor-operation-json {
   flex-shrink: 0;
   margin-top: 3px;
@@ -232,21 +220,32 @@ body.edit.darkMode .routine-editor-parameter-widget {
   color: var(--VTTblue);
 }
 
+/* everything else the operation can say is one click away, so the button saying
+   so is a filled chip in the operation color instead of a dashed gray outline */
 .routine-editor-add-clause {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-size: 11px;
-  color: gray;
-  border: 1px dashed gray;
-  border-radius: 4px;
-  padding: 0 4px;
-  margin-left: 4px;
+  font-weight: bold;
+  color: var(--backgroundColor);
+  background: var(--routineOperationColor);
+  border-radius: 9px;
+  padding: 1px 8px 1px 4px;
+  margin-left: 6px;
   cursor: pointer;
   white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.routine-editor-add-clause .material-symbols {
+  font-size: 14px;
+  margin-right: 1px;
 }
 
 .routine-editor-add-clause:hover {
-  color: var(--VTTblue);
-  border-color: var(--VTTblue);
+  filter: brightness(1.2);
+  outline: 1px solid var(--routineOperationColor);
+  outline-offset: 1px;
 }
 
 .routine-editor-parameter-missing,

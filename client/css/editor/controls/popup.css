@@ -86,26 +86,95 @@
   color: var(--textHighlightColor3);
 }
 
+/* The sections of a popup are the independent ways to fill in a parameter, so
+   they read as separate cards: each one carries the color of what it produces
+   (see --routine*Color in editor/layout.css), a triangle saying whether it is
+   the open one, and the open one is the only one that is not dimmed. */
+.inline-popup .accordion-section {
+  --sectionColor: var(--routineOperationColor);
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-left: 4px solid var(--sectionColor);
+  border-radius: 4px;
+  margin: 6px 0;
+  opacity: 0.75;
+}
+
+.inline-popup .accordion-section.open {
+  opacity: 1;
+  border-color: var(--sectionColor);
+}
+
+.inline-popup .accordion-section[data-kind=widget] {
+  --sectionColor: var(--routineWidgetColor);
+}
+
+.inline-popup .accordion-section[data-kind=collection] {
+  --sectionColor: var(--routineCollectionColor);
+}
+
+.inline-popup .accordion-section[data-kind=variable] {
+  --sectionColor: var(--routineVariableColor);
+}
+
+.inline-popup .accordion-section[data-kind=property] {
+  --sectionColor: var(--routinePropertyColor);
+}
+
 .inline-popup .accordion-section h3 {
   cursor: pointer;
   font-size: 13px;
-  margin: 6px 0 2px 0;
-  padding: 3px 6px;
+  margin: 0;
+  padding: 4px 6px;
+  color: var(--sectionColor);
   background: var(--backgroundHighlightColor1);
-  border-radius: 4px;
+  border-radius: 0 2px 2px 0;
+}
+
+.inline-popup .accordion-section h3::before {
+  content: '▸';
+  display: inline-block;
+  width: 12px;
+}
+
+.inline-popup .accordion-section.open h3::before {
+  content: '▾';
 }
 
 .inline-popup .accordion-section h3:hover {
-  outline: 1px solid var(--VTTblue);
+  outline: 1px solid var(--sectionColor);
 }
 
 .inline-popup .accordion-content {
   display: none;
-  padding: 4px 2px;
+  padding: 4px 6px;
 }
 
 .inline-popup .accordion-content.open {
   display: block;
+}
+
+/* a plain drop-down menu (the ways an operation can work) instead of a popup
+   with a title: one entry per line, the current one marked */
+.inline-popup.popup-menu {
+  min-width: 0;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inline-popup .popup-menu-entry {
+  margin: 0;
+  padding: 3px 8px;
+  text-align: left;
+  border: none;
+  border-radius: 3px;
+  color: var(--routineOperationColor);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.inline-popup .popup-menu-entry.selected {
+  background: var(--backgroundHighlightColor1);
 }
 
 .inline-popup button {
@@ -205,22 +274,58 @@ body.edit.darkMode .inline-popup button:hover {
 }
 
 .inline-popup .popup-entry {
-  margin-bottom: 4px;
+  display: inline-block;
 }
 
-/* the groups the values a routine offers are listed in */
+/* the groups the values a routine offers are listed in, each in the color of
+   what it produces - and so are the entries themselves */
 .inline-popup .popup-value-group {
   font-weight: bold;
   font-size: 11px;
-  opacity: 0.7;
   margin: 8px 2px 2px 2px;
+  padding-left: 4px;
+  border-left: 3px solid var(--routineOperationColor);
 }
 
-.inline-popup .popup-entry-description {
+.inline-popup .popup-value-group[data-kind=variable],
+.inline-popup button[data-kind=variable] {
+  border-left-color: var(--routineVariableColor);
+  color: var(--routineVariableColor);
+}
+
+.inline-popup .popup-value-group[data-kind=collection],
+.inline-popup button[data-kind=collection] {
+  border-left-color: var(--routineCollectionColor);
+  color: var(--routineCollectionColor);
+}
+
+/* the operations a routine can use, name first so they stay findable */
+.inline-popup .popup-operation-list {
+  max-height: 320px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.inline-popup .popup-operation {
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.inline-popup .popup-operation:hover {
+  border-color: var(--routineOperationColor);
+}
+
+.inline-popup .popup-operation-func {
   font-size: 11px;
-  color: gray;
-  margin: 0 2px 2px 2px;
-  max-width: 300px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: var(--routineOperationColor);
+}
+
+.inline-popup .popup-operation-example {
+  font-size: 12px;
 }
 
 .inline-popup table {
