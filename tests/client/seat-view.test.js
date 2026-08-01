@@ -124,8 +124,24 @@ describe('facing', function() {
 
 // A drag detaches a widget to room level, where nothing above it turns any
 // more. It borrows the view of the container it is being dragged in so that it
-// keeps looking the way it looked when it was picked up.
+// keeps looking the way it looked when it was picked up - and, because that
+// container turns the table around a point, it has to be moved to where that
+// turn puts it as well.
 describe('a widget being dragged', function() {
+  // A 1000x1000 container at the room origin. jsdom has no DOMMatrix to measure
+  // a real transform with, so the two views the frame offset is worked out from
+  // are modelled directly: the stored layout, and the same square after the half
+  // turn the per-seat view gives it.
+  function createContainer(id, properties) {
+    const container = createWidget(Object.assign({ id, width: 1000, height: 1000 }, properties));
+    container.coordGlobalFromCoordLocal = function(coord, shared = false) {
+      if(shared || !this.seatViewDelta)
+        return { x: coord.x, y: coord.y };
+      return { x: 1000 - coord.x, y: 1000 - coord.y };
+    };
+    return container;
+  }
+
   function dragOut(id, from, hoverTarget) {
     const widget = widgets.get(id);
     widget.state.parent = null;
@@ -133,12 +149,15 @@ describe('a widget being dragged', function() {
     widget.state.hoverParent = from;
     if(hoverTarget)
       widget.state.hoverTarget = hoverTarget;
+    // a 100x100 widget turns around its centre - jsdom does not lay out, so the
+    // transform origin a browser would compute is set explicitly
+    widget.domElement.style.transformOrigin = '50px 50px';
     return widget;
   }
 
   test('keeps the view of the table it was picked up from', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
-    createWidget({ id: 'table', rotateForViewer: true });
+    createContainer('table', { rotateForViewer: true });
     createWidget({ id: 'card', parent: 'table' });
     const card = dragOut('card', 'table');
 
@@ -149,18 +168,19 @@ describe('a widget being dragged', function() {
 
   test('follows the drop target it is held over, so the drop changes nothing', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
-    createWidget({ id: 'table', rotateForViewer: true });
-    createWidget({ id: 'sideboard' });
+    createContainer('table', { rotateForViewer: true });
+    createContainer('sideboard');
     createWidget({ id: 'card', parent: 'table' });
     const card = dragOut('card', 'table', 'sideboard');
 
     viewAs('north');
     expect(card.seatViewRotation()).toBe(0);
+    expect(card.seatViewOffset).toBe(null);
   });
 
   test('is still kept readable by facing', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
-    createWidget({ id: 'table', rotateForViewer: true });
+    createContainer('table', { rotateForViewer: true });
     createWidget({ id: 'card', parent: 'table', facing: 'viewer' });
     const card = dragOut('card', 'table');
 
@@ -170,7 +190,7 @@ describe('a widget being dragged', function() {
 
   test('borrows nothing once the drag is over', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
-    createWidget({ id: 'table', rotateForViewer: true });
+    createContainer('table', { rotateForViewer: true });
     createWidget({ id: 'card', parent: 'table' });
     const card = dragOut('card', 'table');
     // dropped where no container took it: it is a room level widget now, and
@@ -179,17 +199,51 @@ describe('a widget being dragged', function() {
 
     viewAs('north');
     expect(card.seatViewRotation()).toBe(0);
+    expect(card.seatViewOffset).toBe(null);
+  });
+
+  test('is drawn on the table point it sits on, not at the shared position', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createSeat('south', { player: 'Bob', index: 2 });
+    const table = createContainer('table', { rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table', x: 30, y: 40 });
+    const card = dragOut('card', 'table');
+
+    // Alice looks at the table from the far side: the card is drawn where she
+    // sees the table point it is being dragged over, not where the shared
+    // coordinates would put it on an unturned table
+    viewAs('north');
+    const rendered = card.seatViewRenderedCoord();
+    expect({ x: rendered.x + 50, y: rendered.y + 50 }).toEqual(table.coordGlobalFromCoordLocal({ x: 80, y: 90 }));
+    expect(card.cssTransform()).toBe('translate(870px, 860px) rotate(-180deg)');
+
+    // Bob's table is not turned, so for him the two are the same
+    viewAs('south');
+    expect(card.cssTransform()).toBe('translate(30px, 40px)');
   });
 
   test('does not move in the shared coordinates while it is dragged', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
-    createWidget({ id: 'table', rotateForViewer: true });
+    createContainer('table', { rotateForViewer: true });
     createWidget({ id: 'card', parent: 'table', x: 30, y: 40 });
     const card = dragOut('card', 'table');
 
     viewAs('north');
+    expect(card.get('x')).toBe(30);
+    expect(card.get('y')).toBe(40);
     expect(card.cssTransform(true)).toBe('translate(30px, 40px)');
-    expect(card.cssTransform()).toBe('translate(30px, 40px) rotate(-180deg)');
+  });
+
+  test('the position a drag measures on screen goes back into the shared one', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createContainer('table', { rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table', x: 30, y: 40 });
+    const card = dragOut('card', 'table');
+
+    viewAs('north');
+    // what a drag reads out of the DOM is this client's view of the widget, and
+    // what it stores has to be the position every client agrees on
+    expect(card.seatViewSharedCoord(card.seatViewRenderedCoord())).toEqual({ x: 30, y: 40 });
   });
 });
 

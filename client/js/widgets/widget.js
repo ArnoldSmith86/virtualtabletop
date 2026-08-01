@@ -6,7 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
-import { ownerSeat, refreshSeatViewBranch, scheduleSeatViewRefresh, seatRotation, seatViewGeneration, seatViewMarkUsed, viewingPlayerName, viewingSeat, viewingSeatRotation } from '../seatview.js';
+import { ownerSeat, refreshSeatViewBranch, rotateCoord, scheduleSeatViewRefresh, seatRotation, seatViewGeneration, seatViewMarkUsed, viewingPlayerName, viewingSeat, viewingSeatRotation } from '../seatview.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
 // room - being a child of the line is the common shape, not a requirement. This
@@ -95,7 +95,8 @@ export class Widget extends StateManaged {
     this.seatViewDelta = 0;
     this.seatViewInherited = 0;
     this.seatViewBorrowed = 0;
-    this.appliedSeatViewDelta = 0;
+    this.seatViewOffset = null;
+    this.appliedSeatView = '0';
     this.propertiesUsedInProperty = {};
 
     if(StateManaged.inheritFromMapping[id] === undefined)
@@ -437,13 +438,13 @@ export class Widget extends StateManaged {
   }
 
   // Render this widget the way the seat this client looks through sees it. Only
-  // the transform can differ, and only by a rotation - the stored state is never
-  // touched, so every client keeps computing with the same numbers.
+  // the transform can differ - the stored state is never touched, so every
+  // client keeps computing with the same numbers.
   applySeatView() {
     this.seatViewRefresh();
-    if(this.seatViewRotation() === this.appliedSeatViewDelta)
+    if(this.seatViewKey() === this.appliedSeatView)
       return;
-    this.appliedSeatViewDelta = this.seatViewRotation();
+    this.appliedSeatView = this.seatViewKey();
     // a widget in limbo hangs in #topSurface with a transform of its own that
     // cssTransform cannot reproduce - it gets the new angle when it lands
     if(this.isLimbo)
@@ -791,6 +792,15 @@ export class Widget extends StateManaged {
     const seatViewDelta = shared ? 0 : this.seatViewRotation();
     const rotation = seatViewDelta ? (+this.get('rotation') || 0) + seatViewDelta : this.get('rotation');
 
+    // A borrowed frame turns the whole table around a point, so it does not only
+    // turn the widget, it also moves it: x and y stay the shared position that
+    // every client stores, and this is where that position ends up on screen.
+    if(!shared && this.seatViewOffset) {
+      const rendered = this.seatViewRenderedCoord({ x: +x || 0, y: +y || 0 });
+      x = rendered.x;
+      y = rendered.y;
+    }
+
     if(this.get('ignoreZoom')) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
@@ -838,6 +848,8 @@ export class Widget extends StateManaged {
     let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
     if (parent)
       corner = parent.coordGlobalFromCoordLocal(corner);
+    else
+      corner = this.seatViewSharedCoord(corner);
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
@@ -2596,23 +2608,29 @@ export class Widget extends StateManaged {
   }
 
   async move(coordGlobal, localAnchor) {
-    let newCoord = this.dragCorner(coordGlobal, localAnchor);
+    const dragPosition = _ => {
+      const newCoord = this.dragCorner(coordGlobal, localAnchor);
 
-    //Keeps widget's top left corner within coordinates set by dragLimit object
-    const limit = this.get('dragLimit');
+      //Keeps widget's top left corner within coordinates set by dragLimit object
+      const limit = this.get('dragLimit');
 
-    if (limit.minX !== undefined) {
-      newCoord.x = Math.max(limit.minX, newCoord.x);
-    }
-    if (limit.maxX !== undefined) {
-      newCoord.x = Math.min(limit.maxX, newCoord.x);
-    }
-    if (limit.minY !== undefined) {
-      newCoord.y = Math.max(limit.minY, newCoord.y);
-    }
-    if (limit.maxY !== undefined) {
-      newCoord.y = Math.min(limit.maxY, newCoord.y);
-    }
+      if (limit.minX !== undefined) {
+        newCoord.x = Math.max(limit.minX, newCoord.x);
+      }
+      if (limit.maxX !== undefined) {
+        newCoord.x = Math.min(limit.maxX, newCoord.x);
+      }
+      if (limit.minY !== undefined) {
+        newCoord.y = Math.max(limit.minY, newCoord.y);
+      }
+      if (limit.maxY !== undefined) {
+        newCoord.y = Math.min(limit.maxY, newCoord.y);
+      }
+      return newCoord;
+    };
+
+    const seatViewFrame = this.seatViewFrame();
+    const newCoord = dragPosition();
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
@@ -2700,6 +2718,18 @@ export class Widget extends StateManaged {
       }
     }
 
+    // The container the drag borrows its view from can change halfway through a
+    // move: stepping over a table that is turned for this player, or off it, is
+    // exactly that. The position above was measured in the view the widget had
+    // before, so it is measured once more in the one it has now - otherwise the
+    // grabbed point sits somewhere else than the cursor until the next move.
+    if(this.seatViewFrame() != seatViewFrame && (this.seatViewOffset || this.seatViewFrame())) {
+      refreshSeatViewBranch(this);
+      const seatViewCoord = dragPosition();
+      await this.setPosition(seatViewCoord.x, seatViewCoord.y, this.get('z'));
+      await this.snapToGrid();
+    }
+
     this.highlightStopDropLine(this.lineStopDropTarget());
   }
 
@@ -2769,6 +2799,13 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, localAnchor });
 
     await this.hideShadowWidget();
+
+    // Where this player sees the widget right now. A drop that no container
+    // takes leaves it at room level, and room level is the same for everybody -
+    // so it stays where it was dropped instead of where the turned table it was
+    // dragged over would have put it.
+    const seatViewCoord = this.seatViewOffset && this.seatViewRenderedCoord();
+
     await this.set('dragging', null);
 
     // read where the drag ended before the drop into a holder below moves the widget
@@ -2794,6 +2831,9 @@ export class Widget extends StateManaged {
     }
 
     await this.applyLineStopDrop(stopDropTarget);
+
+    if(seatViewCoord && !this.get('parent'))
+      await this.setPosition(Math.round(seatViewCoord.x), Math.round(seatViewCoord.y), this.get('z'));
 
     this.hideEnlarged();
     if(this.domElement.classList.contains('longtouch'))
@@ -3035,6 +3075,7 @@ export class Widget extends StateManaged {
     this.seatViewGeneration = seatViewGeneration();
     this.seatViewInherited = 0;
     this.seatViewBorrowed = 0;
+    this.seatViewOffset = null;
     this.seatViewDelta = 0;
 
     const parentID = this.get('parent');
@@ -3051,6 +3092,7 @@ export class Widget extends StateManaged {
         frame.seatViewRefresh();
         this.seatViewBorrowed = frame.seatViewInherited + frame.seatViewDelta;
         this.seatViewInherited = this.seatViewBorrowed;
+        this.seatViewOffset = this.seatViewFrameOffset(frame);
       }
     }
 
@@ -3093,16 +3135,61 @@ export class Widget extends StateManaged {
     return frame != this ? frame : null;
   }
 
+  // Where the borrowed frame has moved this widget to. A container turns the
+  // table around a point, so borrowing its angle alone would leave the widget
+  // spinning on the spot at the shared position: the player dragging would have
+  // it slide out from under the cursor, and everybody whose table is turned
+  // differently would watch it travel across the wrong side of the table. One
+  // point taken through the frame both ways pins the rest of the map down,
+  // because the angle is already known.
+  seatViewFrameOffset(frame) {
+    const rendered = frame.coordGlobalFromCoordLocal({ x: 0, y: 0 });
+    const shared = rotateCoord(frame.coordGlobalFromCoordLocal({ x: 0, y: 0 }, true), this.seatViewBorrowed);
+    const offset = { x: rendered.x - shared.x, y: rendered.y - shared.y };
+    return this.seatViewBorrowed || offset.x || offset.y ? offset : null;
+  }
+
   // How far the per-seat view turns this widget's own element: what it is turned
   // by itself, plus the frame it borrows while it is being dragged.
   seatViewRotation() {
     return this.seatViewDelta + this.seatViewBorrowed;
   }
 
+  // What the widget's rendered transform depends on, so that a sweep only
+  // touches the DOM when the per-seat view really changed something.
+  seatViewKey() {
+    return this.seatViewOffset ? `${this.seatViewRotation()} ${this.seatViewOffset.x} ${this.seatViewOffset.y}` : String(this.seatViewRotation());
+  }
+
+  // Where the borrowed frame puts a stored position on this client's screen. The
+  // widget turns around its transform origin, so that is the point the frame
+  // moves - not the position itself.
+  seatViewRenderedCoord(coord = { x: +this.get('x') || 0, y: +this.get('y') || 0 }) {
+    if(!this.seatViewOffset)
+      return coord;
+    const origin = getTransformOrigin(this.domElement);
+    const turned = rotateCoord({ x: coord.x + origin.x, y: coord.y + origin.y }, this.seatViewBorrowed);
+    return Object.assign({}, coord, { x: turned.x + this.seatViewOffset.x - origin.x, y: turned.y + this.seatViewOffset.y - origin.y });
+  }
+
+  // ... and back: a drag measures everything through the DOM and therefore in
+  // this client's view, while x and y have to mean the same on every client, or
+  // the next one to render them would apply this client's detour a second time.
+  seatViewSharedCoord(coord) {
+    if(!this.seatViewOffset)
+      return coord;
+    const origin = getTransformOrigin(this.domElement);
+    const turned = rotateCoord({
+      x: coord.x + origin.x - this.seatViewOffset.x,
+      y: coord.y + origin.y - this.seatViewOffset.y
+    }, -this.seatViewBorrowed);
+    return Object.assign({}, coord, { x: turned.x - origin.x, y: turned.y - origin.y });
+  }
+
   // The transform this widget would have without any per-seat view, or null when
   // there is nothing to take back out.
   sharedTransform() {
-    return this.seatViewRotation() ? this.cssTransform(true) : null;
+    return this.seatViewRotation() || this.seatViewOffset ? this.cssTransform(true) : null;
   }
 
   showEnlarged(event, delta) {

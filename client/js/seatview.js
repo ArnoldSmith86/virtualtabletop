@@ -171,6 +171,16 @@ export function seatRotation(seat, property = 'viewRotation') {
   return Math.round((rotation || 0) / rotationStep) * rotationStep;
 }
 
+// Quarter turns only, so the sine and cosine come out exact. A drag inverts
+// this to work out the position it stores, and floating point dust there would
+// end up in the room state on every mouse move.
+export function rotateCoord(coord, angle) {
+  const quarter = ((Math.round(angle / rotationStep) % 4) + 4) % 4;
+  const cos = [ 1, 0, -1, 0 ][quarter];
+  const sin = [ 0, 1, 0, -1 ][quarter];
+  return { x: coord.x * cos - coord.y * sin, y: coord.x * sin + coord.y * cos };
+}
+
 export function viewingSeatRotation(property = 'viewRotation') {
   return perSweep(`viewingSeatRotation-${property}`, _=>seatRotation(viewingSeat(), property));
 }
