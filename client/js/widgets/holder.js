@@ -1,4 +1,4 @@
-class Holder extends ImageWidget {
+export class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
     // if legacy mode disableHolderImageWidget is enabled, skip the intermediary ImageWidget prototype and use the Widget prototype instead so that image/icon/text properties "work" like they did before the change
@@ -109,6 +109,16 @@ class Holder extends ImageWidget {
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
   }
 
+  // Where inside this holder a widget was dropped. What a drop writes into x and
+  // y is measured on the screen of the player dropping, so it has to be taken
+  // back through this holder's own frame instead of just having the holder's
+  // position subtracted: a holder that is turned against the room - which one
+  // inside a container that turns for the viewing player always is - would
+  // otherwise put the same drop in a different place for every seat.
+  dropCoord(child) {
+    return this.coordLocalFromCoordGlobal({ x: child.get('x'), y: child.get('y') });
+  }
+
   getDefaultIconScale() {
     return 0.85;
   }
@@ -145,10 +155,11 @@ class Holder extends ImageWidget {
 
     if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;
+      const coord = this.dropCoord(child);
       this.preventRearrangeDuringPileDrop = true;
       for(const w of child.children().reverse()) {
-        await w.set('x', child.get('x') - this.absoluteCoord('x') + i/100);
-        await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
+        await w.set('x', coord.x + i/100);
+        await w.set('y', coord.y + i/100);
         await w.set('parent', this.get('id'));
         ++i;
         if(this.get('preventPiles')) {
@@ -169,8 +180,10 @@ class Holder extends ImageWidget {
       await super.onChildAddAlign(child, oldParentID);
     else if(child.movedByButton)
       await this.receiveCard(child, [ this.get('stackOffsetX')*999999, this.get('stackOffsetY')*999999 ]);
-    else
-      await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
+    else {
+      const coord = this.dropCoord(child);
+      await this.receiveCard(child, [ coord.x, coord.y ]);
+    }
   }
 
   async onPropertyChange(property, oldValue, newValue) {

@@ -110,8 +110,12 @@ function hideSelectionRectangle() {
   $('#editorSelection').classList.remove('active');
 }
 
-function updateDragToolbar(invertSelectionMode) {
-  if(selectedWidgets.length && (selectionModeActive == !invertSelectionMode)) {
+export function updateDragToolbar(invertSelectionMode) {
+  // Its buttons apply a movement on this screen straight to the stored x and y,
+  // so while the room is shown the way another seat sees it they would write
+  // positions in a frame that only this client is looking at. "Preview as seat"
+  // is look-only, like the widget drags it already switches off.
+  if(selectedWidgets.length && !getSeatViewPreview() && (selectionModeActive == !invertSelectionMode)) {
     const rects = selectedWidgets.map(w=>w.domElement.getBoundingClientRect());
     $('#editorDragToolbar').classList.add('active');
 

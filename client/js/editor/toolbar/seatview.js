@@ -73,6 +73,9 @@ class SeatViewButton extends ToolbarButtonWithContent {
   syncPreview() {
     $('body').classList.toggle('seatViewPreview', !!getSeatViewPreview());
     this.syncButton();
+    // the drag toolbar writes positions, so it goes away with the preview and
+    // comes back with it - the selection itself is left alone
+    updateDragToolbar();
     if(this.list)
       this.renderSeats();
   }

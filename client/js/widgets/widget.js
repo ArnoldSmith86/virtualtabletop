@@ -96,6 +96,8 @@ export class Widget extends StateManaged {
     this.seatViewInherited = 0;
     this.seatViewBorrowed = 0;
     this.seatViewOffset = null;
+    this.seatViewProperty = 'viewRotation';
+    this.seatViewGeneration = -1; // no sweep has looked at this widget yet
     this.appliedSeatView = '0';
     this.propertiesUsedInProperty = {};
 
@@ -3077,12 +3079,14 @@ export class Widget extends StateManaged {
     this.seatViewBorrowed = 0;
     this.seatViewOffset = null;
     this.seatViewDelta = 0;
+    this.seatViewProperty = 'viewRotation';
 
     const parentID = this.get('parent');
     if(parentID && widgets.has(parentID)) {
       const parent = widgets.get(parentID);
       parent.seatViewRefresh();
       this.seatViewInherited = parent.seatViewInherited + parent.seatViewDelta;
+      this.seatViewProperty = parent.seatViewProperty;
     } else {
       // A parent applies its turn through the DOM; a borrowed frame cannot, so
       // the widget has to carry that turn itself - it is counted as inherited
@@ -3092,6 +3096,7 @@ export class Widget extends StateManaged {
         frame.seatViewRefresh();
         this.seatViewBorrowed = frame.seatViewInherited + frame.seatViewDelta;
         this.seatViewInherited = this.seatViewBorrowed;
+        this.seatViewProperty = frame.seatViewProperty;
         this.seatViewOffset = this.seatViewFrameOffset(frame);
       }
     }
@@ -3106,15 +3111,23 @@ export class Widget extends StateManaged {
     // itself turned by 180 degrees is at the far side, so the table has to come
     // around by -180 for that player to look at it from their own chair.
     // facing wins over rotateForViewer on the same widget: whichever chair the
-    // content reads for, that is where the turning has to stop.
+    // content reads for, that is where the turning has to stop. Both are stated
+    // against the room rather than against whatever turned the widget already,
+    // so what is inherited from above is taken back out first: a turning
+    // container inside another one puts the viewer's side in front of them once,
+    // not twice. Which seat property the angle is read from is inherited too, so
+    // a widget reading upright inside a container that turns by a custom
+    // property is measured against that same property.
     const facing = this.get('facing');
     const rotateForViewer = this.get('rotateForViewer');
     const target = facing == 'viewer' ? viewer : facing == 'owner' ? ownerSeat(this) : null;
     let delta = 0;
     if(target)
-      delta = seatRotation(target) - viewingSeatRotation() - this.seatViewInherited;
-    else if(rotateForViewer)
-      delta = -viewingSeatRotation(typeof rotateForViewer == 'string' ? rotateForViewer : undefined);
+      delta = seatRotation(target, this.seatViewProperty) - viewingSeatRotation(this.seatViewProperty) - this.seatViewInherited;
+    else if(rotateForViewer) {
+      this.seatViewProperty = typeof rotateForViewer == 'string' ? rotateForViewer : 'viewRotation';
+      delta = -viewingSeatRotation(this.seatViewProperty) - this.seatViewInherited;
+    }
     this.seatViewDelta = delta || 0; // never -0, which would end up in the CSS
   }
 

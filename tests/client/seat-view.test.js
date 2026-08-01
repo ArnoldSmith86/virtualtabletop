@@ -1,22 +1,31 @@
 import { addWidget, widgets, widgetFilter } from '../../client/js/serverstate.js';
 import { isSeatViewRotationDelta, refreshSeatViews, scheduleSeatViewRefresh, seatsChanged, setSeatViewPreview } from '../../client/js/seatview.js';
 import { Widget } from '../../client/js/widgets/widget.js';
-import { setText } from '../../client/js/domhelpers.js';
+import { asArray, setText } from '../../client/js/domhelpers.js';
 import { createWidget, removeWidget } from './client-util.js';
 
-// seat.js relies on the concatenated global scope of the shipped bundle rather
-// than on imports, so expose the identifiers it references before importing it.
-let Seat;
+// seat.js and holder.js rely on the concatenated global scope of the shipped
+// bundle rather than on imports, so expose the identifiers they reference before
+// importing them.
+let Seat, Holder;
 beforeAll(async function() {
   globalThis.Widget = Widget;
   globalThis.widgets = widgets;
   globalThis.widgetFilter = widgetFilter;
+  globalThis.asArray = asArray;
   globalThis.setText = setText;
   globalThis.scheduleSeatViewRefresh = scheduleSeatViewRefresh;
   globalThis.isSeatViewRotationDelta = isSeatViewRotationDelta;
   globalThis.seatsChanged = seatsChanged;
   globalThis.viewingPlayerName = _=>'jestPlayer';
+  globalThis.playerName = 'jestPlayer';
+  globalThis.legacyMode = _=>false;
+  globalThis.compareDropTarget = _=>true;
+  globalThis.mapAssetURLs = url=>url;
+  globalThis.tracingEnabled = false;
   ({ Seat } = await import('../../client/js/widgets/seat.js'));
+  ({ ImageWidget: globalThis.ImageWidget } = await import('../../client/js/widgets/imagewidget.js'));
+  ({ Holder } = await import('../../client/js/widgets/holder.js'));
 });
 
 function createSeat(id, properties) {
@@ -87,6 +96,18 @@ describe('rotateForViewer', function() {
     expect(table.seatViewDelta).toBe(-180);
   });
 
+  test('a turning container inside another one turns once, not twice', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    const table = createWidget({ id: 'table', rotateForViewer: true });
+    const area = createWidget({ id: 'area', parent: 'table', rotateForViewer: true });
+
+    viewAs('north');
+    // the property says where the viewer's side of it has to end up, which is
+    // the same place at every depth
+    expect(table.seatViewDelta + table.seatViewInherited).toBe(-180);
+    expect(area.seatViewDelta + area.seatViewInherited).toBe(-180);
+  });
+
   test('children ride along instead of being turned a second time', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
     const table = createWidget({ id: 'table', rotateForViewer: true });
@@ -140,6 +161,19 @@ describe('facing', function() {
     expect(mat.seatViewDelta + mat.seatViewInherited).toBe(0);
 
     // Bob looks at the same mat across the table: upside down, as it should be
+    viewAs('south');
+    expect(mat.seatViewDelta + mat.seatViewInherited).toBe(180);
+  });
+
+  test('owner is measured against the same seat property its container turns by', function() {
+    createSeat('north', { player: 'Alice', rotation: 0, sideRotation: 180 });
+    createSeat('south', { player: 'Bob', index: 2, rotation: 0, sideRotation: 0 });
+    createWidget({ id: 'table', rotateForViewer: 'sideRotation' });
+    const mat = createWidget({ id: 'mat', parent: 'table', owner: 'Alice', facing: 'owner' });
+
+    viewAs('north');
+    expect(mat.seatViewDelta + mat.seatViewInherited).toBe(0);
+
     viewAs('south');
     expect(mat.seatViewDelta + mat.seatViewInherited).toBe(180);
   });
@@ -284,6 +318,58 @@ describe('a widget being dragged', function() {
     // what a drag reads out of the DOM is this client's view of the widget, and
     // what it stores has to be the position every client agrees on
     expect(card.seatViewSharedCoord(card.seatViewRenderedCoord())).toEqual({ x: 30, y: 40 });
+  });
+});
+
+// Where in a hand a dropped card goes is worked out from the position the drop
+// wrote, and that position was measured on the screen of the player dropping it.
+// Inside a container that turns for the viewing player the same spot on the
+// table is a different number on every screen, so the holder has to take the
+// drop back through its own frame instead of subtracting its position - or two
+// players dropping a card on the same spot would put it in two different places
+// in the hand, for everybody.
+describe('a drop into a holder that stacks its children', function() {
+  // jsdom has no DOMMatrix to measure a real transform with, so the holder's
+  // frame is modelled directly: it sits at (100, 800) of a 1000x1000 table, and
+  // the per-seat view turns that table by a half turn around its centre.
+  function createHand(id, properties) {
+    const hand = new Holder(id);
+    addWidget(Object.assign({ id, type: 'holder', alignChildren: true, stackOffsetX: 30 }, properties), hand);
+    hand.coordLocalFromCoordGlobal = function(coord) {
+      const table = widgets.get(this.get('parent'));
+      const inTable = table.seatViewDelta ? { x: 1000 - coord.x, y: 1000 - coord.y } : coord;
+      return { x: inTable.x - 100, y: inTable.y - 800 };
+    };
+    // what a browser reports for the holder's own position, which is the same on
+    // every client because the per-seat view is never written back
+    hand.absoluteCoord = coord=>({ x: 100, y: 800 })[coord];
+    return hand;
+  }
+
+  test('lands in the same place in the stack whichever seat dropped it', async function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createSeat('south', { player: 'Bob', index: 2 });
+    createWidget({ id: 'table', width: 1000, height: 1000, rotateForViewer: true });
+    const hand = createHand('hand', { parent: 'table' });
+    const card = createWidget({ id: 'card', type: 'card' });
+
+    const dropped = [];
+    hand.receiveCard = (c, pos)=>dropped.push(pos);
+
+    // Bob's table is not turned, so he drops the card where it is stored
+    viewAs('south');
+    card.state.x = 300;
+    card.state.y = 850;
+    await hand.onChildAddAlign(card, null);
+
+    // Alice looks at the same table point from the far side of the table
+    viewAs('north');
+    card.state.x = 700;
+    card.state.y = 150;
+    await hand.onChildAddAlign(card, null);
+
+    expect(dropped[0]).toEqual([ 200, 50 ]);
+    expect(dropped[1]).toEqual(dropped[0]);
   });
 });
 
