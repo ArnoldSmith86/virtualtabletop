@@ -8,8 +8,10 @@ import { playerName } from './overlays/players.js';
 // A container with rotateForViewer is turned by the viewing player's seat
 // rotation, so the side of the table that belongs to them ends up in front of
 // them: in chess both players move up the screen, in a trick taking game
-// everybody sits at the bottom and looks across the table. Widgets with facing
-// take that turn back out of their own content so text and art stay readable.
+// everybody sits at the bottom and looks across the table. facing takes that
+// turn back out of the content so text and art stay readable - a widget's
+// content being everything inside it, so facing on the play area covers the
+// pieces on it and facing: 'table' on one of them opts it back out.
 //
 // All of this is a rendering layer. Nothing here is ever written back: x, y,
 // rotation, parent and every other property stay as they are in the room state,

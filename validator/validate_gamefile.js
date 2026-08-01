@@ -96,7 +96,7 @@ const COMMON_PROPERTIES = {
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
     rotateForViewer: v=>typeof v === 'boolean' || typeof v === 'string' || 'rotateForViewer must be true, false or the name of a seat property',
-    facing: v=>v === null || [ 'viewer', 'owner' ].includes(v) || `facing must be 'viewer', 'owner' or null`,
+    facing: v=>v === null || [ 'viewer', 'owner', 'table' ].includes(v) || `facing must be 'viewer', 'owner', 'table' or null`,
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',

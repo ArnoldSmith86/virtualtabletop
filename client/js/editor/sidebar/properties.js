@@ -356,8 +356,8 @@ const editorPropertyHints = {
   totalsLabel: 'Heading shown for the totals.',
   editPaneTitle: 'Title of the pane that opens when entering a score.',
   borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
-  rotateForViewer: 'Turns this widget and everything inside it so that the seat of the player looking at the room ends up at the bottom of their screen. Every player sees the same table from their own chair. This only changes how it looks - the stored rotation never changes. Only what is inside this widget turns with it, so put the seats, hands and player areas in here - anything left outside stays where it is. That goes for lines as well: a line and the widgets it connects belong on the same side of this widget, or the line is drawn to where they are stored instead of to where they are shown.',
-  facing: 'Keeps this widget readable while its surroundings are turned for the viewing player. "whoever is looking at it" is the one to pick for text, card faces and piece art. It only does something inside a widget that turns for the viewing player.',
+  rotateForViewer: 'Turns this widget and everything inside it so that the seat of the player looking at the room ends up at the bottom of their screen. Every player sees the same table from their own chair. This only changes how it looks - the stored rotation never changes. The pieces, labels and buttons in here turn with it and end up upside down for the player at the far side: set "Upright for" on this widget as well to keep everything inside it readable. Only what is inside this widget turns with it, so put the seats, hands and player areas in here - anything left outside stays where it is. That goes for lines as well: a line and the widgets it connects belong on the same side of this widget, or the line is drawn to where they are stored instead of to where they are shown.',
+  facing: 'Keeps this widget and everything inside it readable while its surroundings are turned for the viewing player. "whoever is looking at it" is the one to pick for text, card faces and piece art - set it on the play area and the pieces on it are covered too, or on a single widget to keep just that one upright. A widget inside it can pick "the table" to turn along with the table after all. It only does something inside a widget that turns for the viewing player, and a widget that turns for the viewing player itself is not turned by this - there it only says how its contents read.',
   viewRotation: 'How far the table has to be turned so that this seat is at the bottom of the screen for the player sitting here, e.g. 180 for a seat at the far side. Leave empty to use the seat widget\'s own rotation. Rounded to quarter turns.',
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
@@ -3587,7 +3587,7 @@ class PropertiesModule extends SidebarModule {
       // a widget that turns with the viewer looks like every other one in the
       // sidebar, so say so where the section can be seen without opening it
       renderSummary: summary => {
-        const update = w => summary.textContent = w.get('rotateForViewer') ? 'turns for viewer' : w.get('facing') ? 'reads upright' : '';
+        const update = w => summary.textContent = w.get('rotateForViewer') ? 'turns for viewer' : w.get('facing') == 'table' ? 'turns with the table' : w.get('facing') ? 'reads upright' : '';
         this.addPropertyListener(widget, 'rotateForViewer', update);
         this.addPropertyListener(widget, 'facing', update);
       }
@@ -3628,9 +3628,10 @@ class PropertiesModule extends SidebarModule {
         property: 'facing',
         hint: editorPropertyHints.facing,
         choices: [
-          { value: null, text: 'turns with its surroundings' },
+          { value: null, text: 'the same as its surroundings' },
           { value: 'viewer', text: 'whoever is looking at it' },
-          { value: 'owner', text: 'the seat it belongs to' }
+          { value: 'owner', text: 'the seat it belongs to' },
+          { value: 'table', text: 'nobody - it turns with the table' }
         ]
       }).render(seatSection.contentWrapper);
 

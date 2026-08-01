@@ -194,6 +194,77 @@ describe('facing', function() {
     viewAs('north');
     expect(mat.seatViewDelta).toBe(0);
   });
+
+  test('applies to the contents of a container that turns for the viewer, not to the container', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    const table = createWidget({ id: 'table', rotateForViewer: true, facing: 'viewer' });
+    const piece = createWidget({ id: 'piece', parent: 'table' });
+
+    viewAs('north');
+    // the table still turns, which is what rotateForViewer is there for
+    expect(table.seatViewDelta).toBe(-180);
+    // and the piece on it reads upright without a property of its own
+    expect(piece.seatViewDelta + piece.seatViewInherited).toBe(0);
+  });
+
+  test('reaches every depth of the subtree', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true, facing: 'viewer' });
+    createWidget({ id: 'captures', parent: 'table' });
+    const piece = createWidget({ id: 'piece', parent: 'captures' });
+
+    viewAs('north');
+    expect(piece.seatViewDelta + piece.seatViewInherited).toBe(0);
+  });
+
+  test('table turns a widget with the table again inside a readable subtree', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true, facing: 'viewer' });
+    const arrow = createWidget({ id: 'arrow', parent: 'table', facing: 'table' });
+    const inArrow = createWidget({ id: 'inArrow', parent: 'arrow' });
+
+    viewAs('north');
+    expect(arrow.seatViewDelta + arrow.seatViewInherited).toBe(-180);
+    // and what is inside it turns with it rather than falling back to readable
+    expect(inArrow.seatViewDelta + inArrow.seatViewInherited).toBe(-180);
+  });
+
+  test('a widget states its own facing over the one it inherits', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createSeat('south', { player: 'Bob', index: 2 });
+    createWidget({ id: 'table', rotateForViewer: true, facing: 'viewer' });
+    const mat = createWidget({ id: 'mat', parent: 'table', owner: 'Bob', facing: 'owner' });
+
+    viewAs('north');
+    // Bob's chair is where the mat reads for, half a turn from Alice's
+    expect(mat.seatViewDelta + mat.seatViewInherited).toBe(-180);
+  });
+
+  test('owner is inherited together with the seat the area belongs to', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createSeat('south', { player: 'Bob', index: 2 });
+    createWidget({ id: 'table', rotateForViewer: true });
+    createWidget({ id: 'area', parent: 'table', owner: 'Bob', facing: 'owner' });
+    // the card belongs to nobody, but the area it lies in does
+    const card = createWidget({ id: 'card', parent: 'area' });
+
+    viewAs('north');
+    expect(card.seatViewDelta + card.seatViewInherited).toBe(-180);
+
+    viewAs('south');
+    expect(card.seatViewDelta + card.seatViewInherited).toBe(0);
+  });
+
+  test('a widget inside a container that turns for the viewer is not turned twice by rotateForViewer of its own', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true, facing: 'viewer' });
+    // rotateForViewer says where the viewer's side of this widget has to end up,
+    // so it wins over the readable subtree it is in
+    const area = createWidget({ id: 'area', parent: 'table', rotateForViewer: true });
+
+    viewAs('north');
+    expect(area.seatViewDelta + area.seatViewInherited).toBe(-180);
+  });
 });
 
 // A drag detaches a widget to room level, where nothing above it turns any
@@ -250,6 +321,18 @@ describe('a widget being dragged', function() {
     viewAs('north');
     expect(card.seatViewRotation()).toBe(0);
     expect(card.seatViewOffset).toBe(null);
+  });
+
+  test('is still kept readable by the facing of the table it came from', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createContainer('table', { rotateForViewer: true, facing: 'viewer' });
+    createWidget({ id: 'card', parent: 'table' });
+    const card = dragOut('card', 'table');
+
+    viewAs('north');
+    // it travels across the table it is held over, but it stays readable
+    expect(card.seatViewRotation()).toBe(0);
+    expect(card.seatViewOffset).not.toBe(null);
   });
 
   test('is still kept readable by facing', function() {
