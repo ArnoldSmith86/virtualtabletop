@@ -237,18 +237,28 @@ async function fetchSvgReplaceCandidates(image) {
     return { isSvg: false, candidates: [] };
   if(svgImageCandidatesCache[image])
     return svgImageCandidatesCache[image];
+  // a file that can't be read says nothing about what it is, so fall back to
+  // the file name rather than hiding the editor for an SVG that is offline
+  const guess = { isSvg: /\.svg(\?|#|$)/i.test(image), candidates: [] };
   try {
     const response = await fetch(mapAssetURLs(image));
     if(!response.ok)
-      return { isSvg: false, candidates: [] };
+      return guess;
+    // both /assets/<hash> and /i/**.svg answer with a content type, and a
+    // bitmap saying so is the common case - no reason to pull the whole file
+    // through the wire and stringify it just to find no <svg> in it
+    const contentType = response.headers.get('content-type') || '';
+    if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
+      if(response.body && response.body.cancel)
+        response.body.cancel();
+      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
+    }
     const text = await response.text();
     if(!/<svg/i.test(text))
-      return { isSvg: false, candidates: [] };
-    const result = { isSvg: true, candidates: svgReplaceCandidates(text) };
-    svgImageCandidatesCache[image] = result;
-    return result;
+      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
+    return svgImageCandidatesCache[image] = { isSvg: true, candidates: svgReplaceCandidates(text) };
   } catch(e) {
-    return { isSvg: false, candidates: [] };
+    return guess;
   }
 }
 
@@ -3769,7 +3779,10 @@ class PropertiesModule extends SidebarModule {
 
     input.onchange = () => {
       const value = this.parseSeatReferenceInput(input.value);
-      this.inputValueUpdated(widget, property, value);
+      // emptying the field is the same "nothing picked" as an empty pick in the
+      // popout above, so it has to write the same value - a plain null would
+      // send the scoreboard back to its "all seats" mode
+      this.inputValueUpdated(widget, property, value === null ? emptyValue : value);
     };
 
     this.addPropertyListener(widget, property, w => {
@@ -6172,8 +6185,13 @@ class PropertiesModule extends SidebarModule {
         }
       };
       const loadSvgCandidates = () => {
-        fetchSvgReplaceCandidates(widget.get('image')).then(({ isSvg, candidates }) => {
-          if(!svgColorsHost.isConnected)
+        const requested = widget.get('image');
+        fetchSvgReplaceCandidates(requested).then(({ isSvg, candidates }) => {
+          // switching image A -> B fires two fetches and the slower one would
+          // otherwise win, leaving the section showing (or hiding) what the
+          // previous image said - a result for an image that is no longer set
+          // is not an answer to the question being asked
+          if(!svgColorsHost.isConnected || requested !== widget.get('image'))
             return;
           imageIsSvg = isSvg;
           svgCandidates = candidates;
@@ -7329,6 +7347,17 @@ class PropertiesModule extends SidebarModule {
     // listenTo is empty (this is not a widget property), so nothing fires the
     // initial update the switch would otherwise get from a property listener
     modeSwitch.update(modeSwitch.getValue());
+
+    // With the switch on, every edit below is mirrored into cardDefaults -
+    // which a deck that sets onPileCreation in a card type or face template
+    // never reads, so the line above would promise the edit reached a template
+    // that no new pile of those cards is built from. The "Pile template"
+    // section carries the same warning, but it only exists with the switch off.
+    if(this.pileEditsTemplate) {
+      const overriddenDecks = this.pileTemplateOverriddenDecks(decks);
+      if(overriddenDecks.length)
+        div(block, 'pileHelp warning', `${html(overriddenDecks.map(deck => deck.id).join(', '))} sets "onPileCreation" in a card type or face template. That wins over the deck-wide template, so those cards keep building their piles the way they do now, whatever you change here.`);
+    }
   }
 
   // The handle shows the number of cards unless "text" gives it something
@@ -7434,6 +7463,18 @@ class PropertiesModule extends SidebarModule {
     }).render(this.moduleDOM);
   }
 
+  // cardDefaults is the last place a card looks for a property: a deck that
+  // sets onPileCreation in a card type or face template ignores what is written
+  // to the deck-wide template (Deck.cardPropertyGet).
+  pileTemplateOverriddenDecks(decks) {
+    return decks.filter(deck => {
+      const cardTypes = deck.get('cardTypes') || {};
+      const faceTemplates = deck.get('faceTemplates') || [];
+      return Object.values(cardTypes).some(cardType => isObjectLike(cardType) && cardType.onPileCreation !== undefined)
+        || faceTemplates.some(face => isObjectLike(face) && isObjectLike(face.properties) && face.properties.onPileCreation !== undefined);
+    });
+  }
+
   // Automatically created piles are built from the cards' onPileCreation, which
   // for a deck lives in its cardDefaults - so the pile in front of you is a
   // preview of a template that is edited somewhere else entirely.
@@ -7459,17 +7500,9 @@ class PropertiesModule extends SidebarModule {
     if(decks.length > 1)
       div(this.moduleDOM, 'pileHelp', `This pile holds cards of ${decks.length} decks (${deckNames}). Cards only pile up when their templates are identical, so saving writes the same template to all of them.`);
 
-    // cardDefaults is the last place a card looks for a property: a deck that
-    // sets onPileCreation in a card type or face template would ignore what is
-    // saved here (Deck.cardPropertyGet)
-    const overriddenDecks = decks.filter(deck => {
-      const cardTypes = deck.get('cardTypes') || {};
-      const faceTemplates = deck.get('faceTemplates') || [];
-      return Object.values(cardTypes).some(cardType => isObjectLike(cardType) && cardType.onPileCreation !== undefined)
-        || faceTemplates.some(face => isObjectLike(face) && isObjectLike(face.properties) && face.properties.onPileCreation !== undefined);
-    });
+    const overriddenDecks = this.pileTemplateOverriddenDecks(decks);
     if(overriddenDecks.length)
-      div(this.moduleDOM, 'pileHelp warning', `${overriddenDecks.map(deck => deck.id).join(', ')} sets "onPileCreation" in a card type or face template. That wins over the deck-wide template below, so those cards keep building their piles the way they do now.`);
+      div(this.moduleDOM, 'pileHelp warning', `${html(overriddenDecks.map(deck => deck.id).join(', '))} sets "onPileCreation" in a card type or face template. That wins over the deck-wide template below, so those cards keep building their piles the way they do now.`);
 
     // the whole set at once, for a pile that was set up with the switch off or
     // before the template existed - an edit made with it on is already there
@@ -10037,7 +10070,13 @@ class PropertiesModule extends SidebarModule {
       if(!this.inputUpdaters[widget.id][property])
         this.inputUpdaters[widget.id][property] = [];
 
-      this.inputUpdaters[widget.id][property].push(input.setValue);
+      const updaters = this.inputUpdaters[widget.id][property];
+      updaters.push(input.setValue);
+      // this list is rebuilt whenever a curated property becomes (un)available,
+      // so hand the updater to renderRebuildable like addPropertyListener does -
+      // otherwise every rebuild leaves one behind, bound to detached DOM
+      if(this.collectedListeners)
+        this.collectedListeners.push([ updaters, input.setValue ]);
     }
 
     // The generic editor used to appear only after a game already had an

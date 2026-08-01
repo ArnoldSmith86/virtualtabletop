@@ -402,6 +402,28 @@ test('A pile is edited through its handle, css through declaration rows', async 
     .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
 });
 
+test('A deck that overrides the pile template says so while the pile mirrors into it', async t => {
+  await setRoomState({
+    deck:  { id: 'deck', type: 'deck', cardTypes: { a: { onPileCreation: { text: 'fixed' } } }, faceTemplates: [ { objects: [] } ] },
+    pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // cardDefaults is the last place a card looks for onPileCreation, so a card
+  // type that sets it wins over everything the mirroring writes there - the
+  // warning has to be visible in the mode that does the mirroring, which is
+  // also the default one
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click(Selector('#w_pile .handle'))
+    .expect(Selector('.pileTemplateMode').innerText).contains('pile template')
+    .expect(Selector('.pileTemplateMode .pileHelp.warning').innerText).contains('onPileCreation');
+});
+
 test('Loading another game with a widget still selected does not break the client', async t => {
   await setRoomState({
     deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
@@ -495,6 +517,15 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     .click(seatsMode)
     .click(seatsMode.find('option').withExactText('Chosen seats'))
     .expect(value('board', 'seats')).eql('["seat1","seat2"]')
+    .typeText(Selector('#editorModules .seatReferenceInput').filterVisible(), 'seat1', { replace: true })
+    .pressKey('tab')
+    .expect(value('board', 'seats')).eql('"seat1"')
+    // emptying the field means "chosen, nothing chosen" - the mode has its own
+    // "All seats" entry, so it must not jump back to it behind the user's back
+    .selectText(Selector('#editorModules .seatReferenceInput').filterVisible())
+    .pressKey('delete tab')
+    .expect(value('board', 'seats')).eql('[]')
+    .expect(seatsMode.value).eql('pick')
     .typeText(Selector('#editorModules .seatReferenceInput').filterVisible(), 'seat1', { replace: true })
     .pressKey('tab')
     .expect(value('board', 'seats')).eql('"seat1"');
