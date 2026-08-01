@@ -227,23 +227,28 @@ function svgReplaceCandidates(svgText) {
 }
 
 const svgImageCandidatesCache = {};
+// isSvg is decided by sniffing the fetched content for an <svg> tag rather
+// than the image's file extension - an uploaded asset is served from
+// /assets/<hash>_<size> with no extension at all, so gating on ".svg" would
+// hide this editor for every uploaded SVG (only the built-in game-piece SVGs
+// have a real .svg URL).
 async function fetchSvgReplaceCandidates(image) {
   if(typeof image != 'string' || !image)
-    return [];
+    return { isSvg: false, candidates: [] };
   if(svgImageCandidatesCache[image])
     return svgImageCandidatesCache[image];
   try {
     const response = await fetch(mapAssetURLs(image));
     if(!response.ok)
-      return [];
+      return { isSvg: false, candidates: [] };
     const text = await response.text();
     if(!/<svg/i.test(text))
-      return [];
-    const candidates = svgReplaceCandidates(text);
-    svgImageCandidatesCache[image] = candidates;
-    return candidates;
+      return { isSvg: false, candidates: [] };
+    const result = { isSvg: true, candidates: svgReplaceCandidates(text) };
+    svgImageCandidatesCache[image] = result;
+    return result;
   } catch(e) {
-    return [];
+    return { isSvg: false, candidates: [] };
   }
 }
 
@@ -451,7 +456,7 @@ function widgetOwnValue(widget, property) {
 // the card it is made of and then applies the template over it, so a template
 // holding these would drop every pile of that deck in the same place, at the
 // same size, in the same parent - id and type would break it outright.
-const pileTemplateExcludedProperties = [ 'id', 'type', 'parent', 'fixedParent', 'x', 'y', 'z', 'width', 'height', 'owner', 'dropShadowOwner', 'onPileCreation' ];
+const pileTemplateExcludedProperties = [ 'id', 'type', 'parent', 'fixedParent', 'x', 'y', 'z', 'width', 'height', 'owner', 'dropShadowOwner', 'onPileCreation', 'grid', 'dragLimit' ];
 
 // One property written into a copy of a pile template. A pile that has no
 // value of its own still looks like the default one, so a value equal to the
@@ -479,10 +484,15 @@ function domUsesCssVariable(element, name) {
   if(usesVariable.test(element.getAttribute('style') || ''))
     return true;
 
-  // a rule for ::before/::after still paints this element, so match without it
+  // a rule for ::before/::after still paints this element, so match without
+  // it - and one for :hover/:focus/etc still counts as "this rule can paint
+  // the widget", even while the pointer isn't over it right now, so those are
+  // dropped too instead of asking the DOM to evaluate its live state
   const matchesElement = selector=>{
     try {
-      return element.matches(selector.replace(/::[\w-]+(\([^)]*\))?/g, '').replace(/:(before|after|first-line|first-letter)\b/g, ''));
+      return element.matches(selector
+        .replace(/::[\w-]+(\([^)]*\))?/g, '')
+        .replace(/:(hover|focus(-within|-visible)?|active|visited|target)\b/g, ''));
     } catch(e) {
       return false;
     }
@@ -501,6 +511,14 @@ function domUsesCssVariable(element, name) {
   };
   for(const sheet of document.styleSheets) {
     try {
+      // cheap prefilter: skip the per-rule cssText/matches() walk entirely for
+      // a sheet whose source text does not even mention the variable - the
+      // full walk otherwise serializes every rule of every sheet on each of
+      // the several properties (color, icon, classes, css, svgReplaces) that
+      // call this on every re-render
+      if(sheet.ownerNode && typeof sheet.ownerNode.textContent == 'string' &&
+          sheet.ownerNode.textContent && !usesVariable.test(sheet.ownerNode.textContent))
+        continue;
       if(search(sheet.cssRules))
         return true;
     } catch(e) {
@@ -521,6 +539,11 @@ function basicColorIsUsed(widget) {
   if(widget.get('icon'))
     return true;
   if(svgReplaceProperties(widget.get('svgReplaces')).indexOf('color') != -1)
+    return true;
+  // css: { background: "${PROPERTY color}" } substitutes the value directly
+  // instead of reading a --color custom property, so the engine tracks it in
+  // propertiesUsedInProperty rather than anything domUsesCssVariable can see
+  if((widget.propertiesUsedInProperty && widget.propertiesUsedInProperty['css'] || []).indexOf('color') != -1)
     return true;
   return domUsesCssVariable(widget.domElement, 'color');
 }
@@ -1618,7 +1641,10 @@ class PropertiesModule extends SidebarModule {
       if(delta.s[widgetID] && this.inputUpdaters[widgetID])
         for(const property in delta.s[widgetID])
           if(this.inputUpdaters[widgetID][property])
-            for(const updater of this.inputUpdaters[widgetID][property])
+            // a copy: a renderRebuildable listener drops its own generation
+            // from this very list while it runs, which would make the loop
+            // skip the listener right after it
+            for(const updater of this.inputUpdaters[widgetID][property].slice())
               updater(delta.s[widgetID][property]);
     for(const updater of this.globalInputUpdaters)
       updater(delta.s);
@@ -2843,7 +2869,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
   }
 
   // whether the edited widget - or, for a multi-selection, any of the widgets
@@ -3298,12 +3324,8 @@ class PropertiesModule extends SidebarModule {
     row.style.flexWrap = 'wrap';
     row.style.marginTop = '6px';
 
-    const positionToggle = this.renderLockToggle(row, 'Move in play', () => !widget.get('movable'), locked => {
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated lock state of widget ${widget.id} in editor`);
-      widget.set('movable', !locked);
-      batchEnd();
-    });
+    const positionToggle = this.renderLockToggle(row, 'Move in play', () => !widget.get('movable'),
+      locked => this.inputValueUpdated(widget, 'movable', !locked));
 
     const separator = document.createElement('span');
     separator.textContent = '|';
@@ -3716,6 +3738,12 @@ class PropertiesModule extends SidebarModule {
 
     let popoutControls = null;
     const pickerKey = options.pickerKey || property;
+    // seatReferenceFromArray([]) is null, which for most seat-reference
+    // properties correctly means "no restriction" - but for a property whose
+    // own dropdown has a separate "all seats" state (scoreboard's "seats" in
+    // pick mode), null is read back as that other state instead of "chosen,
+    // nothing picked". Those callers pass emptyValue: [] to keep the two apart.
+    const emptyValue = options.emptyValue !== undefined ? options.emptyValue : null;
 
     if(options.enablePicker) {
       // widget selection popout with the type filter preset to seats
@@ -3726,7 +3754,7 @@ class PropertiesModule extends SidebarModule {
         multiple: true,
         clearLabel: options.clearLabel,
         getSelectedIDs: () => this.seatReferenceToArray(widget.get(property)),
-        apply: seatIDs => this.inputValueUpdated(widget, property, this.seatReferenceFromArray(seatIDs)),
+        apply: seatIDs => this.inputValueUpdated(widget, property, this.seatReferenceFromArray(seatIDs) ?? emptyValue),
         onClear: () => this.inputValueUpdated(widget, property, null)
       });
     }
@@ -4198,10 +4226,13 @@ class PropertiesModule extends SidebarModule {
         updatePreview();
       });
 
-      // resync on undo / remote updates while the section stays open
+      // resync on undo / remote updates while the section stays open - but the
+      // preview follows every edit, even mid-keystroke, so the lattice on the
+      // board never lags behind the field the user is typing in
       this.addPropertyListener(widget, 'grid', _=>{
         if(!body.contains(document.activeElement))
           rebuildEntries();
+        updatePreview();
       });
       for(const property of [ 'width', 'height', 'parent' ])
         this.addPropertyListener(widget, property, _=>updatePreview());
@@ -4391,27 +4422,31 @@ class PropertiesModule extends SidebarModule {
     const limitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
     const host = div(target, 'gridLimits');
 
-    // renderRebuildable: the four inputs listen to grid, so the ones of a
-    // discarded generation have to stop listening with it
-    let rebuildLimits = _=>{};
-    this.renderRebuildable(rebuild=>{
-      rebuildLimits = rebuild;
-      host.innerHTML = '';
-      if(!limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null))
-        return;
-      const x = div(host, 'propertyInlineRow numberPairRow');
-      div(x, 'numberPairLabel', 'X from/to');
-      this.renderGridNumber(widget, index, 'minX', 'min', x, { unit: 'px' });
-      this.renderGridNumber(widget, index, 'maxX', 'max', x, { unit: 'px' });
-      const y = div(host, 'propertyInlineRow numberPairRow');
-      div(y, 'numberPairLabel', 'Y from/to');
-      this.renderGridNumber(widget, index, 'minY', 'min', y, { unit: 'px' });
-      this.renderGridNumber(widget, index, 'maxY', 'max', y, { unit: 'px' });
-    });
+    // renderGridEntry (the caller) already runs fresh inside the outer entry
+    // list's renderRebuildable on every grid change, so these four inputs are
+    // recreated - and their listeners cleaned up - along with it. A nested
+    // renderRebuildable here would only be disposed by calling its own rebuild
+    // again, which nothing does once the outer regeneration replaces this
+    // whole call, so it used to leak a generation of listeners on every grid
+    // edit. Rendering the inputs unconditionally and just hiding the host
+    // avoids the need for that inner rebuild entirely.
+    const x = div(host, 'propertyInlineRow numberPairRow');
+    div(x, 'numberPairLabel', 'X from/to');
+    this.renderGridNumber(widget, index, 'minX', 'min', x, { unit: 'px' });
+    this.renderGridNumber(widget, index, 'maxX', 'max', x, { unit: 'px' });
+    const y = div(host, 'propertyInlineRow numberPairRow');
+    div(y, 'numberPairLabel', 'Y from/to');
+    this.renderGridNumber(widget, index, 'minY', 'min', y, { unit: 'px' });
+    this.renderGridNumber(widget, index, 'maxY', 'max', y, { unit: 'px' });
+
+    const hasLimits = _=>limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null);
+    const updateVisibility = _=>host.style.display = hasLimits() ? '' : 'none';
+    this.addPropertyListener(widget, 'grid', updateVisibility);
+    updateVisibility();
 
     new CheckboxInput(this, widget, 'Only in part of the parent', {
       listenTo: [ 'grid' ],
-      getValue: _=>limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null),
+      getValue: hasLimits,
       setValue: value=>{
         const parent = widgets.get(widget.get('parent'));
         this.updateGridEntry(widget, index, value ? {
@@ -4419,7 +4454,6 @@ class PropertiesModule extends SidebarModule {
           maxX: parent ? +parent.get('width') || 1600 : 1600,
           maxY: parent ? +parent.get('height') || 1000 : 1000
         } : { minX: null, maxX: null, minY: null, maxY: null });
-        rebuildLimits();
       },
       hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids. A 0 counts as "no limit" on that side.'
       // its own host so the label can take the size of the numberPairLabels of
@@ -4452,7 +4486,11 @@ class PropertiesModule extends SidebarModule {
 
         const commit = _=>{
           const newKey = name.value.trim();
-          if(!newKey || (newKey != key && gridExtraProperties(gridEntryList(widget.get('grid'))[index] || {}).indexOf(newKey) != -1)) {
+          // renaming onto one of snapToGrid()'s own geometry keys (x, alignY,
+          // ...) would silently overwrite it with this row's plain-text value
+          // and break snapping for the whole entry
+          if(!newKey || gridGeometryKeys.indexOf(newKey) != -1 ||
+              (newKey != key && gridExtraProperties(gridEntryList(widget.get('grid'))[index] || {}).indexOf(newKey) != -1)) {
             rebuildExtras();
             return;
           }
@@ -5175,7 +5213,7 @@ class PropertiesModule extends SidebarModule {
       removeTitle: 'Remove parent',
       onRemove: async () => {
         await this.setWidgetParent(widget, null);
-        await widget.set('fixedParent', null);
+        this.inputValueUpdated(widget, 'fixedParent', null);
       },
       isPropertySet: (property, value) => {
         if(property == 'fixedParent')
@@ -5214,9 +5252,9 @@ class PropertiesModule extends SidebarModule {
       onRemove: () => {
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} removed seat links of widget ${widget.id} in editor`);
-        widget.set('linkedToSeat', null);
-        widget.set('onlyVisibleForSeat', null);
-        widget.set('hoverInheritVisibleForSeat', null);
+        this.inputValueUpdated(widget, 'linkedToSeat', null);
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', null);
+        this.inputValueUpdated(widget, 'hoverInheritVisibleForSeat', null);
         batchEnd();
       }
     });
@@ -5739,6 +5777,13 @@ class PropertiesModule extends SidebarModule {
       // a pasted block of declarations is split up instead of becoming one
       // unusable property name, like it would be in devtools
       name.onpaste = event=>{
+        // only intercept a paste that replaces the whole field - inserting at
+        // a caret position (e.g. clicking at the end of "font-size" and
+        // pasting "border: 1px solid black") used to always blow this row
+        // away and replace it with the pasted one, silently dropping
+        // whatever this row had with no way to tell it happened
+        if(name.selectionStart != 0 || name.selectionEnd != name.value.length)
+          return;
         const pastedText = (event.clipboardData || window.clipboardData).getData('text');
         if(!pastedText || !pastedText.includes(':'))
           return;
@@ -5838,8 +5883,14 @@ class PropertiesModule extends SidebarModule {
         // it would overwrite the existing row without saying so
         let focusName = null;
         for(const entry of added) {
-          const existing = declarations.find(declaration=>!declaration.disabled && String(declaration.name).trim() == String(entry.name).trim());
+          // a disabled row for the same name still counts as "already in the
+          // list" - skipping it here used to push a second, enabled row with
+          // the same name, which cssDeclarationsWithDisabled then collapsed
+          // back down to just the disabled one on the next rebuild, so "Add"
+          // appeared to silently do nothing
+          const existing = declarations.find(declaration=>String(declaration.name).trim() == String(entry.name).trim());
           if(existing) {
+            existing.disabled = false;
             if(entry.value)
               existing.value = entry.value;
           } else {
@@ -5962,6 +6013,8 @@ class PropertiesModule extends SidebarModule {
 
     let refreshInputs = () => {};
     let renderSwatches = () => {};
+    let updateVisibility = () => {};
+    let imageIsSvg = false;
 
     // collapsed by default for widgets that don't use it yet, so first-time
     // users editing a plain widget aren't confronted with advanced SVG jargon
@@ -6116,12 +6169,14 @@ class PropertiesModule extends SidebarModule {
         }
       };
       const loadSvgCandidates = () => {
-        fetchSvgReplaceCandidates(widget.get('image')).then(candidates => {
+        fetchSvgReplaceCandidates(widget.get('image')).then(({ isSvg, candidates }) => {
           if(!svgColorsHost.isConnected)
             return;
+          imageIsSvg = isSvg;
           svgCandidates = candidates;
           renderSwatches();
           refreshInputs();
+          updateVisibility();
         });
       };
       loadSvgCandidates();
@@ -6182,11 +6237,9 @@ class PropertiesModule extends SidebarModule {
     // visible if replacements already exist so an existing setup doesn't
     // vanish out from under the user (e.g. while the image is briefly cleared).
     if(widget.defaults.image !== undefined) {
-      const updateVisibility = () => {
-        const image = widget.get('image');
-        const isSvg = typeof image == 'string' && /\.svg(\?|#|$)/i.test(image);
+      updateVisibility = () => {
         const stillHasReplaces = isObjectLike(widget.get('svgReplaces')) && Object.keys(widget.get('svgReplaces')).length > 0;
-        section.style.display = (isSvg || stillHasReplaces) ? '' : 'none';
+        section.style.display = (imageIsSvg || stillHasReplaces) ? '' : 'none';
       };
       this.addPropertyListener(widget, 'image', updateVisibility);
       this.addPropertyListener(widget, 'svgReplaces', updateVisibility);
@@ -6203,13 +6256,44 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
-    const automationProperties = this.renderAutomationsSection(widget);
-    const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
-    this.addSubHeader('Other properties');
-    this.renderGenericProperties(widget, exclude);
+    const container = div(this.moduleDOM);
+
+    let rebuild = () => {};
+    this.renderRebuildable(rebuildBody => {
+      rebuild = rebuildBody;
+      container.innerHTML = '';
+      const automationProperties = this.renderAutomationsSection(widget, container);
+      const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
+      this.addSubHeader('Other properties', container);
+      this.renderGenericProperties(widget, exclude, container);
+    });
+
+    // typeSectionProperties only excludes a conditionally-curated property
+    // (e.g. Icon/Symbol color, hidden via .available/basicColorIsUsed while it
+    // paints nothing) while that curation is currently shown for this widget.
+    // Its curated input hides itself live when availability flips, but without
+    // also rebuilding this section a value it leaves behind would stay excluded
+    // from here too and become editable nowhere. The listeners sit outside the
+    // rebuildable: addPropertyListener runs its updater right away, so
+    // registering them inside would rebuild while rebuilding, forever.
+    const conditional = [];
+    for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
+      for(const def of this.typeSections(widget)[group] || [])
+        if(def.available)
+          conditional.push(def);
+    const availability = _=>JSON.stringify(conditional.map(def=>!!def.available(widget)));
+    let lastAvailability = availability();
+    for(const property of new Set(conditional.flatMap(def=>def.availableListenTo || [])))
+      this.addPropertyListener(widget, property, _=>{
+        const signature = availability();
+        if(signature === lastAvailability)
+          return;
+        lastAvailability = signature;
+        rebuild();
+      });
   }
 
-  renderAutomationsSection(widget) {
+  renderAutomationsSection(widget, target = this.moduleDOM) {
     // A pile is temporary, so a routine that only lives on it goes with it -
     // the one that lasts is the one in the pile template. With the template
     // switch on, that is where these buttons point.
@@ -6221,24 +6305,37 @@ class PropertiesModule extends SidebarModule {
     if(!playerRoutines.length)
       return [];
 
-    this.addSubHeader('Automations');
+    this.addSubHeader('Automations', target);
     if(templateDecks.length)
-      div(this.moduleDOM, 'pileHelp', `A routine on this pile disappears with it, so these open the pile template in <b>${html(templateDecks.map(deck => deck.id).join(', '))}</b> instead - the "onPileCreation" every new pile of these cards is built from.`);
+      div(target, 'pileHelp', `A routine on this pile disappears with it, so these open the pile template in <b>${html(templateDecks.map(deck => deck.id).join(', '))}</b> instead - the "onPileCreation" every new pile of these cards is built from.`);
 
     for(const property of playerRoutines) {
-      const row = div(this.moduleDOM, 'propertyInput automationInput');
+      const row = div(target, 'propertyInput automationInput');
       const plainName = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
       const label = document.createElement('label');
       label.textContent = plainName;
       row.appendChild(label);
-      const button = document.createElement('button');
-      button.setAttribute('icon', 'data_object');
-      button.textContent = templateDecks.length ? 'Edit in the pile template' : 'Edit in the JSON editor';
-      button.title = `${property}${templateDecks.length ? ` (in the pile template of ${templateDecks.map(deck => deck.id).join(', ')})` : ''}`;
-      button.onclick = () => templateDecks.length
-        ? this.openInJsonEditor(templateDecks[0], [ 'cardDefaults', 'onPileCreation', property ])
-        : this.openInJsonEditor(null, []);
-      row.appendChild(button);
+      if(!templateDecks.length) {
+        const button = document.createElement('button');
+        button.setAttribute('icon', 'data_object');
+        button.textContent = 'Edit in the JSON editor';
+        button.title = property;
+        button.onclick = () => this.openInJsonEditor(null, []);
+        row.appendChild(button);
+        continue;
+      }
+      // a pile spanning several decks has one "onPileCreation" per deck - a
+      // single button pointing at only the first would let the routine
+      // added through it diverge from the others, so cards of those decks
+      // would stop piling together (Deck.cardPropertyGet / widget.js)
+      for(const deck of templateDecks) {
+        const button = document.createElement('button');
+        button.setAttribute('icon', 'data_object');
+        button.textContent = templateDecks.length > 1 ? `Edit in ${deck.id}` : 'Edit in the pile template';
+        button.title = `${property} (in the pile template of ${deck.id})`;
+        button.onclick = () => this.openInJsonEditor(deck, [ 'cardDefaults', 'onPileCreation', property ]);
+        row.appendChild(button);
+      }
     }
     return playerRoutines;
   }
@@ -6391,7 +6488,12 @@ class PropertiesModule extends SidebarModule {
     // mode and write the face's html onto the widget on the first keystroke
     const ownHTML = _=>widgetOwnValue(widget, 'html');
 
-    const rebuild = () => {
+    // the HTML textarea and renderBasicContentInputs() both register property
+    // listeners, so - like the face list - a mode switch has to drop the
+    // previous generation's listeners instead of just wiping the DOM
+    let rebuild = () => {};
+    this.renderRebuildable(rebuildBody => {
+      rebuild = rebuildBody;
       container.innerHTML = '';
 
       const toggleRow = div(container, 'contentHtmlToggleRow');
@@ -6434,7 +6536,7 @@ class PropertiesModule extends SidebarModule {
       } else {
         this.renderBasicContentInputs(widget, container);
       }
-    };
+    });
 
     this.addPropertyListener(widget, 'html', () => {
       // only rebuild on a mode switch (null <-> non-null); typing in the
@@ -6443,7 +6545,6 @@ class PropertiesModule extends SidebarModule {
       if(usingHTML != (container.querySelector('.textInput.multiline') !== null))
         rebuild();
     });
-    rebuild();
   }
 
   // Text (with a text/symbol mode dropdown) plus icon and image as side by
@@ -6911,10 +7012,14 @@ class PropertiesModule extends SidebarModule {
   // this builds the copy by hand rather than through renderReadonlyCopy: a
   // unique id per copy would burn one seeded random per redraw (breaking
   // reproducible rooms) and leave every redraw's copy behind in the global
-  // registries keyed by widget id.
+  // registries keyed by widget id. One id per face index (not per redraw)
+  // keeps that bookkeeping bounded while still giving every simultaneously
+  // open row its own Widget.css() style element - sharing a single id across
+  // rows meant nested per-face css collided and only the last-drawn face's
+  // rules survived, applied to every row.
   drawFacePreview(widget, preview) {
     preview.innerHTML = '';
-    const copy = new widget.constructor(facePreviewWidgetID);
+    const copy = new widget.constructor(`${facePreviewWidgetID}_${preview.dataset.face}`);
     copy.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
       activeFace: +preview.dataset.face,
       // the copy is not on the table, and a truthy dropTarget would register
@@ -7330,6 +7435,14 @@ class PropertiesModule extends SidebarModule {
   // for a deck lives in its cardDefaults - so the pile in front of you is a
   // preview of a template that is edited somewhere else entirely.
   renderPileTemplateSection(widget) {
+    // With the mode switch off, every change already writes straight into the
+    // template (renderPileTemplateMode / inputValueUpdated), so this section -
+    // whose whole point is to push this pile's settings into the template by
+    // hand - has nothing to add and would just be a redundant, disabled-feeling
+    // copy of what already happened automatically.
+    if(this.pileEditsTemplate)
+      return;
+
     const decks = this.pileDecks(widget);
 
     this.addSubHeader('Pile template');
@@ -7383,14 +7496,6 @@ class PropertiesModule extends SidebarModule {
       setTimeout(_=>save.textContent = buttonText, 2000);
     };
     this.moduleDOM.appendChild(save);
-
-    for(const deck of decks) {
-      const open = document.createElement('button');
-      open.setAttribute('icon', 'style');
-      open.textContent = decks.length > 1 ? `Open ${deck.id}` : 'Open deck properties';
-      open.onclick = _=>setSelection([ deck ]);
-      this.moduleDOM.appendChild(open);
-    }
   }
 
   renderForScoreboard(widget) {
@@ -7505,7 +7610,11 @@ class PropertiesModule extends SidebarModule {
       enablePicker: true,
       pickerKey: 'seats',
       pickerTitle: 'Choose the seats of this scoreboard',
-      clearLabel: 'All seats'
+      clearLabel: 'All seats',
+      // in "Chosen seats" mode, an empty pick means "show none", not the
+      // "all seats" mode switching back to - that already has its own
+      // dropdown option and its own null, kept apart from this one
+      emptyValue: []
     });
 
     const teamsWrap = div(this.moduleDOM, 'scoreboardTeams');
@@ -8147,14 +8256,19 @@ class PropertiesModule extends SidebarModule {
 
     const facesContainer = div(this.moduleDOM, 'diceFacesEditor');
 
-    const rebuild = ()=>{
+    // the rows register the property listeners of their inputs, so - like the
+    // basic-widget face list - they are built through renderRebuildable: a
+    // plain innerHTML wipe left every discarded generation's listeners firing
+    // on later deltas
+    let rebuild = ()=>{};
+    this.renderRebuildable(rebuildRows=>{
+      rebuild = rebuildRows;
       const scrollTop = this.moduleDOM.scrollTop;
       facesContainer.innerHTML = '';
       const faces = this.diceFaces(widget);
       faces.forEach((face, index)=>this.renderDiceFaceRow(widget, index, locks, facesContainer));
       this.moduleDOM.scrollTop = scrollTop;
-    };
-    rebuild();
+    });
 
     // rebuild the rows when the number of faces or the pip mode changes, but
     // not on every value edit (those inputs update themselves)
@@ -8218,7 +8332,8 @@ class PropertiesModule extends SidebarModule {
   // leave a phantom widget behind in the global registries.
   drawDiceFacePreview(widget, preview) {
     preview.innerHTML = '';
-    const dice = new Dice(facePreviewWidgetID);
+    // one id per face index, not one shared by every row - see drawFacePreview
+    const dice = new Dice(`${facePreviewWidgetID}_${preview.dataset.face}`);
     dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
       activeFace: +preview.dataset.face,
       shape3d: false,
@@ -8356,27 +8471,34 @@ class PropertiesModule extends SidebarModule {
     controls.appendChild(cssToggle);
 
     const cssHost = div(row, 'diceFaceCSS');
+    // the "faces" listener is registered once for the row's lifetime instead
+    // of inside renderFaceCSS - that function reruns on every click of the
+    // toggle below, and a fresh addPropertyListener each time left one more
+    // stale listener behind per open, on top of the row itself
+    let textarea = null;
+    const getValue = _=>{
+      const face = this.diceFaces(widget)[index];
+      return isObjectLike(face) ? face.faceCSS : null;
+    };
+    const update = _=>{
+      if(!textarea || document.activeElement === textarea)
+        return;
+      textarea.value = cssTextFromValue(getValue());
+      textarea.rows = Math.max(2, Math.min(8, textarea.value.split('\n').length));
+      textarea.classList.remove('inputError');
+    };
+    this.addPropertyListener(widget, 'faces', update);
     const renderFaceCSS = visible=>{
       cssHost.innerHTML = '';
+      textarea = null;
       if(!visible)
         return;
       const wrap = div(cssHost, 'facePropertyStructured');
       const label = document.createElement('label');
       label.textContent = 'Face CSS';
       wrap.appendChild(label);
-      const textarea = document.createElement('textarea');
+      textarea = document.createElement('textarea');
       textarea.placeholder = 'property: value;';
-      const getValue = _=>{
-        const face = this.diceFaces(widget)[index];
-        return isObjectLike(face) ? face.faceCSS : null;
-      };
-      const update = _=>{
-        if(document.activeElement === textarea)
-          return;
-        textarea.value = cssTextFromValue(getValue());
-        textarea.rows = Math.max(2, Math.min(8, textarea.value.split('\n').length));
-        textarea.classList.remove('inputError');
-      };
       textarea.oninput = _=>{
         const current = getValue();
         if(isObjectLike(current)) {
@@ -8391,7 +8513,6 @@ class PropertiesModule extends SidebarModule {
         }
       };
       wrap.appendChild(textarea);
-      this.addPropertyListener(widget, 'faces', update);
       update();
     };
     // CSS is advanced and can be tall. Keep it folded even when this face has
@@ -8411,7 +8532,10 @@ class PropertiesModule extends SidebarModule {
     const remove = document.createElement('button');
     remove.setAttribute('icon', 'delete');
     remove.className = 'red diceRemoveFace';
-    remove.title = 'Remove this face';
+    // the engine flips through faces modulo their count (Dice.activeFace()),
+    // so an empty faces array turns that into a "% 0" and the die renders NaN
+    remove.disabled = this.diceFaces(widget).length < 2;
+    remove.title = remove.disabled ? 'A die needs at least one face' : 'Remove this face';
     remove.onclick = _=>this.removeFace(widget, this.diceFaces(widget), index, (faces, activeFace)=>this.setFacesProperty(widget, faces, activeFace));
     actions.appendChild(remove);
   }
@@ -8902,6 +9026,7 @@ class PropertiesModule extends SidebarModule {
       { value: 'deck',       label: 'Decks' },
       { value: 'dice',       label: 'Dice' },
       { value: 'holder',     label: 'Holders' },
+      { value: 'line',       label: 'Lines' },
       { value: 'pile',       label: 'Piles' },
       { value: 'spinner',    label: 'Spinners' },
       { value: 'label',      label: 'Labels' },
@@ -9900,12 +10025,12 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  renderGenericProperties(widget, exclude) {
+  renderGenericProperties(widget, exclude, target = this.moduleDOM) {
     for(const property in widget.state) {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
         continue;
 
-      const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
+      const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v), target)
       if(!this.inputUpdaters[widget.id][property])
         this.inputUpdaters[widget.id][property] = [];
 
@@ -9916,7 +10041,7 @@ class PropertiesModule extends SidebarModule {
     // uncategorized property, which made it a dead end for adding one. Start
     // a text value; its own type selector immediately offers the same values
     // (number, boolean, null, object/array) as every existing generic row.
-    this.renderSuggestionAddRow(this.moduleDOM, 'genericAddPropertyRow', {
+    this.renderSuggestionAddRow(target, 'genericAddPropertyRow', {
       placeholder: 'new property',
       title: 'Add property',
       suggestions: Object.keys(widget.defaults || {}).filter(property=>
