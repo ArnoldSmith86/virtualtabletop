@@ -340,6 +340,7 @@ class DeckEditor {
     $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorCardView').onclick = _=>this.setRoomVisible(!this.roomVisible);
     this.setRoomVisible(false); // sets the toggle's initial tooltip
+    $('#deckEditorClose').onclick = _=>this.close();
     $('#deckEditorShowAll').onclick = _=>{
       this.showAllAreas = !this.showAllAreas;
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);

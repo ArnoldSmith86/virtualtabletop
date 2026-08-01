@@ -250,7 +250,8 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')                     // add a card type
     .click(deckNode)                                  // select the deck
     .click('#deckEditorTreeAdd')                      // deck "+" adds a new (empty) face, now selected
@@ -359,7 +360,8 @@ test('Deck editor: breadcrumb undo and redo', async t => {
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')  // step 1
     .click(deckNode)                         // select the deck
     .click('#deckEditorTreeAdd')             // step 2: deck "+" adds a face (now empty, selected)
@@ -418,7 +420,8 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')
     .click(deckNode)
     .click('#deckEditorTreeAdd')
@@ -484,7 +487,8 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
   const getFaceCount = ClientFunction(deckID => widgets.get(deckID).get('faceTemplates').length);
 
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')
     .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(0)) // select the existing object
     .click('#deckEditorTreeAdd')                                    // reveal the add-object controls
@@ -523,7 +527,8 @@ test('Deck editor: switching games while editing does not crash', async t => {
   const deckID = await getDeckID();
 
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd'); // make a change, leaving the deck editor open
 
   // Simulate switching to another game: replace the whole room state. The deck being edited disappears.
@@ -702,7 +707,7 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
   await t.click('#editorToolbar [icon=style]');
   await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
   await t.expect(toolbarButton.hasClass('active')).ok();
-  await t.expect(Selector('#deckEditorClose').exists).notOk(); // the old Close button is gone
+  await t.expect(Selector('#deckEditorClose').exists).ok(); // the Close button next to Card view
 
   // close via the same button
   await t.click('#editorToolbar [icon=style]');
@@ -727,6 +732,13 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
 
   // close with Escape -> the button must deactivate too
   await t.pressKey('esc');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(toolbarButton.hasClass('active')).notOk();
+
+  // close via the Close button next to Card view -> the toolbar button must deactivate too
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.click('#deckEditorClose');
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(toolbarButton.hasClass('active')).notOk();
 });
@@ -822,7 +834,8 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
   await t
     .click('#editButton')
     .click('#editorSidebar [icon=tune]')
-    .click('#w_multiDeck') // selecting the deck opens the deck editor on it
+    .click('#w_multiDeck') // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor on it
     .click(objectRow.nth(0));
   // one object: the properties are sorted into the same blocks the Edit Widget sidebar uses
   await t
