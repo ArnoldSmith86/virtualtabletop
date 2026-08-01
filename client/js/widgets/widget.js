@@ -6,6 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
+import { ownerSeat, scheduleSeatViewRefresh, seatRotation, seatViewGeneration, seatViewMarkUsed, viewingPlayerName, viewingSeat, viewingSeatRotation } from '../seatview.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
 // room - being a child of the line is the common shape, not a requirement. This
@@ -25,6 +26,14 @@ function linesWithStop(widgetID) {
 // has to follow, and a line carrying it as a stop has to re-space.
 const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
 const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ]);
+
+// Properties that can change how far the per-seat view turns a widget - either
+// on the widget itself or on everything below it.
+const seatViewRelevantProperties = new Set([ 'facing', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'rotateForViewer' ]);
+
+// Using one of these anywhere in the room switches the per-seat view on for this
+// client. Until then a refresh is a no-op.
+const seatViewEnablingProperties = new Set([ 'facing', 'rotateForViewer', 'viewRotation' ]);
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -79,6 +88,8 @@ export class Widget extends StateManaged {
     this.dropShadowWidget = null;
     this.targetTransform = '';
     this.childArray = [];
+    this.seatViewDelta = 0;
+    this.seatViewInherited = 0;
     this.propertiesUsedInProperty = {};
 
     if(StateManaged.inheritFromMapping[id] === undefined)
@@ -131,6 +142,12 @@ export class Widget extends StateManaged {
       onlyVisibleForSeat: null,
       hoverInheritVisibleForSeat: true,
 
+      // per-seat views: turn this widget (and everything in it) so the viewing
+      // player's seat ends up in front of them, and keep single widgets
+      // readable while their surroundings turn
+      rotateForViewer: false,
+      facing: null,
+
       clickRoutine: null,
       doubleClickRoutine: null,
       changeRoutine: null,
@@ -178,7 +195,7 @@ export class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
+    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')}, true)[coord]
   }
 
   animateProperties() {
@@ -236,6 +253,13 @@ export class Widget extends StateManaged {
       // If the widget wasn't newly created, transition from its previous location.
       if (delta.id === undefined)
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
+    }
+
+    for(const key in delta) {
+      if(seatViewEnablingProperties.has(key) && delta[key])
+        seatViewMarkUsed();
+      if(seatViewRelevantProperties.has(key))
+        scheduleSeatViewRefresh();
     }
 
     this.applyCSS(delta);
@@ -396,6 +420,17 @@ export class Widget extends StateManaged {
     this.applyRemove();
   }
 
+  // Render this widget the way the seat this client looks through sees it. Only
+  // the transform can differ, and only by a rotation - the stored state is never
+  // touched, so every client keeps computing with the same numbers.
+  applySeatView() {
+    this.seatViewRefresh();
+    if(this.seatViewDelta === this.appliedSeatViewDelta)
+      return;
+    this.appliedSeatViewDelta = this.seatViewDelta;
+    this.targetTransform = this.domElement.style.transform = this.cssTransform();
+  }
+
   applyZ(force) {
     if(force || this.get('inheritChildZ')) {
       this.domElement.style.zIndex = this.calculateZ();
@@ -441,11 +476,14 @@ export class Widget extends StateManaged {
 
   classes(includeTemporary = true) {
     let className = this.get('typeClasses') + ' ' + this.get('classes');
+    // whose eyes this client renders through: the local player, or the seat the
+    // editor is previewing
+    const viewer = viewingPlayerName();
 
     const owner = this.get('owner');
-    if(Array.isArray(owner) && owner.indexOf(playerName) == -1)
+    if(Array.isArray(owner) && owner.indexOf(viewer) == -1)
       className += ' foreign';
-    if(typeof owner == 'string' && owner != playerName)
+    if(typeof owner == 'string' && owner != viewer)
       className += ' foreign';
 
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
@@ -457,7 +495,7 @@ export class Widget extends StateManaged {
 
     let invisible = onlyVisibleForSeat !== null;
     for(const seatID of asArray(onlyVisibleForSeat) || []) {
-      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+      if(widgets.has(seatID) && widgets.get(seatID).get('player') == viewer) {
         invisible = false;
         break;
       }
@@ -466,7 +504,7 @@ export class Widget extends StateManaged {
       className += ' foreign';
 
     const linkedToSeat = this.get('linkedToSeat');
-    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == viewer).length)
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
@@ -577,12 +615,17 @@ export class Widget extends StateManaged {
     }
   }
 
-  coordGlobalFromCoordLocal(coord) {
-    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
+  // shared == true measures in the room's stored coordinate system instead of
+  // the one this client renders. Everything a routine can read, and everything
+  // that gets written back into a property, has to use it so that a per-seat
+  // view cannot make two clients compute different numbers. Drag and drop
+  // deliberately does not, so a drop lands where it looks like it lands.
+  coordGlobalFromCoordLocal(coord, shared = false) {
+    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord, shared), shared);
   }
-  coordGlobalFromCoordParent(coord) {
+  coordGlobalFromCoordParent(coord, shared = false) {
     const p = this.get('parent');
-    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
+    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord, shared) : coord;
   }
   coordGlobalInside(coord) {
     const coordLocal = this.coordLocalFromCoordGlobal(coord);
@@ -592,19 +635,19 @@ export class Widget extends StateManaged {
     const result = getPointOnPlane(getScreenTransform(this.domElement), coord.x, coord.y);
     return result || new DOMPoint();
   }
-  coordLocalFromCoordGlobal(coord) {
-    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
+  coordLocalFromCoordGlobal(coord, shared = false) {
+    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord, shared), shared);
   }
-  coordLocalFromCoordParent(coord) {
-    const result = getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
+  coordLocalFromCoordParent(coord, shared = false) {
+    const result = getPointOnPlane(getElementTransform(this.domElement, shared ? this.sharedTransform() : null), coord.x, coord.y);
     return result || new DOMPoint();
   }
-  coordParentFromCoordGlobal(coord) {
+  coordParentFromCoordGlobal(coord, shared = false) {
     const p = this.get('parent');
-    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
+    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord, shared) : coord;
   }
-  coordParentFromCoordLocal(coord) {
-    const transform = getElementTransform(this.domElement);
+  coordParentFromCoordLocal(coord, shared = false) {
+    const transform = getElementTransform(this.domElement, shared ? this.sharedTransform() : null);
     return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
   }
 
@@ -714,10 +757,13 @@ export class Widget extends StateManaged {
     return this.cssAsText(css.inline || '', usedProperties);
   }
 
-  cssTransform() {
+  // shared == true renders the widget where the room state puts it, ignoring the
+  // per-seat view - that is the frame every client has to agree on.
+  cssTransform(shared = false) {
     let x = this.get('x');
     let y = this.get('y');
     let scaleValue = this.get('scale');
+    const rotation = this.get('rotation') + (shared ? 0 : this.seatViewDelta);
 
     if(this.get('ignoreZoom')) {
       const computedStyle = getComputedStyle(document.documentElement);
@@ -739,8 +785,8 @@ export class Widget extends StateManaged {
 
     let transform = `translate(${x}px, ${y}px)`;
 
-    if(this.get('rotation'))
-      transform += ` rotate(${this.get('rotation')}deg)`;
+    if(rotation)
+      transform += ` rotate(${rotation}deg)`;
     if(scaleValue != 1)
       transform += ` scale(${scaleValue})`;
 
@@ -2341,19 +2387,19 @@ export class Widget extends StateManaged {
         case '_absoluteScale':
           return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
         case '_absoluteX':
-          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')}, true)['x'];
         case '_absoluteY':
-          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')}, true)['y'];
         case '_ancestor':
           return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
         case '_centerAbsoluteX':
-          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2}, true)['x'];
         case '_centerAbsoluteY':
-          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2}, true)['y'];
         case '_localOriginAbsoluteX':
-          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+          return this.coordGlobalFromCoordLocal({x:0,y:0}, true)['x'];
         case '_localOriginAbsoluteY':
-          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+          return this.coordGlobalFromCoordLocal({x:0,y:0}, true)['y'];
         default:
           return super.get(property);
       }
@@ -2940,6 +2986,52 @@ export class Widget extends StateManaged {
         await this.set('text', text);
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
+  }
+
+  // How far the per-seat view turns this widget on this client, on top of its
+  // stored rotation. Cached per refresh because it walks up the parent chain.
+  seatViewRefresh() {
+    if(this.seatViewGeneration === seatViewGeneration())
+      return;
+
+    // set before recursing so a parent cycle terminates instead of hanging
+    this.seatViewGeneration = seatViewGeneration();
+    this.seatViewInherited = 0;
+    this.seatViewDelta = 0;
+
+    const parentID = this.get('parent');
+    if(parentID && widgets.has(parentID)) {
+      const parent = widgets.get(parentID);
+      parent.seatViewRefresh();
+      this.seatViewInherited = parent.seatViewInherited + parent.seatViewDelta;
+    }
+
+    // no seat, no personal view: spectators and players who did not sit down
+    // get the room exactly as it is stored
+    const viewer = viewingSeat();
+    if(!viewer)
+      return;
+
+    // The table is turned against the viewer's seat rotation: a seat that is
+    // itself turned by 180 degrees is at the far side, so the table has to come
+    // around by -180 for that player to look at it from their own chair.
+    // facing wins over rotateForViewer on the same widget: whichever chair the
+    // content reads for, that is where the turning has to stop.
+    const facing = this.get('facing');
+    const rotateForViewer = this.get('rotateForViewer');
+    const target = facing == 'viewer' ? viewer : facing == 'owner' ? ownerSeat(this) : null;
+    let delta = 0;
+    if(target)
+      delta = seatRotation(target) - viewingSeatRotation() - this.seatViewInherited;
+    else if(rotateForViewer)
+      delta = -viewingSeatRotation(typeof rotateForViewer == 'string' ? rotateForViewer : undefined);
+    this.seatViewDelta = delta || 0; // never -0, which would end up in the CSS
+  }
+
+  // The transform this widget would have without any per-seat view, or null when
+  // there is nothing to take back out.
+  sharedTransform() {
+    return this.seatViewDelta ? this.cssTransform(true) : null;
   }
 
   showEnlarged(event, delta) {

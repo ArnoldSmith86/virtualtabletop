@@ -21,12 +21,22 @@ class Seat extends Widget {
       color: '#999999',
       colorEmpty: '#999999',
       layer: -1,
-      borderRadius: 5
+      borderRadius: 5,
+
+      // how far the table has to be turned so that this seat's side of it ends
+      // up in front of the player sitting here (null = the seat's own rotation)
+      viewRotation: null
     });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
+
+    // everybody's personal view is derived from the seats, so any of these can
+    // change what this client renders
+    if(delta.index !== undefined || delta.player !== undefined || delta.rotation !== undefined || delta.viewRotation !== undefined)
+      scheduleSeatViewRefresh();
+
     if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
       const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
       let displayedText = String(display || '')
@@ -58,7 +68,7 @@ class Seat extends Widget {
       className += ' seated';
     if(this.get('turn') && !this.get('hideTurn'))
       className += ' turn';
-    if(this.get('hideWhenUnused') && !this.get('player') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+    if(this.get('hideWhenUnused') && !this.get('player') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == viewingPlayerName()).length)
       className += ' foreign';
 
     return className;

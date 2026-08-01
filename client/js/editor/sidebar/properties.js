@@ -356,6 +356,9 @@ const editorPropertyHints = {
   totalsLabel: 'Heading shown for the totals.',
   editPaneTitle: 'Title of the pane that opens when entering a score.',
   borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
+  rotateForViewer: 'Turns this widget and everything inside it so that the seat of the player looking at the room ends up at the bottom of their screen. Every player sees the same table from their own chair. This only changes how it looks - the stored rotation never changes.',
+  facing: 'Keeps this widget readable while its surroundings are turned for the viewing player. "whoever is looking at it" is the one to pick for text, card faces and piece art.',
+  viewRotation: 'How far the table has to be turned so that this seat is at the bottom of the screen for the player sitting here, e.g. 180 for a seat at the far side. Leave empty to use the seat widget\'s own rotation. Rounded to quarter turns.',
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
@@ -3599,7 +3602,7 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
-    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
+    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat', 'rotateForViewer', 'facing' ], container => {
       const seatSection = this.createOnDemandSectionStructure(container);
 
       this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {
@@ -3607,6 +3610,18 @@ class PropertiesModule extends SidebarModule {
         pickerKey: 'linkedToSeat',
         infoText: 'Widgets linked to a seats are only visible when a player ocupies that seat. Use this to decluster the board when fewer players are present.'
       });
+
+      new CheckboxInput(this, widget, 'Turn for the viewing player', { property: 'rotateForViewer', hint: editorPropertyHints.rotateForViewer }).render(seatSection.contentWrapper);
+
+      new SelectInput(this, widget, 'Reads upright for', {
+        property: 'facing',
+        hint: editorPropertyHints.facing,
+        choices: [
+          { value: null, text: 'nobody in particular' },
+          { value: 'viewer', text: 'whoever is looking at it' },
+          { value: 'owner', text: 'the seat it belongs to' }
+        ]
+      }).render(seatSection.contentWrapper);
 
       this.renderOnDemandSection(widget, 'change visibility', [ 'onlyVisibleForSeat' ], nestedContainer => {
         this.renderSeatVisibilityInput(widget, nestedContainer);
@@ -3621,6 +3636,8 @@ class PropertiesModule extends SidebarModule {
         setDeltaCause(`${getPlayerDetails().playerName} removed seat links of widget ${widget.id} in editor`);
         widget.set('linkedToSeat', null);
         widget.set('onlyVisibleForSeat', null);
+        widget.set('rotateForViewer', false);
+        widget.set('facing', null);
         batchEnd();
       }
     });
@@ -4493,6 +4510,7 @@ class PropertiesModule extends SidebarModule {
     new CheckboxInput(this, widget, 'Has the turn', { property: 'turn', hint: 'This is a temporary value that can be changed by automations in the game.' }).render(indexRow);
 
     this.renderSeatHandInput(widget);
+    new NumberOrTextInput(this, widget, 'View rotation', { property: 'viewRotation', hint: editorPropertyHints.viewRotation }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Ignore this seat in turns', { property: 'skipTurn', hint: editorPropertyHints.skipTurn }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
 
@@ -4507,7 +4525,7 @@ class PropertiesModule extends SidebarModule {
     });
     this.renderSeatColorMode(widget);
 
-    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'color', 'colorEmpty' ]);
+    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'color', 'colorEmpty', 'viewRotation' ]);
   }
 
   // Style presets for seats: "Classic" is the plain default seat; "Background

@@ -511,7 +511,8 @@ async function loadEditMode() {
       toHex, contrastAnyColor,
       asArray, compute_ops,
       eventCoords,
-      getCurrentGameSettings, legacyMode, getEnabledLegacyModes
+      getCurrentGameSettings, legacyMode, getEnabledLegacyModes,
+      getSeatViewPreview, setSeatViewPreview
     });
     $('body').classList.add('loadingEditMode');
     const editmode = await import('./edit.js');

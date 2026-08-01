@@ -95,6 +95,8 @@ const COMMON_PROPERTIES = {
     linkedToSeat: 'idArray',
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
+    rotateForViewer: v=>typeof v === 'boolean' || typeof v === 'string' || 'rotateForViewer must be true, false or the name of a seat property',
+    facing: v=>v === null || [ 'viewer', 'owner' ].includes(v) || `facing must be 'viewer', 'owner' or null`,
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
@@ -150,7 +152,7 @@ const WIDGET_PROPERTIES = {
     },
     Seat: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', movable: 'boolean', index: 'any', turn: 'any', skipTurn: 'any', player: 'any', display: 'any', displayEmpty: 'any', hideTurn: 'any', hideWhenUnused: 'any', hand: 'id', color: 'any', colorEmpty: 'any', layer: 'any', borderRadius: 'any'
+        typeClasses: 'any', movable: 'boolean', index: 'any', turn: 'any', skipTurn: 'any', player: 'any', display: 'any', displayEmpty: 'any', hideTurn: 'any', hideWhenUnused: 'any', hand: 'id', color: 'any', colorEmpty: 'any', layer: 'any', borderRadius: 'any', viewRotation: v=>v === null || typeof v === 'number' || 'viewRotation must be a number or null'
     },
     Spinner: {
         ...COMMON_PROPERTIES,

@@ -351,8 +351,10 @@ export class Line extends Widget {
     const parentID = stop.get('parent');
     if(parentID == this.id)
       return point;
-    const global = this.coordGlobalFromCoordLocal(point);
-    return widgets.has(parentID) ? widgets.get(parentID).coordLocalFromCoordGlobal(global) : global;
+    // shared coordinates: the result is written into the stop's x/y, so it has
+    // to be the same on every client no matter how each of them views the room
+    const global = this.coordGlobalFromCoordLocal(point, true);
+    return widgets.has(parentID) ? widgets.get(parentID).coordLocalFromCoordGlobal(global, true) : global;
   }
 
   hasExternalStops() {
@@ -593,7 +595,7 @@ export class Line extends Widget {
           x: target.get('width') * position,
           y: target.get('height') / 2
         };
-        return { end, connection, target, targetIsLine, position, p, global: target.coordGlobalFromCoordLocal(p) };
+        return { end, connection, target, targetIsLine, position, p, global: target.coordGlobalFromCoordLocal(p, true) };
       };
 
       const points = [ connectionPoint('Start'), connectionPoint('End') ];
@@ -613,12 +615,12 @@ export class Line extends Widget {
           tangent = routeTangent;
         } else if(point.targetIsLine) {
           const delta = 0.001;
-          const before = point.target.coordGlobalFromCoordLocal(point.target.pointAtPosition(Math.max(0, point.position-delta)));
-          const after = point.target.coordGlobalFromCoordLocal(point.target.pointAtPosition(Math.min(1, point.position+delta)));
+          const before = point.target.coordGlobalFromCoordLocal(point.target.pointAtPosition(Math.max(0, point.position-delta)), true);
+          const after = point.target.coordGlobalFromCoordLocal(point.target.pointAtPosition(Math.min(1, point.position+delta)), true);
           tangent = Math.atan2(after.y-before.y, after.x-before.x);
         } else {
-          const before = point.target.coordGlobalFromCoordLocal({ x: 0, y: point.target.get('height')/2 });
-          const after = point.target.coordGlobalFromCoordLocal({ x: point.target.get('width'), y: point.target.get('height')/2 });
+          const before = point.target.coordGlobalFromCoordLocal({ x: 0, y: point.target.get('height')/2 }, true);
+          const after = point.target.coordGlobalFromCoordLocal({ x: point.target.get('width'), y: point.target.get('height')/2 }, true);
           tangent = Math.atan2(after.y-before.y, after.x-before.x);
         }
         const offset = +point.connection.offset || 0;
@@ -630,7 +632,7 @@ export class Line extends Widget {
         // Convert through global coordinates. Target widgets may be nested in
         // a board/holder, so their local x/y cannot be combined directly with
         // this line's local coordinates.
-        const localPoint = this.coordLocalFromCoordGlobal(targetPoint);
+        const localPoint = this.coordLocalFromCoordGlobal(targetPoint, true);
         const newPoint = { x: Math.round(localPoint.x), y: Math.round(localPoint.y) };
         // move this end's Bezier control point by the same delta, so a curved
         // connected line keeps its shape (its middle doesn't stay behind) as the
