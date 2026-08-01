@@ -14,24 +14,34 @@ class SeatViewButton extends ToolbarButtonWithContent {
     this.list = div(target, 'seatViewContent', '');
   }
 
+  renderSeatButton(icon, label, isActive, onclick) {
+    const button = document.createElement('button');
+    button.setAttribute('icon', icon);
+    button.innerText = label; // no span: inside the toolbar that would be a tooltip
+    button.title = label; // the panel is narrow, long seat names get cut off
+    button.classList.toggle('active', isActive);
+    button.onclick = onclick;
+    this.list.appendChild(button);
+    return button;
+  }
+
   renderSeats() {
     this.list.innerHTML = '';
     const active = getSeatViewPreview();
 
-    const own = document.createElement('button');
-    own.innerText = 'Your own view';
-    own.classList.toggle('active', !active);
-    own.onclick = _=>this.preview(null);
-    this.list.appendChild(own);
+    // the panel is opened from an icon-only button, so nothing else on screen
+    // says what this list is
+    div(this.list, 'seatViewHeader', 'Show the room as:');
 
     const seats = widgetFilter(w=>w.get('type') == 'seat').sort((a,b)=>a.get('index') - b.get('index') || String(a.get('id')).localeCompare(String(b.get('id'))));
-    for(const seat of seats) {
-      const button = document.createElement('button');
-      button.innerText = `${seat.get('id')}${seat.get('player') ? ' - ' + seat.get('player') : ' - empty'}`;
-      button.classList.toggle('active', active == seat.get('id'));
-      button.onclick = _=>this.preview(seat.get('id'));
-      this.list.appendChild(button);
-    }
+    const ownSeat = seats.filter(w=>w.get('player') == getPlayerDetails().playerName).length;
+
+    // looking through your own eyes is a different kind of choice than looking
+    // through a seat, and while editing it usually means the stored layout
+    this.renderSeatButton('visibility', ownSeat ? 'Your own view' : 'Your own view (you have no seat)', !active, _=>this.preview(null)).classList.add('seatViewOwn');
+
+    for(const seat of seats)
+      this.renderSeatButton('event_seat', `${seat.get('index')}. ${seat.get('id')} - ${seat.get('player') || 'empty'}`, active == seat.get('id'), _=>this.preview(seat.get('id')));
 
     if(!seats.length)
       div(this.list, 'seatViewEmpty', 'This game has no seat widgets.');
@@ -45,17 +55,39 @@ class SeatViewButton extends ToolbarButtonWithContent {
   stopPreview() {
     setSeatViewPreview(null);
     $('body').classList.remove('seatViewPreview');
+    this.syncButton();
+  }
+
+  // the preview outlives the dropdown it was picked in, so the button has to
+  // stay lit while it is on - that is how every other mode in the toolbar says
+  // it is active
+  syncButton() {
+    $('button', this.domElement).classList.toggle('active', !!this.active || !!getSeatViewPreview());
+  }
+
+  setState(state) {
+    super.setState(state);
+    this.syncButton();
   }
 
   syncPreview() {
     $('body').classList.toggle('seatViewPreview', !!getSeatViewPreview());
+    this.syncButton();
     if(this.list)
       this.renderSeats();
   }
 
   toggle(state) {
     super.toggle(state);
-    if(state)
-      this.renderSeats();
+    if(!state)
+      return;
+    this.renderSeats();
+
+    // the panel hangs below its button, which in a narrow editor puts a list of
+    // seat names past the right edge of the screen
+    this.domContentElement.style.marginLeft = '';
+    const overflow = this.domContentElement.getBoundingClientRect().right - document.documentElement.clientWidth;
+    if(overflow > 0)
+      this.domContentElement.style.marginLeft = `${-5 - overflow}px`;
   }
 }

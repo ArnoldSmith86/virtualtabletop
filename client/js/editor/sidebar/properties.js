@@ -356,8 +356,8 @@ const editorPropertyHints = {
   totalsLabel: 'Heading shown for the totals.',
   editPaneTitle: 'Title of the pane that opens when entering a score.',
   borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
-  rotateForViewer: 'Turns this widget and everything inside it so that the seat of the player looking at the room ends up at the bottom of their screen. Every player sees the same table from their own chair. This only changes how it looks - the stored rotation never changes.',
-  facing: 'Keeps this widget readable while its surroundings are turned for the viewing player. "whoever is looking at it" is the one to pick for text, card faces and piece art.',
+  rotateForViewer: 'Turns this widget and everything inside it so that the seat of the player looking at the room ends up at the bottom of their screen. Every player sees the same table from their own chair. This only changes how it looks - the stored rotation never changes. Only what is inside this widget turns with it, so put the seats, hands and player areas in here - anything left outside stays where it is.',
+  facing: 'Keeps this widget readable while its surroundings are turned for the viewing player. "whoever is looking at it" is the one to pick for text, card faces and piece art. It only does something inside a widget that turns for the viewing player.',
   viewRotation: 'How far the table has to be turned so that this seat is at the bottom of the screen for the player sitting here, e.g. 180 for a seat at the far side. Leave empty to use the seat widget\'s own rotation. Rounded to quarter turns.',
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
@@ -3575,12 +3575,23 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderAssociatedWidgetsSection(widget) {
+    // false and null are the defaults of rotateForViewer and facing, so unlike
+    // the other properties here they only count as set when they are truthy
     const hasLinks = [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ]
-      .some(property => this.isOnDemandPropertyValueSet(widget.get(property))) || widget.get('fixedParent') === true;
+      .some(property => this.isOnDemandPropertyValueSet(widget.get(property)))
+      || widget.get('fixedParent') === true || !!widget.get('rotateForViewer') || !!widget.get('facing');
 
     this.renderCollapsibleSection("Widget's links", !hasLinks, body => {
       this.renderAssociatedWidgetsSectionBody(widget, body);
-    }, null, `${widget.id}:links`);
+    }, null, `${widget.id}:links`, {
+      // a widget that turns with the viewer looks like every other one in the
+      // sidebar, so say so where the section can be seen without opening it
+      renderSummary: summary => {
+        const update = w => summary.textContent = w.get('rotateForViewer') ? 'turns for viewer' : w.get('facing') ? 'reads upright' : '';
+        this.addPropertyListener(widget, 'rotateForViewer', update);
+        this.addPropertyListener(widget, 'facing', update);
+      }
+    });
   }
 
   renderAssociatedWidgetsSectionBody(widget, target) {
@@ -3602,7 +3613,7 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
-    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat', 'rotateForViewer', 'facing' ], container => {
+    this.renderOnDemandSection(widget, 'Add seat behaviour', [ 'linkedToSeat', 'onlyVisibleForSeat', 'rotateForViewer', 'facing' ], container => {
       const seatSection = this.createOnDemandSectionStructure(container);
 
       this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {
@@ -3611,13 +3622,13 @@ class PropertiesModule extends SidebarModule {
         infoText: 'Widgets linked to a seats are only visible when a player ocupies that seat. Use this to decluster the board when fewer players are present.'
       });
 
-      new CheckboxInput(this, widget, 'Turn for the viewing player', { property: 'rotateForViewer', hint: editorPropertyHints.rotateForViewer }).render(seatSection.contentWrapper);
+      new CheckboxInput(this, widget, 'Turn for viewer', { property: 'rotateForViewer', hint: editorPropertyHints.rotateForViewer }).render(seatSection.contentWrapper);
 
-      new SelectInput(this, widget, 'Reads upright for', {
+      new SelectInput(this, widget, 'Upright for', {
         property: 'facing',
         hint: editorPropertyHints.facing,
         choices: [
-          { value: null, text: 'nobody in particular' },
+          { value: null, text: 'turns with its surroundings' },
           { value: 'viewer', text: 'whoever is looking at it' },
           { value: 'owner', text: 'the seat it belongs to' }
         ]
@@ -3630,7 +3641,8 @@ class PropertiesModule extends SidebarModule {
       });
     }, linksSection.contentWrapper, {
       buttonHost: linksSection.newPropertiesWrapper,
-      removeTitle: 'Remove seat links',
+      // it takes rotateForViewer and facing with it, which are not links
+      removeTitle: 'Remove seat behaviour',
       onRemove: () => {
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} removed seat links of widget ${widget.id} in editor`);
@@ -4510,7 +4522,10 @@ class PropertiesModule extends SidebarModule {
     new CheckboxInput(this, widget, 'Has the turn', { property: 'turn', hint: 'This is a temporary value that can be changed by automations in the game.' }).render(indexRow);
 
     this.renderSeatHandInput(widget);
-    new NumberInput(this, widget, 'View rotation', { property: 'viewRotation', step: 90, nullIfEmpty: true, unit: '°', hint: editorPropertyHints.viewRotation }).render(this.moduleDOM);
+    // empty means "the seat's own rotation" - show which angle that currently is
+    const viewRotation = new NumberInput(this, widget, 'View rotation', { property: 'viewRotation', step: 90, nullIfEmpty: true, unit: '°', hint: editorPropertyHints.viewRotation });
+    viewRotation.render(this.moduleDOM);
+    this.addPropertyListener(widget, 'rotation', w => viewRotation.input.placeholder = Math.round((+w.get('rotation') || 0) / 90) * 90);
     new CheckboxInput(this, widget, 'Ignore this seat in turns', { property: 'skipTurn', hint: editorPropertyHints.skipTurn }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
 

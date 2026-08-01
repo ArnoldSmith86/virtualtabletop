@@ -102,12 +102,42 @@ body.compactEditorToolbar #editorToolbar button::before {
   display: flex;
   flex-direction: column;
   max-height: 50vh;
+  max-width: min(70vw, 300px);
   overflow-y: auto;
   white-space: nowrap;
 }
 
+/* seat ids and player names are names, not headings - and a seat id plus a
+   player name does not fit a narrow editor, so cut the label off (the full one
+   is in the title attribute) instead of widening the panel past the screen */
+.seatViewContent button {
+  display: block;
+  font-weight: normal;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  text-transform: none;
+}
+
+.seatViewContent button::before {
+  vertical-align: middle;
+}
+
+/* the panel itself is VTTblueDark, so the toolbar's own "this one is on" color
+   would make the row disappear - outline it instead */
 .seatViewContent button.active {
   font-weight: bold;
+  outline: 2px solid #fff8;
+  outline-offset: -2px;
+}
+
+.seatViewContent .seatViewOwn {
+  border-bottom: 1px solid #fff8;
+}
+
+.seatViewHeader {
+  padding: 5px;
+  opacity: 0.8;
 }
 
 .seatViewEmpty {
