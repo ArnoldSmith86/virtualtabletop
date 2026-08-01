@@ -489,7 +489,7 @@ describe('operation rendering', () => {
     [ { func: 'COUNT' }, 'Count the picked widgets' ],
     [ { func: 'COUNT', holder: 'hand1', variable: 'cards' }, 'Count what is in hand1 and remember it as cards' ],
     [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn face up all widgets in deck1' ],
-    [ { func: 'CLICK', collection: 'myPick', count: 2, mode: 'ignoreClickRoutine' }, 'Click myPick, 2 times, but do not run their click routines' ],
+    [ { func: 'CLICK', collection: 'myPick', count: 2, mode: 'ignoreClickRoutine' }, 'Click the widgets called myPick, 2 times, but do not run their click routines' ],
     [ { func: 'RECALL', holder: 'deck1' }, 'Gather all the cards back into deck1' ],
     [ { func: 'RECALL', holder: 'deck1', owned: false }, 'Gather all the cards back into deck1, except the cards players hold' ],
     [ { func: 'SHUFFLE', holder: 'deck1' }, 'Shuffle deck1' ],
@@ -540,10 +540,10 @@ describe('picking how an operation works and which options it uses', () => {
   test('a blank says what kind of value belongs there, in red', () => {
     const { dom } = renderOperation({ func: 'SET', property: '', value: '' });
     const blanks = [...dom.querySelectorAll('.routine-editor-parameter-missing')];
-    expect(blanks.map(b => b.textContent)).toEqual([ 'property', 'number or text' ]);
+    expect(blanks.map(b => b.textContent)).toEqual([ 'value', 'number or text' ]);
     // what the operation does can word it better than the type of the parameter
     expect(renderOperation({ func: 'SET', relation: '+', property: '' }).dom.textContent).toContain('value of the picked widgets by number');
-    expect(renderOperation({ func: 'SET', relation: '+', property: '', value: '' }).dom.textContent).toContain('"text" to property of the picked widgets');
+    expect(renderOperation({ func: 'SET', relation: '+', property: '', value: '' }).dom.textContent).toContain('"text" to value of the picked widgets');
     // a widget parameter says which kind of widget it wants
     expect(renderOperation({ func: 'MOVE', from: 'deck1' }).dom.textContent).toContain('from deck1 to holder');
     // and a value that has a wording of its own is not a blank
@@ -691,7 +691,7 @@ describe('picking how an operation works and which options it uses', () => {
     };
     // a blank says what kind of value belongs there instead of asking with a "?"
     expect(sentenceOf(newOperation('SELECT'))).toBe('Pick widgets where property is value');
-    expect(sentenceOf(newOperation('SET'))).toBe('Set property of the picked widgets to number or text');
+    expect(sentenceOf(newOperation('SET'))).toBe('Set value of the picked widgets to number or text');
     // everything else is nothing but its func
     expect(newOperation('SHUFFLE')).toEqual({ func: 'SHUFFLE' });
   });
@@ -728,13 +728,14 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'RECALL', holder: 'deck1' });
     editor.setOperationDetails({ state: {} }, { func: 'RECALL', holder: 'deck1' }, [], []);
     const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
-    expect(offered.map(clause => clause.label)).toContain('nearest cards first');
+    expect(offered.map(clause => clause.label)).toContain('the order they come back in');
     const byDistance = offered.find(clause => clause.id == 'byDistance');
     expect(editor.clauseAddValues(byDistance)).toEqual({ byDistance: true }); // switching it on has to change something
-    expect(editor.renderClauseExample(byDistance)).toBe('nearest cards first');
   });
 
-  test('the options are a plain menu of phrases, each with the sentence it would add', async () => {
+  // every option is one phrase naming what it adds, never the two lines the
+  // phrase and the sentence it produces used to be
+  test('the options are a plain menu of one phrase each', async () => {
     const { dom } = renderOperation({ func: 'RECALL', holder: 'deck1' });
     dom.querySelector('.routine-editor-add-clause').dispatchEvent(new Event('click'));
     await new Promise(resolve => setTimeout(resolve, 0));
@@ -742,9 +743,104 @@ describe('picking how an operation works and which options it uses', () => {
     expect(menu).not.toBeNull();
     expect(menu.querySelector('h1')).toBeNull(); // no title repeating the section repeating the one list
     expect(menu.querySelector('.accordion-section')).toBeNull();
-    expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toContain('nearest cards first');
+    expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toContain('the order they come back in');
+    expect(menu.querySelector('.popup-menu-entry-preview')).toBeNull();
     expect(menu.querySelector('.popup-close')).not.toBeNull();
     menu.remove();
+  });
+
+  // the CLICK example of the review: two options, each naming what it is about,
+  // and what exactly is ignored is the drop-down the option leaves behind
+  test('an option names what it is about, without listing what it can say', () => {
+    const editor = editorForOperation({ func: 'CLICK' });
+    editor.setOperationDetails({ state: {} }, { func: 'CLICK' }, [], []);
+    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
+    expect(offered.map(clause => clause.label)).toEqual([ 'a named group of widgets', 'n times', 'ignore something' ]);
+    // and switching it on starts at something that actually ignores
+    expect(editor.clauseAddValues(offered.find(clause => clause.id == 'mode'))).toEqual({ mode: 'ignoreClickRoutine' });
+    for (const func in routineOperationMetadata) {
+      const forFunc = editorForOperation({ func });
+      forFunc.setOperationDetails({ state: {} }, { func }, [], []);
+      const labels = [];
+      for (const clause of forFunc.clauses()) {
+        if (clause.generated)
+          continue;
+        expect(clause.label.length).toBeLessThanOrEqual(30); // a phrase, not a sentence
+        // two options of the same operation cannot read the same either
+        expect(labels).not.toContain(clause.label);
+        labels.push(clause.label);
+      }
+    }
+  });
+
+  test('a setting is a drop-down in the sentence, listing what it can say', async () => {
+    const { editor, dom } = renderOperation({ func: 'CLICK', mode: 'ignoreClickRoutine' });
+    const chip = dom.querySelector('[data-parameter="mode"]');
+    expect(chip.classList.contains('routine-editor-parameter-menu')).toBe(true);
+    expect(chip.querySelector('.material-symbols').textContent).toBe('arrow_drop_down');
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    chip.dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const menu = document.querySelector('.inline-popup.popup-menu');
+    expect(menu.querySelector('h1')).toBeNull(); // a menu, not the popup with its sections
+    const labels = [...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent);
+    expect(labels).toContain('even the ones that are not clickable');
+    expect(labels).not.toContain('ignoreClickable'); // the words, never the engine's value
+    expect(menu.querySelector('button.selected .popup-menu-entry-label').textContent).toBe('but do not run their click routines');
+    [...menu.querySelectorAll('.popup-menu-entry')].find(b => b.textContent == 'even the ones that are not clickable').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(result.mode).toBe('ignoreClickable');
+  });
+
+  test('a setting holding a value the routine works out keeps the full popup', async () => {
+    const { dom } = renderOperation({ func: 'CLICK', mode: '${chosenMode}' });
+    const chip = dom.querySelector('[data-parameter="mode"]');
+    expect(chip.classList.contains('routine-editor-parameter-menu')).toBe(false);
+    chip.dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(document.querySelector('.inline-popup h1')).not.toBeNull();
+    for (const popup of document.querySelectorAll('.inline-popup'))
+      popup.remove();
+  });
+
+  // the drop-down of a setting is not a dead end: the last entry hands over to
+  // the popup that can also hold a value the routine works out
+  test('a drop-down hands over to the full popup for anything it cannot say', async () => {
+    const { dom } = renderOperation({ func: 'CLICK', mode: 'ignoreClickRoutine' });
+    dom.querySelector('[data-parameter="mode"]').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const menu = document.querySelector('.inline-popup.popup-menu');
+    const other = [...menu.querySelectorAll('.popup-menu-entry')].pop();
+    expect(other.textContent).toBe('something else…');
+    other.dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(document.querySelector('.inline-popup h1').textContent).toContain('CLICK');
+    for (const popup of document.querySelectorAll('.inline-popup'))
+      popup.remove();
+  });
+
+  // the same wording SET got: the widgets an operation works on are words in the
+  // sentence until an option names a group instead
+  test('the widgets an operation works on are words until an option names a group', () => {
+    for (const func of [ 'CLICK', 'DELETE', 'GET', 'COUNT' ]) {
+      const plain = renderOperation({ func }).dom;
+      expect(plain.textContent).toContain('the picked widgets');
+      expect(plain.querySelector('[data-parameter="collection"]')).toBeNull();
+      const named = renderOperation({ func, collection: 'myPick' }).dom;
+      expect(named.textContent).toContain('the widgets called myPick');
+      expect(named.querySelector('[data-parameter="collection"]')).not.toBeNull();
+    }
+    // a list of ids written into the operation is not a name to call anybody by
+    expect(renderOperation({ func: 'DELETE', collection: [ 'card1', 'card2' ] }).dom.textContent).toContain('Delete card1 and card2');
+  });
+
+  // an x at the end of a word reads as the letter x rather than as a control
+  test('the marker that takes an option out is not the letter x', () => {
+    const { dom } = renderOperation({ func: 'MOVE', from: 'a', to: 'b', face: 0 });
+    const remove = dom.querySelector('.routine-editor-clause-remove');
+    expect(remove.textContent).toBe('do_not_disturb_on');
+    expect(remove.title.toLowerCase()).toContain('option');
   });
 
   test('the sentence says "add option" like every other add button in the panel', () => {

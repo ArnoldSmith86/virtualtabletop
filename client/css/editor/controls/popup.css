@@ -220,6 +220,15 @@
   background: var(--backgroundHighlightColor1);
 }
 
+/* the way out of a list of phrases, for a value none of them can say: it is not
+   one of the answers, so it does not read like one */
+.inline-popup .popup-menu-entry-other .popup-menu-entry-label {
+  color: var(--textColor);
+  opacity: 0.7;
+  font-weight: normal;
+  font-size: 12px;
+}
+
 /* the entry the pointer is on turns from the operation color into the text
    color - black on the white popup, white on the dark one. Another shade of the
    same blue is not a color change in light mode, and a third color (the teal the
@@ -315,6 +324,13 @@ body.edit.darkMode .inline-popup button:hover {
 .inline-popup .editorModule .propertyPicker {
   border: none;
   padding: 0;
+}
+
+/* the widget picker keeps its controls on two lines (pick/clear, type/search),
+   so the popup around it is wide enough to hold them instead of breaking every
+   one of them onto a line of its own */
+.inline-popup .editorModule .widgetSelectPopout {
+  min-width: min(320px, 100%);
 }
 
 .inline-popup .info-button {

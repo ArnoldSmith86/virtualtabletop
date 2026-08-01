@@ -143,6 +143,25 @@
   outline: 1px solid var(--routineOperationColor);
 }
 
+/* a chip whose parameter is a setting: it opens the same list of phrases the
+   field the sentence starts with opens, so it carries the same arrow - and it is
+   allowed to be wider than the other chips, because the phrases are sentences
+   ("even the ones that are not clickable") rather than values */
+.routine-editor-parameter-menu {
+  display: inline-flex;
+  align-items: center;
+  max-width: 280px;
+  padding-right: 2px;
+}
+
+.routine-editor-parameter-menu .material-symbols {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: inherit;
+  margin-left: 1px;
+  opacity: var(--routineChromeOpacity);
+}
+
 /* color coding by what kind of value the parameter holds - the same colors the
    popup a value is picked from uses for its sections */
 .routine-editor-parameter-variable {
@@ -243,17 +262,22 @@
   white-space: normal;
 }
 
+/* the marker that takes an option back out: a minus in a circle rather than a
+   bare x, which reads as the letter x when it sits at the end of a word, and it
+   turns red on the way to being clicked because it removes something */
 .routine-editor-clause-remove {
-  font-size: 13px;
+  /* the outlined circle: the filled one is a heavy dark dot in a line of text */
+  font-family: 'Material Symbols NoFill';
+  font-size: 15px;
   color: var(--textColor);
   opacity: var(--routineChromeOpacity);
   cursor: pointer;
   vertical-align: middle;
-  margin-left: 1px;
+  margin-left: 2px;
 }
 
 .routine-editor-clause-remove:hover {
-  color: var(--VTTblue);
+  color: var(--textHighlightColor3);
   opacity: 1;
 }
 

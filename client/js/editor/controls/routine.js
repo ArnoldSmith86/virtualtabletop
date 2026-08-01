@@ -24,14 +24,20 @@
 //   clauses - the optional parts of the sentence. A clause is shown while one of
 //     its parameters is set and disappears with them, so a card only words what
 //     the operation actually does. The "add option" button behind the sentence
-//     offers the ones that are off, and every clause shown has an x that removes
-//     it again. Parameters no variant and no clause mentions become a clause of
-//     their own, so nothing an operation supports is unreachable. A clause can
-//     also replace words instead of adding them: whenOff is what the sentence
-//     says while the option is off (SET reads "of the picked widgets" until the
-//     collection option names a group of widgets), and active() decides when a
-//     clause counts as in use where being set is not the same as being in use (a
-//     collection explicitly set to DEFAULT is still the picked widgets).
+//     offers the ones that are off, and every clause shown has the marker that
+//     removes it again. Parameters no variant and no clause mentions become a
+//     clause of their own, so nothing an operation supports is unreachable. A
+//     clause can also replace words instead of adding them: whenOff is what the
+//     sentence says while the option is off (SET reads "of the picked widgets"
+//     until the collection option names a group of widgets), and active() decides
+//     when a clause counts as in use where being set is not the same as being in
+//     use (a collection explicitly set to DEFAULT is still the picked widgets).
+//
+//     label is the one phrase the list of options offers, and it names what the
+//     option is about without saying what it can then say: CLICK offers "n times"
+//     and "ignore something", not the two lines that spell out every mode it
+//     knows. What exactly is ignored is the drop-down the option leaves behind in
+//     the sentence, which is where a choice belongs (see parameterIsDropDown).
 //
 // What belongs in the sentence and what belongs in a clause follows one rule: a
 // parameter whose default means "not in use" (SELECT max, SELECT source, GET
@@ -110,6 +116,21 @@
 // CANVAS canvas vs collection, just spelled out per operation.
 function collectionReplacedBy(parameter) {
   return v=>v(parameter) != null ? { collection: `ignored because ${parameter} is set` } : {};
+}
+
+// The widgets an operation works on are the ones the operations before it picked
+// unless a game says otherwise, so the sentence says so in plain words and the
+// option is what names a group instead (the SET wording, used by every operation
+// whose only target is a collection). A collection explicitly set to DEFAULT is
+// still the picked widgets, so it is the value that decides, not the key - and a
+// list of ids written into the operation is not a name to call anybody by.
+function namedGroupClause(parameter='collection', whenOff=' the picked widgets') {
+  return {
+    id: parameter, label: 'a named group of widgets',
+    active: v=>v(parameter) != 'DEFAULT',
+    template: v=>Array.isArray(v(parameter)) ? ` {${parameter}}` : ` the widgets called {${parameter}}`,
+    whenOff, add: { [parameter]: '' }
+  };
 }
 
 // what a blank says when nothing more specific is worded for it: the kind of
@@ -223,10 +244,10 @@ const routineOperationMetadata = {
       }
     ],
     clauses: [
-      { id: 'maxVolume', label: 'play it quieter', template: ' at {maxVolume} volume', add: { maxVolume: 0.5 } },
-      { id: 'player', label: 'only for one player', template: ' for {player}', add: { player: '' } },
-      { id: 'count', label: 'play it more than once', template: ', {count}' },
-      { id: 'length', label: 'stop after a while', template: ', stopping after {length} milliseconds', add: { length: 1000 } }
+      { id: 'maxVolume', label: 'quieter', template: ' at {maxVolume} volume', add: { maxVolume: 0.5 } },
+      { id: 'player', label: 'for one player', template: ' for {player}', add: { player: '' } },
+      { id: 'count', label: 'n times', template: ', {count}' },
+      { id: 'length', label: 'stop it early', template: ', stopping after {length} milliseconds', add: { length: 1000 } }
     ],
     parameters: {
       source: { type: 'string', default: '', hint: 'file name' },
@@ -249,11 +270,11 @@ const routineOperationMetadata = {
       { id: 'call', label: 'Run another routine', template: 'Run the routine {routine}' }
     ],
     clauses: [
-      { id: 'widget', label: 'a routine of another widget', template: ' of {widget}' },
-      { id: 'arguments', label: 'pass values into the routine', template: ', passing {arguments}' },
-      { id: 'variable', label: 'store the value it returns', template: ' and remember the result as {variable}' },
-      { id: 'collection', label: 'store the widgets it selected', template: ' and remember its widgets as {collection}' },
-      { id: 'return', label: 'do not wait for a result', template: ', {return}', add: { 'return': false } }
+      { id: 'widget', label: 'of another widget', template: ' of {widget}' },
+      { id: 'arguments', label: 'pass values in', template: ', passing {arguments}' },
+      { id: 'variable', label: 'remember the result', template: ' and remember the result as {variable}' },
+      { id: 'collection', label: 'remember its widgets', template: ' and remember its widgets as {collection}' },
+      { id: 'return', label: 'wait for it or not', template: ', {return}', add: { 'return': false } }
     ],
     parameters: {
       routine: { type: 'string', default: 'clickRoutine' },
@@ -289,7 +310,7 @@ const routineOperationMetadata = {
         template: v=>`Set one pixel of ${canvasTarget(v)} at ({x}, {y}) to the value {value}` }
     ],
     clauses: [
-      { id: 'count', label: 'only some of the widgets', template: ', for {count} widgets', add: { count: 1 } }
+      { id: 'count', label: 'only n of them', template: ', for {count} widgets', add: { count: 1 } }
     ],
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
@@ -325,14 +346,17 @@ const routineOperationMetadata = {
   CLICK: {
     description: 'Click widgets as if a player had',
     variants: [
-      { id: 'click', label: 'Click widgets', template: 'Click {collection}' }
+      { id: 'click', label: 'Click widgets', template: 'Click{{collection}}' }
     ],
     clauses: [
-      { id: 'count', label: 'click them more than once', template: ', {count}' },
-      { id: 'mode', label: 'ignore clickable or click routines', template: ', {mode}' }
+      namedGroupClause(),
+      { id: 'count', label: 'n times', template: ', {count}' },
+      // the option says that something is ignored, the drop-down behind it says
+      // what - starting at the one the library uses most
+      { id: 'mode', label: 'ignore something', template: ', {mode}', add: { mode: 'ignoreClickRoutine' } }
     ],
     parameters: {
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
       count: { type: 'number', default: 1, display: value=>value == 1 ? 'once' : `${value} times` },
       mode: { type: 'enum', values: [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ], default: 'respect', display: {
         respect: 'only the ones that are clickable',
@@ -345,16 +369,17 @@ const routineOperationMetadata = {
   CLONE: {
     description: 'Make copies of widgets',
     variants: [
-      { id: 'clone', label: 'Copy widgets', template: v=>`Make ${v('count') == 1 ? '{count} copy' : '{count} copies'} of {source}` }
+      { id: 'clone', label: 'Copy widgets', template: v=>`Make ${v('count') == 1 ? '{count} copy' : '{count} copies'} of{{source}}` }
     ],
     clauses: [
-      { id: 'offset', label: 'place the copies elsewhere', template: ', offset by {xOffset}, {yOffset}' },
-      { id: 'properties', label: 'change properties of the copies', template: ', and set {properties} on them' },
-      { id: 'recursive', label: 'copy the widgets inside as well', template: ', {recursive}', add: { recursive: true } },
-      { id: 'collection', label: 'remember the copies', template: ' — call the copies {collection}' }
+      namedGroupClause('source'),
+      { id: 'offset', label: 'offset the copies', template: ', offset by {xOffset}, {yOffset}' },
+      { id: 'properties', label: 'set properties on them', template: ', and set {properties} on them' },
+      { id: 'recursive', label: 'the widgets on them', template: ', {recursive}', add: { recursive: true } },
+      { id: 'collection', label: 'name the copies', template: ' — call the copies {collection}' }
     ],
     parameters: {
-      source: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
+      source: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
       count: { type: 'number', default: 1 },
       xOffset: { type: 'number', default: 0 },
       yOffset: { type: 'number', default: 0 },
@@ -369,19 +394,20 @@ const routineOperationMetadata = {
     variants: [
       { id: 'collection', label: 'Count the widgets of a collection', fixed: [ 'holder' ],
         apply: operation=>{ delete operation.holder; },
-        template: 'Count {collection}{{owner}}{{variable}}' },
+        template: 'Count{{collection}}{{owner}}{{variable}}' },
       { id: 'holder', label: 'Count what is in a holder', match: (v, isSet)=>isSet('holder'),
         apply: operation=>{ if(operation.holder === undefined) operation.holder = null; },
         template: 'Count what is in {holder}{{owner}}{{variable}}' }
     ],
     clauses: [
-      { id: 'owner', label: 'only what one player owns', template: ' owned by {owner}', add: { owner: '' } },
-      { id: 'variable', label: 'store the number under another name', template: ' and remember it as {variable}' }
+      Object.assign(namedGroupClause(), { variants: [ 'collection' ] }),
+      { id: 'owner', label: 'owned by a player', template: ' owned by {owner}', add: { owner: '' } },
+      { id: 'variable', label: 'under another name', template: ' and remember it as {variable}' }
     ],
     parameters: {
       owner: { type: 'string', default: null, display: { 'null': 'anyone' } },
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
       variable: { type: 'string', default: 'COUNT' }
     },
     definesVariable: 'variable',
@@ -399,10 +425,13 @@ const routineOperationMetadata = {
   DELETE: {
     description: 'Delete widgets',
     variants: [
-      { id: 'delete', label: 'Delete widgets', template: 'Delete {collection}' }
+      { id: 'delete', label: 'Delete widgets', template: 'Delete{{collection}}' }
+    ],
+    clauses: [
+      namedGroupClause()
     ],
     parameters: {
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets }
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' }
     }
   },
   FLIP: {
@@ -469,36 +498,37 @@ const routineOperationMetadata = {
     variants: [
       { id: 'first', label: 'Read the value of the first widget', fixed: [ 'aggregation' ],
         apply: operation=>{ delete operation.aggregation; },
-        template: 'Read {property} of {collection}{{variable}}' },
+        template: 'Read {property} of{{collection}}{{variable}}' },
       { id: 'last', label: 'Read the value of the last widget', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'last',
         apply: operation=>{ operation.aggregation = 'last'; },
-        template: 'Read the last {property} of {collection}{{variable}}' },
+        template: 'Read the last {property} of{{collection}}{{variable}}' },
       { id: 'sum', label: 'Add the values up', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'sum',
         apply: operation=>{ operation.aggregation = 'sum'; },
-        template: 'Add up {property} of {collection}{{variable}}' },
+        template: 'Add up {property} of{{collection}}{{variable}}' },
       { id: 'average', label: 'Average the values', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'average',
         apply: operation=>{ operation.aggregation = 'average'; },
-        template: 'Average {property} of {collection}{{variable}}' },
+        template: 'Average {property} of{{collection}}{{variable}}' },
       { id: 'median', label: 'Take the middle value', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'median',
         apply: operation=>{ operation.aggregation = 'median'; },
-        template: 'Take the median {property} of {collection}{{variable}}' },
+        template: 'Take the median {property} of{{collection}}{{variable}}' },
       { id: 'min', label: 'Take the smallest value', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'min',
         apply: operation=>{ operation.aggregation = 'min'; },
-        template: 'Take the smallest {property} of {collection}{{variable}}' },
+        template: 'Take the smallest {property} of{{collection}}{{variable}}' },
       { id: 'max', label: 'Take the biggest value', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'max',
         apply: operation=>{ operation.aggregation = 'max'; },
-        template: 'Take the biggest {property} of {collection}{{variable}}' },
+        template: 'Take the biggest {property} of{{collection}}{{variable}}' },
       { id: 'array', label: 'Collect the values of all widgets', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'array',
         apply: operation=>{ operation.aggregation = 'array'; },
-        template: 'Collect all {property} of {collection}{{variable}}' }
+        template: 'Collect all {property} of{{collection}}{{variable}}' }
     ],
     clauses: [
-      { id: 'variable', label: 'store the value under another name', template: ' and remember it as {variable}' },
-      { id: 'skipMissing', label: 'skip widgets without the property', template: ', {skipMissing}', add: { skipMissing: true } }
+      namedGroupClause(),
+      { id: 'variable', label: 'under another name', template: ' and remember it as {variable}' },
+      { id: 'skipMissing', label: 'widgets without the property', template: ', {skipMissing}', add: { skipMissing: true } }
     ],
     parameters: {
       property: { type: 'property', default: 'id' },
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
       aggregation: { type: 'enum', values: [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ], default: 'first' },
       variable: { type: 'string', default: operation=>typeof operation.property == 'string' ? operation.property : 'id' },
       skipMissing: { type: 'enum', values: [ true, false ], default: false, display: yesNo('ignoring the widgets that do not have it', 'counting the widgets that do not have it') }
@@ -530,13 +560,13 @@ const routineOperationMetadata = {
       { id: 'input', label: 'Ask the player', template: 'Ask the player to fill in {fields}' }
     ],
     clauses: [
-      { id: 'header', label: 'give the dialog a title', template: ', titled {header}' },
-      { id: 'confirmButtonText', label: 'rename the confirm button', template: ', confirming with {confirmButtonText}' },
-      { id: 'confirmButtonIcon', label: 'add an icon to the confirm button', template: ' and the icon {confirmButtonIcon}', add: { confirmButtonIcon: 'check' } },
-      { id: 'cancelButtonText', label: 'rename the cancel button', template: ', cancelling with {cancelButtonText}' },
-      { id: 'cancelButtonIcon', label: 'add an icon to the cancel button', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' } },
-      { id: 'css', label: 'style the dialog', template: ', styled {css}' },
-      { id: 'randomRotation', label: 'rotate the dialog randomly', template: ', rotated by up to {randomRotation} degrees', add: { randomRotation: 5 } }
+      { id: 'header', label: 'a title', template: ', titled {header}' },
+      { id: 'confirmButtonText', label: 'the confirm button', template: ', confirming with {confirmButtonText}' },
+      { id: 'confirmButtonIcon', label: 'the confirm icon', template: ' and the icon {confirmButtonIcon}', add: { confirmButtonIcon: 'check' } },
+      { id: 'cancelButtonText', label: 'the cancel button', template: ', cancelling with {cancelButtonText}' },
+      { id: 'cancelButtonIcon', label: 'the cancel icon', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' } },
+      { id: 'css', label: 'a style of its own', template: ', styled {css}' },
+      { id: 'randomRotation', label: 'rotated randomly', template: ', rotated by up to {randomRotation} degrees', add: { randomRotation: 5 } }
     ],
     parameters: {
       fields: { type: 'json', default: [], display: value=>Array.isArray(value) ? `${value.length} field${value.length == 1 ? '' : 's'}` : null },
@@ -584,7 +614,7 @@ const routineOperationMetadata = {
         template: 'Top up {to} from {from,collection} until it holds {fillTo}' }
     ],
     clauses: [
-      { id: 'face', label: 'turn them to a face', template: ' and turn them face {face}', add: { face: 0 } }
+      { id: 'face', label: 'to a face', template: ' and turn them face {face}', add: { face: 0 } }
     ],
     parameters: {
       fillTo: { type: 'number', default: null },
@@ -609,10 +639,10 @@ const routineOperationMetadata = {
       { id: 'movexy', label: 'Move widgets to a position', template: v=>`Move ${widgetsCounted(v, 'count')} from {from} to the position {x}, {y}` }
     ],
     clauses: [
-      { id: 'z', label: 'put them on a layer', template: ' on layer {z}', add: { z: 1 } },
-      { id: 'face', label: 'turn them to a face', template: ' and turn them face {face}', add: { face: 0 } },
-      { id: 'snapToGrid', label: 'ignore the grid', template: ', {snapToGrid}', add: { snapToGrid: false } },
-      { id: 'resetOwner', label: 'keep their owner', template: ', {resetOwner}', add: { resetOwner: false } }
+      { id: 'z', label: 'on a layer', template: ' on layer {z}', add: { z: 1 } },
+      { id: 'face', label: 'to a face', template: ' and turn them face {face}', add: { face: 0 } },
+      { id: 'snapToGrid', label: 'the grid', template: ', {snapToGrid}', add: { snapToGrid: false } },
+      { id: 'resetOwner', label: 'their owner', template: ', {resetOwner}', add: { resetOwner: false } }
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
@@ -632,10 +662,10 @@ const routineOperationMetadata = {
       { id: 'recall', label: 'Recall cards', template: 'Gather all the cards back into {holder}' }
     ],
     clauses: [
-      { id: 'owned', label: 'leave the cards players hold', template: ', {owned}', add: { owned: false } },
-      { id: 'inHolder', label: 'only cards lying on the table', template: ', {inHolder}', add: { inHolder: false } },
-      { id: 'byDistance', label: 'nearest cards first', template: ', {byDistance}', add: { byDistance: true } },
-      { id: 'excludeCollection', label: 'leave some cards where they are', template: ', except {excludeCollection}' }
+      { id: 'owned', label: 'the cards players hold', template: ', {owned}', add: { owned: false } },
+      { id: 'inHolder', label: 'the cards in other holders', template: ', {inHolder}', add: { inHolder: false } },
+      { id: 'byDistance', label: 'the order they come back in', template: ', {byDistance}', add: { byDistance: true } },
+      { id: 'excludeCollection', label: 'leave some out', template: ', except {excludeCollection}' }
     ],
     parameters: {
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
@@ -651,7 +681,7 @@ const routineOperationMetadata = {
       { id: 'reset', label: 'Reset widgets', template: 'Reset every widget to its saved starting state{{property}}' }
     ],
     clauses: [
-      { id: 'property', label: 'read another property than resetProperties', template: ', using the values in {property}' }
+      { id: 'property', label: 'another property', template: ', using the values in {property}' }
     ],
     parameters: {
       property: { type: 'property', default: 'resetProperties' }
@@ -722,12 +752,12 @@ const routineOperationMetadata = {
     // is what a new SELECT starts as, with both halves left blank to fill in.
     newOperation: { func: 'SELECT', property: '', value: '' },
     clauses: [
-      { id: 'max', label: 'only some of them', template: ' at most {max}', add: { max: 1 } },
-      { id: 'random', label: 'pick them at random', template: ' {random}', add: { random: true } },
-      { id: 'source', label: 'only among some widgets', template: ' from {source}' },
-      { id: 'sortBy', label: 'sort them', template: ', sorted by {sortBy}', add: { sortBy: 'value' } },
+      { id: 'max', label: 'only n of them', template: ' at most {max}', add: { max: 1 } },
+      { id: 'random', label: 'at random', template: ' {random}', add: { random: true } },
+      { id: 'source', label: 'among some widgets', template: ' from {source}' },
+      { id: 'sortBy', label: 'in an order', template: ', sorted by {sortBy}', add: { sortBy: 'value' } },
       { id: 'collection', label: 'name the pick', variants: [ 'set' ], template: ' — call them {collection}' },
-      { id: 'collection', label: 'use another pick', variants: [ 'add', 'remove', 'intersect' ], template: ' {collection}' }
+      { id: 'collection', label: 'another pick', variants: [ 'add', 'remove', 'intersect' ], template: ' {collection}' }
     ],
     parameters: {
       max: { type: 'number', default: 999999, special: [ 'all' ], display: { '999999': 'all' } },
@@ -754,11 +784,11 @@ const routineOperationMetadata = {
       // and text after text for a string. So the value decides which of the two
       // sentences a stored operation reads as, and picking the other one makes
       // the value the kind that variant is about.
-      { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], hints: { property: 'value', value: 'number' },
+      { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], hints: { value: 'number' },
         match: v=>v('relation') == '+' && typeof v('value') != 'string',
         apply: operation=>{ operation.relation = '+'; if(typeof operation.value != 'number') operation.value = 1; },
         template: 'Increase {property} of{{collection}} by {value}' },
-      { id: 'subtract', label: 'Decrease a property', fixed: [ 'relation' ], hints: { property: 'value', value: 'number' },
+      { id: 'subtract', label: 'Decrease a property', fixed: [ 'relation' ], hints: { value: 'number' },
         match: v=>v('relation') == '-',
         apply: operation=>{ operation.relation = '-'; if(typeof operation.value != 'number') operation.value = 1; },
         template: 'Decrease {property} of{{collection}} by {value}' },
@@ -778,23 +808,17 @@ const routineOperationMetadata = {
         apply: operation=>{ operation.relation = '+'; if(typeof operation.value != 'string') operation.value = ''; },
         template: 'Append {value} to {property} of{{collection}}' }
     ],
-    // the widgets a SET changes are the picked ones in all but a few hundred of
-    // the library's SETs, so the sentence says so in plain words and the option
-    // is what names a group instead - a collection explicitly set to DEFAULT is
-    // still the picked widgets, so it is the value that decides, not the key
     clauses: [
-      { id: 'collection', label: 'use a named group of widgets',
-        active: v=>v('collection') != 'DEFAULT',
-        // a list of ids written into the operation is not a name to call anybody by
-        template: v=>Array.isArray(v('collection')) ? ' {collection}' : ' the widgets called {collection}',
-        whenOff: ' the picked widgets', add: { collection: '' } }
+      namedGroupClause()
     ],
     // "Set parent of the picked widgets to nothing" is what the raw defaults say,
     // and nobody adds a SET for that: a new one asks which property and which
     // value instead of starting from a value that has to be replaced twice
     newOperation: { func: 'SET', property: '', value: '' },
     parameters: {
-      property: { type: 'property', default: 'parent' },
+      // every one of the seven verbs asks for the same thing in the same word:
+      // what a SET changes is the value a property holds, whichever way it changes it
+      property: { type: 'property', default: 'parent', hint: 'value' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
       relation: { type: 'enum', values: [ '=', '+', '-', '*', '/', '!' ], default: '=' },
       // text in quotes is the difference between the number 1 and the digit 1;
@@ -843,11 +867,11 @@ const routineOperationMetadata = {
       { id: 'sort', label: 'Sort widgets', template: 'Sort {holder,collection}{{key}}' }
     ],
     clauses: [
-      { id: 'key', label: 'sort by another property', template: ' by {key}' },
-      { id: 'reverse', label: 'sort the other way round', template: ', {reverse}', add: { reverse: true } },
-      { id: 'rearrange', label: 'keep them where they are', template: ', {rearrange}', add: { rearrange: false } },
-      { id: 'locales', label: 'sort text for a language', template: ', for the language {locales}', add: { locales: 'en' } },
-      { id: 'options', label: 'fine-tune the text comparison', template: ', with the comparison options {options}' }
+      { id: 'key', label: 'by a property', template: ' by {key}' },
+      { id: 'reverse', label: 'which way round', template: ', {reverse}', add: { reverse: true } },
+      { id: 'rearrange', label: 'move them or not', template: ', {rearrange}', add: { rearrange: false } },
+      { id: 'locales', label: 'for a language', template: ', for the language {locales}', add: { locales: 'en' } },
+      { id: 'options', label: 'how text compares', template: ', with the comparison options {options}' }
     ],
     parameters: {
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
@@ -872,10 +896,10 @@ const routineOperationMetadata = {
       { id: 'swaphands', label: 'Swap the hands of the players', template: 'Pass every hand on to the next seat{{interval}}{{direction}}{{source}}' }
     ],
     clauses: [
-      { id: 'interval', label: 'pass them further than one seat', template: ' but {interval} seats along' },
-      { id: 'direction', label: 'pass them the other way', template: ', {direction}' },
-      { id: 'keepOrder', label: "keep the order of each hand", template: ', {keepOrder}', add: { keepOrder: true } },
-      { id: 'source', label: 'only some of the seats', template: ', among {source}' }
+      { id: 'interval', label: 'n seats along', template: ' but {interval} seats along' },
+      { id: 'direction', label: 'which way round', template: ', {direction}' },
+      { id: 'keepOrder', label: 'the order of each hand', template: ', {keepOrder}', add: { keepOrder: true } },
+      { id: 'source', label: 'among some of the seats', template: ', among {source}' }
     ],
     parameters: {
       source: { type: 'collection', default: 'all', display: { 'all': 'all seats', 'DEFAULT': 'the picked seats' }, widgetType: 'seat' },
@@ -949,8 +973,8 @@ const routineOperationMetadata = {
         template: 'Give the turn to the seat {turn}' }
     ],
     clauses: [
-      { id: 'turn', label: 'skip a few seats', variants: [ 'forward', 'backward' ], template: v=>` by ${v('turn') == 1 ? '{turn} seat' : '{turn} seats'}` },
-      { id: 'source', label: 'only some of the seats', template: ', among {source}' },
+      { id: 'turn', label: 'n seats along', variants: [ 'forward', 'backward' ], template: v=>` by ${v('turn') == 1 ? '{turn} seat' : '{turn} seats'}` },
+      { id: 'source', label: 'among some of the seats', template: ', among {source}' },
       { id: 'collection', label: 'remember the seat', template: ' and remember the seat as {collection}' }
     ],
     parameters: {
@@ -969,8 +993,8 @@ const routineOperationMetadata = {
       { id: 'upload', label: 'Ask the player for a file', template: 'Ask the player for a file{{variable}}' }
     ],
     clauses: [
-      { id: 'variable', label: 'store the name under another name', template: ' and remember its name as {variable}' },
-      { id: 'fileTypes', label: 'only accept some file types', template: ', accepting {fileTypes}' }
+      { id: 'variable', label: 'under another name', template: ' and remember its name as {variable}' },
+      { id: 'fileTypes', label: 'only some file types', template: ', accepting {fileTypes}' }
     ],
     parameters: {
       variable: { type: 'string', default: 'uploadedFileName' },
@@ -1585,7 +1609,31 @@ class RoutineOperationEditor {
     return 'value';
   }
 
+  // what a chip opens: a setting whose answers are a handful of phrases is a
+  // drop-down in the sentence (the same expander the phrase a sentence starts
+  // with opens, one level down), everything else the popup of its own kind
   createPopup(parameterNames) {
+    if(this.parameterIsDropDown(parameterNames)) {
+      const spec = this.parameterSpec(parameterNames[0]);
+      return new RoutineEnumMenu({ values: spec.values, display: spec.display });
+    }
+    return this.createFullPopup(parameterNames);
+  }
+
+  // a chip is a drop-down while its parameter is a setting AND holds one of the
+  // phrases that setting knows: a value the routine works out while it runs is
+  // none of them, and the list would have nothing to show it as
+  parameterIsDropDown(parameterNames) {
+    if(parameterNames.length != 1)
+      return false;
+    const spec = this.parameterSpec(parameterNames[0]);
+    if(!spec || spec.type != 'enum' || !Array.isArray(spec.values))
+      return false;
+    const value = this.parameterValue(parameterNames[0]);
+    return spec.values.some(known=>known === value);
+  }
+
+  createFullPopup(parameterNames) {
     const spec = this.parameterSpec(parameterNames[parameterNames.length-1]);
     // a chip can stand for alternative parameters ({holder,collection}), so the
     // type preset of any of them applies to the picker the chip opens
@@ -1935,15 +1983,23 @@ class RoutineOperationEditor {
     for(const span of $a('span[data-parameter]', dom)) {
       focusable(span, async _=>{
         const parameterNames = span.dataset.parameter.split(',');
-        const popup = this.createPopup(parameterNames);
-        popup.setSource(span);
-        popup.setOperationDetails(this.operation, parameterNames, this.widget, this.variables, this.collections);
-        const values = await newRoutineValues(popup);
+        const values = await this.editParameter(span, parameterNames, this.createPopup(parameterNames));
         if(values !== undefined) // undefined means the popup was dismissed
           this.onNewValue(values);
       });
     }
     return dom;
+  }
+
+  // the popup a chip edits its parameter in, and the hand-over to the full popup
+  // when the drop-down of a setting is asked for something it cannot offer
+  async editParameter(span, parameterNames, popup) {
+    popup.setSource(span);
+    popup.setOperationDetails(this.operation, parameterNames, this.widget, this.variables, this.collections);
+    const values = await newRoutineValues(popup);
+    if(values === routineFullPopupRequest)
+      return this.editParameter(span, parameterNames, this.createFullPopup(parameterNames));
+    return values;
   }
 
   // escapeHTML because parameter values come from untrusted room state
@@ -1953,9 +2009,14 @@ class RoutineOperationEditor {
     const category = this.classifyParameter(resolved, rawValue);
     const displayed = this.getDisplayedValue(spec);
     const missing = this.parameterIsBlank(spec) ? ' routine-editor-parameter-missing' : '';
+    // a setting says so: it carries the same arrow as the phrase the sentence
+    // starts with, because it opens the same kind of list of phrases
+    const isMenu = this.parameterIsDropDown(spec.split(','));
+    const menu = isMenu ? ' routine-editor-parameter-menu' : '';
+    const arrow = isMenu ? '<span class="material-symbols">arrow_drop_down</span>' : '';
     const categoryNames = { func: 'operation', variable: 'variable', collection: 'group of widgets', widget: 'widget', property: 'widget property', number: 'number', value: 'value' };
     const title = `${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}`;
-    return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="${escapeHTML(title)}">${escapeHTML(displayed)}</span>`;
+    return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}${menu}" data-parameter="${spec}" title="${escapeHTML(title)}">${escapeHTML(displayed)}${arrow}</span>`;
   }
 
   // the name of the operation, on a line of its own above the sentence: the
@@ -2015,7 +2076,7 @@ class RoutineOperationEditor {
     for(const [ index, part ] of this.sentenceParts().entries()) {
       if(part.clause) {
         if(this.clauseIsActive(part.clause))
-          html += `<span class="routine-editor-clause">${this.renderTemplateText(part.template)}<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Remove this option">close</span></span>`;
+          html += `<span class="routine-editor-clause">${this.renderTemplateText(part.template)}<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Take this option out of the sentence">do_not_disturb_on</span></span>`;
         else if(part.clause.whenOff)
           html += escapeHTML(part.clause.whenOff); // an option that replaces words says what is there without it
         continue;
@@ -2052,9 +2113,11 @@ class RoutineOperationEditor {
     const addClause = $('.routine-editor-add-clause', dom);
     if(addClause)
       focusable(addClause, async _=>{
+        // the phrase alone, the way the drop-down of the sentence offers the ways
+        // an operation can work: what an option says once it is switched on is
+        // the sentence itself, and the sentence is one click away
         const popup = new RoutineClausePopup(this.clauses().filter(clause=>!this.clauseIsActive(clause)).map(clause=>({
           label: clause.label,
-          sentence: this.renderClauseExample(clause),
           values: this.clauseAddValues(clause)
         })));
         popup.setSource(addClause);
@@ -2063,19 +2126,6 @@ class RoutineOperationEditor {
         if(values !== undefined)
           this.onNewValue(values);
       });
-  }
-
-  // what the option would read as once it is switched on, for the menu offering it
-  renderClauseExample(clause) {
-    const values = this.clauseAddValues(clause);
-    return this.resolveTemplate(clause.template).replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>{
-      const name = spec.split(',').find(p=>typeof values[p] != 'undefined') || spec.split(',')[0];
-      const value = values[name];
-      const words = this.displayedWords(name, value);
-      if(words !== null)
-        return words;
-      return value === null || value === '' ? this.parameterHint(name) : (typeof value == 'object' ? JSON.stringify(value) : value);
-    }).trim().replace(/^[,;]\s*/, '');
   }
 
   // a clickable "!" behind every chip whose parameter needs a word of warning:

@@ -189,7 +189,10 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
     if(options.title)
       div(popout, 'propertyPickerSectionTitle', html(options.title));
 
-    const buttonBar = div(popout, 'propertyPickerSection');
+    // the two ways to fill the picker without the list - picking in the room and
+    // dropping the selection - are one row, so the popout starts with one line of
+    // controls rather than a column of full-width buttons
+    const buttonBar = div(popout, 'propertyPickerSection widgetPickerRow');
     const pickButton = document.createElement('button');
     pickButton.setAttribute('icon', 'colorize');
     pickButton.title = `Click this button and then the ${options.multiple ? 'widgets' : 'widget'} on the table. The type filter applies here as well, so with the type set to holder a click on a card selects the holder it lies on.`;
@@ -245,16 +248,20 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
     const searchSection = div(popout, 'propertyPickerSection');
     div(searchSection, 'propertyPickerSectionTitle', 'Search widgets');
 
+    // the two ways to narrow the list down are one row as well: the type is what
+    // the search is filtered by, so reading them apart on two lines only makes
+    // the popout taller
+    const searchRow = div(searchSection, 'widgetPickerRow');
     const typeNames = typeof editorTypeNames != 'undefined' ? editorTypeNames : {};
     const typeSelect = document.createElement('select');
     typeSelect.innerHTML = '<option value="">any type</option>' + Object.keys(typeNames).map(type=>`<option value="${type}">${typeNames[type]}</option>`).join('');
     typeSelect.value = typeFilter;
-    searchSection.appendChild(typeSelect);
+    searchRow.appendChild(typeSelect);
 
     const search = document.createElement('input');
     search.placeholder = 'Search by ID...';
     search.value = searchTerm;
-    searchSection.appendChild(search);
+    searchRow.appendChild(search);
 
     const list = div(searchSection, 'widgetPickerList');
 

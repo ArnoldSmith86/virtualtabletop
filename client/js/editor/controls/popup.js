@@ -813,6 +813,49 @@ class RoutineClausePopup extends RoutinePopup {
   }
 }
 
+// What the drop-down of a setting reports back when the answer is none of its
+// phrases: the caller (the chip in the sentence) then opens the full popup of
+// the parameter, which can also hold a value the routine works out while it runs.
+const routineFullPopupRequest = { openFullPopup: true };
+
+// The drop-down behind a setting: the phrases it can say, worded the way the
+// sentence words them, and the one it says now marked. A setting with a handful
+// of fixed answers is picked from a list the same way the phrase a sentence
+// starts with is - a popup with a title, a text field and three sections around
+// four phrases is a form where a menu was needed.
+class RoutineEnumMenu extends RoutinePopup {
+  constructor(options={}) {
+    super();
+    this.options = options;
+  }
+
+  offersUseDefault() {
+    return false; // a setting always has a value; the list is what changes it
+  }
+
+  offersValueInput() {
+    return false;
+  }
+
+  show() {
+    if(openRoutinePopup && openRoutinePopup !== this)
+      openRoutinePopup.hide();
+    openRoutinePopup = this;
+    Popup.prototype.show.call(this);
+    this.domElement.classList.add('popup-menu', 'popup-menu-plain');
+    const display = this.options.display || {};
+    const current = this.currentValue();
+    for(const value of this.options.values) {
+      const entry = menuEntry(this.domElement, display[value] != null ? display[value] : String(value), null, _=>this.setNewValue(value));
+      entry.classList.toggle('selected', value === current);
+    }
+    const other = menuEntry(this.domElement, 'something else…', null, _=>this.notifyChangeListeners(routineFullPopupRequest));
+    other.classList.add('popup-menu-entry-other');
+    other.title = 'Use a value the routine works out while it runs instead of one of these';
+    this.moveIntoView();
+  }
+}
+
 class RoutineStringPopup extends RoutinePopup {
   constructor() {
     super();
