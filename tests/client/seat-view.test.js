@@ -466,6 +466,143 @@ describe('a drop into a holder that stacks its children', function() {
   });
 });
 
+// The six cups of the Chinese checkers board they were asked for: a round board
+// in the middle that turns for the viewing player, and beside it a column of
+// cups on the left and one on the right that must not turn, because turning them
+// would throw them out of the layout.
+describe('cycleForViewer', function() {
+  const seating = [
+    { color: 'blue',   angle: 0,   x: 0,   y: 600 },
+    { color: 'black',  angle: 60,  x: 0,   y: 300 },
+    { color: 'red',    angle: 120, x: 0,   y: 0   },
+    { color: 'yellow', angle: 180, x: 500, y: 0   },
+    { color: 'white',  angle: 240, x: 500, y: 300 },
+    { color: 'green',  angle: 300, x: 500, y: 600 }
+  ];
+
+  function createBoard(cupProperties = {}) {
+    const cups = {};
+    seating.forEach(function(seat, index) {
+      createSeat(seat.color, { player: seat.color, index: index + 1, rotation: seat.angle });
+      cups[seat.color] = createWidget(Object.assign({
+        id: `cup-${seat.color}`, x: seat.x, y: seat.y, owner: seat.color, cycleForViewer: 'cups'
+      }, cupProperties));
+    });
+    return cups;
+  }
+
+  // which of the six places each cup is drawn at, by the colour that owns it
+  function placesFor(seatID, cups) {
+    viewAs(seatID);
+    const places = {};
+    for(const seat of seating) {
+      const rendered = cups[seat.color].seatViewRenderedCoord();
+      places[seat.color] = (seating.filter(s=>s.x == rendered.x && s.y == rendered.y)[0] || {}).color;
+    }
+    return places;
+  }
+
+  test('the stored layout is what the seat at the bottom of it sees', function() {
+    const cups = createBoard();
+
+    expect(placesFor('blue', cups)).toEqual({ blue: 'blue', black: 'black', red: 'red', yellow: 'yellow', white: 'white', green: 'green' });
+    for(const seat of seating)
+      expect(cups[seat.color].seatViewOffset).toBe(null);
+  });
+
+  test('every player finds their own one where the layout starts, in the same order', function() {
+    const cups = createBoard();
+
+    // Red sees their own cup in the lower left, Yellow at 9 o'clock, White above
+    // that: the same six cups, still going round the table the same way
+    expect(placesFor('red', cups)).toEqual({ red: 'blue', yellow: 'black', white: 'red', green: 'yellow', blue: 'white', black: 'green' });
+    expect(cups.red.seatViewRenderedCoord()).toEqual({ x: 0, y: 600 });
+    expect(cups.red.cssTransform()).toBe('translate(0px, 600px)');
+
+    expect(placesFor('white', cups)).toEqual({ white: 'blue', green: 'black', blue: 'red', black: 'yellow', red: 'white', yellow: 'green' });
+  });
+
+  test('goes round in the order the seats sit, not in the order of their index', function() {
+    const cups = createBoard();
+    // the turn order says nothing about which chair is next to which
+    for(const seat of seating)
+      widgets.get(seat.color).applyDelta({ index: 100 - seating.indexOf(seat) });
+
+    expect(placesFor('red', cups)).toEqual({ red: 'blue', yellow: 'black', white: 'red', green: 'yellow', blue: 'white', black: 'green' });
+  });
+
+  test('a viewer without a seat gets the layout as it is stored', function() {
+    const cups = createBoard();
+
+    viewAs(null);
+    for(const seat of seating)
+      expect(cups[seat.color].seatViewOffset).toBe(null);
+  });
+
+  test('a seat with nothing in the group moves nothing', function() {
+    const cups = createBoard();
+    createSeat('spectator', { player: 'Mallory', index: 7, rotation: 30 });
+
+    viewAs('spectator');
+    for(const seat of seating)
+      expect(cups[seat.color].seatViewOffset).toBe(null);
+  });
+
+  test('a widget that belongs to no seat stays out of the group', function() {
+    const cups = createBoard();
+    const spare = createWidget({ id: 'spare', x: 900, y: 900, cycleForViewer: 'cups' });
+
+    viewAs('red');
+    expect(spare.seatViewOffset).toBe(null);
+    expect(cups.red.seatViewRenderedCoord()).toEqual({ x: 0, y: 600 });
+  });
+
+  test('groups are kept apart by name, and a seat is its own member', function() {
+    const cups = createBoard();
+    for(const seat of seating)
+      widgets.get(seat.color).applyDelta({ x: seat.x - 60, y: seat.y - 60, cycleForViewer: 'seats' });
+
+    viewAs('red');
+    // the seat plate travels to the place of the blue one, its cup to the place
+    // of the blue cup - the two groups never mix
+    expect(widgets.get('red').seatViewRenderedCoord()).toEqual({ x: -60, y: 540 });
+    expect(cups.red.seatViewRenderedCoord()).toEqual({ x: 0, y: 600 });
+  });
+
+  test('what is inside a cup rides along instead of swapping a second time', function() {
+    const cups = createBoard();
+    const marble = createWidget({ id: 'marble', parent: 'cup-red', x: 5, y: 5, cycleForViewer: 'cups' });
+
+    viewAs('red');
+    // it belongs to no seat of its own, so the cup's swap is all it gets - and
+    // that one it gets through the DOM, like every other child
+    expect(marble.seatViewOffset).toBe(null);
+    expect(cups.red.seatViewOffset).toEqual({ x: 0, y: 600 });
+  });
+
+  test('a cup that is being dragged is drawn where it really is', function() {
+    const cups = createBoard();
+
+    viewAs('red');
+    expect(cups.red.seatViewOffset).not.toBe(null);
+
+    cups.red.state.dragging = 'Alice';
+    viewAs('red');
+    expect(cups.red.seatViewOffset).toBe(null);
+  });
+
+  test('swapping is presentation only', function() {
+    const cups = createBoard();
+
+    viewAs('red');
+    expect(cups.red.get('x')).toBe(0);
+    expect(cups.red.get('y')).toBe(0);
+    expect(cups.red.cssTransform(true)).toBe('translate(0px, 0px)');
+    // and what a drag measures on screen goes back into the shared position
+    expect(cups.red.seatViewSharedCoord(cups.red.seatViewRenderedCoord())).toEqual({ x: 0, y: 0 });
+  });
+});
+
 describe('the per-seat view is presentation only', function() {
   test('the stored properties and the shared transform never change', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });

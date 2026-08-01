@@ -570,7 +570,10 @@ function cancelInputOverlay() {
 }
 
 function removeWidget(widgetID) {
-  const isSeat = widgets.has(widgetID) && widgets.get(widgetID).get('type') == 'seat';
+  const removed = widgets.get(widgetID);
+  const isSeat = removed && removed.get('type') == 'seat';
+  // a swap group with one member less puts the remaining ones in other places
+  const inSeatView = isSeat || !!(removed && removed.get('cycleForViewer'));
   try {
     widgets.get(widgetID).applyRemove();
   } catch(e) {
@@ -581,12 +584,13 @@ function removeWidget(widgetID) {
 
   // removing the seat this client looks through (or the previewed one) changes
   // nothing on the remaining widgets, so nothing else would re-render them
-  if(isSeat) {
+  if(inSeatView) {
     if(getSeatViewPreview() == widgetID)
       setSeatViewPreview(null);
     else
       scheduleSeatViewRefresh();
-    seatsChanged();
+    if(isSeat)
+      seatsChanged();
   }
 }
 

@@ -13,6 +13,13 @@ import { playerName } from './overlays/players.js';
 // content being everything inside it, so facing on the play area covers the
 // pieces on it and facing: 'table' on one of them opts it back out.
 //
+// cycleForViewer is the same idea for what is *not* on the table. The seats,
+// each player's cup, their score box: those sit in the layout beside the table,
+// so turning them with it would throw them out of that layout. Instead the
+// widgets naming the same group swap their stored positions, keeping the order
+// they sit in around the table, so every player finds their own one in the same
+// place and a piece moved from the table into it travels where they expect.
+//
 // All of this is a rendering layer. Nothing here is ever written back: x, y,
 // rotation, parent and every other property stay as they are in the room state,
 // so routines, ${PROPERTY ...}, undo and saved games see identical values on
@@ -187,6 +194,12 @@ export function seatRotation(seat, property = 'viewRotation') {
   return +rotation || 0;
 }
 
+// Where this seat sits around the table, as an angle between 0 and 360. That is
+// the order the swap groups go round in.
+function seatAngle(seat) {
+  return ((seatRotation(seat) % 360) + 360) % 360;
+}
+
 // Quarter turns keep an exact sine and cosine, which is what most tables use;
 // everything else goes through the trigonometry. A drag inverts this to work out
 // the position it stores, but rounds that to whole pixels before writing it, so
@@ -210,4 +223,49 @@ export function ownerSeat(widget) {
   const owners = asArray(widget.get('owner'));
   const seatIDs = asArray(widget.get('linkedToSeat')).concat(asArray(widget.get('onlyVisibleForSeat')));
   return orderedSeats().filter(w=>seatIDs.indexOf(w.get('id')) != -1 || w.get('player') != '' && owners.indexOf(w.get('player')) != -1)[0] || null;
+}
+
+// One swap group, in the order its members sit around the table. A seat is its
+// own member; anything else goes in for the seat it belongs to, so a cup is
+// placed by its owner or its linkedToSeat. A widget whose seat cannot be told
+// stays out of the group and is drawn where it is stored.
+function cycleGroup(name) {
+  return perSweep(`cycle-${name}`, function() {
+    const members = [];
+    for(const widget of widgetFilter(w=>w.get('cycleForViewer') === name)) {
+      const seat = widget.get('type') == 'seat' ? widget : ownerSeat(widget);
+      if(seat)
+        members.push({ widget, seat });
+    }
+    // by where the seats are, not by the order the widgets happen to come in:
+    // the group has to go round the table the same way the table turns, or a
+    // player would find their cup on the wrong side of it
+    return members.sort((a, b)=>seatAngle(a.seat) - seatAngle(b.seat) || a.seat.get('index') - b.seat.get('index') || String(a.widget.get('id')).localeCompare(String(b.widget.get('id'))));
+  });
+}
+
+// Where the viewing player sees this widget instead of where it is stored: the
+// place of the member as many steps back in the group as the viewer sits from
+// its start. The member of the seat at angle 0 - the one at the bottom of the
+// stored layout - is that start, so the viewer's own member lands there and
+// everybody else keeps their place relative to it.
+export function seatCycleOffset(widget) {
+  const name = widget.get('cycleForViewer');
+  if(typeof name != 'string' || name === '')
+    return null;
+  const viewer = viewingSeat();
+  if(!viewer)
+    return null;
+
+  const group = cycleGroup(name);
+  const own = group.findIndex(member=>member.widget == widget);
+  const home = group.findIndex(member=>member.seat == viewer);
+  // home == 0 is the layout as stored, home == -1 a viewer with nothing in this
+  // group - neither moves anything
+  if(own == -1 || home < 1)
+    return null;
+
+  const slot = group[(own - home + group.length) % group.length].widget;
+  const offset = { x: (+slot.get('x') || 0) - (+widget.get('x') || 0), y: (+slot.get('y') || 0) - (+widget.get('y') || 0) };
+  return offset.x || offset.y ? offset : null;
 }

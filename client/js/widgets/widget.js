@@ -6,7 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
-import { ownerSeat, refreshSeatViewBranch, rotateCoord, scheduleSeatViewRefresh, seatRotation, seatViewGeneration, seatViewMarkUsed, viewingPlayerName, viewingSeat, viewingSeatRotation } from '../seatview.js';
+import { ownerSeat, refreshSeatViewBranch, rotateCoord, scheduleSeatViewRefresh, seatCycleOffset, seatRotation, seatViewGeneration, seatViewMarkUsed, viewingPlayerName, viewingSeat, viewingSeatRotation } from '../seatview.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
 // room - being a child of the line is the common shape, not a requirement. This
@@ -28,8 +28,8 @@ const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation'
 const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ]);
 
 // Properties that can change how far the per-seat view turns a widget - either
-// on the widget itself or on everything below it.
-const seatViewRelevantProperties = new Set([ 'dragging', 'facing', 'hoverParent', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'rotateForViewer' ]);
+// on the widget itself or on everything below it - or which place it swaps to.
+const seatViewRelevantProperties = new Set([ 'cycleForViewer', 'dragging', 'facing', 'hoverParent', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'rotateForViewer' ]);
 
 // ... and the ones that decide which container a detached widget borrows its
 // view from while it is being dragged.
@@ -37,7 +37,7 @@ const seatViewFrameProperties = new Set([ 'dragging', 'hoverParent', 'hoverTarge
 
 // Using one of these anywhere in the room switches the per-seat view on for this
 // client. Until then a refresh is a no-op.
-const seatViewEnablingProperties = new Set([ 'facing', 'rotateForViewer', 'viewRotation' ]);
+const seatViewEnablingProperties = new Set([ 'cycleForViewer', 'facing', 'rotateForViewer', 'viewRotation' ]);
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -158,6 +158,7 @@ export class Widget extends StateManaged {
       // readable while their surroundings turn
       rotateForViewer: false,
       facing: null,
+      cycleForViewer: null,
 
       clickRoutine: null,
       doubleClickRoutine: null,
@@ -276,6 +277,11 @@ export class Widget extends StateManaged {
       if(seatViewRelevantProperties.has(key))
         seatViewChanged = true;
     }
+    // a member of a swap group moving moves the place every other member of that
+    // group can be drawn at, so the whole group has to be looked at again
+    if((delta.x !== undefined || delta.y !== undefined) && this.get('cycleForViewer'))
+      seatViewChanged = true;
+
     // picking a widget up and dropping it again has to take effect before the
     // drag measures it, everything else can wait for the next sweep
     if(seatViewFrameChanged && (this.seatViewBorrowed || this.seatViewFrame()))
@@ -3154,6 +3160,12 @@ export class Widget extends StateManaged {
       delta = -viewingSeatRotation(this.seatViewProperty) - this.seatViewInherited;
     }
     this.seatViewDelta = delta || 0; // never -0, which would end up in the CSS
+
+    // Widgets beside the table swap places instead of turning. A widget that is
+    // being dragged is left out: it is drawn where the cursor holds it, and that
+    // is also the place the rest of the group swaps into.
+    if(!this.seatViewOffset && !this.get('dragging'))
+      this.seatViewOffset = seatCycleOffset(this);
   }
 
   // The container a dragged widget has to keep looking like it is inside. A drag
@@ -3205,6 +3217,9 @@ export class Widget extends StateManaged {
   seatViewRenderedCoord(coord = { x: +this.get('x') || 0, y: +this.get('y') || 0 }) {
     if(!this.seatViewOffset)
       return coord;
+    // a swap only moves the widget, so there is no point of rotation to measure
+    if(!this.seatViewBorrowed)
+      return Object.assign({}, coord, { x: coord.x + this.seatViewOffset.x, y: coord.y + this.seatViewOffset.y });
     const origin = getTransformOrigin(this.domElement);
     const turned = rotateCoord({ x: coord.x + origin.x, y: coord.y + origin.y }, this.seatViewBorrowed);
     return Object.assign({}, coord, { x: turned.x + this.seatViewOffset.x - origin.x, y: turned.y + this.seatViewOffset.y - origin.y });
@@ -3216,6 +3231,8 @@ export class Widget extends StateManaged {
   seatViewSharedCoord(coord) {
     if(!this.seatViewOffset)
       return coord;
+    if(!this.seatViewBorrowed)
+      return Object.assign({}, coord, { x: coord.x - this.seatViewOffset.x, y: coord.y - this.seatViewOffset.y });
     const origin = getTransformOrigin(this.domElement);
     const turned = rotateCoord({
       x: coord.x + origin.x - this.seatViewOffset.x,
