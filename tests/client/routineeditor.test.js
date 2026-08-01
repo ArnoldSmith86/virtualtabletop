@@ -80,7 +80,7 @@ describe('routine operation metadata', () => {
       const leads = routineOperationVariantChoices({ func }).map(choice => choice.lead);
       expect(new Set(leads).size).toBe(leads.length); // a drop-down with two identical entries picks nothing
       for (const lead of leads) {
-        expect(lead.length).toBeGreaterThan(2);
+        expect(lead.length).toBeGreaterThan(1); // a single character is not a phrase
         expect(lead[0]).toBe(lead[0].toUpperCase());
       }
     }
@@ -381,7 +381,7 @@ describe('operation rendering', () => {
       editor.setOperationDetails({ state: {} }, operation, [], []);
       return editor.getTemplate();
     };
-    expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('to the {faceCycle} face');
+    expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('to {faceCycle}');
     expect(template({ func: 'FLIP', face: 0 })).toContain('Turn face up');
     expect(template({ func: 'FLIP', face: 1 })).toContain('Turn face down');
     expect(template({ func: 'FLIP', face: 3 })).toContain('Turn to the face {face}');
@@ -392,10 +392,10 @@ describe('operation rendering', () => {
     expect(template({ func: 'AUDIO', silence: true })).toContain('Stop all sounds');
     expect(template({ func: 'SET', relation: '!' })).toContain('on or off');
     expect(template({ func: 'MOVE', fillTo: 3 })).toContain('until it holds {fillTo}');
-    expect(template({ func: 'SELECT', mode: 'add' })).toContain('Add widgets to the selection');
-    expect(template({ func: 'SELECT' })).toContain('Select widgets');
+    expect(template({ func: 'SELECT', mode: 'add' })).toContain('Add to the pick');
+    expect(template({ func: 'SELECT' })).toContain('Pick');
     expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('{seconds} seconds');
-    expect(template({ func: 'TIMER' })).toContain('Start or pause the timer');
+    expect(template({ func: 'TIMER' })).toContain('Start or pause');
     expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Reverse the order');
     expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('a random seat');
     expect(template({ func: 'LABEL', label: 'l1' })).toContain('{label,collection}');
@@ -455,6 +455,58 @@ describe('operation rendering', () => {
     expect(raw.getTemplate()).toBe('{statement}');
   });
 
+  // the wording of the whole catalogue in one place: operations taken from the
+  // games in library/games, each with the sentence it has to read as. Defaults
+  // that mean "not in use" stay out of it, enums and yes/no values are words,
+  // and the name of the operation never turns up in its own sentence.
+  test.each([
+    [ { func: 'SET', collection: [ 'playHolder1' ], property: 'pause', value: true }, 'Set pause of playHolder1 to true' ],
+    [ { func: 'SET', property: 'lastOwner', value: null }, 'Set lastOwner of the picked widgets to null' ],
+    [ { func: 'SELECT', property: 'cardType', value: 'ace' }, 'Pick widgets where cardType is ace' ],
+    [ { func: 'SELECT', type: 'card', max: 5, random: true, source: 'hand', sortBy: 'value', collection: 'aces' },
+      'Pick at most 5 random cards from hand, sorted by value — call them aces' ],
+    [ { func: 'SELECT', mode: 'add', property: 'letter', value: '${value}', collection: 'letters' },
+      'Add to the pick letters: widgets where letter is ${value}' ],
+    [ { func: 'IF', operand1: '${cardType}', operand2: 'boba' }, 'If ${cardType} is boba' ],
+    [ { func: 'IF', condition: '${showLog}' }, 'If this is true: ${showLog}' ],
+    [ { func: 'GET', property: 'cardType' }, 'Read cardType of the picked widgets' ],
+    [ { func: 'GET', property: 'score', aggregation: 'sum', variable: 'total' }, 'Add up score of the picked widgets and remember it as total' ],
+    [ { func: 'CALL', routine: 'startRandomRoutine' }, 'Run the routine startRandomRoutine' ],
+    [ { func: 'CALL', routine: 'dealRoutine', widget: 'deck1', arguments: { count: 5 } }, 'Run the routine dealRoutine of deck1, passing count: 5' ],
+    [ { func: 'MOVE', from: 'deck1', to: 'hand1' }, 'Move 1 widget from deck1 to hand1' ],
+    [ { func: 'MOVE', to: 'discard' }, 'Move all widgets from the picked widgets to discard' ],
+    [ { func: 'COUNT' }, 'Count the picked widgets' ],
+    [ { func: 'COUNT', holder: 'hand1', variable: 'cards' }, 'Count what is in hand1 and remember it as cards' ],
+    [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn face up all widgets in deck1' ],
+    [ { func: 'CLICK', collection: 'myPick', count: 2, mode: 'ignoreClickRoutine' }, 'Click myPick, 2 times, but do not run their click routines' ],
+    [ { func: 'RECALL', holder: 'deck1' }, 'Gather all the cards back into deck1' ],
+    [ { func: 'RECALL', holder: 'deck1', owned: false }, 'Gather all the cards back into deck1, except the cards players hold' ],
+    [ { func: 'SHUFFLE', holder: 'deck1' }, 'Shuffle deck1' ],
+    [ { func: 'SORT', holder: 'deck1' }, 'Sort deck1' ],
+    [ { func: 'SORT', holder: 'deck1', key: 'value', reverse: true }, 'Sort deck1 by value, biggest first' ],
+    [ { func: 'TURN' }, 'Pass the turn on' ],
+    [ { func: 'TURN', turnCycle: 'random' }, 'Give the turn to a random seat' ],
+    [ { func: 'DELETE' }, 'Delete the picked widgets' ],
+    [ { func: 'CLONE', count: 3, properties: { owner: 'red' }, collection: 'newCards' },
+      'Make 3 copies of the picked widgets, and set owner: red on them — call the copies newCards' ],
+    [ { func: 'RESET' }, 'Reset every widget to its saved starting state' ],
+    [ { func: 'TIMER', timer: 'clock1', mode: 'inc', seconds: 10 }, 'Add 10 seconds to the timer clock1' ],
+    [ { func: 'SCORE', seats: 'seat1', mode: 'inc', round: 2, value: 1 }, 'Add 1 to score of seat1 in round 2' ],
+    [ { func: 'AUDIO', source: 'click.mp3' }, 'Play the sound click.mp3' ],
+    [ { func: 'AUDIO', source: 'click.mp3', maxVolume: 0.5 }, 'Play the sound click.mp3 at 50% volume' ],
+    [ { func: 'SWAPHANDS' }, 'Pass every hand on to the next seat' ],
+    [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player to fill in 3 fields, titled Choose a card' ],
+    [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
+    [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number of 1 to 10' ]
+  ])('%j reads as its sentence', (operation, sentence) => {
+    const { dom } = renderOperation(operation);
+    const rendered = dom.querySelector('.routine-editor-sentence').cloneNode(true);
+    for (const icon of rendered.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+      icon.remove();
+    expect(rendered.textContent.replace(/\s+/g, ' ').trim()).toBe(sentence);
+    expect(rendered.textContent).not.toContain(operation.func);
+  });
+
   test('unknown operations are edited as whole JSON', () => {
     const { editor } = renderOperation({ func: 'BOGUS', foo: 1 });
     let result = null;
@@ -475,8 +527,8 @@ describe('picking how an operation works and which options it uses', () => {
   }
 
   test('the sentence reads as the variant the operation matches', () => {
-    expect(renderOperation({ func: 'SET', relation: '+', property: 'x' }).dom.textContent).toContain('Increase the property');
-    expect(renderOperation({ func: 'SET', property: 'x' }).dom.textContent).toContain('Set the property');
+    expect(renderOperation({ func: 'SET', relation: '+', property: 'x' }).dom.textContent).toContain('x of the picked widgets by');
+    expect(renderOperation({ func: 'SET', property: 'x' }).dom.textContent).toContain('x of the picked widgets to');
     expect(renderOperation({ func: 'SHUFFLE', mode: 'riffle' }).dom.textContent).toContain('Riffle shuffle');
   });
 
@@ -549,7 +601,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(withoutFace.querySelector('[data-parameter="face"]')).toBeNull();
     expect(withoutFace.querySelector('.routine-editor-add-clause')).not.toBeNull();
     const withFace = renderOperation({ func: 'MOVE', from: 'a', to: 'b', face: 0 }).dom;
-    expect(withFace.textContent).toContain('and turn them to face');
+    expect(withFace.textContent).toContain('and turn them face up');
     expect(withFace.querySelector('.routine-editor-clause-remove')).not.toBeNull();
   });
 
@@ -571,7 +623,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(offered.map(clause => clause.label)).toContain('nearest cards first');
     const byDistance = offered.find(clause => clause.id == 'byDistance');
     expect(editor.clauseAddValues(byDistance)).toEqual({ byDistance: true }); // switching it on has to change something
-    expect(editor.renderClauseExample(byDistance)).toBe('nearest cards first: true');
+    expect(editor.renderClauseExample(byDistance)).toBe('nearest cards first');
   });
 
   test('parameters no variant and no option words become an option of their own', () => {

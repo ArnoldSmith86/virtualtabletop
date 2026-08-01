@@ -1744,6 +1744,7 @@ function commonInfoTopic(topicName) {
       interval: integer - how many positions each hand is passed around the table (defaults to 1).
       direction: forward/backward/random - how the "next" seat is chosen (defaults to forward). forward/backward step through seats in index order; random pairs seats randomly.
       source: all or collection - the seats involved in the swap (defaults to all).
+      keepOrder: boolean - whether each hand keeps the order it had, instead of arriving in the order the widgets were created (defaults to false).
       </pre>
     `, tutorial: 'functions-swaphands' };
   }
