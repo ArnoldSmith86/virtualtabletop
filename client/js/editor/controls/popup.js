@@ -377,8 +377,13 @@ class RoutinePopup extends Popup {
   }
 
   onOutsideClick(e) {
-    // clicking widgets in the room is how the widget picker works
+    // clicking widgets in the room is how the widget picker works - and a picker
+    // that takes a single widget has already stopped itself by the time the
+    // click arrives here, so while this popup offers the room as an input, a
+    // click in it is that input rather than a click outside the popup
     if(isWidgetPickerActive(null, routineWidgetPickerKey))
+      return;
+    if(this.avoidsPlayArea() && e.target.closest && e.target.closest('#roomArea'))
       return;
     super.onOutsideClick(e);
   }
@@ -512,6 +517,13 @@ class RoutinePopup extends Popup {
     updateSuggestions();
     widgetInput.addEventListener('input', updateSuggestions);
 
+    const apply = _=>{
+      const property = nameInput.value.trim();
+      nameInput.classList.toggle('inputError', !property);
+      if(property)
+        this.setNewValue(propertyReference(property, widgetInput.value.trim()));
+    };
+
     const controls = renderWidgetSelectPopout(host, this.widget, {
       title: 'Read the property from',
       pickerKey: routineWidgetPickerKey,
@@ -520,6 +532,11 @@ class RoutinePopup extends Popup {
       apply: widgetID=>{
         widgetInput.value = widgetID;
         updateSuggestions();
+        // with the property named already, picking the widget is the last thing
+        // the value was missing - waiting for another click on "use property"
+        // only leaves the popup looking like it did nothing
+        if(nameInput.value.trim())
+          apply();
       },
       onClear: _=>{
         widgetInput.value = '';
@@ -537,12 +554,6 @@ class RoutinePopup extends Popup {
       this.moveIntoView();
     };
 
-    const apply = _=>{
-      const property = nameInput.value.trim();
-      nameInput.classList.toggle('inputError', !property);
-      if(property)
-        this.setNewValue(propertyReference(property, widgetInput.value.trim()));
-    };
     for(const input of [ nameInput, widgetInput ])
       input.addEventListener('keydown', e=>{
         if(e.key == 'Enter')
@@ -723,6 +734,7 @@ class RoutineOperationPopup extends RoutinePopup {
     showEntries();
 
     this.moveIntoView();
+    search.focus(); // the list is long, so typing is where this popup is used from
   }
 }
 

@@ -391,7 +391,7 @@ describe('operation rendering', () => {
     expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
     expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
     expect(template({ func: 'AUDIO', silence: true })).toContain('Stop all sounds');
-    expect(template({ func: 'SET', relation: '!' })).toContain('on or off');
+    expect(template({ func: 'SET', relation: '!' })).toContain('Toggle {property}');
     expect(template({ func: 'MOVE', fillTo: 3 })).toContain('until it holds {fillTo}');
     expect(template({ func: 'SELECT', mode: 'add' })).toContain('Add to the pick');
     expect(template({ func: 'SELECT' })).toContain('Pick');
@@ -463,6 +463,14 @@ describe('operation rendering', () => {
   test.each([
     [ { func: 'SET', collection: [ 'playHolder1' ], property: 'pause', value: true }, 'Set pause of playHolder1 to true' ],
     [ { func: 'SET', property: 'lastOwner', value: null }, 'Set lastOwner of the picked widgets to null' ],
+    // the six ways a SET can work, each as the catalogue words it
+    [ { func: 'SET', property: 'rotation', value: 90 }, 'Set rotation of the picked widgets to 90' ],
+    [ { func: 'SET', property: 'score', collection: 'myPick', value: 0 }, 'Set score of the widgets called myPick to 0' ],
+    [ { func: 'SET', property: 'value', relation: '+', value: 1 }, 'Increase value of the picked widgets by 1' ],
+    [ { func: 'SET', property: 'value', relation: '-', value: 1 }, 'Decrease value of the picked widgets by 1' ],
+    [ { func: 'SET', property: 'x', relation: '*', value: 2 }, 'Multiply x of the picked widgets by 2' ],
+    [ { func: 'SET', property: 'clickable', relation: '!' }, 'Toggle clickable of the picked widgets' ],
+    [ { func: 'SET', property: 'text', relation: '+', value: ' (used)' }, 'Append " (used)" to text of the picked widgets' ],
     [ { func: 'SELECT', property: 'cardType', value: 'ace' }, 'Pick widgets where cardType is ace' ],
     // the condition is always part of a SELECT: the engine filters by it either
     // way, and its defaults mean "the widgets lying on the table"
@@ -529,10 +537,60 @@ describe('picking how an operation works and which options it uses', () => {
     return { editor, dom };
   }
 
+  test('a blank says what kind of value belongs there, in red', () => {
+    const { dom } = renderOperation({ func: 'SET', property: '', value: '' });
+    const blanks = [...dom.querySelectorAll('.routine-editor-parameter-missing')];
+    expect(blanks.map(b => b.textContent)).toEqual([ 'property', 'number or text' ]);
+    // what the operation does can word it better than the type of the parameter
+    expect(renderOperation({ func: 'SET', relation: '+', property: '' }).dom.textContent).toContain('value of the picked widgets by number');
+    expect(renderOperation({ func: 'SET', relation: '+', property: '', value: '' }).dom.textContent).toContain('"text" to property of the picked widgets');
+    // a widget parameter says which kind of widget it wants
+    expect(renderOperation({ func: 'MOVE', from: 'deck1' }).dom.textContent).toContain('from deck1 to holder');
+    // and a value that has a wording of its own is not a blank
+    expect(renderOperation({ func: 'SELECT', property: 'parent' }).dom.querySelector('.routine-editor-parameter-missing')).toBeNull();
+  });
+
+  test('the widgets a SET changes are words until the option names a group', () => {
+    const withoutCollection = renderOperation({ func: 'SET', property: 'x', value: 1 }).dom;
+    expect(withoutCollection.textContent).toContain('of the picked widgets');
+    expect(withoutCollection.querySelector('[data-parameter="collection"]')).toBeNull();
+    const { editor, dom } = renderOperation({ func: 'SET', property: 'x', value: 1, collection: 'myPick' });
+    expect(dom.textContent).toContain('of the widgets called myPick');
+    // and the x behind it goes back to the picked widgets
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    dom.querySelector('.routine-editor-clause-remove').dispatchEvent(new Event('click'));
+    expect(result.collection).toBeUndefined();
+    // an explicit DEFAULT means the picked widgets as well, so it reads as them
+    expect(renderOperation({ func: 'SET', property: 'x', value: 1, collection: 'DEFAULT' }).dom.textContent).toContain('of the picked widgets');
+  });
+
   test('the sentence reads as the variant the operation matches', () => {
     expect(renderOperation({ func: 'SET', relation: '+', property: 'x' }).dom.textContent).toContain('x of the picked widgets by');
     expect(renderOperation({ func: 'SET', property: 'x' }).dom.textContent).toContain('x of the picked widgets to');
     expect(renderOperation({ func: 'SHUFFLE', mode: 'riffle' }).dom.textContent).toContain('Riffle shuffle');
+  });
+
+  // the order of https://agent.virtualtabletop.io/reports/routine-grammar/ - the
+  // phrasing games write most often is the first entry, not the last one
+  test('the drop-down offers the ways to work in the order of the grammar catalogue', () => {
+    const leads = func => routineOperationVariantChoices({ func }).map(c => c.lead);
+    expect(leads('SET')).toEqual([ 'Set', 'Increase', 'Decrease', 'Multiply', 'Divide', 'Toggle', 'Append' ]);
+    expect(leads('SELECT')[0]).toBe('Pick');
+    expect(leads('SCORE')[0]).toBe('Set');
+    expect(leads('TURN')).toEqual([ 'Pass the turn on', 'Pass the turn back', 'Give the turn to a random seat', 'Give the turn to the seat at position', 'Give the turn to the seat' ]);
+    expect(leads('GET')[0]).toBe('Read');
+    expect(leads('SHUFFLE')[0]).toBe('Shuffle');
+    // and the one an operation without a discriminating parameter reads as is
+    // still the one without a match(), wherever the list puts it
+    for (const func in routineOperationMetadata) {
+      const editor = editorForOperation({ func });
+      editor.setOperationDetails({ state: {} }, { func }, [], []);
+      const variants = routineOperationMetadata[func].variants;
+      const fallback = variants.find(variant => !variant.match);
+      if (fallback)
+        expect(`${func}.${editor.currentVariant().id}`).toBe(`${func}.${fallback.id}`);
+    }
   });
 
   test('the phrase the sentence starts with offers the other ways it can work', () => {
@@ -594,6 +652,8 @@ describe('picking how an operation works and which options it uses', () => {
     const names = () => [...popup.domElement.querySelectorAll('.popup-operation-func')].map(e => e.textContent);
     expect(names().length).toBe(Object.keys(routineOperationMetadata).length + 2); // + var and //
     expect(names()).toContain('AUDIO');
+    // the search box has the focus, so the list is narrowed down by typing
+    expect(document.activeElement).toBe(popup.domElement.querySelector('.popup-property-search'));
     popup.domElement.querySelector('.popup-property-search').value = 'shuffle';
     popup.domElement.querySelector('.popup-property-search').dispatchEvent(new Event('input'));
     expect(names()).toEqual([ 'SHUFFLE' ]);
@@ -629,8 +689,9 @@ describe('picking how an operation works and which options it uses', () => {
         icon.remove();
       return sentence.textContent.replace(/\s+/g, ' ').trim();
     };
-    expect(sentenceOf(newOperation('SELECT'))).toBe('Pick widgets where ? is ?');
-    expect(sentenceOf(newOperation('SET'))).toBe('Set ? of the picked widgets to ?');
+    // a blank says what kind of value belongs there instead of asking with a "?"
+    expect(sentenceOf(newOperation('SELECT'))).toBe('Pick widgets where property is value');
+    expect(sentenceOf(newOperation('SET'))).toBe('Set property of the picked widgets to number or text');
     // everything else is nothing but its func
     expect(newOperation('SHUFFLE')).toEqual({ func: 'SHUFFLE' });
   });
@@ -1147,10 +1208,10 @@ describe('resetting parameters to their default', () => {
     expect(editor.getTemplate()).toContain('{operand1} {relation} {operand2}');
   });
 
-  test('default-null parameters display as unset, explicit null keeps its display', () => {
+  test('default-null parameters display as the blank they are, explicit null keeps its display', () => {
     const editor = editorForOperation({ func: 'SELECT' });
     editor.setOperationDetails({ state: {} }, { func: 'SELECT' }, [], []);
-    expect(editor.getDisplayedValue('sortBy')).toBe('unset');
+    expect(editor.getDisplayedValue('sortBy')).toBe('number or text');
     const setEditor = editorForOperation({ func: 'SET', value: null });
     setEditor.setOperationDetails({ state: {} }, { func: 'SET', value: null }, [], []);
     expect(String(setEditor.getDisplayedValue('value'))).toBe('null'); // explicit null is a real value, rendered as-is
@@ -1528,6 +1589,29 @@ describe('the widget property builder', () => {
     expect(notified).toBe(false);
     expect(name.classList.contains('inputError')).toBe(true);
     popup.hide();
+  });
+
+  test('picking the widget in the room fills the value in instead of dismissing the popup', async () => {
+    const roomArea = div(document.body, '');
+    roomArea.id = 'roomArea';
+    const clickedWidget = div(roomArea, '');
+    const popup = showPopup({ func: 'LABEL' }, [ 'value' ], button1);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    parts(popup).name.value = 'owner';
+    popup.domElement.querySelector('.propertyExpandButton').onclick(new Event('click'));
+    [...popup.domElement.querySelectorAll('.widgetSelectPopout button')].find(b => b.textContent == 'Pick in the room').onclick();
+    await new Promise(resolve => setTimeout(resolve, 0)); // outside clicks are listened for a tick after showing
+
+    expect(handleWidgetPickerClick(widgets.get('card1'))).toBe(true);
+    clickedWidget.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    // the pick is the last thing the value was missing, and the click that made
+    // it must not count as a click outside the popup
+    expect(value).toEqual({ value: '${PROPERTY owner OF card1}' });
+    expect(parts(popup).widget.value).toBe('card1');
+    expect(document.getElementById('editor').contains(popup.domElement)).toBe(true);
+    popup.hide();
+    roomArea.remove();
   });
 });
 

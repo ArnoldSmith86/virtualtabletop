@@ -220,6 +220,15 @@
   background: var(--backgroundHighlightColor1);
 }
 
+/* the entry the pointer is on turns from the operation color into the text
+   color - black on the white popup, white on the dark one. Another shade of the
+   same blue is not a color change in light mode, and a third color (the teal the
+   popup buttons use) reads as a third kind of thing rather than as "this one". */
+.inline-popup .popup-menu-entry:hover,
+body.edit.darkMode .inline-popup .popup-menu-entry:hover {
+  color: var(--textColor);
+}
+
 .inline-popup button {
   margin: 2px;
   padding: 2px 8px;

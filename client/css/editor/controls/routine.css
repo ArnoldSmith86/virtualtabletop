@@ -281,9 +281,11 @@
   background: var(--routineOperationColor);
 }
 
+/* a blank in the sentence: the word says what kind of value belongs there, and
+   the red says it is not one yet - a dashed box around it as well only makes the
+   longer hints ("group of widgets") look like an error message */
 .routine-editor-parameter-missing,
 body.edit.darkMode .routine-editor-parameter-missing {
-  outline: 1px dashed var(--textHighlightColor3);
   color: var(--textHighlightColor3);
 }
 

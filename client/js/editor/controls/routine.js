@@ -6,9 +6,12 @@
 //
 // An operation is described by two tables:
 //
-//   variants - the ways the operation can work, i.e. what it does at all. The
-//     first variant whose match() fits the operation is the one it is shown as,
-//     so the last one is the fallback. Every sentence starts with the words that
+//   variants - the ways the operation can work, i.e. what it does at all. They
+//     are listed in the order the drop-down offers them, which is the order of
+//     the grammar catalogue: the phrasing games write most often first. Which
+//     one an operation is shown as is decided by match() - the first variant
+//     whose match() fits it, with the one without a match() as the fallback,
+//     wherever in the list it sits. Every sentence starts with the words that
 //     say what the operation does ("Turn face up", "Move widgets from"); those
 //     words are the drop-down that switches between the variants, so word every
 //     template so that what tells the variants apart comes before the first
@@ -23,7 +26,12 @@
 //     the operation actually does. The "add option" button behind the sentence
 //     offers the ones that are off, and every clause shown has an x that removes
 //     it again. Parameters no variant and no clause mentions become a clause of
-//     their own, so nothing an operation supports is unreachable.
+//     their own, so nothing an operation supports is unreachable. A clause can
+//     also replace words instead of adding them: whenOff is what the sentence
+//     says while the option is off (SET reads "of the picked widgets" until the
+//     collection option names a group of widgets), and active() decides when a
+//     clause counts as in use where being set is not the same as being in use (a
+//     collection explicitly set to DEFAULT is still the picked widgets).
 //
 // What belongs in the sentence and what belongs in a clause follows one rule: a
 // parameter whose default means "not in use" (SELECT max, SELECT source, GET
@@ -70,6 +78,13 @@
 // the value, or a function of it where the words are computed (a volume as a
 // percentage, a list of ids spelled out).
 //
+// hint is the word a parameter shows while it has no value yet, in red: a fresh
+// SET reads "Set property of the picked widgets to number or text" instead of
+// asking what belongs in a "?" and answering it in a hover tip. It defaults to
+// what the parameter takes (a widgets parameter to the kind of widget it wants),
+// and a variant may word it differently through its own hints table - what an
+// Increase changes is the number a property holds, not any property.
+//
 // widgetType presets the picker's type filter for parameters that almost always
 // name a widget of one type (SHUFFLE holder is a holder, TIMER timer a timer).
 // It is only the initial value of the filter dropdown - the type can be changed
@@ -96,6 +111,19 @@
 function collectionReplacedBy(parameter) {
   return v=>v(parameter) != null ? { collection: `ignored because ${parameter} is set` } : {};
 }
+
+// what a blank says when nothing more specific is worded for it: the kind of
+// value the parameter takes, in the words the popup it opens uses
+const parameterTypeHints = {
+  number: 'number',
+  string: 'text',
+  property: 'property',
+  widgets: 'widget',
+  collection: 'group of widgets',
+  json: 'number or text',
+  color: 'color',
+  icon: 'icon'
+};
 
 // a collection left at DEFAULT is whatever the operations before it picked, and
 // that is what the sentence says instead of the name the engine uses for it.
@@ -183,15 +211,15 @@ const routineOperationMetadata = {
     description: 'Play a sound',
     variants: [
       {
+        id: 'play', label: 'Play a sound', fixed: [ 'silence' ],
+        apply: operation=>{ delete operation.silence; },
+        template: 'Play the sound {source}'
+      },
+      {
         id: 'silence', label: 'Stop all sounds', fixed: [ 'silence' ],
         match: v=>v('silence'),
         apply: operation=>{ operation.silence = true; },
         template: 'Stop all sounds'
-      },
-      {
-        id: 'play', label: 'Play a sound', fixed: [ 'silence' ],
-        apply: operation=>{ delete operation.silence; },
-        template: 'Play the sound {source}'
       }
     ],
     clauses: [
@@ -201,7 +229,7 @@ const routineOperationMetadata = {
       { id: 'length', label: 'stop after a while', template: ', stopping after {length} milliseconds', add: { length: 1000 } }
     ],
     parameters: {
-      source: { type: 'string', default: '' },
+      source: { type: 'string', default: '', hint: 'file name' },
       maxVolume: { type: 'number', default: 1.0, display: value=>typeof value == 'number' ? `${Math.round(value*100)}%` : null },
       length: { type: 'number', default: null },
       player: { type: 'string', default: null, display: { 'null': 'everyone' } },
@@ -339,12 +367,12 @@ const routineOperationMetadata = {
   COUNT: {
     description: 'Count widgets',
     variants: [
-      { id: 'holder', label: 'Count what is in a holder', match: (v, isSet)=>isSet('holder'),
-        apply: operation=>{ if(operation.holder === undefined) operation.holder = null; },
-        template: 'Count what is in {holder}{{owner}}{{variable}}' },
       { id: 'collection', label: 'Count the widgets of a collection', fixed: [ 'holder' ],
         apply: operation=>{ delete operation.holder; },
-        template: 'Count {collection}{{owner}}{{variable}}' }
+        template: 'Count {collection}{{owner}}{{variable}}' },
+      { id: 'holder', label: 'Count what is in a holder', match: (v, isSet)=>isSet('holder'),
+        apply: operation=>{ if(operation.holder === undefined) operation.holder = null; },
+        template: 'Count what is in {holder}{{owner}}{{variable}}' }
     ],
     clauses: [
       { id: 'owner', label: 'only what one player owns', template: ' owned by {owner}', add: { owner: '' } },
@@ -395,7 +423,7 @@ const routineOperationMetadata = {
     ],
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
-      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: thePick },
       face: { type: 'number', default: null, display: { 'null': 'next' } },
       faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward', display: { forward: 'the next face', backward: 'the previous face', random: 'a random face' } }
@@ -412,15 +440,15 @@ const routineOperationMetadata = {
   FOREACH: {
     description: 'Repeat operations for each entry',
     variants: [
+      { id: 'collection', label: 'For each widget of a collection',
+        apply: operation=>{ delete operation['in']; delete operation.range; },
+        template: 'For each widget of {in,range,collection}' },
       { id: 'list', label: 'For each entry of a list', match: v=>v('in') != null,
         apply: operation=>{ delete operation.range; delete operation.collection; if(operation['in'] === undefined) operation['in'] = []; },
         template: 'For each entry of {in,range,collection}' },
       { id: 'range', label: 'For each number of a range', match: v=>v('range') != null,
         apply: operation=>{ delete operation['in']; delete operation.collection; if(operation.range === undefined) operation.range = [ 1, 10, 1 ]; },
-        template: 'For each number of {in,range,collection}' },
-      { id: 'collection', label: 'For each widget of a collection',
-        apply: operation=>{ delete operation['in']; delete operation.range; },
-        template: 'For each widget of {in,range,collection}' }
+        template: 'For each number of {in,range,collection}' }
     ],
     parameters: {
       'in': { type: 'json', default: null, display: listWords },
@@ -439,12 +467,12 @@ const routineOperationMetadata = {
   GET: {
     description: 'Read a property of widgets',
     variants: [
+      { id: 'first', label: 'Read the value of the first widget', fixed: [ 'aggregation' ],
+        apply: operation=>{ delete operation.aggregation; },
+        template: 'Read {property} of {collection}{{variable}}' },
       { id: 'last', label: 'Read the value of the last widget', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'last',
         apply: operation=>{ operation.aggregation = 'last'; },
         template: 'Read the last {property} of {collection}{{variable}}' },
-      { id: 'array', label: 'Collect the values of all widgets', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'array',
-        apply: operation=>{ operation.aggregation = 'array'; },
-        template: 'Collect all {property} of {collection}{{variable}}' },
       { id: 'sum', label: 'Add the values up', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'sum',
         apply: operation=>{ operation.aggregation = 'sum'; },
         template: 'Add up {property} of {collection}{{variable}}' },
@@ -460,9 +488,9 @@ const routineOperationMetadata = {
       { id: 'max', label: 'Take the biggest value', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'max',
         apply: operation=>{ operation.aggregation = 'max'; },
         template: 'Take the biggest {property} of {collection}{{variable}}' },
-      { id: 'first', label: 'Read the value of the first widget', fixed: [ 'aggregation' ],
-        apply: operation=>{ delete operation.aggregation; },
-        template: 'Read {property} of {collection}{{variable}}' }
+      { id: 'array', label: 'Collect the values of all widgets', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'array',
+        apply: operation=>{ operation.aggregation = 'array'; },
+        template: 'Collect all {property} of {collection}{{variable}}' }
     ],
     clauses: [
       { id: 'variable', label: 'store the value under another name', template: ' and remember it as {variable}' },
@@ -482,18 +510,18 @@ const routineOperationMetadata = {
   IF: {
     description: 'Run operations only under a condition',
     variants: [
-      { id: 'condition', label: 'Check a written condition', match: (v, isSet)=>isSet('condition'),
-        apply: operation=>{ if(operation.condition === undefined) operation.condition = ''; },
-        template: 'If this is true: {condition}' },
       { id: 'compare', label: 'Compare two values', fixed: [ 'condition' ],
         apply: operation=>{ delete operation.condition; },
-        template: 'If {operand1} {relation} {operand2}' }
+        template: 'If {operand1} {relation} {operand2}' },
+      { id: 'condition', label: 'Check a written condition', match: (v, isSet)=>isSet('condition'),
+        apply: operation=>{ if(operation.condition === undefined) operation.condition = ''; },
+        template: 'If this is true: {condition}' }
     ],
     parameters: {
-      condition: { type: 'string', default: null },
-      operand1: { type: 'string', default: null, display: { 'null': '?' } },
+      condition: { type: 'string', default: null, hint: 'condition' },
+      operand1: { type: 'string', default: null, hint: 'value' },
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>' ], default: '==', display: comparisonWords },
-      operand2: { type: 'string', default: null, display: { 'null': '?' } }
+      operand2: { type: 'string', default: null, hint: 'value' }
     }
   },
   INPUT: {
@@ -548,12 +576,12 @@ const routineOperationMetadata = {
   MOVE: {
     description: 'Move widgets into a holder',
     variants: [
-      { id: 'fillTo', label: 'Fill a holder up', match: v=>v('fillTo'),
-        apply: operation=>{ delete operation.count; if(!operation.fillTo) operation.fillTo = 1; },
-        template: 'Top up {to} from {from,collection} until it holds {fillTo}' },
       { id: 'move', label: 'Move widgets', fixed: [ 'fillTo' ],
         apply: operation=>{ delete operation.fillTo; },
-        template: v=>`Move ${widgetsCounted(v, 'count')} from {from,collection} to {to}` }
+        template: v=>`Move ${widgetsCounted(v, 'count')} from {from,collection} to {to}` },
+      { id: 'fillTo', label: 'Fill a holder up', match: v=>v('fillTo'),
+        apply: operation=>{ delete operation.count; if(!operation.fillTo) operation.fillTo = 1; },
+        template: 'Top up {to} from {from,collection} until it holds {fillTo}' }
     ],
     clauses: [
       { id: 'face', label: 'turn them to a face', template: ' and turn them face {face}', add: { face: 0 } }
@@ -561,9 +589,9 @@ const routineOperationMetadata = {
     parameters: {
       fillTo: { type: 'number', default: null },
       count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ] },
-      from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
+      from: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
-      to: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
+      to: { type: 'widgets', default: null, widgetType: 'holder' },
       face: { type: 'number', default: null, display: faceWords }
     },
     ignored: (v, isSet)=>{
@@ -588,7 +616,7 @@ const routineOperationMetadata = {
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
-      from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
+      from: { type: 'widgets', default: null, widgetType: 'holder' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
       z: { type: 'number', default: null, display: { 'null': 'unchanged' } },
@@ -610,7 +638,7 @@ const routineOperationMetadata = {
       { id: 'excludeCollection', label: 'leave some cards where they are', template: ', except {excludeCollection}' }
     ],
     parameters: {
-      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       owned: { type: 'enum', values: [ true, false ], default: true, display: yesNo('including the cards players hold', 'except the cards players hold') },
       inHolder: { type: 'enum', values: [ true, false ], default: true, display: yesNo('including the cards inside other holders', 'only the cards lying on the table') },
       excludeCollection: { type: 'collection', default: null, display: pickedWidgets },
@@ -632,12 +660,12 @@ const routineOperationMetadata = {
   ROTATE: {
     description: 'Rotate widgets',
     variants: [
-      { id: 'set', label: 'Turn widgets to an angle', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
-        apply: operation=>{ operation.mode = 'set'; },
-        template: v=>`Turn ${widgetsCounted(v, 'count')} in {holder,collection} to {angle} degrees` },
       { id: 'add', label: 'Turn widgets by an angle', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: v=>`Rotate ${widgetsCounted(v, 'count')} in {holder,collection} by {angle} degrees` }
+        template: v=>`Rotate ${widgetsCounted(v, 'count')} in {holder,collection} by {angle} degrees` },
+      { id: 'set', label: 'Turn widgets to an angle', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
+        apply: operation=>{ operation.mode = 'set'; },
+        template: v=>`Turn ${widgetsCounted(v, 'count')} in {holder,collection} to {angle} degrees` }
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
@@ -651,15 +679,15 @@ const routineOperationMetadata = {
   SCORE: {
     description: 'Change the score of seats',
     variants: [
+      { id: 'set', label: 'Set the score', fixed: [ 'mode' ],
+        apply: operation=>{ delete operation.mode; },
+        template: 'Set {property} of {seats}{{round}} to {value}' },
       { id: 'inc', label: 'Add to the score', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
         template: 'Add {value} to {property} of {seats}{{round}}' },
       { id: 'dec', label: 'Subtract from the score', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: 'Subtract {value} from {property} of {seats}{{round}}' },
-      { id: 'set', label: 'Set the score', fixed: [ 'mode' ],
-        apply: operation=>{ delete operation.mode; },
-        template: 'Set {property} of {seats}{{round}} to {value}' }
+        template: 'Subtract {value} from {property} of {seats}{{round}}' }
     ],
     clauses: [
       { id: 'round', label: 'a round of its own', template: ' in round {round}', add: { round: 1 } }
@@ -675,6 +703,9 @@ const routineOperationMetadata = {
   SELECT: {
     description: 'Pick the widgets the next operations work on',
     variants: [
+      { id: 'set', label: 'Select widgets', fixed: [ 'mode' ],
+        apply: operation=>{ delete operation.mode; },
+        template: 'Pick{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}{{collection}}' },
       { id: 'add', label: 'Add widgets to a collection', fixed: [ 'mode' ], match: v=>v('mode') == 'add',
         apply: operation=>{ operation.mode = 'add'; },
         template: 'Add to the pick{{collection}}:{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
@@ -683,10 +714,7 @@ const routineOperationMetadata = {
         template: 'Remove from the pick{{collection}}:{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
       { id: 'intersect', label: 'Narrow a collection down', fixed: [ 'mode' ], match: v=>v('mode') == 'intersect',
         apply: operation=>{ operation.mode = 'intersect'; },
-        template: 'Narrow the pick{{collection}} down to{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
-      { id: 'set', label: 'Select widgets', fixed: [ 'mode' ],
-        apply: operation=>{ delete operation.mode; },
-        template: 'Pick{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}{{collection}}' }
+        template: 'Narrow the pick{{collection}} down to{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' }
     ],
     // the condition is not an option: the engine always filters by it, so a
     // SELECT that does not name one picks whatever has no parent - the widgets
@@ -707,7 +735,7 @@ const routineOperationMetadata = {
       source: { type: 'collection', default: 'all', display: { 'all': 'all widgets', 'DEFAULT': 'the picked widgets' } },
       property: { type: 'property', default: 'parent' },
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>', 'in' ], default: '==', display: comparisonWords },
-      value: { type: 'string', default: null, display: { 'null': 'nothing' } },
+      value: { type: 'string', default: null, display: { 'null': 'nothing' }, hint: 'value' },
       mode: { type: 'enum', values: [ 'set', 'add', 'remove', 'intersect' ], default: 'set' },
       collection: { type: 'collection', default: 'DEFAULT', display: thePick },
       sortBy: { type: 'json', default: null, display: listWords },
@@ -718,24 +746,48 @@ const routineOperationMetadata = {
   SET: {
     description: 'Change a property of widgets',
     variants: [
-      { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], match: v=>v('relation') == '+',
-        apply: operation=>{ operation.relation = '+'; },
-        template: 'Increase {property} of {collection} by {value}' },
-      { id: 'subtract', label: 'Decrease a property', fixed: [ 'relation' ], match: v=>v('relation') == '-',
-        apply: operation=>{ operation.relation = '-'; },
-        template: 'Decrease {property} of {collection} by {value}' },
-      { id: 'multiply', label: 'Multiply a property', fixed: [ 'relation' ], match: v=>v('relation') == '*',
-        apply: operation=>{ operation.relation = '*'; },
-        template: 'Multiply {property} of {collection} by {value}' },
-      { id: 'divide', label: 'Divide a property', fixed: [ 'relation' ], match: v=>v('relation') == '/',
-        apply: operation=>{ operation.relation = '/'; },
-        template: 'Divide {property} of {collection} by {value}' },
-      { id: 'toggle', label: 'Switch a property on or off', fixed: [ 'relation' ], match: v=>v('relation') == '!',
-        apply: operation=>{ operation.relation = '!'; },
-        template: 'Switch {property} of {collection} on or off' },
       { id: 'set', label: 'Set a property', fixed: [ 'relation' ],
         apply: operation=>{ delete operation.relation; },
-        template: 'Set {property} of {collection} to {value}' }
+        template: 'Set {property} of{{collection}} to {value}' },
+      // increasing and appending are the same relation to the engine: it adds
+      // the value to what the property holds, which is arithmetic for a number
+      // and text after text for a string. So the value decides which of the two
+      // sentences a stored operation reads as, and picking the other one makes
+      // the value the kind that variant is about.
+      { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], hints: { property: 'value', value: 'number' },
+        match: v=>v('relation') == '+' && typeof v('value') != 'string',
+        apply: operation=>{ operation.relation = '+'; if(typeof operation.value != 'number') operation.value = 1; },
+        template: 'Increase {property} of{{collection}} by {value}' },
+      { id: 'subtract', label: 'Decrease a property', fixed: [ 'relation' ], hints: { property: 'value', value: 'number' },
+        match: v=>v('relation') == '-',
+        apply: operation=>{ operation.relation = '-'; if(typeof operation.value != 'number') operation.value = 1; },
+        template: 'Decrease {property} of{{collection}} by {value}' },
+      { id: 'multiply', label: 'Multiply a property', fixed: [ 'relation' ], hints: { value: 'number' },
+        match: v=>v('relation') == '*',
+        apply: operation=>{ operation.relation = '*'; if(typeof operation.value != 'number') operation.value = 1; },
+        template: 'Multiply {property} of{{collection}} by {value}' },
+      { id: 'divide', label: 'Divide a property', fixed: [ 'relation' ], hints: { value: 'number' },
+        match: v=>v('relation') == '/',
+        apply: operation=>{ operation.relation = '/'; if(typeof operation.value != 'number') operation.value = 1; },
+        template: 'Divide {property} of{{collection}} by {value}' },
+      { id: 'toggle', label: 'Switch a property on or off', fixed: [ 'relation', 'value' ], match: v=>v('relation') == '!',
+        apply: operation=>{ operation.relation = '!'; delete operation.value; },
+        template: 'Toggle {property} of{{collection}}' },
+      { id: 'append', label: 'Append text to a property', fixed: [ 'relation' ], hints: { value: '"text"' },
+        match: v=>v('relation') == '+' && typeof v('value') == 'string',
+        apply: operation=>{ operation.relation = '+'; if(typeof operation.value != 'string') operation.value = ''; },
+        template: 'Append {value} to {property} of{{collection}}' }
+    ],
+    // the widgets a SET changes are the picked ones in all but a few hundred of
+    // the library's SETs, so the sentence says so in plain words and the option
+    // is what names a group instead - a collection explicitly set to DEFAULT is
+    // still the picked widgets, so it is the value that decides, not the key
+    clauses: [
+      { id: 'collection', label: 'use a named group of widgets',
+        active: v=>v('collection') != 'DEFAULT',
+        // a list of ids written into the operation is not a name to call anybody by
+        template: v=>Array.isArray(v('collection')) ? ' {collection}' : ' the widgets called {collection}',
+        whenOff: ' the picked widgets', add: { collection: '' } }
     ],
     // "Set parent of the picked widgets to nothing" is what the raw defaults say,
     // and nobody adds a SET for that: a new one asks which property and which
@@ -743,9 +795,11 @@ const routineOperationMetadata = {
     newOperation: { func: 'SET', property: '', value: '' },
     parameters: {
       property: { type: 'property', default: 'parent' },
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
       relation: { type: 'enum', values: [ '=', '+', '-', '*', '/', '!' ], default: '=' },
-      value: { type: 'json', default: null }
+      // text in quotes is the difference between the number 1 and the digit 1;
+      // a value the routine remembers is worded as its name instead
+      value: { type: 'json', default: null, hint: 'number or text', display: value=>typeof value == 'string' && value !== '' && !value.match(/\$\{/) ? `"${value}"` : null }
     },
     // ! is the one relation that takes a single operand (the current value)
     ignored: v=>v('relation') == '!' ? { value: 'ignored because ! only negates the current value' } : {}
@@ -753,24 +807,24 @@ const routineOperationMetadata = {
   SHUFFLE: {
     description: 'Shuffle widgets into another order',
     variants: [
-      { id: 'reverse', label: 'Reverse the order', fixed: [ 'mode' ], match: v=>v('mode') == 'reverse',
-        apply: operation=>{ operation.mode = 'reverse'; },
-        template: 'Reverse the order of {holder,collection}' },
+      { id: 'random', label: 'Shuffle', fixed: [ 'mode' ],
+        apply: operation=>{ delete operation.mode; },
+        template: 'Shuffle {holder,collection}' },
       { id: 'overhand', label: 'Shuffle overhand', fixed: [ 'mode' ], match: v=>v('mode') == 'overhand',
         apply: operation=>{ operation.mode = 'overhand'; },
         template: 'Shuffle overhand {holder,collection}, {modeValue} times' },
       { id: 'riffle', label: 'Riffle shuffle', fixed: [ 'mode' ], match: v=>v('mode') == 'riffle',
         apply: operation=>{ operation.mode = 'riffle'; },
         template: 'Riffle shuffle {holder,collection}, {modeValue} times' },
+      { id: 'reverse', label: 'Reverse the order', fixed: [ 'mode' ], match: v=>v('mode') == 'reverse',
+        apply: operation=>{ operation.mode = 'reverse'; },
+        template: 'Reverse the order of {holder,collection}' },
       { id: 'seeded', label: 'Shuffle the same way every time', fixed: [ 'mode' ], match: v=>v('mode') == 'seeded',
         apply: operation=>{ operation.mode = 'seeded'; },
-        template: 'Shuffle the same way every time: {holder,collection} with the seed {modeValue}' },
-      { id: 'random', label: 'Shuffle', fixed: [ 'mode' ],
-        apply: operation=>{ delete operation.mode; },
-        template: 'Shuffle {holder,collection}' }
+        template: 'Shuffle the same way every time: {holder,collection} with the seed {modeValue}' }
     ],
     parameters: {
-      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random' },
       modeValue: { type: 'number', default: 1 }
@@ -839,6 +893,9 @@ const routineOperationMetadata = {
       { id: 'pause', label: 'Pause a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'pause',
         apply: operation=>{ operation.mode = 'pause'; },
         template: v=>`Pause ${timerTarget(v)}` },
+      { id: 'toggle', label: 'Start or pause a timer', fixed: [ 'mode' ],
+        apply: operation=>{ delete operation.mode; },
+        template: v=>`Start or pause ${timerTarget(v)}` },
       { id: 'reset', label: 'Reset a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'reset',
         apply: operation=>{ operation.mode = 'reset'; },
         template: v=>`Reset ${timerTarget(v)}` },
@@ -850,10 +907,7 @@ const routineOperationMetadata = {
         template: v=>`Add ${timerTime(v)} to ${timerTarget(v)}` },
       { id: 'dec', label: 'Take time away', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: v=>`Take ${timerTime(v)} off ${timerTarget(v)}` },
-      { id: 'toggle', label: 'Start or pause a timer', fixed: [ 'mode' ],
-        apply: operation=>{ delete operation.mode; },
-        template: v=>`Start or pause ${timerTarget(v)}` }
+        template: v=>`Take ${timerTime(v)} off ${timerTarget(v)}` }
     ],
     parameters: {
       timer: { type: 'widgets', default: null, widgetType: 'timer' },
@@ -878,6 +932,12 @@ const routineOperationMetadata = {
   TURN: {
     description: 'Give the turn to a seat',
     variants: [
+      { id: 'forward', label: 'Pass the turn on', fixed: [ 'turnCycle' ],
+        apply: operation=>{ delete operation.turnCycle; },
+        template: 'Pass the turn on{{turn}}' },
+      { id: 'backward', label: 'Pass the turn backwards', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'backward',
+        apply: operation=>{ operation.turnCycle = 'backward'; },
+        template: 'Pass the turn back{{turn}}' },
       { id: 'random', label: 'Give the turn to a random seat', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'random',
         apply: operation=>{ operation.turnCycle = 'random'; },
         template: 'Give the turn to a random seat' },
@@ -886,13 +946,7 @@ const routineOperationMetadata = {
         template: 'Give the turn to the seat at position {turn}' },
       { id: 'seat', label: 'Give the turn to a specific seat', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'seat',
         apply: operation=>{ operation.turnCycle = 'seat'; },
-        template: 'Give the turn to the seat {turn}' },
-      { id: 'backward', label: 'Pass the turn backwards', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'backward',
-        apply: operation=>{ operation.turnCycle = 'backward'; },
-        template: 'Pass the turn back{{turn}}' },
-      { id: 'forward', label: 'Pass the turn on', fixed: [ 'turnCycle' ],
-        apply: operation=>{ delete operation.turnCycle; },
-        template: 'Pass the turn on{{turn}}' }
+        template: 'Give the turn to the seat {turn}' }
     ],
     clauses: [
       { id: 'turn', label: 'skip a few seats', variants: [ 'forward', 'backward' ], template: v=>` by ${v('turn') == 1 ? '{turn} seat' : '{turn} seats'}` },
@@ -1590,27 +1644,48 @@ class RoutineOperationEditor {
   getDisplayedValue(property) {
     const resolved = this.resolveParameter(property);
     if(resolved === null)
-      return '?';
+      return this.parameterHint(property.split(',')[0]);
 
     const explicitlySet = this.operation && typeof this.operation == 'object' && typeof this.operation[resolved] != 'undefined';
     const value = explicitlySet ? this.operation[resolved] : this.getDefaults()[resolved];
     const words = this.displayedWords(resolved, value);
     if(words !== null)
       return words;
-    // an empty value is a blank to fill in, and a blank reads as one instead of
-    // as a gap in the sentence
-    if(value === '')
-      return '?';
+    // a parameter with no value yet is a blank to fill in, and it says what kind
+    // of value belongs there instead of leaving a gap in the sentence
+    if(this.parameterIsBlank(property))
+      return this.parameterHint(resolved);
     // a value the routine remembers reads as its name: ${...} is the engine's
     // syntax for one, and everything else in the sentence is English - the
     // orange the chip is colored in already says it is a stored value
     if(typeof value == 'string' && value.match(/^\$\{[A-Za-z_][A-Za-z0-9_]*\}$/))
       return value.slice(2, -1);
-    if(value === null && !explicitlySet)
-      return 'unset'; // a null default just means the parameter is not used
     if(typeof value == 'object' && value !== null)
       return JSON.stringify(value);
     return value;
+  }
+
+  // whether the chip stands for a blank rather than for a value: an empty text,
+  // or a parameter left at a default that only means "not in use". A wording of
+  // its own wins - a SELECT without a value looks for "nothing", it is not blank.
+  parameterIsBlank(property) {
+    const resolved = this.resolveParameter(property);
+    if(resolved === null)
+      return true;
+    const explicitlySet = this.parameterIsSet(resolved);
+    const value = explicitlySet ? this.operation[resolved] : this.getDefaults()[resolved];
+    if(this.displayedWords(resolved, value) !== null)
+      return false;
+    return value === '' || value === null && !explicitlySet;
+  }
+
+  // the one word a blank shows: what the parameter takes, worded by the variant
+  // where the way it works says more (what an Increase changes is a value), by
+  // the parameter itself where it has its own word, and otherwise by its type
+  parameterHint(name) {
+    const spec = this.parameterSpec(name) || {};
+    const fromVariant = (this.currentVariant().hints || {})[name];
+    return fromVariant || spec.hint || (spec.type == 'widgets' && spec.widgetType) || parameterTypeHints[spec.type] || 'value';
   }
 
   // the words a value is shown as, or null where the value speaks for itself:
@@ -1635,7 +1710,11 @@ class RoutineOperationEditor {
   // example is what the operation says once it is added, not everything it could.
   getExampleWithDefaults(variant) {
     return this.resolveTemplate((variant || this.currentVariant()).template)
-      .replace(/\{\{[a-zA-Z0-9]+\}\}/g, '')
+      .replace(/\{\{([a-zA-Z0-9]+)\}\}/g, (_, id)=>{
+        // an option that replaces words leaves its own wording behind
+        const clause = (this.metadata.clauses || []).find(c=>c.id == id);
+        return clause && clause.whenOff || '';
+      })
       .replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p))
       .trim();
   }
@@ -1643,7 +1722,10 @@ class RoutineOperationEditor {
   // the whole sentence as one template string, optional parts in [brackets] -
   // every parameter the operation supports is reachable through it
   getTemplate() {
-    return this.sentenceParts().map(part=>part.clause ? `[${part.template}]` : part.template).join('');
+    return this.sentenceParts().map(part=>{
+      const template = this.resolveTemplate(part.template);
+      return part.clause ? `[${template}]` : template;
+    }).join('');
   }
 
   // the ways this operation can work, in the order they are matched and offered
@@ -1651,12 +1733,14 @@ class RoutineOperationEditor {
     return this.metadata.variants || [];
   }
 
-  // the variant the operation is shown as: the first one that fits it, with the
-  // last one as the fallback so an operation always has a sentence
+  // the variant the operation is shown as: the first one whose match() fits it,
+  // and otherwise the one that has no match() at all - the fallback is what an
+  // operation is when nothing tells it apart, not the last entry of the list,
+  // so the drop-down can offer the variants in the order people read them
   currentVariant() {
     const variants = this.variants();
-    const matching = variants.find(variant=>!variant.match || variant.match(name=>this.parameterValue(name), name=>this.parameterIsSet(name)));
-    return matching || variants[variants.length-1] || { id: 'default', label: this.func, template: String(this.func || '') };
+    const matching = variants.find(variant=>variant.match && variant.match(name=>this.parameterValue(name), name=>this.parameterIsSet(name)));
+    return matching || variants.find(variant=>!variant.match) || variants[variants.length-1] || { id: 'default', label: this.func, template: String(this.func || '') };
   }
 
   // the words the sentence starts with - the phrase the drop-down offers
@@ -1699,7 +1783,12 @@ class RoutineOperationEditor {
     return clauses;
   }
 
+  // an option is in use while one of its parameters is set - unless the clause
+  // itself knows better, because the value it is set to means the same as not
+  // having it at all (a SET collection of DEFAULT is still the picked widgets)
   clauseIsActive(clause) {
+    if(clause.active)
+      return clause.active(name=>this.parameterValue(name), name=>this.parameterIsSet(name));
     return this.templateParameters(clause.template).some(name=>this.parameterIsSet(name));
   }
 
@@ -1863,7 +1952,7 @@ class RoutineOperationEditor {
     const rawValue = resolved !== null && this.operation && typeof this.operation[resolved] != 'undefined' ? this.operation[resolved] : (resolved !== null ? this.getDefaults()[resolved] : undefined);
     const category = this.classifyParameter(resolved, rawValue);
     const displayed = this.getDisplayedValue(spec);
-    const missing = displayed === '?' ? ' routine-editor-parameter-missing' : '';
+    const missing = this.parameterIsBlank(spec) ? ' routine-editor-parameter-missing' : '';
     const categoryNames = { func: 'operation', variable: 'variable', collection: 'group of widgets', widget: 'widget', property: 'widget property', number: 'number', value: 'value' };
     const title = `${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}`;
     return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="${escapeHTML(title)}">${escapeHTML(displayed)}</span>`;
@@ -1927,6 +2016,8 @@ class RoutineOperationEditor {
       if(part.clause) {
         if(this.clauseIsActive(part.clause))
           html += `<span class="routine-editor-clause">${this.renderTemplateText(part.template)}<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Remove this option">close</span></span>`;
+        else if(part.clause.whenOff)
+          html += escapeHTML(part.clause.whenOff); // an option that replaces words says what is there without it
         continue;
       }
       let template = this.resolveTemplate(part.template);
@@ -1983,7 +2074,7 @@ class RoutineOperationEditor {
       const words = this.displayedWords(name, value);
       if(words !== null)
         return words;
-      return value === null || value === '' ? '?' : (typeof value == 'object' ? JSON.stringify(value) : value);
+      return value === null || value === '' ? this.parameterHint(name) : (typeof value == 'object' ? JSON.stringify(value) : value);
     }).trim().replace(/^[,;]\s*/, '');
   }
 
