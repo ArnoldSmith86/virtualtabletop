@@ -21,6 +21,17 @@
   border-bottom: 2px solid var(--VTTblue);
 }
 
+/* the raw name of what the popup edits, next to the plain-language title - the
+   same pairing the routine cards and the automation headers use */
+.inline-popup h1 .popup-title-raw {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: normal;
+  color: var(--textColor);
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
 /* the current value as text, next to the button that drops it again */
 .inline-popup .popup-value-row {
   display: flex;
@@ -76,7 +87,8 @@
   float: right;
   z-index: 1;
   cursor: pointer;
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
   font-size: 18px;
   background: var(--backgroundColor);
   border-radius: 4px;
@@ -84,6 +96,14 @@
 
 .inline-popup .popup-close:hover {
   color: var(--textHighlightColor3);
+  opacity: 1;
+}
+
+/* with a title the close button belongs to it, not to whatever the popup starts
+   with: it would otherwise land on the border of the first section */
+.inline-popup h1 .popup-close {
+  position: static;
+  margin-left: 8px;
 }
 
 /* The sections of a popup are the independent ways to fill in a parameter, so
@@ -153,13 +173,23 @@
   display: block;
 }
 
-/* a plain drop-down menu (the ways an operation can work) instead of a popup
-   with a title: one entry per line, the current one marked */
+/* a plain drop-down menu (the ways an operation can work, the options it can
+   add) instead of a popup with a title and sections: one entry per line, each
+   with the sentence it would read as, and the current one marked */
 .inline-popup.popup-menu {
   min-width: 0;
   padding: 4px;
   display: flex;
   flex-direction: column;
+}
+
+.inline-popup.popup-menu > .popup-close,
+.inline-popup .popup-menu-header {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 2px;
 }
 
 .inline-popup .popup-menu-entry {
@@ -170,7 +200,20 @@
   border-radius: 3px;
   color: var(--routineOperationColor);
   font-weight: bold;
+}
+
+.inline-popup .popup-menu-entry-label {
   white-space: nowrap;
+}
+
+/* what the entry would make the operation say: the reason to pick it, so it is
+   on screen instead of in a hover tip */
+.inline-popup .popup-menu-entry-preview {
+  color: var(--textColor);
+  opacity: 0.75;
+  font-weight: normal;
+  font-size: 12px;
+  max-width: 300px;
 }
 
 .inline-popup .popup-menu-entry.selected {
@@ -216,6 +259,40 @@ body.edit.darkMode .inline-popup button:hover {
 .inline-popup pre {
   white-space: pre-wrap;
   margin: 4px 0;
+}
+
+/* the wiki text of an operation: prose in the popup's own font (a wall of
+   monospace is what it used to be) and its parameters as a list, with the names
+   in the color the sentence colors a parameter with */
+.inline-popup .popup-info-text p {
+  margin: 6px 0;
+  max-width: 620px;
+}
+
+.inline-popup .popup-info-heading {
+  font-weight: bold;
+  margin: 10px 0 2px 0;
+}
+
+.inline-popup .popup-info-parameters {
+  margin: 2px 0;
+  max-width: 620px;
+}
+
+.inline-popup .popup-info-parameters dt {
+  color: var(--routinePropertyColor);
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.inline-popup .popup-info-parameters dd {
+  margin: 0;
+}
+
+/* the editor's buttons are uppercased; inside a popup they are sentences, and
+   "PICK IN THE ROOM" next to "use default" reads as two different products */
+.inline-popup button[icon] {
+  text-transform: none;
 }
 
 /* the reused properties-module pickers are scoped to .editorModule, which is

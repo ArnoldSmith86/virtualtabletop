@@ -67,7 +67,8 @@
 }
 
 .routine-editor-func-info {
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
 }
 
 .routine-editor-func-info .material-symbols {
@@ -76,6 +77,7 @@
 
 .routine-editor-func-info:hover {
   color: var(--routineOperationColor);
+  opacity: 1;
 }
 
 /* the words the sentence starts with: they say what the operation does, so with
@@ -173,12 +175,14 @@
   flex-shrink: 0;
   margin-top: 3px;
   font-size: 15px;
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
   cursor: pointer;
 }
 
 .routine-editor-operation-json:hover {
   color: var(--VTTblue);
+  opacity: 1;
 }
 
 .routine-editor-else {
@@ -210,7 +214,8 @@
 
 .routine-editor-clause-remove {
   font-size: 13px;
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
   cursor: pointer;
   vertical-align: middle;
   margin-left: 1px;
@@ -218,34 +223,31 @@
 
 .routine-editor-clause-remove:hover {
   color: var(--VTTblue);
+  opacity: 1;
 }
 
 /* everything else the operation can say is one click away, so the button saying
-   so is a filled chip in the operation color instead of a dashed gray outline */
+   so is a chip in the operation color - outlined rather than filled, so that the
+   sentence stays the loudest thing on the card */
 .routine-editor-add-clause {
   display: inline-flex;
   align-items: center;
   font-size: 11px;
   font-weight: bold;
-  color: var(--backgroundColor);
-  background: var(--routineOperationColor);
+  color: var(--routineOperationColor);
+  background: none;
+  border: 1px solid currentColor;
   border-radius: 9px;
-  padding: 1px 8px 1px 4px;
+  padding: 0 8px;
   margin-left: 6px;
   cursor: pointer;
   white-space: nowrap;
   vertical-align: bottom;
 }
 
-.routine-editor-add-clause .material-symbols {
-  font-size: 14px;
-  margin-right: 1px;
-}
-
 .routine-editor-add-clause:hover {
-  filter: brightness(1.2);
-  outline: 1px solid var(--routineOperationColor);
-  outline-offset: 1px;
+  color: var(--backgroundColor);
+  background: var(--routineOperationColor);
 }
 
 .routine-editor-parameter-missing,
@@ -275,23 +277,33 @@ body.edit.darkMode .routine-editor-parameter-missing {
 
 .routine-editor-operation-buttons .material-symbols {
   font-size: 15px;
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
   cursor: pointer;
 }
 
 .routine-editor-operation-buttons .material-symbols:hover {
   color: var(--VTTblue);
+  opacity: 1;
 }
 
-.routine-editor-operation-buttons .routine-editor-block-arrow {
-  font-size: 16px;
-  line-height: 15px;
-  color: gray;
-  cursor: pointer;
-}
+/* The sentence is what an operation card is about, so the controls that reorder
+   or nest it stay out of its way until the pointer (or the keyboard focus) is on
+   the card. The grip and the delete button never go away, and a touch screen -
+   which has no pointer to hover with - keeps all of them. */
+@media (pointer: fine) {
+  .routine-editor-operation-buttons .routine-editor-on-demand,
+  .routine-editor-operation-json {
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
 
-.routine-editor-operation-buttons .routine-editor-block-arrow:hover {
-  color: var(--VTTblue);
+  .routine-editor-operation-header:hover .routine-editor-on-demand,
+  .routine-editor-operation-header:focus-within .routine-editor-on-demand,
+  .routine-editor-operation-header:hover > .routine-editor-operation-json,
+  .routine-editor-operation-header:focus-within > .routine-editor-operation-json {
+    opacity: var(--routineChromeOpacity);
+  }
 }
 
 /* touch needs bigger, further apart targets than a mouse pointer */
@@ -300,8 +312,7 @@ body.edit.darkMode .routine-editor-parameter-missing {
     gap: 9px;
   }
 
-  .routine-editor-operation-buttons .material-symbols,
-  .routine-editor-operation-buttons .routine-editor-block-arrow {
+  .routine-editor-operation-buttons .material-symbols {
     font-size: 19px;
   }
 }
@@ -339,8 +350,18 @@ body.edit.darkMode .routine-editor-parameter-missing {
 
 .routine-editor-empty,
 .events-editor-empty {
-  color: gray;
+  color: var(--textColor);
+  opacity: 0.7;
   font-size: 12px;
   font-style: italic;
   margin: 2px 0;
+}
+
+/* every control of the editor is reachable with the keyboard (see focusable() in
+   routine.js), so every control says when it has the focus */
+.routine-editor [tabindex]:focus-visible,
+.events-editor [tabindex]:focus-visible,
+.inline-popup [tabindex]:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
 }

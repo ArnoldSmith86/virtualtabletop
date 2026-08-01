@@ -50,7 +50,8 @@ beforeAll(() => {
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
-    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton'
+    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
+    'structureInfoHTML'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -466,9 +467,9 @@ describe('operation rendering', () => {
     [ { func: 'SELECT', type: 'card', max: 5, random: true, source: 'hand', sortBy: 'value', collection: 'aces' },
       'Pick at most 5 random cards from hand, sorted by value — call them aces' ],
     [ { func: 'SELECT', mode: 'add', property: 'letter', value: '${value}', collection: 'letters' },
-      'Add to the pick letters: widgets where letter is ${value}' ],
-    [ { func: 'IF', operand1: '${cardType}', operand2: 'boba' }, 'If ${cardType} is boba' ],
-    [ { func: 'IF', condition: '${showLog}' }, 'If this is true: ${showLog}' ],
+      'Add to the pick letters: widgets where letter is value' ],
+    [ { func: 'IF', operand1: '${cardType}', operand2: 'boba' }, 'If cardType is boba' ],
+    [ { func: 'IF', condition: '${showLog}' }, 'If this is true: showLog' ],
     [ { func: 'GET', property: 'cardType' }, 'Read cardType of the picked widgets' ],
     [ { func: 'GET', property: 'score', aggregation: 'sum', variable: 'total' }, 'Add up score of the picked widgets and remember it as total' ],
     [ { func: 'CALL', routine: 'startRandomRoutine' }, 'Run the routine startRandomRoutine' ],
@@ -560,10 +561,13 @@ describe('picking how an operation works and which options it uses', () => {
     const menu = document.querySelector('.inline-popup.popup-menu');
     expect(menu).not.toBeNull();
     expect(menu.querySelector('h1')).toBeNull(); // a menu, not one of the parameter popups
-    expect(menu.querySelector('.popup-close')).toBeNull();
-    expect([...menu.querySelectorAll('button')].map(b => b.textContent)).toEqual([ 'Turn face up', 'Turn face down', 'Turn to the face', 'Flip' ]);
-    expect(menu.querySelector('button.selected').textContent).toBe('Turn face up');
-    [...menu.querySelectorAll('button')].find(b => b.textContent == 'Turn face down').dispatchEvent(new Event('click'));
+    expect(menu.querySelector('.popup-close')).not.toBeNull(); // but it can be closed like every other popup
+    const entryLabels = [...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent);
+    expect(entryLabels).toEqual([ 'Turn face up', 'Turn face down', 'Turn to the face', 'Flip' ]);
+    // every entry says what the operation would read as, so the choice explains itself
+    expect(menu.querySelector('.popup-menu-entry-preview').textContent).toContain('deck1');
+    expect(menu.querySelector('button.selected .popup-menu-entry-label').textContent).toBe('Turn face up');
+    [...menu.querySelectorAll('.popup-menu-entry')].find(b => b.textContent.startsWith('Turn face down')).dispatchEvent(new Event('click'));
     await new Promise(resolve => setTimeout(resolve, 0));
     expect(result.face).toBe(1);
   });
@@ -626,6 +630,28 @@ describe('picking how an operation works and which options it uses', () => {
     expect(editor.renderClauseExample(byDistance)).toBe('nearest cards first');
   });
 
+  test('the options are a plain menu of phrases, each with the sentence it would add', async () => {
+    const { dom } = renderOperation({ func: 'RECALL', holder: 'deck1' });
+    dom.querySelector('.routine-editor-add-clause').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const menu = document.querySelector('.inline-popup.popup-menu');
+    expect(menu).not.toBeNull();
+    expect(menu.querySelector('h1')).toBeNull(); // no title repeating the section repeating the one list
+    expect(menu.querySelector('.accordion-section')).toBeNull();
+    expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toContain('nearest cards first');
+    expect(menu.querySelector('.popup-close')).not.toBeNull();
+    menu.remove();
+  });
+
+  test('the sentence says "add option" like every other add button in the panel', () => {
+    const { dom } = renderOperation({ func: 'RECALL', holder: 'deck1' });
+    expect(dom.querySelector('.routine-editor-add-clause').textContent).toBe('add option');
+    const ifEditor = editorForOperation({ func: 'IF', operand1: 1 });
+    ifEditor.setOperationDetails({ state: {} }, { func: 'IF', operand1: 1 }, [], []);
+    const rendered = ifEditor.render();
+    expect([...rendered.querySelectorAll('button')].map(b => b.textContent)).toEqual([ 'add operation', 'add else' ]);
+  });
+
   test('parameters no variant and no option words become an option of their own', () => {
     const editor = editorForOperation({ func: 'INPUT' });
     editor.setOperationDetails({ state: {} }, { func: 'INPUT' }, [], []);
@@ -665,8 +691,8 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    // the FLIP row shows a ↰ to nest into the IF above
-    const upInto = [...editor.domElement.querySelectorAll('.routine-editor-block-arrow')].find(b => b.textContent == '↰');
+    // the FLIP row shows an arrow to nest into the IF above
+    const upInto = [...editor.domElement.querySelectorAll('.material-symbols')].find(b => b.textContent == 'north_east');
     expect(upInto).not.toBeNull();
     upInto.dispatchEvent(new Event('click'));
     expect(notified).toHaveLength(1);
@@ -679,13 +705,38 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    // the ↱ inside the IF block hoists the first nested op out after the IF
-    const out = [...editor.domElement.querySelectorAll('.routine-editor .routine-editor-block-arrow')].find(b => b.textContent == '↱');
+    // the outdent arrow inside the IF block hoists the first nested op out after the IF
+    const out = [...editor.domElement.querySelectorAll('.routine-editor .material-symbols')].find(b => b.textContent == 'format_indent_decrease');
     expect(out).not.toBeNull();
     out.dispatchEvent(new Event('click'));
     expect(notified).toHaveLength(2);
     expect(notified[0].thenRoutine).toEqual([ { func: 'SHUFFLE' } ]);
     expect(notified[1].func).toBe('FLIP');
+  });
+
+  test('the grip and the delete button stay, the rest of the chrome waits for the pointer', () => {
+    const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP' }, { func: 'SHUFFLE' } ]);
+    const card = editor.domElement.querySelector('.routine-editor-operation');
+    const always = [...card.querySelectorAll('.routine-editor-operation-buttons > *:not(.routine-editor-on-demand)')];
+    expect(always.map(b => b.textContent)).toEqual([ 'drag_indicator', 'delete' ]);
+    expect([...card.querySelectorAll('.routine-editor-on-demand')].map(b => b.textContent)).toEqual([ 'arrow_downward' ]);
+    expect(card.querySelector('.routine-editor-operation-json').classList).toContain('routine-editor-operation-json');
+  });
+
+  test('every control of an operation is reachable and usable with the keyboard', () => {
+    const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP', holder: 'h1' } ]);
+    document.getElementById('editor').append(editor.domElement);
+    const card = editor.domElement.querySelector('.routine-editor-operation');
+    // everything except the drag grip, which has nothing to do without a pointer
+    // (the up/down buttons next to it are how a keyboard reorders)
+    for (const control of card.querySelectorAll('.routine-editor-operation-parameter, .routine-editor-operation-buttons > *:not(.routine-editor-drag-handle), .routine-editor-operation-json, .info-button'))
+      expect(control.tabIndex).toBe(0);
+    let routine = null;
+    editor.registerChangeListener(v => routine = v);
+    const remove = [...card.querySelectorAll('.routine-editor-operation-buttons .material-symbols')].find(b => b.textContent == 'delete');
+    remove.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    expect(routine).toEqual([]);
+    editor.domElement.remove();
   });
 
   test('every operation gets a drag handle for reordering', () => {
@@ -863,6 +914,33 @@ describe('property automations', () => {
     expect(onEnter.description('holder')).toContain('holder');
     expect(onLeave.description('line')).toContain('stops');
     expect(onLeave.description('holder')).toContain('holder');
+  });
+
+  test('a property set says what it applies to and is not filed under "Properties"', () => {
+    const { editor } = makeEditor({ type: 'holder', onEnter: { activeFace: 1 } });
+    expect([...editor.domElement.querySelectorAll('.events-editor-group')].map(g => g.textContent)).toEqual([ 'Routines', 'Property sets' ]);
+    editor.expandedEvents.onEnter = true;
+    editor.render();
+    expect(editor.domElement.querySelector('.events-editor-subtitle').textContent).toBe('Applied to any widget dropped into this holder.');
+    const { editor: lineEditor } = makeEditor({ type: 'line', onEnter: { activeFace: 1 } });
+    lineEditor.expandedEvents.onEnter = true;
+    lineEditor.render();
+    expect(lineEditor.domElement.querySelector('.events-editor-subtitle').textContent).toContain('dropped onto this line');
+  });
+
+  test('the add button of a property set is disabled while it would do nothing', () => {
+    const { editor } = makeEditor({ type: 'holder', onEnter: { activeFace: 1 } });
+    editor.expandedEvents.onEnter = true;
+    editor.render();
+    const nameInput = editor.domElement.querySelector('.events-editor-property-name');
+    const addButton = editor.domElement.querySelector('.events-editor-property-add-button');
+    expect(addButton.disabled).toBe(true);
+    nameInput.value = 'activeFace'; // already in the set
+    nameInput.dispatchEvent(new Event('input'));
+    expect(addButton.disabled).toBe(true);
+    nameInput.value = 'rotation';
+    nameInput.dispatchEvent(new Event('input'));
+    expect(addButton.disabled).toBe(false);
   });
 
   test('automation cards are collapsed by default and expand to one row per entry', () => {
@@ -1163,6 +1241,32 @@ describe('information about an operation and its parameters', () => {
     expect(line).toBe('x / y: number - the target position.');
     expect(parameterInfoLine('x and y: number - the pixel coordinates.', 'x')).toContain('pixel coordinates');
     expect(parameterInfoLine('count: number - how often.', 'unrelated')).toBeNull();
+  });
+
+  test('an info popup is titled, its prose is paragraphs and its parameters a list', () => {
+    for(const stale of document.querySelectorAll('.inline-popup'))
+      stale.remove();
+    const dom = document.createElement('div');
+    document.getElementById('editor').append(dom);
+    const topic = commonInfoTopic('MOVE');
+    infoButton(dom, topic.info, topic.tutorial, null, 'MOVE').dispatchEvent(new Event('mouseenter'));
+    const popup = [...document.querySelectorAll('.inline-popup')].pop();
+    expect(popup.querySelector('h1 .popup-title-text').textContent).toBe('MOVE');
+    expect(popup.querySelector('h1 .popup-close')).not.toBeNull(); // the close belongs to the title bar
+    expect(popup.querySelector('pre')).toBeNull(); // no wall of monospace
+    expect([...popup.querySelectorAll('.accordion-section h3')].map(h => h.textContent)).toEqual([ 'Tutorial' ]); // the text is not a section
+    expect([...popup.querySelectorAll('.popup-info-parameters dt')].map(d => d.textContent.trim())).toContain('count');
+    expect(popup.querySelector('.popup-info-parameters dd').textContent).toContain('specifies the widget(s)');
+    popup.remove();
+    dom.remove();
+  });
+
+  test('only the lines naming a parameter become list entries, prose stays prose', () => {
+    const html = structureInfoHTML('<pre>\nThis does something: really.\n\nParameters:\n\ncount: number - how often.\nnope, no colon here\n</pre>');
+    expect(html).toContain('<dt>count</dt>');
+    expect(html).toContain('<div class=popup-info-heading>Parameters</div>');
+    expect(html).toContain('<p>This does something: really.</p>'); // a sentence, not a parameter
+    expect(html).toContain('<p>nope, no colon here</p>');
   });
 });
 

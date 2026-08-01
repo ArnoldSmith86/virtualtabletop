@@ -5950,7 +5950,6 @@ class PropertiesModule extends SidebarModule {
 
   renderEvents(widget) {
     const section = document.createElement('div');
-    this.addSubHeader('Automations', section);
     const eventsEditor = new EventsEditor(widget, (property, value)=>this.inputValueUpdated(widget, property, value));
     // a delta listener instead of per-property listeners so routines added
     // by other players (properties that did not exist on selection) show up too
@@ -5960,7 +5959,12 @@ class PropertiesModule extends SidebarModule {
     });
     section.append(eventsEditor.domElement);
     // the curated sections come first, then the routines, then the raw list of
-    // whatever properties are left (which the type editor may not render at all)
+    // whatever properties are left (which the type editor may not render at all).
+    // The header goes straight into the module: wrapped in a div it would lose
+    // the inset .tune.editorModule > h2 gives every other section bar.
+    const header = document.createElement('h2');
+    header.innerText = 'Automations';
+    this.moduleDOM.insertBefore(header, this.otherPropertiesHeader);
     this.moduleDOM.insertBefore(section, this.otherPropertiesHeader);
   }
 

@@ -59,12 +59,14 @@ class Popup {
     close.className = 'material-symbols popup-close';
     close.textContent = 'close';
     close.title = 'Close';
-    close.addEventListener('click', e=>{
-      e.stopPropagation();
-      this.hide();
-    });
-    // first child so the sticky float stays in the top right corner while scrolling
-    this.domElement.prepend(close);
+    focusable(close, _=>this.hide());
+    // in the title bar where the popup has one, otherwise the first child so the
+    // sticky float stays in the top right corner while scrolling
+    const h1 = $('h1', this.domElement);
+    if(h1)
+      h1.append(close);
+    else
+      this.domElement.prepend(close);
   }
 
   hide() {
@@ -174,16 +176,25 @@ class Popup {
     this.source = source;
   }
 
+  // the title is its own element inside the h1 so that the close button, the info
+  // button and the raw name of what is edited can live in the same title bar
   setTitle(title) {
-    if(!$('h1', this.domElement)) {
-      const h1 = document.createElement('h1');
+    let h1 = $('h1', this.domElement);
+    if(!h1) {
+      h1 = document.createElement('h1');
+      this.domElement.prepend(h1);
       const close = $('.popup-close', this.domElement);
-      if(close) // keep the close button first so it stays sticky in the corner
-        close.after(h1);
-      else
-        this.domElement.prepend(h1);
+      if(close)
+        h1.append(close);
     }
-    $('h1', this.domElement).textContent = title;
+    let text = $('.popup-title-text', h1);
+    if(!text) {
+      text = document.createElement('span');
+      text.className = 'popup-title-text';
+      h1.prepend(text);
+    }
+    text.textContent = title;
+    return text;
   }
 
   show() {
@@ -213,25 +224,47 @@ class Popup {
 }
 
 class InfoPopup extends Popup {
-  constructor(source, infoHTML, tutorialName=null, videoFilename=null) {
+  constructor(source, infoHTML, tutorialName=null, videoFilename=null, title=null) {
     super(source);
     this.infoHTML = infoHTML;
     this.tutorialName = tutorialName;
     this.videoFilename = videoFilename;
+    this.title = title;
   }
 
   show() {
     super.show();
-    if(!this.tutorialName && !this.videoFilename)
-      div(this.domElement, 'content', this.infoHTML);
-    else
-      this.addAccordionSection('Info', this.infoHTML);
+    // the text is what an info popup is opened for, so it is never a section to
+    // unfold - only the tutorial and the video below it are
+    if(this.title)
+      this.setTitle(this.title);
+    div(this.domElement, 'content popup-info-text', this.infoHTML);
     if(this.tutorialName) // FIXME: using the same roomID more than once doesn't work yet if the tutorial is already in there (also in production?)
       this.addAccordionSection('Tutorial', `<a href="tutorial/${this.tutorialName}/ROOM:${roomID}-tutorials">${this.tutorialName}</a>`);
     if(this.videoFilename)
       this.addAccordionSection('Video', `<video src="i/videos/${this.videoFilename}" controls></video>`);
     this.moveIntoView();
   }
+}
+
+// Every control of the routine editor is a span rather than a button (they sit
+// inside sentences), so this is what gives one a keyboard: the tab order, the
+// role a screen reader announces and Enter/Space doing what a click does.
+function focusable(dom, onActivate) {
+  dom.tabIndex = 0;
+  dom.setAttribute('role', 'button');
+  dom.addEventListener('click', e=>{
+    e.stopPropagation();
+    onActivate(e);
+  });
+  dom.addEventListener('keydown', e=>{
+    if(e.key == 'Enter' || e.key == ' ') {
+      e.preventDefault();
+      e.stopPropagation();
+      onActivate(e);
+    }
+  });
+  return dom;
 }
 
 let openRoutinePopup = null; // only one parameter popup is open at a time
@@ -320,6 +353,14 @@ class RoutinePopup extends Popup {
 
   offersUseDefault() {
     return true;
+  }
+
+  // what the popup asks, in words: its title says "MOVE - which widgets" rather
+  // than "MOVE - parameters from / collection", which is the engine's vocabulary
+  // (the raw names are next to it, the way the routine cards name their
+  // operation and the automation headers their property)
+  parameterQuestion() {
+    return 'which value';
   }
 
   // every popup shows the raw value as editable text; the ones whose own input
@@ -591,14 +632,18 @@ class RoutinePopup extends Popup {
       openRoutinePopup.hide();
     openRoutinePopup = this;
     super.show();
-    this.setTitle(this.operation && this.operation.func ? this.operation.func : 'var');
     const func = this.operation && this.operation.func;
+    const title = this.setTitle(`${func || 'var'} - ${this.parameterQuestion()}`);
     // what this parameter is is the question the popup answers, so its info tip
     // is the parameter's own text rather than the whole operation's
     const info = this.parameterNames[0] == 'func' ? commonInfoButton(null, func) : commonParameterInfoButton(null, func, this.parameterNames[0]);
     if(info)
-      $('h1', this.domElement).append(info);
-    $('h1', this.domElement).append(` - ${this.parameterNames.length > 1 ? 'parameters' : 'parameter'} ${this.parameterNames.join(' / ')}`);
+      title.after(info);
+    const raw = document.createElement('span');
+    raw.className = 'popup-title-raw';
+    raw.textContent = this.parameterNames.join(' / ');
+    raw.title = `The ${this.parameterNames.length > 1 ? 'parameters' : 'parameter'} this sets in the JSON of the operation`;
+    $('h1', this.domElement).append(raw);
 
     this.renderValueRow();
 
@@ -638,11 +683,15 @@ class RoutineOperationPopup extends RoutinePopup {
   // long, so a search box narrows it down by name or by what the sentence says.
   show() {
     super.show(false, false);
-    // the generic "<func> - parameter func" title is jargon in the first popup a new user sees
+    // the generic "<func> - which value / func" title is jargon in the first
+    // popup a new user sees, and there is no raw parameter worth naming here
     const h1 = $('h1', this.domElement);
-    h1.textContent = this.operation && this.operation.func ? `${this.operation.func} - change operation` : 'Add operation';
-    if(this.operation && this.operation.func)
-      commonInfoButton(h1, this.operation.func);
+    for(const generic of $a('.popup-title-raw, .info-button', h1))
+      generic.remove();
+    const title = this.setTitle(this.operation && this.operation.func ? `${this.operation.func} - change operation` : 'Add operation');
+    const info = this.operation && this.operation.func ? commonInfoButton(null, this.operation.func) : null;
+    if(info)
+      title.after(info);
 
     const search = document.createElement('input');
     search.type = 'text';
@@ -672,9 +721,21 @@ class RoutineOperationPopup extends RoutinePopup {
   }
 }
 
+// One entry of a menu: the phrase it would put into the sentence, and under it
+// the sentence it would then read as - what a phrase does is the whole reason to
+// pick it, so it is on screen rather than in a hover tip.
+function menuEntry(appendTo, label, preview, onClick) {
+  const entry = button(appendTo, '', onClick);
+  entry.className = 'popup-menu-entry';
+  div(entry, 'popup-menu-entry-label').textContent = label;
+  if(preview && preview.trim() && preview.trim() != label.trim())
+    div(entry, 'popup-menu-entry-preview').textContent = preview;
+  return entry;
+}
+
 // The drop-down under the phrase a sentence starts with: one entry per way the
-// operation can work, worded as the phrase that sentence would start with. It is
-// a menu, so it has neither a title nor a close button.
+// operation can work, worded as the phrase that sentence would start with, with
+// the sentence it would read as under it. It is a menu, so it has no title.
 class RoutineVariantMenu extends Popup {
   constructor(choices, currentID) {
     super();
@@ -682,15 +743,11 @@ class RoutineVariantMenu extends Popup {
     this.currentID = currentID;
   }
 
-  addCloseButton() {
-  }
-
   show() {
     super.show();
     this.domElement.classList.add('popup-menu');
     for(const choice of this.choices) {
-      const entry = button(this.domElement, choice.lead, _=>this.notifyChangeListeners(choice.values));
-      entry.className = 'popup-menu-entry';
+      const entry = menuEntry(this.domElement, choice.lead, choice.example, _=>this.notifyChangeListeners(choice.values));
       entry.title = `${choice.label}: ${choice.example}`;
       entry.classList.toggle('selected', choice.id === this.currentID);
     }
@@ -715,24 +772,24 @@ class RoutineClausePopup extends RoutinePopup {
     return false;
   }
 
+  // a list of phrases is a menu, not a form: a title saying "add an option" and
+  // a section saying "Options" around a single list of options are two layers of
+  // chrome around the one thing the popup is for
   show() {
-    super.show(false, false);
-    const h1 = $('h1', this.domElement);
-    h1.textContent = `${this.operation && this.operation.func ? this.operation.func : 'operation'} - add an option`;
-    if(this.operation && this.operation.func)
-      commonInfoButton(h1, this.operation.func);
-    const [ title, content ] = this.addAccordionSection('Options', '', 'operation');
-    infoButton(title, `
+    if(openRoutinePopup && openRoutinePopup !== this)
+      openRoutinePopup.hide();
+    openRoutinePopup = this;
+    Popup.prototype.show.call(this);
+    this.domElement.classList.add('popup-menu');
+    const header = document.createElement('div');
+    header.className = 'popup-menu-header';
+    this.domElement.prepend(header);
+    infoButton(header, `
       Everything this operation can do on top of what it does now. An option only shows up in the sentence while it is in use - the x behind it removes it again.
-    `);
-    for(const option of this.options) {
-      const entry = div(content, 'popup-entry');
-      const optionButton = button(entry, option.label, _=>this.notifyChangeListeners(option.values));
-      optionButton.dataset.kind = 'operation';
-      // what it would read as stays a hover tip: spelled out under every option
-      // the list is twice as long and half as easy to scan
-      optionButton.title = option.sentence && option.sentence != option.label ? option.sentence : option.label;
-    }
+    `, null, null, 'the options of an operation');
+    header.append($('.popup-close', this.domElement));
+    for(const option of this.options)
+      menuEntry(this.domElement, option.label, option.sentence, _=>this.notifyChangeListeners(option.values));
     this.moveIntoView();
   }
 }
@@ -740,6 +797,10 @@ class RoutineClausePopup extends RoutinePopup {
 class RoutineStringPopup extends RoutinePopup {
   constructor() {
     super();
+  }
+
+  parameterQuestion() {
+    return 'which text';
   }
 
   currentValue() {
@@ -803,6 +864,10 @@ function proposedPropertyGroups(widget, includeOwn=true) {
 // and of RESET): the value section proposes the names instead of leaving them to
 // be typed from memory - which is where the typos in a routine usually are.
 class RoutinePropertyNamePopup extends RoutineStringPopup {
+  parameterQuestion() {
+    return 'which property';
+  }
+
   show() {
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
     infoButton(valueTitle, `
@@ -848,6 +913,10 @@ class RoutinePropertyNamePopup extends RoutineStringPopup {
 }
 
 class RoutineNumberPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which number';
+  }
+
   constructor(options={}) {
     super();
     this.options = options;
@@ -906,6 +975,10 @@ class RoutineNumberPopup extends RoutinePopup {
 }
 
 class RoutineEnumPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which setting';
+  }
+
   constructor(options={}) {
     super();
     this.options = options;
@@ -924,6 +997,10 @@ class RoutineEnumPopup extends RoutinePopup {
 }
 
 class RoutineWidgetIDPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which widget';
+  }
+
   constructor(options={}) {
     super();
     this.options = options;
@@ -972,6 +1049,10 @@ class RoutineWidgetIDPopup extends RoutinePopup {
 }
 
 class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
+  parameterQuestion() {
+    return 'which widgets';
+  }
+
   constructor(options={}) {
     super(options);
   }
@@ -1012,6 +1093,10 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
 }
 
 class RoutineJSONPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which value, as JSON';
+  }
+
   constructor() {
     super();
   }
@@ -1056,6 +1141,10 @@ class RoutineJSONPopup extends RoutinePopup {
 class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
   constructor() {
     super();
+  }
+
+  parameterQuestion() {
+    return 'the whole operation, as JSON';
   }
 
   offersUseDefault() {
@@ -1150,6 +1239,10 @@ class RoutinePickerPopup extends RoutinePopup {
 }
 
 class RoutineColorPopup extends RoutinePickerPopup {
+  parameterQuestion() {
+    return 'which color';
+  }
+
   inputClass() {
     return typeof ColorInput != 'undefined' ? ColorInput : null;
   }
@@ -1160,6 +1253,10 @@ class RoutineColorPopup extends RoutinePickerPopup {
 }
 
 class RoutineIconPopup extends RoutinePickerPopup {
+  parameterQuestion() {
+    return 'which icon';
+  }
+
   inputClass() {
     return typeof IconInput != 'undefined' ? IconInput : null;
   }
@@ -1170,6 +1267,10 @@ class RoutineIconPopup extends RoutinePickerPopup {
 }
 
 class RoutineForeachSourcePopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'what to repeat for';
+  }
+
   constructor() {
     super();
   }
@@ -1254,13 +1355,13 @@ function dedentInfoText(text) {
   return lines.map(l=>l.slice(strip)).join('\n');
 }
 
-function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
+function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null, title=null) {
+  // one glyph, whatever the topic offers: a second 14px symbol next to the first
+  // says nothing to anyone who does not already know what it means, and the
+  // tutorial and the video are sections of the popup it opens anyway
   const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
-  if(tutorialName)
-    dom.innerHTML += `<span class=material-symbols>school</span>`;
-  if(videoFilename)
-    dom.innerHTML += `<span class=material-symbols>movie</span>`;
-  infoHTML = dedentInfoText(infoHTML);
+  dom.title = title ? `About ${title}` : 'What this does';
+  infoHTML = structureInfoHTML(dedentInfoText(infoHTML));
   // topic names are restricted so literal brackets like [ "widget1", "widget2" ] stay untouched
   infoHTML = infoHTML.replace(/\[([A-Za-z.]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic="${topicName}">${topicInfo != null ? topicInfo : topicName}</span>`);
 
@@ -1283,7 +1384,7 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
     clearTimeout(closeTimer);
     if(popup)
       return;
-    popup = new InfoPopup(dom, infoHTML, tutorialName, videoFilename);
+    popup = new InfoPopup(dom, infoHTML, tutorialName, videoFilename, title);
     popup.show();
     for(const highlight of $a('.highlight', popup.domElement))
       commonInfoButton(highlight, highlight.dataset.topic);
@@ -1294,22 +1395,72 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
   };
   dom.addEventListener('mouseenter', open);
   dom.addEventListener('mouseleave', close);
-  // touch has no pointer to hover with, so a tap opens the same tip
-  dom.addEventListener('click', e=>{
-    e.stopPropagation();
-    open();
-  });
+  // touch has no pointer to hover with, so a tap opens the same tip - and the
+  // keyboard has none either, so focusing the button opens it as well
+  focusable(dom, open);
+  dom.addEventListener('focus', open);
+  dom.addEventListener('blur', close);
   return dom;
+}
+
+// The wiki texts are one <pre> block: prose, and in most of them a list of
+// "name: type - what it does" lines. A popup is not a terminal, so the prose
+// becomes paragraphs and the parameter lines a list whose names carry the color
+// the sentence uses for a value - the same language the rest of the editor
+// teaches, instead of 90 characters of monospace per line.
+function structureInfoHTML(text) {
+  return text.replace(/<pre>([\s\S]*?)<\/pre>/g, (_, body)=>{
+    let html = '';
+    let inList = false;
+    const endList = _=>{
+      html += inList ? '</dl>' : '';
+      inList = false;
+    };
+    for(const rawLine of body.split('\n')) {
+      const line = rawLine.trim();
+      if(!line)
+        continue;
+      const parameter = infoParameterLine(line);
+      if(parameter) {
+        html += inList ? '' : '<dl class=popup-info-parameters>';
+        inList = true;
+        html += `<dt>${parameter.name}</dt><dd>${parameter.description}</dd>`;
+        continue;
+      }
+      endList();
+      if(line.match(/^[A-Za-z ]+:$/))
+        html += `<div class=popup-info-heading>${line.replace(/:$/, '')}</div>`;
+      else
+        html += `<p>${line}</p>`;
+    }
+    endList();
+    return html;
+  });
+}
+
+// "count: number - limits the amount of moved widgets", i.e. a line naming one
+// or more parameters (the texts write alternatives as "operand1 / operand2" and
+// "x and y", and a name can carry a topic link) and then what they are for.
+// Everything else is prose.
+function infoParameterLine(line) {
+  const colon = line.indexOf(':');
+  const description = colon == -1 ? '' : line.slice(colon+1).trim();
+  if(colon < 1 || !description)
+    return null;
+  const names = line.slice(0, colon);
+  if(!names.split(/\/| and /).every(name=>name.replace(/\[[A-Za-z.]+\]|[()"]/g, '').trim().match(/^[A-Za-z0-9_$]+$/)))
+    return null;
+  return { name: names.trim(), description };
 }
 
 function commonInfoButton(appendTo, topicName) {
   const topic = commonInfoTopic(topicName);
-  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null) : undefined;
+  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null, topicName.replace('.', ' ')) : undefined;
 }
 
 function commonParameterInfoButton(appendTo, func, parameter) {
   const topic = parameterInfoTopic(func, parameter);
-  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null) : undefined;
+  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null, `${func} ${parameter}`) : undefined;
 }
 
 // Everything the editor knows about a single parameter of an operation: its own

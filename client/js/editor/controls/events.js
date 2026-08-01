@@ -12,17 +12,17 @@ const predefinedEvents = [
   {
     property: 'changeRoutine',
     label: 'property changed',
-    description: 'Runs whenever any property of this widget changes. The routine receives the variables property, oldValue and value. Use a property-specific routine like fooChangeRoutine to only react to changes of the property foo.'
+    description: 'Runs whenever any property of this widget changes. The routine can use value - what the property is now - as well as oldValue and property. To react to one property only, name the routine after it, like fooChangeRoutine for the property foo.'
   },
   {
     property: 'enterRoutine',
     label: 'widget enters',
-    description: 'Runs when another widget becomes a child of this widget. The routine receives the collection child and the variable oldParentID.'
+    description: 'Runs when another widget is dropped into this widget. The routine starts with the widget that entered picked, and can use oldParentID - the widget it came from.'
   },
   {
     property: 'leaveRoutine',
     label: 'widget leaves',
-    description: 'Runs when a child widget is removed from this widget. The routine receives the collection child. Note that it may run multiple times for a single move.'
+    description: 'Runs when a widget is taken out of this widget. The routine starts with the widget that left picked. It can run more than once for a single move.'
   },
   {
     property: 'gameStartRoutine',
@@ -32,7 +32,7 @@ const predefinedEvents = [
   {
     property: 'globalUpdateRoutine',
     label: 'any widget changed',
-    description: 'Runs when any property of any widget changes. The routine receives the variables widgetID, property, oldValue and value plus the collection widget. Use a property-specific routine like fooGlobalUpdateRoutine to only react to changes of the property foo.'
+    description: 'Runs when any property of any widget in the room changes. The routine starts with the changed widget picked and can use value - what the property is now - as well as oldValue, property and widgetID. To react to one property only, name the routine after it, like fooGlobalUpdateRoutine for the property foo.'
   }
 ];
 
@@ -46,20 +46,20 @@ function describeEventProperty(property) {
     return {
       property,
       label: `${match[1]} changed`,
-      description: `Runs whenever the ${match[1]} property of this widget changes. The routine receives the variables oldValue and value.`
+      description: `Runs whenever the ${match[1]} property of this widget changes. The routine can use value - what ${match[1]} is now - and oldValue, what it was before.`
     };
   }
   if(match = property.match(/^(.+)GlobalUpdateRoutine$/)) {
     return {
       property,
       label: `${match[1]} changed anywhere`,
-      description: `Runs whenever the ${match[1]} property of any widget changes. The routine receives the variables widgetID, oldValue and value plus the collection widget.`
+      description: `Runs whenever the ${match[1]} property of any widget in the room changes. The routine starts with that widget picked and can use value - what ${match[1]} is now - as well as oldValue and widgetID.`
     };
   }
   return {
     property,
     label: property.replace(/Routine$/, ''),
-    description: 'Custom routine. It does not run on its own: call it from any routine using the CALL function with this name as the routine parameter.'
+    description: 'Runs only when another routine runs it by this name - the "Run the routine" operation. Nothing else triggers it.'
   };
 }
 
@@ -73,6 +73,7 @@ const propertyAutomations = [
     label: 'set properties on enter',
     types: [ 'holder', 'line' ],
     keyHint: 'property to set on the widget',
+    subtitle: type=>type == 'line' ? 'Applied to any widget dropped onto this line.' : 'Applied to any widget dropped into this holder.',
     description: type=>`Every property in this object is applied to a widget when it ${type == 'line' ? 'is dropped onto this line and becomes one of its stops' : 'enters this holder'}. For example activeFace: 1 flips cards face up and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.`
   },
   {
@@ -80,6 +81,7 @@ const propertyAutomations = [
     label: 'set properties on leave',
     types: [ 'holder', 'line' ],
     keyHint: 'property to set on the widget',
+    subtitle: type=>type == 'line' ? 'Applied to any widget dragged off this line.' : 'Applied to any widget taken out of this holder.',
     description: type=>`Every property in this object is applied to a widget when it ${type == 'line' ? 'is dragged off this line and stops being one of its stops' : 'leaves this holder'}. For example activeFace: 0 flips cards face down and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.`
   },
   {
@@ -87,6 +89,7 @@ const propertyAutomations = [
     label: 'reset properties',
     types: null,
     keyHint: 'property to restore',
+    subtitle: _=>'Applied to this widget when the game is reset.',
     description: _=>'Every property in this object is applied to this widget by the RESET function - typically used by a reset button to restore the initial game state. Play applies them right now. Record copies the widget\'s current values (including defaults like x, y and rotation) into the object so RESET will restore this exact state.'
   }
 ];
@@ -129,7 +132,7 @@ class AddEventPopup extends Popup {
 
   show() {
     super.show();
-    this.setTitle('Add Routine');
+    this.setTitle('Add routine');
 
     let available = predefinedEvents.filter(e=>this.existingProperties.indexOf(e.property) == -1);
     // enter/leave events mostly matter for the widgets that take others in (a
@@ -296,10 +299,11 @@ class EventsEditor {
       });
       headerDOM.append(removeButton);
 
-      headerDOM.addEventListener('click', _=>{
+      focusable(headerDOM, _=>{
         this.expandedEvents[property] = !expanded;
         this.render();
       });
+      headerDOM.setAttribute('aria-expanded', String(expanded));
 
       if(expanded) {
         const contentDOM = div(eventDOM, 'events-editor-event-content');
@@ -322,7 +326,7 @@ class EventsEditor {
       this.domElement.append(emptyHint);
     }
 
-    const addButton = button(this.domElement, 'Add Routine', _=>{
+    const addButton = button(this.domElement, 'add routine', _=>{
       const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
       const popup = new AddEventPopup(addButton, this.eventProperties(), property=>{
         this.expandedEvents[property] = true;
@@ -339,8 +343,10 @@ class EventsEditor {
   renderPropertyAutomations() {
     const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
     const applicable = propertyAutomations.filter(automation=>!automation.types || automation.types.indexOf(widgetType) != -1);
+    // "Properties" in the property editor reads as "the other properties" - what
+    // these are is a set of properties applied at a given moment
     if(applicable.length)
-      div(this.domElement, 'events-editor-group').textContent = 'Properties';
+      div(this.domElement, 'events-editor-group').textContent = 'Property sets';
     for(const automation of applicable) {
       const property = automation.property;
       const expanded = !!this.expandedEvents[property];
@@ -392,14 +398,19 @@ class EventsEditor {
         headerDOM.append(removeButton);
       }
 
-      headerDOM.addEventListener('click', _=>{
+      focusable(headerDOM, _=>{
         this.expandedEvents[property] = !expanded;
         this.render();
       });
+      headerDOM.setAttribute('aria-expanded', String(expanded));
 
       if(expanded) {
         const contentDOM = div(eventDOM, 'events-editor-event-content');
         contentDOM.addEventListener('click', e=>e.stopPropagation());
+
+        // "on enter" says when, not to what: a holder takes widgets in, a line
+        // makes them one of its stops, and either way the set applies to them
+        div(contentDOM, 'events-editor-subtitle').textContent = automation.subtitle(widgetType);
 
         this.renderPropertySet(contentDOM, automation);
 
@@ -502,7 +513,17 @@ class EventsEditor {
       if(e.key == 'Enter')
         addEntry();
     });
-    button(addRow, 'add', addEntry).className = 'events-editor-property-add-button';
+    const addEntryButton = button(addRow, 'add', addEntry);
+    addEntryButton.className = 'events-editor-property-add-button';
+    // a button that does nothing until a name is typed says so instead of
+    // swallowing the click
+    const updateAddEntryButton = _=>{
+      const key = nameInput.value.trim();
+      addEntryButton.disabled = !key || typeof currentSet()[key] != 'undefined';
+      addEntryButton.title = !key ? 'Type the name of the property to set first' : (addEntryButton.disabled ? `${key} is already in this set` : `Add ${key} to this set`);
+    };
+    nameInput.addEventListener('input', updateAddEntryButton);
+    updateAddEntryButton();
   }
 
   // snapshot the widget so RESET can restore its current state: the explicitly

@@ -6,8 +6,9 @@
 }
 
 .events-editor-group {
-  color: gray;
-  font-size: 11px;
+  color: var(--textColor);
+  opacity: 0.7;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -59,31 +60,37 @@ body.edit.darkMode .events-editor-property {
 
 .events-editor-event-header .info-button {
   cursor: pointer;
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
 }
 
 .events-editor-event-header .info-button:hover {
   color: var(--VTTblue);
+  opacity: 1;
 }
 
 .events-editor-json {
   font-size: 15px;
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
   cursor: pointer;
 }
 
 .events-editor-json:hover {
   color: var(--VTTblue);
+  opacity: 1;
 }
 
 .events-editor-remove {
   font-size: 16px;
-  color: gray;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
   cursor: pointer;
 }
 
 .events-editor-remove:hover {
   color: var(--textHighlightColor3);
+  opacity: 1;
 }
 
 .events-editor-event-content {
@@ -144,15 +151,23 @@ body.edit.darkMode .events-editor-property-key {
   border: 1px dashed var(--backgroundHighlightColor1);
   border-radius: 4px;
   background: none;
-  color: gray;
+  color: var(--textColor);
+  opacity: 0.8;
   cursor: pointer;
   padding: 2px 8px;
   font-size: 12px;
 }
 
-.events-editor-property-add-button:hover {
+.events-editor-property-add-button:hover:not(:disabled) {
   border-color: var(--VTTblue);
   color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* nothing to add without a name: saying so beats a button that does nothing */
+.events-editor-property-add-button:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .events-editor-property-buttons {
@@ -168,7 +183,8 @@ body.edit.darkMode .events-editor-property-key {
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 4px;
   background: none;
-  color: gray;
+  color: var(--textColor);
+  opacity: 0.8;
   cursor: pointer;
   padding: 2px 8px;
   font-size: 12px;
@@ -181,15 +197,18 @@ body.edit.darkMode .events-editor-property-key {
 .events-editor-property-buttons button:hover {
   border-color: var(--VTTblue);
   color: var(--VTTblue);
+  opacity: 1;
 }
 
+/* one shape for every "add something" in the panel: lowercase, dashed outline */
 .events-editor-add,
 .routine-editor-add-operation {
   align-self: flex-start;
   border: 1px dashed var(--backgroundHighlightColor1);
   border-radius: 4px;
   background: none;
-  color: gray;
+  color: var(--textColor);
+  opacity: 0.8;
   cursor: pointer;
   padding: 2px 8px;
   font-size: 12px;
@@ -199,6 +218,16 @@ body.edit.darkMode .events-editor-property-key {
 .routine-editor-add-operation:hover {
   border-color: var(--VTTblue);
   color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* the only add button that sits on an operation card instead of on the page:
+   the dashed outline of the others is the color of that card, so it takes the
+   page background the same way a nested routine is a hole carved into the card */
+.routine-editor-add-else {
+  background: var(--backgroundColor);
+  border-color: var(--backgroundColor);
+  margin-left: 12px;
 }
 
 .add-event-entry {
@@ -206,8 +235,18 @@ body.edit.darkMode .events-editor-property-key {
 }
 
 .add-event-description {
-  font-size: 11px;
-  color: gray;
+  font-size: 12px;
+  color: var(--textColor);
+  opacity: 0.8;
   margin: 1px 2px 4px 2px;
   max-width: 300px;
+}
+
+/* what "enter" or "leave" means for the widget the section belongs to: the one
+   thing the header cannot say by itself */
+.events-editor-subtitle {
+  font-size: 12px;
+  color: var(--textColor);
+  opacity: 0.8;
+  margin: 0 6px 4px 6px;
 }

@@ -26,6 +26,12 @@ body {
   --routinePropertyColor: #c2185b;
   --routineNumberColor: darkcyan;
 
+  /* The controls around a value (move, delete, info, the x of an option) are the
+     text color turned down instead of a fixed gray: gray on the card background
+     reaches 2.5:1, below the 3:1 a control needs to be made out at all, while
+     the same color at this opacity clears 4.5:1 in both themes. */
+  --routineChromeOpacity: 0.6;
+
   color-scheme: light;
   --gridSize: 25px;
   --gridColor: #c0c0c0;
@@ -142,12 +148,15 @@ body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview.pile .handle {
   box-shadow: 0px 0px 0px 5px red;
 }
 
+/* the widgets a picker in the editor has picked: purple rather than orange,
+   because orange next to the yellow of a normal selection is a guess, while
+   purple is the color the routine editor already gives a widget id */
 body.edit:not(.dragToolbarDragging) .widget.customSelectedInEdit:not(.pile) {
-  box-shadow: 0px 0px 0px 5px orange;
+  box-shadow: 0px 0px 0px 5px var(--routineWidgetColor);
 }
 
 body.edit:not(.dragToolbarDragging) .widget.customSelectedInEdit.pile .handle {
-  box-shadow: 0px 0px 0px 5px orange;
+  box-shadow: 0px 0px 0px 5px var(--routineWidgetColor);
 }
 
 .hintUI {

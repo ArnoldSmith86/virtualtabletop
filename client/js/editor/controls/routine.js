@@ -1139,15 +1139,14 @@ class RoutineEditor {
       dragHandle.addEventListener('dragend', _=>endRoutineDrag());
       dragHandle.addEventListener('pointerdown', e=>this.onDragHandlePointerDown(e, dragHandle));
       buttonsDOM.append(dragHandle);
-      const operationButton = (icon, title, onClick, glyphClass='material-symbols')=>{
+      // everything but the grip and the delete button is a convenience the drag
+      // handle also covers, so it only shows while the card is hovered/focused
+      const operationButton = (icon, title, onClick, onDemand=true)=>{
         const buttonDOM = document.createElement('span');
-        buttonDOM.className = glyphClass;
+        buttonDOM.className = `material-symbols${onDemand ? ' routine-editor-on-demand' : ''}`;
         buttonDOM.textContent = icon;
         buttonDOM.title = title;
-        buttonDOM.addEventListener('click', e=>{
-          e.stopPropagation();
-          onClick();
-        });
+        focusable(buttonDOM, onClick);
         buttonsDOM.append(buttonDOM);
       };
       // the block property an adjacent operation would nest this one into
@@ -1172,23 +1171,24 @@ class RoutineEditor {
           this.routine.splice(index+1, 0, this.routine.splice(index, 1)[0]);
           this.routineChanged();
         });
-      // ↰ / ↲ nest this operation into an adjacent IF/FOREACH block
+      // nest this operation into an adjacent IF/FOREACH block, or take it out of
+      // the block it is in - icons from the same font as the buttons next to
+      // them, so the row stays optically even
       const prevBlock = blockOf(this.routine[index-1]);
       if(prevBlock)
-        operationButton('↰', `Move into the ${this.routine[index-1].func} block above`, _=>moveInto(this.routine[index-1], prevBlock, false), 'routine-editor-block-arrow');
+        operationButton('north_east', `Move into the ${this.routine[index-1].func} block above`, _=>moveInto(this.routine[index-1], prevBlock, false));
       const nextBlock = blockOf(this.routine[index+1]);
       if(nextBlock)
-        operationButton('↲', `Move into the ${this.routine[index+1].func} block below`, _=>moveInto(this.routine[index+1], nextBlock, true), 'routine-editor-block-arrow');
-      // ↱ move this operation out of the current block into the parent routine
+        operationButton('south_east', `Move into the ${this.routine[index+1].func} block below`, _=>moveInto(this.routine[index+1], nextBlock, true));
       if(this.onHoist)
-        operationButton('↱', 'Move out of this block', _=>{
+        operationButton('format_indent_decrease', 'Move out of this block', _=>{
           const op = this.routine.splice(index, 1)[0];
           this.onHoist(op);
-        }, 'routine-editor-block-arrow');
+        });
       operationButton('delete', 'Remove this operation', _=>{
         this.routine.splice(index, 1);
         this.routineChanged();
-      });
+      }, false);
       ($('.routine-editor-operation-header', operationDOM) || operationDOM).append(buttonsDOM);
 
       this.domElement.append(operationDOM);
@@ -1510,6 +1510,11 @@ class RoutineOperationEditor {
     const words = this.displayedWords(resolved, value);
     if(words !== null)
       return words;
+    // a value the routine remembers reads as its name: ${...} is the engine's
+    // syntax for one, and everything else in the sentence is English - the
+    // orange the chip is colored in already says it is a stored value
+    if(typeof value == 'string' && value.match(/^\$\{[A-Za-z_][A-Za-z0-9_]*\}$/))
+      return value.slice(2, -1);
     if(value === null && !explicitlySet)
       return 'unset'; // a null default just means the parameter is not used
     if(typeof value == 'object' && value !== null)
@@ -1730,8 +1735,7 @@ class RoutineOperationEditor {
       jsonButton.className = 'material-symbols routine-editor-operation-json';
       jsonButton.textContent = 'data_object';
       jsonButton.title = 'Edit this operation as JSON';
-      jsonButton.addEventListener('click', async e=>{
-        e.stopPropagation();
+      focusable(jsonButton, async _=>{
         const popup = new RoutineFullOperationJSONPopup();
         popup.setSource(jsonButton);
         popup.setOperationDetails(this.operation, [ 'json' ], this.widget, this.variables, this.collections);
@@ -1743,8 +1747,7 @@ class RoutineOperationEditor {
     }
 
     for(const span of $a('span[data-parameter]', dom)) {
-      span.addEventListener('click', async e=>{
-        e.stopPropagation();
+      focusable(span, async _=>{
         const parameterNames = span.dataset.parameter.split(',');
         const popup = this.createPopup(parameterNames);
         popup.setSource(span);
@@ -1829,13 +1832,12 @@ class RoutineOperationEditor {
       html += this.renderTemplateText(template);
     }
     if(this.clauses().some(clause=>!this.clauseIsActive(clause)))
-      html += `<span class="routine-editor-add-clause" title="Add one of the options this operation offers"><span class="material-symbols">add</span>option</span>`;
+      html += `<span class="routine-editor-add-clause" title="Add one of the options this operation offers">add option</span>`;
     dom.innerHTML = html;
 
     const variantMenu = $('.routine-editor-variant-menu', dom);
     if(variantMenu)
-      variantMenu.addEventListener('click', async e=>{
-        e.stopPropagation();
+      focusable(variantMenu, async _=>{
         const popup = new RoutineVariantMenu(routineOperationVariantChoices(this.operation), this.currentVariant().id);
         popup.setSource(variantMenu);
         const values = await newRoutineValues(popup);
@@ -1844,8 +1846,7 @@ class RoutineOperationEditor {
       });
 
     for(const remove of $a('.routine-editor-clause-remove', dom))
-      remove.addEventListener('click', e=>{
-        e.stopPropagation();
+      focusable(remove, _=>{
         const clause = this.clauses().find(c=>c.id == remove.dataset.clause);
         if(clause)
           this.onNewValue(this.clauseRemoveValues(clause));
@@ -1853,8 +1854,7 @@ class RoutineOperationEditor {
 
     const addClause = $('.routine-editor-add-clause', dom);
     if(addClause)
-      addClause.addEventListener('click', async e=>{
-        e.stopPropagation();
+      focusable(addClause, async _=>{
         const popup = new RoutineClausePopup(this.clauses().filter(clause=>!this.clauseIsActive(clause)).map(clause=>({
           label: clause.label,
           sentence: this.renderClauseExample(clause),
@@ -1989,7 +1989,7 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
       this.domElement.append(elseLabel);
       this.renderSubroutine(this.domElement, 'elseRoutine', { emptyHint: 'Add operations to run when the condition is false' });
     } else {
-      const addElse = button(this.domElement, 'add ELSE', _=>{
+      const addElse = button(this.domElement, 'add else', _=>{
         this.operation.elseRoutine = [];
         this.notifyChangeListeners(this.operation);
       });

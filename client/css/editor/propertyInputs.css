@@ -459,8 +459,12 @@
   background: var(--backgroundHighlightColor1, #eee);
 }
 
+/* the type of a widget in the picker: the dim color is #ccc in light mode, which
+   is white-on-white in the list and invisible on a selected row (whose
+   background is #ccc), so the type is the text color turned down instead */
 .editorModule .widgetPickerEntry .widgetPickerType {
-  color: var(--textDimColor1, #777);
+  color: var(--textColor);
+  opacity: 0.65;
   font-size: 11px;
   margin-left: auto;
 }
