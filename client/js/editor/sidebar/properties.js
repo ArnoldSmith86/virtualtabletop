@@ -3754,7 +3754,10 @@ class PropertiesModule extends SidebarModule {
         multiple: true,
         clearLabel: options.clearLabel,
         getSelectedIDs: () => this.seatReferenceToArray(widget.get(property)),
-        apply: seatIDs => this.inputValueUpdated(widget, property, this.seatReferenceFromArray(seatIDs) ?? emptyValue),
+        apply: seatIDs => {
+          const reference = this.seatReferenceFromArray(seatIDs);
+          this.inputValueUpdated(widget, property, reference === null ? emptyValue : reference);
+        },
         onClear: () => this.inputValueUpdated(widget, property, null)
       });
     }
