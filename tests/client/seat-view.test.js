@@ -122,6 +122,77 @@ describe('facing', function() {
   });
 });
 
+// A drag detaches a widget to room level, where nothing above it turns any
+// more. It borrows the view of the container it is being dragged in so that it
+// keeps looking the way it looked when it was picked up.
+describe('a widget being dragged', function() {
+  function dragOut(id, from, hoverTarget) {
+    const widget = widgets.get(id);
+    widget.state.parent = null;
+    widget.state.dragging = 'Alice';
+    widget.state.hoverParent = from;
+    if(hoverTarget)
+      widget.state.hoverTarget = hoverTarget;
+    return widget;
+  }
+
+  test('keeps the view of the table it was picked up from', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table' });
+    const card = dragOut('card', 'table');
+
+    viewAs('north');
+    // the same total turn the table gave it before it was picked up
+    expect(card.seatViewRotation()).toBe(-180);
+  });
+
+  test('follows the drop target it is held over, so the drop changes nothing', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true });
+    createWidget({ id: 'sideboard' });
+    createWidget({ id: 'card', parent: 'table' });
+    const card = dragOut('card', 'table', 'sideboard');
+
+    viewAs('north');
+    expect(card.seatViewRotation()).toBe(0);
+  });
+
+  test('is still kept readable by facing', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table', facing: 'viewer' });
+    const card = dragOut('card', 'table');
+
+    viewAs('north');
+    expect(card.seatViewRotation()).toBe(0);
+  });
+
+  test('borrows nothing once the drag is over', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table' });
+    const card = dragOut('card', 'table');
+    // dropped where no container took it: it is a room level widget now, and
+    // every client has to see it the same way
+    card.state.dragging = null;
+
+    viewAs('north');
+    expect(card.seatViewRotation()).toBe(0);
+  });
+
+  test('does not move in the shared coordinates while it is dragged', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createWidget({ id: 'table', rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table', x: 30, y: 40 });
+    const card = dragOut('card', 'table');
+
+    viewAs('north');
+    expect(card.cssTransform(true)).toBe('translate(30px, 40px)');
+    expect(card.cssTransform()).toBe('translate(30px, 40px) rotate(-180deg)');
+  });
+});
+
 describe('the per-seat view is presentation only', function() {
   test('the stored properties and the shared transform never change', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });

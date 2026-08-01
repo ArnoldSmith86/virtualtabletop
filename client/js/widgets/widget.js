@@ -6,7 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
-import { ownerSeat, scheduleSeatViewRefresh, seatRotation, seatViewGeneration, seatViewMarkUsed, viewingPlayerName, viewingSeat, viewingSeatRotation } from '../seatview.js';
+import { ownerSeat, refreshSeatViewBranch, scheduleSeatViewRefresh, seatRotation, seatViewGeneration, seatViewMarkUsed, viewingPlayerName, viewingSeat, viewingSeatRotation } from '../seatview.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
 // room - being a child of the line is the common shape, not a requirement. This
@@ -29,7 +29,11 @@ const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ])
 
 // Properties that can change how far the per-seat view turns a widget - either
 // on the widget itself or on everything below it.
-const seatViewRelevantProperties = new Set([ 'facing', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'rotateForViewer' ]);
+const seatViewRelevantProperties = new Set([ 'dragging', 'facing', 'hoverParent', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'parent', 'rotateForViewer' ]);
+
+// ... and the ones that decide which container a detached widget borrows its
+// view from while it is being dragged.
+const seatViewFrameProperties = new Set([ 'dragging', 'hoverParent', 'hoverTarget', 'parent' ]);
 
 // Using one of these anywhere in the room switches the per-seat view on for this
 // client. Until then a refresh is a no-op.
@@ -90,6 +94,7 @@ export class Widget extends StateManaged {
     this.childArray = [];
     this.seatViewDelta = 0;
     this.seatViewInherited = 0;
+    this.seatViewBorrowed = 0;
     this.appliedSeatViewDelta = 0;
     this.propertiesUsedInProperty = {};
 
@@ -256,12 +261,22 @@ export class Widget extends StateManaged {
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
     }
 
+    let seatViewFrameChanged = false;
+    let seatViewChanged = false;
     for(const key in delta) {
       if(seatViewEnablingProperties.has(key) && delta[key])
         seatViewMarkUsed();
+      if(seatViewFrameProperties.has(key))
+        seatViewFrameChanged = true;
       if(seatViewRelevantProperties.has(key))
-        scheduleSeatViewRefresh();
+        seatViewChanged = true;
     }
+    // picking a widget up and dropping it again has to take effect before the
+    // drag measures it, everything else can wait for the next sweep
+    if(seatViewFrameChanged && (this.seatViewBorrowed || this.seatViewFrame()))
+      refreshSeatViewBranch(this);
+    else if(seatViewChanged)
+      scheduleSeatViewRefresh();
 
     this.applyCSS(delta);
     
@@ -426,9 +441,9 @@ export class Widget extends StateManaged {
   // touched, so every client keeps computing with the same numbers.
   applySeatView() {
     this.seatViewRefresh();
-    if(this.seatViewDelta === this.appliedSeatViewDelta)
+    if(this.seatViewRotation() === this.appliedSeatViewDelta)
       return;
-    this.appliedSeatViewDelta = this.seatViewDelta;
+    this.appliedSeatViewDelta = this.seatViewRotation();
     // a widget in limbo hangs in #topSurface with a transform of its own that
     // cssTransform cannot reproduce - it gets the new angle when it lands
     if(this.isLimbo)
@@ -773,7 +788,7 @@ export class Widget extends StateManaged {
     // the stored rotation is passed through untouched unless the per-seat view
     // actually turns this widget: games have always been allowed to put a string
     // in there, and "45" + 90 would silently render as 4590 degrees
-    const seatViewDelta = shared ? 0 : this.seatViewDelta;
+    const seatViewDelta = shared ? 0 : this.seatViewRotation();
     const rotation = seatViewDelta ? (+this.get('rotation') || 0) + seatViewDelta : this.get('rotation');
 
     if(this.get('ignoreZoom')) {
@@ -813,8 +828,13 @@ export class Widget extends StateManaged {
         parent.coordLocalFromCoordGlobal(coordGlobal) :
         this.coordParentFromCoordGlobal(coordGlobal);
     const transformOrigin = getTransformOrigin(this.domElement);
-    let positionCoord = this.coordParentFromCoordLocal(transformOrigin);
-    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), positionCoord);
+    // The grabbed point has to be measured in the same frame the drop
+    // coordinate is in, or it lands next to the cursor instead of under it: a
+    // drop target can be turned or scaled against the frame the widget is
+    // dragged in, and a table turned for the viewing player always is.
+    const inTargetFrame = coord => parent ? parent.coordLocalFromCoordGlobal(this.coordGlobalFromCoordLocal(coord)) : this.coordParentFromCoordLocal(coord);
+    let positionCoord = inTargetFrame(transformOrigin);
+    const offset = getOffset(inTargetFrame(localAnchor), positionCoord);
     let corner = {x: coord.x + offset.x - transformOrigin.x, y: coord.y + offset.y - transformOrigin.y, z: this.get('z')};
     if (parent)
       corner = parent.coordGlobalFromCoordLocal(corner);
@@ -2566,6 +2586,12 @@ export class Widget extends StateManaged {
 
       for(const t of this.dropTargets)
         t.domElement.classList.add('droppable');
+
+      // The first mouse move of the drag measures this widget through the DOM
+      // to keep the grabbed point under the cursor, and the delta that detaches
+      // it only reaches the DOM once this whole event is done - so the view it
+      // is dragged in has to be in place before that measurement, not after.
+      refreshSeatViewBranch(this);
     }
   }
 
@@ -3008,6 +3034,7 @@ export class Widget extends StateManaged {
     // set before recursing so a parent cycle terminates instead of hanging
     this.seatViewGeneration = seatViewGeneration();
     this.seatViewInherited = 0;
+    this.seatViewBorrowed = 0;
     this.seatViewDelta = 0;
 
     const parentID = this.get('parent');
@@ -3015,6 +3042,16 @@ export class Widget extends StateManaged {
       const parent = widgets.get(parentID);
       parent.seatViewRefresh();
       this.seatViewInherited = parent.seatViewInherited + parent.seatViewDelta;
+    } else {
+      // A parent applies its turn through the DOM; a borrowed frame cannot, so
+      // the widget has to carry that turn itself - it is counted as inherited
+      // all the same, because that is what it looks like on screen.
+      const frame = this.seatViewFrame();
+      if(frame) {
+        frame.seatViewRefresh();
+        this.seatViewBorrowed = frame.seatViewInherited + frame.seatViewDelta;
+        this.seatViewInherited = this.seatViewBorrowed;
+      }
     }
 
     // no seat, no personal view: spectators and players who did not sit down
@@ -3039,10 +3076,33 @@ export class Widget extends StateManaged {
     this.seatViewDelta = delta || 0; // never -0, which would end up in the CSS
   }
 
+  // The container a dragged widget has to keep looking like it is inside. A drag
+  // detaches the widget to room level, so without this it would leave the turned
+  // table the moment it is picked up: the grabbed point would slide out from
+  // under the cursor and the drop would put it back where it looks like it never
+  // was. Both ends of the drag are known to every client, so a drag looks the
+  // same to the player watching as to the player dragging.
+  seatViewFrame() {
+    // Only while the drag is running: what a drop puts back into a container
+    // gets that container's view through the DOM again, and what it leaves at
+    // room level has really left the table and is on nobody's side of it.
+    if(!this.get('dragging') || this.get('parent'))
+      return null;
+    const frameID = this.get('hoverTarget') || this.get('hoverParent');
+    const frame = frameID && widgets.has(frameID) ? widgets.get(frameID) : null;
+    return frame != this ? frame : null;
+  }
+
+  // How far the per-seat view turns this widget's own element: what it is turned
+  // by itself, plus the frame it borrows while it is being dragged.
+  seatViewRotation() {
+    return this.seatViewDelta + this.seatViewBorrowed;
+  }
+
   // The transform this widget would have without any per-seat view, or null when
   // there is nothing to take back out.
   sharedTransform() {
-    return this.seatViewDelta ? this.cssTransform(true) : null;
+    return this.seatViewRotation() ? this.cssTransform(true) : null;
   }
 
   showEnlarged(event, delta) {

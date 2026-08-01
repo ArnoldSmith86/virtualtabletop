@@ -113,6 +113,30 @@ export function refreshSeatViews(force = false) {
   }
 }
 
+// Dragging is the one thing that changes a single widget's personal view on its
+// own: it detaches the widget to room level, where it has to keep looking like
+// it is still on the table it came from. Every mouse move measures the widget
+// through the DOM to keep the grabbed point under the cursor, so that view has
+// to be in place immediately - a sweep one frame later would be one frame of
+// wrong measurements, which is a visible jump.
+export function refreshSeatViewBranch(widget) {
+  if(!inUse && !seatViewPreview)
+    return;
+  ++generation;
+  sweepCache = {};
+  try {
+    const branch = [ widget ];
+    while(branch.length) {
+      const current = branch.pop();
+      current.applySeatView();
+      for(const child of current.childArray)
+        branch.push(child);
+    }
+  } finally {
+    sweepCache = null;
+  }
+}
+
 // The identity per-player visibility (owner, onlyVisibleForSeat, linkedToSeat)
 // is judged against while rendering.
 export function viewingPlayerName() {
