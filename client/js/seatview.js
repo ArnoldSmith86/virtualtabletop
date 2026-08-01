@@ -18,10 +18,6 @@ import { playerName } from './overlays/players.js';
 // so routines, ${PROPERTY ...}, undo and saved games see identical values on
 // every client.
 
-// Only whole quarter turns: a square area rotated by 90 degrees still fits its
-// own footprint, so the surrounding layout never has to reflow.
-const rotationStep = 90;
-
 let seatViewPreview = null;
 let refreshScheduled = false;
 let generation = 0;
@@ -179,23 +175,28 @@ function orderedSeats() {
 
 // How far the table has to be turned so that this seat's side of it ends up in
 // front of the player sitting there. Defaults to the seat widget's own rotation,
-// which designers already set to point a seat at its side of the table.
+// which designers already set to point a seat at its side of the table. Any
+// angle goes: a square play area is best turned by quarter turns because it
+// still fits its own footprint then, but a round six player board needs sixths.
 export function seatRotation(seat, property = 'viewRotation') {
   rotationProperties.add(property);
   if(!seat)
     return 0;
   const value = seat.get(property);
   const rotation = value === null || value === undefined || value === '' || isNaN(+value) ? seat.get('rotation') : +value;
-  return Math.round((rotation || 0) / rotationStep) * rotationStep;
+  return +rotation || 0;
 }
 
-// Quarter turns only, so the sine and cosine come out exact. A drag inverts
-// this to work out the position it stores, and floating point dust there would
-// end up in the room state on every mouse move.
+// Quarter turns keep an exact sine and cosine, which is what most tables use;
+// everything else goes through the trigonometry. A drag inverts this to work out
+// the position it stores, but rounds that to whole pixels before writing it, so
+// the dust the general case leaves behind never reaches the room state.
 export function rotateCoord(coord, angle) {
-  const quarter = ((Math.round(angle / rotationStep) % 4) + 4) % 4;
-  const cos = [ 1, 0, -1, 0 ][quarter];
-  const sin = [ 0, 1, 0, -1 ][quarter];
+  const degrees = ((angle % 360) + 360) % 360;
+  const quarter = degrees / 90;
+  const exact = Number.isInteger(quarter);
+  const cos = exact ? [ 1, 0, -1, 0 ][quarter] : Math.cos(degrees * Math.PI / 180);
+  const sin = exact ? [ 0, 1, 0, -1 ][quarter] : Math.sin(degrees * Math.PI / 180);
   return { x: coord.x * cos - coord.y * sin, y: coord.x * sin + coord.y * cos };
 }
 

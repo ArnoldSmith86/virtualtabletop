@@ -358,7 +358,7 @@ const editorPropertyHints = {
   borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
   rotateForViewer: 'Turns this widget and everything inside it so that the seat of the player looking at the room ends up at the bottom of their screen. Every player sees the same table from their own chair. This only changes how it looks - the stored rotation never changes. The pieces, labels and buttons in here turn with it and end up upside down for the player at the far side: set "Upright for" on this widget as well to keep everything inside it readable. Only what is inside this widget turns with it, so put the seats, hands and player areas in here - anything left outside stays where it is. That goes for lines as well: a line and the widgets it connects belong on the same side of this widget, or the line is drawn to where they are stored instead of to where they are shown.',
   facing: 'Keeps this widget and everything inside it readable while its surroundings are turned for the viewing player. "whoever is looking at it" is the one to pick for text, card faces and piece art - set it on the play area and the pieces on it are covered too, or on a single widget to keep just that one upright. A widget inside it can pick "the table" to turn along with the table after all. It only does something inside a widget that turns for the viewing player, and a widget that turns for the viewing player itself is not turned by this - there it only says how its contents read.',
-  viewRotation: 'How far the table has to be turned so that this seat is at the bottom of the screen for the player sitting here, e.g. 180 for a seat at the far side. Leave empty to use the seat widget\'s own rotation. Rounded to quarter turns.',
+  viewRotation: 'How far the table has to be turned so that this seat is at the bottom of the screen for the player sitting here, e.g. 180 for a seat at the far side, or 60 on a six player board. Leave empty to use the seat widget\'s own rotation.',
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
@@ -4524,9 +4524,9 @@ class PropertiesModule extends SidebarModule {
 
     this.renderSeatHandInput(widget);
     // empty means "the seat's own rotation" - show which angle that currently is
-    const viewRotation = new NumberInput(this, widget, 'View rotation', { property: 'viewRotation', step: 90, nullIfEmpty: true, unit: '°', hint: editorPropertyHints.viewRotation });
+    const viewRotation = new NumberInput(this, widget, 'View rotation', { property: 'viewRotation', step: 15, nullIfEmpty: true, unit: '°', hint: editorPropertyHints.viewRotation });
     viewRotation.render(this.moduleDOM);
-    this.addPropertyListener(widget, 'rotation', w => viewRotation.input.placeholder = Math.round((+w.get('rotation') || 0) / 90) * 90);
+    this.addPropertyListener(widget, 'rotation', w => viewRotation.input.placeholder = +w.get('rotation') || 0);
     new CheckboxInput(this, widget, 'Ignore this seat in turns', { property: 'skipTurn', hint: editorPropertyHints.skipTurn }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
 

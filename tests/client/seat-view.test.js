@@ -65,12 +65,22 @@ describe('rotateForViewer', function() {
     expect(table.seatViewDelta).toBe(0);
   });
 
-  test('the seat viewRotation wins over its rotation and is rounded to quarter turns', function() {
-    createSeat('east', { player: 'Alice', rotation: 180, viewRotation: 85 });
+  test('the seat viewRotation wins over its rotation', function() {
+    createSeat('east', { player: 'Alice', rotation: 180, viewRotation: 90 });
     const table = createWidget({ id: 'table', rotateForViewer: true });
 
     viewAs('east');
     expect(table.seatViewDelta).toBe(-90);
+  });
+
+  test('turns by any angle, not only by quarter turns', function() {
+    // a six player board has to come round by sixths
+    createSeat('third', { player: 'Alice', rotation: 120 });
+    const table = createWidget({ id: 'table', rotateForViewer: true });
+
+    viewAs('third');
+    expect(table.seatViewDelta).toBe(-120);
+    expect(table.cssTransform()).toBe('translate(0px, 0px) rotate(-120deg)');
   });
 
   test('can read the angle from another seat property', function() {
