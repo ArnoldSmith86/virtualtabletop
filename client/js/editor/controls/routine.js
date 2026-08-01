@@ -208,6 +208,14 @@ function yesNo(yes, no) {
   return { 'true': yes, 'false': no };
 }
 
+// text the game shows or stores, in quotes: they are the difference between the
+// number 1 and the digit 1, and between a word of the sentence and a word the
+// player reads ('titled "Are you sure?"'). A value the routine works out while
+// it runs is not text anybody typed, so it keeps its own wording.
+function quotedText(value) {
+  return typeof value == 'string' && value !== '' && !value.match(/\$\{/) ? `"${value}"` : null;
+}
+
 // the comparisons of IF and SELECT in words: "is more than" says what ">" does
 // to somebody who has never written a condition, and the operations still store
 // the operators the engine reads
@@ -556,28 +564,47 @@ const routineOperationMetadata = {
   },
   INPUT: {
     description: 'Ask the player to fill in a dialog',
+    // an INPUT asks somebody something: who is asked, what the dialog is called
+    // and what there is to fill in are three separate things, so each of them is
+    // a part of the sentence that is there while the operation has it. A dialog
+    // with no fields is the "Are you sure?" every second game asks, so the fields
+    // are an option like the rest instead of a form the sentence claims is there.
     variants: [
-      { id: 'input', label: 'Ask the player', template: 'Ask the player to fill in {fields}' }
+      { id: 'input', label: 'Ask the player', template: 'Ask{{player}}{{header}}{{fields}}' }
     ],
     clauses: [
-      { id: 'header', label: 'a title', template: ', titled {header}' },
+      { id: 'player', label: 'somebody else to ask', whenOff: ' the player', template: ' {player}', add: { player: '' } },
+      { id: 'header', label: 'a title', template: ' {header}' },
+      { id: 'fields', label: 'things to fill in', template: ' to fill in {fields}' },
       { id: 'confirmButtonText', label: 'the confirm button', template: ', confirming with {confirmButtonText}' },
       { id: 'confirmButtonIcon', label: 'the confirm icon', template: ' and the icon {confirmButtonIcon}', add: { confirmButtonIcon: 'check' } },
       { id: 'cancelButtonText', label: 'the cancel button', template: ', cancelling with {cancelButtonText}' },
       { id: 'cancelButtonIcon', label: 'the cancel icon', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' } },
+      { id: 'block', label: 'what everybody else does', template: ', {block}', add: { block: true } },
       { id: 'css', label: 'a style of its own', template: ', styled {css}' },
       { id: 'randomRotation', label: 'rotated randomly', template: ', rotated by up to {randomRotation} degrees', add: { randomRotation: 5 } }
     ],
+    // the two things every dialog is written with: what it says and what it asks
+    newOperation: { func: 'INPUT', header: '', fields: [] },
     parameters: {
-      fields: { type: 'json', default: [], display: value=>Array.isArray(value) ? `${value.length} field${value.length == 1 ? '' : 's'}` : null },
-      confirmButtonText: { type: 'string', default: 'Go' },
+      // a name, or a list of them to ask several players at once - so the value
+      // is worded rather than typed over: a list is a list, not a line of text
+      player: { type: 'json', default: null, hint: 'player name', display: value=>Array.isArray(value) && value.length ? wordList(value) : null },
+      fields: { type: 'json', default: [], hint: 'fields', display: value=>Array.isArray(value) && value.length ? `${value.length} field${value.length == 1 ? '' : 's'}` : null },
+      confirmButtonText: { type: 'string', default: 'Go', display: quotedText },
       confirmButtonIcon: { type: 'icon', default: null },
-      cancelButtonText: { type: 'string', default: 'Cancel' },
+      cancelButtonText: { type: 'string', default: 'Cancel', display: quotedText },
       cancelButtonIcon: { type: 'icon', default: null },
-      header: { type: 'string', default: '' },
+      header: { type: 'string', default: '', hint: 'title', display: quotedText },
+      block: { type: 'enum', values: [ true, false ], default: false, display: yesNo('holding everybody else up until it is answered', 'letting everybody else carry on') },
       css: { type: 'string', default: '' },
       randomRotation: { type: 'number', default: 0 }
-    }
+    },
+    // what an INPUT hands on to the operations after it: every field writes what
+    // was entered into the variable it names, and a field the player picks
+    // widgets in also fills a collection (the same fields validate_gamefile.js reads)
+    definesVariables: operation=>(operation.fields || []).map(field=>field && field.variable).filter(name=>typeof name == 'string'),
+    definesCollection: operation=>(operation.fields || []).filter(field=>field && field.type == 'choose').flatMap(field=>field.collection && typeof field.collection == 'object' ? Object.values(field.collection) : [ field.collection || 'DEFAULT' ]).filter(name=>typeof name == 'string')
   },
   LABEL: {
     description: 'Change the text of a label',
@@ -817,13 +844,14 @@ const routineOperationMetadata = {
     newOperation: { func: 'SET', property: '', value: '' },
     parameters: {
       // every one of the seven verbs asks for the same thing in the same word:
-      // what a SET changes is the value a property holds, whichever way it changes it
-      property: { type: 'property', default: 'parent', hint: 'value' },
+      // what they all change is a property, whichever way they change it, so no
+      // variant words this blank differently
+      property: { type: 'property', default: 'parent' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
       relation: { type: 'enum', values: [ '=', '+', '-', '*', '/', '!' ], default: '=' },
       // text in quotes is the difference between the number 1 and the digit 1;
       // a value the routine remembers is worded as its name instead
-      value: { type: 'json', default: null, hint: 'number or text', display: value=>typeof value == 'string' && value !== '' && !value.match(/\$\{/) ? `"${value}"` : null }
+      value: { type: 'json', default: null, hint: 'number or text', display: quotedText }
     },
     // ! is the one relation that takes a single operand (the current value)
     ignored: v=>v('relation') == '!' ? { value: 'ignored because ! only negates the current value' } : {}
@@ -1282,6 +1310,7 @@ class RoutineEditor {
         buttonDOM.title = title;
         focusable(buttonDOM, onClick);
         appendTo.append(buttonDOM);
+        return buttonDOM;
       };
       // the block property an adjacent operation would nest this one into
       const blockOf = op=>op && typeof op == 'object' ? ({ IF: 'thenRoutine', FOREACH: 'loopRoutine' })[op.func] : undefined;
@@ -1326,7 +1355,7 @@ class RoutineEditor {
       operationButton('delete', 'Remove this operation', _=>{
         this.routine.splice(index, 1);
         this.routineChanged();
-      }, (header && $('.routine-editor-operation-controls-top', header)) || buttonsDOM);
+      }, (header && $('.routine-editor-operation-controls-top', header)) || buttonsDOM).classList.add('routine-editor-operation-delete');
       (controls || header || operationDOM).append(buttonsDOM);
 
       this.domElement.append(operationDOM);
@@ -1714,8 +1743,9 @@ class RoutineOperationEditor {
   }
 
   // whether the chip stands for a blank rather than for a value: an empty text,
-  // or a parameter left at a default that only means "not in use". A wording of
-  // its own wins - a SELECT without a value looks for "nothing", it is not blank.
+  // an empty list, or a parameter left at a default that only means "not in
+  // use". A wording of its own wins - a SELECT without a value looks for
+  // "nothing" and a FOREACH over an empty list says so, they are not blank.
   parameterIsBlank(property) {
     const resolved = this.resolveParameter(property);
     if(resolved === null)
@@ -1724,7 +1754,7 @@ class RoutineOperationEditor {
     const value = explicitlySet ? this.operation[resolved] : this.getDefaults()[resolved];
     if(this.displayedWords(resolved, value) !== null)
       return false;
-    return value === '' || value === null && !explicitlySet;
+    return value === '' || Array.isArray(value) && !value.length || value === null && !explicitlySet;
   }
 
   // the one word a blank shows: what the parameter takes, worded by the variant
@@ -2069,14 +2099,27 @@ class RoutineOperationEditor {
     return Math.min(Math.max(...lengths), 20);
   }
 
+  // an option and the marker that takes it out again. The marker stays with the
+  // last value of the clause instead of standing on its own, so a sentence long
+  // enough to wrap never breaks between them and starts a line with what looks
+  // like a bullet point.
+  renderClauseWithRemoveMarker(part) {
+    const html = this.renderTemplateText(part.template);
+    const marker = `<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Take this option out of the sentence">do_not_disturb_on</span>`;
+    const lastChip = html.lastIndexOf('<span class="routine-editor-operation-parameter');
+    if(lastChip == -1)
+      return html + marker;
+    return `${html.slice(0, lastChip)}<span class="routine-editor-clause-end">${html.slice(lastChip)}${marker}</span>`;
+  }
+
   // the sentence of the current variant, plus the options that are switched on -
-  // each with the x that removes it again - and the button offering the rest
+  // each with the marker that removes it again - and the button offering the rest
   renderSentenceView(dom) {
     let html = '';
     for(const [ index, part ] of this.sentenceParts().entries()) {
       if(part.clause) {
         if(this.clauseIsActive(part.clause))
-          html += `<span class="routine-editor-clause">${this.renderTemplateText(part.template)}<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Take this option out of the sentence">do_not_disturb_on</span></span>`;
+          html += `<span class="routine-editor-clause">${this.renderClauseWithRemoveMarker(part)}</span>`;
         else if(part.clause.whenOff)
           html += escapeHTML(part.clause.whenOff); // an option that replaces words says what is there without it
         continue;

@@ -506,7 +506,10 @@ describe('operation rendering', () => {
     [ { func: 'AUDIO', source: 'click.mp3' }, 'Play the sound click.mp3' ],
     [ { func: 'AUDIO', source: 'click.mp3', maxVolume: 0.5 }, 'Play the sound click.mp3 at 50% volume' ],
     [ { func: 'SWAPHANDS' }, 'Pass every hand on to the next seat' ],
-    [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player to fill in 3 fields, titled Choose a card' ],
+    [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player "Choose a card" to fill in 3 fields' ],
+    // a dialog with nothing to fill in is a question, and the sentence says so
+    [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", cancelling with "No"' ],
+    [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask red and blue to fill in 1 field, holding everybody else up until it is answered' ],
     [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
     [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number of 1 to 10' ]
   ])('%j reads as its sentence', (operation, sentence) => {
@@ -540,10 +543,13 @@ describe('picking how an operation works and which options it uses', () => {
   test('a blank says what kind of value belongs there, in red', () => {
     const { dom } = renderOperation({ func: 'SET', property: '', value: '' });
     const blanks = [...dom.querySelectorAll('.routine-editor-parameter-missing')];
-    expect(blanks.map(b => b.textContent)).toEqual([ 'value', 'number or text' ]);
+    expect(blanks.map(b => b.textContent)).toEqual([ 'property', 'number or text' ]);
     // what the operation does can word it better than the type of the parameter
-    expect(renderOperation({ func: 'SET', relation: '+', property: '' }).dom.textContent).toContain('value of the picked widgets by number');
-    expect(renderOperation({ func: 'SET', relation: '+', property: '', value: '' }).dom.textContent).toContain('"text" to value of the picked widgets');
+    expect(renderOperation({ func: 'SET', relation: '+', property: '' }).dom.textContent).toContain('property of the picked widgets by number');
+    expect(renderOperation({ func: 'SET', relation: '+', property: '', value: '' }).dom.textContent).toContain('"text" to property of the picked widgets');
+    // a list with nothing in it is a blank as well: an INPUT without fields has
+    // nothing to fill in yet, and "0 fields" is not what the card should read
+    expect(renderOperation({ func: 'INPUT', fields: [] }).dom.querySelector('.routine-editor-parameter-missing').textContent).toBe('fields');
     // a widget parameter says which kind of widget it wants
     expect(renderOperation({ func: 'MOVE', from: 'deck1' }).dom.textContent).toContain('from deck1 to holder');
     // and a value that has a wording of its own is not a blank
@@ -691,7 +697,9 @@ describe('picking how an operation works and which options it uses', () => {
     };
     // a blank says what kind of value belongs there instead of asking with a "?"
     expect(sentenceOf(newOperation('SELECT'))).toBe('Pick widgets where property is value');
-    expect(sentenceOf(newOperation('SET'))).toBe('Set value of the picked widgets to number or text');
+    expect(sentenceOf(newOperation('SET'))).toBe('Set property of the picked widgets to number or text');
+    // a dialog is written with what it says and what it asks
+    expect(sentenceOf(newOperation('INPUT'))).toBe('Ask the player title to fill in fields');
     // everything else is nothing but its func
     expect(newOperation('SHUFFLE')).toEqual({ func: 'SHUFFLE' });
   });
@@ -841,6 +849,10 @@ describe('picking how an operation works and which options it uses', () => {
     const remove = dom.querySelector('.routine-editor-clause-remove');
     expect(remove.textContent).toBe('do_not_disturb_on');
     expect(remove.title.toLowerCase()).toContain('option');
+    // and it stays with the value it belongs to while the sentence wraps: on its
+    // own it ends up alone at the start of a line, reading as a bullet point
+    expect(remove.parentElement.className).toBe('routine-editor-clause-end');
+    expect(remove.previousElementSibling.dataset.parameter).toBe('face');
   });
 
   test('the sentence says "add option" like every other add button in the panel', () => {
@@ -857,8 +869,7 @@ describe('picking how an operation works and which options it uses', () => {
     editor.setOperationDetails({ state: {} }, { func: 'INPUT' }, [], []);
     const named = editor.clauses().map(clause => clause.id);
     for (const name in routineOperationMetadata.INPUT.parameters)
-      if (name != 'fields') // the one the sentence itself shows
-        expect(named).toContain(name);
+      expect(named).toContain(name);
   });
 });
 
@@ -876,12 +887,28 @@ describe('routine editor state handling', () => {
     expect(move.collections).toContainEqual([ 'w1', 'w2' ]);
   });
 
+  test('the fields of an INPUT are variables and collections of their own', () => {
+    // what the player fills in is what the operations after it work with, so the
+    // popups offer those names instead of the editor pretending an INPUT stores
+    // nothing (the same fields validate_gamefile.js reads)
+    const editor = new RoutineEditor({ state: {} }, [
+      { func: 'INPUT', fields: [ { type: 'string', variable: 'playerAnswer' }, { type: 'choose', variable: 'picked', collection: 'chosenCards' }, { type: 'title' } ] },
+      { func: 'SET', property: 'text' }
+    ]);
+    expect(editor.operations[1].variables).toEqual([ 'playerAnswer', 'picked' ]);
+    expect(editor.operations[1].collections).toContain('chosenCards');
+  });
+
   test('removing an operation splices the routine', () => {
     const routine = [ { func: 'FLIP' }, { func: 'SHUFFLE' } ];
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    [...editor.domElement.querySelectorAll('.routine-editor-operation-controls .material-symbols')].find(b => b.textContent == 'delete').dispatchEvent(new Event('click'));
+    const remove = [...editor.domElement.querySelectorAll('.routine-editor-operation-controls .material-symbols')].find(b => b.textContent == 'delete');
+    // the one control of a card that takes something away, so it says so in red
+    // like every other removal in the panel rather than in the editor blue
+    expect(remove.classList.contains('routine-editor-operation-delete')).toBe(true);
+    remove.dispatchEvent(new Event('click'));
     expect(notified).toHaveLength(1);
     expect(notified[0].func).toBe('SHUFFLE');
   });
@@ -1979,7 +2006,11 @@ describe('the shared widget picker', () => {
     expect(entries.map(e => e.textContent.replace(/holder|this widget/g, ''))).toEqual([ 'target', 'h1', 'h2' ]);
     expect(entries[1].classList.contains('selected')).toBe(true); // seeded with the current value
     entries[2].onclick();
-    [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'Use these widgets').dispatchEvent(new Event('click'));
+    const apply = [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'Use these widgets');
+    // the button the section is for is the filled one among the outlined ones
+    expect(apply.classList.contains('primary')).toBe(true);
+    expect([...popup.domElement.querySelectorAll('button.primary')]).toHaveLength(1);
+    apply.dispatchEvent(new Event('click'));
     expect(value).toEqual({ from: [ 'h1', 'h2' ] });
     popup.hide();
   });

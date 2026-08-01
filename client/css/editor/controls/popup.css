@@ -257,6 +257,22 @@ body.edit.darkMode .inline-popup button:hover {
   color: var(--textHighlightColor7);
 }
 
+/* the button that puts what was picked into the operation: it is what the
+   section is for, so it is filled in the editor blue instead of being one more
+   outlined button among the ones that only change the selection */
+.inline-popup button.primary,
+.inline-popup button.primary:hover,
+body.edit.darkMode .inline-popup button.primary:hover {
+  border-color: var(--VTTblue);
+  background: var(--VTTblue);
+  color: white;
+  font-weight: bold;
+}
+
+.inline-popup button.primary:hover {
+  filter: brightness(1.15);
+}
+
 .inline-popup input,
 .inline-popup textarea {
   box-sizing: border-box;

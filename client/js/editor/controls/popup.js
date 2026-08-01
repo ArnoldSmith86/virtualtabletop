@@ -1103,7 +1103,10 @@ class RoutineWidgetIDPopup extends RoutinePopup {
       onClear: _=>this.workingIDs = [],
       clearLabel: 'Select none'
     });
-    button(content, 'Use these widgets', _=>this.setNewValue([ ...this.workingIDs ]));
+    // the button that applies the picked widgets is what the section is for, so
+    // it is the one filled button among the outlined ones instead of looking
+    // like another way to change the selection
+    button(content, 'Use these widgets', _=>this.setNewValue([ ...this.workingIDs ])).classList.add('primary');
     // a widget parameter takes a widget id, which a variable or widget property
     // can provide as well - e.g. ${PROPERTY parent} for the holder a button sits on
     super.show(true, showCollections);
@@ -1786,6 +1789,8 @@ function commonInfoTopic(topicName) {
 
       fields: array of field definitions - what to display, in order (checkbox, choose, color, number, palette, select, slider, string, subtitle, switch, text, and title types are supported, each with their own parameters - see the wiki for the full list).
       header: text - text displayed above everything else (mostly kept for backwards compatibility).
+      player: playerName (or an array) - who is shown the overlay (defaults to null, the player whose action started the routine). With an array, everybody named is asked at once and each field comes back keyed by player name.
+      block: boolean - while true, everybody else is shown a message naming who is being asked and cannot interact with widgets until every overlay is answered (defaults to false).
       css: css - modifies the css of field areas other than the header/title/subtitle.
       randomRotation: number - rotates the whole dialog by a random angle of up to half this many degrees in each direction (defaults to 0, no rotation).
       cancelButtonIcon / cancelButtonText: icon/text shown on the cancel button (defaults to no icon, "Cancel"). Set both explicitly to null to hide the cancel button entirely.

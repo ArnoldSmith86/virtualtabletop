@@ -235,6 +235,13 @@
   opacity: 1;
 }
 
+/* deleting the card is the one control that takes something away, so it turns
+   the same red on the way to being clicked as the marker that takes an option
+   out of the sentence and the trash can of a whole routine */
+.routine-editor-operation-controls-top .routine-editor-operation-delete:hover {
+  color: var(--textHighlightColor3);
+}
+
 .routine-editor-else {
   font-weight: bold;
   font-size: 12px;
@@ -253,12 +260,11 @@
 }
 
 /* the optional parts of a sentence: shown while they are in use, each with the
-   x that switches it off again, and the button that offers the rest */
+   marker that switches it off again, and the button that offers the rest. A
+   clause wraps between its words like the rest of the sentence does: held on one
+   line, a long one ("without waiting for it to finish") ran off the edge of the
+   card and was cut off there instead of continuing on the next line. */
 .routine-editor-clause {
-  white-space: nowrap;
-}
-
-.routine-editor-clause > .routine-editor-operation-parameter {
   white-space: normal;
 }
 
@@ -274,6 +280,15 @@
   cursor: pointer;
   vertical-align: middle;
   margin-left: 2px;
+}
+
+/* the last value of a clause and the marker that removes the clause are one
+   unit while the sentence wraps: a line breaking between them would leave the
+   marker alone at the start of the next line, where it reads as a bullet point
+   rather than as the end of the clause it belongs to */
+.routine-editor-clause-end {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .routine-editor-clause-remove:hover {
