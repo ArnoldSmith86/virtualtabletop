@@ -464,8 +464,10 @@ describe('operation rendering', () => {
     [ { func: 'SET', collection: [ 'playHolder1' ], property: 'pause', value: true }, 'Set pause of playHolder1 to true' ],
     [ { func: 'SET', property: 'lastOwner', value: null }, 'Set lastOwner of the picked widgets to null' ],
     [ { func: 'SELECT', property: 'cardType', value: 'ace' }, 'Pick widgets where cardType is ace' ],
+    // the condition is always part of a SELECT: the engine filters by it either
+    // way, and its defaults mean "the widgets lying on the table"
     [ { func: 'SELECT', type: 'card', max: 5, random: true, source: 'hand', sortBy: 'value', collection: 'aces' },
-      'Pick at most 5 random cards from hand, sorted by value — call them aces' ],
+      'Pick at most 5 random cards from hand where parent is nothing, sorted by value — call them aces' ],
     [ { func: 'SELECT', mode: 'add', property: 'letter', value: '${value}', collection: 'letters' },
       'Add to the pick letters: widgets where letter is value' ],
     [ { func: 'IF', operand1: '${cardType}', operand2: 'boba' }, 'If cardType is boba' ],
@@ -564,8 +566,10 @@ describe('picking how an operation works and which options it uses', () => {
     expect(menu.querySelector('.popup-close')).not.toBeNull(); // but it can be closed like every other popup
     const entryLabels = [...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent);
     expect(entryLabels).toEqual([ 'Turn face up', 'Turn face down', 'Turn to the face', 'Flip' ]);
-    // every entry says what the operation would read as, so the choice explains itself
-    expect(menu.querySelector('.popup-menu-entry-preview').textContent).toContain('deck1');
+    // nothing but the phrases: it is the expander of the field the sentence
+    // starts with, and the sentence each phrase produces is a hover away
+    expect(menu.querySelector('.popup-menu-entry-preview')).toBeNull();
+    expect(menu.querySelector('.popup-menu-entry').title).toContain('deck1');
     expect(menu.querySelector('button.selected .popup-menu-entry-label').textContent).toBe('Turn face up');
     [...menu.querySelectorAll('.popup-menu-entry')].find(b => b.textContent.startsWith('Turn face down')).dispatchEvent(new Event('click'));
     await new Promise(resolve => setTimeout(resolve, 0));
@@ -598,6 +602,45 @@ describe('picking how an operation works and which options it uses', () => {
     popup.domElement.querySelector('.popup-operation').dispatchEvent(new Event('click'));
     expect(value.func).toBe('SHUFFLE');
     popup.hide();
+  });
+
+  test('the list of operations says what each one is for, not what an empty one would say', () => {
+    const offered = routineOperationExamples();
+    const of = func => offered.find(e => e.func == func).description;
+    expect(of('AUDIO')).toBe('Play a sound');
+    expect(of('CALL')).toBe('Run another routine');
+    expect(of('CLONE')).toBe('Make copies of widgets');
+    expect(of('DELAY')).toBe('Insert a pause before continuing');
+    for(const { func, description } of offered) {
+      expect(description).toMatch(/^[A-Z]/);
+      expect(description).not.toContain(func); // words, not the name of the operation
+      expect(description).not.toContain('the picked widgets'); // that is the example, not the purpose
+    }
+  });
+
+  test('a new operation starts as the shape it is normally written in', () => {
+    const newOperation = func => routineOperationExamples().find(e => e.func == func).newOperation;
+    // the engine always filters a SELECT, so a new one asks what to filter by
+    expect(newOperation('SELECT')).toEqual({ func: 'SELECT', property: '', value: '' });
+    expect(newOperation('SET')).toEqual({ func: 'SET', property: '', value: '' });
+    const sentenceOf = operation => {
+      const sentence = renderOperation(operation).dom.querySelector('.routine-editor-sentence').cloneNode(true);
+      for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+        icon.remove();
+      return sentence.textContent.replace(/\s+/g, ' ').trim();
+    };
+    expect(sentenceOf(newOperation('SELECT'))).toBe('Pick widgets where ? is ?');
+    expect(sentenceOf(newOperation('SET'))).toBe('Set ? of the picked widgets to ?');
+    // everything else is nothing but its func
+    expect(newOperation('SHUFFLE')).toEqual({ func: 'SHUFFLE' });
+  });
+
+  test('the field a sentence starts with is as wide as the phrases it holds', () => {
+    const lead = renderOperation({ func: 'FLIP', holder: 'deck1', face: 0 }).dom.querySelector('.routine-editor-variant-menu');
+    // "Turn to the face" is the longest of the four ways a FLIP can work
+    expect(lead.style.minWidth).toBe('16ch');
+    // one way to work is no field at all
+    expect(renderOperation({ func: 'DELAY' }).dom.querySelector('.routine-editor-variant').style.minWidth).toBe('');
   });
 
   test('an option only shows up in the sentence while it is in use', () => {
@@ -681,9 +724,38 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    [...editor.domElement.querySelectorAll('.routine-editor-operation-buttons .material-symbols')].find(b => b.textContent == 'delete').dispatchEvent(new Event('click'));
+    [...editor.domElement.querySelectorAll('.routine-editor-operation-controls .material-symbols')].find(b => b.textContent == 'delete').dispatchEvent(new Event('click'));
     expect(notified).toHaveLength(1);
     expect(notified[0].func).toBe('SHUFFLE');
+  });
+
+  test('an operation is added after the card that was worked on last', async () => {
+    const routine = [ { func: 'FLIP' }, { func: 'SHUFFLE' }, { func: 'DELETE' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    document.getElementById('editor').append(editor.domElement);
+    const addOperation = async _=>{
+      editor.domElement.querySelector('.routine-editor-add-operation').dispatchEvent(new Event('click'));
+      await new Promise(resolve => setTimeout(resolve, 0));
+      const popup = document.querySelector('.inline-popup');
+      [...popup.querySelectorAll('.popup-operation')].find(e => e.textContent.startsWith('COUNT')).dispatchEvent(new Event('click'));
+      await new Promise(resolve => setTimeout(resolve, 0));
+    };
+
+    // nothing clicked yet: the operation goes to the end
+    await addOperation();
+    expect(routine.map(o => o.func)).toEqual([ 'FLIP', 'SHUFFLE', 'DELETE', 'COUNT' ]);
+
+    // clicking a card makes it the active one - and the next operation follows it
+    const cards = _=>[...editor.domElement.querySelectorAll(':scope > .routine-editor-operation')];
+    cards()[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(cards()[0].classList).toContain('routine-editor-operation-active');
+    await addOperation();
+    expect(routine.map(o => o.func)).toEqual([ 'FLIP', 'COUNT', 'SHUFFLE', 'DELETE', 'COUNT' ]);
+    // the one just added is where the next one goes, so several in a row stay in order
+    expect(cards()[1].classList).toContain('routine-editor-operation-active');
+    await addOperation();
+    expect(routine.map(o => o.func)).toEqual([ 'FLIP', 'COUNT', 'COUNT', 'SHUFFLE', 'DELETE', 'COUNT' ]);
+    editor.domElement.remove();
   });
 
   test('moves an operation into an adjacent IF block', () => {
@@ -714,13 +786,14 @@ describe('routine editor state handling', () => {
     expect(notified[1].func).toBe('FLIP');
   });
 
-  test('the grip and the delete button stay, the rest of the chrome waits for the pointer', () => {
+  test('every control of a card is there all the time, in two rows', () => {
     const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP' }, { func: 'SHUFFLE' } ]);
     const card = editor.domElement.querySelector('.routine-editor-operation');
-    const always = [...card.querySelectorAll('.routine-editor-operation-buttons > *:not(.routine-editor-on-demand)')];
-    expect(always.map(b => b.textContent)).toEqual([ 'drag_indicator', 'delete' ]);
-    expect([...card.querySelectorAll('.routine-editor-on-demand')].map(b => b.textContent)).toEqual([ 'arrow_downward' ]);
-    expect(card.querySelector('.routine-editor-operation-json').classList).toContain('routine-editor-operation-json');
+    // what changes the operation itself on top, what only moves it around below
+    expect([...card.querySelectorAll('.routine-editor-operation-controls-top > *')].map(b => b.textContent)).toEqual([ 'data_object', 'delete' ]);
+    expect([...card.querySelectorAll('.routine-editor-operation-buttons > *')].map(b => b.textContent)).toEqual([ 'drag_indicator', 'arrow_downward' ]);
+    // nothing waits for the pointer to come near the card
+    expect(card.querySelectorAll('.routine-editor-on-demand')).toHaveLength(0);
   });
 
   test('every control of an operation is reachable and usable with the keyboard', () => {
@@ -729,11 +802,11 @@ describe('routine editor state handling', () => {
     const card = editor.domElement.querySelector('.routine-editor-operation');
     // everything except the drag grip, which has nothing to do without a pointer
     // (the up/down buttons next to it are how a keyboard reorders)
-    for (const control of card.querySelectorAll('.routine-editor-operation-parameter, .routine-editor-operation-buttons > *:not(.routine-editor-drag-handle), .routine-editor-operation-json, .info-button'))
+    for (const control of card.querySelectorAll('.routine-editor-operation-parameter, .routine-editor-operation-controls .material-symbols:not(.routine-editor-drag-handle), .info-button'))
       expect(control.tabIndex).toBe(0);
     let routine = null;
     editor.registerChangeListener(v => routine = v);
-    const remove = [...card.querySelectorAll('.routine-editor-operation-buttons .material-symbols')].find(b => b.textContent == 'delete');
+    const remove = [...card.querySelectorAll('.routine-editor-operation-controls .material-symbols')].find(b => b.textContent == 'delete');
     remove.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     expect(routine).toEqual([]);
     editor.domElement.remove();
@@ -1162,9 +1235,9 @@ describe('the values a parameter popup offers', () => {
 });
 
 describe('information about an operation and its parameters', () => {
-  // hovers an info button and returns the text of the tip it opened
+  // clicks an info button and returns the text of the tip it opened
   function infoTextOf(button) {
-    button.dispatchEvent(new Event('mouseenter'));
+    button.dispatchEvent(new Event('click'));
     const popups = [...document.querySelectorAll('.inline-popup')];
     const popup = popups[popups.length-1];
     const text = popup.textContent;
@@ -1185,16 +1258,19 @@ describe('information about an operation and its parameters', () => {
     return text;
   }
 
-  test('an info tip opens by hovering it, without a second one stacking up', () => {
+  test('an info tip is clicked open and clicked shut again', () => {
     for(const stale of document.querySelectorAll('.inline-popup'))
       stale.remove();
     const dom = document.createElement('div');
     document.getElementById('editor').append(dom);
     const info = infoButton(dom, 'a short explanation');
+    // a pointer travelling past the button leaves it alone
     info.dispatchEvent(new Event('mouseenter'));
+    expect(document.querySelectorAll('.inline-popup')).toHaveLength(0);
+    info.dispatchEvent(new Event('click'));
     expect([...document.querySelectorAll('.inline-popup')].pop().textContent).toContain('a short explanation');
-    info.dispatchEvent(new Event('mouseenter')); // hovering again does not stack a second one
-    expect(document.querySelectorAll('.inline-popup')).toHaveLength(1);
+    info.dispatchEvent(new Event('click')); // the same button closes it again
+    expect(document.querySelectorAll('.inline-popup')).toHaveLength(0);
     for(const popup of document.querySelectorAll('.inline-popup'))
       popup.remove();
     dom.remove();
@@ -1249,7 +1325,7 @@ describe('information about an operation and its parameters', () => {
     const dom = document.createElement('div');
     document.getElementById('editor').append(dom);
     const topic = commonInfoTopic('MOVE');
-    infoButton(dom, topic.info, topic.tutorial, null, 'MOVE').dispatchEvent(new Event('mouseenter'));
+    infoButton(dom, topic.info, topic.tutorial, null, 'MOVE').dispatchEvent(new Event('click'));
     const popup = [...document.querySelectorAll('.inline-popup')].pop();
     expect(popup.querySelector('h1 .popup-title-text').textContent).toBe('MOVE');
     expect(popup.querySelector('h1 .popup-close')).not.toBeNull(); // the close belongs to the title bar

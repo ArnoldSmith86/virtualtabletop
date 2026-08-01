@@ -45,6 +45,15 @@
 // offer it. Games that have one keep it as the custom property it looks like
 // until there is a way to show it that does not read as an invitation.
 //
+// description is the one generic line that says what the operation is for. It is
+// what the list of operations offers ("Play a sound", "Run another routine"),
+// because a sentence full of the values of an operation that does not exist yet
+// describes the example rather than the operation.
+//
+// newOperation is the JSON a freshly added operation starts as, where the raw
+// defaults are not the shape people actually write (SELECT, SET). Everything
+// else starts as nothing but its func.
+//
 // Template syntax: the words before the first parameter are the variant's lead,
 // rendered as the drop-down described above; {name} is a clickable parameter
 // chip; {a,b} shows the first alternative that is explicitly set (or whose
@@ -171,6 +180,7 @@ function canvasTarget(v) {
 
 const routineOperationMetadata = {
   AUDIO: {
+    description: 'Play a sound',
     variants: [
       {
         id: 'silence', label: 'Stop all sounds', fixed: [ 'silence' ],
@@ -206,6 +216,7 @@ const routineOperationMetadata = {
     }
   },
   CALL: {
+    description: 'Run another routine',
     variants: [
       { id: 'call', label: 'Run another routine', template: 'Run the routine {routine}' }
     ],
@@ -228,6 +239,7 @@ const routineOperationMetadata = {
     definesCollection: 'collection'
   },
   CANVAS: {
+    description: 'Draw on a canvas',
     variants: [
       { id: 'reset', label: 'Reset a canvas', fixed: [ 'mode' ], match: v=>v('mode') == 'reset',
         apply: operation=>{ operation.mode = 'reset'; },
@@ -283,6 +295,7 @@ const routineOperationMetadata = {
     }
   },
   CLICK: {
+    description: 'Click widgets as if a player had',
     variants: [
       { id: 'click', label: 'Click widgets', template: 'Click {collection}' }
     ],
@@ -302,6 +315,7 @@ const routineOperationMetadata = {
     }
   },
   CLONE: {
+    description: 'Make copies of widgets',
     variants: [
       { id: 'clone', label: 'Copy widgets', template: v=>`Make ${v('count') == 1 ? '{count} copy' : '{count} copies'} of {source}` }
     ],
@@ -323,6 +337,7 @@ const routineOperationMetadata = {
     definesCollection: 'collection'
   },
   COUNT: {
+    description: 'Count widgets',
     variants: [
       { id: 'holder', label: 'Count what is in a holder', match: (v, isSet)=>isSet('holder'),
         apply: operation=>{ if(operation.holder === undefined) operation.holder = null; },
@@ -345,6 +360,7 @@ const routineOperationMetadata = {
     ignored: collectionReplacedBy('holder')
   },
   DELAY: {
+    description: 'Insert a pause before continuing',
     variants: [
       { id: 'delay', label: 'Wait', template: 'Wait for {milliseconds} milliseconds' }
     ],
@@ -353,6 +369,7 @@ const routineOperationMetadata = {
     }
   },
   DELETE: {
+    description: 'Delete widgets',
     variants: [
       { id: 'delete', label: 'Delete widgets', template: 'Delete {collection}' }
     ],
@@ -361,6 +378,7 @@ const routineOperationMetadata = {
     }
   },
   FLIP: {
+    description: 'Turn widgets face up or down',
     variants: [
       { id: 'up', label: 'Turn face up', fixed: [ 'face', 'faceCycle' ], match: v=>v('face') === 0,
         apply: operation=>{ delete operation.faceCycle; operation.face = 0; },
@@ -392,6 +410,7 @@ const routineOperationMetadata = {
     }
   },
   FOREACH: {
+    description: 'Repeat operations for each entry',
     variants: [
       { id: 'list', label: 'For each entry of a list', match: v=>v('in') != null,
         apply: operation=>{ delete operation.range; delete operation.collection; if(operation['in'] === undefined) operation['in'] = []; },
@@ -418,6 +437,7 @@ const routineOperationMetadata = {
     }
   },
   GET: {
+    description: 'Read a property of widgets',
     variants: [
       { id: 'last', label: 'Read the value of the last widget', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'last',
         apply: operation=>{ operation.aggregation = 'last'; },
@@ -460,6 +480,7 @@ const routineOperationMetadata = {
     ignored: v=>v('aggregation') == 'sum' ? { skipMissing: 'ignored because missing values do not change a sum' } : {}
   },
   IF: {
+    description: 'Run operations only under a condition',
     variants: [
       { id: 'condition', label: 'Check a written condition', match: (v, isSet)=>isSet('condition'),
         apply: operation=>{ if(operation.condition === undefined) operation.condition = ''; },
@@ -476,6 +497,7 @@ const routineOperationMetadata = {
     }
   },
   INPUT: {
+    description: 'Ask the player to fill in a dialog',
     variants: [
       { id: 'input', label: 'Ask the player', template: 'Ask the player to fill in {fields}' }
     ],
@@ -500,6 +522,7 @@ const routineOperationMetadata = {
     }
   },
   LABEL: {
+    description: 'Change the text of a label',
     variants: [
       { id: 'set', label: 'Set the text', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
@@ -523,6 +546,7 @@ const routineOperationMetadata = {
     ignored: collectionReplacedBy('label')
   },
   MOVE: {
+    description: 'Move widgets into a holder',
     variants: [
       { id: 'fillTo', label: 'Fill a holder up', match: v=>v('fillTo'),
         apply: operation=>{ delete operation.count; if(!operation.fillTo) operation.fillTo = 1; },
@@ -552,6 +576,7 @@ const routineOperationMetadata = {
     }
   },
   MOVEXY: {
+    description: 'Move widgets to a position',
     variants: [
       { id: 'movexy', label: 'Move widgets to a position', template: v=>`Move ${widgetsCounted(v, 'count')} from {from} to the position {x}, {y}` }
     ],
@@ -574,6 +599,7 @@ const routineOperationMetadata = {
     ignored: (v, isSet)=>isSet('z') && !v('z') ? { z: 'ignored because 0 keeps the current z, just like leaving it unset' } : {}
   },
   RECALL: {
+    description: 'Gather cards back into a holder',
     variants: [
       { id: 'recall', label: 'Recall cards', template: 'Gather all the cards back into {holder}' }
     ],
@@ -592,6 +618,7 @@ const routineOperationMetadata = {
     }
   },
   RESET: {
+    description: 'Reset widgets to their starting state',
     variants: [
       { id: 'reset', label: 'Reset widgets', template: 'Reset every widget to its saved starting state{{property}}' }
     ],
@@ -603,6 +630,7 @@ const routineOperationMetadata = {
     }
   },
   ROTATE: {
+    description: 'Rotate widgets',
     variants: [
       { id: 'set', label: 'Turn widgets to an angle', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
@@ -621,6 +649,7 @@ const routineOperationMetadata = {
     ignored: collectionReplacedBy('holder')
   },
   SCORE: {
+    description: 'Change the score of seats',
     variants: [
       { id: 'inc', label: 'Add to the score', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
@@ -644,25 +673,30 @@ const routineOperationMetadata = {
     }
   },
   SELECT: {
+    description: 'Pick the widgets the next operations work on',
     variants: [
       { id: 'add', label: 'Add widgets to a collection', fixed: [ 'mode' ], match: v=>v('mode') == 'add',
         apply: operation=>{ operation.mode = 'add'; },
-        template: 'Add to the pick{{collection}}:{{max}}{{random}} {type}{{source}}{{where}}{{sortBy}}' },
+        template: 'Add to the pick{{collection}}:{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
       { id: 'remove', label: 'Remove widgets from a collection', fixed: [ 'mode' ], match: v=>v('mode') == 'remove',
         apply: operation=>{ operation.mode = 'remove'; },
-        template: 'Remove from the pick{{collection}}:{{max}}{{random}} {type}{{source}}{{where}}{{sortBy}}' },
+        template: 'Remove from the pick{{collection}}:{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
       { id: 'intersect', label: 'Narrow a collection down', fixed: [ 'mode' ], match: v=>v('mode') == 'intersect',
         apply: operation=>{ operation.mode = 'intersect'; },
-        template: 'Narrow the pick{{collection}} down to{{max}}{{random}} {type}{{source}}{{where}}{{sortBy}}' },
+        template: 'Narrow the pick{{collection}} down to{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
       { id: 'set', label: 'Select widgets', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: 'Pick{{max}}{{random}} {type}{{source}}{{where}}{{sortBy}}{{collection}}' }
+        template: 'Pick{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}{{collection}}' }
     ],
+    // the condition is not an option: the engine always filters by it, so a
+    // SELECT that does not name one picks whatever has no parent - the widgets
+    // lying on the table. That is also the shape 46% of the library uses, so it
+    // is what a new SELECT starts as, with both halves left blank to fill in.
+    newOperation: { func: 'SELECT', property: '', value: '' },
     clauses: [
       { id: 'max', label: 'only some of them', template: ' at most {max}', add: { max: 1 } },
       { id: 'random', label: 'pick them at random', template: ' {random}', add: { random: true } },
       { id: 'source', label: 'only among some widgets', template: ' from {source}' },
-      { id: 'where', label: 'only widgets with a certain property', template: ' where {property} {relation} {value}' },
       { id: 'sortBy', label: 'sort them', template: ', sorted by {sortBy}', add: { sortBy: 'value' } },
       { id: 'collection', label: 'name the pick', variants: [ 'set' ], template: ' — call them {collection}' },
       { id: 'collection', label: 'use another pick', variants: [ 'add', 'remove', 'intersect' ], template: ' {collection}' }
@@ -673,7 +707,7 @@ const routineOperationMetadata = {
       source: { type: 'collection', default: 'all', display: { 'all': 'all widgets', 'DEFAULT': 'the picked widgets' } },
       property: { type: 'property', default: 'parent' },
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>', 'in' ], default: '==', display: comparisonWords },
-      value: { type: 'string', default: null },
+      value: { type: 'string', default: null, display: { 'null': 'nothing' } },
       mode: { type: 'enum', values: [ 'set', 'add', 'remove', 'intersect' ], default: 'set' },
       collection: { type: 'collection', default: 'DEFAULT', display: thePick },
       sortBy: { type: 'json', default: null, display: listWords },
@@ -682,6 +716,7 @@ const routineOperationMetadata = {
     definesCollection: 'collection'
   },
   SET: {
+    description: 'Change a property of widgets',
     variants: [
       { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], match: v=>v('relation') == '+',
         apply: operation=>{ operation.relation = '+'; },
@@ -702,6 +737,10 @@ const routineOperationMetadata = {
         apply: operation=>{ delete operation.relation; },
         template: 'Set {property} of {collection} to {value}' }
     ],
+    // "Set parent of the picked widgets to nothing" is what the raw defaults say,
+    // and nobody adds a SET for that: a new one asks which property and which
+    // value instead of starting from a value that has to be replaced twice
+    newOperation: { func: 'SET', property: '', value: '' },
     parameters: {
       property: { type: 'property', default: 'parent' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
@@ -712,6 +751,7 @@ const routineOperationMetadata = {
     ignored: v=>v('relation') == '!' ? { value: 'ignored because ! only negates the current value' } : {}
   },
   SHUFFLE: {
+    description: 'Shuffle widgets into another order',
     variants: [
       { id: 'reverse', label: 'Reverse the order', fixed: [ 'mode' ], match: v=>v('mode') == 'reverse',
         apply: operation=>{ operation.mode = 'reverse'; },
@@ -744,6 +784,7 @@ const routineOperationMetadata = {
     }
   },
   SORT: {
+    description: 'Sort widgets by a property',
     variants: [
       { id: 'sort', label: 'Sort widgets', template: 'Sort {holder,collection}{{key}}' }
     ],
@@ -772,6 +813,7 @@ const routineOperationMetadata = {
     }
   },
   SWAPHANDS: {
+    description: 'Pass the hands around the table',
     variants: [
       { id: 'swaphands', label: 'Swap the hands of the players', template: 'Pass every hand on to the next seat{{interval}}{{direction}}{{source}}' }
     ],
@@ -789,6 +831,7 @@ const routineOperationMetadata = {
     }
   },
   TIMER: {
+    description: 'Start, pause or set a timer',
     variants: [
       { id: 'start', label: 'Start a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'start',
         apply: operation=>{ operation.mode = 'start'; },
@@ -833,6 +876,7 @@ const routineOperationMetadata = {
     }
   },
   TURN: {
+    description: 'Give the turn to a seat',
     variants: [
       { id: 'random', label: 'Give the turn to a random seat', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'random',
         apply: operation=>{ operation.turnCycle = 'random'; },
@@ -866,6 +910,7 @@ const routineOperationMetadata = {
     ignored: v=>v('turnCycle') == 'random' ? { turn: 'ignored because a random seat is picked regardless of the value' } : {}
   },
   UPLOAD: {
+    description: 'Ask the player for a file',
     variants: [
       { id: 'upload', label: 'Ask the player for a file', template: 'Ask the player for a file{{variable}}' }
     ],
@@ -880,6 +925,7 @@ const routineOperationMetadata = {
     definesVariable: 'variable'
   },
   VAR: {
+    description: 'Remember values for later operations',
     variants: [
       { id: 'var', label: 'Set variables', template: 'Remember {variables}' }
     ],
@@ -935,6 +981,14 @@ const predefinedVariableLabels = {
 // a drop can move operations between routine levels: into a nested IF/FOREACH
 // block, back out into the parent routine or into a sibling block.
 let activeRoutineDrag = null;
+
+// The card that was worked on last: it is where the next operation is added, so
+// a routine is built by clicking the operation it should follow instead of
+// adding at the end and dragging it up. Only one card in the whole editor is the
+// active one, however many nested routines there are, and it is remembered as
+// the routine array it is in plus its index - the arrays survive the re-render
+// every edit triggers, the editors and their DOM do not.
+let activeRoutineOperation = null;
 
 // every routine editor registers its container here so a point on the screen
 // can be resolved to the routine level that owns it
@@ -1124,6 +1178,8 @@ class RoutineEditor {
       const operationDOM = operation.render();
       if(this.selectedIndices.has(index))
         operationDOM.classList.add('routine-editor-operation-selected');
+      if(this.isActiveOperation(index))
+        operationDOM.classList.add('routine-editor-operation-active');
 
       const buttonsDOM = document.createElement('span');
       buttonsDOM.className = 'routine-editor-operation-buttons';
@@ -1139,15 +1195,15 @@ class RoutineEditor {
       dragHandle.addEventListener('dragend', _=>endRoutineDrag());
       dragHandle.addEventListener('pointerdown', e=>this.onDragHandlePointerDown(e, dragHandle));
       buttonsDOM.append(dragHandle);
-      // everything but the grip and the delete button is a convenience the drag
-      // handle also covers, so it only shows while the card is hovered/focused
-      const operationButton = (icon, title, onClick, onDemand=true)=>{
+      // every control of a card is always there: an icon that appears under the
+      // pointer and disappears again is harder to aim at than one that stays
+      const operationButton = (icon, title, onClick, appendTo=buttonsDOM)=>{
         const buttonDOM = document.createElement('span');
-        buttonDOM.className = `material-symbols${onDemand ? ' routine-editor-on-demand' : ''}`;
+        buttonDOM.className = 'material-symbols';
         buttonDOM.textContent = icon;
         buttonDOM.title = title;
         focusable(buttonDOM, onClick);
-        buttonsDOM.append(buttonDOM);
+        appendTo.append(buttonDOM);
       };
       // the block property an adjacent operation would nest this one into
       const blockOf = op=>op && typeof op == 'object' ? ({ IF: 'thenRoutine', FOREACH: 'loopRoutine' })[op.func] : undefined;
@@ -1185,11 +1241,15 @@ class RoutineEditor {
           const op = this.routine.splice(index, 1)[0];
           this.onHoist(op);
         });
+      // deleting the operation belongs with editing its JSON rather than with
+      // the arrows that only move it around, so it shares their row
+      const header = $('.routine-editor-operation-header', operationDOM);
+      const controls = header && $('.routine-editor-operation-controls', header);
       operationButton('delete', 'Remove this operation', _=>{
         this.routine.splice(index, 1);
         this.routineChanged();
-      }, false);
-      ($('.routine-editor-operation-header', operationDOM) || operationDOM).append(buttonsDOM);
+      }, (header && $('.routine-editor-operation-controls-top', header)) || buttonsDOM);
+      (controls || header || operationDOM).append(buttonsDOM);
 
       this.domElement.append(operationDOM);
     }
@@ -1207,7 +1267,11 @@ class RoutineEditor {
       popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections);
       const values = await newRoutineValues(popup);
       if(values !== undefined) {
-        this.routine.push(typeof values == 'string' ? values : JSON.parse(JSON.stringify(values)));
+        // right after the card that was worked on last, so a routine is built in
+        // the order it runs; at the end when that card is the last one anyway
+        const at = activeRoutineOperation && activeRoutineOperation.routine === this.routine ? Math.min(activeRoutineOperation.index+1, this.routine.length) : this.routine.length;
+        this.routine.splice(at, 0, typeof values == 'string' ? values : JSON.parse(JSON.stringify(values)));
+        this.setActiveOperation(at); // the new operation is where the next one follows
         this.routineChanged();
       }
     });
@@ -1228,6 +1292,23 @@ class RoutineEditor {
     while(el && el.parentElement !== this.domElement)
       el = el.parentElement;
     return el && el.classList && el.classList.contains('routine-editor-operation') ? el : null;
+  }
+
+  // the card the next operation is added after; the one that was active before
+  // gives the highlight up, wherever in the editor it is
+  setActiveOperation(index) {
+    if(index < 0)
+      return;
+    activeRoutineOperation = { routine: this.routine, index };
+    for(const active of $a('.routine-editor-operation-active'))
+      active.classList.remove('routine-editor-operation-active');
+    const card = this.directChildCards()[index];
+    if(card)
+      card.classList.add('routine-editor-operation-active');
+  }
+
+  isActiveOperation(index) {
+    return Boolean(activeRoutineOperation) && activeRoutineOperation.routine === this.routine && activeRoutineOperation.index === index;
   }
 
   // toggles a card of this level in and out of the multi-selection
@@ -1260,8 +1341,14 @@ class RoutineEditor {
         e.stopPropagation();
         return;
       }
-      if(!(e.ctrlKey || e.metaKey))
+      if(!(e.ctrlKey || e.metaKey)) {
+        // a plain click anywhere on a card makes it the one the next operation
+        // is added after; the click itself goes on to whatever it was aimed at
+        const clicked = this.ownCardFromEvent(e);
+        if(clicked)
+          this.setActiveOperation(this.directChildCards().indexOf(clicked));
         return;
+      }
       const card = this.ownCardFromEvent(e);
       if(!card)
         return;
@@ -1510,6 +1597,10 @@ class RoutineOperationEditor {
     const words = this.displayedWords(resolved, value);
     if(words !== null)
       return words;
+    // an empty value is a blank to fill in, and a blank reads as one instead of
+    // as a gap in the sentence
+    if(value === '')
+      return '?';
     // a value the routine remembers reads as its name: ${...} is the engine's
     // syntax for one, and everything else in the sentence is English - the
     // orange the chip is colored in already says it is a stored value
@@ -1728,6 +1819,12 @@ class RoutineOperationEditor {
 
     this.renderParameterWarnings(body);
 
+    // the controls of the card, in two rows next to the sentence: what changes
+    // the operation itself (its JSON, deleting it) on top, what moves it around
+    // below, on the line the sentence is on
+    const controls = div(header, 'routine-editor-operation-controls');
+    const topRow = div(controls, 'routine-editor-operation-controls-top');
+
     // the escape hatch for everything the sentence cannot say: the raw JSON of
     // the whole operation, in the corner opposite the move/delete buttons
     if(this.operation && typeof this.operation == 'object') {
@@ -1743,7 +1840,7 @@ class RoutineOperationEditor {
         if(values !== undefined)
           this.onNewValue(values);
       });
-      header.append(jsonButton);
+      topRow.append(jsonButton);
     }
 
     for(const span of $a('span[data-parameter]', dom)) {
@@ -1810,7 +1907,16 @@ class RoutineOperationEditor {
     if(this.variants().length < 2)
       return `<span class="routine-editor-variant">${escapeHTML(text)}</span>${trailingSpace}`;
     const title = `${leadLabel(text)} - click to pick another way for ${this.func} to work`;
-    return `<span class="routine-editor-variant routine-editor-variant-menu" title="${escapeHTML(title)}">${escapeHTML(text)}<span class="material-symbols">arrow_drop_down</span></span>${trailingSpace}`;
+    return `<span class="routine-editor-variant routine-editor-variant-menu" style="min-width: ${this.variantLeadWidth()}ch" title="${escapeHTML(title)}">${escapeHTML(text)}<span class="material-symbols">arrow_drop_down</span></span>${trailingSpace}`;
+  }
+
+  // the drop-down is a field, so it is as wide as the longest phrase it can hold
+  // and the rest of the sentence stays where it is while another way to work is
+  // picked. A phrase long enough to push the sentence half a card to the right
+  // ("Give the turn to the seat at position") keeps its own width instead.
+  variantLeadWidth() {
+    const lengths = this.variants().map(variant=>this.variantLead(variant).trim().length);
+    return Math.min(Math.max(...lengths), 20);
   }
 
   // the sentence of the current variant, plus the options that are switched on -
@@ -2143,16 +2249,19 @@ function editorForOperation(operation) {
 }
 
 // the choices offered when adding an operation or switching its type: every
-// operation there is, each with the sentence it would read as
+// operation there is, each with the generic line saying what it is for and the
+// sentence it would read as once it is added
 function routineOperationExamples() {
   const examples = [];
   for(const func in routineOperationMetadata) {
-    const editor = editorForOperation({ func });
-    editor.setOperationDetails(null, { func }, [], []);
-    examples.push({ func, example: editor.getExampleWithDefaults(), newOperation: { func } });
+    const metadata = routineOperationMetadata[func];
+    const newOperation = metadata.newOperation ? JSON.parse(JSON.stringify(metadata.newOperation)) : { func };
+    const editor = editorForOperation(newOperation);
+    editor.setOperationDetails(null, newOperation, [], []);
+    examples.push({ func, description: metadata.description || func, example: editor.getExampleWithDefaults(), newOperation });
   }
-  examples.push({ func: 'var', example: 'Variable x gets the value 1', newOperation: 'var x = 1' });
-  examples.push({ func: '//', example: 'A note for whoever reads the routine', newOperation: '// comment' });
+  examples.push({ func: 'var', description: 'Work out a value and remember it', example: 'Variable x gets the value 1', newOperation: 'var x = 1' });
+  examples.push({ func: '//', description: 'Add a note for whoever reads the routine', example: 'A note for whoever reads the routine', newOperation: '// comment' });
   return examples;
 }
 

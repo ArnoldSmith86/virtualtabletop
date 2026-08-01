@@ -3,6 +3,8 @@ body {
   --textColor: black;
 
   --backgroundHighlightColor1: #ccc;
+  /* the card of the routine editor that was worked on last */
+  --backgroundHighlightColor2: #dedede;
 
   --textHighlightColor1: #880;
   --textHighlightColor2: orange;
@@ -32,6 +34,11 @@ body {
      the same color at this opacity clears 4.5:1 in both themes. */
   --routineChromeOpacity: 0.6;
 
+  /* Every part of a sentence - a chip, the drop-down it starts with, the x of an
+     option - is this high and centered on the line, so the words of a sentence
+     stay on one line instead of stepping up and down between them. */
+  --routineChipHeight: 22px;
+
   color-scheme: light;
   --gridSize: 25px;
   --gridColor: #c0c0c0;
@@ -43,6 +50,7 @@ body.edit.darkMode {
   --textColor: #f8f8f2;
 
   --backgroundHighlightColor1: #444;
+  --backgroundHighlightColor2: #565656;
 
   --textHighlightColor1: yellow;
   --textHighlightColor2: orange;

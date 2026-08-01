@@ -704,12 +704,17 @@ class RoutineOperationPopup extends RoutinePopup {
     const showEntries = _=>{
       list.innerHTML = '';
       const term = search.value.trim().toLowerCase();
-      const matches = examples.filter(e=>!term || `${e.func} ${e.example}`.toLowerCase().includes(term));
-      for(const { func, example, newOperation } of matches) {
+      const matches = examples.filter(e=>!term || `${e.func} ${e.description} ${e.example}`.toLowerCase().includes(term));
+      // what the operation is for, not what one with nothing but its defaults
+      // would say: the sentence of an operation that does not exist yet
+      // describes the example, and every one of them starts with "the picked
+      // widgets" - the list is read to find an operation, not to read a routine
+      for(const { func, description, example, newOperation } of matches) {
         const entry = div(list, 'popup-operation');
         entry.addEventListener('click', _=>this.setNewValue(newOperation));
+        entry.title = example;
         div(entry, 'popup-operation-func').textContent = func;
-        div(entry, 'popup-operation-example').textContent = example;
+        div(entry, 'popup-operation-example').textContent = description;
       }
       if(!matches.length)
         div(list, 'popup-property-empty').textContent = 'No matching operation.';
@@ -734,8 +739,10 @@ function menuEntry(appendTo, label, preview, onClick) {
 }
 
 // The drop-down under the phrase a sentence starts with: one entry per way the
-// operation can work, worded as the phrase that sentence would start with, with
-// the sentence it would read as under it. It is a menu, so it has no title.
+// operation can work, worded as the phrase that sentence would start with -
+// nothing else. The phrases are the beginning of the sentence they produce, so
+// an explanation under each of them says the same thing twice and turns picking
+// one into reading a page; the whole sentence is a hover tip away.
 class RoutineVariantMenu extends Popup {
   constructor(choices, currentID) {
     super();
@@ -745,9 +752,9 @@ class RoutineVariantMenu extends Popup {
 
   show() {
     super.show();
-    this.domElement.classList.add('popup-menu');
+    this.domElement.classList.add('popup-menu', 'popup-menu-plain');
     for(const choice of this.choices) {
-      const entry = menuEntry(this.domElement, choice.lead, choice.example, _=>this.notifyChangeListeners(choice.values));
+      const entry = menuEntry(this.domElement, choice.lead, null, _=>this.notifyChangeListeners(choice.values));
       entry.title = `${choice.label}: ${choice.example}`;
       entry.classList.toggle('selected', choice.id === this.currentID);
     }
@@ -1365,41 +1372,25 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null, t
   // topic names are restricted so literal brackets like [ "widget1", "widget2" ] stay untouched
   infoHTML = infoHTML.replace(/\[([A-Za-z.]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic="${topicName}">${topicInfo != null ? topicInfo : topicName}</span>`);
 
-  // an info tip opens by hovering it and goes away again when the pointer
-  // leaves: having to click one open and click it shut turns reading three of
-  // them into six clicks. The pointer may travel into the popup itself (its
-  // links, its video and the topics it references live in there), so leaving the
-  // button only closes it after a moment, and hovering the popup keeps it.
+  // an info tip is clicked open and clicked shut again: a tip that follows the
+  // pointer opens itself while the pointer is only travelling past the button,
+  // and it takes the text away again the moment somebody reaches for it. The
+  // same click works with a finger and, through focusable(), with the keyboard.
   let popup = null;
-  let closeTimer = null;
-  const close = _=>{
-    clearTimeout(closeTimer);
-    closeTimer = setTimeout(_=>{
-      if(popup)
-        popup.hide();
+  const toggle = _=>{
+    if(popup) {
+      popup.hide();
       popup = null;
-    }, 400);
-  };
-  const open = _=>{
-    clearTimeout(closeTimer);
-    if(popup)
       return;
+    }
     popup = new InfoPopup(dom, infoHTML, tutorialName, videoFilename, title);
     popup.show();
     for(const highlight of $a('.highlight', popup.domElement))
       commonInfoButton(highlight, highlight.dataset.topic);
     popup.moveIntoView();
-    popup.domElement.addEventListener('mouseenter', _=>clearTimeout(closeTimer));
-    popup.domElement.addEventListener('mouseleave', close);
     popup.registerCancelListener(_=>{ popup = null; });
   };
-  dom.addEventListener('mouseenter', open);
-  dom.addEventListener('mouseleave', close);
-  // touch has no pointer to hover with, so a tap opens the same tip - and the
-  // keyboard has none either, so focusing the button opens it as well
-  focusable(dom, open);
-  dom.addEventListener('focus', open);
-  dom.addEventListener('blur', close);
+  focusable(dom, toggle);
   return dom;
 }
 
