@@ -208,6 +208,14 @@ body.edit.darkMode .inline-popup button:hover {
   margin-bottom: 4px;
 }
 
+/* the groups the values a routine offers are listed in */
+.inline-popup .popup-value-group {
+  font-weight: bold;
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 8px 2px 2px 2px;
+}
+
 .inline-popup .popup-entry-description {
   font-size: 11px;
   color: gray;

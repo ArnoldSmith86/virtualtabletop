@@ -3741,40 +3741,16 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
-    const automationProperties = this.renderAutomationsSection(widget);
-    const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
-    const remaining = Object.keys(widget.state).filter(property => [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1);
+    // the routines this used to list as "edit in the JSON editor" buttons are
+    // edited in the Automations section renderEvents() builds (see #3034)
+    const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(extraExclude));
+    const remaining = Object.keys(widget.state).filter(property => [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 && !this.isAutomationProperty(widget, property));
     if(!remaining.length)
       return;
     this.addSubHeader('Other properties');
     // where the Automations section goes: in front of the raw property list
     this.otherPropertiesHeader = this.moduleDOM.lastChild;
     this.renderGenericProperties(widget, exclude);
-  }
-
-  renderAutomationsSection(widget) {
-    const playerRoutines = [ 'clickRoutine', 'doubleClickRoutine', 'changeRoutine', 'enterRoutine', 'leaveRoutine' ]
-      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined);
-    if(!playerRoutines.length)
-      return [];
-
-    this.addSubHeader('Automations');
-    for(const property of playerRoutines) {
-      const row = div(this.moduleDOM, 'propertyInput automationInput');
-      const label = document.createElement('label');
-      label.textContent = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
-      row.appendChild(label);
-      const button = document.createElement('button');
-      button.setAttribute('icon', 'data_object');
-      button.textContent = `Edit ${property} in JSON editor`;
-      button.onclick = () => {
-        const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
-        if(jsonModuleButton)
-          jsonModuleButton.click();
-      };
-      row.appendChild(button);
-    }
-    return playerRoutines;
   }
 
   // --- shared curated inputs ---
@@ -5988,15 +5964,22 @@ class PropertiesModule extends SidebarModule {
     this.moduleDOM.insertBefore(section, this.otherPropertiesHeader);
   }
 
+  // the properties the Automations section edits, so that neither the raw
+  // property list below it repeats them nor its header shows up for a widget
+  // that has nothing else left
+  isAutomationProperty(widget, property) {
+    if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
+      return true;
+    // holders and lines take widgets in, so both apply onEnter / onLeave
+    return property == 'resetProperties' || ([ 'holder', 'line' ].indexOf(widget.get('type')) != -1 && [ 'onEnter', 'onLeave' ].indexOf(property) != -1);
+  }
+
   renderGenericProperties(widget, exclude) {
     for(const property in widget.state) {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
         continue;
-      if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
-        continue; // edited in the Automations section above
-      // holders and lines take widgets in, so both apply onEnter / onLeave
-      if(property == 'resetProperties' || ([ 'holder', 'line' ].indexOf(widget.get('type')) != -1 && [ 'onEnter', 'onLeave' ].indexOf(property) != -1))
-        continue; // edited in the Automations section above
+      if(this.isAutomationProperty(widget, property))
+        continue;
 
       const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
       if(!this.inputUpdaters[widget.id][property])

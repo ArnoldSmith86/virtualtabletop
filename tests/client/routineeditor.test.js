@@ -45,6 +45,7 @@ beforeAll(() => {
     'RoutineEditor', 'RoutineOperationEditor', 'IfRoutineOperationEditor', 'ForeachRoutineOperationEditor',
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
+    'routineOperationVariantChoices', 'operationVariantValues', 'RoutineOperationPopup', 'RoutineClausePopup',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
@@ -81,17 +82,56 @@ describe('routine operation metadata', () => {
     expect(funcs).not.toContain('AUDIO');
   });
 
-  test('every declared parameter is reachable as a chip in the template', () => {
+  test('every declared parameter is reachable as a chip or by picking another variant', () => {
     for (const func in routineOperationMetadata) {
       const editor = editorForOperation({ func });
       editor.setOperationDetails({ state: {} }, { func }, [], []);
       const referenced = (editor.getTemplate().match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m => m.slice(1, -1).split(','));
       const ignored = editor.ignoredParameters();
+      const fixed = editor.currentVariant().fixed || [];
       for (const name in routineOperationMetadata[func].parameters)
         if (name in ignored)
           expect(referenced).not.toContain(name); // ignored parameters stay out of the summary, the list view still offers them
+        else if (fixed.includes(name))
+          expect(routineOperationVariantChoices({ func }).length).toBeGreaterThan(1); // changed by picking another way to work
         else
           expect(referenced).toContain(name);
+    }
+  });
+
+  test('every variant of every operation matches the operation picking it produces', () => {
+    for (const func in routineOperationMetadata) {
+      for (const variant of routineOperationMetadata[func].variants) {
+        const values = operationVariantValues({ func }, variant);
+        const operation = { func };
+        for (const key in values)
+          if (values[key] === undefined)
+            delete operation[key];
+          else
+            operation[key] = values[key];
+        const editor = editorForOperation(operation);
+        editor.setOperationDetails({ state: {} }, operation, [], []);
+        expect(`${func}.${editor.currentVariant().id}`).toBe(`${func}.${variant.id}`);
+      }
+    }
+  });
+
+  test('every operation and every variant is worded, and clauses never repeat a parameter', () => {
+    for (const func in routineOperationMetadata) {
+      const metadata = routineOperationMetadata[func];
+      expect(metadata.variants.length).toBeGreaterThan(0);
+      for (const variant of metadata.variants) {
+        expect(typeof variant.label).toBe('string');
+        expect(variant.template).toBeDefined();
+      }
+      const editor = editorForOperation({ func });
+      editor.setOperationDetails({ state: {} }, { func }, [], []);
+      const inVariant = editor.templateParameters(editor.currentVariant().template);
+      for (const clause of editor.clauses()) {
+        expect(typeof clause.label).toBe('string');
+        for (const name of editor.templateParameters(clause.template))
+          expect(inVariant).not.toContain(name); // an option never edits what the sentence already shows
+      }
     }
   });
 
@@ -178,7 +218,7 @@ describe('operation rendering', () => {
   test('the sentence leaves out parameters the engine ignores', () => {
     // FLIP flips to the given face, so the cycle direction has no effect
     const flip = renderOperation({ func: 'FLIP', holder: 'h1', face: 1, faceCycle: 'backward' }).dom;
-    expect(flip.textContent).toContain('to face');
+    expect(flip.textContent).toContain('face down');
     expect(flip.querySelector('[data-parameter="faceCycle"]')).toBeNull();
 
     // the deprecated canvas parameter replaces collection
@@ -348,30 +388,31 @@ describe('operation rendering', () => {
     expect(dom.querySelector('.routine-editor-operation-json')).not.toBeNull();
   });
 
-  test('conditional templates follow the parameter values', () => {
+  test('the sentence follows the way the operation works', () => {
     const template = operation => {
       const editor = editorForOperation(operation);
       editor.setOperationDetails({ state: {} }, operation, [], []);
       return editor.getTemplate();
     };
-    expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('a {faceCycle} face');
-    expect(template({ func: 'FLIP' })).toContain('cycle {faceCycle}');
-    expect(template({ func: 'FLIP', face: 1 })).toContain('to face {face}');
-    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('on {canvas}');
-    expect(template({ func: 'CANVAS' })).toContain('on {collection}');
+    expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('to the {faceCycle} face');
+    expect(template({ func: 'FLIP', face: 0 })).toContain('face up');
+    expect(template({ func: 'FLIP', face: 1 })).toContain('face down');
+    expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
+    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('reset {canvas}');
+    expect(template({ func: 'CANVAS' })).toContain('reset {collection}');
     expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
     expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
     expect(template({ func: 'AUDIO', silence: true })).toContain('stop all sounds');
-    expect(template({ func: 'SET', relation: '!' })).toContain('the {relation} of its current value');
-    expect(template({ func: 'MOVE', fillTo: 3 })).toContain('fill up to {fillTo}');
-    expect(template({ func: 'SELECT', mode: 'add' })).toContain('{mode} to {collection}');
-    expect(template({ func: 'SELECT' })).toContain('{mode} as {collection}');
-    expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('time by {seconds} seconds');
-    expect(template({ func: 'TIMER' })).toContain('{mode} timers in {collection}');
-    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('order of widgets');
-    expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('choose a {turnCycle} seat');
-    expect(template({ func: 'LABEL', label: 'l1' })).toContain('to {label}');
-    expect(template({ func: 'LABEL' })).toContain('labels in {collection}');
+    expect(template({ func: 'SET', relation: '!' })).toContain('on or off');
+    expect(template({ func: 'MOVE', fillTo: 3 })).toContain('until it holds {fillTo}');
+    expect(template({ func: 'SELECT', mode: 'add' })).toContain('add them to {collection}');
+    expect(template({ func: 'SELECT' })).toContain('call them {collection}');
+    expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('add {seconds} seconds');
+    expect(template({ func: 'TIMER' })).toContain('pause it if it is running');
+    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('reverse the order');
+    expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('a random seat');
+    expect(template({ func: 'LABEL', label: 'l1' })).toContain('{label,collection}');
+    expect(template({ func: 'LABEL', mode: 'append' })).toContain('append {value}');
   });
 
   test('classifies parameter chips for color coding', () => {
@@ -429,6 +470,94 @@ describe('operation rendering', () => {
     editor.onNewValue({ func: 'CLICK' });
     expect(result).toEqual({ func: 'CLICK' });
     expect(result.json).toBeUndefined();
+  });
+});
+
+describe('picking how an operation works and which options it uses', () => {
+  function renderOperation(operation) {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails({ state: {} }, operation, [], []);
+    const dom = editor.render();
+    document.getElementById('editor').append(dom);
+    return { editor, dom };
+  }
+
+  test('the sentence reads as the variant the operation matches', () => {
+    expect(renderOperation({ func: 'SET', relation: '+', property: 'x' }).dom.textContent).toContain('increase the property');
+    expect(renderOperation({ func: 'SET', property: 'x' }).dom.textContent).toContain('set the property');
+    expect(renderOperation({ func: 'SHUFFLE', mode: 'riffle' }).dom.textContent).toContain('riffle shuffle');
+  });
+
+  test('the operation chip offers the other ways it can work with the sentence each would read as', () => {
+    const operation = { func: 'FLIP', holder: 'deck1' };
+    const choices = routineOperationVariantChoices(operation);
+    expect(choices.map(c => c.label)).toEqual([ 'Turn face up', 'Turn face down', 'Turn to a specific face', 'Flip to the next face' ]);
+    expect(choices[0].example).toContain('deck1');
+    expect(choices[0].example).toContain('face up');
+    // operations with only one way to work offer nothing to pick
+    expect(routineOperationVariantChoices({ func: 'DELAY' })).toEqual([]);
+  });
+
+  test('picking another way to work rewrites exactly the parameters that tell them apart', () => {
+    const operation = { func: 'FLIP', holder: 'deck1', faceCycle: 'backward' };
+    const down = routineOperationVariantChoices(operation).find(c => c.id == 'down');
+    expect(down.values).toEqual({ func: 'FLIP', holder: 'deck1', faceCycle: undefined, face: 1 });
+  });
+
+  test('the operation popup lists the ways to work, the current one marked', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineOperationPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'SELECT', mode: 'add' }, [ 'func' ], { state: {} }, [], []);
+    popup.show();
+    const section = [...popup.domElement.querySelectorAll('.accordion-section h3')].find(h => h.textContent.startsWith('What this operation does')).parentElement;
+    expect(section).toBeDefined();
+    expect(section.querySelector('button.selected').textContent).toBe('Add widgets to a collection');
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    [...section.querySelectorAll('button')].find(b => b.textContent == 'Select widgets').dispatchEvent(new Event('click'));
+    expect(value.mode).toBeUndefined(); // back to the default mode instead of a second parameter to understand
+    popup.hide();
+  });
+
+  test('an option only shows up in the sentence while it is in use', () => {
+    const withoutFace = renderOperation({ func: 'MOVE', from: 'a', to: 'b' }).dom;
+    expect(withoutFace.querySelector('[data-parameter="face"]')).toBeNull();
+    expect(withoutFace.querySelector('.routine-editor-add-clause')).not.toBeNull();
+    const withFace = renderOperation({ func: 'MOVE', from: 'a', to: 'b', face: 0 }).dom;
+    expect(withFace.textContent).toContain('turn them to face');
+    expect(withFace.querySelector('.routine-editor-clause-remove')).not.toBeNull();
+  });
+
+  test('the x behind an option switches all of its parameters off again', () => {
+    const { editor, dom } = renderOperation({ func: 'CLONE', source: 'DEFAULT', xOffset: 10, yOffset: 20 });
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    const remove = [...dom.querySelectorAll('.routine-editor-clause-remove')].find(r => r.dataset.clause == 'offset');
+    remove.dispatchEvent(new Event('click'));
+    expect(result.xOffset).toBeUndefined();
+    expect(result.yOffset).toBeUndefined();
+    expect(result.source).toBe('DEFAULT');
+  });
+
+  test('the options button offers what is left, with a value that shows what it does', () => {
+    const editor = editorForOperation({ func: 'RECALL', holder: 'deck1' });
+    editor.setOperationDetails({ state: {} }, { func: 'RECALL', holder: 'deck1' }, [], []);
+    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
+    expect(offered.map(clause => clause.label)).toContain('nearest cards first');
+    const byDistance = offered.find(clause => clause.id == 'byDistance');
+    expect(editor.clauseAddValues(byDistance)).toEqual({ byDistance: true }); // switching it on has to change something
+    expect(editor.renderClauseExample(byDistance)).toBe('nearest cards first: true');
+  });
+
+  test('parameters no variant and no option words become an option of their own', () => {
+    const editor = editorForOperation({ func: 'INPUT' });
+    editor.setOperationDetails({ state: {} }, { func: 'INPUT' }, [], []);
+    const named = editor.clauses().map(clause => clause.id);
+    for (const name in routineOperationMetadata.INPUT.parameters)
+      if (name != 'fields') // the one the sentence itself shows
+        expect(named).toContain(name);
   });
 });
 
@@ -809,6 +938,58 @@ describe('resetting parameters to their default', () => {
     const setEditor = editorForOperation({ func: 'SET', value: null });
     setEditor.setOperationDetails({ state: {} }, { func: 'SET', value: null }, [], []);
     expect(String(setEditor.getDisplayedValue('value'))).toBe('null'); // explicit null is a real value, rendered as-is
+  });
+});
+
+describe('the values a parameter popup offers', () => {
+  function showPopup(PopupClass, operation, parameterNames, variables = [], collections = []) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new PopupClass();
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, { state: {} }, variables, collections);
+    popup.show();
+    return popup;
+  }
+
+  const sectionTitles = popup => [...popup.domElement.querySelectorAll('.accordion-section h3')].map(h => h.firstChild.textContent);
+
+  test('one section for what the routine offers instead of four named after the engine', () => {
+    const popup = showPopup(RoutineStringPopup, { func: 'LABEL' }, [ 'value' ], [ 'cards' ]);
+    expect(sectionTitles(popup)).toEqual([ 'Values this routine has', 'A property of a widget in the room' ]);
+    popup.hide();
+  });
+
+  test('the values are grouped by where they come from, predefined ones included', () => {
+    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    const groups = [...popup.domElement.querySelectorAll('.popup-value-group')].map(g => g.textContent);
+    expect(groups).toEqual([ 'Values earlier operations remember', 'Groups of widgets earlier operations select', 'Available in every routine' ]);
+    // and the picker that comes first: widgets are chosen in the room, not typed
+    expect(sectionTitles(popup)[0]).toBe('Widgets in the room');
+    popup.hide();
+  });
+
+  test('a value of the routine is used as a variable, a collection as a collection', () => {
+    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const clickButton = label => [...popup.domElement.querySelectorAll('.popup-entry button')].find(b => b.textContent == label).dispatchEvent(new Event('click'));
+    clickButton('cards');
+    expect(value).toEqual({ holder: '${cards}', collection: undefined });
+    clickButton('aces');
+    expect(value).toEqual({ holder: undefined, collection: 'aces' });
+    clickButton('playerSeats'); // a predefined collection is a collection like any other
+    expect(value).toEqual({ holder: undefined, collection: 'playerSeats' });
+    popup.hide();
+  });
+
+  test('a popup for a value that cannot hold widgets leaves the collections out', () => {
+    const popup = showPopup(RoutineStringPopup, { func: 'LABEL' }, [ 'value' ], [ 'cards' ], [ 'aces' ]);
+    const labels = [...popup.domElement.querySelectorAll('.popup-entry button')].map(b => b.textContent);
+    expect(labels).toContain('cards');
+    expect(labels).toContain('playerName');
+    expect(labels).not.toContain('aces');
+    popup.hide();
   });
 });
 

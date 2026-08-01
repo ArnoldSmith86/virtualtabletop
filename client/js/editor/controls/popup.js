@@ -507,6 +507,69 @@ class RoutinePopup extends Popup {
     this.collections = collections;
   }
 
+  // One list instead of the four sections (variables, predefined variables,
+  // collections, predefined collections) this used to have: the same entries,
+  // but grouped by where they come from and named in a way that says what they
+  // are. Groups without an entry are left out entirely.
+  renderRoutineValueSection(showVariables, showCollections) {
+    const [ title, content ] = this.addAccordionSection('Values this routine has');
+    infoButton(title, `
+      <pre>
+      Everything the routine itself can offer as a value.
+
+      Earlier operations remember values under a name: [COUNT] and [GET] store what they counted or read, [VAR] and [var] store what you calculate, and [CALL] stores what another routine returned. Picking one here uses whatever it holds when the routine runs.
+
+      A collection is a group of widgets an earlier [SELECT] picked out. Operations that act on widgets take one instead of a single widget.
+
+      The last group is there in every routine, without any operation creating it.
+      </pre>
+    `);
+
+    const entries = (groupTitle, list)=>{
+      if(!list.length)
+        return;
+      div(content, 'popup-value-group').textContent = groupTitle;
+      for(const entry of list) {
+        const dom = div(content, 'popup-entry');
+        button(dom, entry.label, entry.onClick);
+        if(entry.description)
+          div(dom, 'popup-entry-description').textContent = entry.description;
+      }
+    };
+
+    if(showVariables)
+      entries('Values earlier operations remember', [ ...this.variables ].sort().map(variable=>({
+        label: variable,
+        onClick: _=>this.setNewValue(`\$\{${variable}\}`)
+      })));
+
+    if(showCollections)
+      entries('Groups of widgets earlier operations select', [ ...this.collections ].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
+        label: typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`,
+        description: typeof collection == 'string' ? null : 'these widgets, listed in the routine itself',
+        onClick: _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ])
+      })));
+
+    const predefined = [];
+    if(showVariables)
+      for(const variable in predefinedVariableDescriptions)
+        predefined.push({ label: variable, description: predefinedVariableDescriptions[variable], onClick: _=>this.setNewValue(`\$\{${variable}\}`) });
+    if(showCollections)
+      for(const collection in predefinedCollectionDescriptions)
+        predefined.push({ label: collection, description: predefinedCollectionDescriptions[collection], onClick: _=>this.setNewCollectionValue(collection) });
+    entries('Available in every routine', predefined);
+  }
+
+  renderWidgetPropertySection() {
+    const [ title, content ] = this.addAccordionSection('A property of a widget in the room');
+    infoButton(title, `
+      Wherever you use a value in an operation, you can use a property of any widget in the room instead.
+      For example, you might want to put a score property on a card widget, then use that score in an operation.
+      Pick the widget in the room (or leave it empty to read the property from the widget this routine belongs to) and choose one of its properties.
+    `);
+    this.renderPropertyBuilder(content);
+  }
+
   show(showVariables=true, showCollections=true) {
     this.propertyPickerShown = false;
     if(openRoutinePopup && openRoutinePopup !== this)
@@ -519,58 +582,10 @@ class RoutinePopup extends Popup {
 
     this.renderValueRow();
 
-    if(showVariables) {
-      const [ variablesTitle, variablesContent ] = this.addAccordionSection('Variables');
-      infoButton(variablesTitle, `
-        Variables can be used to store values that are used in the operation.
-        You can use [VAR], [var] or [COUNT] to put values into variables, then use [var] or [VAR] to do calculations.
-        Then you can use the variable here.
-      `);
-      for(const variable of [ ...this.variables ].sort())
-        button(variablesContent, variable, _=>this.setNewValue(`\$\{${variable}\}`));
-
-      const [ predefinedVariablesTitle, predefinedVariablesContent ] = this.addAccordionSection('Predefined Variables');
-      infoButton(predefinedVariablesTitle, 'Each routine begins with a number of predefined variables that describe the player who started it and the room.');
-      for(const variable in predefinedVariableDescriptions) {
-        const entry = div(predefinedVariablesContent, 'popup-entry');
-        button(entry, variable, _=>this.setNewValue(`\$\{${variable}\}`));
-        div(entry, 'popup-entry-description').textContent = predefinedVariableDescriptions[variable];
-      }
-
-      const [ widgetPropertiesTitle, widgetPropertiesContent ] = this.addAccordionSection('Widget Properties');
-      infoButton(widgetPropertiesTitle, `
-        Wherever you use a value in an operation, you can use a widget property of any widget instead.
-        For example, you might want to put a score property on a card widget, then use that score in an operation.
-        Leave the widget empty to read the property from the widget this routine belongs to, or pick another one.
-      `);
-      this.renderPropertyBuilder(widgetPropertiesContent);
-    }
-
-    if(showCollections) {
-      const [ collectionsTitle, collectionsContent ] = this.addAccordionSection('Collections');
-      infoButton(collectionsTitle, `
-        <pre>
-        A collection is, as its name implies, a collection of widgets. Collections can be created in two different ways.
-
-        A [SELECT](SELECT statement) will create a collection and name it according to the collection parameter. If no collection parameter is provided, it will be named DEFAULT.
-
-        You can also list widget ids directly, like [ "widget1", "widget2" ] - such in-place collections used elsewhere in the routine are offered here as well.
-        </pre>
-      `);
-      const sortedCollections = [...this.collections].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1);
-      for(const collection of sortedCollections) {
-        const label = typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`;
-        button(collectionsContent, label, _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ]));
-      }
-
-      const [ predefinedCollectionsTitle, predefinedCollectionsContent ] = this.addAccordionSection('Predefined Collections');
-      infoButton(predefinedCollectionsTitle, 'Each routine begins with a number of predefined collections.');
-      for(const collection in predefinedCollectionDescriptions) {
-        const entry = div(predefinedCollectionsContent, 'popup-entry');
-        button(entry, collection, _=>this.setNewCollectionValue(collection));
-        div(entry, 'popup-entry-description').textContent = predefinedCollectionDescriptions[collection];
-      }
-    }
+    if(showVariables || showCollections)
+      this.renderRoutineValueSection(showVariables, showCollections);
+    if(showVariables)
+      this.renderWidgetPropertySection();
 
     this.moveIntoView();
   }
@@ -598,6 +613,12 @@ class RoutineOperationPopup extends RoutinePopup {
     }
   }
 
+  // picking another way for the operation to work keeps it and rewrites only the
+  // parameters that tell the ways apart (see operationVariantValues)
+  setVariant(choice) {
+    this.notifyChangeListeners(choice.values);
+  }
+
   show() {
     super.show(false, false);
     // the generic "<func> - parameter func" title is jargon in the first popup a new user sees
@@ -605,6 +626,25 @@ class RoutineOperationPopup extends RoutinePopup {
     h1.textContent = this.operation && this.operation.func ? `${this.operation.func} - change operation` : 'Add operation';
     if(this.operation && this.operation.func)
       commonInfoButton(h1, this.operation.func);
+
+    // what this operation can do at all comes first: most of the time the
+    // operation is right and only the way it works is not
+    const variants = routineOperationVariantChoices(this.operation);
+    if(variants.length) {
+      const [ variantsTitle, variantsContent ] = this.addAccordionSection('What this operation does');
+      infoButton(variantsTitle, `
+        The ways this operation can work. Picking one rewrites the parameters that tell them apart, so the sentence and the operation always say the same thing.
+      `);
+      const current = editorForOperation(this.operation);
+      current.setOperationDetails(null, this.operation, [], []);
+      const currentID = current.currentVariant().id;
+      for(const variant of variants) {
+        const entry = div(variantsContent, 'popup-entry');
+        button(entry, variant.label, _=>this.setVariant(variant)).classList.toggle('selected', variant.id === currentID);
+        div(entry, 'popup-entry-description').textContent = variant.example;
+      }
+    }
+
     const [ , commonContent ] = this.addAccordionSection('Common Actions');
     for(const { example, newOperation } of simpleRoutineOperationExamples) {
       button(commonContent, example, _=>this.setNewValue(newOperation));
@@ -614,6 +654,43 @@ class RoutineOperationPopup extends RoutinePopup {
     for(const { example, newOperation } of routineOperationExamples()) {
       button(allContent, example, _=>this.setNewValue(newOperation));
       allContent.append(document.createElement('br'));
+    }
+    this.moveIntoView();
+  }
+}
+
+// The "+ option" button behind a sentence: everything the operation can say in
+// addition to what it says now, worded as the phrase it would add. Picking one
+// switches its parameters on; the x behind the phrase switches them off again.
+class RoutineClausePopup extends RoutinePopup {
+  constructor(options) {
+    super();
+    this.options = options;
+  }
+
+  offersUseDefault() {
+    return false; // this popup adds a part of the sentence, it has no value of its own
+  }
+
+  offersValueInput() {
+    return false;
+  }
+
+  show() {
+    super.show(false, false);
+    const h1 = $('h1', this.domElement);
+    h1.textContent = `${this.operation && this.operation.func ? this.operation.func : 'operation'} - add an option`;
+    if(this.operation && this.operation.func)
+      commonInfoButton(h1, this.operation.func);
+    const [ title, content ] = this.addAccordionSection('Options');
+    infoButton(title, `
+      Everything this operation can do on top of what it does now. An option only shows up in the sentence while it is in use - the x behind it removes it again.
+    `);
+    for(const option of this.options) {
+      const entry = div(content, 'popup-entry');
+      button(entry, option.label, _=>this.notifyChangeListeners(option.values));
+      if(option.sentence && option.sentence != option.label)
+        div(entry, 'popup-entry-description').textContent = option.sentence;
     }
     this.moveIntoView();
   }
@@ -769,7 +846,7 @@ class RoutineNumberPopup extends RoutinePopup {
     // a few number parameters name a widget instead (TURN turn takes a seat id),
     // so offer the picker for those as well
     if(this.options.widgetType) {
-      const [ widgetTitle, widgetContent ] = this.addAccordionSection('Widgets');
+      const [ widgetTitle, widgetContent ] = this.addAccordionSection('Widgets in the room');
       infoButton(widgetTitle, 'Use the id of a widget instead of a number: search it by id or pick it in the room.');
       // the properties module's picker CSS is scoped to .editorModule
       const host = div(widgetContent, 'editorModule');
@@ -796,8 +873,11 @@ class RoutineEnumPopup extends RoutinePopup {
   show() {
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
+    // the choices read the way the sentence words them (">" is "is more than"),
+    // so nothing is picked from a list that speaks a different language
+    const display = this.options.display || {};
     for(const option of this.options.values)
-      button(valueContent, option, _=>this.setNewValue(option));
+      button(valueContent, display[option] != null ? display[option] : option, _=>this.setNewValue(option));
     super.show(true, false);
   }
 }
@@ -815,7 +895,7 @@ class RoutineWidgetIDPopup extends RoutinePopup {
 
   show(showCollections=false) {
     // the picker is the primary input here, so it comes first and open
-    const [ title, content ] = this.addAccordionSection('Widgets');
+    const [ title, content ] = this.addAccordionSection('Widgets in the room');
     infoButton(title, `
       Search widgets by their id, filter them by type or pick them in the room, then apply the selection.
       The type filter also applies to picking in the room: with the type set to holder, a click on a card selects the holder it lies on.

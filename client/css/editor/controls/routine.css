@@ -210,6 +210,45 @@ body.edit.darkMode .routine-editor-parameter-widget {
   margin-left: 6px;
 }
 
+/* the optional parts of a sentence: shown while they are in use, each with the
+   x that switches it off again, and the button that offers the rest */
+.routine-editor-clause {
+  white-space: nowrap;
+}
+
+.routine-editor-clause > .routine-editor-operation-parameter {
+  white-space: normal;
+}
+
+.routine-editor-clause-remove {
+  font-size: 13px;
+  color: gray;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 1px;
+}
+
+.routine-editor-clause-remove:hover {
+  color: var(--VTTblue);
+}
+
+.routine-editor-add-clause {
+  display: inline-block;
+  font-size: 11px;
+  color: gray;
+  border: 1px dashed gray;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-left: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.routine-editor-add-clause:hover {
+  color: var(--VTTblue);
+  border-color: var(--VTTblue);
+}
+
 .routine-editor-parameter-missing,
 body.edit.darkMode .routine-editor-parameter-missing {
   outline: 1px dashed var(--textHighlightColor3);
