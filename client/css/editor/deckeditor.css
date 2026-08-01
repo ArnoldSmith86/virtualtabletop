@@ -693,37 +693,108 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   color: #fff;
 }
 
-.deckEditorNewDeckModes {
+/* The ways to create a deck are grouped into three expanders, only one of which is open at a time - so the
+   dialog opens as three short rows instead of a list of eight radio buttons. */
+.deckEditorNewDeckGroups {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 16px 0;
 }
 
-.deckEditorNewDeckModes label {
+.deckEditorNewDeckGroup {
+  border: 1px solid #0003;
+  border-radius: 6px;
+}
+
+.deckEditorNewDeckGroupHeader {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #0000000d;
+  color: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  text-transform: none;
+}
+
+.deckEditorNewDeckGroupHeader:hover {
+  background: #0000001a;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader,
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader:hover {
+  border-radius: 5px 5px 0 0;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorNewDeckGroupHeader span {
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+  opacity: 0.75;
+}
+
+.deckEditorNewDeckGroupHeader::after {
+  content: "expand_more";
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-family: "Material Symbols";
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader::after {
+  content: "expand_less";
+}
+
+/* The panel of the selected option is moved into the open group (see openNewDeckGroup), so a closed group is
+   nothing but its header. */
+.deckEditorNewDeckGroupBody {
+  display: none;
+  padding: 12px;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupBody {
+  display: block;
+}
+
+.deckEditorNewDeckModes {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
+}
+
+.deckEditorNewDeckModes label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 8px;
   cursor: pointer;
 }
 
-/* Once a mode has been picked the list of options has done its job, so it collapses to the chosen one and
-   leaves the ~250px it occupies to the panel the user is now filling in. "Change" brings it back. */
-.deckEditorNewDeckModesCollapsed label:not(.deckEditorNewDeckModeSelected) {
+.deckEditorNewDeckModes label span {
+  grid-column: 2;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* A group with a single way to create a deck (the blank one) needs no radio button - opening it is already
+   the choice, and its header says what it does. */
+.deckEditorNewDeckModesSingle {
   display: none;
 }
 
-#deckEditorNewDeckChangeMode {
-  display: none;
-  align-self: flex-start;
-  padding: 2px 8px;
-}
-
-.deckEditorNewDeckModesCollapsed #deckEditorNewDeckChangeMode {
-  display: inline-flex;
-}
-
-#deckEditorNewDeckPanel:not(:empty) {
+/* Separates a group's options from the panel of the selected one - the blank group shows no options, so
+   there is nothing to separate there. */
+.deckEditorNewDeckModes:not(.deckEditorNewDeckModesSingle) + #deckEditorNewDeckPanel:not(:empty) {
   border-top: 1px solid #0002;
   padding-top: 16px;
 }

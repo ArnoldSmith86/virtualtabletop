@@ -265,11 +265,9 @@ class DeckEditor {
     $('#deckEditorAddDeck').onclick = _=>this.openNewDeckOverlay();
     $('#deckEditorNewDeckClose').onclick = _=>this.closeNewDeckOverlay();
     for(const radio of $a('#deckEditorNewDeckOverlay input[name=deckEditorNewDeckMode]'))
-      radio.onchange = _=>{
-        this.renderNewDeckPanel(radio.value);
-        this.setNewDeckModesCollapsed(true);
-      };
-    $('#deckEditorNewDeckChangeMode').onclick = _=>this.setNewDeckModesCollapsed(false);
+      radio.onchange = _=>this.renderNewDeckPanel(radio.value);
+    for(const header of $a('#deckEditorNewDeckOverlay .deckEditorNewDeckGroupHeader'))
+      header.onclick = _=>this.openNewDeckGroup(header.parentNode);
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorCardView').onclick = _=>this.setRoomVisible(!this.roomVisible);
@@ -3181,21 +3179,24 @@ class DeckEditor {
   openNewDeckOverlay() {
     if(!this.deckCreator)
       this.deckCreator = new PropertiesModule();
-    // Always start on the "empty deck" default so the submenu is predictable each time it opens.
-    const empty = $('#deckEditorNewDeckOverlay input[value=empty]');
-    empty.checked = true;
-    this.renderNewDeckPanel('empty');
-    this.setNewDeckModesCollapsed(false);
+    // Always start on the blank deck group so the submenu is predictable each time it opens.
+    this.openNewDeckGroup($('#deckEditorNewDeckGroupBlank'));
     showOverlay('deckEditorNewDeckOverlay');
   }
 
-  // All eight ways to create a deck are on offer while the dialog opens; picking one collapses the list to
-  // the chosen entry so the panel doing the actual work isn't pushed off the bottom of the dialog.
-  setNewDeckModesCollapsed(collapsed) {
-    const modes = $('#deckEditorNewDeckOverlay .deckEditorNewDeckModes');
-    for(const label of $a('label', modes))
-      label.classList.toggle('deckEditorNewDeckModeSelected', $('input', label).checked);
-    modes.classList.toggle('deckEditorNewDeckModesCollapsed', collapsed);
+  // The ways to create a deck are grouped into three expanders - a blank deck, an existing deck, a custom
+  // deck - of which only one is open at a time, so the dialog shows three short rows instead of a wall of
+  // options. Opening a group closes the others and moves the panel doing the actual work into it, right
+  // below the options it belongs to. A group offering several ways waits for one of them to be picked; the
+  // blank deck group has only the one, so opening it is already the choice and its panel shows right away.
+  openNewDeckGroup(group) {
+    for(const other of $a('#deckEditorNewDeckOverlay .deckEditorNewDeckGroup'))
+      other.classList.toggle('deckEditorNewDeckGroupOpen', other == group);
+    const modes = $a('input[name=deckEditorNewDeckMode]', group);
+    for(const radio of $a('#deckEditorNewDeckOverlay input[name=deckEditorNewDeckMode]'))
+      radio.checked = modes.length == 1 && radio == modes[0];
+    $('.deckEditorNewDeckGroupBody', group).append($('#deckEditorNewDeckPanel'));
+    this.renderNewDeckPanel(modes.length == 1 ? modes[0].value : null);
   }
 
   closeNewDeckOverlay() {
@@ -3203,13 +3204,16 @@ class DeckEditor {
     showOverlay();
   }
 
-  // Each mode renders its existing creation flow into the overlay's panel. Every mode except "empty" adds a
-  // fresh deck to the game; once that lands as a delta, deckEditorReceiveDelta switches the editor to it
-  // (this.pendingNewDeck). "empty" opens the new deck here directly.
+  // Each mode renders its existing creation flow into the overlay's panel (no mode picked yet: nothing to
+  // render). Every mode except "empty" adds a fresh deck to the game; once that lands as a delta,
+  // deckEditorReceiveDelta switches the editor to it (this.pendingNewDeck). "empty" opens the new deck here
+  // directly.
   renderNewDeckPanel(mode) {
     const panel = $('#deckEditorNewDeckPanel');
     panel.innerHTML = '';
-    this.pendingNewDeck = mode != 'empty';
+    this.pendingNewDeck = !!mode && mode != 'empty';
+    if(!mode)
+      return;
     if(mode == 'empty') {
       // Card size first, then the (optional) deck id: the size decides what the starter faces and the holder
       // are built at, and it is the harder one to change afterwards.

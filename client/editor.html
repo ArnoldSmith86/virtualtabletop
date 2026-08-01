@@ -230,17 +230,37 @@
     <div id="deckEditorNewDeckDialog" class="deckEditorModal">
       <button id="deckEditorNewDeckClose" icon="close" title="Close"></button>
       <h1>Add a new deck</h1>
-      <p>Add blank deck or choose an existing one to add to the game</p>
-      <div class="deckEditorNewDeckModes">
-        <label><input type="radio" name="deckEditorNewDeckMode" value="empty" checked>Empty deck &mdash; design its faces and card types here in the deck editor</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="library">Browse the public library of ready-made decks</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="traditional">Traditional deck (standard, Spanish, German, Swiss, tarot, hanafuda, mahjong, dominoes)</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="custom">Custom deck of cards (define suits and ranks)</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="images">Upload one image per card or tiled images &mdash; one shared back for the whole deck</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="imagePairs">Upload a separate front and back image for every card</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="text">Text cards &mdash; one card per line of text</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="tts">Import from Tabletop Simulator</label>
-        <button id="deckEditorNewDeckChangeMode" icon="expand_more">Change</button>
+      <p>Where should the cards come from? Open one of the three sections.</p>
+      <div class="deckEditorNewDeckGroups">
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupBlank">
+          <button class="deckEditorNewDeckGroupHeader">New blank deck<span>Start from nothing and design the faces and card types here in the deck editor</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes deckEditorNewDeckModesSingle">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="empty" checked>Empty deck</label>
+            </div>
+          </div>
+        </div>
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupExisting">
+          <button class="deckEditorNewDeckGroupHeader">Use an existing deck<span>Take a deck that is already finished, from the library or another game</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="library"><b>Public library</b><span>Browse the ready-made decks shared in the public library</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="traditional"><b>Traditional deck</b><span>Standard, Spanish, German, Swiss, tarot, hanafuda, mahjong or dominoes</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="tts"><b>Tabletop Simulator</b><span>Import a deck from a Tabletop Simulator save file</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupCustom">
+          <button class="deckEditorNewDeckGroupHeader">Create a custom deck<span>Let the editor build the cards from your own suits, images or texts</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="custom"><b>Suits and ranks</b><span>One card for every combination of a suit and a rank</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="images"><b>One image per card</b><span>Upload one image per card or tiled images &mdash; one shared back for the whole deck</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="imagePairs"><b>A front and a back image per card</b><span>Upload all fronts and all backs &mdash; they are paired up by file name</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="text"><b>Text cards</b><span>One card per line of text</span></label>
+            </div>
+          </div>
+        </div>
       </div>
       <div id="deckEditorNewDeckPanel"></div>
     </div>

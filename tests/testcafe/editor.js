@@ -767,6 +767,7 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
     .click('#editButton')
     .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
     .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
     .click('#deckEditorNewDeckOverlay input[value=text]');
 
   // A multi-line value in one go - typeText would send the newlines as key presses.
@@ -816,6 +817,7 @@ test('Deck editor: pair front and back images in the new deck wizard', async t =
     .click('#editButton')
     .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
     .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
     .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
 
   // The uploads go through a file picker that can't be driven from a test, so uploadAsset is replaced by a
@@ -871,6 +873,7 @@ test('Deck editor: mismatched and shared card backs in the new deck wizard', asy
     .click('#editButton')
     .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
     .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
     .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
 
   const stubUploadOf = ClientFunction(assets => {
@@ -926,6 +929,7 @@ test('Deck editor: a few uploaded card fronts are added without a large-deck con
     .click('#editButton')
     .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
     .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
     .click('#deckEditorNewDeckOverlay input[value=images]');
 
   // The file picker can't be driven from a test - hand the wizard the asset paths the server would return.
