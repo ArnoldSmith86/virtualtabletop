@@ -99,6 +99,7 @@ export class Widget extends StateManaged {
     this.seatViewProperty = 'viewRotation';
     this.seatViewFacing = null;
     this.seatViewFacingSeat = null;
+    this.seatViewDragTable = null; // the turning container the running drag is over
     this.seatViewGeneration = -1; // no sweep has looked at this widget yet
     this.appliedSeatView = '0';
     this.propertiesUsedInProperty = {};
@@ -281,6 +282,12 @@ export class Widget extends StateManaged {
     // group can be drawn at, so the whole group has to be looked at again
     if((delta.x !== undefined || delta.y !== undefined) && this.get('cycleForViewer'))
       seatViewChanged = true;
+
+    // the table a drag stays on is remembered for as long as that drag runs, so
+    // it has to be forgotten the moment it ends - the next one may start
+    // somewhere with nothing under the cursor to work it out from again
+    if(delta.dragging !== undefined && !delta.dragging)
+      this.seatViewDragTable = null;
 
     // picking a widget up and dropping it again has to take effect before the
     // drag measures it, everything else can wait for the next sweep
@@ -3178,11 +3185,37 @@ export class Widget extends StateManaged {
     // Only while the drag is running: what a drop puts back into a container
     // gets that container's view through the DOM again, and what it leaves at
     // room level has really left the table and is on nobody's side of it.
-    if(!this.get('dragging') || this.get('parent'))
+    if(!this.get('dragging') || this.get('parent')) {
+      this.seatViewDragTable = null;
       return null;
+    }
     const frameID = this.get('hoverTarget') || this.get('hoverParent');
-    const frame = frameID && widgets.has(frameID) ? widgets.get(frameID) : null;
-    return frame != this ? frame : null;
+    const hovered = frameID && widgets.has(frameID) ? widgets.get(frameID) : null;
+
+    // The table a widget is dragged over is the container that turns for the
+    // viewer, not every holder lying on it: the squares of a chessboard are
+    // holes in the table, not tables of their own. Taking the deepest one moved
+    // the widget again at every square it crossed, because a holder that only
+    // reads upright puts its own contents somewhere else than the table puts
+    // them - so the position the drag wrote back jumped for everybody watching.
+    for(let frame = hovered, steps = widgets.size; frame && frame != this && steps--; frame = widgets.get(frame.get('parent')))
+      if(frame.get('rotateForViewer')) {
+        this.seatViewDragTable = frame.get('id');
+        return frame;
+      }
+
+    // Nothing under the cursor at all: the gap between two squares, the edge of
+    // the board, the air beside it. The widget has not been carried onto
+    // anything else, so it stays on the table it is being dragged over - it is
+    // dropped in that table's view too, and the drop writes down where it ends
+    // up. Only being over something that is on no turning table really takes it
+    // off one.
+    const table = !hovered && this.seatViewDragTable;
+    if(table && widgets.has(table))
+      return widgets.get(table);
+
+    this.seatViewDragTable = null;
+    return hovered != this ? hovered : null;
   }
 
   // Where the borrowed frame has moved this widget to. A container turns the

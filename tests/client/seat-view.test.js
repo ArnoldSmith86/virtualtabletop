@@ -321,6 +321,58 @@ describe('a widget being dragged', function() {
     expect(card.seatViewRotation()).toBe(-180);
   });
 
+  test('a holder lying on the table is not a table of its own', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    const table = createContainer('table', { rotateForViewer: true, facing: 'viewer' });
+    // a square of a chessboard: it reads upright like everything on the table,
+    // which leaves it turned the other way than the table it lies on
+    createWidget({ id: 'square', parent: 'table', x: 100, y: 100, width: 100, height: 100 });
+    createWidget({ id: 'card', parent: 'square' });
+    const card = dragOut('card', 'table', 'square');
+
+    viewAs('north');
+    expect(widgets.get('square').seatViewDelta + widgets.get('square').seatViewInherited).toBe(0);
+    // ... so borrowing the square instead of the table would put the card
+    // somewhere else, and crossing the next square somewhere else again
+    expect(card.seatViewFrame()).toBe(table);
+    expect(card.seatViewRotation()).toBe(0); // upright, on a table turned by 180
+  });
+
+  test('stays on that table while nothing at all is under the cursor', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    const table = createContainer('table', { rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table' });
+    const card = dragOut('card', 'table');
+
+    viewAs('north');
+    expect(card.seatViewRotation()).toBe(-180);
+
+    // the gap between two squares: the drag has left the widget it was picked
+    // up from and is over nothing else yet
+    card.state.hoverParent = null;
+    viewAs('north');
+    expect(card.seatViewFrame()).toBe(table);
+    expect(card.seatViewRotation()).toBe(-180);
+  });
+
+  test('forgets that table once the drag is over', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    createContainer('table', { rotateForViewer: true });
+    createWidget({ id: 'card', parent: 'table' });
+    const card = dragOut('card', 'table');
+    viewAs('north');
+
+    card.applyDelta({ dragging: null, parent: null });
+
+    // picked up again where nothing turns: it may not still be on the table of
+    // the drag before it
+    card.state.dragging = 'Alice';
+    card.state.hoverParent = null;
+    viewAs('north');
+    expect(card.seatViewFrame()).toBe(null);
+    expect(card.seatViewRotation()).toBe(0);
+  });
+
   test('follows the drop target it is held over, so the drop changes nothing', function() {
     createSeat('north', { player: 'Alice', rotation: 180 });
     createContainer('table', { rotateForViewer: true });
