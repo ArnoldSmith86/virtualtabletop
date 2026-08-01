@@ -1,6 +1,9 @@
 class SeatViewButton extends ToolbarButtonWithContent {
   constructor() {
-    super('event_seat', 'Preview as seat', 'Show the room the way the player in a given seat sees it.\n\nThis only changes what you see - nothing is sent to the other players.');
+    super('event_seat', 'Preview as seat', 'Show the room the way the player in a given seat sees it.\n\nThis only changes what you see - nothing is sent to the other players. Widgets cannot be picked up and dropped while a seat is previewed.');
+    // somebody sitting down (or a seat being added or removed) changes both the
+    // list and, if it was the previewed seat, the preview itself
+    onSeatsChanged(_=>this.syncPreview());
   }
 
   onEditorClose() {
@@ -36,13 +39,18 @@ class SeatViewButton extends ToolbarButtonWithContent {
 
   preview(seatID) {
     setSeatViewPreview(seatID);
-    $('body').classList.toggle('seatViewPreview', !!getSeatViewPreview());
-    this.renderSeats();
+    this.syncPreview();
   }
 
   stopPreview() {
     setSeatViewPreview(null);
     $('body').classList.remove('seatViewPreview');
+  }
+
+  syncPreview() {
+    $('body').classList.toggle('seatViewPreview', !!getSeatViewPreview());
+    if(this.list)
+      this.renderSeats();
   }
 
   toggle(state) {

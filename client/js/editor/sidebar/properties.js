@@ -4510,7 +4510,7 @@ class PropertiesModule extends SidebarModule {
     new CheckboxInput(this, widget, 'Has the turn', { property: 'turn', hint: 'This is a temporary value that can be changed by automations in the game.' }).render(indexRow);
 
     this.renderSeatHandInput(widget);
-    new NumberOrTextInput(this, widget, 'View rotation', { property: 'viewRotation', hint: editorPropertyHints.viewRotation }).render(this.moduleDOM);
+    new NumberInput(this, widget, 'View rotation', { property: 'viewRotation', step: 90, nullIfEmpty: true, unit: '°', hint: editorPropertyHints.viewRotation }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Ignore this seat in turns', { property: 'skipTurn', hint: editorPropertyHints.skipTurn }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
 

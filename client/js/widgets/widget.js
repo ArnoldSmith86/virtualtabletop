@@ -90,6 +90,7 @@ export class Widget extends StateManaged {
     this.childArray = [];
     this.seatViewDelta = 0;
     this.seatViewInherited = 0;
+    this.appliedSeatViewDelta = 0;
     this.propertiesUsedInProperty = {};
 
     if(StateManaged.inheritFromMapping[id] === undefined)
@@ -428,6 +429,10 @@ export class Widget extends StateManaged {
     if(this.seatViewDelta === this.appliedSeatViewDelta)
       return;
     this.appliedSeatViewDelta = this.seatViewDelta;
+    // a widget in limbo hangs in #topSurface with a transform of its own that
+    // cssTransform cannot reproduce - it gets the new angle when it lands
+    if(this.isLimbo)
+      return;
     this.targetTransform = this.domElement.style.transform = this.cssTransform();
   }
 
@@ -458,6 +463,8 @@ export class Widget extends StateManaged {
     return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
+  // deliberately the real player, not the previewed seat: this feeds
+  // rearrangeChildren, which writes the children's x/y
   childrenOwned() {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
@@ -763,7 +770,11 @@ export class Widget extends StateManaged {
     let x = this.get('x');
     let y = this.get('y');
     let scaleValue = this.get('scale');
-    const rotation = this.get('rotation') + (shared ? 0 : this.seatViewDelta);
+    // the stored rotation is passed through untouched unless the per-seat view
+    // actually turns this widget: games have always been allowed to put a string
+    // in there, and "45" + 90 would silently render as 4590 degrees
+    const seatViewDelta = shared ? 0 : this.seatViewDelta;
+    const rotation = seatViewDelta ? (+this.get('rotation') || 0) + seatViewDelta : this.get('rotation');
 
     if(this.get('ignoreZoom')) {
       const computedStyle = getComputedStyle(document.documentElement);

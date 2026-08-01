@@ -28,12 +28,47 @@ let generation = 0;
 // until some widget in the room actually asks for a per-seat view.
 let inUse = false;
 
+// The seats, the seat this client looks through and its rotation cannot change
+// while a single sweep runs, so they are computed once per sweep instead of once
+// per widget - a 1000 widget room would otherwise sort the seat list 1000 times.
+let sweepCache = null;
+
+// The editor's seat list has to be rebuilt when somebody sits down while it is
+// open, which nothing else in the client would notice.
+let seatsChangedCallback = null;
+
 export function seatViewGeneration() {
   return generation;
 }
 
 export function seatViewMarkUsed() {
   inUse = true;
+}
+
+// A different room, a different game: nothing of the old one may leak into it,
+// least of all the sweep that only games using the feature should pay for.
+export function resetSeatViews() {
+  seatViewPreview = null;
+  inUse = false;
+  sweepCache = null;
+  seatsChanged();
+}
+
+export function onSeatsChanged(callback) {
+  seatsChangedCallback = callback;
+}
+
+export function seatsChanged() {
+  if(seatsChangedCallback)
+    seatsChangedCallback();
+}
+
+function perSweep(key, compute) {
+  if(!sweepCache)
+    return compute();
+  if(sweepCache[key] === undefined)
+    sweepCache[key] = compute();
+  return sweepCache[key];
 }
 
 export function getSeatViewPreview() {
@@ -48,7 +83,6 @@ export function setSeatViewPreview(seatID) {
   if(preview === seatViewPreview)
     return;
   seatViewPreview = preview;
-  inUse = true;
   refreshSeatViews(true);
   // per player visibility is judged against the previewed seat, so everything
   // that hides a widget from somebody has to be re-evaluated
@@ -57,7 +91,7 @@ export function setSeatViewPreview(seatID) {
 }
 
 export function scheduleSeatViewRefresh() {
-  if(refreshScheduled || !inUse)
+  if(refreshScheduled || !inUse && !seatViewPreview)
     return;
   refreshScheduled = true;
   setTimeout(function() {
@@ -67,11 +101,16 @@ export function scheduleSeatViewRefresh() {
 }
 
 export function refreshSeatViews(force = false) {
-  if(!inUse && !force)
+  if(!inUse && !seatViewPreview && !force)
     return;
   ++generation;
-  for(const [ id, widget ] of widgets)
-    widget.applySeatView();
+  sweepCache = {};
+  try {
+    for(const [ id, widget ] of widgets)
+      widget.applySeatView();
+  } finally {
+    sweepCache = null;
+  }
 }
 
 // The identity per-player visibility (owner, onlyVisibleForSeat, linkedToSeat)
@@ -86,13 +125,15 @@ export function viewingPlayerName() {
 // otherwise the seat the local player occupies. Null for spectators and players
 // without a seat, which is what makes the stored layout the fallback view.
 export function viewingSeat() {
-  if(seatViewPreview && widgets.has(seatViewPreview))
-    return widgets.get(seatViewPreview);
-  return orderedSeats().filter(w=>w.get('player') != '' && w.get('player') == playerName)[0] || null;
+  return perSweep('viewingSeat', function() {
+    if(seatViewPreview && widgets.has(seatViewPreview))
+      return widgets.get(seatViewPreview);
+    return orderedSeats().filter(w=>w.get('player') != '' && w.get('player') == playerName)[0] || null;
+  });
 }
 
 function orderedSeats() {
-  return widgetFilter(w=>w.get('type') == 'seat').sort((a,b)=>a.get('index') - b.get('index') || String(a.get('id')).localeCompare(String(b.get('id'))));
+  return perSweep('seats', _=>widgetFilter(w=>w.get('type') == 'seat').sort((a,b)=>a.get('index') - b.get('index') || String(a.get('id')).localeCompare(String(b.get('id')))));
 }
 
 // How far the table has to be turned so that this seat's side of it ends up in
@@ -102,12 +143,12 @@ export function seatRotation(seat, property = 'viewRotation') {
   if(!seat)
     return 0;
   const value = seat.get(property);
-  const rotation = typeof value == 'number' ? value : seat.get('rotation');
+  const rotation = value === null || value === undefined || value === '' || isNaN(+value) ? seat.get('rotation') : +value;
   return Math.round((rotation || 0) / rotationStep) * rotationStep;
 }
 
 export function viewingSeatRotation(property = 'viewRotation') {
-  return seatRotation(viewingSeat(), property);
+  return perSweep(`viewingSeatRotation-${property}`, _=>seatRotation(viewingSeat(), property));
 }
 
 // The seat a widget belongs to: the seat of one of its owners, or a seat it is

@@ -133,4 +133,16 @@ describe('the per-seat view is presentation only', function() {
     expect(table.cssTransform(true)).toBe('translate(100px, 200px) rotate(10deg)');
     expect(table.cssTransform()).toBe('translate(100px, 200px) rotate(-170deg)');
   });
+
+  test('a rotation stored as a string is passed through untouched', function() {
+    createSeat('north', { player: 'Alice', rotation: 180 });
+    const plain = createWidget({ id: 'plain', rotation: '45' });
+    const table = createWidget({ id: 'table', rotation: '45', rotateForViewer: true });
+
+    viewAs('north');
+    // a widget the per-seat view does not turn renders exactly like before
+    expect(plain.cssTransform()).toBe('translate(0px, 0px) rotate(45deg)');
+    // and one it does turn is added up as a number instead of concatenated
+    expect(table.cssTransform()).toBe('translate(0px, 0px) rotate(-135deg)');
+  });
 });

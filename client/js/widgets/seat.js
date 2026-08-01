@@ -37,6 +37,10 @@ class Seat extends Widget {
     if(delta.index !== undefined || delta.player !== undefined || delta.rotation !== undefined || delta.viewRotation !== undefined)
       scheduleSeatViewRefresh();
 
+    // the editor's seat list shows who sits where, so it has to follow along
+    if(delta.index !== undefined || delta.player !== undefined)
+      seatsChanged();
+
     if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
       const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
       let displayedText = String(display || '')
