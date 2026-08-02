@@ -190,9 +190,12 @@ export default async function minifyHTML() {
 }
 
 async function compressCSS(cssFiles) {
-  const combinedCSSContent = cssFiles
-    .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
-    .join('\n');  // Combine them into a single string
+  // Hand clean-css the files separately instead of one concatenated string: the output is
+  // identical but problems are then reported as file:line:column instead of a line number
+  // in a string that does not exist anywhere on disk
+  const combinedCSSContent = {};
+  for(const filePath of cssFiles)
+    combinedCSSContent[filePath] = { styles: fs.readFileSync(filePath, 'utf8') };
 
   // clean-css does not throw on broken input, it drops the offending declaration and only
   // mentions it here - without this the minified client would be missing a rule silently
