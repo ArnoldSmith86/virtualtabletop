@@ -282,11 +282,15 @@ const comparisonWords = {
   'in': 'is one of'
 };
 
-// the deprecated CANVAS canvas parameter replaces the collection, so every
-// CANVAS sentence words whichever of the two the operation actually uses
-function canvasTarget(v) {
-  return v('canvas') != null ? '{canvas}' : '{collection}';
-}
+// The deprecated CANVAS canvas parameter replaces the collection, so every
+// CANVAS sentence words whichever of the two the operation actually uses. It is
+// an option that swaps words rather than one that adds them, which is also what
+// gives it the marker that takes it out again: a game that arrived with a canvas
+// is one minus away from the collection every new game writes.
+const canvasTargetClause = {
+  id: 'canvas', label: 'a single canvas widget', offer: false,
+  template: ' {canvas}', whenOff: ' {collection}'
+};
 
 const routineOperationMetadata = {
   AUDIO: {
@@ -360,24 +364,25 @@ const routineOperationMetadata = {
     variants: [
       { id: 'reset', label: 'Reset a canvas', fixed: [ 'mode' ], match: v=>v('mode') == 'reset',
         apply: operation=>{ operation.mode = 'reset'; },
-        template: v=>`Clear the canvas ${canvasTarget(v)}` },
+        template: 'Clear the canvas{{canvas}}' },
       { id: 'set', label: 'Set the value of canvas fields', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: v=>`Set the value of ${canvasTarget(v)} to {value}` },
+        template: 'Set the value of{{canvas}} to {value}' },
       { id: 'inc', label: 'Increase the value of canvas fields', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
-        template: v=>`Increase the value of ${canvasTarget(v)} by {value}` },
+        template: 'Increase the value of{{canvas}} by {value}' },
       { id: 'dec', label: 'Decrease the value of canvas fields', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: v=>`Decrease the value of ${canvasTarget(v)} by {value}` },
+        template: 'Decrease the value of{{canvas}} by {value}' },
       { id: 'change', label: 'Recolor a value on a canvas', fixed: [ 'mode' ], match: v=>v('mode') == 'change',
         apply: operation=>{ operation.mode = 'change'; },
-        template: v=>`Recolor the value {value} on ${canvasTarget(v)} to {color}` },
+        template: 'Recolor the value {value} on{{canvas}} to {color}' },
       { id: 'setPixel', label: 'Set a single pixel', fixed: [ 'mode' ], match: v=>v('mode') == 'setPixel',
         apply: operation=>{ operation.mode = 'setPixel'; },
-        template: v=>`Set one pixel of ${canvasTarget(v)} at ({x}, {y}) to the value {value}` }
+        template: 'Set one pixel of{{canvas}} at ({x}, {y}) to the value {value}' }
     ],
     clauses: [
+      canvasTargetClause,
       { id: 'count', label: 'only n of them', template: ', for {count} widgets', add: { count: 1 } }
     ],
     parameters: {
@@ -764,10 +769,10 @@ const routineOperationMetadata = {
       { id: 'movexy', label: 'Move widgets to a position', template: v=>`Move ${widgetsCounted(v, 'count')} from {from} to the position {x}, {y}` }
     ],
     clauses: [
-      // z is a position, not the layer property a widget also has, and the third
-      // number of a position is not something to offer next to the two the
-      // sentence already names - a game that sets one still reads what it does
-      { id: 'z', label: 'a z position', offer: false, template: ' at the z position {z}', add: { z: 1 } },
+      // z is a position, not the layer property a widget also has - so the option
+      // says which of the two it is instead of leaving that to be guessed from
+      // the letter
+      { id: 'z', label: 'at the specified stacked (z) position', template: ' at the z position {z}', add: { z: 1 } },
       // the first two faces are what a game turns cards to; the ones after them
       // are numbered, and a number needs the word that says what it is
       { id: 'face', label: 'to a face', add: { face: 0 },
@@ -1986,11 +1991,15 @@ class RoutineOperationEditor {
   }
 
   // the whole sentence as one template string, optional parts in [brackets] -
-  // every parameter the operation supports is reachable through it
+  // every parameter the operation supports is reachable through it, the one an
+  // option swaps for another one (CANVAS canvas for its collection) included
   getTemplate() {
     return this.sentenceParts().map(part=>{
       const template = this.resolveTemplate(part.template);
-      return part.clause ? `[${template}]` : template;
+      if(!part.clause)
+        return template;
+      const whenOff = this.resolveTemplate(part.clause.whenOff || '');
+      return `[${template}]${this.templateParameters(whenOff).length ? whenOff : ''}`;
     }).join('');
   }
 
@@ -2037,7 +2046,9 @@ class RoutineOperationEditor {
     const usable = clause=>this.templateParameters(clause.template).every(name=>!Object.prototype.hasOwnProperty.call(ignored, name));
     const clauses = (this.metadata.clauses || []).filter(clause=>(!clause.variants || clause.variants.indexOf(variant.id) != -1) && usable(clause));
 
-    const spokenFor = new Set([ ...this.templateParameters(variant.template), ...(variant.fixed || []), ...clauses.flatMap(clause=>this.templateParameters(clause.template)) ]);
+    // what a clause says while it is off is part of the sentence too, so the
+    // parameter it words is not one nothing mentions
+    const spokenFor = new Set([ ...this.templateParameters(variant.template), ...(variant.fixed || []), ...clauses.flatMap(clause=>[ ...this.templateParameters(clause.template), ...this.templateParameters(clause.whenOff || '') ]) ]);
     for(const name in this.metadata.parameters) {
       if(spokenFor.has(name) || Object.prototype.hasOwnProperty.call(ignored, name))
         continue;
@@ -2318,7 +2329,10 @@ class RoutineOperationEditor {
         if(this.clauseIsActive(part.clause))
           html += `<span class="routine-editor-clause">${this.renderClauseWithRemoveMarker(part)}</span>`;
         else if(part.clause.whenOff)
-          html += escapeHTML(part.clause.whenOff); // an option that replaces words says what is there without it
+          // an option that replaces words says what is there without it - which
+          // may be another parameter (a CANVAS without the deprecated canvas
+          // says which collection it draws on)
+          html += this.renderTemplateText(part.clause.whenOff);
         continue;
       }
       let template = this.resolveTemplate(part.template);

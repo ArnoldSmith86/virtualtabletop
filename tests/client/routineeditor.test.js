@@ -98,6 +98,8 @@ describe('routine operation metadata', () => {
       const editor = editorForOperation({ func });
       editor.setOperationDetails({ state: {} }, { func }, [], []);
       const referenced = (editor.getTemplate().match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m => m.slice(1, -1).split(','));
+      const offered = editor.clauses().filter(clause => clause.offer !== false)
+        .flatMap(clause => editor.templateParameters(clause.template));
       const ignored = editor.ignoredParameters();
       const fixed = editor.currentVariant().fixed || [];
       for (const name in routineOperationMetadata[func].parameters) {
@@ -110,7 +112,7 @@ describe('routine operation metadata', () => {
           // a deprecated parameter (CANVAS canvas) and one the editor writes
           // itself (TIMER seconds) are part of the sentence while a game has
           // them, and are never offered to add to one that has not
-          expect(referenced).not.toContain(name);
+          expect(offered).not.toContain(name);
         else
           expect(referenced).toContain(name);
       }
@@ -392,8 +394,10 @@ describe('operation rendering', () => {
     expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('Cycle the face of');
     expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} widgets] in {holder,collection} {face}');
     expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
-    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas {canvas}');
-    expect(template({ func: 'CANVAS' })).toContain('Clear the canvas {collection}');
+    // the deprecated canvas is the option that swaps the collection for it, so
+    // the template holds both: the words it adds and the ones it replaces
+    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas[ {canvas}] {collection}');
+    expect(template({ func: 'CANVAS' })).toContain('Clear the canvas[ {canvas}] {collection}');
     expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
     expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
     expect(template({ func: 'AUDIO', silence: true })).toContain('Stop all sounds');
@@ -930,7 +934,9 @@ describe('picking how an operation works and which options it uses', () => {
       for (const clause of forFunc.clauses()) {
         if (clause.generated)
           continue;
-        expect(clause.label.length).toBeLessThanOrEqual(30); // a phrase, not a sentence
+        // a phrase, not a sentence - the longest one has to say which of the
+        // numbers a widget stacks by the option is about
+        expect(clause.label.length).toBeLessThanOrEqual(40);
         // two options of the same operation cannot read the same either
         expect(labels).not.toContain(clause.label);
         labels.push(clause.label);
@@ -2711,21 +2717,31 @@ describe('the words and the units of an operation', () => {
     });
   });
 
-  // z is a position and not the layer property a widget also has, so the
-  // sentence stopped calling it one - and the third number of a position is not
-  // something to offer next to the two the sentence already names
-  test('MOVEXY words a face like MOVE and offers no layer', () => {
+  // z is a position and not the layer property a widget also has, so the option
+  // says which of the two it is instead of leaving that to the letter
+  test('MOVEXY words a face like MOVE and offers the stacked position', () => {
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 0 })).toContain('and turn them face up');
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 2 })).toContain('and turn them to face 2');
-    expect(offeredOptions({ func: 'MOVEXY', from: 'h1' })).toEqual([ 'to a face', 'ignoring the grid', 'keeping their current owner' ]);
+    expect(offeredOptions({ func: 'MOVEXY', from: 'h1' })).toEqual([ 'at the specified stacked (z) position', 'to a face', 'ignoring the grid', 'keeping their current owner' ]);
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', z: 3 })).toContain('at the z position 3');
   });
 
   // a deprecated parameter is not a suggestion: it is part of the sentence
-  // while a game has it and nothing the editor invites anybody to add
-  test('the deprecated CANVAS canvas is shown but never offered', () => {
+  // while a game has it and nothing the editor invites anybody to add - but a
+  // game that arrived with one is a minus away from what replaced it
+  test('the deprecated CANVAS canvas is shown with a way out but never offered', () => {
     expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'only n of them' ]);
     expect(sentenceWords({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas c1');
+    expect(sentenceWords({ func: 'CANVAS' })).toContain('Clear the canvas the picked canvases');
+
+    const operation = { func: 'CANVAS', canvas: 'c1' };
+    const editor = editorFor(operation);
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    const remove = editor.render().querySelector('.routine-editor-clause-remove[data-clause="canvas"]');
+    expect(remove).not.toBeNull();
+    remove.dispatchEvent(new Event('click'));
+    expect(result).toEqual({ func: 'CANVAS' });
   });
 
   // which round a score goes into is part of every SCORE: leaving it out adds
@@ -2792,20 +2808,44 @@ describe('the words and the units of an operation', () => {
     expect([...popup.domElement.querySelectorAll('.popup-key-value-key')].map(k => k.textContent)).toEqual([ 'score' ]);
     expect(popup.domElement.querySelector('.popup-key-value-value').value).toBe('3');
 
-    // a row is added by name, its value edited in place, and the parameter is
+    // a row is added with both halves of the pair at once, and the parameter is
     // written once when the popup closes
     let value = null;
     popup.registerChangeListener(v => value = v);
-    const nameInput = popup.domElement.querySelector('.popup-key-value-name');
-    nameInput.value = 'round';
-    nameInput.dispatchEvent(new Event('input'));
+    const addRow = popup.domElement.querySelector('.popup-key-value-add');
+    addRow.querySelector('.popup-key-value-name').value = 'round';
+    addRow.querySelector('.popup-key-value-name').dispatchEvent(new Event('input'));
+    addRow.querySelector('.popup-key-value-value').value = '2';
     [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'add').dispatchEvent(new Event('click'));
     expect(value).toBeNull(); // nothing written yet
-    const added = [...popup.domElement.querySelectorAll('.popup-key-value-row')].find(row => (row.querySelector('.popup-key-value-key') || {}).textContent == 'round');
-    const valueInput = added.querySelector('.popup-key-value-value');
-    valueInput.value = '2';
-    valueInput.dispatchEvent(new Event('change'));
+    expect(popup.currentPairs()).toEqual({ score: 3, round: 2 });
     popup.hide();
     expect(value).toEqual({ variables: { score: 3, round: 2 } });
+  });
+
+  // the button that adds a pair is inside the popup, but re-rendering the list
+  // takes it out of the document while the click is still being dispatched - so
+  // the popup never sees the click that would have stopped it, and the one the
+  // document sees points at a button that is nowhere. That used to read as a
+  // click outside and closed the popup after every single entry.
+  test('adding a pair leaves the popup open for the next one', () => {
+    const popup = popupFor({ func: 'VAR', variables: {} }, 'variables');
+    popup.show();
+    let hidden = false;
+    popup.registerCancelListener(() => hidden = true);
+
+    const addRow = popup.domElement.querySelector('.popup-key-value-add');
+    addRow.querySelector('.popup-key-value-name').value = 'score';
+    addRow.querySelector('.popup-key-value-value').value = '1';
+    const addButton = [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'add');
+    document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    addButton.dispatchEvent(new Event('click'));
+
+    expect(popup.currentPairs()).toEqual({ score: 1 });
+    expect(popup.domElement.querySelector('.popup-key-value-add .popup-key-value-name').value).toBe('');
+    expect(addButton.isConnected).toBe(false);
+    popup.onOutsideClick({ target: addButton, detail: 1 });
+    expect(hidden).toBe(false);
+    popup.hide();
   });
 });

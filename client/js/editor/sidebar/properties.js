@@ -576,6 +576,10 @@ class PropertiesModule extends SidebarModule {
     // the widgets whose Automations section is on screen, so the full size
     // switch knows whether there is anything to give the whole panel to
     this.automationsWidgets = [];
+    // whether the selected widgets already had automations when they were
+    // selected: only then does the remembered preference give the section the
+    // whole panel (see applyAutomationsFullSize)
+    this.automationsWereAvailable = undefined;
     this.collapsibleStates = {};
     this.sizeRatioLocks = new WeakMap();
     // per line: the widget new stops inherit from. Kept outside the panel because
@@ -750,6 +754,7 @@ class PropertiesModule extends SidebarModule {
     // pile, or nothing at all) must not hide what it does show
     this.moduleDOM.classList.remove('automationsFullSize');
     this.automationsWidgets = [];
+    this.automationsWereAvailable = undefined;
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
 
@@ -5961,7 +5966,7 @@ class PropertiesModule extends SidebarModule {
     this.automationsWidgets.push(widget);
     const eventsEditor = new EventsEditor(widget, (property, value)=>{
       this.inputValueUpdated(widget, property, value);
-      // the first routine of a widget is what makes full size worth having
+      // the first routine of a widget is what makes the switch usable at all
       this.applyAutomationsFullSize();
     });
     // a delta listener instead of per-property listeners so routines added
@@ -6002,6 +6007,9 @@ class PropertiesModule extends SidebarModule {
     input.checked = this.automationsFullSize();
     input.onchange = _=>{
       localStorage.setItem('editor.automationsFullSize', input.checked);
+      // switching it on by hand is the opt-in the first routine of a widget
+      // deliberately is not
+      this.automationsWereAvailable = true;
       this.applyAutomationsFullSize();
     };
     toggle.appendChild(input);
@@ -6030,9 +6038,15 @@ class PropertiesModule extends SidebarModule {
     if(!this.moduleDOM)
       return;
     const available = this.hasAutomations();
-    // the preference is remembered either way: adding a routine to a widget that
-    // had none gives the section the height it was switched to before
-    const fullSize = available && this.automationsFullSize();
+    if(this.automationsWereAvailable === undefined)
+      this.automationsWereAvailable = available;
+    // Adding the first routine to a widget that had none must not take the panel
+    // over: everything else would fold away under the pointer in the middle of
+    // an edit. So the remembered preference only applies to a widget that was
+    // already automated when it was selected, and giving the section the whole
+    // panel right after adding a routine is a click of its own. The preference
+    // itself is kept either way - the next automated widget opens full size.
+    const fullSize = available && this.automationsWereAvailable && this.automationsFullSize();
     this.moduleDOM.classList.toggle('automationsFullSize', fullSize);
     // with several widgets selected every one of them has a section bar
     for(const input of $a('.automationsFullSizeToggle input.switchbox', this.moduleDOM)) {

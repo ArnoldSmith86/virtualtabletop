@@ -165,6 +165,12 @@ class Popup {
     // dragged out of a popup's input (e.detail is 0 for clicks from the keyboard)
     if(e.detail && popupMouseDownTarget && popupMouseDownTarget.closest && popupMouseDownTarget.closest('.inline-popup'))
       return;
+    // a control that re-renders its list (the row that adds a name/value pair)
+    // is gone from the document by the time the click reaches here, so asking
+    // where it sits answers "nowhere" - which used to read as a click outside
+    // and closed the popup after every entry
+    if(e.target && e.target.isConnected === false)
+      return;
     if(!this.domElement.contains(e.target))
       this.hide();
   }
@@ -1371,6 +1377,9 @@ class RoutineKeyValuePopup extends RoutinePopup {
       row.append(remove);
     }
 
+    // the row that adds one asks for both halves of a pair at once: a name on
+    // its own is a variable with nothing in it, and having to add it before the
+    // value can be typed is what made the popup look like it closed too early
     const addRow = div(list, 'popup-key-value-row popup-key-value-add');
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
@@ -1393,19 +1402,32 @@ class RoutineKeyValuePopup extends RoutinePopup {
     }
     addRow.append(nameInput);
 
+    const addValueInput = document.createElement('input');
+    addValueInput.type = 'text';
+    addValueInput.className = 'popup-key-value-value';
+    addValueInput.placeholder = 'value';
+    addRow.append(addValueInput);
+
     const addPair = _=>{
       const key = nameInput.value.trim();
       if(!key || typeof this.currentPairs()[key] != 'undefined')
         return;
-      this.savePairs(Object.assign({}, this.currentPairs(), { [key]: '' }));
+      this.savePairs(Object.assign({}, this.currentPairs(), { [key]: this.parseValueText(addValueInput.value) }));
       this.renderPairs();
+      // the popup stays open for the next pair, with the cursor where it is typed
+      const nextName = $('.popup-key-value-add .popup-key-value-name', this.listElement);
+      if(nextName)
+        nextName.focus();
     };
-    nameInput.addEventListener('keydown', e=>{
-      if(e.key == 'Enter')
-        addPair();
-    });
+    for(const input of [ nameInput, addValueInput ])
+      input.addEventListener('keydown', e=>{
+        if(e.key == 'Enter')
+          addPair();
+      });
+    // the button that puts the pair into the list is what the row is for, so it
+    // is the filled one the popups use for the button that applies something
     const addButton = button(addRow, 'add', addPair);
-    addButton.className = 'popup-key-value-add-button';
+    addButton.className = 'popup-key-value-add-button primary';
     // a button that does nothing until a name is typed says so instead of
     // swallowing the click
     const updateAddButton = _=>{
