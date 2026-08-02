@@ -15,7 +15,16 @@ import Logging from './logging.mjs';
 // truthy string 'false'. Both minification passes read the flag through here so they agree.
 function minifyJavascript() {
   const value = Config.get('minifyJavascript');
-  return !!value && value !== 'false';
+  return !!value && ![ 'false', '0', 'no', 'off' ].includes(String(value).toLowerCase());
+}
+
+// html-minifier-terser routes the failures of its own terser and clean-css passes through log()
+// and defaults that to a no-op, so a broken inline <script> or <style> would just come back
+// unchanged without a trace - the same silent failure this file now reports for compressCSS.
+// Its own timing line is the one non-problem message it sends here.
+function htmlMinifyLog(message) {
+  if(!/^minified in: /.test(String(message)))
+    Logging.log(`WARNING - HTML minification - ${message}`);
 }
 
 // html-minifier-terser enables nothing by default, so spell out the set the previous wrapper used.
@@ -30,6 +39,7 @@ function htmlMinifyOptions() {
     collapseInlineTagWhitespace: true,
     collapseWhitespace: true,
     conservativeCollapse: true,
+    log: htmlMinifyLog,
     minifyCSS: true,
     minifyJS: minifyJavascript(),
     removeAttributeQuotes: true,
