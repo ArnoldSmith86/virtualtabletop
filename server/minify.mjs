@@ -9,10 +9,21 @@ import { minify as htmlMinify } from 'html-minifier-terser';
 import { minify as jsMinify } from 'terser';
 
 import Config from './config.mjs';
+import Logging from './logging.mjs';
+
+// Config.get returns environment overrides verbatim, so MINIFYJAVASCRIPT=false arrives as the
+// truthy string 'false'. Both minification passes read the flag through here so they agree.
+function minifyJavascript() {
+  const value = Config.get('minifyJavascript');
+  return !!value && value !== 'false';
+}
 
 // html-minifier-terser enables nothing by default, so spell out the set the previous wrapper used.
 // minifyJS follows the config: the old uglify-js based pass silently failed on our client code,
 // while terser does parse it and would minify even when the config asks for readable output.
+// When it is enabled the client JS goes through terser twice (compressJS and again here as part
+// of the surrounding <script>) which is redundant but cheap - and it also covers the config
+// object that is injected into the HTML after compressJS has run.
 function htmlMinifyOptions() {
   return {
     collapseBooleanAttributes: true,
@@ -20,7 +31,7 @@ function htmlMinifyOptions() {
     collapseWhitespace: true,
     conservativeCollapse: true,
     minifyCSS: true,
-    minifyJS: !!Config.get('minifyJavascript'),
+    minifyJS: minifyJavascript(),
     removeAttributeQuotes: true,
     removeComments: true,
     removeEmptyAttributes: true,
@@ -183,7 +194,15 @@ async function compressCSS(cssFiles) {
     .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
     .join('\n');  // Combine them into a single string
 
-  return new CleanCSS().minify(combinedCSSContent).styles;
+  // clean-css does not throw on broken input, it drops the offending declaration and only
+  // mentions it here - without this the minified client would be missing a rule silently
+  const result = new CleanCSS().minify(combinedCSSContent);
+  for(const error of result.errors)
+    Logging.log(`ERROR - CSS minification - ${error}`);
+  for(const warning of result.warnings)
+    Logging.log(`WARNING - CSS minification - ${warning}`);
+
+  return result.styles;
 }
 
 // Helper function to remove import statements
@@ -199,7 +218,7 @@ async function compressJS(jsFiles) {
     .join('\n');  // Combine them into a single string
 
   // Perform compression
-  if(!Config.get('minifyJavascript'))
+  if(!minifyJavascript())
     return combinedJSContent;
 
   return (await jsMinify(combinedJSContent)).code;
