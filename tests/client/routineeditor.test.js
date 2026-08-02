@@ -473,14 +473,14 @@ describe('operation rendering', () => {
     expect(raw.getTemplate()).toBe('{statement}');
   });
 
-  // the wording of the whole catalogue in one place: operations taken from the
+  // the wording of the whole catalog in one place: operations taken from the
   // games in library/games, each with the sentence it has to read as. Defaults
   // that mean "not in use" stay out of it, enums and yes/no values are words,
   // and the name of the operation never turns up in its own sentence.
   test.each([
     [ { func: 'SET', collection: [ 'playHolder1' ], property: 'pause', value: true }, 'Set pause of playHolder1 to true' ],
     [ { func: 'SET', property: 'lastOwner', value: null }, 'Set lastOwner of the picked widgets to null' ],
-    // the six ways a SET can work, each as the catalogue words it
+    // the six ways a SET can work, each as the catalog words it
     [ { func: 'SET', property: 'rotation', value: 90 }, 'Set rotation of the picked widgets to 90' ],
     [ { func: 'SET', property: 'score', collection: 'myPick', value: 0 }, 'Set score of the widgets called myPick to 0' ],
     [ { func: 'SET', property: 'value', relation: '+', value: 1 }, 'Increase value of the picked widgets by 1' ],
@@ -537,7 +537,7 @@ describe('operation rendering', () => {
     [ { func: 'SWAPHANDS' }, 'Pass every hand on to the next seat' ],
     [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player "Choose a card" to fill in 3 fields' ],
     // a dialog with nothing to fill in is a question, and the sentence says so
-    [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", cancelling with "No"' ],
+    [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", canceling with "No"' ],
     [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask the players red and blue at once to fill in 1 field, holding everybody else up until it is answered' ],
     [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
     [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number in the range 1 to 10, do the operations below' ],
@@ -615,7 +615,7 @@ describe('picking how an operation works and which options it uses', () => {
 
   // the order of https://agent.virtualtabletop.io/reports/routine-grammar/ - the
   // phrasing games write most often is the first entry, not the last one
-  test('the drop-down offers the ways to work in the order of the grammar catalogue', () => {
+  test('the drop-down offers the ways to work in the order of the grammar catalog', () => {
     const leads = func => routineOperationVariantChoices({ func }).map(c => c.lead);
     expect(leads('SET')).toEqual([ 'Set', 'Increase', 'Decrease', 'Multiply', 'Divide', 'Toggle', 'Append' ]);
     expect(leads('SELECT')[0]).toBe('Pick');
@@ -1744,7 +1744,7 @@ describe('information about an operation and its parameters', () => {
     const dom = document.createElement('div');
     document.getElementById('editor').append(dom);
     const info = infoButton(dom, 'a short explanation');
-    // a pointer travelling past the button leaves it alone
+    // a pointer traveling past the button leaves it alone
     info.dispatchEvent(new Event('mouseenter'));
     expect(document.querySelectorAll('.inline-popup')).toHaveLength(0);
     info.dispatchEvent(new Event('click'));
@@ -2893,7 +2893,7 @@ describe('the lines of an INPUT dialog', () => {
   });
 
   test('a line reads as what it shows or asks', () => {
-    expect(fieldWords({ type: 'title', text: 'Choose your colour' })).toBe('Show a heading: "Choose your colour"');
+    expect(fieldWords({ type: 'title', text: 'Choose your color' })).toBe('Show a heading: "Choose your color"');
     expect(fieldWords({ type: 'text', text: 'Pick a card.' })).toBe('Show a paragraph: "Pick a card."');
     expect(fieldWords({ type: 'checkbox', label: 'Include jokers', value: true, variable: 'jokers' }))
       .toBe('Tick box "Include jokers", starting ticked, remembering the answer as jokers');
@@ -2907,12 +2907,12 @@ describe('the lines of an INPUT dialog', () => {
       .toBe('Slide "Volume" from 0 to 100 in steps of 5, showing "%", remembering the answer as v');
     expect(fieldWords({ type: 'slider', label: 'Difficulty', values: [ 'Easy', 'Hard' ], variable: 'd' }))
       .toBe('Slide "Difficulty" through Easy and Hard, remembering the answer as d');
-    expect(fieldWords({ type: 'select', options: [ 'Red', 'Blue' ], variable: 'colour' }))
-      .toBe('Ask them to pick one of Red and Blue, remembering the answer as colour');
+    expect(fieldWords({ type: 'select', options: [ 'Red', 'Blue' ], variable: 'color' }))
+      .toBe('Ask them to pick one of Red and Blue, remembering the answer as color');
     // an entry that stores something other than what it shows reads as what it shows
     expect(fieldWords({ type: 'select', options: [ { value: 'r', text: 'Red' } ], variable: 'c' })).toContain('pick one of Red');
-    expect(fieldWords({ type: 'palette', colors: [ '#ff0000', '#00ff00' ], variable: 'c' })).toContain('pick a colour from #ff0000 and #00ff00');
-    expect(fieldWords({ type: 'color', variable: 'c' })).toBe('Ask them to pick any colour, remembering the answer as c');
+    expect(fieldWords({ type: 'palette', colors: [ '#ff0000', '#00ff00' ], variable: 'c' })).toContain('pick a color from #ff0000 and #00ff00');
+    expect(fieldWords({ type: 'color', variable: 'c' })).toBe('Ask them to pick any color, remembering the answer as c');
     expect(fieldWords({ type: 'string', label: 'Your name', value: 'Player 1', variable: 'name' }))
       .toBe('Ask for text "Your name", starting "Player 1", remembering the answer as name');
   });
@@ -3099,7 +3099,7 @@ describe('working out a value with var', () => {
     expect(words('var total = ${a} + ${b}')).toBe('Set the variable total to a plus b');
     expect(words('var n = ${deck} length')).toBe('Set the variable n to the length of deck');
     expect(words('var d = randInt 1 6')).toBe('Set the variable d to a whole number between 1 and 6');
-    expect(words('var c = colorContrast ${bg}')).toBe('Set the variable c to a colour that reads well on bg');
+    expect(words('var c = colorContrast ${bg}')).toBe('Set the variable c to a color that reads well on bg');
     // the optional operand is only in the sentence while it is in use
     expect(words("var c = colorContrast ${bg} -1")).toContain('-1 as strongly');
     expect(words("var s = ${name} substr 0 3")).toBe('Set the variable s to of name, the part starting at 0 for 3 characters');
@@ -3175,5 +3175,28 @@ describe('working out a value with var', () => {
     const chip = editorFor('var a = ${x} + ${y}').render().querySelector('[data-parameter="operator"]');
     expect(chip.classList.contains('routine-editor-parameter-menu')).toBe(true);
     expect(chip.textContent).toContain('plus');
+  });
+
+  // the same two lines the operation picker uses, the same way round: what the
+  // statement stores in the operation color, what it means underneath it
+  test('an entry of the list names the operation first and says what it means below', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineComputeOperationPopup(routineComputeChoices(), '+');
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'var' }, [ 'operator' ], { state: {} }, [], []);
+    popup.show();
+    popup.domElement.querySelector('.popup-property-search').value = 'divided by';
+    popup.domElement.querySelector('.popup-property-search').dispatchEvent(new Event('input'));
+    const entry = popup.domElement.querySelector('.popup-operation');
+    expect(entry.querySelector('.popup-operation-func').textContent).toBe('/');
+    expect(entry.querySelector('.popup-operation-example').textContent).toBe('divided by');
+    // the plain assignment stores no operation, so it has only the meaning
+    popup.domElement.querySelector('.popup-property-search').value = 'the value';
+    popup.domElement.querySelector('.popup-property-search').dispatchEvent(new Event('input'));
+    const plain = popup.domElement.querySelector('.popup-operation');
+    expect(plain.querySelector('.popup-operation-func')).toBeNull();
+    expect(plain.querySelector('.popup-operation-example').textContent).toBe('the value');
+    popup.hide();
   });
 });

@@ -8,7 +8,7 @@
 //
 //   variants - the ways the operation can work, i.e. what it does at all. They
 //     are listed in the order the drop-down offers them, which is the order of
-//     the grammar catalogue: the phrasing games write most often first. Which
+//     the grammar catalog: the phrasing games write most often first. Which
 //     one an operation is shown as is decided by match() - the first variant
 //     whose match() fits it, with the one without a match() as the fallback,
 //     wherever in the list it sits. Every sentence starts with the words that
@@ -61,7 +61,7 @@
 // and so is a yes/no parameter, whose two sides are two phrases rather than
 // "true" and "false".
 //
-// Not worded at all: skip. The engine still honours it on every operation, but
+// Not worded at all: skip. The engine still honors it on every operation, but
 // it is deprecated and no new game should use one, so the sentence does not
 // offer it. Games that have one keep it as the custom property it looks like
 // until there is a way to show it that does not read as an invitation.
@@ -291,7 +291,7 @@ const comparisonWords = {
 // An INPUT whose cancel button has neither a text nor an icon has no cancel
 // button at all (widget.js hides it when both are explicitly null), which is
 // the only way to make a dialog a forced choice.
-function inputCannotBeCancelled(v, isSet) {
+function inputCannotBeCanceled(v, isSet) {
   return isSet('cancelButtonText') && v('cancelButtonText') === null && isSet('cancelButtonIcon') && v('cancelButtonIcon') === null;
 }
 
@@ -690,13 +690,13 @@ const routineOperationMetadata = {
       // which is a feature (a forced choice) hiding behind two nulls - so it is
       // one option that says so, and the two that word the button step aside
       // while it is on
-      { id: 'noCancel', label: 'they have to answer', active: inputCannotBeCancelled,
+      { id: 'noCancel', label: 'they have to answer', active: inputCannotBeCanceled,
         template: ', and they cannot cancel', add: { cancelButtonText: null, cancelButtonIcon: null },
         remove: { cancelButtonText: undefined, cancelButtonIcon: undefined } },
-      { id: 'cancelButtonText', label: 'the cancel button', template: ', cancelling with {cancelButtonText}',
-        active: (v, isSet)=>isSet('cancelButtonText') && !inputCannotBeCancelled(v, isSet) },
+      { id: 'cancelButtonText', label: 'the cancel button', template: ', canceling with {cancelButtonText}',
+        active: (v, isSet)=>isSet('cancelButtonText') && !inputCannotBeCanceled(v, isSet) },
       { id: 'cancelButtonIcon', label: 'the cancel icon', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' },
-        active: (v, isSet)=>isSet('cancelButtonIcon') && !inputCannotBeCancelled(v, isSet) },
+        active: (v, isSet)=>isSet('cancelButtonIcon') && !inputCannotBeCanceled(v, isSet) },
       { id: 'block', label: 'holding everybody else up', template: ', {block}', add: { block: true } },
       { id: 'css', label: 'a style of its own', template: ', styled {css}' },
       // the engine rotates by it, but no game in the library does and the wiki
@@ -742,7 +742,7 @@ const routineOperationMetadata = {
         template: 'Append {value} to the text of {label,collection}' }
     ],
     parameters: {
-      // any widget with a text property can be labelled, not only a label, so the
+      // any widget with a text property can be labeled, not only a label, so the
       // picker opens on all of them the way every other widget parameter does
       label: { type: 'widgets', default: null },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
@@ -1314,7 +1314,7 @@ const routineInputFieldMetadata = {
     description: 'A number to type',
     // the trap that costs an evening: the engine stores what was typed, not the
     // number it looks like
-    answer: 'the number as TEXT - use parseFloat before doing maths with it',
+    answer: 'the number as TEXT - use parseFloat before doing math with it',
     variants: [ { id: 'number', label: 'Ask for a number', template: `Ask for a number {label}{{value}}{{bounds}}${inputFieldRemembered}` } ],
     clauses: [
       { id: 'value', label: 'filled in to begin with', template: ', starting {value}', add: { value: 0 } },
@@ -1386,9 +1386,9 @@ const routineInputFieldMetadata = {
     }
   },
   palette: {
-    description: 'A row of colours to pick from',
-    answer: 'the colour they picked - nothing at all if none is preselected',
-    variants: [ { id: 'palette', label: 'Ask them to pick a colour from', template: `Ask them to pick a colour from {colors}{{value}}{{label}}${inputFieldRemembered}` } ],
+    description: 'A row of colors to pick from',
+    answer: 'the color they picked - nothing at all if none is preselected',
+    variants: [ { id: 'palette', label: 'Ask them to pick a color from', template: `Ask them to pick a color from {colors}{{value}}{{label}}${inputFieldRemembered}` } ],
     clauses: [
       { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
       { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}' },
@@ -1403,9 +1403,9 @@ const routineInputFieldMetadata = {
     }
   },
   color: {
-    description: 'Any colour at all',
-    answer: 'the colour they picked',
-    variants: [ { id: 'color', label: 'Ask them to pick any colour', template: `Ask them to pick any colour{{label}}{{value}}${inputFieldRemembered}` } ],
+    description: 'Any color at all',
+    answer: 'the color they picked',
+    variants: [ { id: 'color', label: 'Ask them to pick any color', template: `Ask them to pick any color{{label}}{{value}}${inputFieldRemembered}` } ],
     clauses: [
       { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
       { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}', add: { value: '#ff0000' } },
@@ -1482,7 +1482,7 @@ function selectOptionWords(value) {
 }
 
 // ---------------------------------------------------------------------------
-// The catalogue of what a `var` statement can work out: every one of the 110
+// The catalog of what a `var` statement can work out: every one of the 110
 // operations compute.js knows, in the words the sentence says them with.
 //
 // One entry per operation:
@@ -1513,51 +1513,51 @@ function selectOptionWords(value) {
 // a ${...} reference - a bare word is read as the operator, which is what most
 // malformed var steps are. The editor quotes what is typed, so that cannot
 // happen here.
-const routineComputeGroups = [ 'Maths', 'Compare and logic', 'Text', 'Lists', 'Random', 'Colour', 'Other' ];
+const routineComputeGroups = [ 'Math', 'Compare and logic', 'Text', 'Lists', 'Random', 'Color', 'Other' ];
 
 const nullResultNote = 'If this cannot be worked out the variable gets 0 - dividing by zero included.';
 
 const routineComputeOperations = {
-  // Maths
-  '+':  { word: 'plus', template: '{x} {operator} {y}', group: 'Maths', note: 'The only operation that reads numeric text as a number - and the one that joins two texts together if either side really is text.' },
-  '-':  { word: 'minus', template: '{x} {operator} {y}', group: 'Maths', note: nullResultNote },
-  '*':  { word: 'times', template: '{x} {operator} {y}', group: 'Maths', note: nullResultNote },
-  '/':  { word: 'divided by', template: '{x} {operator} {y}', group: 'Maths', note: nullResultNote },
-  '%':  { word: 'the remainder of', template: '{operator} {x} divided by {y}', group: 'Maths', note: nullResultNote },
-  '**': { word: 'to the power of', template: '{x} {operator} {y}', group: 'Maths' },
-  'pow': { word: 'to the power of', template: '{operator} {x} {y}', written: 'prefix', group: 'Maths', note: 'The same as **, written the other way round.' },
-  'min': { word: 'the smaller of', template: '{operator} {x} and {y}', written: 'prefix', group: 'Maths' },
-  'max': { word: 'the larger of', template: '{operator} {x} and {y}', written: 'prefix', group: 'Maths' },
-  'abs': { word: 'the size of', template: '{operator} {x} without its sign', written: 'prefix', group: 'Maths' },
-  'round': { word: 'rounded', template: '{x} {operator}', written: 'prefix', group: 'Maths' },
-  'floor': { word: 'rounded down', template: '{x} {operator}', written: 'prefix', group: 'Maths' },
-  'ceil': { word: 'rounded up', template: '{x} {operator}', written: 'prefix', group: 'Maths' },
-  'trunc': { word: 'the whole part of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
-  'sign': { word: 'the sign of', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'Answers -1, 0 or 1.' },
-  'sqrt': { word: 'the square root of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
-  'cbrt': { word: 'the cube root of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
-  'exp': { word: 'e to the power of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
-  'log': { word: 'the natural log of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
-  'log2': { word: 'the log base 2 of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
-  'log10': { word: 'the log base 10 of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
-  'hypot': { word: 'the length of the line to', template: '{operator} {x}[, {y}]', written: 'prefix', group: 'Maths' },
-  'sin': { word: 'the sine of', template: '{operator} {x} degrees', written: 'prefix', group: 'Maths', note: 'Angles are counted in degrees, not in radians.' },
-  'cos': { word: 'the cosine of', template: '{operator} {x} degrees', written: 'prefix', group: 'Maths', note: 'Angles are counted in degrees, not in radians.' },
-  'tan': { word: 'the tangent of', template: '{operator} {x} degrees', written: 'prefix', group: 'Maths', note: 'Angles are counted in degrees, not in radians.' },
-  'asin': { word: 'the angle whose sine is', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'The answer is in degrees, not in radians.' },
-  'acos': { word: 'the angle whose cosine is', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'The answer is in degrees, not in radians.' },
-  'atan': { word: 'the angle whose tangent is', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'The answer is in degrees, not in radians.' },
-  'atan2': { word: 'the angle to the point', template: '{operator} {y} across and {x} up', written: 'prefix', group: 'Maths', note: 'The first operand is how far up, the second how far across - the other way round from a position. The answer is in degrees.' },
-  'toFixed': { word: 'rounded to', template: '{x} {operator} {y} decimal places', group: 'Maths', note: 'The answer is text, not a number.' },
-  'parseFloat': { word: 'as a number', template: '{x} {operator}', written: 'prefix', group: 'Maths', note: 'What turns the text an INPUT number field remembers into a number.' },
-  'PI': { word: 'pi', template: '{operator}', written: 'prefix', group: 'Maths' },
-  'E': { word: "Euler's number e", template: '{operator}', written: 'prefix', group: 'Maths' },
-  'LN2': { word: 'the natural log of 2', template: '{operator}', written: 'prefix', group: 'Maths' },
-  'LN10': { word: 'the natural log of 10', template: '{operator}', written: 'prefix', group: 'Maths' },
-  'LOG2E': { word: 'the log base 2 of e', template: '{operator}', written: 'prefix', group: 'Maths' },
-  'LOG10E': { word: 'the log base 10 of e', template: '{operator}', written: 'prefix', group: 'Maths' },
-  'SQRT1_2': { word: 'the square root of a half', template: '{operator}', written: 'prefix', group: 'Maths' },
-  'SQRT2': { word: 'the square root of 2', template: '{operator}', written: 'prefix', group: 'Maths' },
+  // Math
+  '+':  { word: 'plus', template: '{x} {operator} {y}', group: 'Math', note: 'The only operation that reads numeric text as a number - and the one that joins two texts together if either side really is text.' },
+  '-':  { word: 'minus', template: '{x} {operator} {y}', group: 'Math', note: nullResultNote },
+  '*':  { word: 'times', template: '{x} {operator} {y}', group: 'Math', note: nullResultNote },
+  '/':  { word: 'divided by', template: '{x} {operator} {y}', group: 'Math', note: nullResultNote },
+  '%':  { word: 'the remainder of', template: '{operator} {x} divided by {y}', group: 'Math', note: nullResultNote },
+  '**': { word: 'to the power of', template: '{x} {operator} {y}', group: 'Math' },
+  'pow': { word: 'to the power of', template: '{operator} {x} {y}', written: 'prefix', group: 'Math', note: 'The same as **, written the other way round.' },
+  'min': { word: 'the smaller of', template: '{operator} {x} and {y}', written: 'prefix', group: 'Math' },
+  'max': { word: 'the larger of', template: '{operator} {x} and {y}', written: 'prefix', group: 'Math' },
+  'abs': { word: 'the size of', template: '{operator} {x} without its sign', written: 'prefix', group: 'Math' },
+  'round': { word: 'rounded', template: '{x} {operator}', written: 'prefix', group: 'Math' },
+  'floor': { word: 'rounded down', template: '{x} {operator}', written: 'prefix', group: 'Math' },
+  'ceil': { word: 'rounded up', template: '{x} {operator}', written: 'prefix', group: 'Math' },
+  'trunc': { word: 'the whole part of', template: '{operator} {x}', written: 'prefix', group: 'Math' },
+  'sign': { word: 'the sign of', template: '{operator} {x}', written: 'prefix', group: 'Math', note: 'Answers -1, 0 or 1.' },
+  'sqrt': { word: 'the square root of', template: '{operator} {x}', written: 'prefix', group: 'Math' },
+  'cbrt': { word: 'the cube root of', template: '{operator} {x}', written: 'prefix', group: 'Math' },
+  'exp': { word: 'e to the power of', template: '{operator} {x}', written: 'prefix', group: 'Math' },
+  'log': { word: 'the natural log of', template: '{operator} {x}', written: 'prefix', group: 'Math' },
+  'log2': { word: 'the log base 2 of', template: '{operator} {x}', written: 'prefix', group: 'Math' },
+  'log10': { word: 'the log base 10 of', template: '{operator} {x}', written: 'prefix', group: 'Math' },
+  'hypot': { word: 'the length of the line to', template: '{operator} {x}[, {y}]', written: 'prefix', group: 'Math' },
+  'sin': { word: 'the sine of', template: '{operator} {x} degrees', written: 'prefix', group: 'Math', note: 'Angles are counted in degrees, not in radians.' },
+  'cos': { word: 'the cosine of', template: '{operator} {x} degrees', written: 'prefix', group: 'Math', note: 'Angles are counted in degrees, not in radians.' },
+  'tan': { word: 'the tangent of', template: '{operator} {x} degrees', written: 'prefix', group: 'Math', note: 'Angles are counted in degrees, not in radians.' },
+  'asin': { word: 'the angle whose sine is', template: '{operator} {x}', written: 'prefix', group: 'Math', note: 'The answer is in degrees, not in radians.' },
+  'acos': { word: 'the angle whose cosine is', template: '{operator} {x}', written: 'prefix', group: 'Math', note: 'The answer is in degrees, not in radians.' },
+  'atan': { word: 'the angle whose tangent is', template: '{operator} {x}', written: 'prefix', group: 'Math', note: 'The answer is in degrees, not in radians.' },
+  'atan2': { word: 'the angle to the point', template: '{operator} {y} across and {x} up', written: 'prefix', group: 'Math', note: 'The first operand is how far up, the second how far across - the other way round from a position. The answer is in degrees.' },
+  'toFixed': { word: 'rounded to', template: '{x} {operator} {y} decimal places', group: 'Math', note: 'The answer is text, not a number.' },
+  'parseFloat': { word: 'as a number', template: '{x} {operator}', written: 'prefix', group: 'Math', note: 'What turns the text an INPUT number field remembers into a number.' },
+  'PI': { word: 'pi', template: '{operator}', written: 'prefix', group: 'Math' },
+  'E': { word: "Euler's number e", template: '{operator}', written: 'prefix', group: 'Math' },
+  'LN2': { word: 'the natural log of 2', template: '{operator}', written: 'prefix', group: 'Math' },
+  'LN10': { word: 'the natural log of 10', template: '{operator}', written: 'prefix', group: 'Math' },
+  'LOG2E': { word: 'the log base 2 of e', template: '{operator}', written: 'prefix', group: 'Math' },
+  'LOG10E': { word: 'the log base 10 of e', template: '{operator}', written: 'prefix', group: 'Math' },
+  'SQRT1_2': { word: 'the square root of a half', template: '{operator}', written: 'prefix', group: 'Math' },
+  'SQRT2': { word: 'the square root of 2', template: '{operator}', written: 'prefix', group: 'Math' },
 
   // Compare and logic
   '==': { word: 'is', template: '{x} {operator} {y}', group: 'Compare and logic', note: 'Text and a number count as the same as long as they read the same, so "3" is 3.' },
@@ -1628,13 +1628,13 @@ const routineComputeOperations = {
   'randRange': { word: 'a number from', template: '{operator} {x} up to but not including {y}[, in steps of {z}]', written: 'prefix', group: 'Random' },
   'random': { word: 'a fraction between 0 and 1', template: '{operator}', written: 'prefix', group: 'Random' },
 
-  // Colour
-  'colorContrast': { word: 'a colour that reads well on', template: '{operator} {x}[, {y} as strongly]', written: 'prefix', group: 'Colour', note: 'The strength runs from -1 to 1 and defaults to 1 - this is how a game picks black or white text for a background.' },
-  'colorLuminance': { word: 'how bright', template: '{operator} {x} is, from 0 to 1', written: 'prefix', group: 'Colour' },
-  'colorToHex': { word: 'as a hex code', template: '{x} {operator}', written: 'prefix', group: 'Colour', note: 'Answers #000000 wherever there is no browser to ask, so a routine running on the server quietly gets black.' },
-  'colorToRGB': { word: 'as an rgb() value', template: '{x} {operator}', written: 'prefix', group: 'Colour' },
-  'colorContrastRatio': { word: 'the contrast between', template: '{operator} {x} and {y}', written: 'prefix', group: 'Colour' },
-  'colorCreateHue': { word: 'a new colour unlike the ones already used', template: '{operator}', written: 'prefix', group: 'Colour' },
+  // Color
+  'colorContrast': { word: 'a color that reads well on', template: '{operator} {x}[, {y} as strongly]', written: 'prefix', group: 'Color', note: 'The strength runs from -1 to 1 and defaults to 1 - this is how a game picks black or white text for a background.' },
+  'colorLuminance': { word: 'how bright', template: '{operator} {x} is, from 0 to 1', written: 'prefix', group: 'Color' },
+  'colorToHex': { word: 'as a hex code', template: '{x} {operator}', written: 'prefix', group: 'Color', note: 'Answers #000000 wherever there is no browser to ask, so a routine running on the server quietly gets black.' },
+  'colorToRGB': { word: 'as an rgb() value', template: '{x} {operator}', written: 'prefix', group: 'Color' },
+  'colorContrastRatio': { word: 'the contrast between', template: '{operator} {x} and {y}', written: 'prefix', group: 'Color' },
+  'colorCreateHue': { word: 'a new color unlike the ones already used', template: '{operator}', written: 'prefix', group: 'Color' },
 
   // Other
   'jsonStringify': { word: 'written out as JSON text', template: '{x} {operator}', written: 'prefix', group: 'Other' },
@@ -2600,7 +2600,7 @@ class RoutineOperationEditor {
       values[name] = typeof empty[spec.type] != 'undefined' ? empty[spec.type] : '';
     }
     // an option can also switch parameters its own words never name: an INPUT
-    // that cannot be cancelled is two nulls and no chip at all
+    // that cannot be canceled is two nulls and no chip at all
     return Object.assign(values, clause.add || {});
   }
 
@@ -3276,7 +3276,7 @@ function decodeVarOperand(raw) {
   if(string)
     return string[1].replace(/\\u([0-9a-fA-F]{4})/g, (_, hex)=>String.fromCharCode(parseInt(hex, 16)));
   // a value the routine remembers reads as its name, the way it does in every
-  // other sentence - the colour of the chip is what says it is a stored value
+  // other sentence - the color of the chip is what says it is a stored value
   const reference = raw.match(/^\$\{([A-Za-z_][A-Za-z0-9_]*)\}$/);
   return reference ? reference[1] : raw;
 }

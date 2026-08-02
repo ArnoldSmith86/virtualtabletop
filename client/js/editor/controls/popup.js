@@ -863,10 +863,13 @@ class RoutineComputeOperationPopup extends RoutinePopup {
           entry.classList.add('selected');
         entry.title = choice.description || `${choice.operator || 'no operation'} - ${choice.word}`;
         entry.addEventListener('click', _=>this.notifyChangeListeners({ operator: choice.operator }));
-        div(entry, 'popup-operation-func').textContent = choice.word;
-        // what the statement stores is the operation's own name, and that is
-        // what a game written by hand (or read in the JSON editor) says
-        div(entry, 'popup-operation-example').textContent = choice.operator || '';
+        // read like the operation picker: what the statement stores in the
+        // operation color, what it means underneath it in the text color. The
+        // plain assignment stores no operation at all, so it has only the
+        // meaning to show
+        if(choice.operator)
+          div(entry, 'popup-operation-func').textContent = choice.operator;
+        div(entry, 'popup-operation-example').textContent = choice.word;
       }
     }
     if(!matches.length)
@@ -1888,7 +1891,7 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null, t
   infoHTML = infoHTML.replace(/\[([A-Za-z.]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic="${topicName}">${topicInfo != null ? topicInfo : topicName}</span>`);
 
   // an info tip is clicked open and clicked shut again: a tip that follows the
-  // pointer opens itself while the pointer is only travelling past the button,
+  // pointer opens itself while the pointer is only traveling past the button,
   // and it takes the text away again the moment somebody reaches for it. The
   // same click works with a finger and, through focusable(), with the keyboard.
   let popup = null;
@@ -2240,7 +2243,7 @@ function commonInfoTopic(topicName) {
   if(topicName == 'INPUT') {
     return { info: `
       <pre>
-      This function shows an overlay with input controls to ask the player for input; on confirmation, the routine continues with the results stored in the given variables. Cancelling stops only the routine INPUT is directly inside (the main routine, or the branch of an IF/CALL/FOREACH it is nested in).
+      This function shows an overlay with input controls to ask the player for input; on confirmation, the routine continues with the results stored in the given variables. Canceling stops only the routine INPUT is directly inside (the main routine, or the branch of an IF/CALL/FOREACH it is nested in).
 
       Parameters:
 

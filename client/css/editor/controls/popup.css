@@ -462,6 +462,11 @@ body.edit.darkMode .inline-popup button.primary:hover {
   border-color: var(--routineOperationColor);
 }
 
+/* the one in use, marked the way the menus mark theirs */
+.inline-popup .popup-operation.selected {
+  background: var(--backgroundHighlightColor1);
+}
+
 .inline-popup .popup-operation-func {
   font-size: 11px;
   font-weight: bold;
@@ -469,8 +474,10 @@ body.edit.darkMode .inline-popup button.primary:hover {
   color: var(--routineOperationColor);
 }
 
+/* what the operation means is the line that is read, so it is as big as the
+   rest of the popup rather than a footnote under the name */
 .inline-popup .popup-operation-example {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .inline-popup table {
