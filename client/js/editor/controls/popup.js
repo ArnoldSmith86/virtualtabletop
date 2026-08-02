@@ -11,6 +11,17 @@ document.addEventListener('keyup', e=>{
   }
 }, true);
 
+// Selecting the text of an input by dragging across it regularly ends outside
+// the popup, and the click the browser then reports has the common ancestor of
+// both ends as its target - the page, not the input. Where the drag started is
+// what says whether that click happened inside the popup, so it is remembered
+// here (mouse clicks only: a keyboard-triggered click has no mousedown of its
+// own and would otherwise be judged by the last one somebody made).
+let popupMouseDownTarget = null;
+document.addEventListener('mousedown', e=>{
+  popupMouseDownTarget = e.target;
+}, true);
+
 class Popup {
   constructor(source) {
     this.source = source;
@@ -149,6 +160,10 @@ class Popup {
       return;
     // clicks inside any popup (e.g. a nested info popup) never dismiss other popups
     if(e.target.closest && e.target.closest('.inline-popup'))
+      return;
+    // and neither does one that only ended outside because a text selection was
+    // dragged out of a popup's input (e.detail is 0 for clicks from the keyboard)
+    if(e.detail && popupMouseDownTarget && popupMouseDownTarget.closest && popupMouseDownTarget.closest('.inline-popup'))
       return;
     if(!this.domElement.contains(e.target))
       this.hide();
@@ -570,61 +585,68 @@ class RoutinePopup extends Popup {
     this.collections = collections;
   }
 
-  // One list instead of the four sections (variables, predefined variables,
-  // collections, predefined collections) this used to have: the same entries,
-  // but grouped by where they come from and named in a way that says what they
-  // are. Groups without an entry are left out entirely.
+  // One section per kind of thing the routine offers instead of four groups in
+  // one: a value and a group of widgets are two different answers to "what can
+  // I put here", so they are two sections, each in the color the sentence uses
+  // for it - and only one of them is open at a time. Where an entry comes from
+  // is a plain line inside the section rather than a heading of its own color.
   renderRoutineValueSection(showVariables, showCollections) {
-    const [ title, content ] = this.addAccordionSection('Values this routine has', '', 'variable');
-    infoButton(title, `
-      <pre>
-      Everything the routine itself can offer as a value.
+    if(showVariables)
+      this.renderRoutineValueKindSection('Values the routine has', 'variable', `
+        <pre>
+        The values the routine itself can offer, by the name they are stored under.
 
-      Earlier operations remember values under a name: [COUNT] and [GET] store what they counted or read, [VAR] and [var] store what you calculate, and [CALL] stores what another routine returned. Picking one here uses whatever it holds when the routine runs.
+        Earlier operations remember values under a name: [COUNT] and [GET] store what they counted or read, [VAR] and [var] store what you calculate, and [CALL] stores what another routine returned. Picking one here uses whatever it holds when the routine runs.
 
-      A collection is a group of widgets an earlier [SELECT] picked out. Operations that act on widgets take one instead of a single widget.
+        The ones below "In every routine" are there without any operation creating them.
+        </pre>
+      `, [
+        { title: 'From earlier operations', list: [ ...this.variables ].sort().map(variable=>({
+          label: variable,
+          onClick: _=>this.setNewValue(`\$\{${variable}\}`)
+        })) },
+        { title: 'In every routine', list: Object.keys(predefinedVariableDescriptions).map(variable=>({
+          label: variable, description: predefinedVariableDescriptions[variable],
+          onClick: _=>this.setNewValue(`\$\{${variable}\}`)
+        })) }
+      ]);
 
-      The last group is there in every routine, without any operation creating it.
-      </pre>
-    `);
+    if(showCollections)
+      this.renderRoutineValueKindSection('Groups of widgets the routine has', 'collection', `
+        <pre>
+        A collection is a group of widgets an earlier [SELECT] picked out, by the name it is stored under. Operations that act on widgets take one instead of a single widget.
 
-    // what each entry is stays a hover tip: written out below every button the
-    // list turns into a wall of text nobody reads through
-    const entries = (groupTitle, kind, list)=>{
-      if(!list.length)
-        return;
-      const group = div(content, 'popup-value-group');
-      group.dataset.kind = kind;
-      group.textContent = groupTitle;
-      for(const entry of list) {
+        The ones below "In every routine" are there without any operation creating them.
+        </pre>
+      `, [
+        { title: 'From earlier operations', list: [ ...this.collections ].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
+          label: typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`,
+          description: typeof collection == 'string' ? null : 'these widgets, listed in the routine itself',
+          onClick: _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ])
+        })) },
+        { title: 'In every routine', list: Object.keys(predefinedCollectionDescriptions).map(collection=>({
+          label: collection, description: predefinedCollectionDescriptions[collection],
+          onClick: _=>this.setNewCollectionValue(collection)
+        })) }
+      ]);
+  }
+
+  // what each entry is stays a hover tip: written out below every button the
+  // list turns into a wall of text nobody reads through
+  renderRoutineValueKindSection(title, kind, infoHTML, groups) {
+    const [ heading, content ] = this.addAccordionSection(title, '', kind);
+    infoButton(heading, infoHTML);
+    for(const group of groups) {
+      if(!group.list.length)
+        continue;
+      div(content, 'popup-value-group').textContent = group.title;
+      for(const entry of group.list) {
         const dom = div(content, 'popup-entry');
         const entryButton = button(dom, entry.label, entry.onClick);
         entryButton.dataset.kind = kind;
-        entryButton.title = entry.description || groupTitle;
+        entryButton.title = entry.description || group.title;
       }
-    };
-
-    if(showVariables)
-      entries('Values earlier operations remember', 'variable', [ ...this.variables ].sort().map(variable=>({
-        label: variable,
-        onClick: _=>this.setNewValue(`\$\{${variable}\}`)
-      })));
-
-    if(showCollections)
-      entries('Collections of widgets picked by earlier operations', 'collection', [ ...this.collections ].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
-        label: typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`,
-        description: typeof collection == 'string' ? null : 'these widgets, listed in the routine itself',
-        onClick: _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ])
-      })));
-
-    if(showVariables)
-      entries('Available in every routine', 'variable', Object.keys(predefinedVariableDescriptions).map(variable=>({
-        label: variable, description: predefinedVariableDescriptions[variable], onClick: _=>this.setNewValue(`\$\{${variable}\}`)
-      })));
-    if(showCollections)
-      entries('Collections available in every routine', 'collection', Object.keys(predefinedCollectionDescriptions).map(collection=>({
-        label: collection, description: predefinedCollectionDescriptions[collection], onClick: _=>this.setNewCollectionValue(collection)
-      })));
+    }
   }
 
   renderWidgetPropertySection() {
@@ -704,37 +726,67 @@ class RoutineOperationPopup extends RoutinePopup {
     if(info)
       title.after(info);
 
+    // how the list is read is a matter of taste rather than of the routine, so
+    // the two settings sit above the search box and are remembered for next time
+    const settings = div(this.domElement, 'popup-list-settings');
+    const showEntries = _=>this.renderOperationEntries();
+    popupSetting(settings, 'Say what each operation is for', 'routineOperationDescriptions', true, showEntries);
+    popupSetting(settings, 'Group them by what they do', 'routineOperationGrouping', false, showEntries);
+
     const search = document.createElement('input');
     search.type = 'text';
     search.className = 'popup-property-search';
     search.placeholder = 'Search operations...';
     this.domElement.append(search);
-    const list = div(this.domElement, 'popup-operation-list');
+    this.searchInput = search;
+    this.listElement = div(this.domElement, 'popup-operation-list');
+    this.examples = routineOperationExamples();
 
-    const examples = routineOperationExamples();
-    const showEntries = _=>{
-      list.innerHTML = '';
-      const term = search.value.trim().toLowerCase();
-      const matches = examples.filter(e=>!term || `${e.func} ${e.description} ${e.example}`.toLowerCase().includes(term));
-      // what the operation is for, not what one with nothing but its defaults
-      // would say: the sentence of an operation that does not exist yet
-      // describes the example, and every one of them starts with "the picked
-      // widgets" - the list is read to find an operation, not to read a routine
-      for(const { func, description, example, newOperation } of matches) {
-        const entry = div(list, 'popup-operation');
-        entry.addEventListener('click', _=>this.setNewValue(newOperation));
-        entry.title = example;
-        div(entry, 'popup-operation-func').textContent = func;
-        div(entry, 'popup-operation-example').textContent = description;
-      }
-      if(!matches.length)
-        div(list, 'popup-property-empty').textContent = 'No matching operation.';
-    };
     search.addEventListener('input', showEntries);
     showEntries();
 
     this.moveIntoView();
     search.focus(); // the list is long, so typing is where this popup is used from
+  }
+
+  // the operations the search term leaves over, either alphabetically (the order
+  // the metadata is written in) or under the heading of what they are for
+  renderOperationEntries() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const term = this.searchInput.value.trim().toLowerCase();
+    const matches = this.examples.filter(e=>!term || `${e.func} ${e.description} ${e.example}`.toLowerCase().includes(term));
+    const withDescription = popupSettingValue('routineOperationDescriptions', true);
+    const grouped = popupSettingValue('routineOperationGrouping', false);
+
+    // what the operation is for, not what one with nothing but its defaults
+    // would say: the sentence of an operation that does not exist yet
+    // describes the example, and every one of them starts with "the picked
+    // widgets" - the list is read to find an operation, not to read a routine
+    const addEntry = ({ func, description, example, newOperation })=>{
+      const entry = div(list, 'popup-operation');
+      entry.addEventListener('click', _=>this.setNewValue(newOperation));
+      entry.title = withDescription ? example : `${description} - ${example}`;
+      div(entry, 'popup-operation-func').textContent = func;
+      if(withDescription)
+        div(entry, 'popup-operation-example').textContent = description;
+    };
+
+    if(grouped) {
+      // the groups in the order they are written in, not in the order the search
+      // happens to leave them in - the list stays the same list while typing
+      const titles = [ ...routineOperationGroups.map(group=>group.title), 'Other operations' ].filter(title=>matches.some(e=>e.group == title));
+      for(const title of titles) {
+        div(list, 'popup-operation-group').textContent = title;
+        for(const example of matches.filter(e=>e.group == title))
+          addEntry(example);
+      }
+    } else {
+      for(const example of matches)
+        addEntry(example);
+    }
+    if(!matches.length)
+      div(list, 'popup-property-empty').textContent = 'No matching operation.';
   }
 }
 
@@ -1401,6 +1453,31 @@ class RoutineForeachSourcePopup extends RoutinePopup {
 
 function escapeHTML(text) {
   return String(text).replace(/[&<>"']/g, c=>({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// How a popup shows what it offers is remembered between sessions: it is a
+// preference of whoever edits, not part of the game, so it lives in
+// localStorage next to the rest of the editor's own state.
+function popupSettingValue(key, fallback) {
+  const stored = localStorage.getItem(`routineEditor.${key}`);
+  return stored === null ? fallback : stored == 'true';
+}
+
+// a checkbox rather than one of the buttons around it: it switches something
+// about the list on and off instead of picking a value for the operation
+function popupSetting(appendTo, label, key, fallback, onChange) {
+  const dom = document.createElement('label');
+  dom.className = 'popup-setting';
+  const input = document.createElement('input');
+  input.type = 'checkbox';
+  input.checked = popupSettingValue(key, fallback);
+  input.addEventListener('change', _=>{
+    localStorage.setItem(`routineEditor.${key}`, input.checked);
+    onChange();
+  });
+  dom.append(input, document.createTextNode(` ${label}`));
+  appendTo.append(dom);
+  return input;
 }
 
 function button(appendTo, text, onClick) {

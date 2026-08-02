@@ -395,26 +395,53 @@ body.edit.darkMode .inline-popup button.primary:hover {
   display: inline-block;
 }
 
-/* the groups the values a routine offers are listed in, each in the color of
-   what it produces - and so are the entries themselves */
+/* where the values of a section come from: a quiet line rather than a heading
+   in a color of its own - the section around it already says what kind of value
+   its entries are, and they carry that color the way the sentence does */
 .inline-popup .popup-value-group {
-  font-weight: bold;
   font-size: 11px;
+  opacity: 0.7;
   margin: 8px 2px 2px 2px;
-  padding-left: 4px;
-  border-left: 3px solid var(--routineOperationColor);
 }
 
-.inline-popup .popup-value-group[data-kind=variable],
 .inline-popup button[data-kind=variable] {
-  border-left-color: var(--routineVariableColor);
   color: var(--routineVariableColor);
 }
 
-.inline-popup .popup-value-group[data-kind=collection],
 .inline-popup button[data-kind=collection] {
-  border-left-color: var(--routineCollectionColor);
   color: var(--routineCollectionColor);
+}
+
+/* how a list is shown rather than what it holds: above the search box, in the
+   quiet type the rest of the popup uses for what is not a value */
+.inline-popup .popup-list-settings {
+  display: flex;
+  flex-direction: column; /* one per line: side by side they are cut off in a narrow popup */
+  gap: 2px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.inline-popup .popup-setting {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.inline-popup .popup-setting input {
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  cursor: pointer;
+}
+
+/* the kind of thing the operations below it do */
+.inline-popup .popup-operation-group {
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 8px 2px 2px 2px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
 }
 
 /* the operations a routine can use, name first so they stay findable */

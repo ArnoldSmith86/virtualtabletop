@@ -45,7 +45,7 @@ beforeAll(() => {
     'RoutineEditor', 'RoutineOperationEditor', 'IfRoutineOperationEditor', 'ForeachRoutineOperationEditor',
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'RoutineVariantMenu',
-    'routineOperationVariantChoices', 'operationVariantValues', 'RoutineOperationPopup', 'RoutineClausePopup',
+    'routineOperationVariantChoices', 'operationVariantValues', 'RoutineOperationPopup', 'RoutineClausePopup', 'routineOperationGroups',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
@@ -396,7 +396,8 @@ describe('operation rendering', () => {
     expect(template({ func: 'SELECT' })).toContain('Pick');
     expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('{seconds} seconds');
     expect(template({ func: 'TIMER' })).toContain('Start or pause');
-    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Reverse the order');
+    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Shuffle {holder,collection}[ {mode}]');
+    expect(template({ func: 'SHUFFLE', mode: 'riffle' })).toContain('[ {mode}, {modeValue} time]');
     expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('a random seat');
     expect(template({ func: 'LABEL', label: 'l1' })).toContain('{label,collection}');
     expect(template({ func: 'LABEL', mode: 'append' })).toContain('Append {value}');
@@ -495,11 +496,15 @@ describe('operation rendering', () => {
     [ { func: 'FLIP', holder: 'deck1', face: 1, count: 3 }, 'Turn 3 widgets in deck1 face down' ],
     [ { func: 'FLIP', collection: 'aces', face: 2 }, 'Turn all widgets in aces to face 2' ],
     [ { func: 'FLIP', faceCycle: 'backward' }, 'Cycle the face of the pick backward' ],
-    [ { func: 'FLIP', faceCycle: 'random', count: 2 }, 'Cycle the face of 2 widgets in the pick random' ],
+    [ { func: 'FLIP', faceCycle: 'random', count: 2 }, 'Cycle the face of 2 widgets in the pick to a random face' ],
     [ { func: 'CLICK', collection: 'myPick', count: 2, mode: 'ignoreClickRoutine' }, 'Click the widgets called myPick, 2 times, but do not run their click routines' ],
     [ { func: 'RECALL', holder: 'deck1' }, 'Gather all the cards back into deck1' ],
     [ { func: 'RECALL', holder: 'deck1', owned: false }, 'Gather all the cards back into deck1, except the cards players hold' ],
     [ { func: 'SHUFFLE', holder: 'deck1' }, 'Shuffle deck1' ],
+    // the technique is an option of the one sentence, and it brings what it needs
+    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'overhand', modeValue: 3 }, 'Shuffle deck1 overhand, 3 times' ],
+    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'reverse' }, 'Shuffle deck1 by reversing the order' ],
+    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'seeded', modeValue: 7 }, 'Shuffle deck1 the same way every time with the seed 7' ],
     [ { func: 'SORT', holder: 'deck1' }, 'Sort deck1' ],
     [ { func: 'SORT', holder: 'deck1', key: 'value', reverse: true }, 'Sort deck1 by value, biggest first' ],
     [ { func: 'TURN' }, 'Pass the turn on' ],
@@ -584,7 +589,7 @@ describe('picking how an operation works and which options it uses', () => {
   test('the sentence reads as the variant the operation matches', () => {
     expect(renderOperation({ func: 'SET', relation: '+', property: 'x' }).dom.textContent).toContain('x of the picked widgets by');
     expect(renderOperation({ func: 'SET', property: 'x' }).dom.textContent).toContain('x of the picked widgets to');
-    expect(renderOperation({ func: 'SHUFFLE', mode: 'riffle' }).dom.textContent).toContain('Riffle shuffle');
+    expect(renderOperation({ func: 'FLIP', faceCycle: 'backward' }).dom.textContent).toContain('Cycle the face of');
   });
 
   // the order of https://agent.virtualtabletop.io/reports/routine-grammar/ - the
@@ -596,7 +601,9 @@ describe('picking how an operation works and which options it uses', () => {
     expect(leads('SCORE')[0]).toBe('Set');
     expect(leads('TURN')).toEqual([ 'Pass the turn on', 'Pass the turn back', 'Give the turn to a random seat', 'Give the turn to the seat at position', 'Give the turn to the seat' ]);
     expect(leads('GET')[0]).toBe('Read the first');
-    expect(leads('SHUFFLE')[0]).toBe('Shuffle');
+    // and an operation that does one thing however it goes about it (SHUFFLE
+    // shuffles, the technique is an option) has no drop-down at all
+    expect(leads('SHUFFLE')).toEqual([]);
     // and the one an operation without a discriminating parameter reads as is
     // still the one without a match(), wherever the list puts it
     for (const func in routineOperationMetadata) {
@@ -682,6 +689,81 @@ describe('picking how an operation works and which options it uses', () => {
     popup.domElement.querySelector('.popup-operation').dispatchEvent(new Event('click'));
     expect(value.func).toBe('SHUFFLE');
     popup.hide();
+  });
+
+  // how the list is read is a matter of taste, so it is two settings above the
+  // search box - and they are what they were the last time somebody looked
+  test('the list of operations is shown the way it was left', () => {
+    const open = () => {
+      const source = document.createElement('span');
+      document.getElementById('editor').append(source);
+      const popup = new RoutineOperationPopup();
+      popup.setSource(source);
+      popup.setOperationDetails({}, [ 'func' ], { state: {} }, [], []);
+      popup.show();
+      return popup;
+    };
+    localStorage.clear();
+    let popup = open();
+    const settings = [...popup.domElement.querySelectorAll('.popup-setting input')];
+    expect(settings.map(s => s.checked)).toEqual([ true, false ]); // saying what they are for, alphabetically
+    expect(popup.domElement.querySelector('.popup-operation-example')).not.toBeNull();
+    expect(popup.domElement.querySelector('.popup-operation-group')).toBeNull();
+
+    settings[0].checked = false;
+    settings[0].dispatchEvent(new Event('change'));
+    expect(popup.domElement.querySelector('.popup-operation-example')).toBeNull();
+    settings[1].checked = true;
+    settings[1].dispatchEvent(new Event('change'));
+    const groups = [...popup.domElement.querySelectorAll('.popup-operation-group')].map(e => e.textContent);
+    expect(groups).toEqual(routineOperationGroups.map(group => group.title));
+    popup.hide();
+
+    popup = open();
+    expect([...popup.domElement.querySelectorAll('.popup-setting input')].map(s => s.checked)).toEqual([ false, true ]);
+    expect(popup.domElement.querySelector('.popup-operation-example')).toBeNull();
+    expect(popup.domElement.querySelector('.popup-operation-group')).not.toBeNull();
+    // and searching keeps the groups it has entries for, in the order they are in
+    popup.domElement.querySelector('.popup-property-search').value = 'sound';
+    popup.domElement.querySelector('.popup-property-search').dispatchEvent(new Event('input'));
+    expect([...popup.domElement.querySelectorAll('.popup-operation-group')].map(e => e.textContent)).toEqual([ 'Talk to the players' ]);
+    popup.hide();
+    localStorage.clear();
+  });
+
+  test('every operation is offered under exactly one group', () => {
+    const sorted = routineOperationGroups.flatMap(group => group.funcs);
+    expect([...new Set(sorted)].length).toBe(sorted.length);
+    for (const example of routineOperationExamples()) {
+      expect(sorted).toContain(example.func);
+      expect(example.group).not.toBe('Other operations');
+    }
+  });
+
+  test('switching back to moving out of a holder starts at one widget again', () => {
+    const picked = { func: 'MOVE', to: 'discard' }; // Move the picked widgets to discard
+    const choice = routineOperationVariantChoices(picked).find(c => c.id == 'from');
+    expect(choice.example).toContain('Move 1 widget from');
+    const operation = Object.assign({}, picked, choice.values);
+    for (const key in operation)
+      if (operation[key] === undefined)
+        delete operation[key];
+    const sentence = renderOperation(operation).dom.querySelector('.routine-editor-sentence').cloneNode(true);
+    for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+      icon.remove();
+    expect(sentence.textContent.replace(/\s+/g, ' ').trim()).toBe('Move 1 widget from holder to discard');
+  });
+
+  test('the way a SHUFFLE goes about it is an option that brings what it needs', () => {
+    const editor = editorForOperation({ func: 'SHUFFLE', holder: 'deck1' });
+    editor.setOperationDetails({ state: {} }, { func: 'SHUFFLE', holder: 'deck1' }, [], []);
+    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
+    expect(offered.map(clause => clause.label)).toEqual([ 'using a specific technique' ]);
+    expect(editor.clauseAddValues(offered[0])).toEqual({ mode: 'overhand' });
+    // and taking it out again takes the value that came with it
+    const shuffling = editorForOperation({ func: 'SHUFFLE', holder: 'deck1', mode: 'riffle', modeValue: 2 });
+    shuffling.setOperationDetails({ state: {} }, { func: 'SHUFFLE', holder: 'deck1', mode: 'riffle', modeValue: 2 }, [], []);
+    expect(shuffling.clauseRemoveValues(shuffling.clauses()[0])).toEqual({ mode: undefined, modeValue: undefined });
   });
 
   test('the list of operations says what each one is for, not what an empty one would say', () => {
@@ -800,7 +882,11 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'RECALL', holder: 'deck1' });
     editor.setOperationDetails({ state: {} }, { func: 'RECALL', holder: 'deck1' }, [], []);
     const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
-    expect(offered.map(clause => clause.label)).toContain('the order they come back in');
+    // every option of a RECALL turns a default around, so it is named after what
+    // switching it on does rather than after the parameter it sets
+    expect(offered.map(clause => clause.label)).toEqual([
+      'except the cards players hold', 'only the cards on the table', 'nearest cards first', 'leave some out'
+    ]);
     const byDistance = offered.find(clause => clause.id == 'byDistance');
     expect(editor.clauseAddValues(byDistance)).toEqual({ byDistance: true }); // switching it on has to change something
   });
@@ -815,7 +901,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(menu).not.toBeNull();
     expect(menu.querySelector('h1')).toBeNull(); // no title repeating the section repeating the one list
     expect(menu.querySelector('.accordion-section')).toBeNull();
-    expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toContain('the order they come back in');
+    expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toContain('nearest cards first');
     expect(menu.querySelector('.popup-menu-entry-preview')).toBeNull();
     expect(menu.querySelector('.popup-close')).not.toBeNull();
     menu.remove();
@@ -1498,28 +1584,30 @@ describe('the values a parameter popup offers', () => {
 
   test('one section for what the routine offers instead of four named after the engine', () => {
     const popup = showPopup(RoutineStringPopup, { func: 'LABEL' }, [ 'value' ], [ 'cards' ]);
-    expect(sectionTitles(popup)).toEqual([ 'Values this routine has', 'A property of a widget in the room' ]);
+    expect(sectionTitles(popup)).toEqual([ 'Values the routine has', 'A property of a widget in the room' ]);
     popup.hide();
   });
 
-  test('the values are grouped by where they come from, predefined ones included', () => {
+  // a value and a group of widgets are two different answers, so they are two
+  // sections - and only one of them is open, so only one color is on screen
+  test('one section per kind of value, the origin a plain line inside it', () => {
     const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    expect(sectionTitles(popup)).toEqual([
+      'Widgets in the room', 'Values the routine has', 'Groups of widgets the routine has', 'A property of a widget in the room'
+    ]);
     const groups = [...popup.domElement.querySelectorAll('.popup-value-group')];
     expect(groups.map(g => g.textContent)).toEqual([
-      'Values earlier operations remember', 'Collections of widgets picked by earlier operations',
-      'Available in every routine', 'Collections available in every routine'
+      'From earlier operations', 'In every routine', 'From earlier operations', 'In every routine'
     ]);
-    // and each group says by its color what it produces, the way the sentence does
-    expect(groups.map(g => g.dataset.kind)).toEqual([ 'variable', 'collection', 'variable', 'collection' ]);
-    // and the picker that comes first: widgets are chosen in the room, not typed
-    expect(sectionTitles(popup)[0]).toBe('Widgets in the room');
+    // the color is the section's, so the lines inside it carry none of their own
+    expect(groups.every(g => !g.dataset.kind)).toBe(true);
     popup.hide();
   });
 
   test('the sections are colored by what they produce and only one is open', () => {
     const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
     const sections = [...popup.domElement.querySelectorAll('.accordion-section')];
-    expect(sections.map(s => s.dataset.kind)).toEqual([ 'widget', 'variable', 'property' ]);
+    expect(sections.map(s => s.dataset.kind)).toEqual([ 'widget', 'variable', 'collection', 'property' ]);
     expect(sections.filter(s => s.classList.contains('open'))).toHaveLength(1);
     expect(sections[0].classList.contains('open')).toBe(true);
     sections[1].querySelector('h3').dispatchEvent(new Event('click'));
@@ -1548,6 +1636,21 @@ describe('the values a parameter popup offers', () => {
     clickButton('playerSeats'); // a predefined collection is a collection like any other
     expect(value).toEqual({ holder: undefined, collection: 'playerSeats' });
     popup.hide();
+  });
+
+  // selecting the text of the value field by dragging across it ends outside the
+  // popup as often as not, and the click that follows is reported on the page
+  test('dragging a text selection out of an input does not close the popup', async () => {
+    const popup = showPopup(RoutineStringPopup, { func: 'LABEL', value: 'hello' }, [ 'value' ], [ 'cards' ]);
+    await new Promise(resolve => setTimeout(resolve, 0)); // the outside-click listener is added deferred
+    const input = popup.domElement.querySelector('.popup-value-input');
+    input.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    document.body.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
+    expect(document.contains(popup.domElement)).toBe(true);
+    // a click that really started outside still closes it
+    document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    document.body.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
+    expect(document.contains(popup.domElement)).toBe(false);
   });
 
   test('a popup for a value that cannot hold widgets leaves the collections out', () => {

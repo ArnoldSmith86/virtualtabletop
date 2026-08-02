@@ -509,7 +509,9 @@ const routineOperationMetadata = {
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: thePick },
       face: { type: 'number', default: null, special: [ 0, 1 ], menu: true, otherLabel: 'a specific face…', display: flipFaceWords },
-      faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
+      // cycling onwards is a direction, and a random face is not one - it is the
+      // one entry of the three that needs the words saying what it does instead
+      faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward', display: { random: 'to a random face' } }
     },
     ignored: v=>{
       const ignored = collectionReplacedBy('holder')(v);
@@ -716,7 +718,10 @@ const routineOperationMetadata = {
     newOperation: { func: 'MOVE', from: null, count: 1 },
     parameters: {
       fillTo: { type: 'number', default: null },
-      count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ], display: countWords },
+      // how many are moved follows which way the operation works, and that is
+      // whether it names a from at all - a from waiting to be filled in is still
+      // "1 widget from ...", the same as the one a fresh MOVE starts as
+      count: { type: 'number', default: operation=>typeof operation.from != 'undefined' ? 1 : 'all', special: [ 'all' ], display: countWords },
       from: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       to: { type: 'widgets', default: null, widgetType: 'holder' },
@@ -759,16 +764,20 @@ const routineOperationMetadata = {
     variants: [
       { id: 'recall', label: 'Recall cards', template: 'Gather all the cards back into {holder}' }
     ],
+    // every option of a RECALL turns one of its defaults around, so each one is
+    // named after what switching it on does rather than after the parameter it
+    // sets: "the cards players hold" are gathered anyway, and the option is what
+    // leaves them where they are
     clauses: [
-      { id: 'owned', label: 'the cards players hold', template: ', {owned}', add: { owned: false } },
-      { id: 'inHolder', label: 'the cards in other holders', template: ', {inHolder}', add: { inHolder: false } },
-      { id: 'byDistance', label: 'the order they come back in', template: ', {byDistance}', add: { byDistance: true } },
+      { id: 'owned', label: 'except the cards players hold', template: ', {owned}', add: { owned: false } },
+      { id: 'inHolder', label: 'only the cards on the table', template: ', {inHolder}', add: { inHolder: false } },
+      { id: 'byDistance', label: 'nearest cards first', template: ', {byDistance}', add: { byDistance: true } },
       { id: 'excludeCollection', label: 'leave some out', template: ', except {excludeCollection}' }
     ],
     parameters: {
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
       owned: { type: 'enum', values: [ true, false ], default: true, display: yesNo('including the cards players hold', 'except the cards players hold') },
-      inHolder: { type: 'enum', values: [ true, false ], default: true, display: yesNo('including the cards inside other holders', 'only the cards lying on the table') },
+      inHolder: { type: 'enum', values: [ true, false ], default: true, display: yesNo('including the cards inside other holders', 'only the cards on the table') },
       excludeCollection: { type: 'collection', default: null, display: pickedWidgets },
       byDistance: { type: 'enum', values: [ true, false ], default: false, display: yesNo('nearest cards first', 'in their current order') }
     }
@@ -934,27 +943,27 @@ const routineOperationMetadata = {
   },
   SHUFFLE: {
     description: 'Shuffle widgets into another order',
+    // shuffling is one thing an operation does, however it goes about it: the
+    // technique is an option of the one sentence rather than five ways of
+    // working, and what it needs (how often, which seed) comes with it
     variants: [
-      { id: 'random', label: 'Shuffle', fixed: [ 'mode' ],
-        apply: operation=>{ delete operation.mode; },
-        template: 'Shuffle {holder,collection}' },
-      { id: 'overhand', label: 'Shuffle overhand', fixed: [ 'mode' ], match: v=>v('mode') == 'overhand',
-        apply: operation=>{ operation.mode = 'overhand'; },
-        template: 'Shuffle overhand {holder,collection}, {modeValue} times' },
-      { id: 'riffle', label: 'Riffle shuffle', fixed: [ 'mode' ], match: v=>v('mode') == 'riffle',
-        apply: operation=>{ operation.mode = 'riffle'; },
-        template: 'Riffle shuffle {holder,collection}, {modeValue} times' },
-      { id: 'reverse', label: 'Reverse the order', fixed: [ 'mode' ], match: v=>v('mode') == 'reverse',
-        apply: operation=>{ operation.mode = 'reverse'; },
-        template: 'Reverse the order of {holder,collection}' },
-      { id: 'seeded', label: 'Shuffle the same way every time', fixed: [ 'mode' ], match: v=>v('mode') == 'seeded',
-        apply: operation=>{ operation.mode = 'seeded'; },
-        template: 'Shuffle the same way every time: {holder,collection} with the seed {modeValue}' }
+      { id: 'shuffle', label: 'Shuffle', template: 'Shuffle {holder,collection}{{mode}}' }
+    ],
+    clauses: [
+      { id: 'mode', label: 'using a specific technique', active: v=>v('mode') != 'true random', add: { mode: 'overhand' },
+        template: v=>{
+          if(v('mode') == 'seeded')
+            return ' {mode} with the seed {modeValue}';
+          if(v('mode') == 'overhand' || v('mode') == 'riffle')
+            return ` {mode}, {modeValue} time${v('modeValue') == 1 ? '' : 's'}`;
+          return ' {mode}';
+        } }
     ],
     parameters: {
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
-      mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random' },
+      mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random',
+        display: { 'true random': 'at random', riffle: 'with a riffle', reverse: 'by reversing the order', seeded: 'the same way every time' } },
       modeValue: { type: 'number', default: 1 }
     },
     ignored: v=>{
@@ -2529,6 +2538,26 @@ function editorForOperation(operation) {
   return new UnknownRoutineOperationEditor();
 }
 
+// The kinds of thing an operation does, for the list that offers them grouped
+// instead of alphabetically. Every operation belongs to exactly one group and
+// the groups are worded as what somebody is looking for ("I want to move
+// something"), not as the part of the engine they belong to.
+const routineOperationGroups = [
+  { title: 'Pick widgets and work out values', funcs: [ 'SELECT', 'COUNT', 'GET', 'VAR', 'var' ] },
+  { title: 'Move and order widgets', funcs: [ 'MOVE', 'MOVEXY', 'RECALL', 'SWAPHANDS', 'SHUFFLE', 'SORT' ] },
+  { title: 'Add, change and remove widgets', funcs: [ 'SET', 'FLIP', 'ROTATE', 'LABEL', 'CANVAS', 'CLONE', 'DELETE', 'RESET' ] },
+  { title: 'The game and its players', funcs: [ 'SCORE', 'TURN', 'TIMER' ] },
+  { title: 'Talk to the players', funcs: [ 'AUDIO', 'INPUT', 'UPLOAD' ] },
+  { title: 'Steer the routine', funcs: [ 'IF', 'FOREACH', 'CALL', 'CLICK', 'DELAY', '//' ] }
+];
+
+// the group an operation is in, so an operation added to the engine without
+// being sorted into one is still offered rather than dropped from the list
+function routineOperationGroup(func) {
+  const group = routineOperationGroups.find(group=>group.funcs.indexOf(func) != -1);
+  return group ? group.title : 'Other operations';
+}
+
 // the choices offered when adding an operation or switching its type: every
 // operation there is, each with the generic line saying what it is for and the
 // sentence it would read as once it is added
@@ -2543,6 +2572,8 @@ function routineOperationExamples() {
   }
   examples.push({ func: 'var', description: 'Work out a value and remember it', example: 'Variable x gets the value 1', newOperation: 'var x = 1' });
   examples.push({ func: '//', description: 'Add a note for whoever reads the routine', example: 'A note for whoever reads the routine', newOperation: '// comment' });
+  for(const example of examples)
+    example.group = routineOperationGroup(example.func);
   return examples;
 }
 
