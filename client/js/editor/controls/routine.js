@@ -1481,6 +1481,171 @@ function selectOptionWords(value) {
   return wordList(value.map(option=>option && typeof option == 'object' ? (option.text || option.value || '') : option));
 }
 
+// ---------------------------------------------------------------------------
+// The catalogue of what a `var` statement can work out: every one of the 110
+// operations compute.js knows, in the words the sentence says them with.
+//
+// One entry per operation:
+//   word     - what the drop-down offers and what the chip in the sentence
+//              shows. It is the operation itself, worded: "plus", "the length
+//              of", "a whole number between".
+//   template - where the operands go around that word. {operator} is the chip
+//              the word sits in, {x}/{y}/{z} are the operands in the order
+//              compute() receives them, and {variable} is the variable the
+//              statement writes - only the operations that work ON it name it.
+//   group    - the heading the drop-down lists it under.
+//   note     - the thing about it that is invisible in the JSON and costs an
+//              evening (the trig functions counting in degrees, division by
+//              zero quietly yielding 0, indexOf answering -1).
+//
+// Two written shapes, and which one an operation uses is fixed by compute.js:
+// infix (`var total = ${a} + ${b}`, the left operand lands in x) and prefix
+// (`var n = randInt 1 6`, the operands are x, y, z in order). Both end up in
+// the same slots, so the editor writes whichever spelling the file it opened
+// used and only falls back to the operation's own when it is a new one.
+//
+// imperative marks the operations that work on the previous value of the
+// variable rather than on an operand: pushing onto a list is not an equation,
+// which is why "var hand = push ${card}" is the one shape people get wrong.
+// Their template is the whole sentence rather than what follows "set ... to".
+//
+// Operands may only be a number, a quoted 'string', null/true/false, [], {} or
+// a ${...} reference - a bare word is read as the operator, which is what most
+// malformed var steps are. The editor quotes what is typed, so that cannot
+// happen here.
+const routineComputeGroups = [ 'Maths', 'Compare and logic', 'Text', 'Lists', 'Random', 'Colour', 'Other' ];
+
+const nullResultNote = 'If this cannot be worked out the variable gets 0 - dividing by zero included.';
+
+const routineComputeOperations = {
+  // Maths
+  '+':  { word: 'plus', template: '{x} {operator} {y}', group: 'Maths', note: 'The only operation that reads numeric text as a number - and the one that joins two texts together if either side really is text.' },
+  '-':  { word: 'minus', template: '{x} {operator} {y}', group: 'Maths', note: nullResultNote },
+  '*':  { word: 'times', template: '{x} {operator} {y}', group: 'Maths', note: nullResultNote },
+  '/':  { word: 'divided by', template: '{x} {operator} {y}', group: 'Maths', note: nullResultNote },
+  '%':  { word: 'the remainder of', template: '{operator} {x} divided by {y}', group: 'Maths', note: nullResultNote },
+  '**': { word: 'to the power of', template: '{x} {operator} {y}', group: 'Maths' },
+  'pow': { word: 'to the power of', template: '{operator} {x} {y}', written: 'prefix', group: 'Maths', note: 'The same as **, written the other way round.' },
+  'min': { word: 'the smaller of', template: '{operator} {x} and {y}', written: 'prefix', group: 'Maths' },
+  'max': { word: 'the larger of', template: '{operator} {x} and {y}', written: 'prefix', group: 'Maths' },
+  'abs': { word: 'the size of', template: '{operator} {x} without its sign', written: 'prefix', group: 'Maths' },
+  'round': { word: 'rounded', template: '{x} {operator}', written: 'prefix', group: 'Maths' },
+  'floor': { word: 'rounded down', template: '{x} {operator}', written: 'prefix', group: 'Maths' },
+  'ceil': { word: 'rounded up', template: '{x} {operator}', written: 'prefix', group: 'Maths' },
+  'trunc': { word: 'the whole part of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
+  'sign': { word: 'the sign of', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'Answers -1, 0 or 1.' },
+  'sqrt': { word: 'the square root of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
+  'cbrt': { word: 'the cube root of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
+  'exp': { word: 'e to the power of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
+  'log': { word: 'the natural log of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
+  'log2': { word: 'the log base 2 of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
+  'log10': { word: 'the log base 10 of', template: '{operator} {x}', written: 'prefix', group: 'Maths' },
+  'hypot': { word: 'the length of the line to', template: '{operator} {x}[, {y}]', written: 'prefix', group: 'Maths' },
+  'sin': { word: 'the sine of', template: '{operator} {x} degrees', written: 'prefix', group: 'Maths', note: 'Angles are counted in degrees, not in radians.' },
+  'cos': { word: 'the cosine of', template: '{operator} {x} degrees', written: 'prefix', group: 'Maths', note: 'Angles are counted in degrees, not in radians.' },
+  'tan': { word: 'the tangent of', template: '{operator} {x} degrees', written: 'prefix', group: 'Maths', note: 'Angles are counted in degrees, not in radians.' },
+  'asin': { word: 'the angle whose sine is', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'The answer is in degrees, not in radians.' },
+  'acos': { word: 'the angle whose cosine is', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'The answer is in degrees, not in radians.' },
+  'atan': { word: 'the angle whose tangent is', template: '{operator} {x}', written: 'prefix', group: 'Maths', note: 'The answer is in degrees, not in radians.' },
+  'atan2': { word: 'the angle to the point', template: '{operator} {y} across and {x} up', written: 'prefix', group: 'Maths', note: 'The first operand is how far up, the second how far across - the other way round from a position. The answer is in degrees.' },
+  'toFixed': { word: 'rounded to', template: '{x} {operator} {y} decimal places', group: 'Maths', note: 'The answer is text, not a number.' },
+  'parseFloat': { word: 'as a number', template: '{x} {operator}', written: 'prefix', group: 'Maths', note: 'What turns the text an INPUT number field remembers into a number.' },
+  'PI': { word: 'pi', template: '{operator}', written: 'prefix', group: 'Maths' },
+  'E': { word: "Euler's number e", template: '{operator}', written: 'prefix', group: 'Maths' },
+  'LN2': { word: 'the natural log of 2', template: '{operator}', written: 'prefix', group: 'Maths' },
+  'LN10': { word: 'the natural log of 10', template: '{operator}', written: 'prefix', group: 'Maths' },
+  'LOG2E': { word: 'the log base 2 of e', template: '{operator}', written: 'prefix', group: 'Maths' },
+  'LOG10E': { word: 'the log base 10 of e', template: '{operator}', written: 'prefix', group: 'Maths' },
+  'SQRT1_2': { word: 'the square root of a half', template: '{operator}', written: 'prefix', group: 'Maths' },
+  'SQRT2': { word: 'the square root of 2', template: '{operator}', written: 'prefix', group: 'Maths' },
+
+  // Compare and logic
+  '==': { word: 'is', template: '{x} {operator} {y}', group: 'Compare and logic', note: 'Text and a number count as the same as long as they read the same, so "3" is 3.' },
+  '!=': { word: 'is not', template: '{x} {operator} {y}', group: 'Compare and logic' },
+  '===': { word: 'is exactly', template: '{x} {operator} {y}', group: 'Compare and logic', note: 'The same value AND the same kind of value, so "3" is not exactly 3.' },
+  '!==': { word: 'is not exactly', template: '{x} {operator} {y}', group: 'Compare and logic' },
+  '>': { word: 'is more than', template: '{x} {operator} {y}', group: 'Compare and logic' },
+  '>=': { word: 'is at least', template: '{x} {operator} {y}', group: 'Compare and logic' },
+  '<': { word: 'is less than', template: '{x} {operator} {y}', group: 'Compare and logic' },
+  '<=': { word: 'is at most', template: '{x} {operator} {y}', group: 'Compare and logic' },
+  '&&': { word: 'and', template: '{x} {operator} {y}', group: 'Compare and logic', note: 'Answers one of the two values rather than true or false, which only matters if it is stored rather than tested.' },
+  '||': { word: 'or', template: '{x} {operator} {y}', group: 'Compare and logic', note: 'Answers one of the two values rather than true or false, which only matters if it is stored rather than tested.' },
+  '!': { word: 'not', template: '{operator} {x}', written: 'prefix', group: 'Compare and logic' },
+
+  // Text
+  'charAt': { word: 'the character at position', template: '{operator} {y} of {x}', group: 'Text', note: 'The first character is at position 0.' },
+  'concat': { word: 'joined with', template: '{x} {operator} {y}', group: 'Text' },
+  'length': { word: 'the length of', template: '{operator} {x}', group: 'Text', note: 'Works on a list as well as on a text.' },
+  'indexOf': { word: 'the position of', template: '{operator} {y} in {x}', group: 'Text', note: 'Answers -1 when it is not in there at all - and -1 counts as true in a condition.' },
+  'lastIndexOf': { word: 'the last position of', template: '{operator} {y} in {x}', group: 'Text', note: 'Answers -1 when it is not in there at all.' },
+  'substr': { word: 'the part starting at', template: 'of {x}, {operator} {y}[ for {z} characters]', group: 'Text' },
+  'slice': { word: 'the part from', template: 'of {x}, {operator} {y}[ to {z}]', group: 'Text', note: 'The end is not included. Works on a list as well as on a text.' },
+  'replaceAll': { word: 'with every', template: '{x} {operator} {y} replaced by {z}', group: 'Text' },
+  'replace': { word: 'with the first', template: '{x} {operator} {y} replaced by {z}', group: 'Text' },
+  'split': { word: 'split into a list by', template: '{x} {operator} {y}', group: 'Text' },
+  'includes': { word: 'contains', template: '{x} {operator} {y}', group: 'Text' },
+  'in': { word: 'is inside', template: '{x} {operator} {y}', group: 'Text' },
+  'endsWith': { word: 'ends with', template: '{x} {operator} {y}', group: 'Text' },
+  'startsWith': { word: 'starts with', template: '{x} {operator} {y}', group: 'Text' },
+  'toUpperCase': { word: 'in capitals', template: '{x} {operator}', group: 'Text' },
+  'toLowerCase': { word: 'in lower case', template: '{x} {operator}', group: 'Text' },
+  'toLocaleUpperCase': { word: 'in capitals for a language', template: '{x} {operator}[, {y}]', group: 'Text' },
+  'toLocaleLowerCase': { word: 'in lower case for a language', template: '{x} {operator}[, {y}]', group: 'Text' },
+  'trim': { word: 'without the spaces around it', template: '{x} {operator}', group: 'Text' },
+  'trimStart': { word: 'without the spaces in front', template: '{x} {operator}', group: 'Text' },
+  'trimEnd': { word: 'without the spaces behind', template: '{x} {operator}', group: 'Text' },
+  'charCodeAt': { word: 'the character code at position', template: '{operator} {y} of {x}', group: 'Text' },
+  'codePointAt': { word: 'the character code point at position', template: '{operator} {y} of {x}', group: 'Text' },
+  'padStart': { word: 'padded at the start to', template: '{x} {operator} {y} characters', group: 'Text' },
+  'padEnd': { word: 'padded at the end to', template: '{x} {operator} {y} characters', group: 'Text' },
+  'repeat': { word: 'repeated', template: '{x} {operator} {y} times', group: 'Text' },
+  'localeCompare': { word: 'compared alphabetically with', template: '{x} {operator} {y}', group: 'Text' },
+  'match': { word: 'matched against the pattern', template: '{x} {operator} {y}[ with the flags {z}]', group: 'Text', note: 'Answers nothing at all when nothing matches, which the variable then gets as 0.' },
+  'search': { word: 'the position matching the pattern', template: 'in {x}, {operator} {y}', group: 'Text' },
+  'from': { word: 'as a list of characters', template: '{x} {operator}', written: 'prefix', group: 'Text' },
+
+  // Lists
+  'getIndex': { word: 'entry number', template: '{operator} {y} of {x}', group: 'Lists', note: 'The same as writing ${x.$y}. The first entry is number 0.' },
+  'isArray': { word: 'is a list', template: '{x} {operator}', written: 'prefix', group: 'Lists' },
+  'shuffle': { word: 'shuffled', template: '{x} {operator}', written: 'prefix', group: 'Lists' },
+  'join': { word: 'joined into text with', template: '{x} {operator} {y}', group: 'Lists' },
+  'reverse': { word: 'reversed', template: '{x} {operator}', group: 'Lists' },
+  'sort': { word: 'sorted as text', template: '{x} {operator}', group: 'Lists' },
+  'numericSort': { word: 'sorted as numbers', template: '{x} {operator}', group: 'Lists' },
+  'numericStringSort': { word: 'sorted naturally', template: '{x} {operator}', group: 'Lists', note: 'Naturally means 2 before 10, where sorting as text puts 10 first.' },
+  'concatArray': { word: 'and', template: '{x} {operator} {y} joined into one list', group: 'Lists' },
+  'sum': { word: 'added up', template: '{x} {operator}', written: 'prefix', group: 'Lists' },
+  'push': { word: 'Add', template: '{operator} {x} to the end of the list {variable}', written: 'prefix', group: 'Lists', imperative: true },
+  'unshift': { word: 'Add', template: '{operator} {x} to the start of the list {variable}', written: 'prefix', group: 'Lists', imperative: true },
+  'insert': { word: 'Insert', template: '{operator} {x} into the list {variable} at position {y}', written: 'prefix', group: 'Lists', imperative: true },
+  'remove': { word: 'Remove', template: '{operator}[ {y}] entries from the list {variable}, starting at position {x}', written: 'prefix', group: 'Lists', imperative: true },
+  'setIndex': { word: 'Set entry number', template: '{operator} {x} of {variable} to {y}', written: 'prefix', group: 'Lists', imperative: true, note: 'The same as writing var {variable}.$x = ...' },
+  'pop': { word: 'Take the last entry off', template: '{operator} {x} and remember it as {variable}', group: 'Lists', imperative: true },
+  'shift': { word: 'Take the first entry off', template: '{operator} {x} and remember it as {variable}', group: 'Lists', imperative: true },
+
+  // Random
+  'randInt': { word: 'a whole number between', template: '{operator} {x} and {y}', written: 'prefix', group: 'Random', note: 'Both ends are included, so between 1 and 6 is a die.' },
+  'randRange': { word: 'a number from', template: '{operator} {x} up to but not including {y}[, in steps of {z}]', written: 'prefix', group: 'Random' },
+  'random': { word: 'a fraction between 0 and 1', template: '{operator}', written: 'prefix', group: 'Random' },
+
+  // Colour
+  'colorContrast': { word: 'a colour that reads well on', template: '{operator} {x}[, {y} as strongly]', written: 'prefix', group: 'Colour', note: 'The strength runs from -1 to 1 and defaults to 1 - this is how a game picks black or white text for a background.' },
+  'colorLuminance': { word: 'how bright', template: '{operator} {x} is, from 0 to 1', written: 'prefix', group: 'Colour' },
+  'colorToHex': { word: 'as a hex code', template: '{x} {operator}', written: 'prefix', group: 'Colour', note: 'Answers #000000 wherever there is no browser to ask, so a routine running on the server quietly gets black.' },
+  'colorToRGB': { word: 'as an rgb() value', template: '{x} {operator}', written: 'prefix', group: 'Colour' },
+  'colorContrastRatio': { word: 'the contrast between', template: '{operator} {x} and {y}', written: 'prefix', group: 'Colour' },
+  'colorCreateHue': { word: 'a new colour unlike the ones already used', template: '{operator}', written: 'prefix', group: 'Colour' },
+
+  // Other
+  'jsonStringify': { word: 'written out as JSON text', template: '{x} {operator}', written: 'prefix', group: 'Other' },
+  'jsonParse': { word: 'read from JSON text', template: '{x} {operator}', written: 'prefix', group: 'Other' },
+  'fetch': { word: 'the web page at', template: '{operator} {x}', written: 'prefix', group: 'Other', note: 'The one operation that waits for the network.' },
+  // kept for compatibility with SET and the only operation exempt from the
+  // "anything that cannot be worked out becomes 0" guard, so a game that has
+  // one still reads what it does - it is never offered
+  '=': { word: 'and then', template: '{x} {operator} {y}', group: 'Other', offer: false, note: 'Answers the second value. It exists for compatibility with SET and is the one operation that leaves a result of nothing alone instead of turning it into 0.' }
+};
+
 // a timer parameter names one timer, a collection stands for however many it
 // holds - the sentence needs a different article for each
 function timerTarget(v) {
@@ -3061,53 +3226,269 @@ class InputRoutineOperationEditor extends RoutineOperationEditor {
   }
 }
 
+// What a var statement is allowed to say, in the same grammar the engine parses
+// it with (widget.js, the string branch of evaluateRoutine): an operand is a
+// number, a quoted 'string', null/true/false, [] or {}, or a ${...} reference -
+// and nothing else. A bare word in an operand slot is read as the operator,
+// which is what most malformed var statements are.
+const varIdentifierPattern = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
+const varOperandPattern = `(?:null|true|false|\\[\\]|\\{\\}|-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?|\\$\\{[^}]+\\}|'(?:[ !#-&(-\\[\\]-~]|\\\\u[0-9a-fA-F]{4})*')`;
+const varTargetPattern = `\\$?${varIdentifierPattern}(?:\\.\\$?${varIdentifierPattern})?`;
+const varOperatorPattern = `(?:${varIdentifierPattern}|[=+*/%<!>&|-]{1,3})`;
+
+// the plain assignment 42% of the library's var statements are, worded as one
+// more way of working out a value so that the sentence always has the same
+// drop-down in the same place
+const varPlainAssignment = { word: 'the value', template: '{operator} {x}' };
+
+// { target, operator, operands, written } for a statement the sentence can say,
+// null for one it cannot - a 🧮 dynamic operator, a trailing comment or the
+// arithmetic the engine falls back to eval for. Those keep their raw text: how
+// they are written decides which code path the engine takes.
+function parseVarStatement(statement) {
+  if(typeof statement != 'string')
+    return null;
+  const plain = statement.match(new RegExp(`^var (${varTargetPattern}) += +(${varOperandPattern}) *$`));
+  if(plain)
+    return { target: plain[1], operator: '', operands: [ plain[2] ], written: 'prefix' };
+  const computed = statement.match(new RegExp(`^var (${varTargetPattern}) += +(?:(${varOperandPattern}) +)?(${varOperatorPattern})(?: +(${varOperandPattern}))?(?: +(${varOperandPattern}))?(?: +(${varOperandPattern}))? *$`));
+  if(!computed || !routineComputeOperations[computed[3]])
+    return null;
+  const leading = computed[2];
+  const trailing = [ computed[4], computed[5], computed[6] ];
+  return {
+    target: computed[1],
+    operator: computed[3],
+    // both spellings end up in the same operand slots (widget.js reads the
+    // leading operand as x and the trailing ones as the rest), so which one a
+    // file used is only remembered to write it back the way it arrived
+    operands: leading !== undefined ? [ leading, trailing[0], trailing[1] ] : trailing,
+    written: leading !== undefined ? 'infix' : 'prefix'
+  };
+}
+
+// the words of an operand: a reference reads as the name it refers to and a
+// quoted string as the text somebody typed, the way every other chip does
+function decodeVarOperand(raw) {
+  if(typeof raw != 'string')
+    return null;
+  const string = raw.match(/^'([\s\S]*)'$/);
+  if(string)
+    return string[1].replace(/\\u([0-9a-fA-F]{4})/g, (_, hex)=>String.fromCharCode(parseInt(hex, 16)));
+  // a value the routine remembers reads as its name, the way it does in every
+  // other sentence - the colour of the chip is what says it is a stored value
+  const reference = raw.match(/^\$\{([A-Za-z_][A-Za-z0-9_]*)\}$/);
+  return reference ? reference[1] : raw;
+}
+
+// and back: what was typed becomes an operand the engine can read. A bare word
+// would be read as the operator, so anything that is not already an operand is
+// quoted - with the characters the engine's strings cannot hold escaped the way
+// it escapes them.
+function encodeVarOperand(text) {
+  const trimmed = String(text == null ? '' : text).trim();
+  if(trimmed === '')
+    return undefined;
+  if(new RegExp(`^${varOperandPattern}$`).test(trimmed))
+    return trimmed;
+  return `'${trimmed.replace(/[^ !#-&(-\[\]-~]/g, c=>`\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`)}'`;
+}
+
+// the statement the sentence stands for. A slot before a filled one cannot just
+// disappear - it is what puts the ones after it in the right place - so it is
+// written as null, which is what the engine reads a missing operand as anyway.
+function writeVarStatement(target, operator, operands, written) {
+  const parts = [ operands[0], operands[1], operands[2] ];
+  while(parts.length && parts[parts.length-1] === undefined)
+    parts.pop();
+  const filled = parts.map(part=>part === undefined ? 'null' : part);
+  if(!operator)
+    return `var ${target} = ${filled.length ? filled[0] : 'null'}`;
+  const spec = routineComputeOperations[operator] || {};
+  const spelling = written || spec.written || 'infix';
+  if(spelling == 'infix' && filled.length)
+    return `var ${target} = ${[ filled[0], operator, ...filled.slice(1) ].join(' ')}`;
+  return `var ${target} = ${[ operator, ...filled ].join(' ')}`;
+}
+
+// the parts of a sentence in [brackets] belong to an operand an operation can do
+// without (the strength of a colorContrast, the end of a slice), so they are
+// only there while that operand is
+function varSentenceTemplate(template, hasOperand) {
+  return template.replace(/\[([^\]]*)\]/g, (_, part)=>{
+    const slots = (part.match(/\{([xyz])\}/g) || []).map(slot=>slot.slice(1, -1));
+    return slots.length && slots.every(slot=>!hasOperand(slot)) ? '' : part;
+  });
+}
+
+// the ways a var statement can work out its value, for the list that offers them
+function routineComputeChoices() {
+  const choices = [ { operator: '', word: varPlainAssignment.word, group: 'A value of its own', description: 'the value as it is, without working anything out' } ];
+  for(const group of routineComputeGroups)
+    for(const operator in routineComputeOperations)
+      if(routineComputeOperations[operator].group == group && routineComputeOperations[operator].offer !== false)
+        choices.push({ operator, word: routineComputeOperations[operator].word, group, description: routineComputeOperations[operator].note || '' });
+  return choices;
+}
+
+// A `var` statement, worded as what it works out. The plain assignment 42% of
+// the library writes is one of the ways rather than a special case, so the
+// sentence always has the same drop-down in the same place - and behind it the
+// 110 operations compute.js knows, each with the words it is said in.
 class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
     super('var');
   }
 
-  currentVariant() {
-    // fall back to raw editing for statements the simple form cannot represent
-    return this.isSimple()
-      ? { id: 'simple', label: 'var', template: 'Set the variable {variable} to the value {expression}' }
-      : { id: 'raw', label: 'var', template: '{statement}' };
+  parsed() {
+    return parseVarStatement(this.operation);
   }
 
+  computeSpec() {
+    const parsed = this.parsed();
+    if(!parsed)
+      return null;
+    return parsed.operator ? routineComputeOperations[parsed.operator] : varPlainAssignment;
+  }
+
+  currentVariant() {
+    const parsed = this.parsed();
+    const spec = this.computeSpec();
+    // a statement the sentence cannot say keeps its raw text: a 🧮 operator, a
+    // trailing comment and the arithmetic the engine falls back to eval for all
+    // stop being what they are as soon as they are rewritten
+    if(!parsed || !spec)
+      return { id: 'raw', label: 'var', template: '{statement}' };
+    const hasOperand = slot=>parsed.operands[[ 'x', 'y', 'z' ].indexOf(slot)] !== undefined;
+    const phrase = varSentenceTemplate(spec.template, hasOperand);
+    return {
+      id: parsed.operator || 'value',
+      label: 'var',
+      template: spec.imperative ? phrase : `Set the variable {variable} to ${phrase}`
+    };
+  }
+
+  // the operation is a drop-down of phrases like every other setting, only that
+  // its list is long enough to need a search box of its own
   createPopup(parameterNames) {
+    if(parameterNames[0] == 'operator')
+      return new RoutineComputeOperationPopup(routineComputeChoices(), (this.parsed() || {}).operator);
     return new RoutineStringPopup();
   }
 
+  createFullPopup(parameterNames) {
+    return this.createPopup(parameterNames);
+  }
+
+  // a popup edits one part of a statement, so it is handed that part rather
+  // than the string the whole statement is
+  async editParameter(span, parameterNames, popup) {
+    const name = parameterNames[0];
+    const current = {};
+    // an operand is edited as what it is written as, not as the name the chip
+    // shows it under: typing a bare word means a text, and ${score} means the
+    // value the routine remembers - the difference has to stay visible here
+    if([ 'x', 'y', 'z' ].indexOf(name) != -1)
+      current[name] = this.rawOperand(name);
+    else if(!this.parameterIsBlank(name))
+      current[name] = this.getDisplayedValue(name);
+    popup.setSource(span);
+    popup.setOperationDetails(current, parameterNames, this.widget, this.variables, this.collections);
+    const values = await newRoutineValues(popup);
+    if(values === routineFullPopupRequest)
+      return this.editParameter(span, parameterNames, this.createFullPopup(parameterNames));
+    return values;
+  }
+
+  classifyParameter(name) {
+    if(name == 'variable')
+      return 'variable';
+    if(name == 'operator')
+      return 'func';
+    const raw = this.rawOperand(name);
+    if(typeof raw == 'string' && raw.match(/^\$\{PROPERTY /))
+      return 'property';
+    if(typeof raw == 'string' && raw.match(/^\$\{/))
+      return 'variable';
+    if(typeof raw == 'string' && raw.match(/^-?[0-9]/))
+      return 'number';
+    return 'value';
+  }
+
+  // the operation is picked from a list of phrases, so its chip carries the
+  // arrow that says so - the operands are values and open a value popup
+  parameterIsDropDown(parameterNames) {
+    return parameterNames.length == 1 && parameterNames[0] == 'operator';
+  }
+
+  rawOperand(name) {
+    const parsed = this.parsed();
+    const slot = [ 'x', 'y', 'z' ].indexOf(name);
+    return parsed && slot != -1 ? parsed.operands[slot] : undefined;
+  }
+
   getDefinedVariables() {
-    const match = typeof this.operation == 'string' && this.operation.match(/^var (\S+) = /);
+    const parsed = this.parsed();
+    if(parsed)
+      return [ parsed.target.replace(/^\$/, '').split('.')[0] ];
+    const match = typeof this.operation == 'string' && this.operation.match(/^var \$?([^\s.]+)/);
     return match ? [ match[1] ] : [];
   }
 
   getDisplayedValue(property) {
-    const match = typeof this.operation == 'string' && this.operation.match(/^var (\S+) = (.*)$/);
+    if(property == 'statement')
+      return String(this.operation);
+    const parsed = this.parsed();
     if(property == 'variable')
-      return match ? match[1] : 'variable';
-    if(property == 'expression')
-      return match ? match[2] : 'expression';
-    return this.operation;
+      return parsed ? parsed.target : 'variable';
+    if(property == 'operator') {
+      const spec = this.computeSpec();
+      return spec ? spec.word : 'operation';
+    }
+    const raw = this.rawOperand(property);
+    return raw === undefined ? 'value' : decodeVarOperand(raw);
+  }
+
+  // a slot with nothing in it says what belongs there, in red, like every other
+  // blank in the editor
+  parameterIsBlank(property) {
+    if([ 'x', 'y', 'z' ].indexOf(property) != -1)
+      return this.rawOperand(property) === undefined;
+    return property == 'variable' && !this.parsed();
   }
 
   getExampleWithDefaults() {
     return 'Set the variable x to the value 1';
   }
 
-  isSimple() {
-    return typeof this.operation == 'string' && !!this.operation.match(/^var (\S+) = (.*)$/);
+  // what the "i" of a var statement says: the words of the operation it uses,
+  // and the thing about it that the JSON never said
+  functionInfoButton() {
+    const parsed = this.parsed();
+    const spec = parsed && parsed.operator && routineComputeOperations[parsed.operator];
+    if(!spec)
+      return commonInfoButton(null, 'var');
+    return infoButton(null, `<pre>${escapeHTML(`${parsed.operator} - ${spec.word}.${spec.note ? `\n\n${spec.note}` : ''}\n\nSee [var] for how a var statement is written.`)}</pre>`, null, null, `var ${parsed.operator}`);
   }
 
   onNewValue(values) {
-    // the operation is a string like "var x = 1", so rebuild it instead of assigning object keys
+    // the operation is a string like "var x = 1", so rebuild it instead of
+    // assigning object keys
     if(typeof values.statement == 'string') {
       this.notifyChangeListeners(values.statement);
       return;
     }
-    const variable = typeof values.variable == 'string' && values.variable !== '' ? values.variable : this.getDisplayedValue('variable');
-    const expression = typeof values.expression == 'string' && values.expression !== '' ? values.expression : this.getDisplayedValue('expression');
-    this.notifyChangeListeners(`var ${variable} = ${expression}`);
+    const parsed = this.parsed() || { target: 'x', operator: '', operands: [], written: null };
+    const has = name=>Object.prototype.hasOwnProperty.call(values, name);
+    const target = has('variable') && String(values.variable || '').trim() ? String(values.variable).trim() : parsed.target;
+    const operator = has('operator') ? values.operator : parsed.operator;
+    const operands = [ parsed.operands[0], parsed.operands[1], parsed.operands[2] ];
+    for(const [ slot, name ] of [ 'x', 'y', 'z' ].entries())
+      if(has(name))
+        operands[slot] = encodeVarOperand(values[name]);
+    // a plain assignment holds its value in the first slot, so switching to it
+    // keeps what was worked out with rather than starting over
+    this.notifyChangeListeners(writeVarStatement(target, operator, operands, has('operator') ? null : parsed.written));
   }
 }
 

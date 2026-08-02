@@ -49,6 +49,8 @@ beforeAll(() => {
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'RoutineInputFieldEditor', 'RoutineInputFieldsEditor', 'InputRoutineOperationEditor', 'routineInputFieldMetadata',
     'routineInputFieldChoices', 'RoutineStringListPopup', 'inputFieldVariableName',
+    'routineComputeOperations', 'routineComputeGroups', 'routineComputeChoices', 'RoutineComputeOperationPopup',
+    'parseVarStatement', 'writeVarStatement', 'encodeVarOperand', 'decodeVarOperand',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
@@ -455,7 +457,7 @@ describe('operation rendering', () => {
   test('var statements render and rebuild correctly', () => {
     const { editor } = renderOperation('var x = 1');
     expect(editor.getDisplayedValue('variable')).toBe('x');
-    expect(editor.getDisplayedValue('expression')).toBe('1');
+    expect(editor.getDisplayedValue('x')).toBe('1');
     let result = null;
     editor.registerChangeListener(v => result = v);
     editor.onNewValue({ variable: 'y' });
@@ -463,8 +465,10 @@ describe('operation rendering', () => {
   });
 
   test('complex var statements fall back to raw editing', () => {
+    // the arithmetic the engine falls back to eval for: rewriting it would
+    // change which code path it takes, so it keeps its text
     const { editor } = renderOperation('var $dynamic.${key} = 1 + 2');
-    expect(editor.getTemplate()).toBe('Set the variable {variable} to the value {expression}');
+    expect(editor.getTemplate()).toBe('{statement}');
     const { editor: raw } = renderOperation('var x'); // no " = ", unrepresentable
     expect(raw.getTemplate()).toBe('{statement}');
   });
@@ -3040,5 +3044,136 @@ describe('the lines of an INPUT dialog', () => {
     expect(value).toBeNull(); // written once, when the popup closes
     popup.hide();
     expect(value).toEqual({ options: [ 'Red', 'Blue', 'Green' ] });
+  });
+});
+
+// The 110 operations compute.js knows, in the words a var statement is said
+// with. The engine's own table is the list this one is measured against: an
+// operation added there without a word here fails this suite instead of
+// quietly landing on a raw card.
+describe('working out a value with var', () => {
+  const computeOps = (() => {
+    const source = fs.readFileSync('client/js/compute.js', 'utf8').replace(/^export .*$/m, '');
+    return new Function(`${source}\nreturn compute_ops;`)();
+  })();
+  const editorFor = statement => {
+    const editor = editorForOperation(statement);
+    editor.setOperationDetails({ state: {} }, statement, [], []);
+    return editor;
+  };
+  const words = statement => {
+    const sentence = editorFor(statement).render().querySelector('.routine-editor-sentence').cloneNode(true);
+    for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+      icon.remove();
+    return sentence.textContent.replace(/\s+/g, ' ').trim();
+  };
+
+  test('every operation the engine has, has a word', () => {
+    const named = Object.keys(routineComputeOperations);
+    expect(named.length).toBe(computeOps.length);
+    for (const op of computeOps) {
+      expect(named).toContain(op.name);
+      const spec = routineComputeOperations[op.name];
+      expect(typeof spec.word).toBe('string');
+      expect(spec.word.length).toBeGreaterThan(0);
+      expect(routineComputeGroups).toContain(spec.group);
+      // an operand slot the sentence never names is one that cannot be filled in
+      expect(spec.template).toMatch(/\{operator\}/);
+    }
+  });
+
+  // which of the two written shapes an operation uses is fixed by compute.js -
+  // the sample it documents itself with is where it says so
+  test('the written shape of every operation matches the engine', () => {
+    for (const op of computeOps) {
+      if (op.name == '=') // its sample is a plain assignment, it never spells the operator
+        continue;
+      const escaped = op.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const infix = String(op.sample).split('\n').some(line => new RegExp(`^var a(?:\\.\\$?\\w+)? = \\$\\{[^}]*\\} +${escaped}(?: |$)`).test(line));
+      expect([ op.name, routineComputeOperations[op.name].written || 'infix' ]).toEqual([ op.name, infix ? 'infix' : 'prefix' ]);
+    }
+  });
+
+  test('a statement reads as what it works out', () => {
+    expect(words('var x = 1')).toBe('Set the variable x to the value 1');
+    expect(words('var total = ${a} + ${b}')).toBe('Set the variable total to a plus b');
+    expect(words('var n = ${deck} length')).toBe('Set the variable n to the length of deck');
+    expect(words('var d = randInt 1 6')).toBe('Set the variable d to a whole number between 1 and 6');
+    expect(words('var c = colorContrast ${bg}')).toBe('Set the variable c to a colour that reads well on bg');
+    // the optional operand is only in the sentence while it is in use
+    expect(words("var c = colorContrast ${bg} -1")).toContain('-1 as strongly');
+    expect(words("var s = ${name} substr 0 3")).toBe('Set the variable s to of name, the part starting at 0 for 3 characters');
+  });
+
+  // the four operations that work ON the variable are not equations: writing
+  // them as one is what makes lists confusing
+  test('a list operation reads as the thing it does', () => {
+    expect(words('var hand = push ${card}')).toBe('Add card to the end of the list hand');
+    expect(words('var hand = unshift ${card}')).toContain('to the start of the list hand');
+    expect(words('var card = ${deck} pop')).toBe('Take the last entry off deck and remember it as card');
+    expect(words('var a = setIndex 2 ${x}')).toBe('Set entry number 2 of a to x');
+  });
+
+  // a 🧮 operator, a trailing comment and the arithmetic the engine falls back
+  // to eval for all stop being what they are as soon as they are rewritten
+  test('what the sentence cannot say keeps its text', () => {
+    for (const statement of [ 'var a = ${x} 🧮${op} ${y}', 'var a = (1+2)*3', 'var a = ${x} frobnicate ${y}' ]) {
+      expect(editorFor(statement).getTemplate()).toBe('{statement}');
+      expect(editorFor(statement).getDisplayedValue('statement')).toBe(statement);
+    }
+  });
+
+  test('the statement is written back the way it arrived', () => {
+    // both spellings put the operands in the same slots, so the one the file
+    // used is the one it keeps
+    for (const statement of [ 'var a = ${x} + ${y}', 'var a = min ${x} ${y}', 'var a = ${x} min ${y}', 'var a = 1', 'var a.b = ${x} concat 5' ]) {
+      const editor = editorFor(statement);
+      let result = null;
+      editor.registerChangeListener(v => result = v);
+      editor.onNewValue({});
+      expect(result).toBe(statement);
+    }
+  });
+
+  test('what is typed into an operand becomes an operand', () => {
+    // a bare word would be read as the operator, so it is quoted
+    expect(encodeVarOperand('hello')).toBe("'hello'");
+    expect(encodeVarOperand('5')).toBe('5');
+    expect(encodeVarOperand('${score}')).toBe('${score}');
+    expect(encodeVarOperand('true')).toBe('true');
+    expect(encodeVarOperand('')).toBe(undefined);
+    // and the characters an engine string cannot hold are escaped the way it escapes them
+    expect(encodeVarOperand("it's")).toBe("'it\\u0027s'");
+    expect(decodeVarOperand("'it\\u0027s'")).toBe("it's");
+
+    const editor = editorFor('var a = ${x} concat 5');
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    editor.onNewValue({ y: 'and more' });
+    expect(result).toBe("var a = ${x} concat 'and more'");
+  });
+
+  test('picking another operation keeps the operands it can', () => {
+    const editor = editorFor('var a = ${x} + ${y}');
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    editor.onNewValue({ operator: 'min' });
+    expect(result).toBe('var a = min ${x} ${y}');
+    // and a plain assignment is one of the ways rather than a special case
+    const back = editorFor(result);
+    back.registerChangeListener(v => result = v);
+    back.onNewValue({ operator: '' });
+    expect(result).toBe('var a = ${x}');
+  });
+
+  test('the list of operations is grouped and leaves out the one nobody should use', () => {
+    const choices = routineComputeChoices();
+    expect(choices[0].operator).toBe(''); // the plain assignment 42% of the library writes
+    expect(choices.map(c => c.operator)).not.toContain('=');
+    expect(choices.filter(c => c.group == 'Random').map(c => c.operator)).toEqual([ 'randInt', 'randRange', 'random' ]);
+    // and the chip that opens it is a drop-down like every other setting
+    const chip = editorFor('var a = ${x} + ${y}').render().querySelector('[data-parameter="operator"]');
+    expect(chip.classList.contains('routine-editor-parameter-menu')).toBe(true);
+    expect(chip.textContent).toContain('plus');
   });
 });

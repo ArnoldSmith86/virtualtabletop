@@ -802,6 +802,78 @@ class RoutineOperationPopup extends RoutinePopup {
   }
 }
 
+// The list behind the drop-down of a var statement: every way it can work out
+// its value, grouped by what the operations are for. It is a menu like the ones
+// a setting opens, only that 110 phrases need a search box and headings - so it
+// borrows the operation picker's list rather than the four-entry menu's.
+class RoutineComputeOperationPopup extends RoutinePopup {
+  constructor(choices, current) {
+    super();
+    this.choices = choices;
+    this.current = current;
+  }
+
+  offersUseDefault() {
+    return false; // a statement always works its value out somehow
+  }
+
+  offersValueInput() {
+    return false; // this popup picks an operation, not a value
+  }
+
+  show() {
+    super.show(false, false);
+    const h1 = $('h1', this.domElement);
+    for(const generic of $a('.popup-title-raw, .info-button', h1))
+      generic.remove();
+    const title = this.setTitle('How the value is worked out');
+    const info = infoButton(null, `
+      <pre>
+      Everything a var statement can work out, in the words it is said with.
+
+      An operand is a number, a text, true/false/nothing, an empty list or box, or a value the routine remembers - never a bare word, which would be read as the operation itself. The editor writes whichever of those was typed.
+      </pre>
+    `, null, null, 'working out a value');
+    if(info)
+      title.after(info);
+
+    const search = document.createElement('input');
+    search.type = 'text';
+    search.className = 'popup-property-search';
+    search.placeholder = 'Search operations...';
+    this.domElement.append(search);
+    this.searchInput = search;
+    this.listElement = div(this.domElement, 'popup-operation-list');
+    search.addEventListener('input', _=>this.renderComputeEntries());
+    this.renderComputeEntries();
+    this.moveIntoView();
+    search.focus(); // the list is long, so typing is where this popup is used from
+  }
+
+  renderComputeEntries() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const term = this.searchInput.value.trim().toLowerCase();
+    const matches = this.choices.filter(choice=>!term || `${choice.operator} ${choice.word} ${choice.description}`.toLowerCase().includes(term));
+    for(const group of [ ...new Set(matches.map(choice=>choice.group)) ]) {
+      div(list, 'popup-operation-group').textContent = group;
+      for(const choice of matches.filter(c=>c.group == group)) {
+        const entry = div(list, 'popup-operation');
+        if(choice.operator === this.current)
+          entry.classList.add('selected');
+        entry.title = choice.description || `${choice.operator || 'no operation'} - ${choice.word}`;
+        entry.addEventListener('click', _=>this.notifyChangeListeners({ operator: choice.operator }));
+        div(entry, 'popup-operation-func').textContent = choice.word;
+        // what the statement stores is the operation's own name, and that is
+        // what a game written by hand (or read in the JSON editor) says
+        div(entry, 'popup-operation-example').textContent = choice.operator || '';
+      }
+    }
+    if(!matches.length)
+      div(list, 'popup-property-empty').textContent = 'No matching operation.';
+  }
+}
+
 // a value offered as a button or a menu entry says what it means in the sentence
 // rather than what is stored: the parameter's own wording (a table or a function
 // of the value), and the value itself where it has none
@@ -2375,6 +2447,19 @@ function commonInfoTopic(topicName) {
       variable: variable name - stores the uploaded file's path, e.g. "/assets/1234_5678" (defaults to "uploadedFileName").
       </pre>
     `, tutorial: 'upload' };
+  }
+  if(topicName == 'var') {
+    return { info: `
+      <pre>
+      A var statement works out one value and remembers it under a name: "var total = \${a} + \${b}".
+
+      What goes on either side of the operation is an operand, and an operand is a number, a text in single quotes, null/true/false, an empty list [] or box {}, or a \${...} reference to something the routine already remembers. A bare word is NOT an operand - it is read as the operation, which is why "var a = hello" does not do what it looks like. The editor writes the quotes for you.
+
+      Some operations work ON the variable rather than on an operand: "var hand = push \${card}" adds a card to whatever hand already holds, and "var card = \${deck} pop" takes the last entry off deck and remembers it.
+
+      Anything that cannot be worked out becomes 0 (dividing by zero included), and the one exception is the "=" operation, which exists for compatibility with [SET].
+      </pre>
+    `, tutorial: 'var' };
   }
   if(topicName == 'VAR') {
     return { info: `
