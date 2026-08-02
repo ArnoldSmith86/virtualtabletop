@@ -738,6 +738,14 @@ class RoutineOperationPopup extends RoutinePopup {
   }
 }
 
+// a value offered as a button or a menu entry says what it means in the sentence
+// rather than what is stored: the parameter's own wording (a table or a function
+// of the value), and the value itself where it has none
+function routineValueWords(value, display) {
+  const words = typeof display == 'function' ? display(value) : display && display[value];
+  return words != null ? String(words) : String(value);
+}
+
 // One entry of a menu: the phrase it would put into the sentence, and under it
 // the sentence it would then read as - what a phrase does is the whole reason to
 // pick it, so it is on screen rather than in a hover tip.
@@ -843,13 +851,12 @@ class RoutineEnumMenu extends RoutinePopup {
     openRoutinePopup = this;
     Popup.prototype.show.call(this);
     this.domElement.classList.add('popup-menu', 'popup-menu-plain');
-    const display = this.options.display || {};
     const current = this.currentValue();
     for(const value of this.options.values) {
-      const entry = menuEntry(this.domElement, display[value] != null ? display[value] : String(value), null, _=>this.setNewValue(value));
+      const entry = menuEntry(this.domElement, routineValueWords(value, this.options.display), null, _=>this.setNewValue(value));
       entry.classList.toggle('selected', value === current);
     }
-    const other = menuEntry(this.domElement, 'something else…', null, _=>this.notifyChangeListeners(routineFullPopupRequest));
+    const other = menuEntry(this.domElement, this.options.otherLabel || 'something else…', null, _=>this.notifyChangeListeners(routineFullPopupRequest));
     other.classList.add('popup-menu-entry-other');
     other.title = 'Use a value the routine works out while it runs instead of one of these';
     this.moveIntoView();
@@ -1007,13 +1014,14 @@ class RoutineNumberPopup extends RoutinePopup {
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
 
-    if(this.options.specialValues)
-      for(const value of this.options.specialValues)
-        button(valueContent, value, _=>this.setNewValue(value));
+    const specials = this.options.specialValues || [];
+    for(const value of specials)
+      button(valueContent, routineValueWords(value, this.options.display), _=>this.setNewValue(value));
     // starts at 0 because that is a meaningful value for most number parameters
     // (move/flip/rotate none, x/y/angle 0); "use default" is what clears a value
     for(let i=0; i<=10; i++)
-      button(valueContent, i, _=>this.setNewValue(i));
+      if(specials.indexOf(i) == -1)
+        button(valueContent, routineValueWords(i, this.options.display), _=>this.setNewValue(i));
 
     // a few number parameters name a widget instead (TURN turn takes a seat id),
     // so offer the picker for those as well
@@ -1051,9 +1059,8 @@ class RoutineEnumPopup extends RoutinePopup {
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
     // the choices read the way the sentence words them (">" is "is more than"),
     // so nothing is picked from a list that speaks a different language
-    const display = this.options.display || {};
     for(const option of this.options.values)
-      button(valueContent, display[option] != null ? display[option] : option, _=>this.setNewValue(option));
+      button(valueContent, routineValueWords(option, this.options.display), _=>this.setNewValue(option));
     super.show(true, false);
   }
 }
@@ -1331,25 +1338,21 @@ class RoutineIconPopup extends RoutinePickerPopup {
   }
 }
 
+// What a FOREACH repeats for, asked one way of repeating at a time: a range is
+// three numbers and a list is what it holds, so a popup offering both under
+// either of them invites a range where only entries work (and the other way
+// round). Which one it asks for is the parameter the chip stands for.
 class RoutineForeachSourcePopup extends RoutinePopup {
   parameterQuestion() {
-    return 'what to repeat for';
+    return this.options.range ? 'which numbers' : 'what to repeat for';
   }
 
-  constructor() {
+  constructor(options={}) {
     super();
+    this.options = options;
   }
 
-  setNewCollectionValue(value) {
-    this.notifyChangeListeners({ 'in': undefined, range: undefined, collection: value });
-  }
-
-  setNewValue(value) {
-    // variables and manual input iterate over their content via "in"
-    this.notifyChangeListeners({ 'in': value, range: undefined, collection: undefined });
-  }
-
-  show() {
+  showRangeSection() {
     const [ rangeTitle, rangeContent ] = this.addAccordionSection('Range', '', 'value');
     infoButton(rangeTitle, 'Iterate over a range of numbers. The loopRoutine receives each number as the variable value.');
     const inputs = {};
@@ -1365,10 +1368,10 @@ class RoutineForeachSourcePopup extends RoutinePopup {
     inputs.start.value = 1;
     inputs.end.value = 10;
     inputs.step.value = 1;
-    button(rangeContent, 'use range', _=>{
-      this.notifyChangeListeners({ 'in': undefined, range: [ +inputs.start.value || 0, +inputs.end.value || 0, +inputs.step.value || 1 ], collection: undefined });
-    });
+    button(rangeContent, 'use range', _=>this.setNewValue([ +inputs.start.value || 0, +inputs.end.value || 0, +inputs.step.value || 1 ]));
+  }
 
+  showEntriesSection() {
     const [ inTitle, inContent ] = this.addAccordionSection('Object / Array', '', 'value');
     infoButton(inTitle, 'Iterate over the entries of an object, array or string. The loopRoutine receives key and value for each entry.');
     const textarea = document.createElement('textarea');
@@ -1383,8 +1386,16 @@ class RoutineForeachSourcePopup extends RoutinePopup {
       }
     });
     inContent.append(textarea);
+  }
 
-    super.show(true, true);
+  show() {
+    if(this.options.range)
+      this.showRangeSection();
+    else
+      this.showEntriesSection();
+    // a collection is the third way to repeat and has its own phrase in the
+    // sentence, so it is not something either of these two is filled in with
+    super.show(true, false);
   }
 }
 

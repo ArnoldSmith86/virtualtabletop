@@ -48,7 +48,7 @@ beforeAll(() => {
     'routineOperationVariantChoices', 'operationVariantValues', 'RoutineOperationPopup', 'RoutineClausePopup',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
-    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
+    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML'
@@ -216,7 +216,7 @@ describe('operation rendering', () => {
   test('an ignored parameter is neither in the sentence nor offered as an option', () => {
     const move = editorForOperation({ func: 'MOVE', fillTo: 3, count: 2 });
     move.setOperationDetails({ state: {} }, { func: 'MOVE', fillTo: 3, count: 2 }, [], []);
-    expect(move.ignoredParameters().count).toMatch(/fill up to/);
+    expect(move.ignoredParameters().count).toMatch(/top up to/);
     expect(move.clauses().map(clause => clause.id)).not.toContain('count');
     expect(move.render().querySelector('[data-parameter="count"]')).toBeNull();
   });
@@ -382,10 +382,9 @@ describe('operation rendering', () => {
       editor.setOperationDetails({ state: {} }, operation, [], []);
       return editor.getTemplate();
     };
-    expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('to {faceCycle}');
-    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn face up');
-    expect(template({ func: 'FLIP', face: 1 })).toContain('Turn face down');
-    expect(template({ func: 'FLIP', face: 3 })).toContain('Turn to the face {face}');
+    expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('Cycle the face of');
+    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} widgets] in {holder,collection} {face}');
+    expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
     expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas {canvas}');
     expect(template({ func: 'CANVAS' })).toContain('Clear the canvas {collection}');
     expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
@@ -485,10 +484,18 @@ describe('operation rendering', () => {
     [ { func: 'CALL', routine: 'startRandomRoutine' }, 'Run the routine startRandomRoutine' ],
     [ { func: 'CALL', routine: 'dealRoutine', widget: 'deck1', arguments: { count: 5 } }, 'Run the routine dealRoutine of deck1, passing count: 5' ],
     [ { func: 'MOVE', from: 'deck1', to: 'hand1' }, 'Move 1 widget from deck1 to hand1' ],
-    [ { func: 'MOVE', to: 'discard' }, 'Move all widgets from the picked widgets to discard' ],
+    [ { func: 'MOVE', to: 'discard' }, 'Move the picked widgets to discard' ],
+    [ { func: 'MOVE', to: 'discard', count: 3 }, 'Move 3 of the picked widgets to discard' ],
+    [ { func: 'MOVE', to: 'discard', collection: 'aces' }, 'Move the widgets called aces to discard' ],
+    [ { func: 'MOVE', from: 'deck1', to: 'hand1', fillTo: 7 }, 'Move widgets from deck1 to hand1 until it holds 7' ],
+    [ { func: 'MOVE', from: 'deck1', to: 'hand1', count: -2, face: 2 }, 'Move all but 2 widgets from deck1 to hand1 and turn them to face 2' ],
     [ { func: 'COUNT' }, 'Count the picked widgets' ],
     [ { func: 'COUNT', holder: 'hand1', variable: 'cards' }, 'Count what is in hand1 and remember it as cards' ],
-    [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn face up all widgets in deck1' ],
+    [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn all widgets in deck1 face up' ],
+    [ { func: 'FLIP', holder: 'deck1', face: 1, count: 3 }, 'Turn 3 widgets in deck1 face down' ],
+    [ { func: 'FLIP', collection: 'aces', face: 2 }, 'Turn all widgets in aces to face 2' ],
+    [ { func: 'FLIP', faceCycle: 'backward' }, 'Cycle the face of the pick backward' ],
+    [ { func: 'FLIP', faceCycle: 'random', count: 2 }, 'Cycle the face of 2 widgets in the pick random' ],
     [ { func: 'CLICK', collection: 'myPick', count: 2, mode: 'ignoreClickRoutine' }, 'Click the widgets called myPick, 2 times, but do not run their click routines' ],
     [ { func: 'RECALL', holder: 'deck1' }, 'Gather all the cards back into deck1' ],
     [ { func: 'RECALL', holder: 'deck1', owned: false }, 'Gather all the cards back into deck1, except the cards players hold' ],
@@ -511,7 +518,10 @@ describe('operation rendering', () => {
     [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", cancelling with "No"' ],
     [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask red and blue to fill in 1 field, holding everybody else up until it is answered' ],
     [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
-    [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number of 1 to 10' ]
+    [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number in the range 1 to 10, do the operations below' ],
+    [ { func: 'FOREACH' }, 'For each picked widget in the pick, do the operations below' ],
+    [ { func: 'FOREACH', 'in': [ 'a', 'b' ] }, 'For each entry in a and b, do the operations below' ],
+    [ { func: 'LABEL', label: 'score1', mode: 'inc', value: 5 }, 'Increase the text of score1 by 5' ]
   ])('%j reads as its sentence', (operation, sentence) => {
     const { dom } = renderOperation(operation);
     const rendered = dom.querySelector('.routine-editor-sentence').cloneNode(true);
@@ -602,9 +612,13 @@ describe('picking how an operation works and which options it uses', () => {
   test('the phrase the sentence starts with offers the other ways it can work', () => {
     const operation = { func: 'FLIP', holder: 'deck1' };
     const choices = routineOperationVariantChoices(operation);
-    expect(choices.map(c => c.lead)).toEqual([ 'Turn face up', 'Turn face down', 'Turn to the face', 'Flip' ]);
+    expect(choices.map(c => c.lead)).toEqual([ 'Turn', 'Cycle the face of' ]);
     expect(choices[0].example).toContain('deck1');
-    expect(choices[0].example).toContain('Turn face up');
+    expect(choices[0].example).toContain('Turn all widgets in deck1 face up');
+    // where two ways of working start with the same word, what they are called
+    // tells them apart instead
+    expect(routineOperationVariantChoices({ func: 'MOVE', from: 'deck1' }).map(c => c.lead))
+      .toEqual([ 'Move widgets from a holder', 'Move the picked widgets' ]);
     // operations with only one way to work offer nothing to pick
     expect(routineOperationVariantChoices({ func: 'DELAY' })).toEqual([]);
   });
@@ -612,7 +626,7 @@ describe('picking how an operation works and which options it uses', () => {
   test('the sentence starts with a drop-down of the ways to work, plain text when there is one', () => {
     const flip = renderOperation({ func: 'FLIP', holder: 'deck1', face: 0 }).dom;
     const lead = flip.querySelector('.routine-editor-variant');
-    expect(lead.textContent).toContain('Turn face up');
+    expect(lead.childNodes[0].textContent).toBe('Turn');
     expect(lead.classList.contains('routine-editor-variant-menu')).toBe(true);
     const delay = renderOperation({ func: 'DELAY' }).dom;
     expect(delay.querySelector('.routine-editor-variant').textContent).toBe('Wait for');
@@ -629,21 +643,21 @@ describe('picking how an operation works and which options it uses', () => {
     expect(menu.querySelector('h1')).toBeNull(); // a menu, not one of the parameter popups
     expect(menu.querySelector('.popup-close')).not.toBeNull(); // but it can be closed like every other popup
     const entryLabels = [...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent);
-    expect(entryLabels).toEqual([ 'Turn face up', 'Turn face down', 'Turn to the face', 'Flip' ]);
+    expect(entryLabels).toEqual([ 'Turn', 'Cycle the face of' ]);
     // nothing but the phrases: it is the expander of the field the sentence
     // starts with, and the sentence each phrase produces is a hover away
     expect(menu.querySelector('.popup-menu-entry-preview')).toBeNull();
     expect(menu.querySelector('.popup-menu-entry').title).toContain('deck1');
-    expect(menu.querySelector('button.selected .popup-menu-entry-label').textContent).toBe('Turn face up');
-    [...menu.querySelectorAll('.popup-menu-entry')].find(b => b.textContent.startsWith('Turn face down')).dispatchEvent(new Event('click'));
+    expect(menu.querySelector('button.selected .popup-menu-entry-label').textContent).toBe('Turn');
+    [...menu.querySelectorAll('.popup-menu-entry')].find(b => b.textContent.startsWith('Cycle')).dispatchEvent(new Event('click'));
     await new Promise(resolve => setTimeout(resolve, 0));
-    expect(result.face).toBe(1);
+    expect(result.face).toBeUndefined();
   });
 
   test('picking another way to work rewrites exactly the parameters that tell them apart', () => {
     const operation = { func: 'FLIP', holder: 'deck1', faceCycle: 'backward' };
-    const down = routineOperationVariantChoices(operation).find(c => c.id == 'down');
-    expect(down.values).toEqual({ func: 'FLIP', holder: 'deck1', faceCycle: undefined, face: 1 });
+    const turn = routineOperationVariantChoices(operation).find(c => c.id == 'turn');
+    expect(turn.values).toEqual({ func: 'FLIP', holder: 'deck1', faceCycle: undefined, face: 0 });
   });
 
   test('adding an operation offers every one of them right away, searchable', () => {
@@ -700,14 +714,64 @@ describe('picking how an operation works and which options it uses', () => {
     expect(sentenceOf(newOperation('SET'))).toBe('Set property of the picked widgets to number or text');
     // a dialog is written with what it says and what it asks
     expect(sentenceOf(newOperation('INPUT'))).toBe('Ask the player title to fill in fields');
+    // a MOVE almost always empties a holder, and how many it moves is the number
+    // the engine uses there - the sentence says it from the start instead of
+    // changing from "all" to "1" the moment a holder is picked
+    expect(newOperation('MOVE')).toEqual({ func: 'MOVE', from: null, count: 1 });
+    expect(sentenceOf(newOperation('MOVE'))).toBe('Move 1 widget from holder to holder');
     // everything else is nothing but its func
     expect(newOperation('SHUFFLE')).toEqual({ func: 'SHUFFLE' });
   });
 
+  // how many widgets an operation works on is a limit, and a negative one is the
+  // engine leaving that many alone rather than a minus sign in the sentence
+  test('a count says what it limits, in both directions', () => {
+    const move = editorForOperation({ func: 'MOVE', from: 'deck1', to: 'hand1', count: -2 });
+    move.setOperationDetails({ state: {} }, { func: 'MOVE', from: 'deck1', to: 'hand1', count: -2 }, [], []);
+    expect(move.getDisplayedValue('count')).toBe('all but 2');
+    expect(sentenceWords(renderOperation({ func: 'ROTATE', holder: 'deck1', count: -1 }).dom))
+      .toBe('Rotate all but 1 widget in deck1 by 90 degrees');
+    // and "all" is not a limit at all, so the option that limits it is off
+    const flip = editorForOperation({ func: 'FLIP', face: 0 });
+    flip.setOperationDetails({ state: {} }, { func: 'FLIP', face: 0 }, [], []);
+    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause)).map(clause => clause.label)).toEqual([ 'limit the number' ]);
+  });
+
+  // which face is one thing a FLIP says, not four ways of working: the two faces
+  // a game turns cards to are a drop-down, every other one a number away
+  test('FLIP picks its face in the sentence', () => {
+    const editor = editorForOperation({ func: 'FLIP', face: 1 });
+    editor.setOperationDetails({ state: {} }, { func: 'FLIP', face: 1 }, [], []);
+    expect(editor.parameterIsDropDown([ 'face' ])).toBe(true);
+    const menu = editor.createPopup([ 'face' ]);
+    expect(menu).toBeInstanceOf(RoutineEnumMenu);
+    menu.setSource(document.getElementById('editor'));
+    menu.setOperationDetails({ func: 'FLIP', face: 1 }, [ 'face' ], { state: {} }, [], []);
+    menu.show();
+    expect([...menu.domElement.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent))
+      .toEqual([ 'face up', 'face down', 'a specific face…' ]);
+    menu.hide();
+    // a face the list does not offer is a number, and the sentence says so
+    const third = editorForOperation({ func: 'FLIP', face: 2 });
+    third.setOperationDetails({ state: {} }, { func: 'FLIP', face: 2 }, [], []);
+    expect(third.parameterIsDropDown([ 'face' ])).toBe(false);
+  });
+
+  // the engine never looks at the collection once a holder is named, so counting
+  // a holder does not offer to name a group of widgets as well
+  test('COUNT offers the options of the way it is working', () => {
+    const holder = editorForOperation({ func: 'COUNT', holder: 'hand1' });
+    holder.setOperationDetails({ state: {} }, { func: 'COUNT', holder: 'hand1' }, [], []);
+    expect(holder.clauses().map(clause => clause.label)).toEqual([ 'owned by a player', 'name the result' ]);
+    const collection = editorForOperation({ func: 'COUNT' });
+    collection.setOperationDetails({ state: {} }, { func: 'COUNT' }, [], []);
+    expect(collection.clauses().map(clause => clause.label)).toContain('a named group of widgets');
+  });
+
   test('the field a sentence starts with is as wide as the phrases it holds', () => {
     const lead = renderOperation({ func: 'FLIP', holder: 'deck1', face: 0 }).dom.querySelector('.routine-editor-variant-menu');
-    // "Turn to the face" is the longest of the four ways a FLIP can work
-    expect(lead.style.minWidth).toBe('16ch');
+    // "Cycle the face of" is the longer of the two ways a FLIP can work
+    expect(lead.style.minWidth).toBe('17ch');
     // one way to work is no field at all
     expect(renderOperation({ func: 'DELAY' }).dom.querySelector('.routine-editor-variant').style.minWidth).toBe('');
   });
@@ -902,7 +966,7 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'GET' });
     editor.setOperationDetails({ state: {} }, { func: 'GET' }, [], []);
     expect(editor.variantLead(editor.currentVariant())).toBe('Read the first ');
-    expect(editor.clauses().map(clause => clause.label)).toEqual([ 'from a named pick', 'remember it as', 'ignore widgets without it' ]);
+    expect(editor.clauses().map(clause => clause.label)).toEqual([ 'from a named pick', 'name the result', 'ignore widgets without it' ]);
     // and the name it is remembered under is the last thing the sentence says
     expect(sentenceWords(renderOperation({ func: 'GET', property: 'score', variable: 'total', skipMissing: true }).dom))
       .toBe('Read the first score of the picked widgets, ignoring the widgets that do not have it and remember it as total');
@@ -914,7 +978,7 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'CALL' });
     editor.setOperationDetails({ state: {} }, { func: 'CALL' }, [], []);
     const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false);
-    expect(offered.map(clause => clause.label)).toEqual([ 'of another widget', 'pass values in', 'remember the result', 'and do not finish this routine' ]);
+    expect(offered.map(clause => clause.label)).toEqual([ 'of another widget', 'pass values in', 'name the result', 'and do not finish this routine' ]);
     expect(renderOperation({ func: 'CALL', routine: 'dealRoutine', 'return': false }).dom.textContent).toContain('and do not finish this routine');
     expect(renderOperation({ func: 'CALL', routine: 'dealRoutine' }).dom.textContent).not.toContain('waiting');
     // a game that did rename them still reads what it does
@@ -2133,7 +2197,6 @@ describe('widget type presets', () => {
       'CANVAS.collection': 'canvas', 'CANVAS.canvas': 'canvas',
       'COUNT.holder': 'holder',
       'FLIP.holder': 'holder',
-      'LABEL.label': 'label',
       'MOVE.from': 'holder', 'MOVE.to': 'holder',
       'MOVEXY.from': 'holder',
       'RECALL.holder': 'holder',
@@ -2164,8 +2227,9 @@ describe('widget type presets', () => {
     const timer = showPopup({ func: 'TIMER' }, [ 'collection' ]); // no timer set: the chip is the collection
     expect(pickedTypes(timer)).toEqual([ 'timer' ]);
     timer.hide();
+    // a LABEL works on any widget with a text property, so its picker starts on all of them
     const label = showPopup({ func: 'LABEL' }, [ 'label' ]);
-    expect(pickedTypes(label)).toEqual([ 'label' ]);
+    expect(pickedTypes(label).sort()).toEqual([ 'button', 'label', 'timer' ]);
     label.hide();
   });
 
@@ -2412,13 +2476,36 @@ describe('popup parameter routing', () => {
     widgets.clear();
   });
 
-  test('FOREACH source popup clears competing parameters', () => {
-    const popup = new RoutineForeachSourcePopup();
-    popup.setOperationDetails({ func: 'FOREACH', 'in': [ 1 ] }, [ 'in', 'range', 'collection' ], { state: {} }, [], []);
+  // each way of repeating asks for its own kind of value, so neither of the two
+  // offers what the other one is about
+  test('the FOREACH source popup asks for the one thing its chip stands for', () => {
+    const editor = editorForOperation({ func: 'FOREACH', range: [ 1, 10 ] });
+    editor.setOperationDetails({ state: {} }, { func: 'FOREACH', range: [ 1, 10 ] }, [], []);
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const range = editor.createPopup([ 'range' ]);
+    expect(range).toBeInstanceOf(RoutineForeachSourcePopup);
+    range.setSource(source);
+    range.setOperationDetails({ func: 'FOREACH', range: [ 1, 10 ] }, [ 'range' ], { state: {} }, [], []);
+    range.show();
+    expect([...range.domElement.querySelectorAll('.accordion-section')].map(s => s.textContent)).not.toContain('Object / Array');
     let value = null;
-    popup.registerChangeListener(v => value = v);
-    popup.setNewCollectionValue('mine');
-    expect(value.collection).toBe('mine');
-    expect('in' in value && value['in'] === undefined).toBe(true);
+    range.registerChangeListener(v => value = v);
+    [...range.domElement.querySelectorAll('button')].find(b => b.textContent == 'use range').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ range: [ 1, 10, 1 ] });
+    range.hide();
+
+    const list = editor.createPopup([ 'in' ]);
+    list.setSource(source);
+    list.setOperationDetails({ func: 'FOREACH', 'in': [ 1 ] }, [ 'in' ], { state: {} }, [], []);
+    list.show();
+    expect(list.domElement.querySelector('input[type=number]')).toBeNull(); // no range to fill in
+    let entries = null;
+    list.registerChangeListener(v => entries = v);
+    const textarea = list.domElement.querySelector('textarea');
+    textarea.value = '[ "a" ]';
+    textarea.dispatchEvent(new Event('change'));
+    expect(entries).toEqual({ 'in': [ 'a' ] });
+    list.hide();
   });
 });

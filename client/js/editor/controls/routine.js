@@ -89,6 +89,11 @@
 // the value, or a function of it where the words are computed (a volume as a
 // percentage, a list of ids spelled out).
 //
+// menu makes a number parameter that is almost always one of a handful of values
+// (a FLIP face is up or down) the same drop-down an enum gets: its special values
+// worded through display, plus otherLabel - the entry that opens the full popup
+// for the numbers the list does not offer.
+//
 // hint is the word a parameter shows while it has no value yet, in red: a fresh
 // SET reads "Set property of the picked widgets to number or text" instead of
 // asking what belongs in a "?" and answering it in a hover tip. It defaults to
@@ -206,10 +211,27 @@ function keyValueWords(value) {
 // over, and "up" and "down" is what they are called everywhere else
 const faceWords = { '0': 'up', '1': 'down', 'null': 'unchanged' };
 
+// the first two faces worded the way FLIP words them, where the face is a whole
+// phrase of the sentence rather than the tail of "turn them face ..."
+const flipFaceWords = { '0': 'face up', '1': 'face down' };
+
 // "1 widgets" is not a sentence: the wording follows the number, while the chip
 // stays in it either way so the number is still there to be changed
 function widgetsCounted(v, parameter) {
-  return `{${parameter}} widget${v(parameter) == 1 ? '' : 's'}`;
+  return `{${parameter}} widget${Math.abs(v(parameter)) == 1 ? '' : 's'}`;
+}
+
+// the operations that take a count cut the list of widgets at it (slice(0,
+// count)), so a negative number leaves that many alone instead of working on
+// that many - which is what the sentence says rather than showing a minus sign
+function countWords(value) {
+  return typeof value == 'number' && value < 0 ? `all but ${-value}` : null;
+}
+
+// a count is in use while it is a real limit: "all" is what an operation does
+// anyway, so the option that limits the number counts as switched off there
+function countIsLimited(v) {
+  return v('count') !== 'all';
 }
 
 // a yes/no parameter has no "true" in its sentence: both sides are the phrase
@@ -290,7 +312,7 @@ const routineOperationMetadata = {
     clauses: [
       { id: 'widget', label: 'of another widget', template: ' of {widget}' },
       { id: 'arguments', label: 'pass values in', template: ', passing {arguments}' },
-      { id: 'variable', label: 'remember the result', template: ' and remember the result as {variable}' },
+      { id: 'variable', label: 'name the result', template: ' and remember the result as {variable}' },
       // the widgets a routine hands back are always called result, so there is
       // nothing to decide: the option is not offered. A game that renames them
       // anyway still reads what it does, which is what offer: false is for.
@@ -419,14 +441,17 @@ const routineOperationMetadata = {
       { id: 'collection', label: 'Count the widgets of a collection', fixed: [ 'holder' ],
         apply: operation=>{ delete operation.holder; },
         template: 'Count{{collection}}{{owner}}{{variable}}' },
-      { id: 'holder', label: 'Count what is in a holder', match: (v, isSet)=>isSet('holder'),
-        apply: operation=>{ if(operation.holder === undefined) operation.holder = null; },
+      // the engine never looks at the collection once a holder is named, so
+      // counting a holder is counting a holder - and the option to name a group
+      // of widgets belongs to the other way of working, not to this one
+      { id: 'holder', label: 'Count what is in a holder', fixed: [ 'collection' ], match: (v, isSet)=>isSet('holder'),
+        apply: operation=>{ delete operation.collection; if(operation.holder === undefined) operation.holder = null; },
         template: 'Count what is in {holder}{{owner}}{{variable}}' }
     ],
     clauses: [
       Object.assign(namedGroupClause(), { variants: [ 'collection' ] }),
       { id: 'owner', label: 'owned by a player', template: ' owned by {owner}', add: { owner: '' } },
-      { id: 'variable', label: 'under another name', template: ' and remember it as {variable}' }
+      { id: 'variable', label: 'name the result', template: ' and remember it as {variable}' }
     ],
     parameters: {
       owner: { type: 'string', default: null, display: { 'null': 'anyone' } },
@@ -460,26 +485,31 @@ const routineOperationMetadata = {
   },
   FLIP: {
     description: 'Turn widgets face up or down',
+    // which face the widgets end up on is one thing the operation says, not four
+    // ways of working: turning them to a face and cycling them onwards are the
+    // two, and which face that is is a drop-down in the sentence
     variants: [
-      { id: 'up', label: 'Turn face up', fixed: [ 'face', 'faceCycle' ], match: v=>v('face') === 0,
-        apply: operation=>{ delete operation.faceCycle; operation.face = 0; },
-        template: v=>`Turn face up ${widgetsCounted(v, 'count')} in {holder,collection}` },
-      { id: 'down', label: 'Turn face down', fixed: [ 'face', 'faceCycle' ], match: v=>v('face') === 1,
-        apply: operation=>{ delete operation.faceCycle; operation.face = 1; },
-        template: v=>`Turn face down ${widgetsCounted(v, 'count')} in {holder,collection}` },
-      { id: 'toFace', label: 'Turn to a specific face', fixed: [ 'faceCycle' ], match: v=>typeof v('face') == 'number',
-        apply: operation=>{ delete operation.faceCycle; if(typeof operation.face != 'number' || operation.face < 2) operation.face = 2; },
-        template: v=>`Turn to the face {face}, ${widgetsCounted(v, 'count')} in {holder,collection}` },
-      { id: 'cycle', label: 'Flip to the next face', fixed: [ 'face' ],
+      { id: 'turn', label: 'Turn widgets to a face', fixed: [ 'faceCycle' ], match: v=>typeof v('face') == 'number',
+        apply: operation=>{ delete operation.faceCycle; if(typeof operation.face != 'number') operation.face = 0; },
+        template: v=>`Turn{{count}} in {holder,collection} ${v('face') > 1 ? 'to face {face}' : '{face}'}` },
+      { id: 'cycle', label: 'Cycle the face of widgets', fixed: [ 'face' ],
         apply: operation=>{ delete operation.face; },
-        template: v=>`Flip ${widgetsCounted(v, 'count')} in {holder,collection} to {faceCycle}` }
+        template: 'Cycle the face of{{count}} {holder,collection} {faceCycle}' }
+    ],
+    // how many widgets are turned is a limit rather than a quantity the operation
+    // applies - it turns everything it was given unless a game says otherwise
+    clauses: [
+      { id: 'count', label: 'limit the number', variants: [ 'turn' ], whenOff: ' all widgets',
+        active: countIsLimited, add: { count: 1 }, template: v=>` ${widgetsCounted(v, 'count')}` },
+      { id: 'count', label: 'limit the number', variants: [ 'cycle' ],
+        active: countIsLimited, add: { count: 1 }, template: v=>` ${widgetsCounted(v, 'count')} in` }
     ],
     parameters: {
-      count: { type: 'number', default: 'all', special: [ 'all' ] },
+      count: { type: 'number', default: 'all', special: [ 'all' ], display: countWords },
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: thePick },
-      face: { type: 'number', default: null, display: { 'null': 'next' } },
-      faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward', display: { forward: 'the next face', backward: 'the previous face', random: 'a random face' } }
+      face: { type: 'number', default: null, special: [ 0, 1 ], menu: true, otherLabel: 'a specific face…', display: flipFaceWords },
+      faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
     },
     ignored: v=>{
       const ignored = collectionReplacedBy('holder')(v);
@@ -492,21 +522,27 @@ const routineOperationMetadata = {
   },
   FOREACH: {
     description: 'Repeat operations for each entry',
+    // what a FOREACH repeats for is one of three things and each of them is its
+    // own way of working, so each sentence names only its own: a range of numbers
+    // is not something the entries of a list can be, and the other way round
     variants: [
-      { id: 'collection', label: 'For each widget of a collection',
+      { id: 'collection', label: 'For each picked widget', fixed: [ 'in', 'range' ],
         apply: operation=>{ delete operation['in']; delete operation.range; },
-        template: 'For each widget of {in,range,collection}' },
-      { id: 'list', label: 'For each entry of a list', match: v=>v('in') != null,
-        apply: operation=>{ delete operation.range; delete operation.collection; if(operation['in'] === undefined) operation['in'] = []; },
-        template: 'For each entry of {in,range,collection}' },
-      { id: 'range', label: 'For each number of a range', match: v=>v('range') != null,
+        template: 'For each picked widget in {collection}, do the operations below' },
+      { id: 'range', label: 'For each number of a range', fixed: [ 'in', 'collection' ],
+        // the engine reads in before range, so an operation with both is the one
+        // it acts as rather than the one it is listed as
+        match: v=>v('range') != null && v('in') == null,
         apply: operation=>{ delete operation['in']; delete operation.collection; if(operation.range === undefined) operation.range = [ 1, 10, 1 ]; },
-        template: 'For each number of {in,range,collection}' }
+        template: 'For each number in the range {range}, do the operations below' },
+      { id: 'list', label: 'For each entry of a list', fixed: [ 'range', 'collection' ], match: v=>v('in') != null,
+        apply: operation=>{ delete operation.range; delete operation.collection; if(operation['in'] === undefined) operation['in'] = []; },
+        template: 'For each entry in {in}, do the operations below' }
     ],
     parameters: {
-      'in': { type: 'json', default: null, display: listWords },
-      range: { type: 'json', default: null, display: rangeWords },
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets }
+      'in': { type: 'json', default: null, hint: 'object, array or text', display: listWords },
+      range: { type: 'json', default: null, hint: 'range', display: rangeWords },
+      collection: { type: 'collection', default: 'DEFAULT', display: thePick }
     },
     // the engine takes the first source that is set: in, then range, then collection
     ignored: v=>{
@@ -547,7 +583,7 @@ const routineOperationMetadata = {
     ],
     clauses: [
       Object.assign(namedGroupClause(), { label: 'from a named pick' }),
-      { id: 'variable', label: 'remember it as', template: ' and remember it as {variable}' },
+      { id: 'variable', label: 'name the result', template: ' and remember it as {variable}' },
       { id: 'skipMissing', label: 'ignore widgets without it', template: ', {skipMissing}', add: { skipMissing: true } }
     ],
     parameters: {
@@ -628,18 +664,20 @@ const routineOperationMetadata = {
       { id: 'set', label: 'Set the text', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
         template: 'Set the text of {label,collection} to {value}' },
-      { id: 'inc', label: 'Increase the number', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
+      { id: 'inc', label: 'Increase the text', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
-        template: 'Increase the number in {label,collection} by {value}' },
-      { id: 'dec', label: 'Decrease the number', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
+        template: 'Increase the text of {label,collection} by {value}' },
+      { id: 'dec', label: 'Decrease the text', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: 'Decrease the number in {label,collection} by {value}' },
+        template: 'Decrease the text of {label,collection} by {value}' },
       { id: 'append', label: 'Append text', fixed: [ 'mode' ], match: v=>v('mode') == 'append',
         apply: operation=>{ operation.mode = 'append'; },
         template: 'Append {value} to the text of {label,collection}' }
     ],
     parameters: {
-      label: { type: 'widgets', default: null, widgetType: 'label' },
+      // any widget with a text property can be labelled, not only a label, so the
+      // picker opens on all of them the way every other widget parameter does
+      label: { type: 'widgets', default: null },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       value: { type: 'string', default: 0 },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'append' ], default: 'set' }
@@ -648,20 +686,37 @@ const routineOperationMetadata = {
   },
   MOVE: {
     description: 'Move widgets into a holder',
+    // where the widgets come from is what tells the two ways apart, because it is
+    // also what decides how many are moved: one out of a holder, all of the ones
+    // an earlier operation picked. One slot switching between the two hid that -
+    // picking a holder in it silently turned "all widgets" into "1 widget".
+    // Topping a holder up is not a third way but an option of both.
     variants: [
-      { id: 'move', label: 'Move widgets', fixed: [ 'fillTo' ],
-        apply: operation=>{ delete operation.fillTo; },
-        template: v=>`Move ${widgetsCounted(v, 'count')} from {from,collection} to {to}` },
-      { id: 'fillTo', label: 'Fill a holder up', match: v=>v('fillTo'),
-        apply: operation=>{ delete operation.count; if(!operation.fillTo) operation.fillTo = 1; },
-        template: 'Top up {to} from {from,collection} until it holds {fillTo}' }
+      { id: 'from', label: 'Move widgets from a holder', fixed: [ 'collection' ], match: (v, isSet)=>isSet('from'),
+        apply: operation=>{ delete operation.collection; if(operation.from === undefined) operation.from = null; },
+        template: v=>`Move ${v('fillTo') ? 'widgets' : widgetsCounted(v, 'count')} from {from} to {to}{{fillTo}}{{face}}` },
+      { id: 'collection', label: 'Move the picked widgets', fixed: [ 'from' ],
+        // a count of 1 is the default out of a holder and "all" for the picked
+        // widgets, so switching drops it instead of carrying a number over into
+        // a sentence where it now means something else
+        apply: operation=>{ delete operation.from; delete operation.count; },
+        template: 'Move{{count}}{{collection}} to {to}{{fillTo}}{{face}}' }
     ],
     clauses: [
-      { id: 'face', label: 'to a face', template: ' and turn them face {face}', add: { face: 0 } }
+      { id: 'count', label: 'only some of them', variants: [ 'collection' ],
+        active: countIsLimited, add: { count: 1 }, template: ' {count} of' },
+      Object.assign(namedGroupClause(), { variants: [ 'collection' ] }),
+      { id: 'fillTo', label: 'top up to n', template: ' until it holds {fillTo}', add: { fillTo: 1 } },
+      // the first two faces are what a game turns cards to; the ones after them
+      // are numbered, and a number needs the word that says what it is
+      { id: 'face', label: 'to a face', add: { face: 0 },
+        template: v=>v('face') > 1 ? ' and turn them to face {face}' : ' and turn them face {face}' }
     ],
+    // the shape 88% of the library writes: so many widgets out of one holder
+    newOperation: { func: 'MOVE', from: null, count: 1 },
     parameters: {
       fillTo: { type: 'number', default: null },
-      count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ] },
+      count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ], display: countWords },
       from: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       to: { type: 'widgets', default: null, widgetType: 'holder' },
@@ -670,7 +725,7 @@ const routineOperationMetadata = {
     ignored: (v, isSet)=>{
       const ignored = collectionReplacedBy('from')(v);
       if(v('fillTo'))
-        ignored.count = 'ignored because "fill up to" is set';
+        ignored.count = 'ignored because "top up to" is set';
       else if(isSet('fillTo'))
         ignored.fillTo = 'ignored because 0 means the same as leaving it unset';
       return ignored;
@@ -688,7 +743,7 @@ const routineOperationMetadata = {
       { id: 'resetOwner', label: 'their owner', template: ', {resetOwner}', add: { resetOwner: false } }
     ],
     parameters: {
-      count: { type: 'number', default: 1, special: [ 'all' ] },
+      count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
       from: { type: 'widgets', default: null, widgetType: 'holder' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
@@ -741,7 +796,7 @@ const routineOperationMetadata = {
         template: v=>`Turn ${widgetsCounted(v, 'count')} in {holder,collection} to {angle} degrees` }
     ],
     parameters: {
-      count: { type: 'number', default: 1, special: [ 'all' ] },
+      count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: thePick },
       angle: { type: 'number', default: 90, special: [ 45, 60, 90, 135, 180 ] },
@@ -1042,7 +1097,7 @@ const routineOperationMetadata = {
       { id: 'upload', label: 'Ask the player for a file', template: 'Ask the player for a file{{variable}}' }
     ],
     clauses: [
-      { id: 'variable', label: 'under another name', template: ' and remember its name as {variable}' },
+      { id: 'variable', label: 'name the result', template: ' and remember its name as {variable}' },
       { id: 'fileTypes', label: 'only some file types', template: ', accepting {fileTypes}' }
     ],
     parameters: {
@@ -1665,9 +1720,20 @@ class RoutineOperationEditor {
   createPopup(parameterNames) {
     if(this.parameterIsDropDown(parameterNames)) {
       const spec = this.parameterSpec(parameterNames[0]);
-      return new RoutineEnumMenu({ values: spec.values, display: spec.display });
+      return new RoutineEnumMenu({ values: this.dropDownValues(spec), display: spec.display, otherLabel: spec.otherLabel });
     }
     return this.createFullPopup(parameterNames);
+  }
+
+  // the phrases a chip offers in its drop-down: what a setting can be, or - for a
+  // number that is almost always one of a few (a FLIP face) - the values worded
+  // next to the sentence, with everything else a popup away
+  dropDownValues(spec) {
+    if(spec && spec.type == 'enum' && Array.isArray(spec.values))
+      return spec.values;
+    if(spec && spec.menu && Array.isArray(spec.special))
+      return spec.special;
+    return null;
   }
 
   // a chip is a drop-down while its parameter is a setting AND holds one of the
@@ -1676,11 +1742,11 @@ class RoutineOperationEditor {
   parameterIsDropDown(parameterNames) {
     if(parameterNames.length != 1)
       return false;
-    const spec = this.parameterSpec(parameterNames[0]);
-    if(!spec || spec.type != 'enum' || !Array.isArray(spec.values))
+    const values = this.dropDownValues(this.parameterSpec(parameterNames[0]));
+    if(!values)
       return false;
     const value = this.parameterValue(parameterNames[0]);
-    return spec.values.some(known=>known === value);
+    return values.some(known=>known === value);
   }
 
   createFullPopup(parameterNames) {
@@ -1698,7 +1764,7 @@ class RoutineOperationEditor {
     if(parameterNames.length > 1 && spec && spec.type == 'collection')
       return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
     switch(spec && spec.type) {
-      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
+      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, display: spec.display, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values, display: spec.display });
       case 'property':   return new RoutinePropertyNamePopup();
       case 'widgets':    return new RoutineWidgetIDPopup(pickerOptions);
@@ -1775,6 +1841,11 @@ class RoutineOperationEditor {
     const value = explicitlySet ? this.operation[resolved] : this.getDefaults()[resolved];
     if(this.displayedWords(resolved, value) !== null)
       return false;
+    // there is no widget called null: a way of working that names the parameter
+    // to say it is the one it works with (COUNT holder, MOVE from) leaves a blank
+    // to fill in, not the word null
+    if(value === null && (this.parameterSpec(resolved) || {}).type == 'widgets')
+      return true;
     return value === '' || Array.isArray(value) && !value.length || value === null && !explicitlySet;
   }
 
@@ -1808,10 +1879,12 @@ class RoutineOperationEditor {
   // operations and their variants in a popup. Optional parts stay out: an
   // example is what the operation says once it is added, not everything it could.
   getExampleWithDefaults(variant) {
-    return this.resolveTemplate((variant || this.currentVariant()).template)
+    const shown = variant || this.currentVariant();
+    return this.resolveTemplate(shown.template)
       .replace(/\{\{([a-zA-Z0-9]+)\}\}/g, (_, id)=>{
-        // an option that replaces words leaves its own wording behind
-        const clause = (this.metadata.clauses || []).find(c=>c.id == id);
+        // an option that replaces words leaves its own wording behind - the one
+        // this way of working has, where several of them share the same id
+        const clause = (this.metadata.clauses || []).find(c=>c.id == id && (!c.variants || c.variants.indexOf(shown.id) != -1));
         return clause && clause.whenOff || '';
       })
       .replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p))
@@ -2316,8 +2389,11 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   createPopup(parameterNames) {
-    if(parameterNames.length > 1)
-      return new RoutineForeachSourcePopup();
+    // each way of repeating asks for its own kind of value: a range is three
+    // numbers, a list is what it holds - offering both under either one is what
+    // let "for each entry" be filled in with a range
+    if(parameterNames.length == 1 && (parameterNames[0] == 'range' || parameterNames[0] == 'in'))
+      return new RoutineForeachSourcePopup({ range: parameterNames[0] == 'range' });
     return super.createPopup(parameterNames);
   }
 
@@ -2492,7 +2568,7 @@ function routineOperationVariantChoices(operation) {
   const metadata = routineOperationMetadata[operation && operation.func];
   if(!metadata || (metadata.variants || []).length < 2)
     return [];
-  return metadata.variants.map(variant=>{
+  const choices = metadata.variants.map(variant=>{
     const preview = Object.assign({}, operation);
     if(variant.apply)
       variant.apply(preview);
@@ -2500,4 +2576,11 @@ function routineOperationVariantChoices(operation) {
     editor.setOperationDetails(null, preview, [], []);
     return { id: variant.id, lead: leadLabel(editor.variantLead(variant)), label: variant.label, example: editor.getExampleWithDefaults(variant), values: operationVariantValues(operation, variant) };
   });
+  // two ways of working whose sentences start with the same word (MOVE says
+  // "Move" either way) are told apart by what they are called instead: the same
+  // phrase twice is a list that offers no choice
+  const shared = choices.filter(choice=>choices.filter(other=>other.lead == choice.lead).length > 1);
+  for(const choice of shared)
+    choice.lead = choice.label;
+  return choices;
 }
