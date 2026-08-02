@@ -1181,6 +1181,12 @@ let activeRoutineDrag = null;
 // every edit triggers, the editors and their DOM do not.
 let activeRoutineOperation = null;
 
+// The same card again after the widget was selected, deselected and selected
+// again - like the JSON editor putting its cursor back where it was. The routine
+// arrays are new objects then, so the place is remembered instead: which routine
+// of which widget (routineKey) and which index in it.
+const activeOperationByWidget = {};
+
 // every routine editor registers its container here so a point on the screen
 // can be resolved to the routine level that owns it
 const routineEditorsByElement = new WeakMap();
@@ -1282,6 +1288,11 @@ class RoutineEditor {
     // the routine editor one level up, so a cross-level drag can re-render (and
     // save) from the top instead of from a level that no longer owns the operation
     this.parentEditor = options.parentEditor || null;
+    // which routine of the widget this level edits ("clickRoutine", or that plus
+    // the path into a nested block), so the card worked on last can be found
+    // again after the widget was selected anew
+    this.routineKey = options.routineKey || '';
+    this.widgetID = widget ? (typeof widget.get == 'function' ? widget.get('id') : widget.state.id) : null;
     this.changeListeners = [];
     // indices (into this level's routine) of the operations selected for a
     // multi-drag; reset whenever the routine changes structurally (see setRoutine)
@@ -1365,6 +1376,7 @@ class RoutineEditor {
 
   render() {
     this.domElement.innerHTML = '';
+    this.restoreActiveOperation();
     for(const [ index, operation ] of this.operations.entries()) {
       const operationDOM = operation.render();
       if(this.selectedIndices.has(index))
@@ -1492,6 +1504,8 @@ class RoutineEditor {
     if(index < 0)
       return;
     activeRoutineOperation = { routine: this.routine, index };
+    if(this.widgetID)
+      activeOperationByWidget[this.widgetID] = { routineKey: this.routineKey, index };
     for(const active of $a('.routine-editor-operation-active'))
       active.classList.remove('routine-editor-operation-active');
     const card = this.directChildCards()[index];
@@ -1501,6 +1515,22 @@ class RoutineEditor {
 
   isActiveOperation(index) {
     return Boolean(activeRoutineOperation) && activeRoutineOperation.routine === this.routine && activeRoutineOperation.index === index;
+  }
+
+  // selecting the widget again builds this level from a fresh routine array, so
+  // the card that was worked on last is pointed at anew - which also makes it
+  // the one the next added operation follows, exactly as before the widget was
+  // left. A card that is gone (the routine got shorter meanwhile) is forgotten.
+  restoreActiveOperation() {
+    const remembered = this.widgetID && activeOperationByWidget[this.widgetID];
+    if(!remembered || remembered.routineKey !== this.routineKey)
+      return;
+    if(remembered.index >= this.routine.length) {
+      delete activeOperationByWidget[this.widgetID];
+      return;
+    }
+    if(!activeRoutineOperation || activeRoutineOperation.routine !== this.routine || activeRoutineOperation.index !== remembered.index)
+      activeRoutineOperation = { routine: this.routine, index: remembered.index };
   }
 
   // toggles a card of this level in and out of the multi-selection
@@ -2326,6 +2356,9 @@ class RoutineOperationEditor {
       ...options,
       onHoist: op=>this.hoistIntoParent && this.hoistIntoParent(op),
       parentEditor: this.routineEditor,
+      // the place of this block in the widget: the routine it is in, the card it
+      // belongs to and which of that card's blocks (see restoreActiveOperation)
+      routineKey: this.routineEditor ? `${this.routineEditor.routineKey}/${this.routineEditor.routine.indexOf(this.operation)}/${property}` : '',
       attachRoutine: _=>{ this.operation[property] = routine; }
     };
     const routineEditor = new RoutineEditor(this.widget, routine, this.variables, this.collections, options);

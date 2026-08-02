@@ -1170,6 +1170,29 @@ describe('routine editor state handling', () => {
     editor.domElement.remove();
   });
 
+  test('the card worked on last is selected again when the widget comes back', () => {
+    const widget = { state: { id: 'w1' } };
+    const cardsOf = editor => [...editor.domElement.querySelectorAll(':scope > .routine-editor-operation')];
+
+    const editor = new RoutineEditor(widget, [ { func: 'FLIP' }, { func: 'SHUFFLE' }, { func: 'DELETE' } ], [], [], { routineKey: 'clickRoutine' });
+    document.getElementById('editor').append(editor.domElement);
+    cardsOf(editor)[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    editor.domElement.remove();
+
+    // selecting the widget again builds a new editor from a new routine array
+    const reopened = new RoutineEditor(widget, [ { func: 'FLIP' }, { func: 'SHUFFLE' }, { func: 'DELETE' } ], [], [], { routineKey: 'clickRoutine' });
+    expect(cardsOf(reopened)[1].classList).toContain('routine-editor-operation-active');
+    expect(cardsOf(reopened)[0].classList).not.toContain('routine-editor-operation-active');
+
+    // another routine of the same widget has its own cards, none of them active
+    const otherRoutine = new RoutineEditor(widget, [ { func: 'FLIP' } ], [], [], { routineKey: 'changeRoutine' });
+    expect(cardsOf(otherRoutine)[0].classList).not.toContain('routine-editor-operation-active');
+
+    // and a card that is gone meanwhile is not looked for any longer
+    const shortened = new RoutineEditor(widget, [ { func: 'FLIP' } ], [], [], { routineKey: 'clickRoutine' });
+    expect(cardsOf(shortened)[0].classList).not.toContain('routine-editor-operation-active');
+  });
+
   test('moves an operation into an adjacent IF block', () => {
     const routine = [ { func: 'IF', operand1: 1 }, { func: 'FLIP' } ];
     const editor = new RoutineEditor({ state: {} }, routine);
@@ -1592,8 +1615,10 @@ describe('the values a parameter popup offers', () => {
   // sections - and only one of them is open, so only one color is on screen
   test('one section per kind of value, the origin a plain line inside it', () => {
     const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    // a property of a widget follows the widgets themselves: both are about
+    // something in the room, the routine's own values are another thought
     expect(sectionTitles(popup)).toEqual([
-      'Widgets in the room', 'Values the routine has', 'Groups of widgets the routine has', 'A property of a widget in the room'
+      'Widgets in the room', 'A property of a widget in the room', 'Values the routine has', 'Groups of widgets the routine has'
     ]);
     const groups = [...popup.domElement.querySelectorAll('.popup-value-group')];
     expect(groups.map(g => g.textContent)).toEqual([
@@ -1607,7 +1632,7 @@ describe('the values a parameter popup offers', () => {
   test('the sections are colored by what they produce and only one is open', () => {
     const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
     const sections = [...popup.domElement.querySelectorAll('.accordion-section')];
-    expect(sections.map(s => s.dataset.kind)).toEqual([ 'widget', 'variable', 'collection', 'property' ]);
+    expect(sections.map(s => s.dataset.kind)).toEqual([ 'widget', 'property', 'variable', 'collection' ]);
     expect(sections.filter(s => s.classList.contains('open'))).toHaveLength(1);
     expect(sections[0].classList.contains('open')).toBe(true);
     sections[1].querySelector('h3').dispatchEvent(new Event('click'));

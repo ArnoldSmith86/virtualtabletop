@@ -3,6 +3,81 @@
   margin-right: 10px;
 }
 
+/* "Full size" (the switch in the Automations bar): every other section is folded
+   away, so the widget's title area is followed by the routines right away and
+   they get the height of the whole panel. */
+.tune.editorModule.automationsFullSize > *:not(.widgetHeader):not(.automationsHeader):not(.automationsSection) {
+  display: none;
+}
+
+/* the switch sits at the far right of the section bar without making it any
+   higher: two short lines centered on the bar's own line of text */
+.tune.editorModule > h2.automationsHeader {
+  position: relative;
+  padding-right: 80px;
+}
+
+.tune.editorModule .automationsFullSizeToggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tune.editorModule .automationsFullSizeLabel {
+  font-size: 9px;
+  line-height: 10px;
+  font-weight: normal;
+}
+
+/* thinner than the switches under Behavior, which are as high as a property row.
+   On the blue bar the blue an on switch is everywhere else would disappear, so
+   the track turns white and the knob takes the blue over. */
+.tune.editorModule .automationsFullSizeToggle label.switchbox {
+  height: 12px;
+  width: 26px;
+  min-width: 26px;
+  max-width: 26px;
+  margin: 1px 0 0 0;
+  padding: 0;
+  position: relative;
+  font-size: 0;
+  line-height: 0;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+}
+
+.tune.editorModule .automationsFullSizeToggle label.switchbox::before {
+  height: 10px;
+  width: 10px;
+  margin-top: 1px;
+  margin-left: 1px;
+  box-shadow: none;
+}
+
+.tune.editorModule .automationsFullSizeToggle input.switchbox:checked + label.switchbox {
+  background: white;
+}
+
+.tune.editorModule .automationsFullSizeToggle input.switchbox:checked + label.switchbox::before {
+  margin-left: 15px;
+  background: var(--VTTblue);
+}
+
+.tune.editorModule .automationsFullSizeToggle input.switchbox {
+  /* keep the hidden checkbox at its DOM position: moving it far off-screen makes
+     the browser scroll it into view when the label click focuses it */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
 .tune.editorModule .inheritFromTitle {
   font-weight: bold;
   margin-bottom: 8px;

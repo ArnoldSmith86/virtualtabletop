@@ -386,7 +386,7 @@ body.edit.darkMode .routine-editor-parameter-missing {
    after: a card lighter than the others rather than another outline, so it does
    not look like the Ctrl-selection that moves several cards at once */
 .routine-editor-operation-active {
-  background: var(--backgroundHighlightColor2);
+  background: var(--routineActiveCardColor);
 }
 
 .routine-editor-operation-dragging {

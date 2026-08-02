@@ -312,7 +312,7 @@ class EventsEditor {
           // clone in both directions: the editor mutates its own copy, and the widget must
           // never share references with it (deltas would alias widget state to the editor's
           // arrays and make later set() calls no-op because the state already "changed")
-          this.routineEditors[property] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.widget.state[property])));
+          this.routineEditors[property] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.widget.state[property])), [], [], { routineKey: property });
           this.routineEditors[property].registerChangeListener(v=>this.onChange(property, JSON.parse(JSON.stringify(v))));
         }
         contentDOM.append(this.routineEditors[property].domElement);

@@ -743,6 +743,9 @@ class PropertiesModule extends SidebarModule {
     this.renderedSelectionIDs = selectionIDs;
 
     this.moduleDOM.innerHTML = '';
+    // put back by renderEvents; a selection without an Automations section (a
+    // pile, or nothing at all) must not hide what it does show
+    this.moduleDOM.classList.remove('automationsFullSize');
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
 
@@ -5950,6 +5953,7 @@ class PropertiesModule extends SidebarModule {
 
   renderEvents(widget) {
     const section = document.createElement('div');
+    section.className = 'automationsSection';
     const eventsEditor = new EventsEditor(widget, (property, value)=>this.inputValueUpdated(widget, property, value));
     // a delta listener instead of per-property listeners so routines added
     // by other players (properties that did not exist on selection) show up too
@@ -5963,9 +5967,56 @@ class PropertiesModule extends SidebarModule {
     // The header goes straight into the module: wrapped in a div it would lose
     // the inset .tune.editorModule > h2 gives every other section bar.
     const header = document.createElement('h2');
+    header.className = 'automationsHeader';
     header.innerText = 'Automations';
+    this.renderAutomationsFullSizeToggle(header);
     this.moduleDOM.insertBefore(header, this.otherPropertiesHeader);
     this.moduleDOM.insertBefore(section, this.otherPropertiesHeader);
+    this.applyAutomationsFullSize();
+  }
+
+  // While routines are being written they are what the panel is for, so this
+  // folds every other section away and leaves the widget's title area and the
+  // Automations section - which then has the height of the whole panel. A switch
+  // like the ones under Behavior rather than a checkmark, two short lines high
+  // so the section bar stays as high as all the others.
+  renderAutomationsFullSizeToggle(header) {
+    const toggle = div(header, 'automationsFullSizeToggle');
+    div(toggle, 'automationsFullSizeLabel').innerText = 'Full size';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.className = 'switchbox';
+    input.id = `automationsFullSize_${rand().toString(36).substring(3, 12)}`;
+    input.checked = this.automationsFullSize();
+    input.onchange = _=>{
+      localStorage.setItem('editor.automationsFullSize', input.checked);
+      this.applyAutomationsFullSize();
+    };
+    toggle.appendChild(input);
+
+    const box = document.createElement('label');
+    box.className = 'switchbox';
+    box.htmlFor = input.id;
+    box.title = 'Give the Automations section the height of the whole panel';
+    toggle.appendChild(box);
+  }
+
+  // how the panel is laid out is a preference of whoever edits rather than
+  // anything about the game, so it lives in localStorage like the rest of the
+  // editor's own state
+  automationsFullSize() {
+    return localStorage.getItem('editor.automationsFullSize') == 'true';
+  }
+
+  applyAutomationsFullSize() {
+    if(!this.moduleDOM)
+      return;
+    const fullSize = this.automationsFullSize();
+    this.moduleDOM.classList.toggle('automationsFullSize', fullSize);
+    // with several widgets selected every one of them has a section bar
+    for(const input of $a('.automationsFullSizeToggle input.switchbox', this.moduleDOM))
+      input.checked = fullSize;
   }
 
   // the properties the Automations section edits, so that neither the raw

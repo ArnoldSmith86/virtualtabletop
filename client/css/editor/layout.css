@@ -3,7 +3,6 @@ body {
   --textColor: black;
 
   --backgroundHighlightColor1: #ccc;
-  /* the card of the routine editor that was worked on last */
   --backgroundHighlightColor2: #dedede;
 
   --textHighlightColor1: #880;
@@ -27,6 +26,12 @@ body {
   --routineVariableColor: #b25b00;
   --routinePropertyColor: #c2185b;
   --routineNumberColor: darkcyan;
+
+  /* The card of the routine editor that was worked on last: a clear step lighter
+     than the other cards (--backgroundHighlightColor1) so it is spotted without
+     reading, while the chrome on it (see --routineChromeOpacity) still clears
+     the 3:1 a control needs. */
+  --routineActiveCardColor: #eeeeee;
 
   /* The controls around a value (move, delete, info, the x of an option) are the
      text color turned down instead of a fixed gray: gray on the card background
@@ -68,6 +73,7 @@ body.edit.darkMode {
   --routineVariableColor: orange;
   --routinePropertyColor: #ff8fb1;
   --routineNumberColor: #40e0d0;
+  --routineActiveCardColor: #626262;
 
   color-scheme: dark;
 }

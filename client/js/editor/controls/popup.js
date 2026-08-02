@@ -680,9 +680,15 @@ class RoutinePopup extends Popup {
 
     this.renderValueRow();
 
+    // where the popup picks a widget in the room, a property of a widget is the
+    // next thing along the same line of thought, so it follows right behind that
+    // section instead of behind the values the routine remembers
+    const propertyBehindPicker = showVariables && this.needsRoomForPicker();
+    if(propertyBehindPicker)
+      this.renderWidgetPropertySection();
     if(showVariables || showCollections)
       this.renderRoutineValueSection(showVariables, showCollections);
-    if(showVariables)
+    if(showVariables && !propertyBehindPicker)
       this.renderWidgetPropertySection();
 
     this.moveIntoView();
