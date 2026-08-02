@@ -59,19 +59,17 @@ body.loadingEditMode * {
   z-index: 1;
 }
 
-@media (min-aspect-ratio: 1600/1000) {
-  body {
-    --roomTop: 0px;
-    --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
-  }
+body.layout-side, body.layout-wide-side {
+  --roomTop: 0px;
+  --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
 }
 
-body.aspectTooGood {
+body.layout-tight {
   --roomTop: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
   --roomLeft: var(--toolbarSize);
 }
 
-body.aspectTooGood.hiddenToolbar {
+body.layout-tight.hiddenToolbar {
   --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
@@ -128,16 +126,16 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    body.wideToolbar {
+    body.layout-wide-side {
       --toolbarSize: 200px;
     }
 
-    body.aspectTooGood #toolbar {
+    body.layout-tight #toolbar {
       top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
       height: calc(var(--scale) * var(--roomHeight));
     }
 
-    body.horizontalToolbar #toolbar {
+    body.layout-bottom #toolbar {
       flex-direction: row;
 
       top: calc((var(--vh, 1vh) * 100 - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
@@ -148,7 +146,7 @@ body.aspectTooGood.hiddenToolbar {
       padding: 0 10px 0 20px;
     }
 
-    body.aspectTooGood.hiddenToolbar #toolbar {
+    body.layout-tight.hiddenToolbar #toolbar {
       display: none;
     }
 
@@ -157,52 +155,52 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     @media (min-height: 350px) {
-      body.wideToolbar #toolbar > img {
+      body.layout-wide-side #toolbar > img {
         display: block;
         margin: 10px 20px 3px 20px;
         height: 52px;
       }
-      body.wideToolbar #toolbar .divider:nth-child(2) {
+      body.layout-wide-side #toolbar .divider:nth-child(2) {
         display: block;
         margin: 20px 10%;
       }
     }
 
     @media (max-height: 450px) {
-      body.wideToolbar #toolbar .divider:nth-child(2) {
+      body.layout-wide-side #toolbar .divider:nth-child(2) {
         margin: 10px 10%;
       }
     }
 
     @media (max-height: 430px) {
-      body.wideToolbar #toolbar {
+      body.layout-wide-side #toolbar {
         padding: 0;
       }
-      body.wideToolbar #toolbar > img {
+      body.layout-wide-side #toolbar > img {
         margin: 10px 20px;
       }
     }
 
     @media (max-height: 415px) {
-      body.wideToolbar #toolbar .divider:nth-child(2) {
+      body.layout-wide-side #toolbar .divider:nth-child(2) {
         display: none;
       }
     }
 
     @media (max-height: 420px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar {
+      body:not(.layout-wide-side,.layout-bottom,.layout-tight) #toolbar {
         padding: 0;
       }
     }
 
     @media (max-width: 760px) {
-      body.aspectTooGood #toolbar {
+      body.layout-tight #toolbar {
         padding: 0;
       }
     }
 
     @media (max-width: 530px) {
-      body.horizontalToolbar #toolbar {
+      body.layout-bottom #toolbar {
         padding: 0 5px;
       }
     }
@@ -222,26 +220,26 @@ body.aspectTooGood.hiddenToolbar {
       flex-grow: 1;
     }
 
-    body.horizontalToolbar #toolbar .divider {
+    body.layout-bottom #toolbar .divider {
       border-left: 1px solid #fff8;
       height: 80%;
       margin: auto 10px;
     }
 
     @media (max-height: 415px) {
-      body.wideToolbar #toolbar .divider {
+      body.layout-wide-side #toolbar .divider {
         display: none;
       }
     }
 
     @media (max-height: 420px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar .divider {
+      body:not(.layout-wide-side,.layout-bottom,.layout-tight) #toolbar .divider {
         display: none;
       }
     }
 
     @media (max-width: 760px) {
-      body.aspectTooGood #toolbar .divider {
+      body.layout-tight #toolbar .divider {
         display: none;
       }
     }
@@ -288,35 +286,35 @@ body.aspectTooGood.hiddenToolbar {
       border-color: transparent;
     }
 
-    body.wideToolbar .toolbarButton {
+    body.layout-wide-side .toolbarButton {
       justify-content: left;
       padding-left: 10%;
     }
 
-    body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
+    body.layout-bottom .toolbarButton:not(.toolbarTab) {
       justify-content: flex-end;
     }
 
     @media (max-height: 520px) {
-      body.wideToolbar .toolbarButton:not(.toolbarTab) {
+      body.layout-wide-side .toolbarButton:not(.toolbarTab) {
         padding: 0 10%;
       }
     }
 
     @media (max-height: 420px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarButton:not(.toolbarTab) {
+      body:not(.layout-wide-side,.layout-bottom,.layout-tight) .toolbarButton:not(.toolbarTab) {
         padding: 2px;
       }
     }
 
     @media (max-width: 760px) {
-      body.aspectTooGood #toolbar .toolbarButton:not(.toolbarTab) {
+      body.layout-tight #toolbar .toolbarButton:not(.toolbarTab) {
         padding: 2px;
       }
     }
 
     @media (max-width: 530px) {
-      body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
+      body.layout-bottom .toolbarButton:not(.toolbarTab) {
         padding: 2px;
         margin: 0;
       }
@@ -340,11 +338,11 @@ body.aspectTooGood.hiddenToolbar {
       color: var(--toolbarColor);
     }
 
-    body.wideToolbar .toolbarTab::before {
+    body.layout-wide-side .toolbarTab::before {
       font-size: 24px;
     }
 
-    body.horizontalToolbar .toolbarTab {
+    body.layout-bottom .toolbarTab {
       border-radius: 20px 20px 0 0;
       margin: auto 2px 0 2px;
       padding: 0 16px;
@@ -352,31 +350,31 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     @media (max-height: 400px) {
-      body.wideToolbar .toolbarTab {
+      body.layout-wide-side .toolbarTab {
         height: 30px;
       }
     }
 
     @media (max-height: 420px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarTab {
+      body:not(.layout-wide-side,.layout-bottom,.layout-tight) .toolbarTab {
         height: 30px;
       }
     }
 
     @media (max-width: 760px) {
-      body.aspectTooGood #toolbar .toolbarTab {
+      body.layout-tight #toolbar .toolbarTab {
         height: 30px;
       }
     }
 
     @media (min-width: 950px) {
-      body.horizontalToolbar .toolbarTab::before {
+      body.layout-bottom .toolbarTab::before {
         font-size: 24px;
       }
     }
 
     @media (max-width: 530px) {
-      body.horizontalToolbar .toolbarTab {
+      body.layout-bottom .toolbarTab {
         padding: 0 8px;
       }
     }
@@ -398,53 +396,53 @@ body.aspectTooGood.hiddenToolbar {
       transition: color 0.3s ease;   
     }
 
-    body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
+    body:not(.loading) .toolbarButton:hover .tooltip, body.layout-wide-side .toolbarButton .tooltip {
       display: block;
     }
 
-    body.wideToolbar .toolbarButton .tooltip {
+    body.layout-wide-side .toolbarButton .tooltip {
       box-shadow: unset;
       background: none;
     }
 
-    body.wideToolbar .toolbarButton .tooltip {
+    body.layout-wide-side .toolbarButton .tooltip {
       margin-left: -4px;
       font-size: 12px;
     }
 
-    body.wideToolbar .toolbarTab .tooltip {
+    body.layout-wide-side .toolbarTab .tooltip {
       font-size: 20px;
     }
 
-    body.wideToolbar .active.toolbarTab .tooltip {
+    body.layout-wide-side .active.toolbarTab .tooltip {
       color: var(--toolbarColor);
     }
 
-    body.horizontalToolbar .toolbarButton .tooltip {
+    body.layout-bottom .toolbarButton .tooltip {
       left: unset;
       bottom: 46px;
     }
 
     @media (min-width: 950px) {
-      body.horizontalToolbar .toolbarTab .tooltip {
+      body.layout-bottom .toolbarTab .tooltip {
         box-shadow: unset;
         background: none;
       }
 
-      body.horizontalToolbar .toolbarButton .tooltip {
+      body.layout-bottom .toolbarButton .tooltip {
         margin-left: -4px;
         font-size: 12px;
       }
 
-      body.horizontalToolbar .toolbarTab .tooltip {
+      body.layout-bottom .toolbarTab .tooltip {
         font-size: 20px;
       }
 
-      body.horizontalToolbar .active.toolbarTab .tooltip {
+      body.layout-bottom .active.toolbarTab .tooltip {
         color: var(--toolbarColor);
       }
 
-      body.horizontalToolbar .toolbarTab .tooltip {
+      body.layout-bottom .toolbarTab .tooltip {
         display: block;
         position: static;
         padding-right: 0;
@@ -525,108 +523,108 @@ body.aspectTooGood.hiddenToolbar {
       content: '[vtt_logo]';
     }
 
-    body:not(.aspectTooGood) #hideToolbarButton {
+    body:not(.layout-tight) #hideToolbarButton {
       display: none;
     }
 
     @media (max-height: 120px) {
-      body.wideToolbar #editButton, body.wideToolbar #addButton {
+      body.layout-wide-side #editButton, body.layout-wide-side #addButton {
         display: none;
       }
     }
 
     @media (max-height: 290px) {
-      body:not(.horizontalToolbar,.aspectTooGood) #toolbar .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
+      body:not(.layout-bottom,.layout-tight) #toolbar .divider, body:not(.layout-bottom,.layout-tight) #optionsButton, body:not(.layout-bottom,.layout-tight) #lightsButton {
         display: none;
       }
     }
 
     @media (max-width: 550px) {
-      body.aspectTooGood #toolbar .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
+      body.layout-tight #toolbar .divider, body.layout-tight #optionsButton, body.layout-tight #lightsButton {
         display: none;
       }
     }
 
     @media (max-height: 230px) {
-      body:not(.horizontalToolbar) #aboutButton {
+      body:not(.layout-bottom) #aboutButton {
         display: none;
       }
     }
 
     @media (max-width: 460px) {
-      body.aspectTooGood #aboutButton {
+      body.layout-tight #aboutButton {
         display: none;
       }
     }
 
     @media (max-width: 410px) {
-      body.aspectTooGood #editButton {
+      body.layout-tight #editButton {
         display: none;
       }
     }
 
     @media (max-height: 190px) {
-      body:not(.horizontalToolbar) #editButton {
+      body:not(.layout-bottom) #editButton {
         display: none;
       }
     }
 
     @media (max-height: 160px) {
-      body:not(.horizontalToolbar) #playersButton {
+      body:not(.layout-bottom) #playersButton {
         display: none;
       }
     }
 
     @media (max-height: 120px) {
-      body:not(.horizontalToolbar) #zoom2xButton {
+      body:not(.layout-bottom) #zoom2xButton {
         display: none;
       }
     }
 
     @media (max-width: 350px) {
-      body.aspectTooGood #playersButton {
+      body.layout-tight #playersButton {
         display: none;
       }
     }
 
     @media (max-width: 295px) {
-      body.aspectTooGood #hideToolbarButton {
+      body.layout-tight #hideToolbarButton {
         display: none;
       }
     }
 
     @media (max-width: 250px) {
-      body.aspectTooGood #zoom2xButton {
+      body.layout-tight #zoom2xButton {
         display: none;
       }
     }
 
     @media (max-width: 390px) {
-      body.horizontalToolbar #toolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
+      body.layout-bottom #toolbar .divider, body.layout-bottom #optionsButton, body.layout-bottom #lightsButton {
         display: none;
       }
     }
 
     @media (max-width: 320px) {
-      body.horizontalToolbar #aboutButton {
+      body.layout-bottom #aboutButton {
         display: none;
       }
     }
 
     @media (max-width: 260px) {
-      body.horizontalToolbar #editButton {
+      body.layout-bottom #editButton {
         display: none;
       }
     }
 
     @media (max-width: 220px) {
-      body.horizontalToolbar #playersButton {
+      body.layout-bottom #playersButton {
         display: none;
       }
     }
 
     @media (max-width: 160px) {
-      body.horizontalToolbar #zoom2xButton {
+      body.layout-bottom #zoom2xButton {
         display: none;
       }
     }
@@ -661,7 +659,7 @@ body.aspectTooGood.hiddenToolbar {
       content: '[volume_off]';
     }
 
-    body.horizontalToolbar #options {
+    body.layout-bottom #options {
       top: -42px;
       left: unset;
       right: -32px;
@@ -696,7 +694,7 @@ body.aspectTooGood.hiddenToolbar {
       content: 'lock';
     }
 
-    body.horizontalToolbar #zoomControls {
+    body.layout-bottom #zoomControls {
       top: -42px;
       left: unset;
       right: -32px;

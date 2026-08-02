@@ -3,6 +3,13 @@ import { startWebSocket, toServer } from './connection.js';
 
 
 export let scale = 1;
+export const viewportConfig = { targetWidth: 1600, targetHeight: 1000 };
+window.viewportConfig = viewportConfig;
+import { calculateLayout } from './calculateLayout.js';
+window.calculateLayout = calculateLayout;
+
+let currentLayoutMode = 'side';
+
 let roomRectangle;
 let overlayActive = false;
 let optionsHidden = true;
@@ -194,19 +201,26 @@ function setScale() {
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
+  const targetW = viewportConfig.targetWidth;
+  const targetH = viewportConfig.targetHeight;
+  const targetAspect = targetW / targetH;
+
+  document.documentElement.style.setProperty('--roomWidth', `${targetW}px`);
+  document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
+
   if(edit || jeEnabled) {
-    const targetWidth = 1600 / zoom;
-    const targetHeight = 1000 / zoom;
+    const targetWidth = targetW / zoom;
+    const targetHeight = targetH / zoom;
     const availableRect = getAvailableRoomRectangle();
     const availableWidth = availableRect.right-availableRect.left;
     const availableHeight = availableRect.bottom-availableRect.top;
 
-    scale = availableWidth/availableHeight < 1600/1000 ? availableWidth/targetWidth : availableHeight/targetHeight;
+    scale = availableWidth/availableHeight < targetAspect ? availableWidth/targetWidth : availableHeight/targetHeight;
 
-    const offsetX = offset[0] + (1-zoom)/2*1600*scale/zoom;
-    const offsetY = offset[1] + (1-zoom)/2*1000*scale/zoom;
+    const offsetX = offset[0] + (1-zoom)/2*targetW*scale/zoom;
+    const offsetY = offset[1] + (1-zoom)/2*targetH*scale/zoom;
 
-    if(availableWidth/availableHeight < 1600/1000) {
+    if(availableWidth/availableHeight < targetAspect) {
       document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left) + 'px');
       document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
     } else {
@@ -215,20 +229,22 @@ function setScale() {
     }
     document.documentElement.style.setProperty('--roomZoom', zoom);
   } else {
-    scale = w/h < 1600/1000 ? w/1600 : h/1000;
-  }
-  $('body').classList.remove('wideToolbar');
-  $('body').classList.remove('horizontalToolbar');
-  if(w-scale*1600 + h-scale*1000 < 44) {
-    $('body').classList.add('aspectTooGood');
-    if(!$('body').className.match(/hiddenToolbar/))
-      scale = (w-44)/1600;
-  } else {
-    $('body').classList.remove('aspectTooGood');
-    if(w - scale*1600 > 200)
-      $('body').classList.add('wideToolbar');
-    else if(w/h < 1600/1000)
-      $('body').classList.add('horizontalToolbar');
+    const menuConfig = {
+      isHidden: $('body').className.match(/layout-hidden/) != null
+    };
+
+    const layout = calculateLayout(w, h, viewportConfig, menuConfig, currentLayoutMode);
+    scale = layout.scale;
+    currentLayoutMode = layout.layoutMode;
+
+    $('body').classList.remove('layout-side', 'layout-wide-side', 'layout-bottom', 'layout-hidden', 'layout-tight');
+    $('body').classList.add(`layout-${currentLayoutMode}`);
+    
+    // Maintain backwards compatibility with tight aspect ratios
+    const isTight = (w - scale * viewportConfig.targetWidth) + (h - scale * viewportConfig.targetHeight) < 44;
+    if (isTight && currentLayoutMode !== 'hidden') {
+      $('body').classList.add('layout-tight');
+    }
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
