@@ -611,7 +611,7 @@ class RoutinePopup extends Popup {
       })));
 
     if(showCollections)
-      entries('Groups of widgets earlier operations select', 'collection', [ ...this.collections ].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
+      entries('Collections of widgets picked by earlier operations', 'collection', [ ...this.collections ].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
         label: typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`,
         description: typeof collection == 'string' ? null : 'these widgets, listed in the routine itself',
         onClick: _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ])
@@ -622,7 +622,7 @@ class RoutinePopup extends Popup {
         label: variable, description: predefinedVariableDescriptions[variable], onClick: _=>this.setNewValue(`\$\{${variable}\}`)
       })));
     if(showCollections)
-      entries('Groups available in every routine', 'collection', Object.keys(predefinedCollectionDescriptions).map(collection=>({
+      entries('Collections available in every routine', 'collection', Object.keys(predefinedCollectionDescriptions).map(collection=>({
         label: collection, description: predefinedCollectionDescriptions[collection], onClick: _=>this.setNewCollectionValue(collection)
       })));
   }

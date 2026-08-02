@@ -475,12 +475,12 @@ describe('operation rendering', () => {
     // the condition is always part of a SELECT: the engine filters by it either
     // way, and its defaults mean "the widgets lying on the table"
     [ { func: 'SELECT', type: 'card', max: 5, random: true, source: 'hand', sortBy: 'value', collection: 'aces' },
-      'Pick at most 5 random cards from hand where parent is nothing, sorted by value — call them aces' ],
+      'Pick at most 5 random cards from the pick called hand where parent is nothing, sorted by value — call them aces' ],
     [ { func: 'SELECT', mode: 'add', property: 'letter', value: '${value}', collection: 'letters' },
-      'Add to the pick letters: widgets where letter is value' ],
+      'Add to the pick called letters: widgets where letter is value' ],
     [ { func: 'IF', operand1: '${cardType}', operand2: 'boba' }, 'If cardType is boba' ],
     [ { func: 'IF', condition: '${showLog}' }, 'If this is true: showLog' ],
-    [ { func: 'GET', property: 'cardType' }, 'Read cardType of the picked widgets' ],
+    [ { func: 'GET', property: 'cardType' }, 'Read the first cardType of the picked widgets' ],
     [ { func: 'GET', property: 'score', aggregation: 'sum', variable: 'total' }, 'Add up score of the picked widgets and remember it as total' ],
     [ { func: 'CALL', routine: 'startRandomRoutine' }, 'Run the routine startRandomRoutine' ],
     [ { func: 'CALL', routine: 'dealRoutine', widget: 'deck1', arguments: { count: 5 } }, 'Run the routine dealRoutine of deck1, passing count: 5' ],
@@ -585,7 +585,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(leads('SELECT')[0]).toBe('Pick');
     expect(leads('SCORE')[0]).toBe('Set');
     expect(leads('TURN')).toEqual([ 'Pass the turn on', 'Pass the turn back', 'Give the turn to a random seat', 'Give the turn to the seat at position', 'Give the turn to the seat' ]);
-    expect(leads('GET')[0]).toBe('Read');
+    expect(leads('GET')[0]).toBe('Read the first');
     expect(leads('SHUFFLE')[0]).toBe('Shuffle');
     // and the one an operation without a discriminating parameter reads as is
     // still the one without a match(), wherever the list puts it
@@ -841,6 +841,84 @@ describe('picking how an operation works and which options it uses', () => {
     }
     // a list of ids written into the operation is not a name to call anybody by
     expect(renderOperation({ func: 'DELETE', collection: [ 'card1', 'card2' ] }).dom.textContent).toContain('Delete card1 and card2');
+  });
+
+  // the blank of a collection takes either of the two things the popup offers
+  test('a blank collection asks for widgets or a collection', () => {
+    for (const func of [ 'SET', 'GET', 'CLICK', 'DELETE', 'COUNT' ]) {
+      const { dom } = renderOperation({ func, collection: '' });
+      expect([...dom.querySelectorAll('.routine-editor-parameter-missing')].map(b => b.textContent)).toContain('widget(s)/collection');
+    }
+  });
+
+  // the sentence without the icons the chips of a drop-down and of a removable
+  // option carry, so an expectation reads as the sentence a card shows
+  const sentenceWords = dom => {
+    const sentence = dom.querySelector('.routine-editor-sentence').cloneNode(true);
+    for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+      icon.remove();
+    return sentence.textContent.replace(/\s+/g, ' ').trim();
+  };
+
+  // a SELECT that names no type picks whatever matches, so the type is an option
+  // like every other part whose absence means something
+  test('SELECT says widgets in plain words until an option names one type', () => {
+    const plain = renderOperation({ func: 'SELECT', property: 'cardType', value: 'ace' }).dom;
+    expect(sentenceWords(plain)).toContain('Pick widgets where');
+    expect(plain.querySelector('[data-parameter="type"]')).toBeNull();
+    const typed = renderOperation({ func: 'SELECT', type: 'card', property: 'cardType', value: 'ace' }).dom;
+    expect(sentenceWords(typed)).toContain('Pick cards where');
+    expect(typed.querySelector('[data-parameter="type"]')).not.toBeNull();
+    // an explicit "any type" is the same sentence as no type at all
+    expect(sentenceWords(renderOperation({ func: 'SELECT', type: 'all', property: 'cardType', value: 'ace' }).dom)).toContain('Pick widgets where');
+    const editor = editorForOperation({ func: 'SELECT' });
+    editor.setOperationDetails({ state: {} }, { func: 'SELECT' }, [], []);
+    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
+    expect(offered.map(clause => clause.label)).toEqual([
+      'only one type', 'from an earlier pick', 'at most n of them', 'in random order', 'sorted by', 'name the pick'
+    ]);
+    // and switching the type on has to narrow the sentence down to something
+    expect(editor.clauseAddValues(offered.find(clause => clause.id == 'type'))).toEqual({ type: 'card' });
+  });
+
+  // where a SELECT takes its widgets from is a group an earlier operation made,
+  // and the sentence says which kind of thing the name refers to
+  test('the source of a SELECT is the pick it is called by', () => {
+    expect(renderOperation({ func: 'SELECT', source: 'hand', property: 'x', value: 1 }).dom.textContent).toContain('from the pick called hand');
+  });
+
+  // the name an operation stores its widgets under is what the operations after
+  // it have to type, so the sentence shows the name and not a phrase for it
+  test('naming what an operation hands on shows the name it stores', () => {
+    expect(renderOperation({ func: 'SELECT', property: 'x', value: 1, collection: 'DEFAULT' }).dom.textContent).toContain('call them DEFAULT');
+    expect(renderOperation({ func: 'CLONE', collection: 'DEFAULT' }).dom.textContent).toContain('call the copies DEFAULT');
+    // while the widgets an operation reads are still the words for them
+    expect(renderOperation({ func: 'FLIP', collection: 'DEFAULT', face: 0 }).dom.textContent).toContain('in the pick');
+  });
+
+  // GET reads one value out of a group of widgets, and every option says which
+  // part of that it changes
+  test('GET reads the first value, and words its options as what they do', () => {
+    const editor = editorForOperation({ func: 'GET' });
+    editor.setOperationDetails({ state: {} }, { func: 'GET' }, [], []);
+    expect(editor.variantLead(editor.currentVariant())).toBe('Read the first ');
+    expect(editor.clauses().map(clause => clause.label)).toEqual([ 'from a named pick', 'remember it as', 'ignore widgets without it' ]);
+    // and the name it is remembered under is the last thing the sentence says
+    expect(sentenceWords(renderOperation({ func: 'GET', property: 'score', variable: 'total', skipMissing: true }).dom))
+      .toBe('Read the first score of the picked widgets, ignoring the widgets that do not have it and remember it as total');
+  });
+
+  // return does not decide whether the caller waits - it always waits. It decides
+  // whether anything after the CALL still runs.
+  test('CALL says what return does, and does not offer to rename what it hands back', () => {
+    const editor = editorForOperation({ func: 'CALL' });
+    editor.setOperationDetails({ state: {} }, { func: 'CALL' }, [], []);
+    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false);
+    expect(offered.map(clause => clause.label)).toEqual([ 'of another widget', 'pass values in', 'remember the result', 'and do not finish this routine' ]);
+    expect(renderOperation({ func: 'CALL', routine: 'dealRoutine', 'return': false }).dom.textContent).toContain('and do not finish this routine');
+    expect(renderOperation({ func: 'CALL', routine: 'dealRoutine' }).dom.textContent).not.toContain('waiting');
+    // a game that did rename them still reads what it does
+    expect(renderOperation({ func: 'CALL', routine: 'dealRoutine', collection: 'dealt' }).dom.textContent).toContain('call its widgets dealt');
   });
 
   // an x at the end of a word reads as the letter x rather than as a control
@@ -1364,8 +1442,8 @@ describe('the values a parameter popup offers', () => {
     const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
     const groups = [...popup.domElement.querySelectorAll('.popup-value-group')];
     expect(groups.map(g => g.textContent)).toEqual([
-      'Values earlier operations remember', 'Groups of widgets earlier operations select',
-      'Available in every routine', 'Groups available in every routine'
+      'Values earlier operations remember', 'Collections of widgets picked by earlier operations',
+      'Available in every routine', 'Collections available in every routine'
     ]);
     // and each group says by its color what it produces, the way the sentence does
     expect(groups.map(g => g.dataset.kind)).toEqual([ 'variable', 'collection', 'variable', 'collection' ]);

@@ -33,6 +33,11 @@
 //     when a clause counts as in use where being set is not the same as being in
 //     use (a collection explicitly set to DEFAULT is still the picked widgets).
 //
+//     offer: false keeps a clause out of that list without hiding it: what a
+//     CALL hands back is always called result, so renaming it is not a choice
+//     worth offering - but a game that did rename it still reads what it does
+//     instead of turning the parameter into an unsupported one.
+//
 //     label is the one phrase the list of options offers, and it names what the
 //     option is about without saying what it can then say: CLICK offers "n times"
 //     and "ignore something", not the two lines that spell out every mode it
@@ -40,12 +45,12 @@
 //     the sentence, which is where a choice belongs (see parameterIsDropDown).
 //
 // What belongs in the sentence and what belongs in a clause follows one rule: a
-// parameter whose default means "not in use" (SELECT max, SELECT source, GET
-// variable, SORT key, TURN turn, RESET property) is a clause and stays out of
-// the sentence until a game sets it, while a parameter whose default is a real
-// quantity the operation applies (a count of widgets, an angle, a delay) stays
-// in the sentence. So an operation with nothing but its defaults reads as the
-// short sentence it is - "Count the picked widgets", "Pick widgets where
+// parameter whose default means "not in use" (SELECT type, SELECT max, SELECT
+// source, GET variable, SORT key, TURN turn, RESET property) is a clause and
+// stays out of the sentence until a game sets it, while a parameter whose
+// default is a real quantity the operation applies (a count, an angle, a delay)
+// stays in the sentence. So an operation with nothing but its defaults reads as
+// the short sentence it is - "Count the picked widgets", "Pick widgets where
 // cardType is ace" - and every word that is there is a word that matters.
 //
 // The words are English, never the engine's vocabulary: no operation name, no
@@ -140,15 +145,20 @@ const parameterTypeHints = {
   string: 'text',
   property: 'property',
   widgets: 'widget',
-  collection: 'group of widgets',
+  // a collection blank takes either: a list of widgets picked in the room or the
+  // name of a group an earlier operation made, and the popup offers both
+  collection: 'widget(s)/collection',
   json: 'number or text',
   color: 'color',
   icon: 'icon'
 };
 
-// a collection left at DEFAULT is whatever the operations before it picked, and
-// that is what the sentence says instead of the name the engine uses for it.
-// "the pick" is the same thing worded for the slots that already say "in".
+// a collection an operation READS and that is left at DEFAULT is whatever the
+// operations before it picked, and that is what the sentence says instead of the
+// name the engine uses for it. "the pick" is the same thing worded for the slots
+// that already say "in". A collection an operation WRITES keeps the name it
+// stores (DEFAULT included): that name is what the operations after it have to
+// type, so wording it away would hide the one thing the option is about.
 const pickedWidgets = { 'DEFAULT': 'the picked widgets' };
 const thePick = { 'DEFAULT': 'the pick' };
 
@@ -281,15 +291,21 @@ const routineOperationMetadata = {
       { id: 'widget', label: 'of another widget', template: ' of {widget}' },
       { id: 'arguments', label: 'pass values in', template: ', passing {arguments}' },
       { id: 'variable', label: 'remember the result', template: ' and remember the result as {variable}' },
-      { id: 'collection', label: 'remember its widgets', template: ' and remember its widgets as {collection}' },
-      { id: 'return', label: 'wait for it or not', template: ', {return}', add: { 'return': false } }
+      // the widgets a routine hands back are always called result, so there is
+      // nothing to decide: the option is not offered. A game that renames them
+      // anyway still reads what it does, which is what offer: false is for.
+      { id: 'collection', label: 'name its widgets', offer: false, template: ' and call its widgets {collection}' },
+      // return does not decide whether the caller waits - it always waits. It
+      // decides whether anything after the CALL still runs (widget.js sets
+      // abortRoutine when it is false).
+      { id: 'return', label: 'and do not finish this routine', template: ', {return}', add: { 'return': false } }
     ],
     parameters: {
       routine: { type: 'string', default: 'clickRoutine' },
       widget: { type: 'widgets', default: null, display: { 'null': 'this widget' } },
       variable: { type: 'string', default: 'result' },
       collection: { type: 'collection', default: 'result' },
-      'return': { type: 'enum', values: [ true, false ], default: true, display: yesNo('waiting for it to finish', 'without waiting for it to finish') },
+      'return': { type: 'enum', values: [ true, false ], default: true, display: yesNo('and carry on with this routine', 'and do not finish this routine') },
       arguments: { type: 'json', default: {}, display: keyValueWords }
     },
     definesVariable: 'variable',
@@ -364,7 +380,7 @@ const routineOperationMetadata = {
       { id: 'mode', label: 'ignore something', template: ', {mode}', add: { mode: 'ignoreClickRoutine' } }
     ],
     parameters: {
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       count: { type: 'number', default: 1, display: value=>value == 1 ? 'once' : `${value} times` },
       mode: { type: 'enum', values: [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ], default: 'respect', display: {
         respect: 'only the ones that are clickable',
@@ -387,13 +403,13 @@ const routineOperationMetadata = {
       { id: 'collection', label: 'name the copies', template: ' — call the copies {collection}' }
     ],
     parameters: {
-      source: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
+      source: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       count: { type: 'number', default: 1 },
       xOffset: { type: 'number', default: 0 },
       yOffset: { type: 'number', default: 0 },
       properties: { type: 'json', default: {}, display: keyValueWords },
       recursive: { type: 'enum', values: [ true, false ], default: false, display: yesNo('including the widgets on them', 'without the widgets on them') },
-      collection: { type: 'collection', default: 'DEFAULT', display: thePick }
+      collection: { type: 'collection', default: 'DEFAULT' }
     },
     definesCollection: 'collection'
   },
@@ -415,7 +431,7 @@ const routineOperationMetadata = {
     parameters: {
       owner: { type: 'string', default: null, display: { 'null': 'anyone' } },
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       variable: { type: 'string', default: 'COUNT' }
     },
     definesVariable: 'variable',
@@ -439,7 +455,7 @@ const routineOperationMetadata = {
       namedGroupClause()
     ],
     parameters: {
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' }
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets }
     }
   },
   FLIP: {
@@ -506,37 +522,37 @@ const routineOperationMetadata = {
     variants: [
       { id: 'first', label: 'Read the value of the first widget', fixed: [ 'aggregation' ],
         apply: operation=>{ delete operation.aggregation; },
-        template: 'Read {property} of{{collection}}{{variable}}' },
+        template: 'Read the first {property} of{{collection}}{{skipMissing}}{{variable}}' },
       { id: 'last', label: 'Read the value of the last widget', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'last',
         apply: operation=>{ operation.aggregation = 'last'; },
-        template: 'Read the last {property} of{{collection}}{{variable}}' },
+        template: 'Read the last {property} of{{collection}}{{skipMissing}}{{variable}}' },
       { id: 'sum', label: 'Add the values up', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'sum',
         apply: operation=>{ operation.aggregation = 'sum'; },
-        template: 'Add up {property} of{{collection}}{{variable}}' },
+        template: 'Add up {property} of{{collection}}{{skipMissing}}{{variable}}' },
       { id: 'average', label: 'Average the values', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'average',
         apply: operation=>{ operation.aggregation = 'average'; },
-        template: 'Average {property} of{{collection}}{{variable}}' },
+        template: 'Average {property} of{{collection}}{{skipMissing}}{{variable}}' },
       { id: 'median', label: 'Take the middle value', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'median',
         apply: operation=>{ operation.aggregation = 'median'; },
-        template: 'Take the median {property} of{{collection}}{{variable}}' },
+        template: 'Take the median {property} of{{collection}}{{skipMissing}}{{variable}}' },
       { id: 'min', label: 'Take the smallest value', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'min',
         apply: operation=>{ operation.aggregation = 'min'; },
-        template: 'Take the smallest {property} of{{collection}}{{variable}}' },
+        template: 'Take the smallest {property} of{{collection}}{{skipMissing}}{{variable}}' },
       { id: 'max', label: 'Take the biggest value', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'max',
         apply: operation=>{ operation.aggregation = 'max'; },
-        template: 'Take the biggest {property} of{{collection}}{{variable}}' },
+        template: 'Take the biggest {property} of{{collection}}{{skipMissing}}{{variable}}' },
       { id: 'array', label: 'Collect the values of all widgets', fixed: [ 'aggregation' ], match: v=>v('aggregation') == 'array',
         apply: operation=>{ operation.aggregation = 'array'; },
-        template: 'Collect all {property} of{{collection}}{{variable}}' }
+        template: 'Collect all {property} of{{collection}}{{skipMissing}}{{variable}}' }
     ],
     clauses: [
-      namedGroupClause(),
-      { id: 'variable', label: 'under another name', template: ' and remember it as {variable}' },
-      { id: 'skipMissing', label: 'widgets without the property', template: ', {skipMissing}', add: { skipMissing: true } }
+      Object.assign(namedGroupClause(), { label: 'from a named pick' }),
+      { id: 'variable', label: 'remember it as', template: ' and remember it as {variable}' },
+      { id: 'skipMissing', label: 'ignore widgets without it', template: ', {skipMissing}', add: { skipMissing: true } }
     ],
     parameters: {
       property: { type: 'property', default: 'id' },
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       aggregation: { type: 'enum', values: [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ], default: 'first' },
       variable: { type: 'string', default: operation=>typeof operation.property == 'string' ? operation.property : 'id' },
       skipMissing: { type: 'enum', values: [ true, false ], default: false, display: yesNo('ignoring the widgets that do not have it', 'counting the widgets that do not have it') }
@@ -762,16 +778,16 @@ const routineOperationMetadata = {
     variants: [
       { id: 'set', label: 'Select widgets', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: 'Pick{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}{{collection}}' },
+        template: 'Pick{{max}}{{random}}{{type}}{{source}} where {property} {relation} {value}{{sortBy}}{{collection}}' },
       { id: 'add', label: 'Add widgets to a collection', fixed: [ 'mode' ], match: v=>v('mode') == 'add',
         apply: operation=>{ operation.mode = 'add'; },
-        template: 'Add to the pick{{collection}}:{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
+        template: 'Add to the pick{{collection}}:{{max}}{{random}}{{type}}{{source}} where {property} {relation} {value}{{sortBy}}' },
       { id: 'remove', label: 'Remove widgets from a collection', fixed: [ 'mode' ], match: v=>v('mode') == 'remove',
         apply: operation=>{ operation.mode = 'remove'; },
-        template: 'Remove from the pick{{collection}}:{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' },
+        template: 'Remove from the pick{{collection}}:{{max}}{{random}}{{type}}{{source}} where {property} {relation} {value}{{sortBy}}' },
       { id: 'intersect', label: 'Narrow a collection down', fixed: [ 'mode' ], match: v=>v('mode') == 'intersect',
         apply: operation=>{ operation.mode = 'intersect'; },
-        template: 'Narrow the pick{{collection}} down to{{max}}{{random}} {type}{{source}} where {property} {relation} {value}{{sortBy}}' }
+        template: 'Narrow the pick{{collection}} down to{{max}}{{random}}{{type}}{{source}} where {property} {relation} {value}{{sortBy}}' }
     ],
     // the condition is not an option: the engine always filters by it, so a
     // SELECT that does not name one picks whatever has no parent - the widgets
@@ -779,12 +795,17 @@ const routineOperationMetadata = {
     // is what a new SELECT starts as, with both halves left blank to fill in.
     newOperation: { func: 'SELECT', property: '', value: '' },
     clauses: [
-      { id: 'max', label: 'only n of them', template: ' at most {max}', add: { max: 1 } },
-      { id: 'random', label: 'at random', template: ' {random}', add: { random: true } },
-      { id: 'source', label: 'among some widgets', template: ' from {source}' },
-      { id: 'sortBy', label: 'in an order', template: ', sorted by {sortBy}', add: { sortBy: 'value' } },
+      // a SELECT that names no type picks whatever matches, so the sentence says
+      // "widgets" in plain words until a game narrows it down - the same shape as
+      // the collection of a SET, and the type takes the place of the word
+      { id: 'type', label: 'only one type', template: ' {type}', whenOff: ' widgets',
+        active: v=>v('type') != 'all', add: { type: 'card' } },
+      { id: 'source', label: 'from an earlier pick', template: ' from the pick called {source}' },
+      { id: 'max', label: 'at most n of them', template: ' at most {max}', add: { max: 1 } },
+      { id: 'random', label: 'in random order', template: ' {random}', add: { random: true } },
+      { id: 'sortBy', label: 'sorted by', template: ', sorted by {sortBy}', add: { sortBy: 'value' } },
       { id: 'collection', label: 'name the pick', variants: [ 'set' ], template: ' — call them {collection}' },
-      { id: 'collection', label: 'another pick', variants: [ 'add', 'remove', 'intersect' ], template: ' {collection}' }
+      { id: 'collection', label: 'another pick', variants: [ 'add', 'remove', 'intersect' ], template: ' called {collection}' }
     ],
     parameters: {
       max: { type: 'number', default: 999999, special: [ 'all' ], display: { '999999': 'all' } },
@@ -794,7 +815,7 @@ const routineOperationMetadata = {
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>', 'in' ], default: '==', display: comparisonWords },
       value: { type: 'string', default: null, display: { 'null': 'nothing' }, hint: 'value' },
       mode: { type: 'enum', values: [ 'set', 'add', 'remove', 'intersect' ], default: 'set' },
-      collection: { type: 'collection', default: 'DEFAULT', display: thePick },
+      collection: { type: 'collection', default: 'DEFAULT' },
       sortBy: { type: 'json', default: null, display: listWords },
       random: { type: 'enum', values: [ true, false ], default: false, display: yesNo('random', 'in their current order') }
     },
@@ -847,7 +868,7 @@ const routineOperationMetadata = {
       // what they all change is a property, whichever way they change it, so no
       // variant words this blank differently
       property: { type: 'property', default: 'parent' },
-      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, hint: 'collection name' },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       relation: { type: 'enum', values: [ '=', '+', '-', '*', '/', '!' ], default: '=' },
       // text in quotes is the difference between the number 1 and the digit 1;
       // a value the routine remembers is worded as its name instead
@@ -2159,7 +2180,7 @@ class RoutineOperationEditor {
         // the phrase alone, the way the drop-down of the sentence offers the ways
         // an operation can work: what an option says once it is switched on is
         // the sentence itself, and the sentence is one click away
-        const popup = new RoutineClausePopup(this.clauses().filter(clause=>!this.clauseIsActive(clause)).map(clause=>({
+        const popup = new RoutineClausePopup(this.clauses().filter(clause=>!this.clauseIsActive(clause) && clause.offer !== false).map(clause=>({
           label: clause.label,
           values: this.clauseAddValues(clause)
         })));
