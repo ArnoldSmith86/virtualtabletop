@@ -3,25 +3,26 @@
     "version": 21,
     "info": {
       "name": "Tempest Cove",
-      "image": "/assets/-1129523133_28798",
-      "rules": "",
+      "image": "/assets/-1859677812_42884",
+      "rules": "https://spielgezeug.de/images/selecta_piratissimo.pdf",
       "bgg": "https://boardgamegeek.com/boardgame/20953/piratissimo",
       "year": "2005",
       "mode": "vs",
-      "time": "40",
-      "attribution": "<div>Layout, design and library image by VTT-AI-Agent. Released to the Public Domain under CC0.</div><div><br></div>\n<div>All game pieces, islands and symbols use the icons that ship with VirtualTabletop: the icons from https://game-icons.net are available under CC BY 3.0 (see the About page), the arrow is a VirtualTabletop symbol.</div><div><br></div>\n<div>Game concept inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005). No artwork, text or component from that game is used here.</div>",
+      "time": "45",
+      "attribution": "<div>Layout, design and the library preview image by VTT-AI-Agent, released to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Source of the layout: https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games/Tempest%20Cove</div>\n<div><br></div>\n<div>AI disclosure: this layout (the JSON file) and all of its texts were written by the AI agent Claude by Anthropic (https://claude.ai), from the instruction &quot;add a game to the VirtualTabletop public library that plays like Piratissimo&quot;. No AI generated imagery is used anywhere in this game: the board, the ships, the dice faces and the wind wheel are drawn with CSS gradients and with the icons listed below, and the library preview image is a screenshot of that board taken in a headless Chromium browser (Playwright, https://playwright.dev) and saved as .webp.</div>\n<div><br></div>\n<div>Board pieces, islands, sea creatures and symbols use icons that ship with VirtualTabletop and are available under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) from https://game-icons.net, as detailed on the About page:</div>\n<div><br></div>\n<div>Delapouite:</div>\n<div>&nbsp;&nbsp;Caravel - https://game-icons.net/1x1/delapouite/caravel.html</div>\n<div>&nbsp;&nbsp;Cave entrance - https://game-icons.net/1x1/delapouite/cave-entrance.html</div>\n<div>&nbsp;&nbsp;Chest - https://game-icons.net/1x1/delapouite/chest.html</div>\n<div>&nbsp;&nbsp;Coconuts - https://game-icons.net/1x1/delapouite/coconuts.html</div>\n<div>&nbsp;&nbsp;Coins - https://game-icons.net/1x1/delapouite/coins.html</div>\n<div>&nbsp;&nbsp;Dolphin - https://game-icons.net/1x1/delapouite/dolphin.html</div>\n<div>&nbsp;&nbsp;Harbor dock - https://game-icons.net/1x1/delapouite/harbor-dock.html</div>\n<div>&nbsp;&nbsp;Hut - https://game-icons.net/1x1/delapouite/hut.html</div>\n<div>&nbsp;&nbsp;Huts village - https://game-icons.net/1x1/delapouite/huts-village.html</div>\n<div>&nbsp;&nbsp;Island - https://game-icons.net/1x1/delapouite/island.html</div>\n<div>&nbsp;&nbsp;Jungle - https://game-icons.net/1x1/delapouite/jungle.html</div>\n<div>&nbsp;&nbsp;Kraken tentacle - https://game-icons.net/1x1/delapouite/kraken-tentacle.html</div>\n<div>&nbsp;&nbsp;Mermaid - https://game-icons.net/1x1/delapouite/mermaid.html</div>\n<div>&nbsp;&nbsp;Palm tree - https://game-icons.net/1x1/delapouite/palm-tree.html</div>\n<div>&nbsp;&nbsp;Rolling dices - https://game-icons.net/1x1/delapouite/rolling-dices.html</div>\n<div>&nbsp;&nbsp;Sailboat - https://game-icons.net/1x1/delapouite/sailboat.html</div>\n<div>&nbsp;&nbsp;Sea turtle - https://game-icons.net/1x1/delapouite/sea-turtle.html</div>\n<div>&nbsp;&nbsp;Shark fin - https://game-icons.net/1x1/delapouite/shark-fin.html</div>\n<div>&nbsp;&nbsp;Ship wreck - https://game-icons.net/1x1/delapouite/ship-wreck.html</div>\n<div>&nbsp;&nbsp;Sperm whale - https://game-icons.net/1x1/delapouite/sperm-whale.html</div>\n<div>&nbsp;&nbsp;Three friends - https://game-icons.net/1x1/delapouite/three-friends.html</div>\n<div>&nbsp;&nbsp;Tropical fish - https://game-icons.net/1x1/delapouite/tropical-fish.html</div>\n<div><br></div>\n<div>Lorc:</div>\n<div>&nbsp;&nbsp;Anchor - https://game-icons.net/1x1/lorc/anchor.html</div>\n<div>&nbsp;&nbsp;Compass - https://game-icons.net/1x1/lorc/compass.html</div>\n<div>&nbsp;&nbsp;Crab - https://game-icons.net/1x1/lorc/crab.html</div>\n<div>&nbsp;&nbsp;Galleon - https://game-icons.net/1x1/lorc/galleon.html</div>\n<div>&nbsp;&nbsp;Monkey - https://game-icons.net/1x1/lorc/monkey.html</div>\n<div>&nbsp;&nbsp;Mountains - https://game-icons.net/1x1/lorc/mountains.html</div>\n<div>&nbsp;&nbsp;Octopus - https://game-icons.net/1x1/lorc/octopus.html</div>\n<div>&nbsp;&nbsp;Parrot head - https://game-icons.net/1x1/lorc/parrot-head.html</div>\n<div>&nbsp;&nbsp;Sea serpent - https://game-icons.net/1x1/lorc/sea-serpent.html</div>\n<div>&nbsp;&nbsp;Spyglass - https://game-icons.net/1x1/lorc/spyglass.html</div>\n<div>&nbsp;&nbsp;Tornado - https://game-icons.net/1x1/lorc/tornado.html</div>\n<div>&nbsp;&nbsp;Volcano - https://game-icons.net/1x1/lorc/volcano.html</div>\n<div>&nbsp;&nbsp;Water splash - https://game-icons.net/1x1/lorc/water-splash.html</div>\n<div>&nbsp;&nbsp;Waves - https://game-icons.net/1x1/lorc/waves.html</div>\n<div>&nbsp;&nbsp;Wind slap - https://game-icons.net/1x1/lorc/wind-slap.html</div>\n<div><br></div>\n<div>Skoll:</div>\n<div>&nbsp;&nbsp;Open treasure chest - https://game-icons.net/1x1/skoll/open-treasure-chest.html</div>\n<div><br></div>\n<div>The arrows that show the sailing route, the storm direction and the goal are /i/icons/arrow_right.svg, one of the user interface icons bundled with VirtualTabletop (https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/icons/arrow_right.svg). Per the About page of virtualtabletop.io, those bundled symbols are either Google Material Symbols under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or symbols made by the VirtualTabletop community and released under CC0.</div>\n<div><br></div>\n<div>The library preview image (assets/-1859677812_42884) is a screenshot of this board, made by VTT-AI-Agent and released under CC0 1.0. Everything visible on it is covered by the licenses above.</div>\n<div><br></div>\n<div>The game is inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005, https://boardgamegeek.com/boardgame/20953/piratissimo). No artwork, text or component of that game is used here; the rules were reimplemented from the publisher&#39;s rulebook.</div>",
       "lastUpdate": 1785438857938,
       "showName": true,
       "skill": "low",
       "language": "en-US",
-      "description": "Sail a ring of 24 treasure islands, dig up as much gold as your hold can take and race it home before a wandering storm or a greedy rival takes it off you. First captain with ten treasure in the harbour wins.",
+      "description": "Pirate ships race around a ring of islands digging up buried treasure. Every island you stop at hands you treasure, forces treasure on you or lets you rob the captain moored there, while a wandering storm blows ships and cargo across the sea and a hold of more than seven treasure capsizes. The first captain to land ten treasure in their own harbour wins.",
       "similarImage": "",
       "similarName": "Piratissimo",
       "similarDesigner": "Manfred Ludwig",
       "similarAwards": "",
-      "ruleText": "<div>Several pirate ships cruise a ring of 24 lonely islands looking for buried treasure. Dig it up, load it on board and be the first to bring ten pieces safely into your own harbour - while a wandering storm, greedy rivals and your own overloaded hold do their best to stop you.</div>\n<div><br></div>\n<div>On your turn you roll one die. A number sails your ship that many islands onward; the storm symbol lets you drift the storm across the board instead. Every island you stop at does something: islands with a green number let you choose how much treasure to take, a red 2 forces two on you, and islands without a chest are where captains rob each other. Your hold takes seven pieces at most - take one too many and everything sinks.</div>\n<div><br></div>\n<div>Only your own harbour can be entered, and only once per lap, so timing your run home is the heart of the game.</div>",
-      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to bring <b>10 treasure</b> home. The number in your harbour (and the anchor next to your seat) is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat, then somebody presses the <b>anchor</b> button on the right. All ships return to their harbours and a random captain starts.</div>\n<h4>Your turn</h4>\n<div>Press the big <b>dice</b> button on the right (or click the die itself).</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green number</b> - load as much treasure as you like, up to that number. The dialog suggests the largest safe amount.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose 0 to do nothing.</li>\n<li><b>Harbour</b> - one per colour, only its owner may sail in.</li>\n<li>A ship can carry <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and you sail on with an empty hold.</li>\n</ul>\n<h4>When the storm stops on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are simply blown one island onward.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number.</div>",
-      "players": "2-4"
+      "ruleText": "<div>Several pirate ships cruise a ring of 28 lonely islands looking for buried treasure. Dig it up, load it on board and be the first to bring ten pieces safely into your own harbour - while a wandering storm, greedy rivals and your own overloaded hold do their best to stop you.</div>\n<div><br></div>\n<div>On your turn you roll one die. A number sails your ship that many islands onward, following the arrows; an island has room for two ships, a third one sails on to the next free island. Islands with an open chest let you take as much of the treasure as you like, up to three; a closed red chest blinds you with greed and forces two on board; on an island without a chest the arriving captain may take up to two treasure from the ship moored there, or push up to two onto it. A hold takes seven treasure at most - one too many and the ship capsizes and the whole cargo sinks.</div>\n<div><br></div>\n<div>Each colour has a harbour beside its own entrance island. Only its owner may turn in, and the rest of the move is lost when they do; the treasure is unloaded there and the ship sets out again on the next turn.</div>\n<div><br></div>\n<div>The storm face of the die lets you sail one single island and then drift the storm against the sailing direction - up to five islands with two players, four with three, three with four. If the storm comes to rest on an island with ships, the wind wheel decides their fate: blown one island on, one treasure to every other captain, swept safely home, or two treasure washed into the sea.</div>",
+      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat, then somebody presses the <b>anchor</b> button on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts.</div>\n<h4>Your turn</h4>\n<div>Press the big <b>dice</b> button on the right (or click the die itself). Everything that follows is worked out for you; you only answer the questions.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose 0 to do nothing.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and it sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Ships and the storm can simply be dragged</b> from island to island, and the two counters next to your seat can be clicked to correct the cargo on board (⛵) and the treasure in your harbour (⚓) - useful for house rules, for taking a move back or for setting up a position. The dice button is only the comfortable way to play.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
+      "players": "2-4",
+      "usesAIImagery": false
     }
   },
   "bg": {
@@ -1071,7 +1072,8 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
+    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#d55e00"
   },
   "s0": {
     "id": "s0",
@@ -1086,13 +1088,50 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "entrance"
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 0
+      }
+    ]
   },
   "b0": {
     "id": "b0",
@@ -1143,14 +1182,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 2
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 1
+      }
+    ]
   },
   "b1": {
     "id": "b1",
@@ -1165,7 +1241,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i2": {
@@ -1201,14 +1277,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 2
+      }
+    ]
   },
   "i3": {
     "id": "i3",
@@ -1243,14 +1356,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "red",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 3
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 3
+      }
+    ]
   },
   "b3": {
     "id": "b3",
@@ -1301,14 +1451,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 4
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 4
+      }
+    ]
   },
   "i5": {
     "id": "i5",
@@ -1343,14 +1530,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 1
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 5
+      }
+    ]
   },
   "b5": {
     "id": "b5",
@@ -1365,7 +1589,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "1",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i6": {
@@ -1401,14 +1625,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 6
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 6
+      }
+    ]
   },
   "i7": {
     "id": "i7",
@@ -1428,7 +1689,8 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
+    "css": "background-color:#0072b2;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #0072b2aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#0072b2"
   },
   "s7": {
     "id": "s7",
@@ -1443,13 +1705,50 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "entrance"
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 7
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 7
+      }
+    ]
   },
   "b7": {
     "id": "b7",
@@ -1500,14 +1799,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 1
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 8
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 8
+      }
+    ]
   },
   "b8": {
     "id": "b8",
@@ -1522,7 +1858,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "1",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i9": {
@@ -1558,14 +1894,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 9
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 9
+      }
+    ]
   },
   "i10": {
     "id": "i10",
@@ -1600,14 +1973,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "red",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 10
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 10
+      }
+    ]
   },
   "b10": {
     "id": "b10",
@@ -1658,14 +2068,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 11
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 11
+      }
+    ]
   },
   "i12": {
     "id": "i12",
@@ -1700,14 +2147,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 2
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 12
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 12
+      }
+    ]
   },
   "b12": {
     "id": "b12",
@@ -1722,7 +2206,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i13": {
@@ -1758,14 +2242,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 13
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 13
+      }
+    ]
   },
   "i14": {
     "id": "i14",
@@ -1785,7 +2306,8 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
+    "css": "background-color:#009e73;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #009e73aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#009e73"
   },
   "s14": {
     "id": "s14",
@@ -1800,13 +2322,50 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "entrance"
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 14
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 14
+      }
+    ]
   },
   "b14": {
     "id": "b14",
@@ -1857,14 +2416,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 3
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 15
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 15
+      }
+    ]
   },
   "b15": {
     "id": "b15",
@@ -1915,14 +2511,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 16
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 16
+      }
+    ]
   },
   "i17": {
     "id": "i17",
@@ -1957,14 +2590,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "red",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 17
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 17
+      }
+    ]
   },
   "b17": {
     "id": "b17",
@@ -2015,14 +2685,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 18
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 18
+      }
+    ]
   },
   "i19": {
     "id": "i19",
@@ -2057,14 +2764,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 0
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 19
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 19
+      }
+    ]
   },
   "b19": {
     "id": "b19",
@@ -2079,7 +2823,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "0",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i20": {
@@ -2115,14 +2859,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 20
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 20
+      }
+    ]
   },
   "i21": {
     "id": "i21",
@@ -2142,7 +2923,8 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px"
+    "css": "background-color:#cc79a7;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #cc79a7aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#cc79a7"
   },
   "s21": {
     "id": "s21",
@@ -2157,13 +2939,50 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 17,
     "dropOffsetY": 60,
     "stackOffsetX": 42,
-    "kind": "entrance"
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 21
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 21
+      }
+    ]
   },
   "b21": {
     "id": "b21",
@@ -2214,14 +3033,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 0
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 22
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 22
+      }
+    ]
   },
   "b22": {
     "id": "b22",
@@ -2236,7 +3092,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "0",
+    "text": "3",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i23": {
@@ -2272,14 +3128,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 23
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 23
+      }
+    ]
   },
   "i24": {
     "id": "i24",
@@ -2314,14 +3207,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "red",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 24
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 24
+      }
+    ]
   },
   "b24": {
     "id": "b24",
@@ -2372,14 +3302,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 25
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 25
+      }
+    ]
   },
   "i26": {
     "id": "i26",
@@ -2414,14 +3381,51 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "green",
-    "amount": 3
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 26
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 26
+      }
+    ]
   },
   "b26": {
     "id": "b26",
@@ -2472,27 +3476,63 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
     "kind": "meet",
-    "amount": 2
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 27
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 27
+      }
+    ]
   },
   "ship1": {
     "id": "ship1",
     "type": "basic",
-    "parent": "s0",
+    "parent": "dock1",
     "x": 17,
     "y": 60,
     "width": 44,
     "height": 44,
     "z": 2,
     "layer": 1,
-    "movable": false,
-    "movableInEdit": false,
+    "movable": true,
     "clickable": false,
     "display": false,
     "borderRadius": "50%",
@@ -2549,15 +3589,14 @@
   "ship2": {
     "id": "ship2",
     "type": "basic",
-    "parent": "s7",
+    "parent": "dock2",
     "x": 17,
     "y": 60,
     "width": 44,
     "height": 44,
     "z": 2,
     "layer": 1,
-    "movable": false,
-    "movableInEdit": false,
+    "movable": true,
     "clickable": false,
     "display": false,
     "borderRadius": "50%",
@@ -2614,15 +3653,14 @@
   "ship3": {
     "id": "ship3",
     "type": "basic",
-    "parent": "s14",
+    "parent": "dock3",
     "x": 17,
     "y": 60,
     "width": 44,
     "height": 44,
     "z": 2,
     "layer": 1,
-    "movable": false,
-    "movableInEdit": false,
+    "movable": true,
     "clickable": false,
     "display": false,
     "borderRadius": "50%",
@@ -2679,15 +3717,14 @@
   "ship4": {
     "id": "ship4",
     "type": "basic",
-    "parent": "s21",
+    "parent": "dock4",
     "x": 17,
     "y": 60,
     "width": 44,
     "height": 44,
     "z": 2,
     "layer": 1,
-    "movable": false,
-    "movableInEdit": false,
+    "movable": true,
     "clickable": false,
     "display": false,
     "borderRadius": "50%",
@@ -2751,8 +3788,7 @@
     "height": 54,
     "z": 4,
     "layer": 2,
-    "movable": false,
-    "movableInEdit": false,
+    "movable": true,
     "clickable": false,
     "tpos": 25,
     "image": "/i/game-icons.net/lorc/tornado.svg",
@@ -2760,7 +3796,8 @@
     "svgReplaces": {
       "#000": "color"
     },
-    "css": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 6px #ffffffcc)"
+    "css": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 6px #ffffffcc)",
+    "isStorm": true
   },
   "centerPlate": {
     "id": "centerPlate",
@@ -2960,7 +3997,7 @@
   "goalIcon": {
     "id": "goalIcon",
     "type": "basic",
-    "x": 1108,
+    "x": 1429,
     "y": 30,
     "width": 56,
     "height": 56,
@@ -2979,9 +4016,9 @@
   "goalText": {
     "id": "goalText",
     "type": "basic",
-    "x": 1176,
+    "x": 1257,
     "y": 30,
-    "width": 390,
+    "width": 90,
     "height": 56,
     "z": 1,
     "layer": 0,
@@ -2989,12 +4026,12 @@
     "movableInEdit": false,
     "clickable": false,
     "text": "10",
-    "css": "color:#4a2f10;font-size:40px;font-weight:900;display:flex;align-items:center;justify-content:flex-start"
+    "css": "color:#4a2f10;font-size:40px;font-weight:900;display:flex;align-items:center;justify-content:center"
   },
   "goalChest": {
     "id": "goalChest",
     "type": "basic",
-    "x": 1240,
+    "x": 1185,
     "y": 30,
     "width": 56,
     "height": 56,
@@ -3026,6 +4063,8 @@
     "playerChangeRoutine": [
       "var sh = 'ship' + ${PROPERTY index}",
       "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
       {
         "func": "IF",
         "condition": "${value}",
@@ -3034,7 +4073,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": true
@@ -3045,7 +4086,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": false
@@ -3065,7 +4108,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/delapouite/sailboat.svg",
@@ -3073,7 +4116,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#d55e00;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000"
+    "css": "background-color:#d55e00;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship1}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 1"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship1"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
   },
   "landInd1": {
     "id": "landInd1",
@@ -3086,7 +4167,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/lorc/anchor.svg",
@@ -3094,7 +4175,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center"
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock1}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 1"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock1"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
   },
   "seat2": {
     "id": "seat2",
@@ -3112,6 +4231,8 @@
     "playerChangeRoutine": [
       "var sh = 'ship' + ${PROPERTY index}",
       "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
       {
         "func": "IF",
         "condition": "${value}",
@@ -3120,7 +4241,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": true
@@ -3131,7 +4254,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": false
@@ -3151,7 +4276,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/delapouite/sailboat.svg",
@@ -3159,7 +4284,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#0072b2;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000"
+    "css": "background-color:#0072b2;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship2}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 2"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship2"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
   },
   "landInd2": {
     "id": "landInd2",
@@ -3172,7 +4335,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/lorc/anchor.svg",
@@ -3180,7 +4343,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center"
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock2}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 2"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock2"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
   },
   "seat3": {
     "id": "seat3",
@@ -3198,6 +4399,8 @@
     "playerChangeRoutine": [
       "var sh = 'ship' + ${PROPERTY index}",
       "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
       {
         "func": "IF",
         "condition": "${value}",
@@ -3206,7 +4409,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": true
@@ -3217,7 +4422,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": false
@@ -3237,7 +4444,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/delapouite/sailboat.svg",
@@ -3245,7 +4452,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#009e73;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000"
+    "css": "background-color:#009e73;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship3}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 3"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship3"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
   },
   "landInd3": {
     "id": "landInd3",
@@ -3258,7 +4503,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/lorc/anchor.svg",
@@ -3266,7 +4511,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center"
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock3}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 3"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock3"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
   },
   "seat4": {
     "id": "seat4",
@@ -3284,6 +4567,8 @@
     "playerChangeRoutine": [
       "var sh = 'ship' + ${PROPERTY index}",
       "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
       {
         "func": "IF",
         "condition": "${value}",
@@ -3292,7 +4577,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": true
@@ -3303,7 +4590,9 @@
             "func": "SET",
             "collection": [
               "${sh}",
-              "${cb}"
+              "${cb}",
+              "${ci}",
+              "${li}"
             ],
             "property": "display",
             "value": false
@@ -3323,7 +4612,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/delapouite/sailboat.svg",
@@ -3331,7 +4620,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#cc79a7;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000"
+    "css": "background-color:#cc79a7;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship4}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 4"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship4"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
   },
   "landInd4": {
     "id": "landInd4",
@@ -3344,7 +4671,7 @@
     "layer": 0,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "borderRadius": "50%",
     "text": "0",
     "image": "/i/game-icons.net/lorc/anchor.svg",
@@ -3352,7 +4679,45 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center"
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock4}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 4"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock4"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
   },
   "die": {
     "id": "die",
@@ -3436,11 +4801,11 @@
             "fields": [
               {
                 "type": "title",
-                "text": "Take a seat first"
+                "text": "Start a voyage first"
               },
               {
                 "type": "subtitle",
-                "text": "Everybody sits down, then somebody presses the anchor button to start a new voyage."
+                "text": "Take a seat, then press the anchor button to start a new voyage."
               }
             ]
           }
@@ -3551,7 +4916,7 @@
     "id": "legIcon0",
     "type": "basic",
     "x": 1098,
-    "y": 644,
+    "y": 626,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -3570,7 +4935,7 @@
     "id": "legBadge0",
     "type": "basic",
     "x": 1162,
-    "y": 650,
+    "y": 632,
     "width": 40,
     "height": 40,
     "z": 1,
@@ -3586,7 +4951,7 @@
     "id": "legText0",
     "type": "basic",
     "x": 1218,
-    "y": 648,
+    "y": 630,
     "width": 340,
     "height": 44,
     "z": 1,
@@ -3601,7 +4966,7 @@
     "id": "legIcon1",
     "type": "basic",
     "x": 1098,
-    "y": 706,
+    "y": 696,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -3620,7 +4985,7 @@
     "id": "legBadge1",
     "type": "basic",
     "x": 1162,
-    "y": 712,
+    "y": 702,
     "width": 40,
     "height": 40,
     "z": 1,
@@ -3636,7 +5001,7 @@
     "id": "legText1",
     "type": "basic",
     "x": 1218,
-    "y": 710,
+    "y": 700,
     "width": 340,
     "height": 44,
     "z": 1,
@@ -3651,7 +5016,7 @@
     "id": "legIcon2",
     "type": "basic",
     "x": 1098,
-    "y": 768,
+    "y": 766,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -3670,7 +5035,7 @@
     "id": "legText2",
     "type": "basic",
     "x": 1162,
-    "y": 772,
+    "y": 770,
     "width": 340,
     "height": 44,
     "z": 1,
@@ -3685,7 +5050,7 @@
     "id": "legIcon3",
     "type": "basic",
     "x": 1098,
-    "y": 830,
+    "y": 836,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -3704,7 +5069,7 @@
     "id": "legText3",
     "type": "basic",
     "x": 1162,
-    "y": 834,
+    "y": 840,
     "width": 340,
     "height": 44,
     "z": 1,
@@ -3719,7 +5084,7 @@
     "id": "legIcon4",
     "type": "basic",
     "x": 1098,
-    "y": 892,
+    "y": 906,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -3738,7 +5103,7 @@
     "id": "legText4",
     "type": "basic",
     "x": 1162,
-    "y": 896,
+    "y": 910,
     "width": 340,
     "height": 44,
     "z": 1,
@@ -3840,76 +5205,58 @@
             "thenRoutine": [
               "var pos = ${pos} + 1",
               "var pos = ${pos} % 28",
-              "var sp = 's' + ${pos}",
-              "var kind = ${PROPERTY kind OF $sp}",
               {
                 "func": "IF",
-                "operand1": "${kind}",
-                "operand2": "entrance",
+                "operand1": "${pos}",
+                "operand2": "${home}",
                 "thenRoutine": [
+                  "var cargo = ${PROPERTY cargo OF $ship}",
                   {
                     "func": "IF",
-                    "operand1": "${pos}",
-                    "operand2": "${home}",
+                    "operand1": "${cargo}",
+                    "relation": ">",
+                    "operand2": 0,
                     "thenRoutine": [
-                      "var cargo = ${PROPERTY cargo OF $ship}",
                       {
-                        "func": "IF",
-                        "operand1": "${cargo}",
-                        "relation": ">",
-                        "operand2": 0,
-                        "thenRoutine": [
+                        "func": "INPUT",
+                        "cancelButtonText": null,
+                        "cancelButtonIcon": null,
+                        "confirmButtonText": "OK",
+                        "fields": [
                           {
-                            "func": "INPUT",
-                            "cancelButtonText": null,
-                            "cancelButtonIcon": null,
-                            "confirmButtonText": "OK",
-                            "fields": [
-                              {
-                                "type": "title",
-                                "text": "Your harbour"
-                              },
-                              {
-                                "type": "subtitle",
-                                "text": "Sail in and unload your cargo? The rest of your move is lost."
-                              },
-                              {
-                                "type": "select",
-                                "label": "Sail into the harbour",
-                                "variable": "dock",
-                                "options": [
-                                  {
-                                    "value": "y",
-                                    "text": "Yes - unload",
-                                    "selected": true
-                                  },
-                                  {
-                                    "value": "n",
-                                    "text": "No - sail on"
-                                  }
-                                ]
-                              }
-                            ]
+                            "type": "title",
+                            "text": "Your harbour"
                           },
                           {
-                            "func": "IF",
-                            "operand1": "${dock}",
-                            "operand2": "y",
-                            "thenRoutine": [
-                              "var docked = 1"
+                            "type": "subtitle",
+                            "text": "Sail in and unload your cargo? The rest of your move is lost."
+                          },
+                          {
+                            "type": "select",
+                            "label": "Sail into the harbour",
+                            "variable": "dock",
+                            "options": [
+                              {
+                                "value": "y",
+                                "text": "Yes - unload",
+                                "selected": true
+                              },
+                              {
+                                "value": "n",
+                                "text": "No - sail on"
+                              }
                             ]
                           }
                         ]
+                      },
+                      {
+                        "func": "IF",
+                        "operand1": "${dock}",
+                        "operand2": "y",
+                        "thenRoutine": [
+                          "var docked = 1"
+                        ]
                       }
-                    ]
-                  },
-                  {
-                    "func": "IF",
-                    "operand1": "${docked}",
-                    "operand2": 0,
-                    "thenRoutine": [
-                      "var pos = ${pos} + 1",
-                      "var pos = ${pos} % 28"
                     ]
                   }
                 ]
@@ -3926,6 +5273,16 @@
           "var target = 'dock' + ${sidx}"
         ],
         "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "freeSpaceRoutine",
+            "variable": "freePos",
+            "arguments": {
+              "ship": "${ship}",
+              "pos": "${pos}"
+            }
+          },
+          "var pos = ${freePos}",
           "var target = 's' + ${pos}"
         ]
       },
@@ -3967,7 +5324,8 @@
             "routine": "islandRoutine",
             "arguments": {
               "ship": "${ship}",
-              "pos": "${pos}"
+              "pos": "${pos}",
+              "allowMeet": 1
             }
           }
         ]
@@ -4040,16 +5398,32 @@
       },
       {
         "func": "IF",
-        "operand1": "${kind}",
-        "operand2": "meet",
+        "operand1": "${allowMeet}",
+        "operand2": 1,
         "thenRoutine": [
           {
-            "func": "CALL",
-            "routine": "meetRoutine",
-            "arguments": {
-              "ship": "${ship}",
-              "pos": "${pos}"
-            }
+            "func": "IF",
+            "operand1": "${kind}",
+            "relation": "!=",
+            "operand2": "green",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${kind}",
+                "relation": "!=",
+                "operand2": "red",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "meetRoutine",
+                    "arguments": {
+                      "ship": "${ship}",
+                      "pos": "${pos}"
+                    }
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -4108,16 +5482,17 @@
       }
     ],
     "meetRoutine": [
+      "var sp = 's' + ${pos}",
       {
         "func": "SELECT",
-        "property": "isShip",
-        "value": true,
+        "property": "parent",
+        "value": "${sp}",
         "collection": "MEET"
       },
       {
         "func": "SELECT",
-        "property": "pos",
-        "value": "${pos}",
+        "property": "isShip",
+        "value": true,
         "collection": "MEET",
         "mode": "intersect"
       },
@@ -4270,17 +5645,6 @@
     "unloadRoutine": [
       "var sidx = ${PROPERTY seatIdx OF $ship}",
       "var cargo = ${PROPERTY cargo OF $ship}",
-      "var hs = 'dock' + ${sidx}",
-      "var landed = ${PROPERTY landed OF $hs}",
-      "var landed = ${landed} + ${cargo}",
-      {
-        "func": "SET",
-        "collection": [
-          "${hs}"
-        ],
-        "property": "landed",
-        "value": "${landed}"
-      },
       {
         "func": "SET",
         "collection": [
@@ -4290,30 +5654,12 @@
         "value": 0
       },
       {
-        "func": "IF",
-        "operand1": "${landed}",
-        "relation": ">=",
-        "operand2": 10,
-        "thenRoutine": [
-          "var seatId = 'seat' + ${sidx}",
-          "var winner = ${PROPERTY player OF $seatId}",
-          {
-            "func": "SET",
-            "collection": [
-              "winBanner"
-            ],
-            "property": "text",
-            "value": "⚓ ${winner} ⚓"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "winBanner"
-            ],
-            "property": "display",
-            "value": true
-          }
-        ]
+        "func": "CALL",
+        "routine": "landRoutine",
+        "arguments": {
+          "sidx": "${sidx}",
+          "n": "${cargo}"
+        }
       }
     ],
     "stormTurnRoutine": [
@@ -4405,31 +5751,9 @@
         "operand2": 0,
         "thenRoutine": [
           "var tp = ${PROPERTY tpos OF tornado}",
-          {
-            "func": "FOREACH",
-            "range": [
-              1,
-              "${k}",
-              1
-            ],
-            "loopRoutine": [
-              "var tp = ${tp} - 1",
-              "var tp = ${tp} + 28",
-              "var tp = ${tp} % 28",
-              "var tsp = 's' + ${tp}",
-              "var tkind = ${PROPERTY kind OF $tsp}",
-              {
-                "func": "IF",
-                "operand1": "${tkind}",
-                "operand2": "entrance",
-                "thenRoutine": [
-                  "var tp = ${tp} - 1",
-                  "var tp = ${tp} + 28",
-                  "var tp = ${tp} % 28"
-                ]
-              }
-            ]
-          },
+          "var tp = ${tp} - ${k}",
+          "var tp = ${tp} + 28",
+          "var tp = ${tp} % 28",
           "var ts = 's' + ${tp}",
           {
             "func": "SET",
@@ -4458,16 +5782,17 @@
       }
     ],
     "stormHitRoutine": [
+      "var sp = 's' + ${pos}",
       {
         "func": "SELECT",
-        "property": "isShip",
-        "value": true,
+        "property": "parent",
+        "value": "${sp}",
         "collection": "HIT"
       },
       {
         "func": "SELECT",
-        "property": "pos",
-        "value": "${pos}",
+        "property": "isShip",
+        "value": true,
         "collection": "HIT",
         "mode": "intersect"
       },
@@ -4508,50 +5833,6 @@
             "thenRoutine": [
               "var np = ${pos} + 1",
               "var np = ${np} % 28",
-              "var nsp = 's' + ${np}",
-              "var nkind = ${PROPERTY kind OF $nsp}",
-              {
-                "func": "IF",
-                "operand1": "${nkind}",
-                "operand2": "entrance",
-                "thenRoutine": [
-                  "var np = ${np} + 1",
-                  "var np = ${np} % 28"
-                ]
-              },
-              "var nt = 's' + ${np}",
-              "var nkind = ${PROPERTY kind OF $nsp}",
-              {
-                "func": "IF",
-                "operand1": "${nkind}",
-                "operand2": "entrance",
-                "thenRoutine": [
-                  "var np = ${np} + 1",
-                  "var np = ${np} % 28"
-                ]
-              },
-              "var nt = 's' + ${np}",
-              "var nkind = ${PROPERTY kind OF $nsp}",
-              {
-                "func": "IF",
-                "operand1": "${nkind}",
-                "operand2": "entrance",
-                "thenRoutine": [
-                  "var np = ${np} + 1",
-                  "var np = ${np} % 28"
-                ]
-              },
-              "var nt = 's' + ${np}",
-              "var nkind = ${PROPERTY kind OF $nsp}",
-              {
-                "func": "IF",
-                "operand1": "${nkind}",
-                "operand2": "entrance",
-                "thenRoutine": [
-                  "var np = ${np} + 1",
-                  "var np = ${np} % 28"
-                ]
-              },
               "var nt = 's' + ${np}",
               {
                 "func": "FOREACH",
@@ -4576,6 +5857,15 @@
                     ],
                     "property": "pos",
                     "value": "${np}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "islandRoutine",
+                    "arguments": {
+                      "ship": "${blown}",
+                      "pos": "${np}",
+                      "allowMeet": 0
+                    }
                   }
                 ]
               }
@@ -4633,11 +5923,9 @@
                               },
                               {
                                 "func": "CALL",
-                                "routine": "loadRoutine",
+                                "routine": "giveRoutine",
                                 "arguments": {
-                                  "ship": "${taker}",
-                                  "n": 1,
-                                  "quiet": 1
+                                  "ship": "${taker}"
                                 }
                               }
                             ]
@@ -4741,6 +6029,8 @@
         "loopRoutine": [
           "var sh = 'ship' + ${value}",
           "var cb = 'cargoBadge' + ${value}",
+          "var ci = 'cargoInd' + ${value}",
+          "var li = 'landInd' + ${value}",
           "var seatId = 'seat' + ${value}",
           "var hm = ${value} - 1",
           "var hm = ${hm} * 7",
@@ -4797,7 +6087,9 @@
                 "func": "SET",
                 "collection": [
                   "${sh}",
-                  "${cb}"
+                  "${cb}",
+                  "${ci}",
+                  "${li}"
                 ],
                 "property": "display",
                 "value": true
@@ -4808,7 +6100,9 @@
                 "func": "SET",
                 "collection": [
                   "${sh}",
-                  "${cb}"
+                  "${cb}",
+                  "${ci}",
+                  "${li}"
                 ],
                 "property": "display",
                 "value": false
@@ -4817,13 +6111,15 @@
           }
         ]
       },
+      "var tp = randInt 0 27",
+      "var ts = 's' + ${tp}",
       {
         "func": "SET",
         "collection": [
           "tornado"
         ],
         "property": "tpos",
-        "value": 25
+        "value": "${tp}"
       },
       {
         "func": "SET",
@@ -4831,11 +6127,148 @@
           "tornado"
         ],
         "property": "parent",
-        "value": "s25"
+        "value": "${ts}"
       },
       {
         "func": "TURN",
         "turnCycle": "random"
+      }
+    ],
+    "freeSpaceRoutine": [
+      "var placed = 0",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          28,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${placed}",
+            "operand2": 0,
+            "thenRoutine": [
+              "var sp = 's' + ${pos}",
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${sp}",
+                "collection": "OCC"
+              },
+              {
+                "func": "SELECT",
+                "property": "isShip",
+                "value": true,
+                "collection": "OCC",
+                "mode": "intersect"
+              },
+              {
+                "func": "SELECT",
+                "property": "display",
+                "value": true,
+                "collection": "OCC",
+                "mode": "intersect"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "${ship}",
+                "collection": "OCC",
+                "mode": "remove"
+              },
+              {
+                "func": "COUNT",
+                "collection": "OCC",
+                "variable": "nOcc"
+              },
+              {
+                "func": "IF",
+                "operand1": "${nOcc}",
+                "relation": "<",
+                "operand2": 2,
+                "thenRoutine": [
+                  "var placed = 1"
+                ],
+                "elseRoutine": [
+                  "var pos = ${pos} + 1",
+                  "var pos = ${pos} % 28"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "var result = ${pos}"
+    ],
+    "landRoutine": [
+      "var hs = 'dock' + ${sidx}",
+      "var landed = ${PROPERTY landed OF $hs}",
+      "var landed = ${landed} + ${n}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hs}"
+        ],
+        "property": "landed",
+        "value": "${landed}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${landed}",
+        "relation": ">=",
+        "operand2": 10,
+        "thenRoutine": [
+          "var seatId = 'seat' + ${sidx}",
+          "var winner = ${PROPERTY player OF $seatId}",
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner"
+            ],
+            "property": "text",
+            "value": "⚓ ${winner} ⚓"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "giveRoutine": [
+      "var si = ${PROPERTY seatIdx OF $ship}",
+      "var hs = 'dock' + ${si}",
+      "var par = ${PROPERTY parent OF $ship}",
+      {
+        "func": "IF",
+        "operand1": "${par}",
+        "operand2": "${hs}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "landRoutine",
+            "arguments": {
+              "sidx": "${si}",
+              "n": 1
+            }
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "loadRoutine",
+            "arguments": {
+              "ship": "${ship}",
+              "n": 1,
+              "quiet": 1
+            }
+          }
+        ]
       }
     ]
   },
@@ -4852,9 +6285,11 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
@@ -4877,6 +6312,23 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 0
+      }
     ]
   },
   "dock2": {
@@ -4892,9 +6344,11 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
@@ -4917,6 +6371,23 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 7
+      }
     ]
   },
   "dock3": {
@@ -4932,9 +6403,11 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
@@ -4957,6 +6430,23 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 14
+      }
     ]
   },
   "dock4": {
@@ -4972,9 +6462,11 @@
     "movableInEdit": false,
     "clickable": false,
     "classes": "transparent",
-    "dropTarget": {
-      "isShip": true
-    },
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
     "dropOffsetX": 12,
     "dropOffsetY": 46,
     "stackOffsetX": 34,
@@ -4997,6 +6489,23 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 21
+      }
     ]
   },
   "entArt1": {
@@ -5017,7 +6526,7 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #d55e00, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
   },
   "entArt2": {
     "id": "entArt2",
@@ -5037,7 +6546,7 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #0072b2, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
   },
   "entArt3": {
     "id": "entArt3",
@@ -5057,7 +6566,7 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #009e73, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
   },
   "entArt4": {
     "id": "entArt4",
@@ -5077,6 +6586,25 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #cc79a7, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "goalArrow": {
+    "id": "goalArrow",
+    "type": "basic",
+    "x": 1363,
+    "y": 34,
+    "width": 48,
+    "height": 48,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#4a2f10",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;background-position:center"
   }
 }
