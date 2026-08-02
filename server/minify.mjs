@@ -4,13 +4,33 @@ import path from 'path';
 import util from 'util';
 import zlib from 'zlib';
 
-import minify from '@node-minify/core';
-import noCompress from '@node-minify/no-compress';
-import cleanCSS from '@node-minify/clean-css';
-import uglifyES from '@node-minify/uglify-es';
-import htmlMinifier from '@node-minify/html-minifier';
+import CleanCSS from 'clean-css';
+import { minify as htmlMinify } from 'html-minifier-terser';
+import { minify as jsMinify } from 'terser';
 
 import Config from './config.mjs';
+
+// html-minifier-terser enables nothing by default, so spell out the set the previous wrapper used.
+// minifyJS follows the config: the old uglify-js based pass silently failed on our client code,
+// while terser does parse it and would minify even when the config asks for readable output.
+function htmlMinifyOptions() {
+  return {
+    collapseBooleanAttributes: true,
+    collapseInlineTagWhitespace: true,
+    collapseWhitespace: true,
+    conservativeCollapse: true,
+    minifyCSS: true,
+    minifyJS: !!Config.get('minifyJavascript'),
+    removeAttributeQuotes: true,
+    removeComments: true,
+    removeEmptyAttributes: true,
+    removeOptionalTags: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    useShortDoctype: true
+  };
+}
 
 export default async function minifyHTML() {
   const room = await compress('client/room.html', [
@@ -145,13 +165,7 @@ export default async function minifyHTML() {
     'validator/validate_gamefile.js'
   ]);
 
-  const editorHTML = await minify({
-    compressor: htmlMinifier,
-    content: fs.readFileSync(path.resolve() + '/client/editor.html', {encoding:'utf8'}),
-    options: {
-      conservativeCollapse: true
-    }
-  });
+  const editorHTML = await htmlMinify(fs.readFileSync(path.resolve() + '/client/editor.html', {encoding:'utf8'}), htmlMinifyOptions());
 
   editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ CSS\ \*\*\*\/\/\ ["']/, _=>'`' + editorCSS.replace(/\\/g, '\\\\') + '`');
   editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ HTML\ \*\*\*\/\/\ ["']/, _=>'`' + editorHTML + '`');
@@ -169,10 +183,7 @@ async function compressCSS(cssFiles) {
     .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
     .join('\n');  // Combine them into a single string
 
-  return await minify({
-    compressor: cleanCSS,
-    content: combinedCSSContent
-  });
+  return new CleanCSS().minify(combinedCSSContent).styles;
 }
 
 // Helper function to remove import statements
@@ -188,10 +199,10 @@ async function compressJS(jsFiles) {
     .join('\n');  // Combine them into a single string
 
   // Perform compression
-  return await minify({
-    compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
-    content: combinedJSContent
-  });
+  if(!Config.get('minifyJavascript'))
+    return combinedJSContent;
+
+  return (await jsMinify(combinedJSContent)).code;
 }
 
 async function compress(htmlFile, cssFiles, jsFiles) {
@@ -206,13 +217,7 @@ async function compress(htmlFile, cssFiles, jsFiles) {
   const js = await compressJS(jsFiles);
   htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, _=>js);
 
-  const html = await minify({
-    compressor: htmlMinifier,
-    content: htmlString,
-    options: {
-      conservativeCollapse: true
-    }
-  });
+  const html = await htmlMinify(htmlString, htmlMinifyOptions());
 
   const gzipped = await util.promisify(zlib.gzip)(html);
   return {
