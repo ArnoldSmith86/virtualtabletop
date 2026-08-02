@@ -1,3 +1,5 @@
+import { viewportConfig } from '../main.js';
+
 const defaultPileSnapRange = 10;
 
 class Pile extends Widget {
@@ -56,7 +58,7 @@ class Pile extends Widget {
 
     const threshold = this.get('handleOffset')+5;
     const handlePosition = String(this.get('handlePosition'));
-    for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
+    for(const e of [ [ 'x', 'right', viewportConfig.targetWidth-this.get('width'), 'center' ], [ 'y', 'bottom', viewportConfig.targetHeight-this.get('height'), 'middle' ] ]) {
       if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
         if(handlePosition == 'static') {
           this.handle.classList.remove(e[1]);

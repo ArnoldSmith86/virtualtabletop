@@ -1,3 +1,5 @@
+import { viewportConfig } from '../../main.js';
+
 class MoveDragButton extends DragButton {
   constructor() {
     super('control_camera', 'Move', 'Drag to move the selected widgets.');
@@ -47,9 +49,9 @@ class MoveDragButton extends DragButton {
       Y change: <i>${dy>0 ? '+' : ''}${Math.floor(dy)}</i><br><br>
 
       Min X: <i>${formatValue(minX)}</i><br>
-      Max X: <i>${formatValue(1600 - maxX)}</i> from right<br>
+      Max X: <i>${formatValue(viewportConfig.targetWidth - maxX)}</i> from right<br>
       Min Y: <i>${formatValue(minY)}</i><br>
-      Max Y: <i>${formatValue(1000 - maxY)}</i> from bottom
+      Max Y: <i>${formatValue(viewportConfig.targetHeight - maxY)}</i> from bottom
     `;
   }
 }

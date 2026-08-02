@@ -1,3 +1,5 @@
+import { viewportConfig } from './main.js';
+
 //This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
@@ -1532,8 +1534,8 @@ function uploadWidget(preset) {
       id = await addWidgetLocal({
         image: asset,
         movable: false,
-        width: 1600,
-        height: 1000,
+        width: viewportConfig.targetWidth,
+        height: viewportConfig.targetHeight,
         layer: -4
       });
     }
