@@ -761,7 +761,7 @@ class RoutineOperationPopup extends RoutinePopup {
     const list = this.listElement;
     list.innerHTML = '';
     const term = this.searchInput.value.trim().toLowerCase();
-    const matches = this.examples.filter(e=>!term || `${e.func} ${e.description} ${e.example}`.toLowerCase().includes(term));
+    const matches = this.examples.filter(e=>!term || `${e.func} ${e.label || ''} ${e.description} ${e.example}`.toLowerCase().includes(term));
     const withDescription = popupSettingValue('routineOperationDescriptions', true);
     const grouped = popupSettingValue('routineOperationGrouping', false);
 
@@ -769,11 +769,11 @@ class RoutineOperationPopup extends RoutinePopup {
     // would say: the sentence of an operation that does not exist yet
     // describes the example, and every one of them starts with "the picked
     // widgets" - the list is read to find an operation, not to read a routine
-    const addEntry = ({ func, description, example, newOperation })=>{
+    const addEntry = ({ func, label, description, example, newOperation })=>{
       const entry = div(list, 'popup-operation');
       entry.addEventListener('click', _=>this.setNewValue(newOperation));
       entry.title = withDescription ? example : `${description} - ${example}`;
-      div(entry, 'popup-operation-func').textContent = func;
+      div(entry, 'popup-operation-func').textContent = label || func;
       if(withDescription)
         div(entry, 'popup-operation-example').textContent = description;
     };
@@ -1058,13 +1058,25 @@ class RoutineNumberPopup extends RoutinePopup {
     return this.options.textHint;
   }
 
+  // everything this popup shows and takes is in the unit the sentence uses, and
+  // scale is what that is worth in the one the engine stores (a time is said in
+  // seconds and stored in milliseconds)
+  scaled(value) {
+    return this.options.scale && typeof value == 'number' ? value*this.options.scale : value;
+  }
+
+  currentValue() {
+    const value = super.currentValue();
+    return this.options.scale && typeof value == 'number' ? value/this.options.scale : value;
+  }
+
   setNewValue(value) {
     // for parameter alternatives like {fillTo,count} the last one is the normal
     // parameter and the ones before it override it in the engine, so clear those
     const values = {};
     for(const parameter of this.parameterNames)
       values[parameter] = undefined;
-    values[this.parameterNames[this.parameterNames.length-1]] = value;
+    values[this.parameterNames[this.parameterNames.length-1]] = this.scaled(value);
     this.notifyChangeListeners(values);
   }
 
@@ -1076,10 +1088,13 @@ class RoutineNumberPopup extends RoutinePopup {
     for(const value of specials)
       button(valueContent, routineValueWords(value, this.options.display), _=>this.setNewValue(value));
     // starts at 0 because that is a meaningful value for most number parameters
-    // (move/flip/rotate none, x/y/angle 0); "use default" is what clears a value
-    for(let i=0; i<=10; i++)
-      if(specials.indexOf(i) == -1)
-        button(valueContent, routineValueWords(i, this.options.display), _=>this.setNewValue(i));
+    // (move/flip/rotate none, x/y/angle 0); "use default" is what clears a value.
+    // A parameter whose numbers are none of them (a ROTATE angle) offers only its
+    // own, with everything else a line of text away.
+    if(!this.options.specialOnly)
+      for(let i=0; i<=10; i++)
+        if(specials.indexOf(i) == -1)
+          button(valueContent, routineValueWords(i, this.options.display), _=>this.setNewValue(i));
 
     // a few number parameters name a widget instead (TURN turn takes a seat id),
     // so offer the picker for those as well
@@ -1265,6 +1280,141 @@ class RoutineJSONPopup extends RoutinePopup {
     valueContent.append(textarea);
     super.show(true, false);
     textarea.focus();
+  }
+}
+
+// A list of name/value pairs, edited as the list it is: one row per pair, the
+// way the property sets of the Automations section are edited, plus a row that
+// adds one - a VAR is a handful of names and what they get, and typing that as
+// JSON means writing the braces and quotes around it by hand. The parameter is
+// written when the popup closes, so several pairs are entered in one go.
+class RoutineKeyValuePopup extends RoutinePopup {
+  constructor(options={}) {
+    super();
+    this.options = options;
+    this.workingValue = null;
+    this.workingChanged = false;
+  }
+
+  parameterQuestion() {
+    return 'which values';
+  }
+
+  offersValueInput() {
+    return false; // the rows below are the whole value
+  }
+
+  currentPairs() {
+    const value = this.workingValue;
+    return value && typeof value == 'object' && !Array.isArray(value) ? value : {};
+  }
+
+  savePairs(pairs) {
+    this.workingValue = pairs;
+    this.workingChanged = true;
+  }
+
+  hide() {
+    // the same apply-on-close as the color/icon pickers: notifyChangeListeners
+    // makes newRoutineValues call hide() again, so guard against re-entering it
+    if(this.workingChanged && !this.applied) {
+      this.applied = true;
+      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
+    }
+    super.hide();
+  }
+
+  show() {
+    const [ title, content ] = this.addAccordionSection('Value', '', 'value');
+    infoButton(title, `
+      One row per name and the value it gets. Anything that is valid JSON (a number, true, null, an object) is stored as such, everything else as text.
+    `);
+    this.workingValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    this.listElement = div(content, 'popup-key-value-list');
+    this.renderPairs();
+    super.show(true, false);
+  }
+
+  renderPairs() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const keyHint = this.options.keyHint || 'name';
+
+    for(const key of Object.keys(this.currentPairs())) {
+      const row = div(list, 'popup-key-value-row');
+
+      const keyDOM = div(row, 'popup-key-value-key');
+      keyDOM.textContent = key;
+      keyDOM.title = key;
+
+      const valueInput = document.createElement('input');
+      valueInput.type = 'text';
+      valueInput.className = 'popup-key-value-value';
+      valueInput.value = this.valueAsText(this.currentPairs()[key]);
+      valueInput.placeholder = 'value';
+      // no re-render on an edit: it would take the focus out of the input
+      valueInput.addEventListener('change', _=>{
+        this.savePairs(Object.assign({}, this.currentPairs(), { [key]: this.parseValueText(valueInput.value) }));
+      });
+      row.append(valueInput);
+
+      const remove = document.createElement('span');
+      remove.className = 'material-symbols popup-key-value-remove';
+      remove.textContent = 'delete';
+      remove.title = `Remove ${key}`;
+      remove.addEventListener('click', _=>{
+        const next = Object.assign({}, this.currentPairs());
+        delete next[key];
+        this.savePairs(next);
+        this.renderPairs();
+      });
+      row.append(remove);
+    }
+
+    const addRow = div(list, 'popup-key-value-row popup-key-value-add');
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'popup-key-value-name';
+    nameInput.placeholder = keyHint;
+
+    // the names the operations before this one already work with, so a value
+    // that overwrites one of them is picked instead of typed out again
+    const suggestions = (this.options.suggestions || []).filter(name=>typeof this.currentPairs()[name] == 'undefined');
+    if(suggestions.length) {
+      const datalist = document.createElement('datalist');
+      datalist.id = `routineKeyValueSuggestions${++propertySuggestionListCounter}`;
+      for(const name of suggestions) {
+        const option = document.createElement('option');
+        option.value = name;
+        datalist.append(option);
+      }
+      addRow.append(datalist);
+      nameInput.setAttribute('list', datalist.id);
+    }
+    addRow.append(nameInput);
+
+    const addPair = _=>{
+      const key = nameInput.value.trim();
+      if(!key || typeof this.currentPairs()[key] != 'undefined')
+        return;
+      this.savePairs(Object.assign({}, this.currentPairs(), { [key]: '' }));
+      this.renderPairs();
+    };
+    nameInput.addEventListener('keydown', e=>{
+      if(e.key == 'Enter')
+        addPair();
+    });
+    const addButton = button(addRow, 'add', addPair);
+    addButton.className = 'popup-key-value-add-button';
+    // a button that does nothing until a name is typed says so instead of
+    // swallowing the click
+    const updateAddButton = _=>{
+      const key = nameInput.value.trim();
+      addButton.disabled = !key || typeof this.currentPairs()[key] != 'undefined';
+      addButton.title = !key ? `Type the name of the ${keyHint} first` : (addButton.disabled ? `${key} is already in this list` : `Add ${key}`);
+    };
+    nameInput.addEventListener('input', updateAddButton);
+    updateAddButton();
   }
 }
 

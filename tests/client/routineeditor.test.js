@@ -48,7 +48,7 @@ beforeAll(() => {
     'routineOperationVariantChoices', 'operationVariantValues', 'RoutineOperationPopup', 'RoutineClausePopup', 'routineOperationGroups',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
-    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
+    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML'
@@ -100,13 +100,20 @@ describe('routine operation metadata', () => {
       const referenced = (editor.getTemplate().match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m => m.slice(1, -1).split(','));
       const ignored = editor.ignoredParameters();
       const fixed = editor.currentVariant().fixed || [];
-      for (const name in routineOperationMetadata[func].parameters)
+      for (const name in routineOperationMetadata[func].parameters) {
+        const spec = routineOperationMetadata[func].parameters[name];
         if (name in ignored)
           expect(referenced).not.toContain(name); // an ignored parameter is neither worded nor offered as an option
         else if (fixed.includes(name))
           expect(routineOperationVariantChoices({ func }).length).toBeGreaterThan(1); // changed by picking another way to work
+        else if (spec.deprecated || spec.offer === false)
+          // a deprecated parameter (CANVAS canvas) and one the editor writes
+          // itself (TIMER seconds) are part of the sentence while a game has
+          // them, and are never offered to add to one that has not
+          expect(referenced).not.toContain(name);
         else
           expect(referenced).toContain(name);
+      }
     }
   });
 
@@ -395,7 +402,7 @@ describe('operation rendering', () => {
     expect(template({ func: 'SELECT', mode: 'add' })).toContain('Add to the pick');
     expect(template({ func: 'SELECT' })).toContain('Pick');
     expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('{seconds} seconds');
-    expect(template({ func: 'TIMER' })).toContain('Start or pause');
+    expect(template({ func: 'TIMER' })).toContain('Toggle on/off');
     expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Shuffle {holder,collection}[ {mode}]');
     expect(template({ func: 'SHUFFLE', mode: 'riffle' })).toContain('[ {mode}, {modeValue} time]');
     expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('a random seat');
@@ -451,7 +458,7 @@ describe('operation rendering', () => {
 
   test('complex var statements fall back to raw editing', () => {
     const { editor } = renderOperation('var $dynamic.${key} = 1 + 2');
-    expect(editor.getTemplate()).toBe('Variable {variable} gets the value {expression}');
+    expect(editor.getTemplate()).toBe('Set the variable {variable} to the value {expression}');
     const { editor: raw } = renderOperation('var x'); // no " = ", unrepresentable
     expect(raw.getTemplate()).toBe('{statement}');
   });
@@ -1052,7 +1059,7 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'GET' });
     editor.setOperationDetails({ state: {} }, { func: 'GET' }, [], []);
     expect(editor.variantLead(editor.currentVariant())).toBe('Read the first ');
-    expect(editor.clauses().map(clause => clause.label)).toEqual([ 'from a named pick', 'name the result', 'ignore widgets without it' ]);
+    expect(editor.clauses().map(clause => clause.label)).toEqual([ 'from a named pick', 'name the result', 'ignoring widgets without it' ]);
     // and the name it is remembered under is the last thing the sentence says
     expect(sentenceWords(renderOperation({ func: 'GET', property: 'score', variable: 'total', skipMissing: true }).dom))
       .toBe('Read the first score of the picked widgets, ignoring the widgets that do not have it and remember it as total');
@@ -2123,10 +2130,18 @@ describe('number popups with text values', () => {
     popup.hide();
   });
 
-  test('no parameter offers null as a value, that is what "use default" does', () => {
+  test('a parameter offers null only where leaving it out is one of the things it says', () => {
     for(const func in routineOperationMetadata)
-      for(const name in routineOperationMetadata[func].parameters)
-        expect(routineOperationMetadata[func].parameters[name].special || []).not.toContain(null);
+      for(const name in routineOperationMetadata[func].parameters) {
+        const spec = routineOperationMetadata[func].parameters[name];
+        if((spec.special || []).indexOf(null) == -1)
+          continue;
+        // a SCORE without a round adds a new one, which is a choice like naming
+        // a round rather than an empty value - so it is one entry of the
+        // drop-down, in the words the sentence uses, instead of "use default"
+        expect(spec.menu).toBe(true);
+        expect(typeof spec.display == 'function' ? spec.display(null) : (spec.display || {})['null']).toBeTruthy();
+      }
   });
 });
 
@@ -2635,5 +2650,162 @@ describe('popup parameter routing', () => {
     textarea.dispatchEvent(new Event('change'));
     expect(entries).toEqual({ 'in': [ 'a' ] });
     list.hide();
+  });
+});
+
+// The round of review that went through the operations one by one: what an
+// option is called, which unit a time is said in, and what the picker behind a
+// value offers.
+describe('the words and the units of an operation', () => {
+  const editorFor = operation => {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails({ state: {} }, operation, [], []);
+    return editor;
+  };
+  const sentenceWords = operation => {
+    const sentence = editorFor(operation).render().querySelector('.routine-editor-sentence').cloneNode(true);
+    for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+      icon.remove();
+    return sentence.textContent.replace(/\s+/g, ' ').trim();
+  };
+  const offeredOptions = operation => {
+    const editor = editorFor(operation);
+    return editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false).map(clause => clause.label);
+  };
+  const popupFor = (operation, parameter) => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = editorFor(operation).createFullPopup([ parameter ]);
+    popup.setSource(source);
+    popup.setOperationDetails(operation, [ parameter ], { state: {} }, [], []);
+    return popup;
+  };
+
+  // every yes/no option turns a default around, so it is named after what it
+  // does rather than after the parameter it sets - "the grid" said nothing
+  // about what switching it on would do to it
+  test('a yes/no option is named after the setting it switches to', () => {
+    const labels = {};
+    for (const func in routineOperationMetadata) {
+      for (const clause of routineOperationMetadata[func].clauses || []) {
+        const parameters = (String(clause.template).match(/\{([a-zA-Z0-9]+)\}/g) || []).map(m => m.slice(1, -1));
+        const spec = parameters.length == 1 && routineOperationMetadata[func].parameters[parameters[0]];
+        if (spec && spec.type == 'enum' && JSON.stringify(spec.values) == JSON.stringify([ true, false ]))
+          labels[`${func} ${parameters[0]}`] = clause.label;
+      }
+    }
+    expect(labels).toEqual({
+      'CALL return': 'and do not finish this routine',
+      'CLONE recursive': 'including the widgets on them',
+      'GET skipMissing': 'ignoring widgets without it',
+      'INPUT block': 'holding everybody else up',
+      'MOVEXY snapToGrid': 'ignoring the grid',
+      'MOVEXY resetOwner': 'keeping their current owner',
+      'RECALL owned': 'except the cards players hold',
+      'RECALL inHolder': 'only the cards on the table',
+      'RECALL byDistance': 'nearest cards first',
+      'SELECT random': 'in random order',
+      'SORT reverse': 'biggest first',
+      'SORT rearrange': 'without moving them',
+      'SWAPHANDS keepOrder': 'keeping the order of each hand'
+    });
+  });
+
+  // z is a position and not the layer property a widget also has, so the
+  // sentence stopped calling it one - and the third number of a position is not
+  // something to offer next to the two the sentence already names
+  test('MOVEXY words a face like MOVE and offers no layer', () => {
+    expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 0 })).toContain('and turn them face up');
+    expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 2 })).toContain('and turn them to face 2');
+    expect(offeredOptions({ func: 'MOVEXY', from: 'h1' })).toEqual([ 'to a face', 'ignoring the grid', 'keeping their current owner' ]);
+    expect(sentenceWords({ func: 'MOVEXY', from: 'h1', z: 3 })).toContain('at the z position 3');
+  });
+
+  // a deprecated parameter is not a suggestion: it is part of the sentence
+  // while a game has it and nothing the editor invites anybody to add
+  test('the deprecated CANVAS canvas is shown but never offered', () => {
+    expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'only n of them' ]);
+    expect(sentenceWords({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas c1');
+  });
+
+  // which round a score goes into is part of every SCORE: leaving it out adds
+  // one to the end of the list (widget.js), which is a choice like naming one
+  test('SCORE says which round in the sentence and has no options left', () => {
+    expect(sentenceWords({ func: 'SCORE', value: 1 })).toBe('Set score of every seat in a new round to 1');
+    expect(sentenceWords({ func: 'SCORE', mode: 'inc', round: 2, value: 1 })).toBe('Add 1 to score of every seat in round 2');
+    expect(offeredOptions({ func: 'SCORE' })).toEqual([]);
+    const { dom } = { dom: editorFor({ func: 'SCORE', value: 1 }).render() };
+    expect(dom.querySelector('[data-parameter="round"]').classList.contains('routine-editor-parameter-menu')).toBe(true);
+  });
+
+  test('ROTATE sets the rotation, and its angle picker offers angles instead of digits', () => {
+    expect(sentenceWords({ func: 'ROTATE', mode: 'set', holder: 'h1', angle: 60 })).toBe('Set the rotation of 1 widget in h1 to 60 degrees');
+    const popup = popupFor({ func: 'ROTATE', angle: 90 }, 'angle');
+    popup.show();
+    const offered = [...popup.domElement.querySelectorAll('.accordion-content button')].map(b => b.textContent);
+    expect(offered).toContain('60'); // the sixths a hex board is built on
+    expect(offered).toContain('360');
+    expect(offered).not.toContain('7'); // and not the keypad of 0 to 10
+    popup.hide();
+  });
+
+  // a time is a number of seconds wherever a game talks about one; the
+  // milliseconds the engine stores are what the editor converts
+  test('TIMER and AUDIO say seconds and store milliseconds', () => {
+    expect(sentenceWords({ func: 'TIMER', timer: 't1' })).toBe('Toggle on/off the timer t1');
+    expect(sentenceWords({ func: 'TIMER', mode: 'set', timer: 't1', value: 5000 })).toBe('Set the timer t1 to 5 seconds');
+    expect(sentenceWords({ func: 'TIMER', mode: 'set', timer: 't1', value: 1000 })).toBe('Set the timer t1 to 1 second');
+    expect(sentenceWords({ func: 'TIMER', mode: 'dec', timer: 't1', value: 30000 })).toBe('Remove 30 seconds from the timer t1');
+    // a game that says it in the seconds parameter still reads as what it is
+    expect(sentenceWords({ func: 'TIMER', mode: 'inc', timer: 't1', seconds: 5 })).toBe('Add 5 seconds to the timer t1');
+    expect(offeredOptions({ func: 'TIMER', mode: 'set', timer: 't1' })).toEqual([]);
+    expect(sentenceWords({ func: 'AUDIO', source: 'a.mp3', length: 2000 })).toBe('Play the sound a.mp3, stopping after 2 seconds');
+
+    const popup = popupFor({ func: 'TIMER', mode: 'set', timer: 't1', value: 5000 }, 'value');
+    popup.show();
+    expect(popup.domElement.querySelector('.popup-value-input').value).toBe('5');
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == '3').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ value: 3000 });
+    popup.hide();
+  });
+
+  test('a var statement sets a variable to a value', () => {
+    expect(sentenceWords('var x = 1')).toBe('Set the variable x to the value 1');
+    expect(routineOperationExamples().find(e => e.func == 'var').example).toBe('Set the variable x to the value 1');
+  });
+
+  // "//" alone is punctuation rather than a name
+  test('the list of operations calls a comment what it is', () => {
+    const comment = routineOperationExamples().find(e => e.func == '//');
+    expect(comment.label).toBe('// Comment');
+  });
+
+  // what a VAR holds is a list of pairs, so it is edited as one instead of as
+  // the JSON object that list is stored as
+  test('VAR edits its variables as name/value rows', () => {
+    const operation = { func: 'VAR', variables: { score: 3 } };
+    const popup = popupFor(operation, 'variables');
+    expect(popup).toBeInstanceOf(RoutineKeyValuePopup);
+    popup.show();
+    expect([...popup.domElement.querySelectorAll('.popup-key-value-key')].map(k => k.textContent)).toEqual([ 'score' ]);
+    expect(popup.domElement.querySelector('.popup-key-value-value').value).toBe('3');
+
+    // a row is added by name, its value edited in place, and the parameter is
+    // written once when the popup closes
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const nameInput = popup.domElement.querySelector('.popup-key-value-name');
+    nameInput.value = 'round';
+    nameInput.dispatchEvent(new Event('input'));
+    [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'add').dispatchEvent(new Event('click'));
+    expect(value).toBeNull(); // nothing written yet
+    const added = [...popup.domElement.querySelectorAll('.popup-key-value-row')].find(row => (row.querySelector('.popup-key-value-key') || {}).textContent == 'round');
+    const valueInput = added.querySelector('.popup-key-value-value');
+    valueInput.value = '2';
+    valueInput.dispatchEvent(new Event('change'));
+    popup.hide();
+    expect(value).toEqual({ variables: { score: 3, round: 2 } });
   });
 });

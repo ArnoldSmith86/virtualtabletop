@@ -484,3 +484,80 @@ body.edit.darkMode .inline-popup button.primary:hover {
   padding: 2px 6px;
   border-bottom: 1px solid var(--backgroundHighlightColor1);
 }
+
+/* the name/value rows of a list of pairs (a VAR), the same shape as the property
+   sets of the Automations section: the name on the left, its value in a field
+   next to it and the row that adds another one at the bottom */
+.inline-popup .popup-key-value-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inline-popup .popup-key-value-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.inline-popup .popup-key-value-key {
+  color: var(--VTTblue);
+  font-family: monospace;
+  font-size: 12px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.edit.darkMode .inline-popup .popup-key-value-key {
+  color: var(--textHighlightColor7);
+}
+
+.inline-popup .popup-key-value-value,
+.inline-popup .popup-key-value-name {
+  box-sizing: border-box;
+  flex: 1;
+  width: 50%;
+  min-width: 50px;
+  margin-top: 0;
+  padding: 2px 4px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.inline-popup .popup-key-value-remove {
+  font-size: 16px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+}
+
+.inline-popup .popup-key-value-remove:hover {
+  color: var(--textHighlightColor3);
+  opacity: 1;
+}
+
+.inline-popup .popup-key-value-add-button {
+  flex: 0 0 auto;
+  border: 1px dashed var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: none;
+  color: var(--textColor);
+  opacity: 0.8;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.inline-popup .popup-key-value-add-button:hover:not(:disabled) {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* nothing to add without a name: saying so beats a button that does nothing */
+.inline-popup .popup-key-value-add-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

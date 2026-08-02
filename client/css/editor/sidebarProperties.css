@@ -78,6 +78,16 @@
   pointer-events: none;
 }
 
+/* a widget with no routine and no property set has nothing to give the whole
+   panel to, so the switch says so instead of folding the panel down to one line */
+.tune.editorModule .automationsFullSizeToggle.disabled {
+  opacity: 0.4;
+}
+
+.tune.editorModule .automationsFullSizeToggle.disabled label.switchbox {
+  cursor: default;
+}
+
 .tune.editorModule .inheritFromTitle {
   font-weight: bold;
   margin-bottom: 8px;

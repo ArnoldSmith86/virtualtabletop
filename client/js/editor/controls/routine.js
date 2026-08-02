@@ -36,7 +36,9 @@
 //     offer: false keeps a clause out of that list without hiding it: what a
 //     CALL hands back is always called result, so renaming it is not a choice
 //     worth offering - but a game that did rename it still reads what it does
-//     instead of turning the parameter into an unsupported one.
+//     instead of turning the parameter into an unsupported one. The same on a
+//     parameter (TIMER seconds, and every deprecated one) keeps the clause that
+//     would otherwise be generated for it out of the list until a game has it.
 //
 //     label is the one phrase the list of options offers, and it names what the
 //     option is about without saying what it can then say: CLICK offers "n times"
@@ -82,8 +84,17 @@
 // so the wording can follow values that do not warrant a variant of their own.
 //
 // Parameter types decide which popup opens: number, enum (with values),
-// string, property (the name of a widget property), json, widgets (pick widgets
-// in the room), collection (pick widgets or a collection name).
+// string, property (the name of a widget property), json, keyValue (a list of
+// name/value pairs, keyHint naming what one is), widgets (pick widgets in the
+// room), collection (pick widgets or a collection name).
+//
+// scale is the number the stored value is divided by to get the one the editor
+// says and takes: the engine counts a time in milliseconds, a game says two
+// seconds, and neither side has to know about the other.
+//
+// specialOnly leaves the keypad of 0 to 10 out of a number popup where those are
+// not the numbers the parameter takes: what a ROTATE angle can sensibly be is
+// the list of angles, not the digits.
 //
 // display turns a stored value into the words the chip shows: a table keyed by
 // the value, or a function of it where the words are computed (a volume as a
@@ -154,6 +165,7 @@ const parameterTypeHints = {
   // name of a group an earlier operation made, and the popup offers both
   collection: 'widget(s)/collection',
   json: 'number or text',
+  keyValue: 'name and value',
   color: 'color',
   icon: 'icon'
 };
@@ -240,6 +252,15 @@ function yesNo(yes, no) {
   return { 'true': yes, 'false': no };
 }
 
+// a time is written in seconds wherever a game talks about one, while the engine
+// stores milliseconds (AUDIO length, TIMER value): the sentence says seconds, the
+// popup offers and takes seconds, and scale is what converts the two - so nobody
+// counts zeroes to stop a sound after two seconds
+const millisecondsPerSecond = 1000;
+function secondsWords(value) {
+  return typeof value == 'number' ? String(value/millisecondsPerSecond) : null;
+}
+
 // text the game shows or stores, in quotes: they are the difference between the
 // number 1 and the digit 1, and between a word of the sentence and a word the
 // player reads ('titled "Are you sure?"'). A value the routine works out while
@@ -284,15 +305,16 @@ const routineOperationMetadata = {
       }
     ],
     clauses: [
-      { id: 'maxVolume', label: 'quieter', template: ' at {maxVolume} volume', add: { maxVolume: 0.5 } },
-      { id: 'player', label: 'for one player', template: ' for {player}', add: { player: '' } },
+      { id: 'maxVolume', label: 'at a set volume', template: ' at {maxVolume} volume', add: { maxVolume: 0.5 } },
+      { id: 'player', label: 'only for specified players', template: ' for {player}', add: { player: '' } },
       { id: 'count', label: 'n times', template: ', {count}' },
-      { id: 'length', label: 'stop it early', template: ', stopping after {length} milliseconds', add: { length: 1000 } }
+      { id: 'length', label: 'stop it early', add: { length: 1000 },
+        template: v=>`, stopping after {length} second${v('length') == 1000 ? '' : 's'}` }
     ],
     parameters: {
       source: { type: 'string', default: '', hint: 'file name' },
       maxVolume: { type: 'number', default: 1.0, display: value=>typeof value == 'number' ? `${Math.round(value*100)}%` : null },
-      length: { type: 'number', default: null },
+      length: { type: 'number', default: null, scale: millisecondsPerSecond, display: secondsWords },
       player: { type: 'string', default: null, display: { 'null': 'everyone' } },
       silence: { type: 'enum', values: [ true, false ], default: false },
       count: { type: 'number', default: 1, special: [ 'loop' ], display: value=>value == 'loop' ? 'over and over' : (value == 1 ? 'once' : `${value} times`) }
@@ -421,7 +443,7 @@ const routineOperationMetadata = {
       namedGroupClause('source'),
       { id: 'offset', label: 'offset the copies', template: ', offset by {xOffset}, {yOffset}' },
       { id: 'properties', label: 'set properties on them', template: ', and set {properties} on them' },
-      { id: 'recursive', label: 'the widgets on them', template: ', {recursive}', add: { recursive: true } },
+      { id: 'recursive', label: 'including the widgets on them', template: ', {recursive}', add: { recursive: true } },
       { id: 'collection', label: 'name the copies', template: ' — call the copies {collection}' }
     ],
     parameters: {
@@ -586,7 +608,7 @@ const routineOperationMetadata = {
     clauses: [
       Object.assign(namedGroupClause(), { label: 'from a named pick' }),
       { id: 'variable', label: 'name the result', template: ' and remember it as {variable}' },
-      { id: 'skipMissing', label: 'ignore widgets without it', template: ', {skipMissing}', add: { skipMissing: true } }
+      { id: 'skipMissing', label: 'ignoring widgets without it', template: ', {skipMissing}', add: { skipMissing: true } }
     ],
     parameters: {
       property: { type: 'property', default: 'id' },
@@ -634,7 +656,7 @@ const routineOperationMetadata = {
       { id: 'confirmButtonIcon', label: 'the confirm icon', template: ' and the icon {confirmButtonIcon}', add: { confirmButtonIcon: 'check' } },
       { id: 'cancelButtonText', label: 'the cancel button', template: ', cancelling with {cancelButtonText}' },
       { id: 'cancelButtonIcon', label: 'the cancel icon', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' } },
-      { id: 'block', label: 'what everybody else does', template: ', {block}', add: { block: true } },
+      { id: 'block', label: 'holding everybody else up', template: ', {block}', add: { block: true } },
       { id: 'css', label: 'a style of its own', template: ', styled {css}' },
       { id: 'randomRotation', label: 'rotated randomly', template: ', rotated by up to {randomRotation} degrees', add: { randomRotation: 5 } }
     ],
@@ -742,10 +764,16 @@ const routineOperationMetadata = {
       { id: 'movexy', label: 'Move widgets to a position', template: v=>`Move ${widgetsCounted(v, 'count')} from {from} to the position {x}, {y}` }
     ],
     clauses: [
-      { id: 'z', label: 'on a layer', template: ' on layer {z}', add: { z: 1 } },
-      { id: 'face', label: 'to a face', template: ' and turn them face {face}', add: { face: 0 } },
-      { id: 'snapToGrid', label: 'the grid', template: ', {snapToGrid}', add: { snapToGrid: false } },
-      { id: 'resetOwner', label: 'their owner', template: ', {resetOwner}', add: { resetOwner: false } }
+      // z is a position, not the layer property a widget also has, and the third
+      // number of a position is not something to offer next to the two the
+      // sentence already names - a game that sets one still reads what it does
+      { id: 'z', label: 'a z position', offer: false, template: ' at the z position {z}', add: { z: 1 } },
+      // the first two faces are what a game turns cards to; the ones after them
+      // are numbered, and a number needs the word that says what it is
+      { id: 'face', label: 'to a face', add: { face: 0 },
+        template: v=>v('face') > 1 ? ' and turn them to face {face}' : ' and turn them face {face}' },
+      { id: 'snapToGrid', label: 'ignoring the grid', template: ', {snapToGrid}', add: { snapToGrid: false } },
+      { id: 'resetOwner', label: 'keeping their current owner', template: ', {resetOwner}', add: { resetOwner: false } }
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
@@ -797,18 +825,21 @@ const routineOperationMetadata = {
   ROTATE: {
     description: 'Rotate widgets',
     variants: [
-      { id: 'add', label: 'Turn widgets by an angle', fixed: [ 'mode' ],
+      { id: 'add', label: 'Rotate widgets by an angle', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
         template: v=>`Rotate ${widgetsCounted(v, 'count')} in {holder,collection} by {angle} degrees` },
-      { id: 'set', label: 'Turn widgets to an angle', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
+      { id: 'set', label: 'Set the rotation of widgets', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: v=>`Turn ${widgetsCounted(v, 'count')} in {holder,collection} to {angle} degrees` }
+        template: v=>`Set the rotation of ${widgetsCounted(v, 'count')} in {holder,collection} to {angle} degrees` }
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: thePick },
-      angle: { type: 'number', default: 90, special: [ 45, 60, 90, 135, 180 ] },
+      // an angle is picked from the ones games turn things by, all the way round:
+      // the sixths a hex board is built on, the eighths everything else uses and
+      // the twelfths in between - a keypad of 0 to 10 offers none of them
+      angle: { type: 'number', default: 90, specialOnly: true, special: [ 0, 30, 45, 60, 90, 120, 135, 180, 225, 240, 270, 300, 315, 360 ] },
       mode: { type: 'enum', values: [ 'set', 'add' ], default: 'add' }
     },
     ignored: collectionReplacedBy('holder')
@@ -818,21 +849,23 @@ const routineOperationMetadata = {
     variants: [
       { id: 'set', label: 'Set the score', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: 'Set {property} of {seats}{{round}} to {value}' },
+        template: 'Set {property} of {seats} in {round} to {value}' },
       { id: 'inc', label: 'Add to the score', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
-        template: 'Add {value} to {property} of {seats}{{round}}' },
+        template: 'Add {value} to {property} of {seats} in {round}' },
       { id: 'dec', label: 'Subtract from the score', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: 'Subtract {value} from {property} of {seats}{{round}}' }
-    ],
-    clauses: [
-      { id: 'round', label: 'a round of its own', template: ' in round {round}', add: { round: 1 } }
+        template: 'Subtract {value} from {property} of {seats} in {round}' }
     ],
     parameters: {
       property: { type: 'property', default: 'score' },
       seats: { type: 'widgets', default: null, display: { 'null': 'every seat' }, widgetType: 'seat' },
-      round: { type: 'number', default: null, display: { 'null': 'a new round' } },
+      // which round a score goes into is part of every SCORE rather than an
+      // option: leaving it out adds one to the end of the list (widget.js reads
+      // `a.round === null ? newScore.length + 1 : a.round`), which is a choice
+      // like naming a round, so both are in the drop-down the sentence has
+      round: { type: 'number', default: null, menu: true, specialOnly: true, special: [ null, 1, 2, 3, 4, 5 ], otherLabel: 'another round…',
+        display: value=>value === null ? 'a new round' : (typeof value == 'number' ? `round ${value}` : null) },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec' ], default: 'set' },
       value: { type: 'number', default: null }
     }
@@ -981,8 +1014,8 @@ const routineOperationMetadata = {
     ],
     clauses: [
       { id: 'key', label: 'by a property', template: ' by {key}' },
-      { id: 'reverse', label: 'which way round', template: ', {reverse}', add: { reverse: true } },
-      { id: 'rearrange', label: 'move them or not', template: ', {rearrange}', add: { rearrange: false } },
+      { id: 'reverse', label: 'biggest first', template: ', {reverse}', add: { reverse: true } },
+      { id: 'rearrange', label: 'without moving them', template: ', {rearrange}', add: { rearrange: false } },
       { id: 'locales', label: 'for a language', template: ', for the language {locales}', add: { locales: 'en' } },
       { id: 'options', label: 'how text compares', template: ', with the comparison options {options}' }
     ],
@@ -1011,7 +1044,7 @@ const routineOperationMetadata = {
     clauses: [
       { id: 'interval', label: 'n seats along', template: ' but {interval} seats along' },
       { id: 'direction', label: 'which way round', template: ', {direction}' },
-      { id: 'keepOrder', label: 'the order of each hand', template: ', {keepOrder}', add: { keepOrder: true } },
+      { id: 'keepOrder', label: 'keeping the order of each hand', template: ', {keepOrder}', add: { keepOrder: true } },
       { id: 'source', label: 'among some of the seats', template: ', among {source}' }
     ],
     parameters: {
@@ -1030,9 +1063,9 @@ const routineOperationMetadata = {
       { id: 'pause', label: 'Pause a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'pause',
         apply: operation=>{ operation.mode = 'pause'; },
         template: v=>`Pause ${timerTarget(v)}` },
-      { id: 'toggle', label: 'Start or pause a timer', fixed: [ 'mode' ],
+      { id: 'toggle', label: 'Toggle a timer on/off', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: v=>`Start or pause ${timerTarget(v)}` },
+        template: v=>`Toggle on/off ${timerTarget(v)}` },
       { id: 'reset', label: 'Reset a timer', fixed: [ 'mode' ], match: v=>v('mode') == 'reset',
         apply: operation=>{ operation.mode = 'reset'; },
         template: v=>`Reset ${timerTarget(v)}` },
@@ -1042,16 +1075,19 @@ const routineOperationMetadata = {
       { id: 'inc', label: 'Add time', fixed: [ 'mode' ], match: v=>v('mode') == 'inc',
         apply: operation=>{ operation.mode = 'inc'; },
         template: v=>`Add ${timerTime(v)} to ${timerTarget(v)}` },
-      { id: 'dec', label: 'Take time away', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
+      { id: 'dec', label: 'Remove time', fixed: [ 'mode' ], match: v=>v('mode') == 'dec',
         apply: operation=>{ operation.mode = 'dec'; },
-        template: v=>`Take ${timerTime(v)} off ${timerTarget(v)}` }
+        template: v=>`Remove ${timerTime(v)} from ${timerTarget(v)}` }
     ],
     parameters: {
       timer: { type: 'widgets', default: null, widgetType: 'timer' },
       collection: { type: 'collection', default: 'DEFAULT', widgetType: 'timer', display: { 'DEFAULT': 'the picked timers' } },
       mode: { type: 'enum', values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ], default: 'toggle' },
-      value: { type: 'number', default: 0, special: [ 'start', 'end' ], textHint: 'name of a timer property to read the time from' },
-      seconds: { type: 'number', default: 0 }
+      value: { type: 'number', default: 0, special: [ 'start', 'end' ], scale: millisecondsPerSecond, display: secondsWords, textHint: 'name of a timer property to read the time from' },
+      // the engine takes seconds over value when it is set (setMilliseconds(a.seconds*1000 || a.value)),
+      // so a game that has one keeps reading as the time it is - but a time is
+      // said in seconds either way now, so there is nothing to choose here
+      seconds: { type: 'number', default: 0, offer: false }
     },
     ignored: (v, isSet)=>{
       const ignored = collectionReplacedBy('timer')(v);
@@ -1121,7 +1157,9 @@ const routineOperationMetadata = {
       { id: 'var', label: 'Set variables', template: 'Remember {variables}' }
     ],
     parameters: {
-      variables: { type: 'json', default: {}, display: keyValueWords }
+      // what a VAR holds is a list of pairs, so it is edited as one - a name and
+      // a value per row - rather than as the object that list is stored as
+      variables: { type: 'keyValue', default: {}, hint: 'variables', display: keyValueWords, keyHint: 'variable' }
     },
     definesVariables: operation=>Object.keys(operation.variables || {})
   }
@@ -1134,11 +1172,15 @@ function timerTarget(v) {
 }
 
 // TIMER reads the time from seconds, from value in milliseconds, or from the
-// timer property value names - the sentence says which one it uses
+// timer property value names. A time is a number of seconds wherever it is said,
+// so the sentence says seconds for both numbers - the milliseconds value holds
+// are what the editor converts, not what anybody types.
 function timerTime(v) {
   if(typeof v('value') == 'string')
     return 'the time in {value}';
-  return v('seconds') ? '{seconds} seconds' : '{value} milliseconds';
+  const parameter = v('seconds') ? 'seconds' : 'value';
+  const seconds = parameter == 'seconds' ? v('seconds') : (typeof v('value') == 'number' ? v('value')/millisecondsPerSecond : null);
+  return `{${parameter}} second${seconds == 1 ? '' : 's'}`;
 }
 
 // the words a sentence starts with: everything before its first parameter. They
@@ -1803,16 +1845,29 @@ class RoutineOperationEditor {
     if(parameterNames.length > 1 && spec && spec.type == 'collection')
       return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
     switch(spec && spec.type) {
-      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, display: spec.display, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
+      // a scaled parameter's own display words the stored value, while everything
+      // in the popup is already in the unit it shows - so the numbers it offers
+      // say what they are without being converted a second time
+      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, specialOnly: spec.specialOnly, scale: spec.scale, display: spec.scale ? null : spec.display, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values, display: spec.display });
       case 'property':   return new RoutinePropertyNamePopup();
       case 'widgets':    return new RoutineWidgetIDPopup(pickerOptions);
       case 'collection': return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
       case 'json':       return new RoutineJSONPopup();
+      case 'keyValue':   return new RoutineKeyValuePopup({ keyHint: spec.keyHint, suggestions: this.parameterKeySuggestions(parameterNames[0]) });
       case 'color':      return new RoutineColorPopup();
       case 'icon':       return new RoutineIconPopup();
       default:           return new RoutineStringPopup();
     }
+  }
+
+  // the names a list of pairs proposes: the variables the operations before this
+  // one define, so a VAR that overwrites one of them picks the name instead of
+  // spelling it out again
+  parameterKeySuggestions(name) {
+    const value = this.parameterValue(name);
+    const taken = value && typeof value == 'object' ? Object.keys(value) : [];
+    return (this.variables || []).filter(variable=>typeof variable == 'string' && taken.indexOf(variable) == -1);
   }
 
   getDefaults() {
@@ -1983,9 +2038,18 @@ class RoutineOperationEditor {
     const clauses = (this.metadata.clauses || []).filter(clause=>(!clause.variants || clause.variants.indexOf(variant.id) != -1) && usable(clause));
 
     const spokenFor = new Set([ ...this.templateParameters(variant.template), ...(variant.fixed || []), ...clauses.flatMap(clause=>this.templateParameters(clause.template)) ]);
-    for(const name in this.metadata.parameters)
-      if(!spokenFor.has(name) && !Object.prototype.hasOwnProperty.call(ignored, name))
-        clauses.push({ id: name, label: name, template: `, ${name} {${name}}`, generated: true });
+    for(const name in this.metadata.parameters) {
+      if(spokenFor.has(name) || Object.prototype.hasOwnProperty.call(ignored, name))
+        continue;
+      // a parameter nothing offers is still part of the sentence while a game
+      // has it - what it is not is a suggestion: a deprecated one (CANVAS canvas)
+      // would read as an invitation to use it, and one the editor writes itself
+      // (TIMER seconds) as a second way of saying the same thing
+      const spec = this.metadata.parameters[name];
+      if((spec.offer === false || spec.deprecated) && !this.parameterIsSet(name))
+        continue;
+      clauses.push({ id: name, label: name, template: `, ${name} {${name}}`, generated: true, offer: spec.offer !== false && !spec.deprecated });
+    }
     // a custom property the operation does not know about is always part of the
     // sentence: the engine ignores it, but hiding it makes a typo impossible to
     // spot - and its x is how it is removed again
@@ -2458,7 +2522,7 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   currentVariant() {
     // fall back to raw editing for statements the simple form cannot represent
     return this.isSimple()
-      ? { id: 'simple', label: 'var', template: 'Variable {variable} gets the value {expression}' }
+      ? { id: 'simple', label: 'var', template: 'Set the variable {variable} to the value {expression}' }
       : { id: 'raw', label: 'var', template: '{statement}' };
   }
 
@@ -2481,7 +2545,7 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   getExampleWithDefaults() {
-    return 'Variable x gets the value 1';
+    return 'Set the variable x to the value 1';
   }
 
   isSimple() {
@@ -2603,8 +2667,9 @@ function routineOperationExamples() {
     editor.setOperationDetails(null, newOperation, [], []);
     examples.push({ func, description: metadata.description || func, example: editor.getExampleWithDefaults(), newOperation });
   }
-  examples.push({ func: 'var', description: 'Work out a value and remember it', example: 'Variable x gets the value 1', newOperation: 'var x = 1' });
-  examples.push({ func: '//', description: 'Add a note for whoever reads the routine', example: 'A note for whoever reads the routine', newOperation: '// comment' });
+  examples.push({ func: 'var', description: 'Work out a value and remember it', example: 'Set the variable x to the value 1', newOperation: 'var x = 1' });
+  // "//" alone is punctuation rather than a name, so the list says what it is
+  examples.push({ func: '//', label: '// Comment', description: 'Add a note for whoever reads the routine', example: 'A note for whoever reads the routine', newOperation: '// comment' });
   for(const example of examples)
     example.group = routineOperationGroup(example.func);
   return examples;

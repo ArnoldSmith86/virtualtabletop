@@ -573,6 +573,9 @@ class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.renderedSelectionIDs = null;
+    // the widgets whose Automations section is on screen, so the full size
+    // switch knows whether there is anything to give the whole panel to
+    this.automationsWidgets = [];
     this.collapsibleStates = {};
     this.sizeRatioLocks = new WeakMap();
     // per line: the widget new stops inherit from. Kept outside the panel because
@@ -746,6 +749,7 @@ class PropertiesModule extends SidebarModule {
     // put back by renderEvents; a selection without an Automations section (a
     // pile, or nothing at all) must not hide what it does show
     this.moduleDOM.classList.remove('automationsFullSize');
+    this.automationsWidgets = [];
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
 
@@ -5954,12 +5958,19 @@ class PropertiesModule extends SidebarModule {
   renderEvents(widget) {
     const section = document.createElement('div');
     section.className = 'automationsSection';
-    const eventsEditor = new EventsEditor(widget, (property, value)=>this.inputValueUpdated(widget, property, value));
+    this.automationsWidgets.push(widget);
+    const eventsEditor = new EventsEditor(widget, (property, value)=>{
+      this.inputValueUpdated(widget, property, value);
+      // the first routine of a widget is what makes full size worth having
+      this.applyAutomationsFullSize();
+    });
     // a delta listener instead of per-property listeners so routines added
     // by other players (properties that did not exist on selection) show up too
     this.addDeltaListener(deltaS=>{
-      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties' ].indexOf(p) != -1))
+      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties' ].indexOf(p) != -1)) {
         eventsEditor.onPropertyChange();
+        this.applyAutomationsFullSize();
+      }
     });
     section.append(eventsEditor.domElement);
     // the curated sections come first, then the routines, then the raw list of
@@ -5998,7 +6009,6 @@ class PropertiesModule extends SidebarModule {
     const box = document.createElement('label');
     box.className = 'switchbox';
     box.htmlFor = input.id;
-    box.title = 'Give the Automations section the height of the whole panel';
     toggle.appendChild(box);
   }
 
@@ -6009,14 +6019,29 @@ class PropertiesModule extends SidebarModule {
     return localStorage.getItem('editor.automationsFullSize') == 'true';
   }
 
+  // whether there is anything to give the whole panel to: a widget with no
+  // routine and no property set shows one line saying so, and folding every
+  // other section away for it leaves a panel with nothing in it
+  hasAutomations() {
+    return this.automationsWidgets.some(widget=>Object.keys(widget.state).some(property=>this.isAutomationProperty(widget, property)));
+  }
+
   applyAutomationsFullSize() {
     if(!this.moduleDOM)
       return;
-    const fullSize = this.automationsFullSize();
+    const available = this.hasAutomations();
+    // the preference is remembered either way: adding a routine to a widget that
+    // had none gives the section the height it was switched to before
+    const fullSize = available && this.automationsFullSize();
     this.moduleDOM.classList.toggle('automationsFullSize', fullSize);
     // with several widgets selected every one of them has a section bar
-    for(const input of $a('.automationsFullSizeToggle input.switchbox', this.moduleDOM))
+    for(const input of $a('.automationsFullSizeToggle input.switchbox', this.moduleDOM)) {
       input.checked = fullSize;
+      input.disabled = !available;
+      input.parentElement.classList.toggle('disabled', !available);
+      if(input.nextElementSibling)
+        input.nextElementSibling.title = available ? 'Give the Automations section the height of the whole panel' : 'Nothing to give the whole panel to yet - add a routine first';
+    }
   }
 
   // the properties the Automations section edits, so that neither the raw
