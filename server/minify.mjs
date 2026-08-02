@@ -80,6 +80,7 @@ export default async function minifyHTML() {
     'client/js/widgets/spinner.js',
     'client/js/widgets/timer.js',
 
+    'client/js/calculateLayout.js',
     'client/js/main.js'
   ]);
 
