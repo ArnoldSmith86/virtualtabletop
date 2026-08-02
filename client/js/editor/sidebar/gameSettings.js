@@ -256,7 +256,7 @@ class GameSettingsModule extends SidebarModule {
   // so fall back to a decimal ratio once the reduced numbers get big
   boardRatioText(width, height) {
     const gcd = (a, b) => b ? gcd(b, a % b) : a;
-    const divisor = gcd(width, height);
+    const divisor = gcd(Math.round(width), Math.round(height));
     const [ w, h ] = [ width/divisor, height/divisor ];
     const ratio = w <= 40 && h <= 40 ? `${w}:${h}` : `${(width/height).toFixed(2)}:1`;
     if(width == height)
@@ -265,12 +265,31 @@ class GameSettingsModule extends SidebarModule {
   }
 
   // only top level widgets sit on the board itself - a smaller board pushes them
-  // past its edge, where they are silently clipped away
+  // past its edge, where they are silently clipped away. rotation and scale are
+  // applied around the widget's center, so the area it covers is not its x/y/
+  // width/height box. Cached because this walks every widget and the board size
+  // fields recompute it on every keystroke.
+  boardWidgetBoxes() {
+    if(!this.cachedWidgetBoxes) {
+      this.cachedWidgetBoxes = widgetFilter(w => !w.get('parent')).map(w => {
+        const scale = w.get('scale') || 1;
+        const halfWidth = w.get('width') * scale / 2;
+        const halfHeight = w.get('height') * scale / 2;
+        const angle = (w.get('rotation') || 0) * Math.PI / 180;
+        const halfX = Math.abs(halfWidth * Math.cos(angle)) + Math.abs(halfHeight * Math.sin(angle));
+        const halfY = Math.abs(halfWidth * Math.sin(angle)) + Math.abs(halfHeight * Math.cos(angle));
+        const centerX = w.get('x') + w.get('width') / 2;
+        const centerY = w.get('y') + w.get('height') / 2;
+        return { widget: w, left: centerX-halfX, top: centerY-halfY, right: centerX+halfX, bottom: centerY+halfY };
+      });
+    }
+    return this.cachedWidgetBoxes;
+  }
+
   widgetsOutsideBoard(width, height) {
-    return widgetFilter(w => !w.get('parent') && (
-      w.get('x') < 0 || w.get('y') < 0 ||
-      w.get('x') + w.get('width') > width || w.get('y') + w.get('height') > height
-    ));
+    return this.boardWidgetBoxes()
+      .filter(box => box.left < 0 || box.top < 0 || box.right > width || box.bottom > height)
+      .map(box => box.widget);
   }
 
   addAspectRatioSetting(target) {
@@ -546,8 +565,14 @@ class GameSettingsModule extends SidebarModule {
   }
 
   onStateReceived(state) {
+    this.cachedWidgetBoxes = null;
     this.updateBadge();
     super.onStateReceived(state);
+  }
+
+  // widgets moved or were added, so the boxes the board size check works on are stale
+  onDeltaReceivedWhileActive(delta) {
+    this.cachedWidgetBoxes = null;
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -568,6 +593,7 @@ class GameSettingsModule extends SidebarModule {
   renderModule(target) {
     target.innerHTML = '';
     this.syncBoardSize = null;
+    this.cachedWidgetBoxes = null;
     this.addHeader('Game Settings');
 
     this.addSubHeader('Board Settings');

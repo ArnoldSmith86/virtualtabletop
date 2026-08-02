@@ -7,6 +7,7 @@ import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
+import { MIN_BOARD_SIZE, MAX_BOARD_SIZE } from '../client/js/calculateLayout.js';
 import Statistics from './statistics.mjs';
 
 export default class Room {
@@ -1133,11 +1134,17 @@ export default class Room {
     const oldLegacyModes = this.state._meta.gameSettings?.legacyModes || {};
     const newLegacyModes = gameSettings.legacyModes || {};
 
-    // the board size affects everyone in the room, so don't store nonsense
-    // (the bounds match MIN_BOARD_SIZE/MAX_BOARD_SIZE in client/js/calculateLayout.js)
+    // the board size affects everyone in the room, so don't store nonsense - keep
+    // the size the room is already playing on instead of resetting it to default
     const aspectRatio = gameSettings.aspectRatio;
-    if(aspectRatio && ![ aspectRatio.width, aspectRatio.height ].every(v => Number.isFinite(v) && v >= 100 && v <= 10000))
-      delete gameSettings.aspectRatio;
+    if(aspectRatio && ![ aspectRatio.width, aspectRatio.height ].every(v => Number.isFinite(v) && v >= MIN_BOARD_SIZE && v <= MAX_BOARD_SIZE)) {
+      const previousAspectRatio = this.state._meta.gameSettings?.aspectRatio;
+      if(previousAspectRatio)
+        gameSettings.aspectRatio = previousAspectRatio;
+      else
+        delete gameSettings.aspectRatio;
+      player.send('error', `The board size has to be between ${MIN_BOARD_SIZE} and ${MAX_BOARD_SIZE} - ignoring it.`);
+    }
 
     this.state._meta.gameSettings = gameSettings;
     this.sendMetaUpdate();

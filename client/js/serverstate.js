@@ -482,6 +482,8 @@ function receiveStateFromServer(args) {
 
   // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
   currentGameSettings = args._meta.gameSettings || {};
+  // no setScale() here: --roomWidth/--roomHeight/--scale are applied by the meta
+  // message the server always sends alongside a state (see Room.setState/loadState)
   setViewportSize(currentGameSettings.aspectRatio);
 
   mouseTarget = null;

@@ -1,6 +1,9 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { calculateLayout, viewportConfig, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { calculateLayout, calculateEditModuleClasses, viewportConfig, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+
+// the layout classes are also reachable from a game's Global Room CSS, so the pre-rename names stay
+const LEGACY_LAYOUT_CLASSES = { 'wide-side': 'wideToolbar', bottom: 'horizontalToolbar', tight: 'aspectTooGood' };
 
 export let scale = 1;
 let roomRectangle;
@@ -203,6 +206,10 @@ function setScale() {
 
   const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
 
+  // set before measuring below - they decide where the module panel sits and so how much room is left
+  $('body').classList.remove('editModulesAbove', 'editModulesOverlay');
+  $('body').classList.add(...calculateEditModuleClasses(w, h, viewportConfig));
+
   if(edit || jeEnabled) {
     const targetWidth = targetW / zoom;
     const targetHeight = targetH / zoom;
@@ -230,6 +237,11 @@ function setScale() {
   scale = layout.scale;
   $('body').classList.remove('layout-side', 'layout-wide-side', 'layout-bottom', 'layout-tight');
   $('body').classList.add(`layout-${layout.layoutMode}`);
+  // the class names above used to be wideToolbar/horizontalToolbar/aspectTooGood - keep those applied
+  // as well so a game's Global Room CSS that targets them keeps working
+  $('body').classList.remove('wideToolbar', 'horizontalToolbar', 'aspectTooGood');
+  if(LEGACY_LAYOUT_CLASSES[layout.layoutMode])
+    $('body').classList.add(LEGACY_LAYOUT_CLASSES[layout.layoutMode]);
 
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();

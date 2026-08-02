@@ -21,10 +21,8 @@
 
 /* On layouts where the module panel sits above the room or covers it entirely (see sidebar.css), it
    simply overlays the deck editor, so don't reserve width for it. */
-@media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20), (max-width: 1000px) and (min-aspect-ratio: 16/20) {
-  #editor.moduleActive #deckEditor {
-    right: var(--editSidebarWidth);
-  }
+body:is(.editModulesAbove, .editModulesOverlay) #editor.moduleActive #deckEditor {
+  right: var(--editSidebarWidth);
 }
 
 body.deckEditorActive #deckEditor {

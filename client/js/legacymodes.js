@@ -28,13 +28,15 @@ onLoad(function() {
   onMessage('meta', args=>{
     currentGameSettings = args.meta.gameSettings || {};
     const previousBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
-    // the aspect ratio can be changed while people are playing, so re-layout
     setViewportSize(currentGameSettings.aspectRatio);
-    setScale();
-    // no widget changed, but pile handles are placed relative to the board edges
-    if(previousBoardSize != `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`)
+    // meta arrives for all kinds of unrelated events (a player joining, a save,
+    // a rename), so only re-layout when the board size actually changed
+    if(previousBoardSize != `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`) {
+      setScale();
+      // no widget changed, but pile handles are placed relative to the board edges
       for(const w of widgets.values())
         if(w.updateHandlePlacement)
           w.updateHandlePlacement();
+    }
   });
 });

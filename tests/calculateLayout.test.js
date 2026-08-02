@@ -1,4 +1,4 @@
-import { calculateLayout, DEFAULT_VIEWPORT, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
+import { calculateLayout, calculateEditModuleClasses, DEFAULT_VIEWPORT, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
 
 describe('calculateLayout', () => {
   const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
@@ -45,6 +45,37 @@ describe('calculateLayout', () => {
     const result = calculateLayout(1700, 1000, viewport16x10, { scale: 0.5 });
     expect(result.scale).toBe(0.5);
     expect(result.layoutMode).toBe('wide-side');
+  });
+});
+
+describe('calculateEditModuleClasses', () => {
+  const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
+
+  // what the media queries this replaces matched, expressed in js
+  const mediaQueryClasses = (w, h) => {
+    const classes = [];
+    if((h >= w && w >= 1000) || w/h <= 16/20)  // (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20)
+      classes.push('editModulesAbove');
+    if(w <= 1000 && w/h >= 16/20)              // (max-width: 1000px) and (min-aspect-ratio: 16/20)
+      classes.push('editModulesOverlay');
+    return classes;
+  };
+
+  test('sets the same classes the media queries matched for the default board', () => {
+    const mismatches = [];
+    for(let w = 200; w <= 3000; w += 8)
+      for(let h = 150; h <= 2000; h += 11)
+        if(String(calculateEditModuleClasses(w, h, viewport16x10)) != String(mediaQueryClasses(w, h)))
+          mismatches.push(`${w}x${h}: ${calculateEditModuleClasses(w, h, viewport16x10)} instead of ${mediaQueryClasses(w, h)}`);
+    expect(mismatches).toEqual([]);
+  });
+
+  test('flips at the shape of the board, not at a hardcoded 16:20', () => {
+    // a wide board leaves room above and below itself, so the panel goes there
+    // instead of taking width away from an already short room
+    const wide = { targetWidth: 3200, targetHeight: 1000 };
+    expect(calculateEditModuleClasses(1400, 1200, viewport16x10)).toEqual([]);
+    expect(calculateEditModuleClasses(1400, 1200, wide)).toEqual([ 'editModulesAbove' ]);
   });
 });
 

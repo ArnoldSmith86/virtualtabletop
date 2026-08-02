@@ -1,6 +1,8 @@
 // Mirrors --toolbarSize in layout.css and the width the wide toolbar needs.
 const TOOLBAR_SIZE = 44;
 const WIDE_TOOLBAR_SIZE = 200;
+// the window width below which edit mode stops keeping the module panel beside the room
+const NARROW_WINDOW_SIZE = 1000;
 
 export const DEFAULT_VIEWPORT = { targetWidth: 1600, targetHeight: 1000 };
 export const MIN_BOARD_SIZE = 100;
@@ -60,4 +62,30 @@ export function calculateLayout(windowWidth, windowHeight, viewport, options = {
   if(windowIsNarrower)
     return { scale, layoutMode: 'bottom' };
   return { scale, layoutMode: 'side' };
+}
+
+/**
+ * Whether edit mode moves the module panel above the room or lets it cover the
+ * room entirely - no class means it stays beside the room. These used to be two
+ * media queries keyed off a hardcoded 16/20 window aspect ratio, which is half
+ * of the default board's 16/10, so a game with a differently shaped board
+ * flipped at the wrong window shape. At 1600x1000 the classes match what those
+ * media queries matched, window size for window size - including the sizes
+ * where both of them applied at once.
+ *
+ * @param {number} windowWidth
+ * @param {number} windowHeight
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @returns {string[]} any of 'editModulesAbove', 'editModulesOverlay'
+ */
+export function calculateEditModuleClasses(windowWidth, windowHeight, viewport) {
+  const windowAspect = windowWidth/windowHeight;
+  const halfBoardAspect = viewport.targetWidth/viewport.targetHeight/2;
+  const classes = [];
+
+  if(windowAspect <= halfBoardAspect || (windowWidth >= NARROW_WINDOW_SIZE && windowHeight >= windowWidth))
+    classes.push('editModulesAbove');
+  if(windowWidth <= NARROW_WINDOW_SIZE && windowAspect >= halfBoardAspect)
+    classes.push('editModulesOverlay');
+  return classes;
 }
