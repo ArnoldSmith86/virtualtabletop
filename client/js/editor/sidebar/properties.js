@@ -574,6 +574,7 @@ class PropertiesModule extends SidebarModule {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.widgetPicker = null;
     this.renderedSelectionIDs = null;
+    this.renderedBoardSize = null;
     this.collapsibleStates = {};
     this.sizeRatioLocks = new WeakMap();
     // per line: the widget new stops inherit from. Kept outside the panel because
@@ -850,6 +851,16 @@ class PropertiesModule extends SidebarModule {
       updater(delta.s);
   }
 
+  onMetaReceivedWhileActive(meta) {
+    // the X/Y/W/H sliders are bounded by the board size, so they go stale when
+    // another tab (or another player) changes it while the panel is open
+    const boardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
+    if(boardSize == this.renderedBoardSize)
+      return;
+    this.renderedBoardSize = boardSize;
+    this.onSelectionChangedWhileActive([ ...selectedWidgets ]);
+  }
+
   onSelectionChangedWhileActive(newSelection) {
     if(this.handleWidgetPickerSelection(newSelection))
       return;
@@ -860,6 +871,7 @@ class PropertiesModule extends SidebarModule {
     const selectionIDs = newSelection.map(widget=>widget.id).join(' ');
     const keepScrollTop = selectionIDs === this.renderedSelectionIDs ? this.moduleDOM.scrollTop : null;
     this.renderedSelectionIDs = selectionIDs;
+    this.renderedBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
 
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
