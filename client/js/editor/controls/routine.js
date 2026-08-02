@@ -166,6 +166,7 @@ const parameterTypeHints = {
   collection: 'widget(s)/collection',
   json: 'number or text',
   keyValue: 'name and value',
+  stringList: 'list of values',
   color: 'color',
   icon: 'icon'
 };
@@ -287,6 +288,13 @@ const comparisonWords = {
 // an option that swaps words rather than one that adds them, which is also what
 // gives it the marker that takes it out again: a game that arrived with a canvas
 // is one minus away from the collection every new game writes.
+// An INPUT whose cancel button has neither a text nor an icon has no cancel
+// button at all (widget.js hides it when both are explicitly null), which is
+// the only way to make a dialog a forced choice.
+function inputCannotBeCancelled(v, isSet) {
+  return isSet('cancelButtonText') && v('cancelButtonText') === null && isSet('cancelButtonIcon') && v('cancelButtonIcon') === null;
+}
+
 const canvasTargetClause = {
   id: 'canvas', label: 'a single canvas widget', offer: false,
   template: ' {canvas}', whenOff: ' {collection}'
@@ -650,20 +658,50 @@ const routineOperationMetadata = {
     // a part of the sentence that is there while the operation has it. A dialog
     // with no fields is the "Are you sure?" every second game asks, so the fields
     // are an option like the rest instead of a form the sentence claims is there.
+    // who is asked is not an option but a way of working, because it changes
+    // what the answers are: with a list of players every field comes back as an
+    // object keyed by player name instead of as a plain value, so everything
+    // reading those variables afterwards has to be written differently
     variants: [
-      { id: 'input', label: 'Ask the player', template: 'Ask{{player}}{{header}}{{fields}}' }
+      { id: 'player', label: 'Ask the player', fixed: [ 'player' ],
+        apply: operation=>{ delete operation.player; },
+        template: 'Ask the player{{header}}{{fields}}' },
+      { id: 'named', label: 'Ask one particular player', fixed: [ 'player' ],
+        match: (v, isSet)=>isSet('player') && v('player') !== null && !Array.isArray(v('player')),
+        apply: operation=>{ operation.player = ''; },
+        template: 'Ask the player called {player}{{header}}{{fields}}' },
+      // what the list of players changes is not who answers but what an answer
+      // is, so the entry that offers it says so
+      { id: 'several', label: 'Ask several players at once - every answer becomes a list, one entry per player', fixed: [ 'player' ],
+        match: v=>Array.isArray(v('player')),
+        apply: operation=>{ operation.player = []; },
+        template: 'Ask the players {player} at once{{header}}{{fields}}' }
     ],
     clauses: [
-      { id: 'player', label: 'somebody else to ask', whenOff: ' the player', template: ' {player}', add: { player: '' } },
       { id: 'header', label: 'a title', template: ' {header}' },
-      { id: 'fields', label: 'things to fill in', template: ' to fill in {fields}' },
+      // the lines of the dialog are the list below the sentence, so the chip is
+      // the summary of that list rather than a way to add one - and a dialog
+      // with nothing to fill in yet says so there, not with a blank up here
+      { id: 'fields', label: 'things to fill in', offer: false, template: ' to fill in {fields}',
+        active: v=>Array.isArray(v('fields')) && v('fields').length > 0 },
       { id: 'confirmButtonText', label: 'the confirm button', template: ', confirming with {confirmButtonText}' },
       { id: 'confirmButtonIcon', label: 'the confirm icon', template: ' and the icon {confirmButtonIcon}', add: { confirmButtonIcon: 'check' } },
-      { id: 'cancelButtonText', label: 'the cancel button', template: ', cancelling with {cancelButtonText}' },
-      { id: 'cancelButtonIcon', label: 'the cancel icon', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' } },
+      // the cancel button is gone once both of its two parameters are null,
+      // which is a feature (a forced choice) hiding behind two nulls - so it is
+      // one option that says so, and the two that word the button step aside
+      // while it is on
+      { id: 'noCancel', label: 'they have to answer', active: inputCannotBeCancelled,
+        template: ', and they cannot cancel', add: { cancelButtonText: null, cancelButtonIcon: null },
+        remove: { cancelButtonText: undefined, cancelButtonIcon: undefined } },
+      { id: 'cancelButtonText', label: 'the cancel button', template: ', cancelling with {cancelButtonText}',
+        active: (v, isSet)=>isSet('cancelButtonText') && !inputCannotBeCancelled(v, isSet) },
+      { id: 'cancelButtonIcon', label: 'the cancel icon', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' },
+        active: (v, isSet)=>isSet('cancelButtonIcon') && !inputCannotBeCancelled(v, isSet) },
       { id: 'block', label: 'holding everybody else up', template: ', {block}', add: { block: true } },
       { id: 'css', label: 'a style of its own', template: ', styled {css}' },
-      { id: 'randomRotation', label: 'rotated randomly', template: ', rotated by up to {randomRotation} degrees', add: { randomRotation: 5 } }
+      // the engine rotates by it, but no game in the library does and the wiki
+      // never mentions it: a game that has one still reads what it does
+      { id: 'randomRotation', label: 'rotated randomly', offer: false, template: ', rotated by up to {randomRotation} degrees', add: { randomRotation: 5 } }
     ],
     // the two things every dialog is written with: what it says and what it asks
     newOperation: { func: 'INPUT', header: '', fields: [] },
@@ -1169,6 +1207,279 @@ const routineOperationMetadata = {
     definesVariables: operation=>Object.keys(operation.variables || {})
   }
 };
+
+// The fields of an INPUT dialog: a form is a list of lines, and every line is
+// described by the same two tables an operation is - the ways it can work and
+// the optional parts of its sentence - so a field is edited with the same
+// chips, drop-downs, options and popups, one level down.
+//
+// Three things the sentences say out loud that the JSON never did:
+//
+//   answer - what the variable holds once the player answered. A number field
+//     remembers TEXT (widget.js reads dom.value unconverted, so ${rounds} + 1
+//     is "31"), a switch remembers "on"/"off" where a tick box remembers
+//     true/false, and a choose remembers one widget or a list of them
+//     depending on how many it lets the player take.
+//
+//   the content key - the three display types keep what they show in text
+//     while every other type keeps it in label. The sentence words both as
+//     what the player reads, and the editor writes whichever key belongs to
+//     the type, so nobody has to learn that there was a difference.
+//
+//   collects: false - the three display types ask nothing. They have no
+//     variable and the sentence does not pretend otherwise.
+//
+// A field's variable is the one clause-like parameter that is not optional: a
+// field without it collects an answer and throws it away, so it is part of
+// every sentence that collects one, in red until it has a name - and the
+// editor proposes one from the label as soon as the label is typed.
+const inputFieldCSSClause = { id: 'css', label: 'a style of its own', template: ', styled {css}' };
+const inputFieldCSSParameter = { type: 'string', default: '' };
+const inputFieldLabelParameter = { type: 'string', default: '', hint: 'question', display: quotedText };
+const inputFieldVariableParameter = { type: 'string', default: '', hint: 'name' };
+const inputFieldRemembered = ', remembering the answer as {variable}';
+
+// the three types that only show something, worded by what they show
+function inputDisplayField(what, hint) {
+  return {
+    description: `Show ${what}`,
+    collects: false,
+    variants: [ { id: 'show', label: `Show ${what}`, template: `Show ${what}: {text}` } ],
+    clauses: [ inputFieldCSSClause ],
+    parameters: {
+      text: { type: 'string', default: '', hint, display: quotedText },
+      css: inputFieldCSSParameter
+    }
+  };
+}
+
+const routineInputFieldMetadata = {
+  title: inputDisplayField('a heading', 'heading'),
+  subtitle: inputDisplayField('a subheading', 'subheading'),
+  text: inputDisplayField('a paragraph', 'paragraph'),
+  checkbox: {
+    description: 'A box the player ticks',
+    answer: 'true or false',
+    variants: [ { id: 'checkbox', label: 'Tick box', template: `Tick box {label}{{value}}${inputFieldRemembered}` } ],
+    clauses: [
+      { id: 'value', label: 'already ticked', template: ', starting {value}', add: { value: true } },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      value: { type: 'enum', values: [ true, false ], default: false, display: yesNo('ticked', 'not ticked') },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  switch: {
+    description: 'A switch the player flips',
+    // the same control to look at as a tick box, and an answer nothing that
+    // compares against true or false will ever match
+    answer: 'the text "on" or the text "off"',
+    variants: [ { id: 'switch', label: 'Toggle', template: `Toggle {label}{{value}}${inputFieldRemembered}` } ],
+    clauses: [
+      { id: 'value', label: 'already on', template: ', starting {value}', add: { value: 'on' } },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      value: { type: 'enum', values: [ 'on', 'off' ], default: 'off', display: { 'on': 'on', 'off': 'off' } },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  string: {
+    description: 'A line of text to type',
+    answer: 'the text they typed',
+    variants: [ { id: 'string', label: 'Ask for text', template: `Ask for text {label}{{value}}${inputFieldRemembered}{{regex}}` } ],
+    clauses: [
+      { id: 'value', label: 'filled in to begin with', template: ', starting {value}', add: { value: '' } },
+      // a pattern without a hint shows the raw pattern as the error message, so
+      // switching the pattern on switches the message on with it
+      { id: 'regex', label: 'only text matching a pattern', template: ', only accepting {regex}', add: { regex: '', regexHint: '' } },
+      { id: 'regexHint', label: 'what to say when it does not match', template: ' and saying {regexHint} when it does not' },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      value: { type: 'string', default: '', display: quotedText },
+      regex: { type: 'string', default: '', hint: 'pattern' },
+      regexHint: { type: 'string', default: '', hint: 'message', display: quotedText },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  number: {
+    description: 'A number to type',
+    // the trap that costs an evening: the engine stores what was typed, not the
+    // number it looks like
+    answer: 'the number as TEXT - use parseFloat before doing maths with it',
+    variants: [ { id: 'number', label: 'Ask for a number', template: `Ask for a number {label}{{value}}{{bounds}}${inputFieldRemembered}` } ],
+    clauses: [
+      { id: 'value', label: 'filled in to begin with', template: ', starting {value}', add: { value: 0 } },
+      { id: 'bounds', label: 'a smallest and a largest', add: { min: 1, max: 10 },
+        template: v=>{
+          if(v('min') != null && v('max') != null)
+            return ', between {min} and {max}';
+          return v('max') != null ? ', up to {max}' : ', at least {min}';
+        } },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      value: { type: 'number', default: 0 },
+      min: { type: 'number', default: null },
+      max: { type: 'number', default: null },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  slider: {
+    description: 'A slider to drag',
+    answer: 'the number it stopped at, or the entry of the list it stopped on',
+    // two genuinely different controls: one slides between two numbers, the
+    // other along a list of words and hands back the word
+    variants: [
+      { id: 'range', label: 'Slide between two numbers', fixed: [ 'values' ],
+        apply: operation=>{ delete operation.values; },
+        template: `Slide {label} from {min} to {max}{{step}}{{unit}}{{value}}${inputFieldRemembered}` },
+      { id: 'values', label: 'Slide along a list', fixed: [ 'values' ], match: v=>Array.isArray(v('values')),
+        apply: operation=>{ operation.values = []; delete operation.min; delete operation.max; delete operation.step; delete operation.unit; },
+        template: `Slide {label} through {values}{{value}}${inputFieldRemembered}` }
+    ],
+    clauses: [
+      { id: 'step', label: 'how far each notch is', template: ' in steps of {step}', add: { step: 1 } },
+      { id: 'unit', label: 'what the number is measured in', template: ', showing {unit}', add: { unit: '%' } },
+      { id: 'value', label: 'where it starts', template: ', starting at {value}' },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      min: { type: 'number', default: 0 },
+      max: { type: 'number', default: 10 },
+      step: { type: 'number', default: 1 },
+      unit: { type: 'string', default: '', display: quotedText },
+      values: { type: 'stringList', default: null, hint: 'entries', display: listWords },
+      value: { type: 'string', default: null },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  select: {
+    description: 'A drop-down to pick one entry from',
+    answer: 'the entry they picked',
+    variants: [ { id: 'select', label: 'Ask them to pick one of', template: `Ask them to pick one of {options}{{value}}{{label}}${inputFieldRemembered}` } ],
+    clauses: [
+      { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
+      { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}' },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      // an entry is the text it shows; an entry that stores something else than
+      // it shows is the { value, text } pair the engine reads, kept as it is
+      options: { type: 'stringList', default: [], hint: 'entries', entryHint: 'entry', display: selectOptionWords },
+      value: { type: 'string', default: null },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  palette: {
+    description: 'A row of colours to pick from',
+    answer: 'the colour they picked - nothing at all if none is preselected',
+    variants: [ { id: 'palette', label: 'Ask them to pick a colour from', template: `Ask them to pick a colour from {colors}{{value}}{{label}}${inputFieldRemembered}` } ],
+    clauses: [
+      { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
+      { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}' },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      colors: { type: 'stringList', default: [ '#000000' ], hint: 'colors', entryHint: 'color', display: listWords },
+      value: { type: 'color', default: null },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  color: {
+    description: 'Any colour at all',
+    answer: 'the colour they picked',
+    variants: [ { id: 'color', label: 'Ask them to pick any colour', template: `Ask them to pick any colour{{label}}{{value}}${inputFieldRemembered}` } ],
+    clauses: [
+      { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
+      { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}', add: { value: '#ff0000' } },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      value: { type: 'color', default: '#ff0000' },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  },
+  choose: {
+    description: 'Widgets of the game to pick',
+    answer: 'one widget while it takes one, a list of widgets as soon as it takes more',
+    // where the widgets come from is what tells the two ways apart - the engine
+    // prefers holder over source and shows an empty picker if neither resolves
+    variants: [
+      { id: 'holder', label: 'Ask them to pick from a holder', fixed: [ 'holder', 'source' ], match: (v, isSet)=>isSet('holder'),
+        apply: operation=>{ delete operation.source; if(operation.holder === undefined) operation.holder = null; },
+        template: `Ask them to pick{{howMany}} of the widgets in {holder}${inputFieldRemembered}{{collection}}` },
+      { id: 'source', label: 'Ask them to pick from a group of widgets', fixed: [ 'holder', 'source' ],
+        apply: operation=>{ delete operation.holder; if(operation.source === undefined) operation.source = ''; },
+        template: `Ask them to pick{{howMany}} of the widgets called {source}${inputFieldRemembered}{{collection}}` }
+    ],
+    clauses: [
+      // how many they may take is also what the answer is: one widget while a
+      // choose takes one, a list of them as soon as it takes more
+      { id: 'howMany', label: 'how many they may take', whenOff: ' one',
+        active: (v, isSet)=>isSet('min') || isSet('max'),
+        template: v=>{
+          if(v('min') != null && v('max') != null)
+            return ' {min} to {max}';
+          return v('max') != null ? ' up to {max}' : ' at least {min}';
+        },
+        add: { min: 1, max: 3 }, remove: { min: undefined, max: undefined } },
+      { id: 'collection', label: 'a name for what they picked', template: ', and calling them {collection}',
+        active: v=>v('collection') != 'DEFAULT', add: { collection: '' } },
+      { id: 'scale', label: 'shown smaller or bigger', template: ', shown at {scale} size', add: { scale: 0.5 } },
+      { id: 'propertyOverride', label: 'shown with other properties', template: ', displayed with {propertyOverride}', add: { propertyOverride: {} } },
+      { id: 'mode', label: 'a side rather than the whole widget', template: ', letting them pick {mode}', add: { mode: 'faces' } },
+      { id: 'faces', label: 'only some of the sides', template: ', out of {faces}', add: { faces: [ 0, 1 ] } },
+      { id: 'value', label: 'already picked', template: ', starting with {value}' },
+      { id: 'visibleChildWidgets', label: 'showing what is on them', offer: false, template: ', showing {visibleChildWidgets}' },
+      inputFieldCSSClause
+    ],
+    parameters: {
+      label: inputFieldLabelParameter,
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
+      source: { type: 'collection', default: '' },
+      min: { type: 'number', default: null },
+      // the engine reads a missing max as one, which is what the sentence says
+      // while the option is off
+      max: { type: 'number', default: null },
+      collection: { type: 'collection', default: 'DEFAULT' },
+      scale: { type: 'number', default: 1, display: value=>typeof value == 'number' ? `${Math.round(value*100)}%` : null },
+      propertyOverride: { type: 'keyValue', default: {}, keyHint: 'property', display: keyValueWords },
+      mode: { type: 'enum', values: [ 'faces' ], default: null, display: { 'faces': 'a side of them' } },
+      faces: { type: 'stringList', default: null, hint: 'sides', entryHint: 'side', display: listWords },
+      value: { type: 'widgets', default: null },
+      visibleChildWidgets: { type: 'json', default: null },
+      variable: inputFieldVariableParameter,
+      css: inputFieldCSSParameter
+    }
+  }
+};
+
+// a select entry is the text it shows; one that stores something other than what
+// it shows is the pair the engine reads and reads as that pair
+function selectOptionWords(value) {
+  if(!Array.isArray(value) || !value.length)
+    return null;
+  return wordList(value.map(option=>option && typeof option == 'object' ? (option.text || option.value || '') : option));
+}
 
 // a timer parameter names one timer, a collection stands for however many it
 // holds - the sentence needs a different article for each
@@ -1860,6 +2171,7 @@ class RoutineOperationEditor {
       case 'collection': return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
       case 'json':       return new RoutineJSONPopup();
       case 'keyValue':   return new RoutineKeyValuePopup({ keyHint: spec.keyHint, suggestions: this.parameterKeySuggestions(parameterNames[0]) });
+      case 'stringList': return new RoutineStringListPopup({ entryHint: spec.entryHint });
       case 'color':      return new RoutineColorPopup();
       case 'icon':       return new RoutineIconPopup();
       default:           return new RoutineStringPopup();
@@ -2122,10 +2434,14 @@ class RoutineOperationEditor {
       const empty = { number: 0, enum: (spec.values || [])[0], collection: 'DEFAULT', widgets: null, json: null };
       values[name] = typeof empty[spec.type] != 'undefined' ? empty[spec.type] : '';
     }
-    return values;
+    // an option can also switch parameters its own words never name: an INPUT
+    // that cannot be cancelled is two nulls and no chip at all
+    return Object.assign(values, clause.add || {});
   }
 
   clauseRemoveValues(clause) {
+    if(clause.remove)
+      return Object.assign({}, clause.remove);
     const values = {};
     for(const name of this.templateParameters(clause.template))
       values[name] = undefined;
@@ -2263,21 +2579,35 @@ class RoutineOperationEditor {
   // is how the operation is exchanged for another one
   renderFunctionName(dom) {
     const line = div(dom, 'routine-editor-operation-func');
-    const known = Boolean(routineOperationMetadata[this.func]);
     const name = document.createElement('span');
     name.className = 'routine-editor-func-name';
     name.textContent = this.func || 'JSON';
-    if(known) {
+    if(this.isKnownFunction()) {
       name.dataset.parameter = 'func';
-      name.title = `${this.func} - click to use another operation here`;
+      name.title = this.functionTitle();
     }
     line.append(name);
-    const info = commonInfoButton(null, this.func);
+    const info = this.functionInfoButton();
     if(info) {
       info.classList.add('routine-editor-func-info');
       line.append(info);
     }
     return line;
+  }
+
+  functionTitle() {
+    return `${this.func} - click to use another operation here`;
+  }
+
+  // whether the name above the sentence is one the editor knows - and with it,
+  // whether clicking it offers the others
+  isKnownFunction() {
+    return Boolean(routineOperationMetadata[this.func]);
+  }
+
+  // what the "i" next to the name of an operation says: the wiki text for it
+  functionInfoButton() {
+    return commonInfoButton(null, this.func);
   }
 
   renderTemplateText(template) {
@@ -2528,6 +2858,209 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
   }
 }
 
+// One line of an INPUT dialog, edited exactly like an operation: the type is
+// the name above the sentence (and the way to another kind of line), the words
+// come from routineInputFieldMetadata, and every chip, drop-down and option
+// works the way it does one level up.
+class RoutineInputFieldEditor extends RoutineOperationEditor {
+  constructor(type) {
+    super(type);
+    this.metadata = routineInputFieldMetadata[type] || {
+      variants: [ { id: 'unknown', label: String(type), template: `a ${type} line - use the JSON button to edit it` } ],
+      parameters: {}
+    };
+  }
+
+  // the JSON of a field keeps what kind of line it is in type, not in func
+  unsupportedProperties() {
+    return super.unsupportedProperties().filter(name=>name != 'type');
+  }
+
+  isKnownFunction() {
+    return Boolean(routineInputFieldMetadata[this.func]);
+  }
+
+  functionTitle() {
+    return `${this.func} - click to use another kind of line here`;
+  }
+
+  // what the "i" of a line says is what the table knows about it: what it is
+  // for, and - the thing the JSON never said - what the answer will be
+  functionInfoButton() {
+    if(!routineInputFieldMetadata[this.func])
+      return undefined;
+    const answer = this.metadata.answer ? `\n\nThe answer: ${this.metadata.answer}.` : '\n\nThis line only shows something - it collects no answer.';
+    return infoButton(null, `<pre>${escapeHTML(this.metadata.description)}.${escapeHTML(answer)}</pre>`, null, null, `the ${this.func} line`);
+  }
+
+  createFullPopup(parameterNames) {
+    if(parameterNames[0] == 'func')
+      return new RoutineClausePopup(routineInputFieldChoices(), `
+        The kinds of line a dialog can hold. Three of them only show something - a heading, a subheading, a paragraph - and every other one asks a question and remembers the answer under a name.
+      `, 'the lines of a dialog');
+    return super.createFullPopup(parameterNames);
+  }
+
+  onNewValue(values) {
+    // another kind of line: what the old one said does not carry over, because
+    // no two kinds keep it under the same keys
+    if(typeof values.func == 'string' && values.func != this.func) {
+      for(const key in this.operation)
+        delete this.operation[key];
+      Object.assign(this.operation, newInputField(values.func));
+      this.notifyChangeListeners(this.operation);
+      return;
+    }
+    delete values.func;
+    // a line without a name throws the answer away, so naming what the player
+    // is asked names what is remembered - until somebody says otherwise
+    const asked = typeof values.label == 'string' ? values.label : '';
+    if(asked && this.metadata.collects !== false && !this.operation.variable && !values.variable)
+      values = Object.assign({}, values, { variable: inputFieldVariableName(asked) });
+    super.onNewValue(values);
+  }
+}
+
+// a name for what a line remembers, made out of what it asks: the words of the
+// question in the shape a variable name has
+function inputFieldVariableName(label) {
+  const words = String(label).replace(/[^A-Za-z0-9 ]+/g, ' ').trim().split(/\s+/).slice(0, 3);
+  if(!words.length || !words[0])
+    return '';
+  return words.map((word, index)=>index ? word.charAt(0).toUpperCase() + word.slice(1) : word.toLowerCase()).join('');
+}
+
+// a freshly added line is nothing but its kind - what it asks and what it
+// remembers are the two blanks the sentence then shows in red
+function newInputField(type) {
+  return { type };
+}
+
+// the kinds of line the list offers, each as what it does plus the sentence it
+// would read as
+function routineInputFieldChoices() {
+  return Object.keys(routineInputFieldMetadata).map(type=>{
+    const editor = new RoutineInputFieldEditor(type);
+    editor.setOperationDetails(null, newInputField(type), [], []);
+    return { label: editor.metadata.description, sentence: editor.getExampleWithDefaults(), values: { func: type } };
+  });
+}
+
+// The lines of an INPUT dialog as the list they are: one card per line with the
+// controls an operation card has, and one button that adds another. It is the
+// routine editor's list one level down rather than the routine editor itself -
+// a line is not an operation, so it neither drags between routines nor nests.
+class RoutineInputFieldsEditor {
+  constructor(widget, fields, variables=[], collections=[]) {
+    this.domElement = document.createElement('div');
+    this.domElement.className = 'routine-editor routine-editor-fields';
+    this.widget = widget;
+    this.fields = fields;
+    this.variables = variables;
+    this.collections = collections;
+    this.changeListeners = [];
+    this.render();
+  }
+
+  notifyChangeListeners() {
+    for(const listener of this.changeListeners)
+      listener(this.fields);
+  }
+
+  registerChangeListener(listener) {
+    this.changeListeners.push(listener);
+  }
+
+  fieldsChanged() {
+    this.notifyChangeListeners();
+    this.render();
+  }
+
+  render() {
+    this.domElement.innerHTML = '';
+    for(const [ index, field ] of this.fields.entries()) {
+      const editor = new RoutineInputFieldEditor(field && typeof field == 'object' ? field.type : null);
+      editor.setOperationDetails(this.widget, field, this.variables, this.collections);
+      editor.registerChangeListener(v=>{
+        this.fields[index] = v;
+        this.fieldsChanged();
+      });
+      const fieldDOM = editor.render();
+      fieldDOM.classList.add('routine-editor-field');
+
+      const buttons = document.createElement('span');
+      buttons.className = 'routine-editor-operation-buttons';
+      const header = $('.routine-editor-operation-header', fieldDOM);
+      const fieldButton = (icon, title, onClick, appendTo=buttons)=>{
+        const buttonDOM = document.createElement('span');
+        buttonDOM.className = 'material-symbols';
+        buttonDOM.textContent = icon;
+        buttonDOM.title = title;
+        focusable(buttonDOM, onClick);
+        appendTo.append(buttonDOM);
+      };
+      if(index > 0)
+        fieldButton('arrow_upward', 'Move this line up', _=>{
+          this.fields.splice(index-1, 0, this.fields.splice(index, 1)[0]);
+          this.fieldsChanged();
+        });
+      if(index < this.fields.length-1)
+        fieldButton('arrow_downward', 'Move this line down', _=>{
+          this.fields.splice(index+1, 0, this.fields.splice(index, 1)[0]);
+          this.fieldsChanged();
+        });
+      fieldButton('delete', 'Remove this line', _=>{
+        this.fields.splice(index, 1);
+        this.fieldsChanged();
+      }, (header && $('.routine-editor-operation-controls-top', header)) || buttons);
+      ((header && $('.routine-editor-operation-controls', header)) || fieldDOM).append(buttons);
+
+      this.domElement.append(fieldDOM);
+    }
+
+    if(!this.fields.length)
+      div(this.domElement, 'routine-editor-empty').textContent = 'Nothing to fill in yet - the dialog is a message with a button.';
+
+    const addButton = button(this.domElement, 'add line', async _=>{
+      const popup = new RoutineClausePopup(routineInputFieldChoices(), `
+        The kinds of line a dialog can hold. Three of them only show something - a heading, a subheading, a paragraph - and every other one asks a question and remembers the answer under a name.
+      `, 'the lines of a dialog');
+      popup.setSource(addButton);
+      popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections);
+      const values = await newRoutineValues(popup);
+      if(values !== undefined) {
+        this.fields.push(newInputField(values.func));
+        this.fieldsChanged();
+      }
+    });
+    addButton.className = 'routine-editor-add-operation';
+
+    return this.domElement;
+  }
+}
+
+// An INPUT is the one operation whose interesting part is not its parameters:
+// what it asks is a form, and a form is a list of lines below the sentence, the
+// way an IF has its block below its condition.
+class InputRoutineOperationEditor extends RoutineOperationEditor {
+  constructor() {
+    super('INPUT');
+  }
+
+  render() {
+    super.render();
+    if(!Array.isArray(this.operation.fields))
+      this.operation.fields = [];
+    this.fieldsEditor = new RoutineInputFieldsEditor(this.widget, this.operation.fields, this.variables, this.collections);
+    this.fieldsEditor.registerChangeListener(fields=>{
+      this.operation.fields = fields;
+      this.notifyChangeListeners(this.operation);
+    });
+    this.domElement.append(this.fieldsEditor.domElement);
+    return this.domElement;
+  }
+}
+
 class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
     super('var');
@@ -2644,6 +3177,8 @@ function editorForOperation(operation) {
       return new IfRoutineOperationEditor();
     if(operation.func == 'FOREACH')
       return new ForeachRoutineOperationEditor();
+    if(operation.func == 'INPUT')
+      return new InputRoutineOperationEditor();
     return new RoutineOperationEditor(operation.func);
   }
   return new UnknownRoutineOperationEditor();

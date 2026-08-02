@@ -850,9 +850,13 @@ class RoutineVariantMenu extends Popup {
 // addition to what it says now, worded as the phrase it would add. Picking one
 // switches its parameters on; the x behind the phrase switches them off again.
 class RoutineClausePopup extends RoutinePopup {
-  constructor(options) {
+  // the same list of phrases also offers the kinds of line an INPUT dialog can
+  // hold, which is a different thing to say about it
+  constructor(options, info=null, infoTitle=null) {
     super();
     this.options = options;
+    this.info = info;
+    this.infoTitle = infoTitle;
   }
 
   offersUseDefault() {
@@ -875,9 +879,9 @@ class RoutineClausePopup extends RoutinePopup {
     const header = document.createElement('div');
     header.className = 'popup-menu-header';
     this.domElement.prepend(header);
-    infoButton(header, `
+    infoButton(header, this.info || `
       Everything this operation can do on top of what it does now. An option only shows up in the sentence while it is in use - the x behind it removes it again.
-    `, null, null, 'the options of an operation');
+    `, null, null, this.infoTitle || 'the options of an operation');
     header.append($('.popup-close', this.domElement));
     for(const option of this.options)
       menuEntry(this.domElement, option.label, option.sentence, _=>this.notifyChangeListeners(option.values));
@@ -1286,6 +1290,121 @@ class RoutineJSONPopup extends RoutinePopup {
     valueContent.append(textarea);
     super.show(true, false);
     textarea.focus();
+  }
+}
+
+// A plain list of values, edited as the list it is: one row per entry with the
+// row that adds another one below, the same shape as the name/value rows. What
+// a drop-down offers, the colors of a palette and the sides of a widget are all
+// lists of one thing each, and writing them as JSON means typing the brackets
+// and quotes around them by hand. An entry that is an object (a select entry
+// that stores something other than what it shows) keeps its JSON so the file
+// round-trips.
+class RoutineStringListPopup extends RoutinePopup {
+  constructor(options={}) {
+    super();
+    this.options = options;
+    this.workingValue = null;
+    this.workingChanged = false;
+  }
+
+  parameterQuestion() {
+    return 'which values';
+  }
+
+  offersValueInput() {
+    return false; // the rows below are the whole value
+  }
+
+  currentEntries() {
+    return Array.isArray(this.workingValue) ? this.workingValue : [];
+  }
+
+  saveEntries(entries) {
+    this.workingValue = entries;
+    this.workingChanged = true;
+  }
+
+  hide() {
+    // the same apply-on-close as the pairs list: several entries in one go
+    if(this.workingChanged && !this.applied) {
+      this.applied = true;
+      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
+    }
+    super.hide();
+  }
+
+  show() {
+    const [ title, content ] = this.addAccordionSection('Value', '', 'value');
+    infoButton(title, `
+      One row per entry, in the order they are shown. Anything that is valid JSON (a number, true, an object) is stored as such, everything else as text.
+    `);
+    this.workingValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    this.listElement = div(content, 'popup-key-value-list');
+    this.renderEntries();
+    super.show(true, false);
+  }
+
+  renderEntries() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const entryHint = this.options.entryHint || 'entry';
+
+    for(const [ index, entry ] of this.currentEntries().entries()) {
+      const row = div(list, 'popup-key-value-row');
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'popup-key-value-value';
+      input.value = this.valueAsText(entry);
+      input.placeholder = entryHint;
+      // no re-render on an edit: it would take the focus out of the input
+      input.addEventListener('change', _=>{
+        const entries = [ ...this.currentEntries() ];
+        entries[index] = this.parseValueText(input.value);
+        this.saveEntries(entries);
+      });
+      row.append(input);
+
+      const remove = document.createElement('span');
+      remove.className = 'material-symbols popup-key-value-remove';
+      remove.textContent = 'delete';
+      remove.title = `Remove ${this.valueAsText(entry)}`;
+      remove.addEventListener('click', _=>{
+        this.saveEntries(this.currentEntries().filter((_e, i)=>i != index));
+        this.renderEntries();
+      });
+      row.append(remove);
+    }
+
+    const addRow = div(list, 'popup-key-value-row popup-key-value-add');
+    const addInput = document.createElement('input');
+    addInput.type = 'text';
+    addInput.className = 'popup-key-value-value';
+    addInput.placeholder = entryHint;
+    addRow.append(addInput);
+
+    const addEntry = _=>{
+      if(!addInput.value.trim())
+        return;
+      this.saveEntries([ ...this.currentEntries(), this.parseValueText(addInput.value) ]);
+      this.renderEntries();
+      const next = $('.popup-key-value-add input', this.listElement);
+      if(next)
+        next.focus();
+    };
+    addInput.addEventListener('keydown', e=>{
+      if(e.key == 'Enter')
+        addEntry();
+    });
+    const addButton = button(addRow, 'add', addEntry);
+    addButton.className = 'popup-key-value-add-button primary';
+    const updateAddButton = _=>{
+      addButton.disabled = !addInput.value.trim();
+      addButton.title = addButton.disabled ? `Type the ${entryHint} first` : `Add ${addInput.value.trim()}`;
+    };
+    addInput.addEventListener('input', updateAddButton);
+    updateAddButton();
   }
 }
 

@@ -425,3 +425,15 @@ body.edit.darkMode .routine-editor-parameter-missing {
   outline: 2px solid var(--VTTblue);
   outline-offset: 1px;
 }
+
+/* The lines of an INPUT dialog. They are the same cards as the operations of a
+   nested routine (and share the cutout that block gets), in the color a value
+   has rather than the one an operation has: a line is something the dialog
+   shows and asks, not a step the routine takes. */
+.routine-editor-fields .routine-editor-operation {
+  border-left-color: var(--routineVariableColor);
+}
+
+.routine-editor-fields .routine-editor-func-name {
+  color: var(--routineVariableColor);
+}

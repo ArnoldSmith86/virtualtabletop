@@ -846,7 +846,7 @@ export class Widget extends StateManaged {
       if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
         isValid = displayError(field, `Please select at least ${field.min}.`);
       if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
-        isValid = displayError(field, `Please select at most ${field.min}.`);
+        isValid = displayError(field, `Please select at most ${field.max || 1}.`);
       if(field.type == 'number' && variables[field.variable] < field.min)
         isValid = displayError(field, `Please enter a number above ${field.min}.`);
       if(field.type == 'number' && variables[field.variable] > field.max)

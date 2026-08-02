@@ -47,6 +47,8 @@ beforeAll(() => {
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'RoutineVariantMenu',
     'routineOperationVariantChoices', 'operationVariantValues', 'RoutineOperationPopup', 'RoutineClausePopup', 'routineOperationGroups',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
+    'RoutineInputFieldEditor', 'RoutineInputFieldsEditor', 'InputRoutineOperationEditor', 'routineInputFieldMetadata',
+    'routineInputFieldChoices', 'RoutineStringListPopup', 'inputFieldVariableName',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
@@ -532,7 +534,7 @@ describe('operation rendering', () => {
     [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player "Choose a card" to fill in 3 fields' ],
     // a dialog with nothing to fill in is a question, and the sentence says so
     [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", cancelling with "No"' ],
-    [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask red and blue to fill in 1 field, holding everybody else up until it is answered' ],
+    [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask the players red and blue at once to fill in 1 field, holding everybody else up until it is answered' ],
     [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
     [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number in the range 1 to 10, do the operations below' ],
     [ { func: 'FOREACH' }, 'For each picked widget in the pick, do the operations below' ],
@@ -573,9 +575,13 @@ describe('picking how an operation works and which options it uses', () => {
     // what the operation does can word it better than the type of the parameter
     expect(renderOperation({ func: 'SET', relation: '+', property: '' }).dom.textContent).toContain('property of the picked widgets by number');
     expect(renderOperation({ func: 'SET', relation: '+', property: '', value: '' }).dom.textContent).toContain('"text" to property of the picked widgets');
-    // a list with nothing in it is a blank as well: an INPUT without fields has
-    // nothing to fill in yet, and "0 fields" is not what the card should read
-    expect(renderOperation({ func: 'INPUT', fields: [] }).dom.querySelector('.routine-editor-parameter-missing').textContent).toBe('fields');
+    // a list with nothing in it is a blank as well: an UPLOAD that accepts no
+    // file type at all has nothing to say, and "0 types" is not what it reads
+    expect(renderOperation({ func: 'CALL', arguments: {} }).dom.textContent).toContain('nothing');
+    // an INPUT with nothing to fill in yet says so in the list of its lines
+    // rather than as a blank in the sentence
+    expect(renderOperation({ func: 'INPUT', fields: [] }).dom.querySelector('.routine-editor-parameter-missing')).toBeNull();
+    expect(renderOperation({ func: 'INPUT', fields: [] }).dom.textContent).toContain('Nothing to fill in yet');
     // a widget parameter says which kind of widget it wants
     expect(renderOperation({ func: 'MOVE', from: 'deck1' }).dom.textContent).toContain('from deck1 to holder');
     // and a value that has a wording of its own is not a blank
@@ -805,8 +811,9 @@ describe('picking how an operation works and which options it uses', () => {
     // a blank says what kind of value belongs there instead of asking with a "?"
     expect(sentenceOf(newOperation('SELECT'))).toBe('Pick widgets where property is value');
     expect(sentenceOf(newOperation('SET'))).toBe('Set property of the picked widgets to number or text');
-    // a dialog is written with what it says and what it asks
-    expect(sentenceOf(newOperation('INPUT'))).toBe('Ask the player title to fill in fields');
+    // a dialog is written with what it says; what it asks is the list of lines
+    // below the sentence, which says for itself that it is still empty
+    expect(sentenceOf(newOperation('INPUT'))).toBe('Ask the player title');
     // a MOVE almost always empties a holder, and how many it moves is the number
     // the engine uses there - the sentence says it from the start instead of
     // changing from "all" to "1" the moment a holder is picked
@@ -1109,8 +1116,10 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'INPUT' });
     editor.setOperationDetails({ state: {} }, { func: 'INPUT' }, [], []);
     const named = editor.clauses().map(clause => clause.id);
+    const fixed = editor.currentVariant().fixed || [];
     for (const name in routineOperationMetadata.INPUT.parameters)
-      expect(named).toContain(name);
+      if (fixed.indexOf(name) == -1) // who is asked is a way of working, not an option
+        expect(named).toContain(name);
   });
 });
 
@@ -2847,5 +2856,189 @@ describe('the words and the units of an operation', () => {
     popup.onOutsideClick({ target: addButton, detail: 1 });
     expect(hidden).toBe(false);
     popup.hide();
+  });
+});
+
+// An INPUT is the one operation whose interesting part is not its parameters:
+// what it asks is a form, and a form is a list of lines. Each of them is
+// described by the same tables an operation is, so it is edited the same way.
+describe('the lines of an INPUT dialog', () => {
+  const fieldEditorFor = field => {
+    const editor = new RoutineInputFieldEditor(field.type);
+    editor.setOperationDetails({ state: {} }, field, [], []);
+    return editor;
+  };
+  const fieldWords = field => {
+    const sentence = fieldEditorFor(field).render().querySelector('.routine-editor-sentence').cloneNode(true);
+    for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+      icon.remove();
+    return sentence.textContent.replace(/\s+/g, ' ').trim();
+  };
+  const inputEditorFor = operation => {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails({ state: {} }, operation, [], []);
+    return editor;
+  };
+
+  test('every kind of line the engine renders has a sentence', () => {
+    // the list formField() in domhelpers.js handles, plus the three that only
+    // show something - a new one in the engine has to get a card here too
+    expect(Object.keys(routineInputFieldMetadata).sort()).toEqual([
+      'checkbox', 'choose', 'color', 'number', 'palette', 'select', 'slider', 'string', 'subtitle', 'switch', 'text', 'title'
+    ].sort());
+  });
+
+  test('a line reads as what it shows or asks', () => {
+    expect(fieldWords({ type: 'title', text: 'Choose your colour' })).toBe('Show a heading: "Choose your colour"');
+    expect(fieldWords({ type: 'text', text: 'Pick a card.' })).toBe('Show a paragraph: "Pick a card."');
+    expect(fieldWords({ type: 'checkbox', label: 'Include jokers', value: true, variable: 'jokers' }))
+      .toBe('Tick box "Include jokers", starting ticked, remembering the answer as jokers');
+    expect(fieldWords({ type: 'switch', label: 'Hard mode', variable: 'hard' }))
+      .toBe('Toggle "Hard mode", remembering the answer as hard');
+    expect(fieldWords({ type: 'number', label: 'Rounds', value: 3, min: 1, max: 10, variable: 'rounds' }))
+      .toBe('Ask for a number "Rounds", starting 3, between 1 and 10, remembering the answer as rounds');
+    expect(fieldWords({ type: 'number', label: 'Rounds', min: 1, variable: 'rounds' })).toContain('at least 1');
+    expect(fieldWords({ type: 'number', label: 'Rounds', max: 9, variable: 'rounds' })).toContain('up to 9');
+    expect(fieldWords({ type: 'slider', label: 'Volume', min: 0, max: 100, step: 5, unit: '%', variable: 'v' }))
+      .toBe('Slide "Volume" from 0 to 100 in steps of 5, showing "%", remembering the answer as v');
+    expect(fieldWords({ type: 'slider', label: 'Difficulty', values: [ 'Easy', 'Hard' ], variable: 'd' }))
+      .toBe('Slide "Difficulty" through Easy and Hard, remembering the answer as d');
+    expect(fieldWords({ type: 'select', options: [ 'Red', 'Blue' ], variable: 'colour' }))
+      .toBe('Ask them to pick one of Red and Blue, remembering the answer as colour');
+    // an entry that stores something other than what it shows reads as what it shows
+    expect(fieldWords({ type: 'select', options: [ { value: 'r', text: 'Red' } ], variable: 'c' })).toContain('pick one of Red');
+    expect(fieldWords({ type: 'palette', colors: [ '#ff0000', '#00ff00' ], variable: 'c' })).toContain('pick a colour from #ff0000 and #00ff00');
+    expect(fieldWords({ type: 'color', variable: 'c' })).toBe('Ask them to pick any colour, remembering the answer as c');
+    expect(fieldWords({ type: 'string', label: 'Your name', value: 'Player 1', variable: 'name' }))
+      .toBe('Ask for text "Your name", starting "Player 1", remembering the answer as name');
+  });
+
+  // how many widgets a choose takes is also what the answer is: one widget
+  // while it takes one, a list of them as soon as it takes more
+  test('a choose says where the widgets come from and how many they may take', () => {
+    expect(fieldWords({ type: 'choose', holder: 'hand1', variable: 'picked' }))
+      .toBe('Ask them to pick one of the widgets in hand1, remembering the answer as picked');
+    expect(fieldWords({ type: 'choose', source: 'aces', min: 1, max: 3, collection: 'chosen', variable: 'picked' }))
+      .toBe('Ask them to pick 1 to 3 of the widgets called aces, remembering the answer as picked, and calling them chosen');
+    expect(fieldWords({ type: 'choose', holder: 'hand1', max: 3, variable: 'p' })).toContain('pick up to 3 of');
+    // the option that limits it is one option, and taking it out takes both numbers
+    const editor = fieldEditorFor({ type: 'choose', holder: 'hand1', min: 1, max: 3, variable: 'p' });
+    const howMany = editor.clauses().find(clause => clause.id == 'howMany');
+    expect(editor.clauseIsActive(howMany)).toBe(true);
+    expect(editor.clauseRemoveValues(howMany)).toEqual({ min: undefined, max: undefined });
+  });
+
+  test('a line that only shows something collects no answer', () => {
+    for (const type of [ 'title', 'subtitle', 'text' ]) {
+      expect(routineInputFieldMetadata[type].collects).toBe(false);
+      expect(Object.keys(routineInputFieldMetadata[type].parameters)).not.toContain('variable');
+    }
+    // and every line that asks something says what the answer will be
+    for (const type in routineInputFieldMetadata)
+      if (routineInputFieldMetadata[type].collects !== false)
+        expect(typeof routineInputFieldMetadata[type].answer).toBe('string');
+  });
+
+  // a line without a name collects an answer and throws it away, so naming
+  // what the player is asked names what is remembered
+  test('naming the question proposes a name for the answer', () => {
+    expect(inputFieldVariableName('How many rounds?')).toBe('howManyRounds');
+    const field = { type: 'string' };
+    const editor = fieldEditorFor(field);
+    editor.onNewValue({ label: 'Your name' });
+    expect(field).toEqual({ type: 'string', label: 'Your name', variable: 'yourName' });
+    // and it never overwrites one that is already there
+    editor.onNewValue({ label: 'Your nickname' });
+    expect(field.variable).toBe('yourName');
+  });
+
+  test('another kind of line starts over instead of keeping keys that mean nothing', () => {
+    const field = { type: 'checkbox', label: 'Jokers', value: true, variable: 'jokers' };
+    const editor = fieldEditorFor(field);
+    editor.onNewValue({ func: 'title' });
+    expect(field).toEqual({ type: 'title' });
+  });
+
+  test('the lines are a list below the sentence, with a card each', () => {
+    const operation = { func: 'INPUT', fields: [ { type: 'title', text: 'Hi' }, { type: 'checkbox', variable: 'a' } ] };
+    const editor = inputEditorFor(operation);
+    expect(editor).toBeInstanceOf(InputRoutineOperationEditor);
+    const dom = editor.render();
+    const cards = dom.querySelectorAll('.routine-editor-fields > .routine-editor-field');
+    expect(cards.length).toBe(2);
+    expect([...cards].map(c => c.querySelector('.routine-editor-func-name').textContent)).toEqual([ 'title', 'checkbox' ]);
+
+    // and they are moved and removed the way operations are
+    let written = null;
+    editor.registerChangeListener(v => written = v);
+    cards[1].querySelector('[title="Move this line up"]').dispatchEvent(new Event('click'));
+    expect(operation.fields.map(f => f.type)).toEqual([ 'checkbox', 'title' ]);
+    expect(written).toBe(operation);
+    dom.querySelectorAll('.routine-editor-field')[0].querySelector('[title="Remove this line"]').dispatchEvent(new Event('click'));
+    expect(operation.fields.map(f => f.type)).toEqual([ 'title' ]);
+  });
+
+  test('the list offers every kind of line with the sentence it would read as', () => {
+    const choices = routineInputFieldChoices();
+    expect(choices.map(c => c.values.func)).toEqual(Object.keys(routineInputFieldMetadata));
+    expect(choices.find(c => c.values.func == 'checkbox').sentence).toContain('Tick box');
+    expect(choices.find(c => c.values.func == 'title').label).toBe('Show a heading');
+  });
+
+  // hiding the cancel button is a real feature behind two nulls, so it is one
+  // option that says so instead of two parameters set to nothing
+  test('a dialog they cannot cancel is one option', () => {
+    const operation = { func: 'INPUT' };
+    const editor = inputEditorFor(operation);
+    const noCancel = editor.clauses().find(clause => clause.id == 'noCancel');
+    expect(editor.clauseIsActive(noCancel)).toBe(false);
+    expect(editor.clauseAddValues(noCancel)).toEqual({ cancelButtonText: null, cancelButtonIcon: null });
+
+    const forced = inputEditorFor({ func: 'INPUT', cancelButtonText: null, cancelButtonIcon: null });
+    expect(forced.clauseIsActive(forced.clauses().find(clause => clause.id == 'noCancel'))).toBe(true);
+    // and the two options that word the button step aside while it is on
+    expect(forced.clauseIsActive(forced.clauses().find(clause => clause.id == 'cancelButtonText'))).toBe(false);
+    expect(forced.render().textContent).toContain('they cannot cancel');
+  });
+
+  // a list of players changes what an answer is, not only who is asked
+  test('who is asked is a way of working, and the list of players says what it does', () => {
+    expect(routineOperationVariantChoices({ func: 'INPUT' }).map(c => c.id)).toEqual([ 'player', 'named', 'several' ]);
+    expect(routineOperationMetadata.INPUT.variants[2].label).toContain('every answer becomes a list');
+    const operation = { func: 'INPUT', player: [ 'red' ] };
+    expect(inputEditorFor(operation).currentVariant().id).toBe('several');
+    expect(inputEditorFor({ func: 'INPUT', player: 'red' }).currentVariant().id).toBe('named');
+    expect(inputEditorFor({ func: 'INPUT' }).currentVariant().id).toBe('player');
+  });
+
+  // the engine rotates by it and no game in the library ever asked it to
+  test('a rotated dialog is shown but never offered', () => {
+    const offered = clauses => clauses.filter(c => c.offer !== false).map(c => c.id);
+    expect(offered(inputEditorFor({ func: 'INPUT' }).clauses())).not.toContain('randomRotation');
+    expect(inputEditorFor({ func: 'INPUT', randomRotation: 5 }).render().textContent).toContain('rotated by up to');
+  });
+
+  // a list of single values is a list of rows, not JSON with the brackets typed
+  // around it by hand
+  test('a list of values is edited as one row per entry', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const field = { type: 'select', options: [ 'Red', 'Blue' ], variable: 'c' };
+    const popup = fieldEditorFor(field).createFullPopup([ 'options' ]);
+    expect(popup).toBeInstanceOf(RoutineStringListPopup);
+    popup.setSource(source);
+    popup.setOperationDetails(field, [ 'options' ], { state: {} }, [], []);
+    popup.show();
+    expect([...popup.domElement.querySelectorAll('.popup-key-value-row:not(.popup-key-value-add) input')].map(i => i.value)).toEqual([ 'Red', 'Blue' ]);
+
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const addInput = popup.domElement.querySelector('.popup-key-value-add input');
+    addInput.value = 'Green';
+    addInput.dispatchEvent(new Event('input'));
+    [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'add').dispatchEvent(new Event('click'));
+    expect(value).toBeNull(); // written once, when the popup closes
+    popup.hide();
+    expect(value).toEqual({ options: [ 'Red', 'Blue', 'Green' ] });
   });
 });
