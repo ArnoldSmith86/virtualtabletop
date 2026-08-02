@@ -1,11 +1,8 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { calculateLayout, viewportConfig } from './calculateLayout.js';
+import { calculateLayout, viewportConfig, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
-
-let currentLayoutMode = 'side';
-
 let roomRectangle;
 let overlayActive = false;
 let optionsHidden = true;
@@ -204,6 +201,8 @@ function setScale() {
   document.documentElement.style.setProperty('--roomWidth', `${targetW}px`);
   document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
 
+  const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
+
   if(edit || jeEnabled) {
     const targetWidth = targetW / zoom;
     const targetHeight = targetH / zoom;
@@ -224,24 +223,14 @@ function setScale() {
       document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top) + 'px');
     }
     document.documentElement.style.setProperty('--roomZoom', zoom);
-  } else {
-    const menuConfig = {
-      isHidden: $('body').className.match(/layout-hidden/) != null
-    };
-
-    const layout = calculateLayout(w, h, viewportConfig, menuConfig, currentLayoutMode);
-    scale = layout.scale;
-    currentLayoutMode = layout.layoutMode;
-
-    $('body').classList.remove('layout-side', 'layout-wide-side', 'layout-bottom', 'layout-hidden', 'layout-tight');
-    $('body').classList.add(`layout-${currentLayoutMode}`);
-    
-    // Maintain backwards compatibility with tight aspect ratios
-    const isTight = (w - scale * viewportConfig.targetWidth) + (h - scale * viewportConfig.targetHeight) < 44;
-    if (isTight && currentLayoutMode !== 'hidden') {
-      $('body').classList.add('layout-tight');
-    }
+    layoutOptions.scale = scale;
   }
+
+  const layout = calculateLayout(w, h, viewportConfig, layoutOptions);
+  scale = layout.scale;
+  $('body').classList.remove('layout-side', 'layout-wide-side', 'layout-bottom', 'layout-tight');
+  $('body').classList.add(`layout-${layout.layoutMode}`);
+
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
@@ -517,7 +506,8 @@ async function loadEditMode() {
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
-      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive, viewportConfig,
+      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      viewportConfig, MIN_BOARD_SIZE, MAX_BOARD_SIZE,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,

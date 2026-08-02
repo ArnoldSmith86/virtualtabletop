@@ -272,14 +272,14 @@ class GameSettingsModule extends SidebarModule {
     `;
 
     const label = document.createElement('label');
-    label.textContent = 'Aspect Ratio (Width x Height)';
+    label.textContent = 'Board Size (Width x Height)';
     label.style.fontWeight = 'bold';
 
     header.append(label);
     tile.append(header);
 
     const desc = document.createElement('div');
-    desc.innerHTML = 'Set the target width and height of the board viewport. The VTT uses this to calculate optimal scaling. Default is 1600 x 1000.';
+    desc.innerHTML = 'The coordinate system all widget positions and sizes are relative to. The board is scaled to fill the window, so this determines its aspect ratio. Default is 1600 x 1000.';
     desc.style.fontSize = '0.9em';
     desc.style.color = 'var(--textColor)';
     tile.append(desc);
@@ -295,7 +295,9 @@ class GameSettingsModule extends SidebarModule {
     const widthInput = document.createElement('input');
     widthInput.type = 'number';
     widthInput.style.cssText = 'flex: 1; padding: 8px;';
-    widthInput.min = '100';
+    widthInput.min = MIN_BOARD_SIZE;
+    widthInput.max = MAX_BOARD_SIZE;
+    widthInput.value = viewportConfig.targetWidth;
 
     const cross = document.createElement('span');
     cross.textContent = 'x';
@@ -303,28 +305,24 @@ class GameSettingsModule extends SidebarModule {
     const heightInput = document.createElement('input');
     heightInput.type = 'number';
     heightInput.style.cssText = 'flex: 1; padding: 8px;';
-    heightInput.min = '100';
-
-    const gameSettings = getCurrentGameSettings();
-    const currentRatio = gameSettings.aspectRatio || { width: 1600, height: 1000 };
-    widthInput.value = currentRatio.width;
-    heightInput.value = currentRatio.height;
+    heightInput.min = MIN_BOARD_SIZE;
+    heightInput.max = MAX_BOARD_SIZE;
+    heightInput.value = viewportConfig.targetHeight;
 
     inputRow.append(widthInput, cross, heightInput);
     tile.append(inputRow);
 
+    // the server broadcasts the new settings back as a meta message, which is
+    // what applies the viewport - here and for everyone else in the room
     const handleChange = () => {
       const w = parseInt(widthInput.value, 10);
       const h = parseInt(heightInput.value, 10);
-      if (isNaN(w) || isNaN(h) || w < 100 || h < 100) return;
-      
+      if(![ w, h ].every(v => v >= MIN_BOARD_SIZE && v <= MAX_BOARD_SIZE))
+        return;
+
       const gameSettings = getCurrentGameSettings();
       gameSettings.aspectRatio = { width: w, height: h };
       toServer('setGameSettings', gameSettings);
-      
-      viewportConfig.targetWidth = w;
-      viewportConfig.targetHeight = h;
-      setScale();
     };
 
     widthInput.addEventListener('change', handleChange);
@@ -404,7 +402,6 @@ class GameSettingsModule extends SidebarModule {
 
     this.addSubHeader('Board Settings');
     this.addAspectRatioSetting(target);
-
 
     const gameSettings = getCurrentGameSettings();
     if (Object.keys(gameSettings ? gameSettings.legacyModes : {}).length > 0) {

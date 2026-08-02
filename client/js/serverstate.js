@@ -886,9 +886,6 @@ onLoad(function() {
   onMessage('meta', (args) => {
     if(args.meta) {
       applyCustomCss(args.meta.gameSettings);
-      currentGameSettings = args.meta.gameSettings || {};
-      setViewportSize(currentGameSettings.aspectRatio);
-      setScale();
     }
   });
   setScale();

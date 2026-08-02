@@ -27,5 +27,8 @@ onLoad(function() {
   });
   onMessage('meta', args=>{
     currentGameSettings = args.meta.gameSettings || {};
+    // the aspect ratio can be changed while people are playing, so re-layout
+    setViewportSize(currentGameSettings.aspectRatio);
+    setScale();
   });
 });

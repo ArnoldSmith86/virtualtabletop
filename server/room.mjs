@@ -1132,7 +1132,13 @@ export default class Room {
   setGameSettings(player, gameSettings) {
     const oldLegacyModes = this.state._meta.gameSettings?.legacyModes || {};
     const newLegacyModes = gameSettings.legacyModes || {};
-  
+
+    // the board size affects everyone in the room, so don't store nonsense
+    // (the bounds match MIN_BOARD_SIZE/MAX_BOARD_SIZE in client/js/calculateLayout.js)
+    const aspectRatio = gameSettings.aspectRatio;
+    if(aspectRatio && ![ aspectRatio.width, aspectRatio.height ].every(v => Number.isFinite(v) && v >= 100 && v <= 10000))
+      delete gameSettings.aspectRatio;
+
     this.state._meta.gameSettings = gameSettings;
     this.sendMetaUpdate();
 

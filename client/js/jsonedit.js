@@ -196,8 +196,9 @@ const jeCommands = [
       { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
       { label: 'Inherit properties',     type: 'string', value: '' },
       { label: 'Copy recursively',       type: 'checkbox', value: true  },
-      { label: 'X offset',               type: 'number',   value: 0,   min: -viewportConfig.targetWidth, max: viewportConfig.targetWidth },
-      { label: 'Y offset',               type: 'number',   value: 0,   min: -viewportConfig.targetHeight, max: viewportConfig.targetHeight },
+      // getters because jeCommands is built at load time, before the game's viewport is known
+      { label: 'X offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetWidth  }, get max() { return viewportConfig.targetWidth  } },
+      { label: 'Y offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetHeight }, get max() { return viewportConfig.targetHeight } },
       { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
       { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
     ],

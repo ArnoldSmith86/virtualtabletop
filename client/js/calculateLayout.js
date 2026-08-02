@@ -1,78 +1,63 @@
-export const DEFAULT_MENU_CONFIG = {
-  minSideMenuWidth: 44,
-  wideSideMenuThreshold: 200,
-  minBottomMenuHeight: 60,
-  isHidden: false,
-};
+// Mirrors --toolbarSize in layout.css and the width the wide toolbar needs.
+const TOOLBAR_SIZE = 44;
+const WIDE_TOOLBAR_SIZE = 200;
 
 export const DEFAULT_VIEWPORT = { targetWidth: 1600, targetHeight: 1000 };
+export const MIN_BOARD_SIZE = 100;
+export const MAX_BOARD_SIZE = 10000;
 
 // The size the board is laid out for. Games can override it through
 // _meta.gameSettings.aspectRatio, so this is mutated in place and everything
 // that needs the current board dimensions reads from this object.
 export const viewportConfig = { ...DEFAULT_VIEWPORT };
 
+function boardDimension(value, fallback) {
+  const number = Math.round(Number(value));
+  if(!number || !isFinite(number))
+    return fallback;
+  return Math.max(MIN_BOARD_SIZE, Math.min(MAX_BOARD_SIZE, number));
+}
+
+// aspectRatio comes straight from the game file / another client, so anything
+// that isn't a usable board size falls back to the default 1600x1000.
 export function setViewportSize(aspectRatio) {
-  viewportConfig.targetWidth  = (aspectRatio && aspectRatio.width)  || DEFAULT_VIEWPORT.targetWidth;
-  viewportConfig.targetHeight = (aspectRatio && aspectRatio.height) || DEFAULT_VIEWPORT.targetHeight;
+  viewportConfig.targetWidth  = boardDimension(aspectRatio && aspectRatio.width,  DEFAULT_VIEWPORT.targetWidth);
+  viewportConfig.targetHeight = boardDimension(aspectRatio && aspectRatio.height, DEFAULT_VIEWPORT.targetHeight);
 }
 
 /**
- * Calculates the optimal layout and scale for the VTT board.
- * 
- * @param {number} windowWidth 
- * @param {number} windowHeight 
- * @param {Object} viewportConfig - { targetWidth, targetHeight }
- * @param {Object} [menuConfig] - Custom menu bounds
- * @param {string} [currentLayoutMode] - Optional mode from previous frame to apply hysteresis
- * @returns {Object} { scale, layoutMode }
+ * Picks the toolbar layout and the scale the board is rendered at. The board
+ * always uses the whole window and the toolbar sits in whatever margin the
+ * window's aspect ratio leaves over - unless there is less than a toolbar width
+ * of margin ('tight'), in which case the board shrinks to make room for it.
+ *
+ * @param {number} windowWidth
+ * @param {number} windowHeight
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @param {Object} [options] - { scale, toolbarHidden }
+ *   scale: board scale dictated by the surrounding UI (edit mode) instead of the window
+ *   toolbarHidden: the player hid the toolbar, so a tight layout keeps the full scale
+ * @returns {Object} { scale, layoutMode: 'side'|'wide-side'|'bottom'|'tight' }
  */
-export function calculateLayout(
-  windowWidth, 
-  windowHeight, 
-  viewportConfig, 
-  menuConfig = {}, 
-  currentLayoutMode = null
-) {
-  const config = { ...DEFAULT_MENU_CONFIG, ...menuConfig };
-  const { targetWidth, targetHeight } = viewportConfig;
+export function calculateLayout(windowWidth, windowHeight, viewport, options = {}) {
+  const { targetWidth, targetHeight } = viewport;
+  const windowIsNarrower = windowWidth/windowHeight < targetWidth/targetHeight;
 
-  if (config.isHidden) {
-    const scale = Math.max(0.1, Math.min(windowWidth / targetWidth, windowHeight / targetHeight));
-    return { scale, layoutMode: 'hidden' };
+  let scale = options.scale !== undefined
+    ? options.scale
+    : (windowIsNarrower ? windowWidth/targetWidth : windowHeight/targetHeight);
+
+  const marginX = windowWidth  - scale*targetWidth;
+  const marginY = windowHeight - scale*targetHeight;
+
+  if(marginX + marginY < TOOLBAR_SIZE) {
+    if(!options.toolbarHidden)
+      scale = (windowWidth - TOOLBAR_SIZE)/targetWidth;
+    return { scale, layoutMode: 'tight' };
   }
-
-  // 1. Calculate possible scales (clamping available space to >= 0)
-  const availWidthSide = Math.max(0, windowWidth - config.minSideMenuWidth);
-  const scaleSide = Math.min(availWidthSide / targetWidth, windowHeight / targetHeight);
-
-  const availHeightBottom = Math.max(0, windowHeight - config.minBottomMenuHeight);
-  const scaleBottom = Math.min(windowWidth / targetWidth, availHeightBottom / targetHeight);
-
-  // 2. Select optimal layout with a 3% hysteresis buffer to prevent resize flicker
-  let layoutMode;
-  const HYSTERESIS_FACTOR = 1.03;
-
-  if (currentLayoutMode === 'bottom' && scaleBottom * HYSTERESIS_FACTOR >= scaleSide) {
-    layoutMode = 'bottom';
-  } else if (scaleSide >= scaleBottom) {
-    layoutMode = 'side';
-  } else {
-    layoutMode = 'bottom';
-  }
-
-  const baseScale = layoutMode === 'side' ? scaleSide : scaleBottom;
-
-  // 3. Determine if side menu can upgrade to "wide"
-  if (layoutMode === 'side') {
-    const remainingWidth = windowWidth - (baseScale * targetWidth);
-    if (remainingWidth >= config.wideSideMenuThreshold) {
-      layoutMode = 'wide-side';
-    }
-  }
-
-  // 4. Clamp to absolute minimum scale
-  const scale = Math.max(baseScale, 0.1);
-
-  return { scale, layoutMode };
+  if(marginX > WIDE_TOOLBAR_SIZE)
+    return { scale, layoutMode: 'wide-side' };
+  if(windowIsNarrower)
+    return { scale, layoutMode: 'bottom' };
+  return { scale, layoutMode: 'side' };
 }

@@ -1,54 +1,71 @@
-import { calculateLayout, DEFAULT_MENU_CONFIG, DEFAULT_VIEWPORT, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
+import { calculateLayout, DEFAULT_VIEWPORT, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
 
 describe('calculateLayout', () => {
   const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
 
-  test('should default to side layout on ultra-wide screens', () => {
-    // 3200x1000 (32:10)
-    const result = calculateLayout(3200, 1000, viewport16x10);
-    expect(result.layoutMode).toBe('wide-side');
-    expect(result.scale).toBe(1); // 1000/1000
+  test('fills the height and leaves the margin to a side toolbar on wide screens', () => {
+    const result = calculateLayout(1700, 1000, viewport16x10);
+    expect(result.layoutMode).toBe('side');
+    expect(result.scale).toBe(1);
   });
 
-  test('should default to bottom layout on vertical screens', () => {
-    // 1000x2000 (1:2)
+  test('upgrades to a wide side toolbar once the margin is big enough', () => {
+    const result = calculateLayout(3200, 1000, viewport16x10);
+    expect(result.layoutMode).toBe('wide-side');
+    expect(result.scale).toBe(1);
+  });
+
+  test('fills the width and puts the toolbar at the bottom on tall screens', () => {
     const result = calculateLayout(1000, 2000, viewport16x10);
     expect(result.layoutMode).toBe('bottom');
-    // window width / target width = 1000/1600 = 0.625
     expect(result.scale).toBe(0.625);
   });
 
-  test('should handle hidden menu configuration', () => {
-    const result = calculateLayout(1600, 1000, viewport16x10, { isHidden: true });
-    expect(result.layoutMode).toBe('hidden');
+  // the tight layout is what makes the hide toolbar button appear, so it has to stay reachable
+  test('shrinks the board to make room for the toolbar when the window matches the board aspect', () => {
+    const result = calculateLayout(1600, 1000, viewport16x10);
+    expect(result.layoutMode).toBe('tight');
+    expect(result.scale).toBe((1600-44)/1600);
+  });
+
+  test('keeps the full scale in a tight layout while the toolbar is hidden', () => {
+    const result = calculateLayout(1600, 1000, viewport16x10, { toolbarHidden: true });
+    expect(result.layoutMode).toBe('tight');
     expect(result.scale).toBe(1);
   });
 
-  test('should apply hysteresis favoring bottom when scaling is close and previous mode was bottom', () => {
-    // With 1.03 hysteresis, if side and bottom are equal, it prefers bottom if previously bottom.
-    // 1644x1060 gives exactly scale=1 for both side (1644-44=1600) and bottom (1060-60=1000)
-    const result = calculateLayout(1644, 1060, viewport16x10, {}, 'bottom');
-    expect(result.layoutMode).toBe('bottom');
-    expect(result.scale).toBe(1);
+  test('uses the board aspect ratio of the game, not 16:10', () => {
+    const portrait = { targetWidth: 1000, targetHeight: 1600 };
+    expect(calculateLayout(1600, 1000, portrait).layoutMode).toBe('wide-side');
+    expect(calculateLayout(1000, 1600, portrait).layoutMode).toBe('tight');
+    expect(calculateLayout(900, 1600, portrait).layoutMode).toBe('bottom');
   });
 
-  test('should clamp to a minimum scale for tiny windows', () => {
-    const result = calculateLayout(10, 10, viewport16x10);
-    expect(result.scale).toBe(0.1);
+  test('keeps the scale it is given (edit mode) but still picks a layout', () => {
+    const result = calculateLayout(1700, 1000, viewport16x10, { scale: 0.5 });
+    expect(result.scale).toBe(0.5);
+    expect(result.layoutMode).toBe('wide-side');
   });
 });
 
 describe('setViewportSize', () => {
   afterEach(() => setViewportSize(null));
 
-  test('should apply the aspect ratio from the game settings', () => {
+  test('applies the aspect ratio from the game settings', () => {
     setViewportSize({ width: 1000, height: 1600 });
     expect(viewportConfig).toEqual({ targetWidth: 1000, targetHeight: 1600 });
   });
 
-  test('should fall back to the default viewport for games without an aspect ratio', () => {
+  test('falls back to the default viewport for games without an aspect ratio', () => {
     setViewportSize({ width: 1000, height: 1600 });
     setViewportSize(undefined);
     expect(viewportConfig).toEqual(DEFAULT_VIEWPORT);
+  });
+
+  test('does not let a broken game file break the layout', () => {
+    setViewportSize({ width: 0, height: 'nonsense' });
+    expect(viewportConfig).toEqual(DEFAULT_VIEWPORT);
+    setViewportSize({ width: -5, height: 1e9 });
+    expect(viewportConfig).toEqual({ targetWidth: 100, targetHeight: 10000 });
   });
 });
