@@ -481,6 +481,14 @@ function receiveStateFromServer(args) {
 
   // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
   currentGameSettings = args._meta.gameSettings || {};
+  if (currentGameSettings.aspectRatio) {
+    window.viewportConfig.targetWidth = currentGameSettings.aspectRatio.width;
+    window.viewportConfig.targetHeight = currentGameSettings.aspectRatio.height;
+  } else {
+    window.viewportConfig.targetWidth = 1600;
+    window.viewportConfig.targetHeight = 1000;
+  }
+
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
@@ -884,6 +892,15 @@ onLoad(function() {
   onMessage('meta', (args) => {
     if(args.meta) {
       applyCustomCss(args.meta.gameSettings);
+      currentGameSettings = args.meta.gameSettings || {};
+      if (currentGameSettings.aspectRatio) {
+        window.viewportConfig.targetWidth = currentGameSettings.aspectRatio.width;
+        window.viewportConfig.targetHeight = currentGameSettings.aspectRatio.height;
+      } else {
+        window.viewportConfig.targetWidth = 1600;
+        window.viewportConfig.targetHeight = 1000;
+      }
+      if (window.setScale) window.setScale();
     }
   });
   setScale();

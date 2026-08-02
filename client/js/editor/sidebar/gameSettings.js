@@ -252,6 +252,87 @@ class GameSettingsModule extends SidebarModule {
     target.append(tile);
   }
 
+  addAspectRatioSetting(target) {
+    const tile = document.createElement('div');
+    tile.className = 'settings-tile';
+    tile.style.cssText = `
+      border: 1px solid var(--modalBorderColor);
+      border-radius: 4px;
+      padding: 12px;
+      margin: 8px 0;
+      background: var(--backgroundColor);
+      color: var(--textColor);
+    `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    `;
+
+    const label = document.createElement('label');
+    label.textContent = 'Aspect Ratio (Width x Height)';
+    label.style.fontWeight = 'bold';
+
+    header.append(label);
+    tile.append(header);
+
+    const desc = document.createElement('div');
+    desc.innerHTML = 'Set the target width and height of the board viewport. The VTT uses this to calculate optimal scaling. Default is 1600 x 1000.';
+    desc.style.fontSize = '0.9em';
+    desc.style.color = 'var(--textColor)';
+    tile.append(desc);
+
+    const inputRow = document.createElement('div');
+    inputRow.style.cssText = `
+      display: flex;
+      align-items: center;
+      margin-top: 12px;
+      gap: 8px;
+    `;
+
+    const widthInput = document.createElement('input');
+    widthInput.type = 'number';
+    widthInput.style.cssText = 'flex: 1; padding: 8px;';
+    widthInput.min = '100';
+
+    const cross = document.createElement('span');
+    cross.textContent = 'x';
+
+    const heightInput = document.createElement('input');
+    heightInput.type = 'number';
+    heightInput.style.cssText = 'flex: 1; padding: 8px;';
+    heightInput.min = '100';
+
+    const gameSettings = getCurrentGameSettings();
+    const currentRatio = gameSettings.aspectRatio || { width: 1600, height: 1000 };
+    widthInput.value = currentRatio.width;
+    heightInput.value = currentRatio.height;
+
+    inputRow.append(widthInput, cross, heightInput);
+    tile.append(inputRow);
+
+    const handleChange = () => {
+      const w = parseInt(widthInput.value, 10);
+      const h = parseInt(heightInput.value, 10);
+      if (isNaN(w) || isNaN(h) || w < 100 || h < 100) return;
+      
+      const gameSettings = getCurrentGameSettings();
+      gameSettings.aspectRatio = { width: w, height: h };
+      toServer('setGameSettings', gameSettings);
+      
+      window.viewportConfig.targetWidth = w;
+      window.viewportConfig.targetHeight = h;
+      if (window.setScale) window.setScale();
+    };
+
+    widthInput.addEventListener('change', handleChange);
+    heightInput.addEventListener('change', handleChange);
+
+    target.append(tile);
+  }
+
   addCssEditor(target) {
     this.addSubHeader('Global Room CSS');
 
@@ -320,6 +401,10 @@ class GameSettingsModule extends SidebarModule {
   renderModule(target) {
     target.innerHTML = '';
     this.addHeader('Game Settings');
+
+    this.addSubHeader('Board Settings');
+    this.addAspectRatioSetting(target);
+
 
     const gameSettings = getCurrentGameSettings();
     if (Object.keys(gameSettings ? gameSettings.legacyModes : {}).length > 0) {
