@@ -1,4 +1,4 @@
-import { viewportConfig } from './main.js';
+import { viewportConfig } from './calculateLayout.js';
 
 let zoomScale = 1;
 let zoomLocked = localStorage.getItem('zoomLocked') === 'true';

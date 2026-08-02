@@ -1,4 +1,4 @@
-import { calculateLayout, DEFAULT_MENU_CONFIG } from '../client/js/calculateLayout.js';
+import { calculateLayout, DEFAULT_MENU_CONFIG, DEFAULT_VIEWPORT, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
 
 describe('calculateLayout', () => {
   const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
@@ -35,5 +35,20 @@ describe('calculateLayout', () => {
   test('should clamp to a minimum scale for tiny windows', () => {
     const result = calculateLayout(10, 10, viewport16x10);
     expect(result.scale).toBe(0.1);
+  });
+});
+
+describe('setViewportSize', () => {
+  afterEach(() => setViewportSize(null));
+
+  test('should apply the aspect ratio from the game settings', () => {
+    setViewportSize({ width: 1000, height: 1600 });
+    expect(viewportConfig).toEqual({ targetWidth: 1000, targetHeight: 1600 });
+  });
+
+  test('should fall back to the default viewport for games without an aspect ratio', () => {
+    setViewportSize({ width: 1000, height: 1600 });
+    setViewportSize(undefined);
+    expect(viewportConfig).toEqual(DEFAULT_VIEWPORT);
   });
 });

@@ -1,5 +1,3 @@
-import { viewportConfig } from '../../main.js';
-
 class MoveDragButton extends DragButton {
   constructor() {
     super('control_camera', 'Move', 'Drag to move the selected widgets.');

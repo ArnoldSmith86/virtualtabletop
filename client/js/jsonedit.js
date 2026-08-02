@@ -1,5 +1,3 @@
-import { viewportConfig } from './main.js';
-
 let jeEnabled = null;
 let jeRoutineLogging = false;
 let jeMode = null;

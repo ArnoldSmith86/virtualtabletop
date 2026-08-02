@@ -1,4 +1,4 @@
-import { viewportConfig } from './main.js';
+import { viewportConfig } from './calculateLayout.js';
 
 let usedTouch = false;
 let mouseTarget = null;

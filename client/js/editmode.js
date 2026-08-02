@@ -1,5 +1,3 @@
-import { viewportConfig } from './main.js';
-
 //This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [

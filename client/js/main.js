@@ -1,12 +1,8 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-
+import { calculateLayout, viewportConfig } from './calculateLayout.js';
 
 export let scale = 1;
-export const viewportConfig = { targetWidth: 1600, targetHeight: 1000 };
-window.viewportConfig = viewportConfig;
-import { calculateLayout } from './calculateLayout.js';
-window.calculateLayout = calculateLayout;
 
 let currentLayoutMode = 'side';
 
@@ -521,7 +517,7 @@ async function loadEditMode() {
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
-      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive, viewportConfig,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,

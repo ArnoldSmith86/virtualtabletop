@@ -5,6 +5,18 @@ export const DEFAULT_MENU_CONFIG = {
   isHidden: false,
 };
 
+export const DEFAULT_VIEWPORT = { targetWidth: 1600, targetHeight: 1000 };
+
+// The size the board is laid out for. Games can override it through
+// _meta.gameSettings.aspectRatio, so this is mutated in place and everything
+// that needs the current board dimensions reads from this object.
+export const viewportConfig = { ...DEFAULT_VIEWPORT };
+
+export function setViewportSize(aspectRatio) {
+  viewportConfig.targetWidth  = (aspectRatio && aspectRatio.width)  || DEFAULT_VIEWPORT.targetWidth;
+  viewportConfig.targetHeight = (aspectRatio && aspectRatio.height) || DEFAULT_VIEWPORT.targetHeight;
+}
+
 /**
  * Calculates the optimal layout and scale for the VTT board.
  * 

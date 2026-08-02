@@ -1,6 +1,7 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
+import { setViewportSize } from './calculateLayout.js';
 import { playerName } from './overlays/players.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
@@ -481,14 +482,7 @@ function receiveStateFromServer(args) {
 
   // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
   currentGameSettings = args._meta.gameSettings || {};
-  if (currentGameSettings.aspectRatio) {
-    window.viewportConfig.targetWidth = currentGameSettings.aspectRatio.width;
-    window.viewportConfig.targetHeight = currentGameSettings.aspectRatio.height;
-  } else {
-    window.viewportConfig.targetWidth = 1600;
-    window.viewportConfig.targetHeight = 1000;
-  }
-
+  setViewportSize(currentGameSettings.aspectRatio);
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
@@ -893,14 +887,8 @@ onLoad(function() {
     if(args.meta) {
       applyCustomCss(args.meta.gameSettings);
       currentGameSettings = args.meta.gameSettings || {};
-      if (currentGameSettings.aspectRatio) {
-        window.viewportConfig.targetWidth = currentGameSettings.aspectRatio.width;
-        window.viewportConfig.targetHeight = currentGameSettings.aspectRatio.height;
-      } else {
-        window.viewportConfig.targetWidth = 1600;
-        window.viewportConfig.targetHeight = 1000;
-      }
-      if (window.setScale) window.setScale();
+      setViewportSize(currentGameSettings.aspectRatio);
+      setScale();
     }
   });
   setScale();

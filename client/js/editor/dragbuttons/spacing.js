@@ -1,5 +1,3 @@
-import { viewportConfig } from '../../main.js';
-
 class SpacingDragButton extends DragButton {
   constructor() {
     super('format_line_spacing', 'Spacing', 'Drag to adjust spacing between selected widgets.');

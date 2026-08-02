@@ -46,6 +46,7 @@ export default async function minifyHTML() {
     'node_modules/dompurify/dist/purify.js',
 
     'client/js/domhelpers.js',
+    'client/js/calculateLayout.js',
     'client/js/connection.js',
     'client/js/serverstate.js',
     'client/js/legacymodes.js',
@@ -80,7 +81,6 @@ export default async function minifyHTML() {
     'client/js/widgets/spinner.js',
     'client/js/widgets/timer.js',
 
-    'client/js/calculateLayout.js',
     'client/js/main.js'
   ]);
 

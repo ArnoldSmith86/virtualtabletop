@@ -322,9 +322,9 @@ class GameSettingsModule extends SidebarModule {
       gameSettings.aspectRatio = { width: w, height: h };
       toServer('setGameSettings', gameSettings);
       
-      window.viewportConfig.targetWidth = w;
-      window.viewportConfig.targetHeight = h;
-      if (window.setScale) window.setScale();
+      viewportConfig.targetWidth = w;
+      viewportConfig.targetHeight = h;
+      setScale();
     };
 
     widthInput.addEventListener('change', handleChange);
