@@ -391,16 +391,19 @@ function mergeDeltas(firstDelta, secondDelta) {
   return merged;
 }
 
-function addDeltaEntryToUndoProtocol(delta) {
+export function addDeltaEntryToUndoProtocol(delta) {
   const undoDelta = {};
 
   for(const widgetID in delta.s) {
     if(delta.s[widgetID] === null) {
       if(widgets.has(widgetID))
         undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
-    } else if(delta.s[widgetID].id || !widgets.has(widgetID)) {
-      // the delta adds a widget this client does not have - undoing it means removing the widget again
+    } else if(delta.s[widgetID].id) {
       undoDelta[widgetID] = null;
+    } else if(!widgets.has(widgetID)) {
+      // the delta changes properties of a widget this client does not have (adding it earlier might have
+      // failed) - there is nothing to restore and removing it could delete a widget that others do have
+      continue;
     } else {
       undoDelta[widgetID] = {};
       for(const property in delta.s[widgetID]) {
@@ -455,7 +458,7 @@ function addStateEntryToUndoProtocol(state) {
   undoProtocol.push({ delta: {s:redoDelta,c:'received complete room state'}, undoDelta });
 }
 
-function getUndoProtocol() {
+export function getUndoProtocol() {
   return undoProtocol;
 }
 
