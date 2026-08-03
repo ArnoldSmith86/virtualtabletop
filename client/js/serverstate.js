@@ -362,6 +362,8 @@ function receiveDelta(delta) {
       } else {
         widgets.get(widgetID).applyDelta(delta.s[widgetID]);
       }
+    } else if(delta.s[widgetID] !== null) {
+      console.error(`Could not apply delta for widget ${widgetID}!`, delta.s[widgetID], 'this client does not have the widget - it might be out of sync with the server');
     }
   }
 
