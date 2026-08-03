@@ -292,7 +292,7 @@ export default class Room {
       return {
         name: this.id + '.vttc',
         type: 'application/zip',
-        content: Zip.create(files)
+        content: await Zip.create(files)
       };
     }
     if(!this.state._meta.states[stateID])
@@ -321,7 +321,7 @@ export default class Room {
             files[asset.substr(1)] = fs.readFileSync(Config.resolveAsset(asset.substr(8)));
     }
 
-    const zipBuffer = Zip.create(files, true);
+    const zipBuffer = await Zip.create(files, true);
 
     let name = s.name + '.vtt';
     if(s.savePlayers)
@@ -1176,7 +1176,7 @@ export default class Room {
             if(!assetStatus[asset] && Config.resolveAsset(asset))
               files['assets/' + asset] = fs.readFileSync(Config.resolveAsset(asset));
 
-          zipBuffer = Zip.create(files);
+          zipBuffer = await Zip.create(files);
         }
 
         const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {

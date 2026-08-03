@@ -18,18 +18,18 @@ const pieceColors = {
 
 export default async function convertPCIO(content) {
   const entries = Zip.list(content);
-  const widgets = JSON.parse(Zip.readString(content, 'widgets.json'));
+  const widgets = JSON.parse(await Zip.readString(content, 'widgets.json'));
 
   const nameMap = {};
   try {
     // created by the client while removing already uploaded assets
-    for(const [ k, v ] of Object.entries(JSON.parse(Zip.readString(content, 'asset-map.json'))))
+    for(const [ k, v ] of Object.entries(JSON.parse(await Zip.readString(content, 'asset-map.json'))))
       nameMap[`package://${v}`] = `/assets/${k}`;
   } catch(e) {}
 
   for(const filename in entries) {
     if(filename.match(/^\/?userassets/) && !filename.match(/\/$/) && entries[filename] < 2097152) {
-      const asset = Zip.read(content, [ filename ])[filename];
+      const asset = (await Zip.read(content, [ filename ]))[filename];
       const targetFile = CRC32.buf(asset) + '_' + asset.length;
       nameMap['package://' + filename] = '/assets/' + targetFile;
       if(!Config.resolveAsset(targetFile))

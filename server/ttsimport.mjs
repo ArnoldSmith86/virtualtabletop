@@ -266,7 +266,7 @@ async function convertTTS(content, linkContent) {
   } else {
     for(const file in Zip.list(content))
       if(file.match(/\.json$/))
-        json = JSON.parse(Zip.readString(content, file));
+        json = JSON.parse(await Zip.readString(content, file));
   }
 
   const widgets = await addRecursive(json.ObjectStates);

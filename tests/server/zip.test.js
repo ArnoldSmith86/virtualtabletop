@@ -26,32 +26,43 @@ describe('server/zip.mjs', function() {
     });
   });
 
-  test('reads entries of a zip written by JSZip', function() {
-    expect(JSON.parse(Zip.readString(legacyVTT, '0.json'))._meta.info.name).toEqual('Test Game');
-    expect(Zip.readString(legacyVTT, 'ümläut.json')).toEqual('{"_meta":{"version":8}}');
+  test('reads entries of a zip written by JSZip', async function() {
+    expect(JSON.parse(await Zip.readString(legacyVTT, '0.json'))._meta.info.name).toEqual('Test Game');
+    expect(await Zip.readString(legacyVTT, 'ümläut.json')).toEqual('{"_meta":{"version":8}}');
 
-    const asset = Zip.read(legacyVTT, [ 'assets/1234_9' ])['assets/1234_9'];
+    const asset = (await Zip.read(legacyVTT, [ 'assets/1234_9' ]))['assets/1234_9'];
     expect(Buffer.from(asset).toString()).toEqual('123456789');
     // assets are stored under `${crc32}_${size}`, so the CRC has to keep matching JSZip's
     expect(CRC32.buf(asset)).toEqual(-873187034);
   });
 
-  test('reads only the requested entries', function() {
-    expect(Object.keys(Zip.read(legacyVTT, [ '0.json' ]))).toEqual([ '0.json' ]);
+  test('reads only the requested entries', async function() {
+    expect(Object.keys(await Zip.read(legacyVTT, [ '0.json' ]))).toEqual([ '0.json' ]);
   });
 
-  test('round-trips stored and deflated files', function() {
-    const asset = Buffer.from(Array.from({ length: 5000 }, (_, i)=>i%251));
-    const files = { '0.json': '{"_meta":{"version":8}}', 'assets/1_2': asset };
+  // 3 MB, so create() has to hand it to the compressor in more than one chunk
+  const asset = Buffer.alloc(3000000).map((_, i)=>i%251);
 
-    const stored = Zip.create(files);
-    const deflated = Zip.create(files, true);
+  test('round-trips stored and deflated files', async function() {
+    const files = { '0.json': '{"_meta":{"version":8}}', 'assets/1_2': asset, 'empty.png': Buffer.alloc(0) };
+
+    const stored = await Zip.create(files);
+    const deflated = await Zip.create(files, true);
     expect(deflated.length).toBeLessThan(stored.length);
 
     for(const zip of [ stored, deflated ]) {
-      expect(Zip.list(zip)).toEqual({ '0.json': 23, 'assets/1_2': 5000 });
-      expect(Zip.readString(zip, '0.json')).toEqual(files['0.json']);
-      expect(Buffer.from(Zip.read(zip, [ 'assets/1_2' ])['assets/1_2'])).toEqual(asset);
+      expect(Zip.list(zip)).toEqual({ '0.json': 23, 'assets/1_2': 3000000, 'empty.png': 0 });
+      expect(await Zip.readString(zip, '0.json')).toEqual(files['0.json']);
+      expect(Buffer.compare(Buffer.from((await Zip.read(zip, [ 'assets/1_2' ]))['assets/1_2']), asset)).toEqual(0);
     }
+  });
+
+  test('keeps the event loop running while packing', async function() {
+    let ticks = 0;
+    const ticker = setInterval(()=>++ticks, 1);
+    await Zip.create({ 'assets/1_2': asset }, true);
+    clearInterval(ticker);
+
+    expect(ticks).toBeGreaterThan(0);
   });
 });

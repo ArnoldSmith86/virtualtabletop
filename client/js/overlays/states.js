@@ -30,29 +30,50 @@ async function waitForZipLibrary() {
 }
 
 // fflate's callback API does the actual (de)compression in a web worker so that
-// uploading or building a big file doesn't freeze the UI
-async function unzipBlob(blob) {
-  const buffer = new Uint8Array(await blob.arrayBuffer());
-  return await new Promise((resolve, reject)=>fflate.unzip(buffer, (e, files)=>e ? reject(e) : resolve(files)));
+// uploading or building a big file doesn't freeze the UI. The worker is created from a
+// blob URL, which a content security policy can forbid, so both helpers fall back to
+// doing the work right here if that fails - a frozen tab beats a broken upload.
+async function unzipBuffer(buffer, keepEntry) {
+  const options = { filter: e=>keepEntry(e.name) };
+  try {
+    return await new Promise((resolve, reject)=>fflate.unzip(buffer, options, (e, files)=>e ? reject(e) : resolve(files)));
+  } catch(e) {
+    return fflate.unzipSync(buffer, options);
+  }
 }
 
 async function zipBlob(files, compress) {
-  const buffer = await new Promise((resolve, reject)=>fflate.zip(files, { level: compress ? 6 : 0 }, (e, data)=>e ? reject(e) : resolve(data)));
+  const options = { level: compress ? 6 : 0 };
+  let buffer;
+  try {
+    buffer = await new Promise((resolve, reject)=>fflate.zip(files, options, (e, data)=>e ? reject(e) : resolve(data)));
+  } catch(e) {
+    buffer = fflate.zipSync(files, options);
+  }
   return new Blob([ buffer ]);
 }
 
-// assets are named after the CRC-32 of their content, both here and on the server
-const crc32Table = new Int32Array(256).map(function(_, crc) {
-  for(let i=0; i<8; ++i)
-    crc = crc & 1 ? 0xedb88320 ^ crc >>> 1 : crc >>> 1;
-  return crc;
-});
+// the index at the end of a zip file, which lists every entry along with the CRC-32 and
+// the size of its contents - that is what assets are named after, so knowing which assets
+// a file contains does not require decompressing (or even holding on to) any of them
+function zipIndex(buffer) {
+  const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
 
-function crc32(data) {
-  let crc = -1;
-  for(let i=0; i<data.length; ++i)
-    crc = crc32Table[(crc ^ data[i]) & 0xff] ^ crc >>> 8;
-  return ~crc;
+  let end = buffer.length - 22;
+  while(end < 0 || view.getUint32(end, true) != 0x06054b50)
+    if(--end < 0 || buffer.length - end > 65558)
+      throw new Error('Could not find the index of the zip file.');
+
+  const entries = {};
+  let offset = view.getUint32(end + 16, true);
+  for(let i=view.getUint16(end + 8, true); i>0; --i) {
+    const nameLength = view.getUint16(offset + 28, true);
+    // filenames are UTF-8 if bit 11 of the flags is set and latin1 otherwise, same as fflate
+    const name = fflate.strFromU8(buffer.subarray(offset + 46, offset + 46 + nameLength), !(view.getUint16(offset + 8, true) & 2048));
+    entries[name] = { crc: view.getInt32(offset + 16, true), size: view.getUint32(offset + 24, true) };
+    offset += 46 + nameLength + view.getUint16(offset + 30, true) + view.getUint16(offset + 32, true);
+  }
+  return entries;
 }
 
 function toBase64(data) {
@@ -65,9 +86,9 @@ function toBase64(data) {
 async function resolveStateCollections(file, callback) {
   if(file.name.match(/\.vttc$/)) {
     await waitForZipLibrary();
-    for(const [ filename, content ] of Object.entries(await unzipBlob(file)))
-      if(!filename.match(/\/$/))
-        callback(new File([ content ], filename));
+    const buffer = new Uint8Array(await file.arrayBuffer());
+    for(const [ filename, content ] of Object.entries(await unzipBuffer(buffer, name=>!name.match(/\/$/))))
+      callback(new File([ content ], filename));
   } else {
     callback(file);
   }
@@ -122,9 +143,13 @@ function addStateFile(f) {
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
   await waitForZipLibrary();
 
-  let files = null;
+  const buffer = new Uint8Array(await sourceFile.arrayBuffer());
+
+  let entries = null;
+  let jsonFiles = null;
   try {
-    files = await unzipBlob(sourceFile);
+    entries = zipIndex(buffer);
+    jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
   } catch(e) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
@@ -132,9 +157,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let json = null;
   const assets = {};
-  for(const [ filename, file ] of Object.entries(files)) {
-    if(filename.match(/json$/)) {
-      const content = JSON.parse(fflate.strFromU8(file));
+  for(const [ filename, entry ] of Object.entries(entries)) {
+    if(jsonFiles[filename]) {
+      const content = JSON.parse(fflate.strFromU8(jsonFiles[filename]));
       if(!json) {
         json = content;
         if(json._meta)
@@ -143,8 +168,8 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(json._meta)
         json._meta.info.variants.push(content._meta.info);
     }
-    if(filename.match(/^\/?(user)?assets/) && file.length)
-      assets[crc32(file) + '_' + file.length] = filename;
+    if(filename.match(/^\/?(user)?assets/) && entry.size)
+      assets[entry.crc + '_' + entry.size] = filename;
   }
 
   if(json === null) {
@@ -158,8 +183,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     if(json._meta.info.image) {
       if(json._meta.info.image.match(/^http/)) {
         imageURL = json._meta.info.image;
-      } else if(files[json._meta.info.image.substr(1)]) {
-        const image = toBase64(files[json._meta.info.image.substr(1)]);
+      } else if(entries[json._meta.info.image.substr(1)]) {
+        const imageFile = json._meta.info.image.substr(1);
+        const image = toBase64((await unzipBuffer(buffer, name=>name == imageFile))[imageFile]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
             imageURL = `data:image/${type};base64,${image}`;
@@ -179,18 +205,21 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let total = 0;
   let removed = 0;
+  const removedFiles = {};
   for(const asset in exist) {
     ++total;
     if(exist[asset]) {
       ++removed;
-      delete files[assets[asset]];
+      removedFiles[assets[asset]] = true;
     }
   }
 
   let blob = sourceFile;
   if(removed > total/2) {
-    files['asset-map.json'] = fflate.strToU8(JSON.stringify(assets));
     console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
+    // only a rebuild needs the contents of the file, so this is the first time it is unpacked
+    const files = await unzipBuffer(buffer, name=>!removedFiles[name] && !name.match(/\/$/));
+    files['asset-map.json'] = fflate.strToU8(JSON.stringify(assets));
     blob = await zipBlob(files, total-removed < 5);
   }
 

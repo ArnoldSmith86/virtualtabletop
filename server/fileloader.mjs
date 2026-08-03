@@ -79,7 +79,7 @@ async function readStatesFromBuffer(buffer, includeVariantNameList) {
       return result;
     }
     if(filename.match(/\.(vtt|pcio)$/))
-      states[filename] = await readVariantsFromBuffer(Zip.read(buffer, [ filename ])[filename]);
+      states[filename] = await readVariantsFromBuffer((await Zip.read(buffer, [ filename ]))[filename]);
   }
   if(Object.keys(states).length == 0)
     throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
@@ -174,7 +174,7 @@ async function readVariantsFromBuffer(buffer) {
       if(filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json') {
         if(entries[filename] >= 20971520)
           throw new Logging.UserError(403, `${filename} is bigger than 20 MiB.`);
-        const variant = JSON.parse(Zip.readString(buffer, filename));
+        const variant = JSON.parse(await Zip.readString(buffer, filename));
         if(typeof variant._meta.version != 'number' || variant._meta.version > VERSION || variant._meta.version < 0)
           throw new Logging.UserError(403, `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`);
         const isNumeric = filename.match(/^([0-9]+)\.json$/);
@@ -187,7 +187,7 @@ async function readVariantsFromBuffer(buffer) {
       if(filename.match(/^\/?assets/) && !filename.match(/\/$/)) {
         if(entries[filename] >= 10485760)
           throw new Logging.UserError(403, `${filename} is bigger than 10 MiB.`);
-        const content = Zip.read(buffer, [ filename ])[filename];
+        const content = (await Zip.read(buffer, [ filename ]))[filename];
         const targetFile = CRC32.buf(content) + '_' + content.length;
         if(!Config.resolveAsset(targetFile))
           fs.writeFileSync(Config.directory('assets') + '/' + targetFile, content);
