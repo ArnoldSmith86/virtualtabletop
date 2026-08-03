@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -2169,18 +2169,21 @@ export class Widget extends StateManaged {
           }
         };
         if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          // a "minutes:seconds" string in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
+          const seconds = timeToMS(a.seconds);
+          const milliseconds = seconds !== a.seconds ? seconds : a.seconds*1000 || a.value;
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
               await w(a.timer, async widget=>{
                 if(widget.setMilliseconds)
-                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await widget.setMilliseconds(milliseconds, a.mode);
               });
             }
           } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setMilliseconds)
-                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await c.setMilliseconds(milliseconds, a.mode);
             } else {
               problems.push(`Collection ${a.collection} is empty.`);
             }
