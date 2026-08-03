@@ -3,14 +3,14 @@
     "version": 21,
     "info": {
       "name": "Tempest Cove",
-      "image": "/assets/-1859677812_42884",
+      "image": "/assets/633675787_42484",
       "rules": "https://spielgezeug.de/images/selecta_piratissimo.pdf",
       "bgg": "https://boardgamegeek.com/boardgame/20953/piratissimo",
       "year": "2005",
       "mode": "vs",
       "time": "45",
-      "attribution": "<div>Layout, design and the library preview image by VTT-AI-Agent, released to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Source of the layout: https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games/Tempest%20Cove</div>\n<div><br></div>\n<div>AI disclosure: this layout (the JSON file) and all of its texts were written by the AI agent Claude by Anthropic (https://claude.ai), from the instruction &quot;add a game to the VirtualTabletop public library that plays like Piratissimo&quot;. No AI generated imagery is used anywhere in this game: the board, the ships, the dice faces and the wind wheel are drawn with CSS gradients and with the icons listed below, and the library preview image is a screenshot of that board taken in a headless Chromium browser (Playwright, https://playwright.dev) and saved as .webp.</div>\n<div><br></div>\n<div>Board pieces, islands, sea creatures and symbols use icons that ship with VirtualTabletop and are available under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) from https://game-icons.net, as detailed on the About page:</div>\n<div><br></div>\n<div>Delapouite:</div>\n<div>&nbsp;&nbsp;Caravel - https://game-icons.net/1x1/delapouite/caravel.html</div>\n<div>&nbsp;&nbsp;Cave entrance - https://game-icons.net/1x1/delapouite/cave-entrance.html</div>\n<div>&nbsp;&nbsp;Chest - https://game-icons.net/1x1/delapouite/chest.html</div>\n<div>&nbsp;&nbsp;Coconuts - https://game-icons.net/1x1/delapouite/coconuts.html</div>\n<div>&nbsp;&nbsp;Coins - https://game-icons.net/1x1/delapouite/coins.html</div>\n<div>&nbsp;&nbsp;Dolphin - https://game-icons.net/1x1/delapouite/dolphin.html</div>\n<div>&nbsp;&nbsp;Harbor dock - https://game-icons.net/1x1/delapouite/harbor-dock.html</div>\n<div>&nbsp;&nbsp;Hut - https://game-icons.net/1x1/delapouite/hut.html</div>\n<div>&nbsp;&nbsp;Huts village - https://game-icons.net/1x1/delapouite/huts-village.html</div>\n<div>&nbsp;&nbsp;Island - https://game-icons.net/1x1/delapouite/island.html</div>\n<div>&nbsp;&nbsp;Jungle - https://game-icons.net/1x1/delapouite/jungle.html</div>\n<div>&nbsp;&nbsp;Kraken tentacle - https://game-icons.net/1x1/delapouite/kraken-tentacle.html</div>\n<div>&nbsp;&nbsp;Mermaid - https://game-icons.net/1x1/delapouite/mermaid.html</div>\n<div>&nbsp;&nbsp;Palm tree - https://game-icons.net/1x1/delapouite/palm-tree.html</div>\n<div>&nbsp;&nbsp;Rolling dices - https://game-icons.net/1x1/delapouite/rolling-dices.html</div>\n<div>&nbsp;&nbsp;Sailboat - https://game-icons.net/1x1/delapouite/sailboat.html</div>\n<div>&nbsp;&nbsp;Sea turtle - https://game-icons.net/1x1/delapouite/sea-turtle.html</div>\n<div>&nbsp;&nbsp;Shark fin - https://game-icons.net/1x1/delapouite/shark-fin.html</div>\n<div>&nbsp;&nbsp;Ship wreck - https://game-icons.net/1x1/delapouite/ship-wreck.html</div>\n<div>&nbsp;&nbsp;Sperm whale - https://game-icons.net/1x1/delapouite/sperm-whale.html</div>\n<div>&nbsp;&nbsp;Three friends - https://game-icons.net/1x1/delapouite/three-friends.html</div>\n<div>&nbsp;&nbsp;Tropical fish - https://game-icons.net/1x1/delapouite/tropical-fish.html</div>\n<div><br></div>\n<div>Lorc:</div>\n<div>&nbsp;&nbsp;Anchor - https://game-icons.net/1x1/lorc/anchor.html</div>\n<div>&nbsp;&nbsp;Compass - https://game-icons.net/1x1/lorc/compass.html</div>\n<div>&nbsp;&nbsp;Crab - https://game-icons.net/1x1/lorc/crab.html</div>\n<div>&nbsp;&nbsp;Galleon - https://game-icons.net/1x1/lorc/galleon.html</div>\n<div>&nbsp;&nbsp;Monkey - https://game-icons.net/1x1/lorc/monkey.html</div>\n<div>&nbsp;&nbsp;Mountains - https://game-icons.net/1x1/lorc/mountains.html</div>\n<div>&nbsp;&nbsp;Octopus - https://game-icons.net/1x1/lorc/octopus.html</div>\n<div>&nbsp;&nbsp;Parrot head - https://game-icons.net/1x1/lorc/parrot-head.html</div>\n<div>&nbsp;&nbsp;Sea serpent - https://game-icons.net/1x1/lorc/sea-serpent.html</div>\n<div>&nbsp;&nbsp;Spyglass - https://game-icons.net/1x1/lorc/spyglass.html</div>\n<div>&nbsp;&nbsp;Tornado - https://game-icons.net/1x1/lorc/tornado.html</div>\n<div>&nbsp;&nbsp;Volcano - https://game-icons.net/1x1/lorc/volcano.html</div>\n<div>&nbsp;&nbsp;Water splash - https://game-icons.net/1x1/lorc/water-splash.html</div>\n<div>&nbsp;&nbsp;Waves - https://game-icons.net/1x1/lorc/waves.html</div>\n<div>&nbsp;&nbsp;Wind slap - https://game-icons.net/1x1/lorc/wind-slap.html</div>\n<div><br></div>\n<div>Skoll:</div>\n<div>&nbsp;&nbsp;Open treasure chest - https://game-icons.net/1x1/skoll/open-treasure-chest.html</div>\n<div><br></div>\n<div>The arrows that show the sailing route, the storm direction and the goal are /i/icons/arrow_right.svg, one of the user interface icons bundled with VirtualTabletop (https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/icons/arrow_right.svg). Per the About page of virtualtabletop.io, those bundled symbols are either Google Material Symbols under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or symbols made by the VirtualTabletop community and released under CC0.</div>\n<div><br></div>\n<div>The library preview image (assets/-1859677812_42884) is a screenshot of this board, made by VTT-AI-Agent and released under CC0 1.0. Everything visible on it is covered by the licenses above.</div>\n<div><br></div>\n<div>The game is inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005, https://boardgamegeek.com/boardgame/20953/piratissimo). No artwork, text or component of that game is used here; the rules were reimplemented from the publisher&#39;s rulebook.</div>",
-      "lastUpdate": 1785709165307,
+      "attribution": "<div>Layout, design and the library preview image by VTT-AI-Agent, released to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Source of the layout: https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games/Tempest%20Cove</div>\n<div><br></div>\n<div>AI disclosure: this layout (the JSON file) and all of its texts were written by the AI agent Claude by Anthropic (https://claude.ai), from the instruction &quot;add a game to the VirtualTabletop public library that plays like Piratissimo&quot;. No AI generated imagery is used anywhere in this game: the board, the ships, the dice faces and the wind wheel are drawn with CSS gradients and with the icons listed below, and the library preview image is a screenshot of that board taken in a headless Chromium browser (Playwright, https://playwright.dev) and saved as .webp.</div>\n<div><br></div>\n<div>Board pieces, islands, sea creatures and symbols use icons that ship with VirtualTabletop and are available under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) from https://game-icons.net, as detailed on the About page:</div>\n<div><br></div>\n<div>Delapouite:</div>\n<div>&nbsp;&nbsp;Caravel - https://game-icons.net/1x1/delapouite/caravel.html</div>\n<div>&nbsp;&nbsp;Cave entrance - https://game-icons.net/1x1/delapouite/cave-entrance.html</div>\n<div>&nbsp;&nbsp;Chest - https://game-icons.net/1x1/delapouite/chest.html</div>\n<div>&nbsp;&nbsp;Coconuts - https://game-icons.net/1x1/delapouite/coconuts.html</div>\n<div>&nbsp;&nbsp;Coins - https://game-icons.net/1x1/delapouite/coins.html</div>\n<div>&nbsp;&nbsp;Dolphin - https://game-icons.net/1x1/delapouite/dolphin.html</div>\n<div>&nbsp;&nbsp;Harbor dock - https://game-icons.net/1x1/delapouite/harbor-dock.html</div>\n<div>&nbsp;&nbsp;Hut - https://game-icons.net/1x1/delapouite/hut.html</div>\n<div>&nbsp;&nbsp;Huts village - https://game-icons.net/1x1/delapouite/huts-village.html</div>\n<div>&nbsp;&nbsp;Island - https://game-icons.net/1x1/delapouite/island.html</div>\n<div>&nbsp;&nbsp;Jungle - https://game-icons.net/1x1/delapouite/jungle.html</div>\n<div>&nbsp;&nbsp;Kraken tentacle - https://game-icons.net/1x1/delapouite/kraken-tentacle.html</div>\n<div>&nbsp;&nbsp;Mermaid - https://game-icons.net/1x1/delapouite/mermaid.html</div>\n<div>&nbsp;&nbsp;Palm tree - https://game-icons.net/1x1/delapouite/palm-tree.html</div>\n<div>&nbsp;&nbsp;Rolling dices - https://game-icons.net/1x1/delapouite/rolling-dices.html</div>\n<div>&nbsp;&nbsp;Sailboat - https://game-icons.net/1x1/delapouite/sailboat.html</div>\n<div>&nbsp;&nbsp;Sea turtle - https://game-icons.net/1x1/delapouite/sea-turtle.html</div>\n<div>&nbsp;&nbsp;Shark fin - https://game-icons.net/1x1/delapouite/shark-fin.html</div>\n<div>&nbsp;&nbsp;Ship wreck - https://game-icons.net/1x1/delapouite/ship-wreck.html</div>\n<div>&nbsp;&nbsp;Sperm whale - https://game-icons.net/1x1/delapouite/sperm-whale.html</div>\n<div>&nbsp;&nbsp;Three friends - https://game-icons.net/1x1/delapouite/three-friends.html</div>\n<div>&nbsp;&nbsp;Tropical fish - https://game-icons.net/1x1/delapouite/tropical-fish.html</div>\n<div><br></div>\n<div>Lorc:</div>\n<div>&nbsp;&nbsp;Anchor - https://game-icons.net/1x1/lorc/anchor.html</div>\n<div>&nbsp;&nbsp;Compass - https://game-icons.net/1x1/lorc/compass.html</div>\n<div>&nbsp;&nbsp;Crab - https://game-icons.net/1x1/lorc/crab.html</div><div>&nbsp;&nbsp;Cycle - https://game-icons.net/1x1/lorc/cycle.html</div>\n<div>&nbsp;&nbsp;Galleon - https://game-icons.net/1x1/lorc/galleon.html</div>\n<div>&nbsp;&nbsp;Laurel crown - https://game-icons.net/1x1/lorc/laurel-crown.html</div><div>&nbsp;&nbsp;Monkey - https://game-icons.net/1x1/lorc/monkey.html</div>\n<div>&nbsp;&nbsp;Mountains - https://game-icons.net/1x1/lorc/mountains.html</div>\n<div>&nbsp;&nbsp;Octopus - https://game-icons.net/1x1/lorc/octopus.html</div>\n<div>&nbsp;&nbsp;Parrot head - https://game-icons.net/1x1/lorc/parrot-head.html</div>\n<div>&nbsp;&nbsp;Sea serpent - https://game-icons.net/1x1/lorc/sea-serpent.html</div>\n<div>&nbsp;&nbsp;Spyglass - https://game-icons.net/1x1/lorc/spyglass.html</div>\n<div>&nbsp;&nbsp;Tornado - https://game-icons.net/1x1/lorc/tornado.html</div>\n<div>&nbsp;&nbsp;Volcano - https://game-icons.net/1x1/lorc/volcano.html</div>\n<div>&nbsp;&nbsp;Water splash - https://game-icons.net/1x1/lorc/water-splash.html</div>\n<div>&nbsp;&nbsp;Waves - https://game-icons.net/1x1/lorc/waves.html</div>\n<div>&nbsp;&nbsp;Wind slap - https://game-icons.net/1x1/lorc/wind-slap.html</div>\n<div><br></div>\n<div>Skoll:</div>\n<div>&nbsp;&nbsp;Open treasure chest - https://game-icons.net/1x1/skoll/open-treasure-chest.html</div>\n<div><br></div>\n<div>The arrows that show the sailing route, the storm direction and the goal are /i/icons/arrow_right.svg, one of the user interface icons bundled with VirtualTabletop (https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/icons/arrow_right.svg). Per the About page of virtualtabletop.io, those bundled symbols are either Google Material Symbols under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or symbols made by the VirtualTabletop community and released under CC0.</div>\n<div><br></div>\n<div>The library preview image (assets/633675787_42484) is a screenshot of this board, made by VTT-AI-Agent and released under CC0 1.0. Everything visible on it is covered by the licenses above.</div>\n<div><br></div>\n<div>The game is inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005, https://boardgamegeek.com/boardgame/20953/piratissimo). No artwork, text or component of that game is used here; the rules were reimplemented from the publisher&#39;s rulebook.</div>",
+      "lastUpdate": 1785726622122,
       "showName": true,
       "skill": "low",
       "language": "en-US",
@@ -20,7 +20,7 @@
       "similarDesigner": "Manfred Ludwig",
       "similarAwards": "",
       "ruleText": "<div>Several pirate ships cruise a ring of 28 lonely islands looking for buried treasure. Dig it up, load it on board and be the first to bring ten pieces safely into your own harbour - while a wandering storm, greedy rivals and your own overloaded hold do their best to stop you.</div>\n<div><br></div>\n<div>On your turn you roll one die. A number sails your ship that many islands onward, following the arrows; an island has room for two ships, a third one sails on to the next free island. Islands with an open chest let you take as much of the treasure as you like, up to three; a closed red chest blinds you with greed and forces two on board; on an island without a chest the arriving captain may take up to two treasure from the ship moored there, or push up to two onto it. A hold takes seven treasure at most - one too many and the ship capsizes and the whole cargo sinks.</div>\n<div><br></div>\n<div>Each colour has a harbour beside its own entrance island. Only its owner may turn in, and the rest of the move is lost when they do; the treasure is unloaded there and the ship sets out again on the next turn.</div>\n<div><br></div>\n<div>The storm face of the die lets you sail one single island and then drift the storm against the sailing direction - up to five islands with two players, four with three, three with four. If the storm comes to rest on an island with ships, the wind wheel decides their fate: blown one island on, one treasure to every other captain, swept safely home, or two treasure washed into the sea.</div>",
-      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat, then somebody presses the <b>anchor</b> button on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts.</div>\n<h4>Your turn</h4>\n<div>Press the big <b>dice</b> button on the right (or click the die itself). Everything that follows is worked out for you; you only answer the questions.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose 0 to do nothing.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and it sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Ships and the storm can simply be dragged</b> from island to island, and the two counters next to your seat can be clicked to correct the cargo on board (⛵) and the treasure in your harbour (⚓) - useful for house rules, for taking a move back or for setting up a position. The dice button is only the comfortable way to play.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
+      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat - the coloured sailboat at the left of each seat row shows which ship that seat commands - then somebody presses the round brown <b>new voyage</b> button (the circling arrows) on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts. Until then a hint plate in the middle of the sea points at that button.</div>\n<h4>Your turn</h4>\n<div>Press the big gold <b>dice</b> button on the right (or click the die itself); its border is drawn in the colour of the captain whose turn it is. Everything that follows is worked out for you; you only answer the questions. The <b>?</b> button at the top of the panel repeats all of this at the table.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose <i>nothing</i> to leave both ships alone.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and it sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Ships and the storm can simply be dragged</b> from island to island, and the two counters next to your seat can be clicked to correct the cargo on board (⛵) and the treasure in your harbour (⚓) - useful for house rules, for taking a move back or for setting up a position. A piece that is not on a space glows red, so a ship left in open water is easy to spot and to drop onto an island. The dice button is only the comfortable way to play.</div>\n<h4>Winning</h4>\n<div>The winner is announced on a laurel banner in the middle of the sea; click the banner to push it aside. The hint plate underneath points back at the new-voyage button.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
       "players": "2-4",
       "usesAIImagery": false
     }
@@ -1096,9 +1096,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 17,
-    "dropOffsetY": 60,
-    "stackOffsetX": 42,
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
     "kind": "entrance",
     "enterRoutine": [
       {
@@ -1131,13 +1131,14 @@
         "property": "tpos",
         "value": 0
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b0": {
     "id": "b0",
     "type": "basic",
-    "x": 153,
-    "y": 118,
+    "x": 222,
+    "y": 187,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -1147,7 +1148,12 @@
     "clickable": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#d55e00;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "css": "background-color:#d55e00;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
   },
   "i1": {
     "id": "i1",
@@ -1190,9 +1196,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -1226,7 +1232,8 @@
         "property": "tpos",
         "value": 1
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b1": {
     "id": "b1",
@@ -1285,9 +1292,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -1321,7 +1328,8 @@
         "property": "tpos",
         "value": 2
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i3": {
     "id": "i3",
@@ -1364,9 +1372,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "red",
     "amount": 2,
     "enterRoutine": [
@@ -1400,7 +1408,8 @@
         "property": "tpos",
         "value": 3
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b3": {
     "id": "b3",
@@ -1459,9 +1468,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -1495,7 +1504,8 @@
         "property": "tpos",
         "value": 4
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i5": {
     "id": "i5",
@@ -1538,9 +1548,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -1574,7 +1584,8 @@
         "property": "tpos",
         "value": 5
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b5": {
     "id": "b5",
@@ -1633,9 +1644,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -1669,7 +1680,8 @@
         "property": "tpos",
         "value": 6
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i7": {
     "id": "i7",
@@ -1713,9 +1725,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 17,
-    "dropOffsetY": 60,
-    "stackOffsetX": 42,
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
     "kind": "entrance",
     "enterRoutine": [
       {
@@ -1748,13 +1760,14 @@
         "property": "tpos",
         "value": 7
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b7": {
     "id": "b7",
     "type": "basic",
-    "x": 785,
-    "y": 118,
+    "x": 770,
+    "y": 187,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -1764,7 +1777,12 @@
     "clickable": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#0072b2;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "css": "background-color:#0072b2;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
   },
   "i8": {
     "id": "i8",
@@ -1807,9 +1825,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -1843,7 +1861,8 @@
         "property": "tpos",
         "value": 8
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b8": {
     "id": "b8",
@@ -1902,9 +1921,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -1938,7 +1957,8 @@
         "property": "tpos",
         "value": 9
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i10": {
     "id": "i10",
@@ -1981,9 +2001,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "red",
     "amount": 2,
     "enterRoutine": [
@@ -2017,7 +2037,8 @@
         "property": "tpos",
         "value": 10
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b10": {
     "id": "b10",
@@ -2076,9 +2097,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -2112,7 +2133,8 @@
         "property": "tpos",
         "value": 11
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i12": {
     "id": "i12",
@@ -2155,9 +2177,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -2191,7 +2213,8 @@
         "property": "tpos",
         "value": 12
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b12": {
     "id": "b12",
@@ -2250,9 +2273,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -2286,7 +2309,8 @@
         "property": "tpos",
         "value": 13
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i14": {
     "id": "i14",
@@ -2330,9 +2354,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 17,
-    "dropOffsetY": 60,
-    "stackOffsetX": 42,
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
     "kind": "entrance",
     "enterRoutine": [
       {
@@ -2365,13 +2389,14 @@
         "property": "tpos",
         "value": 14
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b14": {
     "id": "b14",
     "type": "basic",
-    "x": 785,
-    "y": 750,
+    "x": 770,
+    "y": 735,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -2381,7 +2406,12 @@
     "clickable": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#009e73;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "css": "background-color:#009e73;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
   },
   "i15": {
     "id": "i15",
@@ -2424,9 +2454,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -2460,7 +2490,8 @@
         "property": "tpos",
         "value": 15
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b15": {
     "id": "b15",
@@ -2519,9 +2550,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -2555,7 +2586,8 @@
         "property": "tpos",
         "value": 16
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i17": {
     "id": "i17",
@@ -2598,9 +2630,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "red",
     "amount": 2,
     "enterRoutine": [
@@ -2634,7 +2666,8 @@
         "property": "tpos",
         "value": 17
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b17": {
     "id": "b17",
@@ -2693,9 +2726,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -2729,7 +2762,8 @@
         "property": "tpos",
         "value": 18
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i19": {
     "id": "i19",
@@ -2772,9 +2806,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -2808,7 +2842,8 @@
         "property": "tpos",
         "value": 19
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b19": {
     "id": "b19",
@@ -2867,9 +2902,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -2903,7 +2938,8 @@
         "property": "tpos",
         "value": 20
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i21": {
     "id": "i21",
@@ -2947,9 +2983,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 17,
-    "dropOffsetY": 60,
-    "stackOffsetX": 42,
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
     "kind": "entrance",
     "enterRoutine": [
       {
@@ -2982,13 +3018,14 @@
         "property": "tpos",
         "value": 21
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b21": {
     "id": "b21",
     "type": "basic",
-    "x": 153,
-    "y": 750,
+    "x": 222,
+    "y": 735,
     "width": 40,
     "height": 40,
     "z": 0,
@@ -2998,7 +3035,12 @@
     "clickable": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#cc79a7;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "css": "background-color:#cc79a7;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
   },
   "i22": {
     "id": "i22",
@@ -3041,9 +3083,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -3077,7 +3119,8 @@
         "property": "tpos",
         "value": 22
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b22": {
     "id": "b22",
@@ -3136,9 +3179,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -3172,7 +3215,8 @@
         "property": "tpos",
         "value": 23
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i24": {
     "id": "i24",
@@ -3215,9 +3259,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "red",
     "amount": 2,
     "enterRoutine": [
@@ -3251,7 +3295,8 @@
         "property": "tpos",
         "value": 24
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b24": {
     "id": "b24",
@@ -3310,9 +3355,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -3346,7 +3391,8 @@
         "property": "tpos",
         "value": 25
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "i26": {
     "id": "i26",
@@ -3389,9 +3435,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "green",
     "amount": 3,
     "enterRoutine": [
@@ -3425,7 +3471,8 @@
         "property": "tpos",
         "value": 26
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "b26": {
     "id": "b26",
@@ -3484,9 +3531,9 @@
         "isStorm": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
     "kind": "meet",
     "amount": 2,
     "enterRoutine": [
@@ -3520,16 +3567,17 @@
         "property": "tpos",
         "value": 27
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "ship1": {
     "id": "ship1",
     "type": "basic",
     "parent": "dock1",
-    "x": 17,
-    "y": 60,
-    "width": 44,
-    "height": 44,
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
     "z": 2,
     "layer": 1,
     "movable": true,
@@ -3546,7 +3594,7 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#d55e00;border:3px solid #ffffffee;box-shadow:0 2px 6px #000000aa;background-size:74%;background-position:center;background-repeat:no-repeat",
+    "css": "background-color:#d55e00;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
     "cargoChangeRoutine": [
       "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
       {
@@ -3566,16 +3614,43 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship1"
+            ],
+            "property": "css",
+            "value": "background-color:#d55e00;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship1"
+            ],
+            "property": "css",
+            "value": "background-color:#d55e00;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
     ]
   },
   "cargoBadge1": {
     "id": "cargoBadge1",
     "type": "basic",
     "parent": "ship1",
-    "x": 27,
-    "y": -8,
-    "width": 26,
-    "height": 26,
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
     "z": 3,
     "layer": 2,
     "movable": false,
@@ -3584,16 +3659,16 @@
     "display": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center"
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
   },
   "ship2": {
     "id": "ship2",
     "type": "basic",
     "parent": "dock2",
-    "x": 17,
-    "y": 60,
-    "width": 44,
-    "height": 44,
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
     "z": 2,
     "layer": 1,
     "movable": true,
@@ -3610,7 +3685,7 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#0072b2;border:3px solid #ffffffee;box-shadow:0 2px 6px #000000aa;background-size:74%;background-position:center;background-repeat:no-repeat",
+    "css": "background-color:#0072b2;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
     "cargoChangeRoutine": [
       "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
       {
@@ -3630,16 +3705,43 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship2"
+            ],
+            "property": "css",
+            "value": "background-color:#0072b2;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship2"
+            ],
+            "property": "css",
+            "value": "background-color:#0072b2;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
     ]
   },
   "cargoBadge2": {
     "id": "cargoBadge2",
     "type": "basic",
     "parent": "ship2",
-    "x": 27,
-    "y": -8,
-    "width": 26,
-    "height": 26,
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
     "z": 3,
     "layer": 2,
     "movable": false,
@@ -3648,16 +3750,16 @@
     "display": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center"
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
   },
   "ship3": {
     "id": "ship3",
     "type": "basic",
     "parent": "dock3",
-    "x": 17,
-    "y": 60,
-    "width": 44,
-    "height": 44,
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
     "z": 2,
     "layer": 1,
     "movable": true,
@@ -3674,7 +3776,7 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#009e73;border:3px solid #ffffffee;box-shadow:0 2px 6px #000000aa;background-size:74%;background-position:center;background-repeat:no-repeat",
+    "css": "background-color:#009e73;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
     "cargoChangeRoutine": [
       "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
       {
@@ -3694,16 +3796,43 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship3"
+            ],
+            "property": "css",
+            "value": "background-color:#009e73;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship3"
+            ],
+            "property": "css",
+            "value": "background-color:#009e73;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
     ]
   },
   "cargoBadge3": {
     "id": "cargoBadge3",
     "type": "basic",
     "parent": "ship3",
-    "x": 27,
-    "y": -8,
-    "width": 26,
-    "height": 26,
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
     "z": 3,
     "layer": 2,
     "movable": false,
@@ -3712,16 +3841,16 @@
     "display": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center"
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
   },
   "ship4": {
     "id": "ship4",
     "type": "basic",
     "parent": "dock4",
-    "x": 17,
-    "y": 60,
-    "width": 44,
-    "height": 44,
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
     "z": 2,
     "layer": 1,
     "movable": true,
@@ -3738,7 +3867,7 @@
     "svgReplaces": {
       "#000": "iconColor"
     },
-    "css": "background-color:#cc79a7;border:3px solid #ffffffee;box-shadow:0 2px 6px #000000aa;background-size:74%;background-position:center;background-repeat:no-repeat",
+    "css": "background-color:#cc79a7;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
     "cargoChangeRoutine": [
       "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
       {
@@ -3758,16 +3887,43 @@
         "property": "text",
         "value": "${value}"
       }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship4"
+            ],
+            "property": "css",
+            "value": "background-color:#cc79a7;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship4"
+            ],
+            "property": "css",
+            "value": "background-color:#cc79a7;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
     ]
   },
   "cargoBadge4": {
     "id": "cargoBadge4",
     "type": "basic",
     "parent": "ship4",
-    "x": 27,
-    "y": -8,
-    "width": 26,
-    "height": 26,
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
     "z": 3,
     "layer": 2,
     "movable": false,
@@ -3776,16 +3932,16 @@
     "display": false,
     "borderRadius": "50%",
     "text": "0",
-    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center"
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
   },
   "tornado": {
     "id": "tornado",
     "type": "basic",
     "parent": "s25",
-    "x": 24,
-    "y": -30,
-    "width": 54,
-    "height": 54,
+    "x": 10,
+    "y": 36,
+    "width": 42,
+    "height": 42,
     "z": 4,
     "layer": 2,
     "movable": true,
@@ -3797,7 +3953,34 @@
       "#000": "color"
     },
     "css": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 6px #ffffffcc)",
-    "isStorm": true
+    "isStorm": true,
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "tornado"
+            ],
+            "property": "css",
+            "value": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 6px #ffffffcc)"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "tornado"
+            ],
+            "property": "css",
+            "value": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 4px #c0392b) drop-shadow(0 0 12px #c0392b)"
+          }
+        ]
+      }
+    ]
   },
   "centerPlate": {
     "id": "centerPlate",
@@ -3968,23 +4151,24 @@
   "panel": {
     "id": "panel",
     "type": "basic",
-    "x": 1070,
-    "y": 0,
-    "width": 530,
-    "height": 1000,
+    "x": 1062,
+    "y": 16,
+    "width": 522,
+    "height": 968,
     "z": 0,
     "layer": -5,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "css": "background:linear-gradient(180deg,#3b2a17 0%,#241708 100%);box-shadow:-6px 0 20px #00000088"
+    "css": "background:linear-gradient(180deg,#3b2a17 0%,#241708 100%);box-shadow:inset 0 0 0 8px #f4e3b8, inset 0 0 0 12px #b98f4a, 0 18px 40px #00000066",
+    "borderRadius": 44
   },
   "goalPlate": {
     "id": "goalPlate",
     "type": "basic",
     "x": 1090,
-    "y": 18,
-    "width": 490,
+    "y": 34,
+    "width": 470,
     "height": 80,
     "z": 0,
     "layer": -4,
@@ -3998,7 +4182,7 @@
     "id": "goalIcon",
     "type": "basic",
     "x": 1429,
-    "y": 30,
+    "y": 46,
     "width": 56,
     "height": 56,
     "z": 1,
@@ -4017,7 +4201,7 @@
     "id": "goalText",
     "type": "basic",
     "x": 1257,
-    "y": 30,
+    "y": 46,
     "width": 90,
     "height": 56,
     "z": 1,
@@ -4032,7 +4216,7 @@
     "id": "goalChest",
     "type": "basic",
     "x": 1185,
-    "y": 30,
+    "y": 46,
     "width": 56,
     "height": 56,
     "z": 1,
@@ -4051,9 +4235,9 @@
     "id": "seat1",
     "type": "seat",
     "index": 1,
-    "x": 1090,
+    "x": 1166,
     "y": 122,
-    "width": 300,
+    "width": 224,
     "height": 80,
     "z": 1,
     "layer": -1,
@@ -4219,9 +4403,9 @@
     "id": "seat2",
     "type": "seat",
     "index": 2,
-    "x": 1090,
+    "x": 1166,
     "y": 218,
-    "width": 300,
+    "width": 224,
     "height": 80,
     "z": 1,
     "layer": -1,
@@ -4387,9 +4571,9 @@
     "id": "seat3",
     "type": "seat",
     "index": 3,
-    "x": 1090,
+    "x": 1166,
     "y": 314,
-    "width": 300,
+    "width": 224,
     "height": 80,
     "z": 1,
     "layer": -1,
@@ -4555,9 +4739,9 @@
     "id": "seat4",
     "type": "seat",
     "index": 4,
-    "x": 1090,
+    "x": 1166,
     "y": 410,
-    "width": 300,
+    "width": 224,
     "height": 80,
     "z": 1,
     "layer": -1,
@@ -4884,7 +5068,7 @@
     "backgroundColorOH": "#a8670f",
     "borderColor": "#c9922b",
     "borderColorOH": "#fdf3dc",
-    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "image": "/i/game-icons.net/lorc/cycle.svg",
     "iconColor": "#ffffff",
     "svgReplaces": {
       "#000": "iconColor"
@@ -4950,9 +5134,9 @@
   "legText0": {
     "id": "legText0",
     "type": "basic",
-    "x": 1218,
+    "x": 1220,
     "y": 630,
-    "width": 340,
+    "width": 110,
     "height": 44,
     "z": 1,
     "layer": 0,
@@ -5000,9 +5184,9 @@
   "legText1": {
     "id": "legText1",
     "type": "basic",
-    "x": 1218,
+    "x": 1220,
     "y": 700,
-    "width": 340,
+    "width": 110,
     "height": 44,
     "z": 1,
     "layer": 0,
@@ -5036,7 +5220,7 @@
     "type": "basic",
     "x": 1162,
     "y": 770,
-    "width": 340,
+    "width": 158,
     "height": 44,
     "z": 1,
     "layer": 0,
@@ -5070,7 +5254,7 @@
     "type": "basic",
     "x": 1162,
     "y": 840,
-    "width": 340,
+    "width": 158,
     "height": 44,
     "z": 1,
     "layer": 0,
@@ -5104,7 +5288,7 @@
     "type": "basic",
     "x": 1162,
     "y": 910,
-    "width": 340,
+    "width": 158,
     "height": 44,
     "z": 1,
     "layer": 0,
@@ -5118,18 +5302,32 @@
     "id": "winBanner",
     "type": "basic",
     "x": 235,
-    "y": 420,
+    "y": 380,
     "width": 600,
-    "height": 160,
+    "height": 150,
     "z": 40,
     "layer": 3,
     "movable": false,
     "movableInEdit": false,
-    "clickable": false,
+    "clickable": true,
     "display": false,
     "borderRadius": 20,
     "text": "",
-    "css": "pointer-events:none;background:#fdf3dc;border:6px solid #c9922b;color:#4a2f10;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px #000000aa"
+    "css": "cursor:pointer;background:#fdf3dc;border:6px solid #c9922b;color:#4a2f10;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;padding-left:90px;box-shadow:0 10px 30px #000000aa",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "winBanner",
+          "winIcon",
+          "hintPlate",
+          "hintText",
+          "hintIcon"
+        ],
+        "property": "display",
+        "value": false
+      }
+    ]
   },
   "engine": {
     "id": "engine",
@@ -5152,6 +5350,10 @@
           "die"
         ],
         "mode": "ignoreAll"
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 850
       },
       "var roll = ${PROPERTY value OF die}",
       {
@@ -5182,6 +5384,10 @@
         "func": "TURN",
         "turn": 1,
         "turnCycle": "forward"
+      },
+      {
+        "func": "CALL",
+        "routine": "turnColorRoutine"
       }
     ],
     "sailRoutine": [
@@ -5232,27 +5438,17 @@
                             "text": "Sail in and unload your cargo? The rest of your move is lost."
                           },
                           {
-                            "type": "select",
-                            "label": "Sail into the harbour",
+                            "type": "switch",
+                            "label": "Sail in and unload",
                             "variable": "dock",
-                            "options": [
-                              {
-                                "value": "y",
-                                "text": "Yes - unload",
-                                "selected": true
-                              },
-                              {
-                                "value": "n",
-                                "text": "No - sail on"
-                              }
-                            ]
+                            "value": "on"
                           }
                         ]
                       },
                       {
                         "func": "IF",
                         "operand1": "${dock}",
-                        "operand2": "y",
+                        "operand2": "on",
                         "thenRoutine": [
                           "var docked = 1"
                         ]
@@ -5552,12 +5748,32 @@
                 "variable": "chosen"
               },
               {
-                "type": "number",
-                "label": "take (+) / give (-)",
-                "variable": "amt",
-                "value": 0,
-                "min": -2,
-                "max": 2
+                "type": "select",
+                "label": "What do you do?",
+                "variable": "act",
+                "options": [
+                  {
+                    "value": "take2",
+                    "text": "take 2 from them"
+                  },
+                  {
+                    "value": "take1",
+                    "text": "take 1 from them"
+                  },
+                  {
+                    "value": "none",
+                    "text": "nothing",
+                    "selected": true
+                  },
+                  {
+                    "value": "give1",
+                    "text": "push 1 onto them"
+                  },
+                  {
+                    "value": "give2",
+                    "text": "push 2 onto them"
+                  }
+                ]
               }
             ]
           },
@@ -5578,8 +5794,39 @@
                 "property": "id",
                 "variable": "victim"
               },
-              "var amt = min ${amt} 2",
-              "var amt = max ${amt} -2",
+              "var amt = 0",
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "take2",
+                "thenRoutine": [
+                  "var amt = 2"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "take1",
+                "thenRoutine": [
+                  "var amt = 1"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "give1",
+                "thenRoutine": [
+                  "var amt = -1"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "give2",
+                "thenRoutine": [
+                  "var amt = -2"
+                ]
+              },
               "var myCargo = ${PROPERTY cargo OF $ship}",
               "var hisCargo = ${PROPERTY cargo OF $victim}",
               {
@@ -5678,27 +5925,17 @@
             "text": "You may sail on one island before the storm drifts."
           },
           {
-            "type": "select",
-            "label": "Sail one island",
+            "type": "switch",
+            "label": "Sail one island first",
             "variable": "go",
-            "options": [
-              {
-                "value": "y",
-                "text": "Yes"
-              },
-              {
-                "value": "n",
-                "text": "No",
-                "selected": true
-              }
-            ]
+            "value": "off"
           }
         ]
       },
       {
         "func": "IF",
         "operand1": "${go}",
-        "operand2": "y",
+        "operand2": "on",
         "thenRoutine": [
           {
             "func": "CALL",
@@ -6014,7 +6251,11 @@
       {
         "func": "SET",
         "collection": [
-          "winBanner"
+          "winBanner",
+          "winIcon",
+          "hintPlate",
+          "hintText",
+          "hintIcon"
         ],
         "property": "display",
         "value": false
@@ -6132,6 +6373,10 @@
       {
         "func": "TURN",
         "turnCycle": "random"
+      },
+      {
+        "func": "CALL",
+        "routine": "turnColorRoutine"
       }
     ],
     "freeSpaceRoutine": [
@@ -6227,12 +6472,24 @@
               "winBanner"
             ],
             "property": "text",
-            "value": "⚓ ${winner} ⚓"
+            "value": "${winner}"
           },
           {
             "func": "SET",
             "collection": [
-              "winBanner"
+              "hintText"
+            ],
+            "property": "text",
+            "value": "Press for a new voyage"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner",
+              "winIcon",
+              "hintPlate",
+              "hintText",
+              "hintIcon"
             ],
             "property": "display",
             "value": true
@@ -6270,6 +6527,54 @@
           }
         ]
       }
+    ],
+    "turnColorRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "TC"
+      },
+      {
+        "func": "COUNT",
+        "collection": "TC",
+        "variable": "nTC"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nTC}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "TC",
+            "property": "index",
+            "variable": "tcIdx"
+          },
+          "var tcShip = 'ship' + ${tcIdx}",
+          "var tcCol = ${PROPERTY color OF $tcShip}",
+          {
+            "func": "SET",
+            "collection": [
+              "rollBtn"
+            ],
+            "property": "borderColor",
+            "value": "${tcCol}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "rollBtn"
+            ],
+            "property": "borderColor",
+            "value": "#5b3f12"
+          }
+        ]
+      }
     ]
   },
   "dock1": {
@@ -6290,9 +6595,9 @@
         "isShip": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
     "kind": "harbour",
     "amount": 0,
     "harbourOf": 1,
@@ -6329,7 +6634,8 @@
         "property": "pos",
         "value": 0
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "dock2": {
     "id": "dock2",
@@ -6349,9 +6655,9 @@
         "isShip": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
     "kind": "harbour",
     "amount": 0,
     "harbourOf": 2,
@@ -6388,7 +6694,8 @@
         "property": "pos",
         "value": 7
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "dock3": {
     "id": "dock3",
@@ -6408,9 +6715,9 @@
         "isShip": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
     "kind": "harbour",
     "amount": 0,
     "harbourOf": 3,
@@ -6447,7 +6754,8 @@
         "property": "pos",
         "value": 14
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "dock4": {
     "id": "dock4",
@@ -6467,9 +6775,9 @@
         "isShip": true
       }
     ],
-    "dropOffsetX": 12,
-    "dropOffsetY": 46,
-    "stackOffsetX": 34,
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
     "kind": "harbour",
     "amount": 0,
     "harbourOf": 4,
@@ -6506,7 +6814,8 @@
         "property": "pos",
         "value": 21
       }
-    ]
+    ],
+    "stackOffsetY": 8
   },
   "entArt1": {
     "id": "entArt1",
@@ -6516,7 +6825,7 @@
     "width": 118,
     "height": 118,
     "z": 0,
-    "layer": -4,
+    "layer": -5,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -6536,7 +6845,7 @@
     "width": 118,
     "height": 118,
     "z": 0,
-    "layer": -4,
+    "layer": -5,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -6556,7 +6865,7 @@
     "width": 118,
     "height": 118,
     "z": 0,
-    "layer": -4,
+    "layer": -5,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -6576,7 +6885,7 @@
     "width": 118,
     "height": 118,
     "z": 0,
-    "layer": -4,
+    "layer": -5,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -6592,7 +6901,7 @@
     "id": "goalArrow",
     "type": "basic",
     "x": 1363,
-    "y": 34,
+    "y": 50,
     "width": 48,
     "height": 48,
     "z": 1,
@@ -6606,5 +6915,309 @@
       "#000": "color"
     },
     "css": "background-size:contain;background-repeat:no-repeat;background-position:center"
+  },
+  "helpBtn": {
+    "id": "helpBtn",
+    "type": "button",
+    "x": 1100,
+    "y": 44,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "layer": 1,
+    "borderRadius": "50%",
+    "backgroundColor": "#7a4b16",
+    "backgroundColorOH": "#a8670f",
+    "borderColor": "#c9922b",
+    "borderColorOH": "#fdf3dc",
+    "text": "?",
+    "css": "font-size:38px;font-weight:900",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "How to play"
+          },
+          {
+            "type": "subtitle",
+            "text": "Goal: be the first captain to land 10 treasure in your own harbour."
+          },
+          {
+            "type": "text",
+            "text": "1. Press the round brown button to start a new voyage - every ship goes back to its own harbour and the storm is placed at random."
+          },
+          {
+            "type": "text",
+            "text": "2. On your turn press the gold button (or the die). Sail your ship that many islands along the arrows."
+          },
+          {
+            "type": "text",
+            "text": "3. Green island with a green number: take up to that many treasure. Island with a red 2: you must take 2."
+          },
+          {
+            "type": "text",
+            "text": "4. Plain island: if a rival ship is there you may take up to 2 treasure from it - or push up to 2 of yours onto it to sink it."
+          },
+          {
+            "type": "text",
+            "text": "5. More than 7 treasure on board and your ship capsizes: the whole cargo sinks."
+          },
+          {
+            "type": "text",
+            "text": "6. Sail past your own harbour to turn in and unload. The rest of the move is lost, the treasure is safe."
+          },
+          {
+            "type": "text",
+            "text": "7. Tornado on the die: you may sail one island, then you drift the storm backwards along the route. Every ship the storm reaches spins the wind wheel in the middle of the sea."
+          },
+          {
+            "type": "subtitle",
+            "text": "The wind wheel"
+          },
+          {
+            "type": "text",
+            "text": "Gust (top left): the ship is blown one island onwards. Three friends (top right): the ship gives one treasure to every other ship. Anchor (bottom right): the ship is carried home and unloads. Splash (bottom left): the ship loses 2 treasure."
+          },
+          {
+            "type": "subtitle",
+            "text": "Playing by hand"
+          },
+          {
+            "type": "text",
+            "text": "Nothing is ever blocked: you can drag the ships and the storm anywhere yourself, and click the two round counters beside your name to correct the cargo on board and the treasure landed. A ship that is not on a space glows red."
+          }
+        ]
+      }
+    ]
+  },
+  "seatShip1": {
+    "id": "seatShip1",
+    "type": "basic",
+    "x": 1090,
+    "y": 130,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#d55e00;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "seatShip2": {
+    "id": "seatShip2",
+    "type": "basic",
+    "x": 1090,
+    "y": 226,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#0072b2;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "seatShip3": {
+    "id": "seatShip3",
+    "type": "basic",
+    "x": 1090,
+    "y": 322,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#009e73;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "seatShip4": {
+    "id": "seatShip4",
+    "type": "basic",
+    "x": 1090,
+    "y": 418,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#cc79a7;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "legCap0": {
+    "id": "legCap0",
+    "type": "basic",
+    "x": 1330,
+    "y": 630,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "take what you like",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap1": {
+    "id": "legCap1",
+    "type": "basic",
+    "x": 1330,
+    "y": 700,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "you must take 2",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap2": {
+    "id": "legCap2",
+    "type": "basic",
+    "x": 1330,
+    "y": 770,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "meet: rob or dump 2",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap3": {
+    "id": "legCap3",
+    "type": "basic",
+    "x": 1330,
+    "y": 840,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "8 or more capsizes",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap4": {
+    "id": "legCap4",
+    "type": "basic",
+    "x": 1330,
+    "y": 910,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "land 10 to win",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "hintPlate": {
+    "id": "hintPlate",
+    "type": "basic",
+    "x": 300,
+    "y": 566,
+    "width": 420,
+    "height": 84,
+    "z": 39,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 20,
+    "css": "pointer-events:none;background:#fdf3dc;border:5px solid #c9922b;box-shadow:0 8px 24px #000000aa"
+  },
+  "hintText": {
+    "id": "hintText",
+    "type": "basic",
+    "x": 323,
+    "y": 566,
+    "width": 300,
+    "height": 84,
+    "z": 41,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "Take a seat, then press",
+    "css": "pointer-events:none;color:#4a2f10;font-size:25px;font-weight:700;display:flex;align-items:center;justify-content:flex-end"
+  },
+  "hintIcon": {
+    "id": "hintIcon",
+    "type": "basic",
+    "x": 641,
+    "y": 580,
+    "width": 56,
+    "height": 56,
+    "z": 41,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/lorc/cycle.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "pointer-events:none;background-color:#7a4b16;border:3px solid #c9922b;background-size:34px;background-position:center;background-repeat:no-repeat"
+  },
+  "winIcon": {
+    "id": "winIcon",
+    "type": "basic",
+    "x": 276,
+    "y": 418,
+    "width": 74,
+    "height": 74,
+    "z": 41,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "image": "/i/game-icons.net/lorc/laurel-crown.svg",
+    "color": "#4a2f10",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center"
   }
 }
