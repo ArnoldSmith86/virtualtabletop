@@ -3910,9 +3910,7 @@
     "cardType": "2",
     "id": "v3wh",
     "z": 89357,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "qi86": {
     "type": "pile",
@@ -3921,7 +3919,6 @@
     "y": 4,
     "width": 100,
     "height": 100,
-    "note": "deck1",
     "id": "qi86"
   },
   "mg3r": {
@@ -3930,9 +3927,7 @@
     "cardType": "3",
     "id": "mg3r",
     "z": 89334,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "1asi": {
     "deck": "deck5",
@@ -3940,9 +3935,7 @@
     "cardType": "4",
     "id": "1asi",
     "z": 89350,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "nszc": {
     "deck": "deck5",
@@ -3950,9 +3943,7 @@
     "cardType": "5",
     "id": "nszc",
     "z": 89342,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "moxz": {
     "deck": "deck5",
@@ -3960,9 +3951,7 @@
     "cardType": "6",
     "id": "moxz",
     "z": 89327,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "d6xv": {
     "deck": "deck5",
@@ -3970,9 +3959,7 @@
     "cardType": "7",
     "id": "d6xv",
     "z": 89346,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "w9ff": {
     "deck": "deck5",
@@ -3980,9 +3967,7 @@
     "cardType": "8",
     "id": "w9ff",
     "z": 89352,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "7yh9": {
     "deck": "deck5",
@@ -3990,9 +3975,7 @@
     "cardType": "9",
     "id": "7yh9",
     "z": 89341,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "lyr1": {
     "deck": "deck5",
@@ -4024,9 +4007,7 @@
     "cardType": "13",
     "id": "g3vy",
     "z": 89323,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "vfuj": {
     "deck": "deck5",
@@ -4034,9 +4015,7 @@
     "cardType": "14",
     "id": "vfuj",
     "z": 89331,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "w4i2": {
     "deck": "deck5",
@@ -4044,9 +4023,7 @@
     "cardType": "15",
     "id": "w4i2",
     "z": 89336,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "hzp9": {
     "deck": "deck5",
@@ -4054,9 +4031,7 @@
     "cardType": "16",
     "id": "hzp9",
     "z": 89324,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "kw6r": {
     "deck": "deck5",
@@ -4064,9 +4039,7 @@
     "cardType": "17",
     "id": "kw6r",
     "z": 89351,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "o5n3": {
     "deck": "deck5",
@@ -4074,9 +4047,7 @@
     "cardType": "18",
     "id": "o5n3",
     "z": 89356,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "3mtl": {
     "deck": "deck5",
@@ -4084,9 +4055,7 @@
     "cardType": "19",
     "id": "3mtl",
     "z": 89358,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "sqlw": {
     "deck": "deck5",
@@ -4094,9 +4063,7 @@
     "cardType": "20",
     "id": "sqlw",
     "z": 89338,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "mq4b": {
     "deck": "deck5",
@@ -4104,9 +4071,7 @@
     "cardType": "21",
     "id": "mq4b",
     "z": 89345,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "tssv": {
     "deck": "deck5",
@@ -4114,9 +4079,7 @@
     "cardType": "22",
     "id": "tssv",
     "z": 89343,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "mhqc": {
     "deck": "deck5",
@@ -4124,9 +4087,7 @@
     "cardType": "23",
     "id": "mhqc",
     "z": 89335,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "q6l0": {
     "deck": "deck5",
@@ -4134,9 +4095,7 @@
     "cardType": "24",
     "id": "q6l0",
     "z": 89353,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "8q6k": {
     "deck": "deck5",
@@ -4144,9 +4103,7 @@
     "cardType": "25",
     "id": "8q6k",
     "z": 89337,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "9chx": {
     "deck": "deck5",
@@ -4154,9 +4111,7 @@
     "cardType": "26",
     "id": "9chx",
     "z": 89333,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "gfen": {
     "deck": "deck5",
@@ -4164,9 +4119,7 @@
     "cardType": "27",
     "id": "gfen",
     "z": 89330,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "5x7u": {
     "deck": "deck5",
@@ -4174,9 +4127,7 @@
     "cardType": "28",
     "id": "5x7u",
     "z": 89340,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "c9je": {
     "deck": "deck5",
@@ -4184,9 +4135,7 @@
     "cardType": "29",
     "id": "c9je",
     "z": 89349,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "n6qr": {
     "deck": "deck5",
@@ -4194,9 +4143,7 @@
     "cardType": "30",
     "id": "n6qr",
     "z": 89329,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "21id": {
     "deck": "deck5",
@@ -4204,9 +4151,7 @@
     "cardType": "31",
     "id": "21id",
     "z": 89354,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "t5gv": {
     "deck": "deck5",
@@ -4214,9 +4159,7 @@
     "cardType": "32",
     "id": "t5gv",
     "z": 89332,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "pcgx": {
     "deck": "deck5",
@@ -4224,9 +4167,7 @@
     "cardType": "33",
     "id": "pcgx",
     "z": 89328,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "jxn8": {
     "deck": "deck5",
@@ -4234,9 +4175,7 @@
     "cardType": "34",
     "id": "jxn8",
     "z": 89344,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "p26s": {
     "deck": "deck5",
@@ -4244,9 +4183,7 @@
     "cardType": "35",
     "id": "p26s",
     "z": 89355,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "93qk": {
     "deck": "deck5",
@@ -4254,9 +4191,7 @@
     "cardType": "36",
     "id": "93qk",
     "z": 89339,
-    "parent": "qi86",
-    "x": null,
-    "y": null
+    "parent": "qi86"
   },
   "deck6": {
     "type": "deck",
