@@ -1,3 +1,4 @@
+// setImmediate is a node global, but the tests run this module in a jsdom environment
 import { setImmediate } from 'timers';
 
 import { strFromU8, strToU8, unzip, unzipSync, Zip as ZipStream, ZipDeflate, ZipPassThrough } from 'fflate';
@@ -30,7 +31,10 @@ function read(buffer, names) {
 }
 
 async function readString(buffer, name) {
-  return strFromU8((await read(buffer, [ name ]))[name]);
+  const content = (await read(buffer, [ name ]))[name];
+  if(!content)
+    throw new Error(`${name} is not in the zip file.`);
+  return strFromU8(content);
 }
 
 // entries are streamed into the zip one chunk at a time so that the event loop keeps

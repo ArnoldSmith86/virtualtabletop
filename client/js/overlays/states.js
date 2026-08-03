@@ -32,25 +32,37 @@ async function waitForZipLibrary() {
 // fflate's callback API does the actual (de)compression in a web worker so that
 // uploading or building a big file doesn't freeze the UI. The worker is created from a
 // blob URL, which a content security policy can forbid, so both helpers fall back to
-// doing the work right here if that fails - a frozen tab beats a broken upload.
+// doing the work right here in that case - a frozen tab beats a broken upload. Whether
+// that is necessary is checked once instead of by trying, so that a broken zip file is
+// not unpacked a second time synchronously before its error is reported.
+let workersAvailable = null;
+function canUseWorkers() {
+  if(workersAvailable === null) {
+    try {
+      const url = URL.createObjectURL(new Blob([ '' ], { type: 'text/javascript' }));
+      new Worker(url).terminate();
+      URL.revokeObjectURL(url);
+      workersAvailable = true;
+    } catch(e) {
+      console.log('Zip files are (un)packed in the main thread because web workers are not available:', e.toString());
+      workersAvailable = false;
+    }
+  }
+  return workersAvailable;
+}
+
 async function unzipBuffer(buffer, keepEntry) {
   const options = { filter: e=>keepEntry(e.name) };
-  try {
-    return await new Promise((resolve, reject)=>fflate.unzip(buffer, options, (e, files)=>e ? reject(e) : resolve(files)));
-  } catch(e) {
+  if(!canUseWorkers())
     return fflate.unzipSync(buffer, options);
-  }
+  return await new Promise((resolve, reject)=>fflate.unzip(buffer, options, (e, files)=>e ? reject(e) : resolve(files)));
 }
 
 async function zipBlob(files, compress) {
   const options = { level: compress ? 6 : 0 };
-  let buffer;
-  try {
-    buffer = await new Promise((resolve, reject)=>fflate.zip(files, options, (e, data)=>e ? reject(e) : resolve(data)));
-  } catch(e) {
-    buffer = fflate.zipSync(files, options);
-  }
-  return new Blob([ buffer ]);
+  if(!canUseWorkers())
+    return new Blob([ fflate.zipSync(files, options) ]);
+  return new Blob([ await new Promise((resolve, reject)=>fflate.zip(files, options, (e, data)=>e ? reject(e) : resolve(data))) ]);
 }
 
 // the index at the end of a zip file, which lists every entry along with the CRC-32 and
@@ -66,11 +78,19 @@ function zipIndex(buffer) {
 
   const entries = {};
   let offset = view.getUint32(end + 16, true);
+  if(offset == 0xffffffff)
+    throw new Error('ZIP64 files are not supported.');
   for(let i=view.getUint16(end + 8, true); i>0; --i) {
+    // without this, anything the walk does not understand yields plausible looking garbage
+    if(view.getUint32(offset, true) != 0x02014b50)
+      throw new Error('Could not read the index of the zip file.');
     const nameLength = view.getUint16(offset + 28, true);
     // filenames are UTF-8 if bit 11 of the flags is set and latin1 otherwise, same as fflate
     const name = fflate.strFromU8(buffer.subarray(offset + 46, offset + 46 + nameLength), !(view.getUint16(offset + 8, true) & 2048));
-    entries[name] = { crc: view.getInt32(offset + 16, true), size: view.getUint32(offset + 24, true) };
+    const size = view.getUint32(offset + 24, true);
+    if(size == 0xffffffff)
+      throw new Error('ZIP64 files are not supported.');
+    entries[name] = { crc: view.getInt32(offset + 16, true), size };
     offset += 46 + nameLength + view.getUint16(offset + 30, true) + view.getUint16(offset + 32, true);
   }
   return entries;
@@ -217,7 +237,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   let blob = sourceFile;
   if(removed > total/2) {
     console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
-    // only a rebuild needs the contents of the file, so this is the first time it is unpacked
+    // only a rebuild needs the contents of the file, so this is the first time it is
+    // unpacked - which means the source file, the kept entries and the new file are all in
+    // memory at once here, so this could be streamed entry by entry if that ever hurts
     const files = await unzipBuffer(buffer, name=>!removedFiles[name] && !name.match(/\/$/));
     files['asset-map.json'] = fflate.strToU8(JSON.stringify(assets));
     blob = await zipBlob(files, total-removed < 5);

@@ -78,8 +78,12 @@ async function readStatesFromBuffer(buffer, includeVariantNameList) {
 
       return result;
     }
-    if(filename.match(/\.(vtt|pcio)$/))
+    if(filename.match(/\.(vtt|pcio)$/)) {
+      // the size comes from the zip index, so it has to be checked before unpacking
+      if(entries[filename] >= 104857600)
+        throw new Logging.UserError(403, `${filename} is bigger than 100 MiB.`);
       states[filename] = await readVariantsFromBuffer((await Zip.read(buffer, [ filename ]))[filename]);
+    }
   }
   if(Object.keys(states).length == 0)
     throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');

@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 import { BSON } from 'bson';
 
@@ -12,7 +11,6 @@ async function imgSize(url) {
 
   const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' } });
   const buffer = Buffer.from(await r.arrayBuffer());
-  fs.writeFileSync('/tmp/out', buffer);
   if(buffer.toString('ascii', 1, 4) == 'PNG')
     return imgSizeCache[url] = [ buffer.readUInt32BE(16), buffer.readUInt32BE(20) ];
   for(let offset=4; offset<buffer.length; offset+=2) {
@@ -262,7 +260,6 @@ async function convertTTS(content, linkContent) {
 
   if(linkContent) {
     json = BSON.deserialize(linkContent);
-    fs.writeFileSync('/tmp/tts.json', JSON.stringify(json, null, '  '));
   } else {
     for(const file in Zip.list(content))
       if(file.match(/\.json$/))

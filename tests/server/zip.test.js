@@ -40,6 +40,10 @@ describe('server/zip.mjs', function() {
     expect(Object.keys(await Zip.read(legacyVTT, [ '0.json' ]))).toEqual([ '0.json' ]);
   });
 
+  test('complains about a filename that is not in the zip', async function() {
+    await expect(Zip.readString(legacyVTT, '1.json')).rejects.toThrow('1.json is not in the zip file.');
+  });
+
   // 3 MB, so create() has to hand it to the compressor in more than one chunk
   const asset = Buffer.alloc(3000000).map((_, i)=>i%251);
 

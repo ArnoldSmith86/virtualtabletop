@@ -111,8 +111,8 @@ class AssetsModule extends SidebarModule {
     const files = {};
     const assets = getAllAssets();
 
-    for(const [ i, assetObj ] of Object.entries(assets)) {
-      updateProgress(`Fetching asset ${+i+1}/${assets.length}`, (+i+1)/assets.length);
+    for(const [ i, assetObj ] of assets.entries()) {
+      updateProgress(`Fetching asset ${i+1}/${assets.length}`, (i+1)/assets.length);
       const blob = await (await fetch(assetObj.asset.substr(1))).blob();
       const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
       files[assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin')] = new Uint8Array(await blob.arrayBuffer());
