@@ -252,13 +252,16 @@ class GameSettingsModule extends SidebarModule {
     target.append(tile);
   }
 
-  // 16:10 stays 16:10, but a board like 1234x1000 reduces to nothing readable,
-  // so fall back to a decimal ratio once the reduced numbers get big
+  // A board like 1234x1000 reduces to nothing readable, so fall back to a decimal ratio once
+  // the reduced numbers get big. The reduced form of a screen ratio is not what people call
+  // it - and not what the preset button next to this says - so those keep their usual name.
   boardRatioText(width, height) {
+    const commonNames = { '8:5': '16:10', '5:8': '10:16' };
     const gcd = (a, b) => b ? gcd(b, a % b) : a;
     const divisor = gcd(Math.round(width), Math.round(height));
     const [ w, h ] = [ width/divisor, height/divisor ];
-    const ratio = w <= 40 && h <= 40 ? `${w}:${h}` : `${(width/height).toFixed(2)}:1`;
+    const reduced = `${w}:${h}`;
+    const ratio = w <= 40 && h <= 40 ? commonNames[reduced] || reduced : `${(width/height).toFixed(2)}:1`;
     if(width == height)
       return `${ratio} (square)`;
     return `${ratio} (${width > height ? 'landscape' : 'portrait'})`;
@@ -286,9 +289,13 @@ class GameSettingsModule extends SidebarModule {
     return this.cachedWidgetBoxes;
   }
 
-  widgetsOutsideBoard(width, height) {
+  // Only what the entered size would newly clip. Plenty of games park templates or
+  // decorations off the board on purpose, and those are already clipped today - warning
+  // about them the moment the panel opens would just be noise nobody can act on.
+  widgetsNewlyOutsideBoard(width, height) {
+    const outside = (box, w, h) => box.left < 0 || box.top < 0 || box.right > w || box.bottom > h;
     return this.boardWidgetBoxes()
-      .filter(box => box.left < 0 || box.top < 0 || box.right > width || box.bottom > height)
+      .filter(box => outside(box, width, height) && !outside(box, viewportConfig.targetWidth, viewportConfig.targetHeight))
       .map(box => box.widget);
   }
 
@@ -439,7 +446,7 @@ class GameSettingsModule extends SidebarModule {
           ? 'This board is much wider than it is tall - the toolbar will cover most of it on normal screens.'
           : 'This board is much taller than it is wide - the toolbar will cover most of it on normal screens.');
 
-      const outside = this.widgetsOutsideBoard(w, h);
+      const outside = this.widgetsNewlyOutsideBoard(w, h);
       if(outside.length)
         addMessage(`${outside.length} widget${outside.length == 1 ? '' : 's'} would stick out past the board edge and be clipped away.`, {
           text: 'Select them',

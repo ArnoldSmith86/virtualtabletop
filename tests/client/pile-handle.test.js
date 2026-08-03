@@ -73,6 +73,20 @@ describe('Pile handle placement', () => {
     removeWidget('handle-bottom');
   });
 
+  // the edge the handle is measured against is targetWidth-width, so resizing the pile moves it
+  // just like moving the pile does - width/height were missing from the delta trigger before
+  test('re-places the handle when the pile is resized instead of moved', () => {
+    const pile = createPile({ id: 'handle-resize', x: 1100, y: 100, width: 20, height: 20 });
+    expect(pile.handle.classList.contains('right')).toBe(true);
+
+    pile.applyDelta({ width: 600 });
+    expect(pile.handle.classList.contains('right')).toBe(false);
+
+    pile.applyDelta({ width: 20 });
+    expect(pile.handle.classList.contains('right')).toBe(true);
+    removeWidget('handle-resize');
+  });
+
   test('leaves a centered handle alone', () => {
     const pile = createPile({ id: 'handle-center', x: 970, y: 100, width: 20, height: 20, handlePosition: 'center middle' });
     expect(pile.handle.classList.contains('center')).toBe(true);
