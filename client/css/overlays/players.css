@@ -20,12 +20,17 @@
 #playersTable td {
   padding: 0.25rem 0.5rem;
   vertical-align: middle;
-  border-top: 1px solid #00000044;
+  border-top: 1px solid var(--VTTblueLight);
+}
+
+/* the name column takes all the free width so the action buttons stay next to the sessions */
+#playersTable .playerNameCell {
+  width: 100%;
 }
 
 #playersTable tr.mySessionPlayer td:not(.playerSessionCell),
 #playersTable tr.mySessionEntry td.playerSessionCell {
-  background: #1f5ca622;
+  background: #1f5ca633;
 }
 
 #playersTable tr.inactivePlayerEntry td {
@@ -47,13 +52,21 @@
   gap: 0.5rem;
 }
 
+/* the session cell is only as wide as its widest label, so this aligns the buttons without a large gap */
 #playersTable .sessionCellContent button {
   margin-left: auto;
 }
 
 #playersTable button[icon] {
   display: inline-flex;
-  padding: 3px;
+  padding: 5px;
+}
+
+#playersTable button.unavailable,
+#playersTable button.unavailable:hover {
+  background-color: #808080;
+  color: #d3d3d3;
+  cursor: not-allowed;
 }
 
 #playersTable button[icon]::before {
@@ -141,6 +154,30 @@
 
 #playersTable .myPlayerEntry .playerName{
   font-size: 1.2rem;
+}
+
+#playersLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  max-width: 40rem;
+  margin: 0 auto;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+#playersLegend .material-symbols {
+  font-size: 1.2em;
+  vertical-align: text-bottom;
+  margin-right: 0.25rem;
+}
+
+#playersAloneHint {
+  display: none;
+}
+#playersAloneHint.shown {
+  display: block;
+  max-width: 40rem;
+  margin: 1rem auto 0 auto;
 }
 
 #playerAdd {

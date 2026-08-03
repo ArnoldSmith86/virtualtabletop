@@ -135,8 +135,13 @@ function fillPlayerList(players, active, sessions) {
         });
         const isReferencedByWidgets = [...widgets.values()].some(w=>[ w.state.owner, w.state.player, w.state.artist ].some(v=>Array.isArray(v) ? v.indexOf(player) != -1 : v == player));
         // viewing a connected player who is part of the game would secretly reveal their hand (the server refuses it too)
-        if(player == playerName || session && isReferencedByWidgets) {
+        if(player == playerName) {
           removeFromDOM($('.viewPlayer', row));
+        } else if(session && isReferencedByWidgets) {
+          // keep the button visible but explain why it does not work here, otherwise it just silently disappears for some players
+          $('.viewPlayer', row).classList.add('unavailable');
+          $('.viewPlayer', row).setAttribute('aria-disabled', 'true');
+          $('.viewPlayer', row).title = `You cannot view the game as ${player} because they are connected and taking part in the game - it would reveal their hand to you`;
         } else {
           serverActionButton($('.viewPlayer', row), function() {
             toServer('rename', { oldName: playerName, newName: player, sessionID: mySessionID });
@@ -164,7 +169,9 @@ function fillPlayerList(players, active, sessions) {
 
       const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
       if(session) {
-        $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `Session ${sessionIndex+1} (you)` : `Session ${sessionIndex+1}`;
+        // numbering the sessions only carries information for players that actually have more than one
+        const label = playerSessions.length > 1 ? `Session ${sessionIndex+1}` : 'connected';
+        $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `${label} (you)` : label;
         serverActionButton($('.splitSession', sessionCell), function() {
           const newName = (prompt(`Enter a new player name for this session of ${player}:`) || '').trim();
           if(!newName || newName == player)
@@ -184,6 +191,7 @@ function fillPlayerList(players, active, sessions) {
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
+  $('#playersAloneHint').classList.toggle('shown', sortedPlayers.length < 2);
   updatePlayerCountDisplay();
 }
 
