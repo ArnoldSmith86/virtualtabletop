@@ -219,6 +219,13 @@
   color: var(--textHighlightColor3);
 }
 
+/* the phrase a sentence starts with, while the values that decide it are only
+   worked out when the routine runs: the same orange those values are written in,
+   because that is what the sentence is guessing from */
+.routine-editor-parameter-warning.undetermined {
+  color: var(--routineVariableColor);
+}
+
 .routine-editor-parameter-warning:hover {
   color: var(--VTTblue);
 }

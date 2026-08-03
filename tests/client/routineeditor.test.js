@@ -748,6 +748,63 @@ describe('picking how an operation works and which options it uses', () => {
     expect(turn.values).toEqual({ func: 'FLIP', holder: 'deck1', faceCycle: undefined, face: 0 });
   });
 
+  // a ${...} may sit in any property of an operation, the ones that decide what
+  // it does included - the engine resolves them all before the operation runs
+  test('a way of working the routine only works out is not stated as a fact', () => {
+    const { editor, dom } = renderOperation({ func: 'TURN', turnCycle: '${PROPERTY faceCycle}' });
+    expect(editor.undeterminedBy()).toEqual([ 'turnCycle' ]);
+    // the sentence still reads as one of the ways, and says that it is a guess
+    expect(dom.querySelector('.routine-editor-variant').classList.contains('routine-editor-variant-undetermined')).toBe(true);
+    expect(dom.querySelector('.routine-editor-parameter-warning.undetermined')).not.toBeNull();
+    // and what it guessed from is in the sentence instead of nowhere at all
+    expect(dom.querySelector('[data-parameter="turnCycle"]').textContent).toBe('${PROPERTY faceCycle}');
+  });
+
+  test('a value worked out while the routine runs never hides another one', () => {
+    // silence stops the audio instead of playing it - but only when it comes out
+    // as yes, so the sound is still what this operation may play
+    const { editor, dom } = renderOperation({ func: 'AUDIO', source: 'ding.mp3', silence: '${stop}' });
+    expect(editor.ignoredParameters()).toEqual({});
+    expect(dom.textContent).toContain('ding.mp3');
+    expect(editor.undeterminedBy()).toEqual([ 'silence' ]);
+    // with a value the editor can read, the parameters the engine skips stay out
+    expect(renderOperation({ func: 'AUDIO', source: 'ding.mp3', silence: true }).dom.textContent).not.toContain('ding.mp3');
+  });
+
+  test('what a value is compared to decides whether it can be told apart', () => {
+    const undetermined = operation => renderOperation(operation).editor.undeterminedBy();
+    // the two truthiness traps: every ${...} is a truthy string, and it is
+    // always of type string - so testing it as either answers about the syntax
+    expect(undetermined({ func: 'SET', property: 'rotation', relation: '+', value: '${RANDOM}' })).toEqual([ 'value' ]);
+    expect(undetermined({ func: 'SET', property: 'x', relation: '${op}', value: 5 })).toEqual([ 'relation' ]);
+    expect(undetermined({ func: 'FLIP', face: '${targetFace}' })).toEqual([ 'face' ]);
+    // a way of working the value does not decide is still an answer: a SET with
+    // no relation sets, whatever the value comes out as
+    expect(undetermined({ func: 'SET', property: 'x', value: '${v}' })).toEqual([]);
+    // and so is a question a reference answers by being written down at all
+    expect(undetermined({ func: 'COUNT', holder: '${h}' })).toEqual([]);
+    expect(undetermined({ func: 'FOREACH', range: '${r}' })).toEqual([]);
+  });
+
+  test('picking a way of working says which worked-out value it would replace', () => {
+    const operation = { func: 'TURN', turnCycle: '${PROPERTY faceCycle}' };
+    const choices = routineOperationVariantChoices(operation);
+    // every entry rewrites it, the one the sentence already reads as included
+    expect(choices.every(choice => choice.replaces.join() == 'turnCycle ${PROPERTY faceCycle}')).toBe(true);
+    // and nothing is replaced where the operation holds no such value
+    expect(routineOperationVariantChoices({ func: 'TURN', turnCycle: 'backward' }).every(choice => !choice.replaces.length)).toBe(true);
+
+    const { dom } = renderOperation(operation);
+    dom.querySelector('.routine-editor-variant-menu').dispatchEvent(new Event('click'));
+    const menu = document.querySelector('.inline-popup.popup-menu');
+    const note = menu.querySelector('.popup-menu-entry-replaces');
+    expect(note.textContent).toBe('replaces turnCycle ${PROPERTY faceCycle}');
+    // the phrase stays one line: the warning is part of it, not a second one
+    expect(menu.querySelector('.popup-menu-entry-preview')).toBeNull();
+    expect(note.parentNode.className).toBe('popup-menu-entry-label');
+    menu.querySelector('.popup-close').dispatchEvent(new Event('click')); // leave no popup open behind this test
+  });
+
   test('adding an operation offers every one of them right away, searchable', () => {
     const source = document.createElement('span');
     document.getElementById('editor').append(source);

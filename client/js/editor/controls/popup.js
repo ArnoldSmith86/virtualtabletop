@@ -950,6 +950,18 @@ class RoutineVariantMenu extends Popup {
       const entry = menuEntry(this.domElement, choice.lead, null, _=>this.notifyChangeListeners(choice.values));
       entry.title = `${choice.label}: ${choice.example}`;
       entry.classList.toggle('selected', choice.id === this.currentID);
+      // a way of working writes the parameters that tell the ways apart, and one
+      // of them may hold a value the game works out while it runs - picking any
+      // entry (this one included) writes over it. That is worth a word on the
+      // entry itself rather than a surprise afterwards, and it stays on the one
+      // line every entry is: a phrase, and what picking it costs.
+      if(choice.replaces && choice.replaces.length) {
+        const note = document.createElement('span');
+        note.className = 'popup-menu-entry-replaces';
+        note.textContent = `replaces ${choice.replaces.join(' and ')}`;
+        $('.popup-menu-entry-label', entry).append(note);
+        entry.title += `\n\nPicking this replaces ${choice.replaces.join(' and ')}, which the game works out while the routine runs.`;
+      }
     }
     this.moveIntoView();
   }

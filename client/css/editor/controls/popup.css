@@ -230,6 +230,22 @@
   max-width: 300px;
 }
 
+/* what picking the entry writes over: a value the game works out while the
+   routine runs is written nowhere else, so the entry that would replace it says
+   so next to its phrase instead of swallowing it. It keeps its own color while
+   the entry is hovered - it is a warning, not part of the phrase. */
+.inline-popup .popup-menu-entry-replaces {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  margin-left: 6px;
+  color: var(--routineVariableColor);
+  font-weight: normal;
+  font-size: 12px;
+}
+
 .inline-popup .popup-menu-entry.selected {
   background: var(--backgroundHighlightColor1);
 }

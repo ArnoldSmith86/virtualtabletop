@@ -129,6 +129,17 @@
 // variant should not word them into its sentence in the mode that ignores them
 // (that is what the variants are for), and they are never offered as an option
 // either.
+//
+// Both questions - which variant, and what is ignored - are asked about values
+// the engine may only work out while the routine runs: a ${...} may sit in any
+// property of an operation, the ones that decide what it does included, because
+// evaluateVariablesRecursively resolves them all before the operation runs. So
+// they are not asked once but once per value such a reference may come out as
+// (see undecidableReads), and where the answer changes with it the editor says
+// so instead of guessing: the phrase the sentence starts with carries a "!"
+// naming the reference, the parameter that decides stays in the sentence
+// instead of counting as spoken for, nothing counts as ignored, and every entry
+// of the drop-down says which reference picking it would write over.
 
 // Most operations take either a single widget (holder/label/timer/from/canvas)
 // or a collection - the engine checks the widget parameter first and never looks
@@ -170,6 +181,15 @@ const parameterTypeHints = {
   color: 'color',
   icon: 'icon'
 };
+
+// a value the engine works out while the routine runs: every string property of
+// an operation goes through evaluateVariablesRecursively before the operation
+// runs, so a ${...} may sit anywhere - including in the properties that decide
+// what the operation does at all. The editor cannot know what it will be, so
+// nothing may be decided from it as if it were the literal it is written as.
+function isDynamicValue(value) {
+  return typeof value == 'string' && /\$\{[^}]+\}/.test(value);
+}
 
 // a collection an operation READS and that is left at DEFAULT is whatever the
 // operations before it picked, and that is what the sentence says instead of the
@@ -2631,11 +2651,102 @@ class RoutineOperationEditor {
   // the variant the operation is shown as: the first one whose match() fits it,
   // and otherwise the one that has no match() at all - the fallback is what an
   // operation is when nothing tells it apart, not the last entry of the list,
-  // so the drop-down can offer the variants in the order people read them
-  currentVariant() {
+  // so the drop-down can offer the variants in the order people read them.
+  // Together with it: the parameters that decide the answer but only get their
+  // value while the routine runs, which is what makes the answer a guess.
+  //
+  // Finding those needs no table of its own: see undecidableReads.
+  variantState() {
     const variants = this.variants();
-    const matching = variants.find(variant=>variant.match && variant.match(name=>this.parameterValue(name), name=>this.parameterIsSet(name)));
-    return matching || variants.find(variant=>!variant.match) || variants[variants.length-1] || { id: 'default', label: this.func, template: String(this.func || '') };
+    const dynamic = [];
+    for(const variant of variants) {
+      if(!variant.match)
+        continue;
+      const decided = this.undecidableReads((value, isSet)=>Boolean(variant.match(value, isSet)));
+      for(const name of decided.undecidable)
+        if(dynamic.indexOf(name) == -1)
+          dynamic.push(name);
+      if(decided.answer)
+        return { variant, dynamic };
+    }
+    return { variant: variants.find(variant=>!variant.match) || variants[variants.length-1] || { id: 'default', label: this.func, template: String(this.func || '') }, dynamic };
+  }
+
+  // What a question about the values of an operation answers, and which of the
+  // values it asked about make that answer a guess. Neither needs a table of its
+  // own: the question is handed the accessors it reads the values through, so a
+  // recording pair of them says what it looked at, and asking it again with the
+  // values a ${...} may come out as says whether that would change its mind.
+  //
+  // Only then is the answer a guess: "is this parameter written down at all" and
+  // "is it something rather than nothing" are answered by the reference being
+  // there. What the editor cannot know is which of the values a reference will
+  // come out as - and that covers the two traps a plain "is it a literal?" test
+  // would miss, because any ${...} is a truthy string (so AUDIO would always
+  // read as "stop all sounds") and it is always of type string (so a SET adding
+  // a computed number would always read as appending text).
+  undecidableReads(question) {
+    const read = new Set();
+    const ask = overrides=>question(name=>{
+      read.add(name);
+      return Object.prototype.hasOwnProperty.call(overrides, name) ? overrides[name] : this.parameterValue(name);
+    }, name=>this.parameterIsSet(name));
+    const answer = ask({});
+    const answered = JSON.stringify(answer === undefined ? null : answer);
+    const undecidable = [];
+    const probed = new Set();
+    // a question that stops early never read the rest, so what it reads can grow
+    // while the values it did read are replaced by the ones they may come out as
+    while([ ...read ].some(name=>!probed.has(name))) {
+      for(const name of [ ...read ]) {
+        if(probed.has(name))
+          continue;
+        probed.add(name);
+        if(!this.parameterIsDynamic(name))
+          continue;
+        if(this.dynamicProbeValues(name).some(probe=>this.answersDifferently(ask, name, probe, answered)))
+          undecidable.push(name);
+      }
+    }
+    return { answer, undecidable };
+  }
+
+  answersDifferently(ask, name, probe, answered) {
+    try {
+      const other = ask({ [name]: probe });
+      return JSON.stringify(other === undefined ? null : other) !== answered;
+    } catch(e) {
+      // a question that cannot be asked about this value says nothing about
+      // whether the answer would change
+      return false;
+    }
+  }
+
+  // what a ${...} may come out as: the values the parameter declares where it
+  // has a list of them, and otherwise one of each kind of value the engine can
+  // hand back. Nothing at all is not among them - a reference is written to name
+  // a value, and reading every one of them as possibly missing would turn every
+  // "is there one" into a guess.
+  dynamicProbeValues(name) {
+    const spec = this.parameterSpec(name) || {};
+    const declared = [ ...(Array.isArray(spec.values) ? spec.values : []), ...(Array.isArray(spec.special) ? spec.special : []) ];
+    return declared.length ? declared : [ 0, 1, 'text', true, false, [] ];
+  }
+
+  currentVariant() {
+    return this.variantState().variant;
+  }
+
+  // the parameters that decide what the operation does and are only worked out
+  // while the routine runs - empty while the sentence says what it says for sure
+  undeterminedBy() {
+    return this.variantState().dynamic;
+  }
+
+  // whether the value of a parameter is one the engine works out while the
+  // routine runs rather than one the editor can read
+  parameterIsDynamic(name) {
+    return isDynamicValue(this.parameterValue(name));
   }
 
   // the words the sentence starts with - the phrase the drop-down offers
@@ -2670,7 +2781,12 @@ class RoutineOperationEditor {
     // parameter it words is not one nothing mentions
     // plus the ones the operation says are covered however its sentence reads
     // right now (a VAR words its one pair or lists them, never both)
-    const spokenFor = new Set([ ...(this.metadata.spokenFor || []), ...this.templateParameters(variant.template), ...(variant.fixed || []), ...clauses.flatMap(clause=>[ ...this.templateParameters(clause.template), ...this.templateParameters(clause.whenOff || '') ]) ]);
+    // a parameter a way of working decides is spoken for by the sentence that
+    // way reads as - unless it holds a ${...}, because then the sentence is a
+    // guess and the value it guessed from would be nowhere on the card. What
+    // the editor cannot word it shows as it is written instead of hiding it.
+    const fixed = (variant.fixed || []).filter(name=>!this.parameterIsDynamic(name));
+    const spokenFor = new Set([ ...(this.metadata.spokenFor || []), ...this.templateParameters(variant.template), ...fixed, ...clauses.flatMap(clause=>[ ...this.templateParameters(clause.template), ...this.templateParameters(clause.whenOff || '') ]) ]);
     for(const name in this.metadata.parameters) {
       if(spokenFor.has(name) || Object.prototype.hasOwnProperty.call(ignored, name))
         continue;
@@ -2778,9 +2894,15 @@ class RoutineOperationEditor {
   // { parameterName: reason } for parameters the engine currently ignores because
   // of how other parameters are set (e.g. MOVE count when fillTo is set)
   ignoredParameters() {
-    if(typeof this.metadata.ignored == 'function')
-      return this.metadata.ignored(name=>this.parameterValue(name), name=>this.parameterIsSet(name)) || {};
-    return {};
+    if(typeof this.metadata.ignored != 'function')
+      return {};
+    const decided = this.undecidableReads((value, isSet)=>this.metadata.ignored(value, isSet) || {});
+    // what the engine skips depends on how other parameters are set, and where
+    // that is worked out while the routine runs the editor cannot say it is
+    // skipped: rather than hide parameters that may well be in use, they all
+    // stay in the sentence (an AUDIO whose silence is worked out keeps the sound
+    // it plays while that comes out as no)
+    return decided.undecidable.length ? {} : decided.answer;
   }
 
   notifyChangeListeners(value) {
@@ -2937,10 +3059,14 @@ class RoutineOperationEditor {
     const trailingSpace = lead.slice(text.length);
     if(!text)
       return lead;
+    // the phrase is only what the operation really does while the values that
+    // decide it are values: the ! behind it says so, the way a deprecated
+    // parameter says so, and the words themselves stay what they are
+    const guessed = this.undeterminedBy().length ? ' routine-editor-variant-undetermined' : '';
     if(this.variants().length < 2)
-      return `<span class="routine-editor-variant">${escapeHTML(text)}</span>${trailingSpace}`;
+      return `<span class="routine-editor-variant${guessed}">${escapeHTML(text)}</span>${trailingSpace}`;
     const title = `${leadLabel(text)} - click to pick another way for ${this.func} to work`;
-    return `<span class="routine-editor-variant routine-editor-variant-menu" style="min-width: ${this.variantLeadWidth()}ch" title="${escapeHTML(title)}">${escapeHTML(text)}<span class="material-symbols">arrow_drop_down</span></span>${trailingSpace}`;
+    return `<span class="routine-editor-variant routine-editor-variant-menu${guessed}" style="min-width: ${this.variantLeadWidth()}ch" title="${escapeHTML(title)}">${escapeHTML(text)}<span class="material-symbols">arrow_drop_down</span></span>${trailingSpace}`;
   }
 
   // the drop-down is a field, so it is as wide as the longest phrase it can hold
@@ -3036,8 +3162,13 @@ class RoutineOperationEditor {
 
   // a clickable "!" behind every chip whose parameter needs a word of warning:
   // orange for a deprecated one and red for a custom property the operation does
-  // not support at all
+  // not support at all - and one behind the phrase the sentence starts with
+  // while what the operation does is only decided when the routine runs
   renderParameterWarnings(dom) {
+    const undetermined = this.undeterminedBy();
+    const lead = $('.routine-editor-variant-undetermined', dom);
+    if(lead && undetermined.length)
+      lead.after(this.parameterWarningButton('undetermined', 'warning', this.undeterminedInfoHTML(undetermined), 'this is only what the operation does for one of the values it may work out - click for details'));
     for(const span of $a('span[data-parameter]', dom)) {
       const name = span.dataset.parameter;
       const spec = this.parameterSpec(this.resolveParameter(name));
@@ -3055,12 +3186,30 @@ class RoutineOperationEditor {
     }
   }
 
-  parameterWarningButton(kind, icon, infoHTML) {
+  parameterWarningButton(kind, icon, infoHTML, title) {
     const warning = infoButton(null, infoHTML);
     warning.classList.add('routine-editor-parameter-warning', kind);
     $('.material-symbols', warning).textContent = icon;
-    warning.title = `${kind} - click for details`;
+    warning.title = title || `${kind} - click for details`;
     return warning;
+  }
+
+  // what the "!" behind the phrase says: which values decide the operation, what
+  // they are written as, and that the sentence reads them as one of the things
+  // they may come out as - the value itself is in the sentence as well, so it
+  // can be read and changed instead of only being hinted at
+  undeterminedInfoHTML(names) {
+    // one paragraph per line: the info popup makes a paragraph of every line of
+    // a <pre>, so a sentence broken over two of them would be two paragraphs
+    const many = names.length > 1;
+    const written = names.map(name=>`${name} is written as ${JSON.stringify(this.parameterValue(name))}`).join(', ');
+    return `
+      <pre>
+      What ${escapeHTML(this.func)} does is decided by ${escapeHTML(wordList(names))}, and ${many ? 'those values are' : 'that value is'} only worked out while the routine runs - ${escapeHTML(written)}.
+      So this sentence is what the operation does for one of the values ${many ? 'they' : 'it'} may come out as, not what it does for sure.
+      ${many ? 'The values are' : 'The value is'} part of the sentence as well, so ${many ? 'they' : 'it'} can be read and changed - and picking another way for this operation to work replaces ${many ? 'them' : 'it'} with a fixed value.
+      </pre>
+    `;
   }
 
   // nested routines are rendered by the operation editor itself, so they are
@@ -3882,6 +4031,18 @@ function operationVariantValues(operation, variant) {
   return values;
 }
 
+// picking a way of working rewrites the parameters that tell the ways apart, and
+// one of them may hold a ${...} the game works out while the routine runs - a
+// reference nothing in the room writes a second time. Whichever entry is picked
+// (the one the sentence already reads as included, because that one is a guess
+// too), that reference is gone, so the entry says what it replaces instead of
+// swallowing it without a word.
+function variantChoiceReplacements(operation, values) {
+  if(!operation || typeof operation != 'object')
+    return [];
+  return Object.keys(operation).filter(name=>isDynamicValue(operation[name]) && values[name] !== operation[name]).map(name=>`${name} ${operation[name]}`);
+}
+
 // the ways the operation can work, each worded as the phrase its sentence would
 // start with - that is what the drop-down at the start of the sentence offers.
 // Operations with only one way to work (DELAY, INPUT, ...) have nothing to
@@ -3896,7 +4057,8 @@ function routineOperationVariantChoices(operation) {
       variant.apply(preview);
     const editor = editorForOperation(preview);
     editor.setOperationDetails(null, preview, [], []);
-    return { id: variant.id, lead: leadLabel(editor.variantLead(variant)), label: variant.label, example: editor.getExampleWithDefaults(variant), values: operationVariantValues(operation, variant) };
+    const values = operationVariantValues(operation, variant);
+    return { id: variant.id, lead: leadLabel(editor.variantLead(variant)), label: variant.label, example: editor.getExampleWithDefaults(variant), values, replaces: variantChoiceReplacements(operation, values) };
   });
   // two ways of working whose sentences start with the same word (MOVE says
   // "Move" either way) are told apart by what they are called instead: the same
