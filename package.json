@@ -46,17 +46,15 @@
   },
   "homepage": "https://github.com/ArnoldSmith86/virtualtabletop#readme",
   "dependencies": {
-    "@node-minify/clean-css": "^9.0.1",
-    "@node-minify/core": "^9.0.2",
-    "@node-minify/html-minifier": "^9.0.1",
-    "@node-minify/no-compress": "^9.0.1",
-    "@node-minify/uglify-es": "^9.0.1",
     "bson": "^6.10.4",
+    "clean-css": "^5.3.3",
     "crc-32": "^1.2.2",
     "dompurify": "^3.3.0",
     "express": "^5.1.0",
+    "html-minifier-terser": "^7.2.0",
     "jszip": "^3.10.1",
     "node-fetch": "^3.3.2",
+    "terser": "^5.49.0",
     "ws": "^8.18.3"
   },
   "optionalDependencies": {
