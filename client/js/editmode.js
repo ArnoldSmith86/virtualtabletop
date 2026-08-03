@@ -261,6 +261,71 @@ function generateCounterWidgets(id, x, y) {
   ];
 }
 
+// A stop is a widget listed in the line's stops property; the first one carries
+// the shared appearance and the others inherit it, so restyling that one
+// restyles every stop on the line at once. The stop is a holder that takes the
+// plain widgets pawns usually are, so a new line can be played on right away -
+// unlike the line itself, which takes nothing until it is given a dropTarget.
+function generateLineStop(id, lineID, index, x, y) {
+  if(index)
+    return { type: 'holder', id, parent: lineID, fixedParent: true, movableInEdit: false, inheritFrom: `${lineID}S0`, x, y };
+  return {
+    type: 'holder',
+    id,
+    parent: lineID,
+    fixedParent: true,
+    movableInEdit: false,
+    x,
+    y,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    dropTarget: { type: null },
+    dropOffsetX: 2,
+    dropOffsetY: 2
+  };
+}
+
+// every line offered in the add widget overlay is drawn in the VTT blue the
+// line widget defaults to, so none of them has to spell out a lineColor.
+// The same four lines are also in assets/widgets.json so that they show up in
+// the Widgets sidebar - keep both copies in sync when changing one of them.
+function generateLineWidgets(id, x, y) {
+  const line = {
+    type: 'line',
+    id,
+    x,
+    y,
+    width: 220,
+    height: 40,
+    lineStart: { x: 10, y: 20 },
+    lineEnd: { x: 210, y: 20 },
+    stops: [ { widget: id+'S0', position: 0 }, { widget: id+'S1', position: 1 } ]
+  };
+
+  return [ line, generateLineStop(id+'S0', id, 0, -10, 0), generateLineStop(id+'S1', id, 1, 190, 0) ];
+}
+
+// the ring: the same line widget as a closed shape, with its stops spread all
+// the way round instead of running from one end to the other
+function generateRingWidgets(id, x, y) {
+  const line = {
+    type: 'line',
+    id,
+    x,
+    y,
+    width: 130,
+    height: 130,
+    lineShape: 'ellipse',
+    lineStart: { x: 15, y: 15 },
+    lineEnd: { x: 115, y: 115 },
+    stops: [ 0, 0.25, 0.5, 0.75 ].map((position, i)=>({ widget: `${id}S${i}`, position }))
+  };
+
+  const stopCoords = [ { x: 45, y: -5 }, { x: 95, y: 45 }, { x: 45, y: 95 }, { x: -5, y: 45 } ];
+  return [ line ].concat(stopCoords.map((coord, i)=>generateLineStop(`${id}S${i}`, id, i, coord.x, coord.y)));
+}
+
 function generateTimerWidgets(id, x, y) {
   return [
     { type:'timer', id: id, x: x, y: y },
@@ -317,6 +382,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
+    if(wi.type == 'line')   w = new Line(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
@@ -1184,24 +1250,46 @@ function populateAddWidgetOverlay() {
     x: 1335,
     y: 150
   });
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineVertical'), {
-    x: 1300,
-    y: 325,
-    width: 200,
-    height: 0,
-    borderRadius: "3px",
-
-    css: { "border": "3px solid #666" }
+  // Add the composite line widget (a path with attached stops)
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function() {
+    const id = generateUniqueWidgetID();
+    for(const w of generateLineWidgets(id, 1310, 420))
+      await addWidgetLocal(w);
+    return id
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
-    x: 1535,
-    y: 190,
-    width: 0,
-    height: 200,
-    borderRadius: "3px",
+  // The divider line is a plain line widget (without stops), so it can be
+  // curved, restyled and connected like any other line
+  addWidgetToAddWidgetOverlay(new Line('add-divider-horizontal'), {
+    type: 'line',
+    x: 1290,
+    y: 315,
+    width: 220,
+    height: 20,
+    lineStart: { x: 10, y: 10 },
+    lineEnd: { x: 210, y: 10 },
+    lineWidth: 4
+  });
 
-    css: { "border": "3px solid #666" }
+  // a line without stops in its closed shape: a plain circle/oval outline
+  addWidgetToAddWidgetOverlay(new Line('add-circle'), {
+    type: 'line',
+    x: 1300,
+    y: 500,
+    width: 100,
+    height: 100,
+    lineShape: 'ellipse',
+    lineStart: { x: 10, y: 10 },
+    lineEnd: { x: 90, y: 90 },
+    lineWidth: 4
+  });
+
+  // Add the composite ring widget (a closed line with stops all the way round)
+  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495), async function() {
+    const id = generateUniqueWidgetID();
+    for(const w of generateRingWidgets(id, 1420, 495))
+      await addWidgetLocal(w);
+    return id
   });
 }
 // end of JSON generators
