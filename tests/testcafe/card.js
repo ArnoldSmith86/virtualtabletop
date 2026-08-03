@@ -74,6 +74,60 @@ function lockableCardRoom() {
   return room;
 }
 
+// one write object on two cards: one that can be written on and already holds more text than fits into it,
+// and one that is locked with nothing written on it
+function cuesCardRoom() {
+  return {
+    deck: {
+      id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 200, height: 140 },
+      cardTypes: {
+        full: { note: 'a note with more words in it than the two lines this box shows can hold', unlocked: true },
+        blank: { note: '', unlocked: false }
+      },
+      faceTemplates: [
+        { objects: [ { type: 'write', placeholder: 'write here', x: 10, y: 10, width: 180, height: 30, fontSize: 14, dynamicProperties: { value: 'note', editable: 'unlocked' } } ] }
+      ]
+    },
+    full: { id: 'full', type: 'card', deck: 'deck', cardType: 'full', x: 400, y: 300 },
+    blank: { id: 'blank', type: 'card', deck: 'deck', cardType: 'blank', x: 700, y: 300 }
+  };
+}
+
+// a face that already carries a title line, so a write box added to it has something to be placed below
+function titledCardRoom() {
+  return {
+    deck: {
+      id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 200, height: 140 },
+      cardTypes: { note: { title: 'Mission' } },
+      faceTemplates: [
+        { objects: [ { type: 'text', x: 0, y: 0, width: 200, height: 30, fontSize: 18, textAlign: 'center', dynamicProperties: { value: 'title' } } ] }
+      ]
+    },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'note', x: 400, y: 300 }
+  };
+}
+
+// two write boxes that each stay well below "most of the card" on their own, but together leave only a thin
+// frame of card - the layout a note card actually gets, and the one a player can not grab anymore
+function crowdedCardRoom() {
+  return {
+    deck: {
+      id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 262, height: 160 },
+      cardTypes: { note: { title: '', body: '' } },
+      faceTemplates: [
+        { objects: [
+          { type: 'write', x: 20, y: 20, width: 220, height: 32, fontSize: 14, dynamicProperties: { value: 'title' } },
+          { type: 'write', x: 20, y: 54, width: 220, height: 91, fontSize: 14, dynamicProperties: { value: 'body' } }
+        ] }
+      ]
+    },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'note', x: 400, y: 300 }
+  };
+}
+
 // write objects bound to properties the engine owns: writing to 'type' would replace the card with a
 // different widget and '_ancestor' is computed by the engine and refused to routines as well, so both have
 // to render as plain text objects instead
@@ -269,7 +323,7 @@ test('The deck editor shows a write object as its placeholder and its list row e
     .expect(Selector('#deckEditorAddWritable').visible).notOk()
     .click('#deckEditorAddMode input[value=dynamic]')
     .expect(Selector('#deckEditorAddWritable').visible).ok()
-    .expect(Selector('#deckEditorAddWritable').textContent).eql('Label')
+    .expect(Selector('#deckEditorAddWritable').textContent).eql('Write box')
     .click('#deckEditorAddWritable');
   // the button adds an object of the "write" type, bound to a card type property of its own
   await expectEventually(t, ClientFunction(()=>{
@@ -289,6 +343,70 @@ test('The deck editor shows a write object as its placeholder and its list row e
     .expect(Selector('#w_card [contenteditable]').count).eql(1)
     .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(1))
     .expect(Selector('#deckEditorObjPropList option').withAttribute('value', 'editable').exists).ok();
+});
+
+test('A write object shows that its text is cut off, and a locked empty one is not shown at all', async t => {
+  await setRoomState(cuesCardRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const state = ClientFunction(id=>{
+    const object = document.querySelector(`#w_${id} .cardFaceObject.write`);
+    return [ object.className, object.scrollHeight > object.clientHeight, getComputedStyle(object).borderTopColor ];
+  });
+  await t
+    // the box holds more than it shows: the scrollbar it scrolls with is an overlay in several browsers and
+    // hidden while nothing scrolls, so the class card.css fades the bottom edge with has to be there
+    .expect(await state('full')).eql([ 'cardFaceObject write cardFaceOverflow', true, 'rgb(0, 0, 0)' ])
+    // nothing was ever written on the locked one, so there is nothing to read and nothing to write: it is
+    // not outlined and does not show its placeholder either - that part of the card is simply blank
+    .expect(await state('blank')).eql([ 'cardFaceObject write', false, 'rgba(0, 0, 0, 0)' ]);
+});
+
+test('The Write box button adds its box below the text already on the face', async t => {
+  await setRoomState(titledCardRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_deck')
+    .click('.deckEditorStripCard')
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorAddMode input[value=dynamic]')
+    .click('#deckEditorAddWritable');
+
+  // the new box starts below the title instead of on top of it, and stops short of the bottom of the card:
+  // that strip is what a player has left to drag and flip the card by
+  await expectEventually(t, ClientFunction(()=>{
+    const object = widgets.get('deck').get('faceTemplates')[0].objects[1] || {};
+    return [ object.y, object.y + object.height <= 140 - 28 ];
+  }), [ 39, true ]);
+  // so this layout is not one the sidebar (which is showing the new object) warns about
+  await t
+    .expect(Selector('#deckEditorSidebar .deckEditorSectionNote').withText('Players can type into this box').exists).ok()
+    .expect(Selector('#deckEditorSidebar .deckEditorSectionWarning').exists).notOk();
+});
+
+test('The deck editor warns when the write boxes of a face leave no card to grab', async t => {
+  await setRoomState(crowdedCardRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_deck')
+    .click('.deckEditorStripCard')
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
+    // neither box covers most of the card on its own - it is the two of them together that do
+    .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(0))
+    .expect(Selector('#deckEditorSidebar .deckEditorSectionWarning').visible).ok()
+    .expect(Selector('#deckEditorSidebar .deckEditorSectionWarning').textContent).contains('leave a strip of card free')
+    // and the header says what a write object is per card type and what is per card, instead of only the first
+    .expect(Selector('#deckEditorSidebar .deckEditorSidebarHeader p').textContent).contains('text stored per card');
 });
 
 test('A write object bound to a property of the card widget itself is not editable', async t => {

@@ -95,6 +95,10 @@ export class Card extends Widget {
         for(const callback of (this.dynamicProperties[p] || []))
           callback();
 
+    // a flip shows other boxes, and a delta can have changed the text in one of them
+    if(this.writeBoxes && this.writeBoxes.length)
+      this.updateOverflowHints();
+
     super.applyDeltaToDOM(delta);
   }
 
@@ -117,6 +121,7 @@ export class Card extends Widget {
 
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
+    this.writeBoxes = [];
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
@@ -157,10 +162,12 @@ export class Card extends Widget {
           // same thing everywhere: a form control lays its text out itself, so e.g. flexbox alignment that
           // works on every other face object type has no effect inside a text area.
           if(editProperty) {
+            this.writeBoxes.push(objectDiv);
             objectDiv.addEventListener('input', async _=>{
               // the hint is gone as soon as there is something typed - also before reading the text back,
               // because it is generated content and would otherwise be part of it
               objectDiv.classList.remove('cardFacePlaceholder');
+              this.updateOverflowHints();
               const typed = lastTyped = typedText();
               const stored = this.get(editProperty);
               if(typed === (stored === undefined || stored === null ? '' : String(stored)))
@@ -308,16 +315,19 @@ export class Card extends Widget {
               // nothing: what is on it is what it says, and it can not be written on anymore. It is drawn as
               // generated content (see card.css) so that it can neither be typed into nor read back as text.
               objectDiv.dataset.placeholder = placeholder;
-              objectDiv.classList.toggle('cardFacePlaceholder', text === '' && placeholder !== '' && (writable || this.isReadonlyCopy));
+              // !! because classList.toggle takes an undefined second argument as "no second argument" and
+              // flips the class instead - which showed the hint on exactly the locked object that must not.
+              objectDiv.classList.toggle('cardFacePlaceholder', !!(text === '' && placeholder !== '' && (writable || this.isReadonlyCopy)));
               objectDiv.style.color = object.color;
+              // A locked box with nothing written in it is a field that can neither be read nor used, so it
+              // is not outlined at all: that part of the card is simply blank instead of looking broken.
+              const lockedEmpty = !writable && !this.isReadonlyCopy && text === '';
               // The box a player writes in is part of the type, so its fill and outline are properties of
               // their own instead of something that has to be written as a css object. Only what the object
-              // actually sets is applied inline - the defaults (transparent, black) are in card.css, which
-              // keeps a css object on the object working for everything they do not name.
-              if(object.backgroundColor !== undefined)
-                objectDiv.style.backgroundColor = object.backgroundColor;
-              if(object.borderColor !== undefined)
-                objectDiv.style.borderColor = object.borderColor;
+              // actually sets is applied inline - the defaults (transparent, the text color) are in card.css,
+              // which keeps a css object on the object working for everything they do not name.
+              objectDiv.style.backgroundColor = object.backgroundColor === undefined ? '' : object.backgroundColor;
+              objectDiv.style.borderColor = lockedEmpty ? 'transparent' : object.borderColor === undefined ? '' : object.borderColor;
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
@@ -345,6 +355,15 @@ export class Card extends Widget {
       }
       this.domElement.appendChild(faceDiv);
     }
+    this.updateOverflowHints();
+  }
+
+  // Marks the write boxes holding more text than they show, so that css can say so (see card.css). Called
+  // wherever their content or their size can have changed: after a face is built, when a card is flipped and
+  // whenever a property behind one of them arrives - plus on every keystroke, from the input handler.
+  updateOverflowHints() {
+    for(const box of this.writeBoxes || [])
+      box.classList.toggle('cardFaceOverflow', box.scrollHeight > box.clientHeight);
   }
 
   cssProperties() {

@@ -1798,18 +1798,20 @@ class DeckEditor {
 
     // The caption spells out what the rows below do, so the contrast with the amber "different per card
     // type" Dynamic properties section further down is stated, not just colored.
-    addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Same on every card type');
+    // A write object is the same box on every card type, but the text in it belongs to the single card - the
+    // caption of the section that spells the scope out has to say both, or it reads as a contradiction next
+    // to the note below it.
+    addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard',
+              this.isWritableObject(object) ? 'Same box on every card type, text stored per card' : 'Same on every card type');
     // Note below (not part of) the header, in the same style as the Dynamic properties note.
     if(object.type == 'html')
       div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
-    // The rows below are just a list of properties, so say what this type is for and which of them belong to
-    // it - and warn when the object leaves the player too little card to grab.
+    // One line on what this type is (what each of its properties does is on the rows themselves), plus a
+    // warning when the write boxes of this face leave the player too little card to grab.
     if(this.isWritableObject(object)) {
-      div(sidebar, 'deckEditorSectionNote').textContent = 'Players can type into a "write" object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty, "spellCheck" turns the browser\'s spell checker on, "backgroundColor" and "borderColor" style the box itself, and "editable" is the checkbox that decides whether it can still be written on - link it to a card property below to lock a card once it has been filled in.';
-      const cardWidth = this.mainCard ? this.mainCard.get('width') : 103;
-      const cardHeight = this.mainCard ? this.mainCard.get('height') : 160;
-      if((object.width || 0) * (object.height || 0) > cardWidth * cardHeight * 2/3)
-        div(sidebar, 'deckEditorSectionNote deckEditorSectionWarning').textContent = 'This text box covers most of the card. A card can not be dragged or flipped by its text box, so leave some card around it for players to grab.';
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Players can type into this box while playing; what they type is stored per card in the property bound below.';
+      if(this.freeGrabArea(this.faceTemplates[this.face]) < this.grabStrip())
+        div(sidebar, 'deckEditorSectionNote deckEditorSectionWarning').textContent = 'The write boxes on this face cover most of the card. A card can not be dragged or flipped by a write box, so leave a strip of card free for players to grab.';
     }
 
     // One cause/actionId per edited field: a typing burst on one property of one object stays one
@@ -1839,6 +1841,13 @@ class DeckEditor {
         this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
       });
       const row = this.addTypedInput(property, object[property], onValueChanged, objectProps, fieldType, true);
+      // What a write box's own properties do is explained on the rows themselves rather than in a paragraph
+      // above them, which would be longer than the whole list it introduces.
+      const hint = this.isWritableObject(object) ? writeObjectPropertyHints[property] : undefined;
+      if(hint) {
+        row.dom.title = hint;
+        $('label', row.dom).title = `${property} - ${hint}`;
+      }
       // The object's own value is an image/icon: a picker button opens the same chip picker the Edit
       // Widgets tab uses for a basic widget's Content section, right below this row.
       if(property == 'value' && (object.type == 'image' || object.type == 'icon'))
@@ -2268,13 +2277,13 @@ class DeckEditor {
   }
 
   // A face object players can write on while playing - Card.editableProperty() additionally requires a usable
-  // value binding before the object really becomes writable, which is what the Label button creates.
+  // value binding before the object really becomes writable, which is what the Write box button creates.
   isWritableObject(object) {
     return object.type == 'write';
   }
 
   renderTreeObjectRow(tree, object, index, face = this.face) {
-    // Same icon as the Label button for a write object, so a face with several text objects stays scannable.
+    // Same icon as the Write box button for a write object, so a face with several text objects stays scannable.
     const typeIcon = { text: 'format_size', write: 'edit_note', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
     const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><span class=deckEditorTreeIcon icon=${typeIcon}></span><div class=deckEditorObjectPreview></div>`);
     const objSel = face === this.face && index === this.selectedObject;
@@ -2601,7 +2610,7 @@ class DeckEditor {
   renderObjectTypeRow(target, object) {
     const row = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
-    labelEl.style.cssText = 'display:inline-block;width:100px';
+    labelEl.style.cssText = 'display:inline-block;width:130px';
     labelEl.textContent = 'type';
     const select = document.createElement('select');
     for(const t of [ 'text', 'write', 'image', 'icon', 'html' ]) {
@@ -2644,9 +2653,10 @@ class DeckEditor {
     }
     const wrapper = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
-    // The label column has a fixed width so the fields line up; a property name too long for it (backgroundColor,
-    // hoverStrokeWidth, …) is cut off with an ellipsis and spelled out in the tooltip instead of just ending.
-    labelEl.style.cssText = 'display:inline-block;width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle';
+    // The label column has a fixed width so the fields line up; it fits the longest property names the editor
+    // offers (backgroundColor, …), and a name still too long for it is cut off with an ellipsis and spelled
+    // out in the tooltip instead of just ending.
+    labelEl.style.cssText = 'display:inline-block;width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle';
     labelEl.textContent = label;
     labelEl.title = label;
     wrapper.append(labelEl);
@@ -3003,17 +3013,71 @@ class DeckEditor {
   }
 
   writeTemplate() {
-    const width = this.mainCard ? this.mainCard.get('width') : 103;
-    const height = this.mainCard ? this.mainCard.get('height') : 160;
-    // Roomy enough to write a few lines in, but with a margin around it and the lower half of the card left
-    // free: a card can not be grabbed by its text box, so the player needs some card left to drag and flip.
+    const width = this.cardWidth();
+    const height = this.cardHeight();
+    // Roomy enough to write a few lines in, but with a margin around it and a strip of card left free below
+    // it: a card can not be grabbed by its write box, so the player needs some card left to drag and flip.
     const margin = Math.round(Math.min(width, height)/8);
-    // An empty text box is blank, so it starts out with a placeholder - that is what tells a player the card
+    let y = margin;
+    let boxHeight = Math.max(20, Math.round(height/2)-margin);
+    // A second box goes below the text that is already on the face instead of on top of it - the obvious
+    // "title + body" layout is two of them, and the result should be readable without moving anything first.
+    const objects = (this.faceTemplates[this.face] || {}).objects || [];
+    const covered = objects.filter(o=>this.objectCoversText(o)).reduce((bottom, o)=>Math.max(bottom, (+o.y || 0) + (+o.height || 0)), 0);
+    if(covered) {
+      const stacked = covered + Math.round(margin/2);
+      const stackedHeight = height - this.grabStrip() - stacked;
+      if(stackedHeight >= 20) {
+        y = stacked;
+        boxHeight = stackedHeight;
+      }
+    }
+    // An empty write box is blank, so it starts out with a placeholder - that is what tells a player the card
     // can be written on at all, and it shows the creator the object right after adding it. editable, spellCheck
     // (off, like on a label) and the two color properties carry their defaults so that their rows - the
     // editable checkbox, the color pickers - are right there in the sidebar instead of having to be added by
     // name. editable is also what the per-card lock is bound to, so it has to be offered without being typed.
-    return { type: 'write', editable: true, placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: '#000000', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
+    return { type: 'write', editable: true, placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: 'currentColor', x: margin, y, width: Math.max(20, width-2*margin), height: boxHeight, fontSize: 14, textAlign: 'left' };
+  }
+
+  cardWidth() {
+    return this.mainCard ? this.mainCard.get('width') : 103;
+  }
+
+  cardHeight() {
+    return this.mainCard ? this.mainCard.get('height') : 160;
+  }
+
+  // How much free card a player needs to grab it next to a write box. It is what a new box leaves free below
+  // itself and what the sidebar warns about when the boxes on a face leave less.
+  grabStrip() {
+    return Math.max(Math.round(Math.min(this.cardWidth(), this.cardHeight())/8), Math.round(this.cardHeight()/5));
+  }
+
+  // An object a new write box should not be dropped on top of: the ones carrying text, not the color box or
+  // the background image a face usually starts with (those are meant to have something on top of them).
+  objectCoversText(object) {
+    return object.type === undefined || object.type == 'text' || object.type == 'write';
+  }
+
+  // The tallest full-width strip and the widest full-height strip of the face that no write box sits in -
+  // the places a player can reliably press to drag or flip the card. Warning about one box covering most of
+  // the card misses the layout that actually causes this, which is several boxes each below the threshold.
+  freeGrabArea(face) {
+    const boxes = ((face || {}).objects || []).filter(o=>o.type == 'write');
+    const freeBand = (size, spans)=>{
+      let free = 0;
+      let at = 0;
+      for(const [ from, to ] of spans.sort((a, b)=>a[0]-b[0])) {
+        free = Math.max(free, from-at);
+        at = Math.max(at, to);
+      }
+      return Math.max(free, size-at);
+    };
+    return Math.max(
+      freeBand(this.cardHeight(), boxes.map(o=>[ +o.y || 0, (+o.y || 0) + (+o.height || 0) ])),
+      freeBand(this.cardWidth(), boxes.map(o=>[ +o.x || 0, (+o.x || 0) + (+o.width || 0) ]))
+    );
   }
 
   renderDynamicProperties(sidebar, object) {
@@ -3615,6 +3679,16 @@ class DeckEditor {
 }
 
 const deckEditor = new DeckEditor();
+
+// What the properties of a write box do, shown on the rows they belong to. The properties every face object
+// has (x, width, fontSize, …) are not in here: only the ones that exist because the box can be written in.
+const writeObjectPropertyHints = {
+  editable: 'Whether players can still write in this box. Link it to a card property below to lock a card once it has been filled in.',
+  placeholder: 'The hint shown in the box while it is still empty - it is what tells a player the card can be written on at all.',
+  spellCheck: 'Whether the browser underlines misspelled words in what players type here.',
+  backgroundColor: 'Fills the box. Default: transparent.',
+  borderColor: 'Outlines the box, so players can see where they can write. Default: currentColor, the text color of the box itself.'
+};
 
 // Card sizes offered when creating an empty deck, in the order they are shown. The first is the size new
 // decks have always been created at and stays the default; the rest are the proportions that come up most
