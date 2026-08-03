@@ -2707,9 +2707,9 @@ export class Widget extends StateManaged {
     // Applying the release coordinates first also makes the drop target match what the
     // player last saw highlighted, since move() recomputes it.
     const releasedElsewhere = coordGlobal && (!this.lastMoveCoord || this.lastMoveCoord.x != coordGlobal.x || this.lastMoveCoord.y != coordGlobal.y);
-    delete this.lastMoveCoord;
     if(releasedElsewhere)
       await this.move(coordGlobal, localAnchor);
+    delete this.lastMoveCoord;
 
     await this.hideShadowWidget();
     await this.set('dragging', null);

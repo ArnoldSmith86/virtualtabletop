@@ -105,7 +105,7 @@ async function inputHandler(name, e) {
         if (movable) {
           ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
         }
-      } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
+      } else if((name == 'mouseup' || name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
         const ms = mouseStatus[target.id];
         // End the drag synchronously, before the first await below: a mousemove that
         // is delivered while the drop is still being processed would otherwise queue
@@ -179,8 +179,10 @@ async function inputHandler(name, e) {
             await ms.moveTarget.move(coords, ms.localAnchor);
           }).catch(error => {
             // keep the chain resolvable - a rejected one would make every later move
-            // and the drop in the mouseup branch above fail as well
-            console.error('Error while dragging.', error);
+            // and the drop in the mouseup branch above fail as well - but still let
+            // the error reach the client error reporter in tracing.js, which is where
+            // it would have ended up as an unhandled rejection before the chain
+            setTimeout(_=>{ throw error; });
           });
           await ms.dragChain;
         }
