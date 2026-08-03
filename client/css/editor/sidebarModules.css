@@ -11,12 +11,44 @@
   padding-left: 20px;
 }
 
+/* the blue info icon would disappear on the blue section header */
+.editorModule h2 .info-button {
+  margin-left: 6px;
+  color: white;
+}
+
 .editorModule .buttonBar {
   text-align: right;
 }
 
 .editorModule .buttonBar button {
   display: inline-flex;
+}
+
+/* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
+   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. */
+.editorModule .goButton.buttonBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
+   text color so the intro is readable in both themes (white on the dark editor theme, dark in light mode). */
+.editorModule .noSelectionIntro {
+  color: var(--textColor);
+  margin: 10px 5px 15px;
+}
+
+.editorModule .noSelectionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  justify-content: center;
 }
 
 /* properties */
@@ -95,21 +127,145 @@
 }
 
 
-.tune.editorModule .suitProperties {
-  height: 160px;
+/* The deck creation flows disable their "Add to game" until something is picked. button[icon].green
+   (specificity 0,2,1) beats the generic button:disabled (0,1,1), so without this the greyed-out state never
+   applies and a button that does nothing still looks clickable. */
+.tune.editorModule button[icon].green:disabled,
+.tune.editorModule button[icon].green:disabled:hover {
+  background-color: #808080;
+  color: #d3d3d3;
 }
 
-.tune.editorModule .suitProperties > button.widgetSelectionButton {
-  position: absolute;
+
+/* custom deck: one compact row per suit (icon, name, color, ranks, remove) */
+
+.tune.editorModule .deckGeneratorHint {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  opacity: 0.85;
 }
 
-.tune.editorModule .suitProperties > div {
-  margin-left: 170px;
+/* One grid for the whole list, so the header labels and every row share the same columns. The rows and their
+   pickers are display: contents, i.e. their children are the grid items. */
+.tune.editorModule .deckGeneratorSuits {
+  display: grid;
+  grid-template-columns: auto minmax(60px, 1fr) auto minmax(80px, 2fr) auto;
+  align-items: center;
+  gap: 4px 6px;
 }
 
-.tune.editorModule .suitProperties label {
-  display: inline-block;
-  width: 60px;
+.tune.editorModule .deckGeneratorSuitHeader,
+.tune.editorModule .deckGeneratorSuit,
+.tune.editorModule .deckGeneratorSuitPickers {
+  display: contents;
+}
+
+.tune.editorModule .deckGeneratorSuitHeader > span {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+/* An open picker sits right below the row it belongs to and spans the full width; a closed one is display:
+   none and takes no grid row at all. */
+.tune.editorModule .deckGeneratorSuitPickers > .propertyPicker {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.tune.editorModule .deckGeneratorSuit > .propertyInput {
+  margin: 0;
+}
+
+/* an icon chip in a suit color (see tintIconChip): the icon masks the color */
+.tune.editorModule .deckGeneratorSuitTint {
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+
+.tune.editorModule .deckGeneratorSuitName,
+.tune.editorModule .deckGeneratorSuitRanks {
+  width: 100%;
+  min-width: 0;
+}
+
+/* the name this suit's card types actually get differs from what is typed (see showResolvedSuitNames) */
+.tune.editorModule .deckGeneratorSuitName.deckGeneratorSuitRenamed {
+  border-color: var(--VTTred, #c0392b);
+}
+
+/* destructive, so red rather than the accent color the rest of the row uses */
+.tune.editorModule .deckGeneratorSuitRemove:not(:disabled) {
+  background: var(--VTTred, #c0392b);
+}
+
+.tune.editorModule .deckGeneratorSuitRemove:hover:not(:disabled) {
+  background: #922b21;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.tune.editorModule .deckGeneratorSuitAddLabel {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* these are suit shortcuts, not transparency swatches, so no checkerboard behind them */
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip {
+  cursor: pointer;
+  background: #fff;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip:hover {
+  outline: 2px solid var(--VTTblue);
+}
+
+.tune.editorModule .deckGeneratorLinkedRanks {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+/* Card design gallery: one tile per design, filling the dialog in as many columns as fit so no design ends up
+   cut off or alone on a row. The name goes below the preview instead of on top of the artwork. */
+.tune.editorModule .deckGeneratorDesigns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  gap: 10px 6px;
+  margin-bottom: 12px;
+}
+
+.tune.editorModule .deckDesignTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* a card design is not a transparency preview, so a flat neutral reads better than the checkerboard */
+.tune.editorModule .deckDesignButton {
+  margin: 0;
+  background: #ededed;
+}
+
+.tune.editorModule .deckDesignLabel {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
 }
 
 
@@ -148,6 +304,190 @@
 }
 
 
+/* Front/back image upload: two side-by-side lists, one row per uploaded file, numbered in the order the files
+   are paired in - so row n of the fronts and row n of the backs line up as the pair they are. */
+.tune.editorModule .imagePairColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  align-items: start;
+}
+
+.tune.editorModule .imagePairHint {
+  margin-bottom: 5px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairList {
+  margin-bottom: 5px;
+}
+
+.tune.editorModule .imagePairList:empty::before {
+  content: attr(data-empty-hint);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairEntry {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .imagePairEntry b {
+  min-width: 20px;
+  text-align: right;
+}
+
+.tune.editorModule .imagePairEntry img {
+  width: 48px;
+  height: 64px;
+  object-fit: contain;
+  background: #0002;
+}
+
+/* The delete button follows the file name directly instead of being pushed to the far edge of the column. */
+.tune.editorModule .imagePairEntry span {
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tune.editorModule .imagePairStatus,
+.tune.editorModule .textCardsStatus {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairStatus.imagePairMismatch {
+  color: var(--negativeInput);
+  opacity: 1;
+}
+
+.tune.editorModule .imagePairOptions {
+  margin: 5px 0;
+}
+
+.tune.editorModule .imagePairOptions label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .imagePairOptions [type=number] {
+  width: 60px;
+}
+
+
+/* Text cards: the text input, then the design grid and the preview of the first card side by side. */
+.tune.editorModule .textCardsInput {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  font-family: inherit;
+}
+
+/* How the typed text is cut into cards - one row of radios right under the textarea it describes. */
+.tune.editorModule .textCardsSplit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .textCardsSplit label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .textCardsSplit span {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsColumns {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tune.editorModule .textCardsColumn {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tune.editorModule .textCardsPreviewColumn {
+  flex: 0 0 auto;
+}
+
+.tune.editorModule .textCardsDesign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 16px;
+  margin-bottom: 5px;
+}
+
+/* Each input hugs its own label: right-aligning them across a 1fr column would park the input of one field
+   next to the label of the next one. */
+.tune.editorModule .textCardsDesign label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabelWrap,
+.tune.editorModule .textCardsDesign .textCardsHint {
+  grid-column: 1 / -1;
+}
+
+.tune.editorModule .textCardsDesign .textCardsHint {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsDesign input {
+  width: 60px;
+}
+
+/* Distinguish the color swatches from the number fields at a glance - a white swatch at input width reads as
+   an empty text box. */
+.tune.editorModule .textCardsDesign input[type=color] {
+  width: 40px;
+  height: 24px;
+  padding: 1px;
+}
+
+/* A textarea, so a deck label can carry the line breaks it is shown with on the card backs. */
+.tune.editorModule .textCardsDesign .textCardsLabelWrap {
+  align-items: flex-start;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabel {
+  flex-grow: 1;
+  width: auto;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.tune.editorModule .textCardsPreview {
+  position: relative;
+  overflow: hidden;
+}
+
+.tune.editorModule .textCardsPreviewCard {
+  position: relative;
+  transform-origin: top left;
+}
+
+
 .tune.editorModule .ttsImportLink {
   display: flex;
   gap: 5px;
@@ -159,6 +499,7 @@
   min-width: 0;
 }
 
+/* caption bar of a preview tile: the card count of a TTS deck */
 .tune.editorModule .ttsDeckButton .deckCardCount {
   position: absolute;
   bottom: 0;
@@ -174,14 +515,12 @@
 
 
 .tune.editorModule .cardTypeEdit {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
+  width: fit-content;
+  margin: 10px auto;
   padding: 10px;
-}
-.tune.editorModule .cardCountDiv {
-  float: left;
 }
 .tune.editorModule .cardCountDiv button {
   display: inline-flex;
@@ -194,22 +533,10 @@
 .tune.editorModule .renderedWidget {
   margin: 5px;
 }
-.tune.editorModule .cardCountDivEditing {
-  background: var(--backgroundHighlightColor1);
-  border: 1px solid var(--textColor);
-  border-radius: 5px;
-}
-.tune.editorModule .cardCountDivEditing [icon=create] {
-  display: none;
-}
-.tune.editorModule .cardTypeProperties {
-  padding: 10px;
-}
-.tune.editorModule .cardTypeProperties .buttonBar {
-  margin-top: 10px;
-}
-.tune.editorModule .cardTypeEdit:not(.cardCountDivEditing) .cardTypeProperties {
-  display: none;
+.tune.editorModule .cardDeckButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
 }
 
 
@@ -425,6 +752,409 @@
 .editorModule .segmented-control button.active {
   background:var(--VTTblueDark);
   color:#fff;
+}
+
+/* open line vs closed shape is a mode, not a curve preset, so it gets the
+   sidebar's segmented control above the presets - and the presets below stay
+   in place (greyed out for a closed shape) instead of the grid reflowing */
+.editorModule .lineShapeSwitch {
+  margin: 6px 0;
+}
+.editorModule .lineShapeSwitch button {
+  flex: 1 1 50%;
+  height: 30px;
+}
+.editorModule .lineShapePresets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 8px 0;
+}
+.editorModule button.lineShapePreset {
+  min-width: 0;
+  height: 48px;
+  padding: 3px;
+  background: #3b3b3b;
+  color: white;
+}
+/* the glyphs are drawn with currentColor, so the text color has to darken with
+   the background or the icon all but disappears on hover */
+.editorModule button.lineShapePreset:hover:not(:disabled) {
+  background: #bbb;
+  color: #222;
+}
+.editorModule button.lineShapePreset:disabled {
+  background: #3b3b3b;
+  opacity: .35;
+  cursor: default;
+}
+.editorModule button.lineShapePreset svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.editorModule button.lineShapePreset path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.editorModule button.lineShapePreset.selected {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+/* line color and line width share one row below the style buttons */
+.editorModule .lineAppearanceRow {
+  gap: 4px 12px;
+}
+.editorModule .lineAppearanceRow > .propertyInput > label {
+  white-space: nowrap;
+}
+.editorModule .lineAppearanceRow .numberInput input[type=number] {
+  width: 52px;
+}
+.editorModule .lineDashPresets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 5px 0 8px;
+}
+.editorModule button.lineDashPreset {
+  min-width: 0;
+  padding: 5px 3px;
+  background: #3b3b3b;
+  color: white;
+}
+.editorModule button.lineDashPreset:hover {
+  background: #bbb;
+  color: #222;
+}
+.editorModule button.lineDashPreset svg {
+  display: block;
+  width: 100%;
+  height: 16px;
+}
+.editorModule button.lineDashPreset path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+}
+.editorModule button.lineDashPreset span {
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.editorModule button.lineDashPreset.selected {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.editorModule .lineStopList .genericInput {
+  display: flex;
+  align-items: center;
+  /* the row reads left to right as picture, name, position, buttons and is
+     built from groups so a narrow sidebar wraps them as units instead of
+     tearing e.g. the percentage away from its % sign */
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 7px;
+  padding: 6px;
+  border: 1px solid #777;
+  border-radius: 6px;
+}
+.editorModule .lineStopList .lineStopGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.editorModule .lineStopList .lineStopIdGroup {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.editorModule .lineStopList .genericInput > .lineStopGroup > label {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .lineStopList .genericInput input.lineStopPosition {
+  width: 42px;
+  min-width: 42px;
+}
+/* clicking the picture or the "Stop n" caption selects the stop in the room */
+.editorModule .lineStopList .lineStopSelect {
+  cursor: pointer;
+}
+.editorModule .lineStopList .lineStopSelect:hover {
+  text-decoration: underline;
+}
+/* same dashed-underline rename affordance as the widget header id; it starts at
+   the width of a generated stop id but grows into the row's free space so a
+   hand-given name like PiccadillyCircus stays readable */
+.editorModule .lineStopList input.lineStopIdInput {
+  color: inherit;
+  font: inherit;
+  flex: 1 1 75px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 190px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+}
+.editorModule .lineStopList input.lineStopIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+.editorModule .lineStopList input.lineStopIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
+.editorModule .lineStopPreview {
+  position: relative;
+  flex: 0 0 52px;
+  width: 52px;
+  height: 38px;
+  overflow: hidden;
+  border: 1px solid #777;
+  border-radius: 5px;
+  background: #fff1;
+  cursor: pointer;
+}
+.editorModule .lineStopPreview:hover,
+.editorModule .lineStopPreview:focus-visible {
+  border-color: var(--VTTblueDark);
+  outline: 1px solid var(--VTTblueDark);
+}
+.editorModule input.lineConnectPosition,
+.editorModule input.lineConnectStartOffset,
+.editorModule input.lineConnectEndOffset {
+  width: 52px;
+  min-width: 52px;
+}
+/* "<End> point id:" label, the id field and the widget picker caret on one line,
+   with the end point name keeping the blue sub-title look */
+.editorModule .propertyInput.lineConnectRow > label {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .propertyInput.lineConnectRow > label .appearanceSubTitle {
+  display: inline;
+  margin: 0;
+}
+.editorModule .propertyInput.lineConnectRow input[type=text] {
+  flex: 1 1 80px;
+  min-width: 60px;
+}
+/* the "Connect at ... offset ..." row belongs to the end point above it, so it
+   is indented; each half stays together when the sidebar gets narrow */
+.editorModule .lineConnectDetails {
+  margin-top: 0;
+  padding-left: 10px;
+}
+.editorModule .lineConnectGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+/* one italic line that explains a state of the section above it - the same look
+   the drop target editor uses for its empty state */
+.editorModule .lineHint {
+  margin: -2px 0 6px;
+  font-style: italic;
+  opacity: .7;
+}
+/* dropTarget editor: one indented block per match, its widget type on the
+   header row and the extra property/value conditions indented below it, with
+   an "or" between the blocks to show that any one of them is enough */
+.editorModule .dropTargetEditor {
+  margin: 4px 0;
+  padding-right: 6px;
+}
+.editorModule .dropTargetEditor > label {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.editorModule .dropTargetEditor > label .info-button {
+  margin-left: 4px;
+}
+.editorModule .dropTargetMatches {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.editorModule .dropTargetMatch {
+  border-left: 2px solid var(--VTTblueDark);
+  padding: 4px 0 4px 6px;
+  background: #ffffff0d;
+}
+.editorModule .dropTargetMatchHeader,
+.editorModule .dropTargetCondition {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.editorModule .dropTargetCondition {
+  margin-top: 4px;
+  padding-left: 10px;
+}
+.editorModule .dropTargetMatchHeader > select {
+  flex: 1 1 100px;
+  min-width: 80px;
+  max-width: 100%;
+}
+.editorModule .dropTargetCondition input[type=text] {
+  flex: 1 1 60px;
+  min-width: 50px;
+}
+.editorModule .dropTargetEditor button[icon] {
+  flex: 0 0 auto;
+  padding: 3px;
+  min-width: 0;
+}
+.editorModule .dropTargetOr,
+.editorModule .dropTargetEmpty,
+.editorModule .dropTargetUnsupported {
+  font-style: italic;
+  opacity: .7;
+}
+.editorModule .dropTargetUnsupported {
+  flex: 1 1 auto;
+}
+.editorModule button.dropTargetAddMatch {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 4px 8px 4px 4px;
+}
+/* deleting a stop is destructive, so it gets the shared red icon-button look
+   (white glyph on dark red, darker on hover) from button[icon].red */
+.editorModule .lineStopList button.lineRemoveStop {
+  display: inline-flex;
+  flex: 0 0 auto;
+  margin-left: 3px;
+  padding: 3px;
+  vertical-align: middle;
+}
+.editorModule .lineStopOrder {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+/* the two arrows stack, so each one keeps the sidebar's ~24px target size */
+.editorModule .lineStopOrder button {
+  width: 26px;
+  min-width: 26px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  font-size: 11px;
+  line-height: 22px;
+}
+.editorModule .lineStopOrder button:disabled {
+  opacity: .4;
+}
+/* the three ways to add a stop live behind one button: it opens the menu below
+   it, and picking an entry there swaps the menu for that option's own row */
+.editorModule .lineAddStopSection {
+  margin: 6px 0;
+}
+.editorModule button.lineAddStop {
+  width: 100%;
+  justify-content: center;
+  padding: 5px 8px 5px 4px;
+}
+.editorModule button.lineAddStop.open {
+  background: var(--VTTblueDark);
+}
+.editorModule .lineAddStopMenu,
+.editorModule .lineAddStopOptions > .lineAddStopOption {
+  display: none;
+}
+.editorModule .lineAddStopMenu.open {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 6px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+}
+.editorModule button.lineAddStopMenuEntry {
+  justify-content: flex-start;
+  width: 100%;
+  padding: 5px 8px 5px 4px;
+  text-align: left;
+}
+.editorModule .lineAddStopMenuLabel,
+.editorModule .lineAddStopMenuHint {
+  display: block;
+  white-space: normal;
+}
+.editorModule .lineAddStopMenuHint {
+  font-size: 11px;
+  line-height: 13px;
+  opacity: .75;
+  text-transform: none;
+}
+.editorModule .lineAddStopOptions > .lineAddStopOption.open {
+  display: flex;
+  margin-top: 4px;
+  padding: 6px 6px 0 6px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+}
+.editorModule .lineAddStopOption > label {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .lineAddStopOption input.lineInheritID {
+  flex: 1 1 60px;
+  min-width: 48px;
+}
+.editorModule .lineAddStopOption button.lineAddStopBack {
+  flex: 0 0 auto;
+  padding: 2px;
+  min-width: 30px;
+  justify-content: center;
+}
+.editorModule .lineAddStopOption button.lineAddStopConfirm {
+  flex: 0 0 auto;
+  padding: 4px 8px 4px 4px;
+  white-space: nowrap;
+}
+/* the picker options are nothing but their caret, so it goes to the far right */
+.editorModule .lineExistingStopRow > label,
+.editorModule .lineLibraryStopRow > label {
+  flex: 1 1 auto;
+}
+.editorModule .lineLibraryStopEntry .lineLibraryStopPreview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  overflow: hidden;
+}
+.editorModule .lineLibraryStopEntry .lineLibraryStopPreview * {
+  max-width: 100%;
+  max-height: 100%;
+  font-size: 24px;
 }
 
 .widgets.editorModule .buttonBar input[type=text]{

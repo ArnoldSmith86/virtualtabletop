@@ -28,6 +28,7 @@ jobs:
           - publiclibrary-2.js
           - publiclibrary-3.js
           - publiclibrary-4.js
+          - routines.js
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

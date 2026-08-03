@@ -94,6 +94,8 @@ export function addWidget(widget, instance) {
     w = new Holder(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
+  } else if(widget.type == 'line') {
+    w = new Line(id);
   } else if(widget.type == 'pile') {
     w = new Pile(id);
   } else if(widget.type == 'scoreboard') {
@@ -165,12 +167,16 @@ async function updateWidgetId(widget, oldID) {
   const children = Widget.prototype.children.call(widgets.get(oldID)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==oldID);
 
+  // a rename is a remove+re-add of the same state under a new id, not a real
+  // removal - let onChildRemove/onChildAdd tell it apart from an actual detach
+  widgets.get(oldID).isBeingRenamed = true;
+
   for(const child of children)
     sendPropertyUpdate(child.get('id'), 'parent', null);
   for(const card of cards)
     sendPropertyUpdate(card.get('id'), 'deck', null);
   await removeWidgetLocal(oldID, true);
-  
+
   const id = await addWidgetLocal(widget);
 
   // Restore children
@@ -206,6 +212,10 @@ async function updateWidgetId(widget, oldID) {
     if(originalDropTarget != JSON.stringify(dropTarget))
       await t.set('dropTarget', dropTarget);
   }
+
+  // Keep the stop lists of lines pointing at the renamed widget
+  for(const line of widgetFilter(w=>w.get('type') == 'line'))
+    await line.renameStop(oldID, id);
 
   // Update references in routines
   const updateParam = function(a, func, param) {

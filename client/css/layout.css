@@ -1141,6 +1141,13 @@ button:disabled:hover {
   cursor: not-allowed;
 }
 
+/* The colored variants above are more specific than button:disabled, so a disabled green/red icon button
+   would keep its full color and not look disabled at all. */
+button[icon]:disabled,
+button[icon]:disabled:hover {
+  background-color: #808080;
+}
+
 .ui-button {
   background-color: var(--VTTblue);
   padding: 0 8px;

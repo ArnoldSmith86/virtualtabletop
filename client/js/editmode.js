@@ -2,23 +2,7 @@
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
-    {
-      id: id+'B',
-      parent: id,
-      fixedParent: true,
-      y: 171.36,
-      width: 111,
-      height: 40,
-      type: 'button',
-      text: 'Recall & Shuffle',
-      movableInEdit: false,
-
-      clickRoutine: [
-        { func: 'RECALL',  holder: '${PROPERTY parent}' },
-        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-      ]
-    }
+    deckResetButton(id, 111, 171.36)
   ];
 
   const types = {};
@@ -261,6 +245,71 @@ function generateCounterWidgets(id, x, y) {
   ];
 }
 
+// A stop is a widget listed in the line's stops property; the first one carries
+// the shared appearance and the others inherit it, so restyling that one
+// restyles every stop on the line at once. The stop is a holder that takes the
+// plain widgets pawns usually are, so a new line can be played on right away -
+// unlike the line itself, which takes nothing until it is given a dropTarget.
+function generateLineStop(id, lineID, index, x, y) {
+  if(index)
+    return { type: 'holder', id, parent: lineID, fixedParent: true, movableInEdit: false, inheritFrom: `${lineID}S0`, x, y };
+  return {
+    type: 'holder',
+    id,
+    parent: lineID,
+    fixedParent: true,
+    movableInEdit: false,
+    x,
+    y,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    dropTarget: { type: null },
+    dropOffsetX: 2,
+    dropOffsetY: 2
+  };
+}
+
+// every line offered in the add widget overlay is drawn in the VTT blue the
+// line widget defaults to, so none of them has to spell out a lineColor.
+// The same four lines are also in assets/widgets.json so that they show up in
+// the Widgets sidebar - keep both copies in sync when changing one of them.
+function generateLineWidgets(id, x, y) {
+  const line = {
+    type: 'line',
+    id,
+    x,
+    y,
+    width: 220,
+    height: 40,
+    lineStart: { x: 10, y: 20 },
+    lineEnd: { x: 210, y: 20 },
+    stops: [ { widget: id+'S0', position: 0 }, { widget: id+'S1', position: 1 } ]
+  };
+
+  return [ line, generateLineStop(id+'S0', id, 0, -10, 0), generateLineStop(id+'S1', id, 1, 190, 0) ];
+}
+
+// the ring: the same line widget as a closed shape, with its stops spread all
+// the way round instead of running from one end to the other
+function generateRingWidgets(id, x, y) {
+  const line = {
+    type: 'line',
+    id,
+    x,
+    y,
+    width: 130,
+    height: 130,
+    lineShape: 'ellipse',
+    lineStart: { x: 15, y: 15 },
+    lineEnd: { x: 115, y: 115 },
+    stops: [ 0, 0.25, 0.5, 0.75 ].map((position, i)=>({ widget: `${id}S${i}`, position }))
+  };
+
+  const stopCoords = [ { x: 45, y: -5 }, { x: 95, y: 45 }, { x: 45, y: 95 }, { x: -5, y: 45 } ];
+  return [ line ].concat(stopCoords.map((coord, i)=>generateLineStop(`${id}S${i}`, id, i, coord.x, coord.y)));
+}
+
 function generateTimerWidgets(id, x, y) {
   return [
     { type:'timer', id: id, x: x, y: y },
@@ -317,6 +366,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
+    if(wi.type == 'line')   w = new Line(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
@@ -1184,24 +1234,46 @@ function populateAddWidgetOverlay() {
     x: 1335,
     y: 150
   });
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineVertical'), {
-    x: 1300,
-    y: 325,
-    width: 200,
-    height: 0,
-    borderRadius: "3px",
-
-    css: { "border": "3px solid #666" }
+  // Add the composite line widget (a path with attached stops)
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function() {
+    const id = generateUniqueWidgetID();
+    for(const w of generateLineWidgets(id, 1310, 420))
+      await addWidgetLocal(w);
+    return id
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
-    x: 1535,
-    y: 190,
-    width: 0,
-    height: 200,
-    borderRadius: "3px",
+  // The divider line is a plain line widget (without stops), so it can be
+  // curved, restyled and connected like any other line
+  addWidgetToAddWidgetOverlay(new Line('add-divider-horizontal'), {
+    type: 'line',
+    x: 1290,
+    y: 315,
+    width: 220,
+    height: 20,
+    lineStart: { x: 10, y: 10 },
+    lineEnd: { x: 210, y: 10 },
+    lineWidth: 4
+  });
 
-    css: { "border": "3px solid #666" }
+  // a line without stops in its closed shape: a plain circle/oval outline
+  addWidgetToAddWidgetOverlay(new Line('add-circle'), {
+    type: 'line',
+    x: 1300,
+    y: 500,
+    width: 100,
+    height: 100,
+    lineShape: 'ellipse',
+    lineStart: { x: 10, y: 10 },
+    lineEnd: { x: 90, y: 90 },
+    lineWidth: 4
+  });
+
+  // Add the composite ring widget (a closed line with stops all the way round)
+  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495), async function() {
+    const id = generateUniqueWidgetID();
+    for(const w of generateRingWidgets(id, 1420, 495))
+      await addWidgetLocal(w);
+    return id
   });
 }
 // end of JSON generators
@@ -1211,6 +1283,7 @@ function populateAddWidgetOverlay() {
 let libraryDecksIndex = null;
 let libraryDecksObserver = null;
 let libraryDeckPreviewCounter = 0;
+let libraryDecksPlacement = null; // set by openLibraryDecksOverlay for the deck a click adds
 const libraryDeckDetailsCache = {};
 
 function getLibraryDeckDetails(entry) {
@@ -1229,7 +1302,10 @@ function getLibraryDeckDetails(entry) {
   return libraryDeckDetailsCache[key];
 }
 
-async function openLibraryDecksOverlay() {
+// placement: what to add around a picked deck, when the browser was opened from the "Add New Deck" dialog (which
+// is hidden while browsing). Opened from anywhere else, a picked deck gets the holder and button it always got.
+async function openLibraryDecksOverlay(placement) {
+  libraryDecksPlacement = placement || deckPlacementDefault;
   showOverlay('libraryDecksOverlay');
   if(libraryDecksIndex == 'loading')
     return;
@@ -1373,6 +1449,7 @@ async function renderLibraryDeckPreview(entry, container) {
 
 // adds the deck like the "add deck" entry of the add widget overlay does:
 // a holder containing the deck, a pile with all its cards and a shuffle button
+// (holder and button are optional when the browser was opened from the "Add New Deck" dialog)
 async function addLibraryDeckToGame(entry) {
   let details;
   try {
@@ -1382,6 +1459,7 @@ async function addLibraryDeckToGame(entry) {
     return;
   }
 
+  const placement = libraryDecksPlacement || deckPlacementDefault;
   batchStart();
   setDeltaCause(`${getPlayerDetails().playerName} added deck ${entry.deck} from public library game ${entry.gameName} in editor`);
 
@@ -1393,47 +1471,40 @@ async function addLibraryDeckToGame(entry) {
 
   const holderWidth  = entry.cardWidth  + 8;
   const holderHeight = entry.cardHeight + 11;
-  await addWidgetLocal({
-    type: 'holder',
-    id,
-    x: Math.round(800 - holderWidth/2),
-    y: Math.round(500 - holderHeight/2),
-    width: holderWidth,
-    height: holderHeight,
-    dropTarget: { type: 'card' }
-  });
-  await addWidgetLocal({
-    id: id+'B',
-    parent: id,
-    fixedParent: true,
-    y: holderHeight,
-    width: holderWidth,
-    height: 40,
-    type: 'button',
-    text: 'Recall & Shuffle',
-    movableInEdit: false,
-
-    clickRoutine: [
-      { func: 'RECALL',  holder: '${PROPERTY parent}' },
-      { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-      { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-    ]
-  });
+  if(placement.holder) {
+    await addWidgetLocal({
+      type: 'holder',
+      id,
+      x: Math.round(800 - holderWidth/2),
+      y: Math.round(500 - holderHeight/2),
+      width: holderWidth,
+      height: holderHeight,
+      dropTarget: { type: 'card' }
+    });
+    if(placement.resetButton)
+      await addWidgetLocal(deckResetButton(id, holderWidth, holderHeight));
+  }
 
   const deckWidth  = details.deck.width  || 86;
   const deckHeight = details.deck.height || 86;
-  await addWidgetLocal(Object.assign({}, details.deck, {
-    id: id+'D',
+  // Without a holder the cards still go into a pile in the middle of the table, and the deck widget (which is
+  // invisible outside edit mode) is placed next to it instead of below it.
+  await addWidgetLocal(Object.assign({}, details.deck, { id: id+'D' }, placement.holder ? {
     parent: id,
     x: Math.round((holderWidth -deckWidth )/2),
     y: Math.round((holderHeight-deckHeight)/2)
+  } : {
+    x: Math.round(800 - entry.cardWidth/2 - deckWidth - 10),
+    y: Math.round(500 - deckHeight/2)
   }));
-  await addWidgetLocal({ type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight });
+  await addWidgetLocal(placement.holder
+    ? { type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight }
+    : { type: 'pile', id: id+'P', x: Math.round(800 - entry.cardWidth/2), y: Math.round(500 - entry.cardHeight/2), width: entry.cardWidth, height: entry.cardHeight });
 
   for(const [ i, card ] of details.cards.entries())
     await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
 
-  overlayDone(id);
+  overlayDone(placement.holder ? id : id+'P');
   batchEnd();
 }
 
@@ -1677,7 +1748,7 @@ export function initializeEditMode(currentMetaData) {
     overlayDone(await addWidgetLocal(hand));
   });
 
-  on('#browseLibraryDecks', 'click', openLibraryDecksOverlay);
+  on('#browseLibraryDecks', 'click', _=>openLibraryDecksOverlay());
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);
   on('#libraryDecksClose', 'click', _=>showOverlay());
