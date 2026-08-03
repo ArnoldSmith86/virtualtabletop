@@ -983,8 +983,8 @@ class PropertiesModule extends SidebarModule {
   }
 
   // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
-  // (deckTraditional/deckGenerator/deckImages/deckImportTTS) now live in the deck editor's "Add New Deck"
-  // submenu, so this just points the user at the two starting actions.
+  // (deckTraditional/deckGenerator/deckImages/deckImagePairs/deckTextCards/deckImportTTS) now live in the
+  // deck editor's "Add New Deck" submenu, so this just points the user at the two starting actions.
   addDeck() {
     this.addHeader('Edit widgets');
 
@@ -1559,6 +1559,344 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
+  // "min"/"max" on a number input only constrain its spinner - a typed or pasted value is passed through
+  // unchanged, so everything read back from one goes through here and is clamped to the range the input
+  // itself declares. An emptied or unparsable field falls back to the minimum, which also keeps the defaults
+  // in the HTML templates from having to be repeated in the code that reads them.
+  numberFromInput(input) {
+    const min = +input.min || 1;
+    return Math.min(+input.max || Infinity, Math.max(min, Math.round(+input.value) || min));
+  }
+
+  // Card type names end up in the card widget ids, so strip anything awkward there and keep them short; the
+  // caller's fallback is used when a name has nothing usable left (e.g. a "______ + ______" card text).
+  cardTypeName(name, fallback) {
+    return name.replace(/[^A-Za-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().substr(0, 30).trim() || fallback;
+  }
+
+  // Two bulk uploads - all the card fronts and all the card backs - matched into pairs by sorting both lists
+  // by file name, so front1.jpg gets back1.jpg as its back. Numbers are compared numerically so front2 sorts
+  // before front10. Unlike deckImages (one shared back for the whole deck) every card type carries its own
+  // back image, which the back face reads through a dynamic property.
+  deckImagePairs(target) {
+    const fronts = [];
+    const backs = [];
+
+    const intro = document.createElement('p');
+    intro.innerText = 'Upload all card fronts and all card backs. Both lists are sorted by file name and then matched up in that order, so front1.jpg is paired with back1.jpg. Upload a single back image to use it for every card.';
+    target.append(intro);
+
+    // Fronts and backs go into a two-column grid, filled row by row (both headers, both hints, both lists,
+    // both upload buttons) so that row n of the fronts and row n of the backs - the pair - are on one line.
+    const columns = div(target, 'imagePairColumns');
+    this.addSubHeader('Card fronts', columns);
+    this.addSubHeader('Card backs', columns);
+    div(columns, 'imagePairHint', 'One image per card.');
+    // The single-back shortcut is only worth knowing before you upload, not after it has turned into a mismatch.
+    div(columns, 'imagePairHint', 'One per card, or a single one for every card.');
+
+    const addList = (emptyHint)=>{
+      const listDOM = div(columns, 'imagePairList');
+      listDOM.dataset.emptyHint = emptyHint;
+      return listDOM;
+    };
+    const frontList = addList('No front images yet');
+    const backList  = addList('No back images yet');
+
+    for(const [ list, label ] of [ [ fronts, 'Upload fronts...' ], [ backs, 'Upload backs...' ] ]) {
+      const bar = div(columns, 'buttonBar', `<button icon=upload>${label}</button>`);
+      $('button', bar).onclick = _=>uploadAsset((imagePath, fileName)=>{
+        if(imagePath) {
+          const entry = { imagePath, fileName };
+          list.push(entry);
+          // The card size is derived from the first front image's aspect ratio, and naturalWidth/naturalHeight
+          // stay 0 until the browser has decoded it - so measure the image as soon as it is available instead
+          // of whenever "Add to game" happens to be clicked.
+          const probe = new Image();
+          probe.onload = _=>entry.aspectRatio = probe.naturalWidth / probe.naturalHeight;
+          probe.src = mapAssetURLs(imagePath);
+          render();
+        }
+      });
+    }
+
+    const options = div(target, 'imagePairOptions', '<label>Copies of each card<input type=number min=1 max=99 value=1></label>');
+
+    // The status explains why "Add to game" is disabled, so it belongs right next to it.
+    div(target, 'goButton buttonBar', '<span class=imagePairStatus></span><button icon=add class=green disabled>Add to game</button>');
+    const status = $('.imagePairStatus', target);
+    const addButton = $('.goButton [icon=add]', target);
+
+    const renderList = (list, listDOM, pairedWith)=>{
+      listDOM.innerHTML = '';
+      for(const [ index, entry ] of list.entries()) {
+        const row = div(listDOM, 'imagePairEntry', `<b></b><img src="${mapAssetURLs(entry.imagePath)}"><span></span><button icon=delete title="Remove this image"></button>`);
+        $('b', row).innerText = `${index+1}.`;
+        $('span', row).innerText = entry.fileName;
+        if(pairedWith && pairedWith[index])
+          row.title = `Paired with ${pairedWith[index].fileName}`;
+        $('button', row).onclick = _=>{
+          list.splice(list.indexOf(entry), 1);
+          render();
+        };
+      }
+    };
+
+    // Both lists always render in the order they will be paired in, so the numbers in front of the file names
+    // are the pairing itself - no separate pair list needed.
+    const render = _=>{
+      for(const list of [ fronts, backs ])
+        list.sort((a, b)=>a.fileName.localeCompare(b.fileName, undefined, { numeric: true }));
+      const sharedBack = backs.length == 1;
+      const paired = fronts.length && backs.length && (sharedBack || fronts.length == backs.length);
+      // Only claim a pairing in the tooltips while the counts actually match - otherwise the rows would
+      // promise pairs that "Add to game" is refusing to create.
+      const showPairs = paired && !sharedBack;
+      renderList(fronts, frontList, showPairs ? backs : null);
+      renderList(backs, backList, showPairs ? fronts : null);
+      if(!fronts.length || !backs.length)
+        status.innerText = 'Upload at least one front image and one back image.';
+      else if(paired)
+        status.innerText = `${fronts.length} card${fronts.length == 1 ? '' : ' types'}${sharedBack ? ', all sharing the single back image' : ', each front paired with the back in the same position'}.`;
+      else
+        status.innerText = `${fronts.length} fronts but ${backs.length} backs - upload the same number of each, or a single back for all cards.`;
+      status.classList.toggle('imagePairMismatch', !!(fronts.length && backs.length && !paired));
+      addButton.disabled = !paired;
+    };
+    render();
+
+    addButton.onclick = async _=>{
+      const copies = this.numberFromInput($('input', options));
+      const cardTypes = {};
+      const counts = {};
+      for(const [ index, front ] of fronts.entries()) {
+        const back = backs.length == 1 ? backs[0] : backs[index];
+        // Two files can share a name (they come from separate uploads); a "(2)" suffix rather than a plain
+        // number keeps the generated card ids apart from the "<card type> <copy number>" ids below.
+        const base = this.cardTypeName(front.fileName.replace(/\.[^.]+$/, ''), `card ${index+1}`);
+        let cardType = base;
+        for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
+          cardType = `${base} (${i})`;
+        cardTypes[cardType] = { image: front.imagePath, backImage: back.imagePath };
+        counts[cardType] = copies;
+      }
+
+      const deck = {
+        id: generateUniqueWidgetID(),
+        type: 'deck',
+        cardTypes,
+        faceTemplates: [
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "dynamicProperties": {
+                  "value": "backImage",
+                  "height": "height",
+                  "width": "width"
+                }
+              }
+            ]
+          },
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "dynamicProperties": {
+                  "value": "image",
+                  "height": "height",
+                  "width": "width"
+                }
+              }
+            ]
+          }
+        ]
+      };
+
+      // Keep the default card height and take the width from the first front image's aspect ratio, so the
+      // cards aren't distorted (same approach as the single-image flow above). Falls back to the default card
+      // size while the image hasn't been decoded yet.
+      const aspectRatio = fronts[0].aspectRatio;
+      const cardWidth = aspectRatio ? Math.round(aspectRatio*160) : 103;
+      if(cardWidth != 103)
+        deck.cardDefaults = { width: cardWidth };
+
+      await this.addDeckWithCards(deck, 'front/back image', counts);
+    };
+  }
+
+  // A deck of plain text cards in the shape of the "Cards Against Humanity" decks in the library: every typed
+  // text - one per line, or one per blank-line-separated block when the card text needs line breaks of its own
+  // - becomes a card type with a "text" property, the front face renders it through a dynamic property and
+  // the back face shows an optional deck label. Colors, font size and card size are the only design choices -
+  // everything beyond that is done afterwards in the deck editor.
+  deckTextCards(target) {
+    const intro = document.createElement('p');
+    intro.innerText = 'Type or paste the card texts. Each card becomes a card type - one distinct card design, of which the copies below are duplicates - whose "text" property holds its text, so you can edit the wording later in the deck editor.';
+    target.append(intro);
+
+    this.addSubHeader('Card texts', target);
+    const textarea = document.createElement('textarea');
+    textarea.className = 'textCardsInput';
+    textarea.rows = 8;
+    target.append(textarea);
+
+    // Where one card ends and the next begins. One card per line is what you want for a pasted list, but it
+    // leaves no way to put a line break inside a card - blank line mode spends an empty line on the separator
+    // and gives the line breaks back to the card text.
+    const split = div(target, 'textCardsSplit', `
+      <label><input type=radio name=textCardsSplit value=line checked>One card per line</label>
+      <label><input type=radio name=textCardsSplit value=block>Blank line between cards<span>lets a card's text span several lines</span></label>
+    `);
+    const splitOnBlankLines = _=>$('input[value=block]', split).checked;
+
+    // Design inputs and preview side by side: the preview is exactly what you want to look at while changing
+    // the font size and the colors, so it must not be pushed below the fold by the inputs that drive it.
+    const columns = div(target, 'textCardsColumns');
+    const designColumn = div(columns, 'textCardsColumn');
+    this.addSubHeader('Card design', designColumn);
+    const design = div(designColumn, 'textCardsDesign', `
+      <label>Card color<input class=textCardsBackground type=color value="#000000"></label>
+      <label>Text color<input class=textCardsColor type=color value="#ffffff"></label>
+      <label>Font size<input class=textCardsFontSize type=number min=6 max=72 value=16>px</label>
+      <label>Card width<input class=textCardsWidth type=number min=20 max=600 value=150>px</label>
+      <label>Card height<input class=textCardsHeight type=number min=20 max=600 value=233>px</label>
+      <label>Copies of each card<input class=textCardsCopies type=number min=1 max=99 value=1></label>
+      <label class=textCardsLabelWrap>Deck label<textarea class=textCardsLabel rows=2 placeholder="optional, e.g. the deck name"></textarea></label>
+      <span class=textCardsHint>The deck label is shown large on the card backs - line breaks included - and small along the bottom edge of the fronts.</span>
+    `);
+
+    const previewColumn = div(columns, 'textCardsColumn textCardsPreviewColumn');
+    this.addSubHeader('Preview (first card)', previewColumn);
+    const preview = div(previewColumn, 'textCardsPreview');
+
+    div(target, 'goButton buttonBar', '<span class=textCardsStatus></span><button icon=add class=green disabled>Add to game</button>');
+    const status = $('.textCardsStatus', target);
+    const addButton = $('.goButton [icon=add]', target);
+
+    // Line breaks that survive into a card's text render as line breaks on the card itself, so the only work
+    // here is trimming: every line loses its surrounding spaces and a card loses its leading/trailing blanks.
+    const cardTexts = _=>textarea.value
+      .split(splitOnBlankLines() ? /\n[ \t]*\n/ : '\n')
+      .map(card=>card.split('\n').map(line=>line.trim()).join('\n').replace(/^\n+|\n+$/g, ''))
+      .filter(card=>card.length);
+
+    const deckDefinition = (texts, id)=>{
+      const number = selector=>this.numberFromInput($(selector, design));
+      const width    = number('.textCardsWidth');
+      const height   = number('.textCardsHeight');
+      const fontSize = number('.textCardsFontSize');
+      const color    = $('.textCardsColor', design).value;
+      const label    = $('.textCardsLabel', design).value.split('\n').map(line=>line.trim()).join('\n').replace(/^\n+|\n+$/g, '');
+      const padding  = Math.max(4, Math.round(width/12));
+      // With a deck label the front gets a small footer along its bottom edge, so the card text has to stop
+      // above it - text objects don't clip, a long text would just run over the label.
+      const footerSize   = Math.max(6, Math.round(fontSize/2));
+      const footerHeight = label ? Math.round(footerSize*1.4) : 0;
+
+      const colorBox = _=>({ type: 'image', x: 0, y: 0, width, height, color: $('.textCardsBackground', design).value, value: '' });
+      const textObject = properties=>Object.assign({
+        type: 'text',
+        x: padding,
+        y: padding,
+        width: width - 2*padding,
+        height: height - 2*padding,
+        textAlign: 'left',
+        color,
+        // Clip instead of spilling over the rounded card edge (or over the deck label) when a text is longer
+        // than the box it was given at the chosen font size.
+        css: { 'font-weight': 'bold', 'line-height': '1.25em', 'overflow': 'hidden' }
+      }, properties);
+
+      const cardTypes = {};
+      for(const [ index, text ] of texts.entries()) {
+        // Repeated texts get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
+        const base = this.cardTypeName(text, `card ${index+1}`);
+        let cardType = base;
+        for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
+          cardType = `${base} (${i})`;
+        cardTypes[cardType] = { text };
+      }
+
+      const back = { radius: 8, objects: [ colorBox() ] };
+      const front = { radius: 8, objects: [ colorBox(), textObject({ height: height - 2*padding - footerHeight, dynamicProperties: { value: 'text', fontSize: 'fontSize' } }) ] };
+      if(label) {
+        // The back is just the label at 1.5x, the front repeats it small along the bottom edge - where a
+        // multi-line label has no room, so there it becomes a single line.
+        back.objects.push(textObject({ value: label, fontSize: Math.round(fontSize*1.5) }));
+        front.objects.push(textObject({ value: label.replace(/\n/g, ' '), fontSize: footerSize, y: height - padding - footerHeight, height: footerHeight }));
+      }
+
+      return {
+        id,
+        type: 'deck',
+        cardDefaults: { width, height, fontSize },
+        cardTypes,
+        faceTemplates: [ back, front ]
+      };
+    };
+
+    // One id for every preview render: the preview deck is briefly registered in "widgets" so the preview card
+    // can read its faces from it, which needs an id that is not in use - but generating a fresh one on every
+    // keystroke would be wasteful.
+    const previewID = generateUniqueWidgetID();
+    const updatePreview = _=>{
+      const texts = cardTexts();
+      const deck = deckDefinition([ texts.length ? texts[0] : 'Your card text goes here.' ], previewID);
+      const { width, height } = deck.cardDefaults;
+      // A single upright card at (up to) its real size - the fanned five-card thumbnail renderWidgetButton
+      // draws is far too small to judge the font size, the colors or where the text wraps, which is the only
+      // reason to look at a preview here. Scaling happens on a wrapper so the card keeps its own transform.
+      const scale = Math.min(1, 200/Math.max(width, height));
+      preview.innerHTML = '';
+      preview.style.width = `${Math.round(width*scale)}px`;
+      preview.style.height = `${Math.round(height*scale)}px`;
+      const box = div(preview, 'textCardsPreviewCard');
+      box.style.width = `${width}px`;
+      box.style.height = `${height}px`;
+      box.style.transform = `scale(${scale})`;
+
+      const previewDeck = new Deck(previewID);
+      previewDeck.renderReadonlyCopyRaw(JSON.parse(JSON.stringify(deck)), box).domElement.remove();
+      widgets.set(previewID, previewDeck);
+      new Card().renderReadonlyCopyRaw({ deck: previewID, cardType: Object.keys(deck.cardTypes)[0], activeFace: 1 }, box);
+      widgets.delete(previewID);
+
+      // Spell out what "Add to game" will create: the copies multiplier is easy to miss, and it decides
+      // whether addDeckWithCards asks for confirmation.
+      const copies = this.numberFromInput($('.textCardsCopies', design));
+      const cards = texts.length * copies;
+      status.innerText = texts.length
+        ? `${texts.length} card type${texts.length == 1 ? '' : 's'} × ${copies} = ${cards} card${cards == 1 ? '' : 's'}.`
+        : 'Type or paste at least one line of text above.';
+      addButton.disabled = !texts.length;
+      // The placeholder is where the split mode is easiest to show rather than explain.
+      textarea.placeholder = splitOnBlankLines()
+        ? 'The first card,\nwhich runs over two lines\n\nThe second card\n...'
+        : 'The first card\nThe second card\n...';
+    };
+    textarea.oninput = updatePreview;
+    for(const input of $a('input, textarea', design))
+      input.oninput = updatePreview;
+    for(const radio of $a('input', split))
+      radio.onchange = updatePreview;
+    updatePreview();
+
+    addButton.onclick = async _=>{
+      const texts = cardTexts();
+      if(!texts.length)
+        return;
+      const deck = deckDefinition(texts, generateUniqueWidgetID());
+      const copies = this.numberFromInput($('.textCardsCopies', design));
+      const counts = {};
+      for(const cardType in deck.cardTypes)
+        counts[cardType] = copies;
+      await this.addDeckWithCards(deck, 'text', counts);
+    };
+  }
+
   deckImportTTS(target) {
     this.addSubHeader('Workshop link', target);
     const linkDiv = div(target, 'ttsImportLink', `
@@ -1650,6 +1988,16 @@ class PropertiesModule extends SidebarModule {
   }
 
   async addDeckWithCards(deck, type, counts, placement=this.deckPlacement()) {
+    // Some callers fill counts straight from a number input, where .value is a string - coerce so that the
+    // counts are summed rather than concatenated.
+    const copiesOf = cardType => counts ? Number(counts[cardType]) || 0 : 1;
+
+    // Every card becomes a widget of its own inside a single batch, so a long list of card types multiplied
+    // by a high copy count can keep the client busy for a long time - ask before creating a whole lot of them.
+    const totalCards = Object.keys(deck.cardTypes || {}).reduce((sum, cardType)=>sum + copiesOf(cardType), 0);
+    if(totalCards > 500 && !confirm(`This creates ${totalCards} cards. Adding that many at once takes a while and makes the game harder to work with.\n\nCreate them anyway?`))
+      return;
+
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
 
@@ -1697,7 +2045,7 @@ class PropertiesModule extends SidebarModule {
       : { type: 'pile', id: pileID, x: Math.round(800 - cardWidth/2), y: Math.round(500 - cardHeight/2), width: cardWidth, height: cardHeight });
 
     for(const cardType in deck.cardTypes) {
-      const count = counts ? counts[cardType] || 0 : 1;
+      const count = copiesOf(cardType);
       for(let i=1; i<=count; ++i)
         await addWidgetLocal({
           type: 'card',

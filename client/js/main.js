@@ -1,9 +1,6 @@
-import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
+import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { calculateLayout, calculateEditModuleClasses, viewportConfig, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
-
-// the layout classes are also reachable from a game's Global Room CSS, so the pre-rename names stay
-const LEGACY_LAYOUT_CLASSES = { 'wide-side': 'wideToolbar', bottom: 'horizontalToolbar', tight: 'aspectTooGood' };
+import { calculateLayout, calculateEditModuleClasses, viewportConfig, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -235,19 +232,193 @@ function setScale() {
 
   const layout = calculateLayout(w, h, viewportConfig, layoutOptions);
   scale = layout.scale;
-  $('body').classList.remove('layout-side', 'layout-wide-side', 'layout-bottom', 'layout-tight');
-  $('body').classList.add(`layout-${layout.layoutMode}`);
-  // the class names above used to be wideToolbar/horizontalToolbar/aspectTooGood - keep those applied
-  // as well so a game's Global Room CSS that targets them keeps working
-  $('body').classList.remove('wideToolbar', 'horizontalToolbar', 'aspectTooGood');
-  if(LEGACY_LAYOUT_CLASSES[layout.layoutMode])
-    $('body').classList.add(LEGACY_LAYOUT_CLASSES[layout.layoutMode]);
+  for(const layoutClass of LAYOUT_CLASSES)
+    toggleClass($('body'), layoutClass, layoutClass == layout.layoutClass);
 
   document.documentElement.style.setProperty('--scale', scale);
+  updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
   refreshIgnoreZoomWidgets();
+}
+
+// Each toolbar layout (wide, narrow, horizontal and the one for aspectTooGood) has multiple
+// compaction levels in the CSS. Instead of hardcoding a viewport size for each of them, the
+// lowest level that makes all buttons fit is used - and if not even the most compact level
+// fits, the toolbar becomes scrollable (with arrows hinting at the hidden buttons).
+const toolbarCompactionLevels = 4;
+
+function updateToolbarLayout() {
+  const toolbar = $('#toolbar');
+  if(!toolbar.getClientRects().length)
+    return; // hidden in edit mode, in the JSON editor or through the hideToolbar URL property
+
+  // the scroll arrows are flex items that take space away from the buttons, so measuring while
+  // they are still there would make the result depend on the previous state - and with that on
+  // the direction the window was resized in
+  toggleClass($('body'), 'toolbarOverflow', false);
+
+  let fits = false;
+  for(let level = 0; level <= toolbarCompactionLevels && !fits; ++level) {
+    for(let i = 1; i <= toolbarCompactionLevels; ++i)
+      toggleClass($('body'), `toolbarCompact${i}`, i <= level);
+    fits = toolbarContentFits(toolbar);
+  }
+  toggleClass($('body'), 'toolbarOverflow', !fits);
+  updateToolbarScrolling();
+}
+
+// Applying a compaction level resizes the toolbar, which is also the element that is observed
+// for resizes. Doing that from within the ResizeObserver callback makes the browser abort the
+// delivery loop and report "ResizeObserver loop completed with undelivered notifications" as an
+// error - which the client turns into a crash overlay - so observed resizes are handled in the
+// next frame instead, outside of the delivery loop.
+let toolbarLayoutIsScheduled = false;
+
+function scheduleToolbarLayoutUpdate() {
+  if(toolbarLayoutIsScheduled)
+    return;
+  toolbarLayoutIsScheduled = true;
+  requestAnimationFrame(_=>{
+    toolbarLayoutIsScheduled = false;
+    updateToolbarLayout();
+  });
+}
+
+function toolbarContentFits(toolbar) {
+  const px = value => parseFloat(value) || 0;
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  const toolbarRect = toolbar.getBoundingClientRect();
+  const toolbarStyle = getComputedStyle(toolbar);
+
+  let contentEnd = 0;
+  for(const child of toolbar.children) {
+    if(!child.getClientRects().length)
+      continue;
+    const rect = child.getBoundingClientRect();
+    const style = getComputedStyle(child);
+    contentEnd = Math.max(contentEnd, horizontal ? rect.right + px(style.marginRight) : rect.bottom + px(style.marginBottom));
+  }
+  contentEnd += horizontal ? toolbar.scrollLeft : toolbar.scrollTop;
+
+  const available = horizontal ? toolbarRect.right - px(toolbarStyle.paddingRight) : toolbarRect.bottom - px(toolbarStyle.paddingBottom);
+  return contentEnd <= available + 0.5;
+}
+
+function updateToolbarScrolling() {
+  const toolbar = $('#toolbar');
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  const position = horizontal ? toolbar.scrollLeft : toolbar.scrollTop;
+  const visible = horizontal ? toolbar.clientWidth : toolbar.clientHeight;
+  const content = horizontal ? toolbar.scrollWidth : toolbar.scrollHeight;
+  toggleClass($('body'), 'toolbarScrollBack', position > 1);
+  toggleClass($('body'), 'toolbarScrollForward', position + visible < content - 1);
+  positionToolbarPopups();
+  positionToolbarTooltip();
+}
+
+// clicking one of the arrows scrolls by roughly one screen and returns true - the arrows are
+// pseudo elements, so whether a click on one is reported on the toolbar or on a button that
+// scrolled underneath it depends on the scroll position, which is why the caller catches the
+// click in the capture phase. A vertical mouse wheel does not scroll a horizontally scrolling
+// container, so that is translated in scrollToolbarByWheel below.
+function scrollToolbarByArrow(e) {
+  const body = $('body').classList;
+  if(!body.contains('toolbarOverflow'))
+    return false;
+
+  const toolbar = $('#toolbar');
+  const rect = toolbar.getBoundingClientRect();
+  const horizontal = body.contains('horizontalToolbar');
+  const arrow = parseFloat(getComputedStyle(toolbar).getPropertyValue('--toolbarArrowSize')) || 0;
+  const back = body.contains('toolbarScrollBack') && (horizontal ? e.clientX < rect.left + arrow : e.clientY < rect.top + arrow);
+  const forward = body.contains('toolbarScrollForward') && (horizontal ? e.clientX > rect.right - arrow : e.clientY > rect.bottom - arrow);
+  if(back || forward)
+    scrollToolbarBy((horizontal ? toolbar.clientWidth : toolbar.clientHeight) * (back ? -0.8 : 0.8), 'smooth');
+  return back || forward;
+}
+
+function scrollToolbarByWheel(e) {
+  if(!$('body').classList.contains('horizontalToolbar') || !$('body').classList.contains('toolbarOverflow') || e.deltaX)
+    return;
+  // deltaMode says whether the wheel reports pixels, lines or pages
+  scrollToolbarBy(e.deltaY * ([ 1, 16, $('#toolbar').clientWidth ][e.deltaMode] || 1));
+  e.preventDefault();
+}
+
+function scrollToolbarBy(amount, behavior) {
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  $('#toolbar').scrollBy({ [horizontal ? 'left' : 'top']: amount, behavior });
+}
+
+const toolbarPopups = [ { popup: '#options', button: '#optionsButton' }, { popup: '#zoomControls', button: '#zoom2xButton' } ];
+
+// While the toolbar scrolls, it clips everything that reaches outside of it - so the sound and
+// zoom popups are positioned relative to the viewport instead of relative to their button.
+function positionToolbarPopups() {
+  const overflow = $('body').classList.contains('toolbarOverflow');
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  const toolbarRect = $('#toolbar').getBoundingClientRect();
+  for(const { popup: selector } of toolbarPopups) {
+    const popup = $(selector);
+    if(!overflow || popup.classList.contains('hidden')) {
+      resetToolbarFlyout(popup);
+      continue;
+    }
+    const anchorRect = popup.parentNode.getBoundingClientRect();
+    if(horizontal)
+      positionToolbarFlyout(popup, anchorRect.left + 32 - popup.offsetWidth, toolbarRect.top - popup.offsetHeight - 2);
+    else
+      positionToolbarFlyout(popup, toolbarRect.right + 4, anchorRect.top - 2);
+  }
+}
+
+// the same for the tooltip of the button the mouse is on - the wide toolbar shows its tooltips
+// inside of the toolbar, so those are not clipped and stay where the CSS puts them
+let hoveredToolbarButton = null;
+let positionedTooltip = null;
+
+function positionToolbarTooltip() {
+  if(positionedTooltip)
+    resetToolbarFlyout(positionedTooltip);
+  positionedTooltip = null;
+
+  const body = $('body').classList;
+  if(!hoveredToolbarButton || body.contains('wideToolbar'))
+    return;
+  const tooltip = $('.tooltip', hoveredToolbarButton);
+  if(!tooltip)
+    return;
+
+  // the sound and zoom popups open exactly where the tooltip of their button goes
+  for(const { popup, button } of toolbarPopups) {
+    if(hoveredToolbarButton == $(button) && !$(popup).classList.contains('hidden')) {
+      positionedTooltip = tooltip;
+      tooltip.style.display = 'none';
+      return;
+    }
+  }
+  if(!body.contains('toolbarOverflow'))
+    return;
+
+  positionedTooltip = tooltip;
+  const toolbarRect = $('#toolbar').getBoundingClientRect();
+  const buttonRect = hoveredToolbarButton.getBoundingClientRect();
+  if(body.contains('horizontalToolbar'))
+    positionToolbarFlyout(tooltip, buttonRect.left + (buttonRect.width - tooltip.offsetWidth)/2, toolbarRect.top - tooltip.offsetHeight - 2);
+  else
+    positionToolbarFlyout(tooltip, toolbarRect.right + 4, buttonRect.top + (buttonRect.height - tooltip.offsetHeight)/2);
+}
+
+function positionToolbarFlyout(element, left, top) {
+  element.style.right = 'auto';
+  element.style.left = Math.max(0, Math.min(left, window.innerWidth - element.offsetWidth)) + 'px';
+  element.style.top = Math.max(0, Math.min(top, window.innerHeight - element.offsetHeight)) + 'px';
+}
+
+function resetToolbarFlyout(element) {
+  element.style.top = element.style.left = element.style.right = element.style.display = '';
 }
 
 function getScale() {
@@ -571,6 +742,25 @@ onLoad(function() {
   on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());
 
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
+
+  on('#toolbar', 'scroll', updateToolbarScrolling);
+  $('#toolbar').addEventListener('click', function(e) {
+    if(scrollToolbarByArrow(e))
+      e.stopPropagation(); // the arrow was clicked, not the button that scrolled underneath it
+  }, true);
+  on('#toolbar', 'click', _=>updateToolbarScrolling()); // a click may have toggled a popup
+  on('#toolbar', 'wheel', scrollToolbarByWheel);
+  on('#toolbar', 'mouseover', e=>{
+    hoveredToolbarButton = e.target.closest('.toolbarButton');
+    positionToolbarTooltip();
+  });
+  on('#toolbar', 'mouseleave', _=>{
+    hoveredToolbarButton = null;
+    positionToolbarTooltip();
+  });
+  // catches everything that resizes the toolbar without a setScale, especially it becoming visible again
+  new ResizeObserver(scheduleToolbarLayoutUpdate).observe($('#toolbar'));
+  document.fonts.ready.then(_=>updateToolbarLayout()); // the icon font changes the button sizes
 
   on('.toolbarButton', 'click', function(e) {
     if(isLoading) {

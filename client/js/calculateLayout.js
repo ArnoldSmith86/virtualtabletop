@@ -27,19 +27,24 @@ export function setViewportSize(aspectRatio) {
   viewportConfig.targetHeight = boardDimension(aspectRatio && aspectRatio.height, DEFAULT_VIEWPORT.targetHeight);
 }
 
+// The body classes that pick a toolbar layout. They are the ones the toolbar CSS and
+// updateToolbarLayout in main.js already work with - an empty class is the default
+// layout, where the toolbar sits in the margin at the left of the board.
+export const LAYOUT_CLASSES = [ 'wideToolbar', 'horizontalToolbar', 'aspectTooGood' ];
+
 /**
- * Picks the toolbar layout and the scale the board is rendered at. The board
- * always uses the whole window and the toolbar sits in whatever margin the
- * window's aspect ratio leaves over - unless there is less than a toolbar width
- * of margin ('tight'), in which case the board shrinks to make room for it.
+ * Picks the toolbar layout and the scale the board is rendered at. The board always
+ * uses the whole window and the toolbar sits in whatever margin the window's aspect
+ * ratio leaves over - unless there is less than a toolbar width of margin
+ * ('aspectTooGood'), in which case the board shrinks to make room for it.
  *
  * @param {number} windowWidth
  * @param {number} windowHeight
  * @param {Object} viewport - { targetWidth, targetHeight }
  * @param {Object} [options] - { scale, toolbarHidden }
  *   scale: board scale dictated by the surrounding UI (edit mode) instead of the window
- *   toolbarHidden: the player hid the toolbar, so a tight layout keeps the full scale
- * @returns {Object} { scale, layoutMode: 'side'|'wide-side'|'bottom'|'tight' }
+ *   toolbarHidden: the player hid the toolbar, so aspectTooGood keeps the full scale
+ * @returns {Object} { scale, layoutClass } - layoutClass is one of LAYOUT_CLASSES or ''
  */
 export function calculateLayout(windowWidth, windowHeight, viewport, options = {}) {
   const { targetWidth, targetHeight } = viewport;
@@ -55,13 +60,13 @@ export function calculateLayout(windowWidth, windowHeight, viewport, options = {
   if(marginX + marginY < TOOLBAR_SIZE) {
     if(!options.toolbarHidden)
       scale = (windowWidth - TOOLBAR_SIZE)/targetWidth;
-    return { scale, layoutMode: 'tight' };
+    return { scale, layoutClass: 'aspectTooGood' };
   }
   if(marginX > WIDE_TOOLBAR_SIZE)
-    return { scale, layoutMode: 'wide-side' };
+    return { scale, layoutClass: 'wideToolbar' };
   if(windowIsNarrower)
-    return { scale, layoutMode: 'bottom' };
-  return { scale, layoutMode: 'side' };
+    return { scale, layoutClass: 'horizontalToolbar' };
+  return { scale, layoutClass: '' };
 }
 
 /**

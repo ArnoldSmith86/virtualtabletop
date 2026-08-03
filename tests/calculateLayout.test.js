@@ -5,46 +5,76 @@ describe('calculateLayout', () => {
 
   test('fills the height and leaves the margin to a side toolbar on wide screens', () => {
     const result = calculateLayout(1700, 1000, viewport16x10);
-    expect(result.layoutMode).toBe('side');
+    expect(result.layoutClass).toBe('');
     expect(result.scale).toBe(1);
   });
 
   test('upgrades to a wide side toolbar once the margin is big enough', () => {
     const result = calculateLayout(3200, 1000, viewport16x10);
-    expect(result.layoutMode).toBe('wide-side');
+    expect(result.layoutClass).toBe('wideToolbar');
     expect(result.scale).toBe(1);
   });
 
   test('fills the width and puts the toolbar at the bottom on tall screens', () => {
     const result = calculateLayout(1000, 2000, viewport16x10);
-    expect(result.layoutMode).toBe('bottom');
+    expect(result.layoutClass).toBe('horizontalToolbar');
     expect(result.scale).toBe(0.625);
   });
 
-  // the tight layout is what makes the hide toolbar button appear, so it has to stay reachable
+  // aspectTooGood is what makes the hide toolbar button appear, so it has to stay reachable
   test('shrinks the board to make room for the toolbar when the window matches the board aspect', () => {
     const result = calculateLayout(1600, 1000, viewport16x10);
-    expect(result.layoutMode).toBe('tight');
+    expect(result.layoutClass).toBe('aspectTooGood');
     expect(result.scale).toBe((1600-44)/1600);
   });
 
-  test('keeps the full scale in a tight layout while the toolbar is hidden', () => {
+  test('keeps the full scale in an aspectTooGood layout while the toolbar is hidden', () => {
     const result = calculateLayout(1600, 1000, viewport16x10, { toolbarHidden: true });
-    expect(result.layoutMode).toBe('tight');
+    expect(result.layoutClass).toBe('aspectTooGood');
     expect(result.scale).toBe(1);
   });
 
   test('uses the board aspect ratio of the game, not 16:10', () => {
     const portrait = { targetWidth: 1000, targetHeight: 1600 };
-    expect(calculateLayout(1600, 1000, portrait).layoutMode).toBe('wide-side');
-    expect(calculateLayout(1000, 1600, portrait).layoutMode).toBe('tight');
-    expect(calculateLayout(900, 1600, portrait).layoutMode).toBe('bottom');
+    expect(calculateLayout(1600, 1000, portrait).layoutClass).toBe('wideToolbar');
+    expect(calculateLayout(1000, 1600, portrait).layoutClass).toBe('aspectTooGood');
+    expect(calculateLayout(900, 1600, portrait).layoutClass).toBe('horizontalToolbar');
   });
 
   test('keeps the scale it is given (edit mode) but still picks a layout', () => {
     const result = calculateLayout(1700, 1000, viewport16x10, { scale: 0.5 });
     expect(result.scale).toBe(0.5);
-    expect(result.layoutMode).toBe('wide-side');
+    expect(result.layoutClass).toBe('wideToolbar');
+  });
+
+  // the layout math is meant to be main's setScale, only parameterized by the board size -
+  // this is what setScale did with the numbers hardcoded, so it has to agree everywhere
+  test('picks the same class and scale the hardcoded 1600x1000 math did', () => {
+    const hardcoded = (w, h, toolbarHidden) => {
+      let scale = w/h < 1600/1000 ? w/1600 : h/1000;
+      let layoutClass = '';
+      if(w-scale*1600 + h-scale*1000 < 44) {
+        layoutClass = 'aspectTooGood';
+        if(!toolbarHidden)
+          scale = (w-44)/1600;
+      } else if(w - scale*1600 > 200) {
+        layoutClass = 'wideToolbar';
+      } else if(w/h < 1600/1000) {
+        layoutClass = 'horizontalToolbar';
+      }
+      return { scale, layoutClass };
+    };
+
+    const mismatches = [];
+    for(let w = 200; w <= 4000; w += 7)
+      for(let h = 150; h <= 2500; h += 13)
+        for(const toolbarHidden of [ false, true ]) {
+          const expected = hardcoded(w, h, toolbarHidden);
+          const actual = calculateLayout(w, h, viewport16x10, { toolbarHidden });
+          if(actual.layoutClass != expected.layoutClass || actual.scale != expected.scale)
+            mismatches.push(`${w}x${h}${toolbarHidden ? ' hidden' : ''}: ${actual.layoutClass}/${actual.scale} instead of ${expected.layoutClass}/${expected.scale}`);
+        }
+    expect(mismatches).toEqual([]);
   });
 });
 

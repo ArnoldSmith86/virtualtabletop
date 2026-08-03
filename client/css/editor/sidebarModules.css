@@ -25,6 +25,15 @@
   display: inline-flex;
 }
 
+/* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
+   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. */
+.editorModule .goButton.buttonBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
 /* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
    text color so the intro is readable in both themes (white on the dark editor theme, dark in light mode). */
 .editorModule .noSelectionIntro {
@@ -292,6 +301,190 @@
 .tune.editorModule .cardFrontPreview [type=number] {
   vertical-align: super;
   width: 50px;
+}
+
+
+/* Front/back image upload: two side-by-side lists, one row per uploaded file, numbered in the order the files
+   are paired in - so row n of the fronts and row n of the backs line up as the pair they are. */
+.tune.editorModule .imagePairColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  align-items: start;
+}
+
+.tune.editorModule .imagePairHint {
+  margin-bottom: 5px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairList {
+  margin-bottom: 5px;
+}
+
+.tune.editorModule .imagePairList:empty::before {
+  content: attr(data-empty-hint);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairEntry {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .imagePairEntry b {
+  min-width: 20px;
+  text-align: right;
+}
+
+.tune.editorModule .imagePairEntry img {
+  width: 48px;
+  height: 64px;
+  object-fit: contain;
+  background: #0002;
+}
+
+/* The delete button follows the file name directly instead of being pushed to the far edge of the column. */
+.tune.editorModule .imagePairEntry span {
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tune.editorModule .imagePairStatus,
+.tune.editorModule .textCardsStatus {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairStatus.imagePairMismatch {
+  color: var(--negativeInput);
+  opacity: 1;
+}
+
+.tune.editorModule .imagePairOptions {
+  margin: 5px 0;
+}
+
+.tune.editorModule .imagePairOptions label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .imagePairOptions [type=number] {
+  width: 60px;
+}
+
+
+/* Text cards: the text input, then the design grid and the preview of the first card side by side. */
+.tune.editorModule .textCardsInput {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  font-family: inherit;
+}
+
+/* How the typed text is cut into cards - one row of radios right under the textarea it describes. */
+.tune.editorModule .textCardsSplit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .textCardsSplit label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .textCardsSplit span {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsColumns {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tune.editorModule .textCardsColumn {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tune.editorModule .textCardsPreviewColumn {
+  flex: 0 0 auto;
+}
+
+.tune.editorModule .textCardsDesign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 16px;
+  margin-bottom: 5px;
+}
+
+/* Each input hugs its own label: right-aligning them across a 1fr column would park the input of one field
+   next to the label of the next one. */
+.tune.editorModule .textCardsDesign label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabelWrap,
+.tune.editorModule .textCardsDesign .textCardsHint {
+  grid-column: 1 / -1;
+}
+
+.tune.editorModule .textCardsDesign .textCardsHint {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsDesign input {
+  width: 60px;
+}
+
+/* Distinguish the color swatches from the number fields at a glance - a white swatch at input width reads as
+   an empty text box. */
+.tune.editorModule .textCardsDesign input[type=color] {
+  width: 40px;
+  height: 24px;
+  padding: 1px;
+}
+
+/* A textarea, so a deck label can carry the line breaks it is shown with on the card backs. */
+.tune.editorModule .textCardsDesign .textCardsLabelWrap {
+  align-items: flex-start;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabel {
+  flex-grow: 1;
+  width: auto;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.tune.editorModule .textCardsPreview {
+  position: relative;
+  overflow: hidden;
+}
+
+.tune.editorModule .textCardsPreviewCard {
+  position: relative;
+  transform-origin: top left;
 }
 
 
