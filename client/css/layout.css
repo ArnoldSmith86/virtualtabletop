@@ -935,8 +935,7 @@ body:not(.edit) .widget.limbo {
   position: fixed;
   top: 5vh;
   left: 5vw;
-  transition: opacity 200ms ease;
-  transition-delay: 400ms, 400ms;
+  transition: opacity 200ms ease 400ms;
   transform-origin: top left;
   pointer-events: none;
 }
