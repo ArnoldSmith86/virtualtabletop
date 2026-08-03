@@ -773,6 +773,12 @@ export default class Room {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
       } else if(this.state[widgetID] === undefined) {
+        if(delta.s[widgetID].id === undefined) {
+          // storing this would add the widget to the room as a partial widget and break every client that receives it
+          Logging.log(`WARNING: ignoring delta data for missing widget ${widgetID} in room ${this.id}`);
+          delete delta.s[widgetID];
+          continue;
+        }
         this.state[widgetID] = delta.s[widgetID];
       } else {
         for(const property in delta.s[widgetID]) {
