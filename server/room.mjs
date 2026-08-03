@@ -805,7 +805,8 @@ export default class Room {
       if (this.state[widgetID].dropShadowOwner == player.name) {
         const clonedFrom = this.state[widgetID].clonedFrom;
         serverDelta.s[widgetID] = null;
-        if (clonedFrom) {
+        // only if the original still exists - otherwise this delta would re-add it as a partial widget
+        if (clonedFrom && this.state[clonedFrom]) {
           serverDelta.s[clonedFrom] = {
             dropShadowWidget: null
           };
