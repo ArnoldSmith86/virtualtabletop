@@ -27,3 +27,47 @@
 .card > .cardFace > .cardFaceObject.html {
   white-space: collapse;
 }
+
+/* A write object is a box a player types into, so it is outlined and filled: the defaults for its own
+   backgroundColor (transparent) and borderColor (black) properties live here, an object that sets either of
+   them overrides this rule inline. What a player types is plain text, so their line breaks and spacing are
+   kept and long words break inside the box instead of running out of it. */
+.card > .cardFace > .cardFaceObject.write {
+  background-color: transparent;
+  border: 1px solid #000000;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* Only while it can be written on: the text is clipped into the box and scrolls, the way a text field does.
+   A locked object overflows the object like every other text object, so a note nobody can scroll anymore
+   stays readable. The scrollbar is the only cue that there is more text - keep it thin, but in the object's
+   own color so it shows on dark card faces too. */
+.card > .cardFace > .cardFaceObject.write[contenteditable] {
+  overflow: auto;
+  user-select: text;
+  -webkit-user-select: text;
+  scrollbar-width: thin;
+  scrollbar-color: currentColor transparent;
+}
+
+/* .widget sets touch-action: none so that a drag moves the card. While playing, a card can not be dragged by
+   its write object anyway, so let a vertical drag scroll the overflow there - on a touch device that is the
+   only way to reach it. In edit mode the same drag moves the card, so leave it alone. */
+body:not(.edit) .card > .cardFace > .cardFaceObject.write[contenteditable] {
+  touch-action: pan-y;
+}
+
+.card > .cardFace > .cardFaceObject.write[contenteditable]:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -1px;
+}
+
+/* The hint shown while the object is still empty, dimmed like a text field dims its placeholder but in the
+   object's own color (the browser's fixed grey is unreadable on a dark card face). It is generated content
+   so that it can not be typed into, selected or read back as the text a player wrote - and so that it is
+   laid out by the object's css exactly like that text is. */
+.card > .cardFace > .cardFaceObject.write.cardFacePlaceholder::before {
+  content: attr(data-placeholder);
+  opacity: 0.45;
+}

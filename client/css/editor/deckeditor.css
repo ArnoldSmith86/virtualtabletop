@@ -154,6 +154,12 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   white-space: nowrap;
 }
 
+/* A write object always stores its text on the card, so it only exists as a per-card-type object: the
+   "Label" button is part of the amber Card Type group and is not offered in the blue All Cards one. */
+.deckEditorAddGroupStatic #deckEditorAddWritable {
+  display: none;
+}
+
 #deckEditorHistory {
   display: flex;
   align-items: center;
@@ -462,6 +468,13 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   width: auto;
   height: auto;
   z-index: 20;
+}
+
+/* The public library's deck browser is borrowed into #editor while the deck editor is open (see
+   borrowRoomOverlays), and #editor is not a stacking context of its own - so without a z-index it ends up
+   behind the very editor it is opened from (#deckEditor is z-index: 1, the sidebar 2, the toolbar 3). */
+#editor > #libraryDecksOverlay {
+  z-index: 4;
 }
 
 #deckEditorExportOverlay {
@@ -1199,6 +1212,12 @@ body.deckEditorPanning #deckEditorMain * {
   font-size: 12px;
   opacity: 0.85;
   margin: 2px 5px 8px;
+}
+
+/* A section note that points out a problem with the current object (e.g. a text area covering the whole card). */
+.deckEditorSectionWarning {
+  opacity: 1;
+  color: #ffb300;
 }
 
 /* Column headers over the binding rows; share the row layout but without the row's highlight background. */

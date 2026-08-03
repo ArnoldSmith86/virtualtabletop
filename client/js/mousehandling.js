@@ -30,9 +30,17 @@ async function inputHandler(name, e) {
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
-  if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
-    if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
+  // a card's write object is a contenteditable div rather than a form control, but a click on it belongs to
+  // the text the same way a click on a text field does
+  const textInput = [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1
+                 || e.target.isContentEditable && String(e.target.className).match(/cardFaceObject/);
+  if(!mouseTarget && textInput) {
+    // while editing, a click on the text field of a label or on the write object of a card is not meant
+    // to type but to reach the widget below it, so that it can be selected and moved
+    const widgetText = e.target.parentNode && (e.target.parentNode.className.match(/label/) || String(e.target.className).match(/cardFaceObject/));
+    if(!editMovable || !widgetText)
       return;
+  }
 
   if(name == 'mousedown' || name == 'touchstart') {
     if (!window.getSelection().isCollapsed)

@@ -21,6 +21,12 @@ export function getZoomLevel() {
   return zoomScale;
 }
 
+// A text field that has more text than fits (a writable card text, a label) owns the wheel: without this the
+// room zoom swallows the event and the overflow can only be reached with the caret keys or the scrollbar.
+function scrollableTextField(element) {
+  return element && (element.tagName == 'TEXTAREA' || element.isContentEditable) && element.scrollHeight > element.clientHeight;
+}
+
 function resetZoomAndPan() {
   setZoomLevel(1);
   setPan(0, 0);
@@ -165,6 +171,8 @@ onLoad(function() {
   on('#roomArea', 'wheel', function(e){
     if(overlayActive || zoomLocked)
       return; // allow normal wheel behavior when an overlay is active or zoom is locked
+    if(scrollableTextField(e.target))
+      return; // a writable card text or label scrolls its own overflow instead of zooming the room
     e.preventDefault();
 
     const now = Date.now();
@@ -179,6 +187,8 @@ onLoad(function() {
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
+    if(e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT' || e.target.isContentEditable)
+      return; // paging inside a text field moves the caret, it does not zoom
     if(!overlayActive && !edit && !zoomLocked && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();
       const currentIndex = zoomLevels.indexOf(zoomScale);

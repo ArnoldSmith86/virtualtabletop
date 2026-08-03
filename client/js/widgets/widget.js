@@ -2854,6 +2854,8 @@ export class Widget extends StateManaged {
 
   renderReadonlyCopyRaw(state, target, isChild=false) {
     delete state.id;
+    // the copy is not part of the room state, so nothing it renders may be written back (editable card text)
+    this.isReadonlyCopy = true;
     if(!isChild) {
       state.x = 0;
       state.y = 0;

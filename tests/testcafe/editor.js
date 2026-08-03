@@ -296,6 +296,15 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     };
   });
   const getJSONText = ClientFunction(() => document.querySelector('#jeText').textContent);
+  // The picker is a room overlay the deck editor only borrows: while the editor is open it lives in the card
+  // view, and closing it hands the picker back to the room so it keeps fitting the play area. Left behind in
+  // the editor it covers the whole window and loses to the room and the JSON editor instead.
+  const getPickerHost = ClientFunction(() => document.querySelector('#symbolPickerOverlay').parentNode.id);
+  const pickerFillsHost = ClientFunction(() => {
+    const picker = document.querySelector('#symbolPickerOverlay').getBoundingClientRect();
+    const host = document.querySelector('#symbolPickerOverlay').parentNode.getBoundingClientRect();
+    return picker.x == host.x && picker.y == host.y && picker.width == host.width && picker.height == host.height;
+  });
 
   await t
     .click('#topSurface', { offsetX: 10, offsetY: 10 })
@@ -308,6 +317,8 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(getPickerHost()).eql('deckEditorMainCol')
+    .expect(pickerFillsHost()).ok()
     .click(Selector('#symbolList .material-symbols').nth(0))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 1 });
 
@@ -316,7 +327,8 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .expect(getJSONText()).contains(deckID)
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
-    .pressKey('esc');
+    .pressKey('esc')
+    .expect(getPickerHost()).eql('roomArea');
   await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
 });
 

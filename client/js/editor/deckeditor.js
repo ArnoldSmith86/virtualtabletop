@@ -237,20 +237,33 @@ class DeckEditor {
     return $('body').classList.contains('deckEditorActive');
   }
 
+  // The symbol picker and the public library's deck browser are room overlays that plain edit mode uses too,
+  // so the deck editor only borrows them while it is open: the picker into the card view so it doesn't cover
+  // the tree, strip and sidebar, the deck browser into #editor so it shows above the whole editor.
+  borrowRoomOverlays() {
+    $('#deckEditorMainCol').append($('#symbolPickerOverlay'));
+    $('#editor').append($('#libraryDecksOverlay'));
+  }
+
+  // Closing hands them back to the room, because that is where they fit the play area (an overlay fills its
+  // host) and stack correctly. Left behind in the editor they cover the whole window and lose to both the
+  // room and the JSON editor, which buries the picker when it is opened from there.
+  returnRoomOverlays() {
+    $('#roomArea').append($('#symbolPickerOverlay'));
+    $('#roomArea').append($('#libraryDecksOverlay'));
+  }
+
   initializeDOM() {
     if(this.dragToolbarButtons)
       return;
 
     // Editor overlays are normally hosted in #roomArea, which sits below the full-screen deck editor's
-    // stacking context. Move these into #editor so opening them from the deck editor is actually visible.
+    // stacking context. Move the deck editor's own ones into #editor so opening them from the deck editor is
+    // actually visible. The overlays it shares with plain edit mode are only borrowed while it's open, see
+    // borrowRoomOverlays()/returnRoomOverlays().
     $('#editor').append($('#deckEditorExportOverlay'));
     $('#editor').append($('#deckEditorImportOverlay'));
     $('#editor').append($('#deckEditorNewDeckOverlay'));
-    $('#editor').append($('#symbolPickerOverlay'));
-    // Move the shared public-library overlay into #editor too, so "Browse the public library" from the deck
-    // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
-    // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
-    $('#editor').append($('#libraryDecksOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -306,6 +319,9 @@ class DeckEditor {
     for(const radio of $a('#deckEditorAddMode input[type=radio]'))
       radio.onchange = _=>this.setAddMode(radio.value);
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
+    // A "write" object only works when its value is bound to a card property (that is where the text players
+    // type is stored), so this button is only shown in the "Card Type" add mode (see the CSS).
+    $('#deckEditorAddWritable').onclick = _=>this.addDynamicObject(this.writeTemplate(), 'note', '');
     $('#deckEditorAddImage').onclick = async _=>{
       const symbol = await pickSymbol('images');
       if(symbol && symbol.url)
@@ -840,7 +856,7 @@ class DeckEditor {
     this.resetHistory();
 
     $('body').classList.add('deckEditorActive');
-    $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
+    this.borrowRoomOverlays();
     // If a sidebar module (e.g. the deck's text Properties panel this editor is opened from) is open, close it
     // so the visual editor owns the full width instead of sharing the screen with the panel it replaces. Only
     // when the editor actually opens though: switching decks inside it must leave a panel the user opened
@@ -906,7 +922,7 @@ class DeckEditor {
     this.panY = 0;
     this.resetHistory();
     $('body').classList.add('deckEditorActive');
-    $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
+    this.borrowRoomOverlays();
     if(!wasOpen) {
       const activeModuleButton = $('#editorSidebar button.active');
       if(activeModuleButton)
@@ -965,7 +981,7 @@ class DeckEditor {
     const deck = this.deck();
     this.selectedObject = null;
     $('body').classList.remove('deckEditorActive');
-    $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
+    this.returnRoomOverlays();
     $('#deckEditorDragToolbar').classList.remove('active');
     this.setRoomVisible(false); // hand the whole play area back to the room
     this.syncToolbarButton();
@@ -1016,7 +1032,7 @@ class DeckEditor {
     this.history = [];
     this.historyIndex = -1;
     $('body').classList.remove('deckEditorActive');
-    $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
+    this.returnRoomOverlays();
     $('#deckEditorDragToolbar').classList.remove('active');
     this.setRoomVisible(false);
     this.syncToolbarButton();
@@ -1786,6 +1802,15 @@ class DeckEditor {
     // Note below (not part of) the header, in the same style as the Dynamic properties note.
     if(object.type == 'html')
       div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
+    // The rows below are just a list of properties, so say what this type is for and which of them belong to
+    // it - and warn when the object leaves the player too little card to grab.
+    if(this.isWritableObject(object)) {
+      div(sidebar, 'deckEditorSectionNote').textContent = 'Players can type into a "write" object while playing. What they type is stored in the card property its value is bound to below, so it is always different per card. "placeholder" is the hint shown while it is still empty, "spellCheck" turns the browser\'s spell checker on, "backgroundColor" and "borderColor" style the box itself, and "editable" is the checkbox that decides whether it can still be written on - link it to a card property below to lock a card once it has been filled in.';
+      const cardWidth = this.mainCard ? this.mainCard.get('width') : 103;
+      const cardHeight = this.mainCard ? this.mainCard.get('height') : 160;
+      if((object.width || 0) * (object.height || 0) > cardWidth * cardHeight * 2/3)
+        div(sidebar, 'deckEditorSectionNote deckEditorSectionWarning').textContent = 'This text box covers most of the card. A card can not be dragged or flipped by its text box, so leave some card around it for players to grab.';
+    }
 
     // One cause/actionId per edited field: a typing burst on one property of one object stays one
     // breadcrumb/undo step, but edits to another property or object become their own step.
@@ -2242,8 +2267,15 @@ class DeckEditor {
     this.updateTreeToolbar();
   }
 
+  // A face object players can write on while playing - Card.editableProperty() additionally requires a usable
+  // value binding before the object really becomes writable, which is what the Label button creates.
+  isWritableObject(object) {
+    return object.type == 'write';
+  }
+
   renderTreeObjectRow(tree, object, index, face = this.face) {
-    const typeIcon = { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
+    // Same icon as the Label button for a write object, so a face with several text objects stays scannable.
+    const typeIcon = { text: 'format_size', write: 'edit_note', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
     const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><span class=deckEditorTreeIcon icon=${typeIcon}></span><div class=deckEditorObjectPreview></div>`);
     const objSel = face === this.face && index === this.selectedObject;
     row.classList.toggle('selected', objSel && this.activeArea == 'tree');
@@ -2406,7 +2438,7 @@ class DeckEditor {
 
     // Text objects show the actual text in an inline editable field (like the right sidebar's value field):
     // clicking the field edits it, clicking the row around it selects the object.
-    if(type == 'text') {
+    if(type == 'text' || type == 'write') {
       this.renderPreviewTextField(box, object, index, faceIndex);
       return;
     }
@@ -2456,14 +2488,21 @@ class DeckEditor {
   // bound per card type — the current card type's property, committed with the same debounce as the sidebar.
   renderPreviewTextField(box, object, index, faceIndex = this.face) {
     box.classList.add('deckEditorPreviewTextBox');
-    const bound = object.dynamicProperties && object.dynamicProperties.value;
+    // A writable object's value is whatever a player types on that one card, so there is nothing for the
+    // creator to fill in here: the text they write on the object is its placeholder, so that is what the
+    // field edits instead - which is also what the card shows in the main area while it is still empty.
+    const writable = this.isWritableObject(object);
+    const objectProperty = writable ? 'placeholder' : 'value';
+    const bound = !writable && object.dynamicProperties && object.dynamicProperties.value;
     const editable = !bound || this.cardType !== null;
     const input = document.createElement('input');
     input.className = 'deckEditorPreviewText';
-    let current = bound ? (this.cardType !== null ? this.cardTypes[this.cardType][bound] : undefined) : object.value;
+    let current = bound ? (this.cardType !== null ? this.cardTypes[this.cardType][bound] : undefined) : object[objectProperty];
     input.value = current === undefined || current === null ? '' : current;
     input.disabled = !editable;
-    input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")` : 'Text on every card';
+    input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")`
+                        : writable ? 'Hint shown on every card until a player writes on it (placeholder)'
+                                   : 'Text on every card';
     // Clicking/dragging inside the field must not start a row drag, but should still select this field's
     // face object (and switch to its face) if it isn't already the selection.
     input.onmousedown = e=>e.stopPropagation();
@@ -2486,11 +2525,11 @@ class DeckEditor {
         this.scheduleCommit('cardTypes', ...args);
       } else {
         const args = [
-          `${getPlayerDetails().playerName} updated "value" of face object ${index+1} on face ${faceIndex} of deck ${this.deckID} in deck editor`,
-          `field:faceTemplates:${faceIndex}:${index}:value`
+          `${getPlayerDetails().playerName} updated "${objectProperty}" of face object ${index+1} on face ${faceIndex} of deck ${this.deckID} in deck editor`,
+          `field:faceTemplates:${faceIndex}:${index}:${objectProperty}`
         ];
         await this.flushPendingCommitForOtherField('faceTemplates', args[1]);
-        object.value = value;
+        object[objectProperty] = value;
         this.refreshMainCardFaces();
         this.scheduleCommit('faceTemplates', ...args);
       }
@@ -2557,15 +2596,15 @@ class DeckEditor {
     }
   }
 
-  // The object's "type" as a dropdown of valid values (text/image/icon/html); changing it re-renders because
-  // the header and the image-only upload button depend on it. It has no make-dynamic or delete control.
+  // The object's "type" as a dropdown of valid values (text/write/image/icon/html); changing it re-renders
+  // because the header and the image-only upload button depend on it. It has no make-dynamic or delete control.
   renderObjectTypeRow(target, object) {
     const row = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
     labelEl.style.cssText = 'display:inline-block;width:100px';
     labelEl.textContent = 'type';
     const select = document.createElement('select');
-    for(const t of [ 'text', 'image', 'icon', 'html' ]) {
+    for(const t of [ 'text', 'write', 'image', 'icon', 'html' ]) {
       const opt = document.createElement('option');
       opt.value = opt.textContent = t;
       opt.selected = (object.type || 'text') == t;
@@ -2588,7 +2627,7 @@ class DeckEditor {
   objectFieldType(property) {
     if([ 'x', 'y', 'width', 'height', 'fontSize', 'size', 'strokeWidth', 'rotation' ].indexOf(property) != -1)
       return 'number';
-    if([ 'textAlign', 'color', 'value', 'strokeColor', 'type' ].indexOf(property) != -1)
+    if([ 'textAlign', 'color', 'value', 'strokeColor', 'type', 'placeholder', 'backgroundColor', 'borderColor' ].indexOf(property) != -1)
       return 'text';
     return undefined;
   }
@@ -2605,8 +2644,11 @@ class DeckEditor {
     }
     const wrapper = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
-    labelEl.style.cssText = 'display:inline-block;width:100px';
+    // The label column has a fixed width so the fields line up; a property name too long for it (backgroundColor,
+    // hoverStrokeWidth, …) is cut off with an ellipsis and spelled out in the tooltip instead of just ending.
+    labelEl.style.cssText = 'display:inline-block;width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle';
     labelEl.textContent = label;
+    labelEl.title = label;
     wrapper.append(labelEl);
     let input;
     if(fieldType == 'boolean') {
@@ -2946,7 +2988,7 @@ class DeckEditor {
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
     const typeProperty = this.generateUniquePropertyName(propertyBaseName);
     // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
-    const cause = `${getPlayerDetails().playerName} added a per-card-type ${objectTemplate.type} object to deck ${this.deckID} in deck editor`;
+    const cause =`${getPlayerDetails().playerName} added a per-card-type ${objectTemplate.type} object to deck ${this.deckID} in deck editor`;
     const actionId = this.newAction();
     await this.seedCardTypeProperty(typeProperty, defaultValue, cause, actionId);
     const template = { ...objectTemplate, dynamicProperties: { [boundProperty]: typeProperty } };
@@ -2958,6 +3000,20 @@ class DeckEditor {
     const width = this.mainCard ? this.mainCard.get('width') : 103;
     const height = this.mainCard ? this.mainCard.get('height') : 160;
     return { type: 'image', x: 0, y: 0, width, height, color: '#cccccc' };
+  }
+
+  writeTemplate() {
+    const width = this.mainCard ? this.mainCard.get('width') : 103;
+    const height = this.mainCard ? this.mainCard.get('height') : 160;
+    // Roomy enough to write a few lines in, but with a margin around it and the lower half of the card left
+    // free: a card can not be grabbed by its text box, so the player needs some card left to drag and flip.
+    const margin = Math.round(Math.min(width, height)/8);
+    // An empty text box is blank, so it starts out with a placeholder - that is what tells a player the card
+    // can be written on at all, and it shows the creator the object right after adding it. editable, spellCheck
+    // (off, like on a label) and the two color properties carry their defaults so that their rows - the
+    // editable checkbox, the color pickers - are right there in the sidebar instead of having to be added by
+    // name. editable is also what the per-card lock is bound to, so it has to be offered without being typed.
+    return { type: 'write', editable: true, placeholder: 'write here…', spellCheck: false, backgroundColor: 'transparent', borderColor: '#000000', x: margin, y: margin, width: Math.max(20, width-2*margin), height: Math.max(20, Math.round(height/2)-margin), fontSize: 14, textAlign: 'left' };
   }
 
   renderDynamicProperties(sidebar, object) {
@@ -3034,7 +3090,9 @@ class DeckEditor {
     // Add-binding control laid out on the same grid as the rows above. Both sides are editable comboboxes
     // (input + datalist): pick an existing property or just type a new one in the same box - no separate field.
     const bound = object.dynamicProperties || {};
-    const objectPropertyOptions = [...new Set([ 'value', 'color', 'width', 'height', 'display', ...Object.keys(object) ])]
+    // "editable" is suggested for a write object even when it does not carry it yet: binding it per card type
+    // is how a card is locked once it has been filled in, which is not something to have to know the name for.
+    const objectPropertyOptions = [...new Set([ 'value', 'color', 'width', 'height', 'display', ...(this.isWritableObject(object) ? [ 'editable' ] : []), ...Object.keys(object) ])]
       .filter(p=>p != 'type' && p != 'dynamicProperties' && bound[p] === undefined);
     const typePropertyOptions = this.knownCardTypeProperties();
     const addRow = div(container, 'deckEditorAddBinding', `
@@ -3217,8 +3275,9 @@ class DeckEditor {
         this.addDeck(id || undefined, deckEditorCardSizes[picked ? +picked.value : 0]);
       };
     } else if(mode == 'library') {
-      // Keep the deck editor open: the library overlay is moved into #editor (see initializeDOM) so it shows
-      // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added.
+      // Keep the deck editor open: the library overlay is borrowed into #editor while it is (see
+      // borrowRoomOverlays) so it shows above the editor, and pendingNewDeck makes the picked deck open in
+      // the editor once it is added.
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
       $('button', bar).onclick = _=>openLibraryDecksOverlay();
     } else {

@@ -98,6 +98,11 @@ async function checkIfSVG(url) {
   }
 }
 
+// true while a "write" face object of a deck is selected - a box players can type into while playing
+function jeIsWriteFaceObject() {
+  return jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].type == 'write';
+}
+
 const jeCommands = [
   /* Just for editing convenience, the top (command) buttons are listed first */
   {
@@ -1000,6 +1005,30 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_writeTemplate',
+    name: 'write template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text box,
+      // so there has to be some card left around it for the player to grab. The placeholder is what tells a
+      // player the card can be written on - without it an empty text box is blank.
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'write',
+        placeholder: 'write here…',
+        x: 10,
+        y: 10,
+        fontSize: 14,
+        textAlign: 'left',
+        width: (jeStateNow.cardDefaults && jeStateNow.cardDefaults.width || 103) - 20,
+        height: 60,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
+      });
+      jeSetAndSelect('note');
+    }
+  },
+  {
     id: 'je_inputField',
     name: 'add field',
     context: '^.* ↦ \\(INPUT\\) ↦ fields',
@@ -1046,6 +1075,56 @@ const jeCommands = [
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].display = '###SELECT ME###';
       jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_editable',
+    name: 'editable',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_placeholder',
+    name: 'placeholder',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder = '###SELECT ME###';
+      jeSetAndSelect('');
+    }
+  },
+  {
+    id: 'je_spellCheck',
+    name: 'spellCheck',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_backgroundColor',
+    name: 'backgroundColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor = '###SELECT ME###';
+      jeSetAndSelect('transparent');
+    }
+  },
+  {
+    id: 'je_borderColor',
+    name: 'borderColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor = '###SELECT ME###';
+      jeSetAndSelect('#000000');
     }
   },
   {
