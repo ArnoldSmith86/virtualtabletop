@@ -192,6 +192,20 @@
   margin-bottom: 2px;
 }
 
+/* a list of phrases has the same title bar as every other popup: what it is for
+   on the left, the info button and the x of the popup at the end of it */
+.inline-popup.popup-menu h1 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.inline-popup.popup-menu h1 .popup-title-text {
+  flex: 1;
+  white-space: nowrap;
+}
+
 .inline-popup .popup-menu-entry {
   margin: 0;
   padding: 3px 8px;
@@ -366,11 +380,24 @@ body.edit.darkMode .inline-popup button.primary:hover {
   cursor: pointer;
 }
 
-/* the proposed property names of a parameter that takes one */
+/* The proposed property names of a parameter that takes one. The list is taller
+   than it may be, so it ends on a half-visible row - which reads as a broken
+   list rather than as a scrollable one without a mark saying there is more: a
+   rule under it, and the last rows fading into it. */
 .inline-popup .popup-property-list {
   max-height: 220px;
   overflow-y: auto;
   margin-top: 4px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 18px), transparent);
+  mask-image: linear-gradient(to bottom, black calc(100% - 18px), transparent);
+}
+
+/* a list that fits needs neither: nothing is cut off there */
+.inline-popup .popup-property-list.popup-property-list-complete {
+  border-bottom: none;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .inline-popup .popup-property-group {
@@ -412,13 +439,14 @@ body.edit.darkMode .inline-popup button.primary:hover {
   color: var(--routineCollectionColor);
 }
 
-/* how a list is shown rather than what it holds: above the search box, in the
-   quiet type the rest of the popup uses for what is not a value */
+/* how a list is shown rather than what it holds: below the search box, so the
+   way into the list comes first, in the quiet type the rest of the popup uses
+   for what is not a value */
 .inline-popup .popup-list-settings {
   display: flex;
   flex-direction: column; /* one per line: side by side they are cut off in a narrow popup */
   gap: 2px;
-  margin-bottom: 6px;
+  margin: 4px 0 2px 0;
   font-size: 12px;
   opacity: 0.8;
 }

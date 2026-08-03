@@ -244,6 +244,15 @@ class Popup {
   }
 }
 
+// what a tutorial is called in words: the title of the popup it is offered from
+// where there is one ("SELECT - Pick the widgets…" is a SELECT tutorial), and
+// otherwise the file name without the part every one of them starts with
+function tutorialWords(tutorialName, title) {
+  if(typeof title == 'string' && title)
+    return title.split(' - ')[0];
+  return tutorialName.replace(/^functions-/, '').replace(/-/g, ' ');
+}
+
 class InfoPopup extends Popup {
   constructor(source, infoHTML, tutorialName=null, videoFilename=null, title=null) {
     super(source);
@@ -260,8 +269,10 @@ class InfoPopup extends Popup {
     if(this.title)
       this.setTitle(this.title);
     div(this.domElement, 'content popup-info-text', this.infoHTML);
+    // the link says what it opens: the name of the tutorial file read as a file
+    // name, which is what it is
     if(this.tutorialName) // FIXME: using the same roomID more than once doesn't work yet if the tutorial is already in there (also in production?)
-      this.addAccordionSection('Tutorial', `<a href="tutorial/${this.tutorialName}/ROOM:${roomID}-tutorials">${this.tutorialName}</a>`);
+      this.addAccordionSection('Tutorial', `<a href="tutorial/${this.tutorialName}/ROOM:${roomID}-tutorials">Play the ${tutorialWords(this.tutorialName, this.title)} tutorial</a>`);
     if(this.videoFilename)
       this.addAccordionSection('Video', `<video src="i/videos/${this.videoFilename}" controls></video>`);
     this.moveIntoView();
@@ -738,12 +749,7 @@ class RoutineOperationPopup extends RoutinePopup {
     if(info)
       title.after(info);
 
-    // how the list is read is a matter of taste rather than of the routine, so
-    // the two settings sit above the search box and are remembered for next time
-    const settings = div(this.domElement, 'popup-list-settings');
     const showEntries = _=>this.renderOperationEntries();
-    popupSetting(settings, 'Say what each operation is for', 'routineOperationDescriptions', true, showEntries);
-    popupSetting(settings, 'Group them by what they do', 'routineOperationGrouping', false, showEntries);
 
     const search = document.createElement('input');
     search.type = 'text';
@@ -751,6 +757,17 @@ class RoutineOperationPopup extends RoutinePopup {
     search.placeholder = 'Search operations...';
     this.domElement.append(search);
     this.searchInput = search;
+
+    // how the list is read is a matter of taste rather than of the routine, so
+    // the two settings follow the search box - the first thing a newcomer meets
+    // is the way into the list, not two preferences about it - and they are
+    // remembered for next time
+    const settings = div(this.domElement, 'popup-list-settings');
+    popupSetting(settings, 'Say what each operation is for', 'routineOperationDescriptions', true, showEntries);
+    // grouped by default: 110 operations in one alphabetical scroll is the one
+    // list somebody who does not know their names cannot navigate
+    popupSetting(settings, 'Group them by what they do', 'routineOperationGrouping', true, showEntries);
+
     this.listElement = div(this.domElement, 'popup-operation-list');
     this.examples = routineOperationExamples();
 
@@ -769,7 +786,7 @@ class RoutineOperationPopup extends RoutinePopup {
     const term = this.searchInput.value.trim().toLowerCase();
     const matches = this.examples.filter(e=>!term || `${e.func} ${e.label || ''} ${e.description} ${e.example}`.toLowerCase().includes(term));
     const withDescription = popupSettingValue('routineOperationDescriptions', true);
-    const grouped = popupSettingValue('routineOperationGrouping', false);
+    const grouped = popupSettingValue('routineOperationGrouping', true);
 
     // what the operation is for, not what one with nothing but its defaults
     // would say: the sentence of an operation that does not exist yet
@@ -903,15 +920,19 @@ function menuEntry(appendTo, label, preview, onClick) {
 // an explanation under each of them says the same thing twice and turns picking
 // one into reading a page; the whole sentence is a hover tip away.
 class RoutineVariantMenu extends Popup {
-  constructor(choices, currentID) {
+  constructor(choices, currentID, title=null) {
     super();
     this.choices = choices;
     this.currentID = currentID;
+    this.title = title;
   }
 
   show() {
     super.show();
     this.domElement.classList.add('popup-menu', 'popup-menu-plain');
+    // every other popup of the editor says what it is for in a title bar - a
+    // bare list with a floating x in the corner reads as an unfinished one
+    this.setTitle(this.title || 'What this operation does');
     for(const choice of this.choices) {
       const entry = menuEntry(this.domElement, choice.lead, null, _=>this.notifyChangeListeners(choice.values));
       entry.title = `${choice.label}: ${choice.example}`;
@@ -927,11 +948,12 @@ class RoutineVariantMenu extends Popup {
 class RoutineClausePopup extends RoutinePopup {
   // the same list of phrases also offers the kinds of line an INPUT dialog can
   // hold, which is a different thing to say about it
-  constructor(options, info=null, infoTitle=null) {
+  constructor(options, info=null, infoTitle=null, title=null) {
     super();
     this.options = options;
     this.info = info;
     this.infoTitle = infoTitle;
+    this.title = title;
   }
 
   offersUseDefault() {
@@ -942,18 +964,17 @@ class RoutineClausePopup extends RoutinePopup {
     return false;
   }
 
-  // a list of phrases is a menu, not a form: a title saying "add an option" and
-  // a section saying "Options" around a single list of options are two layers of
-  // chrome around the one thing the popup is for
+  // a list of phrases is a menu, not a form: no section saying "Options" around
+  // a single list of options - but the same title bar every other popup has,
+  // because a bare list with a floating x in the corner reads as an unfinished
+  // one
   show() {
     if(openRoutinePopup && openRoutinePopup !== this)
       openRoutinePopup.hide();
     openRoutinePopup = this;
     Popup.prototype.show.call(this);
     this.domElement.classList.add('popup-menu');
-    const header = document.createElement('div');
-    header.className = 'popup-menu-header';
-    this.domElement.prepend(header);
+    const header = this.setTitle(this.title || 'Add an option').parentNode;
     infoButton(header, this.info || `
       Everything this operation can do on top of what it does now. An option only shows up in the sentence while it is in use - the x behind it removes it again.
     `, null, null, this.infoTitle || 'the options of an operation');
@@ -1056,6 +1077,10 @@ function proposedPropertyGroups(widget, includeOwn=true) {
   if(includeOwn)
     addGroup('This widget', Object.keys((widget && widget.state) || {}));
 
+  // the handful of properties a routine sets over and over, in front of the
+  // hundred the engine defines: the common case is a glance rather than a scan
+  addGroup('Commonly set', [ 'x', 'y', 'owner', 'activeFace', 'movable', 'text', 'parent', 'rotation' ]);
+
   const inRoom = [];
   if(typeof widgets != 'undefined')
     for(const other of widgets.values())
@@ -1116,6 +1141,9 @@ class RoutinePropertyNamePopup extends RoutineStringPopup {
         div(list, 'popup-property-empty').textContent = 'No matching property.';
       else if(hidden)
         div(list, 'popup-property-empty').textContent = `${hidden} more - refine the search.`;
+      // the fade and the rule under the list only mean something while it is
+      // taller than it may be - measured once the popup is on the page
+      setTimeout(_=>list.classList.toggle('popup-property-list-complete', list.scrollHeight <= list.clientHeight), 0);
     };
     search.addEventListener('input', showEntries);
     showEntries();
@@ -1962,9 +1990,9 @@ function infoParameterLine(line) {
   return { name: names.trim(), description };
 }
 
-function commonInfoButton(appendTo, topicName) {
+function commonInfoButton(appendTo, topicName, title=null) {
   const topic = commonInfoTopic(topicName);
-  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null, topicName.replace('.', ' ')) : undefined;
+  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null, title || topicName.replace('.', ' ')) : undefined;
 }
 
 function commonParameterInfoButton(appendTo, func, parameter) {
@@ -1976,6 +2004,11 @@ function commonParameterInfoButton(appendTo, func, parameter) {
 // topic when there is one, otherwise the line the operation's text describes it
 // with. Operations without a text of their own get nothing.
 function parameterInfoTopic(func, parameter) {
+  // a chip standing for a part of another parameter (a VAR's variableName is the
+  // first half of variables) is described by the one it is a part of
+  const spec = ((routineOperationMetadata[func] || {}).parameters || {})[parameter];
+  if(spec && spec.describedBy)
+    parameter = spec.describedBy;
   const own = commonInfoTopic(`${func}.${parameter}`);
   if(own)
     return own;

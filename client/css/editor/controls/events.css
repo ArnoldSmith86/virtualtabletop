@@ -69,6 +69,10 @@ body.edit.darkMode .events-editor-property {
   opacity: 1;
 }
 
+.events-editor-event-header .events-editor-legend .material-symbols {
+  font-size: 15px;
+}
+
 .events-editor-json {
   font-size: 15px;
   color: var(--textColor);
@@ -91,6 +95,15 @@ body.edit.darkMode .events-editor-property {
 .events-editor-remove:hover {
   color: var(--textHighlightColor3);
   opacity: 1;
+}
+
+/* a control with nothing to do says so rather than being left out: a gap where
+   the other cards have an icon reads as an icon that failed to appear */
+.events-editor-event-header .events-editor-disabled,
+.events-editor-event-header .events-editor-disabled:hover {
+  opacity: 0.3;
+  color: var(--textColor);
+  cursor: default;
 }
 
 .events-editor-event-content {
@@ -142,9 +155,26 @@ body.edit.darkMode .events-editor-property-key {
   font-size: 12px;
 }
 
+/* the name of a new entry sits in the column the names above it are in, and its
+   value in the column of the values above it - an input stretching past where
+   every value starts is not under the column it fills */
 .events-editor-property-name {
   flex: 1;
   width: auto;
+  min-width: 0;
+}
+
+.events-editor-property-add .events-editor-property-value {
+  flex: none;
+  width: 50%;
+}
+
+/* what a typed value is stored as, under the rows it applies to */
+.events-editor-property-hint {
+  margin: 4px 6px 0 6px;
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0.7;
 }
 
 .events-editor-property-add-button {

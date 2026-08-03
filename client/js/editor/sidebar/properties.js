@@ -6053,8 +6053,13 @@ class PropertiesModule extends SidebarModule {
       input.checked = fullSize;
       input.disabled = !available;
       input.parentElement.classList.toggle('disabled', !available);
-      if(input.nextElementSibling)
-        input.nextElementSibling.title = available ? 'Give the Automations section the height of the whole panel' : 'Nothing to give the whole panel to yet - add a routine first';
+      // on the label as well as on the switch: the words are the natural thing
+      // to point at, and a greyed-out control that explains itself nowhere is
+      // the one that needs the explanation most
+      const title = available ? 'Give the Automations section the height of the whole panel' : 'Nothing to give the whole panel to yet - add a routine first';
+      for(const target of [ input.nextElementSibling, $('.automationsFullSizeLabel', input.parentElement) ])
+        if(target)
+          target.title = title;
     }
   }
 

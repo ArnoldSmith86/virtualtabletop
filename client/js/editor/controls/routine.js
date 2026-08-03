@@ -173,12 +173,24 @@ const parameterTypeHints = {
 
 // a collection an operation READS and that is left at DEFAULT is whatever the
 // operations before it picked, and that is what the sentence says instead of the
-// name the engine uses for it. "the pick" is the same thing worded for the slots
-// that already say "in". A collection an operation WRITES keeps the name it
-// stores (DEFAULT included): that name is what the operations after it have to
-// type, so wording it away would hide the one thing the option is about.
+// name the engine uses for it - in every sentence with the same words, because
+// four names for one thing ("the pick", "the picked widgets") is four things to
+// a newcomer. A collection an operation WRITES keeps the name it stores (DEFAULT
+// included): that name is what the operations after it have to type, so wording
+// it away would hide the one thing the option is about.
 const pickedWidgets = { 'DEFAULT': 'the picked widgets' };
-const thePick = { 'DEFAULT': 'the pick' };
+
+// a holder is a place widgets are IN; a group of widgets is the widgets
+// themselves, so the sentence says "2 widgets in h1" for the one and "2 of the
+// picked widgets" for the other instead of calling a group a place ("in the
+// pick"). Both stay one slot, so the chip still switches between them.
+function holderPreposition(v) {
+  return v('holder') != null ? ' in' : '';
+}
+
+function countedInHolderOrOfGroup(v) {
+  return v('holder') != null ? ` ${widgetsCounted(v, 'count')}` : ' {count} of';
+}
 
 // a list of ids reads as a list of ids, not as JSON
 function wordList(entries) {
@@ -207,6 +219,55 @@ function rangeWords(value) {
 
 // the values an operation passes on (CALL arguments, CLONE properties, VAR
 // variables) are pairs, and pairs read as pairs
+// The six colors a sentence is written in are a system, and a system that only
+// exists in a CSS comment is one nobody can learn: this is the key to it, opened
+// from the header of every routine. It also defines the one thing the sentences
+// cannot say without a word of their own - the group of widgets an earlier
+// operation picked.
+const routineColorLegendHTML = `
+  <p>Every value in a sentence is colored by the kind of thing it is:</p>
+  <dl class="routine-legend">
+    <dt class="routine-editor-variant">Pick</dt>
+    <dd>what the operation does - the words a sentence starts with</dd>
+    <dt class="routine-editor-parameter-widget">card1</dt>
+    <dd>one widget of the game, named by its id</dd>
+    <dt class="routine-editor-parameter-collection">the picked widgets</dt>
+    <dd>a group of widgets: the ones an earlier operation picked, or a group it gave a name to</dd>
+    <dt class="routine-editor-parameter-variable">score</dt>
+    <dd>a value the routine remembers, under the name it gave it</dd>
+    <dt class="routine-editor-parameter-property">activeFace</dt>
+    <dd>the name of a widget property</dd>
+    <dt class="routine-editor-parameter-number">3</dt>
+    <dd>a number</dd>
+  </dl>
+  <p>A word in red is a blank the operation still needs, and it says what belongs there.</p>
+  <p>SELECT calls the group it is building <b>the pick</b>: that is the same thing every other sentence calls <b>the picked widgets</b>.</p>
+`;
+
+// A chip has padding on both sides, which puts a space between it and the comma
+// or full stop right behind it ("to the position 300 , 200"). The punctuation
+// belongs to the chip, so it is pulled back onto it.
+function tightenPunctuation(html) {
+  return html.replace(/(<\/span>)([,.;:!?)]+)/g, '$1<span class="routine-editor-punctuation">$2</span>');
+}
+
+// how many pairs a VAR remembers - which decides whether its sentence says the
+// one it has or lists them
+function varPairCount(v) {
+  const variables = v('variables');
+  return variables && typeof variables == 'object' && !Array.isArray(variables) ? Object.keys(variables).length : 0;
+}
+
+// the pairs of a VAR, worded the way the sentence words a single one
+function variablePairWords(value) {
+  if(!value || typeof value != 'object' || Array.isArray(value))
+    return null;
+  const entries = Object.entries(value);
+  if(!entries.length)
+    return 'nothing';
+  return wordList(entries.map(([ key, entry ])=>`${key} to ${entry !== null && typeof entry == 'object' ? JSON.stringify(entry) : entry}`));
+}
+
 function keyValueWords(value) {
   if(!value || typeof value != 'object' || Array.isArray(value))
     return null;
@@ -393,7 +454,7 @@ const routineOperationMetadata = {
     ],
     clauses: [
       canvasTargetClause,
-      { id: 'count', label: 'at most n of them', template: v=>`, for ${widgetsCounted(v, 'count', 'canvas', 'canvases')}`, add: { count: 1 } }
+      { id: 'count', label: 'at most a certain number of them', template: v=>`, for ${widgetsCounted(v, 'count', 'canvas', 'canvases')}`, add: { count: 1 } }
     ],
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
@@ -532,24 +593,23 @@ const routineOperationMetadata = {
     variants: [
       { id: 'turn', label: 'Turn widgets to a face', fixed: [ 'faceCycle' ], match: v=>typeof v('face') == 'number',
         apply: operation=>{ delete operation.faceCycle; if(typeof operation.face != 'number') operation.face = 0; },
-        template: v=>`Turn{{count}} in {holder,collection} ${v('face') > 1 ? 'to face {face}' : '{face}'}` },
+        template: v=>`Turn{{count}}${holderPreposition(v)} {holder,collection} ${v('face') > 1 ? 'to face {face}' : '{face}'}` },
       { id: 'cycle', label: 'Cycle the face of widgets', fixed: [ 'face' ],
         apply: operation=>{ delete operation.face; },
-        template: 'Cycle the face of{{count}} {holder,collection} {faceCycle}' }
+        template: v=>`Cycle the face of{{count}}${holderPreposition(v)} {holder,collection} {faceCycle}` }
     ],
     // how many widgets are turned is a limit rather than a quantity the operation
     // applies - it turns everything it was given unless a game says otherwise,
     // and it is worded as the cap it is, the same as everywhere else
     clauses: [
-      { id: 'count', label: 'at most n of them', variants: [ 'turn' ], whenOff: ' all widgets',
-        active: countIsLimited, add: { count: 1 }, template: v=>` ${widgetsCounted(v, 'count')}` },
-      { id: 'count', label: 'at most n of them', variants: [ 'cycle' ],
-        active: countIsLimited, add: { count: 1 }, template: v=>` ${widgetsCounted(v, 'count')} in` }
+      { id: 'count', label: 'at most a certain number of them',
+        whenOff: v=>v('holder') != null ? ' all widgets' : '',
+        active: countIsLimited, add: { count: 1 }, template: countedInHolderOrOfGroup }
     ],
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ], display: countWords },
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
-      collection: { type: 'collection', default: 'DEFAULT', display: thePick },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       face: { type: 'number', default: null, special: [ 0, 1 ], menu: true, otherLabel: 'a specific face…', display: flipFaceWords },
       // cycling onwards is a direction, and a random face is not one - it is the
       // one entry of the three that needs the words saying what it does instead
@@ -572,7 +632,7 @@ const routineOperationMetadata = {
     variants: [
       { id: 'collection', label: 'For each picked widget', fixed: [ 'in', 'range' ],
         apply: operation=>{ delete operation['in']; delete operation.range; },
-        template: 'For each picked widget in {collection}, do the operations below' },
+        template: 'For each of {collection}, do the operations below' },
       { id: 'range', label: 'For each number of a range', fixed: [ 'in', 'collection' ],
         // the engine reads in before range, so an operation with both is the one
         // it acts as rather than the one it is listed as
@@ -586,7 +646,7 @@ const routineOperationMetadata = {
     parameters: {
       'in': { type: 'json', default: null, hint: 'object, array or text', display: listWords },
       range: { type: 'json', default: null, hint: 'range', display: rangeWords },
-      collection: { type: 'collection', default: 'DEFAULT', display: thePick }
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets }
     },
     // the engine takes the first source that is set: in, then range, then collection
     ignored: v=>{
@@ -652,7 +712,10 @@ const routineOperationMetadata = {
         template: 'If this is true: {condition}' }
     ],
     parameters: {
-      condition: { type: 'string', default: null, hint: 'condition' },
+      // the one blank of the editor that takes something written rather than
+      // picked, so it shows the shape of what belongs there instead of the word
+      // "condition", which says nothing to somebody who has not written one
+      condition: { type: 'string', default: null, hint: 'a condition like ${count} > 3' },
       operand1: { type: 'string', default: null, hint: 'value' },
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>' ], default: '==', display: comparisonWords },
       operand2: { type: 'string', default: null, hint: 'value' }
@@ -689,7 +752,9 @@ const routineOperationMetadata = {
       // the lines of the dialog are the list below the sentence, so the chip is
       // the summary of that list rather than a way to add one - and a dialog
       // with nothing to fill in yet says so there, not with a blank up here
-      { id: 'fields', label: 'things to fill in', offer: false, template: ' to fill in {fields}',
+      // and it carries no ⊖: taking it out empties the whole form, which is what
+      // the remove button of each line is for - and nothing would offer it back
+      { id: 'fields', label: 'things to fill in', offer: false, removable: false, template: ' to fill in {fields}',
         active: v=>Array.isArray(v('fields')) && v('fields').length > 0 },
       { id: 'confirmButtonText', label: 'the confirm button', template: ', confirming with {confirmButtonText}' },
       { id: 'confirmButtonIcon', label: 'the confirm icon', template: ' and the icon {confirmButtonIcon}', add: { confirmButtonIcon: 'check' } },
@@ -777,7 +842,7 @@ const routineOperationMetadata = {
         template: 'Move{{count}}{{collection}} to {to}{{fillTo}}{{face}}' }
     ],
     clauses: [
-      { id: 'count', label: 'at most n of them', variants: [ 'collection' ],
+      { id: 'count', label: 'at most a certain number of them', variants: [ 'collection' ],
         active: countIsLimited, add: { count: 1 }, template: ' {count} of' },
       Object.assign(namedGroupClause(), { variants: [ 'collection' ] }),
       { id: 'fillTo', label: 'top up to n', template: ' until it holds {fillTo}', add: { fillTo: 1 } },
@@ -877,15 +942,15 @@ const routineOperationMetadata = {
     variants: [
       { id: 'add', label: 'Rotate widgets by an angle', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: v=>`Rotate ${widgetsCounted(v, 'count')} in {holder,collection} by {angle} degrees` },
+        template: v=>`Rotate${countedInHolderOrOfGroup(v)}${holderPreposition(v)} {holder,collection} by {angle} degrees` },
       { id: 'set', label: 'Set the rotation of widgets', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: v=>`Set the rotation of ${widgetsCounted(v, 'count')} in {holder,collection} to {angle} degrees` }
+        template: v=>`Set the rotation of${countedInHolderOrOfGroup(v)}${holderPreposition(v)} {holder,collection} to {angle} degrees` }
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
-      collection: { type: 'collection', default: 'DEFAULT', display: thePick },
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       // an angle is picked from the ones games turn things by, all the way round:
       // the sixths a hex board is built on, the eighths everything else uses and
       // the twelfths in between - a keypad of 0 to 10 offers none of them
@@ -952,10 +1017,10 @@ const routineOperationMetadata = {
       { id: 'type', label: 'only one type', template: ' {type}', whenOff: ' widgets',
         active: v=>v('type') != 'all', add: { type: 'card' } },
       { id: 'source', label: 'from an earlier pick', template: ' from the pick called {source}' },
-      { id: 'max', label: 'at most n of them', template: ' at most {max}', add: { max: 1 } },
+      { id: 'max', label: 'at most a certain number of them', template: ' at most {max}', add: { max: 1 } },
       { id: 'random', label: 'in random order', template: ' {random}', add: { random: true } },
-      { id: 'sortBy', label: 'sorted by', template: ', sorted by {sortBy}', add: { sortBy: 'value' } },
-      { id: 'collection', label: 'name the pick', variants: [ 'set' ], template: ' — call them {collection}' },
+      { id: 'sortBy', label: 'sorted by a property', template: ', sorted by {sortBy}', add: { sortBy: 'value' } },
+      { id: 'collection', label: 'give this group a name', variants: [ 'set' ], template: ' — call them {collection}' },
       { id: 'collection', label: 'another pick', variants: [ 'add', 'remove', 'intersect' ], template: ' called {collection}' }
     ],
     parameters: {
@@ -1207,14 +1272,31 @@ const routineOperationMetadata = {
   },
   VAR: {
     description: 'Remember values for later operations',
+    // a VAR holding one pair is what three out of four of them are, and one pair
+    // is a sentence: the same words a var statement uses, with the name and the
+    // value as two chips rather than one chip holding the raw "total: 3". Several
+    // pairs stay the list they are, edited as the rows the popup already has.
     variants: [
-      { id: 'var', label: 'Set variables', template: 'Remember {variables}' }
+      { id: 'var', label: 'Set variables',
+        template: v=>varPairCount(v) > 1 ? 'Set the variables {variables}' : 'Set the variable {variableName} to the value {variableValue}' }
+    ],
+    clauses: [
+      // one more pair turns the sentence into the list, where the rows add and
+      // remove them - so this is the one way in and the rows are the way back
+      { id: 'anotherVariable', label: 'another variable', template: '', active: _=>false, add: { anotherVariable: true } }
     ],
     parameters: {
       // what a VAR holds is a list of pairs, so it is edited as one - a name and
       // a value per row - rather than as the object that list is stored as
-      variables: { type: 'keyValue', default: {}, hint: 'variables', display: keyValueWords, keyHint: 'variable' }
+      variables: { type: 'keyValue', default: {}, offer: false, hint: 'variables', display: variablePairWords, keyHint: 'variable' },
+      // the two halves of a single pair: they are not properties of their own,
+      // VarSetRoutineOperationEditor reads and writes them through variables
+      variableName: { type: 'string', default: '', offer: false, hint: 'name', describedBy: 'variables' },
+      variableValue: { type: 'json', default: null, offer: false, hint: 'value', describedBy: 'variables' }
     },
+    // the sentence says all three, one way or the other, so none of them is a
+    // part of it that is missing and could be added
+    spokenFor: [ 'variables', 'variableName', 'variableValue' ],
     definesVariables: operation=>Object.keys(operation.variables || {})
   }
 };
@@ -2477,7 +2559,7 @@ class RoutineOperationEditor {
         // an option that replaces words leaves its own wording behind - the one
         // this way of working has, where several of them share the same id
         const clause = (this.metadata.clauses || []).find(c=>c.id == id && (!c.variants || c.variants.indexOf(shown.id) != -1));
-        return clause && clause.whenOff || '';
+        return clause && clause.whenOff ? this.resolveTemplate(clause.whenOff) : '';
       })
       .replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p))
       .trim();
@@ -2541,7 +2623,9 @@ class RoutineOperationEditor {
 
     // what a clause says while it is off is part of the sentence too, so the
     // parameter it words is not one nothing mentions
-    const spokenFor = new Set([ ...this.templateParameters(variant.template), ...(variant.fixed || []), ...clauses.flatMap(clause=>[ ...this.templateParameters(clause.template), ...this.templateParameters(clause.whenOff || '') ]) ]);
+    // plus the ones the operation says are covered however its sentence reads
+    // right now (a VAR words its one pair or lists them, never both)
+    const spokenFor = new Set([ ...(this.metadata.spokenFor || []), ...this.templateParameters(variant.template), ...(variant.fixed || []), ...clauses.flatMap(clause=>[ ...this.templateParameters(clause.template), ...this.templateParameters(clause.whenOff || '') ]) ]);
     for(const name in this.metadata.parameters) {
       if(spokenFor.has(name) || Object.prototype.hasOwnProperty.call(ignored, name))
         continue;
@@ -2786,9 +2870,11 @@ class RoutineOperationEditor {
     return Boolean(routineOperationMetadata[this.func]);
   }
 
-  // what the "i" next to the name of an operation says: the wiki text for it
+  // what the "i" next to the name of an operation says: the wiki text for it,
+  // under the same "raw name - what it does" title the parameter popups have
   functionInfoButton() {
-    return commonInfoButton(null, this.func);
+    const description = (this.metadata || {}).description;
+    return commonInfoButton(null, this.func, description ? `${this.func} - ${description}` : null);
   }
 
   renderTemplateText(template) {
@@ -2824,6 +2910,11 @@ class RoutineOperationEditor {
   // like a bullet point.
   renderClauseWithRemoveMarker(part) {
     const html = this.renderTemplateText(part.template);
+    // an option nothing offers back is an option nobody may take out by
+    // accident: the ⊖ on an INPUT's "3 fields" looked like every other one and
+    // emptied the whole form, with no way to put it back (see removable below)
+    if(part.clause.removable === false)
+      return html;
     const marker = `<span class="material-symbols routine-editor-clause-remove" data-clause="${escapeHTML(part.clause.id)}" title="Take this option out of the sentence">do_not_disturb_on</span>`;
     const lastChip = html.lastIndexOf('<span class="routine-editor-operation-parameter');
     if(lastChip == -1)
@@ -2854,14 +2945,16 @@ class RoutineOperationEditor {
       }
       html += this.renderTemplateText(template);
     }
-    if(this.clauses().some(clause=>!this.clauseIsActive(clause)))
+    if(this.clauses().some(clause=>!this.clauseIsActive(clause) && clause.offer !== false))
       html += `<span class="routine-editor-add-clause" title="Add one of the options this operation offers">add option</span>`;
-    dom.innerHTML = html;
+    // once, on the whole sentence: a comma often starts the option behind the
+    // one that ends with a chip, so the two are not in the same string
+    dom.innerHTML = tightenPunctuation(html);
 
     const variantMenu = $('.routine-editor-variant-menu', dom);
     if(variantMenu)
       focusable(variantMenu, async _=>{
-        const popup = new RoutineVariantMenu(routineOperationVariantChoices(this.operation), this.currentVariant().id);
+        const popup = new RoutineVariantMenu(routineOperationVariantChoices(this.operation), this.currentVariant().id, `What ${this.func || 'this operation'} does`);
         popup.setSource(variantMenu);
         const values = await newRoutineValues(popup);
         if(values !== undefined)
@@ -2884,7 +2977,7 @@ class RoutineOperationEditor {
         const popup = new RoutineClausePopup(this.clauses().filter(clause=>!this.clauseIsActive(clause) && clause.offer !== false).map(clause=>({
           label: clause.label,
           values: this.clauseAddValues(clause)
-        })));
+        })), null, null, `Add an option to ${this.func || 'this operation'}`);
         popup.setSource(addClause);
         popup.setOperationDetails(this.operation, [ 'func' ], this.widget, this.variables, this.collections);
         const values = await newRoutineValues(popup);
@@ -2996,6 +3089,13 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
+    // both blocks are named, because an unnamed one reads as "the rest of the
+    // routine" rather than as what happens while the condition holds - the two
+    // look the same on screen, and only the ELSE band told them apart
+    const thenLabel = document.createElement('div');
+    thenLabel.className = 'routine-editor-else';
+    thenLabel.textContent = 'THEN';
+    this.domElement.append(thenLabel);
     this.renderSubroutine(this.domElement, 'thenRoutine', { emptyHint: 'Add operations to run when the condition is true' });
     if(Array.isArray(this.operation.elseRoutine)) {
       const elseLabel = document.createElement('div');
@@ -3078,7 +3178,7 @@ class RoutineInputFieldEditor extends RoutineOperationEditor {
     if(parameterNames[0] == 'func')
       return new RoutineClausePopup(routineInputFieldChoices(), `
         The kinds of line a dialog can hold. Three of them only show something - a heading, a subheading, a paragraph - and every other one asks a question and remembers the answer under a name.
-      `, 'the lines of a dialog');
+      `, 'the lines of a dialog', 'Add a line to this dialog');
     return super.createFullPopup(parameterNames);
   }
 
@@ -3205,7 +3305,7 @@ class RoutineInputFieldsEditor {
     const addButton = button(this.domElement, 'add line', async _=>{
       const popup = new RoutineClausePopup(routineInputFieldChoices(), `
         The kinds of line a dialog can hold. Three of them only show something - a heading, a subheading, a paragraph - and every other one asks a question and remembers the answer under a name.
-      `, 'the lines of a dialog');
+      `, 'the lines of a dialog', 'Add a line to this dialog');
       popup.setSource(addButton);
       popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections);
       const values = await newRoutineValues(popup);
@@ -3508,6 +3608,87 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   }
 }
 
+// The VAR whose sentence says the one pair it has: variableName and variableValue
+// are not properties the engine knows, they are the two halves of the first (and
+// usually only) entry of variables, so everything a chip needs - what it shows,
+// whether it is a blank, what a popup starts with and what an answer writes -
+// goes through that object.
+class VarSetRoutineOperationEditor extends RoutineOperationEditor {
+  constructor() {
+    super('VAR');
+  }
+
+  pairs() {
+    const variables = this.operation && this.operation.variables;
+    return variables && typeof variables == 'object' && !Array.isArray(variables) ? Object.entries(variables) : [];
+  }
+
+  isPairHalf(name) {
+    return name == 'variableName' || name == 'variableValue';
+  }
+
+  classifyParameter(name, value) {
+    // the name of a remembered value is one, whatever it is called here
+    if(name == 'variableName')
+      return 'variable';
+    return super.classifyParameter(name, value);
+  }
+
+  getDisplayedValue(property) {
+    if(!this.isPairHalf(property))
+      return super.getDisplayedValue(property);
+    const pair = this.pairs()[0];
+    if(!pair)
+      return this.parameterHint(property);
+    if(property == 'variableName')
+      return pair[0];
+    return pair[1] !== null && typeof pair[1] == 'object' ? JSON.stringify(pair[1]) : String(pair[1]);
+  }
+
+  parameterIsBlank(property) {
+    if(this.isPairHalf(property))
+      return !this.pairs().length;
+    return super.parameterIsBlank(property);
+  }
+
+  async editParameter(span, parameterNames, popup) {
+    const name = parameterNames[0];
+    if(!this.isPairHalf(name))
+      return super.editParameter(span, parameterNames, popup);
+    const pair = this.pairs()[0];
+    const current = pair ? { [name]: name == 'variableName' ? pair[0] : pair[1] } : {};
+    popup.setSource(span);
+    popup.setOperationDetails(current, parameterNames, this.widget, this.variables, this.collections);
+    const values = await newRoutineValues(popup);
+    if(values === routineFullPopupRequest)
+      return this.editParameter(span, parameterNames, this.createFullPopup(parameterNames));
+    return values;
+  }
+
+  onNewValue(values) {
+    const has = name=>Object.prototype.hasOwnProperty.call(values, name);
+    if(!has('variableName') && !has('variableValue') && !has('anotherVariable'))
+      return super.onNewValue(values);
+    const pairs = this.pairs();
+    const variables = {};
+    for(const [ index, [ key, value ] ] of pairs.entries()) {
+      const name = index === 0 && has('variableName') && String(values.variableName || '').trim() ? String(values.variableName).trim() : key;
+      variables[name] = index === 0 && has('variableValue') ? values.variableValue : value;
+    }
+    if(!pairs.length)
+      variables[has('variableName') && String(values.variableName || '').trim() ? String(values.variableName).trim() : 'variable'] = has('variableValue') ? values.variableValue : '';
+    // one more pair, with a name to fill in: the list the rows edit
+    if(has('anotherVariable')) {
+      let name = 'variable';
+      for(let index = 2; typeof variables[name] != 'undefined'; index++)
+        name = `variable${index}`;
+      variables[name] = '';
+    }
+    this.operation.variables = variables;
+    this.notifyChangeListeners(this.operation);
+  }
+}
+
 class CommentRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
     super('//');
@@ -3576,6 +3757,8 @@ function editorForOperation(operation) {
       return new ForeachRoutineOperationEditor();
     if(operation.func == 'INPUT')
       return new InputRoutineOperationEditor();
+    if(operation.func == 'VAR')
+      return new VarSetRoutineOperationEditor();
     return new RoutineOperationEditor(operation.func);
   }
   return new UnknownRoutineOperationEditor();

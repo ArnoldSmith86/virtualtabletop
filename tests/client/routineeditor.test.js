@@ -396,7 +396,7 @@ describe('operation rendering', () => {
       return editor.getTemplate();
     };
     expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('Cycle the face of');
-    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} widgets] in {holder,collection} {face}');
+    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} of] {holder,collection} {face}');
     expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
     // the deprecated canvas is the option that swaps the collection for it, so
     // the template holds both: the words it adds and the ones it replaces
@@ -511,9 +511,9 @@ describe('operation rendering', () => {
     [ { func: 'COUNT', holder: 'hand1', variable: 'cards' }, 'Count what is in hand1 and remember it as cards' ],
     [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn all widgets in deck1 face up' ],
     [ { func: 'FLIP', holder: 'deck1', face: 1, count: 3 }, 'Turn 3 widgets in deck1 face down' ],
-    [ { func: 'FLIP', collection: 'aces', face: 2 }, 'Turn all widgets in aces to face 2' ],
-    [ { func: 'FLIP', faceCycle: 'backward' }, 'Cycle the face of the pick backward' ],
-    [ { func: 'FLIP', faceCycle: 'random', count: 2 }, 'Cycle the face of 2 widgets in the pick to a random face' ],
+    [ { func: 'FLIP', collection: 'aces', face: 2 }, 'Turn aces to face 2' ],
+    [ { func: 'FLIP', faceCycle: 'backward' }, 'Cycle the face of the picked widgets backward' ],
+    [ { func: 'FLIP', faceCycle: 'random', count: 2 }, 'Cycle the face of 2 of the picked widgets to a random face' ],
     [ { func: 'CLICK', collection: 'myPick', count: 2, mode: 'ignoreClickRoutine' }, 'Click the widgets called myPick, 2 times, but do not run their click routines' ],
     [ { func: 'RECALL', holder: 'deck1' }, 'Gather all the cards back into deck1' ],
     [ { func: 'RECALL', holder: 'deck1', owned: false }, 'Gather all the cards back into deck1, except the cards players hold' ],
@@ -541,7 +541,7 @@ describe('operation rendering', () => {
     [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask the players red and blue at once to fill in 1 field, holding everybody else up until it is answered' ],
     [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
     [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number in the range 1 to 10, do the operations below' ],
-    [ { func: 'FOREACH' }, 'For each picked widget in the pick, do the operations below' ],
+    [ { func: 'FOREACH' }, 'For each of the picked widgets, do the operations below' ],
     [ { func: 'FOREACH', 'in': [ 'a', 'b' ] }, 'For each entry in a and b, do the operations below' ],
     [ { func: 'LABEL', label: 'score1', mode: 'inc', value: 5 }, 'Increase the text of score1 by 5' ]
   ])('%j reads as its sentence', (operation, sentence) => {
@@ -668,7 +668,7 @@ describe('picking how an operation works and which options it uses', () => {
     dom.querySelector('.routine-editor-variant-menu').dispatchEvent(new Event('click'));
     const menu = document.querySelector('.inline-popup.popup-menu');
     expect(menu).not.toBeNull();
-    expect(menu.querySelector('h1')).toBeNull(); // a menu, not one of the parameter popups
+    expect(menu.querySelector('h1').textContent).toContain('What FLIP does'); // a menu, but one that says what it is for
     expect(menu.querySelector('.popup-close')).not.toBeNull(); // but it can be closed like every other popup
     const entryLabels = [...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent);
     expect(entryLabels).toEqual([ 'Turn', 'Cycle the face of' ]);
@@ -727,24 +727,27 @@ describe('picking how an operation works and which options it uses', () => {
     localStorage.clear();
     let popup = open();
     const settings = [...popup.domElement.querySelectorAll('.popup-setting input')];
-    expect(settings.map(s => s.checked)).toEqual([ true, false ]); // saying what they are for, alphabetically
+    expect(settings.map(s => s.checked)).toEqual([ true, true ]); // saying what they are for, grouped by what they do
     expect(popup.domElement.querySelector('.popup-operation-example')).not.toBeNull();
-    expect(popup.domElement.querySelector('.popup-operation-group')).toBeNull();
+    const groups = [...popup.domElement.querySelectorAll('.popup-operation-group')].map(e => e.textContent);
+    expect(groups).toEqual(routineOperationGroups.map(group => group.title));
 
     settings[0].checked = false;
     settings[0].dispatchEvent(new Event('change'));
     expect(popup.domElement.querySelector('.popup-operation-example')).toBeNull();
-    settings[1].checked = true;
+    settings[1].checked = false;
     settings[1].dispatchEvent(new Event('change'));
-    const groups = [...popup.domElement.querySelectorAll('.popup-operation-group')].map(e => e.textContent);
-    expect(groups).toEqual(routineOperationGroups.map(group => group.title));
+    expect(popup.domElement.querySelector('.popup-operation-group')).toBeNull();
     popup.hide();
 
     popup = open();
-    expect([...popup.domElement.querySelectorAll('.popup-setting input')].map(s => s.checked)).toEqual([ false, true ]);
+    expect([...popup.domElement.querySelectorAll('.popup-setting input')].map(s => s.checked)).toEqual([ false, false ]);
     expect(popup.domElement.querySelector('.popup-operation-example')).toBeNull();
-    expect(popup.domElement.querySelector('.popup-operation-group')).not.toBeNull();
+    expect(popup.domElement.querySelector('.popup-operation-group')).toBeNull();
     // and searching keeps the groups it has entries for, in the order they are in
+    const grouping = [...popup.domElement.querySelectorAll('.popup-setting input')][1];
+    grouping.checked = true;
+    grouping.dispatchEvent(new Event('change'));
     popup.domElement.querySelector('.popup-property-search').value = 'sound';
     popup.domElement.querySelector('.popup-property-search').dispatchEvent(new Event('input'));
     expect([...popup.domElement.querySelectorAll('.popup-operation-group')].map(e => e.textContent)).toEqual([ 'Talk to the players' ]);
@@ -838,7 +841,7 @@ describe('picking how an operation works and which options it uses', () => {
     // and "all" is not a limit at all, so the option that limits it is off
     const flip = editorForOperation({ func: 'FLIP', face: 0 });
     flip.setOperationDetails({ state: {} }, { func: 'FLIP', face: 0 }, [], []);
-    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause)).map(clause => clause.label)).toEqual([ 'at most n of them' ]);
+    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause)).map(clause => clause.label)).toEqual([ 'at most a certain number of them' ]);
   });
 
   // which face is one thing a FLIP says, not four ways of working: the two faces
@@ -921,7 +924,7 @@ describe('picking how an operation works and which options it uses', () => {
     await new Promise(resolve => setTimeout(resolve, 0));
     const menu = document.querySelector('.inline-popup.popup-menu');
     expect(menu).not.toBeNull();
-    expect(menu.querySelector('h1')).toBeNull(); // no title repeating the section repeating the one list
+    expect(menu.querySelector('h1').textContent).toContain('Add an option to RECALL'); // a title, but no section around the one list
     expect(menu.querySelector('.accordion-section')).toBeNull();
     expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toContain('nearest cards first');
     expect(menu.querySelector('.popup-menu-entry-preview')).toBeNull();
@@ -1049,7 +1052,7 @@ describe('picking how an operation works and which options it uses', () => {
     editor.setOperationDetails({ state: {} }, { func: 'SELECT' }, [], []);
     const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
     expect(offered.map(clause => clause.label)).toEqual([
-      'only one type', 'from an earlier pick', 'at most n of them', 'in random order', 'sorted by', 'name the pick'
+      'only one type', 'from an earlier pick', 'at most a certain number of them', 'in random order', 'sorted by a property', 'give this group a name'
     ]);
     // and switching the type on has to narrow the sentence down to something
     expect(editor.clauseAddValues(offered.find(clause => clause.id == 'type'))).toEqual({ type: 'card' });
@@ -1067,7 +1070,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(renderOperation({ func: 'SELECT', property: 'x', value: 1, collection: 'DEFAULT' }).dom.textContent).toContain('call them DEFAULT');
     expect(renderOperation({ func: 'CLONE', collection: 'DEFAULT' }).dom.textContent).toContain('call the copies DEFAULT');
     // while the widgets an operation reads are still the words for them
-    expect(renderOperation({ func: 'FLIP', collection: 'DEFAULT', face: 0 }).dom.textContent).toContain('in the pick');
+    expect(renderOperation({ func: 'FLIP', collection: 'DEFAULT', face: 0 }).dom.textContent).toContain('the picked widgets');
   });
 
   // GET reads one value out of a group of widgets, and every option says which
@@ -1485,7 +1488,7 @@ describe('property automations', () => {
     const keys = [...editor.domElement.querySelectorAll('.events-editor-property-key')].map(e => e.textContent);
     expect(keys).toEqual([ 'activeFace', 'cardType' ]);
     const values = [...editor.domElement.querySelectorAll('.events-editor-property-value')].map(e => e.value);
-    expect(values).toEqual([ '1', 'stop' ]);
+    expect(values).toEqual([ '1', 'stop', '' ]); // the two entries, and the empty one of the add row
   });
 
   test('editing a value reports the whole set with that entry parsed', () => {
@@ -1787,8 +1790,11 @@ describe('information about an operation and its parameters', () => {
     for(const func in routineOperationMetadata) {
       const topic = commonInfoTopic(func);
       expect(topic).toBeDefined();
-      for(const name in routineOperationMetadata[func].parameters)
-        expect(commonInfoTopic(`${func}.${name}`) || parameterInfoLine(topic.info, name)).toBeTruthy();
+      for(const name in routineOperationMetadata[func].parameters) {
+        // a chip standing for a part of another parameter is described by that one
+        const described = routineOperationMetadata[func].parameters[name].describedBy || name;
+        expect(commonInfoTopic(`${func}.${described}`) || parameterInfoLine(topic.info, described)).toBeTruthy();
+      }
     }
   });
 
@@ -2621,8 +2627,9 @@ describe('popup parameter routing', () => {
 
     const names = _=>[...popup.domElement.querySelectorAll('.popup-property-list button')].map(b => b.textContent);
     expect([...popup.domElement.querySelectorAll('.popup-property-group')].map(g => g.textContent))
-      .toEqual([ 'This widget', 'Other widgets in this room', 'Other standard properties' ]);
-    expect(names().slice(0, 4)).toEqual([ 'id', 'myScore', 'type', 'cardType' ]); // this widget first, then the room
+      .toEqual([ 'This widget', 'Commonly set', 'Other widgets in this room', 'Other standard properties' ]);
+    expect(names().slice(0, 3)).toEqual([ 'id', 'myScore', 'type' ]); // this widget first
+    expect(names()).toContain('cardType'); // then the room
     expect(names()).toContain('dropTarget'); // a standard property no widget in the room uses
     expect(names().filter(n => n == 'id')).toHaveLength(1); // every name appears in its first group only
     expect([...popup.domElement.querySelectorAll('.popup-property-list button.selected')].map(b => b.textContent)).toEqual([ 'myScore' ]);
@@ -2743,7 +2750,7 @@ describe('the words and the units of an operation', () => {
   // while a game has it and nothing the editor invites anybody to add - but a
   // game that arrived with one is a minus away from what replaced it
   test('the deprecated CANVAS canvas is shown with a way out but never offered', () => {
-    expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'at most n of them' ]);
+    expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'at most a certain number of them' ]);
     expect(sentenceWords({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear c1');
     expect(sentenceWords({ func: 'CANVAS' })).toContain('Clear the picked canvases');
 
@@ -2785,10 +2792,10 @@ describe('the words and the units of an operation', () => {
       // how often the operation runs is a different idea and keeps its own words
       'AUDIO count': 'n times',
       'CLICK count': 'n times',
-      'CANVAS count': 'at most n of them',
-      'FLIP count': 'at most n of them',
-      'MOVE count': 'at most n of them',
-      'SELECT max': 'at most n of them'
+      'CANVAS count': 'at most a certain number of them',
+      'FLIP count': 'at most a certain number of them',
+      'MOVE count': 'at most a certain number of them',
+      'SELECT max': 'at most a certain number of them'
     });
   });
 
@@ -2832,6 +2839,68 @@ describe('the words and the units of an operation', () => {
     expect(sentenceWords({ func: 'SCORE', mode: 'inc' })).toBe('Add 1 to score of every seat in a new round');
     expect(sentenceWords({ func: 'SCORE', mode: 'dec' })).toBe('Subtract 1 from score of every seat in a new round');
     expect(editorFor({ func: 'SCORE' }).render().querySelector('[data-parameter="value"]').classList.contains('routine-editor-parameter-missing')).toBe(false);
+  });
+
+  // a holder is a place widgets are in, a group of widgets is the widgets - and
+  // saying "in the pick" made a group a place and taught a word nothing defines
+  test('a group of widgets reads the same way in every sentence, and never as a place', () => {
+    expect(sentenceWords({ func: 'FLIP', holder: 'h1', face: 0 })).toBe('Turn all widgets in h1 face up');
+    expect(sentenceWords({ func: 'FLIP', face: 0 })).toBe('Turn the picked widgets face up');
+    expect(sentenceWords({ func: 'FLIP', face: 0, count: 2 })).toBe('Turn 2 of the picked widgets face up');
+    expect(sentenceWords({ func: 'ROTATE', holder: 'h1', angle: 90 })).toBe('Rotate 1 widget in h1 by 90 degrees');
+    expect(sentenceWords({ func: 'ROTATE', angle: 90 })).toBe('Rotate 1 of the picked widgets by 90 degrees');
+    expect(sentenceWords({ func: 'FOREACH' })).toContain('For each of the picked widgets');
+    for(const operation of [ { func: 'FLIP', face: 0 }, { func: 'ROTATE' }, { func: 'FOREACH' }, { func: 'MOVE' }, { func: 'SET' }, { func: 'CLICK' } ])
+      expect(sentenceWords(operation)).not.toContain('the pick ');
+  });
+
+  // one pair is what three out of four VARs hold, and one pair is a sentence
+  test('VAR reads as a sentence, with the name and the value as their own chips', () => {
+    expect(sentenceWords({ func: 'VAR', variables: { total: 3 } })).toBe('Set the variable total to the value 3');
+    expect(sentenceWords({ func: 'VAR', variables: {} })).toBe('Set the variable name to the value value');
+    expect(sentenceWords({ func: 'VAR', variables: { a: 1, b: 2 } })).toBe('Set the variables a to 1 and b to 2');
+    const dom = editorFor({ func: 'VAR', variables: { total: 3 } }).render();
+    expect(dom.querySelector('[data-parameter="variableName"]').textContent).toBe('total');
+    expect(dom.querySelector('[data-parameter="variableValue"]').textContent).toBe('3');
+  });
+
+  test('editing either half of a VAR pair writes the pair back', async () => {
+    const editor = editorFor({ func: 'VAR', variables: { total: 3 } });
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    editor.onNewValue({ variableName: 'score' });
+    expect(result).toEqual({ func: 'VAR', variables: { score: 3 } });
+    editor.onNewValue({ variableValue: 7 });
+    expect(result).toEqual({ func: 'VAR', variables: { score: 7 } });
+    // and the option that adds one leaves the sentence for the list of rows
+    editor.onNewValue({ anotherVariable: true });
+    expect(Object.keys(result.variables)).toEqual([ 'score', 'variable' ]);
+  });
+
+  // taking the fields out of an INPUT empties the whole form, and nothing offers
+  // them back - so that option has no ⊖ while every other one does
+  test('the lines of an INPUT dialog carry no remove marker', () => {
+    const dom = editorFor({ func: 'INPUT', fields: [ { type: 'string', label: 'a' } ] }).render();
+    expect(dom.querySelector('[data-parameter="fields"]')).not.toBeNull();
+    expect([...dom.querySelectorAll('.routine-editor-clause-remove')].map(m => m.dataset.clause)).not.toContain('fields');
+    expect([...editorFor({ func: 'INPUT', header: 'hi' }).render().querySelectorAll('.routine-editor-clause-remove')].map(m => m.dataset.clause)).toContain('header');
+  });
+
+  // both blocks of an IF are named: the one under the condition read as "the rest
+  // of the routine" while only the other one carried a band
+  test('an IF names its then block as well as its else block', () => {
+    const dom = editorFor({ func: 'IF', elseRoutine: [] }).render();
+    expect([...dom.querySelectorAll('.routine-editor-else')].map(e => e.textContent)).toEqual([ 'THEN', 'ELSE' ]);
+    expect([...editorFor({ func: 'IF' }).render().querySelectorAll('.routine-editor-else')].map(e => e.textContent)).toEqual([ 'THEN' ]);
+  });
+
+  // the punctuation behind a chip belongs to the chip: the chip's own padding put
+  // a space in front of every comma ("to the position 300 , 200")
+  test('punctuation is pulled back onto the chip in front of it', () => {
+    const dom = editorFor({ func: 'MOVEXY', from: 'h1', x: 300, y: 200 }).render();
+    const punctuation = [...dom.querySelectorAll('.routine-editor-punctuation')].map(e => e.textContent);
+    expect(punctuation).toContain(',');
+    expect(dom.querySelector('.routine-editor-sentence').textContent).toContain('300, 200');
   });
 
   test('ROTATE sets the rotation, and its angle picker offers angles instead of digits', () => {

@@ -274,6 +274,12 @@ class EventsEditor {
 
       infoButton(headerDOM, `<pre>${escapeHTML(event.description)}</pre>`);
 
+      // the sentences below lean on their colors, so the key to them is where a
+      // routine starts rather than only in a CSS comment
+      const legend = infoButton(headerDOM, routineColorLegendHTML, null, null, 'the colors of a routine');
+      legend.classList.add('events-editor-legend');
+      $('.material-symbols', legend).textContent = 'palette';
+
       const jsonButton = document.createElement('span');
       jsonButton.className = 'material-symbols events-editor-json';
       jsonButton.textContent = 'data_object';
@@ -382,11 +388,13 @@ class EventsEditor {
       });
       headerDOM.append(jsonButton);
 
-      if(isSet) {
-        const removeButton = document.createElement('span');
-        removeButton.className = 'material-symbols events-editor-remove';
-        removeButton.textContent = 'delete';
-        removeButton.title = `Remove ${property}`;
+      // a property set the widget does not have yet has nothing to remove, and
+      // it says so instead of leaving a gap where every other card has an icon
+      const removeButton = document.createElement('span');
+      removeButton.className = `material-symbols events-editor-remove${isSet ? '' : ' events-editor-disabled'}`;
+      removeButton.textContent = 'delete';
+      removeButton.title = isSet ? `Remove ${property}` : `${property} is not set on this widget, so there is nothing to remove`;
+      if(isSet)
         removeButton.addEventListener('click', e=>{
           e.stopPropagation();
           if(confirm(`Remove ${property}?`)) {
@@ -395,8 +403,9 @@ class EventsEditor {
             this.render();
           }
         });
-        headerDOM.append(removeButton);
-      }
+      else
+        removeButton.addEventListener('click', e=>e.stopPropagation());
+      headerDOM.append(removeButton);
 
       focusable(headerDOM, _=>{
         this.expandedEvents[property] = !expanded;
@@ -482,6 +491,11 @@ class EventsEditor {
       rowDOM.append(removeButton);
     }
 
+    // what a typed value is stored as is a trap ("false" the text or false the
+    // value?), and the rule is one line - so it is on the page rather than in
+    // the title of an input nobody hovers
+    div(contentDOM, 'events-editor-property-hint').textContent = 'true, 12, null and [ 1, 2 ] are stored as values; anything else as text.';
+
     const addRow = div(list, 'events-editor-property-row events-editor-property-add');
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
@@ -502,17 +516,27 @@ class EventsEditor {
     }
     addRow.append(nameInput);
 
+    // the value belongs on the same line as the name it belongs to: a row that
+    // only takes a name adds a half-finished entry and then asks for the rest
+    // one line above, which is the complaint VAR's pair rows were fixed for
+    const addValueInput = document.createElement('input');
+    addValueInput.type = 'text';
+    addValueInput.className = 'events-editor-property-value';
+    addValueInput.placeholder = 'value';
+    addRow.append(addValueInput);
+
     const addEntry = _=>{
       const key = nameInput.value.trim();
       if(!key || typeof currentSet()[key] != 'undefined')
         return;
-      save(Object.assign({}, currentSet(), { [key]: '' }));
+      save(Object.assign({}, currentSet(), { [key]: parsePropertySetValue(addValueInput.value) }));
       this.render();
     };
-    nameInput.addEventListener('keydown', e=>{
-      if(e.key == 'Enter')
-        addEntry();
-    });
+    for(const input of [ nameInput, addValueInput ])
+      input.addEventListener('keydown', e=>{
+        if(e.key == 'Enter')
+          addEntry();
+      });
     const addEntryButton = button(addRow, 'add', addEntry);
     addEntryButton.className = 'events-editor-property-add-button';
     // a button that does nothing until a name is typed says so instead of

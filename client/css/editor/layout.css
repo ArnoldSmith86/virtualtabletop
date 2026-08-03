@@ -25,7 +25,13 @@ body {
   --routineCollectionColor: green;
   --routineVariableColor: #b25b00;
   --routinePropertyColor: #c2185b;
-  --routineNumberColor: darkcyan;
+  /* darkcyan reaches only 4.15:1 on the white chip, and numbers are everywhere
+     in a sentence - this is the same hue at 4.9:1 */
+  --routineNumberColor: #00696b;
+
+  /* A blank in a sentence is red, and pure red reaches 4.0:1 on white - below
+     the 4.5:1 the rest of this file budgets for. Dark mode is fine as it is. */
+  --routineBlankColor: #d32f2f;
 
   /* The card of the routine editor that was worked on last: a clear step lighter
      than the other cards (--backgroundHighlightColor1) so it is spotted without
@@ -73,6 +79,7 @@ body.edit.darkMode {
   --routineVariableColor: orange;
   --routinePropertyColor: #ff8fb1;
   --routineNumberColor: #40e0d0;
+  --routineBlankColor: red;
   --routineActiveCardColor: #626262;
 
   color-scheme: dark;
