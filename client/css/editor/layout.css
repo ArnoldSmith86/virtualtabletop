@@ -3,6 +3,7 @@ body {
   --textColor: black;
 
   --backgroundHighlightColor1: #ccc;
+  --backgroundHighlightColor2: #dedede;
 
   --textHighlightColor1: #880;
   --textHighlightColor2: orange;
@@ -13,6 +14,41 @@ body {
   --textHighlightColor7: darkcyan;
 
   --textDimColor1: #ccc;
+
+  /* The routine editor colors every value by what it is, in the sentence as well
+     as in the popup it is picked from, so a color always means the same thing:
+     blue the operation itself, purple a widget, green a group of widgets, orange
+     a value the routine remembers, pink a widget property, teal a number. A
+     plain text or JSON value stays in the normal text color. */
+  --routineOperationColor: #1f5ca6;
+  --routineWidgetColor: purple;
+  --routineCollectionColor: green;
+  --routineVariableColor: #b25b00;
+  --routinePropertyColor: #c2185b;
+  /* darkcyan reaches only 4.15:1 on the white chip, and numbers are everywhere
+     in a sentence - this is the same hue at 4.9:1 */
+  --routineNumberColor: #00696b;
+
+  /* A blank in a sentence is red, and pure red reaches 4.0:1 on white - below
+     the 4.5:1 the rest of this file budgets for. Dark mode is fine as it is. */
+  --routineBlankColor: #d32f2f;
+
+  /* The card of the routine editor that was worked on last: a clear step lighter
+     than the other cards (--backgroundHighlightColor1) so it is spotted without
+     reading, while the chrome on it (see --routineChromeOpacity) still clears
+     the 3:1 a control needs. */
+  --routineActiveCardColor: #eeeeee;
+
+  /* The controls around a value (move, delete, info, the x of an option) are the
+     text color turned down instead of a fixed gray: gray on the card background
+     reaches 2.5:1, below the 3:1 a control needs to be made out at all, while
+     the same color at this opacity clears 4.5:1 in both themes. */
+  --routineChromeOpacity: 0.6;
+
+  /* Every part of a sentence - a chip, the drop-down it starts with, the x of an
+     option - is this high and centered on the line, so the words of a sentence
+     stay on one line instead of stepping up and down between them. */
+  --routineChipHeight: 22px;
 
   color-scheme: light;
   --gridSize: 25px;
@@ -25,6 +61,7 @@ body.edit.darkMode {
   --textColor: #f8f8f2;
 
   --backgroundHighlightColor1: #444;
+  --backgroundHighlightColor2: #565656;
 
   --textHighlightColor1: yellow;
   --textHighlightColor2: orange;
@@ -35,6 +72,15 @@ body.edit.darkMode {
   --textHighlightColor7: #40e0d0;
 
   --textDimColor1: #606060;
+
+  --routineOperationColor: #7ab7ff;
+  --routineWidgetColor: #dda0dd;
+  --routineCollectionColor: #7ed07e;
+  --routineVariableColor: orange;
+  --routinePropertyColor: #ff8fb1;
+  --routineNumberColor: #40e0d0;
+  --routineBlankColor: red;
+  --routineActiveCardColor: #626262;
 
   color-scheme: dark;
 }
@@ -121,14 +167,6 @@ body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview:not(.pile) {
 
 body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview.pile .handle {
   box-shadow: 0px 0px 0px 5px red;
-}
-
-body.edit:not(.dragToolbarDragging) .widget.customSelectedInEdit:not(.pile) {
-  box-shadow: 0px 0px 0px 5px orange;
-}
-
-body.edit:not(.dragToolbarDragging) .widget.customSelectedInEdit.pile .handle {
-  box-shadow: 0px 0px 0px 5px orange;
 }
 
 .hintUI {

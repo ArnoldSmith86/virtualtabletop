@@ -110,6 +110,15 @@ export function rand() {
   return number;
 }
 
+// converts "minutes:seconds" or "minutes:seconds.fraction" strings to milliseconds
+// (rounded to the nearest millisecond); returns any other value unchanged
+export function timeToMS(value) {
+  const match = typeof value == 'string' && value.match(/^(-?)(\d+):(\d+(?:\.\d+)?)$/);
+  if(match)
+    return (match[1] ? -1 : 1) * Math.round((+match[2]*60 + +match[3])*1000);
+  return value;
+}
+
 export function regexEscape(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
 }
@@ -153,11 +162,11 @@ export function shuffleArray(array) {
 }
 
 export function mapAssetURLs(str) {
-  return String(str).replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
+  return String(str).replaceAll(/(^|["' (=])\/(assets|i)\//g, '$1$2/');
 }
 
 export function unmapAssetURLs(str) {
-  return String(str).replaceAll(/(^|["' (])(assets|i)\//g, '$1/$2/');
+  return String(str).replaceAll(/(^|["' (=])(assets|i)\//g, '$1/$2/');
 }
 
 export function escapeID(id) {

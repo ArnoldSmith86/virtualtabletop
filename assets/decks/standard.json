@@ -1,0 +1,312 @@
+{
+  "name": "Standard playing cards",
+  "description": "French-suited 52-card deck with 2 jokers.",
+  "attribution": "Card images by Adrian Kennard, released under CC0 at https://www.me.uk/cards/. Jokers based on Byron Knoll's public domain playing cards.",
+  "deck": {
+    "type": "deck",
+    "cardTypes": {
+      "2 of spades": {
+        "image": "/i/cards-default/2S.svg",
+        "rank": "2",
+        "suit": "spades"
+      },
+      "3 of spades": {
+        "image": "/i/cards-default/3S.svg",
+        "rank": "3",
+        "suit": "spades"
+      },
+      "4 of spades": {
+        "image": "/i/cards-default/4S.svg",
+        "rank": "4",
+        "suit": "spades"
+      },
+      "5 of spades": {
+        "image": "/i/cards-default/5S.svg",
+        "rank": "5",
+        "suit": "spades"
+      },
+      "6 of spades": {
+        "image": "/i/cards-default/6S.svg",
+        "rank": "6",
+        "suit": "spades"
+      },
+      "7 of spades": {
+        "image": "/i/cards-default/7S.svg",
+        "rank": "7",
+        "suit": "spades"
+      },
+      "8 of spades": {
+        "image": "/i/cards-default/8S.svg",
+        "rank": "8",
+        "suit": "spades"
+      },
+      "9 of spades": {
+        "image": "/i/cards-default/9S.svg",
+        "rank": "9",
+        "suit": "spades"
+      },
+      "A of spades": {
+        "image": "/i/cards-default/AS.svg",
+        "rank": "A",
+        "suit": "spades"
+      },
+      "10 of spades": {
+        "image": "/i/cards-default/TS.svg",
+        "rank": "10",
+        "suit": "spades"
+      },
+      "J of spades": {
+        "image": "/i/cards-default/JS.svg",
+        "rank": "J",
+        "suit": "spades"
+      },
+      "Q of spades": {
+        "image": "/i/cards-default/QS.svg",
+        "rank": "Q",
+        "suit": "spades"
+      },
+      "K of spades": {
+        "image": "/i/cards-default/KS.svg",
+        "rank": "K",
+        "suit": "spades"
+      },
+      "2 of hearts": {
+        "image": "/i/cards-default/2H.svg",
+        "rank": "2",
+        "suit": "hearts"
+      },
+      "3 of hearts": {
+        "image": "/i/cards-default/3H.svg",
+        "rank": "3",
+        "suit": "hearts"
+      },
+      "4 of hearts": {
+        "image": "/i/cards-default/4H.svg",
+        "rank": "4",
+        "suit": "hearts"
+      },
+      "5 of hearts": {
+        "image": "/i/cards-default/5H.svg",
+        "rank": "5",
+        "suit": "hearts"
+      },
+      "6 of hearts": {
+        "image": "/i/cards-default/6H.svg",
+        "rank": "6",
+        "suit": "hearts"
+      },
+      "7 of hearts": {
+        "image": "/i/cards-default/7H.svg",
+        "rank": "7",
+        "suit": "hearts"
+      },
+      "8 of hearts": {
+        "image": "/i/cards-default/8H.svg",
+        "rank": "8",
+        "suit": "hearts"
+      },
+      "9 of hearts": {
+        "image": "/i/cards-default/9H.svg",
+        "rank": "9",
+        "suit": "hearts"
+      },
+      "A of hearts": {
+        "image": "/i/cards-default/AH.svg",
+        "rank": "A",
+        "suit": "hearts"
+      },
+      "10 of hearts": {
+        "image": "/i/cards-default/TH.svg",
+        "rank": "10",
+        "suit": "hearts"
+      },
+      "J of hearts": {
+        "image": "/i/cards-default/JH.svg",
+        "rank": "J",
+        "suit": "hearts"
+      },
+      "Q of hearts": {
+        "image": "/i/cards-default/QH.svg",
+        "rank": "Q",
+        "suit": "hearts"
+      },
+      "K of hearts": {
+        "image": "/i/cards-default/KH.svg",
+        "rank": "K",
+        "suit": "hearts"
+      },
+      "2 of diamonds": {
+        "image": "/i/cards-default/2D.svg",
+        "rank": "2",
+        "suit": "diamonds"
+      },
+      "3 of diamonds": {
+        "image": "/i/cards-default/3D.svg",
+        "rank": "3",
+        "suit": "diamonds"
+      },
+      "4 of diamonds": {
+        "image": "/i/cards-default/4D.svg",
+        "rank": "4",
+        "suit": "diamonds"
+      },
+      "5 of diamonds": {
+        "image": "/i/cards-default/5D.svg",
+        "rank": "5",
+        "suit": "diamonds"
+      },
+      "6 of diamonds": {
+        "image": "/i/cards-default/6D.svg",
+        "rank": "6",
+        "suit": "diamonds"
+      },
+      "7 of diamonds": {
+        "image": "/i/cards-default/7D.svg",
+        "rank": "7",
+        "suit": "diamonds"
+      },
+      "8 of diamonds": {
+        "image": "/i/cards-default/8D.svg",
+        "rank": "8",
+        "suit": "diamonds"
+      },
+      "9 of diamonds": {
+        "image": "/i/cards-default/9D.svg",
+        "rank": "9",
+        "suit": "diamonds"
+      },
+      "A of diamonds": {
+        "image": "/i/cards-default/AD.svg",
+        "rank": "A",
+        "suit": "diamonds"
+      },
+      "10 of diamonds": {
+        "image": "/i/cards-default/TD.svg",
+        "rank": "10",
+        "suit": "diamonds"
+      },
+      "J of diamonds": {
+        "image": "/i/cards-default/JD.svg",
+        "rank": "J",
+        "suit": "diamonds"
+      },
+      "Q of diamonds": {
+        "image": "/i/cards-default/QD.svg",
+        "rank": "Q",
+        "suit": "diamonds"
+      },
+      "K of diamonds": {
+        "image": "/i/cards-default/KD.svg",
+        "rank": "K",
+        "suit": "diamonds"
+      },
+      "2 of clubs": {
+        "image": "/i/cards-default/2C.svg",
+        "rank": "2",
+        "suit": "clubs"
+      },
+      "3 of clubs": {
+        "image": "/i/cards-default/3C.svg",
+        "rank": "3",
+        "suit": "clubs"
+      },
+      "4 of clubs": {
+        "image": "/i/cards-default/4C.svg",
+        "rank": "4",
+        "suit": "clubs"
+      },
+      "5 of clubs": {
+        "image": "/i/cards-default/5C.svg",
+        "rank": "5",
+        "suit": "clubs"
+      },
+      "6 of clubs": {
+        "image": "/i/cards-default/6C.svg",
+        "rank": "6",
+        "suit": "clubs"
+      },
+      "7 of clubs": {
+        "image": "/i/cards-default/7C.svg",
+        "rank": "7",
+        "suit": "clubs"
+      },
+      "8 of clubs": {
+        "image": "/i/cards-default/8C.svg",
+        "rank": "8",
+        "suit": "clubs"
+      },
+      "9 of clubs": {
+        "image": "/i/cards-default/9C.svg",
+        "rank": "9",
+        "suit": "clubs"
+      },
+      "A of clubs": {
+        "image": "/i/cards-default/AC.svg",
+        "rank": "A",
+        "suit": "clubs"
+      },
+      "10 of clubs": {
+        "image": "/i/cards-default/TC.svg",
+        "rank": "10",
+        "suit": "clubs"
+      },
+      "J of clubs": {
+        "image": "/i/cards-default/JC.svg",
+        "rank": "J",
+        "suit": "clubs"
+      },
+      "Q of clubs": {
+        "image": "/i/cards-default/QC.svg",
+        "rank": "Q",
+        "suit": "clubs"
+      },
+      "K of clubs": {
+        "image": "/i/cards-default/KC.svg",
+        "rank": "K",
+        "suit": "clubs"
+      },
+      "Joker 1": {
+        "image": "/i/cards-default/1J.svg",
+        "rank": "J1"
+      },
+      "Joker 2": {
+        "image": "/i/cards-default/2J.svg",
+        "rank": "J2"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

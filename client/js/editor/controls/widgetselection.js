@@ -49,6 +49,35 @@ function resolvePickedWidget(clickedWidget, picker) {
   return !picker.filter || picker.filter(pickedWidget) ? pickedWidget : null;
 }
 
+// A click on a widget in the room while a picker is running belongs to the
+// picker, never to the widget: in edit mode a click on an already selected
+// widget triggers it (that is how a button is tested without leaving the
+// editor), and the widget a picker belongs to is selected the whole time it
+// runs. Clicks are routed here before that happens, which is also what makes
+// that widget pickable at all - it never arrives as a selection change.
+function handleWidgetPickerClick(clickedWidget) {
+  const picker = getWidgetPicker();
+  if(!picker)
+    return false;
+
+  const targetWidget = widgets.get(picker.targetWidgetID);
+  if(!targetWidget) {
+    stopWidgetPicker();
+    return false;
+  }
+
+  const pickedWidget = clickedWidget && resolvePickedWidget(clickedWidget, picker);
+  if(pickedWidget) {
+    // a picker that collects several widgets stays active for the next click
+    if(!picker.multiple)
+      stopWidgetPicker();
+    picker.onPick(targetWidget, [ pickedWidget ]);
+  }
+  // the click was the picker's either way - a widget the filter rejects must not
+  // fall through and be clicked instead
+  return true;
+}
+
 // the picker restores the selection it started from after every pick, which must
 // not be mistaken for the player picking that widget
 let restoringWidgetPickerSelection = false;
@@ -81,8 +110,9 @@ function handleWidgetPickerSelection(newSelection) {
 
   const resolved = [];
   for(const clickedWidget of newSelection) {
-    // the target widget is selected again after every pick, so a click on it
-    // cannot be told apart from that - it is only pickable from the id list
+    // the target widget is selected again after every pick, so a selection
+    // change to it cannot be told apart from that - clicks on it arrive as a
+    // click (handleWidgetPickerClick) instead
     if(!clickedWidget || clickedWidget.id == targetWidget.id)
       continue;
     const pickedWidget = resolvePickedWidget(clickedWidget, picker);
@@ -118,7 +148,8 @@ function handleWidgetPickerSelection(newSelection) {
 //   onClear        - when given, adds a button that removes the value
 //   clearLabel     - label of that button
 //   excludeIDs     - returns additional widget IDs to hide from the list
-//   allowSelf      - offer the widget the popout belongs to as well
+//   allowSelf      - offer the widget the popout belongs to as well, pinned to
+//                    the top of the list and marked as "this widget"
 //   resolveCovering - without a type filter, resolve a clicked card or pile to
 //                    the widget it lies on instead of picking it
 //   inline         - always show the list instead of hiding it behind an arrow
@@ -138,6 +169,9 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
 
   const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
   const excludedIDs = _=>(options.allowSelf ? [] : [ widget.id ]).concat(options.excludeIDs ? options.excludeIDs() : []);
+  // the widget the popout belongs to is the one a routine acts on most often, so
+  // the list pins and marks it instead of hiding it among the other ids
+  const selfID = options.allowSelf ? widget.id : null;
 
   let typeFilter = options.typeFilter || '';
   let searchTerm = '';
@@ -155,7 +189,10 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
     if(options.title)
       div(popout, 'propertyPickerSectionTitle', html(options.title));
 
-    const buttonBar = div(popout, 'propertyPickerSection');
+    // the two ways to fill the picker without the list - picking in the room and
+    // dropping the selection - are one row, so the popout starts with one line of
+    // controls rather than a column of full-width buttons
+    const buttonBar = div(popout, 'propertyPickerSection widgetPickerRow');
     const pickButton = document.createElement('button');
     pickButton.setAttribute('icon', 'colorize');
     pickButton.title = `Click this button and then the ${options.multiple ? 'widgets' : 'widget'} on the table. The type filter applies here as well, so with the type set to holder a click on a card selects the holder it lies on.`;
@@ -211,16 +248,20 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
     const searchSection = div(popout, 'propertyPickerSection');
     div(searchSection, 'propertyPickerSectionTitle', 'Search widgets');
 
+    // the two ways to narrow the list down are one row as well: the type is what
+    // the search is filtered by, so reading them apart on two lines only makes
+    // the popout taller
+    const searchRow = div(searchSection, 'widgetPickerRow');
     const typeNames = typeof editorTypeNames != 'undefined' ? editorTypeNames : {};
     const typeSelect = document.createElement('select');
     typeSelect.innerHTML = '<option value="">any type</option>' + Object.keys(typeNames).map(type=>`<option value="${type}">${typeNames[type]}</option>`).join('');
     typeSelect.value = typeFilter;
-    searchSection.appendChild(typeSelect);
+    searchRow.appendChild(typeSelect);
 
     const search = document.createElement('input');
     search.placeholder = 'Search by ID...';
     search.value = searchTerm;
-    searchSection.appendChild(search);
+    searchRow.appendChild(search);
 
     const list = div(searchSection, 'widgetPickerList');
 
@@ -233,11 +274,12 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
         .filter(w=>excluded.indexOf(w.id) == -1)
         .filter(w=>matchesTypeFilter(w))
         .filter(w=>!term || w.id.toLowerCase().includes(term))
-        // picked widgets come first so they stay visible (and removable) when
-        // the list is cut off below
-        .sort((a, b)=>(current.indexOf(b.id) != -1) - (current.indexOf(a.id) != -1) || a.id.localeCompare(b.id));
+        // the widget the popout belongs to comes first, then the picked widgets
+        // so they stay visible (and removable) when the list is cut off below
+        .sort((a, b)=>(b.id == selfID) - (a.id == selfID) || (current.indexOf(b.id) != -1) - (current.indexOf(a.id) != -1) || a.id.localeCompare(b.id));
       for(const match of matches.slice(0, 50)) {
-        const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span><span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
+        const self = match.id == selfID ? '<span class=widgetPickerSelf>this widget</span>' : '';
+        const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span>${self}<span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
         entry.classList.toggle('selected', current.indexOf(match.id) != -1);
         entry.onclick = _=>{
           if(options.multiple) {

@@ -11,6 +11,17 @@ document.addEventListener('keyup', e=>{
   }
 }, true);
 
+// Selecting the text of an input by dragging across it regularly ends outside
+// the popup, and the click the browser then reports has the common ancestor of
+// both ends as its target - the page, not the input. Where the drag started is
+// what says whether that click happened inside the popup, so it is remembered
+// here (mouse clicks only: a keyboard-triggered click has no mousedown of its
+// own and would otherwise be judged by the last one somebody made).
+let popupMouseDownTarget = null;
+document.addEventListener('mousedown', e=>{
+  popupMouseDownTarget = e.target;
+}, true);
+
 class Popup {
   constructor(source) {
     this.source = source;
@@ -23,21 +34,32 @@ class Popup {
     this.boundOnKeyDown = this.onKeyDown.bind(this);
   }
 
-  addAccordionSection(title, contentHTML='') {
+  // kind colors the section the same way the chips of that kind are colored in
+  // the routine, so "widget", "value" and "property" mean the same thing here as
+  // they do in the sentence; the arrow and the highlight say which one is open
+  addAccordionSection(title, contentHTML='', kind=null) {
     const isFirst = !$('.accordion-section', this.domElement);
     const section = div(this.domElement, 'accordion-section', `
       <h3>${title}</h3>
       <div class=accordion-content>${contentHTML}</div>
     `);
+    if(kind)
+      section.dataset.kind = kind;
+    const open = _=>{
+      for(const toClose of $a('.accordion-section', this.domElement)) {
+        toClose.classList.remove('open');
+        $('.accordion-content', toClose).classList.remove('open');
+      }
+      section.classList.add('open');
+      $('.accordion-content', section).classList.add('open');
+    };
     $('h3', section).addEventListener('click', e=>{
       e.stopPropagation();
-      for(const toClose of $a('.accordion-content', this.domElement))
-        toClose.classList.remove('open');
-      $('.accordion-content', section).classList.add('open');
+      open();
       this.moveIntoView();
     });
     if(isFirst)
-      $('.accordion-content', section).classList.add('open');
+      open();
     return [ $('h3', section), $('.accordion-content', section) ];
   }
 
@@ -48,17 +70,27 @@ class Popup {
     close.className = 'material-symbols popup-close';
     close.textContent = 'close';
     close.title = 'Close';
-    close.addEventListener('click', e=>{
-      e.stopPropagation();
-      this.hide();
-    });
-    // first child so the sticky float stays in the top right corner while scrolling
-    this.domElement.prepend(close);
+    focusable(close, _=>this.hide());
+    // in the title bar where the popup has one, otherwise the first child so the
+    // sticky float stays in the top right corner while scrolling
+    const h1 = $('h1', this.domElement);
+    if(h1)
+      h1.append(close);
+    else
+      this.domElement.prepend(close);
   }
 
   hide() {
     if(openPopups.indexOf(this) != -1)
       openPopups.splice(openPopups.indexOf(this), 1);
+    // a popup opened from a button inside this one (the info tip of a section
+    // title) belongs to it: every popup is appended to #editor rather than to
+    // the one it came from, so without this it stays on screen anchored to an
+    // element that is no longer in the document - and a click outside does not
+    // dismiss it either, because that click is inside a popup
+    for(const above of [ ...openPopups ])
+      if(above.source && this.domElement.contains(above.source))
+        above.hide();
     if(this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = null;
@@ -131,11 +163,18 @@ class Popup {
   }
 
   onOutsideClick(e) {
-    // clicking widgets in the room is part of the interaction while a custom selection is active
-    if(customSelectionCallback)
-      return;
     // clicks inside any popup (e.g. a nested info popup) never dismiss other popups
     if(e.target.closest && e.target.closest('.inline-popup'))
+      return;
+    // and neither does one that only ended outside because a text selection was
+    // dragged out of a popup's input (e.detail is 0 for clicks from the keyboard)
+    if(e.detail && popupMouseDownTarget && popupMouseDownTarget.closest && popupMouseDownTarget.closest('.inline-popup'))
+      return;
+    // a control that re-renders its list (the row that adds a name/value pair)
+    // is gone from the document by the time the click reaches here, so asking
+    // where it sits answers "nowhere" - which used to read as a click outside
+    // and closed the popup after every entry
+    if(e.target && e.target.isConnected === false)
       return;
     if(!this.domElement.contains(e.target))
       this.hide();
@@ -163,16 +202,25 @@ class Popup {
     this.source = source;
   }
 
+  // the title is its own element inside the h1 so that the close button, the info
+  // button and the raw name of what is edited can live in the same title bar
   setTitle(title) {
-    if(!$('h1', this.domElement)) {
-      const h1 = document.createElement('h1');
+    let h1 = $('h1', this.domElement);
+    if(!h1) {
+      h1 = document.createElement('h1');
+      this.domElement.prepend(h1);
       const close = $('.popup-close', this.domElement);
-      if(close) // keep the close button first so it stays sticky in the corner
-        close.after(h1);
-      else
-        this.domElement.prepend(h1);
+      if(close)
+        h1.append(close);
     }
-    $('h1', this.domElement).textContent = title;
+    let text = $('.popup-title-text', h1);
+    if(!text) {
+      text = document.createElement('span');
+      text.className = 'popup-title-text';
+      h1.prepend(text);
+    }
+    text.textContent = title;
+    return text;
   }
 
   show() {
@@ -201,26 +249,67 @@ class Popup {
   }
 }
 
+// what a tutorial is called in words: the title of the popup it is offered from
+// where there is one ("SELECT - Pick the widgets…" is a SELECT tutorial), and
+// otherwise the file name without the part every one of them starts with
+function tutorialWords(tutorialName, title) {
+  if(typeof title == 'string' && title)
+    return title.split(' - ')[0];
+  return tutorialName.replace(/^functions-/, '').replace(/-/g, ' ');
+}
+
 class InfoPopup extends Popup {
-  constructor(source, infoHTML, tutorialName=null, videoFilename=null) {
+  constructor(source, infoHTML, tutorialName=null, videoFilename=null, title=null) {
     super(source);
     this.infoHTML = infoHTML;
     this.tutorialName = tutorialName;
     this.videoFilename = videoFilename;
+    this.title = title;
   }
 
   show() {
     super.show();
-    if(!this.tutorialName && !this.videoFilename)
-      div(this.domElement, 'content', this.infoHTML);
-    else
-      this.addAccordionSection('Info', this.infoHTML);
-    if(this.tutorialName) // FIXME: using the same roomID more than once doesn't work yet if the tutorial is already in there (also in production?)
-      this.addAccordionSection('Tutorial', `<a href="tutorial/${this.tutorialName}/ROOM:${roomID}-tutorials">${this.tutorialName}</a>`);
+    // the text is what an info popup is opened for, so it is never a section to
+    // unfold - only the tutorial and the video below it are
+    if(this.title)
+      this.setTitle(this.title);
+    div(this.domElement, 'content popup-info-text', this.infoHTML);
+    // the link says what it opens: the name of the tutorial file read as a file
+    // name, which is what it is
+    // the room id is whatever the player typed on the welcome screen, so the link
+    // is built as an element rather than as HTML - anything else puts that text
+    // into the DOM of everybody who opens an info popup
+    if(this.tutorialName) { // FIXME: using the same roomID more than once doesn't work yet if the tutorial is already in there (also in production?)
+      const [ , tutorialContent ] = this.addAccordionSection('Tutorial');
+      const link = document.createElement('a');
+      link.href = `tutorial/${encodeURIComponent(this.tutorialName)}/ROOM:${encodeURIComponent(roomID)}-tutorials`;
+      link.textContent = `Play the ${tutorialWords(this.tutorialName, this.title)} tutorial`;
+      tutorialContent.append(link);
+    }
     if(this.videoFilename)
       this.addAccordionSection('Video', `<video src="i/videos/${this.videoFilename}" controls></video>`);
     this.moveIntoView();
   }
+}
+
+// Every control of the routine editor is a span rather than a button (they sit
+// inside sentences), so this is what gives one a keyboard: the tab order, the
+// role a screen reader announces and Enter/Space doing what a click does.
+function focusable(dom, onActivate) {
+  dom.tabIndex = 0;
+  dom.setAttribute('role', 'button');
+  dom.addEventListener('click', e=>{
+    e.stopPropagation();
+    onActivate(e);
+  });
+  dom.addEventListener('keydown', e=>{
+    if(e.key == 'Enter' || e.key == ' ') {
+      e.preventDefault();
+      e.stopPropagation();
+      onActivate(e);
+    }
+  });
+  return dom;
 }
 
 let openRoutinePopup = null; // only one parameter popup is open at a time
@@ -245,6 +334,44 @@ const predefinedCollectionDescriptions = {
 
 const routineWidgetPickerKey = 'routineWidgets';
 
+let propertySuggestionListCounter = 0;
+
+// the identifier syntax ${PROPERTY name OF widget} accepts (see widget.js):
+// everything outside [A-Za-z0-9 _-] has to be escaped, and a leading $ makes the
+// engine read the name from a variable, so it is kept as it is
+const propertyIdentifier = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
+
+function escapePropertyIdentifier(name) {
+  const dollar = String(name).charAt(0) == '$' ? '$' : '';
+  return dollar + String(name).slice(dollar.length).split('').map(c=>{
+    if(c.match(/^[A-Za-z0-9 _-]$/))
+      return c;
+    return `\\u${('000' + c.charCodeAt(0).toString(16)).slice(-4)}`;
+  }).join('').replace(/^PROPERTY /, 'PROPERTY\\u0020').replace(/ OF /g, '\\u0020OF ');
+}
+
+function unescapePropertyIdentifier(name) {
+  return String(name).replace(/\\u([0-9a-fA-F]{4})/g, (_, code)=>String.fromCharCode(parseInt(code, 16)));
+}
+
+function propertyReference(property, widgetID) {
+  const of = widgetID ? ` OF ${escapePropertyIdentifier(widgetID)}` : '';
+  return `\$\{PROPERTY ${escapePropertyIdentifier(property)}${of}\}`;
+}
+
+// { property, widget } of a value that is nothing but a property reference, so
+// the property builder can start from the value the parameter already has
+function parsePropertyReference(value) {
+  if(typeof value != 'string')
+    return null;
+  // the name is matched lazily, exactly like the engine does, so the first " OF "
+  // ends it - which is why escapePropertyIdentifier escapes one inside a name
+  const match = value.match(new RegExp(`^\\$\\{PROPERTY (\\$?${propertyIdentifier}?)(?: OF (\\$?${propertyIdentifier}))?\\}$`));
+  if(!match)
+    return null;
+  return { property: unescapePropertyIdentifier(match[1]), widget: match[2] ? unescapePropertyIdentifier(match[2]) : '' };
+}
+
 class RoutinePopup extends Popup {
   constructor(source) {
     super(source);
@@ -260,16 +387,48 @@ class RoutinePopup extends Popup {
     super.hide();
   }
 
+  // the property builder's widget picker needs the room visible while it is open
+  avoidsPlayArea() {
+    return this.propertyPickerShown || this.needsRoomForPicker();
+  }
+
+  needsRoomForPicker() {
+    return false;
+  }
+
   offersUseDefault() {
     return true;
+  }
+
+  // what the popup asks, in words: its title says "MOVE - which widgets" rather
+  // than "MOVE - parameters from / collection", which is the engine's vocabulary
+  // (the raw names are next to it, the way the routine cards name their
+  // operation and the automation headers their property)
+  parameterQuestion() {
+    return 'which value';
+  }
+
+  // every popup shows the raw value as editable text; the ones whose own input
+  // already is the whole value (JSON, the operation itself) do not need it twice
+  offersValueInput() {
+    return true;
+  }
+
+  valueInputHint() {
+    return null;
   }
 
   onClick(e) {
   }
 
   onOutsideClick(e) {
-    // clicking widgets in the room is how the widget picker works
+    // clicking widgets in the room is how the widget picker works - and a picker
+    // that takes a single widget has already stopped itself by the time the
+    // click arrives here, so while this popup offers the room as an input, a
+    // click in it is that input rather than a click outside the popup
     if(isWidgetPickerActive(null, routineWidgetPickerKey))
+      return;
+    if(this.avoidsPlayArea() && e.target.closest && e.target.closest('#roomArea'))
       return;
     super.onOutsideClick(e);
   }
@@ -282,6 +441,172 @@ class RoutinePopup extends Popup {
     this.notifyChangeListeners({ [this.parameterNames[0]]: value });
   }
 
+  // the value the chip stands for: the parameter that is set (a chip can offer
+  // alternatives like {holder,collection}), otherwise the first one
+  currentValue() {
+    if(!this.operation || typeof this.operation != 'object')
+      return undefined;
+    const set = this.parameterNames.filter(p=>typeof this.operation[p] != 'undefined');
+    return this.operation[set.length ? set[0] : this.parameterNames[0]];
+  }
+
+  valueAsText(value) {
+    if(value === undefined)
+      return '';
+    return typeof value == 'string' ? value : JSON.stringify(value);
+  }
+
+  // a raw text edit means JSON where that is what was typed (numbers, booleans,
+  // arrays, objects) and a plain string otherwise - a bare word, and anything
+  // else that is not valid JSON, is almost always meant as text
+  parseValueText(text) {
+    try {
+      const value = JSON.parse(text);
+      return typeof value == 'string' ? text : value;
+    } catch(e) {
+      return text;
+    }
+  }
+
+  // what the text input does with an edit; the pickers collect it instead of
+  // applying it right away
+  applyValueInput(value) {
+    this.setNewValue(value);
+  }
+
+  syncValueInput(value) {
+    if(this.valueInput && document.activeElement !== this.valueInput)
+      this.valueInput.value = this.valueAsText(value);
+  }
+
+  // the current value as editable text next to the button that drops it again -
+  // the two things a parameter popup is opened for, above everything else
+  renderValueRow() {
+    this.valueInput = null;
+    const row = document.createElement('div');
+    row.className = 'popup-value-row';
+
+    if(this.offersValueInput()) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'popup-value-input';
+      input.value = this.valueAsText(this.currentValue());
+      input.placeholder = this.valueInputHint() || 'value';
+      input.title = 'The value of this parameter - edit it directly or use one of the sections below';
+      input.addEventListener('change', _=>this.applyValueInput(this.parseValueText(input.value)));
+      row.append(input);
+      this.valueInput = input;
+    }
+
+    // an explicitly set parameter (other than the operation type itself) can be
+    // reset to its default, which for IF.condition also restores the operand chips
+    if(this.offersUseDefault() && this.parameterNames[0] != 'func' && this.operation && typeof this.operation == 'object' && this.parameterNames.some(p=>typeof this.operation[p] != 'undefined')) {
+      const clear = button(row, 'use default', _=>{
+        const values = {};
+        for(const parameter of this.parameterNames)
+          values[parameter] = undefined;
+        this.notifyChangeListeners(values);
+      });
+      clear.className = 'popup-use-default';
+      clear.title = 'Remove the explicit value and go back to the default';
+    }
+
+    if(row.firstChild)
+      $('h1', this.domElement).after(row);
+  }
+
+  // "Property <name> of <widget>" instead of a plain list of properties: both
+  // parts are editable, the name field suggests the properties the chosen widget
+  // currently has (the way the CSS editor suggests selectors) and the widget
+  // field gets the picker the rest of the editor uses
+  renderPropertyBuilder(content) {
+    const parsed = parsePropertyReference(this.currentValue()) || { property: '', widget: '' };
+    // the shared picker's CSS is scoped to .editorModule
+    const host = div(content, 'editorModule');
+    const row = div(host, 'popup-property-row');
+
+    div(row, 'popup-property-label').textContent = 'Property';
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'popup-property-name';
+    nameInput.placeholder = 'name';
+    nameInput.value = parsed.property;
+    const listID = `routinePropertySuggestions${++propertySuggestionListCounter}`;
+    nameInput.setAttribute('list', listID);
+    const datalist = document.createElement('datalist');
+    datalist.id = listID;
+    row.append(nameInput, datalist);
+
+    div(row, 'popup-property-label').textContent = 'of';
+    const widgetInput = document.createElement('input');
+    widgetInput.type = 'text';
+    widgetInput.className = 'popup-property-widget';
+    widgetInput.placeholder = 'this widget'; // an empty target means the widget the routine is on
+    widgetInput.value = parsed.widget;
+    row.append(widgetInput);
+
+    // the suggestions are the properties of the widget the value is read from
+    const suggestionsFor = _=>{
+      const targetID = widgetInput.value.trim();
+      const target = targetID && typeof widgets != 'undefined' && widgets.get(targetID);
+      return Object.keys(((target || this.widget || {}).state) || {}).sort();
+    };
+    const updateSuggestions = _=>{
+      datalist.innerHTML = '';
+      for(const property of suggestionsFor()) {
+        const option = document.createElement('option');
+        option.value = property;
+        datalist.append(option);
+      }
+    };
+    updateSuggestions();
+    widgetInput.addEventListener('input', updateSuggestions);
+
+    const apply = _=>{
+      const property = nameInput.value.trim();
+      nameInput.classList.toggle('inputError', !property);
+      if(property)
+        this.setNewValue(propertyReference(property, widgetInput.value.trim()));
+    };
+
+    const controls = renderWidgetSelectPopout(host, this.widget, {
+      title: 'Read the property from',
+      pickerKey: routineWidgetPickerKey,
+      allowSelf: true, // a routine regularly reads a property of its own widget
+      getSelectedIDs: _=>widgetInput.value.trim() ? [ widgetInput.value.trim() ] : [],
+      apply: widgetID=>{
+        widgetInput.value = widgetID;
+        updateSuggestions();
+        // with the property named already, picking the widget is the last thing
+        // the value was missing - waiting for another click on "use property"
+        // only leaves the popup looking like it did nothing
+        if(nameInput.value.trim())
+          apply();
+      },
+      onClear: _=>{
+        widgetInput.value = '';
+        updateSuggestions();
+      },
+      clearLabel: 'This widget'
+    });
+    controls.expandButton.title = 'Pick the widget to read the property from';
+    widgetInput.after(controls.expandButton); // the popout stays below the row
+    const expand = controls.expandButton.onclick;
+    controls.expandButton.onclick = e=>{
+      expand(e);
+      // picking in the room only works while the popup does not cover it
+      this.propertyPickerShown = controls.popout.style.display != 'none';
+      this.moveIntoView();
+    };
+
+    for(const input of [ nameInput, widgetInput ])
+      input.addEventListener('keydown', e=>{
+        if(e.key == 'Enter')
+          apply();
+      });
+    button(host, 'use property', apply);
+  }
+
   setOperationDetails(operation, parameterNames, widget, variables, collections) {
     this.operation = operation;
     this.parameterNames = parameterNames;
@@ -290,81 +615,111 @@ class RoutinePopup extends Popup {
     this.collections = collections;
   }
 
+  // One section per kind of thing the routine offers instead of four groups in
+  // one: a value and a group of widgets are two different answers to "what can
+  // I put here", so they are two sections, each in the color the sentence uses
+  // for it - and only one of them is open at a time. Where an entry comes from
+  // is a plain line inside the section rather than a heading of its own color.
+  renderRoutineValueSection(showVariables, showCollections) {
+    if(showVariables)
+      this.renderRoutineValueKindSection('Values the routine has', 'variable', `
+        <pre>
+        The values the routine itself can offer, by the name they are stored under.
+
+        Earlier operations remember values under a name: [COUNT] and [GET] store what they counted or read, [VAR] and [var] store what you calculate, and [CALL] stores what another routine returned. Picking one here uses whatever it holds when the routine runs.
+
+        The ones below "In every routine" are there without any operation creating them.
+        </pre>
+      `, [
+        { title: 'From earlier operations', list: [ ...this.variables ].sort().map(variable=>({
+          label: variable,
+          onClick: _=>this.setNewValue(`\$\{${variable}\}`)
+        })) },
+        { title: 'In every routine', list: Object.keys(predefinedVariableDescriptions).map(variable=>({
+          label: variable, description: predefinedVariableDescriptions[variable],
+          onClick: _=>this.setNewValue(`\$\{${variable}\}`)
+        })) }
+      ]);
+
+    if(showCollections)
+      this.renderRoutineValueKindSection('Groups of widgets the routine has', 'collection', `
+        <pre>
+        A collection is a group of widgets an earlier [SELECT] picked out, by the name it is stored under. Operations that act on widgets take one instead of a single widget.
+
+        The ones below "In every routine" are there without any operation creating them.
+        </pre>
+      `, [
+        { title: 'From earlier operations', list: [ ...this.collections ].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
+          label: typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`,
+          description: typeof collection == 'string' ? null : 'these widgets, listed in the routine itself',
+          onClick: _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ])
+        })) },
+        { title: 'In every routine', list: Object.keys(predefinedCollectionDescriptions).map(collection=>({
+          label: collection, description: predefinedCollectionDescriptions[collection],
+          onClick: _=>this.setNewCollectionValue(collection)
+        })) }
+      ]);
+  }
+
+  // what each entry is stays a hover tip: written out below every button the
+  // list turns into a wall of text nobody reads through
+  renderRoutineValueKindSection(title, kind, infoHTML, groups) {
+    const [ heading, content ] = this.addAccordionSection(title, '', kind);
+    infoButton(heading, infoHTML);
+    for(const group of groups) {
+      if(!group.list.length)
+        continue;
+      div(content, 'popup-value-group').textContent = group.title;
+      for(const entry of group.list) {
+        const dom = div(content, 'popup-entry');
+        const entryButton = button(dom, entry.label, entry.onClick);
+        entryButton.dataset.kind = kind;
+        entryButton.title = entry.description || group.title;
+      }
+    }
+  }
+
+  renderWidgetPropertySection() {
+    const [ title, content ] = this.addAccordionSection('A property of a widget in the room', '', 'property');
+    infoButton(title, `
+      Wherever you use a value in an operation, you can use a property of any widget in the room instead.
+      For example, you might want to put a score property on a card widget, then use that score in an operation.
+      Pick the widget in the room (or leave it empty to read the property from the widget this routine belongs to) and choose one of its properties.
+    `);
+    this.renderPropertyBuilder(content);
+  }
+
   show(showVariables=true, showCollections=true) {
+    this.propertyPickerShown = false;
     if(openRoutinePopup && openRoutinePopup !== this)
       openRoutinePopup.hide();
     openRoutinePopup = this;
     super.show();
-    this.setTitle(this.operation && this.operation.func ? this.operation.func : 'var');
-    commonInfoButton($('h1', this.domElement), this.operation && this.operation.func);
-    $('h1', this.domElement).append(` - ${this.parameterNames.length > 1 ? 'parameters' : 'parameter'} ${this.parameterNames.join(' / ')}`);
+    const func = this.operation && this.operation.func;
+    const title = this.setTitle(`${func || 'var'} - ${this.parameterQuestion()}`);
+    // what this parameter is is the question the popup answers, so its info tip
+    // is the parameter's own text rather than the whole operation's
+    const info = this.parameterNames[0] == 'func' ? commonInfoButton(null, func) : commonParameterInfoButton(null, func, this.parameterNames[0]);
+    if(info)
+      title.after(info);
+    const raw = document.createElement('span');
+    raw.className = 'popup-title-raw';
+    raw.textContent = this.parameterNames.join(' / ');
+    raw.title = `The ${this.parameterNames.length > 1 ? 'parameters' : 'parameter'} this sets in the JSON of the operation`;
+    $('h1', this.domElement).append(raw);
 
-    // an explicitly set parameter (other than the operation type itself) can be
-    // reset to its default, which for IF.condition also restores the operand chips
-    if(this.offersUseDefault() && this.parameterNames[0] != 'func' && this.operation && typeof this.operation == 'object' && this.parameterNames.some(p=>typeof this.operation[p] != 'undefined')) {
-      const clear = button(this.domElement, 'use default', _=>{
-        const values = {};
-        for(const parameter of this.parameterNames)
-          values[parameter] = undefined;
-        this.notifyChangeListeners(values);
-      });
-      clear.className = 'popup-use-default';
-      clear.title = 'Remove the explicit value and go back to the default';
-      $('h1', this.domElement).after(clear);
-    }
+    this.renderValueRow();
 
-    if(showVariables) {
-      const [ variablesTitle, variablesContent ] = this.addAccordionSection('Variables');
-      infoButton(variablesTitle, `
-        Variables can be used to store values that are used in the operation.
-        You can use [VAR], [var] or [COUNT] to put values into variables, then use [var] or [VAR] to do calculations.
-        Then you can use the variable here.
-      `);
-      for(const variable of [ ...this.variables ].sort())
-        button(variablesContent, variable, _=>this.setNewValue(`\$\{${variable}\}`));
-
-      const [ predefinedVariablesTitle, predefinedVariablesContent ] = this.addAccordionSection('Predefined Variables');
-      infoButton(predefinedVariablesTitle, 'Each routine begins with a number of predefined variables that describe the player who started it and the room.');
-      for(const variable in predefinedVariableDescriptions) {
-        const entry = div(predefinedVariablesContent, 'popup-entry');
-        button(entry, variable, _=>this.setNewValue(`\$\{${variable}\}`));
-        div(entry, 'popup-entry-description').textContent = predefinedVariableDescriptions[variable];
-      }
-
-      const [ widgetPropertiesTitle, widgetPropertiesContent ] = this.addAccordionSection('Widget Properties');
-      infoButton(widgetPropertiesTitle, `
-        Wherever you use a value in an operation, you can use a widget property of any widget instead.
-        For example, you might want to put a score property on a card widget, then use that score in an operation.
-      `);
-      for(const property of Object.keys(this.widget.state).sort())
-        button(widgetPropertiesContent, property, _=>this.setNewValue(`\$\{PROPERTY ${property}\}`));
-    }
-
-    if(showCollections) {
-      const [ collectionsTitle, collectionsContent ] = this.addAccordionSection('Collections');
-      infoButton(collectionsTitle, `
-        <pre>
-        A collection is, as its name implies, a collection of widgets. Collections can be created in two different ways.
-
-        A [SELECT](SELECT statement) will create a collection and name it according to the collection parameter. If no collection parameter is provided, it will be named DEFAULT.
-
-        You can also list widget ids directly, like [ "widget1", "widget2" ] - such in-place collections used elsewhere in the routine are offered here as well.
-        </pre>
-      `);
-      const sortedCollections = [...this.collections].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1);
-      for(const collection of sortedCollections) {
-        const label = typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`;
-        button(collectionsContent, label, _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ]));
-      }
-
-      const [ predefinedCollectionsTitle, predefinedCollectionsContent ] = this.addAccordionSection('Predefined Collections');
-      infoButton(predefinedCollectionsTitle, 'Each routine begins with a number of predefined collections.');
-      for(const collection in predefinedCollectionDescriptions) {
-        const entry = div(predefinedCollectionsContent, 'popup-entry');
-        button(entry, collection, _=>this.setNewCollectionValue(collection));
-        div(entry, 'popup-entry-description').textContent = predefinedCollectionDescriptions[collection];
-      }
-    }
+    // where the popup picks a widget in the room, a property of a widget is the
+    // next thing along the same line of thought, so it follows right behind that
+    // section instead of behind the values the routine remembers
+    const propertyBehindPicker = showVariables && this.needsRoomForPicker();
+    if(propertyBehindPicker)
+      this.renderWidgetPropertySection();
+    if(showVariables || showCollections)
+      this.renderRoutineValueSection(showVariables, showCollections);
+    if(showVariables && !propertyBehindPicker)
+      this.renderWidgetPropertySection();
 
     this.moveIntoView();
   }
@@ -373,6 +728,10 @@ class RoutinePopup extends Popup {
 class RoutineOperationPopup extends RoutinePopup {
   constructor() {
     super();
+  }
+
+  offersValueInput() {
+    return false; // this popup picks an operation, not a value
   }
 
   setNewValue(newOperation) {
@@ -388,23 +747,307 @@ class RoutineOperationPopup extends RoutinePopup {
     }
   }
 
+  // every operation there is, right away and in one list: a shortlist of "common
+  // actions" only hides the other two thirds behind a second click. The list is
+  // long, so a search box narrows it down by name or by what the sentence says.
   show() {
     super.show(false, false);
-    // the generic "<func> - parameter func" title is jargon in the first popup a new user sees
+    // the generic "<func> - which value / func" title is jargon in the first
+    // popup a new user sees, and there is no raw parameter worth naming here
     const h1 = $('h1', this.domElement);
-    h1.textContent = this.operation && this.operation.func ? `${this.operation.func} - change operation` : 'Add operation';
-    if(this.operation && this.operation.func)
-      commonInfoButton(h1, this.operation.func);
-    const [ , commonContent ] = this.addAccordionSection('Common Actions');
-    for(const { example, newOperation } of simpleRoutineOperationExamples) {
-      button(commonContent, example, _=>this.setNewValue(newOperation));
-      commonContent.append(document.createElement('br'));
+    for(const generic of $a('.popup-title-raw, .info-button', h1))
+      generic.remove();
+    const title = this.setTitle(this.operation && this.operation.func ? `${this.operation.func} - change operation` : 'Add operation');
+    const info = this.operation && this.operation.func ? commonInfoButton(null, this.operation.func) : null;
+    if(info)
+      title.after(info);
+
+    const showEntries = _=>this.renderOperationEntries();
+
+    const search = document.createElement('input');
+    search.type = 'text';
+    search.className = 'popup-property-search';
+    search.placeholder = 'Search operations...';
+    this.domElement.append(search);
+    this.searchInput = search;
+
+    // how the list is read is a matter of taste rather than of the routine, so
+    // the two settings follow the search box - the first thing a newcomer meets
+    // is the way into the list, not two preferences about it - and they are
+    // remembered for next time
+    const settings = div(this.domElement, 'popup-list-settings');
+    popupSetting(settings, 'Say what each operation is for', 'routineOperationDescriptions', true, showEntries);
+    // grouped by default: 110 operations in one alphabetical scroll is the one
+    // list somebody who does not know their names cannot navigate
+    popupSetting(settings, 'Group them by what they do', 'routineOperationGrouping', true, showEntries);
+
+    this.listElement = div(this.domElement, 'popup-operation-list');
+    this.examples = routineOperationExamples();
+
+    search.addEventListener('input', showEntries);
+    showEntries();
+
+    this.moveIntoView();
+    search.focus(); // the list is long, so typing is where this popup is used from
+  }
+
+  // the operations the search term leaves over, either alphabetically (the order
+  // the metadata is written in) or under the heading of what they are for
+  renderOperationEntries() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const term = this.searchInput.value.trim().toLowerCase();
+    const matches = this.examples.filter(e=>!term || `${e.func} ${e.label || ''} ${e.description} ${e.example}`.toLowerCase().includes(term));
+    const withDescription = popupSettingValue('routineOperationDescriptions', true);
+    const grouped = popupSettingValue('routineOperationGrouping', true);
+
+    // what the operation is for, not what one with nothing but its defaults
+    // would say: the sentence of an operation that does not exist yet
+    // describes the example, and every one of them starts with "the picked
+    // widgets" - the list is read to find an operation, not to read a routine
+    const addEntry = ({ func, label, description, example, newOperation })=>{
+      const entry = div(list, 'popup-operation');
+      entry.addEventListener('click', _=>this.setNewValue(newOperation));
+      entry.title = withDescription ? example : `${description} - ${example}`;
+      div(entry, 'popup-operation-func').textContent = label || func;
+      if(withDescription)
+        div(entry, 'popup-operation-example').textContent = description;
+    };
+
+    if(grouped) {
+      // the groups in the order they are written in, not in the order the search
+      // happens to leave them in - the list stays the same list while typing
+      const titles = [ ...routineOperationGroups.map(group=>group.title), 'Other operations' ].filter(title=>matches.some(e=>e.group == title));
+      for(const title of titles) {
+        div(list, 'popup-operation-group').textContent = title;
+        for(const example of matches.filter(e=>e.group == title))
+          addEntry(example);
+      }
+    } else {
+      for(const example of matches)
+        addEntry(example);
     }
-    const [ , allContent ] = this.addAccordionSection('All Operations');
-    for(const { example, newOperation } of routineOperationExamples()) {
-      button(allContent, example, _=>this.setNewValue(newOperation));
-      allContent.append(document.createElement('br'));
+    if(!matches.length)
+      div(list, 'popup-property-empty').textContent = 'No matching operation.';
+  }
+}
+
+// The list behind the drop-down of a var statement: every way it can work out
+// its value, grouped by what the operations are for. It is a menu like the ones
+// a setting opens, only that 110 phrases need a search box and headings - so it
+// borrows the operation picker's list rather than the four-entry menu's.
+class RoutineComputeOperationPopup extends RoutinePopup {
+  constructor(choices, current) {
+    super();
+    this.choices = choices;
+    this.current = current;
+  }
+
+  offersUseDefault() {
+    return false; // a statement always works its value out somehow
+  }
+
+  offersValueInput() {
+    return false; // this popup picks an operation, not a value
+  }
+
+  show() {
+    super.show(false, false);
+    const h1 = $('h1', this.domElement);
+    for(const generic of $a('.popup-title-raw, .info-button', h1))
+      generic.remove();
+    const title = this.setTitle('How the value is worked out');
+    const info = infoButton(null, `
+      <pre>
+      Everything a var statement can work out, in the words it is said with.
+
+      An operand is a number, a text, true/false/nothing, an empty list or box, or a value the routine remembers - never a bare word, which would be read as the operation itself. The editor writes whichever of those was typed.
+      </pre>
+    `, null, null, 'working out a value');
+    if(info)
+      title.after(info);
+
+    const search = document.createElement('input');
+    search.type = 'text';
+    search.className = 'popup-property-search';
+    search.placeholder = 'Search operations...';
+    this.domElement.append(search);
+    this.searchInput = search;
+    this.listElement = div(this.domElement, 'popup-operation-list');
+    search.addEventListener('input', _=>this.renderComputeEntries());
+    this.renderComputeEntries();
+    this.moveIntoView();
+    search.focus(); // the list is long, so typing is where this popup is used from
+  }
+
+  renderComputeEntries() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const term = this.searchInput.value.trim().toLowerCase();
+    const matches = this.choices.filter(choice=>!term || `${choice.operator} ${choice.word} ${choice.description}`.toLowerCase().includes(term));
+    for(const group of [ ...new Set(matches.map(choice=>choice.group)) ]) {
+      div(list, 'popup-operation-group').textContent = group;
+      for(const choice of matches.filter(c=>c.group == group)) {
+        const entry = div(list, 'popup-operation');
+        if(choice.operator === this.current)
+          entry.classList.add('selected');
+        entry.title = choice.description || `${choice.operator || 'no operation'} - ${choice.word}`;
+        entry.addEventListener('click', _=>this.notifyChangeListeners({ operator: choice.operator }));
+        // read like the operation picker: what the statement stores in the
+        // operation color, what it means underneath it in the text color. The
+        // plain assignment stores no operation at all, so it has only the
+        // meaning to show
+        if(choice.operator)
+          div(entry, 'popup-operation-func').textContent = choice.operator;
+        div(entry, 'popup-operation-example').textContent = choice.word;
+      }
     }
+    if(!matches.length)
+      div(list, 'popup-property-empty').textContent = 'No matching operation.';
+  }
+}
+
+// a value offered as a button or a menu entry says what it means in the sentence
+// rather than what is stored: the parameter's own wording (a table or a function
+// of the value), and the value itself where it has none
+function routineValueWords(value, display) {
+  const words = typeof display == 'function' ? display(value) : display && display[value];
+  return words != null ? String(words) : String(value);
+}
+
+// One entry of a menu: the phrase it would put into the sentence, and under it
+// the sentence it would then read as - what a phrase does is the whole reason to
+// pick it, so it is on screen rather than in a hover tip.
+function menuEntry(appendTo, label, preview, onClick) {
+  const entry = button(appendTo, '', onClick);
+  entry.className = 'popup-menu-entry';
+  div(entry, 'popup-menu-entry-label').textContent = label;
+  if(preview && preview.trim() && preview.trim() != label.trim())
+    div(entry, 'popup-menu-entry-preview').textContent = preview;
+  return entry;
+}
+
+// The drop-down under the phrase a sentence starts with: one entry per way the
+// operation can work, worded as the phrase that sentence would start with -
+// nothing else. The phrases are the beginning of the sentence they produce, so
+// an explanation under each of them says the same thing twice and turns picking
+// one into reading a page; the whole sentence is a hover tip away.
+class RoutineVariantMenu extends Popup {
+  constructor(choices, currentID, title=null) {
+    super();
+    this.choices = choices;
+    this.currentID = currentID;
+    this.title = title;
+  }
+
+  show() {
+    super.show();
+    this.domElement.classList.add('popup-menu', 'popup-menu-plain');
+    // every other popup of the editor says what it is for in a title bar - a
+    // bare list with a floating x in the corner reads as an unfinished one
+    this.setTitle(this.title || 'What this operation does');
+    for(const choice of this.choices) {
+      const entry = menuEntry(this.domElement, choice.lead, null, _=>this.notifyChangeListeners(choice.values));
+      entry.title = `${choice.label}: ${choice.example}`;
+      entry.classList.toggle('selected', choice.id === this.currentID);
+      // a way of working writes the parameters that tell the ways apart, and one
+      // of them may hold a value the game works out while it runs - picking any
+      // entry (this one included) writes over it. That is worth a word on the
+      // entry itself rather than a surprise afterwards, and it stays on the one
+      // line every entry is: a phrase, and what picking it costs.
+      if(choice.replaces && choice.replaces.length) {
+        const note = document.createElement('span');
+        note.className = 'popup-menu-entry-replaces';
+        note.textContent = `replaces ${choice.replaces.join(' and ')}`;
+        $('.popup-menu-entry-label', entry).append(note);
+        entry.title += `\n\nPicking this replaces ${choice.replaces.join(' and ')}, which the game works out while the routine runs.`;
+      }
+    }
+    this.moveIntoView();
+  }
+}
+
+// The "+ option" button behind a sentence: everything the operation can say in
+// addition to what it says now, worded as the phrase it would add. Picking one
+// switches its parameters on; the x behind the phrase switches them off again.
+class RoutineClausePopup extends RoutinePopup {
+  // the same list of phrases also offers the kinds of line an INPUT dialog can
+  // hold, which is a different thing to say about it
+  constructor(options, info=null, infoTitle=null, title=null) {
+    super();
+    this.options = options;
+    this.info = info;
+    this.infoTitle = infoTitle;
+    this.title = title;
+  }
+
+  offersUseDefault() {
+    return false; // this popup adds a part of the sentence, it has no value of its own
+  }
+
+  offersValueInput() {
+    return false;
+  }
+
+  // a list of phrases is a menu, not a form: no section saying "Options" around
+  // a single list of options - but the same title bar every other popup has,
+  // because a bare list with a floating x in the corner reads as an unfinished
+  // one
+  show() {
+    if(openRoutinePopup && openRoutinePopup !== this)
+      openRoutinePopup.hide();
+    openRoutinePopup = this;
+    Popup.prototype.show.call(this);
+    this.domElement.classList.add('popup-menu');
+    const header = this.setTitle(this.title || 'Add an option').parentNode;
+    infoButton(header, this.info || `
+      Everything this operation can do on top of what it does now. An option only shows up in the sentence while it is in use - the x behind it removes it again.
+    `, null, null, this.infoTitle || 'the options of an operation');
+    header.append($('.popup-close', this.domElement));
+    for(const option of this.options)
+      menuEntry(this.domElement, option.label, option.sentence, _=>this.notifyChangeListeners(option.values));
+    this.moveIntoView();
+  }
+}
+
+// What the drop-down of a setting reports back when the answer is none of its
+// phrases: the caller (the chip in the sentence) then opens the full popup of
+// the parameter, which can also hold a value the routine works out while it runs.
+const routineFullPopupRequest = { openFullPopup: true };
+
+// The drop-down behind a setting: the phrases it can say, worded the way the
+// sentence words them, and the one it says now marked. A setting with a handful
+// of fixed answers is picked from a list the same way the phrase a sentence
+// starts with is - a popup with a title, a text field and three sections around
+// four phrases is a form where a menu was needed.
+class RoutineEnumMenu extends RoutinePopup {
+  constructor(options={}) {
+    super();
+    this.options = options;
+  }
+
+  offersUseDefault() {
+    return false; // a setting always has a value; the list is what changes it
+  }
+
+  offersValueInput() {
+    return false;
+  }
+
+  show() {
+    if(openRoutinePopup && openRoutinePopup !== this)
+      openRoutinePopup.hide();
+    openRoutinePopup = this;
+    Popup.prototype.show.call(this);
+    this.domElement.classList.add('popup-menu', 'popup-menu-plain');
+    const current = this.currentValue();
+    for(const value of this.options.values) {
+      const entry = menuEntry(this.domElement, routineValueWords(value, this.options.display), null, _=>this.setNewValue(value));
+      entry.classList.toggle('selected', value === current);
+    }
+    const other = menuEntry(this.domElement, this.options.otherLabel || 'something else…', null, _=>this.notifyChangeListeners(routineFullPopupRequest));
+    other.classList.add('popup-menu-entry-other');
+    other.title = 'Use a value the routine works out while it runs instead of one of these';
     this.moveIntoView();
   }
 }
@@ -414,34 +1057,155 @@ class RoutineStringPopup extends RoutinePopup {
     super();
   }
 
-  show() {
-    // the current value is the most likely thing to edit, so it comes first and open
-    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
-    infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
-    const input = document.createElement('input');
-    input.type = 'text';
-    let currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+  parameterQuestion() {
+    return 'which text';
+  }
+
+  currentValue() {
     if(typeof this.operation == 'string') { // var statements and comments are strings
       const match = this.operation.match(/^var (\S+) = (.*)$/);
       const stringParts = { variable: match && match[1], expression: match && match[2], statement: this.operation, comment: this.operation.replace(/^\/\/\s?/, '') };
-      currentValue = stringParts[this.parameterNames[0]];
+      const part = stringParts[this.parameterNames[0]];
+      return part == null ? undefined : part;
     }
-    input.value = currentValue != null ? currentValue : '';
-    input.addEventListener('change', _=>this.setNewValue(input.value));
-    valueContent.append(input);
+    return super.currentValue();
+  }
+
+  parseValueText(text) {
+    return text; // a text parameter takes what was typed, quotes and all
+  }
+
+  show() {
     super.show(true, false);
-    input.focus();
+    if(this.valueInput)
+      this.valueInput.focus();
+  }
+}
+
+// The property names to propose for a parameter that takes one, grouped by where
+// they come from: the widget the routine belongs to, the rest of the room, and
+// the standard properties the engine defines (the validator's tables are part of
+// the editor bundle). Every name appears in the first group that has it.
+// includeOwn=false leaves the widget's own properties out entirely (onEnter and
+// onLeave set properties on the widget that entered, not on this one).
+function proposedPropertyGroups(widget, includeOwn=true) {
+  const groups = [];
+  const seen = new Set();
+  const addGroup = (title, names)=>{
+    const fresh = [ ...new Set(names) ].filter(name=>name && !seen.has(name)).sort();
+    for(const name of fresh)
+      seen.add(name);
+    if(fresh.length)
+      groups.push({ title, names: fresh });
+  };
+
+  if(includeOwn)
+    addGroup('This widget', Object.keys((widget && widget.state) || {}));
+
+  // the handful of properties a routine sets over and over, in front of the
+  // hundred the engine defines: the common case is a glance rather than a scan
+  addGroup('Commonly set', [ 'x', 'y', 'owner', 'activeFace', 'movable', 'text', 'parent', 'rotation' ]);
+
+  const inRoom = [];
+  if(typeof widgets != 'undefined')
+    for(const other of widgets.values())
+      if(!widget || other.id != widget.id)
+        inRoom.push(...Object.keys(other.state || {}));
+  addGroup('Other widgets in this room', inRoom);
+
+  const standard = [];
+  if(typeof WIDGET_PROPERTIES != 'undefined')
+    for(const type in WIDGET_PROPERTIES)
+      standard.push(...Object.keys(WIDGET_PROPERTIES[type]));
+  addGroup('Other standard properties', standard);
+
+  return groups;
+}
+
+// Parameters that name a widget property (the property of GET/SET/SELECT/SCORE
+// and of RESET): the value section proposes the names instead of leaving them to
+// be typed from memory - which is where the typos in a routine usually are.
+class RoutinePropertyNamePopup extends RoutineStringPopup {
+  parameterQuestion() {
+    return 'which property';
+  }
+
+  show() {
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
+    infoButton(valueTitle, `
+      This parameter takes the name of a widget property.
+      Any name works - a game can put its own properties on a widget - so the list is only a proposal:
+      the properties this widget has, the ones the other widgets in the room use and the ones the engine defines itself.
+    `);
+
+    const search = document.createElement('input');
+    search.className = 'popup-property-search';
+    search.placeholder = 'Search properties...';
+    valueContent.append(search);
+    const list = div(valueContent, 'popup-property-list');
+
+    const groups = proposedPropertyGroups(this.widget);
+    const showEntries = _=>{
+      list.innerHTML = '';
+      const term = search.value.trim().toLowerCase();
+      const current = this.currentValue();
+      let shown = 0;
+      let hidden = 0;
+      for(const group of groups) {
+        const matches = group.names.filter(name=>!term || name.toLowerCase().includes(term));
+        const visible = matches.slice(0, Math.max(0, 200 - shown));
+        hidden += matches.length - visible.length;
+        shown += visible.length;
+        if(!visible.length)
+          continue;
+        div(list, 'popup-property-group').textContent = group.title;
+        for(const name of visible)
+          button(list, name, _=>this.setNewValue(name)).classList.toggle('selected', name === current);
+      }
+      if(!shown)
+        div(list, 'popup-property-empty').textContent = 'No matching property.';
+      else if(hidden)
+        div(list, 'popup-property-empty').textContent = `${hidden} more - refine the search.`;
+      // the fade and the rule under the list only mean something while it is
+      // taller than it may be - measured once the popup is on the page
+      setTimeout(_=>list.classList.toggle('popup-property-list-complete', list.scrollHeight <= list.clientHeight), 0);
+    };
+    search.addEventListener('input', showEntries);
+    showEntries();
+
+    super.show();
   }
 }
 
 class RoutineNumberPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which number';
+  }
+
   constructor(options={}) {
     super();
     this.options = options;
   }
 
-  avoidsPlayArea() {
+  needsRoomForPicker() {
     return !!this.options.widgetType; // only then it offers the room picker
+  }
+
+  // some number parameters also take strings, e.g. a property name or a seat id
+  valueInputHint() {
+    return this.options.textHint;
+  }
+
+  // everything this popup shows and takes is in the unit the sentence uses, and
+  // scale is what that is worth in the one the engine stores (a time is said in
+  // seconds and stored in milliseconds)
+  scaled(value) {
+    return this.options.scale && typeof value == 'number' ? value*this.options.scale : value;
+  }
+
+  currentValue() {
+    const value = super.currentValue();
+    return this.options.scale && typeof value == 'number' ? value/this.options.scale : value;
   }
 
   setNewValue(value) {
@@ -450,46 +1214,30 @@ class RoutineNumberPopup extends RoutinePopup {
     const values = {};
     for(const parameter of this.parameterNames)
       values[parameter] = undefined;
-    values[this.parameterNames[this.parameterNames.length-1]] = value;
+    values[this.parameterNames[this.parameterNames.length-1]] = this.scaled(value);
     this.notifyChangeListeners(values);
   }
 
   show() {
-    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
 
-    if(this.options.specialValues)
-      for(const value of this.options.specialValues)
-        button(valueContent, value, _=>this.setNewValue(value));
+    const specials = this.options.specialValues || [];
+    for(const value of specials)
+      button(valueContent, routineValueWords(value, this.options.display), _=>this.setNewValue(value));
     // starts at 0 because that is a meaningful value for most number parameters
-    // (move/flip/rotate none, x/y/angle 0); "use default" is what clears a value
-    for(let i=0; i<=10; i++)
-      button(valueContent, i, _=>this.setNewValue(i));
-
-    const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[this.parameterNames.length-1]] : null;
-
-    const count = document.createElement('input');
-    count.type = 'number';
-    if(typeof currentValue == 'number')
-      count.value = currentValue;
-    count.addEventListener('change', _=>this.setNewValue(+count.value));
-    valueContent.append(count);
-
-    // some number parameters also take strings, e.g. a property name or a seat id
-    if(this.options.textHint) {
-      const text = document.createElement('input');
-      text.type = 'text';
-      text.placeholder = this.options.textHint;
-      if(typeof currentValue == 'string')
-        text.value = currentValue;
-      text.addEventListener('change', _=>this.setNewValue(text.value));
-      valueContent.append(text);
-    }
+    // (move/flip/rotate none, x/y/angle 0); "use default" is what clears a value.
+    // A parameter whose numbers are none of them (a ROTATE angle) offers only its
+    // own, with everything else a line of text away.
+    if(!this.options.specialOnly)
+      for(let i=0; i<=10; i++)
+        if(specials.indexOf(i) == -1)
+          button(valueContent, routineValueWords(i, this.options.display), _=>this.setNewValue(i));
 
     // a few number parameters name a widget instead (TURN turn takes a seat id),
     // so offer the picker for those as well
     if(this.options.widgetType) {
-      const [ widgetTitle, widgetContent ] = this.addAccordionSection('Widgets');
+      const [ widgetTitle, widgetContent ] = this.addAccordionSection('Widgets in the room', '', 'widget');
       infoButton(widgetTitle, 'Use the id of a widget instead of a number: search it by id or pick it in the room.');
       // the properties module's picker CSS is scoped to .editorModule
       const host = div(widgetContent, 'editorModule');
@@ -498,7 +1246,7 @@ class RoutineNumberPopup extends RoutinePopup {
         inline: true,
         allowSelf: true,
         typeFilter: this.options.widgetType,
-        getSelectedIDs: _=>typeof currentValue == 'string' ? [ currentValue ] : [],
+        getSelectedIDs: _=>typeof this.currentValue() == 'string' ? [ this.currentValue() ] : [],
         apply: widgetID=>this.setNewValue(widgetID)
       });
     }
@@ -508,34 +1256,51 @@ class RoutineNumberPopup extends RoutinePopup {
 }
 
 class RoutineEnumPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which setting';
+  }
+
   constructor(options={}) {
     super();
     this.options = options;
   }
 
   show() {
-    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
+    // the choices read the way the sentence words them (">" is "is more than"),
+    // so nothing is picked from a list that speaks a different language
     for(const option of this.options.values)
-      button(valueContent, option, _=>this.setNewValue(option));
+      button(valueContent, routineValueWords(option, this.options.display), _=>this.setNewValue(option));
     super.show(true, false);
   }
 }
 
 class RoutineWidgetIDPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which widget';
+  }
+
   constructor(options={}) {
     super();
     this.options = options;
     this.workingIDs = [];
   }
 
-  avoidsPlayArea() {
+  needsRoomForPicker() {
     return true;
+  }
+
+  // whether a click in the room climbs past the card or pile it hit to whatever
+  // lies under it. A parameter that takes any widget takes those two as well, so
+  // it does not - only one that means holders, which cards are what cover.
+  resolvesCovering() {
+    return false;
   }
 
   show(showCollections=false) {
     // the picker is the primary input here, so it comes first and open
-    const [ title, content ] = this.addAccordionSection('Widgets');
+    const [ title, content ] = this.addAccordionSection('Widgets in the room', '', 'widget');
     infoButton(title, `
       Search widgets by their id, filter them by type or pick them in the room, then apply the selection.
       The type filter also applies to picking in the room: with the type set to holder, a click on a card selects the holder it lies on.
@@ -556,14 +1321,17 @@ class RoutineWidgetIDPopup extends RoutinePopup {
       inline: true,
       multiple: true,
       allowSelf: true, // a routine regularly acts on the widget it belongs to
-      resolveCovering: true, // holders are usually covered by their cards
+      resolveCovering: this.resolvesCovering(),
       typeFilter: this.options.widgetType, // preset from the parameter, changeable in the picker
       getSelectedIDs: _=>this.workingIDs,
       apply: widgetIDs=>this.workingIDs = widgetIDs,
       onClear: _=>this.workingIDs = [],
       clearLabel: 'Select none'
     });
-    button(content, 'Use these widgets', _=>this.setNewValue([ ...this.workingIDs ]));
+    // the button that applies the picked widgets is what the section is for, so
+    // it is the one filled button among the outlined ones instead of looking
+    // like another way to change the selection
+    button(content, 'Use these widgets', _=>this.setNewValue([ ...this.workingIDs ])).classList.add('primary');
     // a widget parameter takes a widget id, which a variable or widget property
     // can provide as well - e.g. ${PROPERTY parent} for the holder a button sits on
     super.show(true, showCollections);
@@ -571,8 +1339,18 @@ class RoutineWidgetIDPopup extends RoutinePopup {
 }
 
 class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
+  parameterQuestion() {
+    return 'which widgets';
+  }
+
   constructor(options={}) {
     super(options);
+  }
+
+  // this parameter means the holders widgets are taken from, and a holder in the
+  // room is under the cards lying on it
+  resolvesCovering() {
+    return true;
   }
 
   setNewCollectionValue(value) {
@@ -591,7 +1369,12 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
     // widget ids arrive as an array and belong to the first (holder-like) parameter;
     // a variable or widget property resolves to a widget id, so it goes there too;
     // collection names are strings and belong to the second parameter if there is one
-    if(Array.isArray(value) || typeof value == 'string' && value.match(/\$\{[^}]+\}/)) {
+    // - unless the operation names a holder right now, where a typed-over string is
+    // the id of another one: editing "deck1" to "deck2" may not turn the holder into
+    // a collection and leave the operation acting on nothing. The list of collections
+    // sets one through setNewCollectionValue and is unaffected by this.
+    const namesTheHolder = this.operation && typeof this.operation == 'object' && typeof this.operation[this.parameterNames[0]] != 'undefined';
+    if(Array.isArray(value) || typeof value == 'string' && (namesTheHolder || value.match(/\$\{[^}]+\}/))) {
       const holderParameter = this.parameterNames[0];
       const collectionParameter = this.parameterNames[1];
       // clear the sibling collection (mirror of setNewCollectionValue) so a leftover
@@ -611,6 +1394,10 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
 }
 
 class RoutineJSONPopup extends RoutinePopup {
+  parameterQuestion() {
+    return 'which value, as JSON';
+  }
+
   constructor() {
     super();
   }
@@ -619,28 +1406,38 @@ class RoutineJSONPopup extends RoutinePopup {
     return this.operation[this.parameterNames[0]];
   }
 
+  offersValueInput() {
+    return false; // the textarea below already holds the whole value
+  }
+
+  // what the textarea was typed into means, or undefined where it means nothing
+  // (JSON.parse never returns undefined, so it is free as the "no" of this)
+  parseTextareaValue(text) {
+    try {
+      return JSON.parse(text);
+    } catch(e) {
+      // a bare word (e.g. a sortBy property name) is almost always meant as a
+      // string, so quote it automatically instead of rejecting the input
+      return text.trim().match(/^[A-Za-z_][\w.-]*$/) ? text.trim() : undefined;
+    }
+  }
+
+  valueSectionInfo() {
+    return 'Enter a JSON value (object, array, string, number, boolean or null). A bare word is quoted automatically as a string.';
+  }
+
   show() {
     // the current value is the most likely thing to edit, so it comes first and open
-    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
-    infoButton(valueTitle, 'Enter a JSON value (object, array, string, number, boolean or null). A bare word is quoted automatically as a string.');
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
+    infoButton(valueTitle, this.valueSectionInfo());
     const textarea = document.createElement('textarea');
     const currentValue = this.getCurrentValue();
     textarea.value = JSON.stringify(typeof currentValue != 'undefined' ? currentValue : null, null, '  ');
     textarea.addEventListener('change', _=>{
-      try {
-        const newValue = JSON.parse(textarea.value);
-        textarea.classList.remove('inputError');
+      const newValue = this.parseTextareaValue(textarea.value);
+      textarea.classList.toggle('inputError', newValue === undefined);
+      if(newValue !== undefined)
         this.setNewValue(newValue);
-      } catch(e) {
-        // a bare word (e.g. a sortBy property name) is almost always meant as a
-        // string, so quote it automatically instead of rejecting the input
-        if(textarea.value.trim().match(/^[A-Za-z_][\w.-]*$/)) {
-          textarea.classList.remove('inputError');
-          this.setNewValue(textarea.value.trim());
-        } else {
-          textarea.classList.add('inputError');
-        }
-      }
     });
     valueContent.append(textarea);
     super.show(true, false);
@@ -648,9 +1445,279 @@ class RoutineJSONPopup extends RoutinePopup {
   }
 }
 
+// A plain list of values, edited as the list it is: one row per entry with the
+// row that adds another one below, the same shape as the name/value rows. What
+// a drop-down offers, the colors of a palette and the sides of a widget are all
+// lists of one thing each, and writing them as JSON means typing the brackets
+// and quotes around them by hand. An entry that is an object (a select entry
+// that stores something other than what it shows) keeps its JSON so the file
+// round-trips.
+class RoutineStringListPopup extends RoutinePopup {
+  constructor(options={}) {
+    super();
+    this.options = options;
+    this.workingValue = null;
+    this.workingChanged = false;
+  }
+
+  parameterQuestion() {
+    return 'which values';
+  }
+
+  offersValueInput() {
+    return false; // the rows below are the whole value
+  }
+
+  currentEntries() {
+    return Array.isArray(this.workingValue) ? this.workingValue : [];
+  }
+
+  saveEntries(entries) {
+    this.workingValue = entries;
+    this.workingChanged = true;
+  }
+
+  hide() {
+    // the same apply-on-close as the pairs list: several entries in one go
+    if(this.workingChanged && !this.applied) {
+      this.applied = true;
+      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
+    }
+    super.hide();
+  }
+
+  show() {
+    const [ title, content ] = this.addAccordionSection('Value', '', 'value');
+    infoButton(title, `
+      One row per entry, in the order they are shown. Anything that is valid JSON (a number, true, an object) is stored as such, everything else as text.
+    `);
+    this.workingValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    this.listElement = div(content, 'popup-key-value-list');
+    this.renderEntries();
+    super.show(true, false);
+  }
+
+  renderEntries() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const entryHint = this.options.entryHint || 'entry';
+
+    for(const [ index, entry ] of this.currentEntries().entries()) {
+      const row = div(list, 'popup-key-value-row');
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'popup-key-value-value';
+      input.value = this.valueAsText(entry);
+      input.placeholder = entryHint;
+      // no re-render on an edit: it would take the focus out of the input
+      input.addEventListener('change', _=>{
+        const entries = [ ...this.currentEntries() ];
+        entries[index] = this.parseValueText(input.value);
+        this.saveEntries(entries);
+      });
+      row.append(input);
+
+      const remove = document.createElement('span');
+      remove.className = 'material-symbols popup-key-value-remove';
+      remove.textContent = 'delete';
+      remove.title = `Remove ${this.valueAsText(entry)}`;
+      remove.addEventListener('click', _=>{
+        this.saveEntries(this.currentEntries().filter((_e, i)=>i != index));
+        this.renderEntries();
+      });
+      row.append(remove);
+    }
+
+    const addRow = div(list, 'popup-key-value-row popup-key-value-add');
+    const addInput = document.createElement('input');
+    addInput.type = 'text';
+    addInput.className = 'popup-key-value-value';
+    addInput.placeholder = entryHint;
+    addRow.append(addInput);
+
+    const addEntry = _=>{
+      if(!addInput.value.trim())
+        return;
+      this.saveEntries([ ...this.currentEntries(), this.parseValueText(addInput.value) ]);
+      this.renderEntries();
+      const next = $('.popup-key-value-add input', this.listElement);
+      if(next)
+        next.focus();
+    };
+    addInput.addEventListener('keydown', e=>{
+      if(e.key == 'Enter')
+        addEntry();
+    });
+    const addButton = button(addRow, 'add', addEntry);
+    addButton.className = 'popup-key-value-add-button primary';
+    const updateAddButton = _=>{
+      addButton.disabled = !addInput.value.trim();
+      addButton.title = addButton.disabled ? `Type the ${entryHint} first` : `Add ${addInput.value.trim()}`;
+    };
+    addInput.addEventListener('input', updateAddButton);
+    updateAddButton();
+  }
+}
+
+// A list of name/value pairs, edited as the list it is: one row per pair, the
+// way the property sets of the Automations section are edited, plus a row that
+// adds one - a VAR is a handful of names and what they get, and typing that as
+// JSON means writing the braces and quotes around it by hand. The parameter is
+// written when the popup closes, so several pairs are entered in one go.
+class RoutineKeyValuePopup extends RoutinePopup {
+  constructor(options={}) {
+    super();
+    this.options = options;
+    this.workingValue = null;
+    this.workingChanged = false;
+  }
+
+  parameterQuestion() {
+    return 'which values';
+  }
+
+  offersValueInput() {
+    return false; // the rows below are the whole value
+  }
+
+  currentPairs() {
+    const value = this.workingValue;
+    return value && typeof value == 'object' && !Array.isArray(value) ? value : {};
+  }
+
+  savePairs(pairs) {
+    this.workingValue = pairs;
+    this.workingChanged = true;
+  }
+
+  hide() {
+    // the same apply-on-close as the color/icon pickers: notifyChangeListeners
+    // makes newRoutineValues call hide() again, so guard against re-entering it
+    if(this.workingChanged && !this.applied) {
+      this.applied = true;
+      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
+    }
+    super.hide();
+  }
+
+  show() {
+    const [ title, content ] = this.addAccordionSection('Value', '', 'value');
+    infoButton(title, `
+      One row per name and the value it gets. Anything that is valid JSON (a number, true, null, an object) is stored as such, everything else as text.
+    `);
+    this.workingValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    this.listElement = div(content, 'popup-key-value-list');
+    this.renderPairs();
+    super.show(true, false);
+  }
+
+  renderPairs() {
+    const list = this.listElement;
+    list.innerHTML = '';
+    const keyHint = this.options.keyHint || 'name';
+
+    for(const key of Object.keys(this.currentPairs())) {
+      const row = div(list, 'popup-key-value-row');
+
+      const keyDOM = div(row, 'popup-key-value-key');
+      keyDOM.textContent = key;
+      keyDOM.title = key;
+
+      const valueInput = document.createElement('input');
+      valueInput.type = 'text';
+      valueInput.className = 'popup-key-value-value';
+      valueInput.value = this.valueAsText(this.currentPairs()[key]);
+      valueInput.placeholder = 'value';
+      // no re-render on an edit: it would take the focus out of the input
+      valueInput.addEventListener('change', _=>{
+        this.savePairs(Object.assign({}, this.currentPairs(), { [key]: this.parseValueText(valueInput.value) }));
+      });
+      row.append(valueInput);
+
+      const remove = document.createElement('span');
+      remove.className = 'material-symbols popup-key-value-remove';
+      remove.textContent = 'delete';
+      remove.title = `Remove ${key}`;
+      remove.addEventListener('click', _=>{
+        const next = Object.assign({}, this.currentPairs());
+        delete next[key];
+        this.savePairs(next);
+        this.renderPairs();
+      });
+      row.append(remove);
+    }
+
+    // the row that adds one asks for both halves of a pair at once: a name on
+    // its own is a variable with nothing in it, and having to add it before the
+    // value can be typed is what made the popup look like it closed too early
+    const addRow = div(list, 'popup-key-value-row popup-key-value-add');
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'popup-key-value-name';
+    nameInput.placeholder = keyHint;
+
+    // the names the operations before this one already work with, so a value
+    // that overwrites one of them is picked instead of typed out again
+    const suggestions = (this.options.suggestions || []).filter(name=>typeof this.currentPairs()[name] == 'undefined');
+    if(suggestions.length) {
+      const datalist = document.createElement('datalist');
+      datalist.id = `routineKeyValueSuggestions${++propertySuggestionListCounter}`;
+      for(const name of suggestions) {
+        const option = document.createElement('option');
+        option.value = name;
+        datalist.append(option);
+      }
+      addRow.append(datalist);
+      nameInput.setAttribute('list', datalist.id);
+    }
+    addRow.append(nameInput);
+
+    const addValueInput = document.createElement('input');
+    addValueInput.type = 'text';
+    addValueInput.className = 'popup-key-value-value';
+    addValueInput.placeholder = 'value';
+    addRow.append(addValueInput);
+
+    const addPair = _=>{
+      const key = nameInput.value.trim();
+      if(!key || typeof this.currentPairs()[key] != 'undefined')
+        return;
+      this.savePairs(Object.assign({}, this.currentPairs(), { [key]: this.parseValueText(addValueInput.value) }));
+      this.renderPairs();
+      // the popup stays open for the next pair, with the cursor where it is typed
+      const nextName = $('.popup-key-value-add .popup-key-value-name', this.listElement);
+      if(nextName)
+        nextName.focus();
+    };
+    for(const input of [ nameInput, addValueInput ])
+      input.addEventListener('keydown', e=>{
+        if(e.key == 'Enter')
+          addPair();
+      });
+    // the button that puts the pair into the list is what the row is for, so it
+    // is the filled one the popups use for the button that applies something
+    const addButton = button(addRow, 'add', addPair);
+    addButton.className = 'popup-key-value-add-button primary';
+    // a button that does nothing until a name is typed says so instead of
+    // swallowing the click
+    const updateAddButton = _=>{
+      const key = nameInput.value.trim();
+      addButton.disabled = !key || typeof this.currentPairs()[key] != 'undefined';
+      addButton.title = !key ? `Type the name of the ${keyHint} first` : (addButton.disabled ? `${key} is already in this list` : `Add ${key}`);
+    };
+    nameInput.addEventListener('input', updateAddButton);
+    updateAddButton();
+  }
+}
+
 class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
   constructor() {
     super();
+  }
+
+  parameterQuestion() {
+    return 'the whole operation, as JSON';
   }
 
   offersUseDefault() {
@@ -661,9 +1728,32 @@ class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
     return this.operation;
   }
 
+  valueSectionInfo() {
+    return 'Enter the whole operation as a JSON object, or as the one line a var statement or a // comment is.';
+  }
+
+  // an operation is an object, or one of the two lines a routine may hold as a
+  // string (a var statement, a comment) - a bare word is neither, and quoting it
+  // would replace the operation with that word
+  parseTextareaValue(text) {
+    try {
+      const value = JSON.parse(text);
+      return typeof value == 'string' || value && typeof value == 'object' && !Array.isArray(value) ? value : undefined;
+    } catch(e) {
+      return undefined;
+    }
+  }
+
   setNewValue(value) {
-    // this popup edits the entire operation instead of a single parameter
-    this.notifyChangeListeners(value);
+    // this popup edits the entire operation instead of a single parameter, and
+    // the consumer assigns what it is handed onto the operation rather than
+    // replacing it - so a property the JSON no longer has is cleared explicitly
+    if(typeof value == 'string')
+      return this.notifyChangeListeners(value);
+    const newValue = {};
+    for(const key in this.operation)
+      newValue[key] = undefined;
+    this.notifyChangeListeners(Object.assign(newValue, value));
   }
 }
 
@@ -686,6 +1776,15 @@ class RoutinePickerPopup extends RoutinePopup {
     return 'Use a fixed value that will always behave the same way.';
   }
 
+  // the picker only writes the parameter when the popup closes, so a raw text
+  // edit feeds the same working value instead of applying on its own
+  applyValueInput(value) {
+    this.workingValue = value;
+    this.workingChanged = true;
+    if(this.pickerInput && this.pickerInput.update)
+      this.pickerInput.update(value);
+  }
+
   hide() {
     // apply the picked value on close (before super.hide()'s cancel listener, so
     // its resolve(undefined) is ignored once we have resolved with the value).
@@ -699,8 +1798,9 @@ class RoutinePickerPopup extends RoutinePopup {
   }
 
   show() {
-    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
     infoButton(valueTitle, this.valueHint());
+    this.pickerInput = null;
     this.workingValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
 
     const InputClass = this.inputClass();
@@ -715,33 +1815,30 @@ class RoutinePickerPopup extends RoutinePopup {
           this.workingValue = v;
           this.workingChanged = true;
           input.update(v);
+          this.syncValueInput(v);
         },
         clearable: false
       });
+      this.pickerInput = input;
       // the properties module's picker CSS is scoped to .editorModule, so render
       // into a matching wrapper to inherit the chip/picker sizing
       const host = div(valueContent, 'editorModule');
       input.render(host);
       if(input.openPicker)
         input.openPicker();
-    } else {
-      // fallback for environments without the properties module (e.g. jest)
-      const input = document.createElement('input');
-      input.type = 'text';
-      if(typeof this.workingValue == 'string')
-        input.value = this.workingValue;
-      input.addEventListener('change', _=>{
-        this.workingValue = input.value;
-        this.workingChanged = true;
-      });
-      valueContent.append(input);
     }
+    // without the properties module (e.g. jest) the value text input above is
+    // the whole editor for the parameter
 
     super.show(true, false);
   }
 }
 
 class RoutineColorPopup extends RoutinePickerPopup {
+  parameterQuestion() {
+    return 'which color';
+  }
+
   inputClass() {
     return typeof ColorInput != 'undefined' ? ColorInput : null;
   }
@@ -752,6 +1849,10 @@ class RoutineColorPopup extends RoutinePickerPopup {
 }
 
 class RoutineIconPopup extends RoutinePickerPopup {
+  parameterQuestion() {
+    return 'which icon';
+  }
+
   inputClass() {
     return typeof IconInput != 'undefined' ? IconInput : null;
   }
@@ -761,22 +1862,22 @@ class RoutineIconPopup extends RoutinePickerPopup {
   }
 }
 
+// What a FOREACH repeats for, asked one way of repeating at a time: a range is
+// three numbers and a list is what it holds, so a popup offering both under
+// either of them invites a range where only entries work (and the other way
+// round). Which one it asks for is the parameter the chip stands for.
 class RoutineForeachSourcePopup extends RoutinePopup {
-  constructor() {
+  parameterQuestion() {
+    return this.options.range ? 'which numbers' : 'what to repeat for';
+  }
+
+  constructor(options={}) {
     super();
+    this.options = options;
   }
 
-  setNewCollectionValue(value) {
-    this.notifyChangeListeners({ 'in': undefined, range: undefined, collection: value });
-  }
-
-  setNewValue(value) {
-    // variables and manual input iterate over their content via "in"
-    this.notifyChangeListeners({ 'in': value, range: undefined, collection: undefined });
-  }
-
-  show() {
-    const [ rangeTitle, rangeContent ] = this.addAccordionSection('Range');
+  showRangeSection() {
+    const [ rangeTitle, rangeContent ] = this.addAccordionSection('Range', '', 'value');
     infoButton(rangeTitle, 'Iterate over a range of numbers. The loopRoutine receives each number as the variable value.');
     const inputs = {};
     for(const name of [ 'start', 'end', 'step' ]) {
@@ -788,17 +1889,24 @@ class RoutineForeachSourcePopup extends RoutinePopup {
       label.append(input);
       rangeContent.append(label);
     }
-    inputs.start.value = 1;
-    inputs.end.value = 10;
-    inputs.step.value = 1;
-    button(rangeContent, 'use range', _=>{
-      this.notifyChangeListeners({ 'in': undefined, range: [ +inputs.start.value || 0, +inputs.end.value || 0, +inputs.step.value || 1 ], collection: undefined });
-    });
+    // the range the operation already has, so changing only the step keeps the
+    // start and the end instead of writing the example over them
+    const current = this.currentValue();
+    const seed = [ 1, 10, 1 ].map((fallback, index)=>Array.isArray(current) && typeof current[index] == 'number' ? current[index] : fallback);
+    inputs.start.value = seed[0];
+    inputs.end.value = seed[1];
+    inputs.step.value = seed[2];
+    button(rangeContent, 'use range', _=>this.setNewValue([ +inputs.start.value || 0, +inputs.end.value || 0, +inputs.step.value || 1 ]));
+  }
 
-    const [ inTitle, inContent ] = this.addAccordionSection('Object / Array');
+  showEntriesSection() {
+    const [ inTitle, inContent ] = this.addAccordionSection('Object / Array', '', 'value');
     infoButton(inTitle, 'Iterate over the entries of an object, array or string. The loopRoutine receives key and value for each entry.');
     const textarea = document.createElement('textarea');
     textarea.placeholder = '[ "first", "second" ]';
+    const current = this.currentValue();
+    if(current !== undefined)
+      textarea.value = JSON.stringify(current, null, '  ');
     textarea.addEventListener('change', _=>{
       try {
         const value = JSON.parse(textarea.value);
@@ -809,13 +1917,46 @@ class RoutineForeachSourcePopup extends RoutinePopup {
       }
     });
     inContent.append(textarea);
+  }
 
-    super.show(true, true);
+  show() {
+    if(this.options.range)
+      this.showRangeSection();
+    else
+      this.showEntriesSection();
+    // a collection is the third way to repeat and has its own phrase in the
+    // sentence, so it is not something either of these two is filled in with
+    super.show(true, false);
   }
 }
 
 function escapeHTML(text) {
   return String(text).replace(/[&<>"']/g, c=>({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// How a popup shows what it offers is remembered between sessions: it is a
+// preference of whoever edits, not part of the game, so it lives in
+// localStorage next to the rest of the editor's own state.
+function popupSettingValue(key, fallback) {
+  const stored = localStorage.getItem(`routineEditor.${key}`);
+  return stored === null ? fallback : stored == 'true';
+}
+
+// a checkbox rather than one of the buttons around it: it switches something
+// about the list on and off instead of picking a value for the operation
+function popupSetting(appendTo, label, key, fallback, onChange) {
+  const dom = document.createElement('label');
+  dom.className = 'popup-setting';
+  const input = document.createElement('input');
+  input.type = 'checkbox';
+  input.checked = popupSettingValue(key, fallback);
+  input.addEventListener('change', _=>{
+    localStorage.setItem(`routineEditor.${key}`, input.checked);
+    onChange();
+  });
+  dom.append(input, document.createTextNode(` ${label}`));
+  appendTo.append(dom);
+  return input;
 }
 
 function button(appendTo, text, onClick) {
@@ -846,29 +1987,142 @@ function dedentInfoText(text) {
   return lines.map(l=>l.slice(strip)).join('\n');
 }
 
-function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
+function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null, title=null) {
+  // one glyph, whatever the topic offers: a second 14px symbol next to the first
+  // says nothing to anyone who does not already know what it means, and the
+  // tutorial and the video are sections of the popup it opens anyway
   const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
-  if(tutorialName)
-    dom.innerHTML += `<span class=material-symbols>school</span>`;
-  if(videoFilename)
-    dom.innerHTML += `<span class=material-symbols>movie</span>`;
-  infoHTML = dedentInfoText(infoHTML);
+  dom.title = title ? `About ${title}` : 'What this does';
+  infoHTML = structureInfoHTML(dedentInfoText(infoHTML));
   // topic names are restricted so literal brackets like [ "widget1", "widget2" ] stay untouched
   infoHTML = infoHTML.replace(/\[([A-Za-z.]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic="${topicName}">${topicInfo != null ? topicInfo : topicName}</span>`);
-  dom.addEventListener('click', e=>{
-    e.stopPropagation();
-    const popup = new InfoPopup(dom, infoHTML, tutorialName, videoFilename);
+
+  // an info tip is clicked open and clicked shut again: a tip that follows the
+  // pointer opens itself while the pointer is only traveling past the button,
+  // and it takes the text away again the moment somebody reaches for it. The
+  // same click works with a finger and, through focusable(), with the keyboard.
+  let popup = null;
+  const toggle = _=>{
+    if(popup) {
+      popup.hide();
+      popup = null;
+      return;
+    }
+    popup = new InfoPopup(dom, infoHTML, tutorialName, videoFilename, title);
     popup.show();
     for(const highlight of $a('.highlight', popup.domElement))
       commonInfoButton(highlight, highlight.dataset.topic);
     popup.moveIntoView();
-  });
+    popup.registerCancelListener(_=>{ popup = null; });
+  };
+  focusable(dom, toggle);
   return dom;
 }
 
-function commonInfoButton(appendTo, topicName) {
+// The wiki texts are one <pre> block: prose, and in most of them a list of
+// "name: type - what it does" lines. A popup is not a terminal, so the prose
+// becomes paragraphs and the parameter lines a list whose names carry the color
+// the sentence uses for a value - the same language the rest of the editor
+// teaches, instead of 90 characters of monospace per line.
+function structureInfoHTML(text) {
+  return text.replace(/<pre>([\s\S]*?)<\/pre>/g, (_, body)=>{
+    let html = '';
+    let inList = false;
+    const endList = _=>{
+      html += inList ? '</dl>' : '';
+      inList = false;
+    };
+    for(const rawLine of body.split('\n')) {
+      const line = rawLine.trim();
+      if(!line)
+        continue;
+      const parameter = infoParameterLine(line);
+      if(parameter) {
+        html += inList ? '' : '<dl class=popup-info-parameters>';
+        inList = true;
+        html += `<dt>${parameter.name}</dt><dd>${parameter.description}</dd>`;
+        continue;
+      }
+      endList();
+      if(line.match(/^[A-Za-z ]+:$/))
+        html += `<div class=popup-info-heading>${line.replace(/:$/, '')}</div>`;
+      else
+        html += `<p>${line}</p>`;
+    }
+    endList();
+    return html;
+  });
+}
+
+// "count: number - limits the amount of moved widgets", i.e. a line naming one
+// or more parameters (the texts write alternatives as "operand1 / operand2" and
+// "x and y", and a name can carry a topic link) and then what they are for.
+// Everything else is prose.
+function infoParameterLine(line) {
+  const colon = line.indexOf(':');
+  const description = colon == -1 ? '' : line.slice(colon+1).trim();
+  if(colon < 1 || !description)
+    return null;
+  const names = line.slice(0, colon);
+  if(!names.split(/\/| and /).every(name=>name.replace(/\[[A-Za-z.]+\]|[()"]/g, '').trim().match(/^[A-Za-z0-9_$]+$/)))
+    return null;
+  return { name: names.trim(), description };
+}
+
+function commonInfoButton(appendTo, topicName, title=null) {
+  const topic = commonInfoTopic(topicName);
+  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null, title || topicName.replace('.', ' ')) : undefined;
+}
+
+function commonParameterInfoButton(appendTo, func, parameter) {
+  const topic = parameterInfoTopic(func, parameter);
+  return topic ? infoButton(appendTo, topic.info, topic.tutorial || null, topic.video || null, `${func} ${parameter}`) : undefined;
+}
+
+// Everything the editor knows about a single parameter of an operation: its own
+// topic when there is one, otherwise the line the operation's text describes it
+// with. Operations without a text of their own get nothing.
+function parameterInfoTopic(func, parameter) {
+  // a chip standing for a part of another parameter (a VAR's variableName is the
+  // first half of variables) is described by the one it is a part of
+  const spec = ((routineOperationMetadata[func] || {}).parameters || {})[parameter];
+  if(spec && spec.describedBy)
+    parameter = spec.describedBy;
+  const own = commonInfoTopic(`${func}.${parameter}`);
+  if(own)
+    return own;
+  const operation = commonInfoTopic(func);
+  if(!operation)
+    return null;
+  const line = parameterInfoLine(operation.info, parameter);
+  // no line of its own (the wiki text does not mention it): the whole text is
+  // still the best the editor can offer
+  if(!line)
+    return operation;
+  return { info: `<pre>${line}\n\nSee [${func}] for the whole operation.</pre>` };
+}
+
+// The line an operation's info text has for one of its parameters, e.g.
+// "count: number - limits the amount of moved widgets (defaults to 1)." The
+// texts list one parameter per line, sometimes several at once ("x and y: ...",
+// "operand1 / operand2: ..."), and a name can carry a topic link.
+function parameterInfoLine(infoHTML, parameter) {
+  for(const line of dedentInfoText(infoHTML).split('\n')) {
+    const colon = line.indexOf(':');
+    if(colon == -1)
+      continue;
+    const names = line.slice(0, colon).split(/\/| and /).map(name=>name.replace(/\[[A-Za-z.]+\]|[()]/g, '').trim());
+    if(names.indexOf(parameter) != -1)
+      return line.trim();
+  }
+  return null;
+}
+
+// The wiki texts every info button in the routine editor is built from, keyed by
+// operation name (plus a few parameter/term topics that need more than a line).
+function commonInfoTopic(topicName) {
   if(topicName == 'COUNT') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function determines the size of a collection and stores the result in a variable.
 
@@ -879,10 +2133,10 @@ function commonInfoButton(appendTo, topicName) {
       owner: playerName - filters the widgets in the collection or holder to only count widgets owned by the specified player. The default value, null, results in no filtering by owner.
       variable: variable name - specifies the variable to store the result in (defaults to variable "COUNT").
       </pre>
-    `, 'functions-count');
+    `, tutorial: 'functions-count' };
   }
   if(topicName == 'MOVE') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function moves widgets into a target [holder]. If the target of the move is an occupied seat, then the move will instead direct the widgets to the hand associated with the seat. In this case, if the hand is set to childPerOwner, the owner will be set to the player in the seat.
 
@@ -898,24 +2152,24 @@ function commonInfoButton(appendTo, topicName) {
 
       If the dropTarget property (when moving to a holder) does not match the widgets being moved, the widgets will become children of the holder, but will keep the original x,y coordinates. In other words, they will not follow the stackOffset rules for aligning child widgets.
       </pre>
-    `, 'functions-move');
+    `, tutorial: 'functions-move' };
   }
   if(topicName == 'MOVE.from') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       The from parameter specifies the widget(s) that contains the widgets to move. In the typical case, this would be a holder, but could be any widget with child widgets. If from is not specified, then the "DEFAULT" collection will be moved.
       </pre>
-    `);
+    ` };
   }
   if(topicName == 'holder') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       A holder is a widget that contains other widgets.
       </pre>
-    `);
+    ` };
   }
   if(topicName == 'FOREACH') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function iterates over a collection, object, array, string, or range of values. The loopRoutine parameter specifies the actions to take on each iteration.
 
@@ -933,10 +2187,10 @@ function commonInfoButton(appendTo, topicName) {
       collection: collection - the collection to iterate over if "in"/"range" are not given (defaults to DEFAULT collection).
       loopRoutine: routine - the operations to run on every iteration.
       </pre>
-    `, 'functions-foreach');
+    `, tutorial: 'functions-foreach' };
   }
   if(topicName == 'IF') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function checks a condition and branches into thenRoutine or elseRoutine before continuing with the rest of the current routine. Any variables/collections of the main routine are available in the then/else routines.
 
@@ -949,10 +2203,10 @@ function commonInfoButton(appendTo, topicName) {
 
       undefined, null, 0, "" and false are "falsey"; everything else (including [] and the strings "null"/"false"/"0") is "truthy".
       </pre>
-    `, 'functions-if');
+    `, tutorial: 'functions-if' };
   }
   if(topicName == 'SELECT') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function identifies widgets matching the given source/type/property/relation/value/max criteria, then uses "mode" to combine that set of widgets into the collection named by "collection" (sorted by sortBy, if given). Selecting piles adds their content to the collection instead of the pile widget itself.
 
@@ -967,10 +2221,10 @@ function commonInfoButton(appendTo, topicName) {
       sortBy: property name, key object, or array of keys - sorts the collection after widgets are added.
       random: true/false - if max is smaller than the number of matches, pick randomly among them rather than taking the first ones (defaults to false).
       </pre>
-    `, 'functions-select');
+    `, tutorial: 'functions-select' };
   }
   if(topicName == 'AUDIO') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function causes a sound to play. A url for the audio file is required. Audio will not play on any device until the user interacts with the webpage.
 
@@ -983,44 +2237,47 @@ function commonInfoButton(appendTo, topicName) {
       count: number or "loop" - how many times the clip plays. "loop" plays forever, 0 means it won't play (defaults to 1). Ignored if length is set.
       silence: true/false - when true, stops all sound currently playing in the room (defaults to false).
       </pre>
-    `, 'functions-audio');
+    `, tutorial: 'functions-audio' };
   }
   if(topicName == 'CALL') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function executes a custom routine defined in the same or another widget. It is most useful for "bundling" a sequence of operations you want to reuse.
 
       All collections and variables that exist when the call is made are inherited by the sub-routine, which also receives the collection "caller" (the widget that used CALL). Additional variables can be set via "arguments".
 
-      Each CALL returns a variable and a collection. The variable named "result" inside the called routine becomes the variable named by "variable" (defaults to "result") in the caller; the collection named "result" inside the called routine always becomes the collection named "result" in the caller.
+      Each CALL returns a variable and a collection. The variable named "result" inside the called routine becomes the variable named by "variable" (defaults to "result") in the caller; the collection named "result" inside the called routine becomes the collection named by "collection" (defaults to "result") in the caller.
 
       Parameters:
 
       routine: routine name - the routine to execute (must end in "Routine").
       widget: widget id - the widget containing the routine (defaults to the current widget).
       variable: variable name - stores the value returned from the called routine (defaults to "result").
+      collection: collection name - stores the collection returned from the called routine (defaults to "result").
       return: true/false - if false, no further statements in the calling routine are executed after the CALL (defaults to true).
       arguments: JSON object - properties of this object are passed as variables to the called routine (optional).
       </pre>
-    `, 'functions-call');
+    `, tutorial: 'functions-call' };
   }
   if(topicName == 'CANVAS') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function simplifies control of canvas widgets. The mode parameter determines which automation is executed.
 
       Parameters:
 
       collection: collection - the collection of canvases to change (defaults to DEFAULT collection).
+      canvas: canvasID (or an array) - deprecated, use collection instead: the canvas widget(s) to change.
+      count: number - limits how many canvases of the collection are changed (defaults to 0, which changes all of them).
       mode: set/inc/dec/change/reset/setPixel - which automation to apply. set/inc/dec change the activeColor index into colorMap using value. change replaces the colorMap entry at index value with color. reset sets every pixel back to the first color of colorMap. setPixel sets the pixel at (x, y) to the colorMap index given by value.
       value: number - index into colorMap (defaults to 1).
       color: string - the new color used by mode "change" (defaults to VTT blue).
       x and y: number - the pixel coordinates used by mode "setPixel" (defaults to 0).
       </pre>
-    `, 'functions-canvas');
+    `, tutorial: 'functions-canvas' };
   }
   if(topicName == 'CLICK') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function clicks widgets as if they were clicked by a player. When a collection is used with a count greater than one, each widget in the collection is clicked once before repeating.
 
@@ -1030,10 +2287,10 @@ function commonInfoButton(appendTo, topicName) {
       count: number - how many times the click is triggered (defaults to 1).
       mode: respect/ignoreClickable/ignoreClickRoutine/ignoreAll - controls how the clickable property and any clickRoutine are honored (defaults to respect). respect performs the normal click behavior; ignoreClickable ignores the clickable property; ignoreClickRoutine ignores any clickRoutine and performs the default widget action instead; ignoreAll combines both.
       </pre>
-    `, 'functions-click');
+    `, tutorial: 'functions-click' };
   }
   if(topicName == 'CLONE' || topicName == 'DELETE') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       CLONE creates copies of every widget in a collection, replicating all properties of the original except id. Each clone also gets a clonedFrom property set to the id of the original. Children of the source widgets are not cloned unless recursive is used.
 
@@ -1052,10 +2309,10 @@ function commonInfoButton(appendTo, topicName) {
 
       collection: collection - the collection containing the widgets to delete (defaults to DEFAULT).
       </pre>
-    `, 'functions-clone-and-delete');
+    `, tutorial: 'functions-clone-and-delete' };
   }
   if(topicName == 'DELAY') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function pauses routine execution for a specified duration.
 
@@ -1063,10 +2320,10 @@ function commonInfoButton(appendTo, topicName) {
 
       milliseconds: number - the length of the delay (defaults to 0).
       </pre>
-    `, 'functions-delay');
+    `, tutorial: 'functions-delay' };
   }
   if(topicName == 'FLIP') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function flips widgets to the given face (for a "normal" card, 0 is the back and 1 is the front). If face is omitted, widgets flip to their "next" face as determined by faceCycle. If the holder is a seat, only widgets belonging to that seat are flipped.
 
@@ -1078,10 +2335,10 @@ function commonInfoButton(appendTo, topicName) {
       face: number - the target face. When omitted, flips to the next/random face per faceCycle.
       faceCycle: forward/backward/random - temporarily overrides the widget's faceCycle property for this operation.
       </pre>
-    `, 'functions-flip');
+    `, tutorial: 'functions-flip' };
   }
   if(topicName == 'GET') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function reads a property (default id) of a single widget in a collection, or determines an aggregated value across multiple widgets, and stores the result in a variable.
 
@@ -1093,25 +2350,28 @@ function commonInfoButton(appendTo, topicName) {
       aggregation: first/last/sum/average/median/min/max/array - how to combine values across multiple widgets (defaults to "first").
       skipMissing: true/false - skip widgets where the property has no value at all.
       </pre>
-    `, 'functions-get');
+    `, tutorial: 'functions-get' };
   }
   if(topicName == 'INPUT') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
-      This function shows an overlay with input controls to ask the player for input; on confirmation, the routine continues with the results stored in the given variables. Cancelling stops only the routine INPUT is directly inside (the main routine, or the branch of an IF/CALL/FOREACH it is nested in).
+      This function shows an overlay with input controls to ask the player for input; on confirmation, the routine continues with the results stored in the given variables. Canceling stops only the routine INPUT is directly inside (the main routine, or the branch of an IF/CALL/FOREACH it is nested in).
 
       Parameters:
 
       fields: array of field definitions - what to display, in order (checkbox, choose, color, number, palette, select, slider, string, subtitle, switch, text, and title types are supported, each with their own parameters - see the wiki for the full list).
       header: text - text displayed above everything else (mostly kept for backwards compatibility).
+      player: playerName (or an array) - who is shown the overlay (defaults to null, the player whose action started the routine). With an array, everybody named is asked at once and each field comes back keyed by player name.
+      block: boolean - while true, everybody else is shown a message naming who is being asked and cannot interact with widgets until every overlay is answered (defaults to false).
       css: css - modifies the css of field areas other than the header/title/subtitle.
+      randomRotation: number - rotates the whole dialog by a random angle of up to half this many degrees in each direction (defaults to 0, no rotation).
       cancelButtonIcon / cancelButtonText: icon/text shown on the cancel button (defaults to no icon, "Cancel"). Set both explicitly to null to hide the cancel button entirely.
       confirmButtonIcon / confirmButtonText: icon/text shown on the confirm button (defaults to no icon, "Go").
       </pre>
-    `, 'functions-input');
+    `, tutorial: 'functions-input' };
   }
   if(topicName == 'LABEL') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function changes the text of widgets.
 
@@ -1122,10 +2382,10 @@ function commonInfoButton(appendTo, topicName) {
       mode: set/inc/dec/append - how the value is applied (defaults to set). inc/dec always treat the current value as a number.
       value: string or number - the value to apply (defaults to 0).
       </pre>
-    `, 'functions-label');
+    `, tutorial: 'functions-label' };
   }
   if(topicName == 'MOVEXY') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function moves widgets to a specific position on the surface, outside any holder. Widgets currently in a pile or holder are moved out first.
 
@@ -1135,15 +2395,16 @@ function commonInfoButton(appendTo, topicName) {
       count: number - limits how many widgets are moved (defaults to 1). 0 moves none, "all" moves every selected widget, a positive number moves that many, a negative number leaves that many unmoved.
       face: number - optionally sets the face of the moved widgets (see FLIP). If omitted, widgets keep their current face.
       x / y: number - the target position on the surface (defaults to 0).
+      z: number - the stacking order the moved widgets get (defaults to 0, which keeps the z each widget already has).
       resetOwner: true/false - resets the owner property to null (defaults to true).
       snapToGrid: true/false - aligns x/y to the widget's grid, if any (defaults to true).
 
       The moved widgets can form piles as if a player moved them, but will never be placed into a holder - use MOVE for that.
       </pre>
-    `, 'functions-movexy');
+    `, tutorial: 'functions-movexy' };
   }
   if(topicName == 'RECALL') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function moves cards back into the holder they are associated with via deck. All cards belonging to that deck are moved. Do not use on holders that have no deck. Cards are recalled in DOM order (or by distance, see byDistance).
 
@@ -1155,10 +2416,10 @@ function commonInfoButton(appendTo, topicName) {
       owned: true/false - whether cards owned by a player are recalled too (defaults to true).
       byDistance: true/false - recall in order of proximity to the holder instead of DOM order (defaults to false).
       </pre>
-    `, 'functions-recall');
+    `, tutorial: 'functions-recall' };
   }
   if(topicName == 'RESET') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function looks at the given property on every widget; if that property is an object, each of its key/value pairs is applied to the widget. It is primarily intended to restore widgets to a previously saved state.
 
@@ -1166,10 +2427,10 @@ function commonInfoButton(appendTo, topicName) {
 
       property: property name - the property on each widget that holds the values to restore (defaults to "resetProperties").
       </pre>
-    `, 'functions-reset');
+    `, tutorial: 'functions-reset' };
   }
   if(topicName == 'ROTATE') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function changes the rotation of widgets. If the holder is a seat, only widgets belonging to that seat are rotated.
 
@@ -1181,10 +2442,10 @@ function commonInfoButton(appendTo, topicName) {
       count: number - limits how many widgets are rotated (defaults to 1). 0 rotates none, "all" rotates every selected widget, a positive number rotates that many, a negative number leaves that many unrotated.
       mode: set/add - whether the rotation is set to, or changed by, angle (defaults to add).
       </pre>
-    `, 'functions-rotate');
+    `, tutorial: 'functions-rotate' };
   }
   if(topicName == 'SCORE') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function modifies a property (score by default) in one or more seats. Use SCORE when a scoreboard uses rounds; use SET on the score property when it uses totals only. Usually you don't need SCORE at all if players use the scoreboard's built-in scoring overlay.
 
@@ -1198,10 +2459,10 @@ function commonInfoButton(appendTo, topicName) {
 
       SCORE cannot be used to modify team scores directly - modify player scores instead and let the scoreboard compute team totals.
       </pre>
-    `, 'functions-score');
+    `, tutorial: 'functions-score' };
   }
   if(topicName == 'SET') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function changes a property of the given widgets.
 
@@ -1212,10 +2473,10 @@ function commonInfoButton(appendTo, topicName) {
       relation: = or an operation (+, -, *, /, ...) - whether value is set outright or computed against the current value.
       value: any type - the value to apply (defaults to null).
       </pre>
-    `, 'functions-set');
+    `, tutorial: 'functions-set' };
   }
   if(topicName == 'SHUFFLE') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function randomizes the stacking order (z position) of widgets. If the holder is a seat, only that seat's hand is shuffled.
 
@@ -1226,10 +2487,10 @@ function commonInfoButton(appendTo, topicName) {
       mode: true random/overhand/reverse/riffle/seeded - the shuffling technique (defaults to "true random").
       modeValue: number - meaning depends on mode: number of overhand or riffle shuffles, or the seed for seeded (defaults to 1).
       </pre>
-    `, 'functions-shuffle');
+    `, tutorial: 'functions-shuffle' };
   }
   if(topicName == 'SORT') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function rearranges the stacking order (z position) of widgets according to the given sort key. Widgets with null values sort to the bottom; widgets with equal keys keep their relative order. If the holder is a seat, only that seat's widgets are sorted.
 
@@ -1240,13 +2501,15 @@ function commonInfoButton(appendTo, topicName) {
       key: property name, key object ({key, order, reverse}), or an array of either - what to sort by; an array is applied left to right until values differ.
       reverse: true/false - reverses the order after sorting by key (defaults to false).
       rearrange: true/false - if false, only the order within the collection changes, without moving widgets in the room (only applies to collections, defaults to true).
+      locales: locale string (or an array of them) - the locale used when comparing text values, e.g. "de" (defaults to the locale of the player's browser).
+      options: object - the collator options used when comparing text values, e.g. {"numeric": true} to sort "9" before "10" (defaults to none).
 
       Sorting compares values as strings unless they're numbers; pad numeric strings with zeros, or use {"numeric": true} in options, to sort them numerically.
       </pre>
-    `, 'functions-sort');
+    `, tutorial: 'functions-sort' };
   }
   if(topicName == 'SWAPHANDS') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function swaps cards between the hands of the seats in a collection, avoiding the need to MOVE the cards manually. With more than two seats, it becomes a rotation, with each seat passing its hand to the next.
 
@@ -1255,11 +2518,12 @@ function commonInfoButton(appendTo, topicName) {
       interval: integer - how many positions each hand is passed around the table (defaults to 1).
       direction: forward/backward/random - how the "next" seat is chosen (defaults to forward). forward/backward step through seats in index order; random pairs seats randomly.
       source: all or collection - the seats involved in the swap (defaults to all).
+      keepOrder: boolean - whether each hand keeps the order it had, instead of arriving in the order the widgets were created (defaults to false).
       </pre>
-    `, 'functions-swaphands');
+    `, tutorial: 'functions-swaphands' };
   }
   if(topicName == 'TIMER') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function simplifies control of timer widgets. The mode parameter determines which automation is executed.
 
@@ -1271,10 +2535,10 @@ function commonInfoButton(appendTo, topicName) {
       value: number or string - the value (in milliseconds) used by set/inc/dec; a string is treated as the name of a property on the timer to read the value from (defaults to 0).
       seconds: number - like value, but expressed in seconds and multiplied by 1000 (defaults to 0).
       </pre>
-    `, 'timer');
+    `, tutorial: 'timer' };
   }
   if(topicName == 'TURN') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function changes whose turn it is among a set of seats.
 
@@ -1285,10 +2549,10 @@ function commonInfoButton(appendTo, topicName) {
       source: all or collection - which seats are considered (defaults to all). Seats with skipTurn set to true are never chosen.
       collection: collection name - receives the seat whose turn it now is (defaults to "TURN"). Must be a named collection.
       </pre>
-    `, 'seats');
+    `, tutorial: 'seats' };
   }
   if(topicName == 'UPLOAD') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function lets a player upload a file (image, sound, or JSON) for use in the game.
 
@@ -1297,10 +2561,23 @@ function commonInfoButton(appendTo, topicName) {
       fileTypes: array of file extensions - filters which file types the player may choose (defaults to a standard set of image/audio/JSON extensions).
       variable: variable name - stores the uploaded file's path, e.g. "/assets/1234_5678" (defaults to "uploadedFileName").
       </pre>
-    `, 'upload');
+    `, tutorial: 'upload' };
+  }
+  if(topicName == 'var') {
+    return { info: `
+      <pre>
+      A var statement works out one value and remembers it under a name: "var total = \${a} + \${b}".
+
+      What goes on either side of the operation is an operand, and an operand is a number, a text in single quotes, null/true/false, an empty list [] or box {}, or a \${...} reference to something the routine already remembers. A bare word is NOT an operand - it is read as the operation, which is why "var a = hello" does not do what it looks like. The editor writes the quotes for you.
+
+      Some operations work ON the variable rather than on an operand: "var hand = push \${card}" adds a card to whatever hand already holds, and "var card = \${deck} pop" takes the last entry off deck and remembers it.
+
+      Anything that cannot be worked out becomes 0 (dividing by zero included), and the one exception is the "=" operation, which exists for compatibility with [SET].
+      </pre>
+    `, tutorial: 'var' };
   }
   if(topicName == 'VAR') {
-    return infoButton(appendTo, `
+    return { info: `
       <pre>
       This function sets multiple variables directly and simultaneously. Unlike a "var x = ..." statement, it lets you set arrays, object literals, or strings containing arbitrary characters without worrying about escape sequences.
 
@@ -1308,6 +2585,6 @@ function commonInfoButton(appendTo, topicName) {
 
       variables: object - the variables to set, as key/value pairs.
       </pre>
-    `, 'var');
+    `, tutorial: 'var' };
   }
 }

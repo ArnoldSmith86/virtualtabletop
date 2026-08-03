@@ -9,10 +9,14 @@ let selectionRectangleEnd = null;
 let draggingDragButton = null;
 let widgetRectangles = null;
 
-let customSelection = null;
-let customSelectionCallback = null;
-
 export function editInputHandler(name, e) {
+  // While Space is held (edit-space-pan), never show selection rectangles
+  if(document.body.classList.contains('spacePanActive')) {
+    if(selectionRectangleActive)
+      hideSelectionRectangle();
+    e.preventDefault();
+    return true;
+  }
   if(e.touches && e.touches.length == 2)
     hideSelectionRectangle();
 
@@ -129,30 +133,36 @@ function applySelectionRectangle(addToSelection) {
 
   let newlySelected = [];
   if(s.right - s.left < 5 || s.bottom - s.top < 5) {
-    const clicked = document.elementsFromPoint(s.left, s.top).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w);
+    // resolve each element under the click to its owning widget: some widgets (e.g. a
+    // line) only expose an inner element for hit-testing while their own box has
+    // pointer-events:none, so climb to the nearest ancestor carrying the widget id
+    const clicked = document.elementsFromPoint(s.left, s.top)
+      .map(el => el.closest('[id^="w_"]'))
+      .map(el => el && widgets.get(unescapeID(el.id.slice(2))))
+      .filter(w => w);
     if(clicked.length)
       newlySelected = [ clicked[0] ];
   } else {
     newlySelected = selectedWidgetsPreview;
   }
 
+  // in selection mode a click on a widget arrives here instead of as editClick,
+  // so this is where a running picker takes it - a selection change would not
+  // reach it for the widget the picker belongs to, which stays selected
+  if(newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
+    return;
+
   if(!addToSelection) {
-    if(customSelection)
-      setCustomSelection(newlySelected);
-    else
-      setSelection(newlySelected);
+    setSelection(newlySelected);
   } else {
-    let selectionToApply = customSelection ? [...customSelection] : [...selectedWidgets];
+    let selectionToApply = [...selectedWidgets];
     for(const widget of newlySelected) {
-      if(customSelection ? customSelection.indexOf(widget) == -1 : selectedWidgets.indexOf(widget) == -1)
+      if(selectedWidgets.indexOf(widget) == -1)
         selectionToApply.push(widget);
       else
         selectionToApply = selectionToApply.filter(w=>w!=widget);
     }
-    if(customSelection)
-      setCustomSelection(selectionToApply);
-    else
-      setSelection(selectionToApply);
+    setSelection(selectionToApply);
   }
 }
 
@@ -176,34 +186,12 @@ function setSelection(newSelectedWidgets) {
   updateDragToolbar();
 }
 
-function startCustomSelection(selectedWidgets, callback) {
-  customSelection = selectedWidgets;
-  for(const widget of selectedWidgets) {
-    widget.setHighlighted(null, true);
-  }
-  customSelectionCallback = callback;
-}
-
-function setCustomSelection(selectedWidgets) {
-  const previousCustomSelection = [...customSelection];
-  customSelection = selectedWidgets;
-  for(const widget of previousCustomSelection)
-    widget.setHighlighted(null, false);
-  for(const widget of customSelection)
-    widget.setHighlighted(null, true);
-  if(customSelectionCallback)
-    customSelectionCallback(customSelection);
-}
-
-function endCustomSelection() {
-  if(customSelection)
-    for(const widget of customSelection)
-      widget.setHighlighted(null, false);
-  customSelection = null;
-  customSelectionCallback = null;
-}
-
 export async function editClick(widget) {
+  // a running widget picker owns the clicks in the room; without this the click
+  // falls through to widget.click() for the widget the picker belongs to,
+  // because that one is selected the whole time the picker runs
+  if(handleWidgetPickerClick(widget))
+    return true;
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
     return true;
@@ -213,11 +201,18 @@ export async function editClick(widget) {
 export function editorReceiveDelta(delta) {
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
+  deckEditorReceiveDelta(delta);
 }
 
 function receiveStateFromServer(state) {
+  // The incoming full state has already replaced the widgets map, so the previously selected widgets may no
+  // longer exist. Reset the deck editor and pass an EMPTY new selection to the modules (previous selection as
+  // the old one) so none of them try to render a now-removed widget - rendering e.g. a removed deck's card
+  // types would dereference the missing deck and throw (crash on switching games while a deck was selected).
+  deckEditorStateReplaced();
+  const previousSelection = selectedWidgets;
   for(const module of sidebarModules) {
-    module.onSelectionChanged(selectedWidgets, []);
+    module.onSelectionChanged([], previousSelection);
     module.onStateReceived(state);
   }
   setSelection([]);

@@ -3400,42 +3400,206 @@
       "preview": "symbol:format_h1"
     },
     {
-      "name": "Horizontal Rule",
-      "id": "horizontalRule",
+      "name": "Line (with stops)",
+      "description": "A straight line with a drop spot at each end - drop a piece onto a stop and it snaps to it. Move, curve or rotate the line and the stops follow.",
+      "id": "line",
       "widgets": [
         {
-          "id": "horizontalRule",
-          "x": 1300,
-          "y": 325,
-          "width": 200,
-          "height": 0,
-          "borderRadius": "3px",
-          "z": 26,
-          "css": {
-            "border": "3px solid #666"
-          }
+          "type": "line",
+          "id": "line",
+          "x": 1310,
+          "y": 420,
+          "width": 220,
+          "height": 40,
+          "lineStart": {
+            "x": 10,
+            "y": 20
+          },
+          "lineEnd": {
+            "x": 210,
+            "y": 20
+          },
+          "stops": [
+            {
+              "widget": "lineS0",
+              "position": 0
+            },
+            {
+              "widget": "lineS1",
+              "position": 1
+            }
+          ]
+        },
+        {
+          "type": "holder",
+          "id": "lineS0",
+          "parent": "line",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "x": -10,
+          "y": 0,
+          "width": 40,
+          "height": 40,
+          "borderRadius": 20,
+          "dropTarget": {
+            "type": null
+          },
+          "dropOffsetX": 2,
+          "dropOffsetY": 2
+        },
+        {
+          "type": "holder",
+          "id": "lineS1",
+          "parent": "line",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "lineS0",
+          "x": 190,
+          "y": 0
         }
       ],
-      "preview": "i/icons/width.svg"
+      "preview": "i/icons/line.svg"
     },
     {
-      "name": "Vertical Rule",
-      "id": "verticalRule",
+      "name": "Divider",
+      "description": "A plain line without stops - the horizontal or vertical rule to separate areas of the table. Rotate it, curve it or restyle it however you like.",
+      "id": "divider",
       "widgets": [
         {
-          "id": "verticalRule",
-          "x": 1535,
-          "y": 190,
-          "width": 0,
-          "height": 200,
-          "borderRadius": "3px",
-          "z": 27,
-          "css": {
-            "border": "3px solid #666"
-          }
+          "type": "line",
+          "id": "divider",
+          "x": 1290,
+          "y": 315,
+          "width": 220,
+          "height": 20,
+          "lineStart": {
+            "x": 10,
+            "y": 10
+          },
+          "lineEnd": {
+            "x": 210,
+            "y": 10
+          },
+          "lineWidth": 4
         }
       ],
-      "preview": "i/icons/height.svg"
+      "preview": "i/icons/divider.svg"
+    },
+    {
+      "name": "Circle",
+      "description": "A plain circle outline without stops - resize it into an oval or restyle it like any other line.",
+      "id": "circle",
+      "widgets": [
+        {
+          "type": "line",
+          "id": "circle",
+          "x": 1300,
+          "y": 500,
+          "width": 100,
+          "height": 100,
+          "lineShape": "ellipse",
+          "lineStart": {
+            "x": 10,
+            "y": 10
+          },
+          "lineEnd": {
+            "x": 90,
+            "y": 90
+          },
+          "lineWidth": 4
+        }
+      ],
+      "preview": "i/icons/circle_hollow.svg"
+    },
+    {
+      "name": "Ring (with stops)",
+      "description": "A circle with four drop spots spaced around it - drop a piece onto a stop and it snaps to it. Add or move stops to build a round track.",
+      "id": "ring",
+      "widgets": [
+        {
+          "type": "line",
+          "id": "ring",
+          "x": 1420,
+          "y": 495,
+          "width": 130,
+          "height": 130,
+          "lineShape": "ellipse",
+          "lineStart": {
+            "x": 15,
+            "y": 15
+          },
+          "lineEnd": {
+            "x": 115,
+            "y": 115
+          },
+          "stops": [
+            {
+              "widget": "ringS0",
+              "position": 0
+            },
+            {
+              "widget": "ringS1",
+              "position": 0.25
+            },
+            {
+              "widget": "ringS2",
+              "position": 0.5
+            },
+            {
+              "widget": "ringS3",
+              "position": 0.75
+            }
+          ]
+        },
+        {
+          "type": "holder",
+          "id": "ringS0",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "x": 45,
+          "y": -5,
+          "width": 40,
+          "height": 40,
+          "borderRadius": 20,
+          "dropTarget": {
+            "type": null
+          },
+          "dropOffsetX": 2,
+          "dropOffsetY": 2
+        },
+        {
+          "type": "holder",
+          "id": "ringS1",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "ringS0",
+          "x": 95,
+          "y": 45
+        },
+        {
+          "type": "holder",
+          "id": "ringS2",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "ringS0",
+          "x": 45,
+          "y": 95
+        },
+        {
+          "type": "holder",
+          "id": "ringS3",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "ringS0",
+          "x": -5,
+          "y": 45
+        }
+      ],
+      "preview": "i/icons/ring.svg"
     },
     {
       "name": "Basic Widget",
@@ -3447,6 +3611,915 @@
         }
       ],
       "preview": "i/icons/widget.svg"
+    },
+    {
+      "name": "Widget Factory",
+      "id": "widgetFactory",
+      "widgets": [
+        {
+          "type": "holder",
+          "id": "factory1",
+          "x": 782,
+          "y": 481,
+          "width": 40,
+          "height": 40,
+          "z": 2,
+          "classes": "transparent",
+          "css": {
+            "border": "1px dashed black"
+          },
+          "countRoutine": [
+            {
+              "func": "SELECT",
+              "property": "parent",
+              "value": "${thisID}"
+            },
+            {
+              "func": "SELECT",
+              "source": "DEFAULT",
+              "property": "counter",
+              "value": true,
+              "mode": "remove"
+            },
+            {
+              "func": "COUNT",
+              "variable": "result"
+            }
+          ],
+          "editorAddToRoomRoutine": [
+            {
+              "func": "SELECT",
+              "property": "parent",
+              "value": "${thisID}"
+            },
+            {
+              "func": "SELECT",
+              "source": "DEFAULT",
+              "property": "counter",
+              "value": true,
+              "mode": "remove",
+              "sortBy": {
+                "key": "id"
+              }
+            },
+            {
+              "func": "INPUT",
+              "fields": [
+                {
+                  "type": "title",
+                  "text": "Select options"
+                },
+                {
+                  "type": "choose",
+                  "collection": "DEFAULT",
+                  "propertyOverride": {
+                    "display": true
+                  },
+                  "label": "Type of widget? (3D cube is default)",
+                  "value": "xcube",
+                  "variable": "pieceType"
+                },
+                {
+                  "type": "checkbox",
+                  "value": true,
+                  "variable": "unlimited",
+                  "label": "Unlimited quantity of widgets? When checked, overrides number selected below."
+                },
+                {
+                  "type": "number",
+                  "min": 1,
+                  "value": 1,
+                  "variable": "maxCount",
+                  "label": "Quantity of widgets available?"
+                },
+                {
+                  "type": "color",
+                  "value": "#fcf0d4",
+                  "variable": "widgetColor",
+                  "label": "Widget color?"
+                },
+                {
+                  "type": "checkbox",
+                  "value": false,
+                  "variable": "dynamicColor",
+                  "label": "Change color to playerColor when leaving?"
+                }
+              ]
+            },
+            {
+              "func": "SELECT",
+              "property": "parent",
+              "value": "${thisID}"
+            },
+            {
+              "func": "SELECT",
+              "source": "DEFAULT",
+              "property": "counter",
+              "value": true,
+              "collection": "thisCounter"
+            },
+            {
+              "func": "IF",
+              "condition": "${unlimited}",
+              "thenRoutine": [
+                {
+                  "func": "DELETE",
+                  "collection": "thisCounter"
+                },
+                {
+                  "func": "SET",
+                  "collection": "thisButton",
+                  "property": "enterRoutine",
+                  "value": "${PROPERTY unlimitedEnterRoutine}"
+                },
+                {
+                  "func": "SET",
+                  "collection": "thisButton",
+                  "property": "leaveRoutine",
+                  "value": "${PROPERTY unlimitedLeaveRoutine}"
+                }
+              ],
+              "elseRoutine": [
+                "var maxCount = parseFloat ${maxCount}",
+                "var maxCount = ${maxCount} + 1",
+                {
+                  "func": "SET",
+                  "collection": "thisCounter",
+                  "property": "text",
+                  "value": "${maxCount}"
+                },
+                {
+                  "func": "SET",
+                  "collection": "thisButton",
+                  "property": "enterRoutine",
+                  "value": "${PROPERTY limitedEnterRoutine}"
+                },
+                {
+                  "func": "SET",
+                  "collection": "thisButton",
+                  "property": "leaveRoutine",
+                  "value": "${PROPERTY limitedLeaveRoutine}"
+                }
+              ]
+            },
+            "var pieceID = ${pieceType} replace 'x' ''",
+            {
+              "func": "SET",
+              "collection": [
+                "${thisID}"
+              ],
+              "property": "dropOffsetX",
+              "value": 0
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${thisID}"
+              ],
+              "property": "dropOffsetY",
+              "value": 0
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${pieceType}"
+              ],
+              "property": "id",
+              "value": "${pieceID}"
+            },
+            {
+              "func": "FOREACH",
+              "in": [
+                "limitedEnterRoutine",
+                "limitedLeaveRoutine",
+                "unlimitedEnterRoutine",
+                "unlimitedLeaveRoutine"
+              ],
+              "loopRoutine": [
+                {
+                  "func": "SET",
+                  "collection": "thisButton",
+                  "property": "${value}",
+                  "value": null
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "condition": "${dynamicColor}",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": "thisButton",
+                  "property": "neutral",
+                  "value": "${widgetColor}"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${pieceID}"
+              ],
+              "property": "color",
+              "value": "${widgetColor}"
+            },
+            "var factoryID = ${PROPERTY id}",
+            "var factoryValue = ${factoryID} replace 'factory' ''",
+            "var factoryValue = parseFloat ${factoryValue}",
+            {
+              "func": "GET",
+              "collection": [
+                "${pieceID}"
+              ],
+              "property": "width"
+            },
+            {
+              "func": "GET",
+              "collection": [
+                "${pieceID}"
+              ],
+              "property": "height"
+            },
+            "var width = ${width} + 2",
+            "var height = ${height} + 2",
+            "var mid = ${width} / 2",
+            "var mid = ${mid} - 14",
+            {
+              "func": "SET",
+              "collection": [
+                "${factoryID}"
+              ],
+              "property": "width",
+              "value": "${width}"
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${factoryID}"
+              ],
+              "property": "height",
+              "value": "${height}"
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${pieceID}"
+              ],
+              "property": "piece",
+              "value": "${factoryValue}"
+            },
+            {
+              "func": "SET",
+              "collection": "thisCounter",
+              "property": "x",
+              "value": "${mid}"
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${pieceID}"
+              ],
+              "property": "resetProperties",
+              "value": {
+                "parent": "${factoryID}"
+              }
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${pieceID}"
+              ],
+              "property": "display",
+              "value": true
+            },
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "dropTarget",
+              "value": {
+                "piece": "${factoryValue}"
+              }
+            },
+            {
+              "func": "SELECT",
+              "property": "parent",
+              "value": "${thisID}"
+            },
+            {
+              "func": "SELECT",
+              "source": "DEFAULT",
+              "property": "id",
+              "value": "${pieceType}",
+              "mode": "remove"
+            },
+            {
+              "func": "SELECT",
+              "source": "DEFAULT",
+              "property": "counter",
+              "value": true,
+              "mode": "remove"
+            },
+            {
+              "func": "DELETE",
+              "collection": "DEFAULT"
+            }
+          ],
+          "limitedEnterRoutine": [
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY neutral}",
+              "relation": "!=",
+              "operand2": null,
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": "child",
+                  "property": "color",
+                  "value": "#fcf0d4"
+                }
+              ]
+            },
+            {
+              "func": "CALL",
+              "routine": "countRoutine"
+            },
+            {
+              "func": "IF",
+              "operand1": 1,
+              "relation": "<",
+              "operand2": "${result}",
+              "thenRoutine": [
+                {
+                  "func": "DELETE",
+                  "collection": "child"
+                }
+              ]
+            },
+            {
+              "func": "SELECT",
+              "property": "parent",
+              "value": "${thisID}"
+            },
+            {
+              "func": "SELECT",
+              "source": "DEFAULT",
+              "property": "counter",
+              "value": true,
+              "collection": "thisCounter"
+            },
+            {
+              "func": "SET",
+              "collection": "thisCounter",
+              "property": "text",
+              "relation": "+",
+              "value": 1
+            }
+          ],
+          "limitedLeaveRoutine": [
+            {
+              "func": "CALL",
+              "routine": "countRoutine"
+            },
+            {
+              "func": "SELECT",
+              "property": "parent",
+              "value": "${thisID}"
+            },
+            {
+              "func": "SELECT",
+              "source": "DEFAULT",
+              "property": "counter",
+              "value": true,
+              "collection": "thisCounter"
+            },
+            {
+              "func": "GET",
+              "collection": "thisCounter",
+              "property": "text",
+              "variable": "currentCount"
+            },
+            {
+              "func": "IF",
+              "operand1": "${result}",
+              "operand2": 0,
+              "thenRoutine": [
+                {
+                  "func": "IF",
+                  "operand1": "${currentCount}",
+                  "relation": ">",
+                  "operand2": 1,
+                  "thenRoutine": [
+                    {
+                      "func": "SET",
+                      "collection": "thisCounter",
+                      "property": "text",
+                      "relation": "-",
+                      "value": 2
+                    },
+                    {
+                      "func": "CLONE",
+                      "source": "child"
+                    },
+                    {
+                      "func": "SET",
+                      "property": "parent",
+                      "value": "${thisID}"
+                    }
+                  ],
+                  "elseRoutine": [
+                    {
+                      "func": "SET",
+                      "collection": "thisCounter",
+                      "property": "text",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY neutral}",
+              "relation": "!=",
+              "operand2": null,
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": "child",
+                  "property": "color",
+                  "value": "${playerColor}"
+                }
+              ]
+            }
+          ],
+          "unlimitedLeaveRoutine": [
+            {
+              "func": "CALL",
+              "routine": "countRoutine"
+            },
+            {
+              "func": "IF",
+              "operand1": "${result}",
+              "operand2": 0,
+              "thenRoutine": [
+                {
+                  "func": "CLONE",
+                  "source": "child"
+                },
+                {
+                  "func": "SET",
+                  "property": "parent",
+                  "value": "${thisID}"
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY neutral}",
+              "relation": "!=",
+              "operand2": null,
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": "child",
+                  "property": "color",
+                  "value": "${playerColor}"
+                }
+              ]
+            }
+          ],
+          "unlimitedEnterRoutine": [
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY neutral}",
+              "relation": "!=",
+              "operand2": null,
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": "child",
+                  "property": "color",
+                  "value": "#fcf0d4"
+                }
+              ]
+            },
+            {
+              "func": "CALL",
+              "routine": "countRoutine"
+            },
+            {
+              "func": "IF",
+              "operand1": 1,
+              "relation": "<",
+              "operand2": "${result}",
+              "thenRoutine": [
+                {
+                  "func": "DELETE",
+                  "collection": "child"
+                }
+              ]
+            }
+          ],
+          "dropTarget": {
+            "piece": 1
+          }
+        },
+        {
+          "id": "factoryCount1",
+          "parent": "factory1",
+          "fixedParent": true,
+          "x": 6,
+          "y": -28,
+          "width": 25,
+          "height": 25,
+          "borderRadius": 100,
+          "z": 46,
+          "movable": false,
+          "movableInEdit": false,
+          "css": {
+            "background": "#e4e4e4",
+            "color": "#000",
+            "display": "flex",
+            "justify-content": "center",
+            "align-items": "center",
+            "border": "1px solid gray"
+          },
+          "text": 0,
+          "counter": true
+        },
+        {
+          "id": "xcube",
+          "x": 1,
+          "y": -1,
+          "width": 36,
+          "height": 40,
+          "layer": 10,
+          "z": 1692,
+          "color": "#fcf0d4",
+          "css": "border-radius: 50%/35%;",
+          "image": "/i/game-pieces/3D/Cube-3D.svg",
+          "resetProperties": {
+            "parent": "factory1"
+          },
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "white",
+          "borderWidth": 1,
+          "piece": 1,
+          "secondaryColor": "black",
+          "parent": "factory1",
+          "display": false
+        },
+        {
+          "id": "xpawn",
+          "x": 1,
+          "y": -1,
+          "width": 50.4,
+          "height": 90,
+          "z": 75,
+          "color": "#fcf0d4",
+          "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+          "image": "i/game-pieces/3D/Pawn-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "piece": 1,
+          "parent": "factory1",
+          "display": false
+        },
+        {
+          "id": "xpin",
+          "x": 1,
+          "y": -1,
+          "width": 35,
+          "height": 40,
+          "z": 77,
+          "color": "#fcf0d4",
+          "css": "border-radius: 80% 80% 40% 110%",
+          "image": "/i/game-pieces/3D/Pin-3D.svg",
+          "svgReplaces": {
+            "#borderWidth": "borderWidth",
+            "#borderColor": "borderColor",
+            "#primaryColor": "color"
+          },
+          "borderColor": "black",
+          "borderWidth": "1",
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xmarble",
+          "width": 35,
+          "height": 35,
+          "z": 92,
+          "color": "#fcf0d4",
+          "css": "border-radius: 50%;",
+          "image": "/i/game-pieces/3D/Marble-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#ffffff",
+          "borderWidth": 1,
+          "secondaryColor": "#000000",
+          "piece": 1,
+          "x": 1,
+          "y": -1,
+          "parent": "factory1",
+          "display": false
+        },
+        {
+          "id": "xchecker",
+          "parent": "factory1",
+          "x": 1,
+          "y": -1,
+          "width": 75,
+          "height": 75,
+          "z": 99,
+          "classes": "chip",
+          "color": "#fcf0d4",
+          "faces": [
+            {
+              "image": "i/game-pieces/2D/Checkers-2D.svg",
+              "crowned": false
+            },
+            {
+              "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+              "crowned": true
+            }
+          ],
+          "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "piece": 1,
+          "secondaryColor": "#ffffff",
+          "display": false,
+          "activeFace": 1
+        },
+        {
+          "id": "xchecker3D",
+          "width": 75,
+          "height": 54.75,
+          "z": 105,
+          "activeFace": 1,
+          "classes": "chip3D",
+          "color": "#fcf0d4",
+          "faces": [
+            {
+              "image": "i/game-pieces/3D/Checkers-3D.svg",
+              "crowned": false
+            },
+            {
+              "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+              "crowned": true
+            }
+          ],
+          "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "piece": 1,
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "secondaryColor": "#ffffff",
+          "x": 1,
+          "y": -1,
+          "parent": "factory1",
+          "display": false
+        },
+        {
+          "id": "xmeeple",
+          "width": 56,
+          "height": 56,
+          "z": 130,
+          "color": "#fcf0d4",
+          "css": "border-radius: 100% 100% 25% 25%; ",
+          "image": "i/game-pieces/2D/Meeple-2D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 3,
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xmeeple3D",
+          "width": 66.5,
+          "height": 70,
+          "z": 133,
+          "color": "#fcf0d4",
+          "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+          "faces": [
+            {
+              "image": "i/game-pieces/3D/Meeple-3D.svg",
+              "rotation": 0,
+              "state": "alive"
+            },
+            {
+              "image": "i/game-pieces/3D/Meeple240-3D-iso.svg",
+              "rotation": 240,
+              "state": "dead"
+            }
+          ],
+          "image": "i/game-pieces/3D/Meeple-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xpig",
+          "width": 68.56,
+          "height": 48,
+          "z": 136,
+          "color": "#fcf0d4",
+          "css": "border-radius: 15% 20% 20% 25%/ 15% 20% 50% 75%;",
+          "image": "i/game-pieces/2D/Pig-2D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xpig3D",
+          "width": 85.7,
+          "height": 60,
+          "z": 141,
+          "color": "#fcf0d4",
+          "css": "border-radius: 30% 40% 40% 40%/20% 30% 60% 100%; ",
+          "image": "i/game-pieces/3D/Pig-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xbigHouse",
+          "parent": "factory1",
+          "width": 69,
+          "height": 77,
+          "z": 144,
+          "color": "#fcf0d4",
+          "css": "border-radius: 52% 48% 35% 65%/30% 70% 25% 45%;",
+          "image": "/i/game-pieces/3D/Building-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xhouse",
+          "width": 60,
+          "height": 60,
+          "z": 147,
+          "color": "#fcf0d4",
+          "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+          "image": "/i/game-pieces/3D/House-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xwood",
+          "width": 26,
+          "rotation": 60,
+          "z": 150,
+          "color": "#fcf0d4",
+          "faces": [
+            {
+              "image": "i/game-pieces/3D/Road-3D.svg",
+              "rotation": 0
+            },
+            {
+              "image": "i/game-pieces/3D/Road240-3D.svg",
+              "rotation": 60
+            },
+            {
+              "image": "i/game-pieces/3D/Road90-3D.svg",
+              "rotation": 90
+            },
+            {
+              "image": "i/game-pieces/3D/Road120-3D.svg",
+              "rotation": 300
+            }
+          ],
+          "image": "i/game-pieces/3D/Road240-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xpokerChip",
+          "width": 73,
+          "height": 73,
+          "z": 154,
+          "classes": "pokerChip",
+          "color": "#fcf0d4",
+          "image": "i/game-pieces/2D/Poker-2D.svg",
+          "svgReplaces": {
+            "#accentColor1": "color",
+            "#accentColor2": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth",
+            "#labelColor": "labelColor",
+            "#primaryColor": "color"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "labelColor": "#00000022",
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        },
+        {
+          "id": "xPokerChip3D",
+          "width": 75,
+          "height": 54.75,
+          "z": 157,
+          "classes": "pokerChip3D",
+          "color": "#fcf0d4",
+          "css": "color: #ffffffcc; font-size: 1.8rem",
+          "image": "i/game-pieces/3D/Poker-3D.svg",
+          "svgReplaces": {
+            "#accentColor1": "color",
+            "#accentColor2": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth",
+            "#labelColor": "labelColor",
+            "#primaryColor": "color"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "labelColor": "#00000022",
+          "parent": "factory1",
+          "piece": 1,
+          "display": false
+        }
+      ],
+      "preview": "symbol:content_copy"
     },
     {
       "name": "Upload Token",
@@ -3569,8 +4642,10 @@
       "widgets": [
         "heading",
         "label",
-        "horizontalRule",
-        "verticalRule"
+        "divider",
+        "line",
+        "circle",
+        "ring"
       ],
       "collapsed": true
     },
@@ -3593,7 +4668,8 @@
       "widgets": [
         "uploadBoard",
         "uploadToken",
-        "basicWidget"
+        "basicWidget",
+        "widgetFactory"
       ],
       "collapsed": true
     }

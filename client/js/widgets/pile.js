@@ -275,6 +275,6 @@ class Pile extends Widget {
   }
 
   validDropTargets() {
-    return this.children().length ? getValidDropTargets(this.children()[0]) : [];
+    return this.children().length ? getValidDropTargets(this.children()[0], this) : [];
   }
 }

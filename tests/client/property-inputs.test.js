@@ -12,7 +12,11 @@ const inputHelpers = new Function(inputsSource + `;
   return {
     propertyInputNumberOrText,
     propertyInputValueSet,
+    numericInputValue,
     searchIconIndex,
+    searchImageIndex,
+    iconValueType,
+    usedGameIconValue,
     setIconSearchIndex: index => { iconSearchIndex = index; }
   };
 `)();
@@ -32,19 +36,71 @@ const renderIconChip = new Function('div', 'html', 'mapAssetURLs', 'toNotoMonoch
   value => value
 );
 
-const cssHelpers = new Function('SidebarModule', propertiesSource + `;
+const testWidgets = new Map();
+const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
     cssStringToObject,
     parsePropertyFromCSS,
     mergePropertyFromCSS,
+    parseFontSize,
     formatTimerMs,
-    parseTimerInput
+    parseTimerInput,
+    inheritModeFromSelection,
+    isPropertyDeclaredOnWidget: PropertiesModule.prototype.isPropertyDeclaredOnWidget,
+    isSizeRatioLockEnabled: PropertiesModule.prototype.isSizeRatioLockEnabled,
+    inheritSourceWouldCreateCycle: PropertiesModule.prototype.inheritSourceWouldCreateCycle,
+    normalizeInheritFromObject: PropertiesModule.prototype.normalizeInheritFromObject,
+    basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
+    svgReplaceColorProperties,
+    dicePreviewRotation,
+    dicePreviewActiveFace,
+    textSymbolClass,
+    textValueFromSymbol
   };
-`)(class {});
+`)(class {}, testWidgets);
 
 describe('css helpers', () => {
+  test('basic properties exclude the generic inputs from other property sections', () => {
+    expect(cssHelpers.basicPropertyExcludeList()).toEqual(expect.arrayContaining([ 'clickable', 'enlarge', 'ignoreZoom' ]));
+  });
+
+  test('only D4 and D6 previews use the requested extra rotations', () => {
+    expect(cssHelpers.dicePreviewRotation(4)).toBe('rotateZ(105deg) rotateX(110deg) rotateY(0deg)');
+    expect(cssHelpers.dicePreviewRotation(6)).toBe('rotateX(15deg) rotateY(20deg)');
+    expect(cssHelpers.dicePreviewRotation(8)).toBe('');
+  });
+
+  test('larger dice previews show their highest numeric face', () => {
+    expect(cssHelpers.dicePreviewActiveFace([ 1, 2, 3, 4 ])).toBe(0);
+    expect(cssHelpers.dicePreviewActiveFace([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ])).toBe(9);
+    expect(cssHelpers.dicePreviewActiveFace([ 2, 12, 4, 8, 6, 10, 1, 3 ])).toBe(1);
+    expect(cssHelpers.dicePreviewActiveFace([ { value: 4 }, { value: 20 }, { value: 8 }, { value: 12 }, { value: 16 }, { value: 6 }, { value: 10 } ])).toBe(1);
+  });
+
+  test('picked text symbols select the matching font class and stored value', () => {
+    expect(cssHelpers.textSymbolClass({ type: 'symbols', symbol: '[die_face_6]' })).toBe('symbols');
+    expect(cssHelpers.textSymbolClass({ type: 'material-symbols', symbol: 'casino' })).toBe('material-symbols');
+    expect(cssHelpers.textSymbolClass({ type: 'material-symbols-nofill', symbol: 'casino_NOFILL' })).toBe('material-symbols-nofill');
+    expect(cssHelpers.textSymbolClass({ type: 'emoji-monochrome', symbol: '(🎲)' })).toBe('emoji-monochrome');
+    expect(cssHelpers.textValueFromSymbol({ type: 'symbols', symbol: '[die_face_6]' })).toBe('[die_face_6]');
+    expect(cssHelpers.textValueFromSymbol({ type: 'material-symbols-nofill', symbol: 'casino_NOFILL' })).toBe('casino');
+    expect(cssHelpers.textValueFromSymbol({ type: 'emoji-monochrome', symbol: '(🎲)' })).toBe('🎲');
+  });
+
+  test('svg replacement colors use only declared conventional color properties', () => {
+    expect(cssHelpers.svgReplaceColorProperties({
+      '#primary': 'color',
+      '#accent': 'accentColor1',
+      '#outline': 'outlineColor2',
+      '#border': 'borderColor',
+      '#empty': 'colorEmpty',
+      '#secondary': 'secondaryColor',
+      '#alsoIgnored': 'title'
+    })).toEqual([ 'color', 'accentColor1', 'outlineColor2', 'borderColor', 'colorEmpty', 'secondaryColor' ]);
+  });
+
   test('cssTextFromValue renders all value shapes', () => {
     expect(cssHelpers.cssTextFromValue(null)).toBe('');
     expect(cssHelpers.cssTextFromValue('color: red')).toBe('color: red');
@@ -90,6 +146,45 @@ describe('css helpers', () => {
     expect(cssHelpers.parsePropertyFromCSS('border-color: red', 'color', null)).toBe(null);
     expect(cssHelpers.parsePropertyFromCSS('background-color: red', 'background-color', null)).toBe('red');
   });
+
+  test('parseFontSize safely handles incomplete CSS declarations', () => {
+    expect(cssHelpers.parseFontSize('30px')).toEqual({ value: 30, unit: 'px' });
+    expect(cssHelpers.parseFontSize('')).toEqual({ value: null, unit: null });
+    expect(cssHelpers.parseFontSize(null)).toEqual({ value: null, unit: null });
+  });
+
+  test('inherit declarations respect explicit default-valued state', () => {
+    const widget = { state: { width: 100 }, defaults: { width: 100 } };
+    expect(cssHelpers.isPropertyDeclaredOnWidget(widget, 'width')).toBe(true);
+    expect(cssHelpers.isPropertyDeclaredOnWidget(widget, 'height')).toBe(false);
+  });
+
+  test('an empty exclusion selection preserves copy-all inheritance', () => {
+    expect(cssHelpers.inheritModeFromSelection('all')).toBe('*');
+    expect(cssHelpers.inheritModeFromSelection('selected')).toEqual([]);
+    expect(cssHelpers.inheritModeFromSelection('excluded')).toBe('*');
+    expect(cssHelpers.inheritModeFromSelection('excluded', [ 'width', 'height' ])).toEqual([ '!width', '!height' ]);
+  });
+
+  test('inherit-source selection rejects direct and transitive cycles', () => {
+    const target = { id: 'target', get: () => ({}) };
+    const source = { id: 'source', get: property => property == 'inheritFrom' ? { target: '*' } : null };
+    const indirect = { id: 'indirect', get: property => property == 'inheritFrom' ? { source: '*' } : null };
+    testWidgets.clear();
+    testWidgets.set('target', target);
+    testWidgets.set('source', source);
+    testWidgets.set('indirect', indirect);
+    const module = { normalizeInheritFromObject: cssHelpers.normalizeInheritFromObject };
+    expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'source')).toBe(true);
+    expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'indirect')).toBe(true);
+    expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'missing')).toBe(false);
+  });
+
+  test('the size-ratio lock stays local while honoring a legacy false value', () => {
+    const module = { sizeRatioLocks: new WeakMap() };
+    expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: {} })).toBe(true);
+    expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: { lockSizeRatio: false } })).toBe(false);
+  });
 });
 
 describe('timer time helpers', () => {
@@ -132,6 +227,22 @@ describe('property input helpers', () => {
     expect(inputHelpers.propertyInputValueSet('transparent')).toBe(true);
   });
 
+  test('numericInputValue ignores incomplete fields and enforces bounds', () => {
+    expect(inputHelpers.numericInputValue('')).toBe(null);
+    expect(inputHelpers.numericInputValue('abc')).toBe(null);
+    expect(inputHelpers.numericInputValue('8', 1, 16)).toBe(8);
+    expect(inputHelpers.numericInputValue('0', 1, 16)).toBe(1);
+    expect(inputHelpers.numericInputValue('99', 1, 16)).toBe(16);
+  });
+
+  test('used icon suggestions ignore generic name and value fields', () => {
+    expect(inputHelpers.usedGameIconValue('icon', 'lorc/star', [ 'icon' ], {})).toBe('lorc/star');
+    expect(inputHelpers.usedGameIconValue('name', 'lorc/star', [ 'icon', 'name' ], {})).toBe('lorc/star');
+    expect(inputHelpers.usedGameIconValue('value', 'lorc/star', [ 'faceTemplates', '0', 'value' ], { type: 'icon' })).toBe('lorc/star');
+    expect(inputHelpers.usedGameIconValue('name', 'lorc/star', [ 'routine', 'name' ], {})).toBe(null);
+    expect(inputHelpers.usedGameIconValue('value', 'lorc/star', [ 'routine', 'value' ], {})).toBe(null);
+  });
+
   test('renderIconChip renders object and array icons without crashing', () => {
     const target = { children: [] };
     // a symbol object icon (e.g. Turtle Tower's turnButton) previews its name
@@ -148,15 +259,54 @@ describe('property input helpers', () => {
     expect(stringChip.children[0].className).toBe('material-symbols');
   });
 
-  test('searchIconIndex interleaves font and image matches', () => {
+  test('searchIconIndex preserves symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
       { value: 'star',           keywords: 'star,favorite', image: false },
       { value: 'grade',          keywords: 'star,grade',    image: false },
       { value: 'lorc/star',      keywords: 'star,shiny',    image: true },
       { value: 'delapouite/sun', keywords: 'sun,light',     image: true }
     ]);
-    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'lorc/star', 'grade' ]);
+    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'grade', 'lorc/star' ]);
     expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
     expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
+  });
+
+  test('searchImageIndex returns image URLs for matching glyphs', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/dice-six-faces-six', keywords: 'dice six', image: true },
+      { value: '🎲', keywords: 'dice game', image: true },
+      { value: 'casino', keywords: 'dice casino', image: false }
+    ]);
+
+    expect(inputHelpers.searchImageIndex('dice')).toEqual([
+      '/i/game-icons.net/lorc/dice-six-faces-six.svg',
+      '/i/noto-emoji/emoji_u1f3b2.svg'
+    ]);
+  });
+
+  test('icon search classifies and filters every icon family', () => {
+    expect(inputHelpers.iconValueType('lorc/star')).toBe('game-icons');
+    expect(inputHelpers.iconValueType('star_NOFILL')).toBe('material-symbols');
+    expect(inputHelpers.iconValueType('🎲')).toBe('emoji-color');
+    expect(inputHelpers.iconValueType('(🎲)')).toBe('emoji-monochrome');
+    expect(inputHelpers.iconValueType('[die_face_6]')).toBe('vtt-symbols');
+    expect(inputHelpers.iconValueType('https://example.com/icon.svg')).toBe(null);
+
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/star', type: 'game-icons', keywords: 'star', image: true },
+      { value: 'star', type: 'material-symbols', keywords: 'star', image: false }
+    ]);
+    expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ]))).toEqual([ 'star' ]);
+  });
+
+  test('picker searches show up to 100 results', () => {
+    inputHelpers.setIconSearchIndex(Array.from({ length: 101 }, (_, index) => ({
+      value: `icons/icon-${index}`,
+      keywords: 'icon',
+      image: true
+    })));
+
+    expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
+    expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
   });
 });

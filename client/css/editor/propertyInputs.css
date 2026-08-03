@@ -46,6 +46,14 @@
   min-width: 80px;
 }
 
+/* Values such as border radii are usually short (e.g. 8px or 50%). */
+.editorModule .propertyInput.compactInput input[type=text],
+.editorModule .propertyInput.compactInput input:not([type]) {
+  flex: 0 0 calc(5ch + 12px);
+  min-width: calc(5ch + 12px);
+  width: calc(5ch + 12px);
+}
+
 .editorModule .propertyInput textarea {
   flex: 1 1 200px;
   min-height: 4em;
@@ -130,7 +138,7 @@
   color: var(--textColor);
   z-index: 9;
   padding: 10px;
-  padding-right: 30px;
+  padding-right: 10px;
   border-radius: 8px;
   min-width: 220px;
   max-width: 50vw;
@@ -139,26 +147,6 @@
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
   border: 1px solid var(--backgroundHighlightColor1);
   font-size: 13px;
-}
-
-.inline-popup .popup-close {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  min-width: 22px;
-  width: 22px;
-  height: 22px;
-  padding: 0;
-  justify-content: center;
-  border: none;
-  background: transparent;
-  color: var(--textColor);
-  cursor: pointer;
-}
-
-.inline-popup .popup-close::before {
-  margin: 0;
-  font-size: 16px;
 }
 
 /* picker inputs (color, icon, image) */
@@ -257,6 +245,18 @@
   color: #999;
 }
 
+.editorModule .propertyEmptyChipLabel {
+  width: auto;
+  min-width: 0;
+  padding: 0 8px;
+  font-size: 13px;
+  color: var(--textColor);
+}
+
+.editorModule .propertyEmptyChipLabel::after {
+  content: none;
+}
+
 .editorModule .propertyPicker {
   flex-basis: 100%;
   border: 1px solid var(--VTTblue);
@@ -298,6 +298,33 @@
   min-width: 0;
 }
 
+/* Color symbols are compact, but their names make the control clear to a
+   first-time editor. Keep an attached hint after the text rather than between
+   the icon and its swatch. */
+.editorModule .colorFlexRow .propertyInput > label.iconOnly {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly::after {
+  content: attr(data-label);
+  font-size: 10px;
+  line-height: 1.1;
+  max-width: 72px;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly .labelIcon {
+  order: 1;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly .info-button {
+  order: 3;
+  margin-left: 0;
+}
+
 /* mark the native color input as "opens a dialog" instead of looking like a
    plain swatch of its current value */
 .editorModule .propertyPickerSummary input[type=color] {
@@ -327,6 +354,34 @@
   margin: 4px 0;
 }
 
+.editorModule .iconPickerFilterChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 2px 0 8px;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1, #ccc);
+}
+
+.editorModule .iconPickerFilterTitle {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.editorModule .iconPickerFilterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.editorModule .iconPickerFilterChip input {
+  width: auto;
+  margin: 0;
+}
+
 .editorModule .propertyPickerSectionTitle {
   font-weight: bold;
   font-size: 12px;
@@ -339,8 +394,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  max-height: 220px;
-  overflow-y: auto;
 }
 
 .editorModule .propertyPickerChips .symbols,
@@ -388,6 +441,33 @@
   max-width: 100%;
 }
 
+/* the controls that belong together are one line each: "pick in the room" next
+   to the button that drops the selection, the type filter next to the search it
+   filters. They only wrap when the popout really is too narrow for both. */
+.editorModule .widgetPickerRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .widgetPickerRow button {
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
+.editorModule .widgetPickerRow select {
+  flex: 0 1 auto;
+  min-width: 90px;
+}
+
+.editorModule .widgetPickerRow input {
+  flex: 1 1 110px;
+  width: auto;
+  min-width: 90px;
+  margin: 0;
+}
+
 .editorModule .widgetPickerList {
   max-height: 220px;
   overflow-y: auto;
@@ -406,10 +486,20 @@
   background: var(--backgroundHighlightColor1, #eee);
 }
 
+/* the type of a widget in the picker: the dim color is #ccc in light mode, which
+   is white-on-white in the list and invisible on a selected row (whose
+   background is #ccc), so the type is the text color turned down instead */
 .editorModule .widgetPickerEntry .widgetPickerType {
-  color: var(--textDimColor1, #777);
+  color: var(--textColor);
+  opacity: 0.65;
   font-size: 11px;
   margin-left: auto;
+}
+
+/* the widget the picker belongs to, pinned to the top of the list */
+.editorModule .widgetPickerEntry .widgetPickerSelf {
+  color: var(--VTTblue);
+  font-size: 11px;
 }
 
 .editorModule .widgetPickerEntry.selected::before {
@@ -421,7 +511,7 @@
 
 /* collapsible blocks (Position, Size, Widget's links, CSS) */
 .editorModule .collapsibleSection {
-  margin: 6px 0;
+  margin: 6px 10px 6px 0;
   border: 1px solid var(--backgroundHighlightColor1, #ddd);
   border-radius: 5px;
 }
@@ -435,6 +525,20 @@
   padding: 4px 6px;
   background: var(--backgroundHighlightColor1, #eee);
   border-radius: 4px;
+  border: 0;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.editorModule .collapsibleHeader:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.editorModule .collapsibleSummary {
+  color: var(--textColor);
+  font-weight: normal;
 }
 
 .editorModule .collapseArrow::before {
@@ -641,6 +745,35 @@
   font-size: 120px;
 }
 
+/* Unset media starts as a compact, clearly labelled checkerboard tile. Once
+   selected, the preview expands to the regular 200px tile above. */
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue {
+  min-width: 79px;
+  min-height: 79px;
+  padding: 4px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue .propertyEmptyChipLabel {
+  width: 75px;
+  height: 75px;
+  min-width: 75px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  background: linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), var(--backgroundColor);
+  background-position: 0 0, 8px 8px;
+  background-size: 16px 16px;
+}
+
+.editorModule .basicGeometryHint {
+  color: var(--textColor);
+  font-size: 12px;
+  margin: 2px 0 6px;
+}
+
 /* lock/unlock toggles for movable/editable style properties */
 .editorModule button.lockToggle {
   min-width: 26px;
@@ -694,9 +827,10 @@
 .editorModule .cssTriggeredClasses code {
   font-style: normal;
   font-family: monospace;
-  background: var(--backgroundHighlightColor1, #eee);
+  background: var(--VTTblue);
+  color: #fff;
   border-radius: 3px;
-  padding: 0 3px;
+  padding: 1px 5px;
   cursor: help;
 }
 
@@ -716,6 +850,45 @@
   color: var(--textColor);
   font-size: 1em;
   overflow-wrap: anywhere;
+}
+
+/* Keep the ID in the header, but make its rename affordance discoverable
+   without making it look like a regular properties-row field. */
+.editorModule .widgetHeader .widgetHeaderIdInput {
+  color: inherit;
+  font: inherit;
+  max-width: 80%;
+  padding: 0 3px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+  text-align: left;
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
+
+/* shortcut back to the line a widget is attached to, centered below the id */
+.editorModule .widgetHeader .widgetHeaderLine {
+  margin-top: 5px;
+}
+
+.editorModule .widgetHeader button.widgetHeaderLineButton {
+  display: inline-flex;
+  align-items: center;
+  max-width: 90%;
+  overflow-wrap: anywhere;
+  /* the label carries a widget id and ids are case sensitive, so the shared
+     button uppercasing would show "TDO6" for the line called tdo6 */
+  text-transform: none;
 }
 
 /* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
@@ -759,8 +932,7 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   font-size: 13px;
 }
 
-/* property-set editors (holder onEnter/onLeave) and list editors (spinner options) */
-.editorModule .propSetEditor,
+/* list editor (spinner wheel options) */
 .editorModule .listEditor {
   margin: 6px 0;
 }
@@ -773,7 +945,6 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin-bottom: 4px;
 }
 
-.editorModule .propSetRow,
 .editorModule .listEditorRow {
   display: flex;
   align-items: center;
@@ -781,20 +952,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin: 3px 0;
 }
 
-.editorModule .propSetRow span.propSetKey {
-  flex: 0 0 auto;
-  min-width: 90px;
-  font-size: 13px;
-  font-family: monospace;
-}
-
-.editorModule .propSetRow input.propSetValue,
 .editorModule .listEditorRow input {
   flex: 1 1 auto;
   min-width: 60px;
 }
 
-.editorModule .propSetRow button[icon],
 .editorModule .listEditorRow button[icon] {
   flex: 0 0 auto;
 }
@@ -802,4 +964,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 .editorModule .listEditorRow .faceOrderControls {
   display: flex;
   gap: 2px;
+}
+
+/* seat style preset preview buttons */
+.editorModule .seatPresetRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
