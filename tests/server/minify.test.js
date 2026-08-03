@@ -19,6 +19,23 @@ function inlineClientJS(build) {
   return build.min.match(/<script type=module>([\s\S]*?)<\/script>/)[1];
 }
 
+// The two halves of the edit mode API, read from the source instead of listed here so that the
+// tests below cover every name and not just the ones somebody remembered to add.
+function windowAPINames() {
+  const assign = fs.readFileSync('client/js/main.js', 'utf8').match(/Object\.assign\(window, \{([\s\S]*?)\}\);/)[1];
+  return assign.split(',').map(name => name.trim()).filter(name => /^[\w$]+$/.test(name));
+}
+
+function editorExportNames(readableBuild) {
+  const names = new Set();
+  for(const [ , name ] of readableBuild.editorJSmin.matchAll(/^export\s+(?:async\s+)?(?:function|class|const|let|var)\s+([\w$]+)/gm))
+    names.add(name);
+  for(const [ , list ] of readableBuild.editorJSmin.matchAll(/^export\s*\{([^}]*)\}/gm))
+    for(const name of list.split(',').map(name => name.trim()).filter(name => /^[\w$]+$/.test(name)))
+      names.add(name);
+  return [ ...names ];
+}
+
 // Both minification passes (terser on the bundle and html-minifier-terser on the surrounding
 // document) have to honour the minifyJavascript config, otherwise a local checkout ships a
 // minified client and debugging it in the browser becomes impossible - and a production build
@@ -50,8 +67,12 @@ describe('minifyHTML with minifyJavascript disabled', () => {
 
 describe('minifyHTML with minifyJavascript enabled', () => {
   let build;
+  let exportedByEditMode;
 
   beforeAll(async () => {
+    // the readable build still has the export statements, so it is where the list of names that
+    // have to survive the minified one comes from
+    exportedByEditMode = editorExportNames(await buildWith('false'));
     build = await buildWith('true');
   }, 60000);
 
@@ -63,18 +84,21 @@ describe('minifyHTML with minifyJavascript enabled', () => {
     expect(build.editorJSmin).not.toMatch(readableJS);
   });
 
-  // Top level names get renamed, which is only safe as long as the two names that cross the
-  // bundle boundary survive: the keys main.js copies onto window for edit mode and the exports
-  // edit mode hands back. Both are what terser considers external, so it keeps them - but a
-  // future option that mangles them too would break edit mode and nothing else.
+  // Top level names get renamed, which is only safe as long as the names that cross the bundle
+  // boundary survive: the keys main.js copies onto window for edit mode and the exports edit mode
+  // hands back. Both are what terser considers external, so it keeps them - but a future option
+  // that mangles them too would break edit mode and nothing else.
   test('keeps the names the client bundle hands to edit mode', () => {
     const script = inlineClientJS(build);
-    for(const name of [ 'widgets', 'compute_ops', 'getRoomRectangle', 'loadZipLibrary', 'Widget' ])
-      expect(script).toMatch(new RegExp(`[,{]${name}:`));
+    const names = windowAPINames();
+    expect(names.length).toBeGreaterThan(50);  // the block was found, not an empty match
+    for(const name of names)
+      expect(script).toMatch(new RegExp(`[,{]${name.replace(/\$/g, '\\$')}:`));
   });
 
   test('keeps the names edit mode hands back to the client bundle', () => {
-    for(const name of [ 'initializeEditMode', 'openEditor', 'jeClick' ])
+    expect(exportedByEditMode.length).toBeGreaterThan(10);
+    for(const name of exportedByEditMode)
       expect(build.editorJSmin).toMatch(new RegExp(`\\b${name}\\b`));
   });
 

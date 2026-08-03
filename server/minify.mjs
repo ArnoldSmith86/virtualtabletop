@@ -248,7 +248,11 @@ async function compressCSS(cssFiles) {
     combinedCSSContent[filePath] = { styles: fs.readFileSync(filePath, 'utf8') };
 
   // level 2 additionally merges and reorders rules that cannot affect each other, which pays off
-  // here because the stylesheets are split by widget and repeat a lot of their declarations
+  // here because the stylesheets are split by widget and repeat a lot of their declarations. Note
+  // that this makes the order of the files above matter a little less than plain concatenation
+  // would - it still only merges rules whose selectors cannot match the same element, but a
+  // self-hoster who relies on client/css/custom.css coming last to override a rule should check
+  // that their override still wins
   //
   // clean-css does not throw on broken input, it drops the offending declaration and only
   // mentions it here - without this the minified client would be missing a rule silently
