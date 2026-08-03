@@ -107,6 +107,9 @@ async function inputHandler(name, e) {
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
       if(ms.status != 'initial' && ms.moveTarget) {
         setDeltaCause(`${playerName} dragged ${widget.id}`);
+        // let every mousemove that is still being processed finish first so that the
+        // drop happens after the last one instead of racing with it
+        await ms.dragChain;
         await ms.moveTarget.moveEnd(coords, ms.localAnchor);
       }
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
@@ -142,16 +145,24 @@ async function inputHandler(name, e) {
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
+      const ms = mouseStatus[target.id];
       setDeltaCause(`${playerName} dragged ${widget.id}`);
-      if(mouseStatus[target.id].status == 'initial') {
-        mouseStatus[target.id].status = 'moving';
-        if(mouseStatus[target.id].moveTarget)
-          await mouseStatus[target.id].moveTarget.moveStart();
-      }
-      mouseStatus[target.id].coords = coords;
-      if(mouseStatus[target.id].moveTarget) {
+      const isFirstMove = ms.status == 'initial';
+      if(isFirstMove)
+        ms.status = 'moving';
+      ms.coords = coords;
+      if(ms.moveTarget) {
         setDeltaCause(`${playerName} dragged ${widget.id}`);
-        await mouseStatus[target.id].moveTarget.move(coords, mouseStatus[target.id].localAnchor);
+        // Mouse events are handled asynchronously, so several of them can be in
+        // flight at once. Queue the moves instead of running them in parallel so
+        // the widget always ends up where the most recent event put it - and so
+        // that the drop in the mouseup branch above happens after all of them.
+        ms.dragChain = Promise.resolve(ms.dragChain).then(async _ => {
+          if(isFirstMove)
+            await ms.moveTarget.moveStart();
+          await ms.moveTarget.move(coords, ms.localAnchor);
+        });
+        await ms.dragChain;
       }
     }
     batchEnd();

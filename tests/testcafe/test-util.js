@@ -58,6 +58,25 @@ export async function getState() {
   return await response.text();
 }
 
+// Wait until the room state stops changing, i.e. until every routine triggered by
+// the last interaction has finished. Without this, a test that performs multiple
+// interactions in a row can start the next one while the game is still evaluating
+// the previous one, which makes games that validate moves (like Reversi) reject it.
+export async function waitForStableState(timeout = 10000) {
+  const start = Date.now();
+  let previous = null;
+
+  while(Date.now() - start < timeout) {
+    const state = await getState();
+    if(state === previous)
+      return true;
+    previous = state;
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  return false;
+}
+
 export async function compareState(t, md5) {
   const refFile = `${referenceDir}/${md5}.json`;
   let hash = null;
