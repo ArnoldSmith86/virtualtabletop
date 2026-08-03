@@ -1531,20 +1531,29 @@ class PropertiesModule extends SidebarModule {
   }
 
   // A deck of plain text cards in the shape of the "Cards Against Humanity" decks in the library: every typed
-  // line becomes a card type with a "text" property, the front face renders it through a dynamic property and
+  // text - one per line, or one per blank-line-separated block when the card text needs line breaks of its own
+  // - becomes a card type with a "text" property, the front face renders it through a dynamic property and
   // the back face shows an optional deck label. Colors, font size and card size are the only design choices -
   // everything beyond that is done afterwards in the deck editor.
   deckTextCards(target) {
     const intro = document.createElement('p');
-    intro.innerText = 'Type or paste the card texts, one card per line. Each line becomes a card type - one distinct card design, of which the copies below are duplicates - whose "text" property holds that line, so you can edit the wording later in the deck editor.';
+    intro.innerText = 'Type or paste the card texts. Each card becomes a card type - one distinct card design, of which the copies below are duplicates - whose "text" property holds its text, so you can edit the wording later in the deck editor.';
     target.append(intro);
 
     this.addSubHeader('Card texts', target);
     const textarea = document.createElement('textarea');
     textarea.className = 'textCardsInput';
     textarea.rows = 8;
-    textarea.placeholder = 'The first card\nThe second card\n...';
     target.append(textarea);
+
+    // Where one card ends and the next begins. One card per line is what you want for a pasted list, but it
+    // leaves no way to put a line break inside a card - blank line mode spends an empty line on the separator
+    // and gives the line breaks back to the card text.
+    const split = div(target, 'textCardsSplit', `
+      <label><input type=radio name=textCardsSplit value=line checked>One card per line</label>
+      <label><input type=radio name=textCardsSplit value=block>Blank line between cards<span>lets a card's text span several lines</span></label>
+    `);
+    const splitOnBlankLines = _=>$('input[value=block]', split).checked;
 
     // Design inputs and preview side by side: the preview is exactly what you want to look at while changing
     // the font size and the colors, so it must not be pushed below the fold by the inputs that drive it.
@@ -1558,8 +1567,8 @@ class PropertiesModule extends SidebarModule {
       <label>Card width<input class=textCardsWidth type=number min=20 max=600 value=150>px</label>
       <label>Card height<input class=textCardsHeight type=number min=20 max=600 value=233>px</label>
       <label>Copies of each card<input class=textCardsCopies type=number min=1 max=99 value=1></label>
-      <label class=textCardsLabelWrap>Deck label<input class=textCardsLabel type=text placeholder="optional, e.g. the deck name"></label>
-      <span class=textCardsHint>The deck label is shown large on the card backs and small along the bottom edge of the fronts.</span>
+      <label class=textCardsLabelWrap>Deck label<textarea class=textCardsLabel rows=2 placeholder="optional, e.g. the deck name"></textarea></label>
+      <span class=textCardsHint>The deck label is shown large on the card backs - line breaks included - and small along the bottom edge of the fronts.</span>
     `);
 
     const previewColumn = div(columns, 'textCardsColumn textCardsPreviewColumn');
@@ -1570,7 +1579,12 @@ class PropertiesModule extends SidebarModule {
     const status = $('.textCardsStatus', target);
     const addButton = $('.goButton [icon=add]', target);
 
-    const cardTexts = _=>textarea.value.split('\n').map(line=>line.trim()).filter(line=>line.length);
+    // Line breaks that survive into a card's text render as line breaks on the card itself, so the only work
+    // here is trimming: every line loses its surrounding spaces and a card loses its leading/trailing blanks.
+    const cardTexts = _=>textarea.value
+      .split(splitOnBlankLines() ? /\n[ \t]*\n/ : '\n')
+      .map(card=>card.split('\n').map(line=>line.trim()).join('\n').replace(/^\n+|\n+$/g, ''))
+      .filter(card=>card.length);
 
     const deckDefinition = (texts, id)=>{
       const number = selector=>this.numberFromInput($(selector, design));
@@ -1578,7 +1592,7 @@ class PropertiesModule extends SidebarModule {
       const height   = number('.textCardsHeight');
       const fontSize = number('.textCardsFontSize');
       const color    = $('.textCardsColor', design).value;
-      const label    = $('.textCardsLabel', design).value.trim();
+      const label    = $('.textCardsLabel', design).value.split('\n').map(line=>line.trim()).join('\n').replace(/^\n+|\n+$/g, '');
       const padding  = Math.max(4, Math.round(width/12));
       // With a deck label the front gets a small footer along its bottom edge, so the card text has to stop
       // above it - text objects don't clip, a long text would just run over the label.
@@ -1601,7 +1615,7 @@ class PropertiesModule extends SidebarModule {
 
       const cardTypes = {};
       for(const [ index, text ] of texts.entries()) {
-        // Repeated lines get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
+        // Repeated texts get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
         const base = this.cardTypeName(text, `card ${index+1}`);
         let cardType = base;
         for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
@@ -1612,9 +1626,10 @@ class PropertiesModule extends SidebarModule {
       const back = { radius: 8, objects: [ colorBox() ] };
       const front = { radius: 8, objects: [ colorBox(), textObject({ height: height - 2*padding - footerHeight, dynamicProperties: { value: 'text', fontSize: 'fontSize' } }) ] };
       if(label) {
-        // The back is just the label at 1.5x, the front repeats it small along the bottom edge.
+        // The back is just the label at 1.5x, the front repeats it small along the bottom edge - where a
+        // multi-line label has no room, so there it becomes a single line.
         back.objects.push(textObject({ value: label, fontSize: Math.round(fontSize*1.5) }));
-        front.objects.push(textObject({ value: label, fontSize: footerSize, y: height - padding - footerHeight, height: footerHeight }));
+        front.objects.push(textObject({ value: label.replace(/\n/g, ' '), fontSize: footerSize, y: height - padding - footerHeight, height: footerHeight }));
       }
 
       return {
@@ -1660,10 +1675,16 @@ class PropertiesModule extends SidebarModule {
         ? `${texts.length} card type${texts.length == 1 ? '' : 's'} × ${copies} = ${cards} card${cards == 1 ? '' : 's'}.`
         : 'Type or paste at least one line of text above.';
       addButton.disabled = !texts.length;
+      // The placeholder is where the split mode is easiest to show rather than explain.
+      textarea.placeholder = splitOnBlankLines()
+        ? 'The first card,\nwhich runs over two lines\n\nThe second card\n...'
+        : 'The first card\nThe second card\n...';
     };
     textarea.oninput = updatePreview;
-    for(const input of $a('input', design))
+    for(const input of $a('input, textarea', design))
       input.oninput = updatePreview;
+    for(const radio of $a('input', split))
+      radio.onchange = updatePreview;
     updatePreview();
 
     addButton.onclick = async _=>{

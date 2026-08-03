@@ -268,6 +268,25 @@
   font-family: inherit;
 }
 
+/* How the typed text is cut into cards - one row of radios right under the textarea it describes. */
+.tune.editorModule .textCardsSplit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .textCardsSplit label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .textCardsSplit span {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
 .tune.editorModule .textCardsColumns {
   display: flex;
   align-items: flex-start;
@@ -320,10 +339,18 @@
   padding: 1px;
 }
 
+/* A textarea, so a deck label can carry the line breaks it is shown with on the card backs. */
+.tune.editorModule .textCardsDesign .textCardsLabelWrap {
+  align-items: flex-start;
+}
+
 .tune.editorModule .textCardsDesign .textCardsLabel {
   flex-grow: 1;
   width: auto;
   min-width: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
 }
 
 .tune.editorModule .textCardsPreview {

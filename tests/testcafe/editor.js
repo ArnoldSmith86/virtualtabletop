@@ -797,6 +797,60 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
   await compareState(t, '94d9f0542c71541a5e20ae14a37499b1');
 });
 
+// The other way of cutting the typed text into cards: with a blank line as the separator a card's text keeps
+// the line breaks inside it, and the deck label - a textarea - carries its own onto the card backs, where the
+// front's one-line footer flattens them back into spaces.
+test('Deck editor: text cards with line breaks in the new deck wizard', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=text]')
+    .click('.textCardsSplit input[value=block]');
+
+  // Indented lines, a doubled separator and a trailing blank line: all of them are trimmed away, so this is
+  // two card types, the first of which is two lines long.
+  await ClientFunction(() => {
+    for(const [ selector, value ] of [
+      [ '.textCardsInput', 'Cards that make\n   you think twice\n\n\nA short one.\n\n' ],
+      [ '.textCardsLabel', 'Line\nBreak\nDeck' ]
+    ]) {
+      const element = document.querySelector(selector);
+      element.value = value;
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  })();
+
+  await t
+    .expect(Selector('.textCardsStatus').innerText).eql('2 card types × 1 = 2 cards.')
+    .expect(Selector('.textCardsPreviewCard .cardFace.active .cardFaceObject').nth(1).textContent).eql('Cards that make\nyou think twice')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(2); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return {
+      cardTypes: deck.get('cardTypes'),
+      back: deck.get('faceTemplates')[0].objects[1].value,
+      footer: deck.get('faceTemplates')[1].objects[2].value
+    };
+  })();
+
+  await t
+    .expect(deck.cardTypes).eql({
+      'Cards that make you think twic': { text: 'Cards that make\nyou think twice' },
+      'A short one': { text: 'A short one.' }
+    })
+    .expect(deck.back).eql('Line\nBreak\nDeck')
+    .expect(deck.footer).eql('Line Break Deck');
+});
+
 // The wizard's front/back image section: both uploads are sorted by file name - numerically, so front2 comes
 // before front10 - and then matched up position by position, giving every card type its own back image. The
 // card size comes from the aspect ratio of the first front image.
