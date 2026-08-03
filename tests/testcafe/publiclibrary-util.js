@@ -49,10 +49,15 @@ export function publicLibraryButtons(game, variant, md5, tests) {
           // whether the drop is supposed to be accepted, check it right here so a
           // wrong result is reported at the drag that caused it instead of surfacing
           // as an unrelated-looking state hash mismatch at the end of the test.
-          if(expectDrop !== undefined)
+          if(expectDrop !== undefined) {
+            // wait for the game to finish reacting to the drop first - a rejected
+            // drop is only sent back once the game has evaluated it, so asserting
+            // right away would pass even if the piece was wrongly accepted
+            await waitForStableState();
             await t
               .expect(Selector(`#w_${escapeID(to)}`).find(`#w_${escapeID(from)}`).exists)
               .eql(expectDrop, `dragging ${from} onto ${to} should ${expectDrop ? '' : 'not '}have been accepted`);
+          }
         }
   });
 }

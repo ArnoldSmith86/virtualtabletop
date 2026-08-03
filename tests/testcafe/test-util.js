@@ -69,12 +69,14 @@ export async function waitForStableState(timeout = 10000) {
   while(Date.now() - start < timeout) {
     const state = await getState();
     if(state === previous)
-      return true;
+      return;
     previous = state;
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  return false;
+  // failing here points at the interaction that never settled instead of letting
+  // the test run on and fail with an unrelated-looking state hash mismatch later
+  throw new Error(`The room state was still changing after ${timeout}ms.`);
 }
 
 export async function compareState(t, md5) {
