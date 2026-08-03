@@ -620,10 +620,13 @@ onLoad(function() {
 
   on('#fullscreenButton', 'click', function() {
     if(document.documentElement.requestFullscreen) {
+      // the returned promises reject when the browser denies the request (for
+      // example inside an iframe without allowfullscreen) - don't treat that
+      // as a client error
       if(!document.fullscreenElement)
-        document.documentElement.requestFullscreen();
+        document.documentElement.requestFullscreen().catch(e=>console.warn(`Could not enter fullscreen mode: ${e.message}`));
       else
-        document.exitFullscreen();
+        document.exitFullscreen().catch(e=>console.warn(`Could not exit fullscreen mode: ${e.message}`));
     } else if(document.documentElement.webkitRequestFullscreen) {
       if(!document.webkitFullscreenElement)
         document.documentElement.webkitRequestFullScreen();
