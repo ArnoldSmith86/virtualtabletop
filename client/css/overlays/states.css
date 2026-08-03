@@ -369,6 +369,14 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: block;
 }
 
+.roomState > i.importNotes {
+  right: 0;
+}
+
+.roomState.hasImportNotes > i.importNotes {
+  display: block;
+}
+
 .roomState.hideMainName .details h3 {
   display: none;
 }
@@ -920,6 +928,16 @@ div:nth-of-type(2) > .list > .roomState .star {
 
 #helpTexts [contenteditable="true"] {
   padding: 5px;
+}
+
+#importNotes {
+  margin: 0;
+  padding-left: 20px;
+  white-space: normal;
+}
+
+#importNotes li {
+  margin-bottom: 6px;
 }
 
 @media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {

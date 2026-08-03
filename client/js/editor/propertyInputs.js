@@ -148,6 +148,47 @@ function iconTypeEnabled(value, enabledTypes) {
   return !type || enabledTypes.has(type);
 }
 
+// The full symbol picker is an overlay of its own, so opening it from a picker that sits inside another overlay
+// (e.g. the deck editor's "Add New Deck" dialog) hides that one. Bring that overlay - the one the given element
+// lives in - back afterwards, instead of leaving the user without the dialog they were working in.
+async function pickSymbolKeepingOverlay(element, type='all') {
+  const hostOverlay = element.closest('.overlay');
+  if(!hostOverlay)
+    return await pickSymbol(type);
+
+  // The deck editor parks the symbol picker inside its card view (see DeckEditor.open), which is not where a
+  // dialog floating above the editor wants it: show it where the dialog is and put it back afterwards.
+  const picker = $('#symbolPickerOverlay');
+  const pickerParent = picker.parentNode;
+  hostOverlay.parentNode.appendChild(picker);
+  // Where it lands has no stacking rule of its own, so it would end up behind the deck editor: the class
+  // floats it over the whole editor (see deckeditor.css) for as long as it is parked here.
+  picker.classList.add('symbolPickerAboveEditor');
+
+  // Whatever happens, the user must get their dialog back: the picker's symbol list is fetched, so it can also
+  // fail to open. Keep that failure here - unhandled it would reach the global error handler, which replaces
+  // the dialog with the client error overlay.
+  let symbol = null;
+  let error = null;
+  try {
+    symbol = await pickSymbol(type, true, false);
+  } catch(e) {
+    error = e;
+  }
+
+  picker.classList.remove('symbolPickerAboveEditor');
+  pickerParent.appendChild(picker);
+  // showOverlay toggles, so it would hide the dialog that is still up when the picker never opened at all:
+  // only bring the dialog back when the picker actually took its place.
+  if(hostOverlay.style.display == 'none')
+    showOverlay(hostOverlay.id);
+  if(error) {
+    console.error(error);
+    alert('The symbol picker could not be loaded. Please try again.');
+  }
+  return symbol;
+}
+
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
@@ -984,7 +1025,7 @@ class IconInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbol();
+      const symbol = await pickSymbolKeepingOverlay(showAll);
       if(symbol)
         this.setValue(symbol.symbol);
     };
@@ -1045,7 +1086,7 @@ class ImageInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbol('images');
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'images');
       if(symbol)
         this.setValue(symbol.url);
     };
