@@ -464,6 +464,18 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 20;
 }
 
+/* Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
+   (pickSymbolKeepingOverlay), where the rule above no longer applies and it would render behind #deckEditor
+   (z-index 1). Float it over the whole editor instead: above the sidebar (2), the toolbar (3) and the
+   dialog it was opened from (20). */
+#symbolPickerOverlay.symbolPickerAboveEditor {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+  z-index: 30;
+}
+
 #deckEditorExportOverlay {
   position: fixed;
   top: var(--editToolbarHeight);
@@ -705,6 +717,52 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+}
+
+/* Applies to every mode, so it is set apart from the mode list above and the picked mode's panel below. */
+.deckEditorNewDeckOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 16px 0;
+  padding: 10px 12px;
+  border: 1px solid #0002;
+  border-radius: 8px;
+  background: #0000000a;
+}
+
+.deckEditorNewDeckOptionsLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+.deckEditorNewDeckOptions label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* the reset button needs a holder to recall the cards into, so without one its option is off, not just
+   greyed out while still looking ticked */
+.deckEditorNewDeckOptions label:has(input:disabled) {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* what unticking the holder means, shown only once it is unticked */
+.deckEditorNewDeckOptionsHint {
+  display: none;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.deckEditorNewDeckOptions:has(#deckEditorNewDeckHolder:not(:checked)) .deckEditorNewDeckOptionsHint {
+  display: block;
 }
 
 #deckEditorNewDeckPanel:not(:empty) {
@@ -1056,6 +1114,32 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: default;
 }
 
+/* Align / distribute for a multi-selection of face objects: the Object tab's second toolbar row, right where
+   the selection is made. Icon-only buttons, disabled (not hidden) while fewer objects than they need are
+   selected - each in a wrapper that carries the tooltip, since a disabled button gets no pointer events. */
+.deckEditorAlignToolbar {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.deckEditorAlignButton {
+  display: flex;
+}
+
+.deckEditorAlignLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  margin-right: 4px;
+}
+
+.deckEditorAlignToolbar button {
+  padding: 3px 6px;
+}
+
 /* Holds the shared "Add to: All Cards / Card Type" submenu while the Object tab's "+" has it open. */
 .deckEditorSidebarAddHost:not(:empty) {
   display: block;
@@ -1194,6 +1278,71 @@ body.deckEditorPanning #deckEditorMain * {
   margin: 6px 5px 10px;
 }
 
+/* Property groups (Content / Position / Size / Colors / Appearance / Custom), the deck editor's version of the
+   Edit Widget sidebar's collapsible blocks - same shape and behaviour, but inside the tab that owns them. */
+.deckEditorGroup {
+  margin: 6px 0;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 5px;
+}
+
+.deckEditorGroupHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin: 0;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--backgroundHighlightColor1);
+  color: var(--textColor);
+  text-align: left;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Focus ring like the Edit Widget sidebar's collapsible headers (propertyInputs.css), which this mirrors. */
+.deckEditorGroupHeader:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.deckEditorGroupTitle {
+  flex-shrink: 0;
+}
+
+/* What the block holds, so a folded one still says what is inside it. */
+.deckEditorGroupSummary {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+  font-weight: normal;
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.deckEditorGroupArrow::before {
+  content: 'expand_more';
+  font-family: 'Material Symbols';
+  display: inline-block;
+}
+
+.deckEditorGroup.collapsed .deckEditorGroupArrow::before {
+  content: 'chevron_right';
+}
+
+.deckEditorGroupBody {
+  padding: 4px 6px;
+}
+
+.deckEditorGroup.collapsed .deckEditorGroupBody {
+  display: none;
+}
+
 /* Shared style for the small notes under section headers (Dynamic properties intro, HTML-object hint). */
 .deckEditorSectionNote {
   font-size: 12px;
@@ -1264,6 +1413,25 @@ body.deckEditorPanning #deckEditorMain * {
 
 #deckEditorSidebar .deckEditorProperties .genericInput label {
   flex-shrink: 0;
+}
+
+/* The property name in front of the field. A fixed column so every field starts at the same x - but a
+   game-defined name can be longer than it, so it ends in an ellipsis (and its full text in the tooltip)
+   instead of being cut mid-word right against the field. */
+.deckEditorPropertyLabel {
+  display: inline-block;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* "(mixed)" stands in for a value the selected objects disagree about, so it must not read as a value someone
+   typed - which the color alone doesn't manage in dark mode, where placeholders are drawn in the same white
+   as real text (layout.css). */
+.deckEditorMixedValue::placeholder {
+  font-style: italic;
+  opacity: 0.6;
 }
 
 /* Property rows: a small red trash to delete the property. The glyph size lives on ::before (button[icon]
