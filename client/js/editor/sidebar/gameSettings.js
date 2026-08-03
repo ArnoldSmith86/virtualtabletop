@@ -292,41 +292,31 @@ class GameSettingsModule extends SidebarModule {
       .map(box => box.widget);
   }
 
-  addAspectRatioSetting(target) {
+  addBoardSizeSetting(target) {
     const tile = document.createElement('div');
-    tile.className = 'settings-tile';
-    tile.style.cssText = `
-      border: 1px solid var(--modalBorderColor);
-      border-radius: 4px;
-      padding: 12px;
-      margin: 8px 0;
-      background: var(--backgroundColor);
-      color: var(--textColor);
-    `;
+    tile.className = 'settings-tile boardSizeSetting';
 
     const header = document.createElement('div');
+    header.className = 'boardSizeHeader';
     header.textContent = 'Board Size and Shape';
-    header.style.cssText = 'font-weight: bold; margin-bottom: 8px;';
     tile.append(header);
 
     const desc = document.createElement('div');
+    desc.className = 'boardSizeDescription';
     desc.innerHTML = `
       How large the play area is, in game units. Widget <code>x</code>, <code>y</code>, <code>width</code> and <code>height</code> are measured on this grid and the whole board is scaled to fit each player's window, so this is what decides the board's shape - not how big it looks.
       <br><br>
       Existing widgets are <b>not</b> moved when you change it. Default is 1600 × 1000, allowed values are ${MIN_BOARD_SIZE} to ${MAX_BOARD_SIZE}.
     `;
-    desc.style.fontSize = '0.9em';
-    desc.style.color = 'var(--textColor)';
     tile.append(desc);
 
     const numberField = (title, name, value) => {
       const wrap = document.createElement('div');
-      wrap.style.cssText = 'flex: 1; min-width: 60px; display: flex; flex-direction: column; gap: 2px;';
+      wrap.className = 'boardSizeField';
 
       const label = document.createElement('label');
       label.htmlFor = name;
       label.textContent = title;
-      label.style.cssText = 'font-size: 0.8em; opacity: 0.8;';
 
       const input = document.createElement('input');
       input.type = 'number';
@@ -335,41 +325,38 @@ class GameSettingsModule extends SidebarModule {
       input.min = MIN_BOARD_SIZE;
       input.max = MAX_BOARD_SIZE;
       input.value = value;
-      input.style.cssText = 'width: 100%; padding: 8px; box-sizing: border-box;';
 
       wrap.append(label, input);
       return { wrap, input };
     };
 
     const inputRow = document.createElement('div');
-    inputRow.style.cssText = 'display: flex; align-items: flex-end; margin-top: 12px; gap: 8px;';
+    inputRow.className = 'boardSizeInputs';
 
     const width = numberField('Width', 'boardWidth', viewportConfig.targetWidth);
     const height = numberField('Height', 'boardHeight', viewportConfig.targetHeight);
 
     const cross = document.createElement('span');
     cross.textContent = '×';
-    cross.style.cssText = 'flex: 0 0 auto; opacity: 0.7; padding-bottom: 8px;';
 
     const swapButton = document.createElement('button');
     swapButton.setAttribute('icon', 'swap_horiz');
     swapButton.title = 'Swap width and height';
     swapButton.setAttribute('aria-label', 'Swap width and height');
-    swapButton.style.cssText = 'flex: 0 0 auto; margin: 0;';
 
     inputRow.append(width.wrap, cross, height.wrap, swapButton);
     tile.append(inputRow);
 
     const ratioReadout = document.createElement('div');
-    ratioReadout.style.cssText = 'margin-top: 6px; font-size: 0.9em; opacity: 0.8;';
+    ratioReadout.className = 'boardSizeRatio';
     tile.append(ratioReadout);
 
     const presetRow = document.createElement('div');
-    presetRow.style.cssText = 'display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px;';
+    presetRow.className = 'boardSizePresets';
     tile.append(presetRow);
 
     const actionRow = document.createElement('div');
-    actionRow.style.cssText = 'display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;';
+    actionRow.className = 'boardSizeActions';
 
     const applyButton = document.createElement('button');
     applyButton.setAttribute('icon', 'check');
@@ -383,7 +370,7 @@ class GameSettingsModule extends SidebarModule {
     tile.append(actionRow);
 
     const messages = document.createElement('div');
-    messages.style.cssText = 'margin-top: 10px; font-size: 0.85em;';
+    messages.className = 'boardSizeMessages';
     tile.append(messages);
 
     const presets = [
@@ -406,24 +393,23 @@ class GameSettingsModule extends SidebarModule {
         return;
 
       const gameSettings = getCurrentGameSettings();
-      gameSettings.aspectRatio = { width: w, height: h };
+      gameSettings.boardSize = { width: w, height: h };
       toServer('setGameSettings', gameSettings);
     };
 
     const reset = () => {
       const gameSettings = getCurrentGameSettings();
-      delete gameSettings.aspectRatio;
+      delete gameSettings.boardSize;
       toServer('setGameSettings', gameSettings);
     };
 
-    const addMessage = (text, color, action) => {
+    const addMessage = (text, action) => {
       const message = document.createElement('div');
-      message.style.cssText = `margin-top: 4px; color: ${color};`;
+      message.className = 'boardSizeMessage';
       message.textContent = text;
       if(action) {
         const button = document.createElement('button');
         button.textContent = action.text;
-        button.style.cssText = 'margin: 4px 0 0 0; font-size: 1em;';
         button.addEventListener('click', action.onClick);
         message.append(document.createElement('br'), button);
       }
@@ -437,25 +423,25 @@ class GameSettingsModule extends SidebarModule {
 
       ratioReadout.textContent = valid ? `= ${this.boardRatioText(w, h)}` : '';
       applyButton.disabled = !changed;
-      resetButton.disabled = !(getCurrentGameSettings() || {}).aspectRatio;
+      resetButton.disabled = !(getCurrentGameSettings() || {}).boardSize;
 
       for(const button of presetRow.children)
-        button.style.outline = valid && button.dataset.ratio == (w/h).toFixed(4) ? '2px solid var(--neutralInput)' : '';
+        button.classList.toggle('active', valid && button.dataset.ratio == (w/h).toFixed(4));
 
       messages.innerHTML = '';
       if(!valid) {
-        addMessage(`Width and height have to be between ${MIN_BOARD_SIZE} and ${MAX_BOARD_SIZE}.`, 'var(--negativeInput)');
+        addMessage(`Width and height have to be between ${MIN_BOARD_SIZE} and ${MAX_BOARD_SIZE}.`);
         return;
       }
 
       if(w/h > 4 || h/w > 4)
         addMessage(w > h
           ? 'This board is much wider than it is tall - the toolbar will cover most of it on normal screens.'
-          : 'This board is much taller than it is wide - the toolbar will cover most of it on normal screens.', 'var(--negativeInput)');
+          : 'This board is much taller than it is wide - the toolbar will cover most of it on normal screens.');
 
       const outside = this.widgetsOutsideBoard(w, h);
       if(outside.length)
-        addMessage(`${outside.length} widget${outside.length == 1 ? '' : 's'} would stick out past the board edge and be clipped away.`, 'var(--negativeInput)', {
+        addMessage(`${outside.length} widget${outside.length == 1 ? '' : 's'} would stick out past the board edge and be clipped away.`, {
           text: 'Select them',
           onClick: _=>setSelection(outside)
         });
@@ -465,7 +451,6 @@ class GameSettingsModule extends SidebarModule {
       const button = document.createElement('button');
       button.textContent = preset.text;
       button.dataset.ratio = (preset.width/preset.height).toFixed(4);
-      button.style.cssText = 'margin: 0; font-size: 0.85em;';
       button.addEventListener('click', _=>{
         width.input.value = preset.width;
         height.input.value = preset.height;
@@ -570,9 +555,13 @@ class GameSettingsModule extends SidebarModule {
     super.onStateReceived(state);
   }
 
-  // widgets moved or were added, so the boxes the board size check works on are stale
+  // widgets moved or were added, so the boxes the board size check works on are stale -
+  // recheck right away, otherwise the "would stick out past the board edge" warning keeps
+  // talking about where the widgets used to be until the user touches a field
   onDeltaReceivedWhileActive(delta) {
     this.cachedWidgetBoxes = null;
+    if(this.syncBoardSize)
+      this.syncBoardSize();
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -597,10 +586,12 @@ class GameSettingsModule extends SidebarModule {
     this.addHeader('Game Settings');
 
     this.addSubHeader('Board Settings');
-    this.addAspectRatioSetting(target);
+    this.addBoardSizeSetting(target);
 
     const gameSettings = getCurrentGameSettings();
-    if (Object.keys(gameSettings ? gameSettings.legacyModes : {}).length > 0) {
+    // a game that only sets a board size (or only global CSS) has game settings without any
+    // legacy modes in them, so this can't assume the object is there
+    if (Object.keys(gameSettings && gameSettings.legacyModes || {}).length > 0) {
       this.addSubHeader('Legacy Modes');
       const p1 = document.createElement('p');
       p1.textContent = 'We try our best not to break existing games, but some bugs can only be fixed by changing game behavior.';

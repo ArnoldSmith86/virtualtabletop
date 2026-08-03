@@ -61,8 +61,10 @@ body.loadingEditMode * {
 
 /* the window is wider than the board, so the toolbar sits beside it - this used to be a
    media query against the hardcoded 1600/1000 aspect ratio, but that is exactly what
-   setScale already decides when it picks the toolbar layout for the board's own size */
-body:not(.horizontalToolbar,.aspectTooGood) {
+   setScale already decides when it picks the toolbar layout for the board's own size.
+   .edit is excluded explicitly: edit mode positions the room itself (editor/layout.css)
+   and would otherwise only win this on source order */
+body:not(.edit,.horizontalToolbar,.aspectTooGood) {
   --roomTop: 0px;
   --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
 }

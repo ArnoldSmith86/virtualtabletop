@@ -203,9 +203,11 @@ function setScale() {
 
   const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
 
-  // set before measuring below - they decide where the module panel sits and so how much room is left
+  // set before measuring below - they decide where the module panel sits and so how much room is
+  // left. Only in edit mode: in play mode there is no module panel and game CSS shouldn't see them.
   $('body').classList.remove('editModulesAbove', 'editModulesOverlay');
-  $('body').classList.add(...calculateEditModuleClasses(w, h, viewportConfig));
+  if(edit || jeEnabled)
+    $('body').classList.add(...calculateEditModuleClasses(w, h, viewportConfig));
 
   if(edit || jeEnabled) {
     const targetWidth = targetW / zoom;
@@ -241,6 +243,18 @@ function setScale() {
   if(edit)
     scaleHasChanged(scale);
   refreshIgnoreZoomWidgets();
+}
+
+// Everything that has to happen when the board size changed, on top of viewportConfig
+// itself: setViewportSize decides whether it did, this applies it. Called from the state
+// message (serverstate.js) as well as from the meta message (legacymodes.js) - both carry
+// the game settings and either one can be the first to bring in a new board size.
+function applyViewportLayout() {
+  setScale();
+  // no widget changed, but pile handles are placed relative to the board edges
+  for(const w of widgets.values())
+    if(w.updateHandlePlacement)
+      w.updateHandlePlacement();
 }
 
 // Each toolbar layout (wide, narrow, horizontal and the one for aspectTooGood) has multiple

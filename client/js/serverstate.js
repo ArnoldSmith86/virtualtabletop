@@ -482,9 +482,9 @@ function receiveStateFromServer(args) {
 
   // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
   currentGameSettings = args._meta.gameSettings || {};
-  // no setScale() here: --roomWidth/--roomHeight/--scale are applied by the meta
-  // message the server always sends alongside a state (see Room.setState/loadState)
-  setViewportSize(currentGameSettings.aspectRatio);
+  // the board size has to be in place before the widgets below are created (pile handles
+  // are placed relative to the board edges), but the layout is applied once they are there
+  const boardSizeChanged = setViewportSize(currentGameSettings.boardSize);
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
@@ -520,6 +520,10 @@ function receiveStateFromServer(args) {
         console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
     deferredChildren = {};
   }
+
+  // before resetZoomAndPan, which clamps the pan against the board size and the scale
+  if(boardSizeChanged)
+    applyViewportLayout();
 
   resetZoomAndPan();
 

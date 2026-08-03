@@ -9,7 +9,7 @@ export const MIN_BOARD_SIZE = 100;
 export const MAX_BOARD_SIZE = 10000;
 
 // The size the board is laid out for. Games can override it through
-// _meta.gameSettings.aspectRatio, so this is mutated in place and everything
+// _meta.gameSettings.boardSize, so this is mutated in place and everything
 // that needs the current board dimensions reads from this object.
 export const viewportConfig = { ...DEFAULT_VIEWPORT };
 
@@ -20,11 +20,34 @@ function boardDimension(value, fallback) {
   return Math.max(MIN_BOARD_SIZE, Math.min(MAX_BOARD_SIZE, number));
 }
 
-// aspectRatio comes straight from the game file / another client, so anything
-// that isn't a usable board size falls back to the default 1600x1000.
-export function setViewportSize(aspectRatio) {
-  viewportConfig.targetWidth  = boardDimension(aspectRatio && aspectRatio.width,  DEFAULT_VIEWPORT.targetWidth);
-  viewportConfig.targetHeight = boardDimension(aspectRatio && aspectRatio.height, DEFAULT_VIEWPORT.targetHeight);
+// boardSize comes straight from the game file / another client, so anything that
+// isn't a usable board size falls back to the default 1600x1000. The server runs
+// the same function on everything it stores, so what is saved to disk and what
+// everybody renders can't drift apart.
+export function normalizeBoardSize(boardSize) {
+  if(!boardSize || typeof boardSize != 'object')
+    return null;
+  return {
+    width:  boardDimension(boardSize.width,  DEFAULT_VIEWPORT.targetWidth),
+    height: boardDimension(boardSize.height, DEFAULT_VIEWPORT.targetHeight)
+  };
+}
+
+/**
+ * Applies a game's board size to viewportConfig.
+ * @returns {boolean} whether the board size actually changed - the callers use this
+ *   to re-run the layout, so it must not be second-guessed by comparing viewportConfig
+ *   before and after: state and meta both carry the board size and whichever message
+ *   arrives first would be the only one that sees a difference.
+ */
+export function setViewportSize(boardSize) {
+  const { width, height } = normalizeBoardSize(boardSize) || { width: DEFAULT_VIEWPORT.targetWidth, height: DEFAULT_VIEWPORT.targetHeight };
+  if(width == viewportConfig.targetWidth && height == viewportConfig.targetHeight)
+    return false;
+
+  viewportConfig.targetWidth  = width;
+  viewportConfig.targetHeight = height;
+  return true;
 }
 
 // The body classes that pick a toolbar layout. They are the ones the toolbar CSS and

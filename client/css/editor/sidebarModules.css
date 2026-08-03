@@ -1658,3 +1658,109 @@ div.widget-name {
 .drag-over {
   background-color: #f0f0f0;
 }
+
+/* The Board Size and Shape tile in the Game Settings module. The tile frame itself is what
+   the legacy mode tiles in that module set inline - having it here means the board size tile
+   follows theme changes, and the other tiles pick it up as soon as they lose their inline styles. */
+.settings-tile {
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 4px;
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+.boardSizeSetting .boardSizeHeader {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeDescription {
+  font-size: 0.9em;
+}
+
+.boardSizeSetting .boardSizeInputs {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 12px;
+  gap: 8px;
+}
+
+/* the × between the two fields */
+.boardSizeSetting .boardSizeInputs > span {
+  flex: 0 0 auto;
+  opacity: 0.7;
+  padding-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeInputs > button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.boardSizeSetting .boardSizeField {
+  flex: 1;
+  min-width: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.boardSizeSetting .boardSizeField label {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizeField input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.boardSizeSetting .boardSizeRatio {
+  margin-top: 6px;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizePresets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.boardSizeSetting .boardSizePresets button {
+  margin: 0;
+  font-size: 0.85em;
+}
+
+/* the preset the fields currently match - the buttons are already in the theme's blue, so
+   the ring has to be the text color to be visible on them */
+.boardSizeSetting .boardSizePresets button.active {
+  outline: 2px solid var(--textColor);
+  outline-offset: 1px;
+}
+
+.boardSizeSetting .boardSizeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.boardSizeSetting .boardSizeMessages {
+  margin-top: 10px;
+  font-size: 0.85em;
+}
+
+.boardSizeSetting .boardSizeMessage {
+  margin-top: 4px;
+  color: var(--negativeInput);
+}
+
+.boardSizeSetting .boardSizeMessage button {
+  margin: 4px 0 0 0;
+  font-size: 1em;
+}

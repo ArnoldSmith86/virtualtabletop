@@ -1,4 +1,4 @@
-import { calculateLayout, calculateEditModuleClasses, DEFAULT_VIEWPORT, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
+import { calculateLayout, calculateEditModuleClasses, DEFAULT_VIEWPORT, normalizeBoardSize, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
 
 describe('calculateLayout', () => {
   const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
@@ -112,12 +112,24 @@ describe('calculateEditModuleClasses', () => {
 describe('setViewportSize', () => {
   afterEach(() => setViewportSize(null));
 
-  test('applies the aspect ratio from the game settings', () => {
+  test('applies the board size from the game settings', () => {
     setViewportSize({ width: 1000, height: 1600 });
     expect(viewportConfig).toEqual({ targetWidth: 1000, targetHeight: 1600 });
   });
 
-  test('falls back to the default viewport for games without an aspect ratio', () => {
+  // the state and the meta message both carry the board size, so whoever applies it first
+  // has to be the one that reports the change - the other one must not re-layout again
+  test('reports whether the board size actually changed', () => {
+    expect(setViewportSize({ width: 1000, height: 1600 })).toBe(true);
+    expect(setViewportSize({ width: 1000, height: 1600 })).toBe(false);
+    expect(setViewportSize(null)).toBe(true);
+    expect(setViewportSize(undefined)).toBe(false);
+    // clamped to the same board, so nothing to re-layout
+    expect(setViewportSize({ width: 1600, height: 1e9 })).toBe(true);
+    expect(setViewportSize({ width: 1600, height: 99999 })).toBe(false);
+  });
+
+  test('falls back to the default viewport for games without a board size', () => {
     setViewportSize({ width: 1000, height: 1600 });
     setViewportSize(undefined);
     expect(viewportConfig).toEqual(DEFAULT_VIEWPORT);
@@ -128,5 +140,29 @@ describe('setViewportSize', () => {
     expect(viewportConfig).toEqual(DEFAULT_VIEWPORT);
     setViewportSize({ width: -5, height: 1e9 });
     expect(viewportConfig).toEqual({ targetWidth: 100, targetHeight: 10000 });
+  });
+});
+
+// the server stores what this returns, so a game file can never describe a board that
+// nobody renders - it is the same function the client applies to what it receives
+describe('normalizeBoardSize', () => {
+  test('passes a usable board size through', () => {
+    expect(normalizeBoardSize({ width: 1000, height: 1600 })).toEqual({ width: 1000, height: 1600 });
+  });
+
+  test('clamps to the allowed range and rounds', () => {
+    expect(normalizeBoardSize({ width: 10, height: 1e9 })).toEqual({ width: 100, height: 10000 });
+    expect(normalizeBoardSize({ width: '1600.4', height: 999.5 })).toEqual({ width: 1600, height: 1000 });
+  });
+
+  test('replaces unusable dimensions with the default ones', () => {
+    expect(normalizeBoardSize({ width: 'nonsense', height: 1600 })).toEqual({ width: 1600, height: 1600 });
+    expect(normalizeBoardSize({})).toEqual({ width: 1600, height: 1000 });
+  });
+
+  test('has no board size to store for anything that is not a pair of numbers', () => {
+    expect(normalizeBoardSize(null)).toBe(null);
+    expect(normalizeBoardSize(undefined)).toBe(null);
+    expect(normalizeBoardSize('1600x1000')).toBe(null);
   });
 });

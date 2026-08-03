@@ -58,6 +58,12 @@ export async function getState() {
   return await response.text();
 }
 
+// getState leaves _meta out - this is the version and the game settings the room is on
+export async function getMeta() {
+  const response = await fetch(`${server}/state/testcafe-testing`);
+  return JSON.parse(await response.text())._meta;
+}
+
 // Wait until the room state stops changing, i.e. until every routine triggered by
 // the last interaction has finished, and return that stable state. Without this, a
 // test that performs multiple interactions in a row can start the next one while
