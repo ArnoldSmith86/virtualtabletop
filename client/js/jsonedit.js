@@ -1359,6 +1359,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Line(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
@@ -1389,7 +1390,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
+  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
@@ -1791,7 +1792,10 @@ function jeAddResetPropertiesCommand(key) {
 
 function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
-    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
+    // lineOriginalRotation is a valid global property but only meaningful while a
+    // line rotates one of its stops, so it gets no per-widget-type insert button
+    // (it would be noise on every type).
+    if(property != 'typeClasses' && property != 'lineOriginalRotation' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   if(type != 'card' && type != 'pile') {
@@ -3045,12 +3049,21 @@ let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
+// Empty the log. Operations of a routine that is currently running have the log so far saved on
+// jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
+// again and resurrects what was just cleared.
+function jeLoggingClear() {
+  jeLoggingHTML = '';
+  for(const entry of jeHTMLStack)
+    entry[0] = '';
+}
+
 function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
 export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
       jeRoutineResetOnNextLog = false;
@@ -3068,42 +3081,71 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
 }
 
 export function jeLoggingRoutineEnd(variables, collections) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  if(!jeLoggingDepth)
+    return; // defensive: unmatched End, should not happen since #2672
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
-  if(!jeLoggingDepth) {
-    $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
+  if(!jeLoggingDepth)
+    jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+}
 
-    // Make it so clicking on the arrows expands the subtree
-    const expanders = document.getElementsByClassName('jeExpander');
-    let i;
-    for (i=0; i < expanders.length; i++) {
-      expanders[i].addEventListener('click', function() {
-        this.classList.toggle('jeExpander-down');
-        this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
-        if(this.classList.contains('jeExpander-down')) {
-          this.classList.add('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
-        } else {
-          this.classList.remove('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
-        }
-      });
-    }
-    // Make expander arrows that are parents of nodes with problems show up red.
-    const problems = document.getElementsByClassName('jeLogHasProblems');
-    for (i=0; i<problems.length; i++) {
-      let node = problems[i];
-      while (node && node.id != 'jeLog') {
-        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
-          node.firstElementChild.classList.remove('jeExpander');
-          node.firstElementChild.classList.add('jeRedExpander')
-        }
-        node = node.parentNode;
+// Put the log into the panel. Everything that depends on the rendered DOM (the expander click
+// handlers and the filter) has to be applied again afterwards, so all rendering goes through here.
+function jeLoggingRenderLog(logHTML) {
+  $('#jeLog').innerHTML = logHTML;
+
+  // Make it so clicking on the arrows expands the subtree
+  const expanders = document.getElementsByClassName('jeExpander');
+  let i;
+  for (i=0; i < expanders.length; i++) {
+    expanders[i].addEventListener('click', function() {
+      this.classList.toggle('jeExpander-down');
+      this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
+      if(this.classList.contains('jeExpander-down')) {
+        this.classList.add('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+      } else {
+        this.classList.remove('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
       }
+    });
+  }
+  // Make expander arrows that are parents of nodes with problems show up red.
+  const problems = document.getElementsByClassName('jeLogHasProblems');
+  for (i=0; i<problems.length; i++) {
+    let node = problems[i];
+    while (node && node.id != 'jeLog') {
+      if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
+        node.firstElementChild.classList.remove('jeExpander');
+        node.firstElementChild.classList.add('jeRedExpander')
+      }
+      node = node.parentNode;
     }
   }
+
   if($('#jeLogFilter') && $('#jeLogFilter').value)
     jeLoggingFilterLog($('#jeLogFilter').value);
+}
+
+// Called instead of jeLoggingRoutineEnd when logging was switched on while the routine was already
+// running (e.g. the Debug module was opened while the routine waited for an INPUT). That routine
+// cannot be logged retroactively, so leave a note explaining the gap instead of showing nothing.
+export function jeLoggingRoutineNotLogged(widget, property) {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
+    return;
+  if(jeRoutineResetOnNextLog) {
+    jeLoggingHTML = '';
+    jeRoutineResetOnNextLog = false;
+  }
+  const routine = typeof property == 'string'
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> <span class="jeLogProperty">${html(property)}</span>`
+    : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
+  jeLoggingHTML += `
+    <div class="jeLog jeLogNote">
+      ${routine} was already running when the Debug panel was opened, so it could not be recorded. Run it again to see its log.
+    </div>
+  `;
+  jeLoggingRenderLog(jeLoggingHTML);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {
@@ -3127,6 +3169,11 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
 
   const savedHTML = jeHTMLStack.shift();
+  if(!savedHTML) {
+    // defensive: unmatched End, should not happen since #2672. Nothing to close.
+    jeRoutineResult = '';
+    return;
+  }
   const original = savedHTML[1];
   const originalText = jeLoggingJSON(original);
   const applied = savedHTML[2];
@@ -3890,7 +3937,7 @@ export function jeToggle() {
   }
   jeEnabled = !jeEnabled;
   setJEenabled(jeEnabled);
-  jeLoggingHTML = '';
+  jeLoggingClear();
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
@@ -3955,7 +4002,16 @@ function jeInitEventListeners() {
 
     // Adding hitTest makes foreign elements temporarily hittable.
     document.body.classList.add('hitTest');
-    let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+    let hoveredWidgets = [ ...new Set(document.elementsFromPoint(e.clientX, e.clientY).map(el => {
+      const widget = widgets.get(unescapeID(el.id.slice(2)));
+      if(widget)
+        return widget;
+      // a line's own box is pointer-events:none - only its unnamed hit path
+      // and (while selected) its handles are hittable, so trace those back to
+      // the line widget that owns them
+      const lineElement = el.closest && el.closest('.widget.line');
+      return lineElement ? widgets.get(unescapeID(lineElement.id.slice(2))) : null;
+    })) ].filter(w => w != null);
     document.body.classList.remove('hitTest');
 
     hoveredWidgets.sort(function(w1,w2) {
@@ -4032,7 +4088,7 @@ function jeInitEventListeners() {
       }
     }
 
-    const functionKey = e.key.match(/F([0-9]+)/);
+    const functionKey = e.key && e.key.match(/F([0-9]+)/);
     if(functionKey && jeWidgetLayers[+functionKey[1]]) {
       e.preventDefault();
       if(e.ctrlKey) {
