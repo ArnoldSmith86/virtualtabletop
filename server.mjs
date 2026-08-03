@@ -3,10 +3,8 @@ import path from 'path';
 import v8 from 'v8';
 
 import express from 'express';
-import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
-import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
 import FileLoader from './server/fileloader.mjs';
@@ -134,11 +132,11 @@ MinifyHTML().then(function(result) {
 
   router.get('/scripts/:name', function(req, res) {
     res.setHeader('Content-Type', 'application/javascript');
-    if(req.params.name == 'jszip')
-      res.send(fs.readFileSync('node_modules/jszip/dist/jszip.min.js'));
+    if(req.params.name == 'fflate')
+      res.send(fs.readFileSync('node_modules/fflate/umd/index.js'));
   });
 
-  router.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
+  router.post('/assetcheck', express.json({ limit: '10mb' }), function(req, res) {
     const result = {};
     if(Array.isArray(req.body))
       for(const asset of req.body)
@@ -237,7 +235,7 @@ MinifyHTML().then(function(result) {
     handleGetState(req, res, next, false);
   });
 
-  router.put('/state/:room', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.put('/state/:room', express.json({ limit: '10mb' }), function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
@@ -325,7 +323,7 @@ MinifyHTML().then(function(result) {
     res.send(JSON.stringify(customWidgets));
   });
 
-  router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.put('/api/widgets', express.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const data = req.body;
     if (typeof data === 'object' && data !== null) {
@@ -336,7 +334,7 @@ MinifyHTML().then(function(result) {
     res.send('OK');
   });
 
-  router.post('/api/decksFromLink', bodyParser.json({ limit: '1mb' }), function(req, res, next) {
+  router.post('/api/decksFromLink', express.json({ limit: '1mb' }), function(req, res, next) {
     (async function() {
       if(typeof req.body != 'object' || req.body === null || typeof req.body.link != 'string' || !req.body.link.match(/^https?:\/\//))
         throw new Logging.UserError(400, 'Please provide a link.');
@@ -522,7 +520,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/createTempState/:room/:tempID', bodyParser.raw({ limit: '500mb' }), function(req, res, next) {
+  router.put('/createTempState/:room/:tempID', express.raw({ limit: '500mb' }), function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded && req.params.tempID.match(/^[a-z0-9]{8}$/))
         res.send(await activeRooms.get(req.params.room).createTempState(req.params.tempID, req.body));
@@ -541,7 +539,7 @@ MinifyHTML().then(function(result) {
     }
   });
 
-  router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
+  router.put('/asset', express.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!Config.resolveAsset(filename.substr(1)))
       fs.writeFileSync(assetsdir + filename, req.body);
@@ -559,8 +557,8 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   }
 
-  router.put('/addState/:room/:id/:type/:name/:addAsVariant', bodyParser.raw({ limit: '500mb' }), handleAddState);
-  router.put('/addState/:room/:id/:type/:name', bodyParser.raw({ limit: '500mb' }), handleAddState);
+  router.put('/addState/:room/:id/:type/:name/:addAsVariant', express.raw({ limit: '500mb' }), handleAddState);
+  router.put('/addState/:room/:id/:type/:name', express.raw({ limit: '500mb' }), handleAddState);
 
   router.get('/saveCurrentState/:room/:mode/:name', async function(req, res, next) {
     if(!validateInput(res, next, [ req.params.mode ])) return;
@@ -572,7 +570,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+  router.put('/moveServer/:room/:returnServer/:returnState', express.raw({ limit: '500mb' }), async function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         activeRooms.get(req.params.room).receiveState(req.body, req.params.returnServer, req.params.returnState).then(function() {
@@ -582,7 +580,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/clientError', bodyParser.json({ limit: '50mb' }), function(req, res, next) {
+  router.put('/clientError', express.json({ limit: '50mb' }), function(req, res, next) {
     if(typeof req.body == 'object') {
       const errorID = Math.random().toString(36).substring(2, 10);
       fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));

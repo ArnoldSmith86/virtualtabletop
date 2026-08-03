@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import JSZip from 'jszip';
-import fetch from 'node-fetch';
 import { BSON } from 'bson';
 
 import Logging from './logging.mjs';
+import Zip from './zip.mjs';
 
 const imgSizeCache = {};
 async function imgSize(url) {
@@ -12,7 +11,7 @@ async function imgSize(url) {
     return imgSizeCache[url];
 
   const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' } });
-  const buffer = await r.buffer();
+  const buffer = Buffer.from(await r.arrayBuffer());
   fs.writeFileSync('/tmp/out', buffer);
   if(buffer.toString('ascii', 1, 4) == 'PNG')
     return imgSizeCache[url] = [ buffer.readUInt32BE(16), buffer.readUInt32BE(20) ];
@@ -265,10 +264,9 @@ async function convertTTS(content, linkContent) {
     json = BSON.deserialize(linkContent);
     fs.writeFileSync('/tmp/tts.json', JSON.stringify(json, null, '  '));
   } else {
-    const zip = await JSZip.loadAsync(content);
-    for(var file in zip.files)
+    for(const file in Zip.list(content))
       if(file.match(/\.json$/))
-        json = JSON.parse(await zip.files[file].async('string'));
+        json = JSON.parse(Zip.readString(content, file));
   }
 
   const widgets = await addRecursive(json.ObjectStates);

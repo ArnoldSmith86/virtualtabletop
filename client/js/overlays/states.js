@@ -18,22 +18,56 @@ function setLibraryTypeTab(type) {
 
 const loadedLibraryImages = {};
 
-function loadJSZip() {
+function loadZipLibrary() {
   const node = document.createElement('script');
-  node.src = 'scripts/jszip';
+  node.src = 'scripts/fflate';
   $('head').appendChild(node);
 }
 
-async function waitForJSZip() {
-  while(typeof JSZip == 'undefined')
+async function waitForZipLibrary() {
+  while(typeof fflate == 'undefined')
     await sleep(50)
+}
+
+// fflate's callback API does the actual (de)compression in a web worker so that
+// uploading or building a big file doesn't freeze the UI
+async function unzipBlob(blob) {
+  const buffer = new Uint8Array(await blob.arrayBuffer());
+  return await new Promise((resolve, reject)=>fflate.unzip(buffer, (e, files)=>e ? reject(e) : resolve(files)));
+}
+
+async function zipBlob(files, compress) {
+  const buffer = await new Promise((resolve, reject)=>fflate.zip(files, { level: compress ? 6 : 0 }, (e, data)=>e ? reject(e) : resolve(data)));
+  return new Blob([ buffer ]);
+}
+
+// assets are named after the CRC-32 of their content, both here and on the server
+const crc32Table = new Int32Array(256).map(function(_, crc) {
+  for(let i=0; i<8; ++i)
+    crc = crc & 1 ? 0xedb88320 ^ crc >>> 1 : crc >>> 1;
+  return crc;
+});
+
+function crc32(data) {
+  let crc = -1;
+  for(let i=0; i<data.length; ++i)
+    crc = crc32Table[(crc ^ data[i]) & 0xff] ^ crc >>> 8;
+  return ~crc;
+}
+
+function toBase64(data) {
+  let binary = '';
+  for(let i=0; i<data.length; i+=32768)
+    binary += String.fromCharCode.apply(null, data.subarray(i, i+32768));
+  return btoa(binary);
 }
 
 async function resolveStateCollections(file, callback) {
   if(file.name.match(/\.vttc$/)) {
-    await waitForJSZip();
-    for(const [ filename, f ] of Object.entries((await JSZip.loadAsync(file)).files))
-      callback(new File([await f.async('blob')], filename));
+    await waitForZipLibrary();
+    for(const [ filename, content ] of Object.entries(await unzipBlob(file)))
+      if(!filename.match(/\/$/))
+        callback(new File([ content ], filename));
   } else {
     callback(file);
   }
@@ -86,11 +120,11 @@ function addStateFile(f) {
 }
 
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
-  await waitForJSZip();
+  await waitForZipLibrary();
 
-  let zip = null;
+  let files = null;
   try {
-    zip = await JSZip.loadAsync(sourceFile);
+    files = await unzipBlob(sourceFile);
   } catch(e) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
@@ -98,9 +132,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let json = null;
   const assets = {};
-  for(const [ filename, file ] of Object.entries(zip.files)) {
+  for(const [ filename, file ] of Object.entries(files)) {
     if(filename.match(/json$/)) {
-      const content = JSON.parse(await file.async('string'));
+      const content = JSON.parse(fflate.strFromU8(file));
       if(!json) {
         json = content;
         if(json._meta)
@@ -109,8 +143,8 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(json._meta)
         json._meta.info.variants.push(content._meta.info);
     }
-    if(filename.match(/^\/?(user)?assets/) && file._data && file._data.crc32)
-      assets[file._data.crc32 + '_' + file._data.uncompressedSize] = filename;
+    if(filename.match(/^\/?(user)?assets/) && file.length)
+      assets[crc32(file) + '_' + file.length] = filename;
   }
 
   if(json === null) {
@@ -124,8 +158,8 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     if(json._meta.info.image) {
       if(json._meta.info.image.match(/^http/)) {
         imageURL = json._meta.info.image;
-      } else if(zip.files[json._meta.info.image.substr(1)]) {
-        const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
+      } else if(files[json._meta.info.image.substr(1)]) {
+        const image = toBase64(files[json._meta.info.image.substr(1)]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
             imageURL = `data:image/${type};base64,${image}`;
@@ -149,15 +183,15 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     ++total;
     if(exist[asset]) {
       ++removed;
-      zip.remove(assets[asset]);
+      delete files[assets[asset]];
     }
   }
 
   let blob = sourceFile;
   if(removed > total/2) {
-    zip.file('asset-map.json', JSON.stringify(assets));
+    files['asset-map.json'] = fflate.strToU8(JSON.stringify(assets));
     console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
-    blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
+    blob = await zipBlob(files, total-removed < 5);
   }
 
   var req = new XMLHttpRequest();
@@ -669,7 +703,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   }
 
   $('#stateAddOverlay button[icon=upload]').onclick = function() {
-    loadJSZip();
+    loadZipLibrary();
     showStatesOverlay('statesOverlay');
     selectVTTfile(addStateFile);
   };
@@ -867,7 +901,7 @@ function fillStateDetails(states, state, dom) {
     enableEditing(vEntry, emptyVariant);
   };
   $('#variantAddOverlay button[icon=upload]').onclick = function(e) {
-    loadJSZip();
+    loadZipLibrary();
     selectVTTfile(function(f) {
       $('#stateDetailsOverlay').classList.add('uploading');
 
@@ -1230,7 +1264,7 @@ onLoad(function() {
   document.addEventListener('drop', function(e) {
     if(e.dataTransfer.files.length) {
       e.preventDefault();
-      loadJSZip();
+      loadZipLibrary();
       for(const file of e.dataTransfer.files)
         resolveStateCollections(file, addStateFile);
     }

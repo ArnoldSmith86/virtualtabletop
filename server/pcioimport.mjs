@@ -1,7 +1,8 @@
 import fs from 'fs';
-import JSZip from 'jszip';
+import CRC32 from 'crc-32';
 
 import Config from './config.mjs';
+import Zip from './zip.mjs';
 
 const pieceColors = {
   default: '#000000',
@@ -16,22 +17,23 @@ const pieceColors = {
 };
 
 export default async function convertPCIO(content) {
-  const zip = await JSZip.loadAsync(content);
-  const widgets = JSON.parse(await zip.files['widgets.json'].async('string'));
+  const entries = Zip.list(content);
+  const widgets = JSON.parse(Zip.readString(content, 'widgets.json'));
 
   const nameMap = {};
   try {
     // created by the client while removing already uploaded assets
-    for(const [ k, v ] of Object.entries(JSON.parse(await zip.files['asset-map.json'].async('string'))))
+    for(const [ k, v ] of Object.entries(JSON.parse(Zip.readString(content, 'asset-map.json'))))
       nameMap[`package://${v}`] = `/assets/${k}`;
   } catch(e) {}
 
-  for(const filename in zip.files) {
-    if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
-      const targetFile = zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
+  for(const filename in entries) {
+    if(filename.match(/^\/?userassets/) && !filename.match(/\/$/) && entries[filename] < 2097152) {
+      const asset = Zip.read(content, [ filename ])[filename];
+      const targetFile = CRC32.buf(asset) + '_' + asset.length;
       nameMap['package://' + filename] = '/assets/' + targetFile;
       if(!Config.resolveAsset(targetFile))
-        fs.writeFileSync(Config.directory('assets') + '/' + targetFile, await zip.files[filename].async('nodebuffer'));
+        fs.writeFileSync(Config.directory('assets') + '/' + targetFile, asset);
     }
   }
 

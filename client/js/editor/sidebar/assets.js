@@ -104,19 +104,19 @@ class AssetsModule extends SidebarModule {
   }
 
   async button_assetDownload(usePropertyFilenames) {
-    loadJSZip();
+    loadZipLibrary();
 
-    await waitForJSZip();
-    const zip = new JSZip();
+    await waitForZipLibrary();
+    const files = {};
     const assets = getAllAssets();
 
     for(const assetObj of assets) {
       const blob = await (await fetch(assetObj.asset.substr(1))).blob();
       const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
-      zip.file(assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin'), blob);
+      files[assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin')] = new Uint8Array(await blob.arrayBuffer());
     }
 
-    triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), 'assets.zip');
+    triggerDownload(URL.createObjectURL(await zipBlob(files)), 'assets.zip');
   }
 
   button_assetUpload() {

@@ -15,17 +15,16 @@ class SaveButton extends ToolbarButtonWithContent {
   }
 
   async button_quickDownload(updateProgress, mode) {
-    loadJSZip();
+    loadZipLibrary();
     updateProgress('Fetching state...');
     const state = await (await fetch(`state/${roomID}`)).json();
     state._meta.info = this.currentMetadata;
-    updateProgress('Loading JSZip...');
-    await waitForJSZip();
+    updateProgress('Loading fflate...');
+    await waitForZipLibrary();
     updateProgress('Building file...');
-    const zip = new JSZip();
-    zip.file('0.json', JSON.stringify(state));
+    const blob = await zipBlob({ '0.json': fflate.strToU8(JSON.stringify(state)) });
     updateProgress('Saving...');
-    triggerDownload(URL.createObjectURL(await zip.generateAsync({type:"blob"})), `QuickDownload without assets ${new Date().toISOString().substr(0,16).replace(/T/, ' ').replace(/:/, '')} - ${this.currentMetadata.name}.vtt`);
+    triggerDownload(URL.createObjectURL(blob), `QuickDownload without assets ${new Date().toISOString().substr(0,16).replace(/T/, ' ').replace(/:/, '')} - ${this.currentMetadata.name}.vtt`);
   }
 
   onEditorClose() {

@@ -9,5 +9,8 @@ export default {
   projects: ["<rootDir>/client"],
   setupFilesAfterEnv: ['<rootDir>/tests/client/setup.js'],
   testEnvironment: "jsdom",
+  // the server modules are tested in the jsdom environment as well, so dependencies have
+  // to resolve to their node build (fflate ships an ESM-only build for browsers)
+  testEnvironmentOptions: { customExportConditions: [ "node" ] },
   verbose: true
 };

@@ -502,7 +502,7 @@ async function loadEditMode() {
       setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
-      loadJSZip, waitForJSZip,
+      loadZipLibrary, waitForZipLibrary, zipBlob,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,

@@ -55,8 +55,7 @@
     "crc-32": "^1.2.2",
     "dompurify": "^3.3.0",
     "express": "^5.1.0",
-    "jszip": "^3.10.1",
-    "node-fetch": "^3.3.2",
+    "fflate": "^0.8.2",
     "ws": "^8.18.3"
   },
   "optionalDependencies": {
