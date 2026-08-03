@@ -1,4 +1,4 @@
-export const VERSION = 21;
+export const VERSION = 22;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -38,6 +38,9 @@ function computeGlobalProperties(state, v) {
   }
 
   v<20 && v20WhiteSpacePreWrapRoutineCheck(state, globalProperties);
+
+  if(v < 22)
+    globalProperties.v22SeatIDs = Object.keys(state).filter(id => state[id] && state[id].type == 'seat');
 
   return globalProperties;
 }
@@ -111,6 +114,7 @@ function updateProperties(properties, v, globalProperties) {
   v<15 && v15SkipTurnProperty(properties);
   v<17 && v17MaterialSymbols(properties);
   v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
+  v<22 && v22SeatProperties(properties, globalProperties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -136,6 +140,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<22 && v22SeatRoutine(routine, globalProperties);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -598,6 +603,237 @@ function v20WhiteSpacePreWrap(properties, globalProperties) {
 
   if(!properties.type && (hasMultipleWhitespaceOrNewline(String(properties.html)) || String(JSON.stringify(properties.inheritFrom)).match(/"html"/)) || (typeof properties.html == 'string' && globalProperties.v20WhiteSpacePreWrapForAllHtml) && !cssHasWhiteSpace(properties.css))
     properties.css = addWhiteSpacePreWrapToCss(properties.css);
+}
+
+// v22 renamed the seat's text/color properties so that "display" is free for the
+// generic show/hide boolean every other widget has:
+//   display      -> seatedText   (only on seats, "display" means something else everywhere else)
+//   displayEmpty -> emptyText
+//   colorEmpty   -> emptyColor
+// displayEmpty and colorEmpty only ever meant something on a seat, so they are
+// renamed wherever a property NAME is expected: property keys, the property-name
+// fields of routine operations and "${PROPERTY ...}" references. Arbitrary
+// strings (labels, html, widget IDs, css class names, comments) are never
+// rewritten - they may legitimately contain those words.
+const v22SeatOnlyNames = { displayEmpty: 'emptyText', colorEmpty: 'emptyColor' };
+
+// routine operation fields that hold a widget property name
+const v22PropertyNameFields = { GET: 'property', SELECT: 'property', SET: 'property', RESET: 'property', SCORE: 'property', SORT: 'key' };
+
+// "${PROPERTY <name>}" / "${PROPERTY <name> OF <id>}". The content is captured
+// in one piece and split afterwards: spelling the two identifiers out in the
+// pattern lets it backtrack quadratically on a crafted game file.
+const v22PropertyExpression = /\$\{PROPERTY ([^{}]*)\}/g;
+const v22PropertyIdentifier = /^[a-zA-Z0-9 _-]+$/;
+
+// name and target of a property expression, or null when it is not the plain
+// form evaluateVariables() resolves statically (a "$variable" indirection or an
+// identifier with characters it does not accept)
+function v22ParsePropertyExpression(content) {
+  // identifiers may contain spaces, so the first " OF " wins - the engine
+  // matches the name lazily and gets the same split
+  const of = content.indexOf(' OF ');
+  const name = of == -1 ? content : content.substr(0, of);
+  const ofID = of == -1 ? undefined : content.substr(of + 4);
+  if(!v22PropertyIdentifier.test(name) || ofID !== undefined && !v22PropertyIdentifier.test(ofID))
+    return null;
+  return { name, ofID };
+}
+
+// The replacement for a property name, or null to keep it. "display" is a real
+// property on every widget, so it is only renamed where the widget it is read
+// from is known to be a seat.
+function v22SeatPropertyName(name, ofID, ownIsSeat, seatIDs) {
+  if(v22SeatOnlyNames[name])
+    return v22SeatOnlyNames[name];
+  if(name == 'display' && (ofID === undefined ? ownIsSeat : seatIDs.indexOf(ofID) != -1))
+    return 'seatedText';
+  return null;
+}
+
+// A seat-only name where a property name is expected, keeping the '!' that
+// negates an entry in an inheritFrom list.
+function v22RenameSeatOnlyName(name) {
+  if(typeof name != 'string')
+    return name;
+  const negated = name.charAt(0) == '!';
+  const renamed = v22SeatOnlyNames[negated ? name.substr(1) : name];
+  return renamed ? (negated ? '!' + renamed : renamed) : name;
+}
+
+// Walks the whole value, renaming property references inside "${PROPERTY ...}"
+// expressions and inside the three structures that hold property names rather
+// than values: inheritFrom (widget ID -> '*' or a list of names), svgReplaces
+// (SVG color -> name) and a face object's dynamicProperties (face object
+// property -> name). Nothing else is touched.
+function v22RenameNames(value, ownIsSeat, seatIDs) {
+  if(typeof value == 'string')
+    return value.replace(v22PropertyExpression, (match, content) => {
+      const expression = v22ParsePropertyExpression(content);
+      const renamed = expression && v22SeatPropertyName(expression.name, expression.ofID, ownIsSeat, seatIDs);
+      return renamed ? `\${PROPERTY ${renamed}${expression.ofID === undefined ? '' : ` OF ${expression.ofID}`}}` : match;
+    });
+
+  if(!value || typeof value != 'object')
+    return value;
+
+  for(const key in value) {
+    const nested = value[key];
+    if((key == 'inheritFrom' || key == 'svgReplaces' || key == 'dynamicProperties') && nested && typeof nested == 'object')
+      for(const name in nested)
+        nested[name] = Array.isArray(nested[name]) ? nested[name].map(v22RenameSeatOnlyName) : v22RenameSeatOnlyName(nested[name]);
+    value[key] = v22RenameNames(nested, ownIsSeat, seatIDs);
+  }
+  return value;
+}
+
+function v22RenameKey(object, from, to) {
+  if(object[from] !== undefined) {
+    object[to] = object[from];
+    delete object[from];
+  }
+}
+
+function v22SeatProperties(properties, globalProperties) {
+  const isSeat = properties.type == 'seat';
+
+  v22RenameNames(properties, isSeat, globalProperties.v22SeatIDs || []);
+
+  for(const from in v22SeatOnlyNames)
+    v22RenameKey(properties, from, v22SeatOnlyNames[from]);
+
+  // "display" is a boolean on every other widget, so it is only renamed on seats
+  if(isSeat) {
+    v22RenameKey(properties, 'display', 'seatedText');
+    v22SeatedColorFromCSS(properties);
+  }
+}
+
+// Before seatedColor existed, the editor's "Fixed color" preset pinned the color
+// of an occupied seat with a ".seated { --color: <color> !important }" rule that
+// beat the color the engine writes inline when someone sits down. seatedColor
+// does that job now, so the rule moves into the property.
+function v22SeatedColorFromCSS(properties) {
+  const seated = properties.css && typeof properties.css == 'object' ? properties.css['.seated'] : null;
+  if(!seated || typeof seated != 'object' || typeof seated['--color'] != 'string')
+    return;
+
+  // without !important the inline player color won anyway, so nothing to move
+  const important = '!important';
+  const raw = seated['--color'].trimEnd();
+  if(!raw.toLowerCase().endsWith(important))
+    return;
+  const value = raw.slice(0, -important.length).trim();
+
+  // the preset pointed at the seat's own empty color; anything else dynamic is
+  // left alone because seatedColor is used verbatim, not evaluated
+  const color = /^\$\{PROPERTY emptyColor\}$/.test(value) ? (properties.emptyColor || '#999999') : value;
+  if(!color || color.indexOf('${') != -1)
+    return;
+
+  properties.seatedColor = color;
+  // a seat that is occupied right now showed the fixed color through the
+  // override, so keep it there instead of falling back to the player color
+  if(properties.player)
+    properties.color = color;
+
+  delete seated['--color'];
+  if(!Object.keys(seated).length)
+    delete properties.css['.seated'];
+}
+
+// The property name an operation works on. GET also accepts a [ property, key ]
+// path and SORT a list of keys, so the name can sit inside an array.
+function v22OperationPropertyNames(operation, field) {
+  const value = operation[field];
+  if(typeof value == 'string')
+    return [ { get: () => value, set: name => operation[field] = name } ];
+  if(!Array.isArray(value) || !value.length)
+    return [];
+  // a GET property path names one property, the rest of the path are keys in it
+  const entries = operation.func == 'GET' ? [ value[0] ] : value;
+  return entries.map((entry, index) => typeof entry == 'string'
+    ? { get: () => value[index], set: name => value[index] = name }
+    : { get: () => entry && typeof entry == 'object' ? entry.key : undefined, set: name => entry.key = name });
+}
+
+// GET names its variable after the property unless one is given, so pin the old
+// name down before renaming - "${colorEmpty}" further down keeps working.
+function v22RenameOperationProperty(operation, field, entry, name) {
+  if(operation.func == 'GET' && operation.variable === undefined)
+    operation.variable = entry.get();
+  entry.set(name);
+}
+
+function v22SeatRoutine(routine, globalProperties) {
+  const seatIDs = globalProperties.v22SeatIDs || [];
+
+  // What a collection provably holds: true = seats only, false = no seats at
+  // all, undefined = unknown. A plain SET/GET/SELECT of "display" cannot be
+  // resolved statically, so it is only renamed for a seats-only collection, or -
+  // when nothing is known about the collection - when the value uses a
+  // placeholder that only a seat text understands.
+  const seatOnly = {};
+
+  for(const operation of routine) {
+    if(!operation || typeof operation != 'object')
+      continue;
+    const collection = operation.collection || 'DEFAULT';
+    const field = v22PropertyNameFields[operation.func];
+    const propertyNames = field ? v22OperationPropertyNames(operation, field) : [];
+
+    for(const entry of propertyNames)
+      if(v22SeatOnlyNames[entry.get()])
+        v22RenameOperationProperty(operation, field, entry, v22SeatOnlyNames[entry.get()]);
+
+    if(operation.func == 'SELECT') {
+      const selectsSeats = v22SelectsSeats(operation);
+      const mode = operation.mode || 'set';
+      if(mode == 'set')
+        seatOnly[collection] = selectsSeats;
+      else if(mode == 'add')
+        seatOnly[collection] = v22Union(seatOnly[collection], selectsSeats);
+      else if(mode == 'intersect')
+        seatOnly[collection] = v22Intersection(seatOnly[collection], selectsSeats);
+      // 'remove' can never bring non-seats into the collection
+    } else if(operation.func == 'CLONE') {
+      delete seatOnly[collection];
+    } else if(operation.func == 'CALL' || operation.func == 'FOREACH' || operation.func == 'IF') {
+      // these run routines of their own which can refill any collection
+      for(const name in seatOnly)
+        delete seatOnly[name];
+    }
+
+    if([ 'SELECT', 'SET', 'GET' ].indexOf(operation.func) == -1)
+      continue;
+    // a SELECT filters on the type it selects, everything else on its collection
+    const targetsSeats = operation.func == 'SELECT' ? v22SelectsSeats(operation) : seatOnly[collection];
+    for(const entry of propertyNames)
+      if(entry.get() == 'display' && (targetsSeats === true || targetsSeats === undefined && v22SeatTextValue(operation)))
+        v22RenameOperationProperty(operation, field, entry, 'seatedText');
+  }
+}
+
+// true if the SELECT provably picks only seats, false if it provably picks none,
+// undefined without a type filter
+function v22SelectsSeats(operation) {
+  if(operation.type === undefined || operation.type == 'all' || typeof operation.type != 'string')
+    return undefined;
+  return operation.type == 'seat';
+}
+
+function v22Union(a, b) {
+  return a === true && b === true ? true : (a === false && b === false ? false : undefined);
+}
+
+function v22Intersection(a, b) {
+  return a === false || b === false ? false : (a === true || b === true ? true : undefined);
+}
+
+// only a seat text understands these placeholders, so a value using one was
+// written for a seat even when the collection cannot be resolved
+function v22SeatTextValue(operation) {
+  return typeof operation.value == 'string' && /\b(playerName|seatIndex)\b/.test(operation.value);
 }
 
 function v21DisableHolderImageWidget(meta, state) {

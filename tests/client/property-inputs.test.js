@@ -37,8 +37,10 @@ const renderIconChip = new Function('div', 'html', 'mapAssetURLs', 'toNotoMonoch
 );
 
 const testWidgets = new Map();
-const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `;
+let playerDetails = { playerColors: {}, activePlayers: [], activeColors: [] };
+const cssHelpers = new Function('SidebarModule', 'widgets', 'getPlayerDetails', propertiesSource + `;
   return {
+    applySeatColor: PropertiesModule.prototype.applySeatColor,
     cssTextFromValue,
     cssStringRoundTrips,
     cssStringToObject,
@@ -59,7 +61,16 @@ const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `
     textSymbolClass,
     textValueFromSymbol
   };
-`)(class {}, testWidgets);
+`)(class {}, testWidgets, () => playerDetails);
+
+// the editor writes "color" through so seatedColor/emptyColor take effect right
+// away instead of only on the next sit/stand
+function seatColorUpdates(properties) {
+  const updates = [];
+  cssHelpers.applySeatColor.call({ inputValueUpdated: (widget, property, value) => updates.push([ property, value ]) },
+    { get: property => properties[property] });
+  return updates;
+}
 
 describe('css helpers', () => {
   test('basic properties exclude the generic inputs from other property sections', () => {
@@ -95,10 +106,10 @@ describe('css helpers', () => {
       '#accent': 'accentColor1',
       '#outline': 'outlineColor2',
       '#border': 'borderColor',
-      '#empty': 'colorEmpty',
+      '#empty': 'emptyColor',
       '#secondary': 'secondaryColor',
       '#alsoIgnored': 'title'
-    })).toEqual([ 'color', 'accentColor1', 'outlineColor2', 'borderColor', 'colorEmpty', 'secondaryColor' ]);
+    })).toEqual([ 'color', 'accentColor1', 'outlineColor2', 'borderColor', 'emptyColor', 'secondaryColor' ]);
   });
 
   test('cssTextFromValue renders all value shapes', () => {
@@ -308,5 +319,31 @@ describe('property input helpers', () => {
 
     expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
     expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
+  });
+});
+
+describe('seat colors', () => {
+  beforeEach(() => {
+    playerDetails = { playerColors: { Alice: '#ff0000', Bob: '#00ff00' }, activePlayers: [ 'Alice' ], activeColors: [ '#ff0000' ] };
+  });
+
+  test('an empty seat takes its empty color', () => {
+    expect(seatColorUpdates({ player: '', emptyColor: '#999999', seatedColor: '#0000ff' })).toEqual([ [ 'color', '#999999' ] ]);
+  });
+
+  test('an occupied seat takes its fixed seated color', () => {
+    expect(seatColorUpdates({ player: 'Alice', emptyColor: '#999999', seatedColor: '#0000ff' })).toEqual([ [ 'color', '#0000ff' ] ]);
+  });
+
+  test('an occupied seat takes the player color back when the toggle goes on', () => {
+    expect(seatColorUpdates({ player: 'Alice', seatedColor: 'playerColor' })).toEqual([ [ 'color', '#ff0000' ] ]);
+  });
+
+  test('a seated player who disconnected still has a color', () => {
+    expect(seatColorUpdates({ player: 'Bob', seatedColor: 'playerColor' })).toEqual([ [ 'color', '#00ff00' ] ]);
+  });
+
+  test('nothing is written for a player the room does not know', () => {
+    expect(seatColorUpdates({ player: 'Carol', seatedColor: 'playerColor' })).toEqual([]);
   });
 });

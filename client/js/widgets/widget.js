@@ -491,7 +491,7 @@ export class Widget extends StateManaged {
     if(this.get('enlarge'))
       className += ' enlarge';
 
-    if(!this.get('display') && this.get('type') != 'seat') // seats already have a display property that does something else
+    if(!this.get('display'))
       className += ' hidden';
 
     if(this.isHighlighted)
