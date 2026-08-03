@@ -17,7 +17,7 @@
       "time": "",
       "attribution": "The example cards in the Basic variant of this tutorial come from various public library games.  Attribution for the images in each deck follows.\n\n\nShape sorter deck:\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)\n\nTutti Frutti deck:\n\nThe fruit images are CC BY 3.0 from Game Developer Studio available at https://opengameart.org/content/fruit-icons-redo.\n\nThe yogurt, spoon, and ice cream images are CC0 and available at:\n - https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-yogurt-cup/24664.html\n - https://publicdomainvectors.org/en/free-clipart/Metallic-spoon/50510.html\n - https://publicdomainvectors.org/en/free-clipart/Color-vector-image-of-three-ice-cream-scoops-in-a-cone/5813.html\n\nCard back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.\n\nLost Temples deck:\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  -  By lorc): https://game-icons.net/1x1/lorc/cut-diamond.html\n\n  -  By faithtoken (gold ore): https://game-icons.net/1x1/faithtoken/ore.html",
       "showName": false,
-      "lastUpdate": 1785722411657,
+      "lastUpdate": 1785775481082,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -3880,7 +3880,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 20px; ",
-    "html": "This deck uses the <b>write</b> type of face object. It essentially acts the same as a label-type widget. There is an important difference: this does not have an <b>id</b> and therefore a routine cannot read or react to it directly. However, the value of what is written is stored in a property on the card that is defined in the dynamicProperties links, and that property can be read and changed using routines. Type something in one or both cards above and then press the erase button for a demonstration.<br><br>In this case, note1 is the title area and note2 is the text area. This example contains two copies of the same type of card, but the value of the stored note property can be different for each.<br><br>One other thing a routine might be useful for is preventing or allowing a card to be edited. Click the lock button to switch between being able to edit the cards and not being able to edit them. To configure this on the card, the editable property must be dynamically linked to a card property."
+    "html": "Type something in one or both cards above and then press the erase button for a demonstration. This deck uses the <b>write</b> type of face object. It essentially acts the same as a label-type widget. There is an important difference: this does not have an <b>id</b> and therefore a routine cannot read or react to it directly. However, the value of what is written is stored in a property on the card that is defined in the dynamicProperties links, and that property can be read and changed using routines.<br><br>In this case, note1 is the title area and note2 is the text area. This example contains two copies of the same type of card, but the value of the stored note property can be different for each.<br><br>One other thing a routine might be useful for is preventing or allowing a card to be edited. Click the lock button to switch between being able to edit the cards and not being able to edit them. To configure this on the card, the editable property must be dynamically linked to a card property."
   },
   "name6": {
     "id": "name6",
@@ -4315,17 +4315,17 @@
     "x": 275,
     "y": 490,
     "z": 7,
-    "text": "Unlocked",
+    "text": "Lock Cards",
     "clickRoutine": [
       {
         "func": "IF",
         "operand1": "${PROPERTY text}",
-        "operand2": "Locked",
+        "operand2": "Unlock Cards",
         "thenRoutine": [
           {
             "func": "SET",
             "property": "text",
-            "value": "Unlocked",
+            "value": "Lock Cards",
             "collection": "thisButton"
           },
           {
@@ -4344,7 +4344,7 @@
           {
             "func": "SET",
             "property": "text",
-            "value": "Locked",
+            "value": "Unlock Cards",
             "collection": "thisButton"
           },
           {
