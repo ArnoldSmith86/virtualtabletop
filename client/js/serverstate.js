@@ -2,6 +2,7 @@ import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { playerName } from './overlays/players.js';
+import { getSeatViewPreview, resetSeatViews, scheduleSeatViewRefresh, seatsChanged, setSeatViewPreview } from './seatview.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
@@ -489,6 +490,7 @@ function receiveStateFromServer(args) {
     widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();
+  resetSeatViews();
   maxZ = {};
   StateManaged.globalUpdateListeners = {};
   StateManaged.inheritFromMapping = {};
@@ -568,6 +570,10 @@ function cancelInputOverlay() {
 }
 
 function removeWidget(widgetID) {
+  const removed = widgets.get(widgetID);
+  const isSeat = removed && removed.get('type') == 'seat';
+  // a swap group with one member less puts the remaining ones in other places
+  const inSeatView = isSeat || !!(removed && removed.get('cycleForViewer'));
   try {
     widgets.get(widgetID).applyRemove();
   } catch(e) {
@@ -575,6 +581,17 @@ function removeWidget(widgetID) {
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+
+  // removing the seat this client looks through (or the previewed one) changes
+  // nothing on the remaining widgets, so nothing else would re-render them
+  if(inSeatView) {
+    if(getSeatViewPreview() == widgetID)
+      setSeatViewPreview(null);
+    else
+      scheduleSeatViewRefresh();
+    if(isSeat)
+      seatsChanged();
+  }
 }
 
 async function removeWidgetLocal(widgetID, keepChildren) {

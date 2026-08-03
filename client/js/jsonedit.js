@@ -1845,6 +1845,11 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
               jeStateNow[property] = '###SELECT ME###';
               jeSetAndSelect({});
             }
+        : property == 'facing' || property == 'rotateForViewer' || property == 'cycleForViewer' ? // Special case: the default is "off", which is a useless starting point
+            async function() {
+              jeStateNow[property] = '###SELECT ME###';
+              jeSetAndSelect(property == 'facing' ? 'viewer' : property == 'cycleForViewer' ? 'seats' : true);
+            }
         : async function() {
              jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
            },

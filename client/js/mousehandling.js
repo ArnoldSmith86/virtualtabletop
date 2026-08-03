@@ -84,10 +84,13 @@ async function inputHandler(name, e) {
         status: 'initial',
         start: new Date(),
         downCoords: coords,
-        moveTarget: widget
+        // "preview as seat" judges per player visibility for the previewed seat,
+        // and visibility decides drop targets - so a drag while previewing would
+        // write state that depends on the preview. It is look-only.
+        moveTarget: getSeatViewPreview() ? null : widget
       };
       const ms = mouseStatus[target.id];
-      let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+      let movable = ms.moveTarget && ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
       while (ms.moveTarget && !movable) {
         let parent = ms.moveTarget.get('parent');
         if(parent && widgets.has(parent)) {

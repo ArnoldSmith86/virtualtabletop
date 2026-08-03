@@ -122,6 +122,7 @@ onLoad(function() {
     const oldName = playerName;
     playerName = args;
     localStorage.setItem('playerName', playerName);
+    scheduleSeatViewRefresh(); // the rename can put this client into another seat
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
   });

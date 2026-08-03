@@ -290,3 +290,11 @@
   flex-flow: row wrap;
   column-gap: 0.7em;
 }
+
+/* "Preview as seat" is a personal view of a shared room - make that obvious.
+   The outline goes on the surface, not on #room: the surface covers it whole
+   and is painted on top of it, so an outline down there is never seen. */
+body.seatViewPreview #topSurface {
+  outline: 4px dashed #e8a33d;
+  outline-offset: -4px;
+}
