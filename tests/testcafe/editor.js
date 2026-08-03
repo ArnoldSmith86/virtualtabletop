@@ -250,7 +250,8 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')                     // add a card type
     .click(deckNode)                                  // select the deck
     .click('#deckEditorTreeAdd')                      // deck "+" adds a new (empty) face, now selected
@@ -339,7 +340,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
   const deckID = await getDeckID();
 
   const editTextAndUndoImmediately = ClientFunction(() => {
-    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
     let input = null;
     for(let i=0; i<rows.length; ++i)
       if(rows[i].querySelector('label').textContent == 'value')
@@ -359,7 +360,8 @@ test('Deck editor: breadcrumb undo and redo', async t => {
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')  // step 1
     .click(deckNode)                         // select the deck
     .click('#deckEditorTreeAdd')             // step 2: deck "+" adds a face (now empty, selected)
@@ -394,7 +396,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   });
   const deckID = await getDeckID();
   const editAndReceiveRemoteChange = ClientFunction(deckID => {
-    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
     let input = null;
     for(let i=0; i<rows.length; ++i)
       if(rows[i].querySelector('label').textContent == 'value')
@@ -418,7 +420,8 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')
     .click(deckNode)
     .click('#deckEditorTreeAdd')
@@ -454,7 +457,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
 
   const rapidEditsThenAddFace = ClientFunction(() => new Promise(resolve => {
     const setField = (label, value) => {
-      const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+      const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
       for(const row of rows) {
         if(row.querySelector('label').textContent == label) {
           const input = row.querySelector('input');
@@ -484,7 +487,8 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
   const getFaceCount = ClientFunction(deckID => widgets.get(deckID).get('faceTemplates').length);
 
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')
     .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(0)) // select the existing object
     .click('#deckEditorTreeAdd')                                    // reveal the add-object controls
@@ -523,7 +527,8 @@ test('Deck editor: switching games while editing does not crash', async t => {
   const deckID = await getDeckID();
 
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd'); // make a change, leaving the deck editor open
 
   // Simulate switching to another game: replace the whole room state. The deck being edited disappears.
@@ -702,7 +707,7 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
   await t.click('#editorToolbar [icon=style]');
   await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
   await t.expect(toolbarButton.hasClass('active')).ok();
-  await t.expect(Selector('#deckEditorClose').exists).notOk(); // the old Close button is gone
+  await t.expect(Selector('#deckEditorClose').exists).ok(); // the Close button next to Card view
 
   // close via the same button
   await t.click('#editorToolbar [icon=style]');
@@ -729,6 +734,13 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
   await t.pressKey('esc');
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(toolbarButton.hasClass('active')).notOk();
+
+  // close via the Close button next to Card view -> the toolbar button must deactivate too
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.click('#deckEditorClose');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(toolbarButton.hasClass('active')).notOk();
 });
 
 // With no deck in the game, the toolbar button creates a starter deck (like the Properties tab option) and
@@ -752,6 +764,166 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(deckCount()).eql(0)      // ...but no deck is auto-created
     .pressKey('esc')
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
+});
+
+// Several face objects can be selected at once (Ctrl/Shift+click on the card or in the tree). A property row
+// then writes to all of them - showing "(mixed)" while they disagree - and the Object tab's align/distribute
+// buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget
+// sidebar uses, which is what the group/summary expectations below check.
+test('Deck editor: multi-selected face objects share property edits and alignment', async t => {
+  await setRoomState({
+    multiDeck: {
+      id: 'multiDeck', type: 'deck', x: 20, y: 20,
+      cardTypes: { plain: {} },
+      faceTemplates: [ { objects: [
+        { type: 'text', x: 4,   y: 10,  width: 40, height: 20, fontSize: 14, value: 'one',    color: '#000000' },
+        { type: 'text', x: 30,  y: 60,  width: 60, height: 20, fontSize: 14, value: 'two',    color: '#000000' },
+        { type: 'text', x: 12,  y: 120, width: 50, height: 20, fontSize: 14, value: 'three',  color: '#333333' },
+        { type: 'text', x: 200, y: 200, width: 50, height: 20, fontSize: 14, value: 'hidden', color: '#333333', display: false }
+      ] } ]
+    },
+    multiCard: { id: 'multiCard', type: 'card', deck: 'multiDeck', cardType: 'plain', x: 300, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
+  const groupTitles = ClientFunction(() => {
+    const titles = [];
+    const groups = document.querySelectorAll('#deckEditorSidebar .deckEditorGroupTitle');
+    for(let i = 0; i < groups.length; ++i)
+      titles.push(groups[i].textContent);
+    return titles;
+  });
+  const faceObjects = ClientFunction(() => JSON.stringify(widgets.get('multiDeck').get('faceTemplates')[0].objects));
+  // What kind of field a property row got, and whether it says the objects disagree - a "(mixed)" row has to
+  // keep the type of the property (a checkbox stays a checkbox) instead of falling back to a text field.
+  const fieldOf = ClientFunction(label => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
+    for(let i = 0; i < rows.length; ++i) {
+      if(rows[i].querySelector('label').textContent == label) {
+        const input = rows[i].querySelector('input, textarea');
+        return `${input.type || input.tagName.toLowerCase()}:${input.indeterminate || input.placeholder == '(mixed)' ? 'mixed' : 'common'}`;
+      }
+    }
+    return null;
+  });
+  // A shift+click on the text field of a row that is already being typed in - focused first, so the click sees
+  // the field the way it does mid-edit. Returns whether the field kept the focus.
+  const shiftClickFocusedField = ClientFunction(row => {
+    const input = document.querySelectorAll('#deckEditorTree .deckEditorObjectRow')[row].querySelector('.deckEditorPreviewText');
+    input.focus();
+    input.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, shiftKey: true }));
+    input.dispatchEvent(new MouseEvent('click', { bubbles: true, shiftKey: true }));
+    return document.activeElement == input;
+  });
+  const setSharedField = ClientFunction((label, value) => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
+    for(let i = 0; i < rows.length; ++i) {
+      if(rows[i].querySelector('label').textContent == label) {
+        const input = rows[i].querySelector('input');
+        const placeholder = input.placeholder;
+        input.value = value;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        return placeholder;
+      }
+    }
+    return null;
+  });
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_multiDeck') // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor on it
+    .click(objectRow.nth(0));
+  // one object: the properties are sorted into the same blocks the Edit Widget sidebar uses
+  await t
+    .expect(groupTitles()).eql([ 'Content', 'Position', 'Size', 'Colors', 'Appearance' ])
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).ok(); // needs a second object
+
+  await t
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(Selector('#deckEditorMain .deckEditorSelectedObject').count).eql(3)
+    .expect(Selector('#deckEditorSidebar header h2').innerText).eql('3 face objects selected (1, 2, 3)')
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).notOk()
+    .expect(Selector('#deckEditorDistributeV').hasAttribute('disabled')).notOk();
+
+  // the three objects disagree about their color, so the row says so - and typing gives all of them the value
+  await t.expect(setSharedField('color', '#cc0000')).eql('(mixed)');
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  await t
+    .click('#deckEditorAlignLeft')
+    .click('#deckEditorDistributeV')
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3); // the selection survives
+  await t.wait(700); // let the alignment's commit reach the server
+  const aligned = JSON.parse(await faceObjects());
+  await t
+    .expect(aligned[0].x).eql(aligned[1].x) // aligned left: one x for all three
+    .expect(aligned[1].x).eql(aligned[2].x)
+    // distributed vertically: equal gaps, i.e. equal steps since the three are equally tall (±1 for rounding)
+    .expect(Math.abs((aligned[1].y - aligned[0].y) - (aligned[2].y - aligned[1].y)) <= 1).ok()
+    .pressKey('ctrl+a') // Ctrl+A picks up the whole face, including the hidden object
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // a hidden object has no box on screen, so aligning must leave it where it is instead of moving it to where
+  // its zero-sized rectangle appears to be
+  await t.click('#deckEditorAlignLeft');
+  await t.expect(JSON.parse(await faceObjects())[3].x).eql(200);
+
+  // ...and with nothing but that hidden object next to a single visible one there is nothing to align at all,
+  // so the button has to be disabled instead of being clickable and doing nothing
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(2)
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).ok()
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } }) // back to the whole face for the rows below
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // display is set on the hidden object only, so its row is a "(mixed)" checkbox - not a text field, which
+  // would write the string "false"/"true" into every object
+  await t.expect(fieldOf('display')).eql('checkbox:mixed');
+  const displayRow = Selector('#deckEditorSidebar .deckEditorObjectProperties .genericInput')
+    .filter(node => node.querySelector('label').textContent == 'display');
+  await t.click(displayRow.find('input'));
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  const objects = JSON.parse(await faceObjects());
+  await t
+    .expect(objects.every(object => object.display === true)).ok() // booleans, not strings
+    .expect(fieldOf('display')).eql('checkbox:common');
+
+  // Shift+click makes the range the whole selection: an object picked up with ctrl before, but outside the
+  // range, is dropped. Ctrl+shift+click is the additive version that keeps it.
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(1), { modifiers: { shift: true } }) // range 2-4, so object 1 goes away
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(objectRow.nth(0).hasClass('selected')).notOk()
+    .click(objectRow.nth(0), { modifiers: { ctrl: true, shift: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // Inside the text field that is currently being typed in, shift+click is the field's own "extend the caret
+  // selection" gesture: it must leave the object selection (and the focus) alone instead of rebuilding the tree.
+  await t
+    .click(objectRow.nth(1))
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(shiftClickFocusedField(3)).ok() // the field keeps the focus...
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3); // ...and the selection stands
+
+  // dragging one of the rows to a new position reorders the objects and carries the whole selection along
+  // instead of dropping it
+  await t
+    .dragToElement(objectRow.nth(3), objectRow.nth(0))
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .pressKey('esc');
+  await compareState(t, '101012d22e8e8d136d73d75bc4d4a5f7');
 });
 
 test('Line widget in edit mode', async t => {

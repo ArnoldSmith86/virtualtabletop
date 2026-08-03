@@ -803,7 +803,7 @@ const operationProps = {
         'collection': 'inCollection',
         'mode': getEnumValidator(['set','inc','dec','pause','start','toggle','reset']),
         'value': v=>typeof v === 'number' || typeof v === 'string',
-        'seconds': 'number'
+        'seconds': v=>typeof v === 'number' || typeof v === 'string' && /^-?\d+:\d+(\.\d+)?$/.test(v)
     },
     'TURN': {
         'turn': v=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last',
