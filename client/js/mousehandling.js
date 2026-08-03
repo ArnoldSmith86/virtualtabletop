@@ -60,7 +60,11 @@ async function inputHandler(name, e) {
   else if(name == 'mousemove' || name == 'mouseup')
     target = mouseTarget;
 
-  if(target && target.id) {
+  let contextMenuHandled = false;
+  if(!edit && !jeEnabled)
+    contextMenuHandled = handleContextMenuInput(name, e);
+
+  if(!contextMenuHandled && target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
     // A widget can be replaced while an input event is still in flight (for
     // example, immediately after its ID is renamed in the properties editor).
@@ -101,7 +105,7 @@ async function inputHandler(name, e) {
       if (movable) {
         ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
       }
-    } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
+    } else if((name == 'mouseup' || name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
@@ -141,7 +145,7 @@ async function inputHandler(name, e) {
         }
       }
       delete mouseStatus[target.id];
-    } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
+    } else if((name == 'mousemove' || name == 'touchmove') && mouseStatus[target.id]) {
       setDeltaCause(`${playerName} dragged ${widget.id}`);
       if(mouseStatus[target.id].status == 'initial') {
         mouseStatus[target.id].status = 'moving';

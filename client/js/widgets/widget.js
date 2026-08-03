@@ -132,8 +132,12 @@ export class Widget extends StateManaged {
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
+      rightClickRoutine: null,
       doubleClickRoutine: null,
       changeRoutine: null,
+      rotationSteps: null,
+      contextMenu: null,
+      contextMenuOptions: null,
       enterRoutine: null,
       leaveRoutine: null,
       globalUpdateRoutine: null,
@@ -148,7 +152,13 @@ export class Widget extends StateManaged {
     });
     this.domElement.timer = false
 
-    this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
+    this.domElement.addEventListener('contextmenu', e => {
+      // in play mode, handleContextMenuInput in mousehandling.js takes over
+      if (document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit'))
+        this.showEnlarged(e);
+      else
+        e.preventDefault();
+    }, false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
@@ -163,14 +173,19 @@ export class Widget extends StateManaged {
     this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
+      onTouchEndContextMenu();
       this.hideEnlarged();
     }
 
     this.onlongtouch = function() {
-      this.showEnlarged();
+      if (document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit')) {
+        this.showEnlarged();
+        this.domElement.classList.add('longtouch');
+      } else {
+        onLongTouch(this);
+      }
       clearTimeout(this.timer);
       this.timer = null;
-      this.domElement.classList.add('longtouch');
     }
 
     this.animateTimeouts = {};
@@ -1166,6 +1181,29 @@ export class Widget extends StateManaged {
         }
         if (!a.return)
           abortRoutine = true;
+      }
+
+      if(a.func == 'CONTEXTMENU') {
+        setDefaults(a, { collection: 'DEFAULT', contextMenu: null, property: null });
+        const collection = getCollection(a.collection);
+        if (collection && collections[collection] && collections[collection].length) {
+          const targetWidget = collections[collection][0];
+          let menu = a.contextMenu;
+          if (menu === undefined || menu === null) {
+            if (typeof a.property === 'string') menu = targetWidget.get(a.property);
+            else menu = [];
+          }
+          if (Array.isArray(menu)) {
+            const overrides = {};
+            if (typeof a.factor === 'number') overrides.factor = a.factor;
+            if (typeof a.title === 'string') overrides.title = a.title;
+            if (typeof a.color === 'string') overrides.color = a.color;
+            if (a.image !== undefined && a.image !== null) overrides.image = a.image;
+            if (a.widget !== undefined && a.widget !== null) overrides.widget = a.widget;
+            const hasOverrides = Object.keys(overrides).length > 0;
+            setTimeout(() => openContextMenuWithMenu(targetWidget, menu, hasOverrides ? overrides : undefined), 0);
+          }
+        }
       }
 
       if(a.func == 'CANVAS') {
