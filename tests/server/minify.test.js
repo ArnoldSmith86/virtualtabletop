@@ -26,12 +26,14 @@ function windowAPINames() {
   return assign.split(',').map(name => name.trim()).filter(name => /^[\w$]+$/.test(name));
 }
 
-function editorExportNames(readableBuild) {
+// terser leaves `export function foo` alone and collects the rest into an `export{a as foo}` list,
+// so reading the names out of a bundle has to cover both forms and the renamed left half.
+function exportedNames(js) {
   const names = new Set();
-  for(const [ , name ] of readableBuild.editorJSmin.matchAll(/^export\s+(?:async\s+)?(?:function|class|const|let|var)\s+([\w$]+)/gm))
+  for(const [ , name ] of js.matchAll(/export\s+(?:async\s+)?(?:function|class|const|let|var)\s+([\w$]+)/g))
     names.add(name);
-  for(const [ , list ] of readableBuild.editorJSmin.matchAll(/^export\s*\{([^}]*)\}/gm))
-    for(const name of list.split(',').map(name => name.trim()).filter(name => /^[\w$]+$/.test(name)))
+  for(const [ , list ] of js.matchAll(/export\s*\{([^}]*)\}/g))
+    for(const name of list.split(',').map(entry => entry.trim().split(/\s+as\s+/).pop()).filter(name => /^[\w$]+$/.test(name)))
       names.add(name);
   return [ ...names ];
 }
@@ -72,7 +74,7 @@ describe('minifyHTML with minifyJavascript enabled', () => {
   beforeAll(async () => {
     // the readable build still has the export statements, so it is where the list of names that
     // have to survive the minified one comes from
-    exportedByEditMode = editorExportNames(await buildWith('false'));
+    exportedByEditMode = exportedNames((await buildWith('false')).editorJSmin);
     build = await buildWith('true');
   }, 60000);
 
@@ -97,9 +99,10 @@ describe('minifyHTML with minifyJavascript enabled', () => {
   });
 
   test('keeps the names edit mode hands back to the client bundle', () => {
+    const stillExported = exportedNames(build.editorJSmin);
     expect(exportedByEditMode.length).toBeGreaterThan(10);
     for(const name of exportedByEditMode)
-      expect(build.editorJSmin).toMatch(new RegExp(`\\b${name}\\b`));
+      expect(stillExported).toContain(name);  // exported, not just mentioned somewhere
   });
 
   // fflate is served from node_modules as it is, only pre-compressed

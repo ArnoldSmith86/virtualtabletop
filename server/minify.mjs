@@ -227,7 +227,7 @@ export default async function minifyHTML() {
   // fflate is the one client script that does not go through the bundles: it is loaded on demand
   // (loadZipLibrary in client/js/overlays/states.js) and served straight from node_modules. It
   // already arrives minified, but it was sent uncompressed.
-  const fflate = fs.readFileSync('node_modules/fflate/umd/index.js');
+  const fflate = fs.readFileSync(path.resolve() + '/node_modules/fflate/umd/index.js');
 
   return {
     min: room.min,
@@ -275,9 +275,16 @@ function removeImportStatements(jsContent) {
 // only true for the client bundle: the editor bundle is imported by main.js, so its exports are
 // its interface and have to stay.
 function removeExportStatements(jsContent) {
-  return jsContent
-    .replace(/^export\s*\{[^}]*\};?\r?\n/gm, '')
+  const stripped = jsContent
+    .replace(/^export\s*(?:\*|\{[^}]*\})[^;\n]*;?\r?\n/gm, '')  // export {a, b}; and both re-export forms
     .replace(/^export\s+(?=(?:async\s+)?(?:function|class|const|let|var)\b)/gm, '');
+
+  // export default is the one form that cannot just be unwrapped - dropping the keywords would
+  // leave an anonymous declaration behind - so anything left is reported instead of being shipped
+  for(const [ statement ] of stripped.matchAll(/^export\b.*/gm))
+    Logging.log(`ERROR - JS minification - cannot remove "${statement.trim()}" from the client bundle`);
+
+  return stripped;
 }
 
 async function compressJS(jsFiles, keepExports) {
