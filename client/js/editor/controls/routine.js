@@ -230,8 +230,8 @@ const flipFaceWords = { '0': 'face up', '1': 'face down' };
 
 // "1 widgets" is not a sentence: the wording follows the number, while the chip
 // stays in it either way so the number is still there to be changed
-function widgetsCounted(v, parameter) {
-  return `{${parameter}} widget${Math.abs(v(parameter)) == 1 ? '' : 's'}`;
+function widgetsCounted(v, parameter, singular = 'widget', plural = `${singular}s`) {
+  return `{${parameter}} ${Math.abs(v(parameter)) == 1 ? singular : plural}`;
 }
 
 // the operations that take a count cut the list of widgets at it (slice(0,
@@ -372,7 +372,9 @@ const routineOperationMetadata = {
     variants: [
       { id: 'reset', label: 'Reset a canvas', fixed: [ 'mode' ], match: v=>v('mode') == 'reset',
         apply: operation=>{ operation.mode = 'reset'; },
-        template: 'Clear the canvas{{canvas}}' },
+        // the noun the collection brings with it is the only one the sentence
+        // needs: "Clear the canvas the picked canvases" said it twice
+        template: 'Clear{{canvas}}' },
       { id: 'set', label: 'Set the value of canvas fields', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
         template: 'Set the value of{{canvas}} to {value}' },
@@ -391,7 +393,7 @@ const routineOperationMetadata = {
     ],
     clauses: [
       canvasTargetClause,
-      { id: 'count', label: 'only n of them', template: ', for {count} widgets', add: { count: 1 } }
+      { id: 'count', label: 'at most n of them', template: v=>`, for ${widgetsCounted(v, 'count', 'canvas', 'canvases')}`, add: { count: 1 } }
     ],
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
@@ -405,7 +407,11 @@ const routineOperationMetadata = {
         with collection - and only collection works with the collections earlier operations define.
         </pre>
       ` },
-      count: { type: 'number', default: null, display: { 'null': 'all' } },
+      // the engine cuts the list at the count (slice(0, a.count || 999999)), so
+      // no count means every canvas and a negative one leaves that many alone -
+      // which is what the chip says instead of a bare number that reads like the
+      // opposite. A count of 0 is the one ignored below, where it says why
+      count: { type: 'number', default: null, display: value=>value === null || value === 0 ? 'all' : countWords(value) },
       value: { type: 'number', default: 1 },
       color: { type: 'color', default: '#1F5CA6' },
       x: { type: 'number', default: 0 },
@@ -532,11 +538,12 @@ const routineOperationMetadata = {
         template: 'Cycle the face of{{count}} {holder,collection} {faceCycle}' }
     ],
     // how many widgets are turned is a limit rather than a quantity the operation
-    // applies - it turns everything it was given unless a game says otherwise
+    // applies - it turns everything it was given unless a game says otherwise,
+    // and it is worded as the cap it is, the same as everywhere else
     clauses: [
-      { id: 'count', label: 'limit the number', variants: [ 'turn' ], whenOff: ' all widgets',
+      { id: 'count', label: 'at most n of them', variants: [ 'turn' ], whenOff: ' all widgets',
         active: countIsLimited, add: { count: 1 }, template: v=>` ${widgetsCounted(v, 'count')}` },
-      { id: 'count', label: 'limit the number', variants: [ 'cycle' ],
+      { id: 'count', label: 'at most n of them', variants: [ 'cycle' ],
         active: countIsLimited, add: { count: 1 }, template: v=>` ${widgetsCounted(v, 'count')} in` }
     ],
     parameters: {
@@ -770,7 +777,7 @@ const routineOperationMetadata = {
         template: 'Move{{count}}{{collection}} to {to}{{fillTo}}{{face}}' }
     ],
     clauses: [
-      { id: 'count', label: 'only some of them', variants: [ 'collection' ],
+      { id: 'count', label: 'at most n of them', variants: [ 'collection' ],
         active: countIsLimited, add: { count: 1 }, template: ' {count} of' },
       Object.assign(namedGroupClause(), { variants: [ 'collection' ] }),
       { id: 'fillTo', label: 'top up to n', template: ' until it holds {fillTo}', add: { fillTo: 1 } },
@@ -910,7 +917,11 @@ const routineOperationMetadata = {
       round: { type: 'number', default: null, menu: true, specialOnly: true, special: [ null, 1, 2, 3, 4, 5 ], otherLabel: 'another round…',
         display: value=>value === null ? 'a new round' : (typeof value == 'number' ? `round ${value}` : null) },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec' ], default: 'set' },
-      value: { type: 'number', default: null }
+      // a SCORE without a value does not do nothing: the engine fills in 0 for a
+      // Set and 1 for an Add or a Subtract (`a.value = a.mode=='set' ? 0 : 1`),
+      // so the sentence says the number that is going to be used rather than
+      // leaving a blank where the one thing a score is about belongs
+      value: { type: 'number', default: operation=>operation.mode == 'inc' || operation.mode == 'dec' ? 1 : 0 }
     }
   },
   SELECT: {
@@ -1238,6 +1249,11 @@ const inputFieldCSSParameter = { type: 'string', default: '' };
 const inputFieldLabelParameter = { type: 'string', default: '', hint: 'question', display: quotedText };
 const inputFieldVariableParameter = { type: 'string', default: '', hint: 'name' };
 const inputFieldRemembered = ', remembering the answer as {variable}';
+// the value a field opens with is the same option nine times over, so it is
+// worded once: a field that is in a state says which state it is already in
+// ("already ticked", "already on", "already picked"), and every field that holds
+// a value the player can overwrite says that it holds one to begin with
+const inputFieldStartingValue = 'what it starts with';
 
 // the three types that only show something, worded by what they show
 function inputDisplayField(what, hint) {
@@ -1294,7 +1310,7 @@ const routineInputFieldMetadata = {
     answer: 'the text they typed',
     variants: [ { id: 'string', label: 'Ask for text', template: `Ask for text {label}{{value}}${inputFieldRemembered}{{regex}}` } ],
     clauses: [
-      { id: 'value', label: 'filled in to begin with', template: ', starting {value}', add: { value: '' } },
+      { id: 'value', label: inputFieldStartingValue, template: ', starting {value}', add: { value: '' } },
       // a pattern without a hint shows the raw pattern as the error message, so
       // switching the pattern on switches the message on with it
       { id: 'regex', label: 'only text matching a pattern', template: ', only accepting {regex}', add: { regex: '', regexHint: '' } },
@@ -1317,7 +1333,7 @@ const routineInputFieldMetadata = {
     answer: 'the number as TEXT - use parseFloat before doing math with it',
     variants: [ { id: 'number', label: 'Ask for a number', template: `Ask for a number {label}{{value}}{{bounds}}${inputFieldRemembered}` } ],
     clauses: [
-      { id: 'value', label: 'filled in to begin with', template: ', starting {value}', add: { value: 0 } },
+      { id: 'value', label: inputFieldStartingValue, template: ', starting {value}', add: { value: 0 } },
       { id: 'bounds', label: 'a smallest and a largest', add: { min: 1, max: 10 },
         template: v=>{
           if(v('min') != null && v('max') != null)
@@ -1351,7 +1367,7 @@ const routineInputFieldMetadata = {
     clauses: [
       { id: 'step', label: 'how far each notch is', template: ' in steps of {step}', add: { step: 1 } },
       { id: 'unit', label: 'what the number is measured in', template: ', showing {unit}', add: { unit: '%' } },
-      { id: 'value', label: 'where it starts', template: ', starting at {value}' },
+      { id: 'value', label: inputFieldStartingValue, template: ', starting at {value}' },
       inputFieldCSSClause
     ],
     parameters: {
@@ -1372,7 +1388,7 @@ const routineInputFieldMetadata = {
     variants: [ { id: 'select', label: 'Ask them to pick one of', template: `Ask them to pick one of {options}{{value}}{{label}}${inputFieldRemembered}` } ],
     clauses: [
       { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
-      { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}' },
+      { id: 'value', label: inputFieldStartingValue, template: ', starting at {value}' },
       inputFieldCSSClause
     ],
     parameters: {
@@ -1391,7 +1407,7 @@ const routineInputFieldMetadata = {
     variants: [ { id: 'palette', label: 'Ask them to pick a color from', template: `Ask them to pick a color from {colors}{{value}}{{label}}${inputFieldRemembered}` } ],
     clauses: [
       { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
-      { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}' },
+      { id: 'value', label: inputFieldStartingValue, template: ', starting at {value}' },
       inputFieldCSSClause
     ],
     parameters: {
@@ -1408,7 +1424,7 @@ const routineInputFieldMetadata = {
     variants: [ { id: 'color', label: 'Ask them to pick any color', template: `Ask them to pick any color{{label}}{{value}}${inputFieldRemembered}` } ],
     clauses: [
       { id: 'label', label: 'a question in front of it', template: ', asked as {label}' },
-      { id: 'value', label: 'the one picked to begin with', template: ', starting at {value}', add: { value: '#ff0000' } },
+      { id: 'value', label: inputFieldStartingValue, template: ', starting at {value}', add: { value: '#ff0000' } },
       inputFieldCSSClause
     ],
     parameters: {

@@ -400,8 +400,8 @@ describe('operation rendering', () => {
     expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
     // the deprecated canvas is the option that swaps the collection for it, so
     // the template holds both: the words it adds and the ones it replaces
-    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas[ {canvas}] {collection}');
-    expect(template({ func: 'CANVAS' })).toContain('Clear the canvas[ {canvas}] {collection}');
+    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear[ {canvas}] {collection}');
+    expect(template({ func: 'CANVAS' })).toContain('Clear[ {canvas}] {collection}');
     expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
     expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
     expect(template({ func: 'AUDIO', silence: true })).toContain('Stop all sounds');
@@ -838,7 +838,7 @@ describe('picking how an operation works and which options it uses', () => {
     // and "all" is not a limit at all, so the option that limits it is off
     const flip = editorForOperation({ func: 'FLIP', face: 0 });
     flip.setOperationDetails({ state: {} }, { func: 'FLIP', face: 0 }, [], []);
-    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause)).map(clause => clause.label)).toEqual([ 'limit the number' ]);
+    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause)).map(clause => clause.label)).toEqual([ 'at most n of them' ]);
   });
 
   // which face is one thing a FLIP says, not four ways of working: the two faces
@@ -2743,9 +2743,9 @@ describe('the words and the units of an operation', () => {
   // while a game has it and nothing the editor invites anybody to add - but a
   // game that arrived with one is a minus away from what replaced it
   test('the deprecated CANVAS canvas is shown with a way out but never offered', () => {
-    expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'only n of them' ]);
-    expect(sentenceWords({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear the canvas c1');
-    expect(sentenceWords({ func: 'CANVAS' })).toContain('Clear the canvas the picked canvases');
+    expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'at most n of them' ]);
+    expect(sentenceWords({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear c1');
+    expect(sentenceWords({ func: 'CANVAS' })).toContain('Clear the picked canvases');
 
     const operation = { func: 'CANVAS', canvas: 'c1' };
     const editor = editorFor(operation);
@@ -2757,6 +2757,63 @@ describe('the words and the units of an operation', () => {
     expect(result).toEqual({ func: 'CANVAS' });
   });
 
+  // CANVAS talks about canvases everywhere else, so its count does too - and the
+  // engine cuts the list at it (slice(0, a.count || 999999)), so a negative one
+  // leaves that many alone rather than working on that many
+  test('CANVAS counts canvases, and words a count that does the opposite of what it looks like', () => {
+    expect(sentenceWords({ func: 'CANVAS', count: 3 })).toBe('Clear the picked canvases, for 3 canvases');
+    expect(sentenceWords({ func: 'CANVAS', count: 1 })).toBe('Clear the picked canvases, for 1 canvas');
+    expect(sentenceWords({ func: 'CANVAS', count: -2 })).toBe('Clear the picked canvases, for all but 2 canvases');
+    // and 0 is the count that means all: it is left out of the sentence and the
+    // list view says why, so nobody reads it as "no canvases"
+    expect(sentenceWords({ func: 'CANVAS', count: 0 })).toBe('Clear the picked canvases');
+    expect(editorFor({ func: 'CANVAS', count: 0 }).ignoredParameters().count).toContain('0 means all widgets');
+  });
+
+  // capping how many widgets an operation works on is one idea that had four
+  // names: an option that means the same thing on two operations is worded the
+  // same way on both, so the "+ option" menu reads as one vocabulary
+  test('every option that caps how many widgets are worked on is worded the same', () => {
+    const labels = {};
+    for (const func in routineOperationMetadata)
+      for (const clause of routineOperationMetadata[func].clauses || []) {
+        const spec = routineOperationMetadata[func].parameters[clause.id];
+        if (spec && spec.type == 'number' && (clause.id == 'count' || clause.id == 'max'))
+          labels[`${func} ${clause.id}`] = clause.label;
+      }
+    expect(labels).toEqual({
+      // how often the operation runs is a different idea and keeps its own words
+      'AUDIO count': 'n times',
+      'CLICK count': 'n times',
+      'CANVAS count': 'at most n of them',
+      'FLIP count': 'at most n of them',
+      'MOVE count': 'at most n of them',
+      'SELECT max': 'at most n of them'
+    });
+  });
+
+  // the value a field opens with read six different ways across the nine fields
+  // that collect one: a field that is in a state says which state it is already
+  // in, and every field holding a value the player can overwrite says it alike
+  test('every INPUT field words the value it starts with the same way', () => {
+    const labels = {};
+    for (const type in routineInputFieldMetadata)
+      for (const clause of routineInputFieldMetadata[type].clauses || [])
+        if (clause.id == 'value')
+          labels[type] = clause.label;
+    expect(labels).toEqual({
+      checkbox: 'already ticked',
+      switch: 'already on',
+      choose: 'already picked',
+      string: 'what it starts with',
+      number: 'what it starts with',
+      slider: 'what it starts with',
+      select: 'what it starts with',
+      palette: 'what it starts with',
+      color: 'what it starts with'
+    });
+  });
+
   // which round a score goes into is part of every SCORE: leaving it out adds
   // one to the end of the list (widget.js), which is a choice like naming one
   test('SCORE says which round in the sentence and has no options left', () => {
@@ -2765,6 +2822,16 @@ describe('the words and the units of an operation', () => {
     expect(offeredOptions({ func: 'SCORE' })).toEqual([]);
     const { dom } = { dom: editorFor({ func: 'SCORE', value: 1 }).render() };
     expect(dom.querySelector('[data-parameter="round"]').classList.contains('routine-editor-parameter-menu')).toBe(true);
+  });
+
+  // a SCORE without a value does not do nothing: widget.js fills in 0 for a Set
+  // and 1 for an Add or a Subtract, so the sentence says the number that is
+  // going to be used instead of a blank where the point of a score belongs
+  test('SCORE says the value it falls back to for the way it works', () => {
+    expect(sentenceWords({ func: 'SCORE' })).toBe('Set score of every seat in a new round to 0');
+    expect(sentenceWords({ func: 'SCORE', mode: 'inc' })).toBe('Add 1 to score of every seat in a new round');
+    expect(sentenceWords({ func: 'SCORE', mode: 'dec' })).toBe('Subtract 1 from score of every seat in a new round');
+    expect(editorFor({ func: 'SCORE' }).render().querySelector('[data-parameter="value"]').classList.contains('routine-editor-parameter-missing')).toBe(false);
   });
 
   test('ROTATE sets the rotation, and its angle picker offers angles instead of digits', () => {
