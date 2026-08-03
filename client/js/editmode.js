@@ -2,23 +2,7 @@
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
-    {
-      id: id+'B',
-      parent: id,
-      fixedParent: true,
-      y: 171.36,
-      width: 111,
-      height: 40,
-      type: 'button',
-      text: 'Recall & Shuffle',
-      movableInEdit: false,
-
-      clickRoutine: [
-        { func: 'RECALL',  holder: '${PROPERTY parent}' },
-        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-      ]
-    }
+    deckResetButton(id, 111, 171.36)
   ];
 
   const types = {};
@@ -1299,6 +1283,7 @@ function populateAddWidgetOverlay() {
 let libraryDecksIndex = null;
 let libraryDecksObserver = null;
 let libraryDeckPreviewCounter = 0;
+let libraryDecksPlacement = null; // set by openLibraryDecksOverlay for the deck a click adds
 const libraryDeckDetailsCache = {};
 
 function getLibraryDeckDetails(entry) {
@@ -1317,7 +1302,10 @@ function getLibraryDeckDetails(entry) {
   return libraryDeckDetailsCache[key];
 }
 
-async function openLibraryDecksOverlay() {
+// placement: what to add around a picked deck, when the browser was opened from the "Add New Deck" dialog (which
+// is hidden while browsing). Opened from anywhere else, a picked deck gets the holder and button it always got.
+async function openLibraryDecksOverlay(placement) {
+  libraryDecksPlacement = placement || deckPlacementDefault;
   showOverlay('libraryDecksOverlay');
   if(libraryDecksIndex == 'loading')
     return;
@@ -1461,6 +1449,7 @@ async function renderLibraryDeckPreview(entry, container) {
 
 // adds the deck like the "add deck" entry of the add widget overlay does:
 // a holder containing the deck, a pile with all its cards and a shuffle button
+// (holder and button are optional when the browser was opened from the "Add New Deck" dialog)
 async function addLibraryDeckToGame(entry) {
   let details;
   try {
@@ -1470,6 +1459,7 @@ async function addLibraryDeckToGame(entry) {
     return;
   }
 
+  const placement = libraryDecksPlacement || deckPlacementDefault;
   batchStart();
   setDeltaCause(`${getPlayerDetails().playerName} added deck ${entry.deck} from public library game ${entry.gameName} in editor`);
 
@@ -1481,47 +1471,40 @@ async function addLibraryDeckToGame(entry) {
 
   const holderWidth  = entry.cardWidth  + 8;
   const holderHeight = entry.cardHeight + 11;
-  await addWidgetLocal({
-    type: 'holder',
-    id,
-    x: Math.round(800 - holderWidth/2),
-    y: Math.round(500 - holderHeight/2),
-    width: holderWidth,
-    height: holderHeight,
-    dropTarget: { type: 'card' }
-  });
-  await addWidgetLocal({
-    id: id+'B',
-    parent: id,
-    fixedParent: true,
-    y: holderHeight,
-    width: holderWidth,
-    height: 40,
-    type: 'button',
-    text: 'Recall & Shuffle',
-    movableInEdit: false,
-
-    clickRoutine: [
-      { func: 'RECALL',  holder: '${PROPERTY parent}' },
-      { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-      { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-    ]
-  });
+  if(placement.holder) {
+    await addWidgetLocal({
+      type: 'holder',
+      id,
+      x: Math.round(800 - holderWidth/2),
+      y: Math.round(500 - holderHeight/2),
+      width: holderWidth,
+      height: holderHeight,
+      dropTarget: { type: 'card' }
+    });
+    if(placement.resetButton)
+      await addWidgetLocal(deckResetButton(id, holderWidth, holderHeight));
+  }
 
   const deckWidth  = details.deck.width  || 86;
   const deckHeight = details.deck.height || 86;
-  await addWidgetLocal(Object.assign({}, details.deck, {
-    id: id+'D',
+  // Without a holder the cards still go into a pile in the middle of the table, and the deck widget (which is
+  // invisible outside edit mode) is placed next to it instead of below it.
+  await addWidgetLocal(Object.assign({}, details.deck, { id: id+'D' }, placement.holder ? {
     parent: id,
     x: Math.round((holderWidth -deckWidth )/2),
     y: Math.round((holderHeight-deckHeight)/2)
+  } : {
+    x: Math.round(800 - entry.cardWidth/2 - deckWidth - 10),
+    y: Math.round(500 - deckHeight/2)
   }));
-  await addWidgetLocal({ type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight });
+  await addWidgetLocal(placement.holder
+    ? { type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight }
+    : { type: 'pile', id: id+'P', x: Math.round(800 - entry.cardWidth/2), y: Math.round(500 - entry.cardHeight/2), width: entry.cardWidth, height: entry.cardHeight });
 
   for(const [ i, card ] of details.cards.entries())
     await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
 
-  overlayDone(id);
+  overlayDone(placement.holder ? id : id+'P');
   batchEnd();
 }
 
@@ -1765,7 +1748,7 @@ export function initializeEditMode(currentMetaData) {
     overlayDone(await addWidgetLocal(hand));
   });
 
-  on('#browseLibraryDecks', 'click', openLibraryDecksOverlay);
+  on('#browseLibraryDecks', 'click', _=>openLibraryDecksOverlay());
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);
   on('#libraryDecksClose', 'click', _=>showOverlay());

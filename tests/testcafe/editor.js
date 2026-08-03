@@ -766,6 +766,56 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
 });
 
+// A rank list is empty while it is being retyped: the design gallery has no card to show then and must say so
+// instead of rendering a card without a card type (which throws and leaves the Add button as it was).
+test('Deck editor: the custom deck wizard survives an empty rank list', async t => {
+  await t.resizeWindow(1280, 900);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // typed into the shared ranks field, which "Same ranks for each suit" copies to every suit
+  const setSharedRanks = ClientFunction(ranks => {
+    const input = document.querySelector('.deckGeneratorSuitRanks');
+    input.value = ranks;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const designs = Selector('.deckDesignButton');
+  const hint = Selector('.deckGeneratorDesignHint');
+  const addToGame = Selector('#deckEditorNewDeckPanel button.green');
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]')
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckOverlay input[value=custom]')
+    .expect(designs.count).gt(0)
+    .expect(hint.textContent).eql('52 cards from 4 suits. Pick how they look:')
+    .click(designs.nth(0))
+    .expect(addToGame.hasAttribute('disabled')).notOk();
+
+  await setSharedRanks('');
+  await t
+    .expect(hint.textContent).eql('Add at least one rank above to see the card designs.')
+    .expect(designs.count).eql(0)
+    .expect(addToGame.hasAttribute('disabled')).ok();
+
+  // and it comes back once there is a rank again - with the design that was picked before still picked, so the
+  // deck can be added without noticing that the gallery was rebuilt in between
+  await setSharedRanks('A');
+  await t
+    .expect(hint.textContent).eql('4 cards from 4 suits. Pick how they look:')
+    .expect(designs.count).gt(0)
+    .expect(designs.nth(0).hasClass('selected')).ok()
+    .expect(addToGame.hasAttribute('disabled')).notOk();
+
+  // a range that would build a card type per rank on every keystroke is cut off, and the hint says so
+  await setSharedRanks('2-100000');
+  await t
+    .expect(hint.textContent).eql('800 cards from 4 suits. Only the first 200 ranks of a suit are used. Pick how they look:')
+    .pressKey('esc');
+});
+
 // Several face objects can be selected at once (Ctrl/Shift+click on the card or in the tree). A property row
 // then writes to all of them - showing "(mixed)" while they disagree - and the Object tab's align/distribute
 // buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget

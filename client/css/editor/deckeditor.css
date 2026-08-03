@@ -464,6 +464,18 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 20;
 }
 
+/* Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
+   (pickSymbolKeepingOverlay), where the rule above no longer applies and it would render behind #deckEditor
+   (z-index 1). Float it over the whole editor instead: above the sidebar (2), the toolbar (3) and the
+   dialog it was opened from (20). */
+#symbolPickerOverlay.symbolPickerAboveEditor {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+  z-index: 30;
+}
+
 #deckEditorExportOverlay {
   position: fixed;
   top: var(--editToolbarHeight);
@@ -705,6 +717,52 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+}
+
+/* Applies to every mode, so it is set apart from the mode list above and the picked mode's panel below. */
+.deckEditorNewDeckOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 16px 0;
+  padding: 10px 12px;
+  border: 1px solid #0002;
+  border-radius: 8px;
+  background: #0000000a;
+}
+
+.deckEditorNewDeckOptionsLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+.deckEditorNewDeckOptions label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* the reset button needs a holder to recall the cards into, so without one its option is off, not just
+   greyed out while still looking ticked */
+.deckEditorNewDeckOptions label:has(input:disabled) {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* what unticking the holder means, shown only once it is unticked */
+.deckEditorNewDeckOptionsHint {
+  display: none;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.deckEditorNewDeckOptions:has(#deckEditorNewDeckHolder:not(:checked)) .deckEditorNewDeckOptionsHint {
+  display: block;
 }
 
 #deckEditorNewDeckPanel:not(:empty) {
