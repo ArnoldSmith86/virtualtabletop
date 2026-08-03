@@ -607,6 +607,31 @@ describe('PCIO importer', () => {
     expect(state.counter_incrementButton.css).toBeUndefined();
   });
 
+  it('paints a gradient text fill onto the glyphs and reports where it cannot', async () => {
+    const gradient = { fill: { type: 'linearGradient', angle: 0, stops: [ { color: '#ff0000', position: 0 }, { color: '#0000ff', position: 1 } ] } };
+    const state = await importWidgets([
+      { id: 'label',   type: 'labelText', x: 0, y: 0,   labelContent: 'Gradient', mainTextStyle: { size: 30, mainFill: gradient.fill } },
+      { id: 'counter', type: 'counter',   x: 0, y: 100, counterValue: 3,          mainTextStyle: { size: 26, mainFill: gradient.fill } },
+      { id: 'button',  type: 'urlButton', x: 0, y: 200, label: 'Rules', clickURL: 'https://example.com',
+        mainTextStyle: { size: 20, mainFill: gradient.fill } }
+    ], 8);
+
+    const gradientCSS = {
+      'background-image': 'linear-gradient(180deg, #ff0000 0%, #0000ff 100%)',
+      '-webkit-background-clip': 'text',
+      'background-clip': 'text',
+      '-webkit-text-fill-color': 'transparent'
+    };
+    expect(state.label.css[' textarea']).toEqual(Object.assign({ 'letter-spacing': '-1px' }, gradientCSS));
+    expect(state.label.css.default.color).toBeUndefined();
+    expect(state.counter.css[' > textarea']).toEqual(Object.assign({ 'font-size': '26px' }, gradientCSS));
+    // the button paints its own background, which clipping the text would eat
+    expect(state.button.css).toBe('font-size: 20px');
+    expect(state._meta.info.importerWarnings).toEqual([
+      'The text of "Rules" is filled with a gradient, which VirtualTabletop only does for labels and counters - it uses the default text colour instead.'
+    ]);
+  });
+
   it('reports the same problem on several widgets as one line', async () => {
     const state = await importWidgets([
       { id: 'a', type: 'holder', x: 0,   y: 0, label: 'One',   layoutType: 'grid' },
@@ -626,11 +651,27 @@ describe('PCIO importer', () => {
     expect(state._meta.info.importerWarnings[0]).toBe('This file uses PlayingCards.io format 9 while the importer only knows up to 8 - anything newer than that is missing.');
   });
 
-  it('shows the address of a webpage button without pretending to open it', async () => {
+  it('makes a webpage button a real link', async () => {
     const state = await importWidgets([
-      { id: 'link', type: 'urlButton', x: 0, y: 0, label: 'Rules', clickURL: 'https://example.com/rules' }
+      { id: 'link', type: 'urlButton', x: 0, y: 0, label: 'Rules & "tips"', clickURL: 'https://example.com/rules?a=1&b=2' }
     ], 8);
 
+    expect(state.link.type).toBe('basic');
+    expect(state.link.classes).toBe('button');
+    expect(state.link.movable).toBe(false);
+    expect(state.link.clickRoutine).toBe(undefined);
+    expect(state.link.html).toContain('href="https://example.com/rules?a=1&amp;b=2"');
+    expect(state.link.html).toContain('>Rules &amp; &quot;tips&quot;</a>');
+    expect(state._meta.info.importerWarnings).toBe(undefined);
+  });
+
+  it('shows the address of a webpage button it cannot link to', async () => {
+    const state = await importWidgets([
+      { id: 'link', type: 'urlButton', x: 0, y: 0, label: 'Rules', clickURL: 'javascript:alert(1)' }
+    ], 8);
+
+    expect(state.link.type).toBe('button');
+    expect(state.link.html).toBe(undefined);
     expect(state.link.clickRoutine).toEqual([ {
       func: 'INPUT',
       header: 'Rules',
@@ -638,10 +679,11 @@ describe('PCIO importer', () => {
       cancelButtonText: null,
       cancelButtonIcon: null,
       fields: [
-        { type: 'text', text: 'On PlayingCards.io this button opened a webpage. VirtualTabletop cannot open links, so here is the address:' },
-        { type: 'text', text: 'https://example.com/rules' }
+        { type: 'text', text: 'On PlayingCards.io this button opened a webpage. VirtualTabletop cannot open this address, so here it is:' },
+        { type: 'text', text: 'javascript:alert(1)' }
       ]
     } ]);
+    expect(state._meta.info.importerWarnings).toEqual([ 'The webpage button "Rules" opens an address that VirtualTabletop cannot follow - it shows it instead.' ]);
   });
 
   it('gives a label text the height PCIO gives it and grows it for wrapping text', async () => {

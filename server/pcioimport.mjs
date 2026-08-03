@@ -189,6 +189,11 @@ export default async function convertPCIO(content) {
     return nameMap[name] || name;
   }
 
+  // text and URLs from the file end up inside a widget's html property
+  function htmlEscape(text) {
+    return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
   // PCIO fill object (solid colour or gradient) as a CSS background/color value
   function pcioFill(fill) {
     if(!fill || typeof fill != 'object')
@@ -208,6 +213,27 @@ export default async function convertPCIO(content) {
     if(fill.type == 'conicGradient')
       return `conic-gradient(from ${fill.angle || 0}deg, ${stops})`;
     return `linear-gradient(${(fill.angle || 0) + 180}deg, ${stops})`;
+  }
+
+  // A text fill can be a gradient, which CSS only paints as a background - so
+  // put it behind the text and clip it to the glyphs. That works where the text
+  // has an element of its own (the textarea of a label or a counter); where the
+  // widget itself shows the text, clipping would take its background with it.
+  function textFill(fill, ownElement, widget) {
+    const value = pcioFill(fill);
+    if(!value)
+      return {};
+    if(!value.match(/gradient\(/))
+      return { 'color': value };
+    if(ownElement)
+      return {
+        'background-image': value,
+        '-webkit-background-clip': 'text',
+        'background-clip': 'text',
+        '-webkit-text-fill-color': 'transparent'
+      };
+    warnAbout('textGradient', widget, (names, count)=>`The text of ${names} is filled with a gradient, which VirtualTabletop only does for labels and counters - ${count > 1 ? 'they use' : 'it uses'} the default text colour instead.`);
+    return {};
   }
 
   // PCIO applies mainBackground/mainOutlines/mainTextStyle/mainBorderRadius to
@@ -244,9 +270,7 @@ export default async function convertPCIO(content) {
         textCSS['line-height'] = `${Math.round(text.size*text.lineHeight)}px`;
       if(text.align)
         textCSS['text-align'] = text.align;
-      const color = pcioFill(text.mainFill);
-      if(color)
-        textCSS['color'] = color;
+      Object.assign(textCSS, textFill(text.mainFill, !!options.textSelector, widget));
       if(text.font && pcioFonts[text.font])
         textCSS['font-family'] = pcioFonts[text.font];
       else if(text.font)
@@ -645,29 +669,43 @@ export default async function convertPCIO(content) {
       }
       addDimensions(w, widget, w.width || 50, w.height || 50);
     } else if(widget.type == 'urlButton') {
-      // VTT cannot open a link from a button - show it so it can be copied
-      w.type = 'button';
-      w.text = widget.label || 'Open';
+      const label = widget.label || 'Open';
+      const url = String(widget.clickURL || widget.url || '');
       addDimensions(w, widget, 80, 80);
-      const url = widget.clickURL || widget.url;
-      if(url) {
-        w.clickRoutine = [
-          {
-            func: 'INPUT',
-            header: w.text,
-            // a single honest button: nothing here navigates anywhere
-            confirmButtonText: 'Close',
-            cancelButtonText: null,
-            cancelButtonIcon: null,
-            fields: [
-              { type: 'text',   text: 'On PlayingCards.io this button opened a webpage. VirtualTabletop cannot open links, so here is the address:' },
-              { type: 'text',   text: url }
-            ]
-          }
-        ];
+      if(url.match(/^(https?:\/\/|mailto:)/i)) {
+        // a link in the html of a basic widget is a real link: the room page
+        // sets <base target="_blank">, so it opens the page in a new tab just
+        // like the PCIO button does. The button class keeps the look, and the
+        // link fills the widget so that a click anywhere on it counts.
+        w.type = 'basic';
+        w.classes = 'button';
+        w.movable = false;
+        w.layer = -1;
+        w.borderRadius = 800;
+        w.html = `<a href="${htmlEscape(url)}" style="display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; color: inherit; text-decoration: none">${htmlEscape(label)}</a>`;
+      } else {
+        // an address VirtualTabletop would not open as a link - show it instead
+        w.type = 'button';
+        w.text = label;
+        if(url) {
+          w.clickRoutine = [
+            {
+              func: 'INPUT',
+              header: label,
+              // a single honest button: nothing here navigates anywhere
+              confirmButtonText: 'Close',
+              cancelButtonText: null,
+              cancelButtonIcon: null,
+              fields: [
+                { type: 'text',   text: 'On PlayingCards.io this button opened a webpage. VirtualTabletop cannot open this address, so here it is:' },
+                { type: 'text',   text: url }
+              ]
+            }
+          ];
+          warnAbout('urlButton', widget, (names, count)=>`The webpage button${count > 1 ? 's' : ''} ${names} ${count > 1 ? 'open addresses' : 'opens an address'} that VirtualTabletop cannot follow - ${count > 1 ? 'they show them' : 'it shows it'} instead.`);
+        }
       }
       pcioStyle(widget, w);
-      warnAbout('urlButton', widget, (names, count)=>`Webpage buttons cannot open a link in VirtualTabletop - the button${count > 1 ? 's' : ''} ${names} now show${count > 1 ? '' : 's'} the address instead.`);
     } else if(widget.type == 'hand') {
       if(widget.enabled === false) {
         warn(`The disabled hand ${widgetName(widget)} was not imported.`);
@@ -1093,9 +1131,11 @@ export default async function convertPCIO(content) {
           'letter-spacing': '-1px'
         }
       };
-      const color = pcioFill(style.mainFill);
-      if(color)
-        w.css.default.color = color;
+      const fill = textFill(style.mainFill, true, widget);
+      if(fill.color)
+        w.css.default.color = fill.color;
+      else
+        Object.assign(w.css[' textarea'], fill);
       if(style.font && pcioFonts[style.font])
         w.css.default['font-family'] = pcioFonts[style.font];
       else if(style.font)
