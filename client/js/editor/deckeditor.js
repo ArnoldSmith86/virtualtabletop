@@ -336,6 +336,8 @@ class DeckEditor {
     $('#deckEditorNewDeckClose').onclick = _=>this.closeNewDeckOverlay();
     for(const radio of $a('#deckEditorNewDeckOverlay input[name=deckEditorNewDeckMode]'))
       radio.onchange = _=>this.renderNewDeckPanel(radio.value);
+    for(const header of $a('#deckEditorNewDeckOverlay .deckEditorNewDeckGroupHeader'))
+      header.onclick = _=>this.openNewDeckGroup(header.parentNode);
     // A reset button recalls the cards into the holder, so it is only offered together with one.
     $('#deckEditorNewDeckHolder').onchange = _=>$('#deckEditorNewDeckResetButton').disabled = !$('#deckEditorNewDeckHolder').checked;
     $('#deckEditorUndo').onclick = _=>this.undo();
@@ -3618,22 +3620,36 @@ class DeckEditor {
 
   // "Add New Deck" opens a small submenu offering every existing way to create a deck. Rather than
   // reinventing those flows, we reuse the ones the properties sidebar already implements (traditional,
-  // custom, image upload, TTS import) by rendering them, and the public-library and empty-deck flows.
+  // custom, image upload, front/back image upload, text cards, TTS import) by rendering them, and the
+  // public-library and empty-deck flows.
   openNewDeckOverlay() {
     if(!this.deckCreator) {
       this.deckCreator = new PropertiesModule();
       // The flows this instance renders are the dialog's, so they follow its placement checkboxes.
       this.deckCreator.newDeckPlacement = newDeckPlacement;
     }
-    // Always start on the "empty deck" default with both placement options on, so the submenu is predictable
-    // each time it opens.
-    const empty = $('#deckEditorNewDeckOverlay input[value=empty]');
-    empty.checked = true;
+    // Always start on the blank deck group with both placement options on, so the submenu is predictable each
+    // time it opens. Opening that group is already the "empty deck" choice, so it also renders the panel.
     $('#deckEditorNewDeckHolder').checked = true;
     $('#deckEditorNewDeckResetButton').checked = true;
     $('#deckEditorNewDeckResetButton').disabled = false;
-    this.renderNewDeckPanel('empty');
+    this.openNewDeckGroup($('#deckEditorNewDeckGroupBlank'));
     showOverlay('deckEditorNewDeckOverlay');
+  }
+
+  // The ways to create a deck are grouped into three expanders - a blank deck, an existing deck, a custom
+  // deck - of which only one is open at a time, so the dialog shows three short rows instead of a wall of
+  // options. Opening a group closes the others and moves the panel doing the actual work into it, right
+  // below the options it belongs to. A group offering several ways waits for one of them to be picked; the
+  // blank deck group has only the one, so opening it is already the choice and its panel shows right away.
+  openNewDeckGroup(group) {
+    for(const other of $a('#deckEditorNewDeckOverlay .deckEditorNewDeckGroup'))
+      other.classList.toggle('deckEditorNewDeckGroupOpen', other == group);
+    const modes = $a('input[name=deckEditorNewDeckMode]', group);
+    for(const radio of $a('#deckEditorNewDeckOverlay input[name=deckEditorNewDeckMode]'))
+      radio.checked = modes.length == 1 && radio == modes[0];
+    $('.deckEditorNewDeckGroupBody', group).append($('#deckEditorNewDeckPanel'));
+    this.renderNewDeckPanel(modes.length == 1 ? modes[0].value : null);
   }
 
   closeNewDeckOverlay() {
@@ -3641,13 +3657,16 @@ class DeckEditor {
     showOverlay();
   }
 
-  // Each mode renders its existing creation flow into the overlay's panel. traditional/custom/images/tts
-  // (and the library) add a fresh deck to the game; once that lands as a delta, deckEditorReceiveDelta
-  // switches the editor to it (this.pendingNewDeck). "empty" opens the new deck here directly.
+  // Each mode renders its existing creation flow into the overlay's panel (no mode picked yet: nothing to
+  // render). Every mode except "empty" adds a fresh deck to the game; once that lands as a delta,
+  // deckEditorReceiveDelta switches the editor to it (this.pendingNewDeck). "empty" opens the new deck here
+  // directly.
   renderNewDeckPanel(mode) {
     const panel = $('#deckEditorNewDeckPanel');
     panel.innerHTML = '';
-    this.pendingNewDeck = mode != 'empty';
+    this.pendingNewDeck = !!mode && mode != 'empty';
+    if(!mode)
+      return;
     if(mode == 'empty') {
       // Card size first, then the (optional) deck id: the size decides what the starter faces and the holder
       // are built at, and it is the harder one to change afterwards.
@@ -3688,6 +3707,10 @@ class DeckEditor {
         this.deckCreator.deckGenerator(moduleDOM);
       else if(mode == 'images')
         this.deckCreator.deckImages(moduleDOM);
+      else if(mode == 'imagePairs')
+        this.deckCreator.deckImagePairs(moduleDOM);
+      else if(mode == 'text')
+        this.deckCreator.deckTextCards(moduleDOM);
       else if(mode == 'tts')
         this.deckCreator.deckImportTTS(moduleDOM);
     }

@@ -705,21 +705,107 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   color: #fff;
 }
 
-.deckEditorNewDeckModes {
+/* The ways to create a deck are grouped into three expanders, only one of which is open at a time - so the
+   dialog opens as three short rows instead of a list of eight radio buttons. */
+.deckEditorNewDeckGroups {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 16px 0;
 }
 
-.deckEditorNewDeckModes label {
+.deckEditorNewDeckGroup {
+  border: 1px solid #0003;
+  border-radius: 6px;
+}
+
+.deckEditorNewDeckGroupHeader {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #0000000d;
+  color: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  text-transform: none;
+}
+
+.deckEditorNewDeckGroupHeader:hover {
+  background: #0000001a;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader,
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader:hover {
+  border-radius: 5px 5px 0 0;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorNewDeckGroupHeader span {
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+  opacity: 0.75;
+}
+
+.deckEditorNewDeckGroupHeader::after {
+  content: "expand_more";
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-family: "Material Symbols";
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader::after {
+  content: "expand_less";
+}
+
+/* The panel of the selected option is moved into the open group (see openNewDeckGroup), so a closed group is
+   nothing but its header. */
+.deckEditorNewDeckGroupBody {
+  display: none;
+  padding: 12px;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupBody {
+  display: block;
+}
+
+.deckEditorNewDeckModes {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
+}
+
+.deckEditorNewDeckModes label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 8px;
   cursor: pointer;
 }
 
-/* Applies to every mode, so it is set apart from the mode list above and the picked mode's panel below. */
+.deckEditorNewDeckModes label span {
+  grid-column: 2;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* A group with a single way to create a deck (the blank one) needs no radio button - opening it is already
+   the choice, and its header says what it does. */
+.deckEditorNewDeckModesSingle {
+  display: none;
+}
+
+/* Applies to every mode, so it is set apart from the groups above and the picked mode's panel, which is moved
+   into the open group. */
 .deckEditorNewDeckOptions {
   display: flex;
   flex-direction: column;
@@ -765,9 +851,24 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   display: block;
 }
 
-#deckEditorNewDeckPanel:not(:empty) {
+/* Separates a group's options from the panel of the selected one - the blank group shows no options, so
+   there is nothing to separate there. */
+.deckEditorNewDeckModes:not(.deckEditorNewDeckModesSingle) + #deckEditorNewDeckPanel:not(:empty) {
   border-top: 1px solid #0002;
   padding-top: 16px;
+}
+
+/* The dialog itself is the scroll container, so pinning the action row to its bottom edge keeps the primary
+   action reachable no matter how tall the panel above it grows. The negative offset and the matching padding
+   make it cover the dialog's own bottom padding, so nothing scrolls through the gap below it. */
+#deckEditorNewDeckPanel .goButton,
+.deckEditorNewDeckButtonBar {
+  position: sticky;
+  bottom: -20px;
+  z-index: 1;
+  margin-top: 8px;
+  padding: 8px 0 20px;
+  background: var(--modalBackgroundColor);
 }
 
 /* Card sizes for a new empty deck: a wrapping row of radio chips, the first (the size decks have always been
@@ -824,6 +925,12 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   display: block;
   background: transparent;
   color: inherit;
+}
+
+/* The sidebar's "overflow-x: hidden" would make this module a scroll container of its own, which would stop
+   the sticky action row below from sticking to the dialog (the actual scroll container). */
+.deckEditorNewDeckModule.tune.editorModule {
+  overflow: visible;
 }
 
 @media (max-width: 700px) {

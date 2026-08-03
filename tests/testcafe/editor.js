@@ -766,6 +766,261 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
 });
 
+// The "Add a new deck" wizard's text-cards section: every typed line becomes a card type with a "text"
+// property, the design inputs shape the two faces and the deck lands in a holder with cards, like the other
+// wizard sections. Card type names are derived from the text, deduplicated, and fall back to a running number
+// when a line has no usable characters (the "______" line below).
+test('Deck editor: add a deck of text cards from the new deck wizard', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=text]');
+
+  // A multi-line value in one go - typeText would send the newlines as key presses.
+  await ClientFunction(() => {
+    const textarea = document.querySelector('.textCardsInput');
+    textarea.value = 'A short one.\n______ + ______ = ______.\nA short one.';
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+  })();
+
+  // A typed value ignores the input's "min"/"max", so an out-of-range card width must be clamped to the
+  // declared range (20-600) rather than reaching the deck - here visible on the real-size preview card.
+  const setDesignValue = ClientFunction((selector, value) => {
+    const input = document.querySelector(selector);
+    input.value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await setDesignValue('.textCardsWidth', '-50');
+  await t.expect(Selector('.textCardsPreviewCard').getStyleProperty('width')).eql('20px');
+  await setDesignValue('.textCardsWidth', '150');
+
+  await t
+    .typeText('.textCardsLabel', 'Test Deck')
+    .typeText('.textCardsFontSize', '20', { replace: true })
+    .typeText('.textCardsCopies', '2', { replace: true })
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+  await compareState(t, '94d9f0542c71541a5e20ae14a37499b1');
+});
+
+// The other way of cutting the typed text into cards: with a blank line as the separator a card's text keeps
+// the line breaks inside it, and the deck label - a textarea - carries its own onto the card backs, where the
+// front's one-line footer flattens them back into spaces.
+test('Deck editor: text cards with line breaks in the new deck wizard', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=text]')
+    .click('.textCardsSplit input[value=block]');
+
+  // Indented lines, a doubled separator and a trailing blank line: all of them are trimmed away, so this is
+  // two card types, the first of which is two lines long.
+  await ClientFunction(() => {
+    for(const [ selector, value ] of [
+      [ '.textCardsInput', 'Cards that make\n   you think twice\n\n\nA short one.\n\n' ],
+      [ '.textCardsLabel', 'Line\nBreak\nDeck' ]
+    ]) {
+      const element = document.querySelector(selector);
+      element.value = value;
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  })();
+
+  await t
+    .expect(Selector('.textCardsStatus').innerText).eql('2 card types × 1 = 2 cards.')
+    .expect(Selector('.textCardsPreviewCard .cardFace.active .cardFaceObject').nth(1).textContent).eql('Cards that make\nyou think twice')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(2); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return {
+      cardTypes: deck.get('cardTypes'),
+      back: deck.get('faceTemplates')[0].objects[1].value,
+      footer: deck.get('faceTemplates')[1].objects[2].value
+    };
+  })();
+
+  await t
+    .expect(deck.cardTypes).eql({
+      'Cards that make you think twic': { text: 'Cards that make\nyou think twice' },
+      'A short one': { text: 'A short one.' }
+    })
+    .expect(deck.back).eql('Line\nBreak\nDeck')
+    .expect(deck.footer).eql('Line Break Deck');
+});
+
+// The wizard's front/back image section: both uploads are sorted by file name - numerically, so front2 comes
+// before front10 - and then matched up position by position, giving every card type its own back image. The
+// card size comes from the aspect ratio of the first front image.
+test('Deck editor: pair front and back images in the new deck wizard', async t => {
+  // 40x60 SVGs, one per file name so the pairing is visible in the resulting cardTypes.
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = [ 'front10.png', 'front2.png', 'front1.png' ];
+  const backs  = [ 'back2.png', 'back10.png', 'back1.png' ];
+  const fileNameOfAsset = {};
+  for(const fileName of [ ...fronts, ...backs ])
+    fileNameOfAsset[asset(fileName)] = fileName;
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
+
+  // The uploads go through a file picker that can't be driven from a test, so uploadAsset is replaced by a
+  // stub handing the wizard the asset paths the server would have returned for the files below.
+  const stubUploadOf = ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  });
+  const uploadButton = Selector('#deckEditorNewDeckPanel [icon=upload]');
+
+  await stubUploadOf(fronts.map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(0));
+  await stubUploadOf(backs.map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(1));
+
+  // The card width is read from the first front image, so wait until the browser knows its size.
+  const firstFrontHeight = ClientFunction(() => document.querySelector('.imagePairList img').naturalHeight);
+  await t.expect(firstFrontHeight()).eql(60);
+
+  await t
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return {
+      width: deck.get('cardDefaults').width,
+      pairs: Object.entries(deck.get('cardTypes')).map(([ cardType, c ])=>`${cardType}: ${fileNameOfAsset[c.image]} + ${fileNameOfAsset[c.backImage]}`)
+    };
+  }, { dependencies: { fileNameOfAsset } })();
+
+  await t.expect(deck.pairs).eql([
+    'front1: front1.png + back1.png',
+    'front2: front2.png + back2.png',
+    'front10: front10.png + back10.png'
+  ]);
+  await t.expect(deck.width).eql(107); // 40x60 fronts at the default card height of 160
+});
+
+// The other states of the same section: unequal numbers of fronts and backs keep "Add to game" disabled until
+// the lists are made to match again by deleting an image, and a single back image is shared by every card.
+test('Deck editor: mismatched and shared card backs in the new deck wizard', async t => {
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
+
+  const stubUploadOf = ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  });
+  const uploadButton = Selector('#deckEditorNewDeckPanel [icon=upload]');
+  const addButton = Selector('#deckEditorNewDeckPanel .goButton [icon=add]');
+  const status = Selector('.imagePairStatus');
+  const backs = Selector('.imagePairList').nth(1).find('.imagePairEntry');
+
+  await stubUploadOf([ 'front1.png', 'front2.png', 'front3.png' ].map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(0));
+  await stubUploadOf([ 'back1.png', 'back2.png' ].map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(1));
+
+  await t
+    .expect(status.innerText).contains('3 fronts but 2 backs')
+    .expect(status.hasClass('imagePairMismatch')).ok()
+    .expect(addButton.hasAttribute('disabled')).ok();
+
+  // Deleting one of the two backs leaves a single back image, which is shared by all three cards.
+  await t
+    .click(backs.nth(1).find('[icon=delete]'))
+    .expect(backs.count).eql(1)
+    .expect(status.innerText).contains('all sharing the single back image')
+    .expect(addButton.hasAttribute('disabled')).notOk();
+
+  await t
+    .click(addButton)
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+
+  await t.expect(await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return Object.values(deck.get('cardTypes')).map(c=>c.backImage);
+  })()).eql(Array(3).fill(asset('back1.png')));
+});
+
+// The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
+// strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
+test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = [ 'card1.png', 'card2.png', 'card3.png', 'card4.png' ];
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=images]');
+
+  // The file picker can't be driven from a test - hand the wizard the asset paths the server would return.
+  await ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  })(fronts.map(fileName=>[ fileName, asset(fileName) ]));
+
+  // Declining a confirmation would abort the whole deck, so this asserts twice: no dialog, and the cards exist.
+  await t
+    .setNativeDialogHandler(() => false)
+    .click('#deckEditorNewDeckPanel #frontsButton')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(4); // the wizard's deck is now open
+
+  await t.expect(await t.getNativeDialogHistory()).eql([]);
+  await t.expect(await ClientFunction(() => {
+    let cards = 0;
+    widgets.forEach(w => { if(w.get('type') == 'card') ++cards; });
+    return cards;
+  })()).eql(4);
+});
+
 // A rank list is empty while it is being retyped: the design gallery has no card to show then and must say so
 // instead of rendering a card without a card type (which throws and leaves the Add button as it was).
 test('Deck editor: the custom deck wizard survives an empty rank list', async t => {
@@ -788,6 +1043,7 @@ test('Deck editor: the custom deck wizard survives an empty rank list', async t 
     .click('#editButton')
     .click('#editorToolbar [icon=style]')
     .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
     .click('#deckEditorNewDeckOverlay input[value=custom]')
     .expect(designs.count).gt(0)
     .expect(hint.textContent).eql('52 cards from 4 suits. Pick how they look:')
