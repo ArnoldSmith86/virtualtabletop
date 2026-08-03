@@ -5323,10 +5323,13 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForDeck(widget) {
-    // Selecting a deck in the Properties module now opens the full deck editor directly instead of the old
-    // minimalist deck view that used to live here. The guard avoids re-opening while it is already up.
-    if(!deckEditor.isOpen())
-      deckEditor.open(widget.id);
+    this.renderTypeHeader(widget);
+    const deckEditorButton = div(this.moduleDOM, 'cardDeckButton', `
+      <button id="propertiesOpenDeckEditor" icon=style>Open deck editor</button>
+    `);
+    $('button', deckEditorButton).onclick = _=>deckEditor.open(widget.id);
+    this.renderBasicSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'cardDefaults', 'cardTypes', 'faceTemplates' ]);
   }
 
   renderForDice(widget) {
