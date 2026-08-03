@@ -5,13 +5,13 @@ setupTestEnvironment();
 
 publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
        [
-         [ 'zpiece15', 'sq23', true ],
-         [ 'zpiece78', 'sq22', true ],
-         [ 'zpiece40', 'sq32', true ],
-         [ 'zpiece72', 'sq12', false ], // not a legal move: the piece bounces back into the holder
-         [ 'zpiece72', 'sq24', true ],
-         [ 'zpiece19', 'sq35', true ],
-         [ 'zpiece08', 'sq53', true ]
+         { from: 'zpiece15', to: 'sq23', sticks: true  },
+         { from: 'zpiece78', to: 'sq22', sticks: true  },
+         { from: 'zpiece40', to: 'sq32', sticks: true  },
+         { from: 'zpiece72', to: 'sq12', sticks: false }, // not a legal move: the piece bounces back into the holder
+         { from: 'zpiece72', to: 'sq24', sticks: true  },
+         { from: 'zpiece19', to: 'sq35', sticks: true  },
+         { from: 'zpiece08', to: 'sq53', sticks: true  }
        ]);
 publicLibraryButtons('Reward',             0, '5290d9113f42a3c0e458a788b5a1ea99', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', 'seat1', 'next'
