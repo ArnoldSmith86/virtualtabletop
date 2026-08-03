@@ -5975,7 +5975,8 @@ class PropertiesModule extends SidebarModule {
     // a delta listener instead of per-property listeners so routines added
     // by other players (properties that did not exist on selection) show up too
     this.addDeltaListener(deltaS=>{
-      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties' ].indexOf(p) != -1)) {
+      // cardDefaults because a deck keeps the routines of its cards in there
+      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties', 'cardDefaults' ].indexOf(p) != -1)) {
         eventsEditor.onPropertyChange();
         this.applyAutomationsFullSize();
       }
@@ -6034,7 +6035,9 @@ class PropertiesModule extends SidebarModule {
   // routine and no property set shows one line saying so, and folding every
   // other section away for it leaves a panel with nothing in it
   hasAutomations() {
-    return this.automationsWidgets.some(widget=>Object.keys(widget.state).some(property=>this.isAutomationProperty(widget, property)));
+    // a deck also counts the routines it hands to its cards - they are cards of
+    // the section like any other routine
+    return this.automationsWidgets.some(widget=>Object.keys(widget.state).some(property=>this.isAutomationProperty(widget, property)) || cardDefaultRoutines(widget).length);
   }
 
   applyAutomationsFullSize() {

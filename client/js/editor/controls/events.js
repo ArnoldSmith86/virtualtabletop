@@ -63,6 +63,58 @@ function describeEventProperty(property) {
   };
 }
 
+// A deck is two things in one place: the widget on the table, which nobody
+// clicks, and the cards it hands out, whose properties come from cardDefaults
+// (see Card.getDefaultValue). So a routine written on a deck runs on the deck
+// widget or on every one of its cards depending on which of the two it is in,
+// and both are listed - a game can have the same routine in both places.
+const routineTargets = {
+  cardDefaults: {
+    badge: 'every card',
+    choice: 'on every card of this deck',
+    note: 'Every card of this deck runs this routine: cardDefaults is what a card takes the properties it does not have itself from. A card type that sets the same routine overrides it.',
+    describe: property=>`cardDefaults ↦ ${property}`
+  },
+  widget: {
+    badge: 'the deck itself',
+    choice: 'on the deck widget itself',
+    note: 'Only the deck widget runs this routine. The cards it hands out do not - players click the cards, not the deck.',
+    describe: property=>property
+  }
+};
+
+function widgetTypeOf(widget) {
+  return typeof widget.get == 'function' ? widget.get('type') : widget.state.type;
+}
+
+// where the routines of a widget live: its own properties, plus - for a deck -
+// the card defaults it hands to its cards. cardDefaults comes first because a
+// routine written on a deck is nearly always meant for its cards.
+function routineTargetsOf(widget) {
+  return widgetTypeOf(widget) == 'deck' ? [ 'cardDefaults', 'widget' ] : [ 'widget' ];
+}
+
+function cardDefaultsOf(widget) {
+  const value = widget.state.cardDefaults;
+  return value && typeof value == 'object' && !Array.isArray(value) ? value : {};
+}
+
+function routinePropertiesIn(source) {
+  return Object.keys(source).filter(p=>p.match(/Routine$/) && Array.isArray(source[p]));
+}
+
+// the routines a deck gives its cards - the Automations section lists them, so
+// the properties module counts them as automations too
+function cardDefaultRoutines(widget) {
+  return widgetTypeOf(widget) == 'deck' ? routinePropertiesIn(cardDefaultsOf(widget)) : [];
+}
+
+// what a routine card is filed under - which is the property name everywhere
+// except for the card defaults of a deck, where two cards can share it
+function routineEntryKey(property, target) {
+  return target == 'cardDefaults' ? `cardDefaults.${property}` : property;
+}
+
 // object properties that automate widgets without a routine: a set of
 // "property: value" pairs applied at a given moment. onEnter / onLeave belong to
 // the widget types that take other widgets in - a holder and a line, which makes
@@ -127,12 +179,20 @@ function propertySetSuggestions(widget, property, alreadySet) {
   return groups.flatMap(group=>group.names).filter(name=>alreadySet.indexOf(name) == -1);
 }
 
+let addEventPopupCounter = 0;
+
 class AddEventPopup extends Popup {
+  // existingProperties is one list of routine names per place a routine can go
+  // ({ cardDefaults: [...], widget: [...] }); a plain array is the widget's own,
+  // which is all there is for everything but a deck
   constructor(source, existingProperties, callback, widgetType=null) {
     super(source);
-    this.existingProperties = existingProperties;
+    this.existingProperties = Array.isArray(existingProperties) ? { widget: existingProperties } : existingProperties;
     this.callback = callback;
     this.widgetType = widgetType;
+    this.targets = Object.keys(this.existingProperties);
+    this.target = this.targets[0];
+    this.id = ++addEventPopupCounter;
   }
 
   onClick(e) {
@@ -141,8 +201,49 @@ class AddEventPopup extends Popup {
   show() {
     super.show();
     this.setTitle('Add routine');
+    if(this.targets.length > 1)
+      this.renderTargetChoice();
+    this.renderRoutineChoice();
+    this.moveIntoView();
+  }
 
-    let available = predefinedEvents.filter(e=>this.existingProperties.indexOf(e.property) == -1);
+  // Which of the two places a deck keeps routines in this one goes to. The
+  // notice is what the choice is about: written on the deck it stays on the
+  // deck, and the cards only act on what cardDefaults gives them.
+  renderTargetChoice() {
+    const chooser = div(this.domElement, 'add-event-target');
+    div(chooser, 'add-event-description').textContent = 'A deck hands its properties to the cards it makes through cardDefaults. For the cards to act on a routine, it has to be in cardDefaults - a routine on the deck itself only ever runs on the deck widget.';
+    for(const target of this.targets) {
+      const row = div(chooser, 'add-event-target-option');
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = `addEventTarget_${this.id}`;
+      input.id = `addEventTarget_${this.id}_${target}`;
+      input.checked = target == this.target;
+      input.addEventListener('change', _=>{
+        if(!input.checked)
+          return;
+        this.target = target;
+        this.renderRoutineChoice();
+        this.moveIntoView();
+      });
+      row.append(input);
+      const label = document.createElement('label');
+      label.htmlFor = input.id;
+      label.textContent = routineTargets[target].choice;
+      label.title = routineTargets[target].note;
+      row.append(label);
+    }
+  }
+
+  // the routines still available in the chosen place: a deck that already has a
+  // clickRoutine on itself can still get one for its cards
+  renderRoutineChoice() {
+    for(const section of $a('.accordion-section', this.domElement))
+      section.remove();
+    const existing = this.existingProperties[this.target];
+
+    let available = predefinedEvents.filter(e=>existing.indexOf(e.property) == -1);
     // enter/leave events mostly matter for the widgets that take others in (a
     // holder and a line), so list them last elsewhere
     if([ 'holder', 'line' ].indexOf(this.widgetType) == -1) {
@@ -154,7 +255,7 @@ class AddEventPopup extends Popup {
       for(const event of available) {
         const entry = div(predefinedContent, 'add-event-entry');
         button(entry, event.label, _=>{
-          this.callback(event.property);
+          this.callback(event.property, this.target);
           this.hide();
         });
         div(entry, 'add-event-description').textContent = event.description;
@@ -173,9 +274,9 @@ class AddEventPopup extends Popup {
         return;
       if(!name.match(/Routine$/))
         name += 'Routine';
-      if(this.existingProperties.indexOf(name) != -1)
+      if(existing.indexOf(name) != -1)
         return;
-      this.callback(name);
+      this.callback(name, this.target);
       this.hide();
     };
     nameInput.addEventListener('keydown', e=>{
@@ -186,12 +287,13 @@ class AddEventPopup extends Popup {
 
     if(!available.length)
       $('.accordion-content', this.domElement).classList.add('open');
-    this.moveIntoView();
   }
 }
 
-// opens the JSON editor module and scrolls it to the given widget property key
-function openWidgetJsonAtProperty(property) {
+// opens the JSON editor module and scrolls it to the given widget property key.
+// parent is the key the property is nested in (cardDefaults), so that a deck
+// with a clickRoutine of its own and one for its cards scrolls to the right one
+function openWidgetJsonAtProperty(property, parent=null) {
   const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
   if(jsonModuleButton)
     jsonModuleButton.click();
@@ -202,7 +304,12 @@ function openWidgetJsonAtProperty(property) {
     const highlight = $('#jeTextHighlight');
     if(!highlight)
       return;
+    let insideParent = !parent;
     for(const key of $a('i.key', highlight)) {
+      if(!insideParent) {
+        insideParent = key.textContent == parent;
+        continue;
+      }
       if(key.textContent == property) {
         key.scrollIntoView({ block: 'center' });
         break;
@@ -227,28 +334,56 @@ class EventsEditor {
     this.render();
   }
 
-  eventProperties() {
-    const properties = Object.keys(this.widget.state).filter(p=>p.match(/Routine$/) && Array.isArray(this.widget.state[p]));
+  routineSource(target) {
+    return target == 'cardDefaults' ? cardDefaultsOf(this.widget) : this.widget.state;
+  }
+
+  // one entry per routine and the place it is in. The same name in both places
+  // of a deck is two routines with nothing to do with each other, so they are
+  // both listed, next to each other.
+  routineEntries() {
+    const entries = [];
+    for(const target of routineTargetsOf(this.widget))
+      for(const property of routinePropertiesIn(this.routineSource(target)))
+        entries.push({ property, target, key: routineEntryKey(property, target) });
     const predefinedOrder = predefinedEvents.map(e=>e.property);
-    return properties.sort((a, b)=>{
-      const indexA = predefinedOrder.indexOf(a);
-      const indexB = predefinedOrder.indexOf(b);
-      if(indexA != -1 && indexB != -1)
-        return indexA - indexB;
-      if(indexA != indexB)
-        return indexA != -1 ? -1 : 1;
-      return a < b ? -1 : 1;
+    const rank = entry=>{
+      const index = predefinedOrder.indexOf(entry.property);
+      return index == -1 ? predefinedOrder.length : index;
+    };
+    return entries.sort((a, b)=>{
+      if(rank(a) != rank(b))
+        return rank(a) - rank(b);
+      if(a.property != b.property)
+        return a.property < b.property ? -1 : 1;
+      return a.target == 'cardDefaults' ? -1 : 1;
     });
+  }
+
+  // where a routine card writes back to: a routine of the widget is a property
+  // of its own, one of the card defaults an entry of the cardDefaults object
+  setRoutine(entry, value) {
+    if(entry.target != 'cardDefaults')
+      return this.onChange(entry.property, value);
+    const next = Object.assign({}, cardDefaultsOf(this.widget));
+    if(value === undefined)
+      delete next[entry.property];
+    else
+      next[entry.property] = value;
+    this.onChange('cardDefaults', Object.keys(next).length ? next : undefined);
   }
 
   onPropertyChange() {
     // update existing editors in place (a no-op for echoes of our own edits)
     // and re-render the section so added/removed handlers appear
-    for(const property in this.routineEditors) {
-      if(Array.isArray(this.widget.state[property]))
-        this.routineEditors[property].onPropertyChange(this.widget.state[property]);
+    const current = {};
+    for(const entry of this.routineEntries())
+      current[entry.key] = this.routineSource(entry.target)[entry.property];
+    for(const key in this.routineEditors) {
+      if(Array.isArray(current[key]))
+        this.routineEditors[key].onPropertyChange(current[key]);
       else
-        delete this.routineEditors[property];
+        delete this.routineEditors[key];
     }
     this.render();
   }
@@ -258,9 +393,16 @@ class EventsEditor {
 
     div(this.domElement, 'events-editor-group').textContent = 'Routines';
 
-    for(const property of this.eventProperties()) {
+    const entries = this.routineEntries();
+    const targets = routineTargetsOf(this.widget);
+    // the same routine in both places of a deck: each card says so, because on
+    // its own neither would explain why the routine appears twice
+    const inBothPlaces = entries.filter(entry=>entries.filter(other=>other.property == entry.property).length > 1).map(entry=>entry.property);
+
+    for(const entry of entries) {
+      const { property, target, key } = entry;
       const event = describeEventProperty(property);
-      const expanded = !!this.expandedEvents[property];
+      const expanded = !!this.expandedEvents[key];
 
       const eventDOM = div(this.domElement, 'events-editor-event');
       const headerDOM = div(eventDOM, 'events-editor-event-header');
@@ -275,9 +417,17 @@ class EventsEditor {
       label.textContent = event.label;
       headerDOM.append(label);
 
+      // which of the two things a deck is runs this routine - the one thing the
+      // name of the routine cannot say
+      if(targets.length > 1) {
+        const where = div(headerDOM, 'events-editor-where');
+        where.textContent = routineTargets[target].badge;
+        where.title = routineTargets[target].note;
+      }
+
       const name = document.createElement('span');
       name.className = 'events-editor-property';
-      name.textContent = property;
+      name.textContent = routineTargets[target].describe(property);
       headerDOM.append(name);
 
       infoButton(headerDOM, `<pre>${escapeHTML(event.description)}</pre>`);
@@ -294,7 +444,7 @@ class EventsEditor {
       jsonButton.title = 'Open this routine in the JSON editor';
       jsonButton.addEventListener('click', e=>{
         e.stopPropagation();
-        openWidgetJsonAtProperty(property);
+        openWidgetJsonAtProperty(property, target == 'cardDefaults' ? 'cardDefaults' : null);
       });
       headerDOM.append(jsonButton);
 
@@ -304,17 +454,17 @@ class EventsEditor {
       removeButton.title = 'Remove this routine';
       removeButton.addEventListener('click', e=>{
         e.stopPropagation();
-        if(confirm(`Remove ${property} and all its operations?`)) {
-          delete this.expandedEvents[property];
-          delete this.routineEditors[property];
-          this.onChange(property, undefined);
+        if(confirm(`Remove ${routineTargets[target].describe(property)} and all its operations?`)) {
+          delete this.expandedEvents[key];
+          delete this.routineEditors[key];
+          this.setRoutine(entry, undefined);
           this.render();
         }
       });
       headerDOM.append(removeButton);
 
       focusable(headerDOM, _=>{
-        this.expandedEvents[property] = !expanded;
+        this.expandedEvents[key] = !expanded;
         this.render();
       });
       headerDOM.setAttribute('aria-expanded', String(expanded));
@@ -322,18 +472,24 @@ class EventsEditor {
       if(expanded) {
         const contentDOM = div(eventDOM, 'events-editor-event-content');
         contentDOM.addEventListener('click', e=>e.stopPropagation());
-        if(!this.routineEditors[property]) {
+        // what runs this routine, for the widget that is two of them
+        if(targets.length > 1) {
+          const alsoIn = target == 'cardDefaults' ? 'on the deck itself' : 'in cardDefaults';
+          div(contentDOM, 'events-editor-subtitle').textContent = routineTargets[target].note
+            + (inBothPlaces.indexOf(property) == -1 ? '' : ` This deck also has a ${property} ${alsoIn} - the two are separate routines, each with its own operations.`);
+        }
+        if(!this.routineEditors[key]) {
           // clone in both directions: the editor mutates its own copy, and the widget must
           // never share references with it (deltas would alias widget state to the editor's
           // arrays and make later set() calls no-op because the state already "changed")
-          this.routineEditors[property] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.widget.state[property])), [], [], { routineKey: property });
-          this.routineEditors[property].registerChangeListener(v=>this.onChange(property, JSON.parse(JSON.stringify(v))));
+          this.routineEditors[key] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.routineSource(target)[property])), [], [], { routineKey: key });
+          this.routineEditors[key].registerChangeListener(v=>this.setRoutine(entry, JSON.parse(JSON.stringify(v))));
         }
-        contentDOM.append(this.routineEditors[property].domElement);
+        contentDOM.append(this.routineEditors[key].domElement);
       }
     }
 
-    if(!this.eventProperties().length) {
+    if(!entries.length) {
       const emptyHint = document.createElement('div');
       emptyHint.className = 'events-editor-empty';
       emptyHint.textContent = 'This widget has no routines yet.';
@@ -341,12 +497,15 @@ class EventsEditor {
     }
 
     const addButton = button(this.domElement, 'add routine', _=>{
-      const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
-      const popup = new AddEventPopup(addButton, this.eventProperties(), property=>{
-        this.expandedEvents[property] = true;
-        this.onChange(property, []);
+      const existing = {};
+      for(const target of targets)
+        existing[target] = routinePropertiesIn(this.routineSource(target));
+      const popup = new AddEventPopup(addButton, existing, (property, target)=>{
+        const key = routineEntryKey(property, target);
+        this.expandedEvents[key] = true;
+        this.setRoutine({ property, target, key }, []);
         this.render();
-      }, widgetType);
+      }, widgetTypeOf(this.widget));
       popup.show();
     });
     addButton.className = 'events-editor-add';
@@ -355,7 +514,7 @@ class EventsEditor {
   }
 
   renderPropertyAutomations() {
-    const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
+    const widgetType = widgetTypeOf(this.widget);
     const applicable = propertyAutomations.filter(automation=>!automation.types || automation.types.indexOf(widgetType) != -1);
     // "Properties" in the property editor reads as "the other properties" - what
     // these are is a set of properties applied at a given moment

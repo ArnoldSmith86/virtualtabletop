@@ -44,6 +44,17 @@
   white-space: nowrap;
 }
 
+/* a deck is two things in one place - the widget on the table and the cards it
+   hands out - so each of its routine cards says which of the two runs it */
+.events-editor-where {
+  border: 1px solid var(--textColor);
+  border-radius: 8px;
+  padding: 0 6px;
+  font-size: 11px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
 .events-editor-property {
   color: var(--VTTblue);
   font-family: monospace;
@@ -262,6 +273,32 @@ body.edit.darkMode .events-editor-property-key {
 
 .add-event-entry {
   margin-bottom: 6px;
+}
+
+/* which of the two places of a deck a new routine goes to, above the routines
+   themselves: it decides whether the cards will act on it at all */
+.add-event-target {
+  max-width: 300px;
+  margin-bottom: 8px;
+}
+
+.add-event-target-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+/* every other input of a popup fills its width, which a radio button must not */
+.add-event-target-option input[type=radio] {
+  flex: none;
+  width: auto;
+  margin: 0;
+}
+
+.add-event-target-option label {
+  flex: 1;
+  cursor: pointer;
 }
 
 .add-event-description {

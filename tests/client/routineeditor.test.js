@@ -48,7 +48,7 @@ beforeAll(() => {
     'routineInputFieldChoices', 'RoutineStringListPopup', 'inputFieldVariableName',
     'routineComputeOperations', 'routineComputeGroups', 'routineComputeChoices', 'RoutineComputeOperationPopup',
     'parseVarStatement', 'writeVarStatement', 'encodeVarOperand', 'decodeVarOperand',
-    'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
+    'EventsEditor', 'propertyAutomations', 'AddEventPopup', 'cardDefaultRoutines', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
@@ -1481,6 +1481,116 @@ describe('events editor', () => {
     expect(received).toEqual(routineEditor.routine);
     expect(received).not.toBe(routineEditor.routine);
     expect(received[0]).not.toBe(routineEditor.routine[0]);
+  });
+});
+
+describe('the routines of a deck', () => {
+  let deckCounter = 0;
+  function makeDeck(state, onChange = () => {}) {
+    const widget = { state: { id: `deck${deckCounter++}`, type: 'deck', ...state }, get(p) { return this.state[p]; } };
+    const editor = new EventsEditor(widget, (property, value) => {
+      if (value === undefined)
+        delete widget.state[property];
+      else
+        widget.state[property] = value;
+      onChange(property, value);
+    });
+    return { widget, editor };
+  }
+
+  test('the routines of the cards and those of the deck itself are both listed, each saying which it is', () => {
+    const { editor } = makeDeck({ clickRoutine: [], cardDefaults: { width: 50, clickRoutine: [ { func: 'FLIP' } ] } });
+    const names = [...editor.domElement.querySelectorAll('.events-editor-property')].map(e => e.textContent);
+    expect(names.slice(0, 2)).toEqual([ 'cardDefaults ↦ clickRoutine', 'clickRoutine' ]); // resetProperties follows
+    const where = [...editor.domElement.querySelectorAll('.events-editor-where')].map(e => e.textContent);
+    expect(where).toEqual([ 'every card', 'the deck itself' ]);
+  });
+
+  test('a widget with only one place for a routine says nothing about where it runs', () => {
+    const { editor } = makeDeck({ type: 'button', clickRoutine: [] });
+    expect(editor.domElement.querySelector('.events-editor-where')).toBeNull();
+    expect(editor.domElement.querySelector('.events-editor-property').textContent).toBe('clickRoutine');
+  });
+
+  test('the same routine in both places is two cards, each pointing at the other', () => {
+    const { editor } = makeDeck({ clickRoutine: [], cardDefaults: { clickRoutine: [] } });
+    editor.expandedEvents['cardDefaults.clickRoutine'] = true;
+    editor.expandedEvents.clickRoutine = true;
+    editor.render();
+    expect(Object.keys(editor.routineEditors)).toEqual([ 'cardDefaults.clickRoutine', 'clickRoutine' ]);
+    const subtitles = [...editor.domElement.querySelectorAll('.events-editor-subtitle')].map(e => e.textContent);
+    expect(subtitles[0]).toContain('Every card of this deck runs this routine');
+    expect(subtitles[0]).toContain('also has a clickRoutine on the deck itself');
+    expect(subtitles[1]).toContain('Only the deck widget runs this routine');
+    expect(subtitles[1]).toContain('also has a clickRoutine in cardDefaults');
+  });
+
+  test('editing a card routine writes it back into cardDefaults and leaves the other defaults alone', () => {
+    let received = null;
+    const { editor } = makeDeck({ cardDefaults: { width: 50, clickRoutine: [ { func: 'FLIP' } ] } }, (property, value) => received = { property, value });
+    editor.expandedEvents['cardDefaults.clickRoutine'] = true;
+    editor.render();
+    const routineEditor = editor.routineEditors['cardDefaults.clickRoutine'];
+    expect(routineEditor.routine).toEqual([ { func: 'FLIP' } ]);
+    routineEditor.routine.push({ func: 'SHUFFLE' });
+    routineEditor.routineChanged();
+    expect(received).toEqual({ property: 'cardDefaults', value: { width: 50, clickRoutine: [ { func: 'FLIP' }, { func: 'SHUFFLE' } ] } });
+  });
+
+  test('removing a card routine keeps the other card defaults, and the last one takes cardDefaults with it', () => {
+    const confirmed = window.confirm;
+    window.confirm = () => true;
+    try {
+      let received = null;
+      const { widget, editor } = makeDeck({ cardDefaults: { width: 50, clickRoutine: [] } }, (property, value) => received = { property, value });
+      editor.domElement.querySelector('.events-editor-remove').dispatchEvent(new Event('click'));
+      expect(received).toEqual({ property: 'cardDefaults', value: { width: 50 } });
+      expect(widget.state.cardDefaults).toEqual({ width: 50 });
+
+      const { widget: bare, editor: bareEditor } = makeDeck({ cardDefaults: { clickRoutine: [] } });
+      bareEditor.domElement.querySelector('.events-editor-remove').dispatchEvent(new Event('click'));
+      expect(bare.state.cardDefaults).toBeUndefined();
+    } finally {
+      window.confirm = confirmed;
+    }
+  });
+
+  test('a new routine goes to the cards unless the deck itself is picked', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    let added = null;
+    const popup = new AddEventPopup(source, { cardDefaults: [], widget: [ 'clickRoutine' ] }, (property, target) => added = { property, target }, 'deck');
+    popup.show();
+
+    const options = [...popup.domElement.querySelectorAll('.add-event-target-option label')].map(l => l.textContent);
+    expect(options).toEqual([ 'on every card of this deck', 'on the deck widget itself' ]);
+    const [ cards, deck ] = popup.domElement.querySelectorAll('.add-event-target input');
+    expect(cards.checked).toBe(true); // the cards are what a routine on a deck is nearly always for
+    expect(popup.domElement.querySelector('.add-event-description').textContent).toContain('cardDefaults');
+
+    // the deck already has a clickRoutine of its own, which does not stop its cards from getting one
+    expect([...popup.domElement.querySelectorAll('.add-event-entry button')].map(b => b.textContent)).toContain('click');
+    deck.checked = true;
+    deck.dispatchEvent(new Event('change'));
+    expect([...popup.domElement.querySelectorAll('.add-event-entry button')].map(b => b.textContent)).not.toContain('click');
+    cards.checked = true;
+    cards.dispatchEvent(new Event('change'));
+
+    popup.domElement.querySelector('.add-event-entry button').dispatchEvent(new Event('click'));
+    expect(added).toEqual({ property: 'clickRoutine', target: 'cardDefaults' });
+  });
+
+  test('adding a routine for the cards puts an empty one into cardDefaults', () => {
+    let received = null;
+    const { editor } = makeDeck({ cardDefaults: { width: 50 } }, (property, value) => received = { property, value });
+    editor.setRoutine({ property: 'clickRoutine', target: 'cardDefaults', key: 'cardDefaults.clickRoutine' }, []);
+    expect(received).toEqual({ property: 'cardDefaults', value: { width: 50, clickRoutine: [] } });
+  });
+
+  test('the routines a deck gives its cards are told apart from its other card defaults', () => {
+    const deck = { state: { type: 'deck', cardDefaults: { width: 50, clickRoutine: [], onPileCreation: {} } }, get(p) { return this.state[p]; } };
+    expect(cardDefaultRoutines(deck)).toEqual([ 'clickRoutine' ]);
+    expect(cardDefaultRoutines({ state: { type: 'holder', clickRoutine: [] }, get(p) { return this.state[p]; } })).toEqual([]);
   });
 });
 
