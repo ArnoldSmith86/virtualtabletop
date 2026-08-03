@@ -62,9 +62,89 @@ function newImport() {
     // The fallback for an image whose dimensions could not be read is remembered for
     // the current import only - a host that times out once should not keep every later
     // import of that image pinned to a 1:1 aspect ratio.
-    failedImages: {}
+    failedImages: {},
+    // Everything that could not be brought over from TTS ends up in
+    // _meta.info.importerWarnings, which the game details show as import notes.
+    warnings: [],
+    warned: new Set(),
+    warningGroups: {},
+    suppressedWarnings: 0
   };
 }
+
+// A mod can hold thousands of objects, so the report is capped: it is shown in the
+// interface and stored in the room, which nobody is served by filling with
+// thousands of lines.
+const maxWarnings = 100;
+
+function warn(imp, text) {
+  if(imp.warned.has(text))
+    return;
+  imp.warned.add(text);
+  if(imp.warnings.length < maxWarnings)
+    imp.warnings.push(text);
+  else
+    ++imp.suppressedWarnings;
+}
+
+// A note that names the object it is about would repeat itself once per object, so
+// the objects that share a problem are collected under one key and turned into a
+// single line naming them once the whole save has been read.
+function warnAbout(imp, key, o, message) {
+  const group = imp.warningGroups[key] = imp.warningGroups[key] || { names: [], count: 0, message };
+  const name = objectName(o);
+  if(group.names.indexOf(name) == -1)
+    group.names.push(name);
+  ++group.count;
+}
+
+// how an object is called in a note - the name its author gave it if it has one
+function objectName(o) {
+  return `"${String((o || {}).Nickname || '').trim() || String((o || {}).Name || '').trim() || 'unnamed'}"`;
+}
+
+// a list of object names, shortened so that a mod full of them stays readable -
+// objects that share a name are counted instead of naming one of them for all
+function objectNames(names, count) {
+  let list = names[0];
+  if(names.length > 3)
+    list = `${names.slice(0, 3).join(', ')} and ${names.length-3} more`;
+  else if(names.length > 1)
+    list = `${names.slice(0, -1).join(', ')} and ${names[names.length-1]}`;
+  return names.length == 1 && count > 1 ? `${count}× ${list}` : list;
+}
+
+function importWarnings(imp) {
+  for(const group of Object.values(imp.warningGroups))
+    warn(imp, group.message(objectNames(group.names, group.count), group.count));
+  if(imp.suppressedWarnings)
+    imp.warnings.push(`${imp.suppressedWarnings} more note${imp.suppressedWarnings > 1 ? 's are' : ' is'} not listed here.`);
+  return imp.warnings;
+}
+
+// 'The 1 decal' - a note about how many of something a save has counts only when
+// there is more than one of it
+function many(count, singular, plural) {
+  return count > 1 ? `The ${count} ${plural}` : `The ${singular}`;
+}
+
+// what an object that exists in 3D only is called in a note
+function invisibleLabel(name) {
+  if(name.match(/^Custom_PDF/))
+    return 'A PDF';
+  if(name.match(/^Custom_Audio/))
+    return 'An audio player';
+  if(name.match(/^Fog/))
+    return 'A hidden zone';
+  if(name.match(/^Tileset_/))
+    return '3D scenery';
+  if(name.match(/Trigger$/))
+    return 'A zone';
+  return `An object of type "${name}"`;
+}
+
+// scripting is the one thing a mod can be built on that has no counterpart at all
+const scriptWarning = 'This mod is scripted (Lua/XML UI) - VirtualTabletop cannot run that script, so everything it automated has to be done by hand.';
 
 const imgSizeCache = {};
 async function imgSize(url, imp) {
@@ -222,6 +302,7 @@ function place(o, widget) {
 async function addDeck(o, imp, parent=null) {
   const cardIDs = (o.DeckIDs || [ o.CardID ]).map(extractNumber).filter(id=>!isNaN(+id) && o.CustomDeck[Math.floor(+id/100)]);
   if(!cardIDs.length) {
+    warnAbout(imp, 'deck without images', o, (names, count)=>`The card images of ${names} are not part of the save, so ${count > 1 ? 'those decks were' : 'that deck was'} not imported.`);
     Logging.log(`TTS import: skipping ${o.Name} (${o.GUID}): no card refers to an existing CustomDeck entry`);
     return null;
   }
@@ -368,8 +449,12 @@ async function addBag(o, imp, parent) {
   // the cards of a stack live in its pile and a deck is invisible: what a player
   // gets out of the bag are the widgets that sit in the holder itself
   const children = Object.values(contents).filter(w=>w.parent == id && w.type != 'deck');
-  if(!children.length)
-    return null; // a bag that is empty after the import is nothing to play with
+  if(!children.length) {
+    // a bag that is empty after the import is nothing to play with
+    if(Array.isArray(o.ContainedObjects) && o.ContainedObjects.length)
+      warnAbout(imp, 'empty bag', o, (names, count)=>`Nothing that ${names} holds could be imported, so ${count > 1 ? 'those bags are' : 'that bag is'} not on the table.`);
+    return null;
+  }
 
   const color = toColor(o.ColorDiffuse, '#a97e4b');
   const bagID = `${id}-bag`;
@@ -443,6 +528,9 @@ async function addImage(o, imp, parent) {
 
   const [ imageWidth, imageHeight ] = await imgSize(image, imp);
   const aspect = imageWidth && imageHeight ? imageWidth/imageHeight : 1;
+
+  if(imp.failedImages[image])
+    warnAbout(imp, 'unreadable image', o, (names, count)=>`The image of ${names} could not be read from the server it is stored on - ${count > 1 ? 'those objects are' : 'that object is'} square instead of having the shape of the image.`);
 
   const widget = {
     id: getID(o, imp),
@@ -575,8 +663,15 @@ function addNotecard(o, imp, parent) {
 function addPiece(o, imp, parent) {
   const name = String(o.Name || '');
   const text = String(o.Nickname || '').trim();
-  if(!text && !name.match(pieceObjects))
+  const mesh = o.CustomMesh || name.match(/^Custom_(Model|Assetbundle)/);
+  if(!text && !name.match(pieceObjects)) {
+    if(mesh)
+      warnAbout(imp, 'unnamed mesh', o, (names, count)=>`${names} ${count > 1 ? 'are 3D models' : 'is a 3D model'} without a name and without an image - ${count > 1 ? 'they were' : 'it was'} left out, as an unnamed model is usually decoration of the TTS table.`);
     return null;
+  }
+
+  if(mesh)
+    warnAbout(imp, 'mesh as piece', o, (names, count)=>`${names} ${count > 1 ? 'are 3D models' : 'is a 3D model'} that cannot be shown in 2D - ${count > 1 ? 'they are on the table as colored pieces carrying their names' : 'it is on the table as a colored piece carrying its name'}.`);
 
   const size = clamp(Math.round(baseSize.piece * transformOf(o).scaleX), 40, 400);
   const color = toColor(o.ColorDiffuse, '#cccccc');
@@ -601,8 +696,16 @@ function addPiece(o, imp, parent) {
 async function addObject(o, imp, parent) {
   const name = String(o.Name || '');
 
-  if(name.match(invisibleObjects))
+  if(name.match(invisibleObjects)) {
+    // the hand zones are not lost - they become the seats
+    if(name != 'HandTrigger')
+      warnAbout(imp, `invisible ${name}`, o, (names, count)=>`${invisibleLabel(name)} cannot be shown on a 2D table: ${names} ${count > 1 ? 'were' : 'was'} not imported.`);
     return null;
+  }
+  if(String(o.LuaScript || '').trim() || String(o.XmlUI || '').trim())
+    warn(imp, scriptWarning);
+  if(o.States && Object.keys(o.States).length)
+    warnAbout(imp, 'object states', o, (names, count)=>`${names} ${count > 1 ? 'have' : 'has'} several states in TTS - only the state that was on the table was imported.`);
   if(o.CustomDeck)
     return await addDeck(o, imp, parent);
   if(name.match(/Bag$/))
@@ -647,6 +750,7 @@ async function addRecursive(os, imp, parent=null) {
       }
     } catch(e) {
       // one broken object should not fail the whole import
+      warnAbout(imp, 'broken object', o, (names, count)=>`${names} could not be converted and ${count > 1 ? 'were' : 'was'} left out.`);
       Logging.log(`TTS import: skipping ${o.Name} (${o.GUID}): ${e.toString()}`);
     }
   }
@@ -722,7 +826,7 @@ function scaleWidget(widget, factor, keepPosition) {
   }
 }
 
-function moveIntoBounds(widgets, top, bottom) {
+function moveIntoBounds(widgets, imp, top, bottom) {
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
   const byParent = {};
@@ -756,9 +860,11 @@ function moveIntoBounds(widgets, top, bottom) {
 
   // 3. Make every widget smaller by that factor, children included: their x/y is
   //    relative to their parent and shrinks with the rest of the layout.
-  if(scale < 1)
+  if(scale < 1) {
+    warn(imp, `The table of this mod is bigger than the VirtualTabletop surface, so everything on it was scaled down to ${Math.round(scale*100)}% of the size it has in TTS.`);
     for(const widget of Object.values(widgets))
       scaleWidget(widget, scale, !widget.parent);
+  }
 
   // 4. Put the top level widgets where the scaled down layout has them
   for(const { widget, box, full } of placed) {
@@ -780,6 +886,38 @@ function moveIntoBounds(widgets, top, bottom) {
   }
 
   return widgets;
+}
+
+// Parts of a save that are not objects on the table and therefore never reach
+// addObject: the notebook, the table itself and the settings around it.
+function reportSaveContents(json, imp, seats) {
+  if(String(json.LuaScript || '').trim() || String(json.XmlUI || '').trim())
+    warn(imp, scriptWarning);
+
+  const pages = Object.keys(json.TabStates || {}).length;
+  if(pages)
+    warn(imp, `The notebook of this mod (${pages} page${pages > 1 ? 's' : ''}) was not imported - VirtualTabletop keeps rules text in the game details instead.`);
+
+  const snapPoints = (json.SnapPoints || []).length;
+  if(snapPoints)
+    warn(imp, `${many(snapPoints, 'snap point of the table was', 'snap points of the table were')} not imported - objects can be dropped anywhere, and only a holder keeps them in place.`);
+
+  const decals = (json.Decals || []).length;
+  if(decals)
+    warn(imp, `${many(decals, 'decal on the table was', 'decals on the table were')} not imported.`);
+
+  const drawn = (json.VectorLines || []).length;
+  if(drawn)
+    warn(imp, `${many(drawn, 'line drawn on the table was', 'lines drawn on the table were')} not imported.`);
+
+  if((json.Turns || {}).Enable)
+    warn(imp, 'The turn order of this mod was not imported - whose turn it is has to be agreed on by the players.');
+
+  if(seats > 1)
+    warn(imp, `VirtualTabletop has one hand for all players instead of one zone each: the ${seats} hand zones became seats, and every player sees their own cards in the hand at the bottom.`);
+
+  if([ ...collectImageURLs(json.ObjectStates) ].some(url=>url.match(/^https?:/)))
+    warn(imp, 'The images of this game are still loaded from the servers they are stored on - they disappear from the table if the mod is taken down there.');
 }
 
 async function convertTTS(content, linkContent, workshop={}) {
@@ -807,7 +945,9 @@ async function convertTTS(content, linkContent, workshop={}) {
   const hasHand = handColors.length || json.Hands && json.Hands.Enable;
 
   // leave room for the seats at the top and the hand at the bottom
-  const widgets = moveIntoBounds(await addRecursive(json.ObjectStates, imp), handColors.length ? 50 : 0, hasHand ? 810 : 1000);
+  const widgets = moveIntoBounds(await addRecursive(json.ObjectStates, imp), imp, handColors.length ? 50 : 0, hasHand ? 810 : 1000);
+
+  reportSaveContents(json, imp, handColors.length);
 
   if(json.TableURL) {
     widgets.back = {
@@ -869,6 +1009,12 @@ async function convertTTS(content, linkContent, workshop={}) {
   // the name of the save wins over the title of the workshop item it came from
   if(json.SaveName)
     info.name = String(json.SaveName);
+
+  const warnings = importWarnings(imp);
+  if(warnings.length) {
+    info.importerWarnings = warnings;
+    Logging.log(`TTS import: ${warnings.length} import notes: ${warnings.join(' ')}`);
+  }
 
   widgets._meta = { info, version: 5 };
 

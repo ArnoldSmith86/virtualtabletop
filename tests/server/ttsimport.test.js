@@ -20,6 +20,12 @@ async function convert(save) {
   return widgets;
 }
 
+// what the importer could not bring over - the game details show it as import notes
+async function importNotes(save) {
+  const widgets = (await TTS.fromBSON(BSON.serialize(save))).TTS['0.json'];
+  return widgets._meta.info.importerWarnings;
+}
+
 function objects(...ObjectStates) {
   return { SaveName: 'test', ObjectStates };
 }
@@ -312,6 +318,66 @@ describe('TTS import: layout', () => {
     // the whole table smaller - but it does have to stay reachable once it is
     expect(withBag.board.width).toBe(withoutBag.board.width);
     expectOnSurface(withBag, 810);
+  });
+});
+
+describe('TTS import: import notes', () => {
+  it('says nothing about a save that came over completely', async () => {
+    expect(await importNotes(objects(die('a', -2), die('b', 2)))).toBe(undefined);
+  });
+
+  it('reports the objects and the settings that could not be translated', async () => {
+    const notes = await importNotes({
+      SaveName: 'test',
+      LuaScript: 'function onLoad() end',
+      TabStates: { 0: { title: 'Rules' } },
+      Turns: { Enable: true },
+      ObjectStates: [
+        die('a', 0),
+        { Name: 'Custom_PDF', GUID: 'pdf', Nickname: 'Rulebook', Transform: { posX: 2, posZ: 0 } },
+        { Name: 'Custom_Model', GUID: 'mesh', Nickname: 'Castle', Transform: { posX: 4, posZ: 0 } },
+        { Name: 'Die_6', GUID: 'states', Nickname: 'Weather', Transform: { posX: 6, posZ: 0 }, States: { 2: {} } }
+      ]
+    });
+
+    expect(notes.join('\n')).toMatch(/scripted/);
+    expect(notes.join('\n')).toMatch(/notebook of this mod \(1 page\)/);
+    expect(notes.join('\n')).toMatch(/turn order/);
+    expect(notes.join('\n')).toMatch(/"Rulebook" was not imported/);
+    expect(notes.join('\n')).toMatch(/"Castle" is a 3D model/);
+    expect(notes.join('\n')).toMatch(/"Weather" has several states/);
+  });
+
+  it('names the objects that share a problem in a single note', async () => {
+    const tokens = [ 'Wood', 'Stone', 'Gold', 'Wheat', 'Sheep' ].map((Nickname, index)=>({
+      Name: 'Custom_PDF',
+      GUID: `pdf${index}`,
+      Nickname,
+      Transform: { posX: index, posZ: 0 }
+    }));
+    const notes = await importNotes(objects(die('a', 0), ...tokens));
+
+    const note = notes.filter(n=>n.match(/^A PDF/));
+    expect(note.length).toBe(1);
+    // five names would be a wall of text - the first few of them stand for the rest
+    expect(note[0]).toMatch(/"Wood", "Stone", "Gold" and 2 more were not imported/);
+
+    // objects without a name of their own are counted instead of being listed
+    const unnamed = await importNotes(objects(die('a', 0), ...tokens.map(t=>Object.assign({}, t, { Nickname: '' }))));
+    expect(unnamed.filter(n=>n.match(/^A PDF/))[0]).toMatch(/5× "Custom_PDF" were not imported/);
+  });
+
+  it('caps a report that a broken mod would fill with thousands of lines', async () => {
+    const scenery = Array.from({ length: 150 }, (unused, index)=>({
+      Name: `Tileset_${index}`,
+      GUID: `scenery${index}`,
+      Nickname: `Chair ${index}`,
+      Transform: { posX: index, posZ: 0 }
+    }));
+    const notes = await importNotes(objects(die('a', 0), ...scenery));
+
+    expect(notes.length).toBe(101);
+    expect(notes[100]).toBe('50 more notes are not listed here.');
   });
 });
 
