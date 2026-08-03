@@ -1,3 +1,6 @@
+import fs from 'fs';
+import zlib from 'zlib';
+
 import minifyHTML from '../../server/minify.mjs';
 
 // A readable build keeps multi-line function bodies and blank lines, a minified one has neither.
@@ -37,6 +40,12 @@ describe('minifyHTML with minifyJavascript disabled', () => {
     expect(build.editorJSmin).toMatch(readableJS);
     expect(build.editorJSmin).toContain('\n\n');
   });
+
+  // Nothing imports the client bundle, so its exports only stop terser from dropping code that
+  // is not called anymore. They are removed in both builds so that the two behave the same.
+  test('drops the exports of the client bundle', () => {
+    expect(inlineClientJS(build)).not.toMatch(/^export[ {]/m);
+  });
 });
 
 describe('minifyHTML with minifyJavascript enabled', () => {
@@ -52,5 +61,27 @@ describe('minifyHTML with minifyJavascript enabled', () => {
 
   test('minifies the editor JS', () => {
     expect(build.editorJSmin).not.toMatch(readableJS);
+  });
+
+  // Top level names get renamed, which is only safe as long as the two names that cross the
+  // bundle boundary survive: the keys main.js copies onto window for edit mode and the exports
+  // edit mode hands back. Both are what terser considers external, so it keeps them - but a
+  // future option that mangles them too would break edit mode and nothing else.
+  test('keeps the names the client bundle hands to edit mode', () => {
+    const script = inlineClientJS(build);
+    for(const name of [ 'widgets', 'compute_ops', 'getRoomRectangle', 'loadZipLibrary', 'Widget' ])
+      expect(script).toMatch(new RegExp(`[,{]${name}:`));
+  });
+
+  test('keeps the names edit mode hands back to the client bundle', () => {
+    for(const name of [ 'initializeEditMode', 'openEditor', 'jeClick' ])
+      expect(build.editorJSmin).toMatch(new RegExp(`\\b${name}\\b`));
+  });
+
+  // fflate is served from node_modules as it is, only pre-compressed
+  test('gzips fflate without changing it', () => {
+    const fflate = fs.readFileSync('node_modules/fflate/umd/index.js');
+    expect(build.fflateMin.equals(fflate)).toBe(true);
+    expect(zlib.gunzipSync(build.fflateGzipped).equals(fflate)).toBe(true);
   });
 });

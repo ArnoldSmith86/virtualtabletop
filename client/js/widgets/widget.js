@@ -1090,7 +1090,10 @@ export class Widget extends StateManaged {
             if(mathExpression) {
               let result = null;
               try {
-                result = +eval(mathExpression[5]);
+                // the expression is digits and operators only (see the regex above), so this uses
+                // the indirect form which evaluates in global scope instead of in this function -
+                // a direct eval() would additionally stop the minifier from renaming anything here
+                result = +(0,eval)(mathExpression[5]);
               } catch(e) {
                 problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
                 result = null;
