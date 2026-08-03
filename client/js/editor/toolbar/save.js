@@ -19,7 +19,7 @@ class SaveButton extends ToolbarButtonWithContent {
     updateProgress('Fetching state...');
     const state = await (await fetch(`state/${roomID}`)).json();
     state._meta.info = this.currentMetadata;
-    updateProgress('Loading fflate...');
+    updateProgress('Preparing...');
     await waitForZipLibrary();
     updateProgress('Building file...');
     const blob = await zipBlob({ '0.json': fflate.strToU8(JSON.stringify(state)) });

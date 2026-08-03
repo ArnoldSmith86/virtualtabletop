@@ -103,19 +103,22 @@ class AssetsModule extends SidebarModule {
     super('image', 'Assets', 'Edit the assets used in your game.');
   }
 
-  async button_assetDownload(usePropertyFilenames) {
+  async button_assetDownload(updateProgress, usePropertyFilenames) {
     loadZipLibrary();
 
+    updateProgress('Preparing...');
     await waitForZipLibrary();
     const files = {};
     const assets = getAllAssets();
 
-    for(const assetObj of assets) {
+    for(const [ i, assetObj ] of Object.entries(assets)) {
+      updateProgress(`Fetching asset ${+i+1}/${assets.length}`, (+i+1)/assets.length);
       const blob = await (await fetch(assetObj.asset.substr(1))).blob();
       const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
       files[assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin')] = new Uint8Array(await blob.arrayBuffer());
     }
 
+    updateProgress('Building file...');
     triggerDownload(URL.createObjectURL(await zipBlob(files)), 'assets.zip');
   }
 
@@ -418,9 +421,9 @@ class AssetsModule extends SidebarModule {
       <p>You can replace existing assets in your game by using the Upload Assets button. You must use the same filenames as the original assets. Be sure <b>not</b> to zip them again but select all the assets themselves in the file selection dialog. This button is only for replacing existing assets and not uploading new ones.</p>
       <button icon=cloud_upload id=uploadAllAssetsButton>Upload assets</button>
     `);
-    $('#downloadAllAssetsButton').onclick = e=>this.button_assetDownload(false);
-    $('#downloadAllAssetsByPropertyButton').onclick = e=>this.button_assetDownload(true);
     $('#uploadAllAssetsButton').onclick = e=>this.button_assetUpload();
+    progressButton($('#downloadAllAssetsButton'), async updateProgress=>await this.button_assetDownload(updateProgress, false));
+    progressButton($('#downloadAllAssetsByPropertyButton'), async updateProgress=>await this.button_assetDownload(updateProgress, true));
     progressButton($('#compressAssetsButton'), async updateProgress=>await this.button_compressAssets(updateProgress));
     this.compressAssetsPreviewDOM = div($('#roomArea'), 'compressAssetsPreview overlay', `
       <h2>Compression preview</h2>
