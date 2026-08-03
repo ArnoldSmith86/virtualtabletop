@@ -219,11 +219,12 @@ function rangeWords(value) {
 
 // the values an operation passes on (CALL arguments, CLONE properties, VAR
 // variables) are pairs, and pairs read as pairs
-// The six colors a sentence is written in are a system, and a system that only
+// The colors a sentence is written in are a system, and a system that only
 // exists in a CSS comment is one nobody can learn: this is the key to it, opened
-// from the header of every routine. It also defines the one thing the sentences
-// cannot say without a word of their own - the group of widgets an earlier
-// operation picked.
+// from the header of every routine. Every color the sentences use is in it, the
+// plain text color of everything that is none of the named kinds and the red of
+// a blank included - each one shown in the color it stands for rather than
+// described in a sentence of its own.
 const routineColorLegendHTML = `
   <p>Every value in a sentence is colored by the kind of thing it is:</p>
   <dl class="routine-legend">
@@ -239,9 +240,11 @@ const routineColorLegendHTML = `
     <dd>the name of a widget property</dd>
     <dt class="routine-editor-parameter-number">3</dt>
     <dd>a number</dd>
+    <dt class="routine-editor-parameter-value">"Hello"</dt>
+    <dd>everything else: a text, a setting picked from a list, or a value written as JSON</dd>
+    <dt class="routine-editor-parameter-missing">number or text</dt>
+    <dd>a blank the operation still needs - the word says what belongs there</dd>
   </dl>
-  <p>A word in red is a blank the operation still needs, and it says what belongs there.</p>
-  <p>SELECT calls the group it is building <b>the pick</b>: that is the same thing every other sentence calls <b>the picked widgets</b>.</p>
 `;
 
 // A chip has padding on both sides, which puts a space between it and the comma
