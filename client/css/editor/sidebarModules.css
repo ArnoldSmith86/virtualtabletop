@@ -25,6 +25,15 @@
   display: inline-flex;
 }
 
+/* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
+   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. */
+.editorModule .goButton.buttonBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
 /* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
    text color so the intro is readable in both themes (white on the dark editor theme, dark in light mode). */
 .editorModule .noSelectionIntro {
@@ -118,21 +127,145 @@
 }
 
 
-.tune.editorModule .suitProperties {
-  height: 160px;
+/* The deck creation flows disable their "Add to game" until something is picked. button[icon].green
+   (specificity 0,2,1) beats the generic button:disabled (0,1,1), so without this the greyed-out state never
+   applies and a button that does nothing still looks clickable. */
+.tune.editorModule button[icon].green:disabled,
+.tune.editorModule button[icon].green:disabled:hover {
+  background-color: #808080;
+  color: #d3d3d3;
 }
 
-.tune.editorModule .suitProperties > button.widgetSelectionButton {
-  position: absolute;
+
+/* custom deck: one compact row per suit (icon, name, color, ranks, remove) */
+
+.tune.editorModule .deckGeneratorHint {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  opacity: 0.85;
 }
 
-.tune.editorModule .suitProperties > div {
-  margin-left: 170px;
+/* One grid for the whole list, so the header labels and every row share the same columns. The rows and their
+   pickers are display: contents, i.e. their children are the grid items. */
+.tune.editorModule .deckGeneratorSuits {
+  display: grid;
+  grid-template-columns: auto minmax(60px, 1fr) auto minmax(80px, 2fr) auto;
+  align-items: center;
+  gap: 4px 6px;
 }
 
-.tune.editorModule .suitProperties label {
-  display: inline-block;
-  width: 60px;
+.tune.editorModule .deckGeneratorSuitHeader,
+.tune.editorModule .deckGeneratorSuit,
+.tune.editorModule .deckGeneratorSuitPickers {
+  display: contents;
+}
+
+.tune.editorModule .deckGeneratorSuitHeader > span {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+/* An open picker sits right below the row it belongs to and spans the full width; a closed one is display:
+   none and takes no grid row at all. */
+.tune.editorModule .deckGeneratorSuitPickers > .propertyPicker {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.tune.editorModule .deckGeneratorSuit > .propertyInput {
+  margin: 0;
+}
+
+/* an icon chip in a suit color (see tintIconChip): the icon masks the color */
+.tune.editorModule .deckGeneratorSuitTint {
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+
+.tune.editorModule .deckGeneratorSuitName,
+.tune.editorModule .deckGeneratorSuitRanks {
+  width: 100%;
+  min-width: 0;
+}
+
+/* the name this suit's card types actually get differs from what is typed (see showResolvedSuitNames) */
+.tune.editorModule .deckGeneratorSuitName.deckGeneratorSuitRenamed {
+  border-color: var(--VTTred, #c0392b);
+}
+
+/* destructive, so red rather than the accent color the rest of the row uses */
+.tune.editorModule .deckGeneratorSuitRemove:not(:disabled) {
+  background: var(--VTTred, #c0392b);
+}
+
+.tune.editorModule .deckGeneratorSuitRemove:hover:not(:disabled) {
+  background: #922b21;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.tune.editorModule .deckGeneratorSuitAddLabel {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* these are suit shortcuts, not transparency swatches, so no checkerboard behind them */
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip {
+  cursor: pointer;
+  background: #fff;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip:hover {
+  outline: 2px solid var(--VTTblue);
+}
+
+.tune.editorModule .deckGeneratorLinkedRanks {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+/* Card design gallery: one tile per design, filling the dialog in as many columns as fit so no design ends up
+   cut off or alone on a row. The name goes below the preview instead of on top of the artwork. */
+.tune.editorModule .deckGeneratorDesigns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  gap: 10px 6px;
+  margin-bottom: 12px;
+}
+
+.tune.editorModule .deckDesignTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* a card design is not a transparency preview, so a flat neutral reads better than the checkerboard */
+.tune.editorModule .deckDesignButton {
+  margin: 0;
+  background: #ededed;
+}
+
+.tune.editorModule .deckDesignLabel {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
 }
 
 
@@ -171,6 +304,190 @@
 }
 
 
+/* Front/back image upload: two side-by-side lists, one row per uploaded file, numbered in the order the files
+   are paired in - so row n of the fronts and row n of the backs line up as the pair they are. */
+.tune.editorModule .imagePairColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  align-items: start;
+}
+
+.tune.editorModule .imagePairHint {
+  margin-bottom: 5px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairList {
+  margin-bottom: 5px;
+}
+
+.tune.editorModule .imagePairList:empty::before {
+  content: attr(data-empty-hint);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairEntry {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .imagePairEntry b {
+  min-width: 20px;
+  text-align: right;
+}
+
+.tune.editorModule .imagePairEntry img {
+  width: 48px;
+  height: 64px;
+  object-fit: contain;
+  background: #0002;
+}
+
+/* The delete button follows the file name directly instead of being pushed to the far edge of the column. */
+.tune.editorModule .imagePairEntry span {
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tune.editorModule .imagePairStatus,
+.tune.editorModule .textCardsStatus {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairStatus.imagePairMismatch {
+  color: var(--negativeInput);
+  opacity: 1;
+}
+
+.tune.editorModule .imagePairOptions {
+  margin: 5px 0;
+}
+
+.tune.editorModule .imagePairOptions label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .imagePairOptions [type=number] {
+  width: 60px;
+}
+
+
+/* Text cards: the text input, then the design grid and the preview of the first card side by side. */
+.tune.editorModule .textCardsInput {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  font-family: inherit;
+}
+
+/* How the typed text is cut into cards - one row of radios right under the textarea it describes. */
+.tune.editorModule .textCardsSplit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .textCardsSplit label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .textCardsSplit span {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsColumns {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tune.editorModule .textCardsColumn {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tune.editorModule .textCardsPreviewColumn {
+  flex: 0 0 auto;
+}
+
+.tune.editorModule .textCardsDesign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 16px;
+  margin-bottom: 5px;
+}
+
+/* Each input hugs its own label: right-aligning them across a 1fr column would park the input of one field
+   next to the label of the next one. */
+.tune.editorModule .textCardsDesign label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabelWrap,
+.tune.editorModule .textCardsDesign .textCardsHint {
+  grid-column: 1 / -1;
+}
+
+.tune.editorModule .textCardsDesign .textCardsHint {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsDesign input {
+  width: 60px;
+}
+
+/* Distinguish the color swatches from the number fields at a glance - a white swatch at input width reads as
+   an empty text box. */
+.tune.editorModule .textCardsDesign input[type=color] {
+  width: 40px;
+  height: 24px;
+  padding: 1px;
+}
+
+/* A textarea, so a deck label can carry the line breaks it is shown with on the card backs. */
+.tune.editorModule .textCardsDesign .textCardsLabelWrap {
+  align-items: flex-start;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabel {
+  flex-grow: 1;
+  width: auto;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.tune.editorModule .textCardsPreview {
+  position: relative;
+  overflow: hidden;
+}
+
+.tune.editorModule .textCardsPreviewCard {
+  position: relative;
+  transform-origin: top left;
+}
+
+
 .tune.editorModule .ttsImportLink {
   display: flex;
   gap: 5px;
@@ -182,6 +499,7 @@
   min-width: 0;
 }
 
+/* caption bar of a preview tile: the card count of a TTS deck */
 .tune.editorModule .ttsDeckButton .deckCardCount {
   position: absolute;
   bottom: 0;

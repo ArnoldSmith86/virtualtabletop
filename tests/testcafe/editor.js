@@ -250,7 +250,8 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')                     // add a card type
     .click(deckNode)                                  // select the deck
     .click('#deckEditorTreeAdd')                      // deck "+" adds a new (empty) face, now selected
@@ -339,7 +340,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
   const deckID = await getDeckID();
 
   const editTextAndUndoImmediately = ClientFunction(() => {
-    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
     let input = null;
     for(let i=0; i<rows.length; ++i)
       if(rows[i].querySelector('label').textContent == 'value')
@@ -359,7 +360,8 @@ test('Deck editor: breadcrumb undo and redo', async t => {
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')  // step 1
     .click(deckNode)                         // select the deck
     .click('#deckEditorTreeAdd')             // step 2: deck "+" adds a face (now empty, selected)
@@ -394,7 +396,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   });
   const deckID = await getDeckID();
   const editAndReceiveRemoteChange = ClientFunction(deckID => {
-    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
     let input = null;
     for(let i=0; i<rows.length; ++i)
       if(rows[i].querySelector('label').textContent == 'value')
@@ -418,7 +420,8 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')
     .click(deckNode)
     .click('#deckEditorTreeAdd')
@@ -454,7 +457,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
 
   const rapidEditsThenAddFace = ClientFunction(() => new Promise(resolve => {
     const setField = (label, value) => {
-      const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+      const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
       for(const row of rows) {
         if(row.querySelector('label').textContent == label) {
           const input = row.querySelector('input');
@@ -484,7 +487,8 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
   const getFaceCount = ClientFunction(deckID => widgets.get(deckID).get('faceTemplates').length);
 
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd')
     .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(0)) // select the existing object
     .click('#deckEditorTreeAdd')                                    // reveal the add-object controls
@@ -523,7 +527,8 @@ test('Deck editor: switching games while editing does not crash', async t => {
   const deckID = await getDeckID();
 
   await t
-    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
+    .click(`#w_${deckID}`) // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor
     .click('#deckEditorStripAdd'); // make a change, leaving the deck editor open
 
   // Simulate switching to another game: replace the whole room state. The deck being edited disappears.
@@ -702,7 +707,7 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
   await t.click('#editorToolbar [icon=style]');
   await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
   await t.expect(toolbarButton.hasClass('active')).ok();
-  await t.expect(Selector('#deckEditorClose').exists).notOk(); // the old Close button is gone
+  await t.expect(Selector('#deckEditorClose').exists).ok(); // the Close button next to Card view
 
   // close via the same button
   await t.click('#editorToolbar [icon=style]');
@@ -729,6 +734,13 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
   await t.pressKey('esc');
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(toolbarButton.hasClass('active')).notOk();
+
+  // close via the Close button next to Card view -> the toolbar button must deactivate too
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.click('#deckEditorClose');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(toolbarButton.hasClass('active')).notOk();
 });
 
 // With no deck in the game, the toolbar button creates a starter deck (like the Properties tab option) and
@@ -752,6 +764,472 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(deckCount()).eql(0)      // ...but no deck is auto-created
     .pressKey('esc')
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
+});
+
+// The "Add a new deck" wizard's text-cards section: every typed line becomes a card type with a "text"
+// property, the design inputs shape the two faces and the deck lands in a holder with cards, like the other
+// wizard sections. Card type names are derived from the text, deduplicated, and fall back to a running number
+// when a line has no usable characters (the "______" line below).
+test('Deck editor: add a deck of text cards from the new deck wizard', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=text]');
+
+  // A multi-line value in one go - typeText would send the newlines as key presses.
+  await ClientFunction(() => {
+    const textarea = document.querySelector('.textCardsInput');
+    textarea.value = 'A short one.\n______ + ______ = ______.\nA short one.';
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+  })();
+
+  // A typed value ignores the input's "min"/"max", so an out-of-range card width must be clamped to the
+  // declared range (20-600) rather than reaching the deck - here visible on the real-size preview card.
+  const setDesignValue = ClientFunction((selector, value) => {
+    const input = document.querySelector(selector);
+    input.value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await setDesignValue('.textCardsWidth', '-50');
+  await t.expect(Selector('.textCardsPreviewCard').getStyleProperty('width')).eql('20px');
+  await setDesignValue('.textCardsWidth', '150');
+
+  await t
+    .typeText('.textCardsLabel', 'Test Deck')
+    .typeText('.textCardsFontSize', '20', { replace: true })
+    .typeText('.textCardsCopies', '2', { replace: true })
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+  await compareState(t, '94d9f0542c71541a5e20ae14a37499b1');
+});
+
+// The other way of cutting the typed text into cards: with a blank line as the separator a card's text keeps
+// the line breaks inside it, and the deck label - a textarea - carries its own onto the card backs, where the
+// front's one-line footer flattens them back into spaces.
+test('Deck editor: text cards with line breaks in the new deck wizard', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=text]')
+    .click('.textCardsSplit input[value=block]');
+
+  // Indented lines, a doubled separator and a trailing blank line: all of them are trimmed away, so this is
+  // two card types, the first of which is two lines long.
+  await ClientFunction(() => {
+    for(const [ selector, value ] of [
+      [ '.textCardsInput', 'Cards that make\n   you think twice\n\n\nA short one.\n\n' ],
+      [ '.textCardsLabel', 'Line\nBreak\nDeck' ]
+    ]) {
+      const element = document.querySelector(selector);
+      element.value = value;
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  })();
+
+  await t
+    .expect(Selector('.textCardsStatus').innerText).eql('2 card types × 1 = 2 cards.')
+    .expect(Selector('.textCardsPreviewCard .cardFace.active .cardFaceObject').nth(1).textContent).eql('Cards that make\nyou think twice')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(2); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return {
+      cardTypes: deck.get('cardTypes'),
+      back: deck.get('faceTemplates')[0].objects[1].value,
+      footer: deck.get('faceTemplates')[1].objects[2].value
+    };
+  })();
+
+  await t
+    .expect(deck.cardTypes).eql({
+      'Cards that make you think twic': { text: 'Cards that make\nyou think twice' },
+      'A short one': { text: 'A short one.' }
+    })
+    .expect(deck.back).eql('Line\nBreak\nDeck')
+    .expect(deck.footer).eql('Line Break Deck');
+});
+
+// The wizard's front/back image section: both uploads are sorted by file name - numerically, so front2 comes
+// before front10 - and then matched up position by position, giving every card type its own back image. The
+// card size comes from the aspect ratio of the first front image.
+test('Deck editor: pair front and back images in the new deck wizard', async t => {
+  // 40x60 SVGs, one per file name so the pairing is visible in the resulting cardTypes.
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = [ 'front10.png', 'front2.png', 'front1.png' ];
+  const backs  = [ 'back2.png', 'back10.png', 'back1.png' ];
+  const fileNameOfAsset = {};
+  for(const fileName of [ ...fronts, ...backs ])
+    fileNameOfAsset[asset(fileName)] = fileName;
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
+
+  // The uploads go through a file picker that can't be driven from a test, so uploadAsset is replaced by a
+  // stub handing the wizard the asset paths the server would have returned for the files below.
+  const stubUploadOf = ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  });
+  const uploadButton = Selector('#deckEditorNewDeckPanel [icon=upload]');
+
+  await stubUploadOf(fronts.map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(0));
+  await stubUploadOf(backs.map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(1));
+
+  // The card width is read from the first front image, so wait until the browser knows its size.
+  const firstFrontHeight = ClientFunction(() => document.querySelector('.imagePairList img').naturalHeight);
+  await t.expect(firstFrontHeight()).eql(60);
+
+  await t
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return {
+      width: deck.get('cardDefaults').width,
+      pairs: Object.entries(deck.get('cardTypes')).map(([ cardType, c ])=>`${cardType}: ${fileNameOfAsset[c.image]} + ${fileNameOfAsset[c.backImage]}`)
+    };
+  }, { dependencies: { fileNameOfAsset } })();
+
+  await t.expect(deck.pairs).eql([
+    'front1: front1.png + back1.png',
+    'front2: front2.png + back2.png',
+    'front10: front10.png + back10.png'
+  ]);
+  await t.expect(deck.width).eql(107); // 40x60 fronts at the default card height of 160
+});
+
+// The other states of the same section: unequal numbers of fronts and backs keep "Add to game" disabled until
+// the lists are made to match again by deleting an image, and a single back image is shared by every card.
+test('Deck editor: mismatched and shared card backs in the new deck wizard', async t => {
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imagePairs]');
+
+  const stubUploadOf = ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  });
+  const uploadButton = Selector('#deckEditorNewDeckPanel [icon=upload]');
+  const addButton = Selector('#deckEditorNewDeckPanel .goButton [icon=add]');
+  const status = Selector('.imagePairStatus');
+  const backs = Selector('.imagePairList').nth(1).find('.imagePairEntry');
+
+  await stubUploadOf([ 'front1.png', 'front2.png', 'front3.png' ].map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(0));
+  await stubUploadOf([ 'back1.png', 'back2.png' ].map(fileName=>[ fileName, asset(fileName) ]));
+  await t.click(uploadButton.nth(1));
+
+  await t
+    .expect(status.innerText).contains('3 fronts but 2 backs')
+    .expect(status.hasClass('imagePairMismatch')).ok()
+    .expect(addButton.hasAttribute('disabled')).ok();
+
+  // Deleting one of the two backs leaves a single back image, which is shared by all three cards.
+  await t
+    .click(backs.nth(1).find('[icon=delete]'))
+    .expect(backs.count).eql(1)
+    .expect(status.innerText).contains('all sharing the single back image')
+    .expect(addButton.hasAttribute('disabled')).notOk();
+
+  await t
+    .click(addButton)
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
+
+  await t.expect(await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    return Object.values(deck.get('cardTypes')).map(c=>c.backImage);
+  })()).eql(Array(3).fill(asset('back1.png')));
+});
+
+// The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
+// strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
+test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {
+  const asset = fileName=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = [ 'card1.png', 'card2.png', 'card3.png', 'card4.png' ];
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=images]');
+
+  // The file picker can't be driven from a test - hand the wizard the asset paths the server would return.
+  await ClientFunction(assets => {
+    window.uploadAsset = callback => {
+      for(const [ fileName, imagePath ] of assets)
+        callback(imagePath, fileName);
+    };
+  })(fronts.map(fileName=>[ fileName, asset(fileName) ]));
+
+  // Declining a confirmation would abort the whole deck, so this asserts twice: no dialog, and the cards exist.
+  await t
+    .setNativeDialogHandler(() => false)
+    .click('#deckEditorNewDeckPanel #frontsButton')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(4); // the wizard's deck is now open
+
+  await t.expect(await t.getNativeDialogHistory()).eql([]);
+  await t.expect(await ClientFunction(() => {
+    let cards = 0;
+    widgets.forEach(w => { if(w.get('type') == 'card') ++cards; });
+    return cards;
+  })()).eql(4);
+});
+
+// A rank list is empty while it is being retyped: the design gallery has no card to show then and must say so
+// instead of rendering a card without a card type (which throws and leaves the Add button as it was).
+test('Deck editor: the custom deck wizard survives an empty rank list', async t => {
+  await t.resizeWindow(1280, 900);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // typed into the shared ranks field, which "Same ranks for each suit" copies to every suit
+  const setSharedRanks = ClientFunction(ranks => {
+    const input = document.querySelector('.deckGeneratorSuitRanks');
+    input.value = ranks;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const designs = Selector('.deckDesignButton');
+  const hint = Selector('.deckGeneratorDesignHint');
+  const addToGame = Selector('#deckEditorNewDeckPanel button.green');
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]')
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=custom]')
+    .expect(designs.count).gt(0)
+    .expect(hint.textContent).eql('52 cards from 4 suits. Pick how they look:')
+    .click(designs.nth(0))
+    .expect(addToGame.hasAttribute('disabled')).notOk();
+
+  await setSharedRanks('');
+  await t
+    .expect(hint.textContent).eql('Add at least one rank above to see the card designs.')
+    .expect(designs.count).eql(0)
+    .expect(addToGame.hasAttribute('disabled')).ok();
+
+  // and it comes back once there is a rank again - with the design that was picked before still picked, so the
+  // deck can be added without noticing that the gallery was rebuilt in between
+  await setSharedRanks('A');
+  await t
+    .expect(hint.textContent).eql('4 cards from 4 suits. Pick how they look:')
+    .expect(designs.count).gt(0)
+    .expect(designs.nth(0).hasClass('selected')).ok()
+    .expect(addToGame.hasAttribute('disabled')).notOk();
+
+  // a range that would build a card type per rank on every keystroke is cut off, and the hint says so
+  await setSharedRanks('2-100000');
+  await t
+    .expect(hint.textContent).eql('800 cards from 4 suits. Only the first 200 ranks of a suit are used. Pick how they look:')
+    .pressKey('esc');
+});
+
+// Several face objects can be selected at once (Ctrl/Shift+click on the card or in the tree). A property row
+// then writes to all of them - showing "(mixed)" while they disagree - and the Object tab's align/distribute
+// buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget
+// sidebar uses, which is what the group/summary expectations below check.
+test('Deck editor: multi-selected face objects share property edits and alignment', async t => {
+  await setRoomState({
+    multiDeck: {
+      id: 'multiDeck', type: 'deck', x: 20, y: 20,
+      cardTypes: { plain: {} },
+      faceTemplates: [ { objects: [
+        { type: 'text', x: 4,   y: 10,  width: 40, height: 20, fontSize: 14, value: 'one',    color: '#000000' },
+        { type: 'text', x: 30,  y: 60,  width: 60, height: 20, fontSize: 14, value: 'two',    color: '#000000' },
+        { type: 'text', x: 12,  y: 120, width: 50, height: 20, fontSize: 14, value: 'three',  color: '#333333' },
+        { type: 'text', x: 200, y: 200, width: 50, height: 20, fontSize: 14, value: 'hidden', color: '#333333', display: false }
+      ] } ]
+    },
+    multiCard: { id: 'multiCard', type: 'card', deck: 'multiDeck', cardType: 'plain', x: 300, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
+  const groupTitles = ClientFunction(() => {
+    const titles = [];
+    const groups = document.querySelectorAll('#deckEditorSidebar .deckEditorGroupTitle');
+    for(let i = 0; i < groups.length; ++i)
+      titles.push(groups[i].textContent);
+    return titles;
+  });
+  const faceObjects = ClientFunction(() => JSON.stringify(widgets.get('multiDeck').get('faceTemplates')[0].objects));
+  // What kind of field a property row got, and whether it says the objects disagree - a "(mixed)" row has to
+  // keep the type of the property (a checkbox stays a checkbox) instead of falling back to a text field.
+  const fieldOf = ClientFunction(label => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
+    for(let i = 0; i < rows.length; ++i) {
+      if(rows[i].querySelector('label').textContent == label) {
+        const input = rows[i].querySelector('input, textarea');
+        return `${input.type || input.tagName.toLowerCase()}:${input.indeterminate || input.placeholder == '(mixed)' ? 'mixed' : 'common'}`;
+      }
+    }
+    return null;
+  });
+  // A shift+click on the text field of a row that is already being typed in - focused first, so the click sees
+  // the field the way it does mid-edit. Returns whether the field kept the focus.
+  const shiftClickFocusedField = ClientFunction(row => {
+    const input = document.querySelectorAll('#deckEditorTree .deckEditorObjectRow')[row].querySelector('.deckEditorPreviewText');
+    input.focus();
+    input.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, shiftKey: true }));
+    input.dispatchEvent(new MouseEvent('click', { bubbles: true, shiftKey: true }));
+    return document.activeElement == input;
+  });
+  const setSharedField = ClientFunction((label, value) => {
+    const rows = document.querySelectorAll('#deckEditorSidebar .deckEditorObjectProperties .genericInput');
+    for(let i = 0; i < rows.length; ++i) {
+      if(rows[i].querySelector('label').textContent == label) {
+        const input = rows[i].querySelector('input');
+        const placeholder = input.placeholder;
+        input.value = value;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        return placeholder;
+      }
+    }
+    return null;
+  });
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_multiDeck') // selects the deck, showing the abbreviated Basic/Other properties panel
+    .click('#propertiesOpenDeckEditor') // opens the full deck editor on it
+    .click(objectRow.nth(0));
+  // one object: the properties are sorted into the same blocks the Edit Widget sidebar uses
+  await t
+    .expect(groupTitles()).eql([ 'Content', 'Position', 'Size', 'Colors', 'Appearance' ])
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).ok(); // needs a second object
+
+  await t
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(Selector('#deckEditorMain .deckEditorSelectedObject').count).eql(3)
+    .expect(Selector('#deckEditorSidebar header h2').innerText).eql('3 face objects selected (1, 2, 3)')
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).notOk()
+    .expect(Selector('#deckEditorDistributeV').hasAttribute('disabled')).notOk();
+
+  // the three objects disagree about their color, so the row says so - and typing gives all of them the value
+  await t.expect(setSharedField('color', '#cc0000')).eql('(mixed)');
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  await t
+    .click('#deckEditorAlignLeft')
+    .click('#deckEditorDistributeV')
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3); // the selection survives
+  await t.wait(700); // let the alignment's commit reach the server
+  const aligned = JSON.parse(await faceObjects());
+  await t
+    .expect(aligned[0].x).eql(aligned[1].x) // aligned left: one x for all three
+    .expect(aligned[1].x).eql(aligned[2].x)
+    // distributed vertically: equal gaps, i.e. equal steps since the three are equally tall (±1 for rounding)
+    .expect(Math.abs((aligned[1].y - aligned[0].y) - (aligned[2].y - aligned[1].y)) <= 1).ok()
+    .pressKey('ctrl+a') // Ctrl+A picks up the whole face, including the hidden object
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // a hidden object has no box on screen, so aligning must leave it where it is instead of moving it to where
+  // its zero-sized rectangle appears to be
+  await t.click('#deckEditorAlignLeft');
+  await t.expect(JSON.parse(await faceObjects())[3].x).eql(200);
+
+  // ...and with nothing but that hidden object next to a single visible one there is nothing to align at all,
+  // so the button has to be disabled instead of being clickable and doing nothing
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(2)
+    .expect(Selector('#deckEditorAlignLeft').hasAttribute('disabled')).ok()
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } }) // back to the whole face for the rows below
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // display is set on the hidden object only, so its row is a "(mixed)" checkbox - not a text field, which
+  // would write the string "false"/"true" into every object
+  await t.expect(fieldOf('display')).eql('checkbox:mixed');
+  const displayRow = Selector('#deckEditorSidebar .deckEditorObjectProperties .genericInput')
+    .filter(node => node.querySelector('label').textContent == 'display');
+  await t.click(displayRow.find('input'));
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  const objects = JSON.parse(await faceObjects());
+  await t
+    .expect(objects.every(object => object.display === true)).ok() // booleans, not strings
+    .expect(fieldOf('display')).eql('checkbox:common');
+
+  // Shift+click makes the range the whole selection: an object picked up with ctrl before, but outside the
+  // range, is dropped. Ctrl+shift+click is the additive version that keeps it.
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(1), { modifiers: { shift: true } }) // range 2-4, so object 1 goes away
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(objectRow.nth(0).hasClass('selected')).notOk()
+    .click(objectRow.nth(0), { modifiers: { ctrl: true, shift: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(4);
+
+  // Inside the text field that is currently being typed in, shift+click is the field's own "extend the caret
+  // selection" gesture: it must leave the object selection (and the focus) alone instead of rebuilding the tree.
+  await t
+    .click(objectRow.nth(1))
+    .click(objectRow.nth(2), { modifiers: { ctrl: true } })
+    .click(objectRow.nth(3), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .expect(shiftClickFocusedField(3)).ok() // the field keeps the focus...
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3); // ...and the selection stands
+
+  // dragging one of the rows to a new position reorders the objects and carries the whole selection along
+  // instead of dropping it
+  await t
+    .dragToElement(objectRow.nth(3), objectRow.nth(0))
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(3)
+    .pressKey('esc');
+  await compareState(t, '101012d22e8e8d136d73d75bc4d4a5f7');
 });
 
 test('Line widget in edit mode', async t => {
@@ -818,6 +1296,122 @@ test('Line widget in edit mode', async t => {
   // the added stop's id is derived from the existing stops instead of being
   // random, so the compared state no longer depends on the seeded rand() stream
   await compareState(t, 'd35bd7362c7e87ea9ecb29895cc8d0b9');
+});
+
+// A stop does not have to be a child of the line, and one that is not gets
+// placed through global coordinates - which read the CSS transforms out of the
+// DOM. Moving the city the route is connected to moves the line's box in the
+// same batch, so without a flush the stops are laid out in the frame the line
+// had before the move and end up off the path by exactly that move.
+test('Line stops that are not children of the line', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    cityA: { id: 'cityA', type: 'basic', x: 100, y: 300, width: 40, height: 40 },
+    cityB: { id: 'cityB', type: 'basic', x: 600, y: 300, width: 40, height: 40 },
+    // the cars start out exactly where the line puts them: on the straight path
+    // from city to city, at 33% and 67% of its length
+    car1:  { id: 'car1',  type: 'basic', x: 255, y: 308, width: 60, height: 24, movable: false },
+    car2:  { id: 'car2',  type: 'basic', x: 425, y: 308, width: 60, height: 24, movable: false },
+    // a third car in a frame of its own: it is placed through the holder's
+    // transform instead of the room's, at 50% of the path
+    holder: { id: 'holder', type: 'basic', x: 200, y: 100, width: 400, height: 400, movable: false },
+    car3:  { id: 'car3',  type: 'basic', parent: 'holder', x: 140, y: 208, width: 60, height: 24, movable: false },
+    route: {
+      id: 'route', type: 'line', autoSpaceStops: false,
+      lineStart: { x: 120, y: 320 }, lineEnd: { x: 620, y: 320 },
+      connectStart: { line: 'cityA', position: 0.5 },
+      connectEnd: { line: 'cityB', position: 0.5 },
+      stops: [ { widget: 'car1', position: 0.33 }, { widget: 'car3', position: 0.5 }, { widget: 'car2', position: 0.67 } ]
+    },
+    // a second line between the same two cities, without stops of its own: it is
+    // only here to flush the delta in the middle of a batch, the way every
+    // connected line does
+    route2: {
+      id: 'route2', type: 'line',
+      lineStart: { x: 120, y: 340 }, lineEnd: { x: 620, y: 340 },
+      connectStart: { line: 'cityA', position: 0.5 },
+      connectEnd: { line: 'cityB', position: 0.5 }
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  // entering edit mode is what puts the engine on window for the checks below
+  await t.click('#editButton');
+
+  // every mouse event of a drag is one batch, so move the city as one: the delta
+  // - and with it the line's new box - only reaches the DOM once it ends
+  const moveCity = ClientFunction((dx, dy) => {
+    const city = widgets.get('cityA');
+    batchStart();
+    return city.set('x', city.get('x')+dx)
+      .then(_=>city.set('y', city.get('y')+dy))
+      .then(_=>batchEnd());
+  });
+
+  // how far the stops sit from where the line's own layout puts them - the whole
+  // point of a stop is that it rides on the path, so this has to stay 0
+  const stopsOffPath = ClientFunction(() => {
+    const line = widgets.get('route');
+    return Math.max(...line.stopList().map(entry => {
+      const stop = widgets.get(entry.widget);
+      const p = line.stopCoordInParentFrame(stop, line.pointAtPosition(entry.position));
+      return Math.max(
+        Math.abs(Math.round(p.x - stop.get('width')/2) - stop.get('x')),
+        Math.abs(Math.round(p.y - stop.get('height')/2) - stop.get('y'))
+      );
+    }));
+  });
+
+  // a routine can move the frame a stop lives in and re-lay out the line in the
+  // same batch - then it is the holder's transform that is one event behind.
+  // rotateStops is the cheapest property to re-lay out the stops with: it does
+  // not touch the line's own geometry, so only the holder's frame goes stale.
+  const moveHolderAndLayOutStops = ClientFunction((dx, dy, rotate) => {
+    const holder = widgets.get('holder');
+    batchStart();
+    return holder.set('x', holder.get('x')+dx)
+      .then(_=>holder.set('y', holder.get('y')+dy))
+      .then(_=>widgets.get('route').set('rotateStops', rotate))
+      .then(_=>batchEnd());
+  });
+
+  // the same, except the frame ends the batch where it started - with another
+  // line flushing while it is displaced. Nothing about this line or the holder
+  // has changed by the time the stops are laid out, but the DOM now holds the
+  // displaced transform, so only asking the DOM catches it.
+  const displaceHolderAndLayOutStops = ClientFunction((dx, dy, rotate) => {
+    const holder = widgets.get('holder');
+    batchStart();
+    return holder.set('x', holder.get('x')+dx)
+      .then(_=>holder.set('y', holder.get('y')+dy))
+      .then(_=>widgets.get('route2').applyConnections())
+      .then(_=>holder.set('x', holder.get('x')-dx))
+      .then(_=>holder.set('y', holder.get('y')-dy))
+      .then(_=>widgets.get('route').set('rotateStops', rotate))
+      .then(_=>batchEnd());
+  });
+
+  // a stop can be the frame another stop is placed in, and then the transform
+  // car3 is converted through is one the same pass has just written
+  const holderBecomesAStop = ClientFunction(() => widgets.get('route').addStop('holder', 0.15));
+
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(120, -90);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(-120, 90);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveHolderAndLayOutStops(70, -40, false);
+  await t.expect(stopsOffPath()).eql(0);
+  await moveHolderAndLayOutStops(-70, 40, true);
+  await t.expect(stopsOffPath()).eql(0);
+  await displaceHolderAndLayOutStops(60, -30, false);
+  await t.expect(stopsOffPath()).eql(0);
+  await displaceHolderAndLayOutStops(-60, 30, true);
+  await t.expect(stopsOffPath()).eql(0);
+  await holderBecomesAStop();
+  await t.expect(stopsOffPath()).eql(0);
+  await moveCity(90, -60);
+  await t.expect(stopsOffPath()).eql(0);
 });
 
 test('Enabling the Debug module while a routine waits for INPUT does not abort the routine', async t => {
