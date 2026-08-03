@@ -61,10 +61,10 @@
 // and so is a yes/no parameter, whose two sides are two phrases rather than
 // "true" and "false".
 //
-// Not worded at all: skip. The engine still honors it on every operation, but
-// it is deprecated and no new game should use one, so the sentence does not
-// offer it. Games that have one keep it as the custom property it looks like
-// until there is a way to show it that does not read as an invitation.
+// Never offered: skip. The engine honors it on every operation, so a game that
+// has one reads what it does (", skipped when gameOver") and carries the
+// orange ! that names IF as what to write instead - but no list proposes adding
+// one, because a deprecated option in the list of options reads as an invitation.
 //
 // description is the one generic line that says what the operation is for. It is
 // what the list of operations offers ("Play a sound", "Run another routine"),
@@ -359,10 +359,38 @@ function inputCannotBeCanceled(v, isSet) {
   return isSet('cancelButtonText') && v('cancelButtonText') === null && isSet('cancelButtonIcon') && v('cancelButtonIcon') === null;
 }
 
+// the lines an INPUT is written with, which is a list only while the operation
+// spells them out - a ${...} in their place is resolved when the routine runs
+function inputFields(operation) {
+  return Array.isArray(operation.fields) ? operation.fields : [];
+}
+
 const canvasTargetClause = {
   id: 'canvas', label: 'a single canvas widget', offer: false,
   template: ' {canvas}', whenOff: ' {collection}'
 };
+
+// skip is the one property the engine honors on every operation (widget.js
+// skips the operation whenever it holds anything true), so it is part of no
+// operation's table and part of all of them. It is deprecated in favour of IF
+// and never offered - see the header comment - but a game that has one reads
+// what it does, with the orange ! saying what to write instead.
+const skipParameter = { type: 'json', default: null, offer: false, hint: 'condition', deprecated: `
+  <pre>
+  skip is deprecated - please use IF instead.
+
+  It still works so old games keep running: the operation is skipped whenever this value is
+  anything but an empty text, 0, false or null. An IF around the operation says the same thing
+  where everybody can see it, and it can guard more than one operation at a time.
+  </pre>
+` };
+const skipClause = { id: 'skip', label: 'skip it under a condition', offer: false, template: ', skipped when {skip}' };
+
+// where a template holds a value: {name}, or {nameA,nameB} for a chip that
+// stands for either of two parameters. A custom property may be named anything,
+// so a placeholder is anything but the braces around it - the {{clause}} slots
+// are taken out of a template before it is read for placeholders.
+const templatePlaceholder = /\{([^{}]+)\}/g;
 
 const routineOperationMetadata = {
   AUDIO: {
@@ -757,8 +785,11 @@ const routineOperationMetadata = {
       // with nothing to fill in yet says so there, not with a blank up here
       // and it carries no ⊖: taking it out empties the whole form, which is what
       // the remove button of each line is for - and nothing would offer it back
+      // fields can also be a value the routine works out (the engine resolves the
+      // whole operation before it reads them), and one that is not a list is only
+      // in the sentence - there is no form below to edit it in
       { id: 'fields', label: 'things to fill in', offer: false, removable: false, template: ' to fill in {fields}',
-        active: v=>Array.isArray(v('fields')) && v('fields').length > 0 },
+        active: (v, isSet)=>Array.isArray(v('fields')) ? v('fields').length > 0 : isSet('fields') },
       { id: 'confirmButtonText', label: 'the confirm button', template: ', confirming with {confirmButtonText}' },
       { id: 'confirmButtonIcon', label: 'the confirm icon', template: ' and the icon {confirmButtonIcon}', add: { confirmButtonIcon: 'check' } },
       // the cancel button is gone once both of its two parameters are null,
@@ -797,8 +828,10 @@ const routineOperationMetadata = {
     // what an INPUT hands on to the operations after it: every field writes what
     // was entered into the variable it names, and a field the player picks
     // widgets in also fills a collection (the same fields validate_gamefile.js reads)
-    definesVariables: operation=>(operation.fields || []).map(field=>field && field.variable).filter(name=>typeof name == 'string'),
-    definesCollection: operation=>(operation.fields || []).filter(field=>field && field.type == 'choose').flatMap(field=>field.collection && typeof field.collection == 'object' ? Object.values(field.collection) : [ field.collection || 'DEFAULT' ]).filter(name=>typeof name == 'string')
+    // fields can also be a value the routine works out, and what a dialog like
+    // that asks is only known while it runs - so it defines nothing here
+    definesVariables: operation=>inputFields(operation).map(field=>field && field.variable).filter(name=>typeof name == 'string'),
+    definesCollection: operation=>inputFields(operation).filter(field=>field && field.type == 'choose').flatMap(field=>field.collection && typeof field.collection == 'object' ? Object.values(field.collection) : [ field.collection || 'DEFAULT' ]).filter(name=>typeof name == 'string')
   },
   LABEL: {
     description: 'Change the text of a label',
@@ -835,7 +868,11 @@ const routineOperationMetadata = {
     // Topping a holder up is not a third way but an option of both.
     variants: [
       { id: 'from', label: 'Move widgets from a holder', fixed: [ 'collection' ], match: (v, isSet)=>isSet('from'),
-        apply: operation=>{ delete operation.collection; if(operation.from === undefined) operation.from = null; },
+        // the count this way of working starts with is written down rather than
+        // left to the default: the engine reads "all" while from is still empty
+        // (it dispatches on whether from holds a holder, not on whether it is
+        // there), and the sentence may not say 1 where the engine means all
+        apply: operation=>{ delete operation.collection; if(operation.from === undefined) { operation.from = null; operation.count = 1; } },
         template: v=>`Move ${v('fillTo') ? 'widgets' : widgetsCounted(v, 'count')} from {from} to {to}{{fillTo}}{{face}}` },
       { id: 'collection', label: 'Move the picked widgets', fixed: [ 'from' ],
         // a count of 1 is the default out of a holder and "all" for the picked
@@ -858,10 +895,10 @@ const routineOperationMetadata = {
     newOperation: { func: 'MOVE', from: null, count: 1 },
     parameters: {
       fillTo: { type: 'number', default: null },
-      // how many are moved follows which way the operation works, and that is
-      // whether it names a from at all - a from waiting to be filled in is still
-      // "1 widget from ...", the same as the one a fresh MOVE starts as
-      count: { type: 'number', default: operation=>typeof operation.from != 'undefined' ? 1 : 'all', special: [ 'all' ], display: countWords },
+      // how many are moved is what the engine reads it as: one out of the holder
+      // from names, all of the picked widgets while it names none (widget.js
+      // dispatches on the value of from, not on whether it is there)
+      count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ], display: countWords },
       from: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       to: { type: 'widgets', default: null, widgetType: 'holder' },
@@ -1032,7 +1069,12 @@ const routineOperationMetadata = {
       source: { type: 'collection', default: 'all', display: { 'all': 'all widgets', 'DEFAULT': 'the picked widgets' } },
       property: { type: 'property', default: 'parent' },
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>', 'in' ], default: '==', display: comparisonWords },
-      value: { type: 'string', default: null, display: { 'null': 'nothing' }, hint: 'value' },
+      // the engine compares the property to this value with === , so what it is
+      // matters as much as what it says: a value edited as text would turn the 0
+      // of "activeFace is 0" into "0" and match nothing. It is written as JSON
+      // for the same reason SET value is - and that is also what makes a list,
+      // which "is one of" needs, something the sentence can hold at all.
+      value: { type: 'json', default: null, display: { 'null': 'nothing' }, hint: 'value' },
       mode: { type: 'enum', values: [ 'set', 'add', 'remove', 'intersect' ], default: 'set' },
       collection: { type: 'collection', default: 'DEFAULT' },
       sortBy: { type: 'json', default: null, display: listWords },
@@ -2564,7 +2606,7 @@ class RoutineOperationEditor {
         const clause = (this.metadata.clauses || []).find(c=>c.id == id && (!c.variants || c.variants.indexOf(shown.id) != -1));
         return clause && clause.whenOff ? this.resolveTemplate(clause.whenOff) : '';
       })
-      .replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p))
+      .replace(templatePlaceholder, (_, p)=>this.getDisplayedValue(p))
       .trim();
   }
 
@@ -2611,7 +2653,7 @@ class RoutineOperationEditor {
   // ({{clause}}) are not among them, they only say where the clause goes
   templateParameters(template) {
     const withoutClauses = this.resolveTemplate(template).replace(/\{\{[a-zA-Z0-9]+\}\}/g, '');
-    return (withoutClauses.match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m=>m.slice(1, -1).split(',')).filter(name=>name != 'func');
+    return (withoutClauses.match(templatePlaceholder) || []).flatMap(m=>m.slice(1, -1).split(',')).filter(name=>name != 'func');
   }
 
   // the optional parts of the sentence for the current variant: the ones the
@@ -2641,6 +2683,9 @@ class RoutineOperationEditor {
         continue;
       clauses.push({ id: name, label: name, template: `, ${name} {${name}}`, generated: true, offer: spec.offer !== false && !spec.deprecated });
     }
+    // the one option no operation declares and every operation has
+    if(this.parameterIsSet('skip'))
+      clauses.push(skipClause);
     // a custom property the operation does not know about is always part of the
     // sentence: the engine ignores it, but hiding it makes a typo impossible to
     // spot - and its x is how it is removed again
@@ -2756,7 +2801,7 @@ class RoutineOperationEditor {
   }
 
   parameterSpec(name) {
-    return this.metadata.parameters[name];
+    return this.metadata.parameters[name] || (name == 'skip' ? skipParameter : undefined);
   }
 
   registerChangeListener(listener) {
@@ -2838,7 +2883,7 @@ class RoutineOperationEditor {
     const arrow = isMenu ? '<span class="material-symbols">arrow_drop_down</span>' : '';
     const categoryNames = { func: 'operation', variable: 'variable', collection: 'group of widgets', widget: 'widget', property: 'widget property', number: 'number', value: 'value' };
     const title = `${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}`;
-    return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}${menu}" data-parameter="${spec}" title="${escapeHTML(title)}">${escapeHTML(displayed)}${arrow}</span>`;
+    return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}${menu}" data-parameter="${escapeHTML(spec)}" title="${escapeHTML(title)}">${escapeHTML(displayed)}${arrow}</span>`;
   }
 
   // the name of the operation, on a line of its own above the sentence: the
@@ -2881,7 +2926,7 @@ class RoutineOperationEditor {
   }
 
   renderTemplateText(template) {
-    return this.resolveTemplate(template).replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>this.renderParameterChip(spec));
+    return this.resolveTemplate(template).replace(templatePlaceholder, (_, spec)=>this.renderParameterChip(spec));
   }
 
   // the phrase the sentence starts with. With more than one way to work it is
@@ -3028,7 +3073,7 @@ class RoutineOperationEditor {
   unsupportedProperties() {
     if(!this.operation || typeof this.operation != 'object')
       return [];
-    const known = [ 'func', ...Object.keys(this.metadata.parameters), ...this.subroutineProperties() ];
+    const known = [ 'func', 'skip', ...Object.keys(this.metadata.parameters), ...this.subroutineProperties() ];
     return Object.keys(this.operation).filter(name=>known.indexOf(name) == -1);
   }
 
@@ -3333,9 +3378,15 @@ class InputRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
-    if(!Array.isArray(this.operation.fields))
-      this.operation.fields = [];
-    this.fieldsEditor = new RoutineInputFieldsEditor(this.widget, this.operation.fields, this.variables, this.collections);
+    // fields may be a value the routine works out (${dialogFields}) rather than a
+    // list written down here - the engine resolves the operation before it reads
+    // them, so that is a legal INPUT and rendering it must not overwrite it with
+    // an empty form. The sentence says what it is instead, and the list below
+    // starts out empty without being written until a line is actually added.
+    if(this.operation.fields !== undefined && !Array.isArray(this.operation.fields))
+      return this.domElement;
+    const fields = Array.isArray(this.operation.fields) ? this.operation.fields : [];
+    this.fieldsEditor = new RoutineInputFieldsEditor(this.widget, fields, this.variables, this.collections);
     this.fieldsEditor.registerChangeListener(fields=>{
       this.operation.fields = fields;
       this.notifyChangeListeners(this.operation);
@@ -3737,13 +3788,23 @@ class UnknownRoutineOperationEditor extends RoutineOperationEditor {
     return JSON.stringify(this.operation);
   }
 
-  // the whole operation is unknown, so singling out properties makes no sense
+  // the whole operation is unknown, so singling out properties makes no sense -
+  // its own skip included, which the raw JSON already shows
+  clauses() {
+    return [];
+  }
+
   unsupportedProperties() {
     return [];
   }
 
   onNewValue(values) {
-    // the popup edits the entire operation, so replace it instead of merging keys
+    // the popup edits the entire operation, so replace it instead of merging
+    // keys - the ones it cleared are the ones the new JSON no longer has
+    if(values && typeof values == 'object')
+      for(const key in values)
+        if(values[key] === undefined)
+          delete values[key];
     this.notifyChangeListeners(values);
   }
 }

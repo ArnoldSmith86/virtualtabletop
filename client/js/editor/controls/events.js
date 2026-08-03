@@ -95,19 +95,27 @@ const propertyAutomations = [
 ];
 
 // A value typed into a property set: JSON where that is what was typed (numbers,
-// booleans, null, arrays, objects) and a plain string otherwise - the same rule
-// the routine editor's parameter inputs use.
+// booleans, null, arrays, objects) and a plain string otherwise. The two go both
+// ways, so a row cannot retype what it shows: a string that would read as JSON
+// ("0", "true") is shown in quotes and typed back with them, which is also the
+// way to store the text 0 rather than the number.
 function parsePropertySetValue(text) {
   try {
-    const value = JSON.parse(text);
-    return typeof value == 'string' ? text : value;
+    return JSON.parse(text);
   } catch(e) {
     return text;
   }
 }
 
 function propertySetValueText(value) {
-  return typeof value == 'string' ? value : JSON.stringify(value);
+  if(typeof value != 'string')
+    return JSON.stringify(value);
+  try {
+    JSON.parse(value);
+    return JSON.stringify(value);
+  } catch(e) {
+    return value;
+  }
 }
 
 // The property names proposed for a new entry, from the same tables the routine
@@ -471,7 +479,7 @@ class EventsEditor {
       valueInput.className = 'events-editor-property-value';
       valueInput.value = propertySetValueText(currentSet()[key]);
       valueInput.placeholder = 'value';
-      valueInput.title = 'The value this property is set to. Anything that is valid JSON (a number, true, null, an object) is stored as such, everything else as text.';
+      valueInput.title = 'The value this property is set to. Anything that is valid JSON (a number, true, null, an object) is stored as such, everything else as text - put quotes around it to store it as text anyway.';
       // no re-render on an edit: it would take the focus out of the input
       valueInput.addEventListener('change', _=>{
         save(Object.assign({}, currentSet(), { [key]: parsePropertySetValue(valueInput.value) }));
@@ -494,7 +502,7 @@ class EventsEditor {
     // what a typed value is stored as is a trap ("false" the text or false the
     // value?), and the rule is one line - so it is on the page rather than in
     // the title of an input nobody hovers
-    div(contentDOM, 'events-editor-property-hint').textContent = 'true, 12, null and [ 1, 2 ] are stored as values; anything else as text.';
+    div(contentDOM, 'events-editor-property-hint').textContent = 'true, 12, null and [ 1, 2 ] are stored as values; anything else as text. "12" in quotes is the text 12.';
 
     const addRow = div(list, 'events-editor-property-row events-editor-property-add');
     const nameInput = document.createElement('input');
@@ -551,12 +559,15 @@ class EventsEditor {
   }
 
   // snapshot the widget so RESET can restore its current state: the explicitly
-  // set properties plus the position-related ones even at their default values
+  // set properties plus the position-related ones even at their default values -
+  // but only where the widget has the property at all. get() answers null for
+  // one it has never heard of (a holder has no activeFace) exactly the way it
+  // answers for an empty one, and RESET would go on to set that null.
   recordResetProperties() {
     const snapshot = {};
     if(typeof this.widget.get == 'function')
       for(const property of [ 'x', 'y', 'z', 'rotation', 'parent', 'owner', 'activeFace' ])
-        if(typeof this.widget.get(property) != 'undefined')
+        if(typeof this.widget.state[property] != 'undefined' || typeof this.widget.getDefaultValue == 'function' && this.widget.getDefaultValue(property) !== undefined)
           snapshot[property] = this.widget.get(property);
     for(const property in this.widget.state)
       if([ 'id', 'type', 'onEnter', 'onLeave', 'resetProperties' ].indexOf(property) == -1 && !property.match(/Routine$/))

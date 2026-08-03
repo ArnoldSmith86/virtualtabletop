@@ -83,6 +83,14 @@ class Popup {
   hide() {
     if(openPopups.indexOf(this) != -1)
       openPopups.splice(openPopups.indexOf(this), 1);
+    // a popup opened from a button inside this one (the info tip of a section
+    // title) belongs to it: every popup is appended to #editor rather than to
+    // the one it came from, so without this it stays on screen anchored to an
+    // element that is no longer in the document - and a click outside does not
+    // dismiss it either, because that click is inside a popup
+    for(const above of [ ...openPopups ])
+      if(above.source && this.domElement.contains(above.source))
+        above.hide();
     if(this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = null;
@@ -155,9 +163,6 @@ class Popup {
   }
 
   onOutsideClick(e) {
-    // clicking widgets in the room is part of the interaction while a custom selection is active
-    if(customSelectionCallback)
-      return;
     // clicks inside any popup (e.g. a nested info popup) never dismiss other popups
     if(e.target.closest && e.target.closest('.inline-popup'))
       return;
@@ -271,8 +276,16 @@ class InfoPopup extends Popup {
     div(this.domElement, 'content popup-info-text', this.infoHTML);
     // the link says what it opens: the name of the tutorial file read as a file
     // name, which is what it is
-    if(this.tutorialName) // FIXME: using the same roomID more than once doesn't work yet if the tutorial is already in there (also in production?)
-      this.addAccordionSection('Tutorial', `<a href="tutorial/${this.tutorialName}/ROOM:${roomID}-tutorials">Play the ${tutorialWords(this.tutorialName, this.title)} tutorial</a>`);
+    // the room id is whatever the player typed on the welcome screen, so the link
+    // is built as an element rather than as HTML - anything else puts that text
+    // into the DOM of everybody who opens an info popup
+    if(this.tutorialName) { // FIXME: using the same roomID more than once doesn't work yet if the tutorial is already in there (also in production?)
+      const [ , tutorialContent ] = this.addAccordionSection('Tutorial');
+      const link = document.createElement('a');
+      link.href = `tutorial/${encodeURIComponent(this.tutorialName)}/ROOM:${encodeURIComponent(roomID)}-tutorials`;
+      link.textContent = `Play the ${tutorialWords(this.tutorialName, this.title)} tutorial`;
+      tutorialContent.append(link);
+    }
     if(this.videoFilename)
       this.addAccordionSection('Video', `<video src="i/videos/${this.videoFilename}" controls></video>`);
     this.moveIntoView();
@@ -1266,6 +1279,13 @@ class RoutineWidgetIDPopup extends RoutinePopup {
     return true;
   }
 
+  // whether a click in the room climbs past the card or pile it hit to whatever
+  // lies under it. A parameter that takes any widget takes those two as well, so
+  // it does not - only one that means holders, which cards are what cover.
+  resolvesCovering() {
+    return false;
+  }
+
   show(showCollections=false) {
     // the picker is the primary input here, so it comes first and open
     const [ title, content ] = this.addAccordionSection('Widgets in the room', '', 'widget');
@@ -1289,7 +1309,7 @@ class RoutineWidgetIDPopup extends RoutinePopup {
       inline: true,
       multiple: true,
       allowSelf: true, // a routine regularly acts on the widget it belongs to
-      resolveCovering: true, // holders are usually covered by their cards
+      resolveCovering: this.resolvesCovering(),
       typeFilter: this.options.widgetType, // preset from the parameter, changeable in the picker
       getSelectedIDs: _=>this.workingIDs,
       apply: widgetIDs=>this.workingIDs = widgetIDs,
@@ -1315,6 +1335,12 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
     super(options);
   }
 
+  // this parameter means the holders widgets are taken from, and a holder in the
+  // room is under the cards lying on it
+  resolvesCovering() {
+    return true;
+  }
+
   setNewCollectionValue(value) {
     // a collection (whether a name or an in-place array of widget ids) belongs to the
     // second parameter if there is one; the first (holder-like) parameter is cleared
@@ -1331,7 +1357,12 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
     // widget ids arrive as an array and belong to the first (holder-like) parameter;
     // a variable or widget property resolves to a widget id, so it goes there too;
     // collection names are strings and belong to the second parameter if there is one
-    if(Array.isArray(value) || typeof value == 'string' && value.match(/\$\{[^}]+\}/)) {
+    // - unless the operation names a holder right now, where a typed-over string is
+    // the id of another one: editing "deck1" to "deck2" may not turn the holder into
+    // a collection and leave the operation acting on nothing. The list of collections
+    // sets one through setNewCollectionValue and is unaffected by this.
+    const namesTheHolder = this.operation && typeof this.operation == 'object' && typeof this.operation[this.parameterNames[0]] != 'undefined';
+    if(Array.isArray(value) || typeof value == 'string' && (namesTheHolder || value.match(/\$\{[^}]+\}/))) {
       const holderParameter = this.parameterNames[0];
       const collectionParameter = this.parameterNames[1];
       // clear the sibling collection (mirror of setNewCollectionValue) so a leftover
@@ -1367,28 +1398,34 @@ class RoutineJSONPopup extends RoutinePopup {
     return false; // the textarea below already holds the whole value
   }
 
+  // what the textarea was typed into means, or undefined where it means nothing
+  // (JSON.parse never returns undefined, so it is free as the "no" of this)
+  parseTextareaValue(text) {
+    try {
+      return JSON.parse(text);
+    } catch(e) {
+      // a bare word (e.g. a sortBy property name) is almost always meant as a
+      // string, so quote it automatically instead of rejecting the input
+      return text.trim().match(/^[A-Za-z_][\w.-]*$/) ? text.trim() : undefined;
+    }
+  }
+
+  valueSectionInfo() {
+    return 'Enter a JSON value (object, array, string, number, boolean or null). A bare word is quoted automatically as a string.';
+  }
+
   show() {
     // the current value is the most likely thing to edit, so it comes first and open
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
-    infoButton(valueTitle, 'Enter a JSON value (object, array, string, number, boolean or null). A bare word is quoted automatically as a string.');
+    infoButton(valueTitle, this.valueSectionInfo());
     const textarea = document.createElement('textarea');
     const currentValue = this.getCurrentValue();
     textarea.value = JSON.stringify(typeof currentValue != 'undefined' ? currentValue : null, null, '  ');
     textarea.addEventListener('change', _=>{
-      try {
-        const newValue = JSON.parse(textarea.value);
-        textarea.classList.remove('inputError');
+      const newValue = this.parseTextareaValue(textarea.value);
+      textarea.classList.toggle('inputError', newValue === undefined);
+      if(newValue !== undefined)
         this.setNewValue(newValue);
-      } catch(e) {
-        // a bare word (e.g. a sortBy property name) is almost always meant as a
-        // string, so quote it automatically instead of rejecting the input
-        if(textarea.value.trim().match(/^[A-Za-z_][\w.-]*$/)) {
-          textarea.classList.remove('inputError');
-          this.setNewValue(textarea.value.trim());
-        } else {
-          textarea.classList.add('inputError');
-        }
-      }
     });
     valueContent.append(textarea);
     super.show(true, false);
@@ -1679,9 +1716,32 @@ class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
     return this.operation;
   }
 
+  valueSectionInfo() {
+    return 'Enter the whole operation as a JSON object, or as the one line a var statement or a // comment is.';
+  }
+
+  // an operation is an object, or one of the two lines a routine may hold as a
+  // string (a var statement, a comment) - a bare word is neither, and quoting it
+  // would replace the operation with that word
+  parseTextareaValue(text) {
+    try {
+      const value = JSON.parse(text);
+      return typeof value == 'string' || value && typeof value == 'object' && !Array.isArray(value) ? value : undefined;
+    } catch(e) {
+      return undefined;
+    }
+  }
+
   setNewValue(value) {
-    // this popup edits the entire operation instead of a single parameter
-    this.notifyChangeListeners(value);
+    // this popup edits the entire operation instead of a single parameter, and
+    // the consumer assigns what it is handed onto the operation rather than
+    // replacing it - so a property the JSON no longer has is cleared explicitly
+    if(typeof value == 'string')
+      return this.notifyChangeListeners(value);
+    const newValue = {};
+    for(const key in this.operation)
+      newValue[key] = undefined;
+    this.notifyChangeListeners(Object.assign(newValue, value));
   }
 }
 
@@ -1817,9 +1877,13 @@ class RoutineForeachSourcePopup extends RoutinePopup {
       label.append(input);
       rangeContent.append(label);
     }
-    inputs.start.value = 1;
-    inputs.end.value = 10;
-    inputs.step.value = 1;
+    // the range the operation already has, so changing only the step keeps the
+    // start and the end instead of writing the example over them
+    const current = this.currentValue();
+    const seed = [ 1, 10, 1 ].map((fallback, index)=>Array.isArray(current) && typeof current[index] == 'number' ? current[index] : fallback);
+    inputs.start.value = seed[0];
+    inputs.end.value = seed[1];
+    inputs.step.value = seed[2];
     button(rangeContent, 'use range', _=>this.setNewValue([ +inputs.start.value || 0, +inputs.end.value || 0, +inputs.step.value || 1 ]));
   }
 
@@ -1828,6 +1892,9 @@ class RoutineForeachSourcePopup extends RoutinePopup {
     infoButton(inTitle, 'Iterate over the entries of an object, array or string. The loopRoutine receives key and value for each entry.');
     const textarea = document.createElement('textarea');
     textarea.placeholder = '[ "first", "second" ]';
+    const current = this.currentValue();
+    if(current !== undefined)
+      textarea.value = JSON.stringify(current, null, '  ');
     textarea.addEventListener('change', _=>{
       try {
         const value = JSON.parse(textarea.value);

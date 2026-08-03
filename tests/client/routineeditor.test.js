@@ -17,9 +17,6 @@ beforeAll(() => {
     return d;
   };
   window.html = string => String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  window.customSelectionCallback = null;
-  window.startCustomSelection = () => {};
-  window.endCustomSelection = () => {};
   window.widgets = new Map();
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
@@ -52,7 +49,7 @@ beforeAll(() => {
     'routineComputeOperations', 'routineComputeGroups', 'routineComputeChoices', 'RoutineComputeOperationPopup',
     'parseVarStatement', 'writeVarStatement', 'encodeVarOperand', 'decodeVarOperand',
     'EventsEditor', 'propertyAutomations', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
-    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
+    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML'
@@ -174,6 +171,23 @@ describe('routine operation metadata', () => {
     }
   });
 
+  test('skip is worded on every operation and never offered as an option', () => {
+    // the engine honours skip on every operation (220 uses in the library), so
+    // the editor may not read it as a typo and offer to delete a working guard
+    for (const func of [ 'MOVE', 'SET', 'IF', 'FOREACH', 'INPUT' ]) {
+      const operation = { func, skip: '${gameOver}' };
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      expect(editor.unsupportedProperties()).not.toContain('skip');
+      expect(editor.clauses().map(c => c.id)).toContain('skip');
+      // never in the list of options to add, and never on an operation without one
+      expect(editor.clauses().find(c => c.id == 'skip').offer).toBe(false);
+      const without = editorForOperation({ func });
+      without.setOperationDetails({ state: {} }, { func }, [], []);
+      expect(without.clauses().map(c => c.id)).not.toContain('skip');
+    }
+  });
+
   test('operations resolve to the right editor', () => {
     expect(editorForOperation({ func: 'MOVE' })).toBeInstanceOf(RoutineOperationEditor);
     expect(editorForOperation({ func: 'IF' })).toBeInstanceOf(IfRoutineOperationEditor);
@@ -261,6 +275,52 @@ describe('operation rendering', () => {
     expect(popup.textContent).toMatch(/deprecated/);
     expect(popup.textContent).toMatch(/collection/);
     popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
+  });
+
+  test('a skip reads as the condition it is and warns that IF replaces it', () => {
+    const dom = renderOperation({ func: 'MOVE', from: 'deck', to: 'discard', skip: '${gameOver}' }).dom;
+    expect(dom.textContent).toMatch(/1 widget from deck to discard, skipped when gameOver/);
+    const warning = dom.querySelector('.routine-editor-parameter-warning.deprecated');
+    expect(warning).not.toBeNull();
+    expect(warning.previousSibling.dataset.parameter).toBe('skip');
+    warning.dispatchEvent(new Event('click'));
+    const popup = document.querySelector('.inline-popup');
+    expect(popup.textContent).toMatch(/deprecated/);
+    expect(popup.textContent).toMatch(/IF/);
+    popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
+  });
+
+  test('what a SELECT compares to keeps the type the engine compares with', () => {
+    // the engine uses ===, so "0" matches nothing where 0 was meant - and "is one
+    // of" needs a list, which text could not hold at all
+    expect(routineOperationMetadata.SELECT.parameters.value.type).toBe('json');
+    const editor = editorForOperation({ func: 'SELECT', property: 'activeFace', value: 0 });
+    expect(editor.createPopup([ 'value' ])).toBeInstanceOf(RoutineJSONPopup);
+  });
+
+  test('how many MOVE moves is what the engine reads it as', () => {
+    // the engine dispatches on the value of from, not on whether it is there:
+    // with from empty it moves all the picked widgets, whatever the sentence says
+    const words = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.render().querySelector('.routine-editor-sentence').textContent;
+    };
+    expect(words({ func: 'MOVE', from: null, to: 'h1' })).toMatch(/all widgets from holder to h1/);
+    expect(words({ func: 'MOVE', from: 'deck', to: 'h1' })).toMatch(/1 widget from deck to h1/);
+    // switching back to "from a holder" writes the 1 down instead of leaving the
+    // sentence and the engine to disagree about it
+    const switched = routineOperationVariantChoices({ func: 'MOVE', collection: 'DEFAULT', to: 'h1' }).find(c => c.id == 'from');
+    expect(switched.values.count).toBe(1);
+    expect(switched.example).toMatch(/Move 1 widget/);
+  });
+
+  test('a custom property whose name is not a bare word is still a chip', () => {
+    const operation = { func: 'SET', property: 'x', value: 1, 'my-flag': 3 };
+    const { editor, dom } = renderOperation(operation);
+    expect(editor.unsupportedProperties()).toContain('my-flag');
+    expect(dom.querySelector('[data-parameter="my-flag"]')).not.toBeNull();
+    expect(dom.querySelector('.routine-editor-parameter-warning.unsupported')).not.toBeNull();
   });
 
   test('CANVAS marks collection as ignored while canvas is set', () => {
@@ -1507,6 +1567,26 @@ describe('property automations', () => {
     expect(received.value.cardType).toBe('stop');
   });
 
+  test('a value that is text keeps being text when its row is edited', () => {
+    // "0" the text and 0 the number are two different values, and a row that
+    // showed both as 0 rewrote the first one as the second on the next edit
+    let received = null;
+    const { editor } = makeEditor({ type: 'holder', onEnter: { n: '0', flag: 'true' } }, (property, value) => received = value);
+    editor.expandedEvents.onEnter = true;
+    editor.render();
+    const values = [...editor.domElement.querySelectorAll('.events-editor-property-value')].map(e => e.value);
+    expect(values).toEqual([ '"0"', '"true"', '' ]); // in quotes, which is what they are
+    const input = editor.domElement.querySelector('.events-editor-property-value');
+    input.value = '"1"';
+    input.dispatchEvent(new Event('change'));
+    expect(received.n).toBe('1');
+    expect(received.flag).toBe('true');
+    // and without the quotes it is the number it looks like
+    input.value = '1';
+    input.dispatchEvent(new Event('change'));
+    expect(received.n).toBe(1);
+  });
+
   test('adding an entry names it, removing the last one removes the property', () => {
     let received = null;
     const { widget, editor } = makeEditor({ type: 'line' }, (property, value) => {
@@ -1543,9 +1623,20 @@ describe('property automations', () => {
 
   test('Record snapshots current state including positional defaults', () => {
     const defaults = { x: 100, y: 50, z: 2, rotation: 0, parent: null, owner: null, activeFace: 1 };
-    const widget = { state: { type: 'card', clickRoutine: [ { func: 'FLIP' } ], customProp: 'v' }, get(p) { return p in defaults ? defaults[p] : this.state[p]; } };
+    const widget = { state: { type: 'card', clickRoutine: [ { func: 'FLIP' } ], customProp: 'v' }, getDefaultValue(p) { return defaults[p]; }, get(p) { return p in defaults ? defaults[p] : this.state[p]; } };
     const editor = new EventsEditor(widget, () => {});
     expect(editor.recordResetProperties()).toEqual({ x: 100, y: 50, z: 2, rotation: 0, parent: null, owner: null, activeFace: 1, customProp: 'v' });
+  });
+
+  test('Record leaves out a property the widget does not have at all', () => {
+    // get() answers null for a property the widget has never heard of, the same
+    // way it does for an empty one - RESET would go on to set that null
+    const defaults = { x: 10, y: 20, z: 0, rotation: 0, parent: null, owner: null };
+    const widget = { state: { type: 'holder' }, getDefaultValue(p) { return defaults[p]; }, get(p) { return p in defaults ? defaults[p] : (this.state[p] !== undefined ? this.state[p] : null); } };
+    const editor = new EventsEditor(widget, () => {});
+    const snapshot = editor.recordResetProperties();
+    expect(snapshot).not.toHaveProperty('activeFace');
+    expect(snapshot.parent).toBe(null);
   });
 
   test('Play applies each resetProperties entry to the widget', () => {
@@ -1821,6 +1912,25 @@ describe('information about an operation and its parameters', () => {
     expect(popup.querySelector('.popup-info-parameters dd').textContent).toContain('specifies the widget(s)');
     popup.remove();
     dom.remove();
+  });
+
+  test('the tutorial link carries the room id as text, never as markup', () => {
+    // roomID is the query parameter plus whatever the player typed on the
+    // welcome screen, so it never reaches the DOM as HTML
+    const previousRoomID = window.roomID;
+    window.roomID = '"><img src=x onerror=alert(1)>';
+    try {
+      const source = document.createElement('span');
+      document.getElementById('editor').append(source);
+      const popup = new InfoPopup(source, 'text', 'functions-move');
+      popup.show();
+      expect(popup.domElement.querySelector('img')).toBeNull();
+      const link = popup.domElement.querySelector('.accordion-content a');
+      expect(link.getAttribute('href')).toBe(`tutorial/functions-move/ROOM:${encodeURIComponent(window.roomID)}-tutorials`);
+      popup.hide();
+    } finally {
+      window.roomID = previousRoomID;
+    }
   });
 
   test('only the lines naming a parameter become list entries, prose stays prose', () => {
@@ -2541,6 +2651,18 @@ describe('popup closing', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     expect(document.body.contains(outer.domElement)).toBe(false);
   });
+
+  test('an info popup opened from inside another one closes with it', () => {
+    // every popup is appended to #editor rather than to the one it came from, so
+    // without this the info tip of a section title outlives the section
+    const parent = showInfoPopup('parent');
+    const insideParent = document.createElement('span');
+    parent.domElement.append(insideParent);
+    const child = new InfoPopup(insideParent, 'child');
+    child.show();
+    parent.hide();
+    expect(document.body.contains(child.domElement)).toBe(false);
+  });
 });
 
 describe('JSON parameter popup', () => {
@@ -2579,6 +2701,34 @@ describe('JSON parameter popup', () => {
     expect(textarea.classList.contains('inputError')).toBe(true);
     popup.hide();
   });
+
+  test('the whole-operation editor clears what the JSON no longer has', () => {
+    const operation = { func: 'MOVE', from: 'deck', to: 'discard', count: 3 };
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineFullOperationJSONPopup();
+    popup.setSource(source);
+    popup.setOperationDetails(operation, [ 'json' ], { state: {} }, [], []);
+    popup.show();
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const textarea = popup.domElement.querySelector('textarea');
+    textarea.value = '{ "func": "MOVE", "from": "deck", "to": "discard" }';
+    textarea.dispatchEvent(new Event('change'));
+    expect('count' in value).toBe(true);
+    expect(value.count).toBeUndefined();
+
+    // a bare word is a value, never an operation - quoting it here would replace
+    // the operation with that word
+    textarea.value = 'MOVE';
+    textarea.dispatchEvent(new Event('change'));
+    expect(textarea.classList.contains('inputError')).toBe(true);
+    // the two lines a routine may hold as a string are still accepted
+    textarea.value = '"var x = 1"';
+    textarea.dispatchEvent(new Event('change'));
+    expect(value).toBe('var x = 1');
+    popup.hide();
+  });
 });
 
 describe('popup parameter routing', () => {
@@ -2603,6 +2753,34 @@ describe('popup parameter routing', () => {
     // picking a holder also clears the sibling collection so it can't re-surface
     expect('collection' in value).toBe(true);
     expect(value.collection).toBeUndefined();
+  });
+
+  test('typing over the holder keeps it a holder', () => {
+    // the string is the id of another holder, not the name of a collection: the
+    // engine prefers from over collection, so swapping the two silently made the
+    // operation act on nothing
+    const popup = new RoutineHoldersOrCollectionSourcePopup();
+    popup.setOperationDetails({ func: 'FLIP', holder: 'deck1' }, [ 'holder', 'collection' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.setNewValue('deck2');
+    expect(value.holder).toBe('deck2');
+    expect(value.collection).toBeUndefined();
+
+    // without one, a typed name is a collection as before
+    const withoutHolder = new RoutineHoldersOrCollectionSourcePopup();
+    withoutHolder.setOperationDetails({ func: 'FLIP' }, [ 'holder', 'collection' ], { state: {} }, [], []);
+    withoutHolder.registerChangeListener(v => value = v);
+    withoutHolder.setNewValue('myGroup');
+    expect(value.collection).toBe('myGroup');
+    expect(value.holder).toBeUndefined();
+  });
+
+  test('a widget parameter picks the card that was clicked, not what it lies on', () => {
+    // only a parameter that means holders climbs past a card - a generic widget
+    // parameter (FLIP widget, MOVE to) takes cards and piles as they are
+    expect(new RoutineWidgetIDPopup().resolvesCovering()).toBe(false);
+    expect(new RoutineHoldersOrCollectionSourcePopup().resolvesCovering()).toBe(true);
   });
 
   test('a parameter that names a widget property proposes the names it could have', () => {
@@ -2676,6 +2854,24 @@ describe('popup parameter routing', () => {
     textarea.dispatchEvent(new Event('change'));
     expect(entries).toEqual({ 'in': [ 'a' ] });
     list.hide();
+  });
+
+  test('the range inputs start from the range the operation already has', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineForeachSourcePopup({ range: true });
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'FOREACH', range: [ 5, 50, 5 ] }, [ 'range' ], { state: {} }, [], []);
+    popup.show();
+    const inputs = [...popup.domElement.querySelectorAll('input[type=number]')].map(i => i.value);
+    expect(inputs).toEqual([ '5', '50', '5' ]);
+    // changing only the step keeps the start and the end
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.domElement.querySelectorAll('input[type=number]')[2].value = '10';
+    [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'use range').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ range: [ 5, 50, 10 ] });
+    popup.hide();
   });
 });
 
@@ -3116,6 +3312,24 @@ describe('the lines of an INPUT dialog', () => {
     expect(written).toBe(operation);
     dom.querySelectorAll('.routine-editor-field')[0].querySelector('[title="Remove this line"]').dispatchEvent(new Event('click'));
     expect(operation.fields.map(f => f.type)).toEqual([ 'title' ]);
+  });
+
+  test('fields the routine works out are shown, not overwritten with an empty form', () => {
+    // the engine resolves the whole operation before it reads the fields, so a
+    // ${...} there is a legal INPUT - rendering it may not replace it with []
+    const operation = { func: 'INPUT', header: 'Pick', fields: '${dialogFields}' };
+    const editor = inputEditorFor(operation);
+    const dom = editor.render();
+    expect(operation.fields).toBe('${dialogFields}');
+    expect(dom.querySelector('.routine-editor-fields')).toBeNull();
+    expect(dom.textContent).toMatch(/to fill in dialogFields/);
+
+    // and an INPUT without any fields does not get one written either, until a
+    // line is actually added
+    const empty = { func: 'INPUT', header: 'Sure?' };
+    const emptyEditor = inputEditorFor(empty);
+    emptyEditor.render();
+    expect('fields' in empty).toBe(false);
   });
 
   test('the list offers every kind of line with the sentence it would read as', () => {

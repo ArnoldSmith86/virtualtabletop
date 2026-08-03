@@ -9,9 +9,6 @@ let selectionRectangleEnd = null;
 let draggingDragButton = null;
 let widgetRectangles = null;
 
-let customSelection = null;
-let customSelectionCallback = null;
-
 export function editInputHandler(name, e) {
   // While Space is held (edit-space-pan), never show selection rectangles
   if(document.body.classList.contains('spacePanActive')) {
@@ -152,26 +149,20 @@ function applySelectionRectangle(addToSelection) {
   // in selection mode a click on a widget arrives here instead of as editClick,
   // so this is where a running picker takes it - a selection change would not
   // reach it for the widget the picker belongs to, which stays selected
-  if(!customSelection && newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
+  if(newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
     return;
 
   if(!addToSelection) {
-    if(customSelection)
-      setCustomSelection(newlySelected);
-    else
-      setSelection(newlySelected);
+    setSelection(newlySelected);
   } else {
-    let selectionToApply = customSelection ? [...customSelection] : [...selectedWidgets];
+    let selectionToApply = [...selectedWidgets];
     for(const widget of newlySelected) {
-      if(customSelection ? customSelection.indexOf(widget) == -1 : selectedWidgets.indexOf(widget) == -1)
+      if(selectedWidgets.indexOf(widget) == -1)
         selectionToApply.push(widget);
       else
         selectionToApply = selectionToApply.filter(w=>w!=widget);
     }
-    if(customSelection)
-      setCustomSelection(selectionToApply);
-    else
-      setSelection(selectionToApply);
+    setSelection(selectionToApply);
   }
 }
 
@@ -193,33 +184,6 @@ function setSelection(newSelectedWidgets) {
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
 
   updateDragToolbar();
-}
-
-function startCustomSelection(selectedWidgets, callback) {
-  customSelection = selectedWidgets;
-  for(const widget of selectedWidgets) {
-    widget.setHighlighted(null, true);
-  }
-  customSelectionCallback = callback;
-}
-
-function setCustomSelection(selectedWidgets) {
-  const previousCustomSelection = [...customSelection];
-  customSelection = selectedWidgets;
-  for(const widget of previousCustomSelection)
-    widget.setHighlighted(null, false);
-  for(const widget of customSelection)
-    widget.setHighlighted(null, true);
-  if(customSelectionCallback)
-    customSelectionCallback(customSelection);
-}
-
-function endCustomSelection() {
-  if(customSelection)
-    for(const widget of customSelection)
-      widget.setHighlighted(null, false);
-  customSelection = null;
-  customSelectionCallback = null;
 }
 
 export async function editClick(widget) {

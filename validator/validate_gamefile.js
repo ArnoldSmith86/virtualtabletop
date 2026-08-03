@@ -439,7 +439,9 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         
         for (const prop of Object.keys(operation)) {
-            if (['func'].includes(prop) || prop.match(/^(note|comment)/i) || prop.startsWith('//')) continue;
+            // skip is deprecated but the engine still honours it on every operation,
+            // so it belongs to none of the tables below and to all of them
+            if (['func', 'skip'].includes(prop) || prop.match(/^(note|comment)/i) || prop.startsWith('//')) continue;
             
             const propPath = [...operationPath, prop];
             

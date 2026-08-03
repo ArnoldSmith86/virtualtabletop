@@ -496,8 +496,6 @@ export class Widget extends StateManaged {
 
     if(this.isHighlighted)
       className += ' selectedInEdit';
-    if(this.isCustomHighlighted)
-      className += ' customSelectedInEdit';
 
     if(includeTemporary)
       className += ' ' + Array.from(this.animateClasses.values()).join(' ');
@@ -2904,20 +2902,13 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
-  setHighlighted(isHighlighted, isCustomHighlighted=null) {
-    if(isHighlighted !== null && this.isHighlighted != isHighlighted) {
+  setHighlighted(isHighlighted) {
+    if(this.isHighlighted != isHighlighted) {
       this.isHighlighted = isHighlighted;
       if(isHighlighted)
         this.domElement.classList.add('selectedInEdit');
       else
         this.domElement.classList.remove('selectedInEdit');
-    }
-    if(isCustomHighlighted !== null && this.isCustomHighlighted != isCustomHighlighted) {
-      this.isCustomHighlighted = isCustomHighlighted;
-      if(isCustomHighlighted)
-        this.domElement.classList.add('customSelectedInEdit');
-      else
-        this.domElement.classList.remove('customSelectedInEdit');
     }
   }
 
