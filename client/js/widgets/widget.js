@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -2165,18 +2165,21 @@ export class Widget extends StateManaged {
           }
         };
         if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          // a "minutes:seconds" string in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
+          const seconds = timeToMS(a.seconds);
+          const milliseconds = seconds !== a.seconds ? seconds : a.seconds*1000 || a.value;
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
               await w(a.timer, async widget=>{
                 if(widget.setMilliseconds)
-                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await widget.setMilliseconds(milliseconds, a.mode);
               });
             }
           } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setMilliseconds)
-                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await c.setMilliseconds(milliseconds, a.mode);
             } else {
               problems.push(`Collection ${a.collection} is empty.`);
             }
@@ -2491,6 +2494,7 @@ export class Widget extends StateManaged {
 
     await this.bringToFront();
     await this.set('dragging', playerName);
+    delete this.lastMoveCoord;
 
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
@@ -2534,6 +2538,8 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
 
+    this.lastMoveCoord = coordGlobal;
+
     await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
     await this.snapToGrid();
 
@@ -2541,6 +2547,15 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
+      // The hit test below asks the DOM where this widget is, but the delta that
+      // carries the position set above only reaches the DOM when the batch around
+      // the mouse event ends. Without the flush the drop target is computed for the
+      // position of the *previous* mouse event - so a drag that moves further than
+      // half a holder between two events resolves the drop against the square the
+      // widget has already left, and the piece lands next to where it was dropped
+      // (or the game rejects the move and sends it back).
+      if(this.domElement.style.transform != this.cssTransform())
+        flushDelta();
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
@@ -2690,6 +2705,17 @@ export class Widget extends StateManaged {
     // which runs updatePiles() before the call at the end of this method, so
     // the marker has to cover the whole drop rather than just that call.
     this.pileUpdateFromDrag = true;
+
+    // The drop belongs where the button was released, not where the last mousemove
+    // reported: a fast drag can end with a mouseup at coordinates no mousemove ever
+    // delivered, and everything below - the drop target, the line stop, the position -
+    // would then be resolved for a spot the widget has already been dragged away from.
+    // Applying the release coordinates first also makes the drop target match what the
+    // player last saw highlighted, since move() recomputes it.
+    const releasedElsewhere = coordGlobal && (!this.lastMoveCoord || this.lastMoveCoord.x != coordGlobal.x || this.lastMoveCoord.y != coordGlobal.y);
+    if(releasedElsewhere)
+      await this.move(coordGlobal, localAnchor);
+    delete this.lastMoveCoord;
 
     await this.hideShadowWidget();
     await this.set('dragging', null);
