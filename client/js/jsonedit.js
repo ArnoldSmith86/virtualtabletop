@@ -1484,7 +1484,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(SCORE\\) ↦ mode', [ 'set', 'inc', 'dec' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in', 'contains' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(SHUFFLE\\) ↦ mode', [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ]);
@@ -1499,6 +1499,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
+  jeAddEnumCommands('^holder ↦ multiSelectMax', [ 0, 1, 'all' ]);
+  jeAddEnumCommands('^holder ↦ multiSelectStyle', [ 'elevate', 'highlight', 'shade', 'none' ]);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);

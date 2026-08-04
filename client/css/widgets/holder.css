@@ -85,3 +85,23 @@
   position: absolute;
   box-sizing: border-box;
 }
+
+/*
+ * click-to-select: a holder with multiSelectMax lets players pick the widgets in it
+ * by clicking. The picked ones carry the multiSelected class for the player who
+ * picked them, the holder carries multiSelect-<multiSelectStyle> and decides how that
+ * looks. Games that want something of their own set multiSelectStyle to "none" and
+ * style .multiSelected through the holder's css property.
+ */
+.multiSelect-elevate .widget.multiSelected {
+  translate: 0 -14px;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.45));
+}
+
+.multiSelect-highlight .widget.multiSelected {
+  box-shadow: 0 0 0 3px #f5c518, 0 0 8px 4px rgba(245, 197, 24, 0.7);
+}
+
+.multiSelect-shade .widget.multiSelected {
+  filter: brightness(0.65);
+}

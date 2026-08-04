@@ -401,6 +401,8 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
+  multiSelectMax: 'Let players pick widgets in this holder by clicking them, up to this many each. The picked ones get the clicking player\'s name in their selectedBy property, which automations can read.',
+  multiSelectStyle: 'How a widget the player picked is shown. "custom CSS" only sets the multiSelected class so the holder css can style it.',
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
@@ -5942,6 +5944,7 @@ class PropertiesModule extends SidebarModule {
       { label: 'X', property: 'stackOffsetX' },
       { label: 'Y', property: 'stackOffsetY' }
     ]);
+    this.renderMultiSelectRow(widget);
 
     this.renderAdvancedSection(widget, body => {
       this.renderSeatReferenceInput(widget, 'showInactiveFaceToSeat', 'Show inactive face to seat:', body, {
@@ -5952,7 +5955,49 @@ class PropertiesModule extends SidebarModule {
     });
 
     // onEnter / onLeave stay in the generic property list (handled in PR #3034)
-    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat' ]);
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat', 'multiSelectMax', 'multiSelectStyle' ]);
+  }
+
+  // Click-to-select: how many widgets a player can pick in this holder by clicking
+  // them, and what a picked widget looks like. The style only matters once picking
+  // is enabled, so it stays hidden while the limit is 0.
+  renderMultiSelectRow(widget) {
+    const row = div(this.moduleDOM, 'propertyInlineRow');
+    const maxInput = new SelectInput(this, widget, 'Click to select', {
+      property: 'multiSelectMax',
+      hint: editorPropertyHints.multiSelectMax,
+      choices: [
+        { value: 0, text: 'off' },
+        { value: 1, text: 'one at a time' },
+        { value: 'all', text: 'any number' },
+        { value: 'custom', text: 'up to...' }
+      ],
+      setValue: value => {
+        if(value === 'custom') {
+          const entered = parseInt(prompt('How many widgets may one player select in this holder?', widget.get('multiSelectMax')));
+          if(Number.isFinite(entered) && entered > 0)
+            this.inputValueUpdated(widget, 'multiSelectMax', entered);
+          else
+            maxInput.update(widget.get('multiSelectMax')); // snap the dropdown back
+        } else {
+          this.inputValueUpdated(widget, 'multiSelectMax', value);
+        }
+      }
+    });
+    maxInput.render(row);
+
+    const styleInput = new SelectInput(this, widget, 'Selection shown as', {
+      property: 'multiSelectStyle',
+      hint: editorPropertyHints.multiSelectStyle,
+      choices: [
+        { value: 'elevate',   text: 'raised' },
+        { value: 'highlight', text: 'outlined' },
+        { value: 'shade',     text: 'darkened' },
+        { value: 'none',      text: 'custom CSS' }
+      ]
+    });
+    styleInput.render(row);
+    this.addPropertyListener(widget, 'multiSelectMax', w => styleInput.dom.style.display = w.get('multiSelectMax') ? '' : 'none');
   }
 
   // Text / background / border color plus a brightness filter written into a
