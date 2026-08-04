@@ -1,6 +1,8 @@
+import { viewportConfig } from '../calculateLayout.js';
+
 const defaultPileSnapRange = 10;
 
-class Pile extends Widget {
+export class Pile extends Widget {
   constructor(id) {
     super(id);
     this.handle = document.createElement('div');
@@ -54,24 +56,33 @@ class Pile extends Widget {
         this.handle.classList.remove('small');
     }
 
+    if(this.handle && [ 'x', 'y', 'width', 'height', 'parent', 'handlePosition', 'handleOffset' ].some(p=>delta[p] !== undefined))
+      this.updateHandlePlacement();
+  }
+
+  // The handle sticks out of the pile, so it is flipped inwards when the pile
+  // sits close to a board edge. That depends on the board size, which can change
+  // while people are playing - so this also has to run outside of a delta.
+  updateHandlePlacement() {
+    if(!this.handle)
+      return;
+
     const threshold = this.get('handleOffset')+5;
     const handlePosition = String(this.get('handlePosition'));
-    for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
-        if(handlePosition == 'static') {
+    for(const e of [ [ 'x', 'right', viewportConfig.targetWidth-this.get('width'), 'center' ], [ 'y', 'bottom', viewportConfig.targetHeight-this.get('height'), 'middle' ] ]) {
+      if(handlePosition == 'static') {
+        this.handle.classList.remove(e[1]);
+        this.handle.classList.remove(e[3]);
+      } else if(handlePosition.match(e[3])) {
+        this.handle.classList.remove(e[1]);
+        this.handle.classList.add(e[3]);
+      } else {
+        this.handle.classList.remove(e[3]);
+        const isRightOrBottom = handlePosition.match(e[1]);
+        if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
+          this.handle.classList.add(e[1]);
+        else
           this.handle.classList.remove(e[1]);
-          this.handle.classList.remove(e[3]);
-        } else if(handlePosition.match(e[3])) {
-          this.handle.classList.remove(e[1]);
-          this.handle.classList.add(e[3]);
-        } else {
-          this.handle.classList.remove(e[3]);
-          const isRightOrBottom = handlePosition.match(e[1]);
-          if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
-            this.handle.classList.add(e[1]);
-          else
-            this.handle.classList.remove(e[1]);
-        }
       }
     }
   }

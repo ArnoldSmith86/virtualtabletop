@@ -133,9 +133,11 @@ function applySelectionRectangle(addToSelection) {
 
   let newlySelected = [];
   if(s.right - s.left < 5 || s.bottom - s.top < 5) {
-    // resolve each element under the click to its owning widget: some widgets (e.g. a
-    // line) only expose an inner element for hit-testing while their own box has
-    // pointer-events:none, so climb to the nearest ancestor carrying the widget id
+    // resolve each element under the click to its owning widget: some widgets only
+    // expose an inner element for hit-testing while their own box has
+    // pointer-events:none (a line), and parts a widget renders on top of its own box
+    // (the handle of a pile) have no widget id themselves - so climb to the nearest
+    // ancestor carrying the widget id
     const clicked = document.elementsFromPoint(s.left, s.top)
       .map(el => el.closest('[id^="w_"]'))
       .map(el => el && widgets.get(unescapeID(el.id.slice(2))))
@@ -199,23 +201,29 @@ export async function editClick(widget) {
 }
 
 export function editorReceiveDelta(delta) {
+  // a widget can disappear while it is selected - a pile removes itself as soon
+  // as it holds a single card. Its sidebar inputs would keep writing to the
+  // dead id, and the server re-creates an unknown id as a typeless widget that
+  // then ends up in the saved game, so drop it from the selection first.
+  if(selectedWidgets.some(w=>widgets.get(w.id) !== w))
+    setSelection(selectedWidgets.filter(w=>widgets.get(w.id) === w));
+
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
 }
 
 function receiveStateFromServer(state) {
-  // The incoming full state has already replaced the widgets map, so the previously selected widgets may no
-  // longer exist. Reset the deck editor and pass an EMPTY new selection to the modules (previous selection as
-  // the old one) so none of them try to render a now-removed widget - rendering e.g. a removed deck's card
-  // types would dereference the missing deck and throw (crash on switching games while a deck was selected).
+  // A new state replaces every widget in the room, so anything still selected
+  // points at a widget object that is gone by the time this runs. Clearing the
+  // selection first is the same notification the modules got before - just
+  // with the dead widgets already dropped, so nothing re-renders an editor for
+  // one of them and follows its dangling links (a card looks up its deck).
+  // The selection survives leaving edit mode, so this happens while playing too.
   deckEditorStateReplaced();
-  const previousSelection = selectedWidgets;
-  for(const module of sidebarModules) {
-    module.onSelectionChanged([], previousSelection);
-    module.onStateReceived(state);
-  }
   setSelection([]);
+  for(const module of sidebarModules)
+    module.onStateReceived(state);
 }
 
 function registerSelectionEventHandlers() {

@@ -21,10 +21,8 @@
 
 /* On layouts where the module panel sits above the room or covers it entirely (see sidebar.css), it
    simply overlays the deck editor, so don't reserve width for it. */
-@media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20), (max-width: 1000px) and (min-aspect-ratio: 16/20) {
-  #editor.moduleActive #deckEditor {
-    right: var(--editSidebarWidth);
-  }
+body:is(.editModulesAbove, .editModulesOverlay) #editor.moduleActive #deckEditor {
+  right: var(--editSidebarWidth);
 }
 
 body.deckEditorActive #deckEditor {
@@ -464,6 +462,18 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 20;
 }
 
+/* Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
+   (pickSymbolKeepingOverlay), where the rule above no longer applies and it would render behind #deckEditor
+   (z-index 1). Float it over the whole editor instead: above the sidebar (2), the toolbar (3) and the
+   dialog it was opened from (20). */
+#symbolPickerOverlay.symbolPickerAboveEditor {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+  z-index: 30;
+}
+
 #deckEditorExportOverlay {
   position: fixed;
   top: var(--editToolbarHeight);
@@ -693,23 +703,170 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   color: #fff;
 }
 
-.deckEditorNewDeckModes {
+/* The ways to create a deck are grouped into three expanders, only one of which is open at a time - so the
+   dialog opens as three short rows instead of a list of eight radio buttons. */
+.deckEditorNewDeckGroups {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 16px 0;
 }
 
+.deckEditorNewDeckGroup {
+  border: 1px solid #0003;
+  border-radius: 6px;
+}
+
+.deckEditorNewDeckGroupHeader {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #0000000d;
+  color: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  text-transform: none;
+}
+
+.deckEditorNewDeckGroupHeader:hover {
+  background: #0000001a;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader,
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader:hover {
+  border-radius: 5px 5px 0 0;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorNewDeckGroupHeader span {
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+  opacity: 0.75;
+}
+
+.deckEditorNewDeckGroupHeader::after {
+  content: "expand_more";
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-family: "Material Symbols";
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader::after {
+  content: "expand_less";
+}
+
+/* The panel of the selected option is moved into the open group (see openNewDeckGroup), so a closed group is
+   nothing but its header. */
+.deckEditorNewDeckGroupBody {
+  display: none;
+  padding: 12px;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupBody {
+  display: block;
+}
+
+.deckEditorNewDeckModes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .deckEditorNewDeckModes label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 8px;
+  cursor: pointer;
+}
+
+.deckEditorNewDeckModes label span {
+  grid-column: 2;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* A group with a single way to create a deck (the blank one) needs no radio button - opening it is already
+   the choice, and its header says what it does. */
+.deckEditorNewDeckModesSingle {
+  display: none;
+}
+
+/* Applies to every mode, so it is set apart from the groups above and the picked mode's panel, which is moved
+   into the open group. */
+.deckEditorNewDeckOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 16px 0;
+  padding: 10px 12px;
+  border: 1px solid #0002;
+  border-radius: 8px;
+  background: #0000000a;
+}
+
+.deckEditorNewDeckOptionsLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+.deckEditorNewDeckOptions label {
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  font-size: 13px;
 }
 
-#deckEditorNewDeckPanel:not(:empty) {
+/* the reset button needs a holder to recall the cards into, so without one its option is off, not just
+   greyed out while still looking ticked */
+.deckEditorNewDeckOptions label:has(input:disabled) {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* what unticking the holder means, shown only once it is unticked */
+.deckEditorNewDeckOptionsHint {
+  display: none;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.deckEditorNewDeckOptions:has(#deckEditorNewDeckHolder:not(:checked)) .deckEditorNewDeckOptionsHint {
+  display: block;
+}
+
+/* Separates a group's options from the panel of the selected one - the blank group shows no options, so
+   there is nothing to separate there. */
+.deckEditorNewDeckModes:not(.deckEditorNewDeckModesSingle) + #deckEditorNewDeckPanel:not(:empty) {
   border-top: 1px solid #0002;
   padding-top: 16px;
+}
+
+/* The dialog itself is the scroll container, so pinning the action row to its bottom edge keeps the primary
+   action reachable no matter how tall the panel above it grows. The negative offset and the matching padding
+   make it cover the dialog's own bottom padding, so nothing scrolls through the gap below it. */
+#deckEditorNewDeckPanel .goButton,
+.deckEditorNewDeckButtonBar {
+  position: sticky;
+  bottom: -20px;
+  z-index: 1;
+  margin-top: 8px;
+  padding: 8px 0 20px;
+  background: var(--modalBackgroundColor);
 }
 
 /* Card sizes for a new empty deck: a wrapping row of radio chips, the first (the size decks have always been
@@ -768,6 +925,14 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   color: inherit;
 }
 
+/* The sidebar's "overflow-x: hidden" would make this module a scroll container of its own, which would stop
+   the sticky action row below from sticking to the dialog (the actual scroll container). */
+.deckEditorNewDeckModule.tune.editorModule {
+  overflow: visible;
+}
+
+/* stays a media query: initializeDOM() re-parents this dialog into #editor, where it is positioned
+   against the viewport - a container query on #roomArea has no container to resolve against there */
 @media (max-width: 700px) {
   .deckEditorExportOptions {
     grid-template-columns: 1fr;
@@ -1501,6 +1666,59 @@ body.deckEditorPanning #deckEditorMain * {
 #deckEditorSidebar .deckEditorColorPickerButton.open {
   outline: 2px solid var(--VTTblue);
   outline-offset: 1px;
+}
+
+/* A css/…CSS property is a text row like every other property, with the very declaration rows the Edit
+   Widgets tab uses (CssEditor, styled in propertyInputs.css under ".editorModule") opening below it - the
+   same shape as the image and color pickers above. The button sits where those sit, left of the trash. */
+#deckEditorSidebar .deckEditorProperties .deckEditorCssRow.hasDelete {
+  padding-right: 48px;
+}
+
+#deckEditorSidebar .deckEditorCssPickerButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+#deckEditorSidebar .deckEditorCssRow.hasDelete .deckEditorCssPickerButton {
+  right: 24px;
+}
+
+.deckEditorCssPickerButton[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
+}
+
+#deckEditorSidebar .deckEditorCssPickerButton.open {
+  background: var(--VTTblueDark);
+}
+
+/* the row's own value field: css, so monospace like the declaration rows it opens */
+#deckEditorSidebar .deckEditorCssRow input.cssRowText {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* the nested form is a list of class/selector sections, which no single line can hold - the field names
+   those sections instead of pretending they could be typed here */
+#deckEditorSidebar .deckEditorCssRow input.cssRowText.cssRowSections {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* the sections are already indented by the picker itself, so drop the module's right margin */
+#deckEditorSidebar .deckEditorPickerRow .collapsibleSection {
+  margin-right: 0;
 }
 
 #deckEditorShowAll.active {
