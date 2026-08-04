@@ -196,8 +196,9 @@ const jeCommands = [
       { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
       { label: 'Inherit properties',     type: 'string', value: '' },
       { label: 'Copy recursively',       type: 'checkbox', value: true  },
-      { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
+      // getters because jeCommands is built at load time, before the game's viewport is known
+      { label: 'X offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetWidth  }, get max() { return viewportConfig.targetWidth  } },
+      { label: 'Y offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetHeight }, get max() { return viewportConfig.targetHeight } },
       { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
       { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
     ],
@@ -1539,7 +1540,7 @@ function jeAddAlignmentCommands() {
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
-      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? viewportConfig.targetWidth : viewportConfig.targetHeight);
       jeStateNow[key] = '###SELECT ME###';
       jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
     }
@@ -1770,9 +1771,9 @@ function jeAddLimitCommand(key, value) {
       jeStateNow.dragLimit[key] = '###SELECT ME###';
       let limit = value;
       if (key == 'maxX')
-        limit = 1600 - w.get('width');
+        limit = viewportConfig.targetWidth - w.get('width');
       else if (key == 'maxY')
-        limit = 1000 - w.get('height');
+        limit = viewportConfig.targetHeight - w.get('height');
       jeSetAndSelect(limit);
     }
   });
@@ -3998,8 +3999,8 @@ function jeInitEventListeners() {
     if(!jeEnabled)
       return;
     const surfaceRect = $('#topSurface').getBoundingClientRect();
-    const scaleX = 1600 / surfaceRect.width;
-    const scaleY = 1000 / surfaceRect.height;
+    const scaleX = viewportConfig.targetWidth / surfaceRect.width;
+    const scaleY = viewportConfig.targetHeight / surfaceRect.height;
 
     jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
     jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);

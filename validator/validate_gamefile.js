@@ -803,7 +803,7 @@ const operationProps = {
         'collection': 'inCollection',
         'mode': getEnumValidator(['set','inc','dec','pause','start','toggle','reset']),
         'value': v=>typeof v === 'number' || typeof v === 'string',
-        'seconds': 'number'
+        'seconds': v=>typeof v === 'number' || typeof v === 'string' && /^-?\d+:\d+(\.\d+)?$/.test(v)
     },
     'TURN': {
         'turn': v=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last',
@@ -1129,7 +1129,8 @@ function validateGameFile(data, checkMeta) {
                 'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
                 'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
                 'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
-                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery'
+                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery',
+                'importerTemp', 'importerWarnings', 'importerSchemaVersion'
             ];
             for (const prop of Object.keys(data._meta.info)) {
                 if (!infoProps.includes(prop)) {

@@ -27,5 +27,9 @@ onLoad(function() {
   });
   onMessage('meta', args=>{
     currentGameSettings = args.meta.gameSettings || {};
+    // meta arrives for all kinds of unrelated events (a player joining, a save,
+    // a rename), so only re-layout when the board size actually changed
+    if(setViewportSize(currentGameSettings.boardSize))
+      applyViewportLayout();
   });
 });

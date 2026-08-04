@@ -113,7 +113,11 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     activeFaceIndex,
     widgetOwnValue,
     faceNewPropertyValue: PropertiesModule.prototype.faceNewPropertyValue,
-    removeFace: PropertiesModule.prototype.removeFace
+    removeFace: PropertiesModule.prototype.removeFace,
+    parseRankRange,
+    defaultSuitName,
+    courtSuitLetter,
+    deckGeneratorDesignHint
   };
 `)(class {}, testWidgets);
 
@@ -705,6 +709,63 @@ describe('timer time helpers', () => {
   });
 });
 
+describe('deck generator helpers', () => {
+  test('parseRankRange expands ranges and ignores list whitespace', () => {
+    expect(cssHelpers.parseRankRange('2-10,J,Q,K,A')).toEqual([ 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A' ]);
+    expect(cssHelpers.parseRankRange('2-10, J, Q')).toEqual([ 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q' ]);
+    expect(cssHelpers.parseRankRange('-3--1')).toEqual([ -3, -2, -1 ]);
+    expect(cssHelpers.parseRankRange('Sun,Moon')).toEqual([ 'Sun', 'Moon' ]);
+  });
+
+  test('parseRankRange drops the empty entries of a half-typed list', () => {
+    // a trailing comma would otherwise produce a card type called " of hearts"
+    expect(cssHelpers.parseRankRange('2-4,J,')).toEqual([ 2, 3, 4, 'J' ]);
+    expect(cssHelpers.parseRankRange('A, ,K')).toEqual([ 'A', 'K' ]);
+    expect(cssHelpers.parseRankRange('')).toEqual([]);
+    expect(cssHelpers.parseRankRange(',')).toEqual([]);
+  });
+
+  test('parseRankRange stops expanding a range that would freeze the editor', () => {
+    // a mistyped "2-100000" would otherwise build 100000 ranks per suit on every keystroke
+    const huge = cssHelpers.parseRankRange('2-100000');
+    expect(huge.length).toBe(200);
+    expect(huge[0]).toBe(2);
+    expect(huge[199]).toBe(201);
+    // the cap is on the whole list, not on the single range
+    expect(cssHelpers.parseRankRange('2-201,J').length).toBe(200);
+    expect(cssHelpers.parseRankRange('2-201,J')).not.toContain('J');
+  });
+
+  test('defaultSuitName uses the readable part of an icon value', () => {
+    expect(cssHelpers.defaultSuitName('skoll/hearts')).toBe('hearts');
+    expect(cssHelpers.defaultSuitName('casino')).toBe('casino');
+    expect(cssHelpers.defaultSuitName('[die_face_6]')).toBe('die_face_6');
+    expect(cssHelpers.defaultSuitName('(🎲)')).toBe('🎲');
+    expect(cssHelpers.defaultSuitName('/i/game-icons.net/lorc/star.svg')).toBe('star');
+    // uploads and links have no readable name, so those suits fall back to a generic one
+    expect(cssHelpers.defaultSuitName('/assets/-1234567890')).toBe('');
+    expect(cssHelpers.defaultSuitName('https://example.com/hearts.svg')).toBe('');
+    expect(cssHelpers.defaultSuitName(null)).toBe('');
+  });
+
+  test('court card pictures fall back by suit position, ignoring inherited names', () => {
+    expect(cssHelpers.courtSuitLetter('skoll/hearts', 3)).toBe('H');
+    expect(cssHelpers.courtSuitLetter('lorc/biohazard', 0)).toBe('D');
+    expect(cssHelpers.courtSuitLetter('lorc/biohazard', 5)).toBe('H');
+    expect(cssHelpers.courtSuitLetter('constructor', 2)).toBe('C');
+  });
+
+  test('the design gallery names what is missing instead of previewing zero cards', () => {
+    // a design tile renders a real card, which needs a card type: with no suit or no rank there is none
+    expect(cssHelpers.deckGeneratorDesignHint(0, 0)).toBe('Add at least one suit above to see the card designs.');
+    expect(cssHelpers.deckGeneratorDesignHint(4, 0)).toBe('Add at least one rank above to see the card designs.');
+    expect(cssHelpers.deckGeneratorDesignHint(4, 52)).toBe('52 cards from 4 suits. Pick how they look:');
+    expect(cssHelpers.deckGeneratorDesignHint(1, 1)).toBe('1 card from 1 suit. Pick how they look:');
+    // and it says so when a rank list hit the cap, so the missing ranks are not a surprise
+    expect(cssHelpers.deckGeneratorDesignHint(1, 200, true)).toBe('200 cards from 1 suit. Only the first 200 ranks of a suit are used. Pick how they look:');
+  });
+});
+
 describe('property input helpers', () => {
   test('propertyInputNumberOrText returns numbers for numeric strings', () => {
     expect(inputHelpers.propertyInputNumberOrText('8')).toBe(8);
@@ -949,5 +1010,64 @@ describe('multi-selection helpers', () => {
     expect(inputHelpers.replaceExclusiveProperties({ pips: 3, color: '#fff' }, [ 'pips', 'text', 'icon', 'image' ], 'text', 'hi'))
       .toEqual({ color: '#fff', text: 'hi' });
     expect(inputHelpers.replaceExclusiveProperties(null, [ 'pips' ], 'pips', 2)).toEqual({ pips: 2 });
+  });
+});
+
+// pickSymbolKeepingOverlay moves the symbol picker next to the dialog it was opened from and reaches for a few
+// room globals doing so: build it with a tiny fake DOM, so both outcomes - a picked symbol and a picker that
+// fails to load - can be exercised.
+function symbolPickerFixture(pickSymbolBehavior) {
+  const editor = { children: [] };
+  const pickerParent = { children: [] };
+  for(const parent of [ editor, pickerParent ])
+    parent.appendChild = child => { child.parentNode = parent; parent.children.push(child); };
+
+  const picker = { id: 'symbolPickerOverlay', style: { display: 'none' }, classes: new Set() };
+  picker.classList = { add: c => picker.classes.add(c), remove: c => picker.classes.delete(c) };
+  pickerParent.appendChild(picker);
+
+  const hostOverlay = { id: 'hostOverlay', style: { display: 'flex' }, parentNode: editor };
+  const overlays = { symbolPickerOverlay: picker, hostOverlay };
+  // the real one (client/js/main.js) toggles: showing an overlay that is already visible hides it
+  const showOverlay = id => {
+    for(const [ key, overlay ] of Object.entries(overlays))
+      if(key != id)
+        overlay.style.display = 'none';
+    overlays[id].style.display = overlays[id].style.display !== 'none' ? 'none' : 'flex';
+  };
+
+  const alerts = [];
+  const pickSymbolKeepingOverlay = new Function('$', 'showOverlay', 'pickSymbol', 'alert', 'console', inputsSource + `;
+    return pickSymbolKeepingOverlay;
+  `)(_ => picker, showOverlay, _ => pickSymbolBehavior(showOverlay), message => alerts.push(message), { error: _ => null });
+
+  return { picker, pickerParent, hostOverlay, alerts, call: _ => pickSymbolKeepingOverlay({ closest: _ => hostOverlay }) };
+}
+
+describe('the symbol picker opened from a dialog', () => {
+  test('is parked next to the dialog and gives the dialog back afterwards', async () => {
+    const fixture = symbolPickerFixture(showOverlay => {
+      expect(fixture.picker.parentNode).not.toBe(fixture.pickerParent);
+      expect(fixture.picker.classes.has('symbolPickerAboveEditor')).toBe(true);
+      showOverlay('symbolPickerOverlay'); // what pickSymbol does once the picker is loaded - hides the dialog
+      return Promise.resolve({ symbol: 'casino' });
+    });
+
+    await expect(fixture.call()).resolves.toEqual({ symbol: 'casino' });
+    expect(fixture.hostOverlay.style.display).toBe('flex');
+    expect(fixture.picker.parentNode).toBe(fixture.pickerParent);
+    expect(fixture.picker.classes.size).toBe(0);
+  });
+
+  test('leaves the dialog open and says so when it fails to load', async () => {
+    // loadSymbolPicker fetches, so pickSymbol can reject before it ever hides the dialog: reopening it then
+    // would toggle the still visible dialog off and leave an empty editor behind
+    const fixture = symbolPickerFixture(_ => Promise.reject(new Error('fetch failed')));
+
+    await expect(fixture.call()).resolves.toBe(null); // nothing picked, and no error to the global handler
+    expect(fixture.alerts).toEqual([ 'The symbol picker could not be loaded. Please try again.' ]);
+    expect(fixture.hostOverlay.style.display).toBe('flex');
+    expect(fixture.picker.parentNode).toBe(fixture.pickerParent);
+    expect(fixture.picker.classes.size).toBe(0);
   });
 });

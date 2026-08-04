@@ -70,6 +70,42 @@ export async function getState() {
   return await response.text();
 }
 
+// getState leaves _meta out - this is the version and the game settings the room is on
+export async function getMeta() {
+  const response = await fetch(`${server}/state/testcafe-testing`);
+  return JSON.parse(await response.text())._meta;
+}
+
+// Wait until the room state stops changing, i.e. until every routine triggered by
+// the last interaction has finished, and return that stable state. Without this, a
+// test that performs multiple interactions in a row can start the next one while
+// the game is still evaluating the previous one, which makes games that validate
+// moves (like Reversi) reject it.
+//
+// Pass the state from before an interaction as `differentFrom` to also wait for it
+// to arrive: otherwise "stable" can just mean "the interaction has not reached the
+// server yet", which would make a negative assertion afterwards pass vacuously.
+export async function waitForStableState({ differentFrom = null, timeout = 10000 } = {}) {
+  const start = Date.now();
+  let previous = null;
+  let changed = differentFrom === null;
+
+  while(Date.now() - start < timeout) {
+    const state = await getState();
+    if(!changed)
+      changed = state !== differentFrom;
+    else if(state === previous)
+      return state;
+    previous = state;
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  // failing here points at the interaction that never settled instead of letting
+  // the test run on and fail with an unrelated-looking state hash mismatch later
+  throw new Error(changed ? `The room state was still changing after ${timeout}ms.`
+                          : `The room state did not change at all within ${timeout}ms.`);
+}
+
 export async function compareState(t, md5) {
   const refFile = `${referenceDir}/${md5}.json`;
   let hash = null;
