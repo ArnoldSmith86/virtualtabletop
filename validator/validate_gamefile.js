@@ -828,6 +828,13 @@ function customRoutineChecks(operation, problems, context, operationPath) {
             message: 'IF uses both operand1 and condition - did you mean to use relation instead?'
         });
     }
+    if(operation.func === 'TURN' && operation.turnCycle === 'position' && operation.turn === 0) {
+        problems.push({
+            widget: context.widgetId,
+            property: operationPath,
+            message: 'TURN uses position 0 - positions start at 1, negative positions count back from the last seat'
+        });
+    }
 }
 
 function customWidgetChecks(widget, widgets, problems) {
