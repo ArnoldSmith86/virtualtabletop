@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 
 import { Widget } from '../../client/js/widgets/widget.js';
 
-import { createWidget, removeWidget } from './client-util.js';
+import { createWidget, loadWidgetClasses, removeWidget } from './client-util.js';
 
 describe("Scenarios: Moving widgets with fillTo", () => {
   const testName = "widget-move";
@@ -80,6 +80,130 @@ describe("Scenarios: Moving widgets with fillTo", () => {
         await testWidget.set('clickRoutine', moveRoutine(2));
         await testWidget.click();
         expect(holder.children().length).toBe(2);
+      });
+    });
+  });
+});
+
+describe("Scenarios: Moving widgets to a seat with fillTo", () => {
+  const testName = "widget-move-seat";
+  const player = "player one";
+  let Holder, Seat;
+  let testWidget;
+  let hand, seat, source, cards;
+
+  beforeAll(async () => {
+    ({ Holder, Seat } = await loadWidgetClasses());
+    testWidget = createWidget({ id: `${testName}-test-widget`, clickable: true, type: "widget" });
+    window.jeRoutineLogging = false;
+    window.getMaxZ = () => 0;
+    window.updateMaxZ = () => {};
+    jest.spyOn(Widget.prototype, 'onChildAddAlign').mockImplementation(async () => {});
+  });
+  afterAll(() => {
+    removeWidget(testWidget.get('id'));
+  });
+
+  // the default dropTarget of a holder only accepts cards, so accept everything instead of
+  // setting up a deck just to have widgets that count as the contents of the hand
+  function createHolder(id, properties) {
+    return createWidget(Object.assign({ id, type: "holder", dropTarget: {} }, properties), Holder);
+  }
+
+  async function addToHand(id, owner) {
+    const card = createWidget({ id, type: "widget" });
+    await card.set('parent', hand.get('id'));
+    await card.set('owner', owner);
+    return card;
+  }
+
+  async function moveToSeat(fillTo) {
+    await testWidget.set('clickRoutine', [
+      { func: "MOVE", from: source.get('id'), to: seat.get('id'), fillTo }
+    ]);
+    await testWidget.click();
+  }
+
+  function setUpSeat(childrenPerOwner) {
+    beforeEach(async () => {
+      hand = createHolder(`${testName}-hand`, { childrenPerOwner });
+      seat = createWidget({ id: `${testName}-seat`, type: "seat", hand: hand.get('id'), player }, Seat);
+      source = createHolder(`${testName}-source`);
+      cards = [];
+      for(let i = 0; i < 6; i++) {
+        const card = createWidget({ id: `${testName}-card-${i}`, type: "widget" });
+        await card.set('parent', source.get('id'));
+        cards.push(card);
+      }
+    });
+    afterEach(() => {
+      cards.forEach(c => removeWidget(c.get('id')));
+      [ source, seat, hand ].forEach(w => removeWidget(w.get('id')));
+    });
+  }
+
+  describe("Given a seat whose hand keeps its children per owner", () => {
+    setUpSeat(true);
+
+    describe("When 2 cards are moved to the empty hand with fillTo 2", () => {
+      test("Then the seat's player owns 2 cards", async () => {
+        await moveToSeat(2);
+        expect(seat.children().length).toBe(2);
+        expect(hand.children().length).toBe(2);
+      });
+    });
+
+    describe("When the hand already holds 2 cards of another player", () => {
+      beforeEach(async () => {
+        cards.push(await addToHand(`${testName}-foreign-0`, 'somebody else'));
+        cards.push(await addToHand(`${testName}-foreign-1`, 'somebody else'));
+      });
+
+      test("Then fillTo 2 still gives the seat's player 2 cards", async () => {
+        await moveToSeat(2);
+        expect(seat.children().length).toBe(2);
+        expect(hand.children().length).toBe(4);
+      });
+    });
+
+    describe("When the seat's player already holds 2 cards", () => {
+      beforeEach(async () => {
+        cards.push(await addToHand(`${testName}-owned-0`, player));
+        cards.push(await addToHand(`${testName}-owned-1`, player));
+      });
+
+      test("Then fillTo 3 tops the player up to 3 cards", async () => {
+        await moveToSeat(3);
+        expect(seat.children().length).toBe(3);
+      });
+    });
+  });
+
+  describe("Given a seat whose hand is a regular holder", () => {
+    setUpSeat(false);
+
+    describe("When 2 cards are moved to the empty hand with fillTo 2", () => {
+      test("Then the hand holds 2 cards", async () => {
+        await moveToSeat(2);
+        expect(hand.children().length).toBe(2);
+      });
+    });
+
+    describe("When the hand already holds 2 cards", () => {
+      beforeEach(async () => {
+        cards.push(await addToHand(`${testName}-held-0`, null));
+        cards.push(await addToHand(`${testName}-held-1`, null));
+      });
+
+      test("Then fillTo 5 tops the hand up to 5 cards", async () => {
+        await moveToSeat(5);
+        expect(hand.children().length).toBe(5);
+      });
+
+      test("Then fillTo 2 moves nothing", async () => {
+        await moveToSeat(2);
+        expect(hand.children().length).toBe(2);
+        expect(source.children().length).toBe(6);
       });
     });
   });

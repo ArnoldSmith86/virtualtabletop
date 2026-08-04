@@ -1552,7 +1552,7 @@ export class Widget extends StateManaged {
             problems.push(`Skipping move of ${c.id} to itself.`);
           } else if(target.isDescendantOf(c)) {
             problems.push(`Skipping move of ${c.id} to its descendant ${target.id}.`);
-          } else if(a.fillTo == null || target.children().length < a.fillTo) {
+          } else if(a.fillTo == null || target.fillLevel() < a.fillTo) {
             c.movedByButton = true;
             if(target.get('type') == 'seat') {
               if(target.get('hand') && target.get('player')) {
@@ -2250,6 +2250,11 @@ export class Widget extends StateManaged {
       if(delta[usedProperty] !== undefined)
         return true;
     return false;
+  }
+
+  // how full this widget already is, used as the current value that MOVE's fillTo fills up to
+  fillLevel() {
+    return this.children().length;
   }
 
   getFaceCount() {

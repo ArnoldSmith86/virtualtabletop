@@ -1,4 +1,4 @@
-class Seat extends Widget {
+export class Seat extends Widget {
   constructor(id) {
     super(id);
 
@@ -88,6 +88,17 @@ class Seat extends Widget {
     const p = super.cssProperties();
     p.push('color');
     return p;
+  }
+
+  // moving to a seat moves to its hand, so that is what MOVE's fillTo has to fill up: the
+  // cards belonging to the seat's player if the hand keeps its children per owner, all of
+  // them if the hand is a regular holder that only this seat uses
+  fillLevel() {
+    if(!this.get('hand') || !widgets.has(this.get('hand')))
+      return 0;
+    const hand = widgets.get(this.get('hand'));
+    const cards = hand.children();
+    return hand.get('childrenPerOwner') ? cards.filter(c=>c.get('owner') == this.get('player')).length : cards.length;
   }
 
   //need to add a condition here to change the turn if the turn is in a seat that is empty

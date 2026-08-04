@@ -1,4 +1,4 @@
-class Holder extends ImageWidget {
+export class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
     // if legacy mode disableHolderImageWidget is enabled, skip the intermediary ImageWidget prototype and use the Widget prototype instead so that image/icon/text properties "work" like they did before the change
