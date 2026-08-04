@@ -678,7 +678,7 @@
     "css": {
       "font-size": "25px"
     },
-    "text": "SWAPHANDS is used to swap the contents of the hands of the given collection of seats. This is especially useful for games which use pick-and-pass card drafting, but also in any situation where one or more players need to exchange hands.\n\nIt's possible to use this in a scenario where all seats share one hand with childrenPerOwner: true, but here separate hands are shown for each user to make the effect clearer.\n\nYou can also sit in multiple seats at once in this room, to test out the different buttons."
+    "text": "SWAPHANDS is used to swap the contents of the hands of the given collection of seats. This is especially useful for games which use pick-and-pass card drafting, but also in any situation where one or more players need to exchange hands.\n\nIt's possible to use this in a scenario where all seats share one hand with childrenPerOwner: true, but here separate hands are shown for each user to make the effect clearer.\n\nYou can also sit in multiple seats at once in this room, to test out the different buttons. The keepOrder button in the bottom middle will, for all buttons, either keep the order of the cards as they are passed the same (if true) or not (if false). Even if keepOrder is false, the order may not change, but setting it to true ensures they will not change."
   },
   "seat-p1": {
     "type": "seat",
@@ -1097,7 +1097,8 @@
     "text": "Forward",
     "clickRoutine": [
       {
-        "func": "SWAPHANDS"
+        "func": "SWAPHANDS",
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1112,7 +1113,8 @@
     "clickRoutine": [
       {
         "func": "SWAPHANDS",
-        "direction": "backward"
+        "direction": "backward",
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1127,7 +1129,8 @@
     "clickRoutine": [
       {
         "func": "SWAPHANDS",
-        "direction": "random"
+        "direction": "random",
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1145,7 +1148,8 @@
         "source": [
           "seat-p1",
           "seat-p2"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1163,7 +1167,8 @@
         "source": [
           "seat-p1",
           "seat-p3"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1181,7 +1186,8 @@
         "source": [
           "seat-p1",
           "seat-p4"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1199,7 +1205,8 @@
         "source": [
           "seat-p4",
           "seat-p1"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1217,7 +1224,8 @@
         "source": [
           "seat-p4",
           "seat-p2"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1235,7 +1243,8 @@
         "source": [
           "seat-p4",
           "seat-p3"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1253,7 +1262,8 @@
         "source": [
           "seat-p2",
           "seat-p1"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1271,7 +1281,8 @@
         "source": [
           "seat-p2",
           "seat-p3"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1289,7 +1300,8 @@
         "source": [
           "seat-p2",
           "seat-p4"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1307,7 +1319,8 @@
         "source": [
           "seat-p3",
           "seat-p1"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1325,7 +1338,8 @@
         "source": [
           "seat-p3",
           "seat-p2"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1343,7 +1357,8 @@
         "source": [
           "seat-p3",
           "seat-p4"
-        ]
+        ],
+        "keepOrder": "${PROPERTY keepOrder OF button-keepOrder}"
       }
     ]
   },
@@ -1356,7 +1371,10 @@
     "parent": "holder-deck"
   },
   "_meta": {
-    "version": 20,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - SWAPHANDS",
       "image": "/assets/-407492963_4703",
@@ -1366,7 +1384,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1768621533542,
+      "lastUpdate": 1785106704884,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1379,10 +1397,52 @@
       "players": "1",
       "language": "",
       "variant": "Basics",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "variantImage": "",
+      "usesAIImagery": false
     }
+  },
+  "button-keepOrder": {
+    "type": "button",
+    "id": "button-keepOrder",
+    "x": 740,
+    "y": 736,
+    "width": 120,
+    "height": 50,
+    "text": "keepOrder true",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY keepOrder}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "keepOrder",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "keepOrder false"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "keepOrder",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "keepOrder true"
+          }
+        ]
+      }
+    ],
+    "keepOrder": true
   }
 }

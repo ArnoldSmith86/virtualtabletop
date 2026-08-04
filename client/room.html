@@ -23,7 +23,7 @@
 
   <div id="toolbar">
     <img src="i/branding/logo.svg">
-    <div class="divider"></div>
+    <div class="divider logoDivider"></div>
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Game Shelf</span></button>
     <button id="activeGameButton" class="toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Players</span></button>
@@ -39,6 +39,8 @@
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
     <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
   </div>
+
+  <button id="showToolbarButton" icon="chevron_right" title="Show Toolbar" aria-label="Show Toolbar"></button>
 
   <div id="roomArea">
     <div id="room">
@@ -167,6 +169,7 @@
           <img>
           <button icon="star_rate" class="star"></button>
           <i class="material-symbols linked">link</i>
+          <i class="material-symbols importNotes" title="This game was imported - the game details list what could not be translated">info</i>
           <span class="ai-badge" title="Uses AI generated imagery">AI</span>
           <div class="details">
             <h3>Name</h3>
@@ -348,7 +351,9 @@
         </div>
         <button class="prettyButton next"><i class="material-symbols">arrow_forward</i></button>
       </div>
-      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery">
+      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery|importerWarnings">
+        <h3 data-showfor="importerWarnings" id="importNotesHeading">Import notes</h3>
+        <ul data-showfor="importerWarnings" id="importNotes"></ul>
         <h3 data-showfor="ruleText">How to play the game</h3>
         <div data-field="ruleText" data-html="true"></div>
         <h3 data-showfor="helpText">How to use this implementation</h3>
