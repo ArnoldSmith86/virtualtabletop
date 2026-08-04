@@ -6173,7 +6173,7 @@ class PropertiesModule extends SidebarModule {
   typeSectionProperties(widget) {
     const sections = this.typeSections(widget);
     const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
-    if(this.takesDrops(widget))
+    if(this.showsDropLimit(widget))
       properties.push('dropLimit');
     if(widget.get('type') == 'pile')
       properties.push('showLimit');
@@ -6642,14 +6642,23 @@ class PropertiesModule extends SidebarModule {
 
   renderBehaviorSection(widget, title = 'Behavior') {
     const defs = this.typeSections(widget).behavior || [];
-    if(!defs.length && !this.takesDrops(widget))
+    const dropLimitHere = this.showsDropLimit(widget) && !this.hasDropTargetEditor(widget);
+    if(!defs.length && !dropLimitHere)
       return;
     this.addSubHeader(title);
     this.renderInputs(widget, defs);
-    if(this.takesDrops(widget))
+    if(dropLimitHere)
       this.renderDropLimitInput(widget);
     if(widget.get('type') == 'pile')
       this.renderPileShowLimit(widget);
+  }
+
+  // A panel with a "Target widgets" section says what the widget takes in
+  // there, and the drop limit is rendered with it - anything else (a pile, a
+  // widget given a dropTarget in the JSON editor, or a multi-selection, which
+  // has no drop target editor) gets it in Behavior instead.
+  hasDropTargetEditor(widget) {
+    return !widget.isMulti && [ 'holder', 'line' ].indexOf(widget.get('type')) != -1;
   }
 
   // Appears right below the limit that gives it something to show: without a
@@ -6675,9 +6684,16 @@ class PropertiesModule extends SidebarModule {
     return widget.get('type') == 'pile' || asArray(widget.get('dropTarget') || []).length > 0;
   }
 
+  // A limit that is already set is always offered, even on a widget that takes
+  // no drops right now: it would be stuck otherwise, since being offered here
+  // is what keeps it out of the generic "Other properties" list.
+  showsDropLimit(widget) {
+    return this.takesDrops(widget) || widget.get('dropLimit') > -1;
+  }
+
   // -1 is how "no limit" is stored, but an empty field says it better
   renderDropLimitInput(widget, options = {}) {
-    new NumberInput(this, widget, options.label || 'Drop limit', {
+    return new NumberInput(this, widget, options.label || 'Drop limit', {
       listenTo: [ 'dropLimit' ],
       min: 0,
       step: 1,
@@ -9720,6 +9736,18 @@ class PropertiesModule extends SidebarModule {
       matches = readMatches();
       render();
     });
+
+    // How many of them: the limit constrains exactly the drops the matches
+    // above let in, so it belongs right below them - and it appears as soon as
+    // the first match does, since a widget that accepts nothing cannot fill up.
+    // Without an edit wrapper the standard write is the better one: it names
+    // the cause and covers a multi-selection.
+    const limitRow = this.renderDropLimitInput(widget, options.edit ? {
+      setValue: value=>options.edit(`changed the drop limit of ${widget.id}`, _=>widget.set('dropLimit', value === null ? -1 : value))
+    } : {});
+    const updateLimitRow = _=>limitRow.style.display = this.showsDropLimit(widget) ? '' : 'none';
+    this.addPropertyListener(widget, 'dropTarget', updateLimitRow);
+    this.addPropertyListener(widget, 'dropLimit', updateLimitRow);
   }
 
   renderForLine(widget) {
@@ -9889,12 +9917,6 @@ class PropertiesModule extends SidebarModule {
         await widget.set('rotateStops', checked);
       })
     }).render(this.moduleDOM);
-
-    if(this.takesDrops(widget))
-      this.renderDropLimitInput(widget, {
-        label: 'Maximum stops',
-        setValue: value=>lineEdit(`changed the stop limit of line ${widget.id}`, _=>widget.set('dropLimit', value === null ? -1 : value))
-      });
 
     new CheckboxInput(this, widget, 'Distribute evenly', {
       property: 'autoSpaceStops',
