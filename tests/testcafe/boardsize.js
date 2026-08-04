@@ -33,10 +33,10 @@ const portraitBoard = { roomWidth: '1000px', roomHeight: '1600px', renderedAspec
 
 // How wide one game tile in the shelf ends up. The overlays are children of #roomArea, so what
 // they have to work with is the rendered board, not the window - --columns comes out of the
-// container queries in states.css and the grid divides the shelf's width by it.
+// container queries in states.css and the tiles divide the board's width by it.
 const shelfTiles = ClientFunction(() => {
   const columns = +getComputedStyle(document.querySelector('#statesOverlay')).getPropertyValue('--columns');
-  return { columns, tileWidth: document.querySelector('#roomArea').getBoundingClientRect().width/columns };
+  return { columns, tileWidth: document.querySelector('.roomState.visible').getBoundingClientRect().width };
 });
 
 test('Loading a game with its own board size re-lays out a client that is already in the room', async t => {
@@ -74,27 +74,6 @@ test('An unusable board size in a game file is normalized instead of being store
   await loadGameWithBoardSize(null);
 });
 
-// A portrait board leaves the game shelf a fraction of the width the window has, so it has to
-// drop columns to keep the tiles the size they are on the default board. Off the window - which
-// is what a media query measures - it kept every one of them and squeezed unreadable thumbnails
-// into the space of three.
-test('The game shelf sizes its tiles from the board, not from the window', async t => {
-  await t.resizeWindow(1280, 800);
-  await loadGameWithBoardSize(null);
-  await ClientFunction(prepareClient)();
-  await t.click('#statesButton');
-  const onDefaultBoard = await shelfTiles();
-
-  await loadGameWithBoardSize({ width: 1000, height: 1600 });
-  const onPortraitBoard = await shelfTiles();
-
-  await t
-    .expect(onPortraitBoard.columns).lt(onDefaultBoard.columns)
-    .expect(onPortraitBoard.tileWidth).gt(onDefaultBoard.tileWidth*0.75);
-
-  await loadGameWithBoardSize(null);
-});
-
 // The confirmation names concrete dimensions, so it may only be shown while the board really is
 // on them - with a second editor in the room, somebody else's board size would otherwise leave
 // this panel affirming a size nobody is playing on anymore.
@@ -123,6 +102,28 @@ test('The Apply confirmation goes away when somebody else changes the board size
   await t
     .expect(Selector('#boardHeight').value).eql('1600')
     .expect(confirmation.exists).notOk();
+
+  await loadGameWithBoardSize(null);
+});
+
+// A portrait board leaves the game shelf a fraction of the width the window has, so it has to
+// drop columns to keep the tiles the size they are on the default board. Off the window - which
+// is what a media query measures - it kept every one of them and squeezed unreadable thumbnails
+// into the space of three.
+// Last in this file on purpose: the window size it sets stays with the browser afterwards.
+test('The game shelf sizes its tiles from the board, not from the window', async t => {
+  await t.resizeWindow(1280, 800);
+  await loadGameWithBoardSize(null);
+  await ClientFunction(prepareClient)();
+  await t.click('#statesButton');
+  const onDefaultBoard = await shelfTiles();
+
+  await loadGameWithBoardSize({ width: 1000, height: 1600 });
+  const onPortraitBoard = await shelfTiles();
+
+  await t
+    .expect(onPortraitBoard.columns).lt(onDefaultBoard.columns)
+    .expect(onPortraitBoard.tileWidth).gt(onDefaultBoard.tileWidth*0.75);
 
   await loadGameWithBoardSize(null);
 });
