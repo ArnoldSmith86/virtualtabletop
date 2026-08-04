@@ -13,6 +13,12 @@ body {
   --textHighlightColor7: darkcyan;
 
   --textDimColor1: #ccc;
+  /* dimmed, but still readable, body text (help copy, empty states) -
+     --textDimColor1 is tuned for borders/dashes, not text: at #ccc on white
+     it measures ~1.6:1 contrast, far under the 4.5:1 minimum */
+  --textHelpColor: #666;
+  /* the property name of a css declaration row, devtools style */
+  --cssDeclarationNameColor: var(--VTTblue);
 
   color-scheme: light;
   --gridSize: 25px;
@@ -35,6 +41,9 @@ body.edit.darkMode {
   --textHighlightColor7: #40e0d0;
 
   --textDimColor1: #606060;
+  --textHelpColor: #a0a0a0;
+  /* the blue of light mode is barely readable on the dark input background */
+  --cssDeclarationNameColor: #8ab4f8;
 
   color-scheme: dark;
 }
@@ -105,6 +114,48 @@ body.gridLines33 #topSurface {
 }
 #editorSelection.active {
   display: block;
+}
+
+/* live preview of a widget's snap grid, drawn into its parent (the coordinate
+   space snapToGrid works in) while the "Snap grid" editor section is open.
+   A dot marks every position the widget can actually land on; the faint lines
+   behind them only make the cells easy to compare against a board image. */
+.gridPreviewOverlay {
+  /* the overlay is drawn inside the scaled room, so a fixed-px dot radius
+     shrinks to sub-pixel at typical board scales and disappears into the
+     lattice it is supposed to stand out from - scale it the same way the
+     line width below is compensated */
+  --gridPreviewDotRadius: calc(3px / (var(--scale, 1) * var(--zoom, 1)));
+  --gridPreviewDots: radial-gradient(circle at center, var(--gridPreviewColor) 0 var(--gridPreviewDotRadius), #fff9 var(--gridPreviewDotRadius) calc(var(--gridPreviewDotRadius) + 1.5px), transparent calc(var(--gridPreviewDotRadius) + 1.5px));
+  /* the overlay is drawn inside the scaled room, so a 1px line ends up thinner
+     than one device pixel and the rasterizer drops some of the lines entirely
+     instead of only dimming them - one device pixel is the thinnest that keeps
+     every line of the lattice */
+  --gridPreviewLineWidth: calc(1px / (var(--scale, 1) * var(--zoom, 1)));
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2000000;
+  background-image:
+    var(--gridPreviewDots),
+    repeating-linear-gradient(to right, var(--gridPreviewLine) 0 var(--gridPreviewLineWidth), transparent var(--gridPreviewLineWidth) var(--gridPreviewX)),
+    repeating-linear-gradient(to bottom, var(--gridPreviewLine) 0 var(--gridPreviewLineWidth), transparent var(--gridPreviewLineWidth) var(--gridPreviewY));
+  background-size: var(--gridPreviewX) var(--gridPreviewY), auto, auto;
+  outline: var(--gridPreviewLineWidth) dashed var(--gridPreviewLine);
+}
+
+/* several lattices at once (a hex grid) only agree on their snap points */
+.gridPreviewOverlay.dotsOnly {
+  background-image: var(--gridPreviewDots);
+}
+
+/* leaving edit mode from the toolbar tab keeps the editor loaded, so the
+   preview has to disappear with the mode rather than only on editor close */
+body:not(.edit) .gridPreviewOverlay {
+  display: none;
 }
 
 body.edit:not(.dragToolbarDragging) .widget.selectedInEdit:not(.pile) {

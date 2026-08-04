@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 
+import { Selector } from 'testcafe';
+
 import { diffString, diff } from 'json-diff';
 
 const referenceDir = path.resolve() + '/save/testcafe-references';
@@ -29,10 +31,20 @@ export function prepareClient() {
 }
 
 export async function setName(t, name, color) {
+  // setRoomState() returns after the server accepts its REST request, before
+  // the browser necessarily receives that state. The first received state
+  // activates the Active Game tab, which closes any overlay opened just before
+  // it - intermittently hiding this color input in CI. Wait for that initial
+  // state transition before opening Players.
+  const loadingIndicator = Selector('#loadingRoomIndicator');
+  const playerOverlay = Selector('#playerOverlay');
+  const playerColor = playerOverlay.find('.myPlayerEntry input[type=color]');
   await t
+    .expect(loadingIndicator.exists).notOk()
     .click('#playersButton')
-    .click('.myPlayerEntry input[type=color]')
-    .typeText('.myPlayerEntry input[type=color]', color || '#7F007F', { replace: true })
+    .expect(playerOverlay.visible).ok()
+    .click(playerColor)
+    .typeText(playerColor, color || '#7F007F', { replace: true })
     .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
     .click('#activeGameButton');
 }
@@ -122,4 +134,3 @@ export async function compareState(t, md5) {
 
   await t.expect(hash).eql(md5);
 }
-

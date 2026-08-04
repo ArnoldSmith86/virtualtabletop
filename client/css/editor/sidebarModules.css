@@ -540,20 +540,49 @@
 }
 
 
-.genericInput input, .genericInput textarea {
-  width: 200px;
-  min-width: 200px;
+.editorModule .genericInput {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 4px 0;
 }
-.genericInput textarea {
+.editorModule .genericInput input, .editorModule .genericInput textarea {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 120px;
+}
+.editorModule .genericInput textarea {
   height: 200px;
 }
-.genericInputLabel {
-  display: inline-block;
+.editorModule .genericInputLabel {
+  flex: 0 1 132px;
   width: 132px;
   overflow-wrap: anywhere;
 }
-.genericInput > * {
-  vertical-align: top;
+.editorModule .genericInput select {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+.editorModule .genericAddPropertyRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.editorModule .genericAddPropertyRow input {
+  flex: 0 1 140px;
+  width: 140px;
+  min-width: 0;
+}
+
+.editorModule .genericAddPropertyRow button,
+.editorModule .suggestionListButton {
+  width: 28px;
+  min-width: 28px;
+  padding: 2px;
 }
 
 /* validation */
@@ -1039,6 +1068,32 @@
   margin-top: 2px;
   padding: 4px 8px 4px 4px;
 }
+/* The deck shortcuts under the matches. A deck preview is a picture of cards,
+   so at the full 150px above the list it read as a statement ("this holder
+   takes cards") rather than as a button - they are thumbnails now, dimmed
+   until their match is in the list above and checked when it is. */
+.editorModule .dropTargetDeckShortcuts {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #8888;
+}
+.editorModule .dropTargetDecks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton {
+  width: 70px;
+  min-width: 70px;
+  height: 70px;
+  margin: 0;
+  border-width: 2px;
+  opacity: .45;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton:hover,
+.editorModule .dropTargetDecks .widgetSelectionButton.selected {
+  opacity: 1;
+}
 /* deleting a stop is destructive, so it gets the shared red icon-button look
    (white glyph on dark red, darker on hover) from button[icon].red */
 .editorModule .lineStopList button.lineRemoveStop {
@@ -1436,12 +1491,6 @@ body.darkMode .widget-group-header {
     padding: 1px;
 }
 
-.widget-group-header .collapse-arrow, .widget-list-header .collapse-arrow {
-    width: 1.2em;
-    height: 1em;
-    text-align: center;
-}
-
 .widget-list .new-group-drop-target {
   border: 2px dashed lightgray;
   color: lightgray;
@@ -1639,7 +1688,7 @@ div.widget-name {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='20' viewBox='0 0 10 20'%3E%3Cpath d='M1,3 H9 M1,7 H9 M1,11 H9 M1,15 H9' stroke='%23888' stroke-width='2'/%3E%3C/svg%3E");
 }
 
-.widget-group-header .collapse-arrow {
+.widget-group-header .collapseArrow {
   margin-right: 5px;
 }
 

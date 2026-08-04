@@ -56,7 +56,10 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
     .click('#editButton')
     .click('#editorSidebar [icon=tune]')
     .click('#w_old')
+    // the icon color only paints something once there is an icon (or a class
+    // or css reading --color), so its chip is not offered on a plain widget
     .expect(Selector('.colorFlexRow label.iconOnly').count).eql(4)
+    .expect(Selector('.colorFlexRow label.iconOnly').filterVisible().count).eql(3)
     .expect(Selector('[aria-label="Widget id"]').exists).ok()
     .typeText('[aria-label="Widget id"]', 'new', { replace: true })
     .pressKey('enter')
@@ -73,7 +76,9 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
     { label: null, swatch: null, info: false },
     { label: null, swatch: null, info: false },
     { label: null, swatch: null, info: false },
-    { label: null, swatch: null, info: false }
+    // the icon color says what it paints, since it is the one chip that is
+    // only there for some widgets
+    { label: null, swatch: null, info: true }
   ]);
 
   const result = await ClientFunction(() => {
@@ -95,6 +100,92 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   await t.expect(result.errors).eql([]);
   await t.expect(result.x).notEql(200);
   await t.expect(result.y).notEql(200);
+});
+
+test('Dice faces have their own icon, image scale and CSS controls', async t => {
+  // Keep this at the narrow layout from the review so the controls remain
+  // useful in the smallest supported properties sidebar.
+  await t.resizeWindow(410, 845);
+  await setRoomState({
+    die: {
+      id: 'die', type: 'dice', x: 200, y: 200, width: 100, height: 100,
+      faces: [ { icon: 'casino' }, { image: '/i/game-pieces/2D/Checkers-2D.svg', imageScale: 1.4 }, { text: 'A' } ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const diceState = ClientFunction(() => JSON.stringify(widgets.get('die').state));
+  const matchingFaceValueWidths = ClientFunction(() => {
+    const rows = document.querySelectorAll('#editorModules .diceFaceRow');
+    const iconScale = rows[0].querySelector('.numberInput input');
+    const text = rows[2].querySelector('.textInput input');
+    return Math.abs(iconScale.getBoundingClientRect().width - text.getBoundingClientRect().width) < 1;
+  });
+  const compactFaceLayout = ClientFunction(() => {
+    const rows = document.querySelectorAll('#editorModules .diceFaceRow');
+    const preview = rows[0].querySelector('.diceFacePreview').getBoundingClientRect();
+    const icon = rows[0].querySelector('.propertyPreviewButton').getBoundingClientRect();
+    const image = rows[1].querySelector('.propertyPreviewButton').getBoundingClientRect();
+    const main = rows[0].querySelector('.diceFaceMain').getBoundingClientRect();
+    const toggle = rows[0].querySelector('.diceFaceCssToggle');
+    const genericInput = document.querySelector('#editorModules .genericAddPropertyRow input');
+    return {
+      previewsMatch: [ icon, image ].every(rect => Math.abs(rect.width - preview.width) < 1 && Math.abs(rect.height - preview.height) < 1),
+      previewCentered: Math.abs((preview.top + preview.height / 2) - (main.top + main.height / 2)) < 1,
+      cssUsesSectionHeader: toggle.classList.contains('collapsibleHeader'),
+      nativeSuggestionList: !!genericInput.getAttribute('list'),
+      extraSuggestionButtons: document.querySelectorAll('#editorModules .genericAddPropertyRow .suggestionListButton').length
+    };
+  });
+  const setAllImageScale = ClientFunction(() => {
+    const input = document.querySelector('#editorModules .diceImageScale input');
+    input.value = '0.7';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const rows = Selector('#editorModules .diceFaceRow');
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_die')
+    // Background, pips/icon and border no longer repeat generic color help.
+    .expect(Selector('#editorModules .diceSharedColors .info-button').count).eql(0)
+    // Shared face colors live once above the list. Turning one off gives
+    // every face its own matching swatch instead of repeating all three.
+    .expect(Selector('#editorModules .diceSharedColors .colorFlexRow .propertyInput').count).eql(3)
+    .expect(rows.nth(0).find('.colorFlexRow .propertyInput').count).eql(0)
+    .click(Selector('#editorModules .diceColorLockChecks label.switchbox').nth(0))
+    .expect(Selector('#editorModules .diceSharedColors .colorFlexRow .propertyInput').count).eql(2)
+    .expect(rows.nth(0).find('.colorFlexRow .propertyInput').count).eql(1)
+    .expect(matchingFaceValueWidths()).ok()
+    .expect(rows.nth(0).find('.diceFaceCssToggle .collapseArrow').exists).ok()
+    .expect(rows.nth(0).find('.diceFaceCssToggle').textContent).eql('CSS')
+    .expect(compactFaceLayout()).eql({
+      previewsMatch: true,
+      previewCentered: true,
+      cssUsesSectionHeader: true,
+      nativeSuggestionList: true,
+      extraSuggestionButtons: 0
+    })
+    .typeText(rows.nth(0).find('.numberInput input[type=number]'), '1.5', { replace: true })
+    .expect(diceState()).contains('{"icon":{"name":"casino","scale":1.5}}')
+    // An image face has a local override, while the all-faces control removes
+    // it and writes the shared dice property.
+    .expect(rows.nth(1).find('.numberInput input').value).eql('1.4');
+  await setAllImageScale();
+  await t
+    .expect(diceState()).contains('"imageScale":0.7')
+    .expect(diceState()).notContains('"image":"/i/game-pieces/2D/Checkers-2D.svg","imageScale"')
+    // Face CSS starts folded and stays on the one face, not on the dice as a whole.
+    .expect(rows.nth(0).find('.diceFaceCSS textarea').exists).notOk()
+    .click(rows.nth(0).find('.diceFaceCssToggle'))
+    .typeText(rows.nth(0).find('.diceFaceCSS textarea'), 'opacity: 0.5')
+    .expect(diceState()).contains('"faceCSS":"opacity: 0.5"')
+    // Other properties is always present and can seed a new generic row.
+    .expect(ClientFunction(() => [ ...document.querySelectorAll('#editorModules .genericAddPropertyRow option') ].some(option => /Routine$/.test(option.value)))()).notOk()
+    .typeText('#editorModules .genericAddPropertyRow input', 'customValue')
+    .pressKey('enter')
+    .expect(diceState()).contains('"customValue":""');
 });
 
 test('Space does not interrupt an active edit-mode widget drag', async t => {
@@ -141,6 +232,357 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
   })();
 
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
+});
+
+test('A holder picks what it accepts in the dropTarget editor', async t => {
+  await setRoomState({
+    deck:   { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const dropTarget = ClientFunction(() => JSON.stringify(widgets.get('holder').get('dropTarget')));
+
+  // a holder takes cards until it is told otherwise - the match rows say so
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_holder')
+    .expect(Selector('#editorModules .widgetHeaderType').innerText).contains('Holder')
+    .expect(Selector('#editorModules .dropTargetType').value).eql('type:card');
+
+  // the deck shortcut above the rows narrows that down to one deck, and shows
+  // up as a match row like any other
+  await t
+    .click(Selector('#editorModules .dropTargetDecks .widgetSelectionButton').nth(0))
+    .expect(dropTarget()).eql('{"deck":"deck"}')
+    .expect(Selector('#editorModules .dropTargetProperty').value).eql('deck');
+
+  // a second match lets something in that is not a card at all
+  await t
+    .click('#editorModules .dropTargetAddMatch')
+    .click(Selector('#editorModules .dropTargetType').nth(1))
+    .click(Selector('#editorModules .dropTargetType').nth(1).find('option').withAttribute('value', 'type:dice'))
+    .expect(dropTarget()).eql('[{"deck":"deck"},{"type":"dice"}]');
+
+  // clicking the selected deck again takes its match back out
+  await t
+    .click(Selector('#editorModules .dropTargetDecks .widgetSelectionButton').nth(0))
+    .expect(dropTarget()).eql('{"type":"dice"}');
+});
+
+test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
+  await setRoomState({
+    // an SVG written for svgReplaces: it uses placeholders in fill, stroke and
+    // stroke-width, plus an opacity of its own
+    checker: { id: 'checker', type: 'basic', x: 100, y: 100, width: 91, height: 91, image: '/i/game-pieces/2D/Checkers-2D.svg' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const nestedSection = Selector('#editorModules .collapsibleBody > .collapsibleSection > .collapsibleHeader .collapsibleTitle');
+  const dragLimit = ClientFunction(() => JSON.stringify(widgets.get('checker').state.dragLimit || null));
+  const grid = ClientFunction(() => JSON.stringify(widgets.get('checker').get('grid')));
+  const svgReplaces = ClientFunction(() => JSON.stringify(widgets.get('checker').get('svgReplaces')));
+
+  // where a widget may end up is part of where it is, so both blocks sit
+  // inside Position rather than beside it
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_checker')
+    .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
+    .expect(nestedSection.withExactText('Snap grid').exists).ok()
+    .expect(nestedSection.withExactText('Drag limits').exists).ok();
+
+  const dragLimitBody = Selector('#editorModules .collapsibleHeader').withText('Drag limits').sibling('.collapsibleBody');
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Drag limits'))
+    .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
+    // the whole table minus the widget's own box
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":1509,"maxY":909}')
+    .typeText(dragLimitBody.find('.gridLimits input[type=number]').nth(1), '800', { replace: true })
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":800,"maxY":909}')
+    // the four sides only mean something together, so the switch drops all of
+    // them - and an empty rectangle is the default, i.e. no property at all
+    .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
+    .expect(dragLimit()).eql('null');
+
+  // nothing tells the editor whether an image is a hexagon, let alone which way
+  // up, so both orientations are offered and the user picks one
+  const gridBody = Selector('#editorModules .collapsibleHeader').withText('Snap grid').sibling('.collapsibleBody');
+  const gridButton = gridBody.find('.gridActions button');
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Snap grid'))
+    .expect(gridButton.count).eql(3)
+    .expect(gridButton.nth(0).textContent).contains('Square grid (91 × 91)')
+    .expect(gridButton.nth(1).textContent).contains('Hex grid (flat top)')
+    .expect(gridButton.nth(2).textContent).contains('Hex grid (pointy top)')
+    // the two staggered grids of a pointy topped hexagon that is 91px across:
+    // half a step further along on both axes, so the rows interlock
+    .click(gridButton.nth(2))
+    .expect(grid()).eql('[{"x":78.81,"y":136.5,"offsetX":39.405,"offsetY":68.25},{"x":78.81,"y":136.5,"offsetX":0,"offsetY":0}]')
+    // and the flat topped one is its mirror image
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(1))
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0))
+    .click(gridButton.nth(1))
+    .expect(grid()).eql('[{"x":136.5,"y":78.81,"offsetX":68.25,"offsetY":39.405},{"x":136.5,"y":78.81,"offsetX":0,"offsetY":0}]');
+
+  // the replacements are read out of the SVG: its stroke-width placeholder is
+  // offered as a replacement for a borderWidth, and gets a number input
+  const swatch = text => Selector('#editorModules .svgColorSwatch').withText(text);
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('SVG replacements'))
+    .expect(swatch('stroke-width: #borderWidth').exists).ok()
+    .click(swatch('stroke-width: #borderWidth'))
+    .expect(svgReplaces()).eql('{"#borderWidth":"borderWidth"}')
+    .expect(Selector('#editorModules .svgReplaceColorsHost .numberInput label').innerText).contains('Border Width');
+
+  // a fill becomes the widget's color and gets a color picker instead
+  await t
+    .click(swatch('fill: #primaryColor'))
+    .expect(svgReplaces()).eql('{"#borderWidth":"borderWidth","#primaryColor":"color"}')
+    .expect(Selector('#editorModules .svgReplaceColorsHost .colorInput').exists).ok();
+});
+
+test('A pile is edited through its handle, css through declaration rows', async t => {
+  await setRoomState({
+    deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
+
+  // the handle is the only part of a pile the cards do not cover
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click(Selector('#w_pile .handle'))
+    .expect(Selector('.widgetHeaderType').innerText).contains('Pile')
+    // a pile is temporary, so the panel says up front that it edits the
+    // template of the cards' deck along with the pile
+    .expect(Selector('.pileTemplateMode').innerText).contains('pile template');
+
+  // the handle counts the cards unless it is told to show a text, so the two
+  // are a choice and the text field only exists for the second one
+  const handleShows = Selector('#editorModules .selectInput').withText('Handle shows').find('select');
+  await t
+    .expect(handleShows.value).eql('"count"')
+    .expect(Selector('#editorModules .textInput input').filterVisible().count).eql(0)
+    .click(handleShows)
+    .click(handleShows.find('option').withText('A fixed text'))
+    .typeText(Selector('#editorModules .textInput input').filterVisible(), 'chips', { replace: true })
+    .expect(ClientFunction(() => widgets.get('pile').get('text'))()).eql('chips')
+    // and the same edit landed in the pile template
+    .expect(pileTemplate()).eql('{"text":"chips"}');
+
+  // every fold-away block draws the same arrow, which points sideways while
+  // the block is folded and down while it is open
+  const cssArrow = Selector('#editorModules .collapsibleHeader').withText('CSS').find('.collapseArrow');
+  await t.expect(cssArrow.hasClass('collapsed')).ok();
+
+  // a css property is a block of one row per declaration. The handle colors are
+  // written into handleCSS, not into css, so the pile has a block for each of
+  // the two, each of them named by the property it edits.
+  const cssTitles = Selector('#editorModules .cssEditor .propertyPickerSectionTitle');
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('CSS'))
+    .expect(cssArrow.hasClass('collapsed')).notOk()
+    .expect(cssTitles.nth(0).innerText).contains('css')
+    .expect(cssTitles.nth(1).innerText).contains('handleCSS')
+    .click(Selector('#editorModules .cssDeclarationAddRow input'))
+    .typeText(Selector('#editorModules .cssDeclarationAddRow input'), 'opacity')
+    .pressKey('enter')
+    .typeText(Selector('#editorModules .cssDeclarationValue').nth(0), '0.5')
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}');
+
+  // switching a declaration off takes it out of the widget, switching it back
+  // on restores it
+  await t
+    .click(Selector('#editorModules .cssDeclarationToggle').nth(0))
+    // unset css falls back to the default of the property, an empty string
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css') || null))()).eql('null')
+    .click(Selector('#editorModules .cssDeclarationToggle').nth(0))
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}')
+    .expect(pileTemplate()).eql('{"text":"chips","css":{"opacity":"0.5"}}');
+
+  // with the opt-out switch on, an edit stops at the pile in front of you
+  await t
+    .click(Selector('#editorModules .pileTemplateMode .switchbox[for]'))
+    .expect(Selector('.pileTemplateMode').innerText).contains('this pile only')
+    .typeText(Selector('#editorModules .textInput input').filterVisible(), 'stack', { replace: true })
+    .expect(ClientFunction(() => widgets.get('pile').get('text'))()).eql('stack')
+    .expect(pileTemplate()).eql('{"text":"chips","css":{"opacity":"0.5"}}');
+
+  // a pile removes itself as soon as it holds a single card - the editor has to
+  // drop it from the selection, or the next keystroke in one of its inputs
+  // writes to a dead widget id and the server re-creates it as a ghost widget
+  await ClientFunction(() => widgets.get('card2').set('parent', null))();
+  await t
+    .expect(ClientFunction(() => widgets.has('pile'))()).eql(false)
+    .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
+});
+
+test('A deck that overrides the pile template says so while the pile mirrors into it', async t => {
+  await setRoomState({
+    deck:  { id: 'deck', type: 'deck', cardTypes: { a: { onPileCreation: { text: 'fixed' } } }, faceTemplates: [ { objects: [] } ] },
+    pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // cardDefaults is the last place a card looks for onPileCreation, so a card
+  // type that sets it wins over everything the mirroring writes there - the
+  // warning has to be visible in the mode that does the mirroring, which is
+  // also the default one
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click(Selector('#w_pile .handle'))
+    .expect(Selector('.pileTemplateMode').innerText).contains('pile template')
+    .expect(Selector('.pileTemplateMode .pileHelp.warning').innerText).contains('onPileCreation');
+});
+
+test('Loading another game with a widget still selected does not break the client', async t => {
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await ClientFunction(() => {
+    window.stateLoadErrors = [];
+    window.addEventListener('error', event => window.stateLoadErrors.push(String(event.error || event.message)));
+  })();
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_card')
+    .expect(Selector('.widgetHeaderType').innerText).contains('Card');
+
+  // the selection survives leaving edit mode, and a new state replaces every
+  // widget in the room - so re-rendering the editor for the card would look up
+  // a deck that is gone
+  await t.click('#editorToolbar [icon=close]');
+  await setRoomState({ other: { id: 'other', type: 'basic', x: 200, y: 200 } });
+
+  await t
+    .expect(Selector('#w_other').exists).ok()
+    .expect(Selector('#w_card').exists).notOk()
+    .expect(ClientFunction(() => window.stateLoadErrors)()).eql([])
+    .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
+});
+
+test('Basic curates the stacking, scale and visibility switches, the scoreboard its seats', async t => {
+  await setRoomState({
+    block: { id: 'block', type: 'basic', x: 100, y: 100 },
+    seat1: { id: 'seat1', type: 'seat', x: 100, y: 400, index: 1 },
+    seat2: { id: 'seat2', type: 'seat', x: 300, y: 400, index: 2 },
+    board: { id: 'board', type: 'scoreboard', x: 600, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const value = ClientFunction((id, property) => JSON.stringify(widgets.get(id).get(property)));
+
+  // where a widget ends up in the stacking order belongs to Position, and the
+  // factor it is drawn at to Size
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_block')
+    .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
+    .click('#inheritChildZ_block')
+    .expect(value('block', 'inheritChildZ')).eql('true');
+
+  const sizeBody = Selector('#editorModules .collapsibleHeader').withText('Size').sibling('.collapsibleBody');
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Size'))
+    .typeText(sizeBody.find('.numberOrTextInput input'), '2', { replace: true })
+    .expect(value('block', 'scale')).eql('2')
+    // the collapsed headers name what is set
+    .expect(Selector('#editorModules .collapsibleHeader').withText('Size').find('.collapsibleSummary').innerText).contains('×2');
+
+  // "display" is a switch the other way round: ticking it takes the widget out
+  // of the room for the players
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Interaction & display'))
+    .click('#hidePlayerCursors_block')
+    .expect(value('block', 'hidePlayerCursors')).eql('true')
+    .expect(Selector('#display_block').checked).notOk()
+    .click('#display_block')
+    .expect(value('block', 'display')).eql('false');
+
+  // the seat block holds what a widget dragged onto this one is shown as
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText("Widget's links"))
+    .click(Selector('#editorModules button').withExactText('Add seat'))
+    .click('#hoverInheritVisibleForSeat_block')
+    .expect(value('block', 'hoverInheritVisibleForSeat')).eql('false');
+
+  // a seat's "display" is the text it shows, so it never gets that switch
+  await t
+    .click('#w_seat1')
+    .click(Selector('#editorModules .collapsibleHeader').withText('Interaction & display'))
+    .expect(Selector('#hidePlayerCursors_seat1').exists).ok()
+    .expect(Selector('#display_seat1').exists).notOk();
+
+  // the scoreboard shows every seat unless it is given a list of them
+  const seatsMode = Selector('#editorModules select.scoreboardSeatsMode');
+  await t
+    .click('#w_board')
+    .expect(seatsMode.value).eql('all')
+    .click(seatsMode)
+    .click(seatsMode.find('option').withExactText('Chosen seats'))
+    .expect(value('board', 'seats')).eql('["seat1","seat2"]')
+    .typeText(Selector('#editorModules .seatReferenceInput').filterVisible(), 'seat1', { replace: true })
+    .pressKey('tab')
+    .expect(value('board', 'seats')).eql('"seat1"')
+    // emptying the field means "chosen, nothing chosen" - the mode has its own
+    // "All seats" entry, so it must not jump back to it behind the user's back
+    .selectText(Selector('#editorModules .seatReferenceInput').filterVisible())
+    .pressKey('delete tab')
+    .expect(value('board', 'seats')).eql('[]')
+    .expect(seatsMode.value).eql('pick')
+    .typeText(Selector('#editorModules .seatReferenceInput').filterVisible(), 'seat1', { replace: true })
+    .pressKey('tab')
+    .expect(value('board', 'seats')).eql('"seat1"');
+
+  // teams are the third shape of the same property: one column each, adding up
+  // the seats given to it
+  await t
+    .click(seatsMode)
+    .click(seatsMode.find('option').withExactText('Teams'))
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"]}')
+    .click(Selector('#editorModules .scoreboardTeams button').withText(/add team/i))
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"],"Team 2":[]}');
+
+  const secondRow = Selector('#editorModules .scoreboardTeamRow').nth(1);
+  await t
+    .typeText(secondRow.find('.scoreboardTeamName'), 'Reds', { replace: true })
+    .pressKey('tab')
+    // renaming keeps the team where it was, which is the order of the columns
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"],"Reds":[]}')
+    .typeText(Selector('#editorModules .scoreboardTeamRow').nth(1).find('.scoreboardTeamSeats'), 'seat2', { replace: true })
+    .pressKey('tab')
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"],"Reds":["seat2"]}')
+    .expect(Selector('#w_board').innerText).contains('Reds');
+
+  await t
+    .click(Selector('#editorModules .scoreboardTeamRow').nth(1).find('button[icon=delete]'))
+    .expect(value('board', 'seats')).eql('{"Team 1":["seat1"]}')
+    // and back to every seat, which is the property being unset
+    .click(seatsMode)
+    .click(seatsMode.find('option').withExactText('All seats'))
+    .expect(value('board', 'seats')).eql('null');
 });
 
 test('Create game using edit mode', async t => {
@@ -764,6 +1206,107 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(deckCount()).eql(0)      // ...but no deck is auto-created
     .pressKey('esc')
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
+});
+
+test('Deck editor: a css property is edited as declaration rows in every scope', async t => {
+  await setRoomState({
+    d1: {
+      id: 'd1', type: 'deck',
+      cardDefaults: { width: 103, height: 160, css: 'color: red; font-weight: bold' },
+      cardTypes: { a: { css: { background: '#ffcc00' } } },
+      faceTemplates: [ { css: { border: '2px solid green' }, objects: [
+        { type: 'text', x: 5, y: 5, width: 90, height: 30, fontSize: 16, value: 'hi', css: 'font-style: italic' },
+        { type: 'text', x: 5, y: 45, width: 90, height: 30, fontSize: 16, value: 'ho', css: 'font-style: italic' }
+      ] } ]
+    },
+    c1: { id: 'c1', type: 'card', deck: 'd1', cardType: 'a', x: 300, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const deckProperty = ClientFunction(property => JSON.stringify(widgets.get('d1').get(property)));
+  const tab = id => Selector(`#deckEditorTab_${id}`);
+  const cssProperty = Selector('#deckEditorSidebar .deckEditorCssProperty');
+  const cssText = cssProperty.find('input.cssRowText');
+  const openList = Selector('#deckEditorSidebar .deckEditorCssPickerButton');
+  const rows = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationRow');
+  const names = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationName');
+  const values = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationValue');
+  const addClassRow = Selector('#deckEditorSidebar .deckEditorCssProperty input').withAttribute('placeholder', /new class/);
+  const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
+  const objectsWithCss = ClientFunction(text => widgets.get('d1').get('faceTemplates')[0].objects.filter(object=>String(object.css).indexOf(text) != -1).length);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]')
+    .click(tab('defaults'))
+    // a css property is a text row like every other property of the sidebar...
+    .expect(cssText.value).eql('color: red; font-weight: bold')
+    // ...with the declaration rows of the Edit Widgets tab behind its button. The card defaults become
+    // properties of every card, so their css is a widget css: it has the class/selector sections that tab
+    // offers, and the string form stays a string
+    .click(openList)
+    .expect(rows.count).eql(2)
+    .expect(names.nth(0).value).eql('color')
+    .expect(addClassRow.exists).ok()
+    .typeText(values.nth(0), 'blue', { replace: true })
+    .expect(deckProperty('cardDefaults')).contains('color: blue; font-weight: bold;');
+
+  // the face template's own css styles the face div itself, which the engine writes into a style
+  // attribute - so no class/selector sections there
+  await t
+    .click(tab('face'))
+    .click(openList)
+    .expect(rows.count).eql(1)
+    .expect(names.nth(0).value).eql('border')
+    .expect(addClassRow.exists).notOk()
+    .typeText(values.nth(0), '3px solid blue', { replace: true })
+    .expect(deckProperty('faceTemplates')).contains('"css":{"border":"3px solid blue"}')
+    // the row follows what the list writes
+    .expect(cssText.value).eql('border: 3px solid blue;');
+
+  // a declaration switched off leaves the deck without losing its place in the list
+  await t
+    .click(tab('cardType'))
+    .click(openList)
+    .expect(rows.count).eql(1)
+    .click(Selector('#deckEditorSidebar .cssDeclarationToggle').nth(0))
+    .expect(deckProperty('cardTypes')).eql('{"a":{}}')
+    .click(Selector('#deckEditorSidebar .cssDeclarationToggle').nth(0))
+    .expect(deckProperty('cardTypes')).eql('{"a":{"css":{"background":"#ffcc00"}}}');
+
+  // several face objects that agree on their css get one set of declaration rows, editing all of them at once
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } })
+    .click(tab('object'))
+    .click(openList)
+    .expect(rows.count).eql(1)
+    .expect(names.nth(0).value).eql('font-style')
+    .typeText(values.nth(0), 'oblique', { replace: true })
+    .expect(objectsWithCss('oblique')).eql(2);
+
+  // typing into the row itself is the same edit as filling in the rows
+  await t
+    .click(objectRow.nth(0))
+    .click(tab('object'))
+    .typeText(cssText, 'font-weight: bold', { replace: true })
+    // a css written as a string stays a string, like the rows keep it
+    .expect(deckProperty('faceTemplates')).contains('"css":"font-weight: bold')
+    .click(openList)
+    .expect(rows.count).eql(1)
+    .expect(names.nth(0).value).eql('font-weight')
+    .click(Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationRow button[icon=delete]'))
+    // the last declaration removed is no css property at all, rather than an empty one
+    .expect(objectsWithCss('font-weight')).eql(0);
+
+  // ...but declarations can only be edited from a shared starting point, so once the selected objects
+  // disagree the css falls back to the plain "(mixed)" row every other property has
+  await t
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(2)
+    .expect(cssProperty.exists).notOk()
+    .expect(Selector('#deckEditorSidebar .deckEditorObjectProperties input').withAttribute('placeholder', '(mixed)').exists).ok();
 });
 
 // The "Add a new deck" wizard's text-cards section: every typed line becomes a card type with a "text"
