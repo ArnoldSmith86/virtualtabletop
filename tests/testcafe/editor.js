@@ -386,23 +386,20 @@ test('A pile is edited through its handle, css through declaration rows', async 
   const cssArrow = Selector('#editorModules .collapsibleHeader').withText('CSS').find('.collapseArrow');
   await t.expect(cssArrow.hasClass('collapsed')).ok();
 
-  // a css property is a row like any other: the declarations as text, with a
-  // button opening them as editable rows. The handle colors are written into
-  // handleCSS, not into css, so the pile has a row for each of the two.
-  const cssRow = Selector('#editorModules .cssInput').nth(0);
+  // a css property is a block of one row per declaration. The handle colors are
+  // written into handleCSS, not into css, so the pile has a block for each of
+  // the two, each of them named by the property it edits.
+  const cssTitles = Selector('#editorModules .cssEditor .propertyPickerSectionTitle');
   await t
     .click(Selector('#editorModules .collapsibleHeader').withText('CSS'))
     .expect(cssArrow.hasClass('collapsed')).notOk()
-    .expect(Selector('#editorModules .cssInput > label').nth(0).innerText).contains('css')
-    .expect(Selector('#editorModules .cssInput > label').nth(1).innerText).contains('handleCSS')
-    .click(cssRow.find('.propertyExpandButton'))
+    .expect(cssTitles.nth(0).innerText).contains('css')
+    .expect(cssTitles.nth(1).innerText).contains('handleCSS')
     .click(Selector('#editorModules .cssDeclarationAddRow input'))
     .typeText(Selector('#editorModules .cssDeclarationAddRow input'), 'opacity')
     .pressKey('enter')
     .typeText(Selector('#editorModules .cssDeclarationValue').nth(0), '0.5')
-    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}')
-    // and the row above the list says the same thing as text
-    .expect(cssRow.find('input.cssRowText').value).eql('opacity: 0.5;');
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}');
 
   // switching a declaration off takes it out of the widget, switching it back
   // on restores it

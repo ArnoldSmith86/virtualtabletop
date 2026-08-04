@@ -6252,7 +6252,9 @@ class PropertiesModule extends SidebarModule {
           classSuggestions: property == 'css' ? Object.keys(sections.stateClasses || {}) : [],
           // the engine only supports nested class objects in the css property
           // itself, not in element properties like faceCSS or valueCSS
-          allowClasses: property == 'css'
+          allowClasses: property == 'css',
+          // with just the css property, its name in the body would only repeat the header
+          showTitle: cssProperties.length > 1
         });
     }, null, `${widget.id}:css`);
     propertyInfoButton($('.collapsibleHeader', cssSection), html(editorPropertyHints.css));
@@ -6322,10 +6324,10 @@ class PropertiesModule extends SidebarModule {
       this.addPropertyListener(widget, property, update);
   }
 
-  // A css-like property as a row like every other property: its name, its
-  // declarations as text, and a button opening the devtools-like declaration
-  // list below it. Both are CssEditor (cssEditor.js), shared with the deck
-  // editor - this only points it at the widget's own value.
+  // Chrome-devtools-like editor for a css-like property: one collapsible
+  // section per class/selector with a plain declaration text input. The editor
+  // itself is CssEditor (cssEditor.js), shared with the deck editor - this only
+  // points it at the widget's own value.
   renderCssPropertyEditor(widget, property, target, options = {}) {
     const editor = new CssEditor({
       property,
@@ -6341,13 +6343,15 @@ class PropertiesModule extends SidebarModule {
           widget.applyDeltaToDOM({ [property]: widget.get(property) });
       },
       allowClasses: options.allowClasses,
+      showTitle: options.showTitle !== false,
+      titleInfo: html(cssPropertyHint(property)),
       defaultInfo: 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".',
       classSuggestions: options.classSuggestions,
       selectorSuggestions: cssSelectorSuggestions[widget.get('type') || 'basic'],
       propertySuggestions: this.cssPropertySuggestions(widget),
       listen: refresh=>this.addPropertyListener(widget, property, refresh)
     });
-    editor.renderRow(target, { hint: html(cssPropertyHint(property)) });
+    editor.render(target);
   }
 
   // css property names offered in the declaration rows: the common ones plus

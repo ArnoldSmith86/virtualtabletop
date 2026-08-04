@@ -745,28 +745,14 @@
   margin: 8px 0 2px;
 }
 
-/* A css-like property (css, faceCSS, …) is a text row like every other
-   property; the button at its right end opens the declaration list below it,
-   the way a color property opens its picker. */
-.editorModule .cssInput input.cssRowText {
-  font-family: monospace;
-  font-size: 12px;
-}
-
-/* the nested form is a list of class/selector sections, which no single line
-   can hold - the field names those sections instead of pretending they could
-   be typed here */
-.editorModule .cssInput input.cssRowText.cssRowSections {
-  font-style: italic;
-  opacity: 0.75;
-}
-
+/* the declaration list of a css property that is edited as a text row (the
+   deck editor sidebar) opens below that row, the way a color property opens
+   its picker */
 .editorModule .cssRowPicker {
   margin-top: 2px;
 }
 
-/* CSS editor: the declarations, one collapsible section per class/selector
-   once the value has any */
+/* CSS editor: one collapsible section per class with a plain declaration input */
 .editorModule .cssEditor .cssClassSection {
   margin: 4px 0;
 }

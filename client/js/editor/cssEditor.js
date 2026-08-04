@@ -1,8 +1,12 @@
-// A css-like property (css, faceCSS, handleCSS, …) is a property row like any
-// other: its name, the declarations as text, and a button that opens the
-// Chrome-devtools-like editor below the row - the way a color property opens
-// its picker. That editor is a list of "property: value" rows, one section per
-// class/selector once the value has any.
+// The Chrome-devtools-like editor for a css-like value: a list of
+// "property: value" rows, with one collapsible section per class/selector.
+//
+// It comes in two shapes. render() is the block the widget properties panel
+// shows: the sections one below the other, the value itself among them.
+// renderRow() is the compact form the deck editor uses, where a css property
+// looks like the width/height rows around it - its name, the declarations as
+// text, and a button that opens that same list below the row, the way a color
+// property opens its picker.
 //
 // It knows nothing about widgets: the value it edits is read and written
 // through the accessors it is given, so the widget properties panel (css,
@@ -49,8 +53,9 @@ function cssRowText(value) {
 
 class CssEditor {
   // options:
-  //   property             the property name, shown as the row's label and
-  //                        used to label the "default" section
+  //   property             the property name, shown as the title (or, in the
+  //                        row form, as the label) and used to label the
+  //                        "default" section
   //   stateKey             unique prefix for the per-section editing state
   //   state                a CssEditorState (shared by all editors of one panel)
   //   getValue / setValue  the value being edited, in its own (unresolved) form
@@ -58,16 +63,21 @@ class CssEditor {
   //   allowClasses         whether class/selector sections can be added (the
   //                        engine only reads the nested form in some places)
   //   interpolates         whether ${PROPERTY ...} is valid in a value here
+  //   showTitle            the property name above the sections (block form)
+  //   titleInfo            html for the info button next to that title
   //   defaultLabel         header of the section for the value itself
   //   defaultInfo          html for the info button of that header
   //   classSuggestions / selectorSuggestions / propertySuggestions
-  //   listen(refresh)      register an outside listener that refreshes the row
+  //   listen(refresh)      register an outside listener that refreshes the editor
   constructor(options) {
     this.options = options;
     this.property = options.property;
     this.key = options.stateKey || options.property;
     this.state = options.state || new CssEditorState();
     this.interpolates = options.interpolates !== undefined ? options.interpolates : this.property == 'css';
+    // set by renderRow: the value itself is edited as text in the row, so the
+    // list below it neither wraps it in a section nor offers a text field
+    this.rowMode = false;
   }
 
   value() {
@@ -87,6 +97,7 @@ class CssEditor {
   // options: rowClass, labelStyle, buttonClass, buttonIcon, buttonTitle, hint,
   //          pickerTarget (where the list opens; the row itself by default)
   renderRow(target, rowOptions = {}) {
+    this.rowMode = true;
     const row = div(target, rowOptions.rowClass || 'propertyInput cssInput');
 
     const label = document.createElement('label');
@@ -137,9 +148,17 @@ class CssEditor {
       button.classList.toggle('open', open);
     };
 
-    if(typeof this.options.listen == 'function')
-      this.options.listen(_=>this.refresh());
+    this.startListening();
     return { row, input, button, picker };
+  }
+
+  // the outside listener belongs to the editor, not to one of its two shapes -
+  // registering it twice would rebuild the declaration list twice per change
+  startListening() {
+    if(this.listening || typeof this.options.listen != 'function')
+      return;
+    this.listening = true;
+    this.options.listen(_=>this.refresh());
   }
 
   // the text field shows what the value is, so it only follows it while it is
@@ -165,10 +184,16 @@ class CssEditor {
   render(target) {
     const classSuggestions = this.options.classSuggestions || [];
     const wrap = div(target, 'cssEditor');
+    if(this.options.showTitle) {
+      const title = div(wrap, 'propertyPickerSectionTitle');
+      title.textContent = this.property;
+      if(this.options.titleInfo)
+        propertyInfoButton(title, this.options.titleInfo);
+    }
     const container = div(wrap);
     this.sectionsDOM = container;
 
-    const renderClassSection = (className, classValue) => {
+    const renderClassSection = (className, classValue, wholeProperty) => {
       const section = div(container, 'cssClassSection');
       const stateKey = `${this.key}:${className}`;
       // the "default" class is the widget itself (or, for the css properties
@@ -179,13 +204,18 @@ class CssEditor {
         // URIs and the like) stays a textarea, and so does a section the user
         // switched to text mode
         if(this.state.textModes.has(stateKey) || (typeof classValue === 'string' && classValue.trim() && !cssStringRoundTrips(classValue)))
-          this.renderTextarea(className, classValue, body, rebuild);
+          this.renderTextarea(className, wholeProperty, classValue, body, rebuild);
         else
-          this.renderDeclarationList(className, false, body, rebuild);
+          this.renderDeclarationList(className, wholeProperty, body, rebuild);
       }, this.state.collapsed, stateKey);
 
       if(className == 'default' && this.options.defaultInfo)
         propertyInfoButton($('.collapsibleHeader', section), this.options.defaultInfo);
+
+      // the section for the value itself is not one of the class/selector
+      // sections - removing it would mean removing the property
+      if(wholeProperty)
+        return;
 
       const header = $('.collapsibleHeader', section);
       const deleteButton = document.createElement('button');
@@ -242,7 +272,9 @@ class CssEditor {
       const value = this.value();
       if(hasNestedCSSClasses(value)) {
         for(const [ className, classValue ] of Object.entries(value))
-          renderClassSection(className, classValue);
+          renderClassSection(className, classValue, false);
+      } else if(!this.rowMode) {
+        renderClassSection('default', value, true);
       } else if(typeof value === 'string' && value.trim() && !cssStringRoundTrips(value)) {
         // a value the declaration parser would destroy (a data URI and the
         // like) has no rows - it stays what the text field above says
@@ -272,21 +304,25 @@ class CssEditor {
 
     this.rebuildSections = rebuild;
     rebuild();
+    this.startListening();
     return wrap;
   }
 
   // The declarations of one class/selector as plain text: the fallback for
   // values the rows cannot represent, and a way to rewrite or paste a whole
-  // block at once. (The value without class/selector sections is edited as
-  // text in the property row itself, so this is only for a section of the
-  // nested form.)
-  renderTextarea(className, classValue, target, rebuild) {
+  // block at once. (In the row form the value itself is that text field, so
+  // there this is only reached for a section of the nested form.)
+  renderTextarea(className, wholeProperty, classValue, target, rebuild) {
     const stateKey = `${this.key}:${className}`;
     const textarea = document.createElement('textarea');
     textarea.value = cssTextFromValue(classValue);
     textarea.placeholder = 'property: value;';
     textarea.oninput = () => {
       const text = textarea.value;
+      if(wholeProperty) {
+        this.writeValue(text.trim() === '' ? null : text);
+        return;
+      }
       // class values have to be objects so the engine (and this editor)
       // recognizes the nested form; refuse text the declaration parser
       // would destroy (e.g. data URIs)
@@ -590,9 +626,9 @@ class CssEditor {
     });
     addRow.classList.add('cssAddClassRow');
 
-    // the value itself is already editable as text in the property row, so
-    // only a class/selector section offers the text field
-    if(wholeProperty)
+    // in the row form the value itself is already editable as text up in the
+    // row, so only a class/selector section offers the text field
+    if(wholeProperty && this.rowMode)
       return;
     const footer = div(target, 'cssDeclarationFooter');
     const text = document.createElement('button');
