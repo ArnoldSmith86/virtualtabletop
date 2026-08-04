@@ -1,6 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { calculateLayout, calculateEditModuleClasses, viewportConfig, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { calculateLayout, calculateEditModuleClasses, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -236,6 +236,7 @@ function setScale() {
   scale = layout.scale;
   for(const layoutClass of LAYOUT_CLASSES)
     toggleClass($('body'), layoutClass, layoutClass == layout.layoutClass);
+  toggleClass($('body'), 'orientationMismatch', isOrientationMismatch(w, h, viewportConfig));
 
   document.documentElement.style.setProperty('--scale', scale);
   updateToolbarLayout();
@@ -704,7 +705,7 @@ async function loadEditMode() {
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
-      viewportConfig, MIN_BOARD_SIZE, MAX_BOARD_SIZE,
+      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
@@ -854,6 +855,10 @@ onLoad(function() {
   });
   on('#hideToolbarButton', 'click', function() {
     $('body').classList.add('hiddenToolbar');
+    setScale();
+  });
+  on('#showToolbarButton', 'click', function() {
+    $('body').classList.remove('hiddenToolbar');
     setScale();
   });
 

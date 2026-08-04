@@ -93,6 +93,23 @@ export function calculateLayout(windowWidth, windowHeight, viewport, options = {
 }
 
 /**
+ * Whether the window is turned the wrong way round for the board, which is what the
+ * "please rotate your device" nag is for. It used to be a plain `@media (orientation:
+ * portrait)`, keyed off the window alone - so a portrait board in a portrait window,
+ * the case this all exists for, got told to rotate away from a perfect fit. Only a
+ * landscape board can be rotated into, so a portrait or square board never nags: a
+ * portrait board on a landscape desktop window is letterboxed but perfectly playable.
+ *
+ * @param {number} windowWidth
+ * @param {number} windowHeight
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @returns {boolean}
+ */
+export function isOrientationMismatch(windowWidth, windowHeight, viewport) {
+  return windowHeight >= windowWidth && viewport.targetWidth > viewport.targetHeight;
+}
+
+/**
  * Whether edit mode moves the module panel above the room or lets it cover the
  * room entirely - no class means it stays beside the room. These used to be two
  * media queries keyed off a hardcoded 16/20 window aspect ratio, which is half

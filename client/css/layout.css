@@ -78,29 +78,34 @@ body.aspectTooGood.hiddenToolbar {
   --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
-@media (orientation: portrait) {
-  body:not(.lightsOff,.jsonEdit) {
-    background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
-    background-size: calc(100% - 40px) calc(var(--roomTop) - 40px);
-    background-repeat: no-repeat;
-    background-position: 20px 20px;
-    height: 100vh;
-  }
-  body:not(.lightsOff,.jsonEdit)::after {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* the branding wash and the "rotate your device" hint above the board. This used to be
+   @media (orientation: portrait), which told a player with a portrait board in a portrait
+   window - the best fit there is - to rotate away from it. isOrientationMismatch decides it
+   from the board's own shape now, so only a landscape board asks to be turned landscape.
+   The heights are clamped because --roomTop goes negative on a board that nearly fills the
+   window, which dropped the declaration and left the text sliced across the board. */
+body.orientationMismatch:not(.lightsOff,.jsonEdit) {
+  background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
+  background-size: calc(100% - 40px) max(0px, calc(var(--roomTop) - 40px));
+  background-repeat: no-repeat;
+  background-position: 20px 20px;
+  height: 100vh;
+}
+body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
-    bottom: 0;
-    height: calc(var(--roomTop) - 40px);
-    width: calc(100vw - 40px);
+  bottom: 0;
+  height: max(0px, calc(var(--roomTop) - 40px));
+  width: calc(100vw - 40px);
 
-    content: "Please rotate your device to landscape orientation and switch to fullscreen.";
-    margin: 20px;
-    font-size: 20px;
-    color: #fff2;
-  }
+  content: "Please rotate your device to landscape orientation and switch to fullscreen.";
+  margin: 20px;
+  font-size: 20px;
+  color: #fff2;
 }
 
 
@@ -162,6 +167,48 @@ body.aspectTooGood.hiddenToolbar {
 
     body.aspectTooGood.hiddenToolbar #toolbar {
       display: none;
+    }
+
+    /* hiding the toolbar used to be one way - with the board size configurable, aspectTooGood
+       is something a game can put every player in, so there has to be a way back. A thin strip
+       at the left edge, out of the way until it is hovered. */
+    #showToolbarButton {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      z-index: 3;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+
+      margin: 0;
+      padding: 0;
+      width: 10px;
+      height: 80px;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      background: var(--wcMain);
+      color: var(--wcFont);
+      opacity: 0.4;
+      overflow: hidden;
+      cursor: pointer;
+      transition: width 0.15s ease, opacity 0.15s ease;
+    }
+
+    #showToolbarButton::before {
+      font-size: 20px;
+      width: auto;
+    }
+
+    #showToolbarButton:hover, #showToolbarButton:focus-visible {
+      width: var(--toolbarSize);
+      opacity: 1;
+    }
+
+    /* edit mode hides the whole toolbar anyway, so there is nothing to bring back there */
+    body.aspectTooGood.hiddenToolbar:not(.edit) #showToolbarButton {
+      display: flex;
     }
 
     body.loading #toolbar, body.loading #toolbar * {

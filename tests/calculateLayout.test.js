@@ -1,4 +1,4 @@
-import { calculateLayout, calculateEditModuleClasses, DEFAULT_VIEWPORT, normalizeBoardSize, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
+import { calculateLayout, calculateEditModuleClasses, isOrientationMismatch, DEFAULT_VIEWPORT, normalizeBoardSize, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
 
 describe('calculateLayout', () => {
   const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
@@ -75,6 +75,32 @@ describe('calculateLayout', () => {
             mismatches.push(`${w}x${h}${toolbarHidden ? ' hidden' : ''}: ${actual.layoutClass}/${actual.scale} instead of ${expected.layoutClass}/${expected.scale}`);
         }
     expect(mismatches).toEqual([]);
+  });
+});
+
+// this replaces `@media (orientation: portrait)` on the "please rotate your device" nag, so
+// for the default board it has to match that media query window size for window size
+describe('isOrientationMismatch', () => {
+  const landscapeBoard = { targetWidth: 1600, targetHeight: 1000 };
+  const portraitBoard  = { targetWidth: 1000, targetHeight: 1600 };
+  const squareBoard    = { targetWidth: 1200, targetHeight: 1200 };
+
+  test('matches the portrait media query it replaces for the default board', () => {
+    expect(isOrientationMismatch(400, 800, landscapeBoard)).toBe(true);
+    expect(isOrientationMismatch(800, 800, landscapeBoard)).toBe(true);
+    expect(isOrientationMismatch(800, 799, landscapeBoard)).toBe(false);
+    expect(isOrientationMismatch(1920, 1080, landscapeBoard)).toBe(false);
+  });
+
+  // the case the board size setting exists for: rotating away from it would only make it worse
+  test('never asks to rotate away from a portrait or square board', () => {
+    expect(isOrientationMismatch(620, 1000, portraitBoard)).toBe(false);
+    expect(isOrientationMismatch(620, 1000, squareBoard)).toBe(false);
+  });
+
+  // a letterboxed portrait board on a desktop is perfectly playable, so no nag either way
+  test('does not nag a portrait board on a landscape window', () => {
+    expect(isOrientationMismatch(1920, 1080, portraitBoard)).toBe(false);
   });
 });
 

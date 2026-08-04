@@ -10,12 +10,6 @@ class GameSettingsModule extends SidebarModule {
     const tile = document.createElement('div');
     tile.className = 'settings-tile';
     tile.style.cssText = `
-      border: 1px solid var(--modalBorderColor);
-      border-radius: 4px;
-      padding: 12px;
-      margin: 8px 0;
-      background: var(--backgroundColor);
-      color: var(--textColor);
       cursor: pointer;
       transition: all 0.2s ease;
     `;
@@ -112,14 +106,6 @@ class GameSettingsModule extends SidebarModule {
   addDropdown(text, name, description, options, target) {
     const tile = document.createElement('div');
     tile.className = 'settings-tile';
-    tile.style.cssText = `
-      border: 1px solid var(--modalBorderColor);
-      border-radius: 4px;
-      padding: 12px;
-      margin: 8px 0;
-      background: var(--backgroundColor);
-      color: var(--textColor);
-    `;
 
     const header = document.createElement('div');
     header.style.cssText = `
@@ -311,9 +297,9 @@ class GameSettingsModule extends SidebarModule {
     const desc = document.createElement('div');
     desc.className = 'boardSizeDescription';
     desc.innerHTML = `
-      How large the play area is, in game units. Widget <code>x</code>, <code>y</code>, <code>width</code> and <code>height</code> are measured on this grid and the whole board is scaled to fit each player's window, so this is what decides the board's shape - not how big it looks.
+      How large the play area is. Widget <code>x</code>, <code>y</code>, <code>width</code> and <code>height</code> are measured on this grid, and the whole board is scaled to fit each player's window - so <b>this decides the board's shape, not how big it looks</b>.
       <br><br>
-      Existing widgets are <b>not</b> moved when you change it. Default is 1600 × 1000, allowed values are ${MIN_BOARD_SIZE} to ${MAX_BOARD_SIZE}.
+      Existing widgets keep their coordinates, so anything past the new edge will be cut off. Saved with the game; changes apply to everyone in the room right away. Default is ${DEFAULT_VIEWPORT.targetWidth} × ${DEFAULT_VIEWPORT.targetHeight}, allowed values are ${MIN_BOARD_SIZE} to ${MAX_BOARD_SIZE}.
     `;
     tile.append(desc);
 
@@ -351,12 +337,32 @@ class GameSettingsModule extends SidebarModule {
     swapButton.title = 'Swap width and height';
     swapButton.setAttribute('aria-label', 'Swap width and height');
 
-    inputRow.append(width.wrap, cross, height.wrap, swapButton);
+    // the fields, the × and the swap button stay one tight cluster on the left; the space
+    // that leaves over shows the shape the numbers describe, which is what the setting is
+    // actually about - with the board the room is on as a dashed outline behind it.
+    const preview = document.createElement('div');
+    preview.className = 'boardSizePreview';
+    const previewCurrent = document.createElement('div');
+    previewCurrent.className = 'boardSizePreviewCurrent';
+    const previewPending = document.createElement('div');
+    previewPending.className = 'boardSizePreviewPending';
+    preview.append(previewCurrent, previewPending);
+
+    const fieldCluster = document.createElement('div');
+    fieldCluster.className = 'boardSizeFields';
+    fieldCluster.append(width.wrap, cross, height.wrap, swapButton);
+
+    inputRow.append(fieldCluster, preview);
     tile.append(inputRow);
 
     const ratioReadout = document.createElement('div');
     ratioReadout.className = 'boardSizeRatio';
     tile.append(ratioReadout);
+
+    const presetLabel = document.createElement('div');
+    presetLabel.className = 'boardSizePresetLabel';
+    presetLabel.textContent = 'Presets';
+    tile.append(presetLabel);
 
     const presetRow = document.createElement('div');
     presetRow.className = 'boardSizePresets';
@@ -401,18 +407,23 @@ class GameSettingsModule extends SidebarModule {
 
       const gameSettings = getCurrentGameSettings();
       gameSettings.boardSize = { width: w, height: h };
+      this.boardSizeConfirmation = `The board is ${w} × ${h} now - applied for everyone in the room and saved with the game.`;
       toServer('setGameSettings', gameSettings);
     };
 
     const reset = () => {
       const gameSettings = getCurrentGameSettings();
       delete gameSettings.boardSize;
+      this.boardSizeConfirmation = `The board is back to the default ${DEFAULT_VIEWPORT.targetWidth} × ${DEFAULT_VIEWPORT.targetHeight} - applied for everyone in the room.`;
       toServer('setGameSettings', gameSettings);
     };
 
-    const addMessage = (text, action) => {
+    // kind is 'error' (Apply is blocked), 'warning' (Apply works, but read this first) or
+    // 'success'. They used to share the error red while Apply stayed enabled, which read as
+    // "something is broken" for what is only advice.
+    const addMessage = (kind, text, action) => {
       const message = document.createElement('div');
-      message.className = 'boardSizeMessage';
+      message.className = `boardSizeMessage ${kind}`;
       message.textContent = text;
       if(action) {
         const button = document.createElement('button');
@@ -423,56 +434,97 @@ class GameSettingsModule extends SidebarModule {
       messages.append(message);
     };
 
+    // the preview box in the CSS is square and this is its side in px
+    const PREVIEW_SIZE = 96;
+    const updatePreview = (w, h, valid) => {
+      const currentW = viewportConfig.targetWidth;
+      const currentH = viewportConfig.targetHeight;
+      // both shapes share one scale, so the preview shows how much bigger or smaller the
+      // pending board is - not just its proportions
+      const largest = Math.max(currentW, currentH, valid ? w : 0, valid ? h : 0);
+      const size = (el, boxW, boxH) => {
+        el.style.width  = `${boxW/largest*PREVIEW_SIZE}px`;
+        el.style.height = `${boxH/largest*PREVIEW_SIZE}px`;
+      };
+
+      size(previewCurrent, currentW, currentH);
+      previewCurrent.style.display = valid && (w != currentW || h != currentH) ? 'block' : 'none';
+      previewPending.style.display = valid ? 'block' : 'none';
+      if(valid)
+        size(previewPending, w, h);
+    };
+
     const update = () => {
       const [ w, h ] = pending();
       const valid = isValid(w) && isValid(h);
       const changed = valid && (w != viewportConfig.targetWidth || h != viewportConfig.targetHeight);
+      const isDefault = !(getCurrentGameSettings() || {}).boardSize;
 
-      ratioReadout.textContent = valid ? `= ${this.boardRatioText(w, h)}` : '';
+      ratioReadout.textContent = valid ? `Aspect ratio: ${this.boardRatioText(w, h)}` : '';
       applyButton.disabled = !changed;
-      resetButton.disabled = !(getCurrentGameSettings() || {}).boardSize;
+      resetButton.disabled = isDefault;
+      resetButton.title = isDefault
+        ? `This game already uses the default ${DEFAULT_VIEWPORT.targetWidth} × ${DEFAULT_VIEWPORT.targetHeight} board.`
+        : `Remove the board size from the game and go back to ${DEFAULT_VIEWPORT.targetWidth} × ${DEFAULT_VIEWPORT.targetHeight}.`;
 
       for(const button of presetRow.children)
         button.classList.toggle('active', valid && button.dataset.ratio == (w/h).toFixed(4));
 
+      updatePreview(w, h, valid);
+
       messages.innerHTML = '';
       if(!valid) {
-        addMessage(`Width and height have to be between ${MIN_BOARD_SIZE} and ${MAX_BOARD_SIZE}.`);
+        addMessage('error', `Width and height have to be between ${MIN_BOARD_SIZE} and ${MAX_BOARD_SIZE}.`);
         return;
       }
 
+      // Applying rebuilds the whole tile (the meta message the server answers with does, and
+      // more than once), so the "this is live for everyone now" confirmation lives on the
+      // module instead of in the tile it was triggered from. Editing a field or closing the
+      // panel drops it again.
+      if(this.boardSizeConfirmation && !changed)
+        addMessage('success', this.boardSizeConfirmation);
+
       if(w/h > 4 || h/w > 4)
-        addMessage(w > h
+        addMessage('warning', w > h
           ? 'This board is much wider than it is tall - the toolbar will cover most of it on normal screens.'
           : 'This board is much taller than it is wide - the toolbar will cover most of it on normal screens.');
 
       const outside = this.widgetsNewlyOutsideBoard(w, h);
       if(outside.length)
-        addMessage(`${outside.length} widget${outside.length == 1 ? '' : 's'} would stick out past the board edge and be clipped away.`, {
-          text: 'Select them',
+        addMessage('warning', `${outside.length} widget${outside.length == 1 ? '' : 's'} would stick out past the board edge and be clipped away.`, {
+          text: 'Select on board',
           onClick: _=>setSelection(outside)
         });
+    };
+
+    // an edit means the user moved on from whatever was applied last
+    const edited = () => {
+      this.boardSizeConfirmation = null;
+      update();
     };
 
     for(const preset of presets) {
       const button = document.createElement('button');
       button.textContent = preset.text;
+      // the labels are ratios but the buttons set concrete sizes, so say which
+      button.title = `${preset.text.replace(/ .*/, '')} - sets ${preset.width} × ${preset.height}`;
       button.dataset.ratio = (preset.width/preset.height).toFixed(4);
       button.addEventListener('click', _=>{
         width.input.value = preset.width;
         height.input.value = preset.height;
-        update();
+        edited();
       });
       presetRow.append(button);
     }
 
     swapButton.addEventListener('click', _=>{
       [ width.input.value, height.input.value ] = [ height.input.value, width.input.value ];
-      update();
+      edited();
     });
 
     for(const input of [ width.input, height.input ]) {
-      input.addEventListener('input', update);
+      input.addEventListener('input', edited);
       // a cleared or unusable field would otherwise keep claiming a board size
       // that isn't the one everyone is playing on
       input.addEventListener('blur', _=>{
@@ -548,6 +600,10 @@ class GameSettingsModule extends SidebarModule {
       toServer('setGameSettings', gameSettings);
       this.renderModule(this.moduleDOM);
     }
+  }
+
+  onClose() {
+    this.boardSizeConfirmation = null;
   }
 
   onMetaReceived(meta) {
