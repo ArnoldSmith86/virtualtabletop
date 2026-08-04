@@ -588,6 +588,7 @@ class CheckboxInput extends PropertyInput {
 
 class SelectInput extends PropertyInput {
   // options.choices: [ { value, text } ]
+  // options.customText: value => label for values that are not among the choices
   cssClass() {
     return 'selectInput';
   }
@@ -618,7 +619,7 @@ class SelectInput extends PropertyInput {
         this.select.appendChild(this.customOption);
       }
       this.customOption.value = jsonValue;
-      this.customOption.textContent = `custom: ${jsonValue}`;
+      this.customOption.textContent = this.options.customText ? this.options.customText(value) : `custom: ${jsonValue}`;
     }
     this.select.value = jsonValue;
   }

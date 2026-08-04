@@ -22,6 +22,9 @@ class Holder extends ImageWidget {
       childrenPerOwner: false,
       showInactiveFaceToSeat: null,
 
+      multiSelectMax: 0,
+      multiSelectStyle: 'elevate',
+
       onEnter: {},
       onLeave: {},
 
