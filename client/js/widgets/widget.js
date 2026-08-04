@@ -2024,13 +2024,15 @@ export class Widget extends StateManaged {
                   const copy = property !== null && typeof property == 'object' ? JSON.parse(JSON.stringify(property)) : property;
                   const where = `Property ${JSON.stringify(mainProperty)} of widget ${JSON.stringify(w.get('id'))}`;
                   const keyProblems = [];
-                  const newProperty = setNestedValue(copy, keyPath, newValue, keyProblems);
+                  const keyWarnings = [];
+                  const newProperty = setNestedValue(copy, keyPath, newValue, keyProblems, keyWarnings);
                   if(keyProblems.length) {
                     problems.push(...keyProblems.map(p=>`${where}: ${p}`));
                   } else {
                     // only report the replacement once it actually happened - a refused key changes nothing
                     if(property !== null && typeof property != 'object')
                       problems.push(`Warning: ${where} was not an object - its value ${JSON.stringify(property)} was replaced.`);
+                    problems.push(...keyWarnings.map(p=>`Warning: ${where}: ${p}`));
                     await w.set(mainProperty, newProperty);
                   }
                 }

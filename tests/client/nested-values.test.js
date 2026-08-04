@@ -141,6 +141,14 @@ describe("Scenarios: Reading and writing values inside widget properties", () =>
       expect(targetWidget.get('cardTypes')).toEqual({ '007': 'Bond', '1754300000000': 'timestamp' });
     });
 
+    test("Then it warns about a value that had to be replaced deeper in the path", async () => {
+      const problems = await runCapturingProblems([
+        { func: 'SET', property: [ 'css', 'default', 'background' ], value: 'red' }
+      ], { css: { default: 'color: red' } });
+      expect(targetWidget.get('css')).toEqual({ default: { background: 'red' } });
+      expect(problems).toMatch(/^Warning: Property "css" of widget ".*": Key "default" was not an object - its value "color: red" was replaced\.$/m);
+    });
+
     test("Then it refuses to write into the prototype chain", async () => {
       await run([
         { func: 'SET', property: [ 'cardTypes', '__proto__', 'polluted' ], value: 'yes' },
@@ -207,6 +215,30 @@ describe("Scenarios: Reading and writing values inside widget properties", () =>
         { func: 'LABEL', label: testLabel.get('id'), value: `\${PROPERTY css.default.background OF ${targetWidget.get('id')}}` }
       ]);
       expect(testLabel.get('text')).toBe('');
+    });
+  });
+
+  describe("Given a PROPERTY expression with a key path in css", () => {
+    test("Then it substitutes the nested value", async () => {
+      await targetWidget.set('colors', { main: 'red' });
+      expect(targetWidget.cssReplaceProperties('background-color: ${PROPERTY colors.main}')).toBe('background-color: red');
+    });
+
+    test("Then a missing key becomes an empty string instead of undefined", async () => {
+      await targetWidget.set('colors', { main: 'red' });
+      expect(targetWidget.cssReplaceProperties('background-color: ${PROPERTY colors.other}')).toBe('background-color: ');
+    });
+
+    test("Then a value containing $& is not expanded as a replacement pattern", async () => {
+      await targetWidget.set('colors', { main: "url('a$&b$`c')" });
+      expect(targetWidget.cssReplaceProperties('background: ${PROPERTY colors.main}')).toBe("background: url('a$&b$`c')");
+    });
+
+    test("Then it registers the property it depends on", async () => {
+      await targetWidget.set('colors', { main: 'red' });
+      const usedProperties = new Set();
+      targetWidget.cssReplaceProperties('background-color: ${PROPERTY colors.main}', usedProperties);
+      expect([ ...usedProperties ]).toEqual([ 'colors' ]);
     });
   });
 

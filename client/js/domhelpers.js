@@ -644,8 +644,9 @@ export function getNestedValue(object, path) {
 // Returns the (possibly new) container so that a missing or non-object value can be replaced by the
 // object/array needed to hold the path. Modifies the given object - pass a copy if that matters.
 // Refused keys are collected in problems and leave the object unchanged - check whether problems
-// grew before using the result.
-export function setNestedValue(object, path, value, problems=[]) {
+// grew before using the result. A value that had to be replaced along the way is reported in
+// warnings: the write did happen, but something the author wrote is gone.
+export function setNestedValue(object, path, value, problems=[], warnings=[]) {
   if(!path.length)
     return value;
 
@@ -672,10 +673,14 @@ export function setNestedValue(object, path, value, problems=[]) {
 
   const oldValue = Object.prototype.hasOwnProperty.call(container, key) ? container[key] : null;
   const problemsSoFar = problems.length;
-  const newValue = setNestedValue(oldValue, path.slice(1), value, problems);
+  const newValue = setNestedValue(oldValue, path.slice(1), value, problems, warnings);
   if(problems.length > problemsSoFar)
     return object;
-  container[key] = newValue;
+  // the value under this key had to make room for the rest of the path - say so, it is now lost
+  if(path.length > 1 && oldValue !== null && typeof oldValue != 'object')
+    warnings.push(`Key ${JSON.stringify(String(key))} was not an object - its value ${JSON.stringify(oldValue)} was replaced.`);
+  // defineProperty instead of an assignment so that no setter inherited from the prototype can run
+  Object.defineProperty(container, key, { value: newValue, writable: true, enumerable: true, configurable: true });
   return container;
 }
 

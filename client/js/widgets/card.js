@@ -1,4 +1,4 @@
-class Card extends Widget {
+export class Card extends Widget {
   constructor(id) {
     super(id);
 

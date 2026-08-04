@@ -329,16 +329,29 @@ function pathVariables(path) {
 // The property of GET and SET is either a property name or an array of the property name followed
 // by the keys leading to a value inside it.
 function validatePropertyPath(value, context, propertyPath = []) {
+    const func = context.operation && context.operation.func || 'GET/SET';
     if (typeof value === 'string' && value.length > 0) {
         return validators.property(value, context);
     }
     if (Array.isArray(value) && value.length > 0) {
-        return validators.property(value[0], context);
+        const nameProblem = validators.property(value[0], context);
+        const problems = typeof nameProblem === 'string' ? [{ widget: context.widgetId, property: propertyPath, message: nameProblem }] : [];
+        // everything after the property name is a key leading into it
+        for (const key of value.slice(1)) {
+            if (typeof key !== 'string' && typeof key !== 'number') {
+                problems.push({
+                    widget: context.widgetId,
+                    property: propertyPath,
+                    message: `${func} property key ${JSON.stringify(key)} must be a string or a number`
+                });
+            }
+        }
+        return problems;
     }
     return [{
         widget: context.widgetId,
         property: propertyPath,
-        message: `${context.operation && context.operation.func || 'GET/SET'} property must be a non-empty string or array`
+        message: `${func} property must be a non-empty string or array`
     }];
 }
 
