@@ -484,7 +484,8 @@ describe('snap grid helpers', () => {
   });
 
   test('the hex grid matches the JSON editor calculation for both hex types', () => {
-    // pointy hexes: long side is the width, the second grid is staggered by half
+    // the second grid is staggered by half a step on both axes, and the two
+    // orientations are mirror images of each other
     expect(cssHelpers.hexGridForSize(60, 60, 'point')).toEqual([
       { x: 51.96, y: 90, offsetX: 25.98, offsetY: 45 },
       { x: 51.96, y: 90, offsetX: 0, offsetY: 0 }
@@ -493,6 +494,12 @@ describe('snap grid helpers', () => {
       { x: 90, y: 51.96, offsetX: 45, offsetY: 25.98 },
       { x: 90, y: 51.96, offsetX: 0, offsetY: 0 }
     ]);
+  });
+
+  test('the hex grid sizes the hexagon by the shorter side of a non-square box', () => {
+    // background-size: contain, so a 60x100 box draws the same hexagon as 60x60
+    expect(cssHelpers.hexGridForSize(60, 100, 'flat')).toEqual(cssHelpers.hexGridForSize(60, 60, 'flat'));
+    expect(cssHelpers.hexGridForSize(100, 60, 'point')).toEqual(cssHelpers.hexGridForSize(60, 60, 'point'));
   });
 });
 

@@ -283,6 +283,7 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
 
   const nestedSection = Selector('#editorModules .collapsibleBody > .collapsibleSection > .collapsibleHeader .collapsibleTitle');
   const dragLimit = ClientFunction(() => JSON.stringify(widgets.get('checker').state.dragLimit || null));
+  const grid = ClientFunction(() => JSON.stringify(widgets.get('checker').get('grid')));
   const svgReplaces = ClientFunction(() => JSON.stringify(widgets.get('checker').get('svgReplaces')));
 
   // where a widget may end up is part of where it is, so both blocks sit
@@ -307,6 +308,26 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     // them - and an empty rectangle is the default, i.e. no property at all
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
     .expect(dragLimit()).eql('null');
+
+  // nothing tells the editor whether an image is a hexagon, let alone which way
+  // up, so both orientations are offered and the user picks one
+  const gridBody = Selector('#editorModules .collapsibleHeader').withText('Snap grid').sibling('.collapsibleBody');
+  const gridButton = gridBody.find('.gridActions button');
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('Snap grid'))
+    .expect(gridButton.count).eql(3)
+    .expect(gridButton.nth(0).textContent).contains('Square grid (91 × 91)')
+    .expect(gridButton.nth(1).textContent).contains('Hex grid (flat top)')
+    .expect(gridButton.nth(2).textContent).contains('Hex grid (pointy top)')
+    // the two staggered grids of a pointy topped hexagon that is 91px across:
+    // half a step further along on both axes, so the rows interlock
+    .click(gridButton.nth(2))
+    .expect(grid()).eql('[{"x":78.81,"y":136.5,"offsetX":39.405,"offsetY":68.25},{"x":78.81,"y":136.5,"offsetX":0,"offsetY":0}]')
+    // and the flat topped one is its mirror image
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(1))
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0))
+    .click(gridButton.nth(1))
+    .expect(grid()).eql('[{"x":136.5,"y":78.81,"offsetX":68.25,"offsetY":39.405},{"x":136.5,"y":78.81,"offsetX":0,"offsetY":0}]');
 
   // the replacements are read out of the SVG: its stroke-width placeholder is
   // offered as a replacement for a borderWidth, and gets a number input

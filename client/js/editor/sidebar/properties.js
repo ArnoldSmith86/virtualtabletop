@@ -283,16 +283,19 @@ function squareGridForSize(width, height) {
   return [ { x: width, y: height } ];
 }
 
-// Same math as the JSON editor's "calculated hex grid" button: two staggered
-// grids so every other row/column sits half a hex further along.
+// Two staggered grids so every other row/column sits half a hex further along,
+// each offset by half its own spacing. A widget image is drawn with
+// background-size: contain, so the hexagon's long diagonal is the shorter side
+// of the widget box - for the square box the example hexes use this is the
+// same calculation the JSON editor's "calculated hex grid" button does.
 function hexGridForSize(width, height, hexType) {
   const isFlat = hexType === 'flat';
-  const long = isFlat ? height : width;
+  const long = Math.min(width, height);
   const short = parseFloat((long * Math.sqrt(3) / 2).toFixed(2));
   const xHex = isFlat ? long * 1.5 : short;
   const yHex = isFlat ? short : long * 1.5;
   return [
-    { x: xHex, y: yHex, offsetX: isFlat ? long * 0.75 : short / 2, offsetY: isFlat ? short / 2 : long * 0.75 },
+    { x: xHex, y: yHex, offsetX: xHex / 2, offsetY: yHex / 2 },
     { x: xHex, y: yHex, offsetX: 0, offsetY: 0 }
   ];
 }
@@ -4302,11 +4305,15 @@ class PropertiesModule extends SidebarModule {
       add('Add another grid', 'All grids are tried together - the widget snaps to whichever point is closest.', _=>squareGridForSize(width, height));
       return;
     }
-    // same two starting points the JSON editor offers, but computed and named
+    // the same starting points the JSON editor offers, but computed and named
     // from the widget's current box instead of typed by hand
     add(`Square grid (${width} × ${height})`, 'One snap point per widget box, so widgets end up edge to edge.', _=>squareGridForSize(width, height));
-    const isFlat = widget.get('hexType') === 'flat';
-    add(`Hex grid (${isFlat ? 'flat top' : 'pointy top'})`, `Two staggered grids that place ${isFlat ? 'flat' : 'pointy'} topped hexagons side by side, calculated from the widget box.`, _=>hexGridForSize(width, height, widget.get('hexType')));
+    // both hexagon orientations are offered rather than picked from the
+    // unofficial hexType only the add widget overlay writes: nothing tells the
+    // editor that an image is a hexagon at all, so the widget knowing its own
+    // orientation is the exception, and guessing is one click either way
+    for(const hex of [ { type: 'flat', name: 'flat top', shape: 'flat topped' }, { type: 'point', name: 'pointy top', shape: 'pointy topped' } ])
+      add(`Hex grid (${hex.name})`, `Two staggered grids that place ${hex.shape} hexagons side by side, calculated from the widget box.`, _=>hexGridForSize(width, height, hex.type));
   }
 
   renderGridEntry(widget, index, count, target, rebuild) {
