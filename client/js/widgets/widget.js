@@ -21,6 +21,12 @@ function linesWithStop(widgetID) {
   return widgetFilter(w=>w.get('type') == 'line' && lineListsStop(w, widgetID));
 }
 
+// Modulo that always returns a non-negative index, so that a negative offset
+// wraps around to the end of the array instead of missing it.
+function wrapIndex(index, length) {
+  return ((index % length) + length) % length;
+}
+
 // Only lines care about another widget's geometry: an endpoint connected to it
 // has to follow, and a line carrying it as a stop has to re-space.
 const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
@@ -2252,16 +2258,15 @@ export class Widget extends StateManaged {
           if (unskipped.length === 0) {
             problems.push(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
           } else {
-            // modulo that always returns a non-negative index so negative turn values wrap
-            const wrap = (i, length) => ((i % length) + length) % length;
-
             // identify the correct target seat
             if (a.turnCycle == 'position') {
               if (a.turn == 'last') {
                 target = unskipped[unskipped.length - 1];
+              } else if (a.turn === 0) {
+                problems.push(`Warning: turn 0 is not a valid position - positions start at 1 and negative positions count back from the last seat. Using the first seat.`);
               } else if (Number.isFinite(a.turn)) {
-                // negative positions count from the end: -1 is the last active seat
-                target = unskipped[a.turn < 0 ? wrap(a.turn, unskipped.length) : wrap(a.turn - 1, unskipped.length)];
+                // positions are 1-based, negative positions count from the end: -1 is the last active seat
+                target = unskipped[wrapIndex(a.turn < 0 ? a.turn : a.turn - 1, unskipped.length)];
               }
             } else if (a.turnCycle == 'seat') {
               // Selecting a specific seat so in this case skipTurn will be ignored
@@ -2272,8 +2277,10 @@ export class Widget extends StateManaged {
               }
             } else {
               const turn = Number.isFinite(a.turn) ? a.turn : 1;
-              const offset = (c[0] == unskipped[0] ? 0 : 1);
-              target = unskipped[wrap(turn - offset, unskipped.length)];
+              // if the seat that currently has the turn is skipped, it is missing from
+              // unskipped: index i is then i+1 steps forward but still i steps backward
+              const offset = (turn > 0 && c[0] != unskipped[0] ? 1 : 0);
+              target = unskipped[wrapIndex(turn - offset, unskipped.length)];
             }
 
             // execute the change in turn properties and collect turn seats into output collection
