@@ -69,18 +69,20 @@ function sharedHandRoom() {
 // variant to test. every button marks the witness after the TURN operation, so the
 // witness also shows whether the routine survived the operation
 const turnButtons = {
+  forward:      { turn: 1 },
   back:         { turn: -1 },
   backTwo:      { turn: -2 },
+  backward:     { turnCycle: 'backward', turn: 1 },
   positionLast: { turnCycle: 'position', turn: -1 },
   positionBeforeLast: { turnCycle: 'position', turn: -2 }
 };
 
-function turnRoom() {
+function turnRoom(skipped) {
   const state = {
     witness: { id: 'witness', type: 'basic', x: 1000, y: 400 }
   };
   for(const index of [ 1, 2, 3, 4 ])
-    state[`seat${index}`] = { id: `seat${index}`, type: 'seat', index, player: `Player ${index}`, turn: index == 1, x: 800, y: 200*index };
+    state[`seat${index}`] = { id: `seat${index}`, type: 'seat', index, player: `Player ${index}`, turn: index == 1, skipTurn: skipped.indexOf(index) != -1, x: 800, y: 200*index };
   Object.entries(turnButtons).forEach(([ id, turn ], i)=>{
     state[id] = { id, type: 'button', text: id, x: 50, y: 200*i, clickRoutine: [
       Object.assign({ func: 'TURN' }, turn),
@@ -208,8 +210,8 @@ async function seatsWithTurn() {
   return Object.values(JSON.parse(await getState())).filter(w=>w.type == 'seat' && w.turn).map(w=>w.id).sort();
 }
 
-async function clickTurn(t, button) {
-  await setRoomState(turnRoom());
+async function clickTurn(t, button, skipped=[]) {
+  await setRoomState(turnRoom(skipped));
   await ClientFunction(prepareClient)();
   await setName(t);
   await expectEventually(t, seatsWithTurn, [ 'seat1' ]);
@@ -234,6 +236,26 @@ test('TURN with a negative turn cycles the other way around the seats', async t 
 test('TURN with a negative turn of more than one step wraps around the seats', async t => {
   await clickTurn(t, 'backTwo');
   await expectEventually(t, seatsWithTurn, [ 'seat3' ]);
+  await expectEventually(t, markedWidgets, [ 'witness' ]);
+});
+
+// the seat that has the turn is skipped itself, so it is missing from the list the
+// target is picked from - the step in either direction still has to be a single one
+test('TURN with a negative turn steps back one seat from a skipped current seat', async t => {
+  await clickTurn(t, 'back', [ 1 ]);
+  await expectEventually(t, seatsWithTurn, [ 'seat4' ]);
+  await expectEventually(t, markedWidgets, [ 'witness' ]);
+});
+
+test('TURN with a negative turn matches turnCycle backward on a skipped current seat', async t => {
+  await clickTurn(t, 'backward', [ 1 ]);
+  await expectEventually(t, seatsWithTurn, [ 'seat4' ]);
+  await expectEventually(t, markedWidgets, [ 'witness' ]);
+});
+
+test('TURN with a positive turn skips the current seat as before', async t => {
+  await clickTurn(t, 'forward', [ 1 ]);
+  await expectEventually(t, seatsWithTurn, [ 'seat2' ]);
   await expectEventually(t, markedWidgets, [ 'witness' ]);
 });
 
