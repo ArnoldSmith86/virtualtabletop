@@ -2576,12 +2576,6 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('moveStart', { id: this.get('id') });
 
-    // Dragging one of the widgets the local player selected takes the rest of the
-    // selection along - they follow to wherever this one is dropped. Collected before
-    // the drag detaches this widget from the holder, which is what clears its selection.
-    this.multiSelectSource = this.isMultiSelected() ? this.multiSelectHolder() : null;
-    this.multiSelectDrag = this.multiSelectSource ? this.multiSelectSource.multiSelectedWidgets(playerName).filter(w=>w != this && w.get('movable') && !w.get('fixedParent')).sort((a,b)=>a.get('z')-b.get('z')) : [];
-
     await this.bringToFront();
     await this.set('dragging', playerName);
     delete this.lastMoveCoord;
@@ -2592,6 +2586,14 @@ export class Widget extends StateManaged {
     this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
 
     if(!this.get('fixedParent') && this.get('movable')) {
+      // Dragging one of the widgets the local player selected takes the rest of the
+      // selection along: they leave the holder as soon as this one does and follow the
+      // cursor until it is dropped. Collected before the drag detaches this widget,
+      // which is what ends its selection.
+      this.multiSelectSource = this.isMultiSelected() ? this.multiSelectHolder() : null;
+      this.multiSelectDrag = this.multiSelectSource ? this.multiSelectSource.multiSelectedWidgets(playerName).filter(w=>w != this && w.get('movable') && !w.get('fixedParent')).sort((a,b)=>a.get('z')-b.get('z')) : [];
+      this.multiSelectPicked = [];
+
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
       if(this.currentParent)
@@ -2722,6 +2724,7 @@ export class Widget extends StateManaged {
       }
     }
 
+    await this.dragMultiSelectionAlong();
     this.highlightStopDropLine(this.lineStopDropTarget());
   }
 
@@ -2836,52 +2839,94 @@ export class Widget extends StateManaged {
     await this.updatePiles();
   }
 
-  // The rest of the local player's selection follows the widget that was just dragged
-  // out of the holder: into the same holder it was dropped into - as far as it accepts
-  // them - or onto the surface next to it, spread out so that everybody can see what
-  // was played instead of ending up as one pile.
-  async moveMultiSelectionAlong() {
-    const others = this.multiSelectDrag || [];
+  // How far apart the widgets that follow a drag are laid out. Most holders stack their
+  // children on one spot (stackOffset defaults to 0), so fall back to the width of the
+  // dragged widget - otherwise the whole selection would travel and land on one point.
+  multiSelectSpread(source) {
+    const x = +source.get('stackOffsetX') || 0;
+    const y = +source.get('stackOffsetY') || 0;
+    return x || y ? { x, y } : { x: +this.get('width') || 100, y: 0 };
+  }
+
+  // As soon as the drag has taken this widget out of the holder, the rest of the local
+  // player's selection comes out with it and follows the cursor next to it, so that the
+  // drag shows what is about to be dropped instead of moving a single widget.
+  async dragMultiSelectionAlong() {
     const source = this.multiSelectSource;
-    delete this.multiSelectDrag;
-    delete this.multiSelectSource;
-
-    const targetID = this.get('parent');
-    const target = widgets.has(targetID) ? widgets.get(targetID) : null;
-    if(!others.length || !source || target == source || target && target.get('type') == 'line')
+    if(!source || this.currentParent)
       return;
+    this.multiSelectPicked = this.multiSelectPicked || [];
 
-    // spread them the way the source holder did. Most holders stack their children on
-    // one spot (stackOffset defaults to 0), so fall back to the size of the widget that
-    // was dragged - otherwise the followers would land on each other and form a pile.
-    let offsetX = +source.get('stackOffsetX') || 0;
-    let offsetY = +source.get('stackOffsetY') || 0;
-    if(!offsetX && !offsetY)
-      offsetX = +this.get('width') || 100;
-
-    // the followers were not dragged, so they have to pass the checks a drag would have
-    // done for them: the target has to accept them and still have room. Whoever fails
-    // stays where it is instead of being forced into the holder.
-    let free = target && target.get('dropLimit') > -1 ? target.get('dropLimit') - target.children().length : Infinity;
-
-    let i = 1;
-    for(const w of others) {
+    for(const w of this.multiSelectDrag || []) {
       if(!widgets.has(w.get('id')) || w.get('_ancestor') != source.get('id'))
         continue;
-      if(target) {
-        if(free < 1 || !compareDropTarget(w, target))
-          continue;
-        --free;
-        w.movedByButton = true;
-        await w.moveToHolder(target);
-        delete w.movedByButton;
-      } else {
-        w.currentParent = source;
-        await w.checkParent(true);
-        await w.setPosition(this.get('x') + offsetX*i, this.get('y') + offsetY*i, this.get('z') + i);
-      }
+      // leaving the holder is what ends the selection, so checkParent() takes care of
+      // selectedBy, of the owner a childrenPerOwner holder gave it and of onLeave
+      w.currentParent = source;
+      await w.set('dragging', playerName);
+      await w.checkParent(true);
+      this.multiSelectPicked.push(w);
+    }
+    this.multiSelectDrag = [];
+
+    // absoluteCoord, because a widget that just became the stop of a line is no longer
+    // in the same coordinate system as the followers, which stay on the surface
+    const spread = this.multiSelectSpread(source);
+    const x = this.absoluteCoord('x');
+    const y = this.absoluteCoord('y');
+    let i = 1;
+    for(const w of this.multiSelectPicked) {
+      await w.setPosition(x + spread.x*i, y + spread.y*i, this.get('z') + i);
       ++i;
     }
+  }
+
+  // Where the selection that followed the drag ends up: in the holder this widget was
+  // dropped into - as far as that holder accepts it - or next to it on the surface,
+  // spread out so that everybody can see what was played instead of one pile.
+  async moveMultiSelectionAlong() {
+    const source = this.multiSelectSource;
+    if(source) {
+      const targetID = this.get('parent');
+      const target = widgets.has(targetID) ? widgets.get(targetID) : null;
+      // dropped on the surface (or onto a line, where only the dragged widget becomes a
+      // stop): the selection stays next to it, in the formation it was dragged in
+      if(!target || target.get('type') == 'line')
+        await this.dragMultiSelectionAlong();
+
+      const holder = target && target != source && target.get('type') != 'line' ? target : null;
+      // the followers were not dragged by hand, so the drop has to check them the way it
+      // checked the dragged one: the holder has to accept them and still have room
+      let free = holder && holder.get('dropLimit') > -1 ? holder.get('dropLimit') - holder.children().length : Infinity;
+
+      for(const w of (this.multiSelectPicked || []).concat(this.multiSelectDrag || [])) {
+        if(!widgets.has(w.get('id')))
+          continue;
+        await w.set('dragging', null);
+        const stillInHolder = w.get('_ancestor') == source.get('id');
+        if(holder && free > 0 && compareDropTarget(w, holder)) {
+          --free;
+          w.movedByButton = true;
+          await w.moveToHolder(holder);
+          delete w.movedByButton;
+        } else if(target && !stillInHolder) {
+          // the drop does not take it: back into the holder it was picked from, and
+          // picked again there, so that a refused drop does not cost the selection
+          w.movedByButton = true;
+          await w.moveToHolder(source);
+          delete w.movedByButton;
+          await w.setMultiSelected(true);
+        }
+      }
+
+      // the drag ended where it started, so the selection it interrupted is restored
+      if(target == source)
+        await this.setMultiSelected(true);
+    }
+
+    delete this.multiSelectSource;
+    delete this.multiSelectDrag;
+    delete this.multiSelectPicked;
   }
 
   async hideShadowWidget() {

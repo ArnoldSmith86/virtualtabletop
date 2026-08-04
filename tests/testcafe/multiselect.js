@@ -111,6 +111,8 @@ test('A card the target holder does not accept stays behind', async t => {
   await t.dragToElement('#w_card1', '#w_table');
   await expectEventually(t, ()=>cardsIn('table'), [ 'card1' ]);
   await expectEventually(t, ()=>cardsIn('hand'), [ 'card2', 'card3' ]);
+  // it comes back into the hand still selected, so the refused drop costs no pick
+  await expectEventually(t, selectedCards, [ 'card3' ]);
 });
 
 test('Cards dropped on the surface are spread out even if the holder stacks them', async t => {

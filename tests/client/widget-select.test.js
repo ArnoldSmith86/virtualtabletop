@@ -175,15 +175,61 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
     // the followers are not dragged themselves, so moveMultiSelectionAlong has to apply
     // the drop checks that getValidDropTargets applies to the widget under the mouse
     async function dropInto(holder) {
-      target = holder;
       cards[0].multiSelectSource = hand;
       cards[0].multiSelectDrag = cards.slice(1);
+      await finishDrop(holder);
+    }
+
+    async function finishDrop(holder) {
+      target = holder;
       if(holder)
         await cards[0].moveToHolder(holder);
       else
         await cards[0].set('parent', null);
       await cards[0].moveMultiSelectionAlong();
     }
+
+    // what a drag does once it has carried the widget out of the holder: move() takes
+    // the rest of the selection out as well and keeps it next to the dragged widget
+    async function dragOutOfHolder() {
+      cards[0].multiSelectSource = hand;
+      cards[0].multiSelectDrag = cards.slice(1);
+      cards[0].multiSelectPicked = [];
+      cards[0].currentParent = hand;
+      await cards[0].checkParent(true);
+      await cards[0].setPosition(500, 300, 5);
+      await cards[0].dragMultiSelectionAlong();
+    }
+
+    describe('When the drag carries it out of the holder', () => {
+      test('Then the rest of the selection is carried along with it', async () => {
+        await dragOutOfHolder();
+        expect(cards.map(c=>c.get('parent'))).toEqual([ null, null, null ]);
+        expect(cards.map(c=>c.get('x'))).toEqual([ 500, 500+cards[0].get('width'), 500+2*cards[0].get('width') ]);
+        expect(cards.slice(1).map(c=>c.get('dragging'))).toEqual([ playerName, playerName ]);
+        expect(selectedIDs(cards)).toEqual([]);
+      });
+    });
+
+    describe('When the holder it is dropped into refuses one of the carried ones', () => {
+      test('Then that one goes back into the holder it was picked from, still selected', async () => {
+        await dragOutOfHolder();
+        await finishDrop(createHolder({ id: `${testName}-target`, dropTarget: { cardType: 'plain' } }));
+        expect(cards.map(c=>c.get('parent'))).toEqual([ target.get('id'), target.get('id'), hand.get('id') ]);
+        expect(selectedIDs(cards)).toEqual([ cards[2].get('id') ]);
+        expect(cards[1].get('dragging')).toBe(null);
+      });
+    });
+
+    describe('When the drag ends back in the holder it started in', () => {
+      test('Then the whole selection is put back and stays selected', async () => {
+        await dragOutOfHolder();
+        await finishDrop(hand);
+        expect(cards.map(c=>c.get('parent'))).toEqual([ hand.get('id'), hand.get('id'), hand.get('id') ]);
+        expect(selectedIDs(cards)).toEqual(cards.map(c=>c.get('id')));
+        target = null;
+      });
+    });
 
     describe('When the target rejects one of them', () => {
       test('Then that one stays in the holder', async () => {
