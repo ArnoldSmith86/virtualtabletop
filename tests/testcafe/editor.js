@@ -1218,7 +1218,8 @@ test('Deck editor: a css property is edited as declaration rows in every scope',
       cardDefaults: { width: 103, height: 160, css: 'color: red; font-weight: bold' },
       cardTypes: { a: { css: { background: '#ffcc00' } } },
       faceTemplates: [ { css: { border: '2px solid green' }, objects: [
-        { type: 'text', x: 5, y: 5, width: 90, height: 30, fontSize: 16, value: 'hi', css: 'font-style: italic' }
+        { type: 'text', x: 5, y: 5, width: 90, height: 30, fontSize: 16, value: 'hi', css: 'font-style: italic' },
+        { type: 'text', x: 5, y: 45, width: 90, height: 30, fontSize: 16, value: 'ho', css: 'font-style: italic' }
       ] } ]
     },
     c1: { id: 'c1', type: 'card', deck: 'd1', cardType: 'a', x: 300, y: 100 }
@@ -1235,6 +1236,8 @@ test('Deck editor: a css property is edited as declaration rows in every scope',
   const names = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationName');
   const values = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationValue');
   const addClassRow = Selector('#deckEditorSidebar .deckEditorCssProperty input').withAttribute('placeholder', /new class/);
+  const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
+  const objectsWithCss = ClientFunction(text => widgets.get('d1').get('faceTemplates')[0].objects.filter(object=>String(object.css).indexOf(text) != -1).length);
 
   await t
     .click('#editButton')
@@ -1275,9 +1278,20 @@ test('Deck editor: a css property is edited as declaration rows in every scope',
     .click(Selector('#deckEditorSidebar .cssDeclarationToggle').nth(0))
     .expect(deckProperty('cardTypes')).eql('{"a":{"css":{"background":"#ffcc00"}}}');
 
+  // several face objects that agree on their css get one set of declaration rows, editing all of them at once
+  await t
+    .click(objectRow.nth(0))
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } })
+    .click(tab('object'))
+    .click(openList)
+    .expect(rows.count).eql(1)
+    .expect(names.nth(0).value).eql('font-style')
+    .typeText(values.nth(0), 'oblique', { replace: true })
+    .expect(objectsWithCss('oblique')).eql(2);
+
   // typing into the row itself is the same edit as filling in the rows
   await t
-    .click(Selector('#deckEditorTree .deckEditorObjectRow'))
+    .click(objectRow.nth(0))
     .click(tab('object'))
     .typeText(cssText, 'font-weight: bold', { replace: true })
     // a css written as a string stays a string, like the rows keep it
@@ -1287,7 +1301,15 @@ test('Deck editor: a css property is edited as declaration rows in every scope',
     .expect(names.nth(0).value).eql('font-weight')
     .click(Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationRow button[icon=delete]'))
     // the last declaration removed is no css property at all, rather than an empty one
-    .expect(deckProperty('faceTemplates')).notContains('font-weight');
+    .expect(objectsWithCss('font-weight')).eql(0);
+
+  // ...but declarations can only be edited from a shared starting point, so once the selected objects
+  // disagree the css falls back to the plain "(mixed)" row every other property has
+  await t
+    .click(objectRow.nth(1), { modifiers: { ctrl: true } })
+    .expect(Selector('#deckEditorTree .deckEditorObjectRow.selected').count).eql(2)
+    .expect(cssProperty.exists).notOk()
+    .expect(Selector('#deckEditorSidebar .deckEditorObjectProperties input').withAttribute('placeholder', '(mixed)').exists).ok();
 });
 
 // The "Add a new deck" wizard's text-cards section: every typed line becomes a card type with a "text"
