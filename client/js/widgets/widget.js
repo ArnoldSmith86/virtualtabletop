@@ -2252,12 +2252,16 @@ export class Widget extends StateManaged {
           if (unskipped.length === 0) {
             problems.push(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
           } else {
+            // modulo that always returns a non-negative index so negative turn values wrap
+            const wrap = (i, length) => ((i % length) + length) % length;
+
             // identify the correct target seat
             if (a.turnCycle == 'position') {
               if (a.turn == 'last') {
                 target = unskipped[unskipped.length - 1];
               } else if (Number.isFinite(a.turn)) {
-                target = unskipped[(a.turn - 1) % unskipped.length];
+                // negative positions count from the end: -1 is the last active seat
+                target = unskipped[a.turn < 0 ? wrap(a.turn, unskipped.length) : wrap(a.turn - 1, unskipped.length)];
               }
             } else if (a.turnCycle == 'seat') {
               // Selecting a specific seat so in this case skipTurn will be ignored
@@ -2269,7 +2273,7 @@ export class Widget extends StateManaged {
             } else {
               const turn = Number.isFinite(a.turn) ? a.turn : 1;
               const offset = (c[0] == unskipped[0] ? 0 : 1);
-              target = unskipped[(turn - offset) % unskipped.length];
+              target = unskipped[wrap(turn - offset, unskipped.length)];
             }
 
             // execute the change in turn properties and collect turn seats into output collection
