@@ -1393,35 +1393,49 @@ body.deckEditorPanning #deckEditorMain * {
   outline-offset: 1px;
 }
 
-/* A css/…CSS property is edited by the very same declaration rows the Edit Widgets tab uses (CssEditor,
-   styled in propertyInputs.css under ".editorModule"), so the block carries that class - and with it the
-   module's own display:none and theme colors, which are restored here like on .deckEditorPickerRow above. */
-.deckEditorCssEditor.editorModule {
-  display: block;
-  background: transparent;
-  color: inherit;
-  margin: 4px 0 10px;
+/* A css/…CSS property is a text row like every other property, with the very declaration rows the Edit
+   Widgets tab uses (CssEditor, styled in propertyInputs.css under ".editorModule") opening below it - the
+   same shape as the image and color pickers above. The button sits where those sit, left of the trash. */
+#deckEditorSidebar .deckEditorProperties .deckEditorCssRow.hasDelete {
+  padding-right: 48px;
 }
 
-/* The property name doubles as the block's row: it carries the trash, which sits at the right end like the
-   one of every other property row (those position it absolutely inside their row; here the name is a flex
-   line of its own, so it just goes last). */
-#deckEditorSidebar .deckEditorCssEditor .propertyPickerSectionTitle {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+#deckEditorSidebar .deckEditorCssPickerButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+#deckEditorSidebar .deckEditorCssRow.hasDelete .deckEditorCssPickerButton {
+  right: 24px;
+}
+
+.deckEditorCssPickerButton[icon]::before {
   font-size: 13px;
-  opacity: 1;
+  width: 13px;
+  margin: 0;
 }
 
-#deckEditorSidebar .deckEditorDeleteCssProperty {
-  position: static;
-  transform: none;
-  margin-left: auto;
+#deckEditorSidebar .deckEditorCssPickerButton.open {
+  background: var(--VTTblueDark);
 }
 
-/* the sections are already indented by the block itself, so drop the module's right margin */
-#deckEditorSidebar .deckEditorCssEditor .collapsibleSection {
+/* the row's own value field: css, so monospace like the declaration rows it opens */
+#deckEditorSidebar .deckEditorCssRow input.cssRowText {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* the sections are already indented by the picker itself, so drop the module's right margin */
+#deckEditorSidebar .deckEditorPickerRow .collapsibleSection {
   margin-right: 0;
 }
 

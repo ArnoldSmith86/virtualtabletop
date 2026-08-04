@@ -3009,24 +3009,27 @@ class DeckEditor {
     row.dom.append(button);
   }
 
-  // A property holding css: "css" itself, or one of the "<element>CSS" ones (handleCSS, faceCSS, …). Instead
-  // of a text field (or, for the nested form, a JSON textarea) those get the declaration rows of the Edit
-  // Widgets tab, so the same editor edits the css of a widget and the css of a card, a face or a face object.
+  // A property holding css: "css" itself, or one of the "<element>CSS" ones (handleCSS, faceCSS, …). Those get
+  // a text row like every other property plus, behind a button, the declaration rows of the Edit Widgets tab -
+  // so the same editor edits the css of a widget and the css of a card, a face or a face object.
   isCssProperty(property) {
     return property == 'css' || /^[a-zA-Z]+CSS$/.test(String(property));
   }
 
-  // The devtools-style CSS editor (CssEditor in cssEditor.js, shared with the Edit Widgets tab) for one css
-  // property of a sidebar scope, with the property's trash next to its name.
+  // One css property as a row of this sidebar: its name, its declarations as text and the trash every property
+  // row has, with the devtools-style editor (CssEditor in cssEditor.js, shared with the Edit Widgets tab)
+  // opening below it - the same shape as the image and color pickers of the other rows.
   // The rows read the value back while they are being edited, so the editor keeps its own copy of it: every
   // other write of this sidebar is queued (so a typing burst commits as one undo step) and would reach the
   // model only after the rows have already been rebuilt from it.
   // options: getValue/setValue (setValue(null) means "no css left"), onDelete, allowClasses, defaultLabel,
   // defaultInfo, selectorSuggestions and the stateKey the editing state is remembered under.
   addCssEditor(target, property, options) {
-    const host = div(target, 'deckEditorCssEditor editorModule');
+    const host = div(target, 'deckEditorCssProperty');
+    // created first so the list opens below the row instead of next to it, then moved behind it
+    const pickerHost = div(host, 'deckEditorPickerRow editorModule');
     let value = options.getValue();
-    new CssEditor({
+    const editor = new CssEditor({
       property,
       stateKey: options.stateKey,
       state: this.cssEditorState,
@@ -3036,18 +3039,26 @@ class DeckEditor {
         options.setValue(newValue);
       },
       allowClasses: options.allowClasses !== false,
-      showTitle: true,
       defaultLabel: options.defaultLabel,
       defaultInfo: options.defaultInfo,
       selectorSuggestions: options.selectorSuggestions || []
-    }).render(host);
+    });
+    const { row } = editor.renderRow(host, {
+      rowClass: `genericInput deckEditorTypedInput deckEditorCssRow${options.onDelete ? ' hasDelete' : ''}`,
+      labelStyle: 'display:inline-block;width:100px',
+      buttonClass: 'deckEditorCssPickerButton',
+      buttonIcon: 'format_list_bulleted',
+      hint: options.defaultInfo ? html(options.defaultInfo) : null,
+      pickerTarget: pickerHost
+    });
+    host.insertBefore(row, pickerHost);
     if(options.onDelete) {
       const button = document.createElement('button');
       button.setAttribute('icon', 'delete_forever');
-      button.className = 'deckEditorDeleteProperty deckEditorDeleteCssProperty';
+      button.className = 'deckEditorDeleteProperty';
       button.title = `Delete property "${property}"`;
       button.onclick = options.onDelete;
-      $('.propertyPickerSectionTitle', host).append(button);
+      row.append(button);
     }
     return host;
   }

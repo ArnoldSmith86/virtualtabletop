@@ -365,15 +365,23 @@ test('A pile is edited through its handle, css through declaration rows', async 
   const cssArrow = Selector('#editorModules .collapsibleHeader').withText('CSS').find('.collapseArrow');
   await t.expect(cssArrow.hasClass('collapsed')).ok();
 
-  // the handle colors are written into handleCSS, not into css
+  // a css property is a row like any other: the declarations as text, with a
+  // button opening them as editable rows. The handle colors are written into
+  // handleCSS, not into css, so the pile has a row for each of the two.
+  const cssRow = Selector('#editorModules .cssInput').nth(0);
   await t
     .click(Selector('#editorModules .collapsibleHeader').withText('CSS'))
     .expect(cssArrow.hasClass('collapsed')).notOk()
+    .expect(Selector('#editorModules .cssInput > label').nth(0).innerText).contains('css')
+    .expect(Selector('#editorModules .cssInput > label').nth(1).innerText).contains('handleCSS')
+    .click(cssRow.find('.propertyExpandButton'))
     .click(Selector('#editorModules .cssDeclarationAddRow input'))
     .typeText(Selector('#editorModules .cssDeclarationAddRow input'), 'opacity')
     .pressKey('enter')
     .typeText(Selector('#editorModules .cssDeclarationValue').nth(0), '0.5')
-    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}');
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}')
+    // and the row above the list says the same thing as text
+    .expect(cssRow.find('input.cssRowText').value).eql('opacity: 0.5;');
 
   // switching a declaration off takes it out of the widget, switching it back
   // on restores it
@@ -1187,17 +1195,24 @@ test('Deck editor: a css property is edited as declaration rows in every scope',
 
   const deckProperty = ClientFunction(property => JSON.stringify(widgets.get('d1').get(property)));
   const tab = id => Selector(`#deckEditorTab_${id}`);
-  const rows = Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationRow');
-  const names = Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationName');
-  const values = Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationValue');
-  const addClassRow = Selector('#deckEditorSidebar .deckEditorCssEditor input').withAttribute('placeholder', /new class/);
+  const cssProperty = Selector('#deckEditorSidebar .deckEditorCssProperty');
+  const cssText = cssProperty.find('input.cssRowText');
+  const openList = Selector('#deckEditorSidebar .deckEditorCssPickerButton');
+  const rows = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationRow');
+  const names = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationName');
+  const values = Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationValue');
+  const addClassRow = Selector('#deckEditorSidebar .deckEditorCssProperty input').withAttribute('placeholder', /new class/);
 
   await t
     .click('#editButton')
     .click('#editorToolbar [icon=style]')
     .click(tab('defaults'))
-    // the card defaults become properties of every card, so their css is a widget css: it has the
-    // class/selector sections the Edit Widgets tab offers, and the string form stays a string
+    // a css property is a text row like every other property of the sidebar...
+    .expect(cssText.value).eql('color: red; font-weight: bold')
+    // ...with the declaration rows of the Edit Widgets tab behind its button. The card defaults become
+    // properties of every card, so their css is a widget css: it has the class/selector sections that tab
+    // offers, and the string form stays a string
+    .click(openList)
     .expect(rows.count).eql(2)
     .expect(names.nth(0).value).eql('color')
     .expect(addClassRow.exists).ok()
@@ -1208,29 +1223,38 @@ test('Deck editor: a css property is edited as declaration rows in every scope',
   // attribute - so no class/selector sections there
   await t
     .click(tab('face'))
+    .click(openList)
     .expect(rows.count).eql(1)
     .expect(names.nth(0).value).eql('border')
     .expect(addClassRow.exists).notOk()
     .typeText(values.nth(0), '3px solid blue', { replace: true })
-    .expect(deckProperty('faceTemplates')).contains('"css":{"border":"3px solid blue"}');
+    .expect(deckProperty('faceTemplates')).contains('"css":{"border":"3px solid blue"}')
+    // the row follows what the list writes
+    .expect(cssText.value).eql('border: 3px solid blue;');
 
   // a declaration switched off leaves the deck without losing its place in the list
   await t
     .click(tab('cardType'))
+    .click(openList)
     .expect(rows.count).eql(1)
     .click(Selector('#deckEditorSidebar .cssDeclarationToggle').nth(0))
     .expect(deckProperty('cardTypes')).eql('{"a":{}}')
     .click(Selector('#deckEditorSidebar .cssDeclarationToggle').nth(0))
     .expect(deckProperty('cardTypes')).eql('{"a":{"css":{"background":"#ffcc00"}}}');
 
+  // typing into the row itself is the same edit as filling in the rows
   await t
     .click(Selector('#deckEditorTree .deckEditorObjectRow'))
     .click(tab('object'))
+    .typeText(cssText, 'font-weight: bold', { replace: true })
+    // a css written as a string stays a string, like the rows keep it
+    .expect(deckProperty('faceTemplates')).contains('"css":"font-weight: bold')
+    .click(openList)
     .expect(rows.count).eql(1)
-    .expect(names.nth(0).value).eql('font-style')
-    .click(Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationRow button[icon=delete]'))
+    .expect(names.nth(0).value).eql('font-weight')
+    .click(Selector('#deckEditorSidebar .deckEditorCssProperty .cssDeclarationRow button[icon=delete]'))
     // the last declaration removed is no css property at all, rather than an empty one
-    .expect(deckProperty('faceTemplates')).notContains('font-style');
+    .expect(deckProperty('faceTemplates')).notContains('font-weight');
 });
 
 test('Line widget in edit mode', async t => {

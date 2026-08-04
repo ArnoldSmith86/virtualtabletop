@@ -1,6 +1,8 @@
-// The Chrome-devtools-like editor for a css-like value: one collapsible section
-// per class/selector, each of them a list of "property: value" rows (or a
-// textarea for the values the rows cannot represent).
+// A css-like property (css, faceCSS, handleCSS, …) is a property row like any
+// other: its name, the declarations as text, and a button that opens the
+// Chrome-devtools-like editor below the row - the way a color property opens
+// its picker. That editor is a list of "property: value" rows, one section per
+// class/selector once the value has any.
 //
 // It knows nothing about widgets: the value it edits is read and written
 // through the accessors it is given, so the widget properties panel (css,
@@ -37,10 +39,18 @@ class CssEditorState {
   }
 }
 
+// What a single-line field can show of a css value: its declarations, or - for
+// the nested form, which no one line can hold - the sections it consists of.
+function cssRowText(value) {
+  if(hasNestedCSSClasses(value))
+    return { text: Object.keys(value).join(', '), readOnly: true, title: 'This css has class/selector sections, which are edited in the list below.' };
+  return { text: cssTextFromValue(value).replace(/\s*\n\s*/g, ' '), readOnly: false, title: '' };
+}
+
 class CssEditor {
   // options:
-  //   property             the property name, shown as the title and used to
-  //                        label the "default" section
+  //   property             the property name, shown as the row's label and
+  //                        used to label the "default" section
   //   stateKey             unique prefix for the per-section editing state
   //   state                a CssEditorState (shared by all editors of one panel)
   //   getValue / setValue  the value being edited, in its own (unresolved) form
@@ -48,12 +58,10 @@ class CssEditor {
   //   allowClasses         whether class/selector sections can be added (the
   //                        engine only reads the nested form in some places)
   //   interpolates         whether ${PROPERTY ...} is valid in a value here
-  //   showTitle            the property name above the sections
-  //   titleInfo            html for the info button next to that title
   //   defaultLabel         header of the section for the value itself
   //   defaultInfo          html for the info button of that header
   //   classSuggestions / selectorSuggestions / propertySuggestions
-  //   listen(rebuild)      register an outside listener that rebuilds the editor
+  //   listen(refresh)      register an outside listener that refreshes the row
   constructor(options) {
     this.options = options;
     this.property = options.property;
@@ -70,20 +78,97 @@ class CssEditor {
     this.options.setValue(value);
     if(typeof this.options.onChanged == 'function')
       this.options.onChanged();
+    this.updateTextField();
+  }
+
+  // The property row: the name, the declarations as text and the button that
+  // opens the declaration list below it. The list is only built when it is
+  // first opened, so a widget with a css nobody looks at costs one input.
+  // options: rowClass, labelStyle, buttonClass, buttonIcon, buttonTitle, hint,
+  //          pickerTarget (where the list opens; the row itself by default)
+  renderRow(target, rowOptions = {}) {
+    const row = div(target, rowOptions.rowClass || 'propertyInput cssInput');
+
+    const label = document.createElement('label');
+    label.textContent = this.property;
+    if(rowOptions.labelStyle)
+      label.style.cssText = rowOptions.labelStyle;
+    if(rowOptions.hint)
+      propertyInfoButton(label, rowOptions.hint);
+    row.appendChild(label);
+
+    const input = document.createElement('input');
+    input.className = 'cssRowText';
+    input.placeholder = 'property: value;';
+    input.setAttribute('aria-label', this.property);
+    input.oninput = _=>{
+      if(input.readOnly)
+        return;
+      const text = input.value;
+      // written like the declaration rows write it, so the value keeps the
+      // shape it has (an object stays an object); text the declaration parser
+      // would destroy - a data URI and the like - is kept verbatim instead
+      if(text.trim() === '')
+        this.writeValue(null);
+      else if(cssStringRoundTrips(text))
+        this.writeValue(cssValueFromDeclarations(cssDeclarationList(text), this.value()));
+      else
+        this.writeValue(text);
+      if(this.rebuildSections)
+        this.rebuildSections();
+    };
+    row.appendChild(input);
+    this.textField = input;
+    this.updateTextField();
+
+    const button = document.createElement('button');
+    button.setAttribute('icon', rowOptions.buttonIcon || 'expand_more');
+    button.className = rowOptions.buttonClass || 'propertyExpandButton';
+    button.title = rowOptions.buttonTitle || `Edit ${this.property} as a list of declarations`;
+    row.appendChild(button);
+
+    const picker = div(rowOptions.pickerTarget || row, 'propertyPicker cssRowPicker');
+    picker.style.display = 'none';
+    button.onclick = _=>{
+      const open = picker.style.display == 'none';
+      if(open && !this.rebuildSections)
+        this.render(picker);
+      picker.style.display = open ? '' : 'none';
+      button.classList.toggle('open', open);
+    };
+
+    if(typeof this.options.listen == 'function')
+      this.options.listen(_=>this.refresh());
+    return { row, input, button, picker };
+  }
+
+  // the text field shows what the value is, so it only follows it while it is
+  // not the field the user is typing in
+  updateTextField() {
+    if(!this.textField || document.activeElement === this.textField)
+      return;
+    const shown = cssRowText(this.value());
+    this.textField.value = shown.text;
+    this.textField.readOnly = shown.readOnly;
+    this.textField.title = shown.title;
+    this.textField.classList.toggle('cssRowSections', shown.readOnly);
+  }
+
+  // a change from elsewhere (another player, an undo, a color input): update
+  // the row, and the declaration list unless it is the thing being edited
+  refresh() {
+    this.updateTextField();
+    if(this.rebuildSections && !(this.sectionsDOM && this.sectionsDOM.contains(document.activeElement)))
+      this.rebuildSections();
   }
 
   render(target) {
     const classSuggestions = this.options.classSuggestions || [];
     const wrap = div(target, 'cssEditor');
-    if(this.options.showTitle) {
-      const title = div(wrap, 'propertyPickerSectionTitle');
-      title.textContent = this.property;
-      if(this.options.titleInfo)
-        propertyInfoButton(title, this.options.titleInfo);
-    }
     const container = div(wrap);
+    this.sectionsDOM = container;
 
-    const renderClassSection = (className, classValue, wholeProperty) => {
+    const renderClassSection = (className, classValue) => {
       const section = div(container, 'cssClassSection');
       const stateKey = `${this.key}:${className}`;
       // the "default" class is the widget itself (or, for the css properties
@@ -94,39 +179,37 @@ class CssEditor {
         // URIs and the like) stays a textarea, and so does a section the user
         // switched to text mode
         if(this.state.textModes.has(stateKey) || (typeof classValue === 'string' && classValue.trim() && !cssStringRoundTrips(classValue)))
-          this.renderTextarea(className, wholeProperty, classValue, body, rebuild);
+          this.renderTextarea(className, classValue, body, rebuild);
         else
-          this.renderDeclarationList(className, wholeProperty, body, rebuild);
+          this.renderDeclarationList(className, false, body, rebuild);
       }, this.state.collapsed, stateKey);
 
       if(className == 'default' && this.options.defaultInfo)
         propertyInfoButton($('.collapsibleHeader', section), this.options.defaultInfo);
 
-      if(!wholeProperty) {
-        const header = $('.collapsibleHeader', section);
-        const deleteButton = document.createElement('button');
-        deleteButton.setAttribute('icon', 'delete');
-        deleteButton.title = `Remove ${className}`;
-        deleteButton.style.marginLeft = 'auto';
-        deleteButton.style.minWidth = '26px';
-        deleteButton.style.padding = '0';
-        deleteButton.onclick = e => {
-          e.stopPropagation();
-          const css = this.value();
-          const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-          delete newCss[className];
-          const keys = Object.keys(newCss);
-          // unwrap the nested form when only the default class remains
-          const newValue = keys.length == 0 ? null : (keys.length == 1 && keys[0] == 'default' ? newCss.default : newCss);
-          // the switched off and half typed declarations of this section go
-          // with it - adding the same selector again would otherwise start out
-          // with their ghosts
-          this.state.forget(stateKey);
-          this.writeValue(typeof newValue === 'string' && newValue.trim() === '' ? null : newValue);
-          rebuild();
-        };
-        header.appendChild(deleteButton);
-      }
+      const header = $('.collapsibleHeader', section);
+      const deleteButton = document.createElement('button');
+      deleteButton.setAttribute('icon', 'delete');
+      deleteButton.title = `Remove ${className}`;
+      deleteButton.style.marginLeft = 'auto';
+      deleteButton.style.minWidth = '26px';
+      deleteButton.style.padding = '0';
+      deleteButton.onclick = e => {
+        e.stopPropagation();
+        const css = this.value();
+        const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
+        delete newCss[className];
+        const keys = Object.keys(newCss);
+        // unwrap the nested form when only the default class remains
+        const newValue = keys.length == 0 ? null : (keys.length == 1 && keys[0] == 'default' ? newCss.default : newCss);
+        // the switched off and half typed declarations of this section go
+        // with it - adding the same selector again would otherwise start out
+        // with their ghosts
+        this.state.forget(stateKey);
+        this.writeValue(typeof newValue === 'string' && newValue.trim() === '' ? null : newValue);
+        rebuild();
+      };
+      header.appendChild(deleteButton);
     };
 
     const addClass = className => {
@@ -138,7 +221,9 @@ class CssEditor {
           return false;
         newCss = Object.assign({}, value, { [className]: {} });
       } else {
-        newCss = { [className]: {} };
+        // the declarations that were there stay the first section, so adding a
+        // selector does not push the widget's own styling below it
+        newCss = {};
         if(isSet && className != 'default') {
           // convert the previous value into the default class of the nested form
           if(isObjectLike(value))
@@ -146,6 +231,7 @@ class CssEditor {
           else
             newCss.default = cssStringRoundTrips(String(value)) ? cssStringToObject(String(value)) : value;
         }
+        newCss[className] = {};
       }
       this.writeValue(newCss);
       rebuild();
@@ -156,9 +242,15 @@ class CssEditor {
       const value = this.value();
       if(hasNestedCSSClasses(value)) {
         for(const [ className, classValue ] of Object.entries(value))
-          renderClassSection(className, classValue, false);
+          renderClassSection(className, classValue);
+      } else if(typeof value === 'string' && value.trim() && !cssStringRoundTrips(value)) {
+        // a value the declaration parser would destroy (a data URI and the
+        // like) has no rows - it stays what the text field above says
+        div(container, 'cssDeclarationNote', 'This contains a value that cannot be split into rows, so it is only edited as text.');
       } else {
-        renderClassSection('default', value, true);
+        // one plain list, without a section header: the row above already
+        // says which property these declarations are
+        this.renderDeclarationList('default', true, container, rebuild);
       }
 
       if(this.options.allowClasses === false)
@@ -170,7 +262,7 @@ class CssEditor {
       const dropdownSuggestions = [ ...new Set([ ...commonCssSelectors, ...(this.options.selectorSuggestions || []), ...classSuggestions ]) ]
         .filter(selector => !isPresent(selector));
 
-      suggestionAddRow(container, 'cssAddClassRow', {
+      suggestionAddRow(container, 'cssAddClassRow cssAddSelectorRow', {
         placeholder: 'new class/selector, e.g. ":hover"',
         title: 'Add a class/selector section',
         suggestions: dropdownSuggestions,
@@ -178,41 +270,35 @@ class CssEditor {
       });
     };
 
+    this.rebuildSections = rebuild;
     rebuild();
-    if(typeof this.options.listen == 'function')
-      this.options.listen(() => {
-        if(!container.contains(document.activeElement))
-          rebuild();
-      });
     return wrap;
   }
 
   // The declarations of one class/selector as plain text: the fallback for
   // values the rows cannot represent, and a way to rewrite or paste a whole
-  // block at once.
-  renderTextarea(className, wholeProperty, classValue, target, rebuild) {
+  // block at once. (The value without class/selector sections is edited as
+  // text in the property row itself, so this is only for a section of the
+  // nested form.)
+  renderTextarea(className, classValue, target, rebuild) {
     const stateKey = `${this.key}:${className}`;
     const textarea = document.createElement('textarea');
     textarea.value = cssTextFromValue(classValue);
     textarea.placeholder = 'property: value;';
     textarea.oninput = () => {
       const text = textarea.value;
-      if(wholeProperty) {
-        this.writeValue(text.trim() === '' ? null : text);
-      } else {
-        // class values have to be objects so the engine (and this editor)
-        // recognizes the nested form; refuse text the declaration parser
-        // would destroy (e.g. data URIs)
-        if(text.trim() && !cssStringRoundTrips(text)) {
-          textarea.classList.add('inputError');
-          return;
-        }
-        textarea.classList.remove('inputError');
-        const css = this.value();
-        const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-        newCss[className] = cssStringToObject(text);
-        this.writeValue(newCss);
+      // class values have to be objects so the engine (and this editor)
+      // recognizes the nested form; refuse text the declaration parser
+      // would destroy (e.g. data URIs)
+      if(text.trim() && !cssStringRoundTrips(text)) {
+        textarea.classList.add('inputError');
+        return;
       }
+      textarea.classList.remove('inputError');
+      const css = this.value();
+      const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
+      newCss[className] = cssStringToObject(text);
+      this.writeValue(newCss);
     };
     target.appendChild(textarea);
 
@@ -504,6 +590,10 @@ class CssEditor {
     });
     addRow.classList.add('cssAddClassRow');
 
+    // the value itself is already editable as text in the property row, so
+    // only a class/selector section offers the text field
+    if(wholeProperty)
+      return;
     const footer = div(target, 'cssDeclarationFooter');
     const text = document.createElement('button');
     text.setAttribute('icon', 'edit_note');
