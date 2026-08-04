@@ -401,8 +401,8 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  multiSelectMax: 'Let players pick widgets in this holder by clicking them, up to this many each. The picked ones get the clicking player\'s name in their selectedBy property, which automations can read.',
-  multiSelectStyle: 'How a widget the player picked is shown. The built-in styles win over a filter or shadow the widget sets itself; "custom CSS" only sets the multiSelected class so the holder css can style it.',
+  multiSelectMax: 'Let players pick widgets in this holder by clicking them, up to this many each - or "any number" for no limit. The picked ones get the clicking player\'s name in their selectedBy property, which automations can read. Works best when the holder spreads its widgets out (see Stack offset X/Y): stacked on one spot only the top one can be clicked.',
+  multiSelectStyle: 'How a widget the player picked is shown. The built-in styles win over a filter or shadow the widget sets itself, so a widget cannot hide that it was picked (which also means it loses its own shadow while picked); "own CSS" only sets the multiSelected class so the holder css can style it.',
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
@@ -5972,6 +5972,7 @@ class PropertiesModule extends SidebarModule {
         { value: 'all', text: 'any number' },
         { value: 'custom', text: 'up to...' }
       ],
+      customText: value => +value > 0 ? `up to ${Math.floor(+value)}` : `custom: ${JSON.stringify(value)}`,
       setValue: value => {
         if(value === 'custom') {
           const entered = parseInt(prompt('How many widgets may one player select in this holder?', widget.get('multiSelectMax')));
@@ -5989,15 +5990,19 @@ class PropertiesModule extends SidebarModule {
     const styleInput = new SelectInput(this, widget, 'Selection shown as', {
       property: 'multiSelectStyle',
       hint: editorPropertyHints.multiSelectStyle,
+      // the raw values are in the labels because the JSON editor and the wiki know the
+      // property by those, not by the words this dropdown uses
       choices: [
-        { value: 'elevate',   text: 'raised' },
-        { value: 'highlight', text: 'outlined' },
-        { value: 'shade',     text: 'darkened' },
-        { value: 'none',      text: 'custom CSS' }
+        { value: 'elevate',   text: 'raised (elevate)' },
+        { value: 'highlight', text: 'outlined (highlight)' },
+        { value: 'shade',     text: 'others dimmed (shade)' },
+        { value: 'none',      text: 'own CSS (none)' }
       ]
     });
     styleInput.render(row);
-    this.addPropertyListener(widget, 'multiSelectMax', w => styleInput.dom.style.display = w.get('multiSelectMax') ? '' : 'none');
+    // multiSelectLimit(), not the raw value: a routine-computed "0" is a string and
+    // turns click-to-select off, so the style row has to disappear along with it
+    this.addPropertyListener(widget, 'multiSelectMax', w => styleInput.dom.style.display = w.multiSelectLimit() ? '' : 'none');
   }
 
   // Text / background / border color plus a brightness filter written into a

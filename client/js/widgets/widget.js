@@ -605,11 +605,24 @@ export class Widget extends StateManaged {
       for(const w of others)
         await w.setMultiSelected(false);
     } else if(others.length >= limit) {
+      holder.flashMultiSelectFull();
       return true;
     }
 
     await this.setMultiSelected(true);
     return true;
+  }
+
+  // A click that runs into the limit changes nothing, which looks like a game that
+  // stopped reacting. Flash the holder instead, so that the player sees the click
+  // arrive and can tell that the selection being full is the reason.
+  flashMultiSelectFull() {
+    if(!this.domElement)
+      return;
+    this.domElement.classList.remove('multiSelectFull');
+    this.domElement.offsetWidth; // restart the animation while the player keeps clicking
+    this.domElement.classList.add('multiSelectFull');
+    setTimeout(_=>this.domElement.classList.remove('multiSelectFull'), 400);
   }
 
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
@@ -2842,10 +2855,28 @@ export class Widget extends StateManaged {
   // How far apart the widgets that follow a drag are laid out. Most holders stack their
   // children on one spot (stackOffset defaults to 0), so fall back to the width of the
   // dragged widget - otherwise the whole selection would travel and land on one point.
-  multiSelectSpread(source) {
-    const x = +source.get('stackOffsetX') || 0;
-    const y = +source.get('stackOffsetY') || 0;
-    return x || y ? { x, y } : { x: +this.get('width') || 100, y: 0 };
+  multiSelectSpread(source, count) {
+    let x = +source.get('stackOffsetX') || 0;
+    let y = +source.get('stackOffsetY') || 0;
+    if(!x && !y)
+      x = +this.get('width') || 100;
+    return {
+      x: this.fitMultiSelectSpread(x, count, this.absoluteCoord('x'), +this.get('width') || 0, 1600),
+      y: this.fitMultiSelectSpread(y, count, this.absoluteCoord('y'), +this.get('height') || 0, 1000)
+    };
+  }
+
+  // One axis of that fan, kept on the surface: a selection dragged towards the right
+  // edge fans out to the left instead of off-screen, and one that fits on neither side
+  // moves closer together, so that the drag keeps showing what is about to be dropped.
+  fitMultiSelectSpread(offset, count, start, extent, size) {
+    if(!offset || count < 1)
+      return offset;
+    const before = Math.max(0, start);
+    const after = Math.max(0, size - extent - start);
+    if(Math.abs(offset)*count <= (offset > 0 ? after : before))
+      return offset;
+    return (after >= before ? 1 : -1) * Math.min(Math.abs(offset), Math.max(before, after)/count);
   }
 
   // As soon as the drag has taken this widget out of the holder, the rest of the local
@@ -2871,7 +2902,7 @@ export class Widget extends StateManaged {
 
     // absoluteCoord, because a widget that just became the stop of a line is no longer
     // in the same coordinate system as the followers, which stay on the surface
-    const spread = this.multiSelectSpread(source);
+    const spread = this.multiSelectSpread(source, this.multiSelectPicked.length);
     const x = this.absoluteCoord('x');
     const y = this.absoluteCoord('y');
     let i = 1;

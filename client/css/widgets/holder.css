@@ -97,15 +97,44 @@
  * important: a card that dims itself with a filter must not be able to hide the fact
  * that the player selected it. Use the "none" style to take that decision yourself.
  */
+/* the raise is relative so that it stays a nudge on a card and on a small token alike,
+   and the ring keeps the pick readable when the whole holder is selected and every
+   widget in it is raised by the same amount */
 .multiSelect-elevate .widget.multiSelected {
-  translate: 0 -14px !important;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.45) !important;
+  translate: 0 -10% !important;
+  box-shadow: 0 0 0 2px var(--VTTblue), 0 4px 6px rgba(0, 0, 0, 0.45) !important;
 }
 
+/* VTTblue is the colour the app already uses for "the player chose this" (the INPUT
+   dialog): a gold ring would read as edit mode's yellow selection ring instead */
 .multiSelect-highlight .widget.multiSelected {
-  box-shadow: 0 0 0 3px #f5c518, 0 0 8px 4px rgba(245, 197, 24, 0.7) !important;
+  box-shadow: 0 0 0 3px var(--VTTblue), 0 0 8px 4px rgba(31, 92, 166, 0.6) !important;
 }
 
-.multiSelect-shade .widget.multiSelected {
+/* the picks stand out because everything else steps back - a darkened widget means
+   "unavailable" everywhere else in the app, so dimming the picked ones would read
+   backwards. A widget holding a pick (a pile) is left alone, dimming it would dim
+   the pick inside it. Nothing is dimmed while the player has not picked anything. */
+.multiSelect-shade:has(.multiSelected) .widget:not(.multiSelected):not(:has(.multiSelected)) {
   filter: brightness(0.65) !important;
+}
+
+/* until the first click nothing tells the player that this holder reacts to clicks,
+   so widgets in it answer the pointer with a hint of the ring they would get */
+.multiSelect-elevate .widget:not(.multiSelected):hover,
+.multiSelect-highlight .widget:not(.multiSelected):hover,
+.multiSelect-shade .widget:not(.multiSelected):hover {
+  box-shadow: 0 0 0 2px rgba(31, 92, 166, 0.45);
+}
+
+/* clicking while the selection is full does nothing, which looks like a broken game.
+   The holder flashes instead, to say that the click arrived and the limit is the
+   reason. Marked as an animation so a holder that styles itself cannot swallow it. */
+.widget.multiSelectFull {
+  animation: multiSelectFull 0.4s ease-in-out;
+}
+
+@keyframes multiSelectFull {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: inset 0 0 0 4px rgba(31, 92, 166, 0.8); }
 }

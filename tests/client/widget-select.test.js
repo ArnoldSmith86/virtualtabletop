@@ -191,13 +191,13 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
 
     // what a drag does once it has carried the widget out of the holder: move() takes
     // the rest of the selection out as well and keeps it next to the dragged widget
-    async function dragOutOfHolder() {
+    async function dragOutOfHolder(x = 500, y = 300) {
       cards[0].multiSelectSource = hand;
       cards[0].multiSelectDrag = cards.slice(1);
       cards[0].multiSelectPicked = [];
       cards[0].currentParent = hand;
       await cards[0].checkParent(true);
-      await cards[0].setPosition(500, 300, 5);
+      await cards[0].setPosition(x, y, 5);
       await cards[0].dragMultiSelectionAlong();
     }
 
@@ -208,6 +208,15 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
         expect(cards.map(c=>c.get('x'))).toEqual([ 500, 500+cards[0].get('width'), 500+2*cards[0].get('width') ]);
         expect(cards.slice(1).map(c=>c.get('dragging'))).toEqual([ playerName, playerName ]);
         expect(selectedIDs(cards)).toEqual([]);
+      });
+    });
+
+    describe('When the drag carries it towards the right edge of the surface', () => {
+      test('Then the followers fan out to the other side instead of off the surface', async () => {
+        const width = cards[0].get('width');
+        await dragOutOfHolder(1600-width, 300);
+        expect(cards.map(c=>c.get('x'))).toEqual([ 1600-width, 1600-2*width, 1600-3*width ]);
+        expect(cards.every(c=>c.get('x') >= 0 && c.get('x') + width <= 1600)).toBe(true);
       });
     });
 
@@ -252,6 +261,31 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
         expect(cards.map(c=>c.get('parent'))).toEqual([ null, null, null ]);
         expect(cards.map(c=>c.get('x'))).toEqual([ 500, 500+cards[0].get('width'), 500+2*cards[0].get('width') ]);
         expect(cards.map(c=>c.get('y'))).toEqual([ 300, 300, 300 ]);
+      });
+    });
+  });
+
+  describe('Given a holder that spreads its widgets further apart than the surface allows', () => {
+    let hand, cards;
+    beforeEach(async () => {
+      ({ hand, cards } = createHand('all', 3, { x: 0, y: 0, stackOffsetX: 800 }));
+      for(const card of cards)
+        await card.click();
+    });
+    afterEach(() => {
+      cards.concat(hand).forEach(w => removeWidget(w.get('id')));
+    });
+
+    describe('When a drag carries the selection out of it', () => {
+      test('Then the followers move closer together so that they stay on the surface', async () => {
+        cards[0].multiSelectSource = hand;
+        cards[0].multiSelectDrag = cards.slice(1);
+        cards[0].multiSelectPicked = [];
+        cards[0].currentParent = hand;
+        await cards[0].checkParent(true);
+        await cards[0].setPosition(100, 300, 5);
+        await cards[0].dragMultiSelectionAlong();
+        expect(cards.map(c=>c.get('x'))).toEqual([ 100, 800, 1500 ]);
       });
     });
   });
