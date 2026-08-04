@@ -621,11 +621,9 @@ export function mod(a, b) {
 }
 
 // Many widget properties hold nested objects (css, cardTypes, faces, ...). Routines address a value
-// inside them by a path of keys - the two helpers below read and write such a path.
-
-// Routines come from shared games, so a key must never lead out of the property and into the
-// prototype chain: only own properties are read and these keys are refused entirely.
-const forbiddenNestedKeys = [ '__proto__', 'constructor', 'prototype' ];
+// inside them by a path of keys - the two helpers below read and write such a path. Routines come
+// from shared games, so a key must never lead out of the property and into the prototype chain:
+// only own properties are read and __proto__, constructor and prototype are refused entirely.
 
 // A key is an array index if it is a non-negative integer, written as a JSON number or as a plain
 // decimal string. "007" and "1e3" are object keys.
@@ -651,9 +649,10 @@ export function setNestedValue(object, path, value, problems=[]) {
   if(!path.length)
     return value;
 
-  const key = path[0];
-  if(forbiddenNestedKeys.indexOf(String(key)) != -1) {
-    problems.push(`Key ${JSON.stringify(String(key))} is not allowed inside a property.`);
+  // a primitive key so that what is checked here is exactly what is written below
+  const key = typeof path[0] == 'number' ? path[0] : String(path[0]);
+  if(key === '__proto__' || key === 'constructor' || key === 'prototype') {
+    problems.push(`Key ${JSON.stringify(key)} is not allowed inside a property.`);
     return object;
   }
 
