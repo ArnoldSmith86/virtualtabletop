@@ -159,7 +159,11 @@ class Card extends Widget {
               const content = String(object.value).replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*)\}/g, (m, n) => {
                 const [ property, ...keyPath ] = n.split('.');
                 usedProperties.add(property);
-                return (keyPath.length ? getNestedValue(this.get(property), keyPath) : this.get(property)) || '';
+                if(!keyPath.length)
+                  return this.get(property) || '';
+                // a nested 0, false or '' is a value the author asked for - only a missing one renders empty
+                const value = getNestedValue(this.get(property), keyPath);
+                return value === undefined || value === null ? '' : value;
               });
 
               if(useIframe) {

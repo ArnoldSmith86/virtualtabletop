@@ -338,7 +338,7 @@ function validatePropertyPath(value, context, propertyPath = []) {
     return [{
         widget: context.widgetId,
         property: propertyPath,
-        message: 'property must be a non-empty string or array'
+        message: `${context.operation && context.operation.func || 'GET/SET'} property must be a non-empty string or array`
     }];
 }
 

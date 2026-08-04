@@ -652,7 +652,7 @@ export function setNestedValue(object, path, value, problems=[]) {
   // a primitive key so that what is checked here is exactly what is written below
   const key = typeof path[0] == 'number' ? path[0] : String(path[0]);
   if(key === '__proto__' || key === 'constructor' || key === 'prototype') {
-    problems.push(`Key ${JSON.stringify(key)} is not allowed inside a property.`);
+    problems.push(`Key ${JSON.stringify(key)} is a reserved JavaScript key and cannot be used in a property path, so the SET was ignored.`);
     return object;
   }
 
@@ -661,11 +661,11 @@ export function setNestedValue(object, path, value, problems=[]) {
   const container = object !== null && typeof object == 'object' ? object : (typeof key == 'number' && isArrayIndex(key) ? [] : {});
   if(Array.isArray(container)) {
     if(!isArrayIndex(key)) {
-      problems.push(`Key ${JSON.stringify(String(key))} is not an index, it cannot be set in an array.`);
+      problems.push(`Key ${JSON.stringify(String(key))} is not an array index - only an index can be set inside an array, so the SET was ignored.`);
       return object;
     }
     if(+key > container.length) {
-      problems.push(`Index ${key} is out of range for an array of length ${container.length}.`);
+      problems.push(`Index ${key} is out of range - an array of length ${container.length} can only be written at index 0 to ${container.length} because a SET appends at most one element, so the SET was ignored.`);
       return object;
     }
   }

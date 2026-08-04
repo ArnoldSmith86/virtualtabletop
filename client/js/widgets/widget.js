@@ -1983,7 +1983,7 @@ export class Widget extends StateManaged {
           a.relation = '=';
         }
         if(keyPath.length && [ 'id', 'parent', 'deck' ].indexOf(mainProperty) != -1) {
-          problems.push(`Property ${mainProperty} holds a widget ID, it has no values inside it.`);
+          problems.push(`Property ${JSON.stringify(mainProperty)} holds a widget ID, so it has no values inside it - use a plain property name.`);
         } else if((mainProperty == 'parent' || mainProperty == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${mainProperty} to ${a.value} which doesn't exist.`);
         } else if (collection = getCollection(a.collection)) {
@@ -2021,13 +2021,18 @@ export class Widget extends StateManaged {
                 if(!keyPath.length) {
                   await w.set(mainProperty, newValue);
                 } else {
-                  if(property !== null && typeof property != 'object')
-                    problems.push(`Property ${mainProperty} is not an object, replacing its value ${JSON.stringify(property)}.`);
                   const copy = property !== null && typeof property == 'object' ? JSON.parse(JSON.stringify(property)) : property;
-                  const problemsSoFar = problems.length;
-                  const newProperty = setNestedValue(copy, keyPath, newValue, problems);
-                  if(problems.length == problemsSoFar)
+                  const where = `Property ${JSON.stringify(mainProperty)} of widget ${JSON.stringify(w.get('id'))}`;
+                  const keyProblems = [];
+                  const newProperty = setNestedValue(copy, keyPath, newValue, keyProblems);
+                  if(keyProblems.length) {
+                    problems.push(...keyProblems.map(p=>`${where}: ${p}`));
+                  } else {
+                    // only report the replacement once it actually happened - a refused key changes nothing
+                    if(property !== null && typeof property != 'object')
+                      problems.push(`Warning: ${where} was not an object - its value ${JSON.stringify(property)} was replaced.`);
                     await w.set(mainProperty, newProperty);
+                  }
                 }
               }
             }

@@ -34,6 +34,22 @@ describe("Scenarios: Reading and writing values inside widget properties", () =>
     await testWidget.click();
   }
 
+  // problems of a routine that is not being debugged end up in a single console.log call
+  async function runCapturingProblems(routine, targetProperties, secondTargetProperties) {
+    const problems = [];
+    const originalLog = console.log;
+    console.log = (...args)=>{
+      if(Array.isArray(args[0]))
+        problems.push(...args[0]);
+    };
+    try {
+      await run(routine, targetProperties, secondTargetProperties);
+    } finally {
+      console.log = originalLog;
+    }
+    return problems.join('\n');
+  }
+
   describe("Given a SET operation with a property path", () => {
     test("Then it adds the key to an existing object", async () => {
       await run([
@@ -71,11 +87,21 @@ describe("Scenarios: Reading and writing values inside widget properties", () =>
       expect(testWidget.get('css')).toBe('');
     });
 
-    test("Then it replaces a property that is not an object", async () => {
-      await run([
+    test("Then it replaces a property that is not an object and warns about it", async () => {
+      const problems = await runCapturingProblems([
         { func: 'SET', property: [ 'css', 'default' ], value: 'color: red' }
       ], { css: 'color: blue' });
       expect(targetWidget.get('css')).toEqual({ default: 'color: red' });
+      expect(problems).toMatch(/^Warning: Property "css" of widget ".*" was not an object - its value "color: blue" was replaced\.$/m);
+    });
+
+    test("Then it does not claim a replacement when the key is refused", async () => {
+      const problems = await runCapturingProblems([
+        { func: 'SET', property: [ 'cardTypes', '__proto__' ], value: 'yes' }
+      ], { cardTypes: 'a string' });
+      expect(targetWidget.get('cardTypes')).toBe('a string');
+      expect(problems).toMatch(/reserved JavaScript key/);
+      expect(problems).not.toMatch(/was replaced/);
     });
 
     test("Then the relation of one widget does not affect the next one", async () => {
