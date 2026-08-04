@@ -26,7 +26,9 @@ export async function loadAudioPicker() {
       $('#audioList').innerHTML = list;
 
       $('#audioPickerOverlay input').onkeyup = function() {
-        const text = regexEscape($('#audioPickerOverlay input').value.toLowerCase());
+        // the same separator flattening as the keywords above, so typing a name
+        // the way it is shown ("dice-throw") searches the same words it indexed
+        const text = regexEscape($('#audioPickerOverlay input').value.toLowerCase().replace(/[-_/]+/g, ' '));
         const visibleCategories = {};
         for(const entry of $a('#audioList .audioEntry')) {
           const match = !!entry.dataset.keywords.match(text);

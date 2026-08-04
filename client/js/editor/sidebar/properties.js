@@ -3745,7 +3745,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
   }
 
   // whether the edited widget - or, for a multi-selection, any of the widgets
@@ -4950,6 +4950,12 @@ class PropertiesModule extends SidebarModule {
       this.renderCheckbox(widget, 'Clickable', 'clickable', body, {
         infoText: 'Whether the widget reacts to being clicked at all: with this off its click routine does not run and clicking it does not flip to the next face. Dragging it still works.'
       });
+      // what a click does is the rest of this widget's setup - what it sounds
+      // like belongs right next to the switch that decides it happens at all
+      new SoundInput(this, widget, 'Click sound', {
+        property: 'clickSound',
+        hint: 'Play this sound whenever the widget is clicked. Pick one of the bundled sounds, upload your own audio file or enter a URL. Clicking is what triggers it, so it only plays while the widget is clickable.'
+      }).render(body);
       this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, {
         min: 0,
         step: 1,
@@ -4980,7 +4986,7 @@ class PropertiesModule extends SidebarModule {
     }, null, `${widget.id}:generic`, {
       renderSummary: summary => {
         const update = w => summary.textContent = this.interactionSummary(w);
-        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
+        for(const property of [ 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
           this.addPropertyListener(widget, property, update);
       }
     });
@@ -5014,6 +5020,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     add('clickable', 'clickable', value=>value ? null : 'not clickable');
+    add('clickSound', 'click sound', value=>propertyInputValueSet(value) ? `sound ${soundName(value)}` : null);
     add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
     add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
     add('overlap', 'overlap', value=>value === false ? 'no overlap' : null);

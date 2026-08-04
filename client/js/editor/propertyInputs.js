@@ -1473,6 +1473,124 @@ class ImageInput extends PickerInput {
   }
 }
 
+// The file name of a sound path without its directories and extension: that is
+// what the sound picker lists and the only part of "/i/audio/casino/dice-throw-1.mp3"
+// that says anything, so it is what the chip and the summary show.
+function soundName(value) {
+  return String(value).replace(/^.*\//, '').replace(/\.[a-z0-9]+$/i, '');
+}
+
+// One sound looks exactly like the next, so the chip names the file instead of
+// only showing a speaker - that is what the collapsed row has to identify it by.
+function renderSoundChip(value, target) {
+  const chip = div(target, 'propertyValueChip propertySoundChip');
+  chip.title = value;
+  div(chip, 'material-symbols', 'volume_up');
+  div(chip, 'propertySoundName', html(soundName(value)));
+  return chip;
+}
+
+// One preview plays at a time, so starting another one (or clicking the button
+// of the running one again) stops it. Mirrors the sound picker's own preview.
+let soundPreview = null;
+function stopSoundPreview() {
+  if(!soundPreview)
+    return;
+  soundPreview.audio.pause();
+  soundPreview.button.setAttribute('icon', 'play_arrow');
+  soundPreview = null;
+}
+
+function toggleSoundPreview(value, button) {
+  const wasThisButton = soundPreview && soundPreview.button == button;
+  stopSoundPreview();
+  if(wasThisButton)
+    return;
+  const audio = new Audio(mapAssetURLs(value));
+  soundPreview = { audio, button };
+  button.setAttribute('icon', 'stop');
+  audio.onended = _=>{
+    if(soundPreview && soundPreview.button == button)
+      stopSoundPreview();
+  };
+  audio.play().catch(_=>{});
+}
+
+// A sound is a plain asset path, so unlike an image there is nothing to preview
+// visually: the chip is a speaker, the summary names the file and offers to play
+// it, and the picker is only about getting a path in - from the bundled sound
+// library (see audio.js), from an upload, or typed.
+class SoundInput extends PickerInput {
+  cssClass() {
+    return 'pickerInput soundInput';
+  }
+
+  expandArrow() {
+    return false;
+  }
+
+  renderChip(target, value) {
+    if(propertyInputValueSet(value))
+      return renderSoundChip(value, target);
+    return this.renderEmptyChip(target);
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || 'Choose sound';
+  }
+
+  // the play button lives in the picker, so closing it would leave a preview
+  // running with nothing left to stop it
+  closePicker() {
+    stopSoundPreview();
+    super.closePicker();
+  }
+
+  renderSummaryControls(target, value) {
+    const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
+    if(!propertyInputValueSet(shown))
+      return;
+    const play = document.createElement('button');
+    play.setAttribute('icon', 'play_arrow');
+    play.title = 'Play the sound';
+    play.onclick = _=>toggleSoundPreview(shown, play);
+    target.appendChild(play);
+  }
+
+  renderPickerContent(target, value) {
+    const section = div(target, 'propertyPickerSection');
+
+    const browse = document.createElement('button');
+    browse.setAttribute('icon', 'library_music');
+    browse.textContent = 'Sound library...';
+    browse.onclick = async _=>{
+      // the library is an overlay of its own and the running preview would keep
+      // playing underneath it
+      stopSoundPreview();
+      const sound = await pickAudio();
+      if(sound)
+        this.setValue(sound);
+    };
+    section.appendChild(browse);
+
+    const upload = document.createElement('button');
+    upload.setAttribute('icon', 'upload');
+    upload.textContent = 'Upload sound...';
+    upload.onclick = async _=>{
+      const asset = await uploadAsset();
+      if(asset)
+        this.setValue(asset);
+    };
+    section.appendChild(upload);
+
+    const urlInput = document.createElement('input');
+    urlInput.placeholder = 'or enter an audio URL / path';
+    urlInput.value = propertyInputValueSet(value) ? value : '';
+    urlInput.onchange = _=>this.setValue(urlInput.value || null);
+    section.appendChild(urlInput);
+  }
+}
+
 // options for inputs that edit a single declaration inside a css-like
 // property (through the parse/merge helpers in properties.js) so ColorInput
 // and NumberInput can edit e.g. the "color" declaration of the css property
