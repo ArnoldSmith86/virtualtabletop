@@ -648,6 +648,7 @@ class PropertiesModule extends SidebarModule {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.widgetPicker = null;
     this.renderedSelectionIDs = null;
+    this.renderedBoardSize = null;
     this.collapsibleStates = {};
     this.sizeRatioLocks = new WeakMap();
     // per line: the widget new stops inherit from. Kept outside the panel because
@@ -924,6 +925,16 @@ class PropertiesModule extends SidebarModule {
       updater(delta.s);
   }
 
+  onMetaReceivedWhileActive(meta) {
+    // the X/Y/W/H sliders are bounded by the board size, so they go stale when
+    // another tab (or another player) changes it while the panel is open
+    const boardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
+    if(boardSize == this.renderedBoardSize)
+      return;
+    this.renderedBoardSize = boardSize;
+    this.onSelectionChangedWhileActive([ ...selectedWidgets ]);
+  }
+
   onSelectionChangedWhileActive(newSelection) {
     if(this.handleWidgetPickerSelection(newSelection))
       return;
@@ -934,6 +945,7 @@ class PropertiesModule extends SidebarModule {
     const selectionIDs = newSelection.map(widget=>widget.id).join(' ');
     const keepScrollTop = selectionIDs === this.renderedSelectionIDs ? this.moduleDOM.scrollTop : null;
     this.renderedSelectionIDs = selectionIDs;
+    this.renderedBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
 
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
@@ -3912,8 +3924,8 @@ class PropertiesModule extends SidebarModule {
     // start collapsed and only get expanded for active tweaking
     this.renderCollapsibleSection('Position', true, body=>{
       this.renderDualNumberWithSlider(widget, null, { title: 'X', property: 'x' }, { title: 'Y', property: 'y' }, {
-        left: { min: 0, max: 1600, step: 1 },
-        right: { min: 0, max: 1000, step: 1 },
+        left: { min: 0, max: viewportConfig.targetWidth, step: 1 },
+        right: { min: 0, max: viewportConfig.targetHeight, step: 1 },
         target: body
       });
       this.renderPositionLocks(widget, body);
@@ -3929,8 +3941,8 @@ class PropertiesModule extends SidebarModule {
 
     this.renderCollapsibleSection('Size', true, body=>{
       this.renderDualNumberWithSlider(widget, null, { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
-        left: { min: 1, max: 1600, step: 1 },
-        right: { min: 1, max: 1000, step: 1 },
+        left: { min: 1, max: viewportConfig.targetWidth, step: 1 },
+        right: { min: 1, max: viewportConfig.targetHeight, step: 1 },
         target: body
       });
       this.renderSizeRatioLock(widget, body);

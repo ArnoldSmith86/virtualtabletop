@@ -1515,8 +1515,8 @@ function uploadWidget(preset) {
       id = await addWidgetLocal({
         image: asset,
         movable: false,
-        width: 1600,
-        height: 1000,
+        width: viewportConfig.targetWidth,
+        height: viewportConfig.targetHeight,
         layer: -4
       });
     }

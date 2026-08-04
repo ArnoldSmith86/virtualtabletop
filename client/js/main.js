@@ -1,6 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-
+import { calculateLayout, calculateEditModuleClasses, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -194,19 +194,34 @@ function setScale() {
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
+  const targetW = viewportConfig.targetWidth;
+  const targetH = viewportConfig.targetHeight;
+  const targetAspect = targetW / targetH;
+
+  document.documentElement.style.setProperty('--roomWidth', `${targetW}px`);
+  document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
+
+  const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
+
+  // set before measuring below - they decide where the module panel sits and so how much room is
+  // left. Only in edit mode: in play mode there is no module panel and game CSS shouldn't see them.
+  $('body').classList.remove('editModulesAbove', 'editModulesOverlay');
+  if(edit || jeEnabled)
+    $('body').classList.add(...calculateEditModuleClasses(w, h, viewportConfig));
+
   if(edit || jeEnabled) {
-    const targetWidth = 1600 / zoom;
-    const targetHeight = 1000 / zoom;
+    const targetWidth = targetW / zoom;
+    const targetHeight = targetH / zoom;
     const availableRect = getAvailableRoomRectangle();
     const availableWidth = availableRect.right-availableRect.left;
     const availableHeight = availableRect.bottom-availableRect.top;
 
-    scale = availableWidth/availableHeight < 1600/1000 ? availableWidth/targetWidth : availableHeight/targetHeight;
+    scale = availableWidth/availableHeight < targetAspect ? availableWidth/targetWidth : availableHeight/targetHeight;
 
-    const offsetX = offset[0] + (1-zoom)/2*1600*scale/zoom;
-    const offsetY = offset[1] + (1-zoom)/2*1000*scale/zoom;
+    const offsetX = offset[0] + (1-zoom)/2*targetW*scale/zoom;
+    const offsetY = offset[1] + (1-zoom)/2*targetH*scale/zoom;
 
-    if(availableWidth/availableHeight < 1600/1000) {
+    if(availableWidth/availableHeight < targetAspect) {
       document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left) + 'px');
       document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
     } else {
@@ -214,28 +229,33 @@ function setScale() {
       document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top) + 'px');
     }
     document.documentElement.style.setProperty('--roomZoom', zoom);
-  } else {
-    scale = w/h < 1600/1000 ? w/1600 : h/1000;
+    layoutOptions.scale = scale;
   }
-  $('body').classList.remove('wideToolbar');
-  $('body').classList.remove('horizontalToolbar');
-  if(w-scale*1600 + h-scale*1000 < 44) {
-    $('body').classList.add('aspectTooGood');
-    if(!$('body').className.match(/hiddenToolbar/))
-      scale = (w-44)/1600;
-  } else {
-    $('body').classList.remove('aspectTooGood');
-    if(w - scale*1600 > 200)
-      $('body').classList.add('wideToolbar');
-    else if(w/h < 1600/1000)
-      $('body').classList.add('horizontalToolbar');
-  }
+
+  const layout = calculateLayout(w, h, viewportConfig, layoutOptions);
+  scale = layout.scale;
+  for(const layoutClass of LAYOUT_CLASSES)
+    toggleClass($('body'), layoutClass, layoutClass == layout.layoutClass);
+  toggleClass($('body'), 'orientationMismatch', isOrientationMismatch(w, h, viewportConfig));
+
   document.documentElement.style.setProperty('--scale', scale);
   updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
   refreshIgnoreZoomWidgets();
+}
+
+// Everything that has to happen when the board size changed, on top of viewportConfig
+// itself: setViewportSize decides whether it did, this applies it. Called from the state
+// message (serverstate.js) as well as from the meta message (legacymodes.js) - both carry
+// the game settings and either one can be the first to bring in a new board size.
+function applyViewportLayout() {
+  setScale();
+  // no widget changed, but pile handles are placed relative to the board edges
+  for(const w of widgets.values())
+    if(w.updateHandlePlacement)
+      w.updateHandlePlacement();
 }
 
 // Each toolbar layout (wide, narrow, horizontal and the one for aspectTooGood) has multiple
@@ -685,6 +705,7 @@ async function loadEditMode() {
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
@@ -834,6 +855,10 @@ onLoad(function() {
   });
   on('#hideToolbarButton', 'click', function() {
     $('body').classList.add('hiddenToolbar');
+    setScale();
+  });
+  on('#showToolbarButton', 'click', function() {
+    $('body').classList.remove('hiddenToolbar');
     setScale();
   });
 

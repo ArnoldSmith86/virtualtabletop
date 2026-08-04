@@ -7,6 +7,7 @@ import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
+import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js/calculateLayout.js';
 import Statistics from './statistics.mjs';
 
 export default class Room {
@@ -543,6 +544,7 @@ export default class Room {
       this.removeInvalidPublicLibraryLinks(player);
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
+      this.normalizeGameSettings(this.state._meta.gameSettings);
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
@@ -1136,10 +1138,32 @@ export default class Room {
     this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
   }
 
+  // The board size decides how everyone in the room renders the game and it is written
+  // to the game file, so it gets normalized wherever it enters the room - through the
+  // Board Settings panel, a loaded game file or a hand edited save. The client applies
+  // the same function to what it receives, so the file can never end up describing a
+  // board that nobody is playing on.
+  normalizeGameSettings(gameSettings, player) {
+    if(!gameSettings || gameSettings.boardSize === undefined)
+      return;
+
+    const boardSize = normalizeBoardSize(gameSettings.boardSize);
+    const changed = !boardSize || boardSize.width != gameSettings.boardSize.width || boardSize.height != gameSettings.boardSize.height;
+
+    if(boardSize)
+      gameSettings.boardSize = boardSize;
+    else
+      delete gameSettings.boardSize;
+
+    if(changed && player)
+      player.send('error', `The board size has to be between ${MIN_BOARD_SIZE} and ${MAX_BOARD_SIZE} - using ${boardSize ? `${boardSize.width}x${boardSize.height}` : 'the default'} instead.`);
+  }
+
   setGameSettings(player, gameSettings) {
     const oldLegacyModes = this.state._meta.gameSettings?.legacyModes || {};
     const newLegacyModes = gameSettings.legacyModes || {};
-  
+
+    this.normalizeGameSettings(gameSettings, player);
     this.state._meta.gameSettings = gameSettings;
     this.sendMetaUpdate();
 
@@ -1219,6 +1243,7 @@ export default class Room {
       gameSettings = (this.state._meta || {}).gameSettings || { legacyModes: {} };
     }
     this.state._meta = meta;
+    this.normalizeGameSettings(gameSettings);
     this.state._meta.gameSettings = gameSettings;
 
     if(delayForGameStartRoutine) {

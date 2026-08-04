@@ -1658,3 +1658,189 @@ div.widget-name {
 .drag-over {
   background-color: #f0f0f0;
 }
+
+/* The tiles in the Game Settings module. The legacy mode and cursor tiles used to repeat
+   this as inline styles on every tile; it lives here now so every tile in the module is
+   framed the same way and follows theme changes. */
+.settings-tile {
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 4px;
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+.boardSizeSetting .boardSizeHeader {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeDescription {
+  font-size: 0.9em;
+}
+
+.boardSizeSetting .boardSizeInputs {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* so the preview stays next to the fields it previews instead of drifting off to the far
+     edge of a wide panel */
+  max-width: 480px;
+  margin-top: 12px;
+  gap: 12px;
+}
+
+/* the fields stay a tight cluster instead of stretching across the whole panel - a four digit
+   number does not need 500px, and the × and the swap button belong next to what they act on */
+.boardSizeSetting .boardSizeFields {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* the × between the two fields */
+.boardSizeSetting .boardSizeFields > span {
+  flex: 0 0 auto;
+  opacity: 0.7;
+  padding-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeFields > button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.boardSizeSetting .boardSizeField {
+  flex: 0 0 auto;
+  width: 7em;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.boardSizeSetting .boardSizeField label {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizeField input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* the shape the numbers describe, which is what the whole setting is about. The board the
+   room is on stays behind it as a dashed outline whenever the two differ, so it is obvious
+   whether the pending board is wider, taller or just bigger. */
+.boardSizeSetting .boardSizePreview {
+  flex: 0 0 auto;
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.boardSizeSetting .boardSizePreview > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+}
+
+.boardSizeSetting .boardSizePreviewCurrent {
+  border: 1px dashed var(--textColor);
+  opacity: 0.4;
+}
+
+.boardSizeSetting .boardSizePreviewPending {
+  border: 1px solid var(--wcMain);
+  background: var(--wcMain);
+  opacity: 0.35;
+}
+
+/* min-height so the tile does not jump every time the line is emptied mid-typing */
+.boardSizeSetting .boardSizeRatio {
+  margin-top: 6px;
+  min-height: 1.2em;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizePresetLabel {
+  margin-top: 10px;
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizePresets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.boardSizeSetting .boardSizePresets button {
+  margin: 0;
+  font-size: 0.85em;
+}
+
+/* the preset the fields currently match - the buttons are already in the theme's blue, so
+   the ring has to be the text color to be visible on them */
+.boardSizeSetting .boardSizePresets button.active {
+  outline: 2px solid var(--textColor);
+  outline-offset: 1px;
+}
+
+.boardSizeSetting .boardSizeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* the messages come and go by whole lines, so the block keeps one line of space to stop the
+   tile from resizing under the pointer */
+.boardSizeSetting .boardSizeMessages {
+  margin-top: 10px;
+  min-height: 1.2em;
+  font-size: 0.9em;
+}
+
+/* only the range error blocks Apply, so only it gets the error red - the advisories used to
+   share it while Apply stayed enabled, which reads as "something is broken" for what is
+   advice. The dark mode variants are lighter: #950000 on the near black editor background
+   sits right at the readable edge. */
+.boardSizeSetting .boardSizeMessage {
+  margin-top: 4px;
+}
+
+.boardSizeSetting .boardSizeMessage.error {
+  color: var(--negativeInput);
+}
+
+.boardSizeSetting .boardSizeMessage.warning {
+  color: #8a5300;
+}
+
+.boardSizeSetting .boardSizeMessage.success {
+  color: var(--positiveInput);
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.error {
+  color: #ff8f8f;
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.warning {
+  color: #f0be5a;
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.success {
+  color: #7ed07e;
+}
+
+.boardSizeSetting .boardSizeMessage button {
+  margin: 4px 0 0 0;
+  font-size: 1em;
+}

@@ -35,10 +35,10 @@ class SpacingDragButton extends DragButton {
       await widget.set('y', Math.floor(startY + offsetY*dy));
     }
 
-    let minGapX = 1600;
-    let maxGapX = -1600;
-    let minGapY = 1000;
-    let maxGapY = -1000;
+    let minGapX = viewportConfig.targetWidth;
+    let maxGapX = -viewportConfig.targetWidth;
+    let minGapY = viewportConfig.targetHeight;
+    let maxGapY = -viewportConfig.targetHeight;
     for(const widget of selectedWidgets) {
       const rect = widget.domElement.getBoundingClientRect();
       const biggerX = selectedWidgets.map(w=>w.domElement.getBoundingClientRect().left).filter(l=>l>rect.left).sort();
