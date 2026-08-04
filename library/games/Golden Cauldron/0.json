@@ -1,0 +1,3496 @@
+{
+  "board": {
+    "id": "board",
+    "x": 0,
+    "y": 0,
+    "width": 1600,
+    "height": 1000,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background: radial-gradient(circle at 40% 32%, #1d5a45 0%, #123c2e 55%, #0a2a20 100%)"
+  },
+  "potRing": {
+    "id": "potRing",
+    "x": 470,
+    "y": 107,
+    "width": 340,
+    "height": 340,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "css": "background: radial-gradient(circle, rgba(240,196,25,0.20) 0%, rgba(240,196,25,0) 72%); box-shadow: inset 0 0 0 9px #666666"
+  },
+  "coinDeck": {
+    "type": "deck",
+    "id": "coinDeck",
+    "x": 1420,
+    "y": 760,
+    "cardDefaults": {
+      "width": 38,
+      "height": 38,
+      "borderRadius": 19
+    },
+    "cardTypes": {
+      "gold": {}
+    },
+    "faceTemplates": [
+      {
+        "border": 0,
+        "radius": 19,
+        "css": "background: radial-gradient(circle at 34% 28%, #fff3b0 0%, #f0c419 45%, #b8860b 100%); box-shadow: inset 0 0 0 2px #8a6a00",
+        "objects": [
+          {
+            "type": "icon",
+            "x": 4,
+            "y": 4,
+            "width": 30,
+            "height": 30,
+            "value": "lorc/crown-coin",
+            "color": "#8a6a00"
+          }
+        ]
+      }
+    ]
+  },
+  "bankIcon": {
+    "id": "bankIcon",
+    "x": 1055,
+    "y": 168,
+    "width": 150,
+    "height": 108,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "icon": {
+      "name": "delapouite/bank",
+      "color": "#cfe3d8",
+      "scale": 0.9
+    }
+  },
+  "bank": {
+    "type": "holder",
+    "id": "bank",
+    "x": 1040,
+    "y": 284,
+    "width": 180,
+    "height": 74,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "stackOffsetX": 2,
+    "stackOffsetY": 0,
+    "layer": -3,
+    "css": "background: rgba(255,255,255,0.07); border: 2px dashed rgba(240,196,25,0.45)",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "bankLabel": {
+    "id": "bankLabel",
+    "x": 1070,
+    "y": 366,
+    "width": 120,
+    "height": 52,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "icon": {
+      "name": "lorc/crown-coin",
+      "color": "#f0c419",
+      "scale": 0.85
+    },
+    "text": "55",
+    "css": "color:#ffffff; font-size:30px; font-weight:bold; text-shadow:0 2px 3px #000"
+  },
+  "cauldron": {
+    "id": "cauldron",
+    "x": 495,
+    "y": 132,
+    "width": 290,
+    "height": 290,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "icon": {
+      "name": "lorc/cauldron",
+      "color": "#c3cec8",
+      "scale": 1
+    }
+  },
+  "pot": {
+    "type": "holder",
+    "id": "pot",
+    "x": 552,
+    "y": 236,
+    "width": 176,
+    "height": 74,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "stackOffsetX": 6,
+    "stackOffsetY": 0,
+    "layer": -3,
+    "css": "background: linear-gradient(#3b2a09, #180f02); border: 2px solid rgba(240,196,25,0.55)",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "potLabel": {
+    "id": "potLabel",
+    "x": 565,
+    "y": 396,
+    "width": 150,
+    "height": 60,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "icon": {
+      "name": "lorc/crown-coin",
+      "color": "#f0c419",
+      "scale": 0.8
+    },
+    "text": "0",
+    "css": "color:#ffffff; font-size:34px; font-weight:bold; text-shadow:0 2px 3px #000"
+  },
+  "beatBox": {
+    "id": "beatBox",
+    "x": 60,
+    "y": 168,
+    "width": 190,
+    "height": 250,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 18,
+    "css": "background: #0d2b21; box-shadow: inset 0 0 0 3px rgba(240,196,25,0.5)"
+  },
+  "beatIcon": {
+    "id": "beatIcon",
+    "x": 75,
+    "y": 178,
+    "width": 160,
+    "height": 84,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "icon": {
+      "name": "skoll/bullseye",
+      "color": "#cfe3d8",
+      "scale": 0.85
+    }
+  },
+  "beatLabel": {
+    "id": "beatLabel",
+    "x": 75,
+    "y": 262,
+    "width": 160,
+    "height": 96,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0",
+    "css": "display:flex; align-items:center; justify-content:center; color:#f0c419; font-size:70px; font-weight:bold; text-shadow:0 3px 4px #000"
+  },
+  "beatSeat": {
+    "id": "beatSeat",
+    "x": 78,
+    "y": 366,
+    "width": 154,
+    "height": 34,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 10,
+    "css": "background: #666666"
+  },
+  "die1": {
+    "type": "dice",
+    "id": "die1",
+    "x": 480,
+    "y": 470,
+    "width": 100,
+    "height": 100,
+    "faces": [
+      {
+        "pips": 1,
+        "value": 1
+      },
+      {
+        "pips": 2,
+        "value": 2
+      },
+      {
+        "pips": 3,
+        "value": 3
+      },
+      {
+        "pips": 4,
+        "value": 4
+      },
+      {
+        "pips": 5,
+        "value": 5
+      },
+      {
+        "value": 0,
+        "icon": {
+          "name": "lorc/cauldron",
+          "color": "#8a5a00",
+          "scale": 0.8
+        }
+      }
+    ],
+    "shape3d": "d6",
+    "color": "#ffffff",
+    "borderColor": "#555555",
+    "pipColor": "#1a1a1a",
+    "rollTime": 900,
+    "activeFace": 0,
+    "locked": false,
+    "lockWidget": "lock1",
+    "clickRoutine": [
+      "var lk = ${PROPERTY locked}",
+      "var myLock = ${PROPERTY lockWidget}",
+      {
+        "func": "IF",
+        "condition": "${lk}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "locked",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#ffffff"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#555555"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${myLock}"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "locked",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#ffd75e"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#8a5a00"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${myLock}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "lock1": {
+    "id": "lock1",
+    "x": 516,
+    "y": 576,
+    "width": 28,
+    "height": 28,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "icon": {
+      "name": "delapouite/plain-padlock",
+      "color": "#f0c419",
+      "scale": 1
+    }
+  },
+  "die2": {
+    "type": "dice",
+    "id": "die2",
+    "x": 590,
+    "y": 470,
+    "width": 100,
+    "height": 100,
+    "faces": [
+      {
+        "pips": 1,
+        "value": 1
+      },
+      {
+        "pips": 2,
+        "value": 2
+      },
+      {
+        "pips": 3,
+        "value": 3
+      },
+      {
+        "pips": 4,
+        "value": 4
+      },
+      {
+        "pips": 5,
+        "value": 5
+      },
+      {
+        "value": 0,
+        "icon": {
+          "name": "lorc/cauldron",
+          "color": "#8a5a00",
+          "scale": 0.8
+        }
+      }
+    ],
+    "shape3d": "d6",
+    "color": "#ffffff",
+    "borderColor": "#555555",
+    "pipColor": "#1a1a1a",
+    "rollTime": 900,
+    "activeFace": 1,
+    "locked": false,
+    "lockWidget": "lock2",
+    "clickRoutine": [
+      "var lk = ${PROPERTY locked}",
+      "var myLock = ${PROPERTY lockWidget}",
+      {
+        "func": "IF",
+        "condition": "${lk}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "locked",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#ffffff"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#555555"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${myLock}"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "locked",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#ffd75e"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#8a5a00"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${myLock}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "lock2": {
+    "id": "lock2",
+    "x": 626,
+    "y": 576,
+    "width": 28,
+    "height": 28,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "icon": {
+      "name": "delapouite/plain-padlock",
+      "color": "#f0c419",
+      "scale": 1
+    }
+  },
+  "die3": {
+    "type": "dice",
+    "id": "die3",
+    "x": 700,
+    "y": 470,
+    "width": 100,
+    "height": 100,
+    "faces": [
+      {
+        "pips": 1,
+        "value": 1
+      },
+      {
+        "pips": 2,
+        "value": 2
+      },
+      {
+        "pips": 3,
+        "value": 3
+      },
+      {
+        "pips": 4,
+        "value": 4
+      },
+      {
+        "pips": 5,
+        "value": 5
+      },
+      {
+        "value": 0,
+        "icon": {
+          "name": "lorc/cauldron",
+          "color": "#8a5a00",
+          "scale": 0.8
+        }
+      }
+    ],
+    "shape3d": "d6",
+    "color": "#ffffff",
+    "borderColor": "#555555",
+    "pipColor": "#1a1a1a",
+    "rollTime": 900,
+    "activeFace": 2,
+    "locked": false,
+    "lockWidget": "lock3",
+    "clickRoutine": [
+      "var lk = ${PROPERTY locked}",
+      "var myLock = ${PROPERTY lockWidget}",
+      {
+        "func": "IF",
+        "condition": "${lk}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "locked",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#ffffff"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#555555"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${myLock}"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "locked",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#ffd75e"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "#8a5a00"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${myLock}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "lock3": {
+    "id": "lock3",
+    "x": 736,
+    "y": 576,
+    "width": 28,
+    "height": 28,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "icon": {
+      "name": "delapouite/plain-padlock",
+      "color": "#f0c419",
+      "scale": 1
+    }
+  },
+  "sumBox": {
+    "id": "sumBox",
+    "x": 820,
+    "y": 470,
+    "width": 140,
+    "height": 100,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 18,
+    "css": "background: #0d2b21; box-shadow: inset 0 0 0 3px rgba(255,255,255,0.25)"
+  },
+  "sumLabel": {
+    "id": "sumLabel",
+    "x": 820,
+    "y": 470,
+    "width": 140,
+    "height": 100,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "",
+    "css": "display:flex; align-items:center; justify-content:center; color:#ffffff; font-size:62px; font-weight:bold; text-shadow:0 3px 4px #000"
+  },
+  "sumIcon": {
+    "id": "sumIcon",
+    "x": 850,
+    "y": 424,
+    "width": 80,
+    "height": 44,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "icon": {
+      "name": "delapouite/rolling-dices",
+      "color": "#cfe3d8",
+      "scale": 0.9
+    }
+  },
+  "msg": {
+    "id": "msg",
+    "x": 250,
+    "y": 756,
+    "width": 800,
+    "height": 54,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 14,
+    "text": "↻",
+    "css": "display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.32); color:#ffffff; font-size:30px; font-weight:bold"
+  },
+  "btnRoll": {
+    "type": "button",
+    "id": "btnRoll",
+    "x": 470,
+    "y": 632,
+    "width": 150,
+    "height": 92,
+    "layer": 1,
+    "icon": {
+      "name": "delapouite/rolling-dices",
+      "color": "#ffffff",
+      "scale": 1
+    },
+    "backgroundColor": "#1f7a3d",
+    "borderColor": "#0d4a23",
+    "backgroundColorOH": "#25995a",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "rollRoutine",
+        "widget": "game",
+        "arguments": {
+          "paid": 0
+        }
+      }
+    ]
+  },
+  "btnPayRoll": {
+    "type": "button",
+    "id": "btnPayRoll",
+    "x": 640,
+    "y": 632,
+    "width": 150,
+    "height": 92,
+    "layer": 1,
+    "icon": [
+      {
+        "name": "lorc/crown-coin",
+        "color": "#f0c419",
+        "scale": 0.8
+      },
+      {
+        "name": "delapouite/rolling-dices",
+        "color": "#ffffff",
+        "scale": 0.9
+      }
+    ],
+    "backgroundColor": "#9c6b06",
+    "borderColor": "#5c3f00",
+    "backgroundColorOH": "#c2870a",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "rollRoutine",
+        "widget": "game",
+        "arguments": {
+          "paid": 1
+        }
+      }
+    ]
+  },
+  "btnEnd": {
+    "type": "button",
+    "id": "btnEnd",
+    "x": 810,
+    "y": 632,
+    "width": 150,
+    "height": 92,
+    "layer": 1,
+    "icon": {
+      "name": "delapouite/check-mark",
+      "color": "#ffffff",
+      "scale": 1
+    },
+    "backgroundColor": "#1f5ca6",
+    "borderColor": "#0d2f5e",
+    "backgroundColorOH": "#2f7bd6",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "endTurnRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "btnNew": {
+    "type": "button",
+    "id": "btnNew",
+    "x": 60,
+    "y": 632,
+    "width": 190,
+    "height": 92,
+    "layer": 1,
+    "icon": "restart_alt",
+    "backgroundColor": "#4a4a4a",
+    "borderColor": "#222222",
+    "backgroundColorOH": "#6a6a6a",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "newGameRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "autoToggle": {
+    "id": "autoToggle",
+    "x": 60,
+    "y": 460,
+    "width": 190,
+    "height": 90,
+    "layer": 1,
+    "borderRadius": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "icon": {
+          "name": "lorc/gears",
+          "color": "#ffffff",
+          "scale": 0.85
+        },
+        "css": "background:#1f5ca6; box-shadow: inset 0 0 0 3px #0d2f5e"
+      },
+      {
+        "icon": {
+          "name": "sbed/hand",
+          "color": "#ffffff",
+          "scale": 0.85
+        },
+        "css": "background:#7a1f1f; box-shadow: inset 0 0 0 3px #4a0d0d"
+      }
+    ],
+    "activeFace": 0,
+    "clickRoutine": [
+      "var af = ${PROPERTY activeFace}",
+      {
+        "func": "IF",
+        "condition": "${af}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "activeFace",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "auto",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "activeFace",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "auto",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "index": 1,
+    "x": 20,
+    "y": 10,
+    "width": 230,
+    "height": 52,
+    "hand": "stash1",
+    "stash": "stash1",
+    "display": "seatIndex playerName",
+    "displayEmpty": "seatIndex",
+    "css": "font-size: 21px"
+  },
+  "count1": {
+    "id": "count1",
+    "x": 256,
+    "y": 10,
+    "width": 116,
+    "height": 52,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 12,
+    "icon": {
+      "name": "lorc/crown-coin",
+      "color": "#f0c419",
+      "scale": 0.85
+    },
+    "text": "0",
+    "css": "background: rgba(0,0,0,0.32); color:#ffffff; font-size:30px; font-weight:bold"
+  },
+  "stash1": {
+    "type": "holder",
+    "id": "stash1",
+    "x": 20,
+    "y": 68,
+    "width": 352,
+    "height": 68,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "stackOffsetX": 12,
+    "stackOffsetY": 0,
+    "layer": -3,
+    "css": "background: rgba(255,255,255,0.07); border: 2px dashed rgba(240,196,25,0.45)",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 450,
+    "y": 10,
+    "width": 230,
+    "height": 52,
+    "hand": "stash2",
+    "stash": "stash2",
+    "display": "seatIndex playerName",
+    "displayEmpty": "seatIndex",
+    "css": "font-size: 21px"
+  },
+  "count2": {
+    "id": "count2",
+    "x": 686,
+    "y": 10,
+    "width": 116,
+    "height": 52,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 12,
+    "icon": {
+      "name": "lorc/crown-coin",
+      "color": "#f0c419",
+      "scale": 0.85
+    },
+    "text": "0",
+    "css": "background: rgba(0,0,0,0.32); color:#ffffff; font-size:30px; font-weight:bold"
+  },
+  "stash2": {
+    "type": "holder",
+    "id": "stash2",
+    "x": 450,
+    "y": 68,
+    "width": 352,
+    "height": 68,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "stackOffsetX": 12,
+    "stackOffsetY": 0,
+    "layer": -3,
+    "css": "background: rgba(255,255,255,0.07); border: 2px dashed rgba(240,196,25,0.45)",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 880,
+    "y": 10,
+    "width": 230,
+    "height": 52,
+    "hand": "stash3",
+    "stash": "stash3",
+    "display": "seatIndex playerName",
+    "displayEmpty": "seatIndex",
+    "css": "font-size: 21px"
+  },
+  "count3": {
+    "id": "count3",
+    "x": 1116,
+    "y": 10,
+    "width": 116,
+    "height": 52,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 12,
+    "icon": {
+      "name": "lorc/crown-coin",
+      "color": "#f0c419",
+      "scale": 0.85
+    },
+    "text": "0",
+    "css": "background: rgba(0,0,0,0.32); color:#ffffff; font-size:30px; font-weight:bold"
+  },
+  "stash3": {
+    "type": "holder",
+    "id": "stash3",
+    "x": 880,
+    "y": 68,
+    "width": 352,
+    "height": 68,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "stackOffsetX": 12,
+    "stackOffsetY": 0,
+    "layer": -3,
+    "css": "background: rgba(255,255,255,0.07); border: 2px dashed rgba(240,196,25,0.45)",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 235,
+    "y": 838,
+    "width": 230,
+    "height": 52,
+    "hand": "stash4",
+    "stash": "stash4",
+    "display": "seatIndex playerName",
+    "displayEmpty": "seatIndex",
+    "css": "font-size: 21px"
+  },
+  "count4": {
+    "id": "count4",
+    "x": 471,
+    "y": 838,
+    "width": 116,
+    "height": 52,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 12,
+    "icon": {
+      "name": "lorc/crown-coin",
+      "color": "#f0c419",
+      "scale": 0.85
+    },
+    "text": "0",
+    "css": "background: rgba(0,0,0,0.32); color:#ffffff; font-size:30px; font-weight:bold"
+  },
+  "stash4": {
+    "type": "holder",
+    "id": "stash4",
+    "x": 235,
+    "y": 896,
+    "width": 352,
+    "height": 68,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "stackOffsetX": 12,
+    "stackOffsetY": 0,
+    "layer": -3,
+    "css": "background: rgba(255,255,255,0.07); border: 2px dashed rgba(240,196,25,0.45)",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "x": 665,
+    "y": 838,
+    "width": 230,
+    "height": 52,
+    "hand": "stash5",
+    "stash": "stash5",
+    "display": "seatIndex playerName",
+    "displayEmpty": "seatIndex",
+    "css": "font-size: 21px"
+  },
+  "count5": {
+    "id": "count5",
+    "x": 901,
+    "y": 838,
+    "width": 116,
+    "height": 52,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 12,
+    "icon": {
+      "name": "lorc/crown-coin",
+      "color": "#f0c419",
+      "scale": 0.85
+    },
+    "text": "0",
+    "css": "background: rgba(0,0,0,0.32); color:#ffffff; font-size:30px; font-weight:bold"
+  },
+  "stash5": {
+    "type": "holder",
+    "id": "stash5",
+    "x": 665,
+    "y": 896,
+    "width": 352,
+    "height": 68,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 3,
+    "dropOffsetY": 3,
+    "stackOffsetX": 12,
+    "stackOffsetY": 0,
+    "layer": -3,
+    "css": "background: rgba(255,255,255,0.07); border: 2px dashed rgba(240,196,25,0.45)",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ]
+  },
+  "aid": {
+    "id": "aid",
+    "x": 1300,
+    "y": 20,
+    "width": 288,
+    "height": 720,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 16,
+    "html": "<div style=\"width:100%;height:100%;box-sizing:border-box;padding:8px 8px;color:#e8f2ec;font-family:Roboto,sans-serif;font-size:13px\"><div style=\"text-align:center;padding:2px 0 8px 0;font-size:14px\"><img src=\"/i/game-icons.net/delapouite/rolling-dices.svg\" style=\"width:22px;height:22px;vertical-align:middle;filter:invert(1)\"><sup>1</sup> <span style=\"color:#f28b82;font-size:18px\">&#8594;</span> <img src=\"/i/game-icons.net/delapouite/rolling-dices.svg\" style=\"width:22px;height:22px;vertical-align:middle;filter:invert(1)\"><sup>2</sup> <span style=\"color:#f28b82;font-size:18px\">&#8594;</span> <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:17px;height:17px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/rolling-dices.svg\" style=\"width:22px;height:22px;vertical-align:middle;filter:invert(1)\"><sup>3</sup> <span style=\"color:#f28b82;font-size:18px\">&#8594;</span> <img src=\"/i/game-icons.net/delapouite/check-mark.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"></div><table style=\"width:100%;border-collapse:collapse\"><tr style=\"background:rgba(240,196,25,0.22)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"><sup>all</sup> <span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"> <span style=\"color:#f28b82;font-size:15px\">&#9632;</span></td></tr><tr style=\"background:rgba(242,139,130,0.20)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-one.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-one.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-one.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●●</span><span style=\"color:#f28b82;font-size:18px\">&#8594;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> <span style=\"color:#f28b82;font-size:15px\">&#9632;</span></td></tr><tr style=\"background:rgba(255,255,255,0.06)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-one.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-two.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-three.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> + <img src=\"/i/game-icons.net/delapouite/rolling-dices.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"><sup>+1</sup></td></tr><tr style=\"background:rgba(255,255,255,0.02)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-two.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-three.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"></td></tr><tr style=\"background:rgba(255,255,255,0.06)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-three.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-five.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"> / <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"></td></tr><tr style=\"background:rgba(255,255,255,0.02)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-two.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-two.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-two.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"> / <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"> / <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"></td></tr><tr style=\"background:rgba(255,255,255,0.06)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-three.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-three.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-three.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> + <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"></td></tr><tr style=\"background:rgba(255,255,255,0.02)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> + <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"></td></tr><tr style=\"background:rgba(255,255,255,0.06)\"><td style=\"padding:4px 2px;white-space:nowrap\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-five.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-five.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-five.svg\" style=\"width:25px;height:25px;vertical-align:middle;filter:invert(1)\"></td><td style=\"padding:4px 2px;line-height:1.4\"><span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●●●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span><span style=\"color:#f28b82;font-size:18px\">&#8594;</span><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"><img src=\"/i/game-icons.net/delapouite/person.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"></td></tr></table><div style=\"text-align:center;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.25);font-size:14px\"><img src=\"/i/game-icons.net/delapouite/rolling-dices.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> &gt; <img src=\"/i/game-icons.net/skoll/bullseye.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> <span style=\"color:#f28b82;font-size:18px\">&#8594;</span> <img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"><br><span style=\"line-height:2.4\"><img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"> <img src=\"/i/game-icons.net/delapouite/player-next.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"> <span style=\"color:#f28b82;font-size:18px\">&#8594;</span> <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/lorc/cauldron.svg\" style=\"width:19px;height:19px;vertical-align:middle;filter:invert(1)\"> <span style=\"color:#f28b82;font-size:18px\">&#8594;</span> <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●●</span><span style=\"color:#8fe3a8;font-size:18px\">&#8592;</span><img src=\"/i/game-icons.net/delapouite/bank.svg\" style=\"width:21px;height:21px;vertical-align:middle;filter:invert(1)\"></span></div><div style=\"text-align:center;margin-top:10px;font-size:16px\"><img src=\"/i/game-icons.net/lorc/trophy.svg\" style=\"width:24px;height:24px;vertical-align:middle;filter:invert(1)\"> = <span style=\"color:#f0c419;font-size:18px;letter-spacing:-1px\">●</span> <span style=\"font-size:20px;color:#f0c419\">24</span></div></div>",
+    "css": "background: #0d2b21; box-shadow: inset 0 0 0 3px rgba(240,196,25,0.45)"
+  },
+  "coin01": {
+    "type": "card",
+    "id": "coin01",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 3,
+    "y": 3,
+    "z": 1
+  },
+  "coin02": {
+    "type": "card",
+    "id": "coin02",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 5,
+    "y": 3,
+    "z": 2
+  },
+  "coin03": {
+    "type": "card",
+    "id": "coin03",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 7,
+    "y": 3,
+    "z": 3
+  },
+  "coin04": {
+    "type": "card",
+    "id": "coin04",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 9,
+    "y": 3,
+    "z": 4
+  },
+  "coin05": {
+    "type": "card",
+    "id": "coin05",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 11,
+    "y": 3,
+    "z": 5
+  },
+  "coin06": {
+    "type": "card",
+    "id": "coin06",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 13,
+    "y": 3,
+    "z": 6
+  },
+  "coin07": {
+    "type": "card",
+    "id": "coin07",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 15,
+    "y": 3,
+    "z": 7
+  },
+  "coin08": {
+    "type": "card",
+    "id": "coin08",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 17,
+    "y": 3,
+    "z": 8
+  },
+  "coin09": {
+    "type": "card",
+    "id": "coin09",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 19,
+    "y": 3,
+    "z": 9
+  },
+  "coin10": {
+    "type": "card",
+    "id": "coin10",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 21,
+    "y": 3,
+    "z": 10
+  },
+  "coin11": {
+    "type": "card",
+    "id": "coin11",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 23,
+    "y": 3,
+    "z": 11
+  },
+  "coin12": {
+    "type": "card",
+    "id": "coin12",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 25,
+    "y": 3,
+    "z": 12
+  },
+  "coin13": {
+    "type": "card",
+    "id": "coin13",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 27,
+    "y": 3,
+    "z": 13
+  },
+  "coin14": {
+    "type": "card",
+    "id": "coin14",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 29,
+    "y": 3,
+    "z": 14
+  },
+  "coin15": {
+    "type": "card",
+    "id": "coin15",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 31,
+    "y": 3,
+    "z": 15
+  },
+  "coin16": {
+    "type": "card",
+    "id": "coin16",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 33,
+    "y": 3,
+    "z": 16
+  },
+  "coin17": {
+    "type": "card",
+    "id": "coin17",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 35,
+    "y": 3,
+    "z": 17
+  },
+  "coin18": {
+    "type": "card",
+    "id": "coin18",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 37,
+    "y": 3,
+    "z": 18
+  },
+  "coin19": {
+    "type": "card",
+    "id": "coin19",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 39,
+    "y": 3,
+    "z": 19
+  },
+  "coin20": {
+    "type": "card",
+    "id": "coin20",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 41,
+    "y": 3,
+    "z": 20
+  },
+  "coin21": {
+    "type": "card",
+    "id": "coin21",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 43,
+    "y": 3,
+    "z": 21
+  },
+  "coin22": {
+    "type": "card",
+    "id": "coin22",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 45,
+    "y": 3,
+    "z": 22
+  },
+  "coin23": {
+    "type": "card",
+    "id": "coin23",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 47,
+    "y": 3,
+    "z": 23
+  },
+  "coin24": {
+    "type": "card",
+    "id": "coin24",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 49,
+    "y": 3,
+    "z": 24
+  },
+  "coin25": {
+    "type": "card",
+    "id": "coin25",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 51,
+    "y": 3,
+    "z": 25
+  },
+  "coin26": {
+    "type": "card",
+    "id": "coin26",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 53,
+    "y": 3,
+    "z": 26
+  },
+  "coin27": {
+    "type": "card",
+    "id": "coin27",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 55,
+    "y": 3,
+    "z": 27
+  },
+  "coin28": {
+    "type": "card",
+    "id": "coin28",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 57,
+    "y": 3,
+    "z": 28
+  },
+  "coin29": {
+    "type": "card",
+    "id": "coin29",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 59,
+    "y": 3,
+    "z": 29
+  },
+  "coin30": {
+    "type": "card",
+    "id": "coin30",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 61,
+    "y": 3,
+    "z": 30
+  },
+  "coin31": {
+    "type": "card",
+    "id": "coin31",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 63,
+    "y": 3,
+    "z": 31
+  },
+  "coin32": {
+    "type": "card",
+    "id": "coin32",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 65,
+    "y": 3,
+    "z": 32
+  },
+  "coin33": {
+    "type": "card",
+    "id": "coin33",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 67,
+    "y": 3,
+    "z": 33
+  },
+  "coin34": {
+    "type": "card",
+    "id": "coin34",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 69,
+    "y": 3,
+    "z": 34
+  },
+  "coin35": {
+    "type": "card",
+    "id": "coin35",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 71,
+    "y": 3,
+    "z": 35
+  },
+  "coin36": {
+    "type": "card",
+    "id": "coin36",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 73,
+    "y": 3,
+    "z": 36
+  },
+  "coin37": {
+    "type": "card",
+    "id": "coin37",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 75,
+    "y": 3,
+    "z": 37
+  },
+  "coin38": {
+    "type": "card",
+    "id": "coin38",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 77,
+    "y": 3,
+    "z": 38
+  },
+  "coin39": {
+    "type": "card",
+    "id": "coin39",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 79,
+    "y": 3,
+    "z": 39
+  },
+  "coin40": {
+    "type": "card",
+    "id": "coin40",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 81,
+    "y": 3,
+    "z": 40
+  },
+  "coin41": {
+    "type": "card",
+    "id": "coin41",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 83,
+    "y": 3,
+    "z": 41
+  },
+  "coin42": {
+    "type": "card",
+    "id": "coin42",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 85,
+    "y": 3,
+    "z": 42
+  },
+  "coin43": {
+    "type": "card",
+    "id": "coin43",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 87,
+    "y": 3,
+    "z": 43
+  },
+  "coin44": {
+    "type": "card",
+    "id": "coin44",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 89,
+    "y": 3,
+    "z": 44
+  },
+  "coin45": {
+    "type": "card",
+    "id": "coin45",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 91,
+    "y": 3,
+    "z": 45
+  },
+  "coin46": {
+    "type": "card",
+    "id": "coin46",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 93,
+    "y": 3,
+    "z": 46
+  },
+  "coin47": {
+    "type": "card",
+    "id": "coin47",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 95,
+    "y": 3,
+    "z": 47
+  },
+  "coin48": {
+    "type": "card",
+    "id": "coin48",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 97,
+    "y": 3,
+    "z": 48
+  },
+  "coin49": {
+    "type": "card",
+    "id": "coin49",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 99,
+    "y": 3,
+    "z": 49
+  },
+  "coin50": {
+    "type": "card",
+    "id": "coin50",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 101,
+    "y": 3,
+    "z": 50
+  },
+  "coin51": {
+    "type": "card",
+    "id": "coin51",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 103,
+    "y": 3,
+    "z": 51
+  },
+  "coin52": {
+    "type": "card",
+    "id": "coin52",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 105,
+    "y": 3,
+    "z": 52
+  },
+  "coin53": {
+    "type": "card",
+    "id": "coin53",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 107,
+    "y": 3,
+    "z": 53
+  },
+  "coin54": {
+    "type": "card",
+    "id": "coin54",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 109,
+    "y": 3,
+    "z": 54
+  },
+  "coin55": {
+    "type": "card",
+    "id": "coin55",
+    "deck": "coinDeck",
+    "cardType": "gold",
+    "parent": "bank",
+    "x": 111,
+    "y": 3,
+    "z": 55
+  },
+  "game": {
+    "id": "game",
+    "x": 1420,
+    "y": 820,
+    "width": 60,
+    "height": 60,
+    "display": false,
+    "movable": false,
+    "clickable": false,
+    "beat": 0,
+    "potSeat": "",
+    "freeRolls": 2,
+    "paidRolls": 1,
+    "auto": 1,
+    "over": 0,
+    "turnScore": 0,
+    "busted": 0,
+    "refreshRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "bank",
+        "variable": "n"
+      },
+      {
+        "func": "LABEL",
+        "label": "bankLabel",
+        "value": "${n}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "pot",
+        "variable": "n"
+      },
+      {
+        "func": "LABEL",
+        "label": "potLabel",
+        "value": "${n}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "stash1",
+        "variable": "n"
+      },
+      {
+        "func": "LABEL",
+        "label": "count1",
+        "value": "${n}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "stash2",
+        "variable": "n"
+      },
+      {
+        "func": "LABEL",
+        "label": "count2",
+        "value": "${n}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "stash3",
+        "variable": "n"
+      },
+      {
+        "func": "LABEL",
+        "label": "count3",
+        "value": "${n}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "stash4",
+        "variable": "n"
+      },
+      {
+        "func": "LABEL",
+        "label": "count4",
+        "value": "${n}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "stash5",
+        "variable": "n"
+      },
+      {
+        "func": "LABEL",
+        "label": "count5",
+        "value": "${n}"
+      },
+      "var b = ${PROPERTY beat OF game}",
+      {
+        "func": "LABEL",
+        "label": "beatLabel",
+        "value": "${b}"
+      }
+    ],
+    "curSeatRoutine": [
+      {
+        "func": "SELECT",
+        "source": "activeSeats",
+        "property": "turn",
+        "value": true,
+        "collection": "cur"
+      },
+      {
+        "func": "COUNT",
+        "collection": "cur",
+        "variable": "cn"
+      },
+      "var result = ''",
+      {
+        "func": "IF",
+        "condition": "${cn}",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "cur",
+            "property": "id",
+            "variable": "result"
+          }
+        ]
+      }
+    ],
+    "potColorRoutine": [
+      "var ps = ${PROPERTY potSeat OF game}",
+      "var col = '#9aa7a0'",
+      {
+        "func": "IF",
+        "condition": "${ps}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${ps}",
+            "collection": "psc"
+          },
+          {
+            "func": "COUNT",
+            "collection": "psc",
+            "variable": "pn"
+          },
+          {
+            "func": "IF",
+            "condition": "${pn}",
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": "psc",
+                "property": "color",
+                "variable": "col"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "potRing"
+        ],
+        "property": "css",
+        "value": "background: radial-gradient(circle, rgba(240,196,25,0.20) 0%, rgba(240,196,25,0) 72%); box-shadow: inset 0 0 0 9px ${col}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "beatSeat"
+        ],
+        "property": "css",
+        "value": "background: ${col}"
+      }
+    ],
+    "gainRoutine": [
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "gs"
+      },
+      {
+        "func": "IF",
+        "condition": "${gs}",
+        "thenRoutine": [
+          "var gst = ${PROPERTY stash OF $gs}",
+          {
+            "func": "MOVE",
+            "from": "bank",
+            "to": "${gst}",
+            "count": "${amount}"
+          }
+        ]
+      }
+    ],
+    "payRoutine": [
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "ps2"
+      },
+      {
+        "func": "IF",
+        "condition": "${ps2}",
+        "thenRoutine": [
+          "var pst = ${PROPERTY stash OF $ps2}",
+          {
+            "func": "MOVE",
+            "from": "${pst}",
+            "to": "${dst}",
+            "count": "${amount}"
+          }
+        ]
+      }
+    ],
+    "chooseOthersRoutine": [
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "ms"
+      },
+      {
+        "func": "SELECT",
+        "source": "activeSeats",
+        "property": "id",
+        "relation": "!=",
+        "value": "${ms}",
+        "collection": "others"
+      },
+      {
+        "func": "COUNT",
+        "collection": "others",
+        "variable": "oc"
+      },
+      {
+        "func": "SELECT",
+        "source": "others",
+        "property": "id",
+        "relation": "!=",
+        "value": "",
+        "collection": "result"
+      },
+      {
+        "func": "GET",
+        "collection": "others",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "oid"
+      },
+      "var defPick = slice ${oid} 0 ${n}",
+      {
+        "func": "IF",
+        "operand1": "${oc}",
+        "relation": ">",
+        "operand2": "${n}",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "confirmButtonIcon": "check",
+            "confirmButtonText": "",
+            "cancelButtonIcon": null,
+            "cancelButtonText": null,
+            "fields": [
+              {
+                "type": "title",
+                "text": "${ttl}",
+                "css": "background:#0d2b21;color:#f0c419;font-size:30px;text-align:center"
+              },
+              {
+                "type": "choose",
+                "source": "others",
+                "max": "${n}",
+                "value": "${defPick}",
+                "collection": "result",
+                "scale": 0.6
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "stealRoutine": [
+      {
+        "func": "CALL",
+        "routine": "chooseOthersRoutine",
+        "widget": "game",
+        "arguments": {
+          "n": "${n}",
+          "ttl": "${ttl}"
+        }
+      },
+      {
+        "func": "SELECT",
+        "source": "result",
+        "property": "id",
+        "relation": "!=",
+        "value": "",
+        "collection": "picked"
+      },
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "ss"
+      },
+      {
+        "func": "IF",
+        "condition": "${ss}",
+        "thenRoutine": [
+          "var sst = ${PROPERTY stash OF $ss}",
+          {
+            "func": "FOREACH",
+            "collection": "picked",
+            "loopRoutine": [
+              "var os = ${widgetID}",
+              "var ost = ${PROPERTY stash OF $os}",
+              {
+                "func": "IF",
+                "condition": "${give}",
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "${sst}",
+                    "to": "${ost}",
+                    "count": "${each}"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "${ost}",
+                    "to": "${sst}",
+                    "count": "${each}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "combo222Routine": [
+      {
+        "func": "CALL",
+        "routine": "chooseOthersRoutine",
+        "widget": "game",
+        "arguments": {
+          "n": 2,
+          "ttl": "2 2 2   ● ←"
+        }
+      },
+      {
+        "func": "SELECT",
+        "source": "result",
+        "property": "id",
+        "relation": "!=",
+        "value": "",
+        "collection": "picked"
+      },
+      {
+        "func": "COUNT",
+        "collection": "picked",
+        "variable": "pc"
+      },
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "cs2"
+      },
+      {
+        "func": "IF",
+        "condition": "${cs2}",
+        "thenRoutine": [
+          "var cst = ${PROPERTY stash OF $cs2}",
+          {
+            "func": "IF",
+            "condition": "${pc}",
+            "thenRoutine": [
+              "var each2 = 1",
+              {
+                "func": "IF",
+                "operand1": "${pc}",
+                "relation": "==",
+                "operand2": 1,
+                "thenRoutine": [
+                  "var each2 = 2"
+                ]
+              },
+              {
+                "func": "FOREACH",
+                "collection": "picked",
+                "loopRoutine": [
+                  "var o2 = ${widgetID}",
+                  "var ot2 = ${PROPERTY stash OF $o2}",
+                  {
+                    "func": "MOVE",
+                    "from": "${ot2}",
+                    "to": "${cst}",
+                    "count": "${each2}"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "from": "bank",
+                "to": "${cst}",
+                "count": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "combo345Routine": [
+      {
+        "func": "CALL",
+        "routine": "chooseOthersRoutine",
+        "widget": "game",
+        "arguments": {
+          "n": 2,
+          "ttl": "3 4 5   ● ←"
+        }
+      },
+      {
+        "func": "SELECT",
+        "source": "result",
+        "property": "id",
+        "relation": "!=",
+        "value": "",
+        "collection": "picked"
+      },
+      {
+        "func": "COUNT",
+        "collection": "picked",
+        "variable": "pc3"
+      },
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "cs3"
+      },
+      {
+        "func": "IF",
+        "condition": "${cs3}",
+        "thenRoutine": [
+          "var cst3 = ${PROPERTY stash OF $cs3}",
+          {
+            "func": "IF",
+            "condition": "${pc3}",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "collection": "picked",
+                "loopRoutine": [
+                  "var o3 = ${widgetID}",
+                  "var ot3 = ${PROPERTY stash OF $o3}",
+                  {
+                    "func": "MOVE",
+                    "from": "${ot3}",
+                    "to": "${cst3}",
+                    "count": 1
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "from": "bank",
+                "to": "${cst3}",
+                "count": 2
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "endCombosRoutine": [
+      "var a = ${PROPERTY value OF die1}",
+      "var b = ${PROPERTY value OF die2}",
+      "var c = ${PROPERTY value OF die3}",
+      "var t1 = ${a} == ${b}",
+      "var t2 = ${b} == ${c}",
+      "var trio = ${t1} && ${t2}",
+      {
+        "func": "IF",
+        "condition": "${trio}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${a}",
+            "relation": "==",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "combo222Routine",
+                "widget": "game"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${a}",
+            "relation": "==",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "gainRoutine",
+                "widget": "game",
+                "arguments": {
+                  "amount": 2
+                }
+              },
+              {
+                "func": "CALL",
+                "routine": "stealRoutine",
+                "widget": "game",
+                "arguments": {
+                  "n": 1,
+                  "each": 1,
+                  "give": 0,
+                  "ttl": "3 3 3   ● ←"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${a}",
+            "relation": "==",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "gainRoutine",
+                "widget": "game",
+                "arguments": {
+                  "amount": 2
+                }
+              },
+              {
+                "func": "CALL",
+                "routine": "stealRoutine",
+                "widget": "game",
+                "arguments": {
+                  "n": 2,
+                  "each": 1,
+                  "give": 0,
+                  "ttl": "4 4 4   ● ←"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${a}",
+            "relation": "==",
+            "operand2": 5,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "gainRoutine",
+                "widget": "game",
+                "arguments": {
+                  "amount": 5
+                }
+              },
+              {
+                "func": "CALL",
+                "routine": "stealRoutine",
+                "widget": "game",
+                "arguments": {
+                  "n": 2,
+                  "each": 1,
+                  "give": 1,
+                  "ttl": "5 5 5   ● →"
+                }
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var mn = min ${a} ${b}",
+          "var mn = min ${mn} ${c}",
+          "var mx = max ${a} ${b}",
+          "var mx = max ${mx} ${c}",
+          "var span = ${mx} - ${mn}",
+          "var mid = ${a} + ${b} + ${c} - ${mn} - ${mx}",
+          "var wanted = ${mn} + 1",
+          "var r1 = ${span} == 2",
+          "var r2 = ${mid} == ${wanted}",
+          "var run = ${r1} && ${r2}",
+          {
+            "func": "IF",
+            "condition": "${run}",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${mn}",
+                "relation": "==",
+                "operand2": 2,
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "gainRoutine",
+                    "widget": "game",
+                    "arguments": {
+                      "amount": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${mn}",
+                "relation": "==",
+                "operand2": 3,
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "combo345Routine",
+                    "widget": "game"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "checkEndRoutine": [
+      "var best = -1",
+      "var bestSeat = ''",
+      "var reached = 0",
+      {
+        "func": "FOREACH",
+        "in": "${activeSeats}",
+        "loopRoutine": [
+          "var sid = ${value}",
+          "var sst2 = ${PROPERTY stash OF $sid}",
+          {
+            "func": "COUNT",
+            "holder": "${sst2}",
+            "variable": "sc2"
+          },
+          {
+            "func": "IF",
+            "operand1": "${sc2}",
+            "relation": ">=",
+            "operand2": 24,
+            "thenRoutine": [
+              "var reached = 1"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${sc2}",
+            "relation": ">",
+            "operand2": "${best}",
+            "thenRoutine": [
+              "var best = ${sc2}",
+              "var bestSeat = ${sid}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${reached}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "over",
+            "value": 1
+          },
+          "var wn = ${PROPERTY player OF $bestSeat}",
+          {
+            "func": "LABEL",
+            "label": "msg",
+            "value": "★  ${wn}  ★   ${best}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "msg"
+            ],
+            "property": "css",
+            "value": "display:flex; align-items:center; justify-content:center; background: rgba(156,107,6,0.9); color:#ffffff; font-size:30px; font-weight:bold"
+          }
+        ]
+      }
+    ],
+    "awardPotRoutine": [
+      "var aps = ${PROPERTY potSeat OF game}",
+      {
+        "func": "IF",
+        "condition": "${aps}",
+        "thenRoutine": [
+          "var apst = ${PROPERTY stash OF $aps}",
+          {
+            "func": "MOVE",
+            "from": "pot",
+            "to": "${apst}",
+            "count": "all"
+          },
+          {
+            "func": "MOVE",
+            "from": "bank",
+            "to": "pot",
+            "count": 2
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "beat",
+            "value": 0
+          },
+          "var apn = ${PROPERTY player OF $aps}",
+          {
+            "func": "LABEL",
+            "label": "msg",
+            "value": "★  ${apn}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "msg"
+            ],
+            "property": "css",
+            "value": "display:flex; align-items:center; justify-content:center; background: rgba(156,107,6,0.9); color:#ffffff; font-size:30px; font-weight:bold"
+          },
+          {
+            "func": "CALL",
+            "routine": "checkEndRoutine",
+            "widget": "game"
+          }
+        ]
+      }
+    ],
+    "newTurnRoutine": [
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "type",
+        "value": "dice",
+        "collection": "dd"
+      },
+      {
+        "func": "SET",
+        "collection": "dd",
+        "property": "locked",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "dd",
+        "property": "color",
+        "value": "#ffffff"
+      },
+      {
+        "func": "SET",
+        "collection": "dd",
+        "property": "borderColor",
+        "value": "#555555"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "lock1",
+          "lock2",
+          "lock3"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "game"
+        ],
+        "property": "freeRolls",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "game"
+        ],
+        "property": "paidRolls",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "game"
+        ],
+        "property": "busted",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "game"
+        ],
+        "property": "turnScore",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "sumLabel",
+        "value": ""
+      }
+    ],
+    "jackpotRoutine": [
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "js"
+      },
+      {
+        "func": "IF",
+        "condition": "${js}",
+        "thenRoutine": [
+          "var jst = ${PROPERTY stash OF $js}",
+          {
+            "func": "MOVE",
+            "from": "bank",
+            "to": "${jst}",
+            "count": 2
+          },
+          {
+            "func": "FOREACH",
+            "in": "${activeSeats}",
+            "loopRoutine": [
+              "var jo = ${value}",
+              {
+                "func": "IF",
+                "operand1": "${jo}",
+                "relation": "!=",
+                "operand2": "${js}",
+                "thenRoutine": [
+                  "var jot = ${PROPERTY stash OF $jo}",
+                  {
+                    "func": "MOVE",
+                    "from": "${jot}",
+                    "to": "${jst}",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "pot",
+            "to": "${jst}",
+            "count": "all"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "potSeat",
+            "value": "${js}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "beat",
+            "value": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "bank",
+            "to": "pot",
+            "count": 2
+          },
+          {
+            "func": "LABEL",
+            "label": "msg",
+            "value": "★ ★ ★"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "msg"
+            ],
+            "property": "css",
+            "value": "display:flex; align-items:center; justify-content:center; background: rgba(156,107,6,0.9); color:#ffffff; font-size:30px; font-weight:bold"
+          },
+          {
+            "func": "CALL",
+            "routine": "checkEndRoutine",
+            "widget": "game"
+          },
+          {
+            "func": "CALL",
+            "routine": "newTurnRoutine",
+            "widget": "game"
+          },
+          {
+            "func": "CALL",
+            "routine": "potColorRoutine",
+            "widget": "game"
+          },
+          {
+            "func": "CALL",
+            "routine": "refreshRoutine",
+            "widget": "game"
+          }
+        ]
+      }
+    ],
+    "bustRoutine": [
+      {
+        "func": "CALL",
+        "routine": "payRoutine",
+        "widget": "game",
+        "arguments": {
+          "amount": 3,
+          "dst": "bank"
+        }
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "game"
+        ],
+        "property": "busted",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "game"
+        ],
+        "property": "turnScore",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "sumLabel",
+        "value": "0"
+      },
+      {
+        "func": "LABEL",
+        "label": "msg",
+        "value": "✖ ✖ ✖    − ●●●"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "msg"
+        ],
+        "property": "css",
+        "value": "display:flex; align-items:center; justify-content:center; background: rgba(140,32,32,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+      },
+      {
+        "func": "CALL",
+        "routine": "endTurnRoutine",
+        "widget": "game"
+      }
+    ],
+    "evalRollRoutine": [
+      "var a = ${PROPERTY value OF die1}",
+      "var b = ${PROPERTY value OF die2}",
+      "var c = ${PROPERTY value OF die3}",
+      "var sum = ${a} + ${b} + ${c}",
+      {
+        "func": "SET",
+        "collection": [
+          "game"
+        ],
+        "property": "turnScore",
+        "value": "${sum}"
+      },
+      {
+        "func": "LABEL",
+        "label": "sumLabel",
+        "value": "${sum}"
+      },
+      "var ended = 0",
+      "var t1 = ${a} == ${b}",
+      "var t2 = ${b} == ${c}",
+      "var trio = ${t1} && ${t2}",
+      {
+        "func": "IF",
+        "condition": "${trio}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${a}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              "var ended = 1",
+              {
+                "func": "CALL",
+                "routine": "jackpotRoutine",
+                "widget": "game"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${a}",
+            "relation": "==",
+            "operand2": 1,
+            "thenRoutine": [
+              "var ended = 1",
+              {
+                "func": "CALL",
+                "routine": "bustRoutine",
+                "widget": "game"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${ended}",
+        "elseRoutine": [
+          "var mn = min ${a} ${b}",
+          "var mn = min ${mn} ${c}",
+          "var mx = max ${a} ${b}",
+          "var mx = max ${mx} ${c}",
+          "var span = ${mx} - ${mn}",
+          "var mid = ${sum} - ${mn} - ${mx}",
+          "var wanted = ${mn} + 1",
+          "var r1 = ${span} == 2",
+          "var r2 = ${mid} == ${wanted}",
+          "var run = ${r1} && ${r2}",
+          "var i1 = ${mn} == 1",
+          "var isOneTwoThree = ${run} && ${i1}",
+          {
+            "func": "IF",
+            "condition": "${isOneTwoThree}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "gainRoutine",
+                "widget": "game",
+                "arguments": {
+                  "amount": 1
+                }
+              },
+              {
+                "func": "FOREACH",
+                "in": [
+                  "die1",
+                  "die2",
+                  "die3"
+                ],
+                "loopRoutine": [
+                  "var dID = ${value}",
+                  "var lID = ${PROPERTY lockWidget OF $dID}",
+                  "var dv = ${PROPERTY value OF $dID}",
+                  {
+                    "func": "IF",
+                    "operand1": "${dv}",
+                    "relation": "==",
+                    "operand2": 2,
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${dID}"
+                        ],
+                        "property": "locked",
+                        "value": true
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${dID}"
+                        ],
+                        "property": "color",
+                        "value": "#ffd75e"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${dID}"
+                        ],
+                        "property": "borderColor",
+                        "value": "#8a5a00"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${lID}"
+                        ],
+                        "property": "display",
+                        "value": true
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${dID}"
+                        ],
+                        "property": "locked",
+                        "value": false
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${dID}"
+                        ],
+                        "property": "color",
+                        "value": "#ffffff"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${dID}"
+                        ],
+                        "property": "borderColor",
+                        "value": "#555555"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${lID}"
+                        ],
+                        "property": "display",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "game"
+                ],
+                "property": "freeRolls",
+                "value": 1,
+                "relation": "+"
+              },
+              {
+                "func": "LABEL",
+                "label": "msg",
+                "value": "1 2 3    ● ←    ↻"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "msg"
+                ],
+                "property": "css",
+                "value": "display:flex; align-items:center; justify-content:center; background: rgba(31,122,61,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+              }
+            ],
+            "elseRoutine": [
+              "var bt = ${PROPERTY beat OF game}",
+              {
+                "func": "IF",
+                "operand1": "${sum}",
+                "relation": ">",
+                "operand2": "${bt}",
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "msg",
+                    "value": "▲"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "msg"
+                    ],
+                    "property": "css",
+                    "value": "display:flex; align-items:center; justify-content:center; background: rgba(31,122,61,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "msg",
+                    "value": "▼"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "msg"
+                    ],
+                    "property": "css",
+                    "value": "display:flex; align-items:center; justify-content:center; background: rgba(140,32,32,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "CALL",
+            "routine": "refreshRoutine",
+            "widget": "game"
+          }
+        ]
+      }
+    ],
+    "doRollRoutine": [
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "locked",
+        "relation": "!=",
+        "value": true,
+        "collection": "loose"
+      },
+      {
+        "func": "COUNT",
+        "collection": "loose",
+        "variable": "lc"
+      },
+      {
+        "func": "IF",
+        "condition": "${lc}",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": "loose",
+            "mode": "ignoreClickRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "evalRollRoutine",
+            "widget": "game"
+          }
+        ]
+      }
+    ],
+    "rollRoutine": [
+      "var over = ${PROPERTY over OF game}",
+      {
+        "func": "IF",
+        "condition": "${over}",
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "msg",
+            "value": "★"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "msg"
+            ],
+            "property": "css",
+            "value": "display:flex; align-items:center; justify-content:center; background: rgba(156,107,6,0.9); color:#ffffff; font-size:30px; font-weight:bold"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "curSeatRoutine",
+            "widget": "game",
+            "variable": "rs"
+          },
+          {
+            "func": "IF",
+            "condition": "${rs}",
+            "thenRoutine": [
+              "var fr = ${PROPERTY freeRolls OF game}",
+              "var pr = ${PROPERTY paidRolls OF game}",
+              {
+                "func": "IF",
+                "condition": "${paid}",
+                "thenRoutine": [
+                  "var p1 = ${pr} > 0",
+                  "var p2 = ${fr} == 0",
+                  "var okPaid = ${p1} && ${p2}",
+                  {
+                    "func": "IF",
+                    "condition": "${okPaid}",
+                    "thenRoutine": [
+                      {
+                        "func": "CALL",
+                        "routine": "payRoutine",
+                        "widget": "game",
+                        "arguments": {
+                          "amount": 1,
+                          "dst": "pot"
+                        }
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "game"
+                        ],
+                        "property": "paidRolls",
+                        "value": 1,
+                        "relation": "-"
+                      },
+                      {
+                        "func": "CALL",
+                        "routine": "doRollRoutine",
+                        "widget": "game"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "LABEL",
+                        "label": "msg",
+                        "value": "✖"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "msg"
+                        ],
+                        "property": "css",
+                        "value": "display:flex; align-items:center; justify-content:center; background: rgba(140,32,32,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${fr}",
+                    "relation": ">",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${fr}",
+                        "relation": "==",
+                        "operand2": 2,
+                        "thenRoutine": [
+                          {
+                            "func": "SELECT",
+                            "type": "dice",
+                            "property": "type",
+                            "value": "dice",
+                            "collection": "dd2"
+                          },
+                          {
+                            "func": "SET",
+                            "collection": "dd2",
+                            "property": "locked",
+                            "value": false
+                          },
+                          {
+                            "func": "SET",
+                            "collection": "dd2",
+                            "property": "color",
+                            "value": "#ffffff"
+                          },
+                          {
+                            "func": "SET",
+                            "collection": "dd2",
+                            "property": "borderColor",
+                            "value": "#555555"
+                          },
+                          {
+                            "func": "SET",
+                            "collection": [
+                              "lock1",
+                              "lock2",
+                              "lock3"
+                            ],
+                            "property": "display",
+                            "value": false
+                          }
+                        ]
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "game"
+                        ],
+                        "property": "freeRolls",
+                        "value": 1,
+                        "relation": "-"
+                      },
+                      {
+                        "func": "CALL",
+                        "routine": "doRollRoutine",
+                        "widget": "game"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "LABEL",
+                        "label": "msg",
+                        "value": "✖"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "msg"
+                        ],
+                        "property": "css",
+                        "value": "display:flex; align-items:center; justify-content:center; background: rgba(140,32,32,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "LABEL",
+                "label": "msg",
+                "value": "✖"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "msg"
+                ],
+                "property": "css",
+                "value": "display:flex; align-items:center; justify-content:center; background: rgba(140,32,32,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "endTurnRoutine": [
+      "var over2 = ${PROPERTY over OF game}",
+      {
+        "func": "IF",
+        "condition": "${over2}",
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "msg",
+            "value": "★"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "msg"
+            ],
+            "property": "css",
+            "value": "display:flex; align-items:center; justify-content:center; background: rgba(156,107,6,0.9); color:#ffffff; font-size:30px; font-weight:bold"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "curSeatRoutine",
+            "widget": "game",
+            "variable": "es"
+          },
+          {
+            "func": "IF",
+            "condition": "${es}",
+            "thenRoutine": [
+              "var au = ${PROPERTY auto OF game}",
+              "var sc = ${PROPERTY turnScore OF game}",
+              "var bu = ${PROPERTY busted OF game}",
+              "var fr2 = ${PROPERTY freeRolls OF game}",
+              "var rolled = ${fr2} < 2",
+              "var notBust = ! ${bu}",
+              "var sc1 = ${au} && ${rolled}",
+              "var scoreIt = ${sc1} && ${notBust}",
+              {
+                "func": "IF",
+                "condition": "${scoreIt}",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "endCombosRoutine",
+                    "widget": "game"
+                  },
+                  "var bt2 = ${PROPERTY beat OF game}",
+                  {
+                    "func": "IF",
+                    "operand1": "${sc}",
+                    "relation": ">",
+                    "operand2": "${bt2}",
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "game"
+                        ],
+                        "property": "potSeat",
+                        "value": "${es}"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "game"
+                        ],
+                        "property": "beat",
+                        "value": "${sc}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "TURN",
+                "turn": 1,
+                "turnCycle": "forward"
+              },
+              {
+                "func": "CALL",
+                "routine": "curSeatRoutine",
+                "widget": "game",
+                "variable": "ns"
+              },
+              "var pseat = ${PROPERTY potSeat OF game}",
+              {
+                "func": "SELECT",
+                "source": "activeSeats",
+                "property": "id",
+                "value": "${pseat}",
+                "collection": "pv"
+              },
+              {
+                "func": "COUNT",
+                "collection": "pv",
+                "variable": "pvn"
+              },
+              {
+                "func": "IF",
+                "condition": "${pvn}",
+                "elseRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "game"
+                    ],
+                    "property": "potSeat",
+                    "value": "${ns}"
+                  },
+                  "var pseat = ${ns}"
+                ]
+              },
+              "var cl1 = ${ns} == ${pseat}",
+              "var closes = ${au} && ${cl1}",
+              {
+                "func": "IF",
+                "condition": "${closes}",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "awardPotRoutine",
+                    "widget": "game"
+                  }
+                ]
+              },
+              {
+                "func": "CALL",
+                "routine": "newTurnRoutine",
+                "widget": "game"
+              },
+              {
+                "func": "CALL",
+                "routine": "potColorRoutine",
+                "widget": "game"
+              },
+              {
+                "func": "CALL",
+                "routine": "refreshRoutine",
+                "widget": "game"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "LABEL",
+                "label": "msg",
+                "value": "✖"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "msg"
+                ],
+                "property": "css",
+                "value": "display:flex; align-items:center; justify-content:center; background: rgba(140,32,32,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "newGameRoutine": [
+      {
+        "func": "INPUT",
+        "confirmButtonIcon": "restart_alt",
+        "confirmButtonText": "",
+        "cancelButtonIcon": "cancel",
+        "cancelButtonText": "",
+        "fields": [
+          {
+            "type": "title",
+            "text": "↻",
+            "css": "background:#0d2b21;color:#f0c419;font-size:44px;text-align:center"
+          }
+        ]
+      },
+      {
+        "func": "COUNT",
+        "collection": "activeSeats",
+        "variable": "sn"
+      },
+      {
+        "func": "IF",
+        "condition": "${sn}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "collection": "allc"
+          },
+          {
+            "func": "MOVE",
+            "collection": "allc",
+            "to": "bank",
+            "count": "all"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${activeSeats}",
+            "loopRoutine": [
+              "var nid = ${value}",
+              "var nst = ${PROPERTY stash OF $nid}",
+              {
+                "func": "MOVE",
+                "from": "bank",
+                "to": "${nst}",
+                "count": 3
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "bank",
+            "to": "pot",
+            "count": 1
+          },
+          {
+            "func": "TURN",
+            "turnCycle": "random",
+            "turn": 1
+          },
+          {
+            "func": "CALL",
+            "routine": "curSeatRoutine",
+            "widget": "game",
+            "variable": "st"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "potSeat",
+            "value": "${st}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "beat",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "game"
+            ],
+            "property": "over",
+            "value": 0
+          },
+          {
+            "func": "CALL",
+            "routine": "newTurnRoutine",
+            "widget": "game"
+          },
+          {
+            "func": "CALL",
+            "routine": "potColorRoutine",
+            "widget": "game"
+          },
+          {
+            "func": "CALL",
+            "routine": "refreshRoutine",
+            "widget": "game"
+          },
+          {
+            "func": "LABEL",
+            "label": "msg",
+            "value": "● → ★ 24"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "msg"
+            ],
+            "property": "css",
+            "value": "display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.32); color:#ffffff; font-size:30px; font-weight:bold"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "msg",
+            "value": "✖"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "msg"
+            ],
+            "property": "css",
+            "value": "display:flex; align-items:center; justify-content:center; background: rgba(140,32,32,0.85); color:#ffffff; font-size:30px; font-weight:bold"
+          }
+        ]
+      }
+    ]
+  },
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "Golden Cauldron",
+      "image": "/assets/-1412153140_20838",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/324811/pass-the-pot",
+      "year": "2020",
+      "mode": "vs",
+      "time": "30",
+      "players": "2-5",
+      "language": "en-US",
+      "showName": true,
+      "lastUpdate": 1785801600000,
+      "skill": "Luck",
+      "similarName": "Pass The Pot",
+      "similarDesigner": "Oswald Greene Jr.",
+      "similarImage": "",
+      "similarAwards": "",
+      "variant": "",
+      "variantImage": "",
+      "description": "A push-your-luck dice game: roll three dice, re-roll what you dare, and try to beat the score of the player who is holding the cauldron. Beat it and the cauldron - and every coin in it - passes to you; hold on to it until your next turn and you cash it in. First player to 24 coins triggers the last round.",
+      "ruleText": "Three dice show 1-5 and a cauldron (worth 0). Your score is the sum of the three dice.\n\nOn your turn you roll all three dice, then you may re-roll any of them once for free, and after that you may pay 1 coin into the cauldron for one final re-roll.\n\nIf your final score is higher than the score of the player currently holding the cauldron, you take the cauldron and your score becomes the new target. If the cauldron is still yours when your next turn comes around, you keep every coin in it, then 2 coins from the bank seed the next cauldron and you start the new round.\n\nSpecial rolls: three cauldrons = 2 coins from the bank, 1 coin from every opponent and the cauldron itself (turn ends). 1-1-1 = pay 3 coins to the bank, turn ends. 1-2-3 = 1 coin from the bank plus a free re-roll of the 1 and the 3. 2-3-4 = 1 coin from the bank. 3-4-5 = 1 coin from each of two opponents, or 2 from the bank. 2-2-2 = 2 coins from one opponent, 1 from each of two opponents, or 1 from the bank. 3-3-3 = 2 from the bank and 1 from an opponent. 4-4-4 = 2 from the bank and 1 from each of two opponents. 5-5-5 = 5 from the bank, then give 1 to each of two opponents.\n\nWhen a player reaches 24 coins the round is finished and the richest player wins.",
+      "helpText": "SETUP: take a seat, then press the grey restart button. Every coin goes back to the bank, each seated player gets 3 coins, 1 coin is put into the cauldron and a random player starts as its holder. The coloured ring around the cauldron and the coloured bar under the target number always show whose cauldron it is.\n\nROLLING: the green dice button rolls. The first press of a turn rolls all three dice, the second press is the free re-roll. Click a die to lock it (a padlock appears) and it will not be re-rolled. The gold coin+dice button pays 1 coin into the cauldron for a third re-roll; it only works once both free rolls are used up. The box next to the dice shows the total of the current roll, the box on the left shows the target you have to beat.\n\nENDING A TURN: the blue check button. With automation on (the blue gear switch on the left) it pays out the combo bonus of your final dice, gives you the cauldron if you beat the target, passes the turn to the next seat and pays out the cauldron when it comes back round to its holder. When a combo lets you choose opponents, a picker with the seats opens - the most likely choice is preselected, click the seats to change it and confirm. When somebody reaches 24 coins the current round is finished and the banner shows the winner.\n\nMANUAL PLAY: clicking the gear switch turns it into a red hand - the check button then only passes the turn and you settle all coins yourself. In both modes you can always drag coins by hand between the bank, the cauldron and any player stash; the counters update automatically.\n\nThe chart on the right lists the turn sequence, every scoring combo and the 24 coin win condition using icons only.",
+      "attribution": "Room layout, JSON, deck and preview image created by the author (VTT-AI-Agent) and released to the public domain (CC0).\n\nThe layout, its automation routines and the accompanying texts were produced with the help of an AI assistant (Anthropic Claude, https://claude.ai). No AI generated imagery is used.\n\nAll graphics are internal to VirtualTabletop: the built-in dice, card and button rendering, and icons from the game-icons.net set that ships with VirtualTabletop (cauldron, crown-coin, gears and trophy by Lorc; bank, person, plain-padlock, rolling-dices, check-mark, player-next and the dice-six-faces icons by Delapouite; bullseye by Skoll; hand by Sbed - all CC BY 3.0, https://game-icons.net), plus the Google Material Symbols icon used on the restart button. No external assets are referenced."
+    }
+  }
+}
