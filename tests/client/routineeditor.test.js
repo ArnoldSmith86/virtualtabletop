@@ -251,7 +251,7 @@ describe('operation rendering', () => {
   test('the sentence leaves out parameters the engine ignores', () => {
     // FLIP flips to the given face, so the cycle direction has no effect
     const flip = renderOperation({ func: 'FLIP', holder: 'h1', face: 1, faceCycle: 'backward' }).dom;
-    expect(flip.textContent).toContain('face down');
+    expect(flip.textContent).toContain('face up');
     expect(flip.querySelector('[data-parameter="faceCycle"]')).toBeNull();
 
     // the deprecated canvas parameter replaces collection
@@ -569,8 +569,8 @@ describe('operation rendering', () => {
     [ { func: 'MOVE', from: 'deck1', to: 'hand1', count: -2, face: 2 }, 'Move all but 2 widgets from deck1 to hand1 and turn them to face 2' ],
     [ { func: 'COUNT' }, 'Count the picked widgets' ],
     [ { func: 'COUNT', holder: 'hand1', variable: 'cards' }, 'Count what is in hand1 and remember it as cards' ],
-    [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn all widgets in deck1 face up' ],
-    [ { func: 'FLIP', holder: 'deck1', face: 1, count: 3 }, 'Turn 3 widgets in deck1 face down' ],
+    [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn all widgets in deck1 face down' ],
+    [ { func: 'FLIP', holder: 'deck1', face: 1, count: 3 }, 'Turn 3 widgets in deck1 face up' ],
     [ { func: 'FLIP', collection: 'aces', face: 2 }, 'Turn aces to face 2' ],
     [ { func: 'FLIP', faceCycle: 'backward' }, 'Cycle the face of the picked widgets backward' ],
     [ { func: 'FLIP', faceCycle: 'random', count: 2 }, 'Cycle the face of 2 of the picked widgets to a random face' ],
@@ -702,7 +702,7 @@ describe('picking how an operation works and which options it uses', () => {
     const choices = routineOperationVariantChoices(operation);
     expect(choices.map(c => c.lead)).toEqual([ 'Turn', 'Cycle the face of' ]);
     expect(choices[0].example).toContain('deck1');
-    expect(choices[0].example).toContain('Turn all widgets in deck1 face up');
+    expect(choices[0].example).toContain('Turn all widgets in deck1 face down');
     // where two ways of working start with the same word, what they are called
     // tells them apart instead
     expect(routineOperationVariantChoices({ func: 'MOVE', from: 'deck1' }).map(c => c.lead))
@@ -773,18 +773,24 @@ describe('picking how an operation works and which options it uses', () => {
 
   test('what a value is compared to decides whether it can be told apart', () => {
     const undetermined = operation => renderOperation(operation).editor.undeterminedBy();
-    // the two truthiness traps: every ${...} is a truthy string, and it is
-    // always of type string - so testing it as either answers about the syntax
-    expect(undetermined({ func: 'SET', property: 'rotation', relation: '+', value: '${RANDOM}' })).toEqual([ 'value' ]);
+    // the truthiness trap: every ${...} is a truthy string, so testing it as one
+    // answers about the syntax rather than about the value
+    expect(undetermined({ func: 'AUDIO', source: 'ding.mp3', silence: '${stop}' })).toEqual([ 'silence' ]);
     expect(undetermined({ func: 'SET', property: 'x', relation: '${op}', value: 5 })).toEqual([ 'relation' ]);
-    expect(undetermined({ func: 'FLIP', face: '${targetFace}' })).toEqual([ 'face' ]);
+    // Increase and Append are the same operation in two sets of words (relation
+    // "+" either way), so a value only the routine knows leaves the card right -
+    // it reads as the arithmetic one, which is what a "+" nearly always is
+    expect(undetermined({ func: 'SET', property: 'rotation', relation: '+', value: '${RANDOM}' })).toEqual([]);
     // a way of working the value does not decide is still an answer: a SET with
     // no relation sets, whatever the value comes out as
     expect(undetermined({ func: 'SET', property: 'x', value: '${v}' })).toEqual([]);
-    // and so is a question a reference answers by being written down at all
+    // and so is a question a reference answers by being written down at all - a
+    // FLIP with a face turns the widgets to it, whichever face it works out to
     expect(undetermined({ func: 'COUNT', holder: '${h}' })).toEqual([]);
     expect(undetermined({ func: 'FOREACH', range: '${r}' })).toEqual([]);
+    expect(undetermined({ func: 'FLIP', face: '${targetFace}' })).toEqual([]);
   });
+
 
   test('picking a way of working says which worked-out value it would replace', () => {
     const operation = { func: 'TURN', turnCycle: '${PROPERTY faceCycle}' };
@@ -973,7 +979,7 @@ describe('picking how an operation works and which options it uses', () => {
     menu.setOperationDetails({ func: 'FLIP', face: 1 }, [ 'face' ], { state: {} }, [], []);
     menu.show();
     expect([...menu.domElement.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent))
-      .toEqual([ 'face up', 'face down', 'a specific face…' ]);
+      .toEqual([ 'face down', 'face up', 'a specific face…' ]);
     menu.hide();
     // a face the list does not offer is a number, and the sentence says so
     const third = editorForOperation({ func: 'FLIP', face: 2 });
@@ -1005,7 +1011,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(withoutFace.querySelector('[data-parameter="face"]')).toBeNull();
     expect(withoutFace.querySelector('.routine-editor-add-clause')).not.toBeNull();
     const withFace = renderOperation({ func: 'MOVE', from: 'a', to: 'b', face: 0 }).dom;
-    expect(withFace.textContent).toContain('and turn them face up');
+    expect(withFace.textContent).toContain('and turn them face down');
     expect(withFace.querySelector('.routine-editor-clause-remove')).not.toBeNull();
   });
 
@@ -3103,7 +3109,7 @@ describe('the words and the units of an operation', () => {
   // z is a position and not the layer property a widget also has, so the option
   // says which of the two it is instead of leaving that to the letter
   test('MOVEXY words a face like MOVE and offers the stacked position', () => {
-    expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 0 })).toContain('and turn them face up');
+    expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 0 })).toContain('and turn them face down');
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 2 })).toContain('and turn them to face 2');
     expect(offeredOptions({ func: 'MOVEXY', from: 'h1' })).toEqual([ 'at the specified stacked (z) position', 'to a face', 'ignoring the grid', 'keeping their current owner' ]);
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', z: 3 })).toContain('at the z position 3');
@@ -3204,12 +3210,42 @@ describe('the words and the units of an operation', () => {
     expect(editorFor({ func: 'SCORE' }).render().querySelector('[data-parameter="value"]').classList.contains('routine-editor-parameter-missing')).toBe(false);
   });
 
+  // face 0 is the back of a card and face 1 its front (the wiki says so for
+  // FLIP), so 0 is face DOWN - the words were the other way round
+  test('the first two faces are said the way a deck numbers them', () => {
+    expect(sentenceWords({ func: 'FLIP', holder: 'h1', face: 0 })).toBe('Turn all widgets in h1 face down');
+    expect(sentenceWords({ func: 'FLIP', holder: 'h1', face: 1 })).toBe('Turn all widgets in h1 face up');
+    expect(sentenceWords({ func: 'FLIP', holder: 'h1', face: 2 })).toBe('Turn all widgets in h1 to face 2');
+    expect(sentenceWords({ func: 'MOVE', from: 'a', to: 'b', face: 0 })).toContain('and turn them face down');
+    expect(sentenceWords({ func: 'MOVEXY', from: 'a', face: 1 })).toContain('and turn them face up');
+  });
+
+  // "${x}" is a string to JavaScript, which is the one thing it never means
+  test('a value the routine works out reads as the kind of value it stands in for', () => {
+    // a SET that adds one is arithmetic - the wording that made it text turned
+    // "add up what x comes out to" into "write x behind the property"
+    // (a value the routine remembers is worded as the name it goes by)
+    expect(sentenceWords({ func: 'SET', property: 'rotation', relation: '+', value: '${x}' }))
+      .toBe('Increase rotation of the picked widgets by x');
+    expect(sentenceWords({ func: 'SET', property: 'text', relation: '+', value: ' (used)' }))
+      .toBe('Append " (used)" to text of the picked widgets');
+    // and a FLIP that names a face names one, whichever face it works out to
+    expect(sentenceWords({ func: 'FLIP', holder: 'h1', face: '${f}' })).toBe('Turn all widgets in h1 to face f');
+    expect(sentenceWords({ func: 'MOVE', from: 'a', to: 'b', face: '${f}' })).toContain('and turn them to face f');
+    // picking the way it already reads as leaves the value alone instead of
+    // writing the number a fresh operation of that kind starts with over it
+    const increase = routineOperationVariantChoices({ func: 'SET', property: 'rotation', relation: '+', value: '${x}' })
+      .find(choice => choice.id == 'add');
+    expect(increase.replaces).toEqual([]);
+    expect(increase.values.value).toBe('${x}');
+  });
+
   // a holder is a place widgets are in, a group of widgets is the widgets - and
   // saying "in the pick" made a group a place and taught a word nothing defines
   test('a group of widgets reads the same way in every sentence, and never as a place', () => {
-    expect(sentenceWords({ func: 'FLIP', holder: 'h1', face: 0 })).toBe('Turn all widgets in h1 face up');
-    expect(sentenceWords({ func: 'FLIP', face: 0 })).toBe('Turn the picked widgets face up');
-    expect(sentenceWords({ func: 'FLIP', face: 0, count: 2 })).toBe('Turn 2 of the picked widgets face up');
+    expect(sentenceWords({ func: 'FLIP', holder: 'h1', face: 0 })).toBe('Turn all widgets in h1 face down');
+    expect(sentenceWords({ func: 'FLIP', face: 0 })).toBe('Turn the picked widgets face down');
+    expect(sentenceWords({ func: 'FLIP', face: 0, count: 2 })).toBe('Turn 2 of the picked widgets face down');
     expect(sentenceWords({ func: 'ROTATE', holder: 'h1', angle: 90 })).toBe('Rotate 1 widget in h1 by 90 degrees');
     expect(sentenceWords({ func: 'ROTATE', angle: 90 })).toBe('Rotate 1 of the picked widgets by 90 degrees');
     expect(sentenceWords({ func: 'FOREACH' })).toContain('For each of the picked widgets');

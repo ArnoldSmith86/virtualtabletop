@@ -12,12 +12,12 @@
 //     one an operation is shown as is decided by match() - the first variant
 //     whose match() fits it, with the one without a match() as the fallback,
 //     wherever in the list it sits. Every sentence starts with the words that
-//     say what the operation does ("Turn face up", "Move widgets from"); those
+//     say what the operation does ("Turn face down", "Move widgets from"); those
 //     words are the drop-down that switches between the variants, so word every
 //     template so that what tells the variants apart comes before the first
 //     parameter. Picking another entry runs that variant's apply() and rewrites
 //     the parameters that tell the variants apart together with the sentence, so
-//     nobody has to know that "turn face up" means face 0 and "flip to the next
+//     nobody has to know that "turn face down" means face 0 and "flip to the next
 //     face" means faceCycle. fixed names the parameters a variant decides: they
 //     are changed by picking another variant, never as an option of their own.
 //
@@ -191,6 +191,13 @@ function isDynamicValue(value) {
   return typeof value == 'string' && /\$\{[^}]+\}/.test(value);
 }
 
+// text the operation really holds, as opposed to a string that only carries a
+// reference: to JavaScript "${x}" is of type string, but what it stands for is
+// whatever the routine works out, so a test for "is this text" has to say no
+function isLiteralText(value) {
+  return typeof value == 'string' && !isDynamicValue(value);
+}
+
 // a collection an operation READS and that is left at DEFAULT is whatever the
 // operations before it picked, and that is what the sentence says instead of the
 // name the engine uses for it - in every sentence with the same words, because
@@ -305,12 +312,22 @@ function keyValueWords(value) {
 }
 
 // the first two faces of a card are the ones a game means when it turns cards
-// over, and "up" and "down" is what they are called everywhere else
-const faceWords = { '0': 'up', '1': 'down', 'null': 'unchanged' };
+// over, and "up" and "down" is what they are called everywhere else. Which way
+// round they are is the deck's own convention and the wiki states it for FLIP:
+// "for 'normal' cards, 0 would be the back and 1 would be the front" - so face 0
+// is face down and face 1 is face up, not the other way round
+const faceWords = { '0': 'down', '1': 'up', 'null': 'unchanged' };
 
 // the first two faces worded the way FLIP words them, where the face is a whole
 // phrase of the sentence rather than the tail of "turn them face ..."
-const flipFaceWords = { '0': 'face up', '1': 'face down' };
+const flipFaceWords = { '0': 'face down', '1': 'face up' };
+
+// whether a face is one of the two that have a word: every other one - the third
+// face of a die, and a face the routine works out while it runs - is said as the
+// number it is ("to face 4", "to face ${f}") rather than as a word it has none of
+function isNamedFace(face) {
+  return flipFaceWords[String(face)] !== undefined;
+}
 
 // "1 widgets" is not a sentence: the wording follows the number, while the chip
 // stays in it either way so the number is still there to be changed
@@ -642,9 +659,11 @@ const routineOperationMetadata = {
     // ways of working: turning them to a face and cycling them onwards are the
     // two, and which face that is is a drop-down in the sentence
     variants: [
-      { id: 'turn', label: 'Turn widgets to a face', fixed: [ 'faceCycle' ], match: v=>typeof v('face') == 'number',
-        apply: operation=>{ delete operation.faceCycle; if(typeof operation.face != 'number') operation.face = 0; },
-        template: v=>`Turn{{count}}${holderPreposition(v)} {holder,collection} ${v('face') > 1 ? 'to face {face}' : '{face}'}` },
+      // a face the routine works out is a face like any other: what tells the two
+      // apart is whether the operation names one at all, which a ${...} does
+      { id: 'turn', label: 'Turn widgets to a face', fixed: [ 'faceCycle' ], match: v=>typeof v('face') == 'number' || isDynamicValue(v('face')),
+        apply: operation=>{ delete operation.faceCycle; if(typeof operation.face != 'number' && !isDynamicValue(operation.face)) operation.face = 0; },
+        template: v=>`Turn{{count}}${holderPreposition(v)} {holder,collection} ${isNamedFace(v('face')) ? '{face}' : 'to face {face}'}` },
       { id: 'cycle', label: 'Cycle the face of widgets', fixed: [ 'face' ],
         apply: operation=>{ delete operation.face; },
         template: v=>`Cycle the face of{{count}}${holderPreposition(v)} {holder,collection} {faceCycle}` }
@@ -909,7 +928,7 @@ const routineOperationMetadata = {
       // the first two faces are what a game turns cards to; the ones after them
       // are numbered, and a number needs the word that says what it is
       { id: 'face', label: 'to a face', add: { face: 0 },
-        template: v=>v('face') > 1 ? ' and turn them to face {face}' : ' and turn them face {face}' }
+        template: v=>isNamedFace(v('face')) ? ' and turn them face {face}' : ' and turn them to face {face}' }
     ],
     // the shape 88% of the library writes: so many widgets out of one holder
     newOperation: { func: 'MOVE', from: null, count: 1 },
@@ -946,7 +965,7 @@ const routineOperationMetadata = {
       // the first two faces are what a game turns cards to; the ones after them
       // are numbered, and a number needs the word that says what it is
       { id: 'face', label: 'to a face', add: { face: 0 },
-        template: v=>v('face') > 1 ? ' and turn them to face {face}' : ' and turn them face {face}' },
+        template: v=>isNamedFace(v('face')) ? ' and turn them face {face}' : ' and turn them to face {face}' },
       { id: 'snapToGrid', label: 'ignoring the grid', template: ', {snapToGrid}', add: { snapToGrid: false } },
       { id: 'resetOwner', label: 'keeping their current owner', template: ', {resetOwner}', add: { resetOwner: false } }
     ],
@@ -1110,30 +1129,35 @@ const routineOperationMetadata = {
         template: 'Set {property} of{{collection}} to {value}' },
       // increasing and appending are the same relation to the engine: it adds
       // the value to what the property holds, which is arithmetic for a number
-      // and text after text for a string. So the value decides which of the two
-      // sentences a stored operation reads as, and picking the other one makes
-      // the value the kind that variant is about.
-      { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], hints: { value: 'number' },
-        match: v=>v('relation') == '+' && typeof v('value') != 'string',
-        apply: operation=>{ operation.relation = '+'; if(typeof operation.value != 'number') operation.value = 1; },
+      // and text after text for a string. So the LITERAL value decides which of
+      // the two sentences a stored operation reads as, and picking the other one
+      // makes the value the kind that variant is about. A value the routine works
+      // out while it runs decides nothing: "${x}" is a string to JavaScript, but
+      // what it stands for is a number in a "+" SET far more often than not, so
+      // it reads as the arithmetic one. Which of the two words it is not a guess
+      // the card has to own up to either (wordingOnly, see variantState): both
+      // write the same operation, so all that is at stake is the English.
+      { id: 'add', label: 'Increase a property', fixed: [ 'relation' ], hints: { value: 'number' }, wordingOnly: [ 'value' ],
+        match: v=>v('relation') == '+' && !isLiteralText(v('value')),
+        apply: operation=>{ operation.relation = '+'; if(typeof operation.value != 'number' && !isDynamicValue(operation.value)) operation.value = 1; },
         template: 'Increase {property} of{{collection}} by {value}' },
       { id: 'subtract', label: 'Decrease a property', fixed: [ 'relation' ], hints: { value: 'number' },
         match: v=>v('relation') == '-',
-        apply: operation=>{ operation.relation = '-'; if(typeof operation.value != 'number') operation.value = 1; },
+        apply: operation=>{ operation.relation = '-'; if(typeof operation.value != 'number' && !isDynamicValue(operation.value)) operation.value = 1; },
         template: 'Decrease {property} of{{collection}} by {value}' },
       { id: 'multiply', label: 'Multiply a property', fixed: [ 'relation' ], hints: { value: 'number' },
         match: v=>v('relation') == '*',
-        apply: operation=>{ operation.relation = '*'; if(typeof operation.value != 'number') operation.value = 1; },
+        apply: operation=>{ operation.relation = '*'; if(typeof operation.value != 'number' && !isDynamicValue(operation.value)) operation.value = 1; },
         template: 'Multiply {property} of{{collection}} by {value}' },
       { id: 'divide', label: 'Divide a property', fixed: [ 'relation' ], hints: { value: 'number' },
         match: v=>v('relation') == '/',
-        apply: operation=>{ operation.relation = '/'; if(typeof operation.value != 'number') operation.value = 1; },
+        apply: operation=>{ operation.relation = '/'; if(typeof operation.value != 'number' && !isDynamicValue(operation.value)) operation.value = 1; },
         template: 'Divide {property} of{{collection}} by {value}' },
       { id: 'toggle', label: 'Switch a property on or off', fixed: [ 'relation', 'value' ], match: v=>v('relation') == '!',
         apply: operation=>{ operation.relation = '!'; delete operation.value; },
         template: 'Toggle {property} of{{collection}}' },
-      { id: 'append', label: 'Append text to a property', fixed: [ 'relation' ], hints: { value: '"text"' },
-        match: v=>v('relation') == '+' && typeof v('value') == 'string',
+      { id: 'append', label: 'Append text to a property', fixed: [ 'relation' ], hints: { value: '"text"' }, wordingOnly: [ 'value' ],
+        match: v=>v('relation') == '+' && isLiteralText(v('value')),
         apply: operation=>{ operation.relation = '+'; if(typeof operation.value != 'string') operation.value = ''; },
         template: 'Append {value} to {property} of{{collection}}' }
     ],
@@ -2663,8 +2687,13 @@ class RoutineOperationEditor {
       if(!variant.match)
         continue;
       const decided = this.undecidableReads((value, isSet)=>Boolean(variant.match(value, isSet)));
+      // wordingOnly names the parameters a variant reads to tell itself from a
+      // twin that writes the same operation in other words (SET's Increase and
+      // Append are both relation "+"). A reference in one of those leaves the
+      // reader with the right card - only the English of it could have gone the
+      // other way - so it is not something the sentence has to own up to.
       for(const name of decided.undecidable)
-        if(dynamic.indexOf(name) == -1)
+        if((variant.wordingOnly || []).indexOf(name) == -1 && dynamic.indexOf(name) == -1)
           dynamic.push(name);
       if(decided.answer)
         return { variant, dynamic };

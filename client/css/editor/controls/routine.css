@@ -472,9 +472,22 @@ body.edit.darkMode .routine-editor-parameter-missing {
 }
 
 /* The lines of an INPUT dialog. They are the same cards as the operations of a
-   nested routine (and share the cutout that block gets), in the color a value
-   has rather than the one an operation has: a line is something the dialog
-   shows and asks, not a step the routine takes. */
+   nested routine, in the color a value has rather than the one an operation has:
+   a line is something the dialog shows and asks, not a step the routine takes.
+   Which is why the block around them must NOT be the cutout a thenRoutine is -
+   the two sat below their sentence looking exactly alike, so a dialog read as a
+   block of the routine. Nothing in here runs: this is the sheet the dialog is
+   printed on, so it is framed on all four sides in the color of what it holds,
+   inset from both edges instead of reaching into the card's right border, and it
+   carries the cards on a tint of the card color rather than on the page. */
+.routine-editor .routine-editor-fields {
+  margin: 4px 0 2px 6px;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor2);
+  border: 1px solid var(--routineVariableColor);
+  border-radius: 6px;
+}
+
 .routine-editor-fields .routine-editor-operation {
   border-left-color: var(--routineVariableColor);
 }
