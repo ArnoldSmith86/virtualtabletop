@@ -313,13 +313,17 @@ function parseStringOperation(a) {
 
 function parsePropertySyntax(string) {
     const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
-    const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
+    const identifier          = identifierWithSpace.replace(/ /, '');
+    const path                = `((?:\\.\\$?${identifier})*)`;
+    const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)${path}(?: OF (\\$)?(${identifierWithSpace}))?`;
     const match               = string.match(new RegExp(`^\\$\\{(?:${property})\\}` + '\x24'));
 
     return match;
 }
 
-function validateGetProperty(value, context, propertyPath = []) {
+// The property of GET and SET is either a property name or an array of the property name followed
+// by the keys leading to a value inside it.
+function validatePropertyPath(value, context, propertyPath = []) {
     if (typeof value === 'string' && value.length > 0) {
         return validators.property(value, context);
     }
@@ -329,7 +333,7 @@ function validateGetProperty(value, context, propertyPath = []) {
     return [{
         widget: context.widgetId,
         property: propertyPath,
-        message: 'GET property must be a non-empty string or array'
+        message: 'property must be a non-empty string or array'
     }];
 }
 
@@ -463,21 +467,21 @@ function validateRoutine(routine, context, propertyPath = []) {
                         property: propPath,
                         message: `${func} uses undefined variable '${propMatch[2]}'`
                     });
-                else if(propMatch[3] && !context.validVariables[propMatch[4]])
+                else if(propMatch[4] && !context.validVariables[propMatch[5]])
                     problems.push({
                         widget: context.widgetId,
                         property: propPath,
-                        message: `${func} uses undefined variable '${propMatch[4]}'`
+                        message: `${func} uses undefined variable '${propMatch[5]}'`
                     });
-                else if(!propMatch[3] && propMatch[4] && !context.widgets[propMatch[4]])
+                else if(!propMatch[4] && propMatch[5] && !context.widgets[propMatch[5]])
                     problems.push({
                         widget: context.widgetId,
                         property: propPath,
-                        message: `${func} uses invalid widget '${propMatch[4]}'`
+                        message: `${func} uses invalid widget '${propMatch[5]}'`
                     });
                 else
                     continue;
-            } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)(?:\.[^.}]+)?\}$/)) {
+            } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)(?:\.[^.}]+)*\}$/)) {
                 if(context.validVariables[varMatch[1]])
                     continue;
                 problems.push({
@@ -486,7 +490,7 @@ function validateRoutine(routine, context, propertyPath = []) {
                     message: `${func} uses undefined variable '${varMatch[1]}'`
                 });
                 continue;
-            } else if(typeof operation[prop] === 'string' && operation[prop].match(/\$\{([^.}]+)(?:\.[^.}]+)?\}/)) {
+            } else if(typeof operation[prop] === 'string' && operation[prop].match(/\$\{([^.}]+)(?:\.[^.}]+)*\}/)) {
                 continue;
             } else {
                 const validator = validators[knownProps[prop]] || knownProps[prop];
@@ -688,7 +692,7 @@ const operationProps = {
     },
     'GET': {
         'collection':  'inCollection',
-        'property':    validateGetProperty,
+        'property':    validatePropertyPath,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
@@ -773,7 +777,7 @@ const operationProps = {
     },
     'SET': {
         'collection': 'inCollection',
-        'property': 'string',
+        'property': validatePropertyPath,
         'relation': 'string',
         'value': 'any'
     },

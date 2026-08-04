@@ -156,9 +156,10 @@ class Card extends Widget {
                 generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, typeof object.value == 'object' ? object.value : Object.assign({ name:object.value }, object, { rotation: 0 }), object.text || '', 1, object.color);
               }
             } else if (object.type == 'html') {
-              const content = String(object.value).replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
-                usedProperties.add(n);
-                return this.get(n) || '';
+              const content = String(object.value).replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*)\}/g, (m, n) => {
+                const [ property, ...keyPath ] = n.split('.');
+                usedProperties.add(property);
+                return (keyPath.length ? getNestedValue(this.get(property), keyPath) : this.get(property)) || '';
               });
 
               if(useIframe) {

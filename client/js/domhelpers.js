@@ -620,6 +620,29 @@ export function mod(a, b) {
   return ((a % b) + b) % b;
 }
 
+// Many widget properties hold nested objects (css, cardTypes, faces, ...). Routines address a value
+// inside them by a path of keys - these two helpers read and write such a path.
+export function getNestedValue(object, path) {
+  let value = object;
+  for(const key of path) {
+    if(value === null || typeof value != 'object')
+      return undefined;
+    value = value[key];
+  }
+  return value;
+}
+
+// Returns the (possibly new) container so that a missing or non-object value can be replaced by the
+// object/array needed to hold the path. Modifies the given object - pass a copy if that matters.
+export function setNestedValue(object, path, value) {
+  if(!path.length)
+    return value;
+  const key = path[0];
+  const container = object !== null && typeof object == 'object' ? object : (String(key).match(/^[0-9]+$/) ? [] : {});
+  container[key] = setNestedValue(container[key] === undefined ? null : container[key], path.slice(1), value);
+  return container;
+}
+
 export function funhash(s) {
   for(var i = 0, h = 0xdeadbeef; i < s.length; i++)
   h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
