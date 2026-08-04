@@ -32,7 +32,13 @@
     "cardDefaults": {
       "width": 38,
       "height": 38,
-      "borderRadius": 19
+      "borderRadius": 19,
+      "css": {
+        "inline": "transition: transform 0.55s cubic-bezier(0.34, 0.9, 0.28, 1)",
+        "${THIS}.dragging": {
+          "transition": "none !important"
+        }
+      }
     },
     "cardTypes": {
       "gold": {}
@@ -679,11 +685,12 @@
   "btnRoll": {
     "type": "button",
     "id": "btnRoll",
-    "x": 470,
+    "x": 555,
     "y": 632,
     "width": 150,
     "height": 92,
     "layer": 1,
+    "display": false,
     "icon": {
       "name": "delapouite/rolling-dices",
       "color": "#ffffff",
@@ -706,11 +713,12 @@
   "btnPayRoll": {
     "type": "button",
     "id": "btnPayRoll",
-    "x": 640,
+    "x": 555,
     "y": 632,
     "width": 150,
     "height": 92,
     "layer": 1,
+    "display": false,
     "icon": [
       {
         "name": "lorc/crown-coin",
@@ -740,11 +748,12 @@
   "btnEnd": {
     "type": "button",
     "id": "btnEnd",
-    "x": 810,
+    "x": 735,
     "y": 632,
     "width": 150,
     "height": 92,
     "layer": 1,
+    "display": false,
     "icon": {
       "name": "delapouite/check-mark",
       "color": "#ffffff",
@@ -847,6 +856,11 @@
             "value": 0
           }
         ]
+      },
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
       }
     ]
   },
@@ -1746,6 +1760,20 @@
     "over": 0,
     "turnScore": 0,
     "busted": 0,
+    "turnGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
+      }
+    ],
     "refreshRoutine": [
       {
         "func": "COUNT",
@@ -1822,6 +1850,92 @@
         "func": "LABEL",
         "label": "beatLabel",
         "value": "${b}"
+      },
+      "var canFree = 0",
+      "var canPaid = 0",
+      "var canEnd = 0",
+      {
+        "func": "CALL",
+        "routine": "curSeatRoutine",
+        "widget": "game",
+        "variable": "rcs"
+      },
+      "var rover = ${PROPERTY over OF game}",
+      {
+        "func": "IF",
+        "condition": "${rcs}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "condition": "${rover}",
+            "elseRoutine": [
+              "var canEnd = 1",
+              "var rfr = ${PROPERTY freeRolls OF game}",
+              "var rpr = ${PROPERTY paidRolls OF game}",
+              "var rstash = ${PROPERTY stash OF $rcs}",
+              {
+                "func": "COUNT",
+                "holder": "${rstash}",
+                "variable": "rmy"
+              },
+              {
+                "func": "IF",
+                "operand1": "${rfr}",
+                "relation": ">",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var canFree = 1"
+                ],
+                "elseRoutine": [
+                  "var pOK = ${rpr} > 0",
+                  "var mOK = ${rmy} > 0",
+                  "var bothOK = ${pOK} && ${mOK}",
+                  {
+                    "func": "IF",
+                    "condition": "${bothOK}",
+                    "thenRoutine": [
+                      "var canPaid = 1"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "btnRoll"
+        ],
+        "property": "display",
+        "value": "${canFree}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "btnPayRoll"
+        ],
+        "property": "display",
+        "value": "${canPaid}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "btnEnd"
+        ],
+        "property": "display",
+        "value": "${canEnd}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "btnRoll",
+          "btnPayRoll",
+          "btnEnd"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${rcs}"
       }
     ],
     "curSeatRoutine": [
@@ -1917,6 +2031,10 @@
             "from": "bank",
             "to": "${gst}",
             "count": "${amount}"
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 600
           }
         ]
       }
@@ -1938,6 +2056,10 @@
             "from": "${pst}",
             "to": "${dst}",
             "count": "${amount}"
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 600
           }
         ]
       }
@@ -2063,6 +2185,10 @@
                     "count": "${each}"
                   }
                 ]
+              },
+              {
+                "func": "DELAY",
+                "milliseconds": 600
               }
             ]
           }
@@ -2128,6 +2254,10 @@
                     "from": "${ot2}",
                     "to": "${cst}",
                     "count": "${each2}"
+                  },
+                  {
+                    "func": "DELAY",
+                    "milliseconds": 600
                   }
                 ]
               }
@@ -2138,6 +2268,10 @@
                 "from": "bank",
                 "to": "${cst}",
                 "count": 1
+              },
+              {
+                "func": "DELAY",
+                "milliseconds": 600
               }
             ]
           }
@@ -2193,6 +2327,10 @@
                     "from": "${ot3}",
                     "to": "${cst3}",
                     "count": 1
+                  },
+                  {
+                    "func": "DELAY",
+                    "milliseconds": 600
                   }
                 ]
               }
@@ -2203,6 +2341,10 @@
                 "from": "bank",
                 "to": "${cst3}",
                 "count": 2
+              },
+              {
+                "func": "DELAY",
+                "milliseconds": 600
               }
             ]
           }
@@ -2443,10 +2585,18 @@
             "count": "all"
           },
           {
+            "func": "DELAY",
+            "milliseconds": 600
+          },
+          {
             "func": "MOVE",
             "from": "bank",
             "to": "pot",
             "count": 2
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 600
           },
           {
             "func": "SET",
@@ -2571,6 +2721,10 @@
             "count": 2
           },
           {
+            "func": "DELAY",
+            "milliseconds": 600
+          },
+          {
             "func": "FOREACH",
             "in": "${activeSeats}",
             "loopRoutine": [
@@ -2587,6 +2741,10 @@
                     "from": "${jot}",
                     "to": "${jst}",
                     "count": 1
+                  },
+                  {
+                    "func": "DELAY",
+                    "milliseconds": 600
                   }
                 ]
               }
@@ -2597,6 +2755,10 @@
             "from": "pot",
             "to": "${jst}",
             "count": "all"
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 600
           },
           {
             "func": "SET",
@@ -2621,6 +2783,10 @@
             "count": 2
           },
           {
+            "func": "DELAY",
+            "milliseconds": 600
+          },
+          {
             "func": "LABEL",
             "label": "msg",
             "value": "★ ★ ★"
@@ -2640,17 +2806,7 @@
           },
           {
             "func": "CALL",
-            "routine": "newTurnRoutine",
-            "widget": "game"
-          },
-          {
-            "func": "CALL",
-            "routine": "potColorRoutine",
-            "widget": "game"
-          },
-          {
-            "func": "CALL",
-            "routine": "refreshRoutine",
+            "routine": "endTurnRoutine",
             "widget": "game"
           }
         ]
@@ -3165,6 +3321,11 @@
             ]
           }
         ]
+      },
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "game"
       }
     ],
     "endTurnRoutine": [
@@ -3365,6 +3526,10 @@
             "count": "all"
           },
           {
+            "func": "DELAY",
+            "milliseconds": 600
+          },
+          {
             "func": "FOREACH",
             "in": "${activeSeats}",
             "loopRoutine": [
@@ -3375,6 +3540,10 @@
                 "from": "bank",
                 "to": "${nst}",
                 "count": 3
+              },
+              {
+                "func": "DELAY",
+                "milliseconds": 450
               }
             ]
           },
@@ -3383,6 +3552,10 @@
             "from": "bank",
             "to": "pot",
             "count": 1
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 450
           },
           {
             "func": "TURN",
@@ -3489,7 +3662,7 @@
       "variantImage": "",
       "description": "A push-your-luck dice game: roll three dice, re-roll what you dare, and try to beat the score of the player who is holding the cauldron. Beat it and the cauldron - and every coin in it - passes to you; hold on to it until your next turn and you cash it in. First player to 24 coins triggers the last round.",
       "ruleText": "Three dice show 1-5 and a cauldron (worth 0). Your score is the sum of the three dice.\n\nOn your turn you roll all three dice, then you may re-roll any of them once for free, and after that you may pay 1 coin into the cauldron for one final re-roll.\n\nIf your final score is higher than the score of the player currently holding the cauldron, you take the cauldron and your score becomes the new target. If the cauldron is still yours when your next turn comes around, you keep every coin in it, then 2 coins from the bank seed the next cauldron and you start the new round.\n\nSpecial rolls: three cauldrons = 2 coins from the bank, 1 coin from every opponent and the cauldron itself (turn ends). 1-1-1 = pay 3 coins to the bank, turn ends. 1-2-3 = 1 coin from the bank plus a free re-roll of the 1 and the 3. 2-3-4 = 1 coin from the bank. 3-4-5 = 1 coin from each of two opponents, or 2 from the bank. 2-2-2 = 2 coins from one opponent, 1 from each of two opponents, or 1 from the bank. 3-3-3 = 2 from the bank and 1 from an opponent. 4-4-4 = 2 from the bank and 1 from each of two opponents. 5-5-5 = 5 from the bank, then give 1 to each of two opponents.\n\nWhen a player reaches 24 coins the round is finished and the richest player wins.",
-      "helpText": "SETUP: take a seat, then press the grey restart button. Every coin goes back to the bank, each seated player gets 3 coins, 1 coin is put into the cauldron and a random player starts as its holder. The coloured ring around the cauldron and the coloured bar under the target number always show whose cauldron it is.\n\nROLLING: the green dice button rolls. The first press of a turn rolls all three dice, the second press is the free re-roll. Click a die to lock it (a padlock appears) and it will not be re-rolled. The gold coin+dice button pays 1 coin into the cauldron for a third re-roll; it only works once both free rolls are used up. The box next to the dice shows the total of the current roll, the box on the left shows the target you have to beat.\n\nENDING A TURN: the blue check button. With automation on (the blue gear switch on the left) it pays out the combo bonus of your final dice, gives you the cauldron if you beat the target, passes the turn to the next seat and pays out the cauldron when it comes back round to its holder. When a combo lets you choose opponents, a picker with the seats opens - the most likely choice is preselected, click the seats to change it and confirm. When somebody reaches 24 coins the current round is finished and the banner shows the winner.\n\nMANUAL PLAY: clicking the gear switch turns it into a red hand - the check button then only passes the turn and you settle all coins yourself. In both modes you can always drag coins by hand between the bank, the cauldron and any player stash; the counters update automatically.\n\nThe chart on the right lists the turn sequence, every scoring combo and the 24 coin win condition using icons only.",
+      "helpText": "SETUP: take a seat, then press the grey restart button. Every coin goes back to the bank, each seated player gets 3 coins, 1 coin is put into the cauldron and a random player starts as its holder. Coins are real pieces: whenever they change hands they visibly travel from one stash to the other, so you can always see where a payment came from and where it went. The coloured ring around the cauldron and the coloured bar under the target number always show whose cauldron it is.\n\nROLLING: the buttons under the dice only appear for the player whose turn it is, and only when the action behind them is actually possible right now. The green dice button rolls - the first press of a turn rolls all three dice, the second press is the free re-roll. Click a die to lock it (a padlock appears) and it will not be re-rolled. Once both free rolls are used up the same button turns into the gold coin+dice button: pressing it pays 1 coin into the cauldron for one final re-roll. If you have no coin left to pay with, no re-roll button is offered at all. The box next to the dice shows the total of the current roll, the box on the left shows the target you have to beat.\n\nENDING A TURN: the blue check button. With automation on (the blue gear switch on the left) it pays out the combo bonus of your final dice, gives you the cauldron if you beat the target, passes the turn to the next seat and pays out the cauldron when it comes back round to its holder. When a combo lets you choose opponents, a picker with the seats opens - the most likely choice is preselected, click the seats to change it and confirm. Combo payments are made one at a time so you can follow every coin. When somebody reaches 24 coins the current round is finished, the banner shows the winner and only the restart button remains.\n\nMANUAL PLAY: clicking the gear switch turns it into a red hand - the check button then only passes the turn and you settle all coins yourself. In both modes you can always drag coins by hand between the bank, the cauldron and any player stash; the counters update automatically.\n\nThe chart on the right lists the turn sequence, every scoring combo and the 24 coin win condition using icons only.",
       "attribution": "Room layout, JSON, deck and preview image created by the author (VTT-AI-Agent) and released to the public domain (CC0).\n\nThe layout, its automation routines and the accompanying texts were produced with the help of an AI assistant (Anthropic Claude, https://claude.ai). No AI generated imagery is used.\n\nAll graphics are internal to VirtualTabletop: the built-in dice, card and button rendering, and icons from the game-icons.net set that ships with VirtualTabletop (cauldron, crown-coin, gears and trophy by Lorc; bank, person, plain-padlock, rolling-dices, check-mark, player-next and the dice-six-faces icons by Delapouite; bullseye by Skoll; hand by Sbed - all CC BY 3.0, https://game-icons.net), plus the Google Material Symbols icon used on the restart button. No external assets are referenced."
     }
   }
