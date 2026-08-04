@@ -3444,9 +3444,9 @@ class DeckEditor {
     this.renderPileDefaults(sidebar);
   }
 
-  // Piles are made by pileSnapRange when cards overlap, never through a dropTarget, so the properties sidebar
-  // has nowhere to offer a pile's drop limit: the pile itself is temporary and the deck has no sidebar of its
-  // own. It belongs here instead, in the onPileCreation template every pile of these cards is created with.
+  // A pile is temporary, so its drop limit lives in the onPileCreation template every pile of these cards is
+  // created with. Selecting a pile and setting the limit in the properties sidebar writes the same template -
+  // but only while such a pile is on the table, and this is the deck the cards come from either way.
   renderPileDefaults(sidebar) {
     const header = document.createElement('header');
     header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard';

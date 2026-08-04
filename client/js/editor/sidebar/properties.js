@@ -1068,7 +1068,8 @@ const editorPropertyHints = {
   pipColor: 'The color used for the pips or the face symbol of the dice.',
   dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
-  dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries. Leave empty for no limit.',
+  dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries, on a pile the cards it takes. Leave empty for no limit.',
+  showLimit: 'Make the handle read "2/3" instead of "2", so the drop limit of the pile is readable before a drop is refused.',
   preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
   pileSnapRange: 'How close in pixels this pile has to be dropped to another pile or card to combine with it. A card dropped onto this pile uses its own snap range instead, which comes from the pile template of its deck.',
   handleCSS: 'Custom CSS declarations for the handle badge of the pile.',
@@ -6174,6 +6175,8 @@ class PropertiesModule extends SidebarModule {
     const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
     if(this.takesDrops(widget))
       properties.push('dropLimit');
+    if(widget.get('type') == 'pile')
+      properties.push('showLimit');
     for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
       for(const def of sections[group] || [])
         // an input that is not being offered leaves its property to the
@@ -6645,15 +6648,32 @@ class PropertiesModule extends SidebarModule {
     this.renderInputs(widget, defs);
     if(this.takesDrops(widget))
       this.renderDropLimitInput(widget);
+    if(widget.get('type') == 'pile')
+      this.renderPileShowLimit(widget);
+  }
+
+  // Appears right below the limit that gives it something to show: without a
+  // limit, or with a handle that shows a fixed text instead of the card count,
+  // the checkbox changes nothing and stays out of the way.
+  renderPileShowLimit(widget) {
+    const dom = new CheckboxInput(this, widget, 'Show the limit on the handle', {
+      property: 'showLimit',
+      hint: editorPropertyHints.showLimit
+    }).render(this.moduleDOM);
+    const update = _=>dom.style.display = widget.get('dropLimit') > -1 && widget.get('text') === null ? '' : 'none';
+    this.addPropertyListener(widget, 'dropLimit', update);
+    this.addPropertyListener(widget, 'text', update);
   }
 
   // dropLimit says nothing on a widget nothing can be dropped into, so its
-  // input only shows up once the widget takes drops at all. Piles are the one
-  // thing that takes drops without a dropTarget (they snap cards in through
-  // pileSnapRange) - their limit lives in the deck editor's Piles section,
-  // because a pile is temporary and only its deck can carry the setting.
+  // input only shows up once the widget takes drops at all. A pile has no
+  // dropTarget and still takes cards - it snaps them in through pileSnapRange -
+  // so it is named here rather than derived. A pile is temporary, so the input
+  // is only useful because an edit on a pile is mirrored into the pile template
+  // of its deck (see setAndMirrorToPileTemplate); the deck editor's Piles
+  // section sets the same two for a deck whose cards form no pile right now.
   takesDrops(widget) {
-    return asArray(widget.get('dropTarget') || []).length > 0;
+    return widget.get('type') == 'pile' || asArray(widget.get('dropTarget') || []).length > 0;
   }
 
   // -1 is how "no limit" is stored, but an empty field says it better
@@ -6664,7 +6684,7 @@ class PropertiesModule extends SidebarModule {
       step: 1,
       nullIfEmpty: true,
       placeholder: 'no limit',
-      hint: editorPropertyHints.dropLimit,
+      hint: options.hint || editorPropertyHints.dropLimit,
       getValue: _=>widget.get('dropLimit') > -1 ? widget.get('dropLimit') : null,
       setValue: options.setValue || (value=>this.inputValueUpdated(widget, 'dropLimit', value === null ? -1 : value))
     }).render(options.target || this.moduleDOM);
