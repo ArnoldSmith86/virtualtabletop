@@ -407,14 +407,18 @@ class GameSettingsModule extends SidebarModule {
 
       const gameSettings = getCurrentGameSettings();
       gameSettings.boardSize = { width: w, height: h };
-      this.boardSizeConfirmation = `The board is ${w} × ${h} now - applied for everyone in the room and saved with the game.`;
+      this.boardSizeConfirmation = { width: w, height: h, text: `The board is ${w} × ${h} now - applied for everyone in the room and saved with the game.` };
       toServer('setGameSettings', gameSettings);
     };
 
     const reset = () => {
       const gameSettings = getCurrentGameSettings();
       delete gameSettings.boardSize;
-      this.boardSizeConfirmation = `The board is back to the default ${DEFAULT_VIEWPORT.targetWidth} × ${DEFAULT_VIEWPORT.targetHeight} - applied for everyone in the room.`;
+      this.boardSizeConfirmation = {
+        width: DEFAULT_VIEWPORT.targetWidth,
+        height: DEFAULT_VIEWPORT.targetHeight,
+        text: `The board is back to the default ${DEFAULT_VIEWPORT.targetWidth} × ${DEFAULT_VIEWPORT.targetHeight} - applied for everyone in the room.`
+      };
       toServer('setGameSettings', gameSettings);
     };
 
@@ -454,6 +458,13 @@ class GameSettingsModule extends SidebarModule {
         size(previewPending, w, h);
     };
 
+    // the confirmation names concrete dimensions, so it is only true while the board is
+    // still on them - with a second editor in the room, somebody else applying a different
+    // size has to invalidate it just like an edit here does
+    const confirmationIsCurrent = () => !!this.boardSizeConfirmation
+      && this.boardSizeConfirmation.width == viewportConfig.targetWidth
+      && this.boardSizeConfirmation.height == viewportConfig.targetHeight;
+
     const update = () => {
       const [ w, h ] = pending();
       const valid = isValid(w) && isValid(h);
@@ -482,8 +493,8 @@ class GameSettingsModule extends SidebarModule {
       // more than once), so the "this is live for everyone now" confirmation lives on the
       // module instead of in the tile it was triggered from. Editing a field or closing the
       // panel drops it again.
-      if(this.boardSizeConfirmation && !changed)
-        addMessage('success', this.boardSizeConfirmation);
+      if(confirmationIsCurrent() && !changed)
+        addMessage('success', this.boardSizeConfirmation.text);
 
       if(w/h > 4 || h/w > 4)
         addMessage('warning', w > h
@@ -553,6 +564,11 @@ class GameSettingsModule extends SidebarModule {
         appliedSize = size;
         width.input.value = viewportConfig.targetWidth;
         height.input.value = viewportConfig.targetHeight;
+        // a board size that isn't the one we confirmed is somebody else's, so our
+        // confirmation is history now - drop it instead of letting it come back
+        // if that other editor happens to switch back later
+        if(!confirmationIsCurrent())
+          this.boardSizeConfirmation = null;
       }
       update();
     };

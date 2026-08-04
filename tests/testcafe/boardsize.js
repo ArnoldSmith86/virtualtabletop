@@ -1,6 +1,6 @@
-import { ClientFunction } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 
-import { getMeta, prepareClient, setRoomState, setupTestEnvironment } from './test-util.js';
+import { getMeta, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -62,6 +62,38 @@ test('An unusable board size in a game file is normalized instead of being store
   // what everybody renders and what is stored in the game file have to be the same board
   await t.expect(boardLayout()).eql({ roomWidth: '100px', roomHeight: '10000px', renderedAspect: '0.010' });
   await t.expect((await getMeta()).gameSettings.boardSize).eql({ width: 100, height: 10000 });
+
+  await loadGameWithBoardSize(null);
+});
+
+// The confirmation names concrete dimensions, so it may only be shown while the board really is
+// on them - with a second editor in the room, somebody else's board size would otherwise leave
+// this panel affirming a size nobody is playing on anymore.
+test('The Apply confirmation goes away when somebody else changes the board size', async t => {
+  await loadGameWithBoardSize(null);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const confirmation = Selector('.boardSizeMessage.success');
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=settings]')
+    .typeText('#boardHeight', '1600', { replace: true })
+    .click('.boardSizeActions button[icon=check]')
+    .expect(confirmation.innerText).contains('1600 × 1600')
+    .expect(boardLayout()).eql({ roomWidth: '1600px', roomHeight: '1600px', renderedAspect: '1.000' });
+
+  // the same thing another editor applying a different size looks like from here
+  await loadGameWithBoardSize({ width: 1200, height: 1200 });
+  await t
+    .expect(Selector('#boardHeight').value).eql('1200')
+    .expect(confirmation.exists).notOk();
+
+  // and it does not come back when that other editor switches back
+  await loadGameWithBoardSize({ width: 1600, height: 1600 });
+  await t
+    .expect(Selector('#boardHeight').value).eql('1600')
+    .expect(confirmation.exists).notOk();
 
   await loadGameWithBoardSize(null);
 });
