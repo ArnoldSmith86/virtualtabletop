@@ -49,7 +49,16 @@ body.loadingEditMode * {
   cursor: wait;
 }
 
+/* the overlays are children of #roomArea, so their size is the board's, not the window's.
+   Their breakpoints are container queries against this box: as media queries they measured
+   the window, which only said something about how much room an overlay has back when every
+   board was 1600x1000. A square or portrait board now leaves a much smaller overlay in the
+   same window and would still have gotten the layout of a wide one.
+   Only for overlays that stay in here: an element the deck editor re-parents into #editor (the
+   symbol picker, its own dialogs) has no roomArea container left, and a @container rule on it
+   silently stops matching at any size - those keep their media queries. */
 #roomArea {
+  container: roomArea / size;
   position: fixed;
   overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));

@@ -931,6 +931,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   overflow: visible;
 }
 
+/* stays a media query: initializeDOM() re-parents this dialog into #editor, where it is positioned
+   against the viewport - a container query on #roomArea has no container to resolve against there */
 @media (max-width: 700px) {
   .deckEditorExportOptions {
     grid-template-columns: 1fr;

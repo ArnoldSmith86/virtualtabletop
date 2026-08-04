@@ -31,6 +31,14 @@ async function loadGameWithBoardSize(boardSize) {
 const defaultBoard  = { roomWidth: '1600px', roomHeight: '1000px', renderedAspect: '1.600' };
 const portraitBoard = { roomWidth: '1000px', roomHeight: '1600px', renderedAspect: '0.625' };
 
+// How wide one game tile in the shelf ends up. The overlays are children of #roomArea, so what
+// they have to work with is the rendered board, not the window - --columns comes out of the
+// container queries in states.css and the tiles divide the board's width by it.
+const shelfTiles = ClientFunction(() => {
+  const columns = +getComputedStyle(document.querySelector('#statesOverlay')).getPropertyValue('--columns');
+  return { columns, tileWidth: document.querySelector('.roomState.visible').getBoundingClientRect().width };
+});
+
 test('Loading a game with its own board size re-lays out a client that is already in the room', async t => {
   await loadGameWithBoardSize(null);
   await ClientFunction(prepareClient)();
@@ -94,6 +102,72 @@ test('The Apply confirmation goes away when somebody else changes the board size
   await t
     .expect(Selector('#boardHeight').value).eql('1600')
     .expect(confirmation.exists).notOk();
+
+  await loadGameWithBoardSize(null);
+});
+
+// What the editor sidebar is currently wide - 128px with its button labels, 36px without them.
+const editSidebarWidth = ClientFunction(() => getComputedStyle(document.body).getPropertyValue('--editSidebarWidth').trim());
+
+// A portrait board leaves the game shelf a fraction of the width the window has, so it has to
+// drop columns to keep the tiles the size they are on the default board. Off the window - which
+// is what a media query measures - it kept every one of them and squeezed unreadable thumbnails
+// into the space of three.
+// The last three tests in this file resize the window on purpose - they come last because the
+// size they set stays with the browser afterwards.
+test('The game shelf sizes its tiles from the board, not from the window', async t => {
+  await t.resizeWindow(1280, 800);
+  await loadGameWithBoardSize(null);
+  await ClientFunction(prepareClient)();
+  await t.click('#statesButton');
+  const onDefaultBoard = await shelfTiles();
+
+  await loadGameWithBoardSize({ width: 1000, height: 1600 });
+  const onPortraitBoard = await shelfTiles();
+
+  await t
+    .expect(onPortraitBoard.columns).lt(onDefaultBoard.columns)
+    .expect(onPortraitBoard.tileWidth).gt(onDefaultBoard.tileWidth*0.75);
+
+  await loadGameWithBoardSize(null);
+});
+
+// The editor sidebar trades its button labels for board width, so whether it can afford them
+// depends on the board: this window is too narrow for the default board to keep them, but a
+// portrait board runs out of height long before it runs out of width and has them to spare.
+test('The editor sidebar keeps its labels while the board is not short of the space', async t => {
+  await t.resizeWindow(1280, 800);
+  await loadGameWithBoardSize(null);
+  await ClientFunction(prepareClient)();
+  await t
+    .click('#editButton')
+    .expect(editSidebarWidth()).eql('36px');
+
+  await loadGameWithBoardSize({ width: 1000, height: 1600 });
+  await t.expect(editSidebarWidth()).eql('128px');
+
+  await loadGameWithBoardSize(null);
+});
+
+// Whether the game details are a sidebar of the shelf or an overlay of their own is a container
+// query on the board, so setSidebar() has to decide it from the board too. While it still measured
+// the window, every window that was bigger than its board - 1460x920 on a default board, any
+// desktop window on a portrait one - moved the details into the shelf, where the CSS never gave
+// them a display: clicking a game did nothing at all, with no way on to the PLAY button.
+test('Clicking a game in the shelf opens its details on every board and window size', async t => {
+  const detailsPlayButton = Selector('#stateDetailsOverlay .variantsList > div > button');
+
+  for(const [ window, boardSize ] of [ [ [ 1460, 920 ], null ], [ [ 1920, 1080 ], { width: 1000, height: 1600 } ] ]) {
+    await t.resizeWindow(...window);
+    await loadGameWithBoardSize(boardSize);
+    await t.navigateTo('./testcafe-testing');
+    await ClientFunction(prepareClient)();
+    await t
+      .click('#statesButton')
+      .click(Selector('.roomState.visible'))
+      .expect(Selector('#stateDetailsOverlay').visible).ok()
+      .expect(detailsPlayButton.visible).ok();
+  }
 
   await loadGameWithBoardSize(null);
 });
