@@ -12,6 +12,15 @@ function createHolder(definition) {
   return holder;
 }
 
+// a stand-in for a line the drag ends on: only its type and its coordinate frame
+// matter here, the line geometry itself is covered by line-widget.test.js
+function createLine(definition) {
+  const line = createWidget(Object.assign({ type: 'line', x: 0, y: 0 }, definition));
+  line.coordGlobalFromCoordLocal = coord => ({ x: line.get('x') + coord.x, y: line.get('y') + coord.y });
+  line.coordLocalFromCoordGlobal = coord => ({ x: coord.x - line.get('x'), y: coord.y - line.get('y') });
+  return line;
+}
+
 function createHand(multiSelectMax, numCards, handProperties = {}) {
   const hand = createHolder(Object.assign({ id: `${testName}-hand`, multiSelectMax }, handProperties));
   const cards = [];
@@ -107,6 +116,16 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
         await cards[0].checkParent(true);
         expect(cards[0].get('selectedBy')).toEqual([]);
         expect(cards[0].get('parent')).toBe(null);
+      });
+    });
+
+    describe('When the holder turns click-to-select off while something is selected', () => {
+      test('Then taking that widget out of the holder still clears the selection', async () => {
+        await cards[0].click();
+        await hand.set('multiSelectMax', 0);
+        cards[0].currentParent = hand;
+        await cards[0].checkParent(true);
+        expect(cards[0].get('selectedBy')).toEqual([]);
       });
     });
   });
@@ -227,6 +246,18 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
         expect(cards.map(c=>c.get('parent'))).toEqual([ target.get('id'), target.get('id'), hand.get('id') ]);
         expect(selectedIDs(cards)).toEqual([ cards[2].get('id') ]);
         expect(cards[1].get('dragging')).toBe(null);
+      });
+    });
+
+    describe('When the drag ends on a line, where only the dragged widget becomes a stop', () => {
+      test('Then the followers stay next to it on the surface instead of going back', async () => {
+        await dragOutOfHolder();
+        await finishDrop(createLine({ id: `${testName}-line` }));
+        const x = cards[0].absoluteCoord('x');
+        expect(cards[0].get('parent')).toBe(target.get('id'));
+        expect(cards.slice(1).map(c=>c.get('parent'))).toEqual([ null, null ]);
+        expect(cards.map(c=>c.absoluteCoord('x'))).toEqual([ x, x+cards[0].get('width'), x+2*cards[0].get('width') ]);
+        expect(selectedIDs(cards)).toEqual([]);
       });
     });
 

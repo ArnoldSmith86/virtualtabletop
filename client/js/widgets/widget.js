@@ -430,9 +430,11 @@ export class Widget extends StateManaged {
 
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
-      // a selection only means something while the widget sits in the holder that offers
-      // it - through _ancestor, so that a card leaving a pile inside that holder counts
-      if(asArray(this.get('selectedBy')).length && (this.currentParent.multiSelectLimit() || this.multiSelectHolder()))
+      // a selection only means something while the widget sits in the holder that offered
+      // it, so leaving a parent ends it - without asking whether that holder still offers
+      // click-to-select, otherwise turning multiSelectMax off while something is selected
+      // would leave a name behind that a later SELECT would still collect
+      if(asArray(this.get('selectedBy')).length)
         await this.set('selectedBy', []);
       await this.set('parent', null);
       await this.set('hoverParent', null);
@@ -2922,10 +2924,11 @@ export class Widget extends StateManaged {
       const target = widgets.has(targetID) ? widgets.get(targetID) : null;
       // dropped on the surface (or onto a line, where only the dragged widget becomes a
       // stop): the selection stays next to it, in the formation it was dragged in
-      if(!target || target.get('type') == 'line')
+      const onSurface = !target || target.get('type') == 'line';
+      if(onSurface)
         await this.dragMultiSelectionAlong();
 
-      const holder = target && target != source && target.get('type') != 'line' ? target : null;
+      const holder = !onSurface && target != source ? target : null;
       // the followers were not dragged by hand, so the drop has to check them the way it
       // checked the dragged one: the holder has to accept them and still have room
       let free = holder && holder.get('dropLimit') > -1 ? holder.get('dropLimit') - holder.children().length : Infinity;
@@ -2940,9 +2943,10 @@ export class Widget extends StateManaged {
           w.movedByButton = true;
           await w.moveToHolder(holder);
           delete w.movedByButton;
-        } else if(target && !stillInHolder) {
-          // the drop does not take it: back into the holder it was picked from, and
-          // picked again there, so that a refused drop does not cost the selection
+        } else if(!onSurface && !stillInHolder) {
+          // a holder that does not take it (or the one it was picked from, when the drag
+          // ended where it started): back into the holder it was picked from and picked
+          // again there, so that a refused drop does not cost the selection
           w.movedByButton = true;
           await w.moveToHolder(source);
           delete w.movedByButton;
