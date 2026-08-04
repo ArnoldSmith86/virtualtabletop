@@ -4,8 +4,16 @@ import { createWidget, addLabel, removeWidget } from './client-util.js';
 
 const testName = 'widget-select';
 
-function createHand(multiSelectMax, numCards) {
-  const hand = createWidget({ id: `${testName}-hand`, type: 'widget', multiSelectMax });
+// jsdom does not implement DOMMatrix, so model the room's untransformed coordinate
+// frame directly - these fixtures are about parents and selections, not about geometry
+function createHolder(definition) {
+  const holder = createWidget(Object.assign({ type: 'holder' }, definition));
+  holder.coordLocalFromCoordGlobal = coord => ({ x: coord.x - holder.get('x'), y: coord.y - holder.get('y') });
+  return holder;
+}
+
+function createHand(multiSelectMax, numCards, handProperties = {}) {
+  const hand = createHolder(Object.assign({ id: `${testName}-hand`, multiSelectMax }, handProperties));
   const cards = [];
   for(let i=1; i<=numCards; ++i)
     cards.push(createWidget({
@@ -30,6 +38,9 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
   beforeAll(() => {
     label = addLabel(`${testName}-label`);
     window.jeRoutineLogging = false;
+    // z bookkeeping lives in the concatenated global scope of the shipped bundle
+    globalThis.getMaxZ = () => 0;
+    globalThis.updateMaxZ = () => {};
   });
   afterAll(() => {
     removeWidget(label.get('id'));
@@ -96,6 +107,105 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
         await cards[0].checkParent(true);
         expect(cards[0].get('selectedBy')).toEqual([]);
         expect(cards[0].get('parent')).toBe(null);
+      });
+    });
+  });
+
+  describe('Given a holder with multiSelectMax as a string', () => {
+    let hand, cards;
+    beforeEach(async () => {
+      ({ hand, cards } = createHand('2', 3));
+    });
+    afterEach(() => {
+      cards.concat(hand).forEach(w => removeWidget(w.get('id')));
+    });
+
+    describe('When a widget in it is clicked', () => {
+      test('Then it is selected just like with a number', async () => {
+        await cards[0].click();
+        expect(selectedIDs(cards)).toEqual([ cards[0].get('id') ]);
+      });
+    });
+  });
+
+  describe('Given a selected widget inside a pile inside the holder', () => {
+    let hand, cards, pile;
+    beforeEach(async () => {
+      ({ hand, cards } = createHand('all', 2));
+      pile = createWidget({ id: `${testName}-pile`, type: 'pile', parent: hand.get('id') });
+      await cards[0].set('parent', pile.get('id'));
+      await cards[0].click();
+    });
+    afterEach(() => {
+      cards.concat(hand, pile).forEach(w => removeWidget(w.get('id')));
+    });
+
+    describe('When it is selected by clicking', () => {
+      test('Then the holder around the pile governs the selection', async () => {
+        expect(selectedIDs(cards)).toEqual([ cards[0].get('id') ]);
+      });
+    });
+
+    describe('When a routine moves it out of the pile', () => {
+      test('Then it is no longer selected', async () => {
+        const table = createHolder({ id: `${testName}-table`, dropTarget: {} });
+        await cards[0].moveToHolder(table);
+        expect(cards[0].get('parent')).toBe(table.get('id'));
+        expect(cards[0].get('selectedBy')).toEqual([]);
+        removeWidget(table.get('id'));
+      });
+    });
+  });
+
+  describe('Given a dragged widget that the rest of the selection follows', () => {
+    let hand, cards, target;
+    beforeEach(async () => {
+      ({ hand, cards } = createHand('all', 3, { x: 0, y: 0 }));
+      for(const card of cards)
+        await card.set('cardType', 'plain');
+      await cards[2].set('cardType', 'other');
+      for(const card of cards)
+        await card.click();
+    });
+    afterEach(() => {
+      cards.concat(hand, target).filter(w=>w).forEach(w => removeWidget(w.get('id')));
+      target = null;
+    });
+
+    // the followers are not dragged themselves, so moveMultiSelectionAlong has to apply
+    // the drop checks that getValidDropTargets applies to the widget under the mouse
+    async function dropInto(holder) {
+      target = holder;
+      cards[0].multiSelectSource = hand;
+      cards[0].multiSelectDrag = cards.slice(1);
+      if(holder)
+        await cards[0].moveToHolder(holder);
+      else
+        await cards[0].set('parent', null);
+      await cards[0].moveMultiSelectionAlong();
+    }
+
+    describe('When the target rejects one of them', () => {
+      test('Then that one stays in the holder', async () => {
+        await dropInto(createHolder({ id: `${testName}-target`, dropTarget: { cardType: 'plain' } }));
+        expect(cards.map(c=>c.get('parent'))).toEqual([ target.get('id'), target.get('id'), hand.get('id') ]);
+      });
+    });
+
+    describe('When the target has a dropLimit that is already used up', () => {
+      test('Then no follower is forced into it', async () => {
+        await dropInto(createHolder({ id: `${testName}-target`, dropTarget: {}, dropLimit: 1 }));
+        expect(cards.map(c=>c.get('parent'))).toEqual([ target.get('id'), hand.get('id'), hand.get('id') ]);
+      });
+    });
+
+    describe('When the widget is dropped on the table and the holder does not space its children', () => {
+      test('Then the followers are spread out instead of landing on one spot', async () => {
+        await cards[0].setPosition(500, 300, 5);
+        await dropInto(null);
+        expect(cards.map(c=>c.get('parent'))).toEqual([ null, null, null ]);
+        expect(cards.map(c=>c.get('x'))).toEqual([ 500, 500+cards[0].get('width'), 500+2*cards[0].get('width') ]);
+        expect(cards.map(c=>c.get('y'))).toEqual([ 300, 300, 300 ]);
       });
     });
   });

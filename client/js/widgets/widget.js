@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { compareDropTarget, showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -430,8 +430,9 @@ export class Widget extends StateManaged {
 
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
-      // a selection only means something while the widget sits in the holder that offers it
-      if(this.currentParent.multiSelectLimit() && asArray(this.get('selectedBy')).length)
+      // a selection only means something while the widget sits in the holder that offers
+      // it - through _ancestor, so that a card leaving a pile inside that holder counts
+      if(asArray(this.get('selectedBy')).length && (this.currentParent.multiSelectLimit() || this.multiSelectHolder()))
         await this.set('selectedBy', []);
       await this.set('parent', null);
       await this.set('hoverParent', null);
@@ -555,7 +556,10 @@ export class Widget extends StateManaged {
     const max = this.get('multiSelectMax');
     if(max === 'all')
       return Infinity;
-    return typeof max == 'number' && max > 0 ? Math.floor(max) : 0;
+    // a routine that computes the limit tends to end up with a string, so don't
+    // silently turn click-to-select off just because "2" isn't a number
+    const limit = Math.floor(+max);
+    return limit > 0 ? limit : 0;
   }
 
   multiSelectedWidgets(player) {
@@ -1996,7 +2000,8 @@ export class Widget extends StateManaged {
               return w.get(a.property) > a.value;
             else if(a.relation === 'in' && Array.isArray(a.value))
               return a.value.indexOf(w.get(a.property)) != -1;
-            // the mirror image of 'in': the property is the list, e.g. selectedBy or owner
+            // the mirror image of 'in': the property is the list, e.g. selectedBy or owner.
+            // Not a substring test - a property that isn't a list is one entry long.
             else if(a.relation === 'contains')
               return asArray(w.get(a.property)).indexOf(a.value) != -1;
             if(a.relation != '==')
@@ -2575,7 +2580,7 @@ export class Widget extends StateManaged {
     // selection along - they follow to wherever this one is dropped. Collected before
     // the drag detaches this widget from the holder, which is what clears its selection.
     this.multiSelectSource = this.isMultiSelected() ? this.multiSelectHolder() : null;
-    this.multiSelectDrag = this.multiSelectSource ? this.multiSelectSource.multiSelectedWidgets(playerName).filter(w=>w != this && w.get('movable')) : [];
+    this.multiSelectDrag = this.multiSelectSource ? this.multiSelectSource.multiSelectedWidgets(playerName).filter(w=>w != this && w.get('movable') && !w.get('fixedParent')).sort((a,b)=>a.get('z')-b.get('z')) : [];
 
     await this.bringToFront();
     await this.set('dragging', playerName);
@@ -2832,9 +2837,9 @@ export class Widget extends StateManaged {
   }
 
   // The rest of the local player's selection follows the widget that was just dragged
-  // out of the holder: into the same holder it was dropped into, or onto the surface
-  // next to it - there they keep the spacing the holder gave them so that everybody
-  // can see what was played.
+  // out of the holder: into the same holder it was dropped into - as far as it accepts
+  // them - or onto the surface next to it, spread out so that everybody can see what
+  // was played instead of ending up as one pile.
   async moveMultiSelectionAlong() {
     const others = this.multiSelectDrag || [];
     const source = this.multiSelectSource;
@@ -2846,13 +2851,27 @@ export class Widget extends StateManaged {
     if(!others.length || !source || target == source || target && target.get('type') == 'line')
       return;
 
-    const offsetX = +source.get('stackOffsetX') || 0;
-    const offsetY = +source.get('stackOffsetY') || 0;
+    // spread them the way the source holder did. Most holders stack their children on
+    // one spot (stackOffset defaults to 0), so fall back to the size of the widget that
+    // was dragged - otherwise the followers would land on each other and form a pile.
+    let offsetX = +source.get('stackOffsetX') || 0;
+    let offsetY = +source.get('stackOffsetY') || 0;
+    if(!offsetX && !offsetY)
+      offsetX = +this.get('width') || 100;
+
+    // the followers were not dragged, so they have to pass the checks a drag would have
+    // done for them: the target has to accept them and still have room. Whoever fails
+    // stays where it is instead of being forced into the holder.
+    let free = target && target.get('dropLimit') > -1 ? target.get('dropLimit') - target.children().length : Infinity;
+
     let i = 1;
     for(const w of others) {
       if(!widgets.has(w.get('id')) || w.get('_ancestor') != source.get('id'))
         continue;
       if(target) {
+        if(free < 1 || !compareDropTarget(w, target))
+          continue;
+        --free;
         w.movedByButton = true;
         await w.moveToHolder(target);
         delete w.movedByButton;

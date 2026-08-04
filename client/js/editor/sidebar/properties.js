@@ -402,7 +402,7 @@ const editorPropertyHints = {
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
   multiSelectMax: 'Let players pick widgets in this holder by clicking them, up to this many each. The picked ones get the clicking player\'s name in their selectedBy property, which automations can read.',
-  multiSelectStyle: 'How a widget the player picked is shown. "custom CSS" only sets the multiSelected class so the holder css can style it.',
+  multiSelectStyle: 'How a widget the player picked is shown. The built-in styles win over a filter or shadow the widget sets itself; "custom CSS" only sets the multiSelected class so the holder css can style it.',
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
