@@ -31,6 +31,14 @@ async function loadGameWithBoardSize(boardSize) {
 const defaultBoard  = { roomWidth: '1600px', roomHeight: '1000px', renderedAspect: '1.600' };
 const portraitBoard = { roomWidth: '1000px', roomHeight: '1600px', renderedAspect: '0.625' };
 
+// How wide one game tile in the shelf ends up. The overlays are children of #roomArea, so what
+// they have to work with is the rendered board, not the window - --columns comes out of the
+// container queries in states.css and the grid divides the shelf's width by it.
+const shelfTiles = ClientFunction(() => {
+  const columns = +getComputedStyle(document.querySelector('#statesOverlay')).getPropertyValue('--columns');
+  return { columns, tileWidth: document.querySelector('#roomArea').getBoundingClientRect().width/columns };
+});
+
 test('Loading a game with its own board size re-lays out a client that is already in the room', async t => {
   await loadGameWithBoardSize(null);
   await ClientFunction(prepareClient)();
@@ -62,6 +70,27 @@ test('An unusable board size in a game file is normalized instead of being store
   // what everybody renders and what is stored in the game file have to be the same board
   await t.expect(boardLayout()).eql({ roomWidth: '100px', roomHeight: '10000px', renderedAspect: '0.010' });
   await t.expect((await getMeta()).gameSettings.boardSize).eql({ width: 100, height: 10000 });
+
+  await loadGameWithBoardSize(null);
+});
+
+// A portrait board leaves the game shelf a fraction of the width the window has, so it has to
+// drop columns to keep the tiles the size they are on the default board. Off the window - which
+// is what a media query measures - it kept every one of them and squeezed unreadable thumbnails
+// into the space of three.
+test('The game shelf sizes its tiles from the board, not from the window', async t => {
+  await t.resizeWindow(1280, 800);
+  await loadGameWithBoardSize(null);
+  await ClientFunction(prepareClient)();
+  await t.click('#statesButton');
+  const onDefaultBoard = await shelfTiles();
+
+  await loadGameWithBoardSize({ width: 1000, height: 1600 });
+  const onPortraitBoard = await shelfTiles();
+
+  await t
+    .expect(onPortraitBoard.columns).lt(onDefaultBoard.columns)
+    .expect(onPortraitBoard.tileWidth).gt(onDefaultBoard.tileWidth*0.75);
 
   await loadGameWithBoardSize(null);
 });

@@ -931,7 +931,9 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   overflow: visible;
 }
 
-@media (max-width: 700px) {
+/* the export dialog is one of the #editorOverlays, which initializeEditMode moves into
+   #roomArea - so it is as wide as the board, not as the window */
+@container roomArea (max-width: 700px) {
   .deckEditorExportOptions {
     grid-template-columns: 1fr;
   }

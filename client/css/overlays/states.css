@@ -147,19 +147,19 @@
   overflow: auto;
 }
 
-@media (max-width: 600px), (max-height: 375px) {
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   #statesList { overflow: unset; }
   #statesOverlay { overflow: auto; }
 }
 
-@media (max-width: 2260px), (max-height: 1412px) { #statesOverlay { --columns: 9; } }
-@media (max-width: 2000px), (max-height: 1250px) { #statesOverlay { --columns: 8; } }
-@media (max-width: 1700px), (max-height: 1062px) { #statesOverlay { --columns: 7; } }
-@media (max-width: 1420px), (max-height:  887px) { #statesOverlay { --columns: 6; } }
-@media (max-width: 1120px), (max-height:  700px) { #statesOverlay { --columns: 5; } }
-@media (max-width:  800px), (max-height:  500px) { #statesOverlay { --columns: 4; } }
-@media (max-width:  680px), (max-height:  425px) { #statesOverlay { --columns: 3; } }
-@media (max-width:  520px), (max-height:  325px) { #statesOverlay { --columns: 2; } }
+@container roomArea ((max-width: 2260px) or (max-height: 1412px)) { #statesOverlay { --columns: 9; } }
+@container roomArea ((max-width: 2000px) or (max-height: 1250px)) { #statesOverlay { --columns: 8; } }
+@container roomArea ((max-width: 1700px) or (max-height: 1062px)) { #statesOverlay { --columns: 7; } }
+@container roomArea ((max-width: 1420px) or (max-height:  887px)) { #statesOverlay { --columns: 6; } }
+@container roomArea ((max-width: 1120px) or (max-height:  700px)) { #statesOverlay { --columns: 5; } }
+@container roomArea ((max-width:  800px) or (max-height:  500px)) { #statesOverlay { --columns: 4; } }
+@container roomArea ((max-width:  680px) or (max-height:  425px)) { #statesOverlay { --columns: 3; } }
+@container roomArea ((max-width:  520px) or (max-height:  325px)) { #statesOverlay { --columns: 2; } }
 
 #statesList .title {
   border-top: 1px solid black;
@@ -412,7 +412,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 
 
-@media (max-width: 600px), (max-height: 375px) {
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   #statesOverlay h2.title {
     position: unset;
     margin:  0 !important;
@@ -434,7 +434,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     clear: both;
   }
 }
-@media (max-width: 320px), (max-height: 200px) {
+@container roomArea ((max-width: 320px) or (max-height: 200px)) {
   #filterOverflow > div {
     padding: 2px;
   }
@@ -940,7 +940,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin-bottom: 6px;
 }
 
-@media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {
+@container roomArea ((max-width: 1260px) or (max-height: 787px) or ((min-width: 1421px) and (min-height: 888px))) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
     --similarDetailsHeight: 160px;
@@ -963,12 +963,12 @@ div:nth-of-type(2) > .list > .roomState .star {
     display: none;
   }
 }
-@media (max-width: 1040px), (max-height: 650px), (min-width: 1421px) and (min-height: 888px) {
+@container roomArea ((max-width: 1040px) or (max-height: 650px) or ((min-width: 1421px) and (min-height: 888px))) {
   .variant {
     padding: .11rem .5rem;
   }
 }
-@media (max-width: 957px), (max-height: 600px), (max-width: 1000px) and (max-height: 643px), (min-width: 1421px) and (min-height: 888px) {
+@container roomArea ((max-width: 957px) or (max-height: 600px) or ((max-width: 1000px) and (max-height: 643px)) or ((min-width: 1421px) and (min-height: 888px))) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 150px;
     --similarDetailsHeight: 150px;
@@ -1035,7 +1035,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     padding: 0 20px 20px 20px;
   }
 }
-@media (max-width: 500px), (max-height: 312px) {
+@container roomArea ((max-width: 500px) or (max-height: 312px)) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 50px;
     --similarDetailsHeight: 50px;
@@ -1109,7 +1109,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin: 10px 0;
   }
 }
-@media (max-width: 270px), (max-height: 168px) {
+@container roomArea ((max-width: 270px) or (max-height: 168px)) {
   #stateDetailsOverlay.editing #mainDetails {
     margin-top: 0;
   }
@@ -1121,7 +1121,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     position: unset;
   }
 }
-@media (min-width: 1421px) and (min-height: 888px) { /* sidebar */
+@container roomArea ((min-width: 1421px) and (min-height: 888px)) { /* sidebar */
   #statesOverlay.withDetails {
     padding-right: calc((var(--size) + 22px) * 3);
   }
@@ -1188,7 +1188,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 #stateAddOverlay > div > div:nth-of-type(1), #variantAddOverlay > div > div:nth-of-type(1) {
   grid-column: 1 / span 2;
 }
-@media (max-width: 880px), (max-height: 550px) {
+@container roomArea ((max-width: 880px) or (max-height: 550px)) {
   #stateAddOverlay, #variantAddOverlay {
     justify-content: unset;
   }
@@ -1196,7 +1196,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-top: 20px;
   }
 }
-@media (max-width: 600px), (max-height: 375px) {
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   #stateAddOverlay, #variantAddOverlay {
     padding: 0;
   }
@@ -1204,7 +1204,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     grid-column: unset;
   }
 }
-@media (max-width: 300px), (max-height: 187px) {
+@container roomArea ((max-width: 300px) or (max-height: 187px)) {
   #stateAddOverlay .titleWithCloseButton, #variantAddOverlay .titleWithCloseButton {
     margin-top: 10px;
   }
@@ -1261,13 +1261,13 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin: 0 auto;
 }
 
-@media (max-width: 500px), (max-height: 312px) {
+@container roomArea ((max-width: 500px) or (max-height: 312px)) {
   #stateSaveOverlay {
     justify-content: unset;
   }
 }
 
-@media (max-width: 300px), (max-height: 187px) {
+@container roomArea ((max-width: 300px) or (max-height: 187px)) {
   #stateSaveOverlay {
     padding: 0;
   }
@@ -1325,13 +1325,13 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin: 0 auto;
 }
 
-@media (max-width: 800px), (max-height: 500px) {
+@container roomArea ((max-width: 800px) or (max-height: 500px)) {
   #shareLinkOverlay {
     justify-content: unset;
   }
 }
 
-@media (max-width: 400px), (max-height: 250px) {
+@container roomArea ((max-width: 400px) or (max-height: 250px)) {
   #shareLinkOverlay {
     padding: 0;
   }
@@ -1408,7 +1408,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 
 
-@media (max-width: 1000px), (max-height: 625px) {
+@container roomArea ((max-width: 1000px) or (max-height: 625px)) {
   #updateImageOverlay {
     padding: 10px;
   }
@@ -1422,12 +1422,12 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-left: 4px;
   }
 }
-@media (max-width: 800px), (max-height: 500px) {
+@container roomArea ((max-width: 800px) or (max-height: 500px)) {
   #updateImageOverlay h1 {
     display: none;
   }
 }
-@media (max-width: 600px), (max-height: 375px) {
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   #updateImageOverlay > div:nth-child(2) {
     flex-direction: column;
   }
@@ -1441,12 +1441,12 @@ div:nth-of-type(2) > .list > .roomState .star {
     max-height: 400px;
   }
 }
-@media (max-width: 400px), (max-height: 250px) {
+@container roomArea ((max-width: 400px) or (max-height: 250px)) {
   #updateButtonBar {
     flex-direction: column;
   }
 }
-@media (max-width: 300px), (max-height: 187px) {
+@container roomArea ((max-width: 300px) or (max-height: 187px)) {
   #updateImageOverlay h2 {
     height: unset;
   }

@@ -484,12 +484,12 @@
   display: none;
 }
 
-@media (max-width: 600px), (max-height: 375px) {
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   #symbolPickerOverlay {
     padding: 2%;
   }
 }
-@media (max-width: 300px), (max-height: 187px) {
+@container roomArea ((max-width: 300px) or (max-height: 187px)) {
   #symbolPickerOverlay {
     padding: 0;
   }
@@ -519,7 +519,7 @@ p[icon]::before {
   position: absolute;
   left: -40px;
 }
-@media (max-width: 600px), (max-height: 375px) {
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   p[icon] {
     margin: 10px;
     margin-left: 40px;
