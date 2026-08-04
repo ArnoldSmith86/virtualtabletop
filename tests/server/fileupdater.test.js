@@ -109,3 +109,52 @@ describe("Scenarios: FileUpdater migrating MOVE's fillTo parameter", () => {
     });
   });
 });
+
+describe("Scenarios: FileUpdater enabling the seatFillToIgnoresHandContents legacy mode", () => {
+  function legacyModes(state) {
+    FileUpdater(state);
+    return (state._meta.gameSettings || {}).legacyModes || {};
+  }
+
+  describe("Given a v21 save with seats and a MOVE with fillTo", () => {
+    test("Then the legacy mode is enabled because 'to' can only be resolved at runtime", () => {
+      const state = stateWithClickRoutine(21, [ move({ to: '${seatID}', fillTo: 5 }) ]);
+      state.s1 = { type: 'seat' };
+      expect(legacyModes(state).seatFillToIgnoresHandContents).toBe(true);
+    });
+  });
+
+  describe("Given a v21 save with seats and a MOVE without fillTo", () => {
+    test("Then the legacy mode is not enabled", () => {
+      const state = stateWithClickRoutine(21, [ move({ count: 5 }) ]);
+      state.s1 = { type: 'seat' };
+      expect(legacyModes(state).seatFillToIgnoresHandContents).toBeUndefined();
+    });
+  });
+
+  describe("Given a v21 save with a MOVE with fillTo but no seat at all", () => {
+    test("Then the legacy mode is not enabled", () => {
+      const state = stateWithClickRoutine(21, [ move({ fillTo: 5 }) ]);
+      expect(legacyModes(state).seatFillToIgnoresHandContents).toBeUndefined();
+    });
+  });
+
+  describe("Given a v21 save whose fillTo MOVE is nested in a routine of another operation", () => {
+    test("Then the legacy mode is still enabled", () => {
+      const state = stateWithClickRoutine(21, [
+        { func: 'IF', condition: 'x', thenRoutine: [ move({ to: '${seat}', fillTo: 5 }) ] }
+      ]);
+      state.s1 = { type: 'seat' };
+      expect(legacyModes(state).seatFillToIgnoresHandContents).toBe(true);
+    });
+  });
+
+  describe("Given a save that is already at the current version", () => {
+    test("Then the legacy mode is not enabled for it", () => {
+      const state = stateWithClickRoutine(22, [ move({ to: '${seatID}', fillTo: 5 }) ]);
+      state.s1 = { type: 'seat' };
+      state._meta.gameSettings = { legacyModes: {} };
+      expect(legacyModes(state).seatFillToIgnoresHandContents).toBeUndefined();
+    });
+  });
+});

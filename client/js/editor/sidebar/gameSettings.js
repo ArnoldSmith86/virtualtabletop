@@ -382,6 +382,18 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2634">pull request #2634</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
+    this.addCheckbox('Ignore a seat\'s hand contents for MOVE fillTo', 'seatFillToIgnoresHandContents', `
+      <b>Problem</b>: <code>MOVE</code> with <code>fillTo</code> to a seat moves the widgets into the seat's hand, but it only counted the cards in that hand that the seat's player <i>owns</i>. For a hand that does not have <code>childrenPerOwner</code> enabled nobody owns those cards, so that count stayed <code>0</code> and <code>fillTo</code> behaved like <code>count</code> instead of topping the hand up.
+      <br><br>
+      <b>Example:</b> a seat whose hand is a regular holder already holding 2 cards, then <code>MOVE 8 cards from deck to seat fillTo 5</code>
+      <br><br>
+      <b>Old result</b>: the hand holds 7 cards<br>
+      <b>New result</b>: the hand holds 5 cards
+      <br><br>
+      Hands with <code>childrenPerOwner</code> enabled are unaffected either way. This legacy mode restores the old count for the seat's own cards only.
+      <br><br>
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/3009">pull request #3009</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
+      `, target);
 
     this.addSubHeader('UI Settings');
     this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of other players\' cursor indicators in the room.', [

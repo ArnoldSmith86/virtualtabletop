@@ -94,11 +94,10 @@ export class Seat extends Widget {
   // cards belonging to the seat's player if the hand keeps its children per owner, all of
   // them if the hand is a regular holder that only this seat uses
   fillLevel() {
-    if(!this.get('hand') || !widgets.has(this.get('hand')))
-      return 0;
-    const hand = widgets.get(this.get('hand'));
-    const cards = hand.children();
-    return hand.get('childrenPerOwner') ? cards.filter(c=>c.get('owner') == this.get('player')).length : cards.length;
+    const hand = widgets.has(this.get('hand')) ? widgets.get(this.get('hand')) : null;
+    if(!hand || hand.get('childrenPerOwner') || legacyMode('seatFillToIgnoresHandContents'))
+      return this.children().length;
+    return hand.children().length;
   }
 
   //need to add a condition here to change the turn if the turn is in a seat that is empty

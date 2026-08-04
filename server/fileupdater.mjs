@@ -76,6 +76,7 @@ function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
   v<19 && v19useIframeForHtmlCards(meta, state);
   v<21 && v21DisableHolderImageWidget(meta, state);
+  v<22 && v22SeatFillToIgnoresHandContents(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -531,6 +532,29 @@ function v22UpdateFillToParameter(routine) {
       v22UpdateFillToParameter(routine[key].elseRoutine);
     }
   }
+}
+
+function v22SeatFillToIgnoresHandContents(meta, state) {
+  // MOVE to a seat used to compare fillTo against the cards of the seat's hand that the
+  // seat's player owns - which is always 0 for a hand that does not keep its children per
+  // owner, so fillTo silently behaved like count there. Whether a MOVE targets a seat is
+  // only known at runtime ('to' is frequently a $ template), so no JSON rewrite can express
+  // the old behavior: enable the legacy mode for every old game that has seats and a MOVE
+  // with fillTo. False positives just keep the old behavior of games that already work.
+  function hasMoveWithFillTo(obj) {
+    if(Array.isArray(obj))
+      return obj.some(hasMoveWithFillTo);
+    if(typeof obj == 'object' && obj !== null)
+      return obj.func == 'MOVE' && obj.fillTo != null || Object.values(obj).some(hasMoveWithFillTo);
+    return false;
+  }
+
+  if(!JSON.stringify(state).includes('"seat"') || !hasMoveWithFillTo(state))
+    return;
+
+  meta.gameSettings = meta.gameSettings || {};
+  meta.gameSettings.legacyModes = meta.gameSettings.legacyModes || {};
+  meta.gameSettings.legacyModes.seatFillToIgnoresHandContents = true;
 }
 
 function v17MaterialSymbols(properties) {
