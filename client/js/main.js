@@ -244,6 +244,7 @@ function setScale() {
   document.documentElement.style.setProperty('--scale', scale);
   updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
+  setSidebar(); // the game details sidebar is a container query on the board, so it flips with it
   if(edit)
     scaleHasChanged(scale);
   refreshIgnoreZoomWidgets();

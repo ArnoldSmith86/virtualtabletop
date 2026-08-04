@@ -113,7 +113,8 @@ const editSidebarWidth = ClientFunction(() => getComputedStyle(document.body).ge
 // drop columns to keep the tiles the size they are on the default board. Off the window - which
 // is what a media query measures - it kept every one of them and squeezed unreadable thumbnails
 // into the space of three.
-// The last two tests in this file on purpose: the window size they set stays with the browser.
+// The last three tests in this file resize the window on purpose - they come last because the
+// size they set stays with the browser afterwards.
 test('The game shelf sizes its tiles from the board, not from the window', async t => {
   await t.resizeWindow(1280, 800);
   await loadGameWithBoardSize(null);
@@ -144,6 +145,29 @@ test('The editor sidebar keeps its labels while the board is not short of the sp
 
   await loadGameWithBoardSize({ width: 1000, height: 1600 });
   await t.expect(editSidebarWidth()).eql('128px');
+
+  await loadGameWithBoardSize(null);
+});
+
+// Whether the game details are a sidebar of the shelf or an overlay of their own is a container
+// query on the board, so setSidebar() has to decide it from the board too. While it still measured
+// the window, every window that was bigger than its board - 1460x920 on a default board, any
+// desktop window on a portrait one - moved the details into the shelf, where the CSS never gave
+// them a display: clicking a game did nothing at all, with no way on to the PLAY button.
+test('Clicking a game in the shelf opens its details on every board and window size', async t => {
+  const detailsPlayButton = Selector('#stateDetailsOverlay .variantsList > div > button');
+
+  for(const [ window, boardSize ] of [ [ [ 1460, 920 ], null ], [ [ 1920, 1080 ], { width: 1000, height: 1600 } ] ]) {
+    await t.resizeWindow(...window);
+    await loadGameWithBoardSize(boardSize);
+    await t.navigateTo('./testcafe-testing');
+    await ClientFunction(prepareClient)();
+    await t
+      .click('#statesButton')
+      .click(Selector('.roomState.visible'))
+      .expect(Selector('#stateDetailsOverlay').visible).ok()
+      .expect(detailsPlayButton.visible).ok();
+  }
 
   await loadGameWithBoardSize(null);
 });
