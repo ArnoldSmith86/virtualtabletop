@@ -115,6 +115,24 @@ test('A card the target holder does not accept stays behind', async t => {
   await expectEventually(t, selectedCards, [ 'card3' ]);
 });
 
+test('A pile in the holder keeps its own click instead of becoming a selection', async t => {
+  const state = selectRoom('all');
+  state.pile = { id: 'pile', type: 'pile', parent: 'hand', x: 400, y: 4 };
+  state.card2.parent = 'pile';
+  state.card3.parent = 'pile';
+  await setRoomState(state);
+  await ClientFunction(prepareClient)();
+  await setName(t, player);
+  await expectEventually(t, ()=>cardsIn('hand'), [ 'card1' ]);
+
+  // clicking the pile handle has to open the pile menu - the pile is the stack of what
+  // can be picked, not something to pick, so it must not eat a multiSelectMax slot
+  await t.click('#w_pile .handle');
+  await t.expect(Selector('#pileOverlay').visible).ok();
+  await t.expect(Selector('#w_pile').hasClass('multiSelected')).notOk();
+  await expectEventually(t, selectedCards, []);
+});
+
 test('Cards dropped on the surface are spread out even if the holder stacks them', async t => {
   await openRoom(t, 'all', { stackOffsetX: 0 });
 

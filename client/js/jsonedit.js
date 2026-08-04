@@ -1499,8 +1499,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
-  jeAddEnumCommands('^holder ↦ multiSelectMax', [ 0, 1, 'all' ]);
-  jeAddEnumCommands('^holder ↦ multiSelectStyle', [ 'elevate', 'highlight', 'shade', 'none' ]);
+  jeAddEnumCommands('^.* ↦ multiSelectMax', [ 0, 1, 'all' ]);
+  jeAddEnumCommands('^.* ↦ multiSelectStyle', [ 'elevate', 'highlight', 'shade', 'none' ]);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);

@@ -174,6 +174,33 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
         removeWidget(table.get('id'));
       });
     });
+
+    describe('When the pile itself is clicked', () => {
+      test('Then it is not selected and keeps its own click', async () => {
+        expect(await pile.toggleMultiSelect()).toBe(false);
+        expect(pile.get('selectedBy')).toEqual([]);
+      });
+    });
+  });
+
+  describe('Given a widget picked by a player who is no longer in the room', () => {
+    let hand, cards;
+    beforeEach(async () => {
+      ({ hand, cards } = createHand('all', 2));
+      await cards[0].set('selectedBy', [ 'Ghost' ]);
+      await cards[1].set('selectedBy', [ 'Alice' ]);
+    });
+    afterEach(() => {
+      cards.concat(hand).forEach(w => removeWidget(w.get('id')));
+    });
+
+    describe('When the holder is used again', () => {
+      test('Then only the picks of players who are still there survive', async () => {
+        await hand.clearStaleMultiSelections([ playerName, 'Alice' ]);
+        expect(cards[0].get('selectedBy')).toEqual([]);
+        expect(cards[1].get('selectedBy')).toEqual([ 'Alice' ]);
+      });
+    });
   });
 
   describe('Given a dragged widget that the rest of the selection follows', () => {
@@ -226,6 +253,7 @@ describe('Scenarios: Selecting widgets by clicking them', () => {
         expect(cards.map(c=>c.get('parent'))).toEqual([ null, null, null ]);
         expect(cards.map(c=>c.get('x'))).toEqual([ 500, 500+cards[0].get('width'), 500+2*cards[0].get('width') ]);
         expect(cards.slice(1).map(c=>c.get('dragging'))).toEqual([ playerName, playerName ]);
+        expect(cards.map(c=>c.get('z'))).toEqual([ 5, 4, 3 ]); // the dragged one stays on top
         expect(selectedIDs(cards)).toEqual([]);
       });
     });

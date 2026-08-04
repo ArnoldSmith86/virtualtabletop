@@ -114,16 +114,22 @@
 /* the picks stand out because everything else steps back - a darkened widget means
    "unavailable" everywhere else in the app, so dimming the picked ones would read
    backwards. A widget holding a pick (a pile) is left alone, dimming it would dim
-   the pick inside it. Nothing is dimmed while the player has not picked anything. */
-.multiSelect-shade:has(.multiSelected) .widget:not(.multiSelected):not(:has(.multiSelected)) {
+   the pick inside it - its other children are dimmed one level down instead. Nothing
+   is dimmed while the player has not picked anything. Both rules stay on one level of
+   children: a filter already applies to everything inside the widget it dims, so
+   matching nested widgets as well would only darken them a second time. */
+.multiSelect-shade:has(.multiSelected) > .widget:not(.multiSelected):not(:has(.multiSelected)),
+.multiSelect-shade:has(.multiSelected) > .widget:has(.multiSelected) > .widget:not(.multiSelected) {
   filter: brightness(0.65) !important;
 }
 
 /* until the first click nothing tells the player that this holder reacts to clicks,
-   so widgets in it answer the pointer with a hint of the ring they would get */
-.multiSelect-elevate .widget:not(.multiSelected):hover,
-.multiSelect-highlight .widget:not(.multiSelected):hover,
-.multiSelect-shade .widget:not(.multiSelected):hover {
+   so widgets in it answer the pointer with a hint of the ring they would get. A pile
+   is not one of them (its click opens the pile overlay), and :hover reaches every
+   ancestor, so this stays on the holder's own children. */
+.multiSelect-elevate > .widget:not(.pile):not(.multiSelected):hover,
+.multiSelect-highlight > .widget:not(.pile):not(.multiSelected):hover,
+.multiSelect-shade > .widget:not(.pile):not(.multiSelected):hover {
   box-shadow: 0 0 0 2px rgba(31, 92, 166, 0.45);
 }
 

@@ -570,9 +570,27 @@ export class Widget extends StateManaged {
 
   // The holder that governs click-to-select for this widget, or null. Cards inside
   // a pile inside the holder are governed by that holder as well (_ancestor skips piles).
+  // A pile has that same _ancestor, but it is the stack of what can be picked rather
+  // than something to pick, so it keeps its own click (which opens the pile overlay).
   multiSelectHolder() {
+    if(this.get('type') == 'pile')
+      return null;
     const parent = widgets.get(this.get('_ancestor'));
     return parent && parent.multiSelectLimit() ? parent : null;
+  }
+
+  // A player who leaves the room or renames themselves leaves their name behind on
+  // everything they had picked, where it would keep eating a multiSelectMax slot and
+  // keep being collected by a routine reading selectedBy. Drop the names of players
+  // who are gone whenever somebody uses this holder again.
+  async clearStaleMultiSelections(players = activePlayers) {
+    if(!players.length) // no player list yet - assume everybody is still here
+      return;
+    for(const w of widgetFilter(w=>w.get('_ancestor') == this.get('id') && Array.isArray(w.get('selectedBy')) && w.get('selectedBy').length)) {
+      const remaining = w.get('selectedBy').filter(p=>p == playerName || players.indexOf(p) != -1);
+      if(remaining.length != w.get('selectedBy').length)
+        await w.set('selectedBy', remaining);
+    }
   }
 
   isMultiSelected() {
@@ -593,6 +611,8 @@ export class Widget extends StateManaged {
     const holder = this.multiSelectHolder();
     if(!holder)
       return false;
+
+    await holder.clearStaleMultiSelections();
 
     if(this.isMultiSelected()) {
       await this.setMultiSelected(false);
@@ -621,10 +641,11 @@ export class Widget extends StateManaged {
   flashMultiSelectFull() {
     if(!this.domElement)
       return;
+    clearTimeout(this.multiSelectFullTimeout); // else the previous timer ends this flash early
     this.domElement.classList.remove('multiSelectFull');
     this.domElement.offsetWidth; // restart the animation while the player keeps clicking
     this.domElement.classList.add('multiSelectFull');
-    setTimeout(_=>this.domElement.classList.remove('multiSelectFull'), 400);
+    this.multiSelectFullTimeout = setTimeout(_=>this.domElement.classList.remove('multiSelectFull'), 400);
   }
 
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
@@ -2909,7 +2930,8 @@ export class Widget extends StateManaged {
     const y = this.absoluteCoord('y');
     let i = 1;
     for(const w of this.multiSelectPicked) {
-      await w.setPosition(x + spread.x*i, y + spread.y*i, this.get('z') + i);
+      // descending z, so that the widget under the cursor stays the top one of the fan
+      await w.setPosition(x + spread.x*i, y + spread.y*i, this.get('z') - i);
       ++i;
     }
   }

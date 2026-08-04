@@ -83,6 +83,9 @@ const COMMON_PROPERTIES = {
     owner: v=>typeof v === 'string' || Array.isArray(v) || 'string or array of strings expected',
     dragging: 'string',
     selectedBy: v=>typeof v === 'string' || Array.isArray(v) || 'string or array of player names expected',
+    // click-to-select is offered by whatever widget a pick sits in, not only by holders
+    multiSelectMax: v=>v === 'all' || (typeof v === 'number' || typeof v === 'string' && v.trim() !== '') && Number.isInteger(+v) && +v >= 0 || 'multiSelectMax must be a non-negative whole number or "all"',
+    multiSelectStyle: getEnumValidator([ 'elevate', 'highlight', 'shade', 'none' ]),
     dropOffsetX: 'number',
     dropOffsetY: 'number',
     dropShadowOwner: 'string',
@@ -131,7 +134,7 @@ const WIDGET_PROPERTIES = {
     },
     Holder: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', multiSelectMax: v=>v === 'all' || (typeof v === 'number' || typeof v === 'string' && v.trim() !== '') && Number.isInteger(+v) && +v >= 0 || 'multiSelectMax must be a non-negative whole number or "all"', multiSelectStyle: getEnumValidator([ 'elevate', 'highlight', 'shade', 'none' ]), onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset'
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset'
     },
     Label: {
         ...COMMON_PROPERTIES,

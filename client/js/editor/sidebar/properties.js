@@ -401,7 +401,7 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  multiSelectMax: 'Let players pick widgets in this holder by clicking them, up to this many each - or "any number" for no limit. The picked ones get the clicking player\'s name in their selectedBy property, which automations can read. Works best when the holder spreads its widgets out (see Stack offset X/Y): stacked on one spot only the top one can be clicked.',
+  multiSelectMax: 'Let players pick widgets in this holder by clicking them, up to this many each - or "any number" for no limit. The picked ones get the clicking player\'s name in their selectedBy property, which automations can read. Works best when the holder spreads its widgets out (see Stack offset X/Y): stacked on one spot only the top one can be clicked. All players share the one selectedBy list, so in a holder several players pick from at the same time, two clicks on the same widget in the same moment can cost one of them their pick.',
   multiSelectStyle: 'How a widget the player picked is shown. The built-in styles win over a filter or shadow the widget sets itself, so a widget cannot hide that it was picked (which also means it loses its own shadow while picked); "own CSS" only sets the multiSelected class so the holder css can style it.',
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
