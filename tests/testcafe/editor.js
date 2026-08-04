@@ -1170,6 +1170,69 @@ test('Deck editor: toolbar button opens an empty editor when the game has none',
     .expect(Selector('body').hasClass('deckEditorActive')).notOk();
 });
 
+test('Deck editor: a css property is edited as declaration rows in every scope', async t => {
+  await setRoomState({
+    d1: {
+      id: 'd1', type: 'deck',
+      cardDefaults: { width: 103, height: 160, css: 'color: red; font-weight: bold' },
+      cardTypes: { a: { css: { background: '#ffcc00' } } },
+      faceTemplates: [ { css: { border: '2px solid green' }, objects: [
+        { type: 'text', x: 5, y: 5, width: 90, height: 30, fontSize: 16, value: 'hi', css: 'font-style: italic' }
+      ] } ]
+    },
+    c1: { id: 'c1', type: 'card', deck: 'd1', cardType: 'a', x: 300, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const deckProperty = ClientFunction(property => JSON.stringify(widgets.get('d1').get(property)));
+  const tab = id => Selector(`#deckEditorTab_${id}`);
+  const rows = Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationRow');
+  const names = Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationName');
+  const values = Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationValue');
+  const addClassRow = Selector('#deckEditorSidebar .deckEditorCssEditor input').withAttribute('placeholder', /new class/);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]')
+    .click(tab('defaults'))
+    // the card defaults become properties of every card, so their css is a widget css: it has the
+    // class/selector sections the Edit Widgets tab offers, and the string form stays a string
+    .expect(rows.count).eql(2)
+    .expect(names.nth(0).value).eql('color')
+    .expect(addClassRow.exists).ok()
+    .typeText(values.nth(0), 'blue', { replace: true })
+    .expect(deckProperty('cardDefaults')).contains('color: blue; font-weight: bold;');
+
+  // the face template's own css styles the face div itself, which the engine writes into a style
+  // attribute - so no class/selector sections there
+  await t
+    .click(tab('face'))
+    .expect(rows.count).eql(1)
+    .expect(names.nth(0).value).eql('border')
+    .expect(addClassRow.exists).notOk()
+    .typeText(values.nth(0), '3px solid blue', { replace: true })
+    .expect(deckProperty('faceTemplates')).contains('"css":{"border":"3px solid blue"}');
+
+  // a declaration switched off leaves the deck without losing its place in the list
+  await t
+    .click(tab('cardType'))
+    .expect(rows.count).eql(1)
+    .click(Selector('#deckEditorSidebar .cssDeclarationToggle').nth(0))
+    .expect(deckProperty('cardTypes')).eql('{"a":{}}')
+    .click(Selector('#deckEditorSidebar .cssDeclarationToggle').nth(0))
+    .expect(deckProperty('cardTypes')).eql('{"a":{"css":{"background":"#ffcc00"}}}');
+
+  await t
+    .click(Selector('#deckEditorTree .deckEditorObjectRow'))
+    .click(tab('object'))
+    .expect(rows.count).eql(1)
+    .expect(names.nth(0).value).eql('font-style')
+    .click(Selector('#deckEditorSidebar .deckEditorCssEditor .cssDeclarationRow button[icon=delete]'))
+    // the last declaration removed is no css property at all, rather than an empty one
+    .expect(deckProperty('faceTemplates')).notContains('font-style');
+});
+
 test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

@@ -213,6 +213,9 @@ class DeckEditor {
     this.selectionMemory = {};
     this.lastDeckID = null;
     this.suggestSeq = 0; // unique-id counter for the add-property datalists
+    // The css rows' editing state (declarations switched off, ones without a value yet, sections switched to
+    // text editing, folded sections) - see CssEditor. Not part of the game, so it goes when the editor closes.
+    this.cssEditorState = new CssEditorState();
 
     // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
     // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
@@ -964,6 +967,9 @@ class DeckEditor {
     await this.flushPendingCommits();
     const deck = this.deck();
     this.selectedObject = null;
+    // switched off and half typed css declarations are not in the game state, so nothing may outlive the
+    // editing session they were made in
+    this.cssEditorState.clear();
     $('body').classList.remove('deckEditorActive');
     $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
     $('#deckEditorDragToolbar').classList.remove('active');
@@ -1794,6 +1800,13 @@ class DeckEditor {
       `field:faceTemplates:${this.face}:${this.selectedObject}:${property}`
     ];
     const objectProps = div(sidebar, 'deckEditorProperties deckEditorObjectProperties');
+    const deleteObjectProperty = async property=>{
+      await this.flushPendingCommits();
+      delete object[property];
+      this.refreshMainCardFaces();
+      await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted property "${property}" of a face object of deck ${this.deckID} in deck editor`);
+      this.renderSidebar();
+    };
     for(const property of Object.keys(object)) {
       if(property == 'dynamicProperties')
         continue;
@@ -1813,6 +1826,28 @@ class DeckEditor {
         this.updateDragToolbar();
         this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
       });
+      // The object's css styles the box it is drawn in. Only an HTML object gets class/selector sections:
+      // for every other type the engine writes it into the style attribute of that box (card.js).
+      if(this.isCssProperty(property)) {
+        this.addCssEditor(objectProps, property, {
+          stateKey: `${this.deckID}:faceTemplates:${this.face}:${this.selectedObject}:${property}`,
+          getValue: _=>object[property],
+          setValue: v=>this.queueFieldEdit(async _=>{
+            await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
+            if(v === null) // no declaration left is no css property, rather than a "css": null in the deck
+              delete object[property];
+            else
+              object[property] = v;
+            this.refreshMainCardFaces();
+            this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
+          }),
+          allowClasses: object.type == 'html',
+          defaultLabel: property == 'css' ? 'The object itself' : undefined,
+          defaultInfo: object.type == 'html' ? 'Declarations applied to the object itself. Other sections are selectors matched inside its HTML.' : 'Declarations applied to the box this object is drawn in.',
+          onDelete: _=>deleteObjectProperty(property)
+        });
+        continue;
+      }
       const row = this.addTypedInput(property, object[property], onValueChanged, objectProps, fieldType, true);
       // The object's own value is an image/icon: a picker button opens the same chip picker the Edit
       // Widgets tab uses for a basic widget's Content section, right below this row.
@@ -1823,13 +1858,7 @@ class DeckEditor {
         this.addColorPickerToRow(row, objectProps, property, onValueChanged);
       // Per-row "make different per card type" (split) button removed; that binding is created from the
       // Dynamic properties section's Link control below. Only the delete (trash) button stays on the row.
-      this.addPropertyDeleteButton(row, property, async _=>{
-        await this.flushPendingCommits();
-        delete object[property];
-        this.refreshMainCardFaces();
-        await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted property "${property}" of a face object of deck ${this.deckID} in deck editor`);
-        this.renderSidebar();
-      });
+      this.addPropertyDeleteButton(row, property, _=>deleteObjectProperty(property));
     }
     addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
       if(property == 'dynamicProperties' || object[property] !== undefined)
@@ -2013,6 +2042,15 @@ class DeckEditor {
       for(const object of face.objects || [])
         for(const property of Object.values(object.dynamicProperties || {}))
           boundProperties.add(property);
+    const deleteTypeProperty = async property=>{
+      await this.flushPendingCommits();
+      delete typeProperties[property];
+      if(this.mainCard)
+        delete this.mainCard.state[property];
+      this.refreshMainCardFaces();
+      await this.commit('cardTypes', `${getPlayerDetails().playerName} deleted property "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
+      this.renderSidebar();
+    };
     const addTypeInput = property=>{
       const onValueChanged = v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
@@ -2020,6 +2058,27 @@ class DeckEditor {
         this.refreshMainCardFaces();
         this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       });
+      // a card type property becomes a property of the cards of that type, so its css is a widget css
+      if(this.isCssProperty(property)) {
+        this.addCssEditor(typeProps, property, {
+          stateKey: `${this.deckID}:cardTypes:${this.cardType}:${property}`,
+          getValue: _=>typeProperties[property],
+          setValue: v=>this.queueFieldEdit(async _=>{
+            await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
+            if(v === null) // no declaration left is no css property, rather than a "css": null in the deck
+              delete typeProperties[property];
+            else
+              typeProperties[property] = v;
+            this.refreshMainCardFaces();
+            this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
+          }),
+          defaultLabel: property == 'css' ? 'Cards of this type' : undefined,
+          defaultInfo: 'Declarations applied to the cards of this card type. Other sections style parts of a card (like "&nbsp;> .cardFace") or states like ":hover".',
+          selectorSuggestions: cssSelectorSuggestions.card,
+          onDelete: boundProperties.has(property) ? null : _=>deleteTypeProperty(property)
+        });
+        return;
+      }
       const row = this.addTypedInput(property, typeProperties[property], onValueChanged, typeProps);
       // A custom asset value, or a property bound to an image/icon face object's "value", gets a picker too.
       const boundKind = this.assetPickerKindForCardTypeProperty(property);
@@ -2028,15 +2087,7 @@ class DeckEditor {
       else
         this.addColorPickerToRow(row, typeProps, property, onValueChanged);
       if(!boundProperties.has(property))
-        this.addPropertyDeleteButton(row, property, async _=>{
-          await this.flushPendingCommits();
-          delete typeProperties[property];
-          if(this.mainCard)
-            delete this.mainCard.state[property];
-          this.refreshMainCardFaces();
-          await this.commit('cardTypes', `${getPlayerDetails().playerName} deleted property "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
-          this.renderSidebar();
-        });
+        this.addPropertyDeleteButton(row, property, _=>deleteTypeProperty(property));
     };
     for(const property of Object.keys(typeProperties))
       addTypeInput(property);
@@ -2073,6 +2124,13 @@ class DeckEditor {
     // A trash on a number row (addNumberInput returns the row div, addPropertyDeleteButton wants {dom}).
     const addFaceTrash = (row, property, onDelete)=>this.addPropertyDeleteButton({ dom: row }, property, onDelete);
     const deleteCause = property=>`${getPlayerDetails().playerName} deleted property "${property}" of face ${this.face} of deck ${this.deckID} in deck editor`;
+    const deleteFaceTemplateProperty = async property=>{
+      await this.flushPendingCommits();
+      delete face[property];
+      this.refreshMainCardFaces();
+      await this.commit('faceTemplates', deleteCause(property));
+      this.renderSidebar();
+    };
 
     // border & radius live on the face template itself (numbers). Like the Card type section, a property is a
     // row only while it exists, so its trash removes the whole row; add absent ones from the row below.
@@ -2085,12 +2143,30 @@ class DeckEditor {
         this.refreshMainCardFaces();
         this.scheduleCommit('faceTemplates', ...fieldArgs(property));
       }), faceProps);
-      addFaceTrash(row, property, async _=>{
-        await this.flushPendingCommits();
-        delete face[property];
-        this.refreshMainCardFaces();
-        await this.commit('faceTemplates', deleteCause(property));
-        this.renderSidebar();
+      addFaceTrash(row, property, _=>deleteFaceTemplateProperty(property));
+    }
+
+    // The face template's own css (face.css) styles the face itself - the engine writes it into the style
+    // attribute of the face div (createFaces in card.js), so it has no class/selector sections.
+    for(const property of Object.keys(face)) {
+      if(!this.isCssProperty(property))
+        continue;
+      this.addCssEditor(faceProps, property, {
+        stateKey: `${this.deckID}:faceTemplates:${this.face}:${property}`,
+        getValue: _=>face[property],
+        setValue: value=>this.queueFieldEdit(async _=>{
+          await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
+          if(value === null) // no declaration left is no css property, rather than a "css": null in the deck
+            delete face[property];
+          else
+            face[property] = value;
+          this.refreshMainCardFaces();
+          this.scheduleCommit('faceTemplates', ...fieldArgs(property));
+        }),
+        allowClasses: false,
+        defaultLabel: 'The face itself',
+        defaultInfo: 'Declarations applied to the face of every card of this deck. The engine writes them into the style attribute of the face, so they cannot have class/selector sections.',
+        onDelete: _=>deleteFaceTemplateProperty(property)
       });
     }
 
@@ -2125,6 +2201,28 @@ class DeckEditor {
     for(const property of Object.keys(faceProperties)) {
       if(property == 'enlarge')
         continue;
+      // face.properties reaches the card widget, so a css there is the card's own css while this face is
+      // up - a widget css, unlike the face template's css above
+      if(this.isCssProperty(property)) {
+        this.addCssEditor(faceProps, property, {
+          stateKey: `${this.deckID}:faceTemplates:${this.face}:properties:${property}`,
+          getValue: _=>faceProperties[property],
+          setValue: value=>this.queueFieldEdit(async _=>{
+            await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
+            if(value === null)
+              delete faceProperties[property];
+            else
+              setFaceProperty(property, value);
+            this.refreshMainCardFaces();
+            this.scheduleCommit('faceTemplates', ...fieldArgs(property));
+          }),
+          defaultLabel: property == 'css' ? 'Every card showing this face' : undefined,
+          defaultInfo: 'Declarations applied to the whole card while this face is the one shown - unlike the css above, which styles the face itself.',
+          selectorSuggestions: cssSelectorSuggestions.card,
+          onDelete: _=>deleteFaceProperty(property)
+        });
+        continue;
+      }
       const row = this.addTypedInput(property, faceProperties[property], value=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
         setFaceProperty(property, value);
@@ -2140,16 +2238,18 @@ class DeckEditor {
       this.addPropertyDeleteButton(row, property, _=>deleteFaceProperty(property));
     }
 
-    // Add a whole-face property. border/radius are numbers on the face template itself; enlarge and custom ones
+    // Add a whole-face property. border/radius and css are on the face template itself; enlarge and custom ones
     // live under face.properties. Known face knobs are offered as datalist suggestions so they stay discoverable.
-    const faceLevel = property=>[ 'border', 'radius' ].indexOf(property) != -1;
+    const faceLevel = property=>[ 'border', 'radius' ].indexOf(property) != -1 || this.isCssProperty(property);
     const hasFaceProperty = property=>faceLevel(property) ? face[property] !== undefined : faceProperties[property] !== undefined;
-    const suggestions = [ 'border', 'radius', 'enlarge' ].filter(p=>!hasFaceProperty(p));
+    const suggestions = [ 'border', 'radius', 'enlarge', 'css' ].filter(p=>!hasFaceProperty(p));
     addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
       if(hasFaceProperty(property))
         return;
       await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
-      if(faceLevel(property))
+      if(this.isCssProperty(property))
+        face[property] = {}; // an empty declaration list to fill in
+      else if(faceLevel(property))
         face[property] = 0; // border/radius are numeric face-template properties
       else
         setFaceProperty(property, property == 'enlarge' ? 0 : this.initialValueForType(type));
@@ -2844,6 +2944,32 @@ class DeckEditor {
         this.cardDefaults[property] = v;
         this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
       });
+      // the card defaults become properties of every card widget, so their css is a widget css: the class
+      // and selector sections apply
+      if(this.isCssProperty(property)) {
+        this.addCssEditor(defaultsProps, property, {
+          stateKey: `${this.deckID}:cardDefaults:${property}`,
+          getValue: _=>this.cardDefaults[property],
+          setValue: v=>this.queueFieldEdit(async _=>{
+            await this.flushPendingCommitForOtherField('cardDefaults', defaultsFieldArgs(property)[1]);
+            if(v === null) // no declaration left is no css property, rather than a "css": null in the deck
+              delete this.cardDefaults[property];
+            else
+              this.cardDefaults[property] = v;
+            this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
+          }),
+          defaultLabel: property == 'css' ? 'Every card' : undefined,
+          defaultInfo: 'Declarations applied to every card of this deck. Other sections style parts of a card (like "&nbsp;> .cardFace") or states like ":hover".',
+          selectorSuggestions: cssSelectorSuggestions.card,
+          onDelete: async _=>{
+            await this.flushPendingCommits();
+            delete this.cardDefaults[property];
+            await this.commit('cardDefaults', `${getPlayerDetails().playerName} deleted property "${property}" of card defaults of deck ${this.deckID} in deck editor`);
+            this.renderSidebar();
+          }
+        });
+        return;
+      }
       const row = this.addTypedInput(property, this.cardDefaults[property], onValueChanged, defaultsProps, forced);
       if(this.isAssetValue(this.cardDefaults[property]))
         this.addAssetPickerToRow(row, defaultsProps, 'image', ()=>this.cardDefaults[property], onValueChanged);
@@ -2881,6 +3007,49 @@ class DeckEditor {
     button.title = `Delete property "${property}"`;
     button.onclick = onDelete;
     row.dom.append(button);
+  }
+
+  // A property holding css: "css" itself, or one of the "<element>CSS" ones (handleCSS, faceCSS, …). Instead
+  // of a text field (or, for the nested form, a JSON textarea) those get the declaration rows of the Edit
+  // Widgets tab, so the same editor edits the css of a widget and the css of a card, a face or a face object.
+  isCssProperty(property) {
+    return property == 'css' || /^[a-zA-Z]+CSS$/.test(String(property));
+  }
+
+  // The devtools-style CSS editor (CssEditor in cssEditor.js, shared with the Edit Widgets tab) for one css
+  // property of a sidebar scope, with the property's trash next to its name.
+  // The rows read the value back while they are being edited, so the editor keeps its own copy of it: every
+  // other write of this sidebar is queued (so a typing burst commits as one undo step) and would reach the
+  // model only after the rows have already been rebuilt from it.
+  // options: getValue/setValue (setValue(null) means "no css left"), onDelete, allowClasses, defaultLabel,
+  // defaultInfo, selectorSuggestions and the stateKey the editing state is remembered under.
+  addCssEditor(target, property, options) {
+    const host = div(target, 'deckEditorCssEditor editorModule');
+    let value = options.getValue();
+    new CssEditor({
+      property,
+      stateKey: options.stateKey,
+      state: this.cssEditorState,
+      getValue: _=>value,
+      setValue: newValue=>{
+        value = newValue;
+        options.setValue(newValue);
+      },
+      allowClasses: options.allowClasses !== false,
+      showTitle: true,
+      defaultLabel: options.defaultLabel,
+      defaultInfo: options.defaultInfo,
+      selectorSuggestions: options.selectorSuggestions || []
+    }).render(host);
+    if(options.onDelete) {
+      const button = document.createElement('button');
+      button.setAttribute('icon', 'delete_forever');
+      button.className = 'deckEditorDeleteProperty deckEditorDeleteCssProperty';
+      button.title = `Delete property "${property}"`;
+      button.onclick = options.onDelete;
+      $('.propertyPickerSectionTitle', host).append(button);
+    }
+    return host;
   }
 
   knownCardTypeProperties() {

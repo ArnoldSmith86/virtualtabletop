@@ -426,6 +426,65 @@ function propertyInfoButton(appendTo, infoHTML) {
   return dom;
 }
 
+// Free text field with a datalist of suggestions plus an add button - so the
+// field has a picker but still accepts a name the editor never heard of.
+// onAdd returning false keeps the typed text (the name was rejected).
+function suggestionAddRow(target, className, options) {
+  const row = div(target, className);
+
+  const input = document.createElement('input');
+  input.placeholder = options.placeholder;
+  row.appendChild(input);
+
+  if(options.suggestions.length) {
+    const listID = editorDomID('suggestions');
+    const datalist = document.createElement('datalist');
+    datalist.id = listID;
+    for(const suggestion of options.suggestions) {
+      const option = document.createElement('option');
+      option.value = suggestion;
+      datalist.appendChild(option);
+    }
+    row.appendChild(datalist);
+    input.setAttribute('list', listID);
+
+    // A datalist accepts custom property names as well as its suggestions.
+    // Most add rows get a separate, explicit button because the native
+    // affordance is easy to miss; the generic-property input keeps only the
+    // native arrow because it is already visible inside that compact field.
+    if(!options.nativeSuggestionButtonOnly) {
+      const suggestions = document.createElement('button');
+      suggestions.setAttribute('icon', 'arrow_drop_down');
+      suggestions.className = 'suggestionListButton';
+      suggestions.title = 'Show suggestions';
+      suggestions.onclick = _=>{
+        input.focus();
+        if(typeof input.showPicker == 'function')
+          input.showPicker();
+      };
+      row.appendChild(suggestions);
+    }
+  }
+
+  const submit = _=>{
+    const value = input.value.trim();
+    if(value && options.onAdd(value) !== false)
+      input.value = '';
+  };
+  input.onkeydown = event=>{
+    if(event.key == 'Enter')
+      submit();
+  };
+
+  const add = document.createElement('button');
+  add.setAttribute('icon', 'add');
+  add.title = options.title;
+  add.onclick = submit;
+  row.appendChild(add);
+
+  return row;
+}
+
 function propertyInputNumberOrText(rawValue, nullIfEmpty=false) {
   const value = String(rawValue).trim();
   if(value === '' && nullIfEmpty)

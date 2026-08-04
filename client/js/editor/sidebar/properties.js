@@ -1250,15 +1250,10 @@ class PropertiesModule extends SidebarModule {
     this.widgetPicker = null;
     this.renderedSelectionIDs = null;
     this.collapsibleStates = {};
-    // CSS editor: sections switched to text editing, and the declarations
-    // switched off with their checkbox (kept for the editing session only, so
-    // turning one off never leaves anything unusable behind in the game)
-    this.cssTextModes = new Set();
-    this.cssDisabledDeclarations = new Map();
-    // declarations that have a name but no value yet - not valid css, so they
-    // are rows here rather than junk in the game state
-    this.cssPendingDeclarations = new Map();
-    this.cssPendingFocus = null;
+    // CSS editor: sections switched to text editing, declarations switched off
+    // with their checkbox and ones that have a name but no value yet - kept for
+    // the editing session only, so nothing unusable is left behind in the game
+    this.cssEditorState = new CssEditorState();
     // per pile: the corner its handle had before it was pinned to the top left
     this.lastPileHandlePosition = new Map();
     // per pile: the handle text it had before it went back to the card count
@@ -1681,9 +1676,7 @@ class PropertiesModule extends SidebarModule {
     // switched off and half typed css declarations only live as long as their
     // widget is selected - they are not in the game state, so nothing may
     // outlive it
-    this.cssDisabledDeclarations.clear();
-    this.cssPendingDeclarations.clear();
-    this.cssPendingFocus = null;
+    this.cssEditorState.clear();
 
     // Re-rendering the very same widgets must not scroll the panel back to the
     // top: picking a widget in the room re-selects the target, which lands here
@@ -4013,37 +4006,10 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  // A block whose body can be folded away by clicking the header.
+  // A block whose body can be folded away by clicking the header
+  // (collapsibleSection in sidebarModule.js, shared with the deck editor).
   renderCollapsibleSection(title, collapsed, renderBody, target = null, stateKey = null, options = {}) {
-    if(stateKey !== null && this.collapsibleStates[stateKey] !== undefined)
-      collapsed = this.collapsibleStates[stateKey];
-    const wrap = div(target || this.moduleDOM, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
-    const header = document.createElement('button');
-    header.type = 'button';
-    header.className = 'collapsibleHeader';
-    header.setAttribute('aria-expanded', String(!collapsed));
-    const arrow = renderCollapseArrow(header, collapsed);
-    const heading = document.createElement('span');
-    heading.className = 'collapsibleTitle';
-    heading.textContent = title;
-    header.appendChild(heading);
-    if(options.renderSummary) {
-      const summary = document.createElement('span');
-      summary.className = 'collapsibleSummary';
-      header.appendChild(summary);
-      options.renderSummary(summary);
-    }
-    wrap.appendChild(header);
-    const body = div(wrap, 'collapsibleBody');
-    header.onclick = _=>{
-      const nowCollapsed = wrap.classList.toggle('collapsed');
-      setCollapseArrow(arrow, nowCollapsed);
-      header.setAttribute('aria-expanded', String(!nowCollapsed));
-      if(stateKey !== null)
-        this.collapsibleStates[stateKey] = nowCollapsed;
-    };
-    renderBody(body);
-    return wrap;
+    return collapsibleSection(target || this.moduleDOM, title, collapsed, renderBody, this.collapsibleStates, stateKey, options);
   }
 
   renderBasicSection(widget) {
@@ -5482,457 +5448,33 @@ class PropertiesModule extends SidebarModule {
   }
 
   // Chrome-devtools-like editor for a css-like property: one collapsible
-  // section per class/selector with a plain declaration text input.
+  // section per class/selector with a plain declaration text input. The editor
+  // itself is CssEditor (cssEditor.js), shared with the deck editor - this only
+  // points it at the widget's own value.
   renderCssPropertyEditor(widget, property, target, options = {}) {
-    const classSuggestions = options.classSuggestions || [];
-    const wrap = div(target, 'cssEditor');
-    if(options.showTitle !== false) {
-      const title = div(wrap, 'propertyPickerSectionTitle');
-      title.textContent = property;
-      if(editorPropertyHints[property] || property == 'css')
-        propertyInfoButton(title, html(editorPropertyHints[property] || editorPropertyHints.css));
-    }
-    const container = div(wrap);
-
-    const renderClassSection = (className, classValue, wholeProperty) => {
-      const section = div(container, 'cssClassSection');
-      const stateKey = `${widget.id}:${property}:${className}`;
-      // the "default" class is the widget itself (or, for the css properties
-      // of a sub-element, that element) - show a friendlier label
-      const displayName = className == 'default' ? (cssPropertyTargets[property] || 'Base widget') : className;
-      this.renderCollapsibleSection(displayName, false, body => {
-        // text the declaration rows cannot split without losing data (data
-        // URIs and the like) stays a textarea, and so does a section the user
-        // switched to text mode
-        if(this.cssTextModes.has(stateKey) || (typeof classValue === 'string' && classValue.trim() && !cssStringRoundTrips(classValue)))
-          this.renderCssTextarea(widget, property, className, wholeProperty, classValue, body, rebuild);
-        else
-          this.renderCssDeclarationList(widget, property, className, wholeProperty, body, rebuild);
-      }, section, stateKey);
-
-      if(className == 'default')
-        propertyInfoButton($('.collapsibleHeader', section), 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".');
-
-      if(!wholeProperty) {
-        const header = $('.collapsibleHeader', section);
-        const deleteButton = document.createElement('button');
-        deleteButton.setAttribute('icon', 'delete');
-        deleteButton.title = `Remove ${className}`;
-        deleteButton.style.marginLeft = 'auto';
-        deleteButton.style.minWidth = '26px';
-        deleteButton.style.padding = '0';
-        deleteButton.onclick = e => {
-          e.stopPropagation();
-          const css = widgetOwnValue(widget, property);
-          const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-          delete newCss[className];
-          const keys = Object.keys(newCss);
-          // unwrap the nested form when only the default class remains
-          const newValue = keys.length == 0 ? null : (keys.length == 1 && keys[0] == 'default' ? newCss.default : newCss);
-          // the switched off and half typed declarations of this section go
-          // with it - adding the same selector again would otherwise start out
-          // with their ghosts
-          this.cssDisabledDeclarations.delete(stateKey);
-          this.cssPendingDeclarations.delete(stateKey);
-          this.inputValueUpdated(widget, property, typeof newValue === 'string' && newValue.trim() === '' ? null : newValue);
-          if(widget.applyDeltaToDOM)
-            widget.applyDeltaToDOM({ [property]: widget.get(property) });
-          rebuild();
-        };
-        header.appendChild(deleteButton);
-      }
-    };
-
-    const addClass = className => {
-      const value = widgetOwnValue(widget, property);
-      let newCss;
-      if(hasNestedCSSClasses(value)) {
-        if(value[className] !== undefined)
-          return false;
-        newCss = Object.assign({}, value, { [className]: {} });
-      } else {
-        newCss = { [className]: {} };
-        if(this.isOnDemandPropertyValueSet(value) && className != 'default') {
-          // convert the previous value into the default class of the nested form
-          if(isObjectLike(value))
-            newCss.default = value;
-          else
-            newCss.default = cssStringRoundTrips(String(value)) ? cssStringToObject(String(value)) : value;
-        }
-      }
-      this.inputValueUpdated(widget, property, newCss);
-      rebuild();
-    };
-
-    const rebuild = () => {
-      container.innerHTML = '';
+    const editor = new CssEditor({
+      property,
+      stateKey: `${widget.id}:${property}`,
+      state: this.cssEditorState,
       // widgetOwnValue, not get(): a basic widget resolves get() through its
       // shown face, so a face overriding css would be rendered - and written
       // back - as the widget's own declarations
-      const value = widgetOwnValue(widget, property);
-      if(hasNestedCSSClasses(value)) {
-        for(const [ className, classValue ] of Object.entries(value))
-          renderClassSection(className, classValue, false);
-      } else {
-        renderClassSection('default', value, true);
-      }
-
-      if(options.allowClasses === false)
-        return;
-
-      // dropdown (datalist) of common + per-type selectors, minus the ones
-      // already present, so the field has a picker but still allows free text
-      const type = widget.get('type') || 'basic';
-      const isPresent = selector => hasNestedCSSClasses(value) && value[selector] !== undefined;
-      const dropdownSuggestions = [ ...new Set([ ...commonCssSelectors, ...(cssSelectorSuggestions[type] || []), ...classSuggestions ]) ]
-        .filter(selector => !isPresent(selector));
-
-      this.renderSuggestionAddRow(container, 'cssAddClassRow', {
-        placeholder: 'new class/selector, e.g. ":hover"',
-        title: 'Add a class/selector section',
-        suggestions: dropdownSuggestions,
-        onAdd: addClass
-      });
-    };
-
-    rebuild();
-    this.addPropertyListener(widget, property, () => {
-      if(!container.contains(document.activeElement))
-        rebuild();
+      getValue: _=>widgetOwnValue(widget, property),
+      setValue: value=>this.inputValueUpdated(widget, property, value),
+      onChanged: _=>{
+        if(widget.applyDeltaToDOM)
+          widget.applyDeltaToDOM({ [property]: widget.get(property) });
+      },
+      allowClasses: options.allowClasses,
+      showTitle: options.showTitle !== false,
+      titleInfo: (editorPropertyHints[property] || property == 'css') ? html(editorPropertyHints[property] || editorPropertyHints.css) : null,
+      defaultInfo: 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".',
+      classSuggestions: options.classSuggestions,
+      selectorSuggestions: cssSelectorSuggestions[widget.get('type') || 'basic'],
+      propertySuggestions: this.cssPropertySuggestions(widget),
+      listen: rebuild=>this.addPropertyListener(widget, property, rebuild)
     });
-  }
-
-  // The declarations of one class/selector as plain text: the fallback for
-  // values the rows cannot represent, and a way to rewrite or paste a whole
-  // block at once.
-  renderCssTextarea(widget, property, className, wholeProperty, classValue, target, rebuild) {
-    const stateKey = `${widget.id}:${property}:${className}`;
-    const textarea = document.createElement('textarea');
-    textarea.value = cssTextFromValue(classValue);
-    textarea.placeholder = 'property: value;';
-    textarea.oninput = () => {
-      const text = textarea.value;
-      if(wholeProperty) {
-        this.inputValueUpdated(widget, property, text.trim() === '' ? null : text);
-      } else {
-        // class values have to be objects so the engine (and this editor)
-        // recognizes the nested form; refuse text the declaration parser
-        // would destroy (e.g. data URIs)
-        if(text.trim() && !cssStringRoundTrips(text)) {
-          textarea.classList.add('inputError');
-          return;
-        }
-        textarea.classList.remove('inputError');
-        const css = widgetOwnValue(widget, property);
-        const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-        newCss[className] = cssStringToObject(text);
-        this.inputValueUpdated(widget, property, newCss);
-      }
-      if(widget.applyDeltaToDOM)
-        widget.applyDeltaToDOM({ [property]: widget.get(property) });
-    };
-    target.appendChild(textarea);
-
-    const footer = div(target, 'cssDeclarationFooter');
-    if(this.cssTextModes.has(stateKey)) {
-      const list = document.createElement('button');
-      list.setAttribute('icon', 'format_list_bulleted');
-      list.textContent = 'Edit as a list';
-      list.title = 'Back to one row per declaration';
-      list.onclick = _=>{
-        this.cssTextModes.delete(stateKey);
-        rebuild();
-      };
-      footer.appendChild(list);
-    } else {
-      div(footer, 'cssDeclarationNote', 'This contains a value that cannot be split into rows, so it is edited as text.');
-    }
-  }
-
-  // The declarations of one class/selector as devtools-like rows: a checkbox
-  // that turns a declaration off without losing it, the property name and the
-  // value with completion for both, a swatch for colors and a marker for what
-  // the browser does not understand.
-  renderCssDeclarationList(widget, property, className, wholeProperty, target, rebuild) {
-    const stateKey = `${widget.id}:${property}:${className}`;
-    const classValueOf = _=>{
-      const value = widgetOwnValue(widget, property);
-      return wholeProperty ? value : (isObjectLike(value) ? value[className] : undefined);
-    };
-
-    const writeClassValue = newValue => {
-      if(wholeProperty) {
-        this.inputValueUpdated(widget, property, newValue);
-      } else {
-        const css = widgetOwnValue(widget, property);
-        const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-        newCss[className] = isObjectLike(newValue) ? newValue : cssStringToObject(String(newValue || ''));
-        this.inputValueUpdated(widget, property, newCss);
-      }
-      if(widget.applyDeltaToDOM)
-        widget.applyDeltaToDOM({ [property]: widget.get(property) });
-    };
-
-    const declarations = cssDeclarationsWithDisabled(cssDeclarationList(classValueOf()), this.cssDisabledDeclarations.get(stateKey), this.cssPendingDeclarations.get(stateKey));
-
-    const isEmptyValue = declaration=>String(declaration.value === null || declaration.value === undefined ? '' : declaration.value).trim() === '';
-    const remember = (map, filter)=>{
-      const kept = declarations
-        .map((declaration, index)=>({ name: declaration.name, value: declaration.value, index, disabled: declaration.disabled }))
-        .filter(filter);
-      if(kept.length)
-        map.set(stateKey, kept.map(({ name, value, index })=>({ name, value, index })));
-      else
-        map.delete(stateKey);
-    };
-
-    const commit = _=>{
-      remember(this.cssDisabledDeclarations, declaration=>declaration.disabled);
-      // a declaration without a value is invalid css, so a row that only has
-      // its name yet is kept here instead of writing "font-size: ;" into the
-      // game state - it becomes real as soon as it has a value
-      remember(this.cssPendingDeclarations, declaration=>!declaration.disabled && String(declaration.name).trim() !== '' && isEmptyValue(declaration));
-      writeClassValue(cssValueFromDeclarations(declarations.filter(declaration=>!declaration.disabled && !isEmptyValue(declaration)), classValueOf()));
-    };
-
-    const propertyNames = this.cssPropertySuggestions(widget);
-    const nameListID = editorDomID('cssProperties');
-    const nameList = document.createElement('datalist');
-    nameList.id = nameListID;
-    for(const suggestion of propertyNames) {
-      const option = document.createElement('option');
-      option.value = suggestion;
-      nameList.appendChild(option);
-    }
-    target.appendChild(nameList);
-
-    let addRow = null;
-    // a css value cannot hold the same property twice, so a name that is
-    // already in the list continues in the row that has it
-    const rowByName = new Map();
-    const list = div(target, 'cssDeclarationList');
-    declarations.forEach((declaration, index) => {
-      const row = div(list, `cssDeclarationRow${declaration.disabled ? ' disabled' : ''}`);
-
-      const toggle = document.createElement('input');
-      toggle.type = 'checkbox';
-      toggle.className = 'cssDeclarationToggle';
-      toggle.checked = !declaration.disabled;
-      toggle.title = 'Turn this declaration off. It stays in this list while the widget is selected.';
-      toggle.onchange = _=>{
-        declaration.disabled = !toggle.checked;
-        commit();
-        rebuild();
-      };
-      row.appendChild(toggle);
-
-      const name = document.createElement('input');
-      name.className = 'cssDeclarationName';
-      name.value = declaration.name;
-      name.placeholder = 'property';
-      name.setAttribute('list', nameListID);
-      row.appendChild(name);
-
-      div(row, 'cssDeclarationColon', ':');
-
-      const value = document.createElement('input');
-      value.className = 'cssDeclarationValue';
-      value.value = declaration.value;
-      value.placeholder = 'value';
-      // the value suggestions depend on the property name, so they are built
-      // for the row that is actually being edited instead of for all of them
-      value.onfocus = _=>{
-        const suggestions = cssValueSuggestions(declaration.name);
-        if(value.getAttribute('list') || !suggestions.length)
-          return;
-        const valueList = document.createElement('datalist');
-        valueList.id = editorDomID('cssValues');
-        for(const suggestion of suggestions) {
-          const option = document.createElement('option');
-          option.value = suggestion;
-          valueList.appendChild(option);
-        }
-        row.appendChild(valueList);
-        value.setAttribute('list', valueList.id);
-      };
-
-      const warning = document.createElement('span');
-      warning.className = 'cssDeclarationWarning material-symbols';
-      warning.textContent = 'warning';
-      warning.title = 'The browser does not understand this declaration, so it has no effect.';
-      const markValidity = _=>{
-        const valid = cssDeclarationIsValid(declaration.name, declaration.value, property == 'css');
-        row.classList.toggle('invalidDeclaration', !valid);
-        warning.style.display = valid ? 'none' : '';
-      };
-      markValidity();
-
-      if(!declaration.disabled)
-        rowByName.set(String(declaration.name).trim(), value);
-
-      // committing the name per keystroke would write every prefix of it into
-      // the game state, so it waits for Enter or leaving the field
-      name.onchange = _=>{
-        const newName = name.value.trim();
-        // renaming onto another row would silently drop that row's value
-        if(newName && newName != String(declaration.name).trim() && rowByName.has(newName)) {
-          alert(`This section already sets "${newName}".`);
-          name.value = declaration.name;
-          return;
-        }
-        rowByName.delete(String(declaration.name).trim());
-        declaration.name = name.value;
-        rowByName.set(newName, value);
-        markValidity();
-        commit();
-      };
-      name.onkeydown = event=>{
-        if(event.key == 'Enter')
-          value.focus();
-      };
-      // a pasted block of declarations is split up instead of becoming one
-      // unusable property name, like it would be in devtools
-      name.onpaste = event=>{
-        // only intercept a paste that replaces the whole field - inserting at
-        // a caret position (e.g. clicking at the end of "font-size" and
-        // pasting "border: 1px solid black") used to always blow this row
-        // away and replace it with the pasted one, silently dropping
-        // whatever this row had with no way to tell it happened
-        if(name.selectionStart != 0 || name.selectionEnd != name.value.length)
-          return;
-        const pastedText = (event.clipboardData || window.clipboardData).getData('text');
-        if(!pastedText || !pastedText.includes(':'))
-          return;
-        const pasted = cssDeclarationList(pastedText);
-        if(!pasted.length)
-          return;
-        event.preventDefault();
-        // a css value cannot hold the same property twice, so a pasted
-        // declaration another row already has updates that row instead of
-        // becoming a duplicate that cssValueFromDeclarations would drop
-        const added = [];
-        for(const entry of pasted) {
-          const entryName = String(entry.name).trim();
-          const existing = declarations.find((declaration, position)=>position != index && !declaration.disabled && String(declaration.name).trim() == entryName)
-            || added.find(declaration=>String(declaration.name).trim() == entryName);
-          if(existing)
-            existing.value = entry.value;
-          else
-            added.push({ name: entry.name, value: entry.value, disabled: false });
-        }
-        // nothing new means the paste only updated other rows - keep this one
-        declarations.splice(index, added.length ? 1 : 0, ...added);
-        this.cssPendingFocus = `${stateKey}:${pasted[pasted.length-1].name}`;
-        commit();
-        rebuild();
-      };
-      value.oninput = _=>{
-        declaration.value = value.value;
-        markValidity();
-        commit();
-      };
-      // Enter moves on to the next declaration, like devtools does
-      value.onkeydown = event=>{
-        if(event.key == 'Enter' && addRow)
-          $('input', addRow).focus();
-      };
-
-      // the swatch slot is reserved on every row, colour or not - only some
-      // declarations show one, and letting the rest skip it entirely shifted
-      // their value column out of line with the ones that do (devtools keeps
-      // this column fixed regardless of the property).
-      if(cssValueIsColor(declaration.value)) {
-        const hasAlpha = cssColorHasAlpha(declaration.value);
-        const hex = hasAlpha ? null : cssColorHexValue(declaration.value);
-        if(hex === null) {
-          // an <input type="color"> is a plain opaque hex: it has no alpha
-          // channel and knows no modern color space, so it would silently
-          // flatten those values - this one only shows what is set
-          const swatch = div(row, 'cssDeclarationSwatch readOnly');
-          swatch.style.backgroundImage = `linear-gradient(${declaration.value}, ${declaration.value})`;
-          swatch.title = `${declaration.value} - ${hasAlpha ? 'colors with transparency are' : 'this color is'} edited in the value field`;
-        } else {
-          const swatch = document.createElement('input');
-          swatch.type = 'color';
-          swatch.className = 'cssDeclarationSwatch';
-          swatch.value = hex;
-          swatch.title = declaration.value;
-          swatch.oninput = _=>{
-            declaration.value = swatch.value;
-            value.value = swatch.value;
-            commit();
-          };
-          row.appendChild(swatch);
-        }
-      } else {
-        div(row, 'cssDeclarationSwatch placeholder');
-      }
-
-      row.appendChild(value);
-      row.appendChild(warning);
-
-      const remove = document.createElement('button');
-      remove.setAttribute('icon', 'delete');
-      remove.title = `Remove ${declaration.name || 'this declaration'}`;
-      remove.onclick = _=>{
-        declarations.splice(index, 1);
-        commit();
-        rebuild();
-      };
-      row.appendChild(remove);
-
-      if(this.cssPendingFocus == `${stateKey}:${declaration.name}`) {
-        this.cssPendingFocus = null;
-        setTimeout(_=>value.focus(), 0);
-      }
-    });
-
-    addRow = this.renderSuggestionAddRow(target, 'cssDeclarationAddRow', {
-      placeholder: 'property, e.g. "font-size"',
-      title: 'Add a declaration',
-      suggestions: propertyNames.filter(suggestion=>!declarations.some(declaration=>declaration.name == suggestion)),
-      onAdd: text => {
-        const added = text.includes(':') ? cssDeclarationList(text) : [ { name: text, value: '' } ];
-        if(!added.length)
-          return false;
-        // a property that is already in the list is not added a second time -
-        // it would overwrite the existing row without saying so
-        let focusName = null;
-        for(const entry of added) {
-          // a disabled row for the same name still counts as "already in the
-          // list" - skipping it here used to push a second, enabled row with
-          // the same name, which cssDeclarationsWithDisabled then collapsed
-          // back down to just the disabled one on the next rebuild, so "Add"
-          // appeared to silently do nothing
-          const existing = declarations.find(declaration=>String(declaration.name).trim() == String(entry.name).trim());
-          if(existing) {
-            existing.disabled = false;
-            if(entry.value)
-              existing.value = entry.value;
-          } else {
-            declarations.push({ name: entry.name, value: entry.value, disabled: false });
-          }
-          if(focusName === null)
-            focusName = entry.name;
-        }
-        // the name is set, so continue in the value of that row
-        this.cssPendingFocus = `${stateKey}:${focusName}`;
-        commit();
-        rebuild();
-      }
-    });
-    addRow.classList.add('cssAddClassRow');
-
-    const footer = div(target, 'cssDeclarationFooter');
-    const text = document.createElement('button');
-    text.setAttribute('icon', 'edit_note');
-    text.textContent = 'Edit as text';
-    text.title = 'Edit all declarations of this section in one text field';
-    text.onclick = _=>{
-      this.cssTextModes.add(stateKey);
-      rebuild();
-    };
-    footer.appendChild(text);
+    editor.render(target);
   }
 
   // css property names offered in the declaration rows: the common ones plus
@@ -5947,63 +5489,10 @@ class PropertiesModule extends SidebarModule {
     return [ ...new Set(custom.concat(commonCssProperties)) ];
   }
 
-  // Free text field with a datalist of suggestions plus an add button - so the
-  // field has a picker but still accepts a name the editor never heard of.
-  // onAdd returning false keeps the typed text (the name was rejected).
+  // Free text field with a datalist of suggestions plus an add button
+  // (suggestionAddRow in propertyInputs.js, shared with the deck editor).
   renderSuggestionAddRow(target, className, options) {
-    const row = div(target, className);
-
-    const input = document.createElement('input');
-    input.placeholder = options.placeholder;
-    row.appendChild(input);
-
-    if(options.suggestions.length) {
-      const listID = editorDomID('suggestions');
-      const datalist = document.createElement('datalist');
-      datalist.id = listID;
-      for(const suggestion of options.suggestions) {
-        const option = document.createElement('option');
-        option.value = suggestion;
-        datalist.appendChild(option);
-      }
-      row.appendChild(datalist);
-      input.setAttribute('list', listID);
-
-      // A datalist accepts custom property names as well as its suggestions.
-      // Most add rows get a separate, explicit button because the native
-      // affordance is easy to miss; the generic-property input keeps only the
-      // native arrow because it is already visible inside that compact field.
-      if(!options.nativeSuggestionButtonOnly) {
-        const suggestions = document.createElement('button');
-        suggestions.setAttribute('icon', 'arrow_drop_down');
-        suggestions.className = 'suggestionListButton';
-        suggestions.title = 'Show suggestions';
-        suggestions.onclick = _=>{
-          input.focus();
-          if(typeof input.showPicker == 'function')
-            input.showPicker();
-        };
-        row.appendChild(suggestions);
-      }
-    }
-
-    const submit = _=>{
-      const value = input.value.trim();
-      if(value && options.onAdd(value) !== false)
-        input.value = '';
-    };
-    input.onkeydown = event=>{
-      if(event.key == 'Enter')
-        submit();
-    };
-
-    const add = document.createElement('button');
-    add.setAttribute('icon', 'add');
-    add.title = options.title;
-    add.onclick = submit;
-    row.appendChild(add);
-
-    return row;
+    return suggestionAddRow(target, className, options);
   }
 
   // color inputs of one subsection side by side; their pickers open below

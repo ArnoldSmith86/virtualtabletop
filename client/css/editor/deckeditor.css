@@ -1393,6 +1393,38 @@ body.deckEditorPanning #deckEditorMain * {
   outline-offset: 1px;
 }
 
+/* A css/…CSS property is edited by the very same declaration rows the Edit Widgets tab uses (CssEditor,
+   styled in propertyInputs.css under ".editorModule"), so the block carries that class - and with it the
+   module's own display:none and theme colors, which are restored here like on .deckEditorPickerRow above. */
+.deckEditorCssEditor.editorModule {
+  display: block;
+  background: transparent;
+  color: inherit;
+  margin: 4px 0 10px;
+}
+
+/* The property name doubles as the block's row: it carries the trash, which sits at the right end like the
+   one of every other property row (those position it absolutely inside their row; here the name is a flex
+   line of its own, so it just goes last). */
+#deckEditorSidebar .deckEditorCssEditor .propertyPickerSectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  opacity: 1;
+}
+
+#deckEditorSidebar .deckEditorDeleteCssProperty {
+  position: static;
+  transform: none;
+  margin-left: auto;
+}
+
+/* the sections are already indented by the block itself, so drop the module's right margin */
+#deckEditorSidebar .deckEditorCssEditor .collapsibleSection {
+  margin-right: 0;
+}
+
 #deckEditorShowAll.active {
   background: var(--VTTblueDark);
   color: #fff;

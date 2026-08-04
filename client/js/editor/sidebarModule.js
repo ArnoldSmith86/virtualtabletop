@@ -19,6 +19,41 @@ function setCollapseArrow(arrow, collapsed) {
   arrow.classList.toggle('collapsed', !!collapsed);
 }
 
+// A block whose body can be folded away by clicking the header. collapsedStates
+// is where the fold is remembered across rebuilds (an object keyed by stateKey),
+// so this works for anything that renders sections, not just a sidebar module.
+function collapsibleSection(target, title, collapsed, renderBody, collapsedStates = null, stateKey = null, options = {}) {
+  if(collapsedStates && stateKey !== null && collapsedStates[stateKey] !== undefined)
+    collapsed = collapsedStates[stateKey];
+  const wrap = div(target, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
+  const header = document.createElement('button');
+  header.type = 'button';
+  header.className = 'collapsibleHeader';
+  header.setAttribute('aria-expanded', String(!collapsed));
+  const arrow = renderCollapseArrow(header, collapsed);
+  const heading = document.createElement('span');
+  heading.className = 'collapsibleTitle';
+  heading.textContent = title;
+  header.appendChild(heading);
+  if(options.renderSummary) {
+    const summary = document.createElement('span');
+    summary.className = 'collapsibleSummary';
+    header.appendChild(summary);
+    options.renderSummary(summary);
+  }
+  wrap.appendChild(header);
+  const body = div(wrap, 'collapsibleBody');
+  header.onclick = _=>{
+    const nowCollapsed = wrap.classList.toggle('collapsed');
+    setCollapseArrow(arrow, nowCollapsed);
+    header.setAttribute('aria-expanded', String(!nowCollapsed));
+    if(collapsedStates && stateKey !== null)
+      collapsedStates[stateKey] = nowCollapsed;
+  };
+  renderBody(body);
+  return wrap;
+}
+
 class SidebarModule {
   constructor(icon, title, tooltip) {
     this.icon = icon;
