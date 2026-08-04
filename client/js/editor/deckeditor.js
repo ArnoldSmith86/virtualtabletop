@@ -3441,55 +3441,6 @@ class DeckEditor {
       this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
       this.renderSidebar();
     }));
-    this.renderPileDefaults(sidebar);
-  }
-
-  // A pile is temporary, so its drop limit lives in the onPileCreation template every pile of these cards is
-  // created with. Selecting a pile and setting the limit in the properties sidebar writes the same template -
-  // but only while such a pile is on the table, and this is the deck the cards come from either way.
-  renderPileDefaults(sidebar) {
-    const header = document.createElement('header');
-    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard';
-    header.innerHTML = '<h2>Piles</h2><p>Every pile made from these cards</p>';
-    sidebar.append(header);
-    div(sidebar, 'deckEditorSectionNote').textContent = 'The drop limit caps how many cards a player can drag into one pile; showing it makes the pile handle read "2/3" instead of "2". Routines, the JSON editor and "Split the pile" ignore the limit, and piles that already exist keep the one they were created with. Set it to 1 to stop these cards from piling up at all.';
-
-    const pileProps = div(sidebar, 'deckEditorProperties');
-    const onPileCreation = _=>{
-      const template = this.cardDefaults.onPileCreation;
-      return template && typeof template == 'object' && !Array.isArray(template) ? template : {};
-    };
-    // null removes the property again, so a deck that never had an onPileCreation keeps it that way
-    const setPileProperty = (property, value)=>this.queueFieldEdit(async _=>{
-      const args = [
-        `${getPlayerDetails().playerName} updated "${property}" of the piles of deck ${this.deckID} in deck editor`,
-        `field:cardDefaults:onPileCreation:${property}`
-      ];
-      await this.flushPendingCommitForOtherField('cardDefaults', args[1]);
-      const template = Object.assign({}, onPileCreation());
-      if(value === null)
-        delete template[property];
-      else
-        template[property] = value;
-      if(Object.keys(template).length)
-        this.cardDefaults.onPileCreation = template;
-      else
-        delete this.cardDefaults.onPileCreation;
-      this.scheduleCommit('cardDefaults', ...args);
-    });
-
-    // -1 is how "no limit" is stored, but an empty field says it better
-    const limit = onPileCreation().dropLimit;
-    const limitRow = div(pileProps, 'deckEditorNumberInput', '<label>Drop limit</label><input type=number min=0 step=1 placeholder="no limit">');
-    const limitInput = $('input', limitRow);
-    limitInput.value = typeof limit == 'number' && limit > -1 ? limit : '';
-    limitInput.oninput = _=>{
-      const value = limitInput.value.trim();
-      setPileProperty('dropLimit', value === '' ? null : Math.max(0, Math.floor(Number(value)) || 0));
-    };
-
-    // showLimit defaults to false, so switching it off is the same as not having it
-    this.addTypedInput('Show limit', !!onPileCreation().showLimit, value=>setPileProperty('showLimit', value || null), pileProps, 'boolean');
   }
 
   // The type dropdown's "not set" only unsets the value until the next re-render; this removes the row too.

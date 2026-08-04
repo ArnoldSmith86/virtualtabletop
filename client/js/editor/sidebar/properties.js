@@ -6669,9 +6669,8 @@ class PropertiesModule extends SidebarModule {
   // input only shows up once the widget takes drops at all. A pile has no
   // dropTarget and still takes cards - it snaps them in through pileSnapRange -
   // so it is named here rather than derived. A pile is temporary, so the input
-  // is only useful because an edit on a pile is mirrored into the pile template
-  // of its deck (see setAndMirrorToPileTemplate); the deck editor's Piles
-  // section sets the same two for a deck whose cards form no pile right now.
+  // outlives the pile only because an edit on a pile is mirrored into the pile
+  // template of its deck (see setAndMirrorToPileTemplate).
   takesDrops(widget) {
     return widget.get('type') == 'pile' || asArray(widget.get('dropTarget') || []).length > 0;
   }
