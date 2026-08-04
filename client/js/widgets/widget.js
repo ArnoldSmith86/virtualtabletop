@@ -2706,7 +2706,7 @@ export class Widget extends StateManaged {
               if (a.turn == 'last') {
                 target = unskipped[unskipped.length - 1];
               } else if (a.turn === 0) {
-                problems.push(`Warning: turn 0 is not a valid position - positions start at 1 and negative positions count back from the last seat. Using the first seat.`);
+                problems.push(`Warning: turn 0 is not a valid position. Using the first active seat.`);
               } else if (Number.isFinite(a.turn)) {
                 // positions are 1-based, negative positions count from the end: -1 is the last active seat
                 target = unskipped[wrapIndex(a.turn < 0 ? a.turn : a.turn - 1, unskipped.length)];
