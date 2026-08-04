@@ -835,14 +835,16 @@ export class Widget extends StateManaged {
 
     const displayError = (field, error) => {
       const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
-      div(dom.parentElement, 'inputError', error);
+      // the message carries what the field defines (regexHint, min, max, regex),
+      // so it goes into the DOM as text and not as HTML
+      div(dom.parentElement, 'inputError').textContent = error;
     };
 
     for(const field of o.fields || []) {
       if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
         isValid = displayError(field, `Please select at least ${field.min}.`);
       if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
-        isValid = displayError(field, `Please select at most ${field.min}.`);
+        isValid = displayError(field, `Please select at most ${field.max || 1}.`);
       if(field.type == 'number' && variables[field.variable] < field.min)
         isValid = displayError(field, `Please enter a number above ${field.min}.`);
       if(field.type == 'number' && variables[field.variable] > field.max)
