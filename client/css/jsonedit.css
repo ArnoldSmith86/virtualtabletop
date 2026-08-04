@@ -650,13 +650,14 @@ body.jsonEdit #toolbar {
   word-break: break-all;
 }
 
-.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections, .jeLogProblems {
+.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections {
   margin-left:20px;
   white-space: pre;
 }
 
 /* problems are sentences, not JSON: wrap them instead of clipping at the panel edge */
 .jeLogProblems {
+  margin-left:20px;
   white-space: pre-wrap;
   word-break: break-word;
 }
