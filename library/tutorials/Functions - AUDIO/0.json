@@ -223,5 +223,27 @@
     },
     "text": "This bell has a 'clickSound' linked to an external URL.",
     "movable": false
+  },
+  "pickerSpeaker": {
+    "id": "pickerSpeaker",
+    "x": 1102,
+    "y": 690,
+    "image": "/i/noto-emoji/emoji_u1f50a.svg",
+    "clickSound": "",
+    "movable": false
+  },
+  "i4bj": {
+    "id": "i4bj",
+    "x": 902,
+    "y": 800,
+    "width": 500,
+    "height": 50,
+    "z": 75277,
+    "css": {
+      "font-size": "20px",
+      "color": "black"
+    },
+    "text": "This speaker has an empty 'clickSound' and stays silent. You do not need a sound file of your own: open it in the JSON Editor, put the cursor on the 'clickSound' line and use the 'pick a sound from the sound picker' button in the upper right corner. Preview the bundled sounds with ▶, click one to insert its '/i/audio/...' path, then leave edit mode and click the speaker.",
+    "movable": false
   }
 }
