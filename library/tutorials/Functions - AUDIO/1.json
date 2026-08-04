@@ -1170,5 +1170,18 @@
       "font-size": "20px",
       "color": "black"
     }
+  },
+  "bm7j": {
+    "id": "bm7j",
+    "x": 108,
+    "y": 280,
+    "width": 1400,
+    "z": 10018,
+    "movable": false,
+    "text": "The 'source' can be any sound URL, but you do not have to find one yourself. Open the Deal button in the JSON Editor, put the cursor on the 'source' line of its AUDIO function and use the 'pick a sound from the sound picker' button in the upper right corner. Preview the sounds that ship with VTT using ▶, click one to insert its '/i/audio/...' path, then leave edit mode and press Deal to hear it.",
+    "css": {
+      "font-size": "20px",
+      "color": "black"
+    }
   }
 }
