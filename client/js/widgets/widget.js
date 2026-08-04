@@ -683,7 +683,8 @@ export class Widget extends StateManaged {
     for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*)\}/g)) {
       const [ property, ...keyPath ] = match[1].split('.');
       const value = keyPath.length ? getNestedValue(this.get(property), keyPath) : this.get(property);
-      css = css.replace(match[0], value === undefined ? '' : value);
+      // a function as the replacement so that $& and friends in the value are not expanded
+      css = css.replace(match[0], ()=>value === undefined ? '' : value);
       if (usedProperties)
         usedProperties.add(property);
     }
@@ -909,7 +910,7 @@ export class Widget extends StateManaged {
           }
           if(varContent === undefined)
             return undefined;
-          varContent = varContent[key];
+          varContent = getNestedValue(varContent, [ key ]);
         }
         return varContent;
       }
@@ -2011,19 +2012,22 @@ export class Widget extends StateManaged {
 
               const property = w.get(mainProperty);
               const oldValue = keyPath.length ? getNestedValue(property, keyPath) : property;
-              if(a.relation == '+' && oldValue == null)
-                a.relation = '=';
-              if(a.relation == '+' && a.value == null) {
+              // a local relation: falling back to = for one widget must not change it for the next
+              const relation = a.relation == '+' && oldValue == null ? '=' : a.relation;
+              if(relation == '+' && a.value == null) {
                 problems.push(`null value being appended, SET ignored`);
               } else {
-                const newValue = await compute(a.relation, null, oldValue === undefined ? null : oldValue, a.value);
+                const newValue = await compute(relation, null, oldValue === undefined ? null : oldValue, a.value);
                 if(!keyPath.length) {
                   await w.set(mainProperty, newValue);
                 } else {
                   if(property !== null && typeof property != 'object')
                     problems.push(`Property ${mainProperty} is not an object, replacing its value ${JSON.stringify(property)}.`);
                   const copy = property !== null && typeof property == 'object' ? JSON.parse(JSON.stringify(property)) : property;
-                  await w.set(mainProperty, setNestedValue(copy, keyPath, newValue));
+                  const problemsSoFar = problems.length;
+                  const newProperty = setNestedValue(copy, keyPath, newValue, problems);
+                  if(problems.length == problemsSoFar)
+                    await w.set(mainProperty, newProperty);
                 }
               }
             }

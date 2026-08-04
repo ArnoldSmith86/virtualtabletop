@@ -621,11 +621,22 @@ export function mod(a, b) {
 }
 
 // Many widget properties hold nested objects (css, cardTypes, faces, ...). Routines address a value
-// inside them by a path of keys - these two helpers read and write such a path.
+// inside them by a path of keys - the two helpers below read and write such a path.
+
+// Routines come from shared games, so a key must never lead out of the property and into the
+// prototype chain: only own properties are read and these keys are refused entirely.
+const forbiddenNestedKeys = [ '__proto__', 'constructor', 'prototype' ];
+
+// A key is an array index if it is a non-negative integer, written as a JSON number or as a plain
+// decimal string. "007" and "1e3" are object keys.
+function isArrayIndex(key) {
+  return typeof key == 'number' ? Number.isInteger(key) && key >= 0 : !!String(key).match(/^(0|[1-9][0-9]*)$/);
+}
+
 export function getNestedValue(object, path) {
   let value = object;
   for(const key of path) {
-    if(value === null || typeof value != 'object')
+    if(value === null || value === undefined || !Object.prototype.hasOwnProperty.call(value, key))
       return undefined;
     value = value[key];
   }
@@ -634,12 +645,38 @@ export function getNestedValue(object, path) {
 
 // Returns the (possibly new) container so that a missing or non-object value can be replaced by the
 // object/array needed to hold the path. Modifies the given object - pass a copy if that matters.
-export function setNestedValue(object, path, value) {
+// Refused keys are collected in problems and leave the object unchanged - check whether problems
+// grew before using the result.
+export function setNestedValue(object, path, value, problems=[]) {
   if(!path.length)
     return value;
+
   const key = path[0];
-  const container = object !== null && typeof object == 'object' ? object : (String(key).match(/^[0-9]+$/) ? [] : {});
-  container[key] = setNestedValue(container[key] === undefined ? null : container[key], path.slice(1), value);
+  if(forbiddenNestedKeys.indexOf(String(key)) != -1) {
+    problems.push(`Key ${JSON.stringify(String(key))} is not allowed inside a property.`);
+    return object;
+  }
+
+  // Only a JSON number creates an array: a string key like "1754300000000" is a map key and would
+  // otherwise create an array of a million nulls that is synced to every client.
+  const container = object !== null && typeof object == 'object' ? object : (typeof key == 'number' && isArrayIndex(key) ? [] : {});
+  if(Array.isArray(container)) {
+    if(!isArrayIndex(key)) {
+      problems.push(`Key ${JSON.stringify(String(key))} is not an index, it cannot be set in an array.`);
+      return object;
+    }
+    if(+key > container.length) {
+      problems.push(`Index ${key} is out of range for an array of length ${container.length}.`);
+      return object;
+    }
+  }
+
+  const oldValue = Object.prototype.hasOwnProperty.call(container, key) ? container[key] : null;
+  const problemsSoFar = problems.length;
+  const newValue = setNestedValue(oldValue, path.slice(1), value, problems);
+  if(problems.length > problemsSoFar)
+    return object;
+  container[key] = newValue;
   return container;
 }
 

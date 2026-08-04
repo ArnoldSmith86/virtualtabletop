@@ -321,6 +321,11 @@ function parsePropertySyntax(string) {
     return match;
 }
 
+// The variables used as keys in the ".a.$b.c" part of a ${PROPERTY ...} or ${variable} expression.
+function pathVariables(path) {
+    return (path || '').split('.').filter(key=>key[0] == '$').map(key=>key.substr(1));
+}
+
 // The property of GET and SET is either a property name or an array of the property name followed
 // by the keys leading to a value inside it.
 function validatePropertyPath(value, context, propertyPath = []) {
@@ -461,11 +466,19 @@ function validateRoutine(routine, context, propertyPath = []) {
                 // No validation for Set-based properties
                 continue;
             } else if (propMatch = parsePropertySyntax(String(operation[prop]))) {
+                // keys of the path leading into the property can be variables as well
+                const undefinedKeyVariable = pathVariables(propMatch[3]).find(v=>!context.validVariables[v]);
                 if(propMatch[1] && !context.validVariables[propMatch[2]])
                     problems.push({
                         widget: context.widgetId,
                         property: propPath,
                         message: `${func} uses undefined variable '${propMatch[2]}'`
+                    });
+                else if(undefinedKeyVariable)
+                    problems.push({
+                        widget: context.widgetId,
+                        property: propPath,
+                        message: `${func} uses undefined variable '${undefinedKeyVariable}'`
                     });
                 else if(propMatch[4] && !context.validVariables[propMatch[5]])
                     problems.push({
@@ -481,13 +494,16 @@ function validateRoutine(routine, context, propertyPath = []) {
                     });
                 else
                     continue;
-            } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)(?:\.[^.}]+)*\}$/)) {
-                if(context.validVariables[varMatch[1]])
+            } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)((?:\.[^.}]+)*)\}$/)) {
+                const undefinedVariable = context.validVariables[varMatch[1]]
+                    ? pathVariables(varMatch[2]).find(v=>!context.validVariables[v])
+                    : varMatch[1];
+                if(!undefinedVariable)
                     continue;
                 problems.push({
                     widget: context.widgetId,
                     property: propPath,
-                    message: `${func} uses undefined variable '${varMatch[1]}'`
+                    message: `${func} uses undefined variable '${undefinedVariable}'`
                 });
                 continue;
             } else if(typeof operation[prop] === 'string' && operation[prop].match(/\$\{([^.}]+)(?:\.[^.}]+)*\}/)) {
@@ -949,7 +965,8 @@ function getCustomPropertyUsage(data) {
             let match;
             while ((match = regex.exec(value)) !== null) {
                 if (match && match[2]) {
-                    customProperties.add(match[2]);
+                    // everything after the first dot indexes into the property, it is not part of its name
+                    customProperties.add(match[2].split('.')[0]);
                 }
             }
         }
@@ -1042,6 +1059,8 @@ function getCustomPropertyUsage(data) {
                 } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
                     addPropertyUsage(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
+                    addPropertyUsage(value);
+                } else if (func === 'SET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
                     addPropertyUsage(value);
                 }
             }
