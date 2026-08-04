@@ -3,6 +3,10 @@ const TOOLBAR_SIZE = 44;
 const WIDE_TOOLBAR_SIZE = 200;
 // the window width below which edit mode stops keeping the module panel beside the room
 const NARROW_WINDOW_SIZE = 1000;
+// Mirror editor/sidebar.css and editor/toolbar.css: the width of the editor sidebar with its
+// button labels and the height of the editor toolbar above the room.
+const EDIT_SIDEBAR_WIDTH = 128;
+const EDIT_TOOLBAR_HEIGHT = 36;
 
 export const DEFAULT_VIEWPORT = { targetWidth: 1600, targetHeight: 1000 };
 export const MIN_BOARD_SIZE = 100;
@@ -133,4 +137,28 @@ export function calculateEditModuleClasses(windowWidth, windowHeight, viewport) 
   if(windowWidth <= NARROW_WINDOW_SIZE && windowAspect >= halfBoardAspect)
     classes.push('editModulesOverlay');
   return classes;
+}
+
+/**
+ * Whether the editor sidebar has to drop its button labels and show icons only. It is
+ * 128px wide with them and 36px without, and those 92px come out of the room - but only
+ * while the room is what is limited by the window's width. A portrait board fills the
+ * height long before it runs out of width, so it can keep the labels in a window where
+ * the default board can't, and a wide board loses them in one where it could.
+ *
+ * This used to be `@media (max-width: 1600px)`, which is roughly the window a 16:10 board
+ * needs at full height - the same number for every board, and one that took the labels
+ * away on e.g. 1600x900 even though the room there is limited by its height and does not
+ * get one pixel bigger without them.
+ *
+ * @param {number} windowWidth
+ * @param {number} windowHeight
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @returns {boolean}
+ */
+export function isEditSidebarNarrow(windowWidth, windowHeight, viewport) {
+  // the module panel layouts put the panel where the sidebar's labels would be
+  if(calculateEditModuleClasses(windowWidth, windowHeight, viewport).length)
+    return true;
+  return (windowWidth - EDIT_SIDEBAR_WIDTH)/viewport.targetWidth < (windowHeight - EDIT_TOOLBAR_HEIGHT)/viewport.targetHeight;
 }

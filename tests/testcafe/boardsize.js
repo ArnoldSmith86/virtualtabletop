@@ -106,11 +106,14 @@ test('The Apply confirmation goes away when somebody else changes the board size
   await loadGameWithBoardSize(null);
 });
 
+// What the editor sidebar is currently wide - 128px with its button labels, 36px without them.
+const editSidebarWidth = ClientFunction(() => getComputedStyle(document.body).getPropertyValue('--editSidebarWidth').trim());
+
 // A portrait board leaves the game shelf a fraction of the width the window has, so it has to
 // drop columns to keep the tiles the size they are on the default board. Off the window - which
 // is what a media query measures - it kept every one of them and squeezed unreadable thumbnails
 // into the space of three.
-// Last in this file on purpose: the window size it sets stays with the browser afterwards.
+// The last two tests in this file on purpose: the window size they set stays with the browser.
 test('The game shelf sizes its tiles from the board, not from the window', async t => {
   await t.resizeWindow(1280, 800);
   await loadGameWithBoardSize(null);
@@ -124,6 +127,23 @@ test('The game shelf sizes its tiles from the board, not from the window', async
   await t
     .expect(onPortraitBoard.columns).lt(onDefaultBoard.columns)
     .expect(onPortraitBoard.tileWidth).gt(onDefaultBoard.tileWidth*0.75);
+
+  await loadGameWithBoardSize(null);
+});
+
+// The editor sidebar trades its button labels for board width, so whether it can afford them
+// depends on the board: this window is too narrow for the default board to keep them, but a
+// portrait board runs out of height long before it runs out of width and has them to spare.
+test('The editor sidebar keeps its labels while the board is not short of the space', async t => {
+  await t.resizeWindow(1280, 800);
+  await loadGameWithBoardSize(null);
+  await ClientFunction(prepareClient)();
+  await t
+    .click('#editButton')
+    .expect(editSidebarWidth()).eql('36px');
+
+  await loadGameWithBoardSize({ width: 1000, height: 1600 });
+  await t.expect(editSidebarWidth()).eql('128px');
 
   await loadGameWithBoardSize(null);
 });

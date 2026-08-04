@@ -245,29 +245,31 @@ body.lightsOff #editorModules {
   color: #f8f8f2;
 }
 
-/* iconify sidebar icons */
-@media (max-width: 1600px) {
-  :root {
-    --editSidebarWidth: 36px;
-  }
-  #editorSidebar button {
-    font-size: 0;
-    padding: 5px;
-  }
-  #editorSidebar button::before {
-    margin: 0;
-  }
-  #editorSidebar button span {
-    font-size: 13px;
-  }
+/* iconify sidebar icons - set by isEditSidebarNarrow() because the window width at which the
+   labels stop being affordable depends on the board's shape, which a media query can't know.
+   It used to be @media (max-width: 1600px), which took them away whenever the window was
+   narrower than a 16:10 board at full height, even where the room is limited by its height
+   and does not get any bigger without them. The module panel layouts below always iconify. */
+body.narrowEditSidebar {
+  --editSidebarWidth: 36px;
+}
+body.narrowEditSidebar #editorSidebar button {
+  font-size: 0;
+  padding: 5px;
+}
+body.narrowEditSidebar #editorSidebar button::before {
+  margin: 0;
+}
+body.narrowEditSidebar #editorSidebar button span {
+  font-size: 13px;
 }
 
 /* module above the room - the classes below are set by calculateEditModuleClasses() because the window
    shape they kick in at depends on the board's shape, which a media query can't know. They used to be two
    media queries in this order, and just like those they can both be active at once - the overlay comes
-   second, so it still wins where they overlap. */
+   second, so it still wins where they overlap. Both imply narrowEditSidebar, which is where the 36px
+   sidebar they leave room for comes from. */
 body.edit.editModulesAbove {
-  --editSidebarWidth: 36px;
   --roomTop: calc(100 * var(--vh) - var(--roomHeight) * var(--scale) / var(--roomZoom) + (1 - var(--roomZoom)) / 2 * var(--roomHeight) * var(--scale) / var(--roomZoom));
 }
 body.editModulesAbove #editorModules {
@@ -282,9 +284,6 @@ body.editModulesAbove #editorModules {
 }
 
 /* module as fullscreen overlay */
-body.edit.editModulesOverlay {
-  --editSidebarWidth: 36px;
-}
 body.editModulesOverlay #editorModules {
   left: 0;
   top: var(--editToolbarHeight);

@@ -1,6 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { calculateLayout, calculateEditModuleClasses, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -203,11 +203,14 @@ function setScale() {
 
   const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
 
-  // set before measuring below - they decide where the module panel sits and so how much room is
-  // left. Only in edit mode: in play mode there is no module panel and game CSS shouldn't see them.
-  $('body').classList.remove('editModulesAbove', 'editModulesOverlay');
-  if(edit || jeEnabled)
+  // set before measuring below - they decide where the module panel sits and how wide the sidebar
+  // is, and so how much room is left. Only in edit mode: in play mode there is neither a module
+  // panel nor a sidebar and game CSS shouldn't see them.
+  $('body').classList.remove('editModulesAbove', 'editModulesOverlay', 'narrowEditSidebar');
+  if(edit || jeEnabled) {
     $('body').classList.add(...calculateEditModuleClasses(w, h, viewportConfig));
+    toggleClass($('body'), 'narrowEditSidebar', isEditSidebarNarrow(w, h, viewportConfig));
+  }
 
   if(edit || jeEnabled) {
     const targetWidth = targetW / zoom;

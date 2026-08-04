@@ -490,6 +490,14 @@
   #symbolPickerOverlay {
     padding: 2%;
   }
+  #symbolPickerOverlay p[icon] {
+    margin: 10px;
+    margin-left: 40px;
+  }
+  #symbolPickerOverlay p[icon]::before {
+    font-size: 150%;
+    left: -30px;
+  }
 }
 @media (max-width: 300px), (max-height: 187px) {
   #symbolPickerOverlay {
@@ -521,7 +529,10 @@ p[icon]::before {
   position: absolute;
   left: -40px;
 }
-@media (max-width: 600px), (max-height: 375px) {
+/* the other one of these is the welcome overlay's user-generated-content warning, which is laid
+   out inside the board - the symbol picker's copy is handled by the media query above, since that
+   overlay is not always in the room */
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   p[icon] {
     margin: 10px;
     margin-left: 40px;

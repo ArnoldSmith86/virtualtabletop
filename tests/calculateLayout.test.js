@@ -1,4 +1,4 @@
-import { calculateLayout, calculateEditModuleClasses, isOrientationMismatch, DEFAULT_VIEWPORT, normalizeBoardSize, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
+import { calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, DEFAULT_VIEWPORT, normalizeBoardSize, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
 
 describe('calculateLayout', () => {
   const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
@@ -132,6 +132,37 @@ describe('calculateEditModuleClasses', () => {
     const wide = { targetWidth: 3200, targetHeight: 1000 };
     expect(calculateEditModuleClasses(1400, 1200, viewport16x10)).toEqual([]);
     expect(calculateEditModuleClasses(1400, 1200, wide)).toEqual([ 'editModulesAbove' ]);
+  });
+});
+
+// replaces `@media (max-width: 1600px)` on the editor sidebar: the labels may stay as long as
+// the 92px they cost are not what the room is short of
+describe('isEditSidebarNarrow', () => {
+  const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
+  const portraitBoard = { targetWidth: 1000, targetHeight: 1600 };
+  const wideBoard     = { targetWidth: 3200, targetHeight: 1000 };
+
+  test('keeps the labels while the room is limited by the window height', () => {
+    expect(isEditSidebarNarrow(1920, 1080, viewport16x10)).toBe(false);
+    // the media query took them away here even though the room is 90px short of the sidebar
+    expect(isEditSidebarNarrow(1600, 900, viewport16x10)).toBe(false);
+  });
+
+  test('drops them once they would make the board smaller', () => {
+    expect(isEditSidebarNarrow(1280, 800, viewport16x10)).toBe(true);
+    // a wide board runs out of width in a window the default board has plenty of room in
+    expect(isEditSidebarNarrow(1920, 1080, wideBoard)).toBe(true);
+  });
+
+  test('lets a portrait board keep them in a window the default board loses them in', () => {
+    expect(isEditSidebarNarrow(1280, 800, portraitBoard)).toBe(false);
+  });
+
+  test('is implied by both module panel layouts, which need the room the sidebar has', () => {
+    expect(calculateEditModuleClasses(1900, 1900, portraitBoard)).toEqual([ 'editModulesAbove' ]);
+    expect(isEditSidebarNarrow(1900, 1900, portraitBoard)).toBe(true);
+    expect(calculateEditModuleClasses(900, 900, viewport16x10)).toEqual([ 'editModulesOverlay' ]);
+    expect(isEditSidebarNarrow(900, 900, viewport16x10)).toBe(true);
   });
 });
 
