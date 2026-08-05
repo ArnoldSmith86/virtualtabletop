@@ -22,6 +22,14 @@ document.addEventListener('mousedown', e=>{
   popupMouseDownTarget = e.target;
 }, true);
 
+// The lists inside a popup that scroll on their own anyway (the widget ids, the
+// property names, the operations). Where the popup does not fit the room it has,
+// they are what gives way - see fitScrollAreas.
+const popupScrollAreas = '.widgetPickerList, .popup-property-list, .popup-operation-list';
+// three rows or so: a list shorter than that shows less than it takes to scroll
+// it, so the popup scrolls after all instead of shrinking it any further
+const popupScrollAreaMinHeight = 66;
+
 class Popup {
   constructor(source) {
     this.source = source;
@@ -155,6 +163,49 @@ class Popup {
     return height(strip) >= 240 ? strip : limits;
   }
 
+  // A popup that is taller than the room it has scrolls, which puts whatever is
+  // at its bottom out of sight with nothing saying it is there: the button a
+  // section is for is the last thing in it, so "Use these widgets" is exactly
+  // what a too-long list of widget ids pushes below the fold. The lists in a
+  // popup scroll on their own anyway, so the height that is missing is taken
+  // from them rather than from the popup - the list gets shorter, everything
+  // around it stays where it can be seen and reached.
+  fitScrollAreas() {
+    const lists = [ ...$a(popupScrollAreas, this.domElement) ].filter(list=>list.offsetParent !== null);
+    if(!lists.length)
+      return;
+    // start from their full height every time: what does not fit changes with
+    // the section that is open, the search term and the size of the window
+    for(const list of lists)
+      list.style.maxHeight = '';
+    // shrinking a list reflows what is around it, so ask again rather than
+    // assume the popup got shorter by exactly as much as the list did
+    for(let pass=0; pass<3; ++pass) {
+      let missing = this.domElement.scrollHeight - this.domElement.clientHeight;
+      if(missing <= 0)
+        break;
+      let shrank = false;
+      for(const list of lists) {
+        if(missing <= 0)
+          break;
+        const height = list.getBoundingClientRect().height;
+        const shrunk = Math.max(popupScrollAreaMinHeight, height-missing);
+        if(shrunk >= height)
+          continue;
+        list.style.maxHeight = `${shrunk}px`;
+        missing -= height-shrunk;
+        shrank = true;
+      }
+      if(!shrank) // nothing left to give: the popup scrolls after all
+        break;
+    }
+    // the mark that says a list is cut off (a rule and a fade below its last
+    // row) is set when the list is filled, before it is known how tall it may be
+    for(const list of lists)
+      if(list.classList.contains('popup-property-list'))
+        list.classList.toggle('popup-property-list-complete', list.scrollHeight <= list.clientHeight);
+  }
+
   moveIntoView() {
     const limits = this.limitsAroundSource(this.placementLimits());
     // shrink into the available strip instead of hanging out of it
@@ -168,6 +219,8 @@ class Popup {
     // Measured at the left end of the room it may use, it is the width it keeps
     // at every position that fits it, which is every position placed below.
     this.domElement.style.left = `${limits.left+10}px`;
+    // at the width it keeps as well: how tall the content is depends on it
+    this.fitScrollAreas();
     const rect = this.domElement.getBoundingClientRect();
     const fit = (position, size, from, to)=>Math.min(Math.max(position, from+10), Math.max(from+10, to-10-size));
     this.domElement.style.left = `${fit(wanted.left, rect.width, limits.left, limits.right)}px`;

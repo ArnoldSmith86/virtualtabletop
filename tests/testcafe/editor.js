@@ -2193,3 +2193,47 @@ test('A property info tip goes away with the widget it explains', async t => {
   await ClientFunction(_=>removeWidgetLocal('button'))();
   await t.expect(infoTip.exists).notOk();
 });
+
+test('A long list of widget ids shrinks instead of pushing the apply button out of the popup', async t => {
+  await t.resizeWindow(1280, 500);
+  const roomState = {
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] }
+  };
+  // more holders than the list of ids can show, so it wants to be at its tallest
+  for(let i=1; i<=30; ++i)
+    roomState[`holder${i}`] = { id: `holder${i}`, type: 'holder', x: 300+i%6*60, y: 100+Math.floor(i/6)*60 };
+  await setRoomState(roomState);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_button');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .expect(popup.find('.widgetPickerList').exists).ok();
+
+  // The button that applies the picked widgets is the last thing in the section,
+  // so a list of ids that is taller than the popup has room for pushes it out of
+  // sight - and a popup that scrolls says nothing about there being more below
+  // it. The list scrolls anyway, so it is what gives way.
+  const fit = await ClientFunction(_=>{
+    const popup = document.querySelector('.inline-popup');
+    const apply = popup.querySelector('button.primary'); // "Use these widgets"
+    const popupRect = popup.getBoundingClientRect(), applyRect = apply.getBoundingClientRect();
+    const list = popup.querySelector('.widgetPickerList');
+    return {
+      popupScrollsBy: popup.scrollHeight - popup.clientHeight,
+      applyInPopup: applyRect.top >= popupRect.top && applyRect.bottom <= popupRect.bottom + 1,
+      listScrolls: list.scrollHeight > list.clientHeight
+    };
+  })();
+  await t.expect(fit).eql({ popupScrollsBy: 0, applyInPopup: true, listScrolls: true });
+});
