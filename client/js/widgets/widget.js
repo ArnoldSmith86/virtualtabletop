@@ -21,6 +21,12 @@ function linesWithStop(widgetID) {
   return widgetFilter(w=>w.get('type') == 'line' && lineListsStop(w, widgetID));
 }
 
+// Modulo that always returns a non-negative index, so that a negative offset
+// wraps around to the end of the array instead of missing it.
+function wrapIndex(index, length) {
+  return ((index % length) + length) % length;
+}
+
 // Only lines care about another widget's geometry: an endpoint connected to it
 // has to follow, and a line carrying it as a stop has to re-space.
 const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
@@ -2254,12 +2260,26 @@ export class Widget extends StateManaged {
           if (unskipped.length === 0) {
             problems.push(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
           } else {
+            // except for the 'seat' cycle, where turn is a seat id, turn indexes the seat
+            // list - so only whole numbers work. accept numeric strings and cut off
+            // fractions instead of ending up with no target at all
+            const turnNumber = Math.trunc(parseFloat(a.turn));
+            if (a.turnCycle != 'seat' && !isNaN(turnNumber) && turnNumber != parseFloat(a.turn))
+              problems.push(`Warning: turn ${a.turn} is not a whole number. Using ${turnNumber}.`);
+
             // identify the correct target seat
             if (a.turnCycle == 'position') {
-              if (a.turn == 'last') {
+              if (a.turn == 'first') {
+                target = unskipped[0];
+              } else if (a.turn == 'last') {
                 target = unskipped[unskipped.length - 1];
-              } else if (Number.isFinite(a.turn)) {
-                target = unskipped[(a.turn - 1) % unskipped.length];
+              } else if (isNaN(turnNumber)) {
+                problems.push(`Warning: turn ${JSON.stringify(a.turn)} is not a valid position. Using the first active seat.`);
+              } else if (turnNumber == 0) {
+                problems.push(`Warning: turn 0 is not a valid position. Using the first active seat.`);
+              } else {
+                // positions are 1-based, negative positions count from the end: -1 is the last active seat
+                target = unskipped[wrapIndex(turnNumber < 0 ? turnNumber : turnNumber - 1, unskipped.length)];
               }
             } else if (a.turnCycle == 'seat') {
               // Selecting a specific seat so in this case skipTurn will be ignored
@@ -2269,9 +2289,20 @@ export class Widget extends StateManaged {
                 target = c[0];
               }
             } else {
-              const turn = Number.isFinite(a.turn) ? a.turn : 1;
-              const offset = (c[0] == unskipped[0] ? 0 : 1);
-              target = unskipped[(turn - offset) % unskipped.length];
+              if (isNaN(turnNumber))
+                problems.push(`Warning: turn ${JSON.stringify(a.turn)} is only valid with turnCycle position. Using 1.`);
+              // turn 0 leaves the turn where it is - unless the current seat is skipped,
+              // in which case it is not in unskipped and the turn moves on to the next seat
+              const turn = isNaN(turnNumber) ? 1 : turnNumber;
+              // if the seat that currently has the turn is skipped, it is missing from
+              // unskipped: index i is then i+1 steps forward but still i steps backward
+              const offset = (turn > 0 && c[0] != unskipped[0] ? 1 : 0);
+              target = unskipped[wrapIndex(turn - offset, unskipped.length)];
+            }
+
+            if (!target) {
+              problems.push(`Warning: no target seat could be determined. Using the first active seat.`);
+              target = unskipped[0];
             }
 
             // execute the change in turn properties and collect turn seats into output collection
