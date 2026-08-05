@@ -1647,7 +1647,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVE') {
         setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
-        let count = a.fillTo || a.count;
+        let count = a.fillTo != null ? a.fillTo : a.count;
         if(count === 'all')
           count = 999999;
 
@@ -1665,7 +1665,7 @@ export class Widget extends StateManaged {
             problems.push(`Skipping move of ${c.id} to itself.`);
           } else if(target.isDescendantOf(c)) {
             problems.push(`Skipping move of ${c.id} to its descendant ${target.id}.`);
-          } else if(!a.fillTo || target.children().length < a.fillTo) {
+          } else if(a.fillTo == null || target.fillLevel() < a.fillTo) {
             c.movedByButton = true;
             if(target.get('type') == 'seat') {
               if(target.get('hand') && target.get('player')) {
@@ -2396,6 +2396,11 @@ export class Widget extends StateManaged {
       if(delta[usedProperty] !== undefined)
         return true;
     return false;
+  }
+
+  // how full this widget already is, used as the current value that MOVE's fillTo fills up to
+  fillLevel() {
+    return this.children().length;
   }
 
   getFaceCount() {

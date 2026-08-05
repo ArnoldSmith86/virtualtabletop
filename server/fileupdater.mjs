@@ -1,4 +1,4 @@
-export const VERSION = 21;
+export const VERSION = 22;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -76,6 +76,7 @@ function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
   v<19 && v19useIframeForHtmlCards(meta, state);
   v<21 && v21DisableHolderImageWidget(meta, state);
+  v<22 && v22SeatFillToIgnoresHandContents(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -136,6 +137,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<22 && v22UpdateFillToParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -501,6 +503,58 @@ function v16UpdateCountParameter(routine) {
       }
     }
   }
+}
+
+function v22UpdateFillToParameter(routine) {
+  for(const key in routine) {
+    if(routine[key] && routine[key].func == 'MOVE' && typeof routine[key].fillTo != 'undefined') {
+      if(!routine[key].fillTo) {
+        routine[key].fillTo = null;
+      } else if(typeof routine[key].fillTo == 'string' && routine[key].fillTo.includes('$')) {
+        routine[key] = {
+          note: `This was added by the automatic file migration because the behavior of MOVE with fillTo=0 changed.`,
+          func: 'IF',
+          condition: routine[key].fillTo,
+          thenRoutine: [
+            {...routine[key]}
+          ],
+          elseRoutine: [
+            Object.assign({}, routine[key], { fillTo: null })
+          ]
+        };
+      }
+    } else if(routine[key] && routine[key].func == 'IF' && String(routine[key].note).includes('count=0 changed')) {
+      // v16UpdateCountParameter wraps a MOVE with a dynamic `count` into a new IF at this
+      // same array level, after this array's own IF/FOREACH children were already recursed
+      // into above in updateRoutine() - so its branches (copies of the original MOVE) never
+      // otherwise get a chance to run through this fillTo migration.
+      v22UpdateFillToParameter(routine[key].thenRoutine);
+      v22UpdateFillToParameter(routine[key].elseRoutine);
+    }
+  }
+}
+
+function v22SeatFillToIgnoresHandContents(meta, state) {
+  // MOVE to a seat used to compare fillTo against the cards of the seat's hand that the
+  // seat's player owns - which is always 0 for a hand that does not keep its children per
+  // owner, so fillTo silently behaved like count there. Whether a MOVE targets a seat is
+  // only known at runtime ('to' is frequently a $ template), so no JSON rewrite can express
+  // the old behavior: enable the legacy mode for every old game that has seats and a MOVE
+  // with fillTo. False positives just keep the old behavior of games that already work.
+  function hasMoveWithFillTo(obj) {
+    if(Array.isArray(obj))
+      return obj.some(hasMoveWithFillTo);
+    if(typeof obj == 'object' && obj !== null)
+      return obj.func == 'MOVE' && obj.fillTo != null || Object.values(obj).some(hasMoveWithFillTo);
+    return false;
+  }
+
+  if(!JSON.stringify(state).includes('"seat"') || !hasMoveWithFillTo(state))
+    return;
+
+  meta.gameSettings = meta.gameSettings || {};
+  meta.gameSettings.legacyModes = meta.gameSettings.legacyModes || {};
+  meta.gameSettings.legacyModes.seatFillToIgnoresHandContents = true;
 }
 
 function v17MaterialSymbols(properties) {

@@ -1,4 +1,4 @@
-class ImageWidget extends Widget {
+export class ImageWidget extends Widget {
   constructor(id) {
     super(id);
 
