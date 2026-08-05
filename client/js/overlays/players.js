@@ -62,6 +62,22 @@ function nextMetaUpdate(isApplied, timeout=3000) {
 
 // shows a spinner on the button while a returned promise is pending; the row usually
 // gets replaced by the meta update before the button is restored
+// the widget properties the server looks at before it lets a player be removed, and how to say
+// in the tooltip of the disabled button what is still pointing at that player
+const playerReferences = {
+  owner: 'cards or other widgets in the game belong to them',
+  player: 'they are seated in the game',
+  artist: 'they are credited as an artist'
+};
+
+// a button that cannot do anything here stays visible and says why - removing it silently
+// leaves people wondering why the same row of the table has fewer buttons than the others
+function unavailableButton(button, reason) {
+  button.classList.add('unavailable');
+  button.setAttribute('aria-disabled', 'true');
+  button.title = reason;
+}
+
 function serverActionButton(button, action) {
   button.addEventListener('click', async function() {
     if(button.disabled)
@@ -108,6 +124,11 @@ function fillPlayerList(players, active, sessions) {
   const rank = player=>player == playerName ? 0 : sessionsByPlayer[player] ? 1 : 2;
   const sortedPlayers = Object.keys(players).sort((a,b)=>rank(a)-rank(b) || a.localeCompare(b));
 
+  const widgetList = [...widgets.values()];
+  const referencesTo = player=>Object.keys(playerReferences).filter(p=>widgetList.some(function(w) {
+    return Array.isArray(w.state[p]) ? w.state[p].indexOf(player) != -1 : w.state[p] == player;
+  }));
+
   for(const player of sortedPlayers) {
     const playerSessions = sessionsByPlayer[player] || [ null ];
     const hasMySession = playerSessions.some(s=>s && s.sessionID == mySessionID);
@@ -145,23 +166,25 @@ function fillPlayerList(players, active, sessions) {
           $('.playerName', row).focus();
           $('.playerName', row).select();
         });
-        const isReferencedByWidgets = [...widgets.values()].some(w=>[ w.state.owner, w.state.player, w.state.artist ].some(v=>Array.isArray(v) ? v.indexOf(player) != -1 : v == player));
+        const references = referencesTo(player);
         // viewing a connected player who is part of the game would secretly reveal their hand (the server refuses it too)
         if(player == playerName) {
           removeFromDOM($('.viewPlayer', row));
-        } else if(session && isReferencedByWidgets) {
-          // keep the button visible but explain why it does not work here, otherwise it just silently disappears for some players
-          $('.viewPlayer', row).classList.add('unavailable');
-          $('.viewPlayer', row).setAttribute('aria-disabled', 'true');
-          $('.viewPlayer', row).title = `You cannot view the game as ${player} because they are connected and taking part in the game - it would reveal their hand to you`;
+        } else if(session && references.length) {
+          unavailableButton($('.viewPlayer', row), `You cannot view the game as ${player} because they are connected and taking part in the game - it would reveal their hand to you`);
         } else {
           serverActionButton($('.viewPlayer', row), function() {
             toServer('rename', { oldName: playerName, newName: player, sessionID: mySessionID });
             return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == mySessionID && s.player == player));
           });
         }
-        if(session || isReferencedByWidgets) {
+        // a player the game still points at cannot be removed - the sessions column already says
+        // why a connected one cannot, so only the widget references need spelling out
+        if(session) {
           removeFromDOM($('.removePlayer', row));
+        } else if(references.length) {
+          const reasons = references.map(p=>playerReferences[p]);
+          unavailableButton($('.removePlayer', row), `You cannot remove ${player} because ${reasons.join(' and ')}. Rename them to a player who stays, or free what belongs to them, and the button becomes available.`);
         } else {
           serverActionButton($('.removePlayer', row), function() {
             toServer('removeLocalPlayer', { player });
