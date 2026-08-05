@@ -1,4 +1,5 @@
 import fs from 'fs';
+import crypto from 'crypto';
 
 import JSZip from 'jszip';
 import fetch from 'node-fetch';
@@ -28,7 +29,7 @@ export default class Room {
     }, 5000);
   }
 
-  addPlayer(player) {
+  async addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
     clearTimeout(this.unloadTimeout);
     this.players.push(player);
@@ -38,6 +39,8 @@ export default class Room {
 
     this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
+
+    player.send('adminStatus', await this.isAdmin(player.collection));
 
     if(this.state._meta.redirectTo) {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
@@ -263,6 +266,258 @@ export default class Room {
 
     // Refresh memory cache
     this.reloadPublicLibraryGames();
+  }
+
+  claimedBy() {
+    return this.state._meta.security && this.state._meta.security.adminCollection || null;
+  }
+
+  async collectionAction(action, args) {
+    const collection = typeof args.collection == 'string' ? args.collection : '';
+    const requireAdmin = async _=>{
+      if(!await this.isAdmin(collection))
+        throw new Logging.UserError(403, 'You are not the admin of this room. Claim it first.');
+    };
+
+    if(action == 'claim') {
+      if(!collection.match(/^[A-Za-z0-9_-]{6,64}$/))
+        throw new Logging.UserError(403, 'Invalid collection ID.');
+      if(this.claimedBy() && !await this.isAdmin(collection))
+        throw new Logging.UserError(403, 'This room is already claimed by another collection.');
+      // prevent drive-by claiming of enumerated room IDs
+      if(!this.players.some(player=>player.collection === collection))
+        throw new Logging.UserError(403, 'You have to be a player in the room to claim it.');
+      // reserve the claim synchronously so two concurrent claims can't both pass the checks above
+      // while hashSecret (async) is still deriving the key, and the second requester loses cleanly
+      if(this.claimReservedBy && this.claimReservedBy != collection)
+        throw new Logging.UserError(403, 'This room is already claimed by another collection.');
+      this.claimReservedBy = collection;
+      try {
+        this.ensureSalt();
+        this.security().adminCollection = await this.hashSecret(collection);
+      } finally {
+        delete this.claimReservedBy;
+      }
+      Logging.log(`room ${this.id} was claimed by collection ${this.claimedBy().substring(0, 8)}…`);
+    } else if(action == 'unclaim') {
+      await requireAdmin();
+      delete this.state._meta.security;
+      delete this.state._meta.locked;
+    } else if(action == 'setName') {
+      await requireAdmin();
+      const name = String(args.name || '').trim().substring(0, 64);
+      if(name)
+        this.state._meta.roomName = name;
+      else
+        delete this.state._meta.roomName;
+    } else if(action == 'setLocked') {
+      await requireAdmin();
+      if(args.locked)
+        this.state._meta.locked = true;
+      else
+        delete this.state._meta.locked;
+    } else if(action == 'setPassword') {
+      await requireAdmin();
+      if(args.password) {
+        this.ensureSalt();
+        this.security().joinPassword = await this.hashSecret(args.password);
+      } else {
+        delete this.security().joinPassword;
+      }
+    } else if(action == 'delete') {
+      await requireAdmin();
+      return await this.deleteRoom();
+    } else {
+      throw new Logging.UserError(404, 'Unknown room action.');
+    }
+
+    this.writeToFilesystem();
+    this.sendMetaUpdate();
+    await this.sendAdminStatus();
+  }
+
+  async copyFromRoom(sourceRoom) {
+    Logging.log(`copying room ${sourceRoom.id} to room ${this.id}`);
+    const copy = JSON.parse(JSON.stringify(sourceRoom.state));
+
+    copy._meta.players = {};
+    delete copy._meta.security;
+    delete copy._meta.locked;
+    delete copy._meta.linkSourceRoom;
+    delete copy._meta.tracingEnabled;
+    delete copy._meta.redirectTo;
+    delete copy._meta.returnServer;
+    delete copy._meta.returnState;
+    if(copy._meta.roomName)
+      copy._meta.roomName += ' (copy)';
+    for(const id in copy._meta.states)
+      if(id.match(/^PL:/))
+        delete copy._meta.states[id];
+
+    for(const [ stateID, state ] of Object.entries(copy._meta.states))
+      for(const variantID in state.variants)
+        if(!state.variants[variantID].link && !state.variants[variantID].plStateID && fs.existsSync(sourceRoom.variantFilename(stateID, variantID)))
+          fs.copyFileSync(sourceRoom.variantFilename(stateID, variantID), this.variantFilename(stateID, variantID));
+
+    copy._meta.states = Object.assign(copy._meta.states, this.getPublicLibraryGames());
+    this.state = copy;
+    this.state._meta.deltaID = this.deltaID;
+    this.writeToFilesystem();
+    this.broadcast('state', this.state);
+    this.sendMetaUpdate();
+  }
+
+  async deleteRoom() {
+    Logging.log(`deleting room ${this.id}`);
+    for(const [ stateID, state ] of Object.entries(this.state._meta.states)) {
+      if(String(stateID).match(/^PL:/))
+        continue;
+      for(const variantID in state.variants) {
+        const filename = this.variantFilename(stateID, variantID);
+        if(fs.existsSync(filename))
+          fs.unlinkSync(filename);
+      }
+    }
+    if(fs.existsSync(this.roomFilename()))
+      fs.unlinkSync(this.roomFilename());
+
+    this.state = FileUpdater({
+      _meta: {
+        version: 1,
+        metaVersion: 1,
+        players: {},
+        states: {},
+        starred: {}
+      }
+    });
+    this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+    for(const player of this.players)
+      this.state._meta.players[player.name] = this.newPlayerColor();
+    this.state._meta.deltaID = this.deltaID;
+    this.broadcast('state', this.state);
+    this.sendMetaUpdate();
+    await this.sendAdminStatus();
+  }
+
+  async getRoomDetails(collection) {
+    const meta = this.state._meta;
+    const active = meta.activeState || {};
+    let game = null;
+    for(const id of [ active.saveStateID, active.stateID, active.linkStateID ])
+      if(!game && id !== undefined && meta.states[id])
+        game = meta.states[id];
+    return {
+      id: this.id,
+      name: meta.roomName || this.id,
+      gameName: game && game.name || null,
+      image: game && game.image || null,
+      claimed: !!this.claimedBy(),
+      isAdmin: await this.isAdmin(collection),
+      locked: !!meta.locked,
+      hasPassword: !!(meta.security && meta.security.joinPassword),
+      autoLink: !!meta.linkSourceRoom,
+      players: [...new Set(this.players.map(player=>player.name))].map(name=>({ name, color: meta.players[name] || null }))
+    };
+  }
+
+  ensureSalt() {
+    if(!this.security().salt)
+      this.security().salt = crypto.randomBytes(16).toString('hex');
+  }
+
+  // async so the key derivation runs in the thread pool instead of blocking the event loop;
+  // memoized per salt+secret because the collection listing checks many rooms with the same secret
+  hashSecret(secret) {
+    const salt = this.state._meta.security && this.state._meta.security.salt || '';
+    const cacheKey = `${salt}:${secret}`;
+    if(!this.secretHashCache)
+      this.secretHashCache = {};
+    if(!this.secretHashCache[cacheKey]) {
+      if(Object.keys(this.secretHashCache).length >= 100)
+        this.secretHashCache = {};
+      this.secretHashCache[cacheKey] = new Promise((resolve, reject)=>{
+        crypto.scrypt(String(secret), salt, 32, (err, derivedKey)=>err ? reject(err) : resolve(derivedKey.toString('hex')));
+      });
+    }
+    return this.secretHashCache[cacheKey];
+  }
+
+  async isAdmin(collection) {
+    if(!this.claimedBy() || !collection)
+      return false;
+    return await this.hashSecret(collection) == this.claimedBy();
+  }
+
+  async linkFromRoom(sourceRoom, autoLink) {
+    Logging.log(`linking room ${sourceRoom.id} to room ${this.id}`);
+    this.state._meta.starred = JSON.parse(JSON.stringify(sourceRoom.state._meta.starred || {}));
+    if(autoLink)
+      this.state._meta.linkSourceRoom = sourceRoom.id;
+    await this.linkStatesFromRoomState(sourceRoom.state, sourceRoom.id);
+    this.writeToFilesystem();
+    this.broadcast('state', this.state);
+    this.sendMetaUpdate();
+  }
+
+  async linkStatesFromRoomState(sourceState, sourceRoomID) {
+    if(!this.state._meta.autoLinkedStates)
+      this.state._meta.autoLinkedStates = {};
+    for(const [ id, state ] of Object.entries(sourceState._meta && sourceState._meta.states || {})) {
+      if(id.match(/^PL:/) || state.savePlayers || this.state._meta.states[id] || this.state._meta.autoLinkedStates[id])
+        continue;
+      try {
+        await this.addState(id, 'link', `${Config.get('externalURL')}/dl/${sourceRoomID}/${encodeURIComponent(id)}`, '');
+        this.state._meta.autoLinkedStates[id] = true;
+      } catch(e) {
+        Logging.log(`ERROR: linking state ${id} from room ${sourceRoomID} to room ${this.id} failed: ${e}`);
+      }
+    }
+  }
+
+  async mayJoin(collection, password) {
+    const security = this.state._meta.security;
+    if(!security || !security.joinPassword || await this.isAdmin(collection))
+      return true;
+    return typeof password == 'string' && await this.hashSecret(password) == security.joinPassword;
+  }
+
+  publicMeta(meta) {
+    if(!meta || !meta.security)
+      return meta;
+    const publicCopy = Object.assign({}, meta);
+    delete publicCopy.security;
+    return publicCopy;
+  }
+
+  security() {
+    if(!this.state._meta.security)
+      this.state._meta.security = {};
+    return this.state._meta.security;
+  }
+
+  async sendAdminStatus() {
+    for(const player of this.players)
+      player.send('adminStatus', await this.isAdmin(player.collection));
+  }
+
+  async syncLinkSourceRoom() {
+    const sourceID = this.state._meta.linkSourceRoom;
+    if(typeof sourceID != 'string' || !sourceID.match(/^[A-Za-z0-9_-]+$/))
+      return;
+    if(Room.roomsBeingSynced && Room.roomsBeingSynced[this.id])
+      return;
+    const filename = Config.directory('save') + '/rooms/' + sourceID + '.json';
+    if(!fs.existsSync(filename))
+      return;
+    try {
+      Room.roomsBeingSynced = Room.roomsBeingSynced || {};
+      Room.roomsBeingSynced[this.id] = true;
+      await this.linkStatesFromRoomState(JSON.parse(fs.readFileSync(filename)), sourceID);
+    } catch(e) {
+      Logging.log(`ERROR: syncing linked room ${sourceID} into room ${this.id} failed: ${e}`);
+    } finally {
+      delete Room.roomsBeingSynced[this.id];
+    }
   }
 
   broadcast(func, args, exceptPlayer) {
@@ -542,6 +797,8 @@ export default class Room {
       this.migrateBrokenSaveWithoutVersion();
       await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
+      if(this.state._meta.linkSourceRoom)
+        await this.syncLinkSourceRoom();
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.normalizeGameSettings(this.state._meta.gameSettings);
@@ -1314,7 +1571,8 @@ export default class Room {
   unload() {
     if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
-      if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
+      const hasCollectionData = this.state._meta.security && Object.keys(this.state._meta.security).length || this.state._meta.roomName || this.state._meta.linkSourceRoom || this.state._meta.locked;
+      if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer || hasCollectionData) {
         Logging.log(`unloading room ${this.id}`);
         this.writeToFilesystem();
       } else {
