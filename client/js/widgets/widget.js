@@ -444,17 +444,21 @@ export class Widget extends StateManaged {
 
       await this.set('parent', null);
       await this.set('hoverParent', null);
-      if(parent.get('childrenPerOwner'))
+      // remembered with the rest of the state below, so that the reveal restores exactly the
+      // properties that were cleared here even if a leave hook changes the flag mid-drag
+      const perOwner = parent.get('childrenPerOwner');
+      if(perOwner)
         await this.set('owner',  null);
       if(parent.dispenseCard)
         await parent.dispenseCard(this);
       delete this.currentParent;
 
-      if(hidden) {
+      // nothing to hide (and nothing to restore later) if a leave hook just removed the widget
+      if(hidden && !this.isBeingRemoved && !this.inRemovalQueue) {
         this.detachedParent = parent;
-        this.detachedParentState = { hoverParent: this.get('hoverParent'), owner: this.get('owner') };
+        this.detachedParentState = { hoverParent: this.get('hoverParent'), owner: this.get('owner'), perOwner };
         await this.set('hoverParent', hidden.hoverParent);
-        if(parent.get('childrenPerOwner'))
+        if(perOwner)
           await this.set('owner',  hidden.owner);
       }
     }
@@ -467,13 +471,12 @@ export class Widget extends StateManaged {
   // word.
   async checkDetachedParent(force) {
     if(this.detachedParent && (force || !overlap(this.domElement, this.detachedParent.domElement))) {
-      const parent = this.detachedParent;
       const state = this.detachedParentState;
       delete this.detachedParent;
       delete this.detachedParentState;
 
       await this.set('hoverParent', state.hoverParent);
-      if(parent.get('childrenPerOwner'))
+      if(state.perOwner)
         await this.set('owner',  state.owner);
     }
   }
@@ -658,6 +661,9 @@ export class Widget extends StateManaged {
     await this.set('dropShadowWidget', (await shadowWidget.clone({
         'movable': false,
         'dropShadowOwner': playerName,
+        // the dragged widget can still carry the hoverParent of the holder it is on its way
+        // out of - the shadow sits in the target holder and must not inherit that
+        'hoverParent': null,
         'parent': null}, true)).get('id'));
   }
 
@@ -2536,6 +2542,10 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
     delete this.lastMoveCoord;
+    // a previous drag that did not reach checkDetachedParent(true) must not restore its state
+    // onto this one
+    delete this.detachedParent;
+    delete this.detachedParentState;
 
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be

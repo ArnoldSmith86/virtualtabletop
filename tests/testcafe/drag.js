@@ -76,15 +76,27 @@ async function cardState() {
   };
 }
 
+// the preview a dropShadow holder shows while a card is dragged over it, as the other
+// players see it - it is a clone of the card and must not carry anything that would make
+// it look like the hand the card is still hidden in
+async function shadowState() {
+  const shadow = Object.values(JSON.parse(await getState())).filter(w => w && w.dropShadowOwner)[0];
+  return shadow ? { parent: shadow.parent || null, hoverParent: shadow.hoverParent || null } : null;
+}
+
 // the mouse events above return before the drag they trigger has reached the server, so
 // give the state a moment to arrive there instead of waiting a fixed amount of time
-async function expectCardState(t, expected) {
-  let actual = await cardState();
+async function expectState(t, readState, expected) {
+  let actual = await readState();
   for(let wait=50; wait<2000 && JSON.stringify(actual) != JSON.stringify(expected); wait*=2) {
     await new Promise(resolve => setTimeout(resolve, wait));
-    actual = await cardState();
+    actual = await readState();
   }
   await t.expect(actual).eql(expected);
+}
+
+async function expectCardState(t, expected) {
+  await expectState(t, cardState, expected);
 }
 
 test('A card is not revealed while it is dragged over a holder stacked on top of its hand', async t => {
@@ -159,4 +171,23 @@ test('An owner assigned by a leaveRoutine survives the card leaving its hand', a
 
   await dragEnd();
   await expectCardState(t, { owner: 'TestCafe', parent: null, hoverParent: null, hoverTarget: null, onLeave: 'ran', leaveRoutine: 'ran' });
+});
+
+test('The drop shadow of a holder stacked on a hand does not inherit that hand', async t => {
+  const room = stackedHoldersRoom();
+  room.over.dropShadow = true;
+  await setRoomState(room);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await dragStart('card');
+  await dragOnto('over');
+
+  // the card is hidden in the hand it has not left yet, but the preview of where it would
+  // land is in the holder on top and belongs to nothing else
+  await expectCardState(t, { owner: 'TestCafe', parent: null, hoverParent: 'hand', hoverTarget: 'over', onLeave: 'ran', leaveRoutine: 'ran' });
+  await expectState(t, shadowState, { parent: 'over', hoverParent: null });
+
+  await dragEnd();
+  await expectState(t, shadowState, null);
 });
