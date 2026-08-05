@@ -1045,7 +1045,10 @@
     "text": "This button sets a length for the audio to play in milliseconds and reduces the volume to 80% of the maximum. Users can also adjust the volume or silence sounds by using the 'sound' slider in the main menu toolbar."
   },
   "_meta": {
-    "version": 20,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - AUDIO",
       "image": "/assets/-648207956_3845",
@@ -1054,9 +1057,9 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.<div><br></div><div>The bell sound and the excerpt of the song are available under CC0 from Wikiemedia Commons at:</div><div><br></div><div><ul><li>https://commons.wikimedia.org/wiki/File:406243_stubb_typewriter-ding-near-mono.wav</li><li>https://commons.wikimedia.org/wiki/File:Beethoven_Piano_Concerto_4_slow_movement,_bars_47-55.wav</li></ul></div>",
+      "attribution": "<div>The bell sound and the excerpt of the song are available under CC0 from Wikiemedia Commons at:</div><div><ul><li>https://commons.wikimedia.org/wiki/File:406243_stubb_typewriter-ding-near-mono.wav</li><li>https://commons.wikimedia.org/wiki/File:Beethoven_Piano_Concerto_4_slow_movement,_bars_47-55.wav</li></ul></div>",
       "showName": false,
-      "lastUpdate": 1768608618173,
+      "lastUpdate": 1785898588861,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1065,13 +1068,11 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "players": "1",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "AUDIO",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "40ug": {
@@ -1096,8 +1097,8 @@
     "height": 150,
     "layer": -3,
     "z": 125,
-    "css": "font-size: 25px; ",
-    "text": "The AUDIO function can be used in a routine to start or stop sounds. AUDIO parameters allow customization of the volume, how long the sound plays, which players can hear it, and how many times the sound is played. The AUDIO function will override a 'clickSound' property."
+    "css": "font-size: 24px",
+    "html": "The AUDIO function can be used in a routine to start or stop sounds. AUDIO parameters allow customization of the volume, how long the sound plays, which players can hear it, and how many times the sound is played. The AUDIO function will override a 'clickSound' property.<br><br>The 'source' can be any sound URL, but you do not have to find one yourself. Open the Deal button in the JSON Editor, put the cursor on the 'source' line of its AUDIO function and use the 'pick a sound from the sound picker' button in the upper right corner. Preview the sounds that ship with VTT using ▶, click one to insert its '/i/audio/...' path, then leave edit mode and press Deal to hear it."
   },
   "bm4j": {
     "id": "bm4j",
@@ -1166,19 +1167,6 @@
     "z": 10018,
     "movable": false,
     "text": "The bell will play for the array of players specified in the AUDIO function. It will repeat 10 times. The 'count' parameter defaults to 1 and can be set to 0, any postive number, or to 'loop'. If set to 'loop' it will play until the room is reloaded or the sound is stopped using an AUDIO function with 'silence' set to true as in the stop button below.",
-    "css": {
-      "font-size": "20px",
-      "color": "black"
-    }
-  },
-  "bm7j": {
-    "id": "bm7j",
-    "x": 108,
-    "y": 280,
-    "width": 1400,
-    "z": 10018,
-    "movable": false,
-    "text": "The 'source' can be any sound URL, but you do not have to find one yourself. Open the Deal button in the JSON Editor, put the cursor on the 'source' line of its AUDIO function and use the 'pick a sound from the sound picker' button in the upper right corner. Preview the sounds that ship with VTT using ▶, click one to insert its '/i/audio/...' path, then leave edit mode and press Deal to hear it.",
     "css": {
       "font-size": "20px",
       "color": "black"
