@@ -66,7 +66,24 @@ const COMMON_PROPERTIES = {
     rotation: 'number',
     scale: v=>typeof v === 'number' || typeof v === 'string' && !!String(v).match(/^-[0-9.]+,[0-9.]+$|^[0-9.]+,-[0-9.]+$/) || 'number expected (or special string for flipping: -x,y or x,-y)',
     ignoreZoom: 'boolean',
-    dragLimit: 'any',
+    // a side is a number or an expression that evaluates to one, condition is
+    // one inequality in x and y or a list of them (see client/js/expression.js)
+    dragLimit: v=>{
+        if(typeof v !== 'object' || v === null || Array.isArray(v))
+            return 'object expected (minX/maxX/minY/maxY and/or condition)';
+        for(const key of Object.keys(v)) {
+            if([ 'minX', 'maxX', 'minY', 'maxY' ].includes(key)) {
+                if(typeof v[key] !== 'number' && typeof v[key] !== 'string')
+                    return `${key} must be a number or an expression`;
+            } else if(key === 'condition') {
+                if(!asArray(v[key]).every(c=>typeof c === 'string'))
+                    return 'condition must be an expression or a list of expressions';
+            } else {
+                return `unknown key '${key}' (valid: minX, maxX, minY, maxY, condition)`;
+            }
+        }
+        return true;
+    },
     classes: 'string',
     css: 'any',
     movable: 'boolean',

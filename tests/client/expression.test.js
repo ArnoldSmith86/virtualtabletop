@@ -1,0 +1,82 @@
+import { evaluateExpression, expressionCondition, expressionNumber } from '../../client/js/expression.js';
+
+// x and y are what a dragLimit condition is tested with, everything else stands
+// in for a widget property
+const scope = { x: 3, y: 4, width: 100, seats: 2 };
+const resolve = (name, widgetID) => widgetID === null ? scope[name] : ({ board: { seats: 5 } }[widgetID] || {})[name];
+
+const value = text => evaluateExpression(text, resolve);
+
+describe('the expression language', () => {
+  test('reads numbers, names and property references', () => {
+    expect(value('42')).toBe(42);
+    expect(value('1.5')).toBe(1.5);
+    expect(value('x')).toBe(3);
+    expect(value('${PROPERTY width}')).toBe(100);
+    expect(value('${PROPERTY seats OF board}')).toBe(5);
+  });
+
+  test('applies the usual precedence', () => {
+    expect(value('1 + 2 * 3')).toBe(7);
+    expect(value('(1 + 2) * 3')).toBe(9);
+    expect(value('2 ^ 3 ^ 2')).toBe(512);
+    expect(value('-2 ^ 2')).toBe(-4);
+    expect(value('7 % 4')).toBe(3);
+    expect(value('10 / 4')).toBe(2.5);
+  });
+
+  test('multiplies a number written in front of a name or a bracket', () => {
+    expect(value('2x')).toBe(6);
+    expect(value('2x^2')).toBe(18);
+    expect(value('3(x + 1)')).toBe(12);
+    expect(value('2pi')).toBeCloseTo(2 * Math.PI);
+  });
+
+  test('compares and combines', () => {
+    expect(value('x < y')).toBe(true);
+    expect(value('x >= 3 && y != 4')).toBe(false);
+    expect(value('x >= 3 || y != 4')).toBe(true);
+    expect(value('!(x > y)')).toBe(true);
+  });
+
+  test('calls the maths functions', () => {
+    expect(value('sqrt(16)')).toBe(4);
+    expect(value('min(x, y, 1)')).toBe(1);
+    expect(value('abs(0 - x)')).toBe(3);
+    expect(value('floor(2.7) + ceil(0.2) + round(1.5)')).toBe(5);
+  });
+
+  test('reads an inequality written without spaces or multiplication signs', () => {
+    // "2x^2+y>4" and "2y+10>5x" - with x=3, y=4: 22 > 4 and 18 > 15
+    expect(value('2x^2+y>4')).toBe(true);
+    expect(value('2y+10>5x')).toBe(true);
+    expect(evaluateExpression('2x^2+y>4', (name)=>({ x: 0, y: 1 }[name]))).toBe(false);
+    expect(evaluateExpression('2y+10>5x', (name)=>({ x: 10, y: 1 }[name]))).toBe(false);
+  });
+
+  test('throws rather than guessing', () => {
+    expect(_=>value('x +')).toThrow();
+    expect(_=>value('(x')).toThrow();
+    expect(_=>value('x @ y')).toThrow();
+    expect(_=>value('nope + 1')).toThrow();     // no such property
+    expect(_=>value('')).toThrow();
+  });
+});
+
+describe('the two shapes a property asks for', () => {
+  test('a number keeps a plain number and falls back on anything unreadable', () => {
+    expect(expressionNumber(7, resolve)).toBe(7);
+    expect(expressionNumber('${PROPERTY width} / 2', resolve)).toBe(50);
+    expect(expressionNumber('x > 1', resolve, -1)).toBe(-1); // a condition is not a number
+    expect(expressionNumber('nope', resolve, -1)).toBe(-1);
+    expect(expressionNumber(null, resolve, -1)).toBe(-1);
+  });
+
+  test('a condition holds unless it is written down and false', () => {
+    expect(expressionCondition('x < y', resolve)).toBe(true);
+    expect(expressionCondition('x > y', resolve)).toBe(false);
+    expect(expressionCondition('x + 1', resolve)).toBe(true); // 4 is truthy
+    expect(expressionCondition('broken(', resolve)).toBe(true);
+    expect(expressionCondition(undefined, resolve)).toBe(true);
+  });
+});

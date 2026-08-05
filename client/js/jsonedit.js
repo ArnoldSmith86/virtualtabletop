@@ -1457,6 +1457,7 @@ function jeAddCommands() {
   // Default max limits are computed dynamically.
   jeAddLimitCommand('maxX');
   jeAddLimitCommand('maxY');
+  jeAddLimitConditionCommand();
 
   // Default values computed dynamically.
   jeAddResetPropertiesCommand('parent');
@@ -1787,6 +1788,23 @@ function jeAddLimitCommand(key, value) {
       else if (key == 'maxY')
         limit = viewportConfig.targetHeight - w.get('height');
       jeSetAndSelect(limit);
+    }
+  });
+}
+
+// The area a widget can be dragged in does not have to be a rectangle: a
+// condition is an inequality in x and y (the top left corner, in the same
+// coordinates as the four sides) that the drag keeps true. The starting point
+// is the half-plane below the diagonal - short, and it shows the syntax.
+function jeAddLimitConditionCommand() {
+  jeCommands.push({
+    id: 'limit_condition',
+    name: 'condition',
+    context: '^[^ ]* ↦ dragLimit',
+    show: _=>typeof jeStateNow.dragLimit == "object" && jeStateNow.dragLimit !== null && jeStateNow.dragLimit.condition === undefined,
+    call: async function() {
+      jeStateNow.dragLimit.condition = '###SELECT ME###';
+      jeSetAndSelect('y > x');
     }
   });
 }

@@ -356,7 +356,22 @@ function dragLimitValue(dragLimit, key) {
 }
 
 function dragLimitIsSet(dragLimit) {
-  return dragLimitKeys.some(key => dragLimitValue(dragLimit, key) !== null);
+  return dragLimitKeys.some(key => dragLimitValue(dragLimit, key) !== null) || dragLimitConditions(dragLimit).length > 0;
+}
+
+function dragLimitConditions(dragLimit) {
+  const condition = isObjectLike(dragLimit) ? dragLimit.condition : undefined;
+  return condition === undefined || condition === null ? [] : asArray(condition);
+}
+
+// A side of the rectangle can be an expression instead of a number, and a
+// condition ("2x^2 + y > 4") bounds the drag to an area no rectangle can
+// describe - neither of which the four number inputs can show. A dragLimit
+// using either is left to the generic "Other properties" list, so it stays
+// visible and editable instead of reading as an empty rectangle.
+function dragLimitIsDynamic(dragLimit) {
+  return dragLimitConditions(dragLimit).length > 0
+      || dragLimitKeys.some(key => typeof dragLimitValue(dragLimit, key) == 'string');
 }
 
 function dicePreviewRotation(faceCount) {
@@ -1059,7 +1074,7 @@ const editorPropertyHints = {
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
-  dragLimit: 'A rectangle the widget\'s top left corner is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. It only limits dragging - a routine can still move the widget anywhere.',
+  dragLimit: 'A rectangle the widget\'s top left corner is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. It only limits dragging - a routine can still move the widget anywhere. In the JSON editor each side can be an expression instead of a number, and a "condition" like "2x^2 + y > 4" limits the drag to any area that can be written down.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
   lineWidth: 'The brush width used for new canvas strokes.',
   activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
@@ -5217,7 +5232,7 @@ class PropertiesModule extends SidebarModule {
   renderDragLimitSection(widget, target) {
     // a rectangle per widget - merging four numbers across a selection whose
     // widgets sit in different places has no safe common value
-    if(widget.isMulti)
+    if(!this.showsDragLimitSection(widget))
       return;
 
     const section = this.renderCollapsibleSection('Drag limits', true, body=>{
@@ -5278,6 +5293,12 @@ class PropertiesModule extends SidebarModule {
       }
     });
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.dragLimit));
+  }
+
+  // see dragLimitIsDynamic: what the four number inputs cannot show is edited
+  // as raw JSON in "Other properties" instead of being hidden behind them
+  showsDragLimitSection(widget) {
+    return !widget.isMulti && !dragLimitIsDynamic(widget.get('dragLimit'));
   }
 
   updateDragLimit(widget, change) {
@@ -6486,7 +6507,10 @@ class PropertiesModule extends SidebarModule {
       // temporary and renderEvents skips it, so it keeps the buttons that open
       // the routines of its pile template in the JSON editor.
       const automationProperties = widget.get('type') == 'pile' ? this.renderAutomationsSection(widget, container) : [];
-      const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
+      // dragLimit is normally curated in Position, but not while it uses an
+      // expression or a condition - then it belongs in this list instead
+      const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude))
+        .filter(property => property != 'dragLimit' || this.showsDragLimitSection(widget));
       this.addSubHeader('Other properties', container);
       this.renderGenericProperties(widget, exclude, container);
     });

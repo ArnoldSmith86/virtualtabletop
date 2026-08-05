@@ -1,0 +1,236 @@
+// The small algebraic expression language widget properties use where a fixed
+// number is not enough - most of all dragLimit, which describes the area a
+// widget can be dragged in with inequalities like "2x^2 + y > 4".
+//
+// An expression is ordinary infix maths: numbers, + - * / % ^, parentheses,
+// comparisons (< <= > >= == !=), logic (&& || !), the functions below, and
+// names. A name is resolved by the caller - for dragLimit, x and y are the
+// position being tested and every other name is a property of the widget - as
+// is ${PROPERTY name} / ${PROPERTY name OF widgetID}, the same reference
+// routines use. A number directly in front of a name or a bracket multiplies,
+// so "2x" and "3(x+1)" mean what they look like.
+//
+// Nothing here reads the room state or the DOM: it evaluates what the resolve
+// callback answers, which is what makes it testable and safe to run on every
+// mouse move.
+
+const functions = {
+  abs: Math.abs, atan2: Math.atan2, ceil: Math.ceil, cos: Math.cos, exp: Math.exp,
+  floor: Math.floor, hypot: Math.hypot, log: Math.log, max: Math.max, min: Math.min,
+  pow: Math.pow, round: Math.round, sign: Math.sign, sin: Math.sin, sqrt: Math.sqrt, tan: Math.tan
+};
+
+const constants = { pi: Math.PI };
+
+// ${PROPERTY name} and ${PROPERTY name OF widget} come first so their contents
+// are not read as operators; the rest is numbers, names and operator symbols.
+// The sticky flag makes every match start where the last one ended, so nothing
+// in between can be skipped silently - hence a fresh regex per call.
+const tokenSource = '\\s*(?:\\$\\{\\s*PROPERTY\\s+([^}]+?)\\s*\\}|([0-9]*\\.[0-9]+|[0-9]+)|([A-Za-z_][A-Za-z0-9_]*)|(&&|\\|\\||[<>=!]=|\\*\\*|[-+*/%^()<>!,]))';
+
+function tokenize(text) {
+  const tokens = [];
+  const tokenPattern = new RegExp(tokenSource, 'y');
+  while(tokenPattern.lastIndex < text.length) {
+    const start = tokenPattern.lastIndex;
+    const match = tokenPattern.exec(text);
+    if(!match) {
+      // trailing whitespace is not a problem, anything else is
+      if(text.substr(start).trim() === '')
+        break;
+      throw new Error(`cannot read "${text.substr(start).trim()}"`);
+    }
+    if(match[1] !== undefined) {
+      const reference = match[1].split(/\s+OF\s+/);
+      tokens.push({ type: 'name', value: reference[0].trim(), widget: reference.length > 1 ? reference[1].trim() : null });
+    } else if(match[2] !== undefined) {
+      tokens.push({ type: 'number', value: +match[2] });
+    } else if(match[3] !== undefined) {
+      tokens.push({ type: 'name', value: match[3], widget: null });
+    } else {
+      tokens.push({ type: 'operator', value: match[4] == '**' ? '^' : match[4] });
+    }
+  }
+  return tokens;
+}
+
+// Evaluates text, asking resolve(name, widgetID) for every name in it. Throws
+// on anything it cannot read or on a name that does not answer with a number,
+// so a caller can decide what a broken expression should mean.
+export function evaluateExpression(text, resolve) {
+  const tokens = tokenize(String(text));
+  let position = 0;
+
+  const peek = _=>tokens[position];
+  const isOperator = (...values)=>peek() && peek().type == 'operator' && values.indexOf(peek().value) != -1;
+  const take = _=>tokens[position++];
+  const expect = value=>{
+    if(!isOperator(value))
+      throw new Error(`expected "${value}"`);
+    ++position;
+  };
+
+  const number = value=>{
+    const asNumber = typeof value == 'string' && value.trim() !== '' ? +value : value;
+    if(typeof asNumber != 'number' || !isFinite(asNumber))
+      throw new Error(`"${value}" is not a number`);
+    return asNumber;
+  };
+
+  function parsePrimary() {
+    if(isOperator('(')) {
+      ++position;
+      const value = parseOr();
+      expect(')');
+      return value;
+    }
+    const token = take();
+    if(!token)
+      throw new Error('expression ends early');
+    if(token.type == 'number')
+      return token.value;
+    if(token.type != 'name')
+      throw new Error(`unexpected "${token.value}"`);
+
+    // a name directly in front of a bracket is a function call, everything
+    // else is a value the caller resolves
+    if(token.widget === null && functions[token.value] && isOperator('(')) {
+      ++position;
+      const args = [];
+      if(!isOperator(')')) {
+        args.push(number(parseOr()));
+        while(isOperator(',')) {
+          ++position;
+          args.push(number(parseOr()));
+        }
+      }
+      expect(')');
+      return functions[token.value](...args);
+    }
+    if(token.widget === null && constants[token.value] !== undefined)
+      return constants[token.value];
+    return number(resolve(token.value, token.widget));
+  }
+
+  // right associative, and binding tighter than a unary minus so -x^2 is -(x^2)
+  function parsePower() {
+    const base = parsePrimary();
+    if(isOperator('^')) {
+      ++position;
+      return Math.pow(number(base), number(parseUnary()));
+    }
+    return base;
+  }
+
+  function parseUnary() {
+    if(isOperator('-')) {
+      ++position;
+      return -number(parseUnary());
+    }
+    if(isOperator('+')) {
+      ++position;
+      return number(parseUnary());
+    }
+    if(isOperator('!')) {
+      ++position;
+      return !parseUnary();
+    }
+    return parsePower();
+  }
+
+  function parseProduct() {
+    let value = parseUnary();
+    while(true) {
+      if(isOperator('*', '/', '%')) {
+        const operator = take().value;
+        const right = number(parseUnary());
+        value = operator == '*' ? number(value) * right : operator == '/' ? number(value) / right : number(value) % right;
+      } else if(peek() && (peek().type == 'number' || peek().type == 'name' || isOperator('('))) {
+        // implicit multiplication: 2x, 3(x+1), 2pi
+        value = number(value) * number(parseUnary());
+      } else {
+        return value;
+      }
+    }
+  }
+
+  function parseSum() {
+    let value = parseProduct();
+    while(isOperator('+', '-')) {
+      const operator = take().value;
+      const right = number(parseProduct());
+      value = operator == '+' ? number(value) + right : number(value) - right;
+    }
+    return value;
+  }
+
+  function parseComparison() {
+    let value = parseSum();
+    while(isOperator('<', '<=', '>', '>=', '==', '!=')) {
+      const operator = take().value;
+      const right = parseSum();
+      value = operator == '<' ? value < right
+            : operator == '<=' ? value <= right
+            : operator == '>' ? value > right
+            : operator == '>=' ? value >= right
+            : operator == '==' ? value == right
+            : value != right;
+    }
+    return value;
+  }
+
+  function parseAnd() {
+    let value = parseComparison();
+    while(isOperator('&&')) {
+      ++position;
+      const right = parseComparison();
+      value = !!value && !!right;
+    }
+    return value;
+  }
+
+  function parseOr() {
+    let value = parseAnd();
+    while(isOperator('||')) {
+      ++position;
+      const right = parseAnd();
+      value = !!value || !!right;
+    }
+    return value;
+  }
+
+  if(!tokens.length)
+    throw new Error('empty expression');
+  const result = parseOr();
+  if(position < tokens.length)
+    throw new Error(`unexpected "${tokens[position].value}"`);
+  return result;
+}
+
+// The two shapes a property asks for: a number (a limit, a coordinate) and a
+// condition (an inequality). Both answer with the fallback rather than throwing,
+// because a mistyped expression must not break dragging a widget.
+export function expressionNumber(text, resolve, fallback = null) {
+  if(typeof text == 'number')
+    return text;
+  if(typeof text != 'string')
+    return fallback;
+  try {
+    const value = evaluateExpression(text, resolve);
+    return typeof value == 'number' && isFinite(value) ? value : fallback;
+  } catch(e) {
+    return fallback;
+  }
+}
+
+export function expressionCondition(text, resolve, fallback = true) {
+  if(typeof text == 'boolean')
+    return text;
+  if(typeof text != 'string')
+    return fallback;
+  try {
+    return !!evaluateExpression(text, resolve);
+  } catch(e) {
+    return fallback;
+  }
+}

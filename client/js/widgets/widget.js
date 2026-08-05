@@ -1,4 +1,5 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
+import { expressionCondition, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -764,6 +765,63 @@ export class Widget extends StateManaged {
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
+  }
+
+  // How a name in a dragLimit expression is answered: x and y are the position
+  // being tested rather than where the widget currently is, every other name is
+  // a property of this widget, and ${PROPERTY name OF id} reads another one.
+  // That makes "x" and "y" mean in an expression what minX/maxX/minY/maxY mean
+  // next to it - the top left corner in the coordinates of the parent.
+  dragLimitResolver(coord) {
+    return (name, widgetID)=>{
+      if(widgetID === null && (name == 'x' || name == 'y'))
+        return coord[name];
+      if(widgetID === null)
+        return this.get(name);
+      return widgets.has(widgetID) ? widgets.get(widgetID).get(name) : undefined;
+    };
+  }
+
+  // Where a drag is allowed to put the widget's top left corner. minX/maxX/
+  // minY/maxY bound it to a rectangle, and each of them can be an expression
+  // instead of a fixed number ("${PROPERTY width OF board} - 100"). A condition
+  // - one inequality or a list of them, "2x^2 + y > 4", "2y + 10 > 5x" - bounds
+  // it to any area that can be written down, and both are checked on every
+  // mouse move, so an area that depends on the state follows it.
+  //
+  // A refused position falls back to moving on one axis only, so a widget
+  // slides along the edge of its area rather than sticking to it, and to where
+  // it already is if neither axis works. A widget that starts outside its area
+  // (a condition that changed under it, a routine that put it there) is not
+  // held in place: it is free until it is inside, so it can never get stuck.
+  dragLimitedCoord(coord) {
+    const limit = this.get('dragLimit');
+    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+      return coord;
+
+    const resolve = this.dragLimitResolver(coord);
+    const bound = key=>limit[key] === undefined ? undefined : expressionNumber(limit[key], resolve);
+    const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
+
+    let x = coord.x, y = coord.y;
+    if(minX !== undefined && minX !== null) x = Math.max(minX, x);
+    if(maxX !== undefined && maxX !== null) x = Math.min(maxX, x);
+    if(minY !== undefined && minY !== null) y = Math.max(minY, y);
+    if(maxY !== undefined && maxY !== null) y = Math.min(maxY, y);
+
+    const conditions = asArray(limit.condition === undefined ? [] : limit.condition);
+    if(!conditions.length)
+      return Object.assign({}, coord, { x, y });
+
+    const allowed = position=>conditions.every(c=>expressionCondition(c, this.dragLimitResolver(position)));
+    const currentX = this.get('x'), currentY = this.get('y');
+    // moving on one axis only, the axis that gives up the least first, then
+    // staying put - and if even that is outside, the widget is not held
+    const alternatives = Math.abs(y - currentY) < Math.abs(x - currentX)
+      ? [ { x, y: currentY }, { x: currentX, y } ]
+      : [ { x: currentX, y }, { x, y: currentY } ];
+    const inside = [ { x, y }, ...alternatives, { x: currentX, y: currentY } ].find(allowed);
+    return Object.assign({}, coord, inside || { x, y });
   }
 
   async doubleClick(mode='respect') {
@@ -2519,23 +2577,7 @@ export class Widget extends StateManaged {
   }
 
   async move(coordGlobal, localAnchor) {
-    let newCoord = this.dragCorner(coordGlobal, localAnchor);
-
-    //Keeps widget's top left corner within coordinates set by dragLimit object
-    const limit = this.get('dragLimit');
-
-    if (limit.minX !== undefined) {
-      newCoord.x = Math.max(limit.minX, newCoord.x);
-    }
-    if (limit.maxX !== undefined) {
-      newCoord.x = Math.min(limit.maxX, newCoord.x);
-    }
-    if (limit.minY !== undefined) {
-      newCoord.y = Math.max(limit.minY, newCoord.y);
-    }
-    if (limit.maxY !== undefined) {
-      newCoord.y = Math.min(limit.maxY, newCoord.y);
-    }
+    let newCoord = this.dragLimitedCoord(this.dragCorner(coordGlobal, localAnchor));
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
