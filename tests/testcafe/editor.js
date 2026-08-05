@@ -570,7 +570,7 @@ test("A pile's drop limit is set on the pile and lands in its template", async t
   // limit for it to show
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(handle)
     .expect(dropLimit.visible).ok()
     .expect(showLimit.visible).notOk()
