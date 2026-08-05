@@ -5245,7 +5245,10 @@ class PropertiesModule extends SidebarModule {
       this.renderRebuildable(rebuild=>{
         rebuildLimits = rebuild;
         host.innerHTML = '';
-        if(!dragLimitIsSet(widget.get('dragLimit')))
+        // the four inputs also step aside when the limit turns into an
+        // expression or a condition while the section is open - showing it as
+        // an empty rectangle would overwrite it with the next keystroke
+        if(!dragLimitIsSet(widget.get('dragLimit')) || dragLimitIsDynamic(widget.get('dragLimit')))
           return;
         const x = div(host, 'propertyInlineRow numberPairRow');
         div(x, 'numberPairLabel', 'X from/to');
@@ -6538,6 +6541,17 @@ class PropertiesModule extends SidebarModule {
         lastAvailability = signature;
         rebuild();
       });
+
+    // dragLimit is the same story with one property: it moves in and out of
+    // this list as its curated section steps aside for an expression or a
+    // condition (see showsDragLimitSection)
+    let lastShowsDragLimit = this.showsDragLimitSection(widget);
+    this.addPropertyListener(widget, 'dragLimit', _=>{
+      if(this.showsDragLimitSection(widget) === lastShowsDragLimit)
+        return;
+      lastShowsDragLimit = this.showsDragLimitSection(widget);
+      rebuild();
+    });
   }
 
   renderAutomationsSection(widget, target = this.moduleDOM) {
