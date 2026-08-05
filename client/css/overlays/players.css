@@ -181,7 +181,6 @@
 /* the room URL is text to read out or select, not a link - clicking it would only reload the room.
    breaking it anywhere keeps it fully readable without widening the table on narrow screens */
 #playerInviteURL {
-  font-weight: bold;
   overflow-wrap: anywhere;
 }
 /* the share button lines up with the row action buttons and has no room for a label,
