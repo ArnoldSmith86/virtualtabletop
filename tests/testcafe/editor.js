@@ -4,30 +4,77 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 
 setupTestEnvironment();
 
+const setEditorState = ClientFunction(state => {
+  if(state)
+    localStorage.setItem('editorState', JSON.stringify(state));
+  else
+    localStorage.removeItem('editorState');
+});
+
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
   });
   await ClientFunction(prepareClient)();
-  await ClientFunction(() => localStorage.removeItem('editorState'))();
+  await setEditorState(null);
   await setName(t);
   await t
     .click('#editButton')
     .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .expect(Selector('#editorSidebar button[icon=tune].active').exists).ok();
+  await setEditorState(null);
 });
 
 test('Edit mode restores the remembered module instead of the default one', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
   });
   await ClientFunction(prepareClient)();
-  await ClientFunction(() => localStorage.setItem('editorState', JSON.stringify({ modules: { JSON: 'editorModuleTopLeft' } })))();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
   await setName(t);
   await t
     .click('#editButton')
     .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
     .expect(Selector('#editorModuleTopLeft.tune').exists).notOk();
+  await setEditorState(null);
+});
+
+// closing every module deletes the last entry, so only the flag tells "I closed
+// them all" apart from "I have never been here"
+test('Edit mode leaves the modules closed once the default has been opened before', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: {}, defaultModuleOpened: true });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// there the panel is a fullscreen overlay, so opening it by default would hide
+// the room the user just went to edit
+test('Edit mode skips the default module in the narrow-window layout', async t => {
+  await t.resizeWindow(900, 600);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
 });
 
 test('Pan in edit mode while holding Space', async t => {

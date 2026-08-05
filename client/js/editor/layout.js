@@ -124,7 +124,8 @@ function renderDragToolbar(buttons) {
 }
 
 function renderSidebar(modules) {
-  const state = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}').modules;
+  const editorState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+  const state = editorState.modules;
   let opened = false;
   for(const module of modules) {
     module.renderButton($('#editorSidebar'));
@@ -134,10 +135,19 @@ function renderSidebar(modules) {
     }
   }
 
-  // Without a remembered module the sidebar would just be a column of buttons,
-  // so entering edit mode for the first time starts on the properties panel.
-  if(!opened)
+  // Without a remembered module the sidebar would just be a column of buttons, so entering edit
+  // mode for the first time starts on the properties panel. Only the first time ever: closing the
+  // last module deletes its entry, so "nothing remembered" is also how "I want the whole room" is
+  // stored, and defaultModuleOpened is what tells the two apart. Not in the narrow-window layout
+  // either, where the panel is a fullscreen overlay that would hide the room it edits.
+  const modulePanelIsOverlay = calculateEditModuleClasses(window.innerWidth, window.innerHeight, viewportConfig).includes('editModulesOverlay');
+  if(!opened && !editorState.defaultModuleOpened && !modulePanelIsOverlay) {
     modules.find(module=>module instanceof PropertiesModule).openInTarget($('#editorModuleTopLeft'));
+    // openInTarget has just written that module into editorState, so re-read before adding the flag
+    const savedState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+    savedState.defaultModuleOpened = true;
+    localStorage.setItem('editorState', JSON.stringify(savedState));
+  }
 
   editorModulesResizer();
 }
