@@ -126,39 +126,42 @@
           </tfoot>
         </table>
       </div>
-      <details id="playersHelp">
+      <details id="playersHelp" class="playersHelp">
         <summary>Help: playing together</summary>
-        <div class="helpTopic">
-          <i class="material-symbols">groups</i>
-          <div>
-            <h2>Players and sessions</h2>
-            <p>Every connected browser tab is a session of a player. Edit the name and color of any player, view the game as another player or add a local player that shares this device. While you have this room open in more than one tab, adding a player switches the current tab to them, so every tab can be its own player.</p>
+        <div class="helpContent">
+          <div class="helpTopic">
+            <i class="material-symbols">groups</i>
+            <div>
+              <h2>Players and sessions</h2>
+              <p>Every connected browser tab is a session of a player. Edit the name and color of any player, view the game as another player or add a local player that shares this device. While you have this room open in more than one tab, adding a player switches the current tab to them, so every tab can be its own player.</p>
+            </div>
+          </div>
+          <div class="helpTopic">
+            <i class="material-symbols">share</i>
+            <div>
+              <h2>Remote play</h2>
+              <p>Everybody plays on their own device: send them the room URL with the <i class="material-symbols">share</i> button in the table above and they join this table as soon as they open it. Their browser tab shows up here as a session and they can pick their name and color in the table.</p>
+            </div>
+          </div>
+          <div class="helpTopic">
+            <i class="material-symbols">swap_horizontal_circle</i>
+            <div>
+              <h2>Hotseat</h2>
+              <p>Several people share one device: add each of them with the <i class="material-symbols">person_add</i> row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only your own session changes, the game itself stays untouched.</p>
+            </div>
           </div>
         </div>
-        <div class="helpTopic">
-          <i class="material-symbols">share</i>
-          <div>
-            <h2>Remote play</h2>
-            <p>Everybody plays on their own device: send them the room URL with the <i class="material-symbols">share</i> button in the table above and they join this table as soon as they open it. Their browser tab shows up here as a session and they can pick their name and color in the table.</p>
-          </div>
-        </div>
-        <div class="helpTopic">
-          <i class="material-symbols">swap_horizontal_circle</i>
-          <div>
-            <h2>Hotseat</h2>
-            <p>Several people share one device: add each of them with the <i class="material-symbols">person_add</i> row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only your own session changes, the game itself stays untouched.</p>
-          </div>
-        </div>
-        <div class="helpTopic">
-          <i class="material-symbols">smart_button</i>
-          <div>
-            <h2>What the buttons do</h2>
-            <ul>
-              <li><i class="material-symbols">edit</i>Rename the player everywhere in the game</li>
-              <li><i class="material-symbols">visibility</i>View the game as this player - greyed out while they are connected and playing</li>
-              <li><i class="material-symbols">delete</i>Remove this player</li>
-            </ul>
-          </div>
+      </details>
+      <details id="playersButtonHelp" class="playersHelp">
+        <summary>Help: what the buttons do</summary>
+        <div class="helpContent">
+          <ul>
+            <li><i class="material-symbols">edit</i>Rename the player everywhere in the game</li>
+            <li><i class="material-symbols">visibility</i>View the game as this player - greyed out while they are connected and playing</li>
+            <li><i class="material-symbols">delete</i>Remove this player</li>
+            <li><i class="material-symbols">add</i>Add a player who shares this device</li>
+            <li><i class="material-symbols">share</i>Share the room URL so other players can join</li>
+          </ul>
         </div>
       </details>
     </div>
