@@ -154,18 +154,22 @@ function applySelectionRectangle(addToSelection) {
   if(newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
     return;
 
-  if(!addToSelection) {
-    setSelection(newlySelected);
-  } else {
-    let selectionToApply = [...selectedWidgets];
-    for(const widget of newlySelected) {
-      if(selectedWidgets.indexOf(widget) == -1)
-        selectionToApply.push(widget);
-      else
-        selectionToApply = selectionToApply.filter(w=>w!=widget);
+  // a band drawn in the room is the one selection change a running picker owns:
+  // it is how widgets are picked with a band rather than a click
+  selectWidgetsInRoom(_=>{
+    if(!addToSelection) {
+      setSelection(newlySelected);
+    } else {
+      let selectionToApply = [...selectedWidgets];
+      for(const widget of newlySelected) {
+        if(selectedWidgets.indexOf(widget) == -1)
+          selectionToApply.push(widget);
+        else
+          selectionToApply = selectionToApply.filter(w=>w!=widget);
+      }
+      setSelection(selectionToApply);
     }
-    setSelection(selectionToApply);
-  }
+  });
 }
 
 // whether a selection is a different set of widgets than the one before it -
@@ -184,8 +188,12 @@ function setSelection(newSelectedWidgets) {
   // and a widget can also be selected without clicking in the room), and the
   // popups hang off controls this very selection change is about to throw away -
   // the ones that let widgets be picked in the room ignore clicks in there, so
-  // nothing else ever closes them. A widget picker is not the editor moving on:
-  // it restores the selection it started from after every pick.
+  // nothing else ever closes them. Picking widgets in the room is not the editor
+  // moving on: the picker restores the selection it started from after every
+  // pick. Every other way to select another widget is - a picker waiting for a
+  // click in the room does not make the JSON editor's tree or an "Edit line ..."
+  // link something else than the editor moving on, so it ends with its popup.
+  endWidgetPickerWithoutTarget();
   const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
                         && selectionChanged(previousSelectedWidgets, newSelectedWidgets);
   if(editorMovedOn)

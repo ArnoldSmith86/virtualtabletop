@@ -1612,11 +1612,6 @@ class PropertiesModule extends SidebarModule {
       .filter(deck => deck && deck.get('type') == 'deck');
   }
 
-  onClose() {
-    // this module drives the widget picker, so a pick cannot outlive it
-    stopWidgetPicker();
-  }
-
   onDeltaReceivedWhileActive(delta) {
     for(const widgetID in delta.s)
       if(delta.s[widgetID] && this.inputUpdaters[widgetID])
@@ -1634,6 +1629,11 @@ class PropertiesModule extends SidebarModule {
   onClose() {
     this.clearGridPreview();
     this.clearFaceRowRefresh();
+    // This module is what the popups hang off, and closing it throws away the
+    // controls they are anchored to just like moving on to another widget does -
+    // so they go the same way, and the picks they run in the room with them.
+    stopWidgetPicker();
+    closeEditorPopups();
   }
 
   onEditorClose() {

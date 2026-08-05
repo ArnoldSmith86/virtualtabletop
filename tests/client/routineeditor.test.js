@@ -51,7 +51,7 @@ beforeAll(() => {
     'EventsEditor', 'propertyAutomations', 'AddEventPopup', 'cardDefaultRoutines', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineSoundPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
-    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
+    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
@@ -2517,6 +2517,13 @@ describe('the shared widget picker', () => {
     return id => widgets.get(id);
   }
 
+  // a band drawn in the room reaches the picker as a selection change, and that
+  // is the only selection it takes: one made anywhere else is the editor moving
+  // on to another widget, waiting picker or not
+  function selectInRoom(selection) {
+    return selectWidgetsInRoom(_=>handleWidgetPickerSelection(selection));
+  }
+
   // renders the popout the properties sidebar and the routine editor share and
   // starts its in-room pick mode
   function pickInRoom(options) {
@@ -2537,7 +2544,7 @@ describe('the shared widget picker', () => {
     let picked = null;
     pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
     // the card covers the holder, so a click on it means the holder underneath
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toBe('h1');
   });
 
@@ -2545,26 +2552,38 @@ describe('the shared widget picker', () => {
     const get = room([ 'target', 'button' ], [ 'l1', 'label' ]);
     let picked = null;
     pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
-    handleWidgetPickerSelection([ get('l1') ]);
+    selectInRoom([ get('l1') ]);
     expect(picked).toBeNull();
     expect(isWidgetPickerActive()).toBe(true); // still waiting for a matching click
+  });
+
+  test('a selection made anywhere but in the room is not a pick', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    // the editor selecting another widget on its own (the JSON editor's tree, a
+    // link in the sidebar) is it moving on: taking that as a pick would both
+    // write it into the parameter and put the editor back on the widget the
+    // picker belongs to, so the sidebar could not move on at all while one runs
+    expect(handleWidgetPickerSelection([ get('h1') ])).toBe(false);
+    expect(picked).toBeNull();
   });
 
   test('without a type filter only resolveCovering pickers look past cards and piles', () => {
     const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'p1', 'pile', 'h1' ], [ 'c1', 'card', 'p1' ], [ 'c2', 'card' ]);
     let picked = null;
     pickInRoom({ apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c1') ]); // the plain picker takes what was clicked
+    selectInRoom([ get('c1') ]); // the plain picker takes what was clicked
     expect(picked).toBe('c1');
 
     stopWidgetPicker();
     pickInRoom({ resolveCovering: true, apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toBe('h1');
 
     stopWidgetPicker();
     pickInRoom({ resolveCovering: true, apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c2') ]); // a card on the table stays itself
+    selectInRoom([ get('c2') ]); // a card on the table stays itself
     expect(picked).toBe('c2');
   });
 
@@ -2572,7 +2591,7 @@ describe('the shared widget picker', () => {
     const get = room([ 'target', 'button' ], [ 'c1', 'card', 'c2' ], [ 'c2', 'card', 'c1' ]);
     let picked = null;
     pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toBeNull();
   });
 
@@ -2580,9 +2599,9 @@ describe('the shared widget picker', () => {
     const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'h2', 'holder' ], [ 'c1', 'card', 'h2' ]);
     let picked = [];
     pickInRoom({ multiple: true, resolveCovering: true, getSelectedIDs: () => picked, apply: ids => picked = ids });
-    handleWidgetPickerSelection([ get('h1') ]);
+    selectInRoom([ get('h1') ]);
     expect(isWidgetPickerActive()).toBe(true);
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toEqual([ 'h1', 'h2' ]);
   });
 
@@ -2599,7 +2618,7 @@ describe('the shared widget picker', () => {
 
     // it stays selected while the picker runs, so a click on it never arrives as
     // a selection change - only as a click
-    handleWidgetPickerSelection([ widgets.get('target') ]);
+    selectInRoom([ widgets.get('target') ]);
     expect(picked).toBeNull();
     expect(handleWidgetPickerClick(widgets.get('target'))).toBe(true);
     expect(picked).toBe('target');

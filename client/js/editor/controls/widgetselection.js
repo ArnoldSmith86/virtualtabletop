@@ -99,30 +99,58 @@ function isWidgetPickerRestoringSelection() {
   return restoringWidgetPickerSelection;
 }
 
-// Whether a running picker explains a selection change: picking widgets in the
-// room selects them and then restores the selection the picker started from,
-// which is not the editor moving on to another widget. That only holds while the
-// widget the picker belongs to is still there - once it is deleted or replaced
-// by a new state, the change is real and the popup the picker runs from goes
-// along. Nothing can be picked for a widget that is gone, so the picker ends
-// here rather than on the next click in the room, which would never come: the
-// popup it belongs to is about to be closed.
+// A rubber band drawn in the room is the one selection change a running picker
+// owns - it is how widgets are picked with a band instead of a click, and the
+// picker puts its own widget back afterwards. Every other route into
+// setSelection (the JSON editor's tree, an "Edit line ..." link, an undo, a new
+// state) is the editor moving on to another widget, armed picker or not: it is
+// the selection the picker itself makes that must not be mistaken for one, not
+// the mere existence of a picker.
+let selectingWidgetsInRoom = false;
+
+function selectWidgetsInRoom(applySelection) {
+  selectingWidgetsInRoom = true;
+  try {
+    return applySelection();
+  } finally {
+    selectingWidgetsInRoom = false;
+  }
+}
+
+// Whether a running picker explains a selection change: it selects what was
+// caught in the room and then restores the selection it started from, which is
+// not the editor moving on to another widget. That only holds for a selection
+// made in the room, and only while the widget the picker belongs to is still
+// there - once it is deleted or replaced by a new state, the change is real and
+// the popup the picker runs from goes along.
 function isWidgetPickerChangingSelection() {
-  if(!activeWidgetPicker)
-    return false;
-  if(widgetPickerTarget())
-    return true;
-  // the crosshair over the room is the only sign that a click in there is being
-  // waited for, so it must not just disappear: say why it did
+  return !!activeWidgetPicker && selectingWidgetsInRoom && !!widgetPickerTarget();
+}
+
+// Nothing can be picked for a widget that is gone, and the click in the room a
+// picker waits for would never come: the popup it runs from is being closed in
+// the same breath. So it ends where its widget does, whichever route the
+// selection change came from - and since the crosshair over the room is the only
+// sign that a click in there is being waited for, it must not just disappear:
+// say why it did.
+function endWidgetPickerWithoutTarget() {
+  if(!activeWidgetPicker || widgetPickerTarget())
+    return;
   const targetWidgetID = activeWidgetPicker.targetWidgetID;
   stopWidgetPicker();
   editorNote(`picking in the room ended: ${targetWidgetID} is gone`);
-  return false;
 }
 
+// Turns a selection into a pick and puts the picker's own widget back
+// afterwards, which is why the sidebar stops there rather than re-rendering for
+// what was picked. Only a selection made in the room is one: taking any other
+// one would put the editor back on the widget the picker belongs to, so a
+// running picker would make the sidebar unable to move on at all.
 function handleWidgetPickerSelection(newSelection) {
   if(restoringWidgetPickerSelection)
     return true;
+  if(!selectingWidgetsInRoom)
+    return false;
 
   const picker = getWidgetPicker();
   if(!picker)

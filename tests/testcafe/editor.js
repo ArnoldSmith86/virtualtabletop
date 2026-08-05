@@ -2091,6 +2091,72 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
     .expect(popup.exists).ok()
     .expect(popup.find('.widgetPickerEntry.selected').withText('holder2').exists).ok()
     .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+
+  // The route that reads as a pick least of all: the JSON editor, which selects
+  // widgets in its own tree. Opening it also replaces the module the popup hangs
+  // off, which takes the popup along by itself - either way nothing of the
+  // editor for the other widget is left over the new one.
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  await t.click(popup.find('.popup-close'));
+  await openFromPopup();
+  await t
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok()
+    .click('#editorSidebar [icon=data_object]')
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk()
+    .click('#jeShowTree')
+    .click(Selector('#jeTree .jeTreeWidget').find('.key').withExactText('holder2'))
+    .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
+});
+
+// An armed picker only explains the selection changes it makes itself - a click
+// or a band in the room. Every other way to select another widget is the editor
+// moving on, waiting picker or not: without that, arming the picker would leave
+// the popup floating over whatever the editor moved on to, with the picker still
+// armed for a widget that is not on screen any more. The sidebar has such a
+// route of its own, so it does not even take another module: a widget attached
+// to a line offers a way back to the line it rides on.
+test('An armed picker does not keep a popup open when the sidebar moves the editor on', async t => {
+  await setRoomState({
+    route: {
+      id: 'route', type: 'line', lineStart: { x: 100, y: 300 }, lineEnd: { x: 600, y: 300 },
+      stops: [ { widget: 'stop1', position: 0.5 } ]
+    },
+    stop1: {
+      id: 'stop1', type: 'basic', parent: 'route', x: 340, y: 290, width: 40, height: 20,
+      clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ]
+    },
+    holder1: { id: 'holder1', type: 'holder', x: 300, y: 100 },
+    holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_stop1');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok();
+
+  // "Edit line route" in the widget header selects the line - a selection change
+  // that never touches the room, with the widget the picker belongs to still
+  // there. It is the editor moving on all the same.
+  await t
+    .click(Selector('.widgetHeaderLineButton'))
+    .expect(Selector('#w_route').hasClass('selectedInEdit')).ok()
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk();
 });
 
 test('An editor popup does not outlive the widget it belongs to without a click either', async t => {
