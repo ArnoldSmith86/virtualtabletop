@@ -3,6 +3,7 @@ let unmuteVol = 30;
 
 let audioPickerLoad = null;
 let audioPickerPreview = null;
+let audioPickerFinish = null;
 
 // Builds the list of bundled Kenney sound effects (see assets/audio/audio.json)
 // once and wires up the search box. Mirrors loadSymbolPicker in symbols.js.
@@ -62,18 +63,25 @@ export async function pickAudio(closeOverlay=true) {
 
   await loadAudioPicker();
   return new Promise(resolve => {
+    // one way out for every way of leaving the picker (a sound, the close
+    // button, or the editor cancelling it), so none of them forgets to stop a
+    // running preview or leaves the overlay up
+    const finish = function(sound) {
+      audioPickerFinish = null;
+      stopAudioPickerPreview();
+      if(closeOverlay)
+        showOverlay(null);
+      resolve(sound);
+    };
+    audioPickerFinish = finish;
+
     showOverlay('audioPickerOverlay');
     $('#audioPickerOverlay').scrollTop = 0;
     $('#audioPickerOverlay input').value = '';
     $('#audioPickerOverlay input').focus();
     $('#audioPickerOverlay input').onkeyup();
 
-    $('#audioPickerOverlay [icon=close]').onclick = function() {
-      stopAudioPickerPreview();
-      if(closeOverlay)
-        showOverlay(null);
-      resolve(null);
-    };
+    $('#audioPickerOverlay [icon=close]').onclick = _=>finish(null);
 
     for(const entry of $a('#audioList .audioEntry')) {
       $('.audioPreview', entry).onclick = function(e) {
@@ -92,14 +100,18 @@ export async function pickAudio(closeOverlay=true) {
         };
         audio.play().catch(()=>{});
       };
-      entry.onclick = function() {
-        stopAudioPickerPreview();
-        if(closeOverlay)
-          showOverlay(null);
-        resolve(entry.dataset.url);
-      };
+      entry.onclick = _=>finish(entry.dataset.url);
     }
   });
+}
+
+// Closes a sound picker that is still open and resolves it with nothing. The
+// editor calls this when the widget being edited changes: whoever opened the
+// picker edits that widget, so its result would be written to a widget that is
+// no longer on screen.
+export function cancelAudioPicker() {
+  if(audioPickerFinish)
+    audioPickerFinish(null);
 }
 
 export let audioContext;

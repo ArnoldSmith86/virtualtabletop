@@ -2357,6 +2357,24 @@ describe('color, icon and sound parameters use the picker popups', () => {
     expect(value).toEqual({ source: '/i/audio/casino/card-shuffle.mp3' });
   });
 
+  test('a click on a widget in the room closes the sound popup', () => {
+    // it keeps out of the play area so the library it opens is not covered, but
+    // the room is none of its inputs: a click in there selects another widget,
+    // and the popup would go on writing the sound to the widget that was shown
+    // before it
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const clickedWidget = div(document.getElementById('roomArea'), '');
+    const popup = new RoutineSoundPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'AUDIO' }, [ 'source' ], { state: {} }, [], []);
+    popup.show();
+    expect(popup.usesRoomAsInput()).toBe(false);
+    popup.onOutsideClick({ target: clickedWidget });
+    expect(document.getElementById('editor').contains(popup.domElement)).toBe(false);
+    clickedWidget.remove();
+  });
+
   test('a click in the sound library does not close the popup that opened it', () => {
     const source = document.createElement('span');
     document.getElementById('editor').append(source);

@@ -389,6 +389,16 @@ class RoutinePopup extends Popup {
 
   // the property builder's widget picker needs the room visible while it is open
   avoidsPlayArea() {
+    return this.usesRoomAsInput();
+  }
+
+  // whether a click in the play area is an answer this popup is waiting for
+  // rather than a click outside it. Only the pickers that take widgets from the
+  // room are: a popup that merely keeps out of the play area (so that what it
+  // opens is not covered by it) must still be dismissed by a click in there -
+  // that click selects another widget, which is a different editor than the one
+  // the popup was opened in.
+  usesRoomAsInput() {
     return this.propertyPickerShown || this.needsRoomForPicker();
   }
 
@@ -428,7 +438,7 @@ class RoutinePopup extends Popup {
     // click in it is that input rather than a click outside the popup
     if(isWidgetPickerActive(null, routineWidgetPickerKey))
       return;
-    if(this.avoidsPlayArea() && e.target.closest && e.target.closest('#roomArea'))
+    if(this.usesRoomAsInput() && e.target.closest && e.target.closest('#roomArea'))
       return;
     super.onOutsideClick(e);
   }
@@ -1880,8 +1890,9 @@ class RoutineSoundPopup extends RoutinePickerPopup {
 
   // the sound library opens as an overlay over the board, so a popup sitting on
   // the play area would cover the very list it opens (and be covered by it on a
-  // portrait window): it keeps out of the play area the way the popups that pick
-  // widgets in the room do
+  // portrait window). Only where it is placed, though - the room is not one of
+  // its inputs, so usesRoomAsInput stays false and a click on a widget in there
+  // dismisses it like any other click outside.
   avoidsPlayArea() {
     return true;
   }
