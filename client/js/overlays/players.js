@@ -9,7 +9,6 @@ let activeColors = [];
 let mouseCoords = [];
 let mySessionID = null;
 let metaUpdateResolves = [];
-let helpDefaultApplied = false;
 let inviteStatusTimeout = null;
 localStorage.setItem('playerName', playerName);
 
@@ -200,12 +199,6 @@ function fillPlayerList(players, active, sessions) {
   $('#addLocalPlayerButton').title = (sessionsByPlayer[playerName] || []).length > 1
     ? 'Add a player and switch this browser tab to them'
     : 'Add a player who shares this device';
-  // somebody who is alone at the table is usually here to find out how to get others in, so
-  // the help starts open for them - once there are other players it would just be in the way
-  if(!helpDefaultApplied) {
-    helpDefaultApplied = true;
-    $('#playersHelp').open = sortedPlayers.length < 2;
-  }
   updatePlayerCountDisplay();
 }
 
