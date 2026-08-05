@@ -142,7 +142,7 @@ const WIDGET_PROPERTIES = {
     },
     Pile: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
+        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', showLimit: 'boolean', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
     },
     Scoreboard: {
         ...COMMON_PROPERTIES,

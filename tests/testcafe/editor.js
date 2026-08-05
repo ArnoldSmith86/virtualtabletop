@@ -428,6 +428,40 @@ test('A pile is edited through its handle, css through declaration rows', async 
     .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
 });
 
+test("A pile's drop limit is set on the pile and lands in its template", async t => {
+  await setRoomState({
+    deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
+  const dropLimit = Selector('#editorModules .propertyInput').withText('Drop limit');
+  const showLimit = Selector('#editorModules .checkboxInput').withText('Show the limit on the handle');
+  const handle = Selector('#w_pile .handle');
+
+  // a pile takes cards through its snap range instead of a dropTarget, so the
+  // limit is offered in Behavior - and the handle display only once there is a
+  // limit for it to show
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click(handle)
+    .expect(dropLimit.visible).ok()
+    .expect(showLimit.visible).notOk()
+    .typeText(dropLimit.find('input[type=number]'), '3', { replace: true })
+    .expect(handle.innerText).eql('2')
+    .expect(showLimit.visible).ok()
+    .click(showLimit.find('label.switchbox'))
+    .expect(handle.innerText).eql('2/3')
+    // a pile is temporary, so both land in the template new piles of these
+    // cards are built from
+    .expect(pileTemplate()).eql('{"dropLimit":3,"showLimit":true}');
+});
+
 test('A deck that overrides the pile template says so while the pile mirrors into it', async t => {
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: { onPileCreation: { text: 'fixed' } } }, faceTemplates: [ { objects: [] } ] },
@@ -1805,6 +1839,11 @@ test('Line widget in edit mode', async t => {
     .click(Selector('#editorModules .lineShapePreset').withAttribute('aria-label', 'Shallow curve'));
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
 
+  // the drop limit constrains exactly those drops, so it is rendered with the
+  // matches - and stays out of the way while the line accepts nothing
+  const dropLimitInput = Selector('#editorModules .propertyInput').withText('Drop limit');
+  await t.expect(dropLimitInput.visible).notOk();
+
   // "Target widgets" writes the line's dropTarget: each match is a widget type
   // plus any number of property/value conditions, several matches are an array
   await t
@@ -1823,6 +1862,19 @@ test('Line widget in edit mode', async t => {
     .pressKey('tab');
   const dropTargets = await ClientFunction(id => JSON.stringify(widgets.get(id).get('dropTarget')))(lineID);
   await t.expect(dropTargets).eql('[{"type":"card"},{"movable":true}]');
+
+  // an empty field is "no limit", which the widget stores as -1
+  const readDropLimit = ClientFunction(id => widgets.get(id).get('dropLimit'));
+  await t
+    .expect(dropLimitInput.visible).ok()
+    .typeText(dropLimitInput.find('input[type=number]'), '3', { replace: true });
+  const dropLimit = await readDropLimit(lineID);
+  await t
+    .expect(dropLimit).eql(3)
+    .selectText(dropLimitInput.find('input[type=number]'))
+    .pressKey('delete');
+  const clearedDropLimit = await readDropLimit(lineID);
+  await t.expect(clearedDropLimit).eql(-1);
 
   await t.click(Selector('#editorModules .dropTargetRemoveMatch').nth(1));
 
