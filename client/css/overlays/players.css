@@ -183,38 +183,55 @@
 }
 
 #playerInvite {
+  width: 100%;
   max-width: 40rem;
   margin: 1rem auto;
 }
 #playerInvite h1 {
   text-align: left;
+  margin-bottom: 0.5em;
 }
-#playerInvite .material-symbols {
+
+#playersHelp {
+  width: 100%;
+  max-width: 40rem;
+  margin: 1rem auto;
+}
+#playersHelp > summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+#playersHelp .helpTopic {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+#playersHelp .helpTopic > .material-symbols {
+  font-size: 32px;
+  flex: 0 0 32px;
+  color: var(--VTTblue);
+}
+#playersHelp h2 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+}
+#playersHelp p {
+  margin: 0;
+}
+#playersHelp p .material-symbols {
   font-size: 1em;
   vertical-align: text-bottom;
 }
 
 .overlay .heading{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   width: 100%;
-  max-width: 40rem; /* same width as the table, legend and add-player block below */
+  max-width: 40rem; /* same width as the table, legend and invite block below */
   margin: 0 auto;
 }
 .overlay .heading h1{
-  margin: 0 0.5em 0 0;
-  padding: 0.25em 0.5em 0.25em 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  line-height: 1em;
+  margin: 0;
   text-align: left;
-  max-width: 45%;
-}
-.overlay .heading .instructionalText{
-  display: block;
-  font-size: 16px;
-  text-align: left;
-  padding: 0.9rem 0;
 }
 #playerCursors {
   position: absolute;

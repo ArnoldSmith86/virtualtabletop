@@ -84,7 +84,6 @@
     <div id="playerOverlay" class="overlay">
       <div class="heading">
         <h1>Players</h1>
-        <div class="instructionalText">Every connected browser tab is a session of a player. Edit the name and color of any player, view the game as another player or add a local player that shares this device.</div>
       </div>
       <div id="playerList">
         <template id="template-playerlist-player" type="text/template">
@@ -129,10 +128,33 @@
         <div id="playersAloneHint">You are the only player at this table. Share the room URL or add a local player to play with others.</div>
       </div>
       <div id="playerInvite">
-        <h1>Invite</h1>
-        <p>More players can join this game by visiting <span id="playerInviteURL"></span>. Players without their own device can be added in the last row of the table above and take their turns via the <i class="material-symbols">visibility</i> buttons.</p>
+        <h1>Invite players to <a id="playerInviteURL">this room</a></h1>
         <button icon="share" id="playersShareButton">Share room URL</button>
       </div>
+      <details id="playersHelp">
+        <summary>Help: playing together</summary>
+        <div class="helpTopic">
+          <i class="material-symbols">groups</i>
+          <div>
+            <h2>Players and sessions</h2>
+            <p>Every connected browser tab is a session of a player. Edit the name and color of any player, view the game as another player or add a local player that shares this device.</p>
+          </div>
+        </div>
+        <div class="helpTopic">
+          <i class="material-symbols">share</i>
+          <div>
+            <h2>Remote play</h2>
+            <p>Everybody plays on their own device: send them the room URL above and they join this table as soon as they open it. Their browser tab shows up here as a session and they can pick their name and color in the table.</p>
+          </div>
+        </div>
+        <div class="helpTopic">
+          <i class="material-symbols">swap_horizontal_circle</i>
+          <div>
+            <h2>Hotseat</h2>
+            <p>Several people share one device: add each of them in the last row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only your own session changes, the game itself stays untouched.</p>
+          </div>
+        </div>
+      </details>
     </div>
 
     <div id="returnOverlay" class="overlay">
