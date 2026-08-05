@@ -240,6 +240,7 @@ function updatePlayerCountDisplay() {
 
   const tooltip = $('.tooltip', playersButton);
   if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
+  updateToolbarLayout(); // the player count is part of the toolbar in some layouts
 
   [playersButton, tooltip].forEach(element => element.classList.add('playerChange'));
   

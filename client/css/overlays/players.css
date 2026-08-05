@@ -46,9 +46,9 @@
   font-size: 0.8rem;
 }
 
-/* on a phone the session labels are what pushes the table past the viewport, so let them
-   wrap there rather than making the whole overlay scroll sideways */
-@media (max-width: 530px) {
+/* on a narrow board the session labels are what pushes the table past the overlay, so let
+   them wrap there rather than making the whole overlay scroll sideways */
+@container roomArea (max-width: 530px) {
   #playersTable .playerSessionCell {
     white-space: normal;
   }

@@ -1,0 +1,497 @@
+.routine-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 8px;
+}
+
+/* nested routines look like a hole carved into the parent operation: the page
+   background shows as a rounded cutout that reaches the parent's right border
+   while the operation cards inside keep their normal size */
+.routine-editor .routine-editor {
+  margin: 4px -8px 4px 12px;
+  padding: 5px;
+  background: var(--backgroundColor);
+  border-radius: 10px 0 0 10px;
+}
+
+.routine-editor-operation {
+  position: relative;
+  background: var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--routineOperationColor);
+  border-radius: 4px 4px 4px 0;
+  padding: 5px 8px;
+  line-height: 1.8;
+  font-size: 13px;
+}
+
+/* The sentence below the operation name. Every part of it - a word, a chip, the
+   drop-down, an x, the button offering the options - is the same height and
+   centered on the same line, so the eye follows one line of text instead of
+   words stepping up and down between the chips. */
+/* A sentence too long for the width wraps, and the lines after the first are
+   indented: flush with the first word they read as a new statement rather than
+   as the rest of the one above. */
+.routine-editor-sentence {
+  line-height: 26px;
+  padding-left: 16px;
+  text-indent: -16px;
+}
+
+/* text-indent inherits, and every chip is an inline-block of its own - so the
+   sentence would pull each of them 16px to the left inside its own box */
+.routine-editor-sentence * {
+  text-indent: 0;
+}
+
+/* the punctuation right behind a chip belongs to the chip, not to the gap after
+   it: the chip's own padding put a space in front of every comma ("300 , 200") */
+.routine-editor-punctuation {
+  margin-left: -4px;
+}
+
+.routine-editor-sentence .routine-editor-operation-parameter,
+.routine-editor-sentence .routine-editor-variant,
+.routine-editor-sentence .routine-editor-clause-remove,
+.routine-editor-sentence .routine-editor-add-clause,
+.routine-editor-sentence .routine-editor-parameter-warning {
+  box-sizing: border-box;
+  min-height: var(--routineChipHeight);
+  line-height: calc(var(--routineChipHeight) - 2px);
+  vertical-align: middle;
+}
+
+/* the summary and the move/delete icons sit next to each other so the icons
+   never cover the text, however narrow the editor gets */
+.routine-editor-operation-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.routine-editor-operation-body {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+/* the name of the operation, on a line of its own above the sentence: the link
+   to what the routine stores for advanced users, and the way to exchange the
+   operation for another one */
+.routine-editor-operation-func {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  color: var(--routineOperationColor);
+}
+
+.routine-editor-func-name[data-parameter] {
+  cursor: pointer;
+}
+
+.routine-editor-func-name[data-parameter]:hover {
+  text-decoration: underline;
+}
+
+.routine-editor-func-info {
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+}
+
+.routine-editor-func-info .material-symbols {
+  font-size: 14px;
+}
+
+.routine-editor-func-info:hover {
+  color: var(--routineOperationColor);
+  opacity: 1;
+}
+
+/* the words the sentence starts with: they say what the operation does, so with
+   more than one way to work they are the drop-down that switches between them */
+.routine-editor-variant {
+  color: var(--routineOperationColor);
+  font-weight: bold;
+}
+
+/* the drop-down is a field the sentence starts with: as wide as the longest
+   phrase it holds (see variantLeadWidth in routine.js), with the arrow at its
+   end, so picking another way to work does not move the rest of the sentence */
+.routine-editor-variant-menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 2px 0 4px;
+  margin-left: -4px;
+  background: var(--backgroundColor);
+}
+
+.routine-editor-variant-menu .material-symbols {
+  font-size: 16px;
+  line-height: inherit;
+}
+
+.routine-editor-variant-menu:hover {
+  outline: 1px solid var(--routineOperationColor);
+}
+
+.routine-editor-operation-parameter {
+  display: inline-block;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0 5px;
+  cursor: pointer;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.routine-editor-operation-parameter:hover {
+  outline: 1px solid var(--routineOperationColor);
+}
+
+/* a chip whose parameter is a setting: it opens the same list of phrases the
+   field the sentence starts with opens, so it carries the same arrow - and it is
+   allowed to be wider than the other chips, because the phrases are sentences
+   ("even the ones that are not clickable") rather than values */
+.routine-editor-parameter-menu {
+  display: inline-flex;
+  align-items: center;
+  max-width: 280px;
+  padding-right: 2px;
+}
+
+.routine-editor-parameter-menu .material-symbols {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: inherit;
+  margin-left: 1px;
+  opacity: var(--routineChromeOpacity);
+}
+
+/* color coding by what kind of value the parameter holds - the same colors the
+   popup a value is picked from uses for its sections */
+.routine-editor-parameter-variable {
+  color: var(--routineVariableColor);
+}
+
+.routine-editor-parameter-collection {
+  color: var(--routineCollectionColor);
+}
+
+.routine-editor-parameter-widget {
+  color: var(--routineWidgetColor);
+}
+
+.routine-editor-parameter-property {
+  color: var(--routinePropertyColor);
+}
+
+.routine-editor-parameter-number {
+  color: var(--routineNumberColor);
+}
+
+/* deprecated and unsupported parameters stay editable but carry an info button
+   explaining the problem */
+.routine-editor-parameter-warning {
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.routine-editor-parameter-warning.deprecated {
+  color: darkorange;
+}
+
+.routine-editor-parameter-warning.unsupported {
+  color: var(--textHighlightColor3);
+}
+
+/* the phrase a sentence starts with, while the values that decide it are only
+   worked out when the routine runs: the same orange those values are written in,
+   because that is what the sentence is guessing from */
+.routine-editor-parameter-warning.undetermined {
+  color: var(--routineVariableColor);
+}
+
+.routine-editor-parameter-warning:hover {
+  color: var(--VTTblue);
+}
+
+/* the controls of a card, in two rows beside the sentence: what changes the
+   operation itself on top (its JSON, deleting it), what only moves it around
+   below, on the line the sentence starts on */
+.routine-editor-operation-controls {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin-top: 1px;
+}
+
+.routine-editor-operation-controls-top {
+  display: flex;
+  gap: 3px;
+}
+
+.routine-editor-operation-controls-top .material-symbols {
+  font-size: 15px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+}
+
+.routine-editor-operation-controls-top .material-symbols:hover {
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* deleting the card is the one control that takes something away, so it turns
+   the same red on the way to being clicked as the marker that takes an option
+   out of the sentence and the trash can of a whole routine */
+.routine-editor-operation-controls-top .routine-editor-operation-delete:hover {
+  color: var(--textHighlightColor3);
+}
+
+.routine-editor-else {
+  font-weight: bold;
+  font-size: 12px;
+  margin: 2px 0 0 12px;
+}
+
+/* the key to the colors a sentence is written in: the example on the left in the
+   color it stands for, what it means on the right */
+.inline-popup .routine-legend {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 8px;
+  margin: 6px 0;
+}
+
+.inline-popup .routine-legend dt {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.inline-popup .routine-legend dd {
+  margin: 0;
+}
+
+.inline-popup label {
+  display: block;
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.inline-popup label input {
+  width: 80px;
+  margin-left: 6px;
+}
+
+/* the optional parts of a sentence: shown while they are in use, each with the
+   marker that switches it off again, and the button that offers the rest. A
+   clause wraps between its words like the rest of the sentence does: held on one
+   line, a long one ("without waiting for it to finish") ran off the edge of the
+   card and was cut off there instead of continuing on the next line. */
+.routine-editor-clause {
+  white-space: normal;
+}
+
+/* the marker that takes an option back out: a minus in a circle rather than a
+   bare x, which reads as the letter x when it sits at the end of a word, and it
+   turns red on the way to being clicked because it removes something */
+.routine-editor-clause-remove {
+  /* the outlined circle: the filled one is a heavy dark dot in a line of text */
+  font-family: 'Material Symbols NoFill';
+  font-size: 15px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+/* the last value of a clause and the marker that removes the clause are one
+   unit while the sentence wraps: a line breaking between them would leave the
+   marker alone at the start of the next line, where it reads as a bullet point
+   rather than as the end of the clause it belongs to */
+.routine-editor-clause-end {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.routine-editor-clause-remove:hover {
+  color: var(--textHighlightColor3);
+  opacity: 1;
+}
+
+/* everything else the operation can say is one click away, and the button saying
+   so looks like every other "add something" in the panel (see events.css): a
+   dashed grey outline. In the operation blue it was the loudest thing on a card,
+   louder than the sentence it belongs to - and blue already means "operation". */
+.routine-editor-add-clause {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  color: var(--textColor);
+  opacity: 0.6;
+  background: none;
+  /* currentColor rather than the grey the add buttons on the page use: on a card
+     that grey IS the background (--backgroundHighlightColor1) and disappears */
+  border: 1px dashed currentColor;
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-left: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.routine-editor-add-clause:hover {
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* a blank in the sentence: the word says what kind of value belongs there, and
+   the red says it is not one yet - a dashed box around it as well only makes the
+   longer hints ("group of widgets") look like an error message */
+.routine-editor-parameter-missing,
+body.edit.darkMode .routine-editor-parameter-missing {
+  color: var(--routineBlankColor);
+}
+
+/* comments and var statements are all text, so never truncate them */
+.routine-editor-operation-parameter[data-parameter="comment"],
+.routine-editor-operation-parameter[data-parameter="expression"],
+.routine-editor-operation-parameter[data-parameter="statement"],
+.routine-editor-operation-parameter[data-parameter="json"] {
+  max-width: none;
+  white-space: normal;
+}
+
+.routine-editor-operation-buttons {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 3px;
+}
+
+.routine-editor-operation-buttons .material-symbols {
+  font-size: 15px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+}
+
+.routine-editor-operation-buttons .material-symbols:hover {
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* touch needs bigger, further apart targets than a mouse pointer */
+@media (pointer: coarse) {
+  .routine-editor-operation-buttons,
+  .routine-editor-operation-controls-top {
+    gap: 9px;
+  }
+
+  .routine-editor-operation-controls-top .material-symbols,
+  .routine-editor-operation-buttons .material-symbols {
+    font-size: 19px;
+  }
+}
+
+/* drag-and-drop reordering: a grip to grab, Ctrl-click (long press on touch) to
+   select several cards; touch-action keeps a drag from scrolling the sidebar */
+.routine-editor-operation-buttons .routine-editor-drag-handle {
+  cursor: grab;
+  touch-action: none;
+}
+
+.routine-editor-operation-selected {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -1px;
+}
+
+/* the card that was worked on last, and the one the next operation is added
+   after: a card lighter than the others rather than another outline, so it does
+   not look like the Ctrl-selection that moves several cards at once */
+.routine-editor-operation-active {
+  background: var(--routineActiveCardColor);
+}
+
+.routine-editor-operation-dragging {
+  opacity: 0.4;
+}
+
+/* a blue line at the edge of the card the dragged operations would land next to */
+.routine-editor-drop-before {
+  box-shadow: 0 -3px 0 -1px var(--VTTblue);
+}
+
+.routine-editor-drop-after {
+  box-shadow: 0 3px 0 -1px var(--VTTblue);
+}
+
+/* dropping into a block that has no operation card to aim at yet */
+.routine-editor-drop-into {
+  outline: 2px dashed var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.routine-editor-empty,
+.events-editor-empty {
+  color: var(--textColor);
+  opacity: 0.7;
+  font-size: 12px;
+  font-style: italic;
+  margin: 2px 0;
+}
+
+/* every control of the editor is reachable with the keyboard (see focusable() in
+   routine.js), so every control says when it has the focus */
+.routine-editor [tabindex]:focus-visible,
+.events-editor [tabindex]:focus-visible,
+.inline-popup [tabindex]:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+}
+
+/* The lines of an INPUT dialog. They are the same cards as the operations of a
+   nested routine, in the color a value has rather than the one an operation has:
+   a line is something the dialog shows and asks, not a step the routine takes.
+   Which is why the block around them must NOT be the cutout a thenRoutine is -
+   the two sat below their sentence looking exactly alike, so a dialog read as a
+   block of the routine. Nothing in here runs: this is the sheet the dialog is
+   printed on, so it is framed on all four sides in the color of what it holds,
+   inset from both edges instead of reaching into the card's right border, and it
+   carries the cards on a tint of the card color rather than on the page. */
+.routine-editor .routine-editor-fields {
+  margin: 4px 0 2px 6px;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor2);
+  border: 1px solid var(--routineVariableColor);
+  border-radius: 6px;
+}
+
+.routine-editor-fields .routine-editor-operation {
+  border-left-color: var(--routineVariableColor);
+}
+
+.routine-editor-fields .routine-editor-func-name {
+  color: var(--routineVariableColor);
+}
