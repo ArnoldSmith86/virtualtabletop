@@ -46,17 +46,6 @@
   font-size: 0.8rem;
 }
 
-#playersTable .sessionCellContent {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* the session cell is only as wide as its widest label, so this aligns the buttons without a large gap */
-#playersTable .sessionCellContent button {
-  margin-left: auto;
-}
-
 #playersTable button[icon] {
   display: inline-flex;
   padding: 5px;
@@ -156,6 +145,19 @@
   font-size: 1.2rem;
 }
 
+/* the row that adds a local player: same layout as a player row, but nothing exists yet */
+#addPlayerRow .playerColorCell .material-symbols {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  opacity: 0.6;
+}
+#addPlayerRow .playerName {
+  font-weight: normal;
+}
+
 #playersLegend {
   display: flex;
   flex-wrap: wrap;
@@ -180,26 +182,16 @@
   margin: 1rem auto 0 auto;
 }
 
-#playerAdd {
+#playerInvite {
   max-width: 40rem;
   margin: 1rem auto;
 }
-#playerAdd h1 {
+#playerInvite h1 {
   text-align: left;
 }
-#playerAdd .material-symbols {
+#playerInvite .material-symbols {
   font-size: 1em;
   vertical-align: text-bottom;
-}
-#addLocalPlayer {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin: 0.5rem 0;
-}
-#localPlayerName {
-  font-size: 1rem;
-  padding: 5px;
 }
 
 .overlay .heading{

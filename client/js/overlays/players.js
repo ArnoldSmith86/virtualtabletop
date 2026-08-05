@@ -1,4 +1,4 @@
-import { asArray, onLoad, progressButton, rand } from '../domhelpers.js';
+import { asArray, onLoad, rand } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -172,16 +172,8 @@ function fillPlayerList(players, active, sessions) {
         // numbering the sessions only carries information for players that actually have more than one
         const label = playerSessions.length > 1 ? `Session ${sessionIndex+1}` : 'connected';
         $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `${label} (you)` : label;
-        serverActionButton($('.splitSession', sessionCell), function() {
-          const newName = (prompt(`Enter a new player name for this session of ${player}:`) || '').trim();
-          if(!newName || newName == player)
-            return;
-          toServer('rename', { oldName: player, newName, sessionID: session.sessionID });
-          return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == session.sessionID && s.player == newName));
-        });
       } else {
         $('.sessionLabel', sessionCell).textContent = 'not connected';
-        removeFromDOM($('.splitSession', sessionCell));
       }
       row.appendChild(sessionCell);
 
@@ -271,16 +263,19 @@ onLoad(function() {
       widget.updateOwner();
   });
 
-  progressButton($('#addLocalPlayerButton'), async function() {
-    const localPlayerName = $('#localPlayerName').value.trim();
-    if(!localPlayerName)
-      throw new Error('Please enter a player name.');
-    if(lastMetaArgs && lastMetaArgs.meta.players[localPlayerName] !== undefined)
-      throw new Error('This player already exists.');
+  serverActionButton($('#addLocalPlayerButton'), function() {
+    const input = $('#localPlayerName');
+    const localPlayerName = input.value.trim();
+    // the server silently ignores empty and duplicate names, so complain right at the input instead
+    if(!localPlayerName || (lastMetaArgs && lastMetaArgs.meta.players[localPlayerName] !== undefined)) {
+      input.setCustomValidity(localPlayerName ? 'This player already exists.' : 'Please enter a player name.');
+      input.reportValidity();
+      return;
+    }
     toServer('addLocalPlayer', { player: localPlayerName });
-    await nextMetaUpdate(args=>args.meta.players[localPlayerName] !== undefined);
-    $('#localPlayerName').value = '';
+    return nextMetaUpdate(args=>args.meta.players[localPlayerName] !== undefined).then(_=>input.value = '');
   });
+  $('#localPlayerName').addEventListener('input', e=>e.target.setCustomValidity(''));
   $('#localPlayerName').addEventListener('keydown', function(e) {
     if(e.key == 'Enter')
       $('#addLocalPlayerButton').click();
