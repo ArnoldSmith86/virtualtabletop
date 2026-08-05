@@ -427,36 +427,54 @@ export class Widget extends StateManaged {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
-  // keepOwnerWhileInside is used by the drag that is on its way out of a holder: the widget
-  // is detached as soon as another holder becomes the drop target, which is while it is still
+  // hideUntilOutside is used by the drag that is on its way out of a holder: the widget is
+  // detached as soon as another holder becomes the drop target, which is while it is still
   // completely inside its own holder when that other holder is stacked on top of it. owner
   // and hoverParent are what keeps the widget out of sight of the other players, so they are
-  // kept until it has really left - otherwise a card is shown to the whole table before it
-  // has even left the hand it is being dragged around in. Leaving itself keeps its timing:
-  // onLeave and leaveRoutine still run right here.
-  async checkParent(forceDetach, keepOwnerWhileInside) {
-    if(!this.currentParent)
-      return;
-    const stillInside = (!forceDetach || keepOwnerWhileInside) && overlap(this.domElement, this.currentParent.domElement);
-    if(forceDetach || !stillInside) {
+  // put back until it has really left - otherwise a card is shown to the whole table before
+  // it has even left the hand it is being dragged around in. Detaching itself is unchanged:
+  // parent, hoverParent and owner are cleared and onLeave / leaveRoutine run in the same
+  // place with the same values as before, so whatever the leave hooks assign is what the
+  // widget gets back once it is outside (see checkDetachedParent).
+  async checkParent(forceDetach, hideUntilOutside) {
+    if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
+      const parent = this.currentParent;
+      const hidden = hideUntilOutside && overlap(this.domElement, parent.domElement)
+        ? { hoverParent: this.get('hoverParent'), owner: this.get('owner') } : null;
+
       await this.set('parent', null);
-      this.detachedParent = this.currentParent;
-      await this.checkDetachedParent(!(keepOwnerWhileInside && stillInside));
-      if(this.currentParent.dispenseCard)
-        await this.currentParent.dispenseCard(this);
+      await this.set('hoverParent', null);
+      if(parent.get('childrenPerOwner'))
+        await this.set('owner',  null);
+      if(parent.dispenseCard)
+        await parent.dispenseCard(this);
       delete this.currentParent;
+
+      if(hidden) {
+        this.detachedParent = parent;
+        this.detachedParentState = { hoverParent: this.get('hoverParent'), owner: this.get('owner') };
+        await this.set('hoverParent', hidden.hoverParent);
+        if(parent.get('childrenPerOwner'))
+          await this.set('owner',  hidden.owner);
+      }
     }
   }
 
-  // Clears what checkParent() kept when it detached the widget while it was still inside its
-  // holder. Called on every move so that the widget stops being the owner's as soon as it no
-  // longer overlaps that holder, and with force when the drag ends.
+  // Reveals a widget that checkParent() hid in the holder it was detached from, by restoring
+  // the state the detaching left it in. Called on every move so that the widget becomes
+  // visible to the other players as soon as it no longer overlaps that holder, and with
+  // force when the drag ends, before the drop, so that the holder it lands in has the last
+  // word.
   async checkDetachedParent(force) {
     if(this.detachedParent && (force || !overlap(this.domElement, this.detachedParent.domElement))) {
-      await this.set('hoverParent', null);
-      if(this.detachedParent.get('childrenPerOwner'))
-        await this.set('owner',  null);
+      const parent = this.detachedParent;
+      const state = this.detachedParentState;
       delete this.detachedParent;
+      delete this.detachedParentState;
+
+      await this.set('hoverParent', state.hoverParent);
+      if(parent.get('childrenPerOwner'))
+        await this.set('owner',  state.owner);
     }
   }
 

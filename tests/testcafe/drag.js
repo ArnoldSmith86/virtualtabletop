@@ -8,15 +8,20 @@ setupTestEnvironment();
 // top of its right half. The card starts on the left, in the part of the hand that the
 // other holder does not cover, so that it can be picked up at all. The hand marks the
 // card when it leaves, once through onLeave and once through leaveRoutine, so that the
-// tests can tell when the card left on top of what the other players see of it.
-function stackedHoldersRoom() {
+// tests can tell when the card left on top of what the other players see of it. With
+// keepOwnerOnLeave the leaveRoutine also hands the card to the player who took it out,
+// the way the hands in "4-Letter Words" and "CONTEST" do. spot is not a drop target, it
+// just marks a free place on the table to drop a card onto.
+function stackedHoldersRoom(keepOwnerOnLeave) {
   return {
     deck:  { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 1200, y: 50 },
     hand:  { id: 'hand', type: 'holder', x: 100, y: 400, width: 600, height: 300, childrenPerOwner: true, alignChildren: false,
              onLeave: { classes: 'ran' },
-             leaveRoutine: [ { func: 'SET', collection: 'child', property: 'text', value: 'ran' } ] },
+             leaveRoutine: [ { func: 'SET', collection: 'child', property: 'text', value: 'ran' },
+                             ...(keepOwnerOnLeave ? [ { func: 'SET', collection: 'child', property: 'owner', value: '${playerName}' } ] : []) ] },
     over:  { id: 'over', type: 'holder', x: 400, y: 350, width: 300, height: 400, z: 10 },
     table: { id: 'table', type: 'holder', x: 800, y: 100, width: 300, height: 250 },
+    spot:  { id: 'spot', x: 850, y: 550, width: 200, height: 200, movable: false },
     card:  { id: 'card', type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand', x: 30, y: 70, owner: 'TestCafe' }
   };
 }
@@ -132,4 +137,26 @@ test('A card half out of its hand and over no other holder still belongs to its 
 
   await dragEnd();
   await expectCardState(t, { owner: null, parent: null, hoverParent: null, hoverTarget: null, onLeave: 'ran', leaveRoutine: 'ran' });
+});
+
+test('An owner assigned by a leaveRoutine survives the card leaving its hand', async t => {
+  await setRoomState(stackedHoldersRoom(true));
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await dragStart('card');
+
+  // the card leaves the hand while it is still inside it, so the leaveRoutine hands it to
+  // the player right here - and it is still hidden from the other players
+  await dragOnto('over');
+  await expectCardState(t, { owner: 'TestCafe', parent: null, hoverParent: 'hand', hoverTarget: 'over', onLeave: 'ran', leaveRoutine: 'ran' });
+
+  // being outside the hand only takes back what leaving it did, so the owner the
+  // leaveRoutine assigned stays - the card keeps belonging to the player who took it,
+  // all the way to a drop on the table next to any holder
+  await dragOnto('spot');
+  await expectCardState(t, { owner: 'TestCafe', parent: null, hoverParent: null, hoverTarget: null, onLeave: 'ran', leaveRoutine: 'ran' });
+
+  await dragEnd();
+  await expectCardState(t, { owner: 'TestCafe', parent: null, hoverParent: null, hoverTarget: null, onLeave: 'ran', leaveRoutine: 'ran' });
 });
