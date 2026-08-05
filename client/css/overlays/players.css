@@ -178,15 +178,6 @@
   margin-right: 0.25rem;
 }
 
-#playersAloneHint {
-  display: none;
-}
-#playersAloneHint.shown {
-  display: block;
-  max-width: 40rem;
-  margin: 1rem auto 0 auto;
-}
-
 #playersHelp {
   width: 100%;
   max-width: 40rem;

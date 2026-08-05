@@ -183,7 +183,6 @@ function fillPlayerList(players, active, sessions) {
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
-  $('#playersAloneHint').classList.toggle('shown', sortedPlayers.length < 2);
   updatePlayerCountDisplay();
 }
 
