@@ -36,17 +36,30 @@ export function compareDropTarget(widget, t, exclude){
   return false;
 }
 
+// How dropLimit is read wherever it is enforced: a target holding currentCount
+// widgets takes count more only while that stays within the limit. currentCount
+// has to leave out the widget being dropped - putting one back where it already
+// is does not add to the count. Lines pass their number of stops instead of the
+// default children count, because that is what a line's limit bounds. Counting
+// the children is left until the limit turns out to be real: children() sorts
+// the child array, and the default -1 is what nearly every widget has.
+export function exceedsDropLimit(target, count = 1, currentCount = null) {
+  const limit = target.get('dropLimit');
+  if(!(limit > -1))
+    return false;
+  return (currentCount === null ? target.children().length : currentCount) + count > limit;
+}
+
 function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
       continue;
 
-    // if the holder has a drop limit and it's reached, skip the holder
-    if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
-      // don't skip it if the dragged widget is already its child
-      if(t.children().indexOf(widget) == -1)
-        continue;
+    // if the holder has a drop limit and it's reached, skip the holder -
+    // unless the dragged widget is already its child and just goes back in
+    if(exceedsDropLimit(t) && t.children().indexOf(widget) == -1)
+      continue;
 
     let isValid = compareDropTarget(widget, t);
 
@@ -707,7 +720,7 @@ async function loadEditMode() {
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, calculateEditModuleClasses, isOrientationMismatch,
       html, formField,

@@ -320,6 +320,7 @@ class DeckEditor {
     $('#editor').append($('#deckEditorImportOverlay'));
     $('#editor').append($('#deckEditorNewDeckOverlay'));
     $('#editor').append($('#symbolPickerOverlay'));
+    $('#editor').append($('#audioPickerOverlay'));
     // Move the shared public-library overlay into #editor too, so "Browse the public library" from the deck
     // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
     // plain edit mode - overlays are position:fixed, so the parent only affects stacking).

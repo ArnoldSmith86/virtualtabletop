@@ -1068,6 +1068,8 @@ const editorPropertyHints = {
   pipColor: 'The color used for the pips or the face symbol of the dice.',
   dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
+  dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries, on a pile the cards it takes. Leave empty for no limit.',
+  showLimit: 'Make the handle read "2/3" instead of "2", so the drop limit of the pile is readable before a drop is refused.',
   preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
   pileSnapRange: 'How close in pixels this pile has to be dropped to another pile or card to combine with it. A card dropped onto this pile uses its own snap range instead, which comes from the pile template of its deck.',
   handleCSS: 'Custom CSS declarations for the handle badge of the pile.',
@@ -3658,7 +3660,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
   }
 
   // whether the edited widget - or, for a multi-selection, any of the widgets
@@ -4721,6 +4723,12 @@ class PropertiesModule extends SidebarModule {
       this.renderCheckbox(widget, 'Clickable', 'clickable', body, {
         infoText: 'Whether the widget reacts to being clicked at all: with this off its click routine does not run and clicking it does not flip to the next face. Dragging it still works.'
       });
+      // what a click does is the rest of this widget's setup - what it sounds
+      // like belongs right next to the switch that decides it happens at all
+      new SoundInput(this, widget, 'Click sound', {
+        property: 'clickSound',
+        hint: 'Play this sound whenever the widget is clicked. Pick one of the bundled sounds, upload your own audio file or enter a URL. Clicking is what triggers it, so it only plays while the widget is clickable.'
+      }).render(body);
       this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, {
         min: 0,
         step: 1,
@@ -4751,7 +4759,7 @@ class PropertiesModule extends SidebarModule {
     }, null, `${widget.id}:generic`, {
       renderSummary: summary => {
         const update = w => summary.textContent = this.interactionSummary(w);
-        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
+        for(const property of [ 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
           this.addPropertyListener(widget, property, update);
       }
     });
@@ -4785,6 +4793,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     add('clickable', 'clickable', value=>value ? null : 'not clickable');
+    add('clickSound', 'click sound', value=>propertyInputValueSet(value) ? `sound ${soundName(value)}` : null);
     add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
     add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
     add('overlap', 'overlap', value=>value === false ? 'no overlap' : null);
@@ -5942,6 +5951,10 @@ class PropertiesModule extends SidebarModule {
   typeSectionProperties(widget) {
     const sections = this.typeSections(widget);
     const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
+    if(this.showsDropLimit(widget))
+      properties.push('dropLimit');
+    if(widget.get('type') == 'pile')
+      properties.push('showLimit');
     for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
       for(const def of sections[group] || [])
         // an input that is not being offered leaves its property to the
@@ -6407,10 +6420,67 @@ class PropertiesModule extends SidebarModule {
 
   renderBehaviorSection(widget, title = 'Behavior') {
     const defs = this.typeSections(widget).behavior || [];
-    if(!defs.length)
+    const dropLimitHere = this.showsDropLimit(widget) && !this.hasDropTargetEditor(widget);
+    if(!defs.length && !dropLimitHere)
       return;
     this.addSubHeader(title);
     this.renderInputs(widget, defs);
+    if(dropLimitHere)
+      this.renderDropLimitInput(widget);
+    if(widget.get('type') == 'pile')
+      this.renderPileShowLimit(widget);
+  }
+
+  // A panel with a "Target widgets" section says what the widget takes in
+  // there, and the drop limit is rendered with it - anything else (a pile, a
+  // widget given a dropTarget in the JSON editor, or a multi-selection, which
+  // has no drop target editor) gets it in Behavior instead.
+  hasDropTargetEditor(widget) {
+    return !widget.isMulti && [ 'holder', 'line' ].indexOf(widget.get('type')) != -1;
+  }
+
+  // Appears right below the limit that gives it something to show: without a
+  // limit, or with a handle that shows a fixed text instead of the card count,
+  // the checkbox changes nothing and stays out of the way.
+  renderPileShowLimit(widget) {
+    const dom = new CheckboxInput(this, widget, 'Show the limit on the handle', {
+      property: 'showLimit',
+      hint: editorPropertyHints.showLimit
+    }).render(this.moduleDOM);
+    const update = _=>dom.style.display = widget.get('dropLimit') > -1 && widget.get('text') === null ? '' : 'none';
+    this.addPropertyListener(widget, 'dropLimit', update);
+    this.addPropertyListener(widget, 'text', update);
+  }
+
+  // dropLimit says nothing on a widget nothing can be dropped into, so its
+  // input only shows up once the widget takes drops at all. A pile has no
+  // dropTarget and still takes cards - it snaps them in through pileSnapRange -
+  // so it is named here rather than derived. A pile is temporary, so the input
+  // outlives the pile only because an edit on a pile is mirrored into the pile
+  // template of its deck (see setAndMirrorToPileTemplate).
+  takesDrops(widget) {
+    return widget.get('type') == 'pile' || asArray(widget.get('dropTarget') || []).length > 0;
+  }
+
+  // A limit that is already set is always offered, even on a widget that takes
+  // no drops right now: it would be stuck otherwise, since being offered here
+  // is what keeps it out of the generic "Other properties" list.
+  showsDropLimit(widget) {
+    return this.takesDrops(widget) || widget.get('dropLimit') > -1;
+  }
+
+  // -1 is how "no limit" is stored, but an empty field says it better
+  renderDropLimitInput(widget, options = {}) {
+    return new NumberInput(this, widget, options.label || 'Drop limit', {
+      listenTo: [ 'dropLimit' ],
+      min: 0,
+      step: 1,
+      nullIfEmpty: true,
+      placeholder: 'no limit',
+      hint: options.hint || editorPropertyHints.dropLimit,
+      getValue: _=>widget.get('dropLimit') > -1 ? widget.get('dropLimit') : null,
+      setValue: options.setValue || (value=>this.inputValueUpdated(widget, 'dropLimit', value === null ? -1 : value))
+    }).render(options.target || this.moduleDOM);
   }
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
@@ -9451,6 +9521,18 @@ class PropertiesModule extends SidebarModule {
       matches = readMatches();
       render();
     });
+
+    // How many of them: the limit constrains exactly the drops the matches
+    // above let in, so it belongs right below them - and it appears as soon as
+    // the first match does, since a widget that accepts nothing cannot fill up.
+    // Without an edit wrapper the standard write is the better one: it names
+    // the cause and covers a multi-selection.
+    const limitRow = this.renderDropLimitInput(widget, options.edit ? {
+      setValue: value=>options.edit(`changed the drop limit of ${widget.id}`, _=>widget.set('dropLimit', value === null ? -1 : value))
+    } : {});
+    const updateLimitRow = _=>limitRow.style.display = this.showsDropLimit(widget) ? '' : 'none';
+    this.addPropertyListener(widget, 'dropTarget', updateLimitRow);
+    this.addPropertyListener(widget, 'dropLimit', updateLimitRow);
   }
 
   renderForLine(widget) {

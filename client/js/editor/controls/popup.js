@@ -389,6 +389,16 @@ class RoutinePopup extends Popup {
 
   // the property builder's widget picker needs the room visible while it is open
   avoidsPlayArea() {
+    return this.usesRoomAsInput();
+  }
+
+  // whether a click in the play area is an answer this popup is waiting for
+  // rather than a click outside it. Only the pickers that take widgets from the
+  // room are: a popup that merely keeps out of the play area (so that what it
+  // opens is not covered by it) must still be dismissed by a click in there -
+  // that click selects another widget, which is a different editor than the one
+  // the popup was opened in.
+  usesRoomAsInput() {
     return this.propertyPickerShown || this.needsRoomForPicker();
   }
 
@@ -428,7 +438,7 @@ class RoutinePopup extends Popup {
     // click in it is that input rather than a click outside the popup
     if(isWidgetPickerActive(null, routineWidgetPickerKey))
       return;
-    if(this.avoidsPlayArea() && e.target.closest && e.target.closest('#roomArea'))
+    if(this.usesRoomAsInput() && e.target.closest && e.target.closest('#roomArea'))
       return;
     super.onOutsideClick(e);
   }
@@ -1859,6 +1869,50 @@ class RoutineIconPopup extends RoutinePickerPopup {
 
   valueHint() {
     return 'Pick an icon from the ones used in this game or search the icon library.';
+  }
+}
+
+// The sound an AUDIO plays, picked the same way clickSound is picked in the
+// properties sidebar: the bundled sound library, an upload or a typed path,
+// each of which can be played back before the routine is run.
+class RoutineSoundPopup extends RoutinePickerPopup {
+  parameterQuestion() {
+    return 'which sound';
+  }
+
+  inputClass() {
+    return typeof SoundInput != 'undefined' ? SoundInput : null;
+  }
+
+  valueHint() {
+    return 'Pick a sound from the bundled library, upload one, or type the path of an audio file.';
+  }
+
+  // the sound library opens as an overlay over the board, so a popup sitting on
+  // the play area would cover the very list it opens (and be covered by it on a
+  // portrait window). Only where it is placed, though - the room is not one of
+  // its inputs, so usesRoomAsInput stays false and a click on a widget in there
+  // dismisses it like any other click outside.
+  avoidsPlayArea() {
+    return true;
+  }
+
+  // the sound library is an overlay of its own, so the click that picks a sound
+  // in it happens outside this popup - closing it there would throw the pick
+  // away before the picker hands it over
+  onOutsideClick(e) {
+    if(e.target.closest && e.target.closest('#audioPickerOverlay'))
+      return;
+    super.onOutsideClick(e);
+  }
+
+  // the play button goes with the popup, so a preview started in it would keep
+  // playing with nothing left to stop it (stopSoundPreview lives in the
+  // properties module, which jest does not load)
+  hide() {
+    if(typeof stopSoundPreview == 'function')
+      stopSoundPreview();
+    super.hide();
   }
 }
 

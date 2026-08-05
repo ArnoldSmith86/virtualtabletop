@@ -568,6 +568,18 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_audioPicker',
+    name: 'pick a sound from the sound picker',
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
+    call: async function() {
+      const a = await pickAudio();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
     id: 'je_cardDefaultsHeightAndWidth',
     name: 'height and width',
     context: '^deck ↦ cardDefaults',
