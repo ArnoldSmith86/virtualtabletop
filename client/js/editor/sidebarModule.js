@@ -65,6 +65,20 @@ class SidebarModule {
     const h = document.createElement('h1');
     h.innerText = text;
     (target || this.moduleDOM).append(h);
+    if(!target && this.moduleDOM)
+      this.addCloseButton(h);
+  }
+
+  // A module can open itself (the first-run default in renderSidebar), so its header carries the way
+  // out - without it, closing means knowing that the sidebar button on the right toggles.
+  addCloseButton(header) {
+    const close = document.createElement('button');
+    close.className = 'moduleCloseButton';
+    close.setAttribute('icon', 'close');
+    close.title = `Close ${this.title}`;
+    close.onclick = _=>this.openInTarget();
+    header.append(close);
+    return close;
   }
 
   addSubHeader(text, target) {
@@ -175,6 +189,10 @@ class SidebarModule {
   }
 
   openInTarget(target) {
+    // the content width is only for the panel that opened itself - once a module is opened or closed
+    // by hand, the panel goes back to the width the user has (or hasn't) set (see renderSidebar)
+    $('body').classList.remove('defaultEditorModuleWidth');
+
     if(this.moduleDOM) {
       this.moduleDOM.dataset.currentlyLoaded = '';
       this.moduleDOM.classList.remove('active');

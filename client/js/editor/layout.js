@@ -138,15 +138,22 @@ function renderSidebar(modules) {
   // Without a remembered module the sidebar would just be a column of buttons, so entering edit
   // mode for the first time starts on the properties panel. Only the first time ever: closing the
   // last module deletes its entry, so "nothing remembered" is also how "I want the whole room" is
-  // stored, and defaultModuleOpened is what tells the two apart. Not in the narrow-window layout
-  // either, where the panel is a fullscreen overlay that would hide the room it edits.
-  const modulePanelIsOverlay = calculateEditModuleClasses(window.innerWidth, window.innerHeight, viewportConfig).includes('editModulesOverlay');
-  if(!opened && !editorState.defaultModuleOpened && !modulePanelIsOverlay) {
+  // stored, and defaultModuleOpened is what tells the two apart. And only where the panel and the
+  // room can coexist: the narrow-window layout makes the panel a fullscreen overlay, and a portrait
+  // window showing a landscape board is busy asking the user to rotate the device.
+  const roomWouldBeCovered = calculateEditModuleClasses(window.innerWidth, window.innerHeight, viewportConfig).includes('editModulesOverlay')
+                             || isOrientationMismatch(window.innerWidth, window.innerHeight, viewportConfig);
+  if(!opened && !editorState.defaultModuleOpened && !roomWouldBeCovered) {
     modules.find(module=>module instanceof PropertiesModule).openInTarget($('#editorModuleTopLeft'));
+    // A panel the user opened is a 50/50 split of the window by default (see editorModulesResizer),
+    // which is a poor first sight of edit mode: half the room gone for a mostly empty panel. This
+    // one sizes itself to its content instead, until the user opens a module or drags the resizer.
+    $('body').classList.add('defaultEditorModuleWidth');
     // openInTarget has just written that module into editorState, so re-read before adding the flag
     const savedState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
     savedState.defaultModuleOpened = true;
     localStorage.setItem('editorState', JSON.stringify(savedState));
+    setScale();
   }
 
   editorModulesResizer();
@@ -168,6 +175,7 @@ function editorModulesResizer() {
   }
 
   $('#editorModulesResizer').onmousedown = function(e) {
+    $('body').classList.remove('defaultEditorModuleWidth');
     mouseReference = e.x;
     resizerReference = $('#jeTree').offsetHeight;
     document.addEventListener('mousemove', resize, false);

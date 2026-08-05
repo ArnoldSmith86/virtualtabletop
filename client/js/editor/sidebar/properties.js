@@ -1731,6 +1731,7 @@ class PropertiesModule extends SidebarModule {
     const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
 
     const header = div(this.moduleDOM, 'widgetHeader');
+    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
     // say which widgets, so a stray rubber-band/shift-click pickup is easy to
     // spot before editing - only the type header said "how many" before
@@ -1841,13 +1842,15 @@ class PropertiesModule extends SidebarModule {
 
     const intro = document.createElement('p');
     intro.className = 'noSelectionIntro';
-    intro.innerText = 'You do not have a widget selected. To get started, click on one to the left or:';
+    // "click on one to the left" would be wrong in the layouts that put the panel above the room
+    intro.innerText = 'You do not have a widget selected. To get started, click a widget in the room or:';
     this.moduleDOM.append(intro);
 
     const addWidgetButton = document.createElement('button');
     addWidgetButton.innerText = 'Add a new widget';
     addWidgetButton.setAttribute('icon', 'add');
     addWidgetButton.className = 'noSelectionButton';
+    addWidgetButton.title = 'Pick a card, dice, board or other piece to place in the room';
     addWidgetButton.onclick = _=>{ setSelection([]); showOverlay('addOverlay'); };
     this.moduleDOM.append(addWidgetButton);
 
@@ -1855,8 +1858,16 @@ class PropertiesModule extends SidebarModule {
     deckEditorButton.innerText = 'Open deck editor';
     deckEditorButton.setAttribute('icon', 'style');
     deckEditorButton.className = 'noSelectionButton';
+    deckEditorButton.title = 'Design the cards in a deck';
     deckEditorButton.onclick = _=>deckEditor.openBestDeck();
     this.moduleDOM.append(deckEditorButton);
+
+    // this panel can be the first thing a new user sees, and the icon column it sits next to is
+    // exactly what they wouldn't have found on their own
+    const sidebarHint = document.createElement('p');
+    sidebarHint.className = 'noSelectionIntro';
+    sidebarHint.innerText = 'The other editor tools are in the sidebar on the right.';
+    this.moduleDOM.append(sidebarHint);
   }
 
   async deckTraditional(target) {
@@ -4615,6 +4626,7 @@ class PropertiesModule extends SidebarModule {
     // type in the header's accent color, id in the plain text color so the two
     // are easy to tell apart
     const header = div(this.moduleDOM, 'widgetHeader');
+    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
     const idArea = div(header, 'widgetHeaderId');
     idArea.append('Widget id: ');

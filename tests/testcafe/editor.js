@@ -11,6 +11,8 @@ const setEditorState = ClientFunction(state => {
     localStorage.removeItem('editorState');
 });
 
+const moduleWidth = ClientFunction(() => document.querySelector('#editorModules').getBoundingClientRect().width);
+
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -22,7 +24,14 @@ test('Edit mode opens the Edit Widgets module when no module is remembered', asy
   await t
     .click('#editButton')
     .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
-    .expect(Selector('#editorSidebar button[icon=tune].active').exists).ok();
+    .expect(Selector('#editorSidebar button[icon=tune].active').exists).ok()
+    // sized to its content, not to the 50/50 split a module the user opens gets
+    .expect(Selector('body.defaultEditorModuleWidth').exists).ok()
+    .expect(moduleWidth()).lte(420)
+    // opening a module by hand hands the width back to the resizer
+    .click('#editorSidebar button[icon=data_object]')
+    .expect(Selector('body.defaultEditorModuleWidth').exists).notOk()
+    .expect(moduleWidth()).gt(420);
   await setEditorState(null);
 });
 
@@ -74,6 +83,44 @@ test('Edit mode skips the default module in the narrow-window layout', async t =
     .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
     .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
     .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// a portrait window showing a landscape board asks the user to rotate the device,
+// which is more useful than a properties panel covering that message
+test('Edit mode skips the default module in a portrait window', async t => {
+  await t.resizeWindow(410, 845);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// the default module opens itself, so it has to be closable without knowing that
+// the sidebar button toggles
+test('A module is closed again through the button in its header', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#editorModuleTopLeft h1 .moduleCloseButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk()
+    .expect(Selector('#editorSidebar button[icon=tune].active').exists).notOk();
   await setEditorState(null);
 });
 
@@ -219,6 +266,8 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
   const rows = Selector('#editorModules .diceFaceRow');
   await t
     .click('#editButton')
+    // portrait window, so this is one of the layouts where the module does not open by default
+    .click('#editorSidebar [icon=tune]')
     .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_die')
     // Background, pips/icon and border no longer repeat generic color help.
