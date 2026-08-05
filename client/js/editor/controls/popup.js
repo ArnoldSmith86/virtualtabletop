@@ -1878,6 +1878,14 @@ class RoutineSoundPopup extends RoutinePickerPopup {
     return 'Pick a sound from the bundled library, upload one, or type the path of an audio file.';
   }
 
+  // the sound library opens as an overlay over the board, so a popup sitting on
+  // the play area would cover the very list it opens (and be covered by it on a
+  // portrait window): it keeps out of the play area the way the popups that pick
+  // widgets in the room do
+  avoidsPlayArea() {
+    return true;
+  }
+
   // the sound library is an overlay of its own, so the click that picks a sound
   // in it happens outside this popup - closing it there would throw the pick
   // away before the picker hands it over

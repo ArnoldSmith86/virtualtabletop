@@ -2820,6 +2820,17 @@ describe('popups stay out of the play area', () => {
     });
   });
 
+  // the sound library is an overlay over the board, so the popup that opens it
+  // must not be there itself - the two would cover each other
+  test('the sound popup keeps out of the play area the library opens in', () => {
+    withRoom({ left: 0, top: window.innerHeight/2, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineSoundPopup().placementLimits().bottom).toBe(window.innerHeight/2);
+    });
+    withRoom({ left: 0, top: 0, right: 500, bottom: window.innerHeight }, () => {
+      expect(new RoutineSoundPopup().placementLimits().left).toBe(500);
+    });
+  });
+
   test('a play area without a usable strip beside it does not squeeze the popup away', () => {
     withRoom({ left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight }, () => {
       expect(new RoutineWidgetIDPopup({}).placementLimits().bottom).toBe(window.innerHeight);
