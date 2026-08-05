@@ -555,6 +555,18 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     .click('#display_block')
     .expect(value('block', 'display')).eql('false');
 
+  // the click sound sits next to the clickable switch; its picker offers the
+  // bundled sound library, an upload and - what this types into - a plain path
+  const soundInput = Selector('#editorModules .soundInput');
+  await t
+    .click(soundInput.find('.propertyPreviewButton'))
+    .typeText(soundInput.find('.propertyPicker input'), '/i/audio/casino/card-shuffle.mp3')
+    .pressKey('enter')
+    .expect(value('block', 'clickSound')).eql('"/i/audio/casino/card-shuffle.mp3"')
+    .expect(soundInput.find('.propertySoundName').innerText).eql('card-shuffle')
+    .click(soundInput.find('.propertyPickerFooter button'))
+    .expect(value('block', 'clickSound')).eql('null');
+
   // the seat block holds what a widget dragged onto this one is shown as
   await t
     .click(Selector('#editorModules .collapsibleHeader').withText("Widget's links"))

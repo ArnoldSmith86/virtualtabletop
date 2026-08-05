@@ -268,6 +268,24 @@
   background: var(--chipColor, transparent);
 }
 
+/* sound chips: there is nothing to preview, so the chip is a speaker plus the
+   file name and grows with it instead of staying a square swatch */
+.editorModule .propertySoundChip {
+  width: auto;
+  padding: 0 8px;
+  gap: 4px;
+  font-size: 20px;
+  background: white;
+}
+
+.editorModule .propertySoundName {
+  font-size: 13px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .editorModule .propertyColorChip[style*="--chipColor: transparent"] {
   background: repeating-linear-gradient(45deg, #fff, #fff 4px, #eee 4px, #eee 8px);
 }
@@ -606,6 +624,33 @@
   max-width: 100%;
 }
 
+/* the controls that belong together are one line each: "pick in the room" next
+   to the button that drops the selection, the type filter next to the search it
+   filters. They only wrap when the popout really is too narrow for both. */
+.editorModule .widgetPickerRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .widgetPickerRow button {
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
+.editorModule .widgetPickerRow select {
+  flex: 0 1 auto;
+  min-width: 90px;
+}
+
+.editorModule .widgetPickerRow input {
+  flex: 1 1 110px;
+  width: auto;
+  min-width: 90px;
+  margin: 0;
+}
+
 .editorModule .widgetPickerList {
   max-height: 220px;
   overflow-y: auto;
@@ -624,10 +669,20 @@
   background: var(--backgroundHighlightColor1, #eee);
 }
 
+/* the type of a widget in the picker: the dim color is #ccc in light mode, which
+   is white-on-white in the list and invisible on a selected row (whose
+   background is #ccc), so the type is the text color turned down instead */
 .editorModule .widgetPickerEntry .widgetPickerType {
-  color: var(--textHelpColor, #666);
+  color: var(--textColor);
+  opacity: 0.65;
   font-size: 11px;
   margin-left: auto;
+}
+
+/* the widget the picker belongs to, pinned to the top of the list */
+.editorModule .widgetPickerEntry .widgetPickerSelf {
+  color: var(--VTTblue);
+  font-size: 11px;
 }
 
 .editorModule .widgetPickerEntry.selected::before {

@@ -1336,8 +1336,14 @@ function defaultSuitName(icon) {
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
-    this.widgetPicker = null;
     this.renderedSelectionIDs = null;
+    // the widgets whose Automations section is on screen, so the full size
+    // switch knows whether there is anything to give the whole panel to
+    this.automationsWidgets = [];
+    // whether the selected widgets already had automations when they were
+    // selected: only then does the remembered preference give the section the
+    // whole panel (see applyAutomationsFullSize)
+    this.automationsWereAvailable = undefined;
     this.renderedBoardSize = null;
     this.collapsibleStates = {};
     // CSS editor: sections switched to text editing, declarations switched off
@@ -1356,129 +1362,6 @@ class PropertiesModule extends SidebarModule {
     // per line: the widget new stops inherit from. Kept outside the panel because
     // picking a widget in the room re-selects the line and re-renders the panel.
     this.lineStopInheritIDs = {};
-  }
-
-  startWidgetPicker(targetWidgetID, onPick, options = {}) {
-    const pendingWidgetIDs = Array.isArray(options.pendingWidgetIDs) ?
-      [...new Set(options.pendingWidgetIDs.filter(v => typeof v === 'string' && v.trim() !== ''))] : [];
-
-    this.widgetPicker = {
-      targetWidgetID,
-      onPick,
-      pickerKey: options.pickerKey || null,
-      filter: typeof options.filter === 'function' ? options.filter : null,
-      allowMultiple: !!options.allowMultiple,
-      toggleSelection: options.toggleSelection !== false,
-      pendingWidgetIDs,
-      onPendingChanged: typeof options.onPendingChanged === 'function' ? options.onPendingChanged : null
-    };
-
-    if(this.widgetPicker.onPendingChanged)
-      this.widgetPicker.onPendingChanged([ ...this.widgetPicker.pendingWidgetIDs ]);
-
-    $('body').classList.add('editorWidgetPicking');
-  }
-
-  stopWidgetPicker() {
-    this.widgetPicker = null;
-    $('body').classList.remove('editorWidgetPicking');
-  }
-
-  getWidgetPicker(targetWidgetID = null, pickerKey = null) {
-    if(!this.widgetPicker)
-      return null;
-
-    if(targetWidgetID !== null && this.widgetPicker.targetWidgetID != targetWidgetID)
-      return null;
-
-    if(pickerKey !== null && this.widgetPicker.pickerKey !== pickerKey)
-      return null;
-
-    return this.widgetPicker;
-  }
-
-  isWidgetPickerActive(targetWidgetID = null, pickerKey = null) {
-    return !!this.getWidgetPicker(targetWidgetID, pickerKey);
-  }
-
-  confirmWidgetPicker() {
-    const picker = this.getWidgetPicker();
-    if(!picker || !picker.allowMultiple)
-      return false;
-
-    const targetWidget = widgets.get(picker.targetWidgetID);
-    if(!targetWidget) {
-      this.stopWidgetPicker();
-      return false;
-    }
-
-    const pickedWidgets = picker.pendingWidgetIDs
-      .map(widgetID => widgets.get(widgetID))
-      .filter(pickedWidget => pickedWidget && pickedWidget.id != targetWidget.id);
-
-    this.stopWidgetPicker();
-    picker.onPick(targetWidget, pickedWidgets);
-    setSelection([ targetWidget ]);
-    return true;
-  }
-
-  handleWidgetPickerSelection(newSelection) {
-    const picker = this.getWidgetPicker();
-    if(!picker)
-      return false;
-
-    const targetWidget = widgets.get(picker.targetWidgetID);
-
-    if(!targetWidget) {
-      this.stopWidgetPicker();
-      return false;
-    }
-
-    const keepTargetSelection = () => {
-      if(newSelection.length != 1 || newSelection[0].id != targetWidget.id)
-        setSelection([ targetWidget ]);
-    };
-
-    const pickedWidgets = newSelection.filter(pickedWidget => {
-      if(!pickedWidget || pickedWidget.id == targetWidget.id)
-        return false;
-      return !picker.filter || picker.filter(pickedWidget);
-    });
-
-    if(picker.allowMultiple) {
-      if(pickedWidgets.length) {
-        if(pickedWidgets.length == 1) {
-          const pickedWidgetID = pickedWidgets[0].id;
-          const existingIndex = picker.pendingWidgetIDs.indexOf(pickedWidgetID);
-          if(existingIndex == -1)
-            picker.pendingWidgetIDs.push(pickedWidgetID);
-          else if(picker.toggleSelection)
-            picker.pendingWidgetIDs.splice(existingIndex, 1);
-        } else {
-          for(const pickedWidget of pickedWidgets)
-            if(picker.pendingWidgetIDs.indexOf(pickedWidget.id) == -1)
-              picker.pendingWidgetIDs.push(pickedWidget.id);
-        }
-
-        if(picker.onPendingChanged)
-          picker.onPendingChanged([ ...picker.pendingWidgetIDs ]);
-      }
-
-      keepTargetSelection();
-      return true;
-    }
-
-    const pickedWidget = pickedWidgets.length == 1 ? pickedWidgets[0] : null;
-
-    if(pickedWidget && pickedWidget.id != targetWidget.id) {
-      this.stopWidgetPicker();
-      picker.onPick(targetWidget, pickedWidget);
-      setSelection([ targetWidget ]);
-      return true;
-    }
-
-    keepTargetSelection();
-    return true;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -1731,6 +1614,11 @@ class PropertiesModule extends SidebarModule {
       .filter(deck => deck && deck.get('type') == 'deck');
   }
 
+  onClose() {
+    // this module drives the widget picker, so a pick cannot outlive it
+    stopWidgetPicker();
+  }
+
   onDeltaReceivedWhileActive(delta) {
     for(const widgetID in delta.s)
       if(delta.s[widgetID] && this.inputUpdaters[widgetID])
@@ -1767,7 +1655,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
-    if(this.handleWidgetPickerSelection(newSelection))
+    if(handleWidgetPickerSelection(newSelection))
       return;
 
     // the board preview belongs to the widget that was being edited
@@ -1788,11 +1676,18 @@ class PropertiesModule extends SidebarModule {
 
 
     this.moduleDOM.innerHTML = '';
+    // put back by renderEvents; a selection without an Automations section (a
+    // pile, several widgets at once, or nothing at all) must not hide what it
+    // does show
+    this.moduleDOM.classList.remove('automationsFullSize');
+    this.automationsWidgets = [];
+    this.automationsWereAvailable = undefined;
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
 
     for(const widget of newSelection)
       this.inputUpdaters[widget.id] = {};
+    this.otherPropertiesHeader = null;
 
     if(newSelection.length > 1) {
       this.renderForMulti(newSelection);
@@ -1817,6 +1712,13 @@ class PropertiesModule extends SidebarModule {
           this.renderForBasic(widget);
           break;
       }
+
+      // every widget can have routines, so the section is always there - piles
+      // are the exception because they are temporary and not editable, and a
+      // deck hands the module over to the deck editor, leaving no DOM to render
+      // into (its routines are edited there)
+      if(widget.get('type') != 'pile' && this.moduleDOM)
+        this.renderEvents(widget);
     } else {
       this.addDeck();
     }
@@ -3747,7 +3649,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
   }
 
   // whether the edited widget - or, for a multi-selection, any of the widgets
@@ -4336,149 +4238,6 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
-  // Inline popout (styled like the icon/image pickers) to select widgets by
-  // searching their ID, filtered by type, or by clicking them in the room.
-  // options:
-  //   pickerKey      - key for the in-room widget picker
-  //   typeFilter     - presets the type filter (e.g. 'seat' for seat inputs)
-  //   multiple       - toggle entries in a list of IDs instead of picking one
-  //   getSelectedIDs - returns the currently selected widget IDs
-  //   apply          - called with the picked ID (single) or array of IDs (multiple)
-  //   onClear        - when given, adds a button that removes the value
-  //   clearLabel     - label of that button
-  //   excludeIDs     - returns additional widget IDs to hide from the list
-  renderWidgetSelectPopout(wrap, widget, options = {}) {
-    const expandButton = document.createElement('button');
-    expandButton.className = 'propertyExpandButton';
-    expandButton.setAttribute('icon', 'expand_more');
-    expandButton.title = 'Select a widget';
-    wrap.appendChild(expandButton);
-
-    const popout = div(wrap, 'propertyPicker widgetSelectPopout');
-    popout.style.display = 'none';
-
-    const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
-    const excludedIDs = _=>[ widget.id ].concat(options.excludeIDs ? options.excludeIDs() : []);
-
-    let typeFilter = options.typeFilter || '';
-    let searchTerm = '';
-
-    const renderPopout = _=>{
-      popout.innerHTML = '';
-
-      if(options.title)
-        div(popout, 'propertyPickerSectionTitle', html(options.title));
-
-      const buttonBar = div(popout, 'propertyPickerSection');
-      const pickButton = document.createElement('button');
-      pickButton.setAttribute('icon', 'colorize');
-      pickButton.title = 'Click this button and then the widget on the table';
-      buttonBar.appendChild(pickButton);
-
-      const updatePickButton = _=>{
-        const isSelecting = this.isWidgetPickerActive(widget.id, options.pickerKey);
-        pickButton.textContent = isSelecting ? 'click a widget...' : 'Pick in the room';
-        pickButton.classList.toggle('selected', isSelecting);
-      };
-      updatePickButton();
-
-      pickButton.onclick = _=>{
-        if(this.isWidgetPickerActive(widget.id, options.pickerKey)) {
-          this.stopWidgetPicker();
-        } else {
-          this.startWidgetPicker(widget.id, (targetWidget, pickedWidget)=>{
-            if(options.multiple)
-              options.apply(pickedWidget.map(picked=>picked.id));
-            else
-              options.apply(pickedWidget.id);
-          }, {
-            pickerKey: options.pickerKey,
-            filter: pickedWidget=>excludedIDs().indexOf(pickedWidget.id) == -1 && (!typeFilter || (pickedWidget.get('type') || 'basic') == typeFilter),
-            allowMultiple: !!options.multiple,
-            pendingWidgetIDs: options.multiple ? selectedIDs() : [],
-            onPendingChanged: options.multiple ? widgetIDs=>options.apply(widgetIDs) : null
-          });
-        }
-        updatePickButton();
-      };
-
-      if(options.onClear) {
-        const clearButton = document.createElement('button');
-        clearButton.setAttribute('icon', 'link_off');
-        clearButton.textContent = options.clearLabel || 'Clear';
-        clearButton.onclick = _=>options.onClear();
-        buttonBar.appendChild(clearButton);
-      }
-
-      const searchSection = div(popout, 'propertyPickerSection');
-      div(searchSection, 'propertyPickerSectionTitle', 'Search widgets');
-
-      const typeSelect = document.createElement('select');
-      typeSelect.innerHTML = '<option value="">any type</option>' + Object.keys(editorTypeNames).map(type=>`<option value="${type}">${editorTypeNames[type]}</option>`).join('');
-      typeSelect.value = typeFilter;
-      searchSection.appendChild(typeSelect);
-
-      const search = document.createElement('input');
-      search.placeholder = 'Search by ID...';
-      search.value = searchTerm;
-      searchSection.appendChild(search);
-
-      const list = div(searchSection, 'widgetPickerList');
-
-      const showEntries = _=>{
-        list.innerHTML = '';
-        const term = searchTerm.trim().toLowerCase();
-        const current = selectedIDs();
-        const matches = [...widgets.values()]
-          .filter(w=>excludedIDs().indexOf(w.id) == -1)
-          .filter(w=>!typeFilter || (w.get('type') || 'basic') == typeFilter)
-          .filter(w=>!term || w.id.toLowerCase().includes(term))
-          .sort((a, b)=>a.id.localeCompare(b.id));
-        for(const match of matches.slice(0, 50)) {
-          const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span><span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
-          entry.classList.toggle('selected', current.indexOf(match.id) != -1);
-          entry.onclick = _=>{
-            if(options.multiple) {
-              const now = selectedIDs();
-              options.apply(now.indexOf(match.id) == -1 ? now.concat(match.id) : now.filter(id=>id != match.id));
-              entry.classList.toggle('selected');
-            } else {
-              options.apply(match.id);
-              toggle(false);
-            }
-          };
-        }
-        if(!matches.length)
-          div(list, 'propertyPickerEmpty', 'No matching widgets.');
-        else if(matches.length > 50)
-          div(list, 'propertyPickerEmpty', `${matches.length - 50} more - refine the search.`);
-      };
-
-      typeSelect.onchange = _=>{ typeFilter = typeSelect.value; showEntries(); };
-      search.oninput = _=>{ searchTerm = search.value; showEntries(); };
-      showEntries();
-    };
-
-    const toggle = open=>{
-      popout.style.display = open ? '' : 'none';
-      expandButton.classList.toggle('open', open);
-      if(open)
-        renderPopout();
-      else if(this.isWidgetPickerActive(widget.id, options.pickerKey))
-        this.stopWidgetPicker();
-    };
-    expandButton.onclick = _=>toggle(popout.style.display == 'none');
-
-    return {
-      expandButton,
-      popout,
-      refresh: _=>{
-        if(popout.style.display != 'none' && !popout.contains(document.activeElement))
-          renderPopout();
-      }
-    };
-  }
-
   // Sets the parent while preserving the widget's position on the table.
   // Returns an error message or null on success.
   async setWidgetParent(widget, parentID) {
@@ -4553,7 +4312,7 @@ class PropertiesModule extends SidebarModule {
       lockParentButton.classList.toggle('selected', isParentLocked);
     };
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose a parent widget',
       pickerKey: 'parent',
       getSelectedIDs: () => {
@@ -4625,7 +4384,7 @@ class PropertiesModule extends SidebarModule {
 
     if(options.enablePicker) {
       // widget selection popout with the type filter preset to seats
-      popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      popoutControls = renderWidgetSelectPopout(wrap, widget, {
         title: options.pickerTitle || 'Choose seats',
         pickerKey,
         typeFilter: 'seat',
@@ -4710,7 +4469,7 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(input);
 
     const pickerKey = 'onlyVisibleForSeat';
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose which seats can see this widget',
       pickerKey,
       typeFilter: 'seat',
@@ -4952,6 +4711,12 @@ class PropertiesModule extends SidebarModule {
       this.renderCheckbox(widget, 'Clickable', 'clickable', body, {
         infoText: 'Whether the widget reacts to being clicked at all: with this off its click routine does not run and clicking it does not flip to the next face. Dragging it still works.'
       });
+      // what a click does is the rest of this widget's setup - what it sounds
+      // like belongs right next to the switch that decides it happens at all
+      new SoundInput(this, widget, 'Click sound', {
+        property: 'clickSound',
+        hint: 'Play this sound whenever the widget is clicked. Pick one of the bundled sounds, upload your own audio file or enter a URL. Clicking is what triggers it, so it only plays while the widget is clickable.'
+      }).render(body);
       this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, {
         min: 0,
         step: 1,
@@ -4982,7 +4747,7 @@ class PropertiesModule extends SidebarModule {
     }, null, `${widget.id}:generic`, {
       renderSummary: summary => {
         const update = w => summary.textContent = this.interactionSummary(w);
-        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
+        for(const property of [ 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
           this.addPropertyListener(widget, property, update);
       }
     });
@@ -5016,6 +4781,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     add('clickable', 'clickable', value=>value ? null : 'not clickable');
+    add('clickSound', 'click sound', value=>propertyInputValueSet(value) ? `sound ${soundName(value)}` : null);
     add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
     add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
     add('overlap', 'overlap', value=>value === false ? 'no overlap' : null);
@@ -5982,7 +5748,7 @@ class PropertiesModule extends SidebarModule {
     label.textContent = 'Add source widget:';
     wrap.appendChild(label);
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose a widget to inherit properties from',
       pickerKey: 'inheritFrom',
       apply: pickedWidgetID => {
@@ -6707,12 +6473,19 @@ class PropertiesModule extends SidebarModule {
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
     const container = div(this.moduleDOM);
+    // where the Automations section renderEvents() builds goes: in front of the
+    // raw property list
+    this.otherPropertiesHeader = container;
 
     let rebuild = () => {};
     this.renderRebuildable(rebuildBody => {
       rebuild = rebuildBody;
       container.innerHTML = '';
-      const automationProperties = this.renderAutomationsSection(widget, container);
+      // Every widget edits its routines in the Automations section
+      // renderEvents() builds (see #3034). A pile is the exception: it is
+      // temporary and renderEvents skips it, so it keeps the buttons that open
+      // the routines of its pile template in the JSON editor.
+      const automationProperties = widget.get('type') == 'pile' ? this.renderAutomationsSection(widget, container) : [];
       const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
       this.addSubHeader('Other properties', container);
       this.renderGenericProperties(widget, exclude, container);
@@ -8169,7 +7942,7 @@ class PropertiesModule extends SidebarModule {
 
         // the popout is the last child of the row, which wraps - so it opens on
         // its own line below the inputs instead of squeezing them
-        const popoutControls = this.renderWidgetSelectPopout(row, widget, {
+        const popoutControls = renderWidgetSelectPopout(row, widget, {
           title: `Choose the seats of ${name}`,
           pickerKey: `seats:${name}`,
           typeFilter: 'seat',
@@ -8431,7 +8204,7 @@ class PropertiesModule extends SidebarModule {
     input.onchange = () => this.inputValueUpdated(widget, 'hand', input.value.trim() || null);
     wrap.appendChild(input);
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose the holder used as this seat\'s hand',
       pickerKey: 'hand',
       typeFilter: 'holder',
@@ -9327,7 +9100,7 @@ class PropertiesModule extends SidebarModule {
       });
     });
 
-    // onEnter / onLeave stay in the generic property list (handled in PR #3034)
+    // onEnter / onLeave are edited in the Automations section below
     this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat' ]);
   }
 
@@ -10148,7 +9921,7 @@ class PropertiesModule extends SidebarModule {
     inheritID.value = inheritStore[widget.id];
     inheritID.oninput = _=>inheritStore[widget.id] = inheritTarget();
     inheritRow.appendChild(inheritID);
-    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritRow, widget, {
+    const inheritPopoutControls = renderWidgetSelectPopout(inheritRow, widget, {
       title: 'Choose a widget for the new stop to inherit from',
       pickerKey: 'lineInheritStop',
       getSelectedIDs: ()=>inheritTarget() ? [ inheritTarget() ] : [],
@@ -10192,7 +9965,7 @@ class PropertiesModule extends SidebarModule {
     // 2) any widget already in the room can be made a stop by listing it - it
     // does not have to be (or become) a child of the line.
     const existingRow = addStopOption('existing', 'lineExistingStopRow', 'In the room:');
-    const existingControls = this.renderWidgetSelectPopout(existingRow, widget, {
+    const existingControls = renderWidgetSelectPopout(existingRow, widget, {
       title: 'Choose a widget in the room to ride on this line',
       pickerKey: 'lineExistingStop',
       getSelectedIDs: ()=>[],
@@ -10320,7 +10093,7 @@ class PropertiesModule extends SidebarModule {
       target.onchange = setDefaultPositionForTarget;
       position.onchange = offset.onchange = saveConnection;
 
-      const connectPopoutControls = this.renderWidgetSelectPopout(wrapper, widget, {
+      const connectPopoutControls = renderWidgetSelectPopout(wrapper, widget, {
         title: `Connect ${end.toLowerCase()} point to`,
         pickerKey: 'connect'+end,
         getSelectedIDs: ()=>{
@@ -10505,9 +10278,127 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
+  renderEvents(widget) {
+    const section = document.createElement('div');
+    section.className = 'automationsSection';
+    this.automationsWidgets.push(widget);
+    const eventsEditor = new EventsEditor(widget, (property, value)=>{
+      this.inputValueUpdated(widget, property, value);
+      // the first routine of a widget is what makes the switch usable at all
+      this.applyAutomationsFullSize();
+    });
+    // a delta listener instead of per-property listeners so routines added
+    // by other players (properties that did not exist on selection) show up too
+    this.addDeltaListener(deltaS=>{
+      // cardDefaults because a deck keeps the routines of its cards in there
+      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties', 'cardDefaults' ].indexOf(p) != -1)) {
+        eventsEditor.onPropertyChange();
+        this.applyAutomationsFullSize();
+      }
+    });
+    section.append(eventsEditor.domElement);
+    // the curated sections come first, then the routines, then the raw list of
+    // whatever properties are left (which the type editor may not render at all).
+    // The header goes straight into the module: wrapped in a div it would lose
+    // the inset .tune.editorModule > h2 gives every other section bar.
+    const header = document.createElement('h2');
+    header.className = 'automationsHeader';
+    header.innerText = 'Automations';
+    this.renderAutomationsFullSizeToggle(header);
+    this.moduleDOM.insertBefore(header, this.otherPropertiesHeader);
+    this.moduleDOM.insertBefore(section, this.otherPropertiesHeader);
+    this.applyAutomationsFullSize();
+  }
+
+  // While routines are being written they are what the panel is for, so this
+  // folds every other section away and leaves the widget's title area and the
+  // Automations section - which then has the height of the whole panel. A switch
+  // like the ones under Behavior rather than a checkmark, two short lines high
+  // so the section bar stays as high as all the others.
+  renderAutomationsFullSizeToggle(header) {
+    const toggle = div(header, 'automationsFullSizeToggle');
+    div(toggle, 'automationsFullSizeLabel').innerText = 'Full size';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.className = 'switchbox';
+    input.id = `automationsFullSize_${rand().toString(36).substring(3, 12)}`;
+    input.checked = this.automationsFullSize();
+    input.onchange = _=>{
+      localStorage.setItem('editor.automationsFullSize', input.checked);
+      // switching it on by hand is the opt-in the first routine of a widget
+      // deliberately is not
+      this.automationsWereAvailable = true;
+      this.applyAutomationsFullSize();
+    };
+    toggle.appendChild(input);
+
+    const box = document.createElement('label');
+    box.className = 'switchbox';
+    box.htmlFor = input.id;
+    toggle.appendChild(box);
+  }
+
+  // how the panel is laid out is a preference of whoever edits rather than
+  // anything about the game, so it lives in localStorage like the rest of the
+  // editor's own state
+  automationsFullSize() {
+    return localStorage.getItem('editor.automationsFullSize') == 'true';
+  }
+
+  // whether there is anything to give the whole panel to: a widget with no
+  // routine and no property set shows one line saying so, and folding every
+  // other section away for it leaves a panel with nothing in it
+  hasAutomations() {
+    // a deck also counts the routines it hands to its cards - they are cards of
+    // the section like any other routine
+    return this.automationsWidgets.some(widget=>Object.keys(widget.state).some(property=>this.isAutomationProperty(widget, property)) || cardDefaultRoutines(widget).length);
+  }
+
+  applyAutomationsFullSize() {
+    if(!this.moduleDOM)
+      return;
+    const available = this.hasAutomations();
+    if(this.automationsWereAvailable === undefined)
+      this.automationsWereAvailable = available;
+    // Adding the first routine to a widget that had none must not take the panel
+    // over: everything else would fold away under the pointer in the middle of
+    // an edit. So the remembered preference only applies to a widget that was
+    // already automated when it was selected, and giving the section the whole
+    // panel right after adding a routine is a click of its own. The preference
+    // itself is kept either way - the next automated widget opens full size.
+    const fullSize = available && this.automationsWereAvailable && this.automationsFullSize();
+    this.moduleDOM.classList.toggle('automationsFullSize', fullSize);
+    // with several widgets selected every one of them has a section bar
+    for(const input of $a('.automationsFullSizeToggle input.switchbox', this.moduleDOM)) {
+      input.checked = fullSize;
+      input.disabled = !available;
+      input.parentElement.classList.toggle('disabled', !available);
+      // on the label as well as on the switch: the words are the natural thing
+      // to point at, and a greyed-out control that explains itself nowhere is
+      // the one that needs the explanation most
+      const title = available ? 'Give the Automations section the height of the whole panel' : 'Nothing to give the whole panel to yet - add a routine first';
+      for(const target of [ input.nextElementSibling, $('.automationsFullSizeLabel', input.parentElement) ])
+        if(target)
+          target.title = title;
+    }
+  }
+
+  // the properties the Automations section edits, so that neither the raw
+  // property list below it repeats them nor its header shows up for a widget
+  // that has nothing else left
+  isAutomationProperty(widget, property) {
+    if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
+      return true;
+    // holders and lines take widgets in, so both apply onEnter / onLeave
+    return property == 'resetProperties' || ([ 'holder', 'line' ].indexOf(widget.get('type')) != -1 && [ 'onEnter', 'onLeave' ].indexOf(property) != -1);
+  }
+
   renderGenericProperties(widget, exclude, target = this.moduleDOM) {
     for(const property in widget.state) {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
+        continue;
+      if(this.isAutomationProperty(widget, property))
         continue;
 
       const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v), target)

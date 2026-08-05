@@ -148,6 +148,12 @@ function applySelectionRectangle(addToSelection) {
     newlySelected = selectedWidgetsPreview;
   }
 
+  // in selection mode a click on a widget arrives here instead of as editClick,
+  // so this is where a running picker takes it - a selection change would not
+  // reach it for the widget the picker belongs to, which stays selected
+  if(newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
+    return;
+
   if(!addToSelection) {
     setSelection(newlySelected);
   } else {
@@ -162,8 +168,25 @@ function applySelectionRectangle(addToSelection) {
   }
 }
 
+// whether a selection is a different set of widgets than the one before it -
+// re-selecting the same widget (clicking the one that already is selected) is
+// not the editor moving on to another one
+function selectionChanged(previousSelection, newSelection) {
+  return previousSelection.length != newSelection.length || newSelection.some(widget=>previousSelection.indexOf(widget) == -1);
+}
+
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
+
+  // The sound library is an overlay that outlives the editor it was opened from
+  // (it does not cover the sidebar, and a widget can also be selected without
+  // clicking in the room): whoever opened it edits the widget that was shown
+  // then, so a sound picked in it now would go to a widget that is no longer on
+  // screen. A widget picker is not affected - it restores the selection it
+  // started from after every pick, which is not the editor moving on.
+  if(!isWidgetPickerActive() && selectionChanged(previousSelectedWidgets, newSelectedWidgets))
+    cancelAudioPicker();
+
   selectedWidgets = newSelectedWidgets;
 
   for(const widget of previousSelectedWidgets)
@@ -183,6 +206,11 @@ function setSelection(newSelectedWidgets) {
 }
 
 export async function editClick(widget) {
+  // a running widget picker owns the clicks in the room; without this the click
+  // falls through to widget.click() for the widget the picker belongs to,
+  // because that one is selected the whole time the picker runs
+  if(handleWidgetPickerClick(widget))
+    return true;
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
     return true;

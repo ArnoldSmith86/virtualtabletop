@@ -27,7 +27,8 @@ const inputHelpers = new Function(inputsSource + `;
     MULTI_DIFFERENT,
     propertyInputIsMulti,
     MultiWidget,
-    replaceExclusiveProperties
+    replaceExclusiveProperties,
+    soundName
   };
 `)();
 
@@ -452,6 +453,15 @@ describe('css helpers', () => {
     expect(summaryOf({ clickable: true, enlarge: 2, ignoreZoom: true })).toBe('enlarge ×2 · ignores zoom');
     expect(summaryOf({ clickable: cssHelpers.MULTI_DIFFERENT, enlarge: cssHelpers.MULTI_DIFFERENT })).toBe('clickable — · enlarge —');
     expect(summaryOf({ type: 'seat', clickable: true, display: false })).toBe('');
+    // a click sound is named by its file, not by the /i/audio/… path it is stored as
+    expect(summaryOf({ clickable: true, clickSound: '/i/audio/casino/dice-throw-1.mp3' })).toBe('sound dice-throw-1');
+    expect(summaryOf({ clickable: true, clickSound: null })).toBe('');
+  });
+
+  test('a sound is named by its file, whatever it was uploaded or picked as', () => {
+    expect(inputHelpers.soundName('/i/audio/casino/dice-throw-1.mp3')).toBe('dice-throw-1');
+    expect(inputHelpers.soundName('/assets/-2035762169_5722')).toBe('-2035762169_5722');
+    expect(inputHelpers.soundName('https://example.com/sounds/My Sound.ogg')).toBe('My Sound');
   });
 
   test('the size-ratio lock stays local while honoring a legacy false value', () => {
