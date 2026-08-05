@@ -246,10 +246,16 @@
 .playersHelp li + li {
   margin-top: 0.25rem;
 }
+/* an inline icon is placed by its own box instead of by text-bottom: with a fixed height and a
+   hidden overflow its baseline is the bottom edge of that box, so the offset below the text
+   baseline is a plain length and no longer depends on how a browser reads the font metrics */
 .playersHelp p .material-symbols,
 .playersHelp li .material-symbols {
   font-size: 1em;
-  vertical-align: text-bottom;
+  height: 1em;
+  line-height: 1em;
+  overflow: hidden;
+  vertical-align: -0.25em;
   margin-right: 0.25rem;
 }
 
