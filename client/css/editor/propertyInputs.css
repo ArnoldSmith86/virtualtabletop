@@ -268,6 +268,24 @@
   background: var(--chipColor, transparent);
 }
 
+/* sound chips: there is nothing to preview, so the chip is a speaker plus the
+   file name and grows with it instead of staying a square swatch */
+.editorModule .propertySoundChip {
+  width: auto;
+  padding: 0 8px;
+  gap: 4px;
+  font-size: 20px;
+  background: white;
+}
+
+.editorModule .propertySoundName {
+  font-size: 13px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .editorModule .propertyColorChip[style*="--chipColor: transparent"] {
   background: repeating-linear-gradient(45deg, #fff, #fff 4px, #eee 4px, #eee 8px);
 }

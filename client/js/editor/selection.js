@@ -168,8 +168,25 @@ function applySelectionRectangle(addToSelection) {
   }
 }
 
+// whether a selection is a different set of widgets than the one before it -
+// re-selecting the same widget (clicking the one that already is selected) is
+// not the editor moving on to another one
+function selectionChanged(previousSelection, newSelection) {
+  return previousSelection.length != newSelection.length || newSelection.some(widget=>previousSelection.indexOf(widget) == -1);
+}
+
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
+
+  // The sound library is an overlay that outlives the editor it was opened from
+  // (it does not cover the sidebar, and a widget can also be selected without
+  // clicking in the room): whoever opened it edits the widget that was shown
+  // then, so a sound picked in it now would go to a widget that is no longer on
+  // screen. A widget picker is not affected - it restores the selection it
+  // started from after every pick, which is not the editor moving on.
+  if(!isWidgetPickerActive() && selectionChanged(previousSelectedWidgets, newSelectedWidgets))
+    cancelAudioPicker();
+
   selectedWidgets = newSelectedWidgets;
 
   for(const widget of previousSelectedWidgets)

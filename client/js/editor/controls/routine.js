@@ -453,7 +453,7 @@ const routineOperationMetadata = {
         template: v=>`, stopping after {length} second${v('length') == 1000 ? '' : 's'}` }
     ],
     parameters: {
-      source: { type: 'string', default: '', hint: 'file name' },
+      source: { type: 'sound', default: '', hint: 'sound file' },
       maxVolume: { type: 'number', default: 1.0, display: value=>typeof value == 'number' ? `${Math.round(value*100)}%` : null },
       length: { type: 'number', default: null, scale: millisecondsPerSecond, display: secondsWords },
       player: { type: 'string', default: null, display: { 'null': 'everyone' } },
@@ -2526,6 +2526,7 @@ class RoutineOperationEditor {
       case 'stringList': return new RoutineStringListPopup({ entryHint: spec.entryHint });
       case 'color':      return new RoutineColorPopup();
       case 'icon':       return new RoutineIconPopup();
+      case 'sound':      return new RoutineSoundPopup();
       default:           return new RoutineStringPopup();
     }
   }

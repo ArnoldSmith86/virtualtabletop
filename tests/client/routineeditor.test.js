@@ -49,7 +49,7 @@ beforeAll(() => {
     'routineComputeOperations', 'routineComputeGroups', 'routineComputeChoices', 'RoutineComputeOperationPopup',
     'parseVarStatement', 'writeVarStatement', 'encodeVarOperand', 'decodeVarOperand',
     'EventsEditor', 'propertyAutomations', 'AddEventPopup', 'cardDefaultRoutines', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
-    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
+    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineSoundPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML'
@@ -2323,7 +2323,7 @@ describe('the widget property builder', () => {
   });
 });
 
-describe('color and icon parameters use the picker popups', () => {
+describe('color, icon and sound parameters use the picker popups', () => {
   function editorFor(operation) {
     const editor = editorForOperation(operation);
     editor.setOperationDetails({ state: {} }, operation, [], []);
@@ -2334,6 +2334,60 @@ describe('color and icon parameters use the picker popups', () => {
     expect(editorFor({ func: 'CANVAS' }).createPopup([ 'color' ])).toBeInstanceOf(RoutineColorPopup);
     expect(editorFor({ func: 'INPUT' }).createPopup([ 'confirmButtonIcon' ])).toBeInstanceOf(RoutineIconPopup);
     expect(editorFor({ func: 'INPUT' }).createPopup([ 'cancelButtonIcon' ])).toBeInstanceOf(RoutineIconPopup);
+  });
+
+  test('the sound of an AUDIO opens the sound picker popup', () => {
+    expect(editorFor({ func: 'AUDIO' }).createPopup([ 'source' ])).toBeInstanceOf(RoutineSoundPopup);
+  });
+
+  test('the sound popup applies the path it was given when it closes', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineSoundPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'AUDIO' }, [ 'source' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show(); // SoundInput is absent in jest, so the text fallback is used
+    const input = popup.domElement.querySelector('input[type=text]');
+    input.value = '/i/audio/casino/card-shuffle.mp3';
+    input.dispatchEvent(new Event('change'));
+    expect(value).toBeNull(); // nothing applied until the popup closes
+    popup.hide();
+    expect(value).toEqual({ source: '/i/audio/casino/card-shuffle.mp3' });
+  });
+
+  test('a click on a widget in the room closes the sound popup', () => {
+    // it keeps out of the play area so the library it opens is not covered, but
+    // the room is none of its inputs: a click in there selects another widget,
+    // and the popup would go on writing the sound to the widget that was shown
+    // before it
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const clickedWidget = div(document.getElementById('roomArea'), '');
+    const popup = new RoutineSoundPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'AUDIO' }, [ 'source' ], { state: {} }, [], []);
+    popup.show();
+    expect(popup.usesRoomAsInput()).toBe(false);
+    popup.onOutsideClick({ target: clickedWidget });
+    expect(document.getElementById('editor').contains(popup.domElement)).toBe(false);
+    clickedWidget.remove();
+  });
+
+  test('a click in the sound library does not close the popup that opened it', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const overlay = div(document.body, '');
+    overlay.id = 'audioPickerOverlay';
+    const popup = new RoutineSoundPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'AUDIO' }, [ 'source' ], { state: {} }, [], []);
+    popup.show();
+    popup.onOutsideClick({ target: overlay });
+    expect(document.getElementById('editor').contains(popup.domElement)).toBe(true);
+    popup.hide();
+    overlay.remove();
   });
 
   test('the picker applies its working value when the popup closes', () => {
@@ -2781,6 +2835,17 @@ describe('popups stay out of the play area', () => {
       expect(new RoutineNumberPopup({}).placementLimits().bottom).toBe(window.innerHeight);
       // a number parameter that names a widget does offer the room picker
       expect(new RoutineNumberPopup({ widgetType: 'seat' }).placementLimits().bottom).toBe(window.innerHeight/2);
+    });
+  });
+
+  // the sound library is an overlay over the board, so the popup that opens it
+  // must not be there itself - the two would cover each other
+  test('the sound popup keeps out of the play area the library opens in', () => {
+    withRoom({ left: 0, top: window.innerHeight/2, right: window.innerWidth, bottom: window.innerHeight }, () => {
+      expect(new RoutineSoundPopup().placementLimits().bottom).toBe(window.innerHeight/2);
+    });
+    withRoom({ left: 0, top: 0, right: 500, bottom: window.innerHeight }, () => {
+      expect(new RoutineSoundPopup().placementLimits().left).toBe(500);
     });
   });
 

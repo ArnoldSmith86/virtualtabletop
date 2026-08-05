@@ -474,6 +474,17 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 30;
 }
 
+/* The sound picker is opened from the JSON editor, which is reachable while the deck editor covers the play
+   area, so it is moved into #editor as well (see initializeDOM). It has no smaller box to be constrained to
+   there, so float it over the whole editor like the rule above - otherwise #deckEditor (z-index 1) hides it. */
+#editor > #audioPickerOverlay {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+  z-index: 30;
+}
+
 #deckEditorExportOverlay {
   position: fixed;
   top: var(--editToolbarHeight);
