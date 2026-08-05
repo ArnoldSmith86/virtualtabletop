@@ -45,7 +45,7 @@ export async function setName(t, name, color) {
     .expect(playerOverlay.visible).ok()
     .click(playerColor)
     .typeText(playerColor, color || '#7F007F', { replace: true })
-    .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
+    .typeText('.myPlayerEntry .playerName', name || 'TestCafe', { replace: true })
     .click('#activeGameButton');
 }
 
