@@ -427,19 +427,21 @@ export class Widget extends StateManaged {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
-  async checkParent(forceDetach) {
-    const stillInside = this.currentParent && overlap(this.domElement, this.currentParent.domElement);
-    if(this.currentParent && (forceDetach || !stillInside)) {
+  // keepOwnerWhileInside is used by the drag that is on its way out of a holder: the widget
+  // is detached as soon as another holder becomes the drop target, which is while it is still
+  // completely inside its own holder when that other holder is stacked on top of it. owner
+  // and hoverParent are what keeps the widget out of sight of the other players, so they are
+  // kept until it has really left - otherwise a card is shown to the whole table before it
+  // has even left the hand it is being dragged around in. Leaving itself keeps its timing:
+  // onLeave and leaveRoutine still run right here.
+  async checkParent(forceDetach, keepOwnerWhileInside) {
+    if(!this.currentParent)
+      return;
+    const stillInside = (!forceDetach || keepOwnerWhileInside) && overlap(this.domElement, this.currentParent.domElement);
+    if(forceDetach || !stillInside) {
       await this.set('parent', null);
-      // A forced detach can happen while the widget is still completely inside the holder it
-      // is being dragged out of: a holder stacked on top of that one becomes the drop target
-      // as soon as the widget is dragged over it. owner and hoverParent are what keeps the
-      // widget out of sight of the other players, so they are only cleared once it has
-      // really left - otherwise a card is shown to the whole table before it has even left
-      // the hand it is being dragged around in. Leaving itself keeps its timing: onLeave and
-      // leaveRoutine still run right here.
       this.detachedParent = this.currentParent;
-      await this.checkDetachedParent(!stillInside);
+      await this.checkDetachedParent(!(keepOwnerWhileInside && stillInside));
       if(this.currentParent.dispenseCard)
         await this.currentParent.dispenseCard(this);
       delete this.currentParent;
@@ -2626,7 +2628,7 @@ export class Widget extends StateManaged {
       if (lastHoverTarget != this.hoverTarget) {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
         if(this.hoverTarget != this.currentParent)
-          await this.checkParent(true);
+          await this.checkParent(true, true);
 
         // When the hover target changes we may need to create or remove the shadow widget.
         // Only create a shadow widget if the holder is shared and doesn't already have one in it.
