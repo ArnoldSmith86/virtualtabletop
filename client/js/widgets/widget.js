@@ -2546,8 +2546,6 @@ export class Widget extends StateManaged {
     await this.snapToGrid();
 
     if(!this.get('fixedParent') && this.get('movable')) {
-      await this.checkParent();
-
       const lastHoverTarget = this.hoverTarget;
       // The hit test below asks the DOM where this widget is, but the delta that
       // carries the position set above only reaches the DOM when the batch around
@@ -2558,6 +2556,14 @@ export class Widget extends StateManaged {
       // (or the game rejects the move and sends it back).
       if(this.domElement.style.transform != this.cssTransform())
         flushDelta();
+
+      // A widget stays in its holder until it no longer overlaps it - leaving as soon as the
+      // hover target changes would run the holder's onLeave and drop the owner while the
+      // widget is still inside, which reveals a card to everyone before it has even left the
+      // hand it is being dragged around in. This runs after the flush above so that the
+      // overlap is checked against where the widget is now, not where it was last event.
+      await this.checkParent();
+
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
@@ -2600,14 +2606,6 @@ export class Widget extends StateManaged {
 
       if (lastHoverTarget != this.hoverTarget) {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
-        // A holder that sits on top of the current parent becomes the hover target while the
-        // widget is still completely inside that parent. Leaving the parent right away would
-        // run its onLeave and drop the owner - which reveals a card to everyone before it has
-        // even left the hand it is being dragged around in - so the widget only leaves once it
-        // no longer overlaps its parent. This repeats the check from the top of move() because
-        // the delta flushed above is what gave the widget its current geometry.
-        if(this.hoverTarget != this.currentParent)
-          await this.checkParent();
 
         // When the hover target changes we may need to create or remove the shadow widget.
         // Only create a shadow widget if the holder is shared and doesn't already have one in it.

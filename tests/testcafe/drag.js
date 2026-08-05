@@ -35,6 +35,19 @@ const dragOnto = ClientFunction(id => {
   window.dragCoords = to;
 });
 
+// Drags straight down until the dragged widget's center sits the given number of card
+// heights below the bottom edge of the given widget - so 0.2 leaves the card overlapping
+// that widget and 0.7 (more than half a card) puts it completely clear of it.
+const dragBelow = ClientFunction((id, cardHeights) => {
+  const bottom = document.querySelector(`#w_${id}`).getBoundingClientRect().bottom;
+  const card = document.querySelector('#w_card').getBoundingClientRect();
+  const from = window.dragCoords;
+  const to = { x: from.x, y: bottom + card.height*cardHeights };
+  for(let step=1; step<=5; ++step)
+    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 1, clientX: to.x, clientY: from.y + (to.y-from.y)*step/5 }));
+  window.dragCoords = to;
+});
+
 const dragEnd = ClientFunction(() => {
   document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 0, clientX: window.dragCoords.x, clientY: window.dragCoords.y }));
 });
@@ -42,18 +55,16 @@ const dragEnd = ClientFunction(() => {
 // the state is read straight from the server so that this sees what the other players see
 async function cardState() {
   const { card } = JSON.parse(await getState());
-  return { owner: card.owner || null, parent: card.parent || null, hoverTarget: card.hoverTarget || null };
+  return { owner: card.owner || null, parent: card.parent || null, hoverParent: card.hoverParent || null, hoverTarget: card.hoverTarget || null };
 }
 
 // the mouse events above return before the drag they trigger has reached the server, so
 // give the state a moment to arrive there instead of waiting a fixed amount of time
 async function expectCardState(t, expected) {
-  let actual = null;
-  for(let wait=50; wait<2000; wait*=2) {
-    actual = await cardState();
-    if(JSON.stringify(actual) == JSON.stringify(expected))
-      break;
+  let actual = await cardState();
+  for(let wait=50; wait<2000 && JSON.stringify(actual) != JSON.stringify(expected); wait*=2) {
     await new Promise(resolve => setTimeout(resolve, wait));
+    actual = await cardState();
   }
   await t.expect(actual).eql(expected);
 }
@@ -69,10 +80,10 @@ test('A card is not revealed while it is dragged over a holder stacked on top of
   // the card is still completely inside the hand, so it still belongs to its owner and
   // the other players do not get to see it - even though the holder on top of the hand
   // is what a drop would go to now
-  await expectCardState(t, { owner: 'TestCafe', parent: null, hoverTarget: 'over' });
+  await expectCardState(t, { owner: 'TestCafe', parent: null, hoverParent: 'hand', hoverTarget: 'over' });
 
   await dragEnd();
-  await expectCardState(t, { owner: null, parent: 'over', hoverTarget: null });
+  await expectCardState(t, { owner: null, parent: 'over', hoverParent: null, hoverTarget: null });
 });
 
 test('A card is revealed as soon as it is dragged out of its hand', async t => {
@@ -83,8 +94,29 @@ test('A card is revealed as soon as it is dragged out of its hand', async t => {
   await dragStart('card');
   await dragOnto('table');
 
-  await expectCardState(t, { owner: null, parent: null, hoverTarget: 'table' });
+  await expectCardState(t, { owner: null, parent: null, hoverParent: null, hoverTarget: 'table' });
 
   await dragEnd();
-  await expectCardState(t, { owner: null, parent: 'table', hoverTarget: null });
+  await expectCardState(t, { owner: null, parent: 'table', hoverParent: null, hoverTarget: null });
+});
+
+test('A card half out of its hand and over no other holder still belongs to its owner', async t => {
+  await setRoomState(stackedHoldersRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await dragStart('card');
+
+  // dragged straight down out of the hand, past its bottom edge but not clear of it: the
+  // hover target is gone (there is nothing below the hand) but the card still overlaps
+  // the hand it came from, so it keeps its owner
+  await dragBelow('hand', 0.2);
+  await expectCardState(t, { owner: 'TestCafe', parent: null, hoverParent: 'hand', hoverTarget: null });
+
+  // once it no longer touches the hand at all, it leaves and everyone gets to see it
+  await dragBelow('hand', 0.7);
+  await expectCardState(t, { owner: null, parent: null, hoverParent: null, hoverTarget: null });
+
+  await dragEnd();
+  await expectCardState(t, { owner: null, parent: null, hoverParent: null, hoverTarget: null });
 });
