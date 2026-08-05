@@ -196,6 +196,10 @@ function fillPlayerList(players, active, sessions) {
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
+  // with a second tab open as the same player, adding a player also moves this tab to it
+  $('#addLocalPlayerButton').title = (sessionsByPlayer[playerName] || []).length > 1
+    ? 'Add a player and switch this browser tab to them'
+    : 'Add a player who shares this device';
   // somebody who is alone at the table is usually here to find out how to get others in, so
   // the help starts open for them - once there are other players it would just be in the way
   if(!helpDefaultApplied) {
@@ -290,6 +294,13 @@ onLoad(function() {
       input.setCustomValidity(localPlayerName ? 'This player already exists.' : 'Please enter a player name.');
       input.reportValidity();
       return;
+    }
+    // a second tab connected as the same player is somebody who wants to be their own player, so
+    // the new player takes this session over right away instead of waiting for a View click
+    if((lastMetaArgs && lastMetaArgs.sessions || []).filter(s=>s.player == playerName).length > 1) {
+      // renaming a single session creates the player if it does not exist yet
+      toServer('rename', { oldName: playerName, newName: localPlayerName, sessionID: mySessionID });
+      return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == mySessionID && s.player == localPlayerName)).then(_=>input.value = '');
     }
     toServer('addLocalPlayer', { player: localPlayerName });
     return nextMetaUpdate(args=>args.meta.players[localPlayerName] !== undefined).then(_=>input.value = '');
