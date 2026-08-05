@@ -146,12 +146,9 @@
 }
 
 /* the rows that add a local player and invite remote ones: same layout as a player row, but no player of their own */
-#playersTable tfoot .playerColorCell .material-symbols {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2em;
-  height: 2em;
+/* they reuse the wrap of the color circle so their icon sits in a box of the same size */
+#playersTable tfoot .teamColorWrap .material-symbols {
+  font-size: 1.5em;
   opacity: 0.6;
 }
 #addPlayerRow .playerName {
