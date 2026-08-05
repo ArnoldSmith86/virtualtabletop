@@ -125,3 +125,27 @@ describe('a dragLimit condition', () => {
     expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 0, y: 900 });
   });
 });
+
+// what the editor's "Show on board" preview asks of every point it samples -
+// not where a refused drag ends up, only whether the point is in the area
+describe('dragLimitAllows', () => {
+  test('answers for the rectangle and the conditions together', () => {
+    const w = widgetAt(0, 0, { minX: 10, maxX: 100, condition: 'y > x' });
+    expect(w.dragLimitAllows({ x: 50, y: 60 })).toBe(true);
+    expect(w.dragLimitAllows({ x: 5, y: 60 })).toBe(false);   // left of minX
+    expect(w.dragLimitAllows({ x: 200, y: 300 })).toBe(false); // right of maxX
+    expect(w.dragLimitAllows({ x: 50, y: 40 })).toBe(false);   // above the diagonal
+  });
+
+  test('says yes everywhere when there is no limit', () => {
+    expect(widgetAt(0, 0, {}).dragLimitAllows({ x: 9999, y: 9999 })).toBe(true);
+    expect(widgetAt(0, 0, 'nonsense').dragLimitAllows({ x: 9999, y: 9999 })).toBe(true);
+  });
+
+  test('takes the rules it is given, so a drawing reads the sides once', () => {
+    const w = widgetAt(0, 0, { maxX: 100 });
+    const rules = w.dragLimitRules({ x: 0, y: 0 });
+    expect(w.dragLimitAllows({ x: 50, y: 0 }, rules)).toBe(true);
+    expect(w.dragLimitAllows({ x: 150, y: 0 }, rules)).toBe(false);
+  });
+});

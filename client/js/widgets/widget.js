@@ -782,6 +782,46 @@ export class Widget extends StateManaged {
     };
   }
 
+  // What the dragLimit says, read for one position: the two clamps of the
+  // rectangle (each side a number or an expression that computes one) and the
+  // conditions to test there. null when there is no limit to obey at all.
+  dragLimitRules(coord) {
+    const limit = this.get('dragLimit');
+    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+      return null;
+
+    const resolve = this.dragLimitResolver(coord);
+    const bound = key=>limit[key] === undefined ? undefined : expressionNumber(limit[key], resolve);
+    const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
+
+    return {
+      clampX: value=>{
+        if(minX !== undefined && minX !== null) value = Math.max(minX, value);
+        if(maxX !== undefined && maxX !== null) value = Math.min(maxX, value);
+        return value;
+      },
+      clampY: value=>{
+        if(minY !== undefined && minY !== null) value = Math.max(minY, value);
+        if(maxY !== undefined && maxY !== null) value = Math.min(maxY, value);
+        return value;
+      },
+      conditions: asArray(limit.condition === undefined || limit.condition === null ? [] : limit.condition).filter(c=>c !== null && c !== undefined)
+    };
+  }
+
+  // Whether a position is inside the area at all, i.e. whether a drag that ends
+  // there is left alone. This is the question the editor's preview asks of
+  // every point it samples; dragLimitedCoord() below answers the other one -
+  // where a drag that is not allowed ends up instead. The rules can be passed
+  // in when the caller knows they are the same everywhere (thousands of points
+  // of one drawing), which saves reading the four sides at every one of them.
+  dragLimitAllows(coord, rules = this.dragLimitRules(coord)) {
+    if(!rules)
+      return true;
+    return rules.clampX(coord.x) === coord.x && rules.clampY(coord.y) === coord.y
+      && rules.conditions.every(c=>expressionCondition(c, this.dragLimitResolver(coord)));
+  }
+
   // Where a drag is allowed to put the widget's top left corner. minX/maxX/
   // minY/maxY bound it to a rectangle, and each of them can be an expression
   // instead of a fixed number ("${PROPERTY width OF board} - 100"). A condition
@@ -795,27 +835,13 @@ export class Widget extends StateManaged {
   // (a condition that changed under it, a routine that put it there) is not
   // held in place: it is free until it is inside, so it can never get stuck.
   dragLimitedCoord(coord) {
-    const limit = this.get('dragLimit');
-    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+    const rules = this.dragLimitRules(coord);
+    if(!rules)
       return coord;
 
-    const resolve = this.dragLimitResolver(coord);
-    const bound = key=>limit[key] === undefined ? undefined : expressionNumber(limit[key], resolve);
-    const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
-
-    const clampX = value=>{
-      if(minX !== undefined && minX !== null) value = Math.max(minX, value);
-      if(maxX !== undefined && maxX !== null) value = Math.min(maxX, value);
-      return value;
-    };
-    const clampY = value=>{
-      if(minY !== undefined && minY !== null) value = Math.max(minY, value);
-      if(maxY !== undefined && maxY !== null) value = Math.min(maxY, value);
-      return value;
-    };
+    const { clampX, clampY, conditions } = rules;
     const x = clampX(coord.x), y = clampY(coord.y);
 
-    const conditions = asArray(limit.condition === undefined || limit.condition === null ? [] : limit.condition).filter(c=>c !== null && c !== undefined);
     if(!conditions.length)
       return Object.assign({}, coord, { x, y });
 

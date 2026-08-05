@@ -1656,12 +1656,14 @@ class PropertiesModule extends SidebarModule {
 
   onClose() {
     this.clearGridPreview();
+    this.clearDragLimitPreview();
     this.clearFaceRowRefresh();
   }
 
   onEditorClose() {
     super.onEditorClose();
     this.clearGridPreview();
+    this.clearDragLimitPreview();
     this.clearFaceRowRefresh();
   }
 
@@ -1681,6 +1683,7 @@ class PropertiesModule extends SidebarModule {
 
     // the board preview belongs to the widget that was being edited
     this.clearGridPreview();
+    this.clearDragLimitPreview();
     this.clearFaceRowRefresh();
     // switched off and half typed css declarations only live as long as their
     // widget is selected - they are not in the game state, so nothing may
@@ -5242,16 +5245,21 @@ class PropertiesModule extends SidebarModule {
     if(widget.isMulti)
       return;
 
+    let updatePreview = _=>{};
     const section = this.renderCollapsibleSection('Drag limits', true, body=>{
       div(body, 'gridHelp', 'Keeps this widget inside an area while it is dragged, so it cannot be dropped somewhere it is hard to get back from. The four sides make a rectangle around its top left corner, measured in the coordinates of its parent. A condition is an inequality in x and y - that same corner - which has to stay true, so "y > x" keeps the widget below the diagonal.');
 
       const host = div(body, 'gridLimits');
+      const previewHost = div(body, 'dragLimitPreviewToggle');
       // renderRebuildable: the four inputs listen to dragLimit, so the ones of
       // a discarded generation have to stop listening with it
       let rebuildLimits = _=>{};
       this.renderRebuildable(rebuild=>{
         rebuildLimits = rebuild;
         host.innerHTML = '';
+        // nothing to show while the widget can be dragged anywhere
+        previewHost.style.display = dragLimitIsSet(widget.get('dragLimit')) ? '' : 'none';
+        updatePreview();
         if(!dragLimitIsSet(widget.get('dragLimit')))
           return;
         // each side carries its own axis in its label: a side holding an
@@ -5266,6 +5274,21 @@ class PropertiesModule extends SidebarModule {
         this.renderDragLimitCondition(widget, host);
         div(host, 'gridHelp', 'x and y are the widget\'s top left corner in its parent. Every line has to be true.');
       });
+
+      // an area a condition describes cannot be read off the numbers that
+      // describe it - this switch paints it onto the board instead
+      new CheckboxInput(this, widget, 'Show on board', {
+        // not a widget property - listening to dragLimit just gives the
+        // checkbox its initial render (addPropertyListener runs its updater
+        // at once) and follows every edit of the area with the drawing
+        listenTo: [ 'dragLimit' ],
+        getValue: _=>this.dragLimitPreviewEnabled !== false,
+        setValue: value=>{
+          this.dragLimitPreviewEnabled = value;
+          updatePreview();
+        },
+        hint: 'Shades every position this widget\'s top left corner can be dragged to, drawn into the widget\'s parent. Only ever visible in edit mode.'
+      }).render(previewHost);
 
       new CheckboxInput(this, widget, 'Limit where it can be dragged', {
         listenTo: [ 'dragLimit' ],
@@ -5291,12 +5314,20 @@ class PropertiesModule extends SidebarModule {
         // X/Y rows below it instead of reading as a heading above them
       }).render(div(body, 'gridLimitToggle'));
       body.appendChild(host);
+      body.appendChild(previewHost);
 
-      // resync on undo / remote updates while the section stays open
+      // resync on undo / remote updates while the section stays open - and
+      // redraw the area on every edit, whether the fields were rebuilt for it
+      // or the value was typed into them
       this.addPropertyListener(widget, 'dragLimit', _=>{
         if(!body.contains(document.activeElement))
           rebuildLimits();
+        updatePreview();
       });
+      // an expression side can read the widget's own box, and where the area
+      // is drawn is the parent's coordinate space
+      for(const property of [ 'width', 'height', 'parent', 'x', 'y' ])
+        this.addPropertyListener(widget, property, _=>updatePreview());
     }, target, `${widget.id}:dragLimit`, {
       renderSummary: summary=>{
         // a condition-only limit leaves the four sides empty, so the summary
@@ -5309,6 +5340,79 @@ class PropertiesModule extends SidebarModule {
       }
     });
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.dragLimit));
+
+    // the body is rendered even while the section is collapsed, so the area on
+    // the board follows the headers rather than appearing on every selection -
+    // the Position section around it folds this one away just as well
+    updatePreview = _=>this.updateDragLimitPreview(widget, this.dragLimitPreviewEnabled !== false && !section.closest('.collapsibleSection.collapsed'));
+    for(let block = section; block; block = block.parentElement && block.parentElement.closest('.collapsibleSection'))
+      $('.collapsibleHeader', block).addEventListener('click', _=>updatePreview());
+    updatePreview();
+  }
+
+  clearDragLimitPreview() {
+    clearTimeout(this.dragLimitPreviewTimer);
+    this.dragLimitPreviewRequest = null;
+    for(const overlay of $a('.dragLimitPreviewOverlay'))
+      overlay.remove();
+  }
+
+  // A drawing samples thousands of positions, so it waits for a short pause
+  // instead of being redrawn between two keystrokes of the very condition it
+  // is drawing.
+  updateDragLimitPreview(widget, show) {
+    clearTimeout(this.dragLimitPreviewTimer);
+    this.dragLimitPreviewRequest = { widget, show };
+    this.dragLimitPreviewTimer = setTimeout(_=>{
+      const request = this.dragLimitPreviewRequest;
+      if(request)
+        this.drawDragLimitPreview(request.widget, request.show);
+    }, 100);
+  }
+
+  // Draws the area a drag can put the widget's top left corner in, into the
+  // widget's parent - the coordinate space dragLimitedCoord() works in, so the
+  // shading covers exactly the corner positions a drag will accept. A condition
+  // can describe any shape at all, so the area is not computed but sampled: one
+  // canvas pixel per sampled point, asking the widget itself whether its limit
+  // allows that point, blown up to the parent's box by the browser.
+  drawDragLimitPreview(widget, show) {
+    this.clearDragLimitPreview();
+    const container = widget.domElement && widget.domElement.parentNode;
+    if(!show || !container || !dragLimitIsSet(widget.get('dragLimit')))
+      return;
+
+    const width = container.offsetWidth, height = container.offsetHeight;
+    if(!(width > 0) || !(height > 0))
+      return;
+    // a step small enough to show the shape and coarse enough to stay quick
+    // while a condition is being typed (~10k points either way)
+    const step = Math.max(4, Math.round(Math.sqrt(width * height / 10000)));
+    const columns = Math.ceil(width / step), rows = Math.ceil(height / step);
+
+    // a side can be an expression, and an expression can read x and y - then
+    // the rectangle differs at every point and has to be read at each of them.
+    // Reading it at two opposite corners tells that apart from the ordinary
+    // case, where it is read once for the whole drawing instead of 10000 times.
+    const corner = coord=>{
+      const rules = widget.dragLimitRules(coord);
+      return rules && [ rules.clampX(-1e6), rules.clampX(1e6), rules.clampY(-1e6), rules.clampY(1e6) ].join();
+    };
+    const fixedRules = corner({ x: 0, y: 0 }) === corner({ x: width, y: height }) ? widget.dragLimitRules({ x: 0, y: 0 }) : undefined;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'dragLimitPreviewOverlay';
+    canvas.width = columns;
+    canvas.height = rows;
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#2f9e44';
+    for(let row = 0; row < rows; ++row)
+      for(let column = 0; column < columns; ++column)
+        // the middle of the cell the pixel stands for, so a boundary running
+        // along the sampling lattice does not depend on rounding
+        if(widget.dragLimitAllows({ x: (column + 0.5) * step, y: (row + 0.5) * step }, fixedRules))
+          context.fillRect(column, row, 1, 1);
+    container.appendChild(canvas);
   }
 
   updateDragLimit(widget, change) {

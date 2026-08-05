@@ -297,6 +297,7 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .expect(nestedSection.withExactText('Drag limits').exists).ok();
 
   const dragLimitBody = Selector('#editorModules .collapsibleHeader').withText('Drag limits').sibling('.collapsibleBody');
+  const areaPreview = Selector('.dragLimitPreviewOverlay');
   await t
     .click(Selector('#editorModules .collapsibleHeader').withText('Drag limits'))
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
@@ -312,10 +313,19 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":"y > x"}')
     .typeText(dragLimitBody.find('textarea'), '\n2x^2 + y > 4')
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
+    // the area a condition describes is sampled onto the board while the
+    // section is open, and the switch next to it takes it away again
+    .expect(areaPreview.exists).ok()
+    .click(dragLimitBody.find('.dragLimitPreviewToggle label.switchbox'))
+    .expect(areaPreview.exists).notOk()
+    .click(dragLimitBody.find('.dragLimitPreviewToggle label.switchbox'))
+    .expect(areaPreview.exists).ok()
     // the four sides only mean something together, so the switch drops all of
     // them - and an empty rectangle is the default, i.e. no property at all
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
-    .expect(dragLimit()).eql('null');
+    .expect(dragLimit()).eql('null')
+    // and a widget that can be dragged anywhere has no area to draw
+    .expect(areaPreview.exists).notOk();
 
   // nothing tells the editor whether an image is a hexagon, let alone which way
   // up, so both orientations are offered and the user picks one
