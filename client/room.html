@@ -118,6 +118,11 @@
               <td class="playerNameCell"><input id="localPlayerName" class="playerName" placeholder="Add a local player" /></td>
               <td class="playerActionsCell" colspan="2"><button icon="add" id="addLocalPlayerButton" title="Add a local player that shares this device"></button></td>
             </tr>
+            <tr id="invitePlayerRow">
+              <td class="playerColorCell"><i class="material-symbols">link</i></td>
+              <td class="playerNameCell">Invite players to <a id="playerInviteURL">this room</a></td>
+              <td class="playerActionsCell" colspan="2"><button icon="share" id="playersShareButton" title="Share the room URL so other players can join"></button></td>
+            </tr>
           </tfoot>
         </table>
         <div id="playersLegend">
@@ -126,10 +131,6 @@
           <span><i class="material-symbols">delete</i>Remove this player</span>
         </div>
         <div id="playersAloneHint">You are the only player at this table. Share the room URL or add a local player to play with others.</div>
-      </div>
-      <div id="playerInvite">
-        <h1>Invite players to <a id="playerInviteURL">this room</a></h1>
-        <button icon="share" id="playersShareButton">Share room URL</button>
       </div>
       <details id="playersHelp">
         <summary>Help: playing together</summary>
@@ -144,14 +145,14 @@
           <i class="material-symbols">share</i>
           <div>
             <h2>Remote play</h2>
-            <p>Everybody plays on their own device: send them the room URL above and they join this table as soon as they open it. Their browser tab shows up here as a session and they can pick their name and color in the table.</p>
+            <p>Everybody plays on their own device: send them the room URL with the <i class="material-symbols">share</i> button in the table above and they join this table as soon as they open it. Their browser tab shows up here as a session and they can pick their name and color in the table.</p>
           </div>
         </div>
         <div class="helpTopic">
           <i class="material-symbols">swap_horizontal_circle</i>
           <div>
             <h2>Hotseat</h2>
-            <p>Several people share one device: add each of them in the last row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only your own session changes, the game itself stays untouched.</p>
+            <p>Several people share one device: add each of them with the <i class="material-symbols">person_add</i> row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only your own session changes, the game itself stays untouched.</p>
           </div>
         </div>
       </details>

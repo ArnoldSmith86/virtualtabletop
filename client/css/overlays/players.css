@@ -145,8 +145,8 @@
   font-size: 1.2rem;
 }
 
-/* the row that adds a local player: same layout as a player row, but nothing exists yet */
-#addPlayerRow .playerColorCell .material-symbols {
+/* the rows that add a local player and invite remote ones: same layout as a player row, but no player of their own */
+#playersTable tfoot .playerColorCell .material-symbols {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -156,6 +156,14 @@
 }
 #addPlayerRow .playerName {
   font-weight: normal;
+}
+#invitePlayerRow .playerNameCell {
+  font-size: 0.9rem;
+}
+/* the share button lines up with the row action buttons, so the progress text that
+   progressButton writes into it has to stay out of the layout - its icon shows the state */
+#playersShareButton {
+  font-size: 0;
 }
 
 #playersLegend {
@@ -180,16 +188,6 @@
   display: block;
   max-width: 40rem;
   margin: 1rem auto 0 auto;
-}
-
-#playerInvite {
-  width: 100%;
-  max-width: 40rem;
-  margin: 1rem auto;
-}
-#playerInvite h1 {
-  text-align: left;
-  margin-bottom: 0.5em;
 }
 
 #playersHelp {
