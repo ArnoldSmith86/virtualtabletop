@@ -1,3 +1,5 @@
+import { expressionError } from '../client/js/expression.js';
+
 const validators = {
     asset: v=>!!String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
     routineProperty: v=>!!String(v).match(/.Routine$/) || 'routine name expected (format: myRoutine)',
@@ -67,7 +69,9 @@ const COMMON_PROPERTIES = {
     scale: v=>typeof v === 'number' || typeof v === 'string' && !!String(v).match(/^-[0-9.]+,[0-9.]+$|^[0-9.]+,-[0-9.]+$/) || 'number expected (or special string for flipping: -x,y or x,-y)',
     ignoreZoom: 'boolean',
     // a side is a number or an expression that evaluates to one, condition is
-    // one inequality in x and y or a list of them (see client/js/expression.js)
+    // one inequality in x and y or a list of them (see client/js/expression.js).
+    // Both are parsed here: a mistyped expression is ignored at drag time, so
+    // without this its only symptom would be a limit that does nothing.
     dragLimit: v=>{
         if(typeof v !== 'object' || v === null || Array.isArray(v))
             return 'object expected (minX/maxX/minY/maxY and/or condition)';
@@ -75,9 +79,17 @@ const COMMON_PROPERTIES = {
             if([ 'minX', 'maxX', 'minY', 'maxY' ].includes(key)) {
                 if(typeof v[key] !== 'number' && typeof v[key] !== 'string')
                     return `${key} must be a number or an expression`;
+                const problem = typeof v[key] === 'string' && expressionError(v[key]);
+                if(problem)
+                    return `${key} is not a valid expression: ${problem}`;
             } else if(key === 'condition') {
                 if(!asArray(v[key]).every(c=>typeof c === 'string'))
                     return 'condition must be an expression or a list of expressions';
+                for(const condition of asArray(v[key])) {
+                    const problem = expressionError(condition);
+                    if(problem)
+                        return `condition '${condition}' is not a valid expression: ${problem}`;
+                }
             } else {
                 return `unknown key '${key}' (valid: minX, maxX, minY, maxY, condition)`;
             }

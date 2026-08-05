@@ -726,7 +726,7 @@ async function loadEditMode() {
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
-      asArray, compute_ops,
+      asArray, compute_ops, expressionError,
       eventCoords,
       getCurrentGameSettings, legacyMode, getEnabledLegacyModes
     });

@@ -14,13 +14,16 @@
 // callback answers, which is what makes it testable and safe to run on every
 // mouse move.
 
-const functions = {
+// Object.create(null) rather than a plain literal: a literal also answers for
+// inherited keys, so "constructor" would be a function and a widget property
+// named "toString" could never be read.
+const functions = Object.assign(Object.create(null), {
   abs: Math.abs, atan2: Math.atan2, ceil: Math.ceil, cos: Math.cos, exp: Math.exp,
   floor: Math.floor, hypot: Math.hypot, log: Math.log, max: Math.max, min: Math.min,
   pow: Math.pow, round: Math.round, sign: Math.sign, sin: Math.sin, sqrt: Math.sqrt, tan: Math.tan
-};
+});
 
-const constants = { pi: Math.PI };
+const constants = Object.assign(Object.create(null), { pi: Math.PI });
 
 // ${PROPERTY name} and ${PROPERTY name OF widget} come first so their contents
 // are not read as operators; the rest is numbers, names and operator symbols.
@@ -28,7 +31,28 @@ const constants = { pi: Math.PI };
 // in between can be skipped silently - hence a fresh regex per call.
 const tokenSource = '\\s*(?:\\$\\{\\s*PROPERTY\\s+([^}]+?)\\s*\\}|([0-9]*\\.[0-9]+|[0-9]+)|([A-Za-z_][A-Za-z0-9_]*)|(&&|\\|\\||[<>=!]=|\\*\\*|[-+*/%^()<>!,]))';
 
+// A drag evaluates the same handful of strings on every mouse move, so what
+// they tokenize to is kept - including the error of one that cannot be read, so
+// a broken expression costs no more than a working one.
+const tokenCache = new Map();
+
 function tokenize(text) {
+  if(!tokenCache.has(text)) {
+    if(tokenCache.size > 1000)
+      tokenCache.clear();
+    try {
+      tokenCache.set(text, tokenizeText(text));
+    } catch(e) {
+      tokenCache.set(text, e);
+    }
+  }
+  const tokens = tokenCache.get(text);
+  if(tokens instanceof Error)
+    throw tokens;
+  return tokens;
+}
+
+function tokenizeText(text) {
   const tokens = [];
   const tokenPattern = new RegExp(tokenSource, 'y');
   while(tokenPattern.lastIndex < text.length) {
@@ -70,10 +94,31 @@ export function evaluateExpression(text, resolve) {
     ++position;
   };
 
+  // The right side of && / || is parsed but not read once the left side has
+  // decided the result, so "${PROPERTY x OF gone} != 0 && x < 5" can guard
+  // itself instead of the missing widget disabling the whole condition. While
+  // skipping, a name answers with 0 and nothing but a syntax error throws.
+  let skipping = 0;
+  const skipped = (skip, parse)=>{
+    if(!skip)
+      return parse();
+    ++skipping;
+    try {
+      return parse();
+    } finally {
+      --skipping;
+    }
+  };
+
   const number = value=>{
     const asNumber = typeof value == 'string' && value.trim() !== '' ? +value : value;
-    if(typeof asNumber != 'number' || !isFinite(asNumber))
-      throw new Error(`"${value}" is not a number`);
+    if(typeof asNumber != 'number' || !isFinite(asNumber)) {
+      if(skipping)
+        return 0;
+      // marked so the syntax check can tell "this property does not answer with
+      // a number" (not its business) from "this cannot be read" (its business)
+      throw Object.assign(new Error(`"${value}" is not a number`), { isValueError: true });
+    }
     return asNumber;
   };
 
@@ -109,7 +154,7 @@ export function evaluateExpression(text, resolve) {
     }
     if(token.widget === null && constants[token.value] !== undefined)
       return constants[token.value];
-    return number(resolve(token.value, token.widget));
+    return number(skipping ? 0 : resolve(token.value, token.widget));
   }
 
   // right associative, and binding tighter than a unary minus so -x^2 is -(x^2)
@@ -145,8 +190,10 @@ export function evaluateExpression(text, resolve) {
         const operator = take().value;
         const right = number(parseUnary());
         value = operator == '*' ? number(value) * right : operator == '/' ? number(value) / right : number(value) % right;
-      } else if(peek() && (peek().type == 'number' || peek().type == 'name' || isOperator('('))) {
-        // implicit multiplication: 2x, 3(x+1), 2pi
+      } else if(tokens[position-1] && tokens[position-1].type == 'number' && peek() && (peek().type == 'name' || isOperator('('))) {
+        // implicit multiplication: 2x, 3(x+1), 2pi - only ever a number in
+        // front of a name or a bracket, so the stray space in "2 3x" is a
+        // reported error instead of quietly meaning 6x
         value = number(value) * number(parseUnary());
       } else {
         return value;
@@ -164,26 +211,31 @@ export function evaluateExpression(text, resolve) {
     return value;
   }
 
+  // Not chainable: "0 < x < 500" would otherwise read as "(0 < x) < 500", i.e.
+  // "true < 500", which is true wherever the widget is - a limit that silently
+  // does nothing. Saying so is the only way the author finds out.
+  const comparisons = [ '<', '<=', '>', '>=', '==', '!=' ];
   function parseComparison() {
-    let value = parseSum();
-    while(isOperator('<', '<=', '>', '>=', '==', '!=')) {
-      const operator = take().value;
-      const right = parseSum();
-      value = operator == '<' ? value < right
-            : operator == '<=' ? value <= right
-            : operator == '>' ? value > right
-            : operator == '>=' ? value >= right
-            : operator == '==' ? value == right
-            : value != right;
-    }
-    return value;
+    const value = parseSum();
+    if(!isOperator(...comparisons))
+      return value;
+    const operator = take().value;
+    const right = parseSum();
+    if(isOperator(...comparisons))
+      throw new Error(`"${peek().value}" cannot follow "${operator}" - write "a > 0 && a < 500" instead of "0 < a < 500"`);
+    return operator == '<' ? value < right
+         : operator == '<=' ? value <= right
+         : operator == '>' ? value > right
+         : operator == '>=' ? value >= right
+         : operator == '==' ? value == right
+         : value != right;
   }
 
   function parseAnd() {
     let value = parseComparison();
     while(isOperator('&&')) {
       ++position;
-      const right = parseComparison();
+      const right = skipped(!value, parseComparison);
       value = !!value && !!right;
     }
     return value;
@@ -193,7 +245,7 @@ export function evaluateExpression(text, resolve) {
     let value = parseAnd();
     while(isOperator('||')) {
       ++position;
-      const right = parseAnd();
+      const right = skipped(!!value, parseAnd);
       value = !!value || !!right;
     }
     return value;
@@ -220,6 +272,20 @@ export function expressionNumber(text, resolve, fallback = null) {
     return typeof value == 'number' && isFinite(value) ? value : fallback;
   } catch(e) {
     return fallback;
+  }
+}
+
+// What the validator asks: is this written down correctly? Every name answers
+// with 1 and what a value turns out to be is none of its business, so only the
+// syntax is judged - a property that does not exist yet is not an error here,
+// but "2x^^2 > 4" or "0 < x < 500" are, and they are reported in edit mode
+// instead of quietly limiting nothing.
+export function expressionError(text) {
+  try {
+    evaluateExpression(text, _=>1);
+    return null;
+  } catch(e) {
+    return e.isValueError ? null : e.message;
   }
 }
 

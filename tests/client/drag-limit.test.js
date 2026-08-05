@@ -104,4 +104,24 @@ describe('a dragLimit condition', () => {
     expect(w.dragLimitedCoord({ x: 900, y: 400 })).toMatchObject({ x: 300, y: 400 });
     expect(w.dragLimitedCoord({ x: 900, y: 100 })).toMatchObject({ x: 0, y: 100 });
   });
+
+  test('never falls back outside the rectangle, wherever the widget sits', () => {
+    // a routine put the widget at 900 - outside its own maxX, which no drag may
+    // hand back even though the condition is what refuses the drop
+    const w = widgetAt(900, 100, { maxX: 300, condition: 'x > 500' });
+    expect(w.dragLimitedCoord({ x: 400, y: 100 }).x).toBeLessThanOrEqual(300);
+  });
+
+  test('reads a missing condition as no condition', () => {
+    const w = widgetAt(0, 0, { maxX: 300, condition: null });
+    expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 300, y: 900 });
+  });
+
+  test('lets a condition guard against the widget it reads being gone', () => {
+    // && stops at the left side, so the missing widget is never read
+    const w = widgetAt(0, 0, { condition: '${PROPERTY size OF gone} > 0 && x < 100' });
+    expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 900, y: 900 });
+    createWidget({ id: 'gone', type: 'basic', size: 300 });
+    expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 0, y: 900 });
+  });
 });

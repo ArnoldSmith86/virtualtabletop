@@ -1795,7 +1795,9 @@ function jeAddLimitCommand(key, value) {
 // The area a widget can be dragged in does not have to be a rectangle: a
 // condition is an inequality in x and y (the top left corner, in the same
 // coordinates as the four sides) that the drag keeps true. The starting point
-// is the half-plane below the diagonal - short, and it shows the syntax.
+// is the half-plane below the diagonal - short, and it shows the syntax. The
+// second command turns one condition into the list of them that a shape needs
+// more than one inequality for.
 function jeAddLimitConditionCommand() {
   jeCommands.push({
     id: 'limit_condition',
@@ -1805,6 +1807,16 @@ function jeAddLimitConditionCommand() {
     call: async function() {
       jeStateNow.dragLimit.condition = '###SELECT ME###';
       jeSetAndSelect('y > x');
+    }
+  });
+  jeCommands.push({
+    id: 'limit_condition_add',
+    name: 'another condition',
+    context: '^[^ ]* ↦ dragLimit',
+    show: _=>typeof jeStateNow.dragLimit == "object" && jeStateNow.dragLimit !== null && jeStateNow.dragLimit.condition !== undefined,
+    call: async function() {
+      jeStateNow.dragLimit.condition = asArray(jeStateNow.dragLimit.condition).concat([ '###SELECT ME###' ]);
+      jeSetAndSelect('x > y');
     }
   });
 }

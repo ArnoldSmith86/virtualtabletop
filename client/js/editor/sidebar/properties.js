@@ -364,16 +364,6 @@ function dragLimitConditions(dragLimit) {
   return condition === undefined || condition === null ? [] : asArray(condition);
 }
 
-// A side of the rectangle can be an expression instead of a number, and a
-// condition ("2x^2 + y > 4") bounds the drag to an area no rectangle can
-// describe - neither of which the four number inputs can show. A dragLimit
-// using either is left to the generic "Other properties" list, so it stays
-// visible and editable instead of reading as an empty rectangle.
-function dragLimitIsDynamic(dragLimit) {
-  return dragLimitConditions(dragLimit).length > 0
-      || dragLimitKeys.some(key => typeof dragLimitValue(dragLimit, key) == 'string');
-}
-
 function dicePreviewRotation(faceCount) {
   if(faceCount == 4)
     return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
@@ -1074,7 +1064,7 @@ const editorPropertyHints = {
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
-  dragLimit: 'A rectangle the widget\'s top left corner is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. It only limits dragging - a routine can still move the widget anywhere. In the JSON editor each side can be an expression instead of a number, and a "condition" like "2x^2 + y > 4" limits the drag to any area that can be written down.',
+  dragLimit: 'An area the widget\'s top left corner is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. Each side can be an expression instead of a number, and a condition like "2x^2 + y > 4" cuts any other shape. It only limits dragging - a routine can still move the widget anywhere.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
   lineWidth: 'The brush width used for new canvas strokes.',
   activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
@@ -5226,17 +5216,18 @@ class PropertiesModule extends SidebarModule {
 
   // --- drag limits ---
 
-  // Curated editor for "dragLimit": the rectangle move() keeps the widget's top
-  // left corner in while it is dragged. Like the grid limits the four sides
-  // only make sense together, so one checkbox adds or drops all of them.
+  // Curated editor for "dragLimit": the area move() keeps the widget's top left
+  // corner in while it is dragged - four sides plus any number of conditions.
+  // Like the grid limits the four sides only make sense together, so one
+  // checkbox adds or drops all of them.
   renderDragLimitSection(widget, target) {
     // a rectangle per widget - merging four numbers across a selection whose
     // widgets sit in different places has no safe common value
-    if(!this.showsDragLimitSection(widget))
+    if(widget.isMulti)
       return;
 
     const section = this.renderCollapsibleSection('Drag limits', true, body=>{
-      div(body, 'gridHelp', 'Keeps this widget inside a rectangle while it is dragged, so it cannot be dropped somewhere it is hard to get back from. The limits are measured on its top left corner, in the coordinates of its parent.');
+      div(body, 'gridHelp', 'Keeps this widget inside an area while it is dragged, so it cannot be dropped somewhere it is hard to get back from. The area is measured on its top left corner, in the coordinates of its parent: four sides make a rectangle, and a condition cuts any other shape.');
 
       const host = div(body, 'gridLimits');
       // renderRebuildable: the four inputs listen to dragLimit, so the ones of
@@ -5245,19 +5236,17 @@ class PropertiesModule extends SidebarModule {
       this.renderRebuildable(rebuild=>{
         rebuildLimits = rebuild;
         host.innerHTML = '';
-        // the four inputs also step aside when the limit turns into an
-        // expression or a condition while the section is open - showing it as
-        // an empty rectangle would overwrite it with the next keystroke
-        if(!dragLimitIsSet(widget.get('dragLimit')) || dragLimitIsDynamic(widget.get('dragLimit')))
+        if(!dragLimitIsSet(widget.get('dragLimit')))
           return;
-        const x = div(host, 'propertyInlineRow numberPairRow');
+        const x = div(host, 'propertyInlineRow numberPairRow dragLimitRow');
         div(x, 'numberPairLabel', 'X from/to');
         this.renderDragLimitNumber(widget, 'minX', 'min', x);
         this.renderDragLimitNumber(widget, 'maxX', 'max', x);
-        const y = div(host, 'propertyInlineRow numberPairRow');
+        const y = div(host, 'propertyInlineRow numberPairRow dragLimitRow');
         div(y, 'numberPairLabel', 'Y from/to');
         this.renderDragLimitNumber(widget, 'minY', 'min', y);
         this.renderDragLimitNumber(widget, 'maxY', 'max', y);
+        this.renderDragLimitCondition(widget, host);
       });
 
       new CheckboxInput(this, widget, 'Limit where it can be dragged', {
@@ -5279,7 +5268,7 @@ class PropertiesModule extends SidebarModule {
           } : {});
           rebuildLimits();
         },
-        hint: 'Only the corner is limited, so a widget can still stick out of the rectangle by its own width and height. Clearing one of the four fields removes the limit on that side.'
+        hint: 'Only the corner is limited, so a widget can still stick out of the area by its own width and height. Clearing one of the four fields removes the limit on that side.'
         // its own host so the label can take the size of the numberPairLabels
         // of the X/Y rows below it instead of reading as a heading above them
       }).render(div(body, 'gridLimitToggle'));
@@ -5298,12 +5287,6 @@ class PropertiesModule extends SidebarModule {
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.dragLimit));
   }
 
-  // see dragLimitIsDynamic: what the four number inputs cannot show is edited
-  // as raw JSON in "Other properties" instead of being hidden behind them
-  showsDragLimitSection(widget) {
-    return !widget.isMulti && !dragLimitIsDynamic(widget.get('dragLimit'));
-  }
-
   updateDragLimit(widget, change) {
     const current = widget.get('dragLimit');
     const limit = Object.assign({}, isObjectLike(current) ? current : {});
@@ -5316,14 +5299,36 @@ class PropertiesModule extends SidebarModule {
     this.inputValueUpdated(widget, 'dragLimit', limit);
   }
 
-  // A number input bound to one side of the rectangle.
+  // One side of the rectangle: a number, or an expression that computes one, so
+  // the side can follow the state ("${PROPERTY width OF board} - 100"). The
+  // same input Scale uses, for the same "a number or something the engine
+  // reads" reason.
   renderDragLimitNumber(widget, key, label, target) {
-    return new NumberInput(this, widget, label, {
+    return new NumberOrTextInput(this, widget, label, {
       listenTo: [ 'dragLimit' ],
       nullIfEmpty: true,
-      step: 1,
+      placeholder: 'none',
       getValue: _=>dragLimitValue(widget.get('dragLimit'), key),
       setValue: value=>this.updateDragLimit(widget, { [key]: value })
+    }).render(target);
+  }
+
+  // The area does not have to be a rectangle: a condition is an inequality in
+  // x and y - the corner being tested, in the same coordinates as the four
+  // sides - that a drag keeps true. One per line, all of which have to hold.
+  renderDragLimitCondition(widget, target) {
+    return new TextInput(this, widget, 'Condition', {
+      listenTo: [ 'dragLimit' ],
+      multiline: true,
+      placeholder: 'e.g. 2x^2 + y > 4',
+      getValue: _=>dragLimitConditions(widget.get('dragLimit')).join('\n'),
+      setValue: value=>{
+        const conditions = String(value === null ? '' : value).split('\n').map(c=>c.trim()).filter(c=>c !== '');
+        // one condition is stored as a string, several as a list, none drops
+        // the key - the shapes the engine and the JSON editor already read
+        this.updateDragLimit(widget, { condition: conditions.length ? (conditions.length == 1 ? conditions[0] : conditions) : null });
+      },
+      hint: 'Ordinary maths: x and y are the widget\'s top left corner, width, height or any other property of the widget can be used by name, and ${PROPERTY name OF id} reads another widget\'s. A number in front of a name or a bracket multiplies, so "2x^2 + y > 4" is written as it looks. Combine with && and ||, or write one inequality per line.'
     }).render(target);
   }
 
@@ -6510,10 +6515,7 @@ class PropertiesModule extends SidebarModule {
       // temporary and renderEvents skips it, so it keeps the buttons that open
       // the routines of its pile template in the JSON editor.
       const automationProperties = widget.get('type') == 'pile' ? this.renderAutomationsSection(widget, container) : [];
-      // dragLimit is normally curated in Position, but not while it uses an
-      // expression or a condition - then it belongs in this list instead
-      const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude))
-        .filter(property => property != 'dragLimit' || this.showsDragLimitSection(widget));
+      const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
       this.addSubHeader('Other properties', container);
       this.renderGenericProperties(widget, exclude, container);
     });
@@ -6541,17 +6543,6 @@ class PropertiesModule extends SidebarModule {
         lastAvailability = signature;
         rebuild();
       });
-
-    // dragLimit is the same story with one property: it moves in and out of
-    // this list as its curated section steps aside for an expression or a
-    // condition (see showsDragLimitSection)
-    let lastShowsDragLimit = this.showsDragLimitSection(widget);
-    this.addPropertyListener(widget, 'dragLimit', _=>{
-      if(this.showsDragLimitSection(widget) === lastShowsDragLimit)
-        return;
-      lastShowsDragLimit = this.showsDragLimitSection(widget);
-      rebuild();
-    });
   }
 
   renderAutomationsSection(widget, target = this.moduleDOM) {

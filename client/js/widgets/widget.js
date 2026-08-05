@@ -803,18 +803,27 @@ export class Widget extends StateManaged {
     const bound = key=>limit[key] === undefined ? undefined : expressionNumber(limit[key], resolve);
     const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
 
-    let x = coord.x, y = coord.y;
-    if(minX !== undefined && minX !== null) x = Math.max(minX, x);
-    if(maxX !== undefined && maxX !== null) x = Math.min(maxX, x);
-    if(minY !== undefined && minY !== null) y = Math.max(minY, y);
-    if(maxY !== undefined && maxY !== null) y = Math.min(maxY, y);
+    const clampX = value=>{
+      if(minX !== undefined && minX !== null) value = Math.max(minX, value);
+      if(maxX !== undefined && maxX !== null) value = Math.min(maxX, value);
+      return value;
+    };
+    const clampY = value=>{
+      if(minY !== undefined && minY !== null) value = Math.max(minY, value);
+      if(maxY !== undefined && maxY !== null) value = Math.min(maxY, value);
+      return value;
+    };
+    const x = clampX(coord.x), y = clampY(coord.y);
 
-    const conditions = asArray(limit.condition === undefined ? [] : limit.condition);
+    const conditions = asArray(limit.condition === undefined || limit.condition === null ? [] : limit.condition).filter(c=>c !== null && c !== undefined);
     if(!conditions.length)
       return Object.assign({}, coord, { x, y });
 
     const allowed = position=>conditions.every(c=>expressionCondition(c, this.dragLimitResolver(position)));
-    const currentX = this.get('x'), currentY = this.get('y');
+    // where the widget is, put through the rectangle as well: it is a hard
+    // bound, so a widget sitting outside it (a routine moved it, a side moved
+    // under it) must not be able to stay there through the fallbacks below
+    const currentX = clampX(+this.get('x') || 0), currentY = clampY(+this.get('y') || 0);
     // moving on one axis only, the axis that gives up the least first, then
     // staying put - and if even that is outside, the widget is not held
     const alternatives = Math.abs(y - currentY) < Math.abs(x - currentX)

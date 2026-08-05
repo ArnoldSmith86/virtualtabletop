@@ -1911,6 +1911,21 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   min-width: 0;
 }
 
+/* a side of the drag limit takes a number or an expression that computes one,
+   and an expression does not fit the width a number needs */
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput {
+  flex: 1 1 auto;
+}
+
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput > label:not(.switchbox) {
+  padding-right: 4px;
+}
+
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput input[type=text] {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .editorModule .gridExtraRow {
   display: flex;
   align-items: center;

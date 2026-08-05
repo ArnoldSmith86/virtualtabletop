@@ -1,4 +1,4 @@
-import { evaluateExpression, expressionCondition, expressionNumber } from '../../client/js/expression.js';
+import { evaluateExpression, expressionCondition, expressionError, expressionNumber } from '../../client/js/expression.js';
 
 // x and y are what a dragLimit condition is tested with, everything else stands
 // in for a widget property
@@ -54,12 +54,45 @@ describe('the expression language', () => {
     expect(evaluateExpression('2y+10>5x', (name)=>({ x: 10, y: 1 }[name]))).toBe(false);
   });
 
+  test('reads the right side of && and || only when it decides the result', () => {
+    // a name that cannot be read throws - but not where it is never reached,
+    // so a condition can check whether the widget it reads exists at all
+    expect(_=>value('nope > 1')).toThrow();
+    expect(value('x > 100 && nope > 1')).toBe(false);
+    expect(value('x > 1 || nope > 1')).toBe(true);
+    expect(_=>value('x > 1 && nope > 1')).toThrow();
+    // a syntax error is still one, reached or not
+    expect(_=>value('x > 100 && 2x^^2 > 1')).toThrow();
+  });
+
   test('throws rather than guessing', () => {
     expect(_=>value('x +')).toThrow();
     expect(_=>value('(x')).toThrow();
     expect(_=>value('x @ y')).toThrow();
     expect(_=>value('nope + 1')).toThrow();     // no such property
     expect(_=>value('')).toThrow();
+  });
+
+  test('refuses a chained comparison instead of always answering true', () => {
+    // "0 < x < 500" reads as "(0 < x) < 500", i.e. "true < 500" - true for
+    // every x, which as a dragLimit would be a limit that limits nothing
+    expect(_=>value('0 < x < 500')).toThrow();
+    expect(_=>value('1 == 1 == 1')).toThrow();
+    expect(value('x > 0 && x < 500')).toBe(true);
+  });
+
+  test('multiplies implicitly only where a number is written in front', () => {
+    expect(_=>value('2 3')).toThrow();          // a stray space in "23"
+    expect(_=>value('x y')).toThrow();
+    expect(value('2 x')).toBe(6);               // spaces around it are fine
+  });
+
+  test('does not answer with what every object inherits', () => {
+    // a widget property named "constructor" or "toString" is read like any
+    // other name rather than resolving to Object.prototype
+    expect(_=>value('constructor')).toThrow();
+    expect(_=>value('toString(1)')).toThrow();
+    expect(evaluateExpression('constructor + 1', name=>({ constructor: 41 }[name]))).toBe(42);
   });
 });
 
@@ -78,5 +111,23 @@ describe('the two shapes a property asks for', () => {
     expect(expressionCondition('x + 1', resolve)).toBe(true); // 4 is truthy
     expect(expressionCondition('broken(', resolve)).toBe(true);
     expect(expressionCondition(undefined, resolve)).toBe(true);
+  });
+});
+
+// what the validator reports in edit mode, since a broken expression is
+// ignored rather than complained about while dragging
+describe('the syntax check', () => {
+  test('passes anything that can be read, whatever it reads', () => {
+    expect(expressionError('2x^2 + y > 4')).toBe(null);
+    expect(expressionError('${PROPERTY seats OF board} * 100')).toBe(null);
+    expect(expressionError('whatever + 1')).toBe(null); // a property, not a typo
+    expect(expressionError('x / (y - 1) + 1')).toBe(null); // what it computes is not its business
+  });
+
+  test('names what cannot be read', () => {
+    expect(expressionError('2x^^2 > 4')).toEqual(expect.any(String));
+    expect(expressionError('0 < x < 500')).toEqual(expect.any(String));
+    expect(expressionError('(x + 1')).toEqual(expect.any(String));
+    expect(expressionError('')).toEqual(expect.any(String));
   });
 });

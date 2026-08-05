@@ -302,8 +302,16 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
     // the whole table minus the widget's own box
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":1509,"maxY":909}')
-    .typeText(dragLimitBody.find('.gridLimits input[type=number]').nth(1), '800', { replace: true })
+    .typeText(dragLimitBody.find('.dragLimitRow input').nth(1), '800', { replace: true })
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":800,"maxY":909}')
+    // a side takes an expression instead of a number, and the area does not
+    // have to be a rectangle at all - one condition per line
+    .typeText(dragLimitBody.find('.dragLimitRow input').nth(1), '${PROPERTY width OF checker} * 10', { replace: true })
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909}')
+    .typeText(dragLimitBody.find('textarea'), 'y > x')
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":"y > x"}')
+    .typeText(dragLimitBody.find('textarea'), '\n2x^2 + y > 4')
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
     // the four sides only mean something together, so the switch drops all of
     // them - and an empty rectangle is the default, i.e. no property at all
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
