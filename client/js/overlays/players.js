@@ -60,10 +60,8 @@ function nextMetaUpdate(isApplied, timeout=3000) {
   });
 }
 
-// shows a spinner on the button while a returned promise is pending; the row usually
-// gets replaced by the meta update before the button is restored
-// the widget properties the server looks at before it lets a player be removed, and how to say
-// in the tooltip of the disabled button what is still pointing at that player
+// the widget properties that can still point at a player after they left, and how to name
+// them in the warning shown before that player is taken off the list
 const playerReferences = {
   owner: 'cards or other widgets in the game belong to them',
   player: 'they are seated in the game',
@@ -78,6 +76,16 @@ function unavailableButton(button, reason) {
   button.title = reason;
 }
 
+// what a removed player leaves behind is invisible in this overlay, so say it before it happens
+async function confirmRemoval(player, references) {
+  const reasons = references.map(p=>playerReferences[p]).join(' and ');
+  const confirmed = await confirmOverlay('Remove player', `${player} is not connected, but ${reasons}.\n\nRemoving them only takes the name off this list - everything that belongs to them stays in the game and is picked up again by a player of the same name.`, 'Remove', 'Keep', 'delete', 'undo', 'red');
+  showOverlay('playerOverlay');
+  return confirmed;
+}
+
+// shows a spinner on the button while a returned promise is pending; the row usually
+// gets replaced by the meta update before the button is restored
 function serverActionButton(button, action) {
   button.addEventListener('click', async function() {
     if(button.disabled)
@@ -178,15 +186,16 @@ function fillPlayerList(players, active, sessions) {
             return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == mySessionID && s.player == player));
           });
         }
-        // a player the game still points at cannot be removed - the sessions column already says
-        // why a connected one cannot, so only the widget references need spelling out
+        // only a connected player cannot be taken off the list, and the sessions column of the
+        // same row already says so - anybody else can go, with a warning about what they leave behind
         if(session) {
           removeFromDOM($('.removePlayer', row));
-        } else if(references.length) {
-          const reasons = references.map(p=>playerReferences[p]);
-          unavailableButton($('.removePlayer', row), `You cannot remove ${player} because ${reasons.join(' and ')}. Rename them to a player who stays, or free what belongs to them, and the button becomes available.`);
         } else {
-          serverActionButton($('.removePlayer', row), function() {
+          if(references.length)
+            $('.removePlayer', row).title = `Remove ${player} from the list - ${references.map(p=>playerReferences[p]).join(' and ')}`;
+          serverActionButton($('.removePlayer', row), async function() {
+            if(references.length && !await confirmRemoval(player, references))
+              return;
             toServer('removeLocalPlayer', { player });
             return nextMetaUpdate(args=>args.meta.players[player] === undefined);
           });

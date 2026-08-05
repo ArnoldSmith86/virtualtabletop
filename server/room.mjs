@@ -854,8 +854,10 @@ export default class Room {
     return Object.values(this.state).some(w=>[ w.owner, w.player, w.artist ].some(v=>Array.isArray(v) ? v.indexOf(playerName) != -1 : v == playerName));
   }
 
+  // a player the game still points at can be removed too - the client warns about what stays
+  // behind, and those widgets pick the name up again as soon as a player uses it
   removeLocalPlayer(removingPlayer, playerName) {
-    if(this.players.filter(p=>p.name == playerName).length || this.playerIsReferencedInWidgets(playerName))
+    if(this.players.filter(p=>p.name == playerName).length)
       return;
     delete this.state._meta.players[playerName];
     this.sendMetaUpdate();
