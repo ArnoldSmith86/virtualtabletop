@@ -4,6 +4,32 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 
 setupTestEnvironment();
 
+test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await ClientFunction(() => localStorage.removeItem('editorState'))();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .expect(Selector('#editorSidebar button[icon=tune].active').exists).ok();
+});
+
+test('Edit mode restores the remembered module instead of the default one', async t => {
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await ClientFunction(() => localStorage.setItem('editorState', JSON.stringify({ modules: { JSON: 'editorModuleTopLeft' } })))();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk();
+});
+
 test('Pan in edit mode while holding Space', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -54,7 +80,7 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   })();
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_old')
     // the icon color only paints something once there is an icon (or a class
     // or css reading --color), so its chip is not offered on a plain widget
@@ -146,7 +172,7 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
   const rows = Selector('#editorModules .diceFaceRow');
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_die')
     // Background, pips/icon and border no longer repeat generic color help.
     .expect(Selector('#editorModules .diceSharedColors .info-button').count).eql(0)
@@ -247,7 +273,7 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
   // a holder takes cards until it is told otherwise - the match rows say so
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_holder')
     .expect(Selector('#editorModules .widgetHeaderType').innerText).contains('Holder')
     .expect(Selector('#editorModules .dropTargetType').value).eql('type:card');
@@ -290,7 +316,7 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
   // inside Position rather than beside it
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_checker')
     .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
     .expect(nestedSection.withExactText('Snap grid').exists).ok()
@@ -361,7 +387,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
   // the handle is the only part of a pile the cards do not cover
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(Selector('#w_pile .handle'))
     .expect(Selector('.widgetHeaderType').innerText).contains('Pile')
     // a pile is temporary, so the panel says up front that it edits the
@@ -444,7 +470,7 @@ test('A deck that overrides the pile template says so while the pile mirrors int
   // also the default one
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(Selector('#w_pile .handle'))
     .expect(Selector('.pileTemplateMode').innerText).contains('pile template')
     .expect(Selector('.pileTemplateMode .pileHelp.warning').innerText).contains('onPileCreation');
@@ -464,7 +490,7 @@ test('Loading another game with a widget still selected does not break the clien
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_card')
     .expect(Selector('.widgetHeaderType').innerText).contains('Card');
 
@@ -497,7 +523,7 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
   // factor it is drawn at to Size
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_block')
     .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
     .click('#inheritChildZ_block')
@@ -593,6 +619,9 @@ test('Create game using edit mode', async t => {
   await setName(t);
   await t
     .click('#editButton')
+    // this one places widgets in the room, so it gets the whole room: close the
+    // Edit Widgets module edit mode opens on
+    .click('#editorSidebar [icon=tune]')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-spinner0')
     .typeText('#INPUT_\\;values', '8', { replace: true })
@@ -680,7 +709,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -723,7 +752,7 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -772,7 +801,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -829,7 +858,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -888,7 +917,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -959,7 +988,7 @@ test('Deck editor: switching games while editing does not crash', async t => {
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -1055,7 +1084,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#editor .noSelectionButton[icon=style]') // "Open deck editor": opens the empty editor (no auto-created deck)
     .click('#deckEditorAddDeck')                     // Add New Deck submenu (defaults to the Empty deck option)
     .click('#deckEditorNewDeckPanel button')         // "Create empty deck" -> creates a starter deck and opens it
@@ -1682,7 +1711,7 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_multiDeck') // selects the deck, showing the abbreviated Basic/Other properties panel
     .click('#propertiesOpenDeckEditor') // opens the full deck editor on it
     .click(objectRow.nth(0));
@@ -1784,7 +1813,7 @@ test('Line widget in edit mode', async t => {
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-line')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     // "Add stop" opens the menu of the three ways to add one; the first is a new
     // widget inheriting from an existing stop, which the Add button then creates
     .click('#editorModules .lineAddStop')

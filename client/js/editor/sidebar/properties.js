@@ -1331,6 +1331,9 @@ function defaultSuitName(icon) {
   return icon.replace(/^.*\//, '').replace(/\.svg$/, '').replace(/^[[(]|[\])]$/g, '');
 }
 
+// makes the id of the Automations "Full size" switch unique per render
+let automationsFullSizeToggles = 0;
+
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
@@ -10240,7 +10243,9 @@ class PropertiesModule extends SidebarModule {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.className = 'switchbox';
-    input.id = `automationsFullSize_${rand().toString(36).substring(3, 12)}`;
+    // a counter instead of rand() because the random sequence is the game's:
+    // spending a number on a DOM id shifts every id a widget gets afterwards
+    input.id = `automationsFullSize_${++automationsFullSizeToggles}`;
     input.checked = this.automationsFullSize();
     input.onchange = _=>{
       localStorage.setItem('editor.automationsFullSize', input.checked);

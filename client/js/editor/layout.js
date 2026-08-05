@@ -125,11 +125,19 @@ function renderDragToolbar(buttons) {
 
 function renderSidebar(modules) {
   const state = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}').modules;
+  let opened = false;
   for(const module of modules) {
     module.renderButton($('#editorSidebar'));
-    if(state[module.title] && state[module.title] != 'editorModuleInOverlay' && $(`#${state[module.title]}`))
+    if(state[module.title] && state[module.title] != 'editorModuleInOverlay' && $(`#${state[module.title]}`)) {
       module.openInTarget($(`#${state[module.title]}`));
+      opened = true;
+    }
   }
+
+  // Without a remembered module the sidebar would just be a column of buttons,
+  // so entering edit mode for the first time starts on the properties panel.
+  if(!opened)
+    modules.find(module=>module instanceof PropertiesModule).openInTarget($('#editorModuleTopLeft'));
 
   editorModulesResizer();
 }
