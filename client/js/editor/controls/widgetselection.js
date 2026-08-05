@@ -82,6 +82,10 @@ function handleWidgetPickerClick(clickedWidget) {
 // not be mistaken for the player picking that widget
 let restoringWidgetPickerSelection = false;
 
+function isWidgetPickerRestoringSelection() {
+  return restoringWidgetPickerSelection;
+}
+
 function handleWidgetPickerSelection(newSelection) {
   if(restoringWidgetPickerSelection)
     return true;

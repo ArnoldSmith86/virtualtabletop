@@ -249,6 +249,19 @@ class Popup {
   }
 }
 
+// Every popup of the editor belongs to the widget that is being edited: it hangs
+// off a control (a chip of a routine, the button that adds one) that is thrown
+// away as soon as the editor moves on to another widget, so it would be left
+// floating over the new one with nothing behind it. A click outside dismisses a
+// popup, but a click that selects another widget in the room is not one for the
+// popups that read the room - the widget pickers take the clicks in there - and
+// a selection also changes without any click at all: deleting the widget, an
+// undo, or a new state arriving from the server.
+function closeEditorPopups() {
+  for(const popup of [ ...openPopups ])
+    popup.hide();
+}
+
 // what a tutorial is called in words: the title of the popup it is offered from
 // where there is one ("SELECT - Pick the widgets…" is a SELECT tutorial), and
 // otherwise the file name without the part every one of them starts with

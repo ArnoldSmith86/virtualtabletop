@@ -178,14 +178,18 @@ function selectionChanged(previousSelection, newSelection) {
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
 
-  // The sound library is an overlay that outlives the editor it was opened from
-  // (it does not cover the sidebar, and a widget can also be selected without
-  // clicking in the room): whoever opened it edits the widget that was shown
-  // then, so a sound picked in it now would go to a widget that is no longer on
-  // screen. A widget picker is not affected - it restores the selection it
-  // started from after every pick, which is not the editor moving on.
-  if(!isWidgetPickerActive() && selectionChanged(previousSelectedWidgets, newSelectedWidgets))
+  // Whatever the editor has open belongs to the widget that was being edited, so
+  // moving on to another one takes it along: the sound library is an overlay
+  // that outlives the editor it was opened from (it does not cover the sidebar,
+  // and a widget can also be selected without clicking in the room), and the
+  // popups hang off controls this very selection change is about to throw away -
+  // the ones that let widgets be picked in the room ignore clicks in there, so
+  // nothing else ever closes them. A widget picker is not the editor moving on:
+  // it restores the selection it started from after every pick.
+  if(!isWidgetPickerActive() && !isWidgetPickerRestoringSelection() && selectionChanged(previousSelectedWidgets, newSelectedWidgets)) {
     cancelAudioPicker();
+    closeEditorPopups();
+  }
 
   selectedWidgets = newSelectedWidgets;
 

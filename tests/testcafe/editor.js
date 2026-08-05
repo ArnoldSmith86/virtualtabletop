@@ -2010,3 +2010,47 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await t.expect(Selector('#jeLog .jeLogNote').innerText).contains('could not be recorded');
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
+
+test('A routine parameter popup goes away with the widget it belongs to', async t => {
+  await setRoomState({
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] },
+    holder1: { id: 'holder1', type: 'holder', x: 300, y: 100 },
+    holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const fromChip = Selector('.routine-editor-operation [data-parameter=from]');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+  const openFromPopup = async _=>{
+    await t.click('#w_button');
+    if(await routineHeader.getAttribute('aria-expanded') == 'false')
+      await t.click(routineHeader);
+    await t.click(fromChip).expect(popup.exists).ok();
+  };
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]');
+  await openFromPopup();
+
+  // The popup hangs off a chip of the routine of the widget being edited, so a
+  // click that moves the editor on to another widget takes it along - without
+  // this it stays on screen over an editor for a widget it has nothing to do
+  // with. Its own "Pick in the room" is what makes a click in the room fill the
+  // parameter instead, which is why nothing else ever closed it.
+  await t
+    .click('#w_holder2')
+    .expect(popup.exists).notOk()
+    .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
+
+  // with the picker armed the same click belongs to the popup, which stays open
+  await openFromPopup();
+  await t
+    .click(popup.find('button').withText('Pick in the room'))
+    .click('#w_holder2')
+    .expect(popup.exists).ok()
+    .expect(popup.find('.widgetPickerEntry.selected').withText('holder2').exists).ok()
+    .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+});
