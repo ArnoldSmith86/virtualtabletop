@@ -87,7 +87,7 @@ const COMMON_PROPERTIES = {
     dropShadowOwner: 'string',
     dropShadowWidget: 'id',
     dropTarget: 'any',
-    dropLimit: v=>typeof v === 'number' || typeof v === 'string' && v.includes('${') || 'number or dynamic expression expected',
+    dropLimit: 'number',
     inheritChildZ: 'boolean',
     hoverTarget: 'id',
     hoverParent: 'id',

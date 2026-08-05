@@ -1,5 +1,4 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
-import { compute_ops } from '../compute.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -66,29 +65,6 @@ function hasPlayerSpecificChooseField(overlay) {
       field[property] && typeof field[property] == 'object' && !Array.isArray(field[property])
     )
   );
-}
-
-// A property that holds a number can be given as a dynamic expression instead:
-// "${PROPERTY maxCards}", "${PROPERTY seats OF board} * 2", "min ${PROPERTY a} 5".
-// One token is either a property reference (of this widget, or of the widget
-// named after OF), a number, or the operation applied to them - so the two
-// shapes are the ones a routine writes as "op1 operation op2 op3" and
-// "operation op1 op2 op3", with the same operations (compute.js). As in a
-// routine, the parts are separated by spaces.
-const dynamicValueToken = /\$\{PROPERTY ([^}]+?)(?: OF ([^}]+?))?\}|\S+/g;
-
-// A display of a dynamic value has to follow the properties its expression
-// reads, and those usually sit on another widget - one whose deltas the widget
-// showing the value never sees. Displays register the dependencies of their
-// last evaluation here and get called back whenever one of them changes.
-const dynamicValueWatchers = new Map(); // 'widgetID:property' -> Set of callbacks
-
-function notifyDynamicValueWatchers(widgetID, delta) {
-  if(!dynamicValueWatchers.size)
-    return;
-  for(const property in delta)
-    for(const callback of dynamicValueWatchers.get(`${widgetID}:${property}`) || [])
-      callback();
 }
 
 let lastExecutedOperation = null;
@@ -358,8 +334,6 @@ export class Widget extends StateManaged {
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
       this.showEnlarged(null, delta);
     }
-
-    notifyDynamicValueWatchers(this.id, delta);
   }
 
   applyInheritedDeltaToDOM(delta) {
@@ -414,8 +388,6 @@ export class Widget extends StateManaged {
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
-    for(const name in this.dynamicValueWatches || {})
-      this.unwatchDynamicValue(name);
   }
 
   applyRemoveRecursive() {
@@ -807,95 +779,6 @@ export class Widget extends StateManaged {
     } else {
       return false;
     }
-  }
-
-  // Reads a value that is either a plain number or a dynamic expression (see
-  // dynamicValueToken). The expression is evaluated every time the value is
-  // used, so it follows the state without a routine having to write the number
-  // anywhere. Anything that does not come out as a number - a typo, a widget
-  // that is gone, an operation that does not apply - falls back to the given
-  // default rather than to a wrong number. dependencies, when passed, collects
-  // the properties the expression read, for watchDynamicValue().
-  evaluateDynamicNumber(value, fallback = null, dependencies = null) {
-    if(typeof value == 'number')
-      return value;
-    if(typeof value != 'string')
-      return fallback;
-
-    const operands = [];
-    let operation = null;
-    for(const token of value.trim().matchAll(dynamicValueToken)) {
-      if(token[1] !== undefined) {
-        const widgetID = token[2] === undefined ? this.get('id') : token[2].trim();
-        const property = token[1].trim();
-        if(dependencies)
-          dependencies.push(`${widgetID}:${property}`);
-        operands.push(widgets.has(widgetID) ? widgets.get(widgetID).get(property) : null);
-      } else if(token[0].match(/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/)) {
-        operands.push(+token[0]);
-      } else if(operation === null && operands.length < 2) {
-        operation = token[0];
-      } else {
-        return fallback;
-      }
-    }
-
-    let result = operands[0];
-    if(operation !== null) {
-      const op = compute_ops.find(o=>o.name == operation);
-      if(!op)
-        return fallback;
-      try {
-        // the same argument order a routine uses: the operands follow the value
-        // being computed on, which an expression like this one does not have
-        result = op.call(operands[0], operands[0], operands[1], operands[2]);
-      } catch(e) {
-        return fallback;
-      }
-    }
-    if(typeof result == 'string' && result.trim().match(/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/))
-      result = +result;
-    return typeof result == 'number' && isFinite(result) ? result : fallback;
-  }
-
-  // The drop limit as everything that enforces or shows it reads it: -1 (no
-  // limit) both for the default and for an expression that does not evaluate
-  // to a number, so a broken expression cannot make a widget refuse everything.
-  currentDropLimit(dependencies = null) {
-    return this.evaluateDynamicNumber(this.get('dropLimit'), -1, dependencies);
-  }
-
-  // Keeps callback registered for exactly the dependencies the last evaluation
-  // collected, so an expression that changed stops listening to what it no
-  // longer reads. name tells several dynamic values of one widget apart.
-  watchDynamicValue(name, dependencies, callback) {
-    this.dynamicValueWatches = this.dynamicValueWatches || {};
-    const previous = this.dynamicValueWatches[name];
-    if(previous && String(previous.dependencies) == String(dependencies))
-      return;
-
-    this.unwatchDynamicValue(name);
-    if(!dependencies.length)
-      return;
-
-    this.dynamicValueWatches[name] = { dependencies, callback };
-    for(const dependency of dependencies) {
-      if(!dynamicValueWatchers.has(dependency))
-        dynamicValueWatchers.set(dependency, new Set());
-      dynamicValueWatchers.get(dependency).add(callback);
-    }
-  }
-
-  unwatchDynamicValue(name) {
-    const watch = (this.dynamicValueWatches || {})[name];
-    if(!watch)
-      return;
-    for(const dependency of watch.dependencies) {
-      const callbacks = dynamicValueWatchers.get(dependency);
-      if(callbacks && callbacks.delete(watch.callback) && !callbacks.size)
-        dynamicValueWatchers.delete(dependency);
-    }
-    delete this.dynamicValueWatches[name];
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
@@ -3357,10 +3240,8 @@ export class Widget extends StateManaged {
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
           // the pile that would be created is bound by the dropLimit it would
-          // be created with, so a limit below 2 rules the pile out entirely.
-          // The pile does not exist yet, so a dynamic limit is evaluated on the
-          // card that carries the template.
-          const newPileDropLimit = this.evaluateDynamicNumber(thisOnPileCreation && thisOnPileCreation.dropLimit, -1);
+          // be created with, so a limit below 2 rules the pile out entirely
+          const newPileDropLimit = thisOnPileCreation && thisOnPileCreation.dropLimit;
           if(this.pileUpdateFromDrag && newPileDropLimit > -1 && newPileDropLimit < 2)
             continue;
           const pile = Object.assign({

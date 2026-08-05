@@ -92,7 +92,7 @@ export class Pile extends Widget {
     if(!await super.click(mode)) {
 
       const childCount = this.children().length;
-      const dropLimit = this.currentDropLimit();
+      const dropLimit = this.get('dropLimit');
       const cardCount = this.get('showLimit') && dropLimit > -1 ? `${childCount} of ${dropLimit}` : childCount;
       $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${cardCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
 
@@ -285,15 +285,10 @@ export class Pile extends Widget {
 
   // The handle shows how many cards the pile holds. A pile with showLimit set
   // says how many it takes as well - "2/3" - so the limit is readable before a
-  // drop is refused rather than only after. A limit given as a dynamic
-  // expression shows what it currently amounts to, and the watch redraws the
-  // handle when one of the properties it reads changes - those usually sit on
-  // another widget, whose deltas never reach this one.
+  // drop is refused rather than only after.
   updateText() {
     const text = this.get('text');
-    const dependencies = [];
-    const limit = this.currentDropLimit(dependencies);
-    this.watchDynamicValue('dropLimit', dependencies, _=>this.updateText());
+    const limit = this.get('dropLimit');
     const withLimit = text === null && this.get('showLimit') && limit > -1;
     this.handle.classList.toggle('withLimit', withLimit);
     this.handle.textContent = text !== null ? text : withLimit ? `${this.childCount}/${limit}` : this.childCount;

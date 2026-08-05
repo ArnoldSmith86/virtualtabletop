@@ -359,20 +359,6 @@ function dragLimitIsSet(dragLimit) {
   return dragLimitKeys.some(key => dragLimitValue(dragLimit, key) !== null);
 }
 
-// --- drop limit ---
-
-// dropLimit is a number, -1 meaning no limit - or a dynamic expression, which
-// the engine evaluates whenever it applies the limit (evaluateDynamicNumber in
-// widget.js). Everything the editor asks about a limit has to go through these
-// two so an expression does not read as "no limit set".
-function dropLimitIsDynamic(dropLimit) {
-  return typeof dropLimit == 'string';
-}
-
-function dropLimitIsSet(dropLimit) {
-  return dropLimitIsDynamic(dropLimit) ? dropLimit.trim() !== '' : dropLimit > -1;
-}
-
 function dicePreviewRotation(faceCount) {
   if(faceCount == 4)
     return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
@@ -1082,7 +1068,7 @@ const editorPropertyHints = {
   pipColor: 'The color used for the pips or the face symbol of the dice.',
   dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
-  dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries, on a pile the cards it takes. Leave empty for no limit. In the JSON editor it also takes a dynamic expression, e.g. "${PROPERTY seats OF board}", which is evaluated whenever the limit is applied.',
+  dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries, on a pile the cards it takes. Leave empty for no limit.',
   showLimit: 'Make the handle read "2/3" instead of "2", so the drop limit of the pile is readable before a drop is refused.',
   preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
   pileSnapRange: 'How close in pixels this pile has to be dropped to another pile or card to combine with it. A card dropped onto this pile uses its own snap range instead, which comes from the pile template of its deck.',
@@ -6449,7 +6435,7 @@ class PropertiesModule extends SidebarModule {
       property: 'showLimit',
       hint: editorPropertyHints.showLimit
     }).render(this.moduleDOM);
-    const update = _=>dom.style.display = dropLimitIsSet(widget.get('dropLimit')) && widget.get('text') === null ? '' : 'none';
+    const update = _=>dom.style.display = widget.get('dropLimit') > -1 && widget.get('text') === null ? '' : 'none';
     this.addPropertyListener(widget, 'dropLimit', update);
     this.addPropertyListener(widget, 'text', update);
   }
@@ -6466,11 +6452,9 @@ class PropertiesModule extends SidebarModule {
 
   // A limit that is already set is always offered, even on a widget that takes
   // no drops right now: it would be stuck otherwise, since being offered here
-  // is what keeps it out of the generic "Other properties" list. A limit given
-  // as a dynamic expression is the one thing the number input cannot show, so
-  // that one is left to "Other properties" until the input can edit one.
+  // is what keeps it out of the generic "Other properties" list.
   showsDropLimit(widget) {
-    return !dropLimitIsDynamic(widget.get('dropLimit')) && (this.takesDrops(widget) || widget.get('dropLimit') > -1);
+    return this.takesDrops(widget) || widget.get('dropLimit') > -1;
   }
 
   // -1 is how "no limit" is stored, but an empty field says it better
