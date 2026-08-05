@@ -428,14 +428,33 @@ export class Widget extends StateManaged {
   }
 
   async checkParent(forceDetach) {
-    if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
+    const stillInside = this.currentParent && overlap(this.domElement, this.currentParent.domElement);
+    if(this.currentParent && (forceDetach || !stillInside)) {
       await this.set('parent', null);
-      await this.set('hoverParent', null);
-      if(this.currentParent.get('childrenPerOwner'))
-        await this.set('owner',  null);
+      // A forced detach can happen while the widget is still completely inside the holder it
+      // is being dragged out of: a holder stacked on top of that one becomes the drop target
+      // as soon as the widget is dragged over it. owner and hoverParent are what keeps the
+      // widget out of sight of the other players, so they are only cleared once it has
+      // really left - otherwise a card is shown to the whole table before it has even left
+      // the hand it is being dragged around in. Leaving itself keeps its timing: onLeave and
+      // leaveRoutine still run right here.
+      this.detachedParent = this.currentParent;
+      await this.checkDetachedParent(!stillInside);
       if(this.currentParent.dispenseCard)
         await this.currentParent.dispenseCard(this);
       delete this.currentParent;
+    }
+  }
+
+  // Clears what checkParent() kept when it detached the widget while it was still inside its
+  // holder. Called on every move so that the widget stops being the owner's as soon as it no
+  // longer overlaps that holder, and with force when the drag ends.
+  async checkDetachedParent(force) {
+    if(this.detachedParent && (force || !overlap(this.domElement, this.detachedParent.domElement))) {
+      await this.set('hoverParent', null);
+      if(this.detachedParent.get('childrenPerOwner'))
+        await this.set('owner',  null);
+      delete this.detachedParent;
     }
   }
 
@@ -2546,6 +2565,8 @@ export class Widget extends StateManaged {
     await this.snapToGrid();
 
     if(!this.get('fixedParent') && this.get('movable')) {
+      await this.checkParent();
+
       const lastHoverTarget = this.hoverTarget;
       // The hit test below asks the DOM where this widget is, but the delta that
       // carries the position set above only reaches the DOM when the batch around
@@ -2557,12 +2578,10 @@ export class Widget extends StateManaged {
       if(this.domElement.style.transform != this.cssTransform())
         flushDelta();
 
-      // A widget stays in its holder until it no longer overlaps it - leaving as soon as the
-      // hover target changes would run the holder's onLeave and drop the owner while the
-      // widget is still inside, which reveals a card to everyone before it has even left the
-      // hand it is being dragged around in. This runs after the flush above so that the
-      // overlap is checked against where the widget is now, not where it was last event.
-      await this.checkParent();
+      // after the flush, so that a widget that was detached while it was still inside its
+      // holder is measured against where it is now: the last mouse event of a drag is the
+      // one that takes the widget out of the holder, and there is no next one to notice it
+      await this.checkDetachedParent();
 
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
@@ -2606,6 +2625,8 @@ export class Widget extends StateManaged {
 
       if (lastHoverTarget != this.hoverTarget) {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
+        if(this.hoverTarget != this.currentParent)
+          await this.checkParent(true);
 
         // When the hover target changes we may need to create or remove the shadow widget.
         // Only create a shadow widget if the holder is shared and doesn't already have one in it.
@@ -2726,6 +2747,9 @@ export class Widget extends StateManaged {
     delete this.stopDropLines;
 
     await this.set('hoverTarget', null);
+    // the drag is over, so the widget is not on its way out of anything any more - this runs
+    // before the drop below so that a holder taking the widget in still has the last word
+    await this.checkDetachedParent(true);
 
     if(!this.get('fixedParent') && this.get('movable')) {
       for(const t of this.dropTargets)
