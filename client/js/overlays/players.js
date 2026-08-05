@@ -1,4 +1,4 @@
-import { asArray, onLoad, progressButton, rand } from '../domhelpers.js';
+import { asArray, onLoad, rand, shareURL } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -9,6 +9,7 @@ let activeColors = [];
 let mouseCoords = [];
 let mySessionID = null;
 let metaUpdateResolves = [];
+let inviteStatusTimeout = null;
 localStorage.setItem('playerName', playerName);
 
 export {
@@ -59,6 +60,30 @@ function nextMetaUpdate(isApplied, timeout=3000) {
   });
 }
 
+// the widget properties that can still point at a player after they left, and how to name
+// them in the warning shown before that player is taken off the list
+const playerReferences = {
+  owner: 'cards or other widgets in the game belong to them',
+  player: 'they are seated in the game',
+  artist: 'they are credited as an artist'
+};
+
+// a button that cannot do anything here stays visible and says why - removing it silently
+// leaves people wondering why the same row of the table has fewer buttons than the others
+function unavailableButton(button, reason) {
+  button.classList.add('unavailable');
+  button.setAttribute('aria-disabled', 'true');
+  button.title = reason;
+}
+
+// what a removed player leaves behind is invisible in this overlay, so say it before it happens
+async function confirmRemoval(player, references) {
+  const reasons = references.map(p=>playerReferences[p]).join(' and ');
+  const confirmed = await confirmOverlay('Remove player', `${player} is not connected, but ${reasons}.\n\nRemoving them only takes the name off this list - everything that belongs to them stays in the game and is picked up again by a player of the same name.`, 'Remove', 'Keep', 'delete', 'undo', 'red');
+  showOverlay('playerOverlay');
+  return confirmed;
+}
+
 // shows a spinner on the button while a returned promise is pending; the row usually
 // gets replaced by the meta update before the button is restored
 function serverActionButton(button, action) {
@@ -81,6 +106,17 @@ function serverActionButton(button, action) {
   });
 }
 
+// the share button sits in the actions column of the invite row and has no room for a label,
+// so sharing reports its result in the name cell of that row instead
+function showInviteStatus(text, isError) {
+  clearTimeout(inviteStatusTimeout);
+  $('#playerInviteStatus').textContent = text;
+  $('#playerInviteStatus').classList.toggle('error', !!isError);
+  $('#invitePlayerRow').classList.toggle('showStatus', !!text);
+  if(text)
+    inviteStatusTimeout = setTimeout(_=>showInviteStatus(''), 5000);
+}
+
 function fillPlayerList(players, active, sessions) {
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
@@ -95,6 +131,11 @@ function fillPlayerList(players, active, sessions) {
 
   const rank = player=>player == playerName ? 0 : sessionsByPlayer[player] ? 1 : 2;
   const sortedPlayers = Object.keys(players).sort((a,b)=>rank(a)-rank(b) || a.localeCompare(b));
+
+  const widgetList = [...widgets.values()];
+  const referencesTo = player=>Object.keys(playerReferences).filter(p=>widgetList.some(function(w) {
+    return Array.isArray(w.state[p]) ? w.state[p].indexOf(player) != -1 : w.state[p] == player;
+  }));
 
   for(const player of sortedPlayers) {
     const playerSessions = sessionsByPlayer[player] || [ null ];
@@ -133,25 +174,28 @@ function fillPlayerList(players, active, sessions) {
           $('.playerName', row).focus();
           $('.playerName', row).select();
         });
-        const isReferencedByWidgets = [...widgets.values()].some(w=>[ w.state.owner, w.state.player, w.state.artist ].some(v=>Array.isArray(v) ? v.indexOf(player) != -1 : v == player));
+        const references = referencesTo(player);
         // viewing a connected player who is part of the game would secretly reveal their hand (the server refuses it too)
         if(player == playerName) {
           removeFromDOM($('.viewPlayer', row));
-        } else if(session && isReferencedByWidgets) {
-          // keep the button visible but explain why it does not work here, otherwise it just silently disappears for some players
-          $('.viewPlayer', row).classList.add('unavailable');
-          $('.viewPlayer', row).setAttribute('aria-disabled', 'true');
-          $('.viewPlayer', row).title = `You cannot view the game as ${player} because they are connected and taking part in the game - it would reveal their hand to you`;
+        } else if(session && references.length) {
+          unavailableButton($('.viewPlayer', row), `You cannot view the game as ${player} because they are connected and taking part in the game - it would reveal their hand to you`);
         } else {
           serverActionButton($('.viewPlayer', row), function() {
             toServer('rename', { oldName: playerName, newName: player, sessionID: mySessionID });
             return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == mySessionID && s.player == player));
           });
         }
-        if(session || isReferencedByWidgets) {
+        // only a connected player cannot be taken off the list, and the sessions column of the
+        // same row already says so - anybody else can go, with a warning about what they leave behind
+        if(session) {
           removeFromDOM($('.removePlayer', row));
         } else {
-          serverActionButton($('.removePlayer', row), function() {
+          if(references.length)
+            $('.removePlayer', row).title = `Remove ${player} from the list - ${references.map(p=>playerReferences[p]).join(' and ')}`;
+          serverActionButton($('.removePlayer', row), async function() {
+            if(references.length && !await confirmRemoval(player, references))
+              return;
             toServer('removeLocalPlayer', { player });
             return nextMetaUpdate(args=>args.meta.players[player] === undefined);
           });
@@ -169,19 +213,11 @@ function fillPlayerList(players, active, sessions) {
 
       const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
       if(session) {
-        // numbering the sessions only carries information for players that actually have more than one
-        const label = playerSessions.length > 1 ? `Session ${sessionIndex+1}` : 'connected';
+        // numbering the connections only carries information for players that actually have more than one
+        const label = playerSessions.length > 1 ? `Connection ${sessionIndex+1}` : 'connected';
         $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `${label} (you)` : label;
-        serverActionButton($('.splitSession', sessionCell), function() {
-          const newName = (prompt(`Enter a new player name for this session of ${player}:`) || '').trim();
-          if(!newName || newName == player)
-            return;
-          toServer('rename', { oldName: player, newName, sessionID: session.sessionID });
-          return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == session.sessionID && s.player == newName));
-        });
       } else {
         $('.sessionLabel', sessionCell).textContent = 'not connected';
-        removeFromDOM($('.splitSession', sessionCell));
       }
       row.appendChild(sessionCell);
 
@@ -191,7 +227,10 @@ function fillPlayerList(players, active, sessions) {
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
-  $('#playersAloneHint').classList.toggle('shown', sortedPlayers.length < 2);
+  // with a second tab open as the same player, adding a player also moves this tab to it
+  $('#addLocalPlayerButton').title = (sessionsByPlayer[playerName] || []).length > 1
+    ? 'Add a player and switch this browser tab to them'
+    : 'Add a player who shares this device';
   updatePlayerCountDisplay();
 }
 
@@ -271,21 +310,38 @@ onLoad(function() {
       widget.updateOwner();
   });
 
-  progressButton($('#addLocalPlayerButton'), async function() {
-    const localPlayerName = $('#localPlayerName').value.trim();
-    if(!localPlayerName)
-      throw new Error('Please enter a player name.');
-    if(lastMetaArgs && lastMetaArgs.meta.players[localPlayerName] !== undefined)
-      throw new Error('This player already exists.');
+  serverActionButton($('#addLocalPlayerButton'), function() {
+    const input = $('#localPlayerName');
+    input.setCustomValidity('');
+    const localPlayerName = input.value.trim();
+    // the server silently ignores empty and duplicate names, so complain right at the input instead
+    if(!localPlayerName || (lastMetaArgs && lastMetaArgs.meta.players[localPlayerName] !== undefined)) {
+      input.setCustomValidity(localPlayerName ? 'This player already exists.' : 'Please enter a player name.');
+      input.reportValidity();
+      return;
+    }
+    // a second tab connected as the same player is somebody who wants to be their own player, so
+    // the new player takes this session over right away instead of waiting for a View click
+    if((lastMetaArgs && lastMetaArgs.sessions || []).filter(s=>s.player == playerName).length > 1) {
+      // renaming a single session creates the player if it does not exist yet
+      toServer('rename', { oldName: playerName, newName: localPlayerName, sessionID: mySessionID });
+      return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == mySessionID && s.player == localPlayerName)).then(_=>input.value = '');
+    }
     toServer('addLocalPlayer', { player: localPlayerName });
-    await nextMetaUpdate(args=>args.meta.players[localPlayerName] !== undefined);
-    $('#localPlayerName').value = '';
+    return nextMetaUpdate(args=>args.meta.players[localPlayerName] !== undefined).then(_=>input.value = '');
   });
+  $('#localPlayerName').addEventListener('input', e=>e.target.setCustomValidity(''));
   $('#localPlayerName').addEventListener('keydown', function(e) {
     if(e.key == 'Enter')
       $('#addLocalPlayerButton').click();
   });
 
-  // share URL when clicking button
-  shareButton($('#playersShareButton'), _=>location.href);
+  // the room URL is plain text - clicking it would just reload the room, so sharing it is the button's job
+  serverActionButton($('#playersShareButton'), async function() {
+    try {
+      showInviteStatus(await shareURL(location.href) == 'clipboard' ? 'Room URL copied to clipboard.' : 'Room URL shared.');
+    } catch(e) {
+      showInviteStatus(e.message, true);
+    }
+  });
 });

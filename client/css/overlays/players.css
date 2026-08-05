@@ -46,15 +46,12 @@
   font-size: 0.8rem;
 }
 
-#playersTable .sessionCellContent {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* the session cell is only as wide as its widest label, so this aligns the buttons without a large gap */
-#playersTable .sessionCellContent button {
-  margin-left: auto;
+/* on a phone the session labels are what pushes the table past the viewport, so let them
+   wrap there rather than making the whole overlay scroll sideways */
+@media (max-width: 530px) {
+  #playersTable .playerSessionCell {
+    white-space: normal;
+  }
 }
 
 #playersTable button[icon] {
@@ -156,73 +153,131 @@
   font-size: 1.2rem;
 }
 
-#playersLegend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1.5rem;
-  max-width: 40rem;
-  margin: 0 auto;
-  font-size: 0.8rem;
-  opacity: 0.8;
+/* the rows that add a local player and invite remote ones: same layout as a player row, but no player of their own */
+/* they reuse the wrap of the color circle so their icon sits in a box of the same size */
+#playersTable tfoot .teamColorWrap .material-symbols {
+  font-size: 1.5em;
+  opacity: 0.6;
 }
-#playersLegend .material-symbols {
-  font-size: 1.2em;
-  vertical-align: text-bottom;
+/* an empty input has no value to read, so unlike the player names it needs to look like a field */
+#addPlayerRow .playerName {
+  font-weight: normal;
+  box-sizing: border-box;
+  min-width: 0;
+  border-bottom: 1px solid var(--VTTblueLight);
+}
+#addPlayerRow .playerName:invalid {
+  border-bottom-color: darkred;
+}
+/* the invite row is a hint of the same kind as the add-player placeholder, so it gets its color
+   (spelled out because browsers disagree on the default placeholder color) */
+#addPlayerRow .playerName::placeholder,
+#invitePlayerRow .playerNameCell {
+  color: #757575;
+}
+#invitePlayerRow .playerNameCell {
+  font-size: 0.9rem;
+}
+/* the room URL is text to read out or select, not a link - clicking it would only reload the room.
+   breaking it anywhere keeps it fully readable without widening the table on narrow screens */
+#playerInviteURL {
+  overflow-wrap: anywhere;
+}
+/* the share button lines up with the row action buttons and has no room for a label,
+   so the result of sharing replaces the invite text of the row */
+#playerInviteStatus,
+#invitePlayerRow.showStatus #playerInviteText {
+  display: none;
+}
+#invitePlayerRow.showStatus #playerInviteStatus {
+  display: inline;
+}
+#playerInviteStatus.error {
+  color: darkred;
+}
+
+/* framed so that it is obvious where the collapsed section starts and what belongs to it */
+.playersHelp {
+  width: 100%;
+  max-width: 40rem;
+  box-sizing: border-box;
+  margin: 0.5rem auto;
+  border: 1px solid var(--VTTblueLight);
+  border-radius: 4px;
+}
+.playersHelp > summary {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.5rem;
+  background: #1f5ca61a;
+}
+.playersHelp[open] > summary {
+  border-bottom: 1px solid var(--VTTblueLight);
+}
+.playersHelp .helpContent {
+  padding: 0.5rem 0.75rem 0.75rem 0.75rem;
+}
+.playersHelp .helpTopic {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.playersHelp .helpTopic + .helpTopic {
+  margin-top: 1rem;
+}
+.playersHelp .helpTopic > .material-symbols {
+  font-size: 32px;
+  flex: 0 0 32px;
+  color: var(--VTTblue);
+}
+.playersHelp h2 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+}
+.playersHelp p {
+  margin: 0;
+}
+.playersHelp ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* the button list uses the icon column of the topics above so that both sections indent
+   their text by the same amount - only the icons themselves are smaller */
+.playersHelp li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.playersHelp li + li {
+  margin-top: 0.5rem;
+}
+.playersHelp li > .material-symbols {
+  font-size: 20px;
+  flex: 0 0 32px;
+  text-align: center;
+  color: var(--VTTblue);
+}
+/* an inline icon is placed by its own box instead of by text-bottom: with a fixed height and a
+   hidden overflow its baseline is the bottom edge of that box, so the offset below the text
+   baseline is a plain length and no longer depends on how a browser reads the font metrics */
+.playersHelp p .material-symbols {
+  font-size: 1em;
+  height: 1em;
+  line-height: 1em;
+  overflow: hidden;
+  vertical-align: -0.25em;
   margin-right: 0.25rem;
 }
 
-#playersAloneHint {
-  display: none;
-}
-#playersAloneHint.shown {
-  display: block;
-  max-width: 40rem;
-  margin: 1rem auto 0 auto;
-}
-
-#playerAdd {
-  max-width: 40rem;
-  margin: 1rem auto;
-}
-#playerAdd h1 {
-  text-align: left;
-}
-#playerAdd .material-symbols {
-  font-size: 1em;
-  vertical-align: text-bottom;
-}
-#addLocalPlayer {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin: 0.5rem 0;
-}
-#localPlayerName {
-  font-size: 1rem;
-  padding: 5px;
-}
-
 .overlay .heading{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   width: 100%;
-  max-width: 40rem; /* same width as the table, legend and add-player block below */
+  max-width: 40rem; /* same width as the table and the help section below */
   margin: 0 auto;
 }
 .overlay .heading h1{
-  margin: 0 0.5em 0 0;
-  padding: 0.25em 0.5em 0.25em 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  line-height: 1em;
+  margin: 0;
   text-align: left;
-  max-width: 45%;
-}
-.overlay .heading .instructionalText{
-  display: block;
-  font-size: 16px;
-  text-align: left;
-  padding: 0.9rem 0;
 }
 #playerCursors {
   position: absolute;

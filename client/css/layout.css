@@ -462,7 +462,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     #playersButton::before {
-      content: '[users_settings]';
+      content: '[people]';
     }
 
     #editButton::before {
