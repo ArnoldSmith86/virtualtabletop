@@ -680,8 +680,7 @@ onLoad(function() {
     checkedOnce = true;
     let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
-    const inviteLink = $('#playerInviteURL');
-    inviteLink.href = inviteLink.innerText = location.href;
+    $('#playerInviteURL').innerText = location.href;
   });
 });
 

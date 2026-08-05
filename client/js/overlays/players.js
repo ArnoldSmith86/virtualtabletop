@@ -311,16 +311,12 @@ onLoad(function() {
       $('#addLocalPlayerButton').click();
   });
 
-  // share URL when clicking the button or the link, which would otherwise just reload the room
+  // the room URL is plain text - clicking it would just reload the room, so sharing it is the button's job
   serverActionButton($('#playersShareButton'), async function() {
     try {
       showInviteStatus(await shareURL(location.href) == 'clipboard' ? 'Room URL copied to clipboard.' : 'Room URL shared.');
     } catch(e) {
       showInviteStatus(e.message, true);
     }
-  });
-  $('#playerInviteURL').addEventListener('click', function(e) {
-    e.preventDefault();
-    $('#playersShareButton').click();
   });
 });
