@@ -2011,6 +2011,26 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
 
+// drags a selection rectangle around the given widgets - the events go to the
+// window, where the editor listens for them, so they need no element to start
+// from. A rectangle around a single widget is treated like a click on it, which
+// is why the callers put the widget being edited in the band as well.
+const rubberBandOver = ClientFunction(selector => {
+  const from = { x: Infinity, y: Infinity };
+  const to = { x: -Infinity, y: -Infinity };
+  document.querySelectorAll(selector).forEach(element=>{
+    const rect = element.getBoundingClientRect();
+    from.x = Math.min(from.x, rect.left - 20);
+    from.y = Math.min(from.y, rect.top - 20);
+    to.x = Math.max(to.x, rect.right + 20);
+    to.y = Math.max(to.y, rect.bottom + 20);
+  });
+  const at = (type, point)=>document.body.dispatchEvent(new MouseEvent(type, { bubbles: true, button: 0, clientX: point.x, clientY: point.y }));
+  at('mousedown', from);
+  at('mousemove', to);
+  at('mouseup', to);
+});
+
 test('A routine parameter popup goes away with the widget it belongs to', async t => {
   await setRoomState({
     button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] },
@@ -2045,7 +2065,25 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
     .expect(popup.exists).notOk()
     .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
 
+  // A rubber band is the other way to pick in the room, and the only one that
+  // goes through the selection: it selects what it caught, and the picker puts
+  // the widget it belongs to back afterwards - which is not the editor moving on
+  // either. The property builder picks a single widget, so its picker is already
+  // gone by the time that restore arrives.
+  await openFromPopup();
+  const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
+  await t
+    .click(propertySection.find('h3'))
+    .click(propertySection.find('.propertyExpandButton'))
+    .click(propertySection.find('button[icon=colorize]'));
+  await rubberBandOver('#w_button, #w_holder1');
+  await t
+    .expect(popup.exists).ok()
+    .expect(propertySection.find('.popup-property-widget').value).eql('holder1')
+    .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+
   // with the picker armed the same click belongs to the popup, which stays open
+  await t.click(popup.find('.popup-close'));
   await openFromPopup();
   await t
     .click(popup.find('button').withText('Pick in the room'))
@@ -2053,4 +2091,76 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
     .expect(popup.exists).ok()
     .expect(popup.find('.widgetPickerEntry.selected').withText('holder2').exists).ok()
     .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+});
+
+test('An editor popup does not outlive the widget it belongs to without a click either', async t => {
+  await setRoomState({
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'CANVAS', mode: 'change', color: '#1f5ca6' } ] },
+    holder: { id: 'holder', type: 'holder', x: 500, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const colorChip = Selector('.routine-editor-operation [data-parameter=color]');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+  const routineColor = ClientFunction(_=>widgets.get('button').get('clickRoutine')[0].color);
+  const openColorPopup = async _=>{
+    await t.click('#w_button');
+    if(await routineHeader.getAttribute('aria-expanded') == 'false')
+      await t.click(routineHeader);
+    await t.click(colorChip).expect(popup.exists).ok();
+  };
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]');
+  await openColorPopup();
+
+  // The color, icon and sound pickers only write their parameter when the popup
+  // goes away, so closing it applies what was picked - to the widget the popup
+  // belongs to, exactly as a click outside the popup would.
+  await t
+    .click(popup.find('.propertyColorChip[data-value="#3cb44b"]'))
+    .click('#w_holder')
+    .expect(popup.exists).notOk()
+    .expect(routineColor()).eql('#3cb44b');
+
+  // The routes without any click: the widget being edited is removed, which is
+  // what a delete, an undo and a dissolving pile all arrive as. An armed room
+  // picker keeps the popup through the selection changes it causes itself, but
+  // not through this one - the widget it would write to is gone.
+  await openColorPopup();
+  const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
+  await t
+    .click(propertySection.find('h3'))
+    .click(propertySection.find('.propertyExpandButton'))
+    .click(propertySection.find('button[icon=colorize]'));
+  await ClientFunction(_=>removeWidgetLocal('button'))();
+  await t
+    .expect(popup.exists).notOk()
+    .expect(ClientFunction(_=>widgets.has('button'))()).notOk();
+});
+
+test('A property info tip goes away with the widget it explains', async t => {
+  await setRoomState({
+    button: { id: 'button', type: 'button', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const infoTip = Selector('#editor > .inline-popup');
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_button')
+    .click(Selector('#editorModules .collapsibleHeader').withText('CSS').find('.info-button'))
+    .expect(infoTip.exists).ok();
+
+  // An info tip hangs off a sidebar control just like the popups do. Its own
+  // outside-click handler covers every route with a click in it, but not the
+  // selection changing on its own - here the widget it explains is removed.
+  await ClientFunction(_=>removeWidgetLocal('button'))();
+  await t.expect(infoTip.exists).notOk();
 });

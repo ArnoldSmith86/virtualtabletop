@@ -86,6 +86,16 @@ function isWidgetPickerRestoringSelection() {
   return restoringWidgetPickerSelection;
 }
 
+// Whether a running picker explains a selection change: picking widgets in the
+// room selects them and then restores the selection the picker started from,
+// which is not the editor moving on to another widget. That only holds while the
+// widget the picker belongs to is still there - once it is deleted or dropped by
+// a new state, the change is real and the popup the picker runs from goes along.
+function isWidgetPickerChangingSelection() {
+  const picker = getWidgetPicker();
+  return !!picker && widgets.has(picker.targetWidgetID);
+}
+
 function handleWidgetPickerSelection(newSelection) {
   if(restoringWidgetPickerSelection)
     return true;

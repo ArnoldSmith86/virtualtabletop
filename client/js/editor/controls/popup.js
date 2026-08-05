@@ -257,9 +257,15 @@ class Popup {
 // popups that read the room - the widget pickers take the clicks in there - and
 // a selection also changes without any click at all: deleting the widget, an
 // undo, or a new state arriving from the server.
+// Closing is not always a pure dismissal: the pickers that only write their
+// parameter when the popup goes away (color, icon, sound, key/value and string
+// lists) apply what was picked, exactly as they do on a click outside. That
+// write goes to the widget the popup belonged to, which is why this runs after
+// the editor has moved on rather than in the middle of it.
 function closeEditorPopups() {
   for(const popup of [ ...openPopups ])
     popup.hide();
+  closePropertyInfoPopup();
 }
 
 // what a tutorial is called in words: the title of the popup it is offered from

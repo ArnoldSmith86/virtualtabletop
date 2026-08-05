@@ -186,10 +186,10 @@ function setSelection(newSelectedWidgets) {
   // the ones that let widgets be picked in the room ignore clicks in there, so
   // nothing else ever closes them. A widget picker is not the editor moving on:
   // it restores the selection it started from after every pick.
-  if(!isWidgetPickerActive() && !isWidgetPickerRestoringSelection() && selectionChanged(previousSelectedWidgets, newSelectedWidgets)) {
+  const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
+                        && selectionChanged(previousSelectedWidgets, newSelectedWidgets);
+  if(editorMovedOn)
     cancelAudioPicker();
-    closeEditorPopups();
-  }
 
   selectedWidgets = newSelectedWidgets;
 
@@ -207,6 +207,13 @@ function setSelection(newSelectedWidgets) {
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
 
   updateDragToolbar();
+
+  // last, once the editor really is on the new selection: closing a popup that
+  // applies on close writes the picked value to the widget it belonged to, and
+  // that delta can come straight back in here (a widget dropping out of the
+  // selection re-enters setSelection) - which must not happen half way through.
+  if(editorMovedOn)
+    closeEditorPopups();
 }
 
 export async function editClick(widget) {
