@@ -213,8 +213,8 @@ function fillPlayerList(players, active, sessions) {
 
       const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
       if(session) {
-        // numbering the sessions only carries information for players that actually have more than one
-        const label = playerSessions.length > 1 ? `Session ${sessionIndex+1}` : 'connected';
+        // numbering the connections only carries information for players that actually have more than one
+        const label = playerSessions.length > 1 ? `Connection ${sessionIndex+1}` : 'connected';
         $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `${label} (you)` : label;
       } else {
         $('.sessionLabel', sessionCell).textContent = 'not connected';

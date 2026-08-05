@@ -98,7 +98,7 @@
           </td>
           <td class="playerActionsCell">
             <button icon="edit" class="renamePlayer" title="Rename this player and update all references to it in the game"></button>
-            <button icon="visibility" class="viewPlayer" title="View the game as this player: only your session gets renamed and the game stays unchanged"></button>
+            <button icon="visibility" class="viewPlayer" title="View the game as this player: only this browser tab switches over and the game stays unchanged"></button>
             <button icon="delete" class="removePlayer" title="Remove this player"></button>
           </td>
         </template>
@@ -109,7 +109,7 @@
         </template>
         <table id="playersTable">
           <thead>
-            <tr><th></th><th>Player</th><th></th><th title="Every connected browser tab is a session of a player">Sessions</th></tr>
+            <tr><th></th><th>Player</th><th></th><th title="Every browser tab that has this room open is one connection of a player">Connections</th></tr>
           </thead>
           <tbody></tbody>
           <tfoot>
@@ -132,22 +132,22 @@
           <div class="helpTopic">
             <i class="material-symbols">groups</i>
             <div>
-              <h2>Players and sessions</h2>
-              <p>Every connected browser tab is a session of a player. Edit the name and color of any player, view the game as another player or add a local player that shares this device. While you have this room open in more than one tab, adding a player switches the current tab to them, so every tab can be its own player.</p>
+              <h2>Players and connections</h2>
+              <p>Every browser tab that has this room open is one connection of a player. Edit the name and color of any player, view the game as another player or add a local player that shares this device. While you have this room open in more than one tab, adding a player switches the current tab to them, so every tab can be its own player.</p>
             </div>
           </div>
           <div class="helpTopic">
             <i class="material-symbols">share</i>
             <div>
               <h2>Remote play</h2>
-              <p>Everybody plays on their own device: send them the room URL with the <i class="material-symbols">share</i> button in the table above and they join this table as soon as they open it. Their browser tab shows up here as a session and they can pick their name and color in the table.</p>
+              <p>Everybody plays on their own device: send them the room URL with the <i class="material-symbols">share</i> button in the table above and they join this table as soon as they open it. Their browser tab shows up here as a connection and they can pick their name and color in the table.</p>
             </div>
           </div>
           <div class="helpTopic">
             <i class="material-symbols">swap_horizontal_circle</i>
             <div>
               <h2>Hotseat</h2>
-              <p>Several people share one device: add each of them with the <i class="material-symbols">person_add</i> row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only your own session changes, the game itself stays untouched.</p>
+              <p>Several people share one device: add each of them with the <i class="material-symbols">person_add</i> row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only this browser tab switches over, the game itself stays untouched.</p>
             </div>
           </div>
         </div>
