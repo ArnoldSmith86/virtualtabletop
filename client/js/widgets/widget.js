@@ -2600,8 +2600,14 @@ export class Widget extends StateManaged {
 
       if (lastHoverTarget != this.hoverTarget) {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
+        // A holder that sits on top of the current parent becomes the hover target while the
+        // widget is still completely inside that parent. Leaving the parent right away would
+        // run its onLeave and drop the owner - which reveals a card to everyone before it has
+        // even left the hand it is being dragged around in - so the widget only leaves once it
+        // no longer overlaps its parent. This repeats the check from the top of move() because
+        // the delta flushed above is what gave the widget its current geometry.
         if(this.hoverTarget != this.currentParent)
-          await this.checkParent(true);
+          await this.checkParent();
 
         // When the hover target changes we may need to create or remove the shadow widget.
         // Only create a shadow widget if the holder is shared and doesn't already have one in it.
