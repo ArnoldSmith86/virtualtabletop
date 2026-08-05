@@ -4,9 +4,10 @@
 // routine editor for widget, holder and collection parameters.
 let activeWidgetPicker = null;
 
-function startWidgetPicker(targetWidgetID, onPick, options = {}) {
+function startWidgetPicker(targetWidget, onPick, options = {}) {
   activeWidgetPicker = {
-    targetWidgetID,
+    targetWidget,
+    targetWidgetID: targetWidget.id,
     onPick,
     pickerKey: options.pickerKey || null,
     filter: typeof options.filter === 'function' ? options.filter : null,
@@ -39,6 +40,18 @@ function isWidgetPickerActive(targetWidgetID = null, pickerKey = null) {
   return !!getWidgetPicker(targetWidgetID, pickerKey);
 }
 
+// The widget a running picker belongs to, as long as it still is the widget of
+// that id in the room: a new state from the server replaces every widget, so the
+// same id regularly comes back as a different object - one that has nothing to
+// do with the editor the picker was started from. The editor tells widgets apart
+// by identity everywhere else for the same reason (widgetStillExists).
+function widgetPickerTarget() {
+  if(!activeWidgetPicker)
+    return null;
+  const targetWidget = widgets.get(activeWidgetPicker.targetWidgetID);
+  return targetWidget === activeWidgetPicker.targetWidget ? targetWidget : null;
+}
+
 // A click in the room hits the top-most widget, which is often not the one the
 // picker is looking for - a holder is covered by the cards lying on it. The
 // picker resolves such a click to the widget underneath it that fits.
@@ -60,7 +73,7 @@ function handleWidgetPickerClick(clickedWidget) {
   if(!picker)
     return false;
 
-  const targetWidget = widgets.get(picker.targetWidgetID);
+  const targetWidget = widgetPickerTarget();
   if(!targetWidget) {
     stopWidgetPicker();
     return false;
@@ -89,11 +102,18 @@ function isWidgetPickerRestoringSelection() {
 // Whether a running picker explains a selection change: picking widgets in the
 // room selects them and then restores the selection the picker started from,
 // which is not the editor moving on to another widget. That only holds while the
-// widget the picker belongs to is still there - once it is deleted or dropped by
-// a new state, the change is real and the popup the picker runs from goes along.
+// widget the picker belongs to is still there - once it is deleted or replaced
+// by a new state, the change is real and the popup the picker runs from goes
+// along. Nothing can be picked for a widget that is gone, so the picker ends
+// here rather than on the next click in the room, which would never come: the
+// popup it belongs to is about to be closed.
 function isWidgetPickerChangingSelection() {
-  const picker = getWidgetPicker();
-  return !!picker && widgets.has(picker.targetWidgetID);
+  if(!activeWidgetPicker)
+    return false;
+  if(widgetPickerTarget())
+    return true;
+  stopWidgetPicker();
+  return false;
 }
 
 function handleWidgetPickerSelection(newSelection) {
@@ -104,7 +124,7 @@ function handleWidgetPickerSelection(newSelection) {
   if(!picker)
     return false;
 
-  const targetWidget = widgets.get(picker.targetWidgetID);
+  const targetWidget = widgetPickerTarget();
 
   if(!targetWidget) {
     stopWidgetPicker();
@@ -223,7 +243,7 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
       if(isWidgetPickerActive(widget.id, options.pickerKey)) {
         stopWidgetPicker();
       } else {
-        startWidgetPicker(widget.id, (targetWidget, pickedWidgets)=>{
+        startWidgetPicker(widget, (targetWidget, pickedWidgets)=>{
           if(options.multiple)
             options.apply([...new Set(selectedIDs().concat(pickedWidgets.map(w=>w.id)))]);
           else

@@ -2094,10 +2094,11 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
 });
 
 test('An editor popup does not outlive the widget it belongs to without a click either', async t => {
-  await setRoomState({
+  const roomState = {
     button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'CANVAS', mode: 'change', color: '#1f5ca6' } ] },
     holder: { id: 'holder', type: 'holder', x: 500, y: 100 }
-  });
+  };
+  await setRoomState(roomState);
   await ClientFunction(prepareClient)();
   await setName(t);
 
@@ -2105,11 +2106,20 @@ test('An editor popup does not outlive the widget it belongs to without a click 
   const colorChip = Selector('.routine-editor-operation [data-parameter=color]');
   const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
   const routineColor = ClientFunction(_=>widgets.get('button').get('clickRoutine')[0].color);
+  const picking = Selector('body').hasClass('editorWidgetPicking');
   const openColorPopup = async _=>{
     await t.click('#w_button');
     if(await routineHeader.getAttribute('aria-expanded') == 'false')
       await t.click(routineHeader);
     await t.click(colorChip).expect(popup.exists).ok();
+  };
+  const armRoomPicker = async _=>{
+    const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
+    await t
+      .click(propertySection.find('h3'))
+      .click(propertySection.find('.propertyExpandButton'))
+      .click(propertySection.find('button[icon=colorize]'))
+      .expect(picking).ok();
   };
 
   await t
@@ -2131,15 +2141,27 @@ test('An editor popup does not outlive the widget it belongs to without a click 
   // picker keeps the popup through the selection changes it causes itself, but
   // not through this one - the widget it would write to is gone.
   await openColorPopup();
-  const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
-  await t
-    .click(propertySection.find('h3'))
-    .click(propertySection.find('.propertyExpandButton'))
-    .click(propertySection.find('button[icon=colorize]'));
+  await armRoomPicker();
   await ClientFunction(_=>removeWidgetLocal('button'))();
   await t
     .expect(popup.exists).notOk()
-    .expect(ClientFunction(_=>widgets.has('button'))()).notOk();
+    .expect(ClientFunction(_=>widgets.has('button'))()).notOk()
+    .expect(picking).notOk();
+
+  // The other route without a click: a new state from the server, which replaces
+  // every widget in the room. It usually brings the same ids back (an undo, the
+  // same game loaded again), so the widget the popup belongs to can only be told
+  // apart from its replacement by identity - going by the id alone would leave
+  // the popup floating over an editor that has nothing selected at all.
+  await setRoomState(roomState);
+  await t.expect(ClientFunction(_=>widgets.has('button'))()).ok();
+  await openColorPopup();
+  await armRoomPicker();
+  await setRoomState(roomState);
+  await t
+    .expect(popup.exists).notOk()
+    .expect(ClientFunction(_=>widgets.has('button'))()).ok()
+    .expect(picking).notOk();
 });
 
 test('A property info tip goes away with the widget it explains', async t => {
