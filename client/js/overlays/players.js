@@ -265,6 +265,7 @@ onLoad(function() {
 
   serverActionButton($('#addLocalPlayerButton'), function() {
     const input = $('#localPlayerName');
+    input.setCustomValidity('');
     const localPlayerName = input.value.trim();
     // the server silently ignores empty and duplicate names, so complain right at the input instead
     if(!localPlayerName || (lastMetaArgs && lastMetaArgs.meta.players[localPlayerName] !== undefined)) {
