@@ -1862,6 +1862,41 @@ class RoutineIconPopup extends RoutinePickerPopup {
   }
 }
 
+// The sound an AUDIO plays, picked the same way clickSound is picked in the
+// properties sidebar: the bundled sound library, an upload or a typed path,
+// each of which can be played back before the routine is run.
+class RoutineSoundPopup extends RoutinePickerPopup {
+  parameterQuestion() {
+    return 'which sound';
+  }
+
+  inputClass() {
+    return typeof SoundInput != 'undefined' ? SoundInput : null;
+  }
+
+  valueHint() {
+    return 'Pick a sound from the bundled library, upload one, or type the path of an audio file.';
+  }
+
+  // the sound library is an overlay of its own, so the click that picks a sound
+  // in it happens outside this popup - closing it there would throw the pick
+  // away before the picker hands it over
+  onOutsideClick(e) {
+    if(e.target.closest && e.target.closest('#audioPickerOverlay'))
+      return;
+    super.onOutsideClick(e);
+  }
+
+  // the play button goes with the popup, so a preview started in it would keep
+  // playing with nothing left to stop it (stopSoundPreview lives in the
+  // properties module, which jest does not load)
+  hide() {
+    if(typeof stopSoundPreview == 'function')
+      stopSoundPreview();
+    super.hide();
+  }
+}
+
 // What a FOREACH repeats for, asked one way of repeating at a time: a range is
 // three numbers and a list is what it holds, so a popup offering both under
 // either of them invites a range where only entries work (and the other way
