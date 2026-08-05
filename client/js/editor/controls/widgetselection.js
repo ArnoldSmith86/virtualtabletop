@@ -112,7 +112,11 @@ function isWidgetPickerChangingSelection() {
     return false;
   if(widgetPickerTarget())
     return true;
+  // the crosshair over the room is the only sign that a click in there is being
+  // waited for, so it must not just disappear: say why it did
+  const targetWidgetID = activeWidgetPicker.targetWidgetID;
   stopWidgetPicker();
+  editorNote(`picking in the room ended: ${targetWidgetID} is gone`);
   return false;
 }
 
@@ -229,12 +233,14 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
     const buttonBar = div(popout, 'propertyPickerSection widgetPickerRow');
     const pickButton = document.createElement('button');
     pickButton.setAttribute('icon', 'colorize');
-    pickButton.title = `Click this button and then the ${options.multiple ? 'widgets' : 'widget'} on the table. The type filter applies here as well, so with the type set to holder a click on a card selects the holder it lies on.`;
+    pickButton.title = `Click this button and then the ${options.multiple ? 'widgets' : 'widget'} in the room. The type filter applies here as well, so with the type set to holder a click on a card selects the holder it lies on.`;
     buttonBar.appendChild(pickButton);
 
     const updatePickButton = _=>{
       const isSelecting = isWidgetPickerActive(widget.id, options.pickerKey);
-      pickButton.textContent = isSelecting ? `click ${options.multiple ? 'widgets' : 'a widget'}...` : 'Pick in the room';
+      // armed, the button says what to do next rather than what it does, in the
+      // same words as unarmed: one control, one way of speaking
+      pickButton.textContent = isSelecting ? `Click ${options.multiple ? 'widgets' : 'a widget'} in the room…` : 'Pick in the room';
       pickButton.classList.toggle('selected', isSelecting);
     };
     updatePickButton();

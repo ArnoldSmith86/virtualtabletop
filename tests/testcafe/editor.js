@@ -2107,6 +2107,7 @@ test('An editor popup does not outlive the widget it belongs to without a click 
   const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
   const routineColor = ClientFunction(_=>widgets.get('button').get('clickRoutine')[0].color);
   const picking = Selector('body').hasClass('editorWidgetPicking');
+  const notes = Selector('#editorNotes');
   const openColorPopup = async _=>{
     await t.click('#w_button');
     if(await routineHeader.getAttribute('aria-expanded') == 'false')
@@ -2129,12 +2130,15 @@ test('An editor popup does not outlive the widget it belongs to without a click 
 
   // The color, icon and sound pickers only write their parameter when the popup
   // goes away, so closing it applies what was picked - to the widget the popup
-  // belongs to, exactly as a click outside the popup would.
+  // belongs to, exactly as a click outside the popup would. That widget is off
+  // screen by then, so the editor says what it wrote where: without that, having
+  // kept the pick and having thrown it away look exactly the same.
   await t
     .click(popup.find('.propertyColorChip[data-value="#3cb44b"]'))
     .click('#w_holder')
     .expect(popup.exists).notOk()
-    .expect(routineColor()).eql('#3cb44b');
+    .expect(routineColor()).eql('#3cb44b')
+    .expect(notes.innerText).contains('CANVAS color set to #3cb44b on button');
 
   // The routes without any click: the widget being edited is removed, which is
   // what a delete, an undo and a dissolving pile all arrive as. An armed room
@@ -2146,7 +2150,10 @@ test('An editor popup does not outlive the widget it belongs to without a click 
   await t
     .expect(popup.exists).notOk()
     .expect(ClientFunction(_=>widgets.has('button'))()).notOk()
-    .expect(picking).notOk();
+    .expect(picking).notOk()
+    // the crosshair over the room is all there is to see of an armed picker, so
+    // it ending on its own is said out loud as well
+    .expect(notes.innerText).contains('picking in the room ended: button is gone');
 
   // The other route without a click: a new state from the server, which replaces
   // every widget in the room. It usually brings the same ids back (an undo, the

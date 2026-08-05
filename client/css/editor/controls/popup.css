@@ -1,5 +1,53 @@
+/* A line of feedback about something that happened where the user is not
+   looking - a value written to the widget the editor has just left, a mode that
+   ended on its own. In the corner of the module panel, above the popups (whose
+   closing is what it is usually about), fading on its own so it never becomes
+   part of the layout. */
+#editorNotes {
+  position: absolute;
+  right: calc(var(--editSidebarWidth) + 10px);
+  bottom: 10px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: none; /* the gaps between the notes stay clickable */
+}
+
+.editorNote {
+  pointer-events: auto;
+  cursor: pointer;
+  max-width: min(360px, 80vw);
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--VTTblue);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  font-size: 13px;
+  transition: opacity 1s;
+}
+
+.editorNote.editorNoteFading {
+  opacity: 0;
+}
+
+/* the control a popup is open for, in its own color (a chip of the routine is
+   colored by what it holds): the popup is that control opened up, so it says
+   which one - and where the popup went when it goes away with it */
+.popupSource {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+
 .inline-popup {
   position: fixed;
+  /* the popup is placed by its outer size, so the max-width/max-height it is
+     placed with have to be the outer size as well - with the padding and the
+     border on top of them it overshoots the space it was fitted into by 22px */
+  box-sizing: border-box;
   background: var(--backgroundColor);
   color: var(--textColor);
   z-index: 9;
@@ -68,9 +116,13 @@
   margin-top: 0;
 }
 
+/* the name next to a value is quieter than the value, but a fixed gray is only
+   readable in one of the two themes - this is the text color turned down, the
+   way the popup title does it */
 .inline-popup .popup-property-label {
   flex: 0 0 auto;
-  color: gray;
+  color: var(--textColor);
+  opacity: 0.7;
 }
 
 .inline-popup .popup-property-row .propertyExpandButton {
@@ -424,7 +476,8 @@ body.edit.darkMode .inline-popup button.primary:hover {
 }
 
 .inline-popup .popup-property-empty {
-  color: gray;
+  color: var(--textColor);
+  opacity: 0.7;
   font-style: italic;
   margin: 4px 2px;
 }
