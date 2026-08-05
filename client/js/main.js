@@ -43,8 +43,10 @@ export function compareDropTarget(widget, t, exclude){
 // default children count, because that is what a line's limit bounds. Counting
 // the children is left until the limit turns out to be real: children() sorts
 // the child array, and the default -1 is what nearly every widget has.
+// currentDropLimit() evaluates the limit, which can be a dynamic expression -
+// reading it here rather than caching it is what lets it follow the state.
 export function exceedsDropLimit(target, count = 1, currentCount = null) {
-  const limit = target.get('dropLimit');
+  const limit = target.currentDropLimit();
   if(!(limit > -1))
     return false;
   return (currentCount === null ? target.children().length : currentCount) + count > limit;

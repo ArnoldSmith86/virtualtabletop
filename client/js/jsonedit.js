@@ -844,6 +844,23 @@ const jeCommands = [
     }
   },
   {
+    // dropLimit is a number, but it also takes an expression that is evaluated
+    // whenever the limit is applied (evaluateDynamicNumber in widget.js), so
+    // the limit can follow the state instead of being written by a routine.
+    id: 'je_dropLimitExpression',
+    name: _=>typeof jeStateNow.dropLimit == 'string' ? 'fixed limit' : 'dynamic limit',
+    context: '^[^ ]* ↦ dropLimit',
+    call: async function() {
+      if(typeof jeStateNow.dropLimit == 'string') {
+        jeStateNow.dropLimit = '###SELECT ME###';
+        jeSetAndSelect(-1);
+      } else {
+        jeStateNow.dropLimit = '${PROPERTY ###SELECT ME###}';
+        jeSetAndSelect('maxCards', true);
+      }
+    }
+  },
+  {
     id: 'je_grid',
     name: 'grid element',
     context: '^[^ ]* ↦ grid',
