@@ -1,4 +1,4 @@
-import { asArray, onLoad, rand } from '../domhelpers.js';
+import { asArray, onLoad, rand, shareURL } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -9,6 +9,8 @@ let activeColors = [];
 let mouseCoords = [];
 let mySessionID = null;
 let metaUpdateResolves = [];
+let helpDefaultApplied = false;
+let inviteStatusTimeout = null;
 localStorage.setItem('playerName', playerName);
 
 export {
@@ -79,6 +81,17 @@ function serverActionButton(button, action) {
     button.setAttribute('icon', initialIcon);
     button.classList.remove('working');
   });
+}
+
+// the share button sits in the actions column of the invite row and has no room for a label,
+// so sharing reports its result in the name cell of that row instead
+function showInviteStatus(text, isError) {
+  clearTimeout(inviteStatusTimeout);
+  $('#playerInviteStatus').textContent = text;
+  $('#playerInviteStatus').classList.toggle('error', !!isError);
+  $('#invitePlayerRow').classList.toggle('showStatus', !!text);
+  if(text)
+    inviteStatusTimeout = setTimeout(_=>showInviteStatus(''), 5000);
 }
 
 function fillPlayerList(players, active, sessions) {
@@ -183,6 +196,12 @@ function fillPlayerList(players, active, sessions) {
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
+  // somebody who is alone at the table is usually here to find out how to get others in, so
+  // the help starts open for them - once there are other players it would just be in the way
+  if(!helpDefaultApplied) {
+    helpDefaultApplied = true;
+    $('#playersHelp').open = sortedPlayers.length < 2;
+  }
   updatePlayerCountDisplay();
 }
 
@@ -281,6 +300,16 @@ onLoad(function() {
       $('#addLocalPlayerButton').click();
   });
 
-  // share URL when clicking button
-  shareButton($('#playersShareButton'), _=>location.href);
+  // share URL when clicking the button or the link, which would otherwise just reload the room
+  serverActionButton($('#playersShareButton'), async function() {
+    try {
+      showInviteStatus(await shareURL(location.href) == 'clipboard' ? 'Room URL copied to clipboard.' : 'Room URL shared.');
+    } catch(e) {
+      showInviteStatus(e.message, true);
+    }
+  });
+  $('#playerInviteURL').addEventListener('click', function(e) {
+    e.preventDefault();
+    $('#playersShareButton').click();
+  });
 });

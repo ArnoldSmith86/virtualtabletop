@@ -46,6 +46,14 @@
   font-size: 0.8rem;
 }
 
+/* on a phone the session labels are what pushes the table past the viewport, so let them
+   wrap there rather than making the whole overlay scroll sideways */
+@media (max-width: 530px) {
+  #playersTable .playerSessionCell {
+    white-space: normal;
+  }
+}
+
 #playersTable button[icon] {
   display: inline-flex;
   padding: 5px;
@@ -151,31 +159,34 @@
   font-size: 1.5em;
   opacity: 0.6;
 }
+/* an empty input has no value to read, so unlike the player names it needs to look like a field */
 #addPlayerRow .playerName {
   font-weight: normal;
+  box-sizing: border-box;
+  min-width: 0;
+  border-bottom: 1px solid var(--VTTblueLight);
+}
+#addPlayerRow .playerName:invalid {
+  border-bottom-color: darkred;
 }
 #invitePlayerRow .playerNameCell {
   font-size: 0.9rem;
 }
-/* the share button lines up with the row action buttons, so the progress text that
-   progressButton writes into it has to stay out of the layout - its icon shows the state */
-#playersShareButton {
-  font-size: 0;
+/* breaking the URL anywhere keeps it fully readable without widening the table on narrow screens */
+#playerInviteURL {
+  overflow-wrap: anywhere;
 }
-
-#playersLegend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1.5rem;
-  max-width: 40rem;
-  margin: 0 auto;
-  font-size: 0.8rem;
-  opacity: 0.8;
+/* the share button lines up with the row action buttons and has no room for a label,
+   so the result of sharing replaces the invite text of the row */
+#playerInviteStatus,
+#invitePlayerRow.showStatus #playerInviteText {
+  display: none;
 }
-#playersLegend .material-symbols {
-  font-size: 1.2em;
-  vertical-align: text-bottom;
-  margin-right: 0.25rem;
+#invitePlayerRow.showStatus #playerInviteStatus {
+  display: inline;
+}
+#playerInviteStatus.error {
+  color: darkred;
 }
 
 #playersHelp {
@@ -205,14 +216,24 @@
 #playersHelp p {
   margin: 0;
 }
-#playersHelp p .material-symbols {
+#playersHelp ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#playersHelp li {
+  margin-top: 0.25rem;
+}
+#playersHelp p .material-symbols,
+#playersHelp li .material-symbols {
   font-size: 1em;
   vertical-align: text-bottom;
+  margin-right: 0.25rem;
 }
 
 .overlay .heading{
   width: 100%;
-  max-width: 40rem; /* same width as the table, legend and invite block below */
+  max-width: 40rem; /* same width as the table and the help section below */
   margin: 0 auto;
 }
 .overlay .heading h1{

@@ -109,27 +109,22 @@
         </template>
         <table id="playersTable">
           <thead>
-            <tr><th></th><th>Player</th><th></th><th>Sessions</th></tr>
+            <tr><th></th><th>Player</th><th></th><th title="Every connected browser tab is a session of a player">Sessions</th></tr>
           </thead>
           <tbody></tbody>
           <tfoot>
             <tr id="addPlayerRow">
               <td class="playerColorCell"><span class="teamColorWrap"><i class="material-symbols">person_add</i></span></td>
-              <td class="playerNameCell"><input id="localPlayerName" class="playerName" placeholder="Add a local player" /></td>
-              <td class="playerActionsCell" colspan="2"><button icon="add" id="addLocalPlayerButton" title="Add a local player that shares this device"></button></td>
+              <td class="playerNameCell"><input id="localPlayerName" class="playerName" placeholder="Add a player who shares this device" /></td>
+              <td class="playerActionsCell" colspan="2"><button icon="add" id="addLocalPlayerButton" title="Add a player who shares this device"></button></td>
             </tr>
             <tr id="invitePlayerRow">
-              <td class="playerColorCell"><span class="teamColorWrap"><i class="material-symbols">link</i></span></td>
-              <td class="playerNameCell">Invite players to <a id="playerInviteURL">this room</a></td>
+              <td class="playerColorCell"><span class="teamColorWrap"><i class="material-symbols">group_add</i></span></td>
+              <td class="playerNameCell"><span id="playerInviteText">Invite players to <a id="playerInviteURL" title="Share the room URL so other players can join"></a></span><span id="playerInviteStatus"></span></td>
               <td class="playerActionsCell" colspan="2"><button icon="share" id="playersShareButton" title="Share the room URL so other players can join"></button></td>
             </tr>
           </tfoot>
         </table>
-        <div id="playersLegend">
-          <span><i class="material-symbols">edit</i>Rename the player everywhere in the game</span>
-          <span><i class="material-symbols">visibility</i>View the game as this player - greyed out while they are connected and playing</span>
-          <span><i class="material-symbols">delete</i>Remove this player</span>
-        </div>
       </div>
       <details id="playersHelp">
         <summary>Help: playing together</summary>
@@ -152,6 +147,17 @@
           <div>
             <h2>Hotseat</h2>
             <p>Several people share one device: add each of them with the <i class="material-symbols">person_add</i> row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only your own session changes, the game itself stays untouched.</p>
+          </div>
+        </div>
+        <div class="helpTopic">
+          <i class="material-symbols">smart_button</i>
+          <div>
+            <h2>What the buttons do</h2>
+            <ul>
+              <li><i class="material-symbols">edit</i>Rename the player everywhere in the game</li>
+              <li><i class="material-symbols">visibility</i>View the game as this player - greyed out while they are connected and playing</li>
+              <li><i class="material-symbols">delete</i>Remove this player</li>
+            </ul>
           </div>
         </div>
       </details>

@@ -64,16 +64,19 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
   };
 }
 
-async function shareURL(url) {
+// returns how the URL was passed on so callers can tell the user what happened
+export async function shareURL(url) {
   try {
     await navigator.share({ url });
   } catch(e) {
     try {
       await navigator.clipboard.writeText(url);
+      return 'clipboard';
     } catch(e) {
       throw new Error('Could not share or copy URL.');
     }
   }
+  return 'share';
 }
 
 // uses a progressButton with a custom handler that shares a URL
