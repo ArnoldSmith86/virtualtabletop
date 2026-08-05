@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1785206909405,
+      "lastUpdate": 1785900352201,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -81,7 +81,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The line above contains several new properties all easily added through the &quotEdit Widgets&quot tab. <b>lineColor</b> and <b>lineWidth</b> are self-explanatory. <b>lineDash</b> follows the syntax for CSS stroke-dasharray where the first number is the length of the dash and the second number is the space between dashes (in pixels). <b>controlEnd</b> and <b>controlStart</b> are represented by the small orange squares connected by lines (only visible in edit mode) used to change the shape of the curve.<br><br>The line above also has <b>dropTarget</b> set for any widget, so you can move the cubes onto the line.",
+    "html": "The line above contains several new properties all easily added through the &quotEdit Widgets&quot tab. <b>lineColor</b> and <b>lineWidth</b> are self-explanatory. <b>lineDash</b> follows the syntax for CSS stroke-dasharray where the first number is the length of the dash and the second number is the space between dashes (in pixels). <b>controlEnd</b> and <b>controlStart</b> are represented by the small orange squares connected by lines (only visible in edit mode) used to change the shape of the curve.<br><br>The line above has <b>dropTarget</b> set for any widget, so you can move the cubes onto the line. But it also has <b>dropLimit</b> of 4 so a maximum of 4 stops can be placed on it.",
     "layer": -3
   },
   "text3": {
@@ -148,7 +148,8 @@
         "position": 1
       }
     ],
-    "dropTarget": {}
+    "dropTarget": {},
+    "dropLimit": 4
   },
   "line2S0": {
     "type": "holder",
