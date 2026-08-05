@@ -17,6 +17,24 @@
   transform: translateY(-50%);
 }
 
+/* In the modules that render no header (JSON, Debug, Assets) it sits in the module's own top right
+   corner instead, where it has to stay above what they put there. */
+.editorModule > .moduleCloseButton {
+  z-index: 3;
+}
+
+/* except in the JSON module, where that corner is the command pane - it goes to the right end of the
+   widget switcher bar above the text instead */
+.data_object.editorModule > .moduleCloseButton {
+  right: calc(var(--commandPaneWidth) + 5px);
+  top: 6px;
+}
+
+/* the Debug module's filter row is right-aligned, so it has to leave that corner free */
+.pest_control.editorModule > .buttonBar:first-child {
+  padding-right: 40px;
+}
+
 .editorModule h2 {
   color: white;
   background: var(--VTTblue);
@@ -61,7 +79,7 @@
   gap: 8px;
   width: 100%;
   max-width: 420px; /* the panel can be half the window wide - without this they become banners */
-  margin: 8px 0;
+  margin: 8px auto; /* and without the auto they hug the left edge of a wide panel */
   padding: 10px;
   justify-content: center;
 }

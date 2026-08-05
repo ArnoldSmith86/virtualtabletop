@@ -69,8 +69,9 @@ class SidebarModule {
       this.addCloseButton(h);
   }
 
-  // A module can open itself (the first-run default in renderSidebar), so its header carries the way
-  // out - without it, closing means knowing that the sidebar button on the right toggles.
+  // A module can open itself (the first-run default in renderSidebar), so it carries its own way out -
+  // without it, closing means knowing that the sidebar button on the right toggles. Goes into the
+  // module header where there is one and into the module's top right corner otherwise (openInTarget).
   addCloseButton(header) {
     const close = document.createElement('button');
     close.className = 'moduleCloseButton';
@@ -191,7 +192,7 @@ class SidebarModule {
   openInTarget(target) {
     // the content width is only for the panel that opened itself - once a module is opened or closed
     // by hand, the panel goes back to the width the user has (or hasn't) set (see renderSidebar)
-    $('body').classList.remove('defaultEditorModuleWidth');
+    dropDefaultModuleWidth();
 
     if(this.moduleDOM) {
       this.moduleDOM.dataset.currentlyLoaded = '';
@@ -234,6 +235,11 @@ class SidebarModule {
       this.buttonDOM.classList.add('active');
       this.renderModule(target);
       this.onSelectionChanged(selectedWidgets, []);
+      // Modules with a header got their close button from addHeader (which also puts it back when the
+      // module re-renders itself). The ones that render no header - JSON, Debug, Assets - get it in
+      // the module's top right corner, so there is a way out of every module and not just of most.
+      if(!$('.moduleCloseButton', target))
+        this.addCloseButton(target);
       this.saveToLocalStorage(target);
     }
 

@@ -4,6 +4,10 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 
 setupTestEnvironment();
 
+// Which modules edit mode comes up with depends on what the browser has stored and on whether the
+// window has room for a panel next to the board, and both survive a test. Every test that expects
+// the properties module to be open therefore states its own window size and editor state instead of
+// inheriting them from whichever test ran before it.
 const setEditorState = ClientFunction(state => {
   if(state)
     localStorage.setItem('editorState', JSON.stringify(state));
@@ -163,10 +167,12 @@ test('Pan in edit mode while holding Space', async t => {
 });
 
 test('Renaming a widget keeps its color controls clear and it movable', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     old: { id: 'old', type: 'basic', x: 200, y: 200, movable: true, movableInEdit: true }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await ClientFunction(() => {
     window.renamedWidgetErrors = [];
@@ -233,6 +239,7 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const diceState = ClientFunction(() => JSON.stringify(widgets.get('die').state));
@@ -357,11 +364,13 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 });
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:   { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const dropTarget = ClientFunction(() => JSON.stringify(widgets.get('holder').get('dropTarget')));
@@ -395,12 +404,14 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
 });
 
 test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     // an SVG written for svgReplaces: it uses placeholders in fill, stroke and
     // stroke-width, plus an opacity of its own
     checker: { id: 'checker', type: 'basic', x: 100, y: 100, width: 91, height: 91, image: '/i/game-pieces/2D/Checkers-2D.svg' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const nestedSection = Selector('#editorModules .collapsibleBody > .collapsibleSection > .collapsibleHeader .collapsibleTitle');
@@ -469,6 +480,7 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
 });
 
 test('A pile is edited through its handle, css through declaration rows', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -476,6 +488,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
@@ -551,6 +564,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
 });
 
 test("A pile's drop limit is set on the pile and lands in its template", async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -558,6 +572,7 @@ test("A pile's drop limit is set on the pile and lands in its template", async t
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
@@ -585,6 +600,7 @@ test("A pile's drop limit is set on the pile and lands in its template", async t
 });
 
 test('A deck that overrides the pile template says so while the pile mirrors into it', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: { onPileCreation: { text: 'fixed' } } }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -592,6 +608,7 @@ test('A deck that overrides the pile template says so while the pile mirrors int
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   // cardDefaults is the last place a card looks for onPileCreation, so a card
@@ -607,11 +624,13 @@ test('A deck that overrides the pile template says so while the pile mirrors int
 });
 
 test('Loading another game with a widget still selected does not break the client', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 100, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await ClientFunction(() => {
     window.stateLoadErrors = [];
@@ -638,6 +657,7 @@ test('Loading another game with a widget still selected does not break the clien
 });
 
 test('Basic curates the stacking, scale and visibility switches, the scoreboard its seats', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     block: { id: 'block', type: 'basic', x: 100, y: 100 },
     seat1: { id: 'seat1', type: 'seat', x: 100, y: 400, index: 1 },
@@ -645,6 +665,7 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     board: { id: 'board', type: 'scoreboard', x: 600, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const value = ClientFunction((id, property) => JSON.stringify(widgets.get(id).get(property)));
@@ -843,8 +864,10 @@ test('Create game using edit mode', async t => {
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
@@ -886,8 +909,10 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
 });
 
 test('Deck editor: symbol pickers and JSON fallback', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
@@ -935,8 +960,10 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
 });
 
 test('Deck editor: breadcrumb undo and redo', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
@@ -992,8 +1019,10 @@ test('Deck editor: breadcrumb undo and redo', async t => {
 });
 
 test('Deck editor: remote update preserves an unrelated pending edit', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
@@ -1051,8 +1080,10 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
 // three separate undo steps: undoing the added face must not revert the typed edits, and undoing once more
 // must revert only the second field.
 test('Deck editor: rapid cross-field edits stay separate undo steps', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
@@ -1122,8 +1153,10 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
 // selected deck/card no longer exists when the new state arrives). TestCafe fails the test on any uncaught
 // client error, so simply performing the switch guards against the crash coming back.
 test('Deck editor: switching games while editing does not crash', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
@@ -1158,8 +1191,10 @@ test('Deck editor: switching games while editing does not crash', async t => {
 // Also guards against Escape leaking to the room editor behind the deck editor (it used to toggle the
 // sidebar tab and could exit edit mode entirely).
 test('Deck editor: create deck from scratch with color box, face and defaults', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   // All sidebar sections share the same row markup; find a row by its section header and label text. Scan every
@@ -1791,6 +1826,7 @@ test('Deck editor: the custom deck wizard survives an empty rank list', async t 
 // buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget
 // sidebar uses, which is what the group/summary expectations below check.
 test('Deck editor: multi-selected face objects share property edits and alignment', async t => {
+  await t.resizeWindow(1280, 900);
   await setRoomState({
     multiDeck: {
       id: 'multiDeck', type: 'deck', x: 20, y: 20,
@@ -1805,6 +1841,7 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     multiCard: { id: 'multiCard', type: 'card', deck: 'multiDeck', cardType: 'plain', x: 300, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
@@ -1950,6 +1987,7 @@ test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await t
     .click('#editButton')
