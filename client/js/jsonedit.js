@@ -1801,7 +1801,7 @@ function jeAddLimitCommand(key, value) {
 function jeAddLimitConditionCommand() {
   jeCommands.push({
     id: 'limit_condition',
-    name: 'condition',
+    name: 'add condition',
     context: '^[^ ]* ↦ dragLimit',
     show: _=>typeof jeStateNow.dragLimit == "object" && jeStateNow.dragLimit !== null && jeStateNow.dragLimit.condition === undefined,
     call: async function() {
@@ -1811,7 +1811,7 @@ function jeAddLimitConditionCommand() {
   });
   jeCommands.push({
     id: 'limit_condition_add',
-    name: 'another condition',
+    name: 'add another condition',
     context: '^[^ ]* ↦ dragLimit',
     show: _=>typeof jeStateNow.dragLimit == "object" && jeStateNow.dragLimit !== null && jeStateNow.dragLimit.condition !== undefined,
     call: async function() {

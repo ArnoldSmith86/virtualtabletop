@@ -364,6 +364,22 @@ function dragLimitConditions(dragLimit) {
   return condition === undefined || condition === null ? [] : asArray(condition);
 }
 
+// the conditions of the multiline input, one per line and blank lines dropped
+function dragLimitConditionList(text) {
+  return String(text === null || text === undefined ? '' : text).split('\n').map(c=>c.trim()).filter(c=>c !== '');
+}
+
+// the first line that will not parse, if any: one line the engine cannot read
+// makes the whole condition do nothing, so it is worth saying which
+function dragLimitConditionProblem(text) {
+  for(const condition of dragLimitConditionList(text)) {
+    const problem = expressionError(condition);
+    if(problem)
+      return `"${condition}": ${problem}`;
+  }
+  return null;
+}
+
 function dicePreviewRotation(faceCount) {
   if(faceCount == 4)
     return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
@@ -5227,7 +5243,7 @@ class PropertiesModule extends SidebarModule {
       return;
 
     const section = this.renderCollapsibleSection('Drag limits', true, body=>{
-      div(body, 'gridHelp', 'Keeps this widget inside an area while it is dragged, so it cannot be dropped somewhere it is hard to get back from. The area is measured on its top left corner, in the coordinates of its parent: four sides make a rectangle, and a condition cuts any other shape.');
+      div(body, 'gridHelp', 'Keeps this widget inside an area while it is dragged, so it cannot be dropped somewhere it is hard to get back from. The four sides make a rectangle around its top left corner, measured in the coordinates of its parent. A condition is an inequality in x and y - that same corner - which has to stay true, so "y > x" keeps the widget below the diagonal.');
 
       const host = div(body, 'gridLimits');
       // renderRebuildable: the four inputs listen to dragLimit, so the ones of
@@ -5238,15 +5254,17 @@ class PropertiesModule extends SidebarModule {
         host.innerHTML = '';
         if(!dragLimitIsSet(widget.get('dragLimit')))
           return;
-        const x = div(host, 'propertyInlineRow numberPairRow dragLimitRow');
-        div(x, 'numberPairLabel', 'X from/to');
-        this.renderDragLimitNumber(widget, 'minX', 'min', x);
-        this.renderDragLimitNumber(widget, 'maxX', 'max', x);
-        const y = div(host, 'propertyInlineRow numberPairRow dragLimitRow');
-        div(y, 'numberPairLabel', 'Y from/to');
-        this.renderDragLimitNumber(widget, 'minY', 'min', y);
-        this.renderDragLimitNumber(widget, 'maxY', 'max', y);
+        // each side carries its own axis in its label: a side holding an
+        // expression takes the whole line it needs, so the two of a row are
+        // not always side by side under a shared "X from/to"
+        const x = div(host, 'propertyInlineRow dragLimitRow');
+        this.renderDragLimitNumber(widget, 'minX', 'X min', x);
+        this.renderDragLimitNumber(widget, 'maxX', 'X max', x);
+        const y = div(host, 'propertyInlineRow dragLimitRow');
+        this.renderDragLimitNumber(widget, 'minY', 'Y min', y);
+        this.renderDragLimitNumber(widget, 'maxY', 'Y max', y);
         this.renderDragLimitCondition(widget, host);
+        div(host, 'gridHelp', 'x and y are the widget\'s top left corner in its parent. Every line has to be true.');
       });
 
       new CheckboxInput(this, widget, 'Limit where it can be dragged', {
@@ -5268,9 +5286,9 @@ class PropertiesModule extends SidebarModule {
           } : {});
           rebuildLimits();
         },
-        hint: 'Only the corner is limited, so a widget can still stick out of the area by its own width and height. Clearing one of the four fields removes the limit on that side.'
-        // its own host so the label can take the size of the numberPairLabels
-        // of the X/Y rows below it instead of reading as a heading above them
+        hint: 'Only the corner is limited, so a widget can still stick out of the area by its own width and height. Clearing one of the four fields removes the limit on that side; switching this off drops the whole limit, conditions included.'
+        // its own host so the label can take the size of the side labels of the
+        // X/Y rows below it instead of reading as a heading above them
       }).render(div(body, 'gridLimitToggle'));
       body.appendChild(host);
 
@@ -5281,7 +5299,13 @@ class PropertiesModule extends SidebarModule {
       });
     }, target, `${widget.id}:dragLimit`, {
       renderSummary: summary=>{
-        this.addPropertyListener(widget, 'dragLimit', w=>summary.textContent = dragLimitIsSet(w.get('dragLimit')) ? 'on' : 'off');
+        // a condition-only limit leaves the four sides empty, so the summary
+        // says how many conditions do the limiting instead of just "on"
+        this.addPropertyListener(widget, 'dragLimit', w=>{
+          const conditions = dragLimitConditions(w.get('dragLimit')).length;
+          summary.textContent = !dragLimitIsSet(w.get('dragLimit')) ? 'off'
+            : conditions ? `on · ${conditions} condition${conditions == 1 ? '' : 's'}` : 'on';
+        });
       }
     });
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.dragLimit));
@@ -5309,7 +5333,10 @@ class PropertiesModule extends SidebarModule {
       nullIfEmpty: true,
       placeholder: 'none',
       getValue: _=>dragLimitValue(widget.get('dragLimit'), key),
-      setValue: value=>this.updateDragLimit(widget, { [key]: value })
+      setValue: value=>this.updateDragLimit(widget, { [key]: value }),
+      // a mistyped expression limits nothing at all, so it is reported right
+      // here rather than only in the Debug module's validation table
+      validate: value=>typeof value == 'string' ? expressionError(value) : null
     }).render(target);
   }
 
@@ -5317,18 +5344,20 @@ class PropertiesModule extends SidebarModule {
   // x and y - the corner being tested, in the same coordinates as the four
   // sides - that a drag keeps true. One per line, all of which have to hold.
   renderDragLimitCondition(widget, target) {
-    return new TextInput(this, widget, 'Condition', {
+    return new TextInput(this, widget, 'Conditions (one per line)', {
       listenTo: [ 'dragLimit' ],
       multiline: true,
-      placeholder: 'e.g. 2x^2 + y > 4',
+      rows: 3,
+      placeholder: 'none',
       getValue: _=>dragLimitConditions(widget.get('dragLimit')).join('\n'),
       setValue: value=>{
-        const conditions = String(value === null ? '' : value).split('\n').map(c=>c.trim()).filter(c=>c !== '');
+        const conditions = dragLimitConditionList(value);
         // one condition is stored as a string, several as a list, none drops
         // the key - the shapes the engine and the JSON editor already read
         this.updateDragLimit(widget, { condition: conditions.length ? (conditions.length == 1 ? conditions[0] : conditions) : null });
       },
-      hint: 'Ordinary maths: x and y are the widget\'s top left corner, width, height or any other property of the widget can be used by name, and ${PROPERTY name OF id} reads another widget\'s. A number in front of a name or a bracket multiplies, so "2x^2 + y > 4" is written as it looks. Combine with && and ||, or write one inequality per line.'
+      hint: 'Ordinary maths: x and y are the widget\'s top left corner, width, height or any other property of the widget can be used by name, and ${PROPERTY name OF id} reads another widget\'s. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "2x^2 + y > 4" is written as it looks. Every line has to be true; && and || combine within one line.',
+      validate: dragLimitConditionProblem
     }).render(target);
   }
 

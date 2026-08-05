@@ -75,26 +75,34 @@ const COMMON_PROPERTIES = {
     dragLimit: v=>{
         if(typeof v !== 'object' || v === null || Array.isArray(v))
             return 'object expected (minX/maxX/minY/maxY and/or condition)';
+        // every problem is collected: stopping at the first one would hide the
+        // second typo until the first is fixed, and they are usually typed
+        // in the same sitting
+        const problems = [];
         for(const key of Object.keys(v)) {
             if([ 'minX', 'maxX', 'minY', 'maxY' ].includes(key)) {
-                if(typeof v[key] !== 'number' && typeof v[key] !== 'string')
-                    return `${key} must be a number or an expression`;
+                if(typeof v[key] !== 'number' && typeof v[key] !== 'string') {
+                    problems.push(`${key} must be a number or an expression`);
+                    continue;
+                }
                 const problem = typeof v[key] === 'string' && expressionError(v[key]);
                 if(problem)
-                    return `${key} is not a valid expression: ${problem}`;
+                    problems.push(`${key} is not a valid expression: ${problem}`);
             } else if(key === 'condition') {
-                if(!asArray(v[key]).every(c=>typeof c === 'string'))
-                    return 'condition must be an expression or a list of expressions';
+                if(!asArray(v[key]).every(c=>typeof c === 'string')) {
+                    problems.push('condition must be an expression or a list of expressions');
+                    continue;
+                }
                 for(const condition of asArray(v[key])) {
                     const problem = expressionError(condition);
                     if(problem)
-                        return `condition '${condition}' is not a valid expression: ${problem}`;
+                        problems.push(`condition '${condition}' is not a valid expression: ${problem}`);
                 }
             } else {
-                return `unknown key '${key}' (valid: minX, maxX, minY, maxY, condition)`;
+                problems.push(`unknown key '${key}' (valid: minX, maxX, minY, maxY, condition)`);
             }
         }
-        return true;
+        return problems.length ? problems.join('; ') : true;
     },
     classes: 'string',
     css: 'any',

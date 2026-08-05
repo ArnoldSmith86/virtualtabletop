@@ -1911,19 +1911,33 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   min-width: 0;
 }
 
-/* a side of the drag limit takes a number or an expression that computes one,
-   and an expression does not fit the width a number needs */
-.editorModule .propertyInlineRow.dragLimitRow .propertyInput {
-  flex: 1 1 auto;
+/* a side of the drag limit takes a number or an expression that computes one:
+   the two sides of an axis stay side by side at the width a number needs, and
+   only a side actually holding an expression takes a line of its own */
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput.nonNumericValue {
+  flex: 1 1 100%;
 }
 
-.editorModule .propertyInlineRow.dragLimitRow .propertyInput > label:not(.switchbox) {
-  padding-right: 4px;
-}
-
-.editorModule .propertyInlineRow.dragLimitRow .propertyInput input[type=text] {
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput.nonNumericValue input[type=text] {
   flex: 1 1 auto;
   min-width: 0;
+}
+
+/* what is wrong with the value, under the input holding it */
+.editorModule .propertyInput .propertyInputProblem:not(:empty) {
+  flex: 1 1 100%;
+  margin-left: 132px;
+  color: #e05d5d;
+  font-size: 12px;
+}
+
+.editorModule .propertyInlineRow .propertyInput .propertyInputProblem:not(:empty) {
+  margin-left: 0;
+}
+
+.editorModule .propertyInput.hasProblem input,
+.editorModule .propertyInput.hasProblem textarea {
+  outline: 1px solid #e05d5d;
 }
 
 .editorModule .gridExtraRow {

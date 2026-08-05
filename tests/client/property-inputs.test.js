@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { expressionError } from '../../client/js/expression.js';
+
 // The editor files are plain scripts that get concatenated by server/minify.mjs,
 // so evaluate the sources and grab the pure helpers from their scope.
 const dir = path.dirname(fileURLToPath(import.meta.url));
@@ -51,7 +53,7 @@ const testWidgets = new Map();
 // buildDiceFace (properties.js) calls replaceExclusiveProperties (propertyInputs.js) -
 // both files are concatenated into one bundle in the browser, so evaluate them
 // together here too instead of propertiesSource alone
-const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + propertiesSource + `;
+const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', inputsSource + propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
@@ -90,6 +92,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     svgReplacePropertyForAttributes,
     dragLimitIsSet,
     dragLimitValue,
+    dragLimitConditionList,
+    dragLimitConditionProblem,
     positionSummary: PropertiesModule.prototype.positionSummary,
     dicePreviewRotation,
     dicePreviewActiveFace,
@@ -120,7 +124,7 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     courtSuitLetter,
     deckGeneratorDesignHint
   };
-`)(class {}, testWidgets);
+`)(class {}, testWidgets, expressionError);
 
 describe('css declaration rows', () => {
   test('declarations are listed in order from both the string and the object form', () => {
@@ -346,6 +350,15 @@ describe('css helpers', () => {
     expect(cssHelpers.dragLimitIsSet({ maxY: 900 })).toBe(true);
     expect(cssHelpers.dragLimitValue({ minX: 0 }, 'minX')).toBe(0);
     expect(cssHelpers.dragLimitValue({ minX: 0 }, 'maxX')).toBe(null);
+  });
+
+  test('the condition field is one condition per line, and says which line does not parse', () => {
+    expect(cssHelpers.dragLimitConditionList('y > x\n\n  2x^2 + y > 4  \n')).toEqual([ 'y > x', '2x^2 + y > 4' ]);
+    expect(cssHelpers.dragLimitConditionList(null)).toEqual([]);
+    expect(cssHelpers.dragLimitConditionProblem('y > x\n2x^2 + y > 4')).toBe(null);
+    expect(cssHelpers.dragLimitConditionProblem('')).toBe(null);
+    // the message names the line it is about - the other lines are fine
+    expect(cssHelpers.dragLimitConditionProblem('y > x\n0 < x < 500')).toMatch(/^"0 < x < 500": /);
   });
 
   test('cssTextFromValue renders all value shapes', () => {
