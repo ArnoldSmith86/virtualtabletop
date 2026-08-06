@@ -1638,8 +1638,11 @@ class PropertiesModule extends SidebarModule {
 
   onEditorClose() {
     super.onEditorClose();
-    this.clearGridPreview();
-    this.clearFaceRowRefresh();
+    // Leaving edit mode is the most complete way of moving on, but it does not
+    // go through onClose(): the editor is only display:none'd, so a popup left
+    // open lives on inside it and an armed picker keeps the crosshair over the
+    // whole page while playing.
+    this.onClose();
   }
 
   onMetaReceivedWhileActive(meta) {

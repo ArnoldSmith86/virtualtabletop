@@ -144,6 +144,15 @@ class Popup {
     return strips[0] || limits; // no strip is usable: covering the room beats being unusable
   }
 
+  // Whether the control the popup hangs off has to stay readable while it is
+  // open. It does where the popup edits that control - a routine chip is the
+  // sentence the parameter belongs to. An info tip is not about its own button:
+  // that button is a 14px glyph with nothing to read on it, while the tip is
+  // prose that wants every line of height it can get.
+  avoidsSource() {
+    return true;
+  }
+
   // The popup is the control it hangs off, opened up: a parameter popup that
   // lands on its own chip hides the sentence it is about (on a phone it swallows
   // the whole routine), and the chip going away with the popup is what says the
@@ -151,7 +160,7 @@ class Popup {
   // control - the roomier of the two - as long as one of them can hold a popup
   // at all; where neither can, being usable still beats being clear of it.
   limitsAroundSource(limits) {
-    if(!this.source || !this.source.isConnected)
+    if(!this.avoidsSource() || !this.source || !this.source.isConnected)
       return limits;
     const source = this.source.getBoundingClientRect();
     if(!source.width && !source.height)
@@ -383,9 +392,30 @@ function closeEditorPopups() {
   }
   closePropertyInfoPopup();
   for(const write of applied)
-    editorNote(write.kept
-      ? `${write.parameter} set to ${write.value} on ${write.widgetID}`
-      : `${write.parameter} was not set to ${write.value}: ${write.widgetID} is gone`);
+    editorNote(writeWords(write));
+}
+
+// Which of the widgets a write goes to are still there to take it, told apart
+// exactly the way the sidebar tells them apart before writing (widgetStillExists
+// in properties.js - the jest harness loads this file without it, so fall back
+// to the identity half of that test there).
+function writtenWidgets(widget) {
+  const exists = typeof widgetStillExists == 'function'
+    ? widgetStillExists
+    : w=>!!w && !w.isBeingRemoved && widgets.get(w.id) === w;
+  const targets = !widget ? [] : (widget.isMulti ? widget.widgets : [ widget ]);
+  return { kept: targets.filter(exists), gone: targets.filter(w=>!exists(w)) };
+}
+
+// What a write that happened off screen reads like. A multi-selection can be
+// half gone, and saying "set" for it would be as wrong as saying "not set": name
+// the widgets it reached and the ones it did not.
+function writeWords(write) {
+  if(!write.goneIDs.length)
+    return `${write.parameter} set to ${write.value} on ${write.widgetID}`;
+  if(!write.keptIDs.length)
+    return `${write.parameter} was not set to ${write.value}: ${write.widgetID} is gone`;
+  return `${write.parameter} set to ${write.value} on ${write.keptIDs.join(', ')}: ${write.goneIDs.join(', ')} is gone`;
 }
 
 // a value in a line of feedback: what was typed for text, the JSON for the rest,
@@ -437,6 +467,12 @@ class InfoPopup extends Popup {
     this.tutorialName = tutorialName;
     this.videoFilename = videoFilename;
     this.title = title;
+  }
+
+  // several paragraphs of prose about a 14px "i": covering that button costs
+  // nothing, halving the height the text may use costs a scrollbar
+  avoidsSource() {
+    return false;
   }
 
   show() {
@@ -574,16 +610,17 @@ class RoutinePopup extends Popup {
     this.applied = true;
     const parameter = this.parameterNames[0];
     const widget = this.widget;
-    // the same identity check the sidebar writes through (widgetStillExists):
-    // where the widget is gone, its write is dropped there rather than saved
-    const stillExists = !!widget && (widget.isMulti
-      ? widget.widgets.some(w=>widgets.get(w.id) === w)
-      : widgets.get(widget.id) === widget);
+    // Exactly the test the write itself goes through, so the note cannot claim
+    // a value the sidebar then drops: a pile that is dissolving is still in
+    // widgets under its own id for the three property changes it takes to get
+    // there, and widgetStillExists is the only thing that knows that.
+    const written = writtenWidgets(widget);
     this.appliedOnHide = {
       parameter: `${(this.operation && this.operation.func) || 'var'} ${parameter}`,
       value: shortValueWords(this.workingValue),
       widgetID: widget && widget.id,
-      kept: stillExists
+      keptIDs: written.kept.map(w=>w.id),
+      goneIDs: written.gone.map(w=>w.id)
     };
     this.notifyChangeListeners({ [parameter]: this.workingValue });
   }

@@ -20,6 +20,7 @@ beforeAll(() => {
   window.widgets = new Map();
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
+  window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
   // the validator tables are part of the editor bundle; the property proposals read them
   window.WIDGET_PROPERTIES = {
@@ -51,7 +52,8 @@ beforeAll(() => {
     'EventsEditor', 'propertyAutomations', 'AddEventPopup', 'cardDefaultRoutines', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineSoundPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
-    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
+    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
+    'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
@@ -2679,6 +2681,78 @@ describe('the shared widget picker', () => {
     apply.dispatchEvent(new Event('click'));
     expect(value).toEqual({ from: [ 'h1', 'h2' ] });
     popup.hide();
+  });
+
+  // the facade the properties sidebar renders a multi-selection through
+  // (MultiWidget): its id is the ids of all of them, so no widget in the room
+  // has it - the widgets behind it are what says whether it is still there
+  function multiSelection(...ids) {
+    return { id: ids.join(','), isMulti: true, widgets: ids.map(id => widgets.get(id)) };
+  }
+
+  test('the parent picker of a multi-selection picks in the room', () => {
+    const get = room([ 'h1', 'holder' ], [ 'h2', 'holder' ], [ 'h3', 'holder' ]);
+    let picked = null;
+    startWidgetPicker(multiSelection('h1', 'h2'), (target, pickedWidgets) => picked = pickedWidgets.map(w => w.id));
+    expect(handleWidgetPickerClick(get('h3'))).toBe(true);
+    expect(picked).toEqual([ 'h3' ]);
+  });
+
+  test('a picker of a multi-selection ends when one of its widgets is gone', () => {
+    room([ 'h1', 'holder' ], [ 'h2', 'holder' ]);
+    const facade = multiSelection('h1', 'h2');
+    startWidgetPicker(facade, () => {});
+    expect(widgetPickerTarget()).toBe(facade);
+    // it does not end while they are there - the note used to say "h1,h2 is
+    // gone" about widgets that are both in the room
+    endWidgetPickerWithoutTarget();
+    expect(isWidgetPickerActive()).toBe(true);
+
+    widgets.delete('h1');
+    expect(widgetPickerTarget()).toBeNull();
+    endWidgetPickerWithoutTarget();
+    expect(isWidgetPickerActive()).toBe(false);
+    expect(document.querySelector('#editorNotes').lastChild.textContent).toBe('picking in the room ended: h1 is gone');
+  });
+});
+
+describe('what the editor says about a write it made off screen', () => {
+  // a color is picked by dragging, so the parameter is only written when the
+  // popup closes - which is also what the editor moving on to another widget
+  // does to it
+  function colorPopupWithAPick(widget) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineColorPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'CANVAS', color: '#1f5ca6' }, [ 'color' ], widget, [], []);
+    popup.show();
+    popup.applyValueInput('#3cb44b');
+    return popup;
+  }
+
+  const lastNote = () => document.querySelector('#editorNotes').lastChild.textContent;
+
+  beforeEach(() => {
+    widgets.clear();
+    const state = { id: 'button', type: 'button' };
+    widgets.set('button', { id: 'button', state, get: p => state[p], set() {} });
+  });
+
+  test('the write is named with the widget it went to', () => {
+    colorPopupWithAPick(widgets.get('button'));
+    closeEditorPopups();
+    expect(lastNote()).toBe('CANVAS color set to #3cb44b on button');
+  });
+
+  test('a widget that is on its way out of the room does not get credit for the write', () => {
+    // a pile sets isBeingRemoved and then awaits three property changes before
+    // it removes itself, so it is still in widgets under its own id - and the
+    // sidebar drops writes to it for exactly that window (widgetStillExists)
+    widgets.get('button').isBeingRemoved = true;
+    colorPopupWithAPick(widgets.get('button'));
+    closeEditorPopups();
+    expect(lastNote()).toBe('CANVAS color was not set to #3cb44b: button is gone');
   });
 });
 

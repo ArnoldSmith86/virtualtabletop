@@ -30,8 +30,11 @@
   transition: opacity 1s;
 }
 
+/* a note nobody can see any more must not take the click that was aimed at what
+   is behind it - the strip hangs over the play area on a narrow window */
 .editorNote.editorNoteFading {
   opacity: 0;
+  pointer-events: none;
 }
 
 /* the control a popup is open for, in its own color (a chip of the routine is

@@ -2157,6 +2157,24 @@ test('An armed picker does not keep a popup open when the sidebar moves the edit
     .expect(Selector('#w_route').hasClass('selectedInEdit')).ok()
     .expect(popup.exists).notOk()
     .expect(picking).notOk();
+
+  // Leaving edit mode is the most complete way of moving on, and it goes past
+  // the module being closed: the editor is only hidden, so a popup left open
+  // lives on inside it and an armed picker keeps the crosshair over the whole
+  // page while playing. An armed picker also makes the popup ignore the click on
+  // the edit button itself, so nothing else takes it along.
+  await t.click('#w_stop1');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok()
+    .click('#editorToolbar button[icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk()
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk();
 });
 
 test('An editor popup does not outlive the widget it belongs to without a click either', async t => {
