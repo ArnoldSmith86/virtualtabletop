@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { expressionError } from '../../client/js/expression.js';
+import { expressionError, expressionNames } from '../../client/js/expression.js';
+import { asArray } from '../../client/js/domhelpers.js';
 
 // The editor files are plain scripts that get concatenated by server/minify.mjs,
 // so evaluate the sources and grab the pure helpers from their scope.
@@ -53,7 +54,7 @@ const testWidgets = new Map();
 // buildDiceFace (properties.js) calls replaceExclusiveProperties (propertyInputs.js) -
 // both files are concatenated into one bundle in the browser, so evaluate them
 // together here too instead of propertiesSource alone
-const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', inputsSource + propertiesSource + `;
+const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', 'expressionNames', 'asArray', inputsSource + propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
@@ -94,6 +95,9 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', i
     dragLimitValue,
     dragLimitConditionList,
     dragLimitConditionProblem,
+    dragLimitVariesWithPosition,
+    dragLimitDependencies,
+    dragLimitDeltaMatters,
     positionSummary: PropertiesModule.prototype.positionSummary,
     dicePreviewRotation,
     dicePreviewActiveFace,
@@ -124,7 +128,7 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', i
     courtSuitLetter,
     deckGeneratorDesignHint
   };
-`)(class {}, testWidgets, expressionError);
+`)(class {}, testWidgets, expressionError, expressionNames, asArray);
 
 describe('css declaration rows', () => {
   test('declarations are listed in order from both the string and the object form', () => {
@@ -359,6 +363,40 @@ describe('css helpers', () => {
     expect(cssHelpers.dragLimitConditionProblem('')).toBe(null);
     // the message names the line it is about - the other lines are fine
     expect(cssHelpers.dragLimitConditionProblem('y > x\n0 < x < 500')).toMatch(/^"0 < x < 500": /);
+  });
+
+  test('the drawing reads a side once unless it varies with the position', () => {
+    expect(cssHelpers.dragLimitVariesWithPosition({ minX: 0, maxX: 800 })).toBe(false);
+    expect(cssHelpers.dragLimitVariesWithPosition({ maxX: '${PROPERTY width OF board} - 100' })).toBe(false);
+    // a condition is evaluated at every point anyway - only the sides matter here
+    expect(cssHelpers.dragLimitVariesWithPosition({ maxX: 800, condition: 'y > x' })).toBe(false);
+    expect(cssHelpers.dragLimitVariesWithPosition({ maxY: '800 - x/2' })).toBe(true);
+    // the same number at both ends of the parent and a different one in between:
+    // this is why the two corners it used to be sampled at cannot answer it
+    expect(cssHelpers.dragLimitVariesWithPosition({ maxX: '(x - 800)^2' })).toBe(true);
+  });
+
+  test('the drawing follows every property its expressions read', () => {
+    const widget = { id: 'piece', get: property=>({
+      dragLimit: { maxX: '${PROPERTY edge OF board} - limitWidth', condition: 'y > ${PROPERTY top OF rail}' },
+      parent: 'holder'
+    })[property] };
+    const dependencies = cssHelpers.dragLimitDependencies(widget);
+    expect([ ...dependencies.board ]).toEqual([ 'edge' ]);
+    expect([ ...dependencies.rail ]).toEqual([ 'top' ]);
+    expect([ ...dependencies.piece ]).toEqual([ 'limitWidth' ]);
+    // the drawing is painted into the parent's box, so its size counts too
+    expect([ ...dependencies.holder ].sort()).toEqual([ 'height', 'width' ]);
+
+    // a button that moves the area redraws it, an unrelated change does not
+    expect(cssHelpers.dragLimitDeltaMatters(dependencies, { board: { edge: 900 } })).toBe(true);
+    expect(cssHelpers.dragLimitDeltaMatters(dependencies, { piece: { limitWidth: 20 } })).toBe(true);
+    expect(cssHelpers.dragLimitDeltaMatters(dependencies, { board: { z: 5 } })).toBe(false);
+    expect(cssHelpers.dragLimitDeltaMatters(dependencies, { other: { x: 5 } })).toBe(false);
+    // x and y are the position being tested, not a property any delta carries
+    expect(cssHelpers.dragLimitDeltaMatters(dependencies, { piece: { x: 5 } })).toBe(false);
+    // a widget the limit reads being deleted changes the area as well
+    expect(cssHelpers.dragLimitDeltaMatters(dependencies, { rail: null })).toBe(true);
   });
 
   test('cssTextFromValue renders all value shapes', () => {

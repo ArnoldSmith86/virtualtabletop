@@ -1,4 +1,4 @@
-import { evaluateExpression, expressionCondition, expressionError, expressionNumber } from '../../client/js/expression.js';
+import { evaluateExpression, expressionCondition, expressionError, expressionNames, expressionNumber } from '../../client/js/expression.js';
 
 // x and y are what a dragLimit condition is tested with, everything else stands
 // in for a widget property
@@ -129,5 +129,32 @@ describe('the syntax check', () => {
     expect(expressionError('0 < x < 500')).toEqual(expect.any(String));
     expect(expressionError('(x + 1')).toEqual(expect.any(String));
     expect(expressionError('')).toEqual(expect.any(String));
+  });
+});
+
+// what the editor's drawing asks: which of the names an expression reads are
+// the caller's to answer, so it can tell a side that varies with the position
+// from one that does not and redraw when a property it reads changes
+describe('the names an expression reads', () => {
+  test('are the ones the caller resolves', () => {
+    expect(expressionNames('2x^2 + y > 4')).toEqual([ { name: 'x', widget: null }, { name: 'y', widget: null } ]);
+    expect(expressionNames('${PROPERTY edge OF board} - limitWidth')).toEqual([
+      { name: 'edge', widget: 'board' }, { name: 'limitWidth', widget: null }
+    ]);
+  });
+
+  test('leave out what the language answers itself', () => {
+    expect(expressionNames('sqrt(x) + 2pi')).toEqual([ { name: 'x', widget: null } ]);
+    // a property called sqrt is still a property when it is not called
+    expect(expressionNames('sqrt + 1')).toEqual([ { name: 'sqrt', widget: null } ]);
+  });
+
+  test('are read off the words, so half written text still answers', () => {
+    // reporting a name too many only costs a redraw, so text that does not
+    // parse (yet) still says what it reads
+    expect(expressionNames('2x^^2 > 4')).toEqual([ { name: 'x', widget: null } ]);
+    expect(expressionNames('x @ 1')).toEqual([]); // nothing that can even be read as words
+    expect(expressionNames(400)).toEqual([]);
+    expect(expressionNames(null)).toEqual([]);
   });
 });

@@ -99,7 +99,25 @@ describe('a dragLimit condition', () => {
     // free there would be a limit that stops applying at its own boundary
     const w = widgetAt(0, 0, { condition: 'y > x' });
     expect(w.dragLimitedCoord({ x: 5, y: 300 })).toMatchObject({ x: 5, y: 300 });
-    expect(w.dragLimitedCoord({ x: 300, y: 5 })).toMatchObject({ x: 154, y: 155 });
+    expect(w.dragLimitedCoord({ x: 300, y: 5 })).toMatchObject({ x: 152, y: 153 });
+  });
+
+  test('lets a widget on an axis parallel edge move along it too', () => {
+    // 200 < 200 is false, so this widget is on the edge of its area rather than
+    // inside it - and no position that keeps one of its coordinates is inside
+    // it either, which used to make the limit stop applying here
+    const w = widgetAt(200, 100, { condition: 'x < 200' });
+    const to = w.dragLimitedCoord({ x: 300, y: 400 });
+    expect(to.x).toBeLessThan(200);
+    expect(to.y).toBe(400);
+  });
+
+  test('does not pull a widget outside the area back to it', () => {
+    // both where the widget is and where the drag wants to go are outside the
+    // disc, and so is every position around the widget: mixing one coordinate
+    // of each gives (0,0), the centre, which says nothing about either
+    const w = widgetAt(500, 0, { condition: 'x^2 + y^2 < 100^2' });
+    expect(w.dragLimitedCoord({ x: 0, y: 500 })).toMatchObject({ x: 0, y: 500 });
   });
 
   test('is ignored while it cannot be read', () => {

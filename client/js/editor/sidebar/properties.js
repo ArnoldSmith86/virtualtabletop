@@ -380,6 +380,50 @@ function dragLimitConditionProblem(text) {
   return null;
 }
 
+// all the text of a limit that the engine reads as an expression
+function dragLimitExpressions(dragLimit) {
+  return [ ...dragLimitKeys.map(key=>dragLimitValue(dragLimit, key)), ...dragLimitConditions(dragLimit) ];
+}
+
+// Whether a side has to be read at every point of the drawing rather than once
+// for all of it: only an expression that reads the position being tested does.
+// Sampling it in two places cannot answer this - "(x - 800)^2" is the same
+// number at both ends of a 1600 wide parent and a different one in between.
+function dragLimitVariesWithPosition(dragLimit) {
+  return dragLimitKeys.some(key=>expressionNames(dragLimitValue(dragLimit, key))
+    .some(name=>name.widget === null && (name.name == 'x' || name.name == 'y')));
+}
+
+// Which widget properties the sides and conditions of a limit read, so the
+// drawing can follow them: a name without a widget is a property of the limited
+// widget (except x and y, which are the position being tested), one with a
+// widget is that widget's property - and the drawing lives in the parent's box,
+// so its size counts too.
+function dragLimitDependencies(widget) {
+  const dependencies = {};
+  const add = (id, property)=>(dependencies[id] = dependencies[id] || new Set()).add(property);
+  for(const text of dragLimitExpressions(widget.get('dragLimit')))
+    for(const name of expressionNames(text))
+      if(name.widget !== null)
+        add(name.widget, name.name);
+      else if(name.name != 'x' && name.name != 'y')
+        add(widget.id, name.name);
+  if(widget.get('parent'))
+    for(const property of [ 'width', 'height' ])
+      add(widget.get('parent'), property);
+  return dependencies;
+}
+
+// A widget that is gone (or back) changes what the expressions reading it
+// amount to just as much as a new value does, so a delta that only removes one
+// counts as well.
+function dragLimitDeltaMatters(dependencies, deltaState) {
+  for(const id in deltaState || {})
+    if(dependencies[id] && (!deltaState[id] || Object.keys(deltaState[id]).some(property=>dependencies[id].has(property))))
+      return true;
+  return false;
+}
+
 function dicePreviewRotation(faceCount) {
   if(faceCount == 4)
     return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
@@ -5328,6 +5372,15 @@ class PropertiesModule extends SidebarModule {
       // is drawn is the parent's coordinate space
       for(const property of [ 'width', 'height', 'parent', 'x', 'y' ])
         this.addPropertyListener(widget, property, _=>updatePreview());
+      // and it can read any other property of the widget and any property of
+      // any other widget ("${PROPERTY edge OF board}"), which no list written
+      // down here could know - so every delta is held against the names the
+      // limit actually reads, and the drawing follows a button that moves the
+      // area just as a real drag does
+      this.addDeltaListener(deltaState=>{
+        if(dragLimitDeltaMatters(dragLimitDependencies(widget), deltaState))
+          updatePreview();
+      });
     }, target, `${widget.id}:dragLimit`, {
       renderSummary: summary=>{
         // a condition-only limit leaves the four sides empty, so the summary
@@ -5392,13 +5445,9 @@ class PropertiesModule extends SidebarModule {
 
     // a side can be an expression, and an expression can read x and y - then
     // the rectangle differs at every point and has to be read at each of them.
-    // Reading it at two opposite corners tells that apart from the ordinary
-    // case, where it is read once for the whole drawing instead of 10000 times.
-    const corner = coord=>{
-      const rules = widget.dragLimitRules(coord);
-      return rules && [ rules.clampX(-1e6), rules.clampX(1e6), rules.clampY(-1e6), rules.clampY(1e6) ].join();
-    };
-    const fixedRules = corner({ x: 0, y: 0 }) === corner({ x: width, y: height }) ? widget.dragLimitRules({ x: 0, y: 0 }) : undefined;
+    // Whether one of them does is read off the names in it, so the ordinary
+    // case reads the four sides once instead of 10000 times.
+    const fixedRules = dragLimitVariesWithPosition(widget.get('dragLimit')) ? undefined : widget.dragLimitRules({ x: 0, y: 0 });
 
     const canvas = document.createElement('canvas');
     canvas.className = 'dragLimitPreviewOverlay';

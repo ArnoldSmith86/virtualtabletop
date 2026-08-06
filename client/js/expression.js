@@ -289,6 +289,30 @@ export function expressionError(text) {
   }
 }
 
+// Which names an expression reads: the ones the caller resolves, so the
+// functions and constants the language answers itself are left out. The
+// editor's drag limit preview asks this to tell a side that varies with the
+// position being tested from one that is the same everywhere, and to redraw
+// when a property one of them reads changes. Read off the words rather than the
+// parsed expression, so half typed text still says what it reads: a name too
+// many only costs a redraw, one too few would show an area that is no longer
+// there.
+export function expressionNames(text) {
+  if(typeof text != 'string')
+    return [];
+  let tokens = [];
+  try {
+    tokens = tokenize(text);
+  } catch(e) {
+    return [];
+  }
+  const isCall = token=>token && token.type == 'operator' && token.value == '(';
+  return tokens
+    .filter((token, index)=>token.type == 'name' && !(token.widget === null
+      && (constants[token.value] !== undefined || (functions[token.value] && isCall(tokens[index+1])))))
+    .map(token=>({ name: token.value, widget: token.widget }));
+}
+
 export function expressionCondition(text, resolve, fallback = true) {
   if(typeof text == 'boolean')
     return text;

@@ -836,7 +836,8 @@ export class Widget extends StateManaged {
   // straight edge at any angle and around a curve alike.
   // A widget that starts outside its area (a condition that changed under it,
   // a routine that put it there) is not held in place: it is free until it is
-  // inside, so it can never get stuck.
+  // inside, so it can never get stuck - only a widget that is on the boundary
+  // of its area rather than away from it is carried along that boundary.
   dragLimitedCoord(coord) {
     const rules = this.dragLimitRules(coord);
     if(!rules)
@@ -859,12 +860,25 @@ export class Widget extends StateManaged {
     // bound, so a widget sitting outside it (a routine moved it, a side moved
     // under it) must not be able to stay there through the fallbacks below
     const current = { x: clampX(+this.get('x') || 0), y: clampY(+this.get('y') || 0) };
-    // A widget that is not inside its area is normally let go, but a widget
-    // sitting exactly on the edge of a strict inequality is not inside it
-    // either - so the two positions that keep one of its coordinates are tried
-    // first, which is the drag along that edge its author meant to allow.
-    const start = inside(current) ? current
-      : [ { x: target.x, y: current.y }, { x: current.x, y: target.y } ].find(inside);
+    const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
+    // A widget that is not inside its area is let go - but a widget sitting
+    // exactly on the edge of a strict inequality ("x < 200" at x == 200, put
+    // there by a routine or by the initial state) is not inside it either, and
+    // that is a different thing: it is on the boundary rather than away from
+    // the area, and letting it go would make the limit stop applying at its own
+    // edge. The two are told apart by asking the whole positions around the
+    // widget, the ones a drag could have left it on: one of them being inside
+    // means the area is right there, and the drag along that edge its author
+    // meant to allow starts from the one nearest the pointer.
+    const edgeStart = _=>{
+      const around = [];
+      for(const x of [ current.x - 1, current.x, current.x + 1 ])
+        for(const y of [ current.y - 1, current.y, current.y + 1 ])
+          if(x != current.x || y != current.y)
+            around.push({ x, y });
+      return around.sort((a, b)=>away(a) - away(b)).find(inside);
+    };
+    const start = inside(current) ? current : edgeStart();
     if(!start)
       return asCoord(target);
 
@@ -899,7 +913,6 @@ export class Widget extends StateManaged {
     // quarter turn (which is standing still, and therefore always allowed).
     // Repeating the whole thing follows an edge that curves away, where no
     // straight movement can stay against the boundary.
-    const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
     let position = start;
     for(let round = 0; round < 3; ++round) {
       const dx = target.x - position.x, dy = target.y - position.y;
