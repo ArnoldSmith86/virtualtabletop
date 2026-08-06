@@ -1,7 +1,7 @@
 import { ClientFunction } from 'testcafe';
 
 import { escapeID } from '../../client/js/domhelpers.js';
-import { compareState, prepareClient, setName, setRoomState, setLegacyMode } from './test-util.js';
+import { applyLegacy, compareState, prepareClient, setName, setRoomState } from './test-util.js';
 
 function opToString(op) {
   if(op === undefined)
@@ -57,12 +57,15 @@ export function computeShard(allOps, shardIndex, totalShards) {
   return allOps.slice(shardIndex * size, (shardIndex + 1) * size);
 }
 
-export function computeTest(allOps, ops, label) {
+// The recorded hashes describe the engine as the two var-parameter modes see it, so that is
+// the combination the sweep runs in - but it is now named and applied in full instead of
+// switching two modes on and inheriting the other two from whatever ran before.
+// tests/testcafe/legacymatrix.js is what varies the combination.
+export function computeTest(allOps, ops, label, combo = { convertNumericVarParametersToNumbers: true, useOneAsDefaultForVarParameters: true }) {
   test(`Compute (${label})`, async t => {
     await ClientFunction(prepareClient)();
     await setName(t);
-    await setLegacyMode('convertNumericVarParametersToNumbers', true);
-    await setLegacyMode('useOneAsDefaultForVarParameters', true);
+    await applyLegacy(combo);
 
     const precedingOps = allOps.slice(0, allOps.indexOf(ops[0]));
     for(const op of precedingOps)

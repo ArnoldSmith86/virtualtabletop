@@ -104,6 +104,7 @@ const COMMON_PROPERTIES = {
     gameStartRoutine: 'routine',
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
+    lineOriginalRotation: 'object',
     animatePropertyChange: 'any',
     resetProperties: 'object',
     clonedFrom: 'string',
@@ -135,9 +136,13 @@ const WIDGET_PROPERTIES = {
         ...COMMON_PROPERTIES,
         height: 'number', movable: 'boolean', layer: 'any', clickable: 'boolean', spellCheck: 'any', tabIndex: 'any', placeholderText: 'any', text: 'any', editable: 'any', twoRowBottomAlign: 'any'
     },
+    Line: {
+        ...COMMON_PROPERTIES,
+        layer: 'any', movable: 'boolean', lineShape: v=>[ 'line', 'ellipse' ].includes(v) || 'lineShape must be "line" or "ellipse"', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', stops: v=>Array.isArray(v) && v.every(e=>e && typeof e === 'object' && typeof e.widget === 'string' && typeof e.position === 'number') || 'stops must be an array of { widget, position } objects', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', autoSpaceStops: 'boolean', dropTarget: 'any', onEnter: 'object', onLeave: 'object', connectStart: 'any', connectEnd: 'any'
+    },
     Pile: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
+        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', showLimit: 'boolean', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
     },
     Scoreboard: {
         ...COMMON_PROPERTIES,
@@ -434,7 +439,9 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         
         for (const prop of Object.keys(operation)) {
-            if (['func'].includes(prop) || prop.match(/^(note|comment)/i) || prop.startsWith('//')) continue;
+            // skip is deprecated but the engine still honours it on every operation,
+            // so it belongs to none of the tables below and to all of them
+            if (['func', 'skip'].includes(prop) || prop.match(/^(note|comment)/i) || prop.startsWith('//')) continue;
             
             const propPath = [...operationPath, prop];
             
@@ -533,8 +540,12 @@ function validateRoutine(routine, context, propertyPath = []) {
             for(const field of operation.fields) {
                 if(typeof field.variable === 'string')
                     context.validVariables[field.variable] = 1;
-                if(field.type === 'choose')
-                    context.validCollections[field.collection || 'DEFAULT'] = 1;
+                if(field.type === 'choose') {
+                    const outputCollections = field.collection && typeof field.collection === 'object' && !Array.isArray(field.collection) ? Object.values(field.collection) : [field.collection || 'DEFAULT'];
+                    for(const collection of outputCollections)
+                        if(typeof collection === 'string')
+                            context.validCollections[collection] = 1;
+                }
             }
         }
         if(func === 'SELECT')
@@ -614,12 +625,14 @@ const operationProps = {
         'routine':   'routineProperty', 
         'widget':    'idArray', 
         'variable':  'string',
+        'collection': 'string',
         'return':    'boolean',
         'arguments': 'object'
     },
     'CANVAS': { 
         'canvas':     'idArray', 
         'collection': 'inCollection', 
+        'count':      'positiveNumber',
         'color':      v=>typeof v === 'string' && /^#[0-9A-Fa-f]{3,8}$/.test(v) || 'color expected (format: #RGB, #RGBA, #RRGGBB or #RRGGBBAA)',
         'mode':       getEnumValidator(['set', 'inc', 'dec', 'change', 'reset', 'setPixel']),
         'value':      'positiveNumber',
@@ -700,6 +713,9 @@ const operationProps = {
         'header': v=>typeof v === 'string',
         'fields': v=>Array.isArray(v) || 'fields must be an array',
         'css': v=>typeof v === 'string',
+        'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
+        'block':     'boolean',
+        'randomRotation': 'number',
     },
     'LABEL': {
         'label': 'idArray',
@@ -720,6 +736,7 @@ const operationProps = {
         'count': 'countOrAll',
         'x': 'number',
         'y': 'number',
+        'z': 'number',
         'resetOwner': 'boolean',
         'face': 'positiveNumber',
         'snapToGrid': 'boolean'
@@ -784,14 +801,15 @@ const operationProps = {
     'SWAPHANDS': {
         'interval': v=>typeof v === 'number' && Number.isInteger(v),
         'direction': getEnumValidator(['forward','backward','random']),
-        'source': 'inCollection'
+        'source': 'inCollection',
+        'keepOrder': 'boolean'
     },
     'TIMER': {
         'timer': 'idArray',
         'collection': 'inCollection',
         'mode': getEnumValidator(['set','inc','dec','pause','start','toggle','reset']),
         'value': v=>typeof v === 'number' || typeof v === 'string',
-        'seconds': 'number'
+        'seconds': v=>typeof v === 'number' || typeof v === 'string' && /^-?\d+:\d+(\.\d+)?$/.test(v)
     },
     'TURN': {
         'turn': v=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last',
@@ -1117,7 +1135,8 @@ function validateGameFile(data, checkMeta) {
                 'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
                 'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
                 'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
-                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery'
+                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery',
+                'importerTemp', 'importerWarnings', 'importerSchemaVersion'
             ];
             for (const prop of Object.keys(data._meta.info)) {
                 if (!infoProps.includes(prop)) {
