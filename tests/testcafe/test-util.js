@@ -25,11 +25,15 @@ const knownHashDrifts = {
 // after it - within the file and, because the whole suite shares one room, across files too.
 export function setupTestEnvironment() {
   server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
-  const reset = async _=>{
-    await setRoomState();
-    await applyLegacy('modern');
-  };
-  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(reset).after(reset);
+  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(resetRoom).after(resetRoom);
+}
+
+// Empty the room and clear its game settings in one request: setState() takes the gameSettings
+// out of the _meta it is handed, so the room is back in the modern combination without a
+// setLegacyMode round trip per mode. Those would be five state messages in a row before every
+// single test - and a state message makes the client rebuild every widget it has.
+export async function resetRoom() {
+  await setRoomState({ _meta: { version: (await getMeta()).version, gameSettings: {} } });
 }
 
 // The page every fixture starts on. A second client in the same room is a second window on the
@@ -42,8 +46,11 @@ export function prepareClient() {
   // non random random
   window.customRandomSeed = 1;
 
-  // remove base element because it causes popups on form submit
-  document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
+  // remove base element because it causes popups on form submit - a test that prepares the
+  // same page twice (multiclient.js names its client before it opens the room) finds it gone
+  const base = document.querySelector('base');
+  if(base)
+    base.parentNode.removeChild(base);
 }
 
 export async function setName(t, name, color) {

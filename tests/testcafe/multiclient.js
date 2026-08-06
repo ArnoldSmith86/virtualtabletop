@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { prepareClient, roomURL, setName, setupTestEnvironment } from './test-util.js';
+import { prepareClient, roomURL, setupTestEnvironment } from './test-util.js';
 import { openRoom, stateWhen } from './interaction-util.js';
 
 setupTestEnvironment();
@@ -36,12 +36,23 @@ const isForeign = ClientFunction(id => document.getElementById('w_' + id).classN
 
 const visibleOverlays = ClientFunction(_=>Array.prototype.map.call(document.querySelectorAll('.overlay'), o=>o.style.display != 'none' ? o.id : '').filter(id=>id).join(' '));
 
+// The name a client joins under comes from localStorage, so it is put there before the room is
+// loaded rather than typed into the Players table: renaming there is a round trip per keystroke,
+// and with two clients in the room both of them work through every meta update that follows.
+const storePlayerName = ClientFunction(name => localStorage.setItem('playerName', name));
+
+// Load (or reload) the room in the current window as the named player.
+async function openClient(t, name) {
+  await storePlayerName(name);
+  await t.navigateTo(roomURL());
+  await ClientFunction(prepareClient)();
+  await t.click('#activeGameButton');
+}
+
 // A second browser window on the same room, prepared the same way the first one is.
 async function openSecondClient(t, name) {
   const second = await t.openWindow(roomURL());
-  await ClientFunction(prepareClient)();
-  await t.click('#activeGameButton');
-  await setName(t, name);
+  await openClient(t, name);
   return second;
 }
 
@@ -61,8 +72,8 @@ function twoPlayerState(overrides = {}) {
 }
 
 test('A change made by one client arrives at the other', async t => {
+  await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState());
-  await setName(t, 'Alice');
   const first = await t.getCurrentWindow();
   const second = await openSecondClient(t, 'Bob');
 
@@ -80,6 +91,7 @@ test('A change made by one client arrives at the other', async t => {
 });
 
 test('Two clients acting on different widgets converge on the same board', async t => {
+  await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState({
     other: { type: 'basic', x: 300, y: 700, width: 100, height: 100 },
     moveOther: { type: 'button', x: 300, y: 500, width: 120, height: 60, text: 'other', clickRoutine: [
@@ -87,7 +99,6 @@ test('Two clients acting on different widgets converge on the same board', async
       { func: 'SET', property: 'y', value: 850 }
     ] }
   }));
-  await setName(t, 'Alice');
   const first = await t.getCurrentWindow();
   const second = await openSecondClient(t, 'Bob');
 
@@ -105,8 +116,8 @@ test('Two clients acting on different widgets converge on the same board', async
 });
 
 test('onlyVisibleForSeat hides the widget from the other player, not from its own', async t => {
+  await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState());
-  await setName(t, 'Alice');
   const first = await t.getCurrentWindow();
   const second = await openSecondClient(t, 'Bob');
 
@@ -127,8 +138,8 @@ test('onlyVisibleForSeat hides the widget from the other player, not from its ow
 });
 
 test('A card owned by one player is foreign to the other', async t => {
+  await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState());
-  await setName(t, 'Alice');
   const first = await t.getCurrentWindow();
   const second = await openSecondClient(t, 'Bob');
 
@@ -147,6 +158,7 @@ test('A card owned by one player is foreign to the other', async t => {
 });
 
 test('An INPUT overlay opens on the client that triggered it and nowhere else', async t => {
+  await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState({
     ask: { type: 'button', x: 1000, y: 500, width: 120, height: 60, text: 'ask', clickRoutine: [
       { func: 'INPUT', header: 'Pick one', fields: [ { type: 'string', variable: 'answer', label: 'answer', value: 'yes' } ] },
@@ -154,7 +166,6 @@ test('An INPUT overlay opens on the client that triggered it and nowhere else', 
       { func: 'SET', property: 'answered', value: '${answer}' }
     ] }
   }));
-  await setName(t, 'Alice');
   const first = await t.getCurrentWindow();
   const second = await openSecondClient(t, 'Bob');
 
