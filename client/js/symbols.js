@@ -114,7 +114,10 @@ export async function loadSymbolPicker() {
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);
-      toggleClass($('#symbolPickerOverlay'), 'fewResults', $a('#symbolList i:not(.hidden)').length < 100);
+      const matches = $a('#symbolList i:not(.hidden)').length;
+      toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
+      toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
+      $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}".`;
     };
   }
 }

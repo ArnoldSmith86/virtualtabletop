@@ -395,17 +395,29 @@
    the media queries at the end of this block cannot see - so make it a container and query that instead. */
 #symbolPickerOverlay {
   container: symbolPicker / size;
+  /* .overlay's own 5% 10% is a percentage of the WIDTH, in both directions: the wider the host box the more
+     vertical padding the picker gets - ~90px of dead band above the title in #editor at 1920px, while the
+     small boxes that actually need every pixel of height get almost none. The column below is centered and
+     capped at 1000px anyway, so the horizontal padding only matters once the box is narrower than that. */
+  padding: 20px 10px;
 }
 
-/* In a short box the hint is what has to go: it explains the list but costs more height than the list is
-   then left with (114px of a 250px box). Same breakpoint as the media queries below, and the same
-   compensation .fewResults makes when it hides the hint for the same reason. */
-@container symbolPicker (max-height: 375px) {
+/* In a short or a narrow box the hint is what has to go: it explains the list but costs more height than the
+   list is then left with - 114px of a 250px-tall box, and 700px of a 931px-tall one when the box is only
+   204px wide and every line of the hint holds two words. Same breakpoints as the media queries below, and
+   the same compensation .fewResults makes when it hides the hint for the same reason. */
+@container symbolPicker (max-height: 375px), symbolPicker (max-width: 600px) {
   #symbolPickerOverlay p[icon] {
     display: none;
   }
   #symbolPickerOverlay input {
     margin-bottom: 20px;
+  }
+  /* the close button is positioned over the right edge of the title, which the centered "Pick icon" runs
+     into once the box is this narrow */
+  #symbolPickerOverlay h1 {
+    font-size: 20px;
+    margin: 0 40px 10px;
   }
 }
 
@@ -424,6 +436,15 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
+}
+
+/* div[icon] clips (overflow: hidden, for its rounded corners and its watermark glyph), so squeezing it below
+   what it holds drops the bottom of the list on the floor with nothing left to scroll. Keep it at least as
+   tall as the reduced layout needs - its own padding, the search field, and the list's floor below. The
+   plain wrapper around it does not clip, so a box that cannot afford even this overflows the overlay, which
+   scrolls (.overlay is overflow: auto), instead of losing the rest of the list. */
+#symbolPickerOverlay div[icon] {
+  min-height: 210px;
 }
 
 #symbolPickerOverlay > button {
@@ -462,6 +483,22 @@
 }
 #symbolPickerOverlay.bigPreviews.fewResults #symbolList {
   --symbolSize: 64px;
+}
+
+/* a search that matches nothing left an empty card without saying why - take the list's place instead */
+#symbolNoResults {
+  display: none;
+}
+#symbolPickerOverlay.noResults #symbolList {
+  display: none;
+}
+#symbolPickerOverlay.noResults #symbolNoResults {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  word-wrap: anywhere;
 }
 
 #symbolPickerOverlay h1 {
