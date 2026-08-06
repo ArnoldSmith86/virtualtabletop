@@ -1,6 +1,6 @@
 import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
-import { compareDropTarget } from '../../client/js/main.js';
+import { compareDropTarget, exceedsDropLimit } from '../../client/js/main.js';
 
 import { removeWidget } from './client-util.js';
 
@@ -15,6 +15,7 @@ beforeAll(async () => {
   globalThis.batchEnd = batchEnd;
   globalThis.flushDelta = flushDelta;
   globalThis.compareDropTarget = compareDropTarget;
+  globalThis.exceedsDropLimit = exceedsDropLimit;
   globalThis.setDeltaCause = () => {};
   globalThis.getMaxZ = () => 0;
   globalThis.updateMaxZ = () => {};
@@ -688,5 +689,50 @@ describe('dragging a widget onto a line to make it a stop', () => {
     await token.set('y', 300);
     await token.applyLineStopDrop(token.lineStopDropTarget());
     expect(line.stopList().length).toBe(1);
+  });
+
+  describe('dropLimit', () => {
+    let other;
+
+    beforeEach(() => {
+      other = new Widget('drop-other');
+      addWidget({ id: 'drop-other', x: 200, y: 100, width: 40, height: 40 }, other);
+    });
+
+    afterEach(() => removeWidget('drop-other'));
+
+    test('a line takes no more stops than its dropLimit', async () => {
+      await line.set('dropLimit', 1);
+      // with room for one stop the drop is still on
+      expect(token.lineStopDropTarget()).not.toBeNull();
+
+      await line.addStop('drop-other', 0.75);
+      expect(token.lineStopDropTarget()).toBeNull();
+    });
+
+    test('a stop the line already carries can be dropped back onto the path', async () => {
+      await line.set('dropLimit', 1);
+      await line.addStop('drop-token', 0.75);
+      expect(token.lineStopDropTarget().line).toBe(line);
+
+      // even a line that is already over its limit hands nothing back
+      await line.addStop('drop-other', 0.9);
+      expect(token.lineStopDropTarget().line).toBe(line);
+    });
+
+    test('the limit counts stops, not children', async () => {
+      // a fixedParent widget rides the line as a stop without becoming a child
+      await line.set('dropLimit', 1);
+      await other.set('fixedParent', true);
+      await line.addStop('drop-other', 0.75);
+      expect(line.children().length).toBe(0);
+      expect(token.lineStopDropTarget()).toBeNull();
+    });
+
+    test('the default of -1 places no limit', async () => {
+      await line.addStop('drop-other', 0.75);
+      expect(line.get('dropLimit')).toBe(-1);
+      expect(token.lineStopDropTarget()).not.toBeNull();
+    });
   });
 });

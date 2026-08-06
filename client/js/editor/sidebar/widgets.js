@@ -50,6 +50,35 @@ function deepReplace(obj, idMap) {
   }
 }
 
+// Prepares one widget state of a saved widget for the drag image. Every id
+// reference is remapped to the temporary preview ids the same way
+// placeSavedWidgetFromBuffer does for the real placement, so references like
+// inheritFrom or a line's stops point at the preview copies instead of at the
+// library ids (or at an unrelated room widget that happens to use one of them).
+// Returns null for a card whose deck is not part of the preview.
+function remapPreviewState(state, tempId, idMap, minX, minY) {
+  if (state.deck && !idMap.has(state.deck)) {
+    return null;
+  }
+
+  const tempState = JSON.parse(JSON.stringify(state));
+  tempState.id = tempId;
+  deepReplace(tempState, Object.fromEntries(idMap));
+
+  // roots of the buffer are placed side by side in the drag image instead of
+  // keeping the coordinates they had in the library
+  if (!hasPreviewParent(state, idMap)) {
+    tempState.x = (state.x || 0) - minX;
+    tempState.y = (state.y || 0) - minY;
+  }
+
+  return tempState;
+}
+
+function hasPreviewParent(state, idMap) {
+  return !!state.parent && idMap.has(state.parent);
+}
+
 // The saved widget library, shared by the Widgets sidebar and by anything else
 // that offers to place one of them (e.g. adding a stop to a line).
 async function getSavedWidgets(source) {
@@ -78,6 +107,14 @@ async function getSavedWidgets(source) {
   }
 
   return { widgets: [], groups: [] };
+}
+
+// Entries can explain themselves in plain language through an optional
+// description. In grid view the name is all that is shown, so the tooltip is
+// the only place that can tell apart e.g. a line with stops from a plain one.
+function tooltipAttribute(state) {
+  const tooltip = [ state.name || state.id, state.description ].filter(t=>t).join('\n');
+  return ` title="${html(tooltip)}"`;
 }
 
 // Render preview markup from a URL or a Material Symbol reference like "symbol:heading"
@@ -461,6 +498,9 @@ class WidgetsModule extends SidebarModule {
         if (!filter) return true;
         const nameMatch = (widgetData.name || widgetData.id || '').toLowerCase().includes(lowerCaseFilter);
         if (nameMatch) return true;
+        // the description doubles as the entry's tooltip, so searching it also
+        // finds a widget by what it does instead of just by its name
+        if ((widgetData.description || '').toLowerCase().includes(lowerCaseFilter)) return true;
         if (widgetData.widgets && Array.isArray(widgetData.widgets)) {
           return widgetData.widgets.some(subWidget =>
             (subWidget.type || 'basic').toLowerCase().includes(lowerCaseFilter)
@@ -580,7 +620,7 @@ class WidgetsModule extends SidebarModule {
         list += `
           <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
               <div class="widget-group-header">
-                  <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
+                  ${collapseArrowHTML(isCollapsed)}
                   <input class="group-name-input" value="${html(group.name)}" readonly>
               </div>
               <div class="widget-grid" ${isCollapsed ? 'style="display: none;"' : ''}>
@@ -593,7 +633,7 @@ class WidgetsModule extends SidebarModule {
             <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
                 <div class="widget-group-header" draggable="${isEditing}">
                     <span class="drag-handle"></span>
-                    <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
+                    ${collapseArrowHTML(isCollapsed)}
                     <input class="group-name-input" value="${html(group.name)}" readonly>
                 </div>
                 <ul class="widget-group-body" ${isCollapsed ? 'style="display: none;"' : ''}>
@@ -654,7 +694,7 @@ class WidgetsModule extends SidebarModule {
       serverListHTML = `
         <div class="widget-list-container ${isServerListCollapsed ? 'collapsed' : ''}" data-list-key="server">
           <div class="widget-list-header">
-          <span class="collapse-arrow material-symbols">${isServerListCollapsed ? 'expand_less' : 'expand_more'}</span>
+          ${collapseArrowHTML(isServerListCollapsed)}
             <span class="widget-list-header-text">On The Server</span>
             <div class="widget-list-actions">
               ${config.allowPublicLibraryEdits ? `<button icon="upload" class="sidebarButton import-widgets" data-source="server"><span>Import Server-Wide</span></button>` : ''}
@@ -671,7 +711,7 @@ class WidgetsModule extends SidebarModule {
       ${serverListHTML}
       <div class="widget-list-container ${isLocalListCollapsed ? 'collapsed' : ''}" data-list-key="local">
         <div class="widget-list-header">
-          <span class="collapse-arrow material-symbols">${isLocalListCollapsed ? 'expand_less' : 'expand_more'}</span>
+          ${collapseArrowHTML(isLocalListCollapsed)}
           <span class="widget-list-header-text">In Local Storage</span>
           <div class="widget-list-actions">
             <div class="segmented-control sort-control">
@@ -716,8 +756,7 @@ class WidgetsModule extends SidebarModule {
         if (!listKey) return;
         const isCollapsed = container.classList.toggle('collapsed');
         localStorage.setItem(`vtt-widget-list-collapsed-${listKey}`, isCollapsed);
-        const arrow = header.querySelector('.collapse-arrow');
-        arrow.textContent = isCollapsed ? 'expand_less' : 'expand_more';
+        setCollapseArrow(header.querySelector('.collapseArrow'), isCollapsed);
       };
     }
 
@@ -866,25 +905,14 @@ class WidgetsModule extends SidebarModule {
               const previewWidget = tempWidgetInstances.get(tempId);
               widgets.set(tempId, previewWidget);
 
-              const tempState = JSON.parse(JSON.stringify(s));
-              tempState.id = tempId;
-
-              const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-              if (parentId) {
-                tempState.parent = parentId;
-              } else {
-                tempState.x = (s.x || 0) - minX;
-                tempState.y = (s.y || 0) - minY;
-              }
-              if (tempState.deck) {
-                if(!idMap.has(tempState.deck))
-                  continue;
-                tempState.deck = idMap.get(tempState.deck);
+              const tempState = remapPreviewState(s, tempId, idMap, minX, minY);
+              if (!tempState) {
+                continue;
               }
 
               previewWidget.applyInitialDelta(tempState);
 
-              if (!parentId) {
+              if (!hasPreviewParent(s, idMap)) {
                 scaleWrapper.appendChild(previewWidget.domElement);
               }
             }
@@ -1115,24 +1143,14 @@ class WidgetsModule extends SidebarModule {
             const previewWidget = tempWidgetInstances.get(tempId);
             widgets.set(tempId, previewWidget);
 
-            const tempState = JSON.parse(JSON.stringify(s));
-            tempState.id = tempId;
-            const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-            if (parentId) {
-              tempState.parent = parentId;
-            } else {
-              tempState.x = (s.x || 0) - minX;
-              tempState.y = (s.y || 0) - minY;
-            }
-            if (tempState.deck) {
-              if(!idMap.has(tempState.deck))
-                continue;
-              tempState.deck = idMap.get(tempState.deck);
+            const tempState = remapPreviewState(s, tempId, idMap, minX, minY);
+            if (!tempState) {
+              continue;
             }
 
             previewWidget.applyInitialDelta(tempState);
 
-            if (!parentId) {
+            if (!hasPreviewParent(s, idMap)) {
               scaleWrapper.appendChild(previewWidget.domElement);
             }
           }
@@ -1357,7 +1375,7 @@ class WidgetsModule extends SidebarModule {
     const widgetTypes = getWidgetTypesString(state);
     const hasAddToRoomRoutine = state.widgets.some(w => w.editorAddToRoomRoutine);
     return `
-          <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}" style="display: flex; align-items: center; margin-bottom: 5px;">
+          <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}"${tooltipAttribute(state)} style="display: flex; align-items: center; margin-bottom: 5px;">
               <span class="drag-handle"></span>
               <div class="widget-preview">
                 ${this.renderPreviewHTML(state.preview)}
@@ -1380,7 +1398,7 @@ class WidgetsModule extends SidebarModule {
 
   renderGridWidget(state, source, isEditing) {
     return `
-      <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true">
+      <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true"${tooltipAttribute(state)}>
         <div class="widget-preview">
           ${this.renderPreviewHTML(state.preview)}
           <button icon="add" class="sidebarButton add-to-room-grid"><span>Add widget to room</span></button>

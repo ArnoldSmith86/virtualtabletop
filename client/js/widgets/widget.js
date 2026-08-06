@@ -1,8 +1,8 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -835,14 +835,16 @@ export class Widget extends StateManaged {
 
     const displayError = (field, error) => {
       const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
-      div(dom.parentElement, 'inputError', error);
+      // the message carries what the field defines (regexHint, min, max, regex),
+      // so it goes into the DOM as text and not as HTML
+      div(dom.parentElement, 'inputError').textContent = error;
     };
 
     for(const field of o.fields || []) {
       if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
         isValid = displayError(field, `Please select at least ${field.min}.`);
       if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
-        isValid = displayError(field, `Please select at most ${field.min}.`);
+        isValid = displayError(field, `Please select at most ${field.max || 1}.`);
       if(field.type == 'number' && variables[field.variable] < field.min)
         isValid = displayError(field, `Please enter a number above ${field.min}.`);
       if(field.type == 'number' && variables[field.variable] > field.max)
@@ -958,7 +960,14 @@ export class Widget extends StateManaged {
 
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
-    if(jeRoutineLogging)
+
+    // Capture the routine logging state once, at the start of the routine. Toggling the Debug
+    // panel while the routine is suspended (e.g. waiting for an INPUT modal) would otherwise
+    // mismatch the jeLogging start/end calls and crash the client. (#2672) A routine that was
+    // already running when logging got enabled can not be logged retroactively - it adds a note
+    // to the log instead (see jeLoggingRoutineNotLogged at the end of this function).
+    const routineLogging = jeRoutineLogging;
+    if(routineLogging)
       jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
 
     let variables = initialVariables;
@@ -1003,10 +1012,10 @@ export class Widget extends StateManaged {
         property: typeof property == 'string' ? property : 'literal'
       };
 
-      if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
+      if(routineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
-        if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, true);
+        if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, true);
         continue;
       }
 
@@ -1069,12 +1078,12 @@ export class Widget extends StateManaged {
             variables[variable][index] = await getValue(variables[variable][index]);
           else
             variables[variable] = await getValue(variables[variable]);
-          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
+          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
           if (comment) {
             // ignore (but log) blank and comment only lines
-            if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
+            if(routineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
             const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
             const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
@@ -1094,7 +1103,7 @@ export class Widget extends StateManaged {
                 variables[variable][index] = result;
               else
                 variables[variable] = result;
-              if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+              if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
             } else {
               problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
             }
@@ -1142,7 +1151,7 @@ export class Widget extends StateManaged {
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
@@ -1213,7 +1222,7 @@ export class Widget extends StateManaged {
           problems.push(`Collection ${a.collection} is empty.`);
         }
 
-        if(jeRoutineLogging) {
+        if(routineLogging) {
           if(a.mode == 'set')
             jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${JSON.stringify(a.value)}`)
           else if(a.mode == 'change')
@@ -1237,7 +1246,7 @@ export class Widget extends StateManaged {
           for(let i=0; i<a.count; ++i)
             for(const w of collections[collection])
               await w.click(a.mode);
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const theCount = a.count ? `${a.count} times` : '';
             jeLoggingRoutineOperationSummary( `'${a.collection}' ${theCount}`)
           }
@@ -1259,7 +1268,7 @@ export class Widget extends StateManaged {
             }
           }
           collections[a.collection]=c;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`);
         }
       }
@@ -1308,7 +1317,7 @@ export class Widget extends StateManaged {
           }
           theItem = `${a.collection}`
         }
-        if(jeRoutineLogging)
+        if(routineLogging)
           jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
       }
@@ -1317,7 +1326,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { milliseconds: 0 });
         flushDelta();
         await sleep(a.milliseconds);
-        if(jeRoutineLogging)
+        if(routineLogging)
           jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
 
@@ -1330,7 +1339,7 @@ export class Widget extends StateManaged {
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `'${a.collection}'`)
         }
       }
@@ -1348,7 +1357,7 @@ export class Widget extends StateManaged {
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
@@ -1357,7 +1366,7 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
@@ -1376,10 +1385,10 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
@@ -1397,7 +1406,7 @@ export class Widget extends StateManaged {
         if(a.in) {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
         } else if(a.range) {
           let range = [...asArray(a.range)];
@@ -1435,12 +1444,12 @@ export class Widget extends StateManaged {
 
           for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
             await callWithAdditionalValues({ value: index });
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `widgets in '${a.collection}'`);
         }
       }
@@ -1495,7 +1504,7 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
@@ -1513,7 +1522,7 @@ export class Widget extends StateManaged {
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             if (a.condition === undefined)
               jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
             else
@@ -1581,7 +1590,7 @@ export class Widget extends StateManaged {
             Object.assign(variables, result.variables);
             Object.assign(collections, result.collections);
           }
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             let varList = [];
             let valueList = [];
             a.fields.forEach(f=>{
@@ -1594,7 +1603,7 @@ export class Widget extends StateManaged {
           }
         } catch(e) {
           abortRoutine = true;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
@@ -1609,7 +1618,7 @@ export class Widget extends StateManaged {
             await w(a.label, async widget=>{
               await widget.setText(a.value, a.mode, problems)
             });
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
                 jeLoggingRoutineOperationSummary(`${a.mode} '${a.label}' by ${a.value}`)
               else if(a.mode == 'append')
@@ -1622,7 +1631,7 @@ export class Widget extends StateManaged {
           if(collections[collection].length) {
             for(const c of collections[collection])
               await c.setText(a.value, a.mode, problems);
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
                 jeLoggingRoutineOperationSummary(`${a.mode} widgets in '${a.collection}' by ${a.value}`)
               else if(a.mode == 'append')
@@ -1712,7 +1721,7 @@ export class Widget extends StateManaged {
                 await target.updateAfterShuffle();
             });
           }
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const logCount = count==1 ? '1 widget' : `${count == 999999 ? 'all' : count} widgets`;
             jeLoggingRoutineOperationSummary(`${logCount} from '${a.from || a.collection}' to '${a.to}'`)
           }
@@ -1738,7 +1747,7 @@ export class Widget extends StateManaged {
               await c.set('parent', null);
             }
           });
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
             jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to (${a.x}, ${a.y})`)
           }
@@ -1796,7 +1805,7 @@ export class Widget extends StateManaged {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
           };
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
           }
         }
@@ -1813,7 +1822,7 @@ export class Widget extends StateManaged {
             }
           }
         }
-        if (jeRoutineLogging) {
+        if (routineLogging) {
           jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
         }
       }
@@ -1831,7 +1840,7 @@ export class Widget extends StateManaged {
               for(const c of holder.children().slice(0, a.count))
                 await c.rotate(a.angle, a.mode);
             });
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
             }
           }
@@ -1839,7 +1848,7 @@ export class Widget extends StateManaged {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count))
               await c.rotate(a.angle, a.mode);
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
@@ -1880,7 +1889,7 @@ export class Widget extends StateManaged {
           await seats[i].set(String(a.property), newScore);
         }
 
-        if(jeRoutineLogging) {
+        if(routineLogging) {
           const phrase = round===null ? 'new round' : `round ${a.round}`;
           const seatIds = seats.map(w => w.get('id'));
           if(a.mode == 'inc' || a.mode == 'dec')
@@ -1940,7 +1949,7 @@ export class Widget extends StateManaged {
           if(a.sortBy)
             await sortWidgets(collections[a.collection], a.sortBy);
 
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
@@ -1991,7 +2000,7 @@ export class Widget extends StateManaged {
             }
           }
         }
-        if(jeRoutineLogging)
+        if(routineLogging)
           jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
       }
 
@@ -2005,7 +2014,7 @@ export class Widget extends StateManaged {
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
         } else if(collection = getCollection(a.collection)) {
@@ -2014,7 +2023,7 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
@@ -2036,7 +2045,7 @@ export class Widget extends StateManaged {
                 await holder.updateAfterShuffle();
             });
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
@@ -2048,7 +2057,7 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
         }
       }
@@ -2094,7 +2103,7 @@ export class Widget extends StateManaged {
             }
           }
           if(moves.length) {
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationStart("Moves", "Moves");
             for(const move of moves) {
               // the collection is named after the seat it comes from so that the
@@ -2120,14 +2129,14 @@ export class Widget extends StateManaged {
                   collections[collection] = shadowed;
               }
             }
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const how = a.direction == 'random' ? `hands in a random seat order by ${a.interval}` : `hands ${a.direction} by ${a.interval}`;
             jeLoggingRoutineOperationSummary(moves.length ? `${how}${a.keepOrder ? ', keeping the card order' : ''}` : 'no seat with a player has a valid hand, nothing to swap');
           }
-        } else if(jeRoutineLogging) {
+        } else if(routineLogging) {
           jeLoggingRoutineOperationSummary('less than two seats with a player, nothing to swap');
         }
       }
@@ -2158,24 +2167,27 @@ export class Widget extends StateManaged {
           }
         };
         if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          // a "minutes:seconds" string in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
+          const seconds = timeToMS(a.seconds);
+          const milliseconds = seconds !== a.seconds ? seconds : a.seconds*1000 || a.value;
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
               await w(a.timer, async widget=>{
                 if(widget.setMilliseconds)
-                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await widget.setMilliseconds(milliseconds, a.mode);
               });
             }
           } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setMilliseconds)
-                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await c.setMilliseconds(milliseconds, a.mode);
             } else {
               problems.push(`Collection ${a.collection} is empty.`);
             }
           }
         };
-        if(jeRoutineLogging &&
+        if(routineLogging &&
            (a.timer != undefined || (collection && collections[collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
@@ -2192,11 +2204,11 @@ export class Widget extends StateManaged {
         const uploadedAsset = await uploadAsset(null, a.fileTypes);
         if(!String(uploadedAsset).match(/^\/assets\/[0-9_-]+$/)) {
           variables[a.variable] = false;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary("UPLOAD cancelled");
         } else {
           variables[a.variable] = uploadedAsset;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
         }
       }
@@ -2212,7 +2224,7 @@ export class Widget extends StateManaged {
         let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
 
         if (c.length == 0) {
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`No active seats found in collection ${a.source}.`);
         } else {
           if (c.length > 1) {
@@ -2271,7 +2283,7 @@ export class Widget extends StateManaged {
             }
           }
 
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             if (target) {
               const indexList = c.map(w => w.get('index'));
               const turn = target.get('index');
@@ -2288,14 +2300,14 @@ export class Widget extends StateManaged {
         for(const [ key, value ] of Object.entries(a.variables||{}))
           variables[key] = value;
 
-        if(jeRoutineLogging) {
+        if(routineLogging) {
           jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
         }
       }
 
-      if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
+      if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
-      if(!jeRoutineLogging && problems.length)
+      if(!routineLogging && problems.length)
         console.log(problems);
 
       if(abortRoutine)
@@ -2303,7 +2315,10 @@ export class Widget extends StateManaged {
 
     } // End iterate over functions in routine
 
-    if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
+    if(routineLogging)
+      jeLoggingRoutineEnd(variables, collections);
+    else if(jeRoutineLogging)
+      jeLoggingRoutineNotLogged(this, property); // logging was enabled while this routine was running
 
     batchEnd();
 
@@ -2481,6 +2496,7 @@ export class Widget extends StateManaged {
 
     await this.bringToFront();
     await this.set('dragging', playerName);
+    delete this.lastMoveCoord;
 
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
@@ -2524,6 +2540,8 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
 
+    this.lastMoveCoord = coordGlobal;
+
     await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
     await this.snapToGrid();
 
@@ -2531,6 +2549,15 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
+      // The hit test below asks the DOM where this widget is, but the delta that
+      // carries the position set above only reaches the DOM when the batch around
+      // the mouse event ends. Without the flush the drop target is computed for the
+      // position of the *previous* mouse event - so a drag that moves further than
+      // half a holder between two events resolves the drop against the square the
+      // widget has already left, and the piece lands next to where it was dropped
+      // (or the game rejects the move and sends it back).
+      if(this.domElement.style.transform != this.cssTransform())
+        flushDelta();
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
@@ -2675,6 +2702,23 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, localAnchor });
 
+    // dropLimit constrains manual drops only, and every pile this widget can
+    // still form from here on is one. Dropping into a holder reparents it,
+    // which runs updatePiles() before the call at the end of this method, so
+    // the marker has to cover the whole drop rather than just that call.
+    this.pileUpdateFromDrag = true;
+
+    // The drop belongs where the button was released, not where the last mousemove
+    // reported: a fast drag can end with a mouseup at coordinates no mousemove ever
+    // delivered, and everything below - the drop target, the line stop, the position -
+    // would then be resolved for a spot the widget has already been dragged away from.
+    // Applying the release coordinates first also makes the drop target match what the
+    // player last saw highlighted, since move() recomputes it.
+    const releasedElsewhere = coordGlobal && (!this.lastMoveCoord || this.lastMoveCoord.x != coordGlobal.x || this.lastMoveCoord.y != coordGlobal.y);
+    if(releasedElsewhere)
+      await this.move(coordGlobal, localAnchor);
+    delete this.lastMoveCoord;
+
     await this.hideShadowWidget();
     await this.set('dragging', null);
 
@@ -2707,6 +2751,7 @@ export class Widget extends StateManaged {
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+    delete this.pileUpdateFromDrag;
   }
 
   async hideShadowWidget() {
@@ -3170,6 +3215,12 @@ export class Widget extends StateManaged {
     const thisOwner = this.get('owner');
     const thisOnPileCreation = this.get('onPileCreation');
     const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
+
+    // A pile that is already at its dropLimit takes no more cards - but only
+    // when this update comes from a drag. Everything else that piles cards up
+    // (a MOVE or CLONE in a routine, "Split the pile", the JSON editor) ignores
+    // dropLimit elsewhere too, and games rely on that, so it stays ignored here.
+    const isFull = (pile, count) => this.pileUpdateFromDrag && exceedsDropLimit(pile, count);
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -3188,6 +3239,11 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
+          // the pile that would be created is bound by the dropLimit it would
+          // be created with, so a limit below 2 rules the pile out entirely
+          const newPileDropLimit = thisOnPileCreation && thisOnPileCreation.dropLimit;
+          if(this.pileUpdateFromDrag && newPileDropLimit > -1 && newPileDropLimit < 2)
+            continue;
           const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
@@ -3207,6 +3263,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(thisType == 'pile' && widgetType == 'pile') {
+          if(isFull(widget, this.children().length))
+            continue;
           for(const w of this.children().reverse()) {
             await w.set('parent', widget.get('id'));
             await w.bringToFront();
@@ -3216,6 +3274,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
         if(thisType == 'pile' && widgetType == 'card') {
+          if(isFull(this, 1))
+            continue;
           for(const w of this.children().reverse())
             await w.bringToFront();
           await this.set('x', widget.get('x'));
@@ -3226,6 +3286,8 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
         if(thisType == 'card' && widgetType == 'pile') {
+          if(isFull(widget, 1))
+            continue;
           await this.bringToFront();
           await this.set('parent', widget.get('id'));
           break;

@@ -19,6 +19,8 @@ jobs:
       matrix:
         testfile:
           - editor.js
+          - toolbar.js
+          - boardsize.js
           - compute-1.js
           - compute-2.js
           - compute-3.js
