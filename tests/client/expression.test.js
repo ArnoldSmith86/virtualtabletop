@@ -1,3 +1,4 @@
+import { compute_ops } from '../../client/js/compute.js';
 import { evaluateExpression, expressionCondition, expressionError, expressionNames, expressionNumber } from '../../client/js/expression.js';
 
 // x and y are what a dragLimit condition is tested with, everything else stands
@@ -29,7 +30,7 @@ describe('the expression language', () => {
     expect(value('2x')).toBe(6);
     expect(value('2x^2')).toBe(18);
     expect(value('3(x + 1)')).toBe(12);
-    expect(value('2pi')).toBeCloseTo(2 * Math.PI);
+    expect(value('2PI')).toBeCloseTo(2 * Math.PI);
   });
 
   test('compares and combines', () => {
@@ -107,6 +108,45 @@ describe('the expression language', () => {
     expect(value('2 x')).toBe(6);               // spaces around it are fine
   });
 
+  test('says what the same name says in var', () => {
+    // the point of the whole table: a formula can be moved between a routine
+    // and a condition without quietly computing something else - angles most of
+    // all, which are degrees on both sides
+    const varOp = name=>compute_ops.find(op=>op.name == name);
+    const oneArgument = {
+      abs: -3.5, acos: 0.5, asin: 0.5, atan: 2, cbrt: 27, ceil: 2.2, cos: 60, exp: 1.5,
+      floor: 2.7, log: 5, log10: 1000, log2: 8, round: 1.5, sign: -4, sin: 30, sqrt: 20,
+      tan: 45, trunc: -2.7
+    };
+    for(const [ name, argument ] of Object.entries(oneArgument))
+      expect(value(`${name}(${argument})`)).toBeCloseTo(varOp(name).call(undefined, argument), 10);
+
+    const twoArguments = { atan2: [ 3, 4 ], hypot: [ 3, 4 ], max: [ 3, 4 ], min: [ 3, 4 ], pow: [ 3, 4 ] };
+    for(const [ name, [ first, second ] ] of Object.entries(twoArguments))
+      expect(value(`${name}(${first}, ${second})`)).toBeCloseTo(varOp(name).call(undefined, first, second), 10);
+
+    for(const name of [ 'E', 'LN10', 'LN2', 'LOG10E', 'LOG2E', 'PI', 'SQRT1_2', 'SQRT2' ])
+      expect(value(name)).toBe(varOp(name).call(undefined));
+
+    expect(value('sin(90)')).toBe(1);
+    expect(value('atan2(1, 1)')).toBeCloseTo(45);
+  });
+
+  test('leaves out of that table what an area cannot use', () => {
+    // an area that is not the same twice can neither be slid along nor drawn,
+    // so the three random operations are names like any other - i.e. properties
+    expect(_=>value('random')).toThrow();
+    expect(_=>value('randInt(1, 6)')).toThrow();
+    expect(evaluateExpression('random + 1', name=>({ random: 41 }[name]))).toBe(42);
+  });
+
+  test('compares with === and !== like var does', () => {
+    expect(value('x === 3')).toBe(true);
+    expect(value('x !== 3')).toBe(false);
+    expect(value('(x > 0) === (y > 0)')).toBe(true);
+    expect(_=>value('0 === x === 3')).toThrow();
+  });
+
   test('does not answer with what every object inherits', () => {
     // a widget property named "constructor" or "toString" is read like any
     // other name rather than resolving to Object.prototype
@@ -166,7 +206,7 @@ describe('the names an expression reads', () => {
   });
 
   test('leave out what the language answers itself', () => {
-    expect(expressionNames('sqrt(x) + 2pi')).toEqual([ { name: 'x', widget: null } ]);
+    expect(expressionNames('sqrt(x) + 2PI')).toEqual([ { name: 'x', widget: null } ]);
     // a property called sqrt is still a property when it is not called
     expect(expressionNames('sqrt + 1')).toEqual([ { name: 'sqrt', widget: null } ]);
   });

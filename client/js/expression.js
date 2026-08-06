@@ -3,9 +3,10 @@
 // widget can be dragged in with inequalities like "2x^2 + y > 4".
 //
 // An expression is ordinary infix maths: numbers, + - * / % ^, parentheses,
-// comparisons (< <= > >= == !=), logic (&& || !), the functions below, and
-// names. A name is resolved by the caller - for dragLimit, x and y are the
-// position being tested and every other name is a property of the widget - as
+// comparisons (< <= > >= == === != !==), logic (&& || !), the functions and
+// constants "var" has, and names. A name is resolved by the caller - for
+// dragLimit, x and y are the position being tested and every other name is a
+// property of the widget - as
 // is ${PROPERTY name} / ${PROPERTY name OF widgetID}, the same reference
 // routines use. A number directly in front of a name or a bracket multiplies,
 // so "2x" and "3(x+1)" mean what they look like.
@@ -14,22 +15,38 @@
 // callback answers, which is what makes it testable and safe to run on every
 // mouse move.
 
+// The names are the numeric ones "var" has (compute.js): same spelling, same
+// meaning - angles in degrees most of all - so a formula can be moved between a
+// routine and a condition without quietly computing something else.
+// tests/client/expression.test.js holds every one of them against compute_ops,
+// so the two languages cannot drift apart. Left out of that list is what an
+// area cannot use: "random" and the two randInt/randRange (an area that is not
+// the same twice can neither be slid along nor drawn) and everything that is
+// about strings, arrays or colours rather than numbers.
+//
 // Object.create(null) rather than a plain literal: a literal also answers for
 // inherited keys, so "constructor" would be a function and a widget property
 // named "toString" could never be read.
+const perDegree = Math.PI/180;
 const functions = Object.assign(Object.create(null), {
-  abs: Math.abs, atan2: Math.atan2, ceil: Math.ceil, cos: Math.cos, exp: Math.exp,
-  floor: Math.floor, hypot: Math.hypot, log: Math.log, max: Math.max, min: Math.min,
-  pow: Math.pow, round: Math.round, sign: Math.sign, sin: Math.sin, sqrt: Math.sqrt, tan: Math.tan
+  abs: Math.abs, acos: x=>Math.acos(x)/perDegree, asin: x=>Math.asin(x)/perDegree,
+  atan: x=>Math.atan(x)/perDegree, atan2: (y, x)=>Math.atan2(y, x)/perDegree, cbrt: Math.cbrt,
+  ceil: Math.ceil, cos: x=>Math.cos(x*perDegree), exp: Math.exp, floor: Math.floor,
+  hypot: Math.hypot, log: Math.log, log10: Math.log10, log2: Math.log2, max: Math.max,
+  min: Math.min, pow: Math.pow, round: Math.round, sign: Math.sign, sin: x=>Math.sin(x*perDegree),
+  sqrt: Math.sqrt, tan: x=>Math.tan(x*perDegree), trunc: Math.trunc
 });
 
-const constants = Object.assign(Object.create(null), { pi: Math.PI });
+const constants = Object.assign(Object.create(null), {
+  E: Math.E, LN10: Math.LN10, LN2: Math.LN2, LOG10E: Math.LOG10E, LOG2E: Math.LOG2E,
+  PI: Math.PI, SQRT1_2: Math.SQRT1_2, SQRT2: Math.SQRT2
+});
 
 // ${PROPERTY name} and ${PROPERTY name OF widget} come first so their contents
 // are not read as operators; the rest is numbers, names and operator symbols.
 // The sticky flag makes every match start where the last one ended, so nothing
 // in between can be skipped silently - hence a fresh regex per call.
-const tokenSource = '\\s*(?:\\$\\{\\s*PROPERTY\\s+([^}]+?)\\s*\\}|([0-9]*\\.[0-9]+|[0-9]+)|([A-Za-z_][A-Za-z0-9_]*)|(&&|\\|\\||[<>=!]=|\\*\\*|[-+*/%^()<>!,]))';
+const tokenSource = '\\s*(?:\\$\\{\\s*PROPERTY\\s+([^}]+?)\\s*\\}|([0-9]*\\.[0-9]+|[0-9]+)|([A-Za-z_][A-Za-z0-9_]*)|(&&|\\|\\||[=!]==|[<>=!]=|\\*\\*|[-+*/%^()<>!,]))';
 
 // A drag evaluates the same handful of strings on every mouse move, so what
 // they tokenize to is kept - including the error of one that cannot be read, so
@@ -197,7 +214,7 @@ export function evaluateExpression(text, resolve) {
         const right = number(parseUnary());
         value = operator == '*' ? number(value) * right : operator == '/' ? number(value) / right : number(value) % right;
       } else if(tokens[position-1] && tokens[position-1].type == 'number' && peek() && (peek().type == 'name' || isOperator('('))) {
-        // implicit multiplication: 2x, 3(x+1), 2pi - only ever a number in
+        // implicit multiplication: 2x, 3(x+1), 2PI - only ever a number in
         // front of a name or a bracket, so the stray space in "2 3x" is a
         // reported error instead of quietly meaning 6x
         value = number(value) * number(parseUnary());
@@ -220,7 +237,8 @@ export function evaluateExpression(text, resolve) {
   // Not chainable: "0 < x < 500" would otherwise read as "(0 < x) < 500", i.e.
   // "true < 500", which is true wherever the widget is - a limit that silently
   // does nothing. Saying so is the only way the author finds out.
-  const comparisons = [ '<', '<=', '>', '>=', '==', '!=' ];
+  const comparisons = [ '<', '<=', '>', '>=', '==', '===', '!=', '!==' ];
+  const equalities = [ '==', '===', '!=', '!==' ];
   function parseComparison() {
     const value = parseSum();
     if(!isOperator(...comparisons))
@@ -233,14 +251,16 @@ export function evaluateExpression(text, resolve) {
     // true limit. Comparing what is already true or false is only allowed
     // against the same kind, "(x > 0) == (y > 0)".
     if(typeof value == 'boolean' || typeof right == 'boolean')
-      if(typeof value != typeof right || (operator != '==' && operator != '!='))
+      if(typeof value != typeof right || equalities.indexOf(operator) == -1)
         throw new Error(`"${operator}" cannot compare true or false with a number - write "a > 0 && a < 500" instead of "(0 < a) < 500"`);
     return operator == '<' ? value < right
          : operator == '<=' ? value <= right
          : operator == '>' ? value > right
          : operator == '>=' ? value >= right
          : operator == '==' ? value == right
-         : value != right;
+         : operator == '===' ? value === right
+         : operator == '!=' ? value != right
+         : value !== right;
   }
 
   function parseAnd() {
