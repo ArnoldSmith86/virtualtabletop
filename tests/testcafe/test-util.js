@@ -6,6 +6,8 @@ import { Selector } from 'testcafe';
 
 import { diffString, diff } from 'json-diff';
 
+import { fullLegacyCombination, legacyModeCombinations } from '../../client/js/legacymoderegistry.js';
+
 const referenceDir = path.resolve() + '/save/testcafe-references';
 fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
@@ -17,17 +19,38 @@ const knownHashDrifts = {
   '7dbb198bba63663b41191432d8648492': 'bc511e7edd7e40b433f5620534775646'  // Chrome 150
 };
 
+// Every fixture starts from an empty room in the modern combination. Widgets are not the only
+// thing a test leaves behind: setRoomState() keeps the room's gameSettings (see Room.setState),
+// so without the reset a test that switches a legacy mode on hands it to every test that runs
+// after it - within the file and, because the whole suite shares one room, across files too.
 export function setupTestEnvironment() {
   server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
-  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
+  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(resetRoom).after(resetRoom);
+}
+
+// Empty the room and clear its game settings in one request: setState() takes the gameSettings
+// out of the _meta it is handed, so the room is back in the modern combination without a
+// setLegacyMode round trip per mode. Those would be five state messages in a row before every
+// single test - and a state message makes the client rebuild every widget it has.
+export async function resetRoom() {
+  await setRoomState({ _meta: { version: (await getMeta()).version, gameSettings: {} } });
+}
+
+// The page every fixture starts on. A second client in the same room is a second window on the
+// same URL, which is what multiclient.js opens.
+export function roomURL() {
+  return `${server}/testcafe-testing`;
 }
 
 export function prepareClient() {
   // non random random
   window.customRandomSeed = 1;
 
-  // remove base element because it causes popups on form submit
-  document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
+  // remove base element because it causes popups on form submit - a test that prepares the
+  // same page twice (multiclient.js names its client before it opens the room) finds it gone
+  const base = document.querySelector('base');
+  if(base)
+    base.parentNode.removeChild(base);
 }
 
 export async function setName(t, name, color) {
@@ -65,9 +88,41 @@ export async function setLegacyMode(name, value) {
   });
 }
 
+// The tiers from the legacy-mode registry: modern (all off), legacy-all (all on), one entry
+// per mode alone and one per declared interaction. Linear in the number of modes.
+export const LEGACY_COMBOS = legacyModeCombinations();
+
+// setLegacyMode() only ever switches one mode, so a combination has to name the false modes as
+// well - fullLegacyCombination() does that - or the room keeps whatever the last caller set.
+export async function applyLegacy(combo) {
+  const modes = typeof combo == 'string' ? LEGACY_COMBOS[combo] : combo;
+  if(!modes)
+    throw Error(`Unknown legacy mode combination '${combo}'.`);
+  for(const [ name, value ] of Object.entries(fullLegacyCombination(modes)))
+    await setLegacyMode(name, value);
+}
+
 export async function getState() {
   const response = await fetch(`${server}/state/testcafe-testing/false`);
   return await response.text();
+}
+
+export async function getStateObject() {
+  return JSON.parse(await getState());
+}
+
+// Everything a test does arrives at the server asynchronously, so an assertion has to give the
+// delta time to show up. Polls until the value matches or the backoff runs out, then asserts
+// once - so a passing test is fast and a failing one still prints the last value it saw.
+export async function expectEventually(t, get, expected, message) {
+  let actual = null;
+  for(let wait=50; wait<1000; wait*=2) {
+    actual = await get();
+    if(JSON.stringify(actual) == JSON.stringify(expected))
+      break;
+    await new Promise(resolve=>setTimeout(resolve, wait));
+  }
+  await t.expect(actual).eql(expected, message);
 }
 
 // getState leaves _meta out - this is the version and the game settings the room is on
