@@ -386,6 +386,30 @@
 
 
 
+/* The picker is a dialog, not a document: the title, the search field and the hint stay put and the symbol
+   list is the only part that scrolls. The whole overlay scrolling meant that scrolling down to an icon also
+   scrolled the search field and the close button off the top of the screen. */
+#symbolPickerOverlay {
+  overflow: hidden;
+}
+
+/* the title and the list are separate children, so they need the same width to line up - the close button
+   sits at the right edge of the title */
+#symbolPickerOverlay > .titleWithCloseButton,
+#symbolPickerOverlay > div:not(.titleWithCloseButton) {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#symbolPickerOverlay > div:not(.titleWithCloseButton),
+#symbolPickerOverlay div[icon] {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 #symbolPickerOverlay > button {
   position: absolute;
   right: 10px;
@@ -415,6 +439,8 @@
   overflow-x: hidden;
   overflow-y: auto;
   word-wrap: anywhere;
+  flex: 1;
+  min-height: 0;
 }
 #symbolPickerOverlay.bigPreviews.fewResults #symbolList {
   --symbolSize: 64px;

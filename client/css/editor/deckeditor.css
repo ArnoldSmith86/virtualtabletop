@@ -474,12 +474,20 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 30;
 }
 
-/* The sound picker is opened from the JSON editor, which is reachable while the deck editor covers the play
-   area, so it is moved into #editor as well (see initializeDOM). It has no smaller box to be constrained to
-   there, so float it over the whole editor like the rule above - otherwise #deckEditor (z-index 1) hides it. */
+/* Both pickers are opened from the JSON editor and the properties panel, which stay reachable while the deck
+   editor covers the play area, so they are moved into #editor (see initializeDOM) and the symbol picker is
+   left there when the deck editor closes (see close()) - from then on that is where edit mode opens it. In
+   #editor they have no box and no stacking order of their own, so .overlay's own 100%/100% makes them cover
+   the whole window and #roomArea (position: fixed, z-index 1) paints the board on top of the open picker.
+   Give them the deck editor's box instead - below the toolbar, beside the sidebar - and float them above the
+   sidebar (2), the toolbar (3) and the deck editor's dialogs (20). */
+#editor > #symbolPickerOverlay,
 #editor > #audioPickerOverlay {
   position: fixed;
-  inset: 0;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
   width: auto;
   height: auto;
   z-index: 30;
