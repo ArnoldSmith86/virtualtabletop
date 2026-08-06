@@ -88,8 +88,10 @@ export class Timer extends Widget {
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
 
-    if(property == 'milliseconds')
-      await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
+    if(property == 'milliseconds') {
+      const end = timeToMS(this.get('end'));
+      await this.set('alert', end !== null && ((this.get('countdown') && newValue<=end) || (!this.get('countdown') && newValue>=end)));
+    }
 
     if(property == 'paused' && newValue !== true) {
       this.stopTimer();
@@ -98,10 +100,12 @@ export class Timer extends Widget {
   }
 
   async setMilliseconds(value, mode) {
-    let ms = this.get('start');
+    let ms = timeToMS(this.get('start'));
 
-    if(typeof this.get(value) == 'number')
-      value = this.get(value);
+    value = timeToMS(value);
+    const propertyValue = timeToMS(this.get(value));
+    if(typeof propertyValue == 'number')
+      value = propertyValue;
     else if(typeof value != 'number')
       value = 0;
 
