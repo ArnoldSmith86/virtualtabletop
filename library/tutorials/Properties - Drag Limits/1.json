@@ -5,7 +5,7 @@
       "legacyModes": {}
     },
     "info": {
-      "name": "Properties - Drag Limits",
+      "name": "Properties - dragLimit",
       "image": "/assets/1304805849_8659",
       "rules": "",
       "bgg": "",
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1786024371034,
+      "lastUpdate": 1786034915395,
       "showName": false,
       "skill": "",
       "description": "",
