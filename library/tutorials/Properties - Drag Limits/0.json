@@ -1,16 +1,19 @@
 {
   "_meta": {
     "version": 22,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Drag Limits",
-      "image": "/assets/236456698_496",
+      "image": "/assets/1304805849_8659",
       "rules": "",
       "bgg": "",
       "year": "2026",
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1785974400000,
+      "lastUpdate": 1786024371033,
       "showName": false,
       "skill": "",
       "description": "",
@@ -23,7 +26,8 @@
       "variantImage": "",
       "variant": "Rectangle",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "title": {
@@ -47,12 +51,12 @@
     "width": 1480,
     "height": 140,
     "css": "font-size: 24px;",
-    "text": "The dragLimit property keeps a widget inside an area while a player drags it. Its simplest form is a rectangle: minX, maxX, minY and maxY, measured in the coordinates of the widget's parent. Only dragging is limited - a routine can still move the widget anywhere - and what is kept inside is the widget's top left corner, which is what the two examples below are about. A side you leave out is not limited at all. In edit mode all of it sits under Position > Drag limits, together with a switch that shades the area on the board.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
     "layer": -1,
-    "z": 10
+    "z": 10,
+    "html": "The <b>dragLimit</b> property keeps a widget inside an area while a player drags it. Its simplest form is a rectangle: <b>minX</b>, <b>maxX</b>, <b>minY</b>, and <b>maxY</b>, measured in the coordinates of the widget's parent. Only dragging is limited. A routine can still move the widget anywhere. What is kept inside is the widget's top left corner, which is what the two examples below are about. A side you leave out is not limited at all."
   },
   "frameA": {
     "id": "frameA",
@@ -100,11 +104,11 @@
   "noteA": {
     "id": "noteA",
     "x": 120,
-    "y": 840,
+    "y": 850,
     "width": 560,
     "height": 150,
     "css": "font-size: 21px;",
-    "text": "Exactly the rectangle drawn here - so the corner of A reaches its bottom right corner and the piece itself hangs out of the frame by its own width and height. Subtract those if you want the whole widget to stay inside, which is what B does.",
+    "text": "The limits are exactly the rectangle drawn here. So the corner of A reaches its bottom right corner and the piece itself hangs out of the frame by its own width and height. Subtract those if you want the whole widget to stay inside, which is what B does.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -157,11 +161,11 @@
   "noteB": {
     "id": "noteB",
     "x": 920,
-    "y": 840,
+    "y": 850,
     "width": 560,
     "height": 150,
     "css": "font-size: 21px;",
-    "text": "A side can be an expression instead of a number. These read the frame and take off B's own size, so B stays completely inside - and follows the frame when the button changes it. A widget left outside its rectangle is free until it is back inside, so nothing can get stuck.",
+    "text": "A side can be an expression instead of a number. These read the frame and take off B's own size, so B stays completely inside. Use the button to resize the frame and B stays inside the new boundaries. A widget left outside its rectangle is free until it is back inside, so nothing can get stuck.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -212,11 +216,11 @@
     "width": 300,
     "height": 60,
     "css": "font-size: 19px;",
-    "text": "The limit follows it, without a routine touching dragLimit.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
     "layer": -1,
-    "z": 10
+    "z": 10,
+    "html": "The limit follows it, without a routine touching <b>dragLimit</b>."
   }
 }

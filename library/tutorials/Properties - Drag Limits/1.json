@@ -1,16 +1,19 @@
 {
   "_meta": {
     "version": 22,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Drag Limits",
-      "image": "/assets/236456698_496",
+      "image": "/assets/1304805849_8659",
       "rules": "",
       "bgg": "",
       "year": "2026",
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1785974400000,
+      "lastUpdate": 1786024371034,
       "showName": false,
       "skill": "",
       "description": "",
@@ -21,9 +24,10 @@
       "helpText": "",
       "similarDesigner": "",
       "variantImage": "",
-      "variant": "Any shape",
+      "variant": "Other shapes",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "shapeRect": {
@@ -39,7 +43,7 @@
     "clickable": false,
     "shape": true,
     "show": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
-    "css": "display: none"
+    "css": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);"
   },
   "shapeCircle": {
     "id": "shapeCircle",
@@ -54,7 +58,7 @@
     "clickable": false,
     "shape": true,
     "show": "background: rgba(96,165,250,0.16); border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
-    "css": "background: rgba(96,165,250,0.16); border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);"
+    "css": "display: none"
   },
   "shapeHex": {
     "id": "shapeHex",
@@ -110,7 +114,12 @@
     "z": 20,
     "css": "background: #e8b04b; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.5);",
     "dragLimit": {
-      "condition": "(x + width/2 - 800)^2 + (y + height/2 - 500)^2 < 500^2"
+      "condition": [
+        "x + width/2 > 450",
+        "x + width/2 < 1150",
+        "y + height/2 > 175",
+        "y + height/2 < 825"
+      ]
     }
   },
   "title": {
@@ -134,12 +143,12 @@
     "width": 280,
     "height": 260,
     "css": "font-size: 19px;",
-    "text": "A rectangle is not always the shape you want. dragLimit also takes a condition: an inequality in x and y - the widget's top left corner - that has to stay true while it is dragged. A list of them all have to hold.\n\nEvery example here adds half the piece to x and y, so the shape drawn is where its middle can go rather than its corner.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
     "layer": -1,
-    "z": 10
+    "z": 10,
+    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a condition: an inequality in x and y representing the widget's top left corner that has to stay true while it is dragged. <br><br>Every example here adds half the piece to x and y, so the shape drawn is where its middle can go rather than its corner."
   },
   "btnsides": {
     "type": "button",
@@ -530,12 +539,12 @@
     "width": 280,
     "height": 330,
     "css": "font-size: 19px;",
-    "text": "Every button writes one dragLimit onto the piece and puts it back in the middle of the new area. Open the JSON editor (ctrl-J) and click one to read what it writes.\n\nIn edit mode, select the piece and look at Position > Drag limits: the same four sides and conditions are there as fields, and \"Show on board\" shades the whole area for you while you type it.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
     "layer": -1,
-    "z": 10
+    "z": 10,
+    "html": "Every button writes one <b>dragLimit</b> onto the piece and puts it back in the middle of the new area.<br><br>\n\nIn Edit Widgets, select the piece and look at Position > Drag limits: the same four sides and conditions are there as fields, and &quotShow on board&quot shades the whole area for you while you type it."
   },
   "language": {
     "id": "language",
@@ -544,12 +553,12 @@
     "width": 280,
     "height": 250,
     "css": "font-size: 19px;",
-    "text": "The maths is the one var uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. A bare name is a property of the widget - width, height, anything your game puts on it - and ${PROPERTY name OF id} reads another widget's. && and || combine within one line.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
     "layer": -1,
-    "z": 10
+    "z": 10,
+    "html": "The math is the one <b>var</b> uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. A bare name is a property of the widget: width, height, anything your game puts on it. ${PROPERTY name OF id} reads another widget's. && and || combine within one line."
   },
   "codePanel": {
     "id": "codePanel",
@@ -558,7 +567,7 @@
     "width": 280,
     "height": 330,
     "css": "font-size: 17px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
-    "text": "\"dragLimit\": {\n  \"condition\":\n    \"(x + width/2 - 800)^2\n   + (y + height/2 - 500)^2\n   < 500^2\"\n}",
+    "text": "\"dragLimit\": {\n  \"condition\": [\n    \"x + width/2 > 450\",\n    \"x + width/2 < 1150\",\n    \"y + height/2 > 175\",\n    \"y + height/2 < 825\"\n  ]\n}",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -572,7 +581,7 @@
     "width": 280,
     "height": 310,
     "css": "font-size: 19px;",
-    "text": "A disc around the middle of the room, radius 500. Push the piece against the edge and it slides along the circle instead of stopping - a refused position puts the widget where its area comes closest to the mouse.",
+    "text": "The rectangle minX/maxX/minY/maxY already make, written as four conditions instead. Nothing is won here - but every line is an expression, so a side like this can depend on anything the game knows.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
