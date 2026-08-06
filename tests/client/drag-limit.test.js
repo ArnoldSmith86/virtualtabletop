@@ -47,42 +47,42 @@ describe('a dragLimit condition', () => {
   test('keeps the corner where the inequality holds', () => {
     const w = widgetAt(0, 200, { condition: 'y > x' });
     expect(w.dragLimitedCoord({ x: 100, y: 300 })).toMatchObject({ x: 100, y: 300 });
-    // below the diagonal: x alone is refused, so it slides along it on y
-    expect(w.dragLimitedCoord({ x: 100, y: 50 })).toMatchObject({ x: 0, y: 50 });
+    // below the diagonal: the drag is carried up to it and then along it
+    expect(w.dragLimitedCoord({ x: 100, y: 50 })).toMatchObject({ x: 74, y: 75 });
   });
 
   test('slides along the edge instead of sticking to it', () => {
     const w = widgetAt(10, 100, { condition: 'x < 200' });
-    // the x is refused and the y is not, so the widget keeps moving downwards
-    expect(w.dragLimitedCoord({ x: 300, y: 400 })).toMatchObject({ x: 10, y: 400 });
+    // the x stops at the edge and the y is free, so the widget keeps moving down
+    expect(w.dragLimitedCoord({ x: 300, y: 400 })).toMatchObject({ x: 199, y: 400 });
   });
 
   test('takes a list, all of which have to hold', () => {
     const w = widgetAt(100, 100, { condition: [ 'x > 50', 'y > 50' ] });
     expect(w.dragLimitedCoord({ x: 80, y: 80 })).toMatchObject({ x: 80, y: 80 });
-    expect(w.dragLimitedCoord({ x: 10, y: 10 })).toMatchObject({ x: 100, y: 100 });
+    expect(w.dragLimitedCoord({ x: 10, y: 10 })).toMatchObject({ x: 51, y: 51 });
   });
 
   test('bounds an area a rectangle cannot describe', () => {
     // a disc of radius 100 around (200,200)
     const w = widgetAt(200, 200, { condition: '(x - 200)^2 + (y - 200)^2 < 100^2' });
     expect(w.dragLimitedCoord({ x: 250, y: 250 })).toMatchObject({ x: 250, y: 250 });
-    expect(w.dragLimitedCoord({ x: 400, y: 400 })).toMatchObject({ x: 200, y: 200 });
+    // straight out of the disc: it comes to rest on the circle, not at the centre
+    expect(w.dragLimitedCoord({ x: 400, y: 400 })).toMatchObject({ x: 270, y: 271 });
     // 2x^2+y>4 and 2y+10>5x, the two the property was asked for
     const parabola = widgetAt(0, 10, { condition: [ '2x^2+y>4', '2y+10>5x' ] });
     expect(parabola.dragLimitedCoord({ x: 5, y: 20 })).toMatchObject({ x: 5, y: 20 });
-    // under the parabola: (1,1) is refused, and so is giving up the x movement
-    // (2*0^2+1 is not > 4), so the drag keeps the x and stays on the old y
-    expect(parabola.dragLimitedCoord({ x: 1, y: 1 })).toMatchObject({ x: 1, y: 10 });
+    // under the parabola: the x is reached and the y stops on the curve
+    expect(parabola.dragLimitedCoord({ x: 1, y: 1 })).toMatchObject({ x: 2, y: 1 });
     // and the half-plane bounds it on the other side
-    expect(parabola.dragLimitedCoord({ x: 20, y: 20 })).toMatchObject({ x: 0, y: 20 });
+    expect(parabola.dragLimitedCoord({ x: 20, y: 20 })).toMatchObject({ x: 11, y: 23 });
   });
 
   test('reads the widget and other widgets, not just x and y', () => {
     createWidget({ id: 'board', type: 'basic', size: 300 });
     const w = widgetAt(0, 0, { condition: 'x + width < ${PROPERTY size OF board}' });
     expect(w.dragLimitedCoord({ x: 200, y: 5 })).toMatchObject({ x: 200, y: 5 });
-    expect(w.dragLimitedCoord({ x: 280, y: 5 })).toMatchObject({ x: 0, y: 5 });
+    expect(w.dragLimitedCoord({ x: 280, y: 5 })).toMatchObject({ x: 249, y: 5 });
   });
 
   test('does not hold a widget that starts outside its area in place', () => {
@@ -91,7 +91,15 @@ describe('a dragLimit condition', () => {
     // and takes hold again as soon as it is inside
     w.state.x = 50;
     w.state.y = 50;
-    expect(w.dragLimitedCoord({ x: 400, y: 60 })).toMatchObject({ x: 50, y: 60 });
+    expect(w.dragLimitedCoord({ x: 400, y: 60 })).toMatchObject({ x: 99, y: 60 });
+  });
+
+  test('lets a widget sitting exactly on the edge move along it', () => {
+    // 0 > 0 is false, so the widget is not inside its own area - letting it go
+    // free there would be a limit that stops applying at its own boundary
+    const w = widgetAt(0, 0, { condition: 'y > x' });
+    expect(w.dragLimitedCoord({ x: 5, y: 300 })).toMatchObject({ x: 5, y: 300 });
+    expect(w.dragLimitedCoord({ x: 300, y: 5 })).toMatchObject({ x: 154, y: 155 });
   });
 
   test('is ignored while it cannot be read', () => {
@@ -102,7 +110,7 @@ describe('a dragLimit condition', () => {
   test('applies after the rectangle, so both bound the same drag', () => {
     const w = widgetAt(0, 0, { maxX: 300, condition: 'y > x' });
     expect(w.dragLimitedCoord({ x: 900, y: 400 })).toMatchObject({ x: 300, y: 400 });
-    expect(w.dragLimitedCoord({ x: 900, y: 100 })).toMatchObject({ x: 0, y: 100 });
+    expect(w.dragLimitedCoord({ x: 900, y: 100 })).toMatchObject({ x: 200, y: 201 });
   });
 
   test('never falls back outside the rectangle, wherever the widget sits', () => {
@@ -122,7 +130,58 @@ describe('a dragLimit condition', () => {
     const w = widgetAt(0, 0, { condition: '${PROPERTY size OF gone} > 0 && x < 100' });
     expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 900, y: 900 });
     createWidget({ id: 'gone', type: 'basic', size: 300 });
-    expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 0, y: 900 });
+    expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 99, y: 900 });
+  });
+});
+
+// What a drag against the edge of an area has to feel like: the widget ends up
+// on the edge whatever the mouse did in between, and a slope carries it along
+// instead of stopping it - the two things that made it look like the area was
+// smaller than it is and that it moved in steps.
+describe('a drag along the edge of an area', () => {
+  test('reaches the edge however far the pointer jumps past it', () => {
+    // a pointer one pixel outside the circle and one five hundred pixels
+    // outside both leave the widget on the circle: a fast mouse, which reports
+    // one long move rather than fifty short ones, must not stop it short
+    for(const overshoot of [ 1, 5, 50, 500 ]) {
+      const w = widgetAt(0, 0, { condition: 'x*x + y*y < 100^2' });
+      const to = w.dragLimitedCoord({ x: 60 + overshoot, y: 80 });
+      expect(Math.hypot(to.x, to.y)).toBeGreaterThan(99);
+      expect(Math.hypot(to.x, to.y)).toBeLessThan(100);
+    }
+  });
+
+  test('follows an inclined edge rather than stepping down it', () => {
+    // a drag straight along a 45 degree edge, one mouse move after the other:
+    // every one of them moves the widget on both axes, no staircase
+    const w = widgetAt(0, 10, { condition: 'y > x' });
+    for(let step = 1; step <= 5; ++step) {
+      const before = { x: w.get('x'), y: w.get('y') };
+      const to = w.dragLimitedCoord({ x: before.x + 40, y: before.y + 20 });
+      expect(to.x).toBeGreaterThan(before.x);
+      expect(to.y).toBeGreaterThan(before.y);
+      expect(to.y - to.x).toBeLessThanOrEqual(11);
+      w.state.x = to.x;
+      w.state.y = to.y;
+    }
+  });
+
+  test('slides around a curve without getting caught on it', () => {
+    // pushed against a disc from the inside and dragged along it: a widget that
+    // could only move towards the pointer on each axis would stop dead at the
+    // top of the circle, where getting any further right means going down
+    const w = widgetAt(0, -90, { condition: 'x^2 + y^2 < 100^2' });
+    for(let step = 0; step < 20; ++step) {
+      const to = w.dragLimitedCoord({ x: w.get('x') + 30, y: w.get('y') - 30 });
+      expect(Math.hypot(to.x, to.y)).toBeLessThan(100);
+      w.state.x = to.x;
+      w.state.y = to.y;
+    }
+    // twenty moves up and to the right, every one of them refused by the
+    // circle, and the widget has travelled round from the top of it to the
+    // point that lies in the direction it is being pulled, (71,-71)
+    expect(w.get('x')).toBeGreaterThan(65);
+    expect(w.get('y')).toBeGreaterThan(-77);
   });
 });
 

@@ -829,34 +829,119 @@ export class Widget extends StateManaged {
   // it to any area that can be written down, and both are checked on every
   // mouse move, so an area that depends on the state follows it.
   //
-  // A refused position falls back to moving on one axis only, so a widget
-  // slides along the edge of its area rather than sticking to it, and to where
-  // it already is if neither axis works. A widget that starts outside its area
-  // (a condition that changed under it, a routine that put it there) is not
-  // held in place: it is free until it is inside, so it can never get stuck.
+  // A refused position does not stop the drag where the last accepted one was:
+  // the widget goes where its area comes closest to the pointer, so it comes to
+  // rest against the boundary itself rather than a whole mouse step before it,
+  // and it keeps sliding along that boundary while the pointer moves - along a
+  // straight edge at any angle and around a curve alike.
+  // A widget that starts outside its area (a condition that changed under it,
+  // a routine that put it there) is not held in place: it is free until it is
+  // inside, so it can never get stuck.
   dragLimitedCoord(coord) {
     const rules = this.dragLimitRules(coord);
     if(!rules)
       return coord;
 
     const { clampX, clampY, conditions } = rules;
-    const x = clampX(coord.x), y = clampY(coord.y);
+    const target = { x: clampX(coord.x), y: clampY(coord.y) };
+    const asCoord = position=>Object.assign({}, coord, position);
 
     if(!conditions.length)
-      return Object.assign({}, coord, { x, y });
+      return asCoord(target);
 
-    const allowed = position=>conditions.every(c=>expressionCondition(c, this.dragLimitResolver(position)));
+    // the rectangle is part of the question everywhere below, so a position
+    // reached by sliding or by rounding can never leave it either
+    const inside = position=>this.dragLimitAllows(position, rules);
+    if(inside(target))
+      return asCoord(target);
+
     // where the widget is, put through the rectangle as well: it is a hard
     // bound, so a widget sitting outside it (a routine moved it, a side moved
     // under it) must not be able to stay there through the fallbacks below
-    const currentX = clampX(+this.get('x') || 0), currentY = clampY(+this.get('y') || 0);
-    // moving on one axis only, the axis that gives up the least first, then
-    // staying put - and if even that is outside, the widget is not held
-    const alternatives = Math.abs(y - currentY) < Math.abs(x - currentX)
-      ? [ { x, y: currentY }, { x: currentX, y } ]
-      : [ { x: currentX, y }, { x, y: currentY } ];
-    const inside = [ { x, y }, ...alternatives, { x: currentX, y: currentY } ].find(allowed);
-    return Object.assign({}, coord, inside || { x, y });
+    const current = { x: clampX(+this.get('x') || 0), y: clampY(+this.get('y') || 0) };
+    // A widget that is not inside its area is normally let go, but a widget
+    // sitting exactly on the edge of a strict inequality is not inside it
+    // either - so the two positions that keep one of its coordinates are tried
+    // first, which is the drag along that edge its author meant to allow.
+    const start = inside(current) ? current
+      : [ { x: target.x, y: current.y }, { x: current.x, y: target.y } ].find(inside);
+    if(!start)
+      return asCoord(target);
+
+    // How far along the way from an allowed position to a refused one the area
+    // reaches. Bisection rather than maths: a condition is an arbitrary
+    // expression, so the only thing that can be asked of it is whether a point
+    // is in it - and halving until the answer is a twentieth of a pixel wide is
+    // both invisibly precise and a handful of evaluations of an already
+    // tokenized string.
+    const reach = (from, to)=>{
+      if(inside(to))
+        return to;
+      const at = part=>({ x: from.x + (to.x - from.x) * part, y: from.y + (to.y - from.y) * part });
+      let reached = 0, refused = 1;
+      for(let steps = Math.min(20, Math.ceil(Math.log2(Math.hypot(to.x - from.x, to.y - from.y) * 20))); steps > 0; --steps) {
+        const middle = (reached + refused) / 2;
+        if(inside(at(middle)))
+          reached = middle;
+        else
+          refused = middle;
+      }
+      return at(reached);
+    };
+
+    // The widget ends up where its area comes closest to the pointer. Straight
+    // at the pointer is one candidate; the others are that same movement turned
+    // to one side and to the other, which is what sliding along an edge is.
+    // Turning a movement also shortens it to the point of the turned line
+    // nearest the pointer, so the smallest turn that lands in the area is the
+    // one that ends up closest - it is looked for by halving the angle between
+    // straight at the pointer (refused, or there would be nothing to do) and a
+    // quarter turn (which is standing still, and therefore always allowed).
+    // Repeating the whole thing follows an edge that curves away, where no
+    // straight movement can stay against the boundary.
+    const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
+    let position = start;
+    for(let round = 0; round < 3; ++round) {
+      const dx = target.x - position.x, dy = target.y - position.y;
+      const turnedBy = angle=>{
+        const cos = Math.cos(angle), sin = Math.sin(angle);
+        return { x: position.x + (dx*cos - dy*sin)*cos, y: position.y + (dx*sin + dy*cos)*cos };
+      };
+      let closest = reach(position, target);
+      // as many halvings of the quarter turn as it takes for the last one to
+      // move the widget by less than a twentieth of a pixel
+      const halvings = Math.min(16, Math.max(1, Math.ceil(Math.log2(Math.hypot(dx, dy) * 32))));
+      for(const side of [ -1, 1 ]) {
+        let turn = side*Math.PI/2, straighter = 0;
+        for(let step = 0; step < halvings; ++step) {
+          const middle = (turn + straighter) / 2;
+          if(inside(turnedBy(middle)))
+            turn = middle;
+          else
+            straighter = middle;
+        }
+        const slid = turnedBy(turn);
+        if(away(slid) < away(closest))
+          closest = slid;
+      }
+      // anything below the precision the two searches above work to is noise,
+      // and taking it would let the widget wobble by a pixel for nothing
+      if(away(closest) > away(position) - .05)
+        break;
+      position = closest;
+    }
+
+    // A widget is placed on whole pixels like every other position a drag
+    // writes, and this one is on the edge of its area: rounded the usual way it
+    // would be just outside it half the time. So the four whole positions
+    // around it are tried, the one nearest the pointer first, and the widget
+    // stays where it was only if the area is too thin to hold any of them.
+    const whole = [];
+    for(const x of new Set([ Math.floor(position.x), Math.ceil(position.x) ]))
+      for(const y of new Set([ Math.floor(position.y), Math.ceil(position.y) ]))
+        whole.push({ x, y });
+    whole.sort((a, b)=>away(a) - away(b));
+    return asCoord(whole.find(inside) || start);
   }
 
   async doubleClick(mode='respect') {

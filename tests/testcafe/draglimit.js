@@ -36,12 +36,13 @@ test('A dragLimit rectangle stops a drag at its sides', async t => {
 test('A dragLimit condition bounds a drag to an area no rectangle can describe', async t => {
   await t.resizeWindow(1280, 800);
   // a disc of radius 200 around where the piece sits, and a drag that leaves it:
-  // every mouse move is limited, so the piece slides along the edge of the disc
-  // rather than stopping where it first hits it
+  // the piece ends up against the edge of the disc - not inside it where the
+  // last mouse move before the edge happened to fall - and not outside it
   const before = await roomWith(t, { condition: '(x - 100)^2 + (y - 300)^2 < 200^2' });
   await t.drag('#w_piece', 400, 50);
   const slid = await position(before);
   await t.expect(Math.hypot(slid.x - 100, slid.y - 300)).lte(200);
+  await t.expect(Math.hypot(slid.x - 100, slid.y - 300)).gte(195);
   await t.expect(slid.x).gt(100);
 });
 
