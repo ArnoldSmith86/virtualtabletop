@@ -129,7 +129,7 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
     $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
     $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
     $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
-    $('#symbolPickerOverlay').scrollTop = 0;
+    $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();
@@ -226,7 +226,7 @@ export function addRichtextControls(dom) {
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
-    $('#symbolPickerOverlay').scrollTop = 0;
+    $('#symbolList').scrollTop = 0;
     for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
       $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';

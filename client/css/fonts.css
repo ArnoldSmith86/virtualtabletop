@@ -388,9 +388,25 @@
 
 /* The picker is a dialog, not a document: the title, the search field and the hint stay put and the symbol
    list is the only part that scrolls. The whole overlay scrolling meant that scrolling down to an icon also
-   scrolled the search field and the close button off the top of the screen. */
+   scrolled the search field and the close button off the top of the screen. .overlay's own overflow: auto
+   stays as a fallback for a box too short even for the reduced layout below.
+   How much room the parts have is decided by the picker's own box, not by the window: it is opened in three
+   hosts of very different sizes (the room overlays, the deck editor's card column, #editor), which is what
+   the media queries at the end of this block cannot see - so make it a container and query that instead. */
 #symbolPickerOverlay {
-  overflow: hidden;
+  container: symbolPicker / size;
+}
+
+/* In a short box the hint is what has to go: it explains the list but costs more height than the list is
+   then left with (114px of a 250px box). Same breakpoint as the media queries below, and the same
+   compensation .fewResults makes when it hides the hint for the same reason. */
+@container symbolPicker (max-height: 375px) {
+  #symbolPickerOverlay p[icon] {
+    display: none;
+  }
+  #symbolPickerOverlay input {
+    margin-bottom: 20px;
+  }
 }
 
 /* the title and the list are separate children, so they need the same width to line up - the close button
@@ -440,7 +456,9 @@
   overflow-y: auto;
   word-wrap: anywhere;
   flex: 1;
-  min-height: 0;
+  /* the list takes what is left over, but never less than about four rows: with min-height: 0 whatever sits
+     above it could squeeze it to nothing, and since it is the only scroller that leaves no icon reachable */
+  min-height: 120px;
 }
 #symbolPickerOverlay.bigPreviews.fewResults #symbolList {
   --symbolSize: 64px;
