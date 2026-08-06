@@ -3,14 +3,14 @@
     "version": 21,
     "info": {
       "name": "Tempest Cove",
-      "image": "/assets/633675787_42484",
+      "image": "/assets/-432217213_47290",
       "rules": "https://spielgezeug.de/images/selecta_piratissimo.pdf",
       "bgg": "https://boardgamegeek.com/boardgame/20953/piratissimo",
       "year": "2005",
       "mode": "vs",
       "time": "45",
       "attribution": "<div>Layout, design and the library preview image by VTT-AI-Agent, released to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Source of the layout: https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games/Tempest%20Cove</div>\n<div><br></div>\n<div>AI disclosure: this layout (the JSON file) and all of its texts were written by the AI agent Claude by Anthropic (https://claude.ai), from the instruction &quot;add a game to the VirtualTabletop public library that plays like Piratissimo&quot;. No AI generated imagery is used anywhere in this game: the board, the ships, the dice faces and the wind wheel are drawn with CSS gradients and with the icons listed below, and the library preview image is a screenshot of that board taken in a headless Chromium browser (Playwright, https://playwright.dev) and saved as .webp.</div>\n<div><br></div>\n<div>Board pieces, islands, sea creatures and symbols use icons that ship with VirtualTabletop and are available under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) from https://game-icons.net, as detailed on the About page:</div>\n<div><br></div>\n<div>Delapouite:</div>\n<div>&nbsp;&nbsp;Caravel - https://game-icons.net/1x1/delapouite/caravel.html</div>\n<div>&nbsp;&nbsp;Cave entrance - https://game-icons.net/1x1/delapouite/cave-entrance.html</div>\n<div>&nbsp;&nbsp;Chest - https://game-icons.net/1x1/delapouite/chest.html</div>\n<div>&nbsp;&nbsp;Coconuts - https://game-icons.net/1x1/delapouite/coconuts.html</div>\n<div>&nbsp;&nbsp;Coins - https://game-icons.net/1x1/delapouite/coins.html</div>\n<div>&nbsp;&nbsp;Dolphin - https://game-icons.net/1x1/delapouite/dolphin.html</div>\n<div>&nbsp;&nbsp;Harbor dock - https://game-icons.net/1x1/delapouite/harbor-dock.html</div>\n<div>&nbsp;&nbsp;Hut - https://game-icons.net/1x1/delapouite/hut.html</div>\n<div>&nbsp;&nbsp;Huts village - https://game-icons.net/1x1/delapouite/huts-village.html</div>\n<div>&nbsp;&nbsp;Island - https://game-icons.net/1x1/delapouite/island.html</div>\n<div>&nbsp;&nbsp;Jungle - https://game-icons.net/1x1/delapouite/jungle.html</div>\n<div>&nbsp;&nbsp;Kraken tentacle - https://game-icons.net/1x1/delapouite/kraken-tentacle.html</div>\n<div>&nbsp;&nbsp;Mermaid - https://game-icons.net/1x1/delapouite/mermaid.html</div>\n<div>&nbsp;&nbsp;Palm tree - https://game-icons.net/1x1/delapouite/palm-tree.html</div>\n<div>&nbsp;&nbsp;Rolling dices - https://game-icons.net/1x1/delapouite/rolling-dices.html</div>\n<div>&nbsp;&nbsp;Sailboat - https://game-icons.net/1x1/delapouite/sailboat.html</div>\n<div>&nbsp;&nbsp;Sea turtle - https://game-icons.net/1x1/delapouite/sea-turtle.html</div>\n<div>&nbsp;&nbsp;Shark fin - https://game-icons.net/1x1/delapouite/shark-fin.html</div>\n<div>&nbsp;&nbsp;Ship wreck - https://game-icons.net/1x1/delapouite/ship-wreck.html</div>\n<div>&nbsp;&nbsp;Sperm whale - https://game-icons.net/1x1/delapouite/sperm-whale.html</div>\n<div>&nbsp;&nbsp;Three friends - https://game-icons.net/1x1/delapouite/three-friends.html</div>\n<div>&nbsp;&nbsp;Tropical fish - https://game-icons.net/1x1/delapouite/tropical-fish.html</div>\n<div><br></div>\n<div>Lorc:</div>\n<div>&nbsp;&nbsp;Anchor - https://game-icons.net/1x1/lorc/anchor.html</div>\n<div>&nbsp;&nbsp;Compass - https://game-icons.net/1x1/lorc/compass.html</div>\n<div>&nbsp;&nbsp;Crab - https://game-icons.net/1x1/lorc/crab.html</div><div>&nbsp;&nbsp;Cycle - https://game-icons.net/1x1/lorc/cycle.html</div>\n<div>&nbsp;&nbsp;Galleon - https://game-icons.net/1x1/lorc/galleon.html</div>\n<div>&nbsp;&nbsp;Laurel crown - https://game-icons.net/1x1/lorc/laurel-crown.html</div><div>&nbsp;&nbsp;Monkey - https://game-icons.net/1x1/lorc/monkey.html</div>\n<div>&nbsp;&nbsp;Mountains - https://game-icons.net/1x1/lorc/mountains.html</div>\n<div>&nbsp;&nbsp;Octopus - https://game-icons.net/1x1/lorc/octopus.html</div>\n<div>&nbsp;&nbsp;Parrot head - https://game-icons.net/1x1/lorc/parrot-head.html</div>\n<div>&nbsp;&nbsp;Sea serpent - https://game-icons.net/1x1/lorc/sea-serpent.html</div>\n<div>&nbsp;&nbsp;Spyglass - https://game-icons.net/1x1/lorc/spyglass.html</div>\n<div>&nbsp;&nbsp;Tornado - https://game-icons.net/1x1/lorc/tornado.html</div>\n<div>&nbsp;&nbsp;Volcano - https://game-icons.net/1x1/lorc/volcano.html</div>\n<div>&nbsp;&nbsp;Water splash - https://game-icons.net/1x1/lorc/water-splash.html</div>\n<div>&nbsp;&nbsp;Waves - https://game-icons.net/1x1/lorc/waves.html</div>\n<div>&nbsp;&nbsp;Wind slap - https://game-icons.net/1x1/lorc/wind-slap.html</div>\n<div><br></div>\n<div>Skoll:</div>\n<div>&nbsp;&nbsp;Open treasure chest - https://game-icons.net/1x1/skoll/open-treasure-chest.html</div>\n<div><br></div>\n<div>The arrows that show the sailing route, the storm direction and the goal are /i/icons/arrow_right.svg, one of the user interface icons bundled with VirtualTabletop (https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/icons/arrow_right.svg). Per the About page of virtualtabletop.io, those bundled symbols are either Google Material Symbols under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or symbols made by the VirtualTabletop community and released under CC0.</div>\n<div><br></div>\n<div>The library preview image (assets/633675787_42484) is a screenshot of this board, made by VTT-AI-Agent and released under CC0 1.0. Everything visible on it is covered by the licenses above.</div>\n<div><br></div>\n<div>The game is inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005, https://boardgamegeek.com/boardgame/20953/piratissimo). No artwork, text or component of that game is used here; the rules were reimplemented from the publisher&#39;s rulebook.</div>",
-      "lastUpdate": 1785726622122,
+      "lastUpdate": 1786007110693,
       "showName": true,
       "skill": "low",
       "language": "en-US",
@@ -19,8 +19,8 @@
       "similarName": "Piratissimo",
       "similarDesigner": "Manfred Ludwig",
       "similarAwards": "",
-      "ruleText": "<div>Several pirate ships cruise a ring of 28 lonely islands looking for buried treasure. Dig it up, load it on board and be the first to bring ten pieces safely into your own harbour - while a wandering storm, greedy rivals and your own overloaded hold do their best to stop you.</div>\n<div><br></div>\n<div>On your turn you roll one die. A number sails your ship that many islands onward, following the arrows; an island has room for two ships, a third one sails on to the next free island. Islands with an open chest let you take as much of the treasure as you like, up to three; a closed red chest blinds you with greed and forces two on board; on an island without a chest the arriving captain may take up to two treasure from the ship moored there, or push up to two onto it. A hold takes seven treasure at most - one too many and the ship capsizes and the whole cargo sinks.</div>\n<div><br></div>\n<div>Each colour has a harbour beside its own entrance island. Only its owner may turn in, and the rest of the move is lost when they do; the treasure is unloaded there and the ship sets out again on the next turn.</div>\n<div><br></div>\n<div>The storm face of the die lets you sail one single island and then drift the storm against the sailing direction - up to five islands with two players, four with three, three with four. If the storm comes to rest on an island with ships, the wind wheel decides their fate: blown one island on, one treasure to every other captain, swept safely home, or two treasure washed into the sea.</div>",
-      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat - the coloured sailboat at the left of each seat row shows which ship that seat commands - then somebody presses the round brown <b>new voyage</b> button (the circling arrows) on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts. Until then a hint plate in the middle of the sea points at that button.</div>\n<h4>Your turn</h4>\n<div>Press the big gold <b>dice</b> button on the right (or click the die itself); its border is drawn in the colour of the captain whose turn it is. Everything that follows is worked out for you; you only answer the questions. The <b>?</b> button at the top of the panel repeats all of this at the table.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose <i>nothing</i> to leave both ships alone.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and it sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Ships and the storm can simply be dragged</b> from island to island, and the two counters next to your seat can be clicked to correct the cargo on board (⛵) and the treasure in your harbour (⚓) - useful for house rules, for taking a move back or for setting up a position. A piece that is not on a space glows red, so a ship left in open water is easy to spot and to drop onto an island. The dice button is only the comfortable way to play.</div>\n<h4>Winning</h4>\n<div>The winner is announced on a laurel banner in the middle of the sea; click the banner to push it aside. The hint plate underneath points back at the new-voyage button.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
+      "ruleText": "<div>Several pirate ships cruise a ring of 28 lonely islands looking for buried treasure. Dig it up, load it on board and be the first to bring ten pieces safely into your own harbour - while a wandering storm, greedy rivals and your own overloaded hold do their best to stop you.</div>\n<div><br></div>\n<div>On your turn you roll one die. A number sails your ship that many islands onward, following the arrows; an island has room for two ships, a third one sails on to the next free island. Islands with an open chest let you take as much of the treasure as you like, up to the number on the chest - half of them hold at most one, the other half up to three; a closed red chest blinds you with greed and forces two on board; on an island without a chest the arriving captain may take up to two treasure from the ship moored there, or push up to two onto it. A hold takes seven treasure at most - one too many and the ship capsizes and the whole cargo sinks.</div>\n<div><br></div>\n<div>Each colour has a harbour beside its own entrance island. Only its owner may turn in, and the rest of the move is lost when they do; the treasure is unloaded there and the ship sets out again on the next turn.</div>\n<div><br></div>\n<div>The storm face of the die lets you sail one single island and then drift the storm against the sailing direction - up to five islands with two players, four with three, three with four. If the storm comes to rest on an island with ships, the wind wheel decides their fate: blown one island on, one treasure to every other captain, swept safely home, or two treasure washed into the sea.</div>",
+      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat - the coloured sailboat at the left of each seat row shows which ship that seat commands - then somebody presses the round brown <b>new voyage</b> button (the circling arrows) on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts. Until then a hint plate in the middle of the sea points at that button.</div>\n<h4>Your turn</h4>\n<div>Press the big gold <b>dice</b> button on the right (or click the die itself); its border is drawn in the colour of the captain whose turn it is. Everything that follows is worked out for you; you only answer the questions. The <b>?</b> button at the top of the panel repeats all of this at the table.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 1</b> - load as much treasure as you like, 0 or 1.</li>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. Half of the open chests are the small ones, half the big ones. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose <i>nothing</i> to leave both ships alone.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and it sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Ships and the storm can simply be dragged</b> from island to island, and the two counters next to your seat can be clicked to correct the cargo on board (⛵) and the treasure in your harbour (⚓) - useful for house rules, for taking a move back or for setting up a position. A piece that is not on a space glows red, so a ship left in open water is easy to spot and to drop onto an island. The dice button is only the comfortable way to play.</div>\n<h4>Winning</h4>\n<div>The winner is announced on a laurel banner in the middle of the sea; click the banner to push it aside. The hint plate underneath points back at the new-voyage button.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
       "players": "2-4",
       "usesAIImagery": false
     }
@@ -1200,7 +1200,7 @@
     "dropOffsetY": 36,
     "stackOffsetX": 22,
     "kind": "green",
-    "amount": 3,
+    "amount": 1,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -1248,7 +1248,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
+    "text": "1",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i2": {
@@ -1344,7 +1344,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "52% 48% 38% 62% / 44% 56% 44% 56%",
-    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -1375,8 +1375,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "red",
-    "amount": 2,
+    "kind": "green",
+    "amount": 3,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -1424,8 +1424,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
-    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i4": {
     "id": "i4",
@@ -1520,7 +1520,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "44% 56% 60% 40% / 39% 61% 39% 61%",
-    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -1551,8 +1551,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "green",
-    "amount": 3,
+    "kind": "red",
+    "amount": 2,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -1600,8 +1600,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
-    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i6": {
     "id": "i6",
@@ -1829,7 +1829,7 @@
     "dropOffsetY": 36,
     "stackOffsetX": 22,
     "kind": "green",
-    "amount": 3,
+    "amount": 1,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -1877,7 +1877,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
+    "text": "1",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i9": {
@@ -1973,7 +1973,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "61% 39% 52% 48% / 55% 46% 54% 45%",
-    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -2004,8 +2004,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "red",
-    "amount": 2,
+    "kind": "green",
+    "amount": 3,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -2053,8 +2053,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
-    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i11": {
     "id": "i11",
@@ -2149,7 +2149,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "46% 54% 61% 39% / 52% 43% 57% 48%",
-    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -2180,8 +2180,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "green",
-    "amount": 3,
+    "kind": "red",
+    "amount": 2,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -2229,8 +2229,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
-    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i13": {
     "id": "i13",
@@ -2458,7 +2458,7 @@
     "dropOffsetY": 36,
     "stackOffsetX": 22,
     "kind": "green",
-    "amount": 3,
+    "amount": 1,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -2506,7 +2506,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
+    "text": "1",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i16": {
@@ -2602,7 +2602,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "44% 56% 60% 40% / 39% 61% 39% 61%",
-    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -2633,8 +2633,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "red",
-    "amount": 2,
+    "kind": "green",
+    "amount": 3,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -2682,8 +2682,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
-    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i18": {
     "id": "i18",
@@ -2778,7 +2778,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "58% 42% 44% 56% / 46% 58% 42% 54%",
-    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -2809,8 +2809,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "green",
-    "amount": 3,
+    "kind": "red",
+    "amount": 2,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -2858,8 +2858,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
-    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i20": {
     "id": "i20",
@@ -3087,7 +3087,7 @@
     "dropOffsetY": 36,
     "stackOffsetX": 22,
     "kind": "green",
-    "amount": 3,
+    "amount": 1,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -3135,7 +3135,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
+    "text": "1",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i23": {
@@ -3231,7 +3231,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "46% 54% 61% 39% / 52% 43% 57% 48%",
-    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -3262,8 +3262,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "red",
-    "amount": 2,
+    "kind": "green",
+    "amount": 3,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -3311,8 +3311,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "2",
-    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i25": {
     "id": "i25",
@@ -3407,7 +3407,7 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "40% 60% 55% 45% / 60% 40% 60% 40%",
-    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
     "iconColor": "#5a3a12",
     "svgReplaces": {
       "#000": "iconColor"
@@ -3438,8 +3438,8 @@
     "dropOffsetX": 10,
     "dropOffsetY": 36,
     "stackOffsetX": 22,
-    "kind": "green",
-    "amount": 3,
+    "kind": "red",
+    "amount": 2,
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -3487,8 +3487,8 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
-    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
   },
   "i27": {
     "id": "i27",
@@ -5100,7 +5100,7 @@
     "id": "legIcon0",
     "type": "basic",
     "x": 1098,
-    "y": 626,
+    "y": 614,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -5119,7 +5119,7 @@
     "id": "legBadge0",
     "type": "basic",
     "x": 1162,
-    "y": 632,
+    "y": 620,
     "width": 40,
     "height": 40,
     "z": 1,
@@ -5128,14 +5128,14 @@
     "movableInEdit": false,
     "clickable": false,
     "borderRadius": "50%",
-    "text": "3",
+    "text": "1",
     "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center"
   },
   "legText0": {
     "id": "legText0",
     "type": "basic",
     "x": 1220,
-    "y": 630,
+    "y": 618,
     "width": 110,
     "height": 44,
     "z": 1,
@@ -5143,14 +5143,14 @@
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "text": "0 – 3",
+    "text": "0 – 1",
     "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
   },
   "legIcon1": {
     "id": "legIcon1",
     "type": "basic",
     "x": 1098,
-    "y": 696,
+    "y": 730,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -5169,7 +5169,7 @@
     "id": "legBadge1",
     "type": "basic",
     "x": 1162,
-    "y": 702,
+    "y": 736,
     "width": 40,
     "height": 40,
     "z": 1,
@@ -5185,7 +5185,7 @@
     "id": "legText1",
     "type": "basic",
     "x": 1220,
-    "y": 700,
+    "y": 734,
     "width": 110,
     "height": 44,
     "z": 1,
@@ -5200,7 +5200,7 @@
     "id": "legIcon2",
     "type": "basic",
     "x": 1098,
-    "y": 766,
+    "y": 788,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -5219,7 +5219,7 @@
     "id": "legText2",
     "type": "basic",
     "x": 1162,
-    "y": 770,
+    "y": 792,
     "width": 158,
     "height": 44,
     "z": 1,
@@ -5234,7 +5234,7 @@
     "id": "legIcon3",
     "type": "basic",
     "x": 1098,
-    "y": 836,
+    "y": 846,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -5253,7 +5253,7 @@
     "id": "legText3",
     "type": "basic",
     "x": 1162,
-    "y": 840,
+    "y": 850,
     "width": 158,
     "height": 44,
     "z": 1,
@@ -5268,7 +5268,7 @@
     "id": "legIcon4",
     "type": "basic",
     "x": 1098,
-    "y": 906,
+    "y": 904,
     "width": 52,
     "height": 52,
     "z": 1,
@@ -5287,7 +5287,7 @@
     "id": "legText4",
     "type": "basic",
     "x": 1162,
-    "y": 910,
+    "y": 908,
     "width": 158,
     "height": 44,
     "z": 1,
@@ -7079,7 +7079,7 @@
     "id": "legCap0",
     "type": "basic",
     "x": 1330,
-    "y": 630,
+    "y": 618,
     "width": 226,
     "height": 44,
     "z": 1,
@@ -7094,7 +7094,7 @@
     "id": "legCap1",
     "type": "basic",
     "x": 1330,
-    "y": 700,
+    "y": 734,
     "width": 226,
     "height": 44,
     "z": 1,
@@ -7109,7 +7109,7 @@
     "id": "legCap2",
     "type": "basic",
     "x": 1330,
-    "y": 770,
+    "y": 792,
     "width": 226,
     "height": 44,
     "z": 1,
@@ -7124,7 +7124,7 @@
     "id": "legCap3",
     "type": "basic",
     "x": 1330,
-    "y": 840,
+    "y": 850,
     "width": 226,
     "height": 44,
     "z": 1,
@@ -7139,7 +7139,7 @@
     "id": "legCap4",
     "type": "basic",
     "x": 1330,
-    "y": 910,
+    "y": 908,
     "width": 226,
     "height": 44,
     "z": 1,
@@ -7219,5 +7219,70 @@
       "#000": "color"
     },
     "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center"
+  },
+  "legIcon5": {
+    "id": "legIcon5",
+    "type": "basic",
+    "x": 1098,
+    "y": 672,
+    "width": 52,
+    "height": 52,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "color": "#f0dfb8",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "legBadge5": {
+    "id": "legBadge5",
+    "type": "basic",
+    "x": 1162,
+    "y": 678,
+    "width": 40,
+    "height": 40,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "legText5": {
+    "id": "legText5",
+    "type": "basic",
+    "x": 1220,
+    "y": 676,
+    "width": 110,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0 – 3",
+    "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap5": {
+    "id": "legCap5",
+    "type": "basic",
+    "x": 1330,
+    "y": 676,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "take what you like",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
   }
 }
