@@ -37,6 +37,31 @@ describe('the dragLimit rectangle', () => {
     expect(w.dragLimitedCoord({ x: 500, y: 5 })).toMatchObject({ x: 150, y: 5 });
   });
 
+  test('reads a side that depends on the position at the position it bounds', () => {
+    // "maxX": "y" is a different rectangle at every point - together with the
+    // condition, the triangle x <= y below y = 400. Reading it once where the
+    // pointer is would let the drag end up outside that triangle, i.e. exactly
+    // where the editor's drawing says a drag may not end.
+    const w = widgetAt(0, 100, { maxX: 'y', condition: 'y < 400' });
+    expect(w.dragLimitAllows({ x: 450, y: 380 })).toBe(false);
+    const to = w.dragLimitedCoord({ x: 500, y: 500 });
+    expect(w.dragLimitAllows(to)).toBe(true);
+    expect(to.x).toBeLessThanOrEqual(to.y);
+    expect(to.y).toBeLessThan(400);
+  });
+
+  test('says whether its sides have to be read again at every position', () => {
+    // what both the drag and the editor's drawing ask before reading the four
+    // sides once for thousands of positions
+    const rules = dragLimit=>widgetAt(0, 0, dragLimit).dragLimitRules({ x: 0, y: 0 });
+    expect(rules({ maxX: 100 }).varies).toBe(false);
+    expect(rules({ maxX: '${PROPERTY width OF board} - 10' }).varies).toBe(false);
+    // the same number at both ends of a 1600 wide parent and a different one in
+    // between, so sampling two points could never answer this
+    expect(rules({ maxX: '(x - 800)^2' }).varies).toBe(true);
+    expect(rules({ minY: 'y / 2' }).varies).toBe(true);
+  });
+
   test('ignores a side that cannot be read rather than clamping to nothing', () => {
     const w = widgetAt(0, 0, { minX: 10, maxX: '${PROPERTY nope OF gone}' });
     expect(w.dragLimitedCoord({ x: 5000, y: 5 })).toMatchObject({ x: 5000, y: 5 });

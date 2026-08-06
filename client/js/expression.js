@@ -162,7 +162,13 @@ export function evaluateExpression(text, resolve) {
     const base = parsePrimary();
     if(isOperator('^')) {
       ++position;
-      return Math.pow(number(base), number(parseUnary()));
+      const exponent = number(parseUnary());
+      // "2^2x" is written to mean 2^(2x) and would be read as (2^2)*x by the
+      // implicit multiplication below - so it is refused rather than quietly
+      // meaning one of the two. "2x^2" is unambiguous and stays 2*(x^2).
+      if(peek() && (peek().type == 'name' || isOperator('(')))
+        throw new Error(`"${peek().value}" directly after an exponent is ambiguous - write "2^(2x)" or "(2^2)x"`);
+      return Math.pow(number(base), exponent);
     }
     return base;
   }
@@ -223,6 +229,12 @@ export function evaluateExpression(text, resolve) {
     const right = parseSum();
     if(isOperator(...comparisons))
       throw new Error(`"${peek().value}" cannot follow "${operator}" - write "a > 0 && a < 500" instead of "0 < a < 500"`);
+    // and brackets are no way around it: "(0 < x) < 500" is the same always
+    // true limit. Comparing what is already true or false is only allowed
+    // against the same kind, "(x > 0) == (y > 0)".
+    if(typeof value == 'boolean' || typeof right == 'boolean')
+      if(typeof value != typeof right || (operator != '==' && operator != '!='))
+        throw new Error(`"${operator}" cannot compare true or false with a number - write "a > 0 && a < 500" instead of "(0 < a) < 500"`);
     return operator == '<' ? value < right
          : operator == '<=' ? value <= right
          : operator == '>' ? value > right

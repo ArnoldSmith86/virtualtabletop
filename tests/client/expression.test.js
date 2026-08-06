@@ -81,6 +81,26 @@ describe('the expression language', () => {
     expect(value('x > 0 && x < 500')).toBe(true);
   });
 
+  test('refuses brackets as a way around that, too', () => {
+    // "(0 < x) < 500" is the same always true limit written differently
+    expect(_=>value('(0 < x) < 500')).toThrow();
+    expect(_=>value('(x > 0) + 1 > 0')).toThrow();
+    // comparing two of them against each other is not that mistake, though
+    expect(value('(x > 0) == (y > 0)')).toBe(true);
+    expect(value('(x > 0) != (y > 9)')).toBe(true);
+  });
+
+  test('refuses an implicit multiplication that would read as an exponent', () => {
+    // "2^2x" is written to mean 2^(2x) and would be read as (2^2)*x, so it is
+    // reported rather than quietly meaning one of the two
+    expect(_=>value('2^2x')).toThrow();
+    expect(_=>value('2^2(x + 1)')).toThrow();
+    expect(value('2^(2x)')).toBe(64);
+    expect(value('(2^2)*x')).toBe(12);
+    // the case the property advertises stays as it reads: 2 * (x^2)
+    expect(value('2x^2')).toBe(18);
+  });
+
   test('multiplies implicitly only where a number is written in front', () => {
     expect(_=>value('2 3')).toThrow();          // a stray space in "23"
     expect(_=>value('x y')).toThrow();
@@ -127,6 +147,8 @@ describe('the syntax check', () => {
   test('names what cannot be read', () => {
     expect(expressionError('2x^^2 > 4')).toEqual(expect.any(String));
     expect(expressionError('0 < x < 500')).toEqual(expect.any(String));
+    expect(expressionError('(0 < x) < 500')).toEqual(expect.any(String));
+    expect(expressionError('2^2x')).toEqual(expect.any(String));
     expect(expressionError('(x + 1')).toEqual(expect.any(String));
     expect(expressionError('')).toEqual(expect.any(String));
   });

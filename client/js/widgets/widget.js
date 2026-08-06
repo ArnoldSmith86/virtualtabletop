@@ -1,5 +1,5 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
-import { expressionCondition, expressionNumber } from '../expression.js';
+import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -785,6 +785,10 @@ export class Widget extends StateManaged {
   // What the dragLimit says, read for one position: the two clamps of the
   // rectangle (each side a number or an expression that computes one) and the
   // conditions to test there. null when there is no limit to obey at all.
+  // `varies` says whether these rules hold for one position only: a side that
+  // reads x or y ("maxX": "y") is a different number at every point, so both
+  // callers - the drag and the editor's drawing - have to read it again for
+  // every position they judge instead of once for all of them.
   dragLimitRules(coord) {
     const limit = this.get('dragLimit');
     if(!limit || typeof limit != 'object' || Array.isArray(limit))
@@ -795,6 +799,8 @@ export class Widget extends StateManaged {
     const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
 
     return {
+      varies: [ 'minX', 'maxX', 'minY', 'maxY' ].some(key=>expressionNames(limit[key])
+        .some(name=>name.widget === null && (name.name == 'x' || name.name == 'y'))),
       clampX: value=>{
         if(minX !== undefined && minX !== null) value = Math.max(minX, value);
         if(maxX !== undefined && maxX !== null) value = Math.min(maxX, value);
@@ -827,7 +833,9 @@ export class Widget extends StateManaged {
   // instead of a fixed number ("${PROPERTY width OF board} - 100"). A condition
   // - one inequality or a list of them, "2x^2 + y > 4", "2y + 10 > 5x" - bounds
   // it to any area that can be written down, and both are checked on every
-  // mouse move, so an area that depends on the state follows it.
+  // mouse move, so an area that depends on the state follows it. A side can
+  // read x and y like a condition can ("maxX": "y"), and then the rectangle is
+  // judged where the position it bounds is rather than where the pointer is.
   //
   // A refused position does not stop the drag where the last accepted one was:
   // the widget goes where its area comes closest to the pointer, so it comes to
@@ -843,23 +851,31 @@ export class Widget extends StateManaged {
     if(!rules)
       return coord;
 
-    const { clampX, clampY, conditions } = rules;
-    const target = { x: clampX(coord.x), y: clampY(coord.y) };
+    // A side that reads the position being judged describes a different
+    // rectangle at every point, so it is read again for each of them - the same
+    // way a condition is. Any other limit is read once for the whole drag.
+    const rulesAt = rules.varies ? position=>this.dragLimitRules(position) : _=>rules;
+    const clamped = position=>{
+      const { clampX, clampY } = rulesAt(position);
+      return { x: clampX(position.x), y: clampY(position.y) };
+    };
+    const target = clamped(coord);
     const asCoord = position=>Object.assign({}, coord, position);
 
-    if(!conditions.length)
+    // a fixed rectangle and nothing else is what clamping already answered
+    if(!rules.varies && !rules.conditions.length)
       return asCoord(target);
 
     // the rectangle is part of the question everywhere below, so a position
     // reached by sliding or by rounding can never leave it either
-    const inside = position=>this.dragLimitAllows(position, rules);
+    const inside = position=>this.dragLimitAllows(position, rulesAt(position));
     if(inside(target))
       return asCoord(target);
 
     // where the widget is, put through the rectangle as well: it is a hard
     // bound, so a widget sitting outside it (a routine moved it, a side moved
     // under it) must not be able to stay there through the fallbacks below
-    const current = { x: clampX(+this.get('x') || 0), y: clampY(+this.get('y') || 0) };
+    const current = clamped({ x: +this.get('x') || 0, y: +this.get('y') || 0 });
     const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
     // A widget that is not inside its area is let go - but a widget sitting
     // exactly on the edge of a strict inequality ("x < 200" at x == 200, put

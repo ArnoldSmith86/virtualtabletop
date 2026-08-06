@@ -80,6 +80,10 @@ const COMMON_PROPERTIES = {
         // in the same sitting
         const problems = [];
         for(const key of Object.keys(v)) {
+            // the engine reads a side or a condition written as null the same
+            // way as a missing one - no limit from it - so it is not an error
+            if(v[key] === null)
+                continue;
             if([ 'minX', 'maxX', 'minY', 'maxY' ].includes(key)) {
                 if(typeof v[key] !== 'number' && typeof v[key] !== 'string') {
                     problems.push(`${key} must be a number or an expression`);
@@ -89,11 +93,12 @@ const COMMON_PROPERTIES = {
                 if(problem)
                     problems.push(`${key} is not a valid expression: ${problem}`);
             } else if(key === 'condition') {
-                if(!asArray(v[key]).every(c=>typeof c === 'string')) {
+                const conditions = asArray(v[key]).filter(c=>c !== null);
+                if(!conditions.every(c=>typeof c === 'string')) {
                     problems.push('condition must be an expression or a list of expressions');
                     continue;
                 }
-                for(const condition of asArray(v[key])) {
+                for(const condition of conditions) {
                     const problem = expressionError(condition);
                     if(problem)
                         problems.push(`condition '${condition}' is not a valid expression: ${problem}`);

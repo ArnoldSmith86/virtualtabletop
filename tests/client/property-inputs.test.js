@@ -95,7 +95,6 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', '
     dragLimitValue,
     dragLimitConditionList,
     dragLimitConditionProblem,
-    dragLimitVariesWithPosition,
     dragLimitDependencies,
     dragLimitDeltaMatters,
     positionSummary: PropertiesModule.prototype.positionSummary,
@@ -365,17 +364,6 @@ describe('css helpers', () => {
     expect(cssHelpers.dragLimitConditionProblem('y > x\n0 < x < 500')).toMatch(/^"0 < x < 500": /);
   });
 
-  test('the drawing reads a side once unless it varies with the position', () => {
-    expect(cssHelpers.dragLimitVariesWithPosition({ minX: 0, maxX: 800 })).toBe(false);
-    expect(cssHelpers.dragLimitVariesWithPosition({ maxX: '${PROPERTY width OF board} - 100' })).toBe(false);
-    // a condition is evaluated at every point anyway - only the sides matter here
-    expect(cssHelpers.dragLimitVariesWithPosition({ maxX: 800, condition: 'y > x' })).toBe(false);
-    expect(cssHelpers.dragLimitVariesWithPosition({ maxY: '800 - x/2' })).toBe(true);
-    // the same number at both ends of the parent and a different one in between:
-    // this is why the two corners it used to be sampled at cannot answer it
-    expect(cssHelpers.dragLimitVariesWithPosition({ maxX: '(x - 800)^2' })).toBe(true);
-  });
-
   test('the drawing follows every property its expressions read', () => {
     const widget = { id: 'piece', get: property=>({
       dragLimit: { maxX: '${PROPERTY edge OF board} - limitWidth', condition: 'y > ${PROPERTY top OF rail}' },
@@ -385,12 +373,14 @@ describe('css helpers', () => {
     expect([ ...dependencies.board ]).toEqual([ 'edge' ]);
     expect([ ...dependencies.rail ]).toEqual([ 'top' ]);
     expect([ ...dependencies.piece ]).toEqual([ 'limitWidth' ]);
-    // the drawing is painted into the parent's box, so its size counts too
-    expect([ ...dependencies.holder ].sort()).toEqual([ 'height', 'width' ]);
+    // the drawing is a canvas inside the parent, which empties itself when it
+    // renders its own content - so every property of the parent counts
+    expect(dependencies.holder).toBe(true);
 
     // a button that moves the area redraws it, an unrelated change does not
     expect(cssHelpers.dragLimitDeltaMatters(dependencies, { board: { edge: 900 } })).toBe(true);
     expect(cssHelpers.dragLimitDeltaMatters(dependencies, { piece: { limitWidth: 20 } })).toBe(true);
+    expect(cssHelpers.dragLimitDeltaMatters(dependencies, { holder: { text: 'hi' } })).toBe(true);
     expect(cssHelpers.dragLimitDeltaMatters(dependencies, { board: { z: 5 } })).toBe(false);
     expect(cssHelpers.dragLimitDeltaMatters(dependencies, { other: { x: 5 } })).toBe(false);
     // x and y are the position being tested, not a property any delta carries

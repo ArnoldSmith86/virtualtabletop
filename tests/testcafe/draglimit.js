@@ -46,6 +46,18 @@ test('A dragLimit condition bounds a drag to an area no rectangle can describe',
   await t.expect(slid.x).gt(100);
 });
 
+test('A dragLimit side that reads the position is evaluated where that position is', async t => {
+  await t.resizeWindow(1280, 800);
+  // "maxX": "y" is a different rectangle at every point - together with the
+  // condition the triangle x <= y below y = 400. Reading it once where the
+  // pointer is would let the drag end up outside that triangle.
+  const before = await roomWith(t, { maxX: 'y', condition: 'y < 400' });
+  await t.drag('#w_piece', 400, 400);
+  const dropped = await position(before);
+  await t.expect(dropped.y).lt(400);
+  await t.expect(dropped.x).lte(dropped.y);
+});
+
 test('A dragLimit side written as an expression is evaluated while dragging', async t => {
   await t.resizeWindow(1280, 800);
   const before = await roomWith(t, { maxX: '${PROPERTY width OF piece} * 4' });
