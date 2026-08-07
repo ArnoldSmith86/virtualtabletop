@@ -1,8 +1,9 @@
 import fs from 'fs';
-import JSZip from 'jszip';
+import CRC32 from 'crc-32';
 
 import Config from './config.mjs';
 import Logging from './logging.mjs';
+import Zip from './zip.mjs';
 
 const pieceColors = {
   default: '#000000',
@@ -82,14 +83,14 @@ const pcioTypeNames = {
 const knownSchemaVersion = 8;
 
 export default async function convertPCIO(content) {
-  const zip = await JSZip.loadAsync(content);
+  const entries = Zip.list(content);
   // a null entry in widgets.json must not break the loops that follow
-  const widgets = JSON.parse(await zip.files['widgets.json'].async('string')).filter(widget=>widget && typeof widget == 'object');
+  const widgets = JSON.parse(await Zip.readString(content, 'widgets.json')).filter(widget=>widget && typeof widget == 'object');
 
   // the file format version lives in its own zip member since PCIO schema 3
   let schemaVersion = 0;
-  if(zip.files['schemaVersion'])
-    schemaVersion = +(await zip.files['schemaVersion'].async('string')) || 0;
+  if(entries['schemaVersion'] !== undefined)
+    schemaVersion = +(await Zip.readString(content, 'schemaVersion')) || 0;
 
   // everything that could not be translated ends up in _meta.info.importerWarnings.
   // A broken file can have a note per widget, so the report is capped: it is
@@ -138,23 +139,24 @@ export default async function convertPCIO(content) {
   const nameMap = {};
   try {
     // created by the client while removing already uploaded assets
-    for(const [ k, v ] of Object.entries(JSON.parse(await zip.files['asset-map.json'].async('string'))))
+    for(const [ k, v ] of Object.entries(JSON.parse(await Zip.readString(content, 'asset-map.json'))))
       nameMap[`package://${v}`] = `/assets/${k}`;
   } catch(e) {}
 
-  for(const filename in zip.files) {
+  for(const filename in entries) {
     // a .pcio carries a folder entry for its assets, which has no content: it
     // would be written out as an empty "undefined_undefined" asset
-    if(filename.match(/^\/?userassets/) && !zip.files[filename].dir && zip.files[filename]._data) {
+    if(filename.match(/^\/?userassets/) && !filename.match(/\/$/)) {
       // 10 MiB is the same limit that FileLoader applies to assets in .vtt files
-      if(zip.files[filename]._data.uncompressedSize >= 10485760) {
+      if(entries[filename] >= 10485760) {
         warn(`Asset ${filename} is bigger than 10 MiB and was not imported.`);
         continue;
       }
-      const targetFile = zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
+      const asset = (await Zip.read(content, [ filename ]))[filename];
+      const targetFile = CRC32.buf(asset) + '_' + asset.length;
       nameMap['package://' + filename] = '/assets/' + targetFile;
       if(!Config.resolveAsset(targetFile))
-        fs.writeFileSync(Config.directory('assets') + '/' + targetFile, await zip.files[filename].async('nodebuffer'));
+        fs.writeFileSync(Config.directory('assets') + '/' + targetFile, asset);
     }
   }
 

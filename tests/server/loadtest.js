@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import WebSocket from 'ws';
 
 const target = 'http://localhost:8272';
