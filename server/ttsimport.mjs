@@ -7,9 +7,10 @@ import Config from './config.mjs';
 import Logging from './logging.mjs';
 import Zip from './zip.mjs';
 
-// node-fetch capped how much of a response it would buffer through its "size" option;
-// node's built-in fetch has no such limit, so the body is read chunk by chunk and the
-// request is dropped once enough of it has arrived.
+// node-fetch capped how much of a response it would buffer through its "size" option and
+// gave up once that was exceeded. Node's built-in fetch has no such limit, so the body is
+// read chunk by chunk and dropped at the same point - truncating it instead would hand
+// back half an image, which both callers would then treat as a whole one.
 async function fetchBuffer(url, options, maxBytes) {
   const response = await fetch(url, options);
   if(!response.body)
@@ -20,10 +21,10 @@ async function fetchBuffer(url, options, maxBytes) {
   for await (const chunk of response.body) {
     chunks.push(chunk);
     length += chunk.length;
-    if(length >= maxBytes)
-      break;
+    if(length > maxBytes)
+      throw new Error(`the response is bigger than ${maxBytes} bytes`);
   }
-  return Buffer.concat(chunks, Math.min(length, maxBytes));
+  return Buffer.concat(chunks, length);
 }
 
 // A TTS unit is about an inch, which is 50px on the VTT surface (a poker card is
