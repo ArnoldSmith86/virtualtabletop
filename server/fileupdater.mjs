@@ -1,3 +1,5 @@
+import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
+
 export const VERSION = 22;
 
 export default function FileUpdater(state) {
@@ -73,9 +75,30 @@ function hasPropertyCondition(properties, condition) {
 }
 
 function updateMeta(meta, v, state) {
-  v<18 && v18RoutineLegacyModes(meta, state);
-  v<19 && v19useIframeForHtmlCards(meta, state);
-  v<21 && v21DisableHolderImageWidget(meta, state);
+  updateLegacyModes(meta, v, state);
+}
+
+// Every legacy mode is enabled for games that were saved before the version that introduced
+// it and whose state trips its detector. Both facts live in LEGACY_MODES, so a new mode needs
+// no change here - see client/js/legacymoderegistry.js.
+function updateLegacyModes(meta, v, state) {
+  // a pre-v18 save cannot carry legacy modes of its own, but it can carry sibling game settings
+  if(v < 18)
+    meta.gameSettings = Object.assign({}, meta.gameSettings, { legacyModes: {} });
+
+  for(const [ name, mode ] of Object.entries(LEGACY_MODES))
+    if(v < mode.since && mode.detect(state))
+      legacyModesOf(meta)[name] = true;
+}
+
+// Created on demand so that a save which needs no legacy mode keeps the _meta shape it was
+// saved with. Missing objects are tolerated: hand-written saves and importer output do occur.
+function legacyModesOf(meta) {
+  if(!meta.gameSettings)
+    meta.gameSettings = {};
+  if(!meta.gameSettings.legacyModes)
+    meta.gameSettings.legacyModes = {};
+  return meta.gameSettings.legacyModes;
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -514,25 +537,6 @@ function v17MaterialSymbols(properties) {
   }
 }
 
-function v18RoutineLegacyModes(meta, state) {
-  meta.gameSettings = { legacyModes: {} };
-
-  if(JSON.stringify(state).match(/"var |COMPUTE/)) {
-    meta.gameSettings.legacyModes.convertNumericVarParametersToNumbers = true;
-    meta.gameSettings.legacyModes.useOneAsDefaultForVarParameters = true;
-  }
-}
-
-function v19useIframeForHtmlCards(meta, state) {
-  for(const widget of Object.values(state))
-    if(widget.type == 'deck' && Array.isArray(widget.faceTemplates))
-      for(const face of widget.faceTemplates)
-        if(Array.isArray(face.objects))
-          for(const object of face.objects)
-            if(object.type == 'html')
-              return meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
-}
-
 function v20WhiteSpacePreWrapRoutineCheck(obj, globalProperties) {
   // recursively check all objects in state to see if any SET operation sets html
   if(Array.isArray(obj)) {
@@ -599,18 +603,6 @@ function v20WhiteSpacePreWrap(properties, globalProperties) {
 
   if(!properties.type && (hasMultipleWhitespaceOrNewline(String(properties.html)) || String(JSON.stringify(properties.inheritFrom)).match(/"html"/)) || (typeof properties.html == 'string' && globalProperties.v20WhiteSpacePreWrapForAllHtml) && !cssHasWhiteSpace(properties.css))
     properties.css = addWhiteSpacePreWrapToCss(properties.css);
-}
-
-function v21DisableHolderImageWidget(meta, state) {
-  for(const id in state) {
-    const properties = state[id];
-    if(properties && properties.type == 'holder') {
-      if(properties.image || properties.icon || properties.text || properties.textColor || properties.color || properties.svgReplaces) {
-        meta.gameSettings.legacyModes.disableHolderImageWidget = true;
-        return;
-      }
-    }
-  }
 }
 
 // A side of dragLimit written as null used to be clamped with Math.max(null, x)

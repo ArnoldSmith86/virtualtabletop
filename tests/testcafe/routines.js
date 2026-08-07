@@ -1,6 +1,6 @@
 import { ClientFunction } from 'testcafe';
 
-import { getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { expectEventually, getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -46,17 +46,6 @@ function removeOnEnterRoom() {
   state.hand1.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'witness' }, { func: 'SET', property: 'marked', value: true } ];
   state.hand2.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'doomed' }, { func: 'DELETE' } ];
   return state;
-}
-
-async function expectEventually(t, get, expected) {
-  let actual = null;
-  for(let wait=50; wait<1000; wait*=2) {
-    actual = await get();
-    if(JSON.stringify(actual) == JSON.stringify(expected))
-      break;
-    await new Promise(resolve=>setTimeout(resolve, wait));
-  }
-  await t.expect(actual).eql(expected);
 }
 
 // a hand is filled from the bottom up, so its order is the one of ascending z

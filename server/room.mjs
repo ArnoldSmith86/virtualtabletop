@@ -28,10 +28,19 @@ export default class Room {
     }, 5000);
   }
 
+  addLocalPlayer(addingPlayer, playerName) {
+    playerName = typeof playerName == 'string' ? playerName.trim() : '';
+    if(!playerName || this.state._meta.players[playerName])
+      return;
+    this.state._meta.players[playerName] = this.newPlayerColor();
+    this.sendMetaUpdate();
+  }
+
   addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
     clearTimeout(this.unloadTimeout);
     this.players.push(player);
+    player.send('sessionID', player.sessionID);
 
     if(!this.state._meta.players[player.name])
       this.state._meta.players[player.name] = this.newPlayerColor();
@@ -850,6 +859,19 @@ export default class Room {
     }
   }
 
+  playerIsReferencedInWidgets(playerName) {
+    return Object.values(this.state).some(w=>[ w.owner, w.player, w.artist ].some(v=>Array.isArray(v) ? v.indexOf(playerName) != -1 : v == playerName));
+  }
+
+  // a player the game still points at can be removed too - the client warns about what stays
+  // behind, and those widgets pick the name up again as soon as a player uses it
+  removeLocalPlayer(removingPlayer, playerName) {
+    if(this.players.filter(p=>p.name == playerName).length)
+      return;
+    delete this.state._meta.players[playerName];
+    this.sendMetaUpdate();
+  }
+
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
@@ -893,19 +915,62 @@ export default class Room {
     }
   }
 
-  renamePlayer(renamingPlayer, oldName, newName) {
-    if(oldName == newName)
+  renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
+    newName = typeof newName == 'string' ? newName.trim() : '';
+    if(oldName == newName || !newName)
+      return;
+
+    const renamedSessions = this.players.filter(p=>p.name == oldName && (sessionID == null || p.sessionID == sessionID));
+    if(sessionID != null && !renamedSessions.length)
+      return;
+
+    // refuse taking the name of a connected player who is part of the game (seat, owner, artist) -
+    // it would secretly reveal that player's hand
+    if(this.players.some(p=>p.name == newName) && this.playerIsReferencedInWidgets(newName))
       return;
 
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
-    this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
-    delete this.state._meta.players[oldName];
+    if(this.state._meta.players[newName] === undefined)
+      this.state._meta.players[newName] = sessionID == null ? this.state._meta.players[oldName] : this.newPlayerColor();
 
-    for(const player of this.players)
-      if(player.name == oldName)
-        player.rename(newName);
+    for(const player of renamedSessions)
+      player.rename(newName);
+
+    // when only a single session is renamed (split/view), the old player stays available for the other sessions -
+    // except for abandoned guest entries which the disconnect cleanup would no longer catch under the new name
+    if(sessionID == null)
+      delete this.state._meta.players[oldName];
+    else if(oldName.match(/^Guest/) && !this.players.filter(p=>p.name == oldName).length && !this.playerIsReferencedInWidgets(oldName))
+      delete this.state._meta.players[oldName];
+
+    if(updateWidgets)
+      this.renamePlayerInWidgets(oldName, newName);
 
     this.sendMetaUpdate();
+  }
+
+  renamePlayerInWidgets(oldName, newName) {
+    const delta = { s: {} };
+    for(const widgetID in this.state) {
+      if(widgetID == '_meta')
+        continue;
+      const changes = {};
+      for(const property of [ 'owner', 'player', 'artist' ]) {
+        const value = this.state[widgetID][property];
+        if(value === oldName)
+          changes[property] = newName;
+        else if(Array.isArray(value) && value.includes(oldName))
+          changes[property] = [...new Set(value.map(p=>p === oldName ? newName : p))];
+      }
+      if(Object.keys(changes).length) {
+        Object.assign(this.state[widgetID], changes);
+        delta.s[widgetID] = changes;
+      }
+    }
+    if(Object.keys(delta.s).length) {
+      delta.id = ++this.deltaID;
+      this.broadcast('delta', delta);
+    }
   }
 
   // Input sessions are tracked by the Player *connection*, not by name, so a
@@ -1135,7 +1200,7 @@ export default class Room {
   }
 
   sendMetaUpdate() {
-    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
+    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name), sessions: this.players.map(p=>({ sessionID: p.sessionID, player: p.name })) });
   }
 
   // The board size decides how everyone in the room renders the game and it is written

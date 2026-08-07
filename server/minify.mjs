@@ -90,6 +90,7 @@ export default async function minifyHTML() {
     'client/js/calculateLayout.js',
     'client/js/connection.js',
     'client/js/serverstate.js',
+    'client/js/legacymoderegistry.js',
     'client/js/legacymodes.js',
     'client/js/geometry.js',
     'client/js/compute.js',
