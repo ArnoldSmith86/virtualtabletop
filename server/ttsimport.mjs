@@ -1,12 +1,31 @@
 import fs from 'fs';
 
 import CRC32 from 'crc-32';
-import JSZip from 'jszip';
-import fetch from 'node-fetch';
 import { BSON } from 'bson';
 
 import Config from './config.mjs';
 import Logging from './logging.mjs';
+import Zip from './zip.mjs';
+
+// node-fetch capped how much of a response it would buffer through its "size" option and
+// gave up once that was exceeded. Node's built-in fetch has no such limit, so the body is
+// read chunk by chunk and dropped at the same point - truncating it instead would hand
+// back half an image, which both callers would then treat as a whole one.
+async function fetchBuffer(url, options, maxBytes) {
+  const response = await fetch(url, options);
+  if(!response.body)
+    return Buffer.alloc(0);
+
+  const chunks = [];
+  let length = 0;
+  for await (const chunk of response.body) {
+    chunks.push(chunk);
+    length += chunk.length;
+    if(length > maxBytes)
+      throw new Error(`the response is bigger than ${maxBytes} bytes`);
+  }
+  return Buffer.concat(chunks, length);
+}
 
 // A TTS unit is about an inch, which is 50px on the VTT surface (a poker card is
 // 3.5 units / 160px high). TTS tables are much bigger than the VTT surface, so
@@ -154,8 +173,7 @@ async function imgSize(url, imp) {
   try {
     // only the first few KB are needed, but a host may ignore the Range header and
     // send the whole image - don't wait or buffer indefinitely for that
-    const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' }, signal: AbortSignal.timeout(15000), size: 1000000 });
-    const buffer = await r.buffer();
+    const buffer = await fetchBuffer(url, { headers: { 'Range': 'bytes=0-40000' }, signal: AbortSignal.timeout(15000) }, 1000000);
     if(buffer.toString('ascii', 1, 4) == 'PNG')
       return imgSizeCache[url] = [ buffer.readUInt32BE(16), buffer.readUInt32BE(20) ];
     for(let offset=4; offset<buffer.length; offset+=2) {
@@ -926,10 +944,9 @@ async function convertTTS(content, linkContent, workshop={}) {
   if(linkContent) {
     json = BSON.deserialize(linkContent);
   } else {
-    const zip = await JSZip.loadAsync(content);
-    for(var file in zip.files)
+    for(const file in Zip.list(content))
       if(file.match(/\.json$/))
-        json = JSON.parse(await zip.files[file].async('string'));
+        json = JSON.parse(await Zip.readString(content, file));
   }
 
   const imp = newImport();
@@ -1061,7 +1078,7 @@ async function resolveLink(link) {
 async function storeThumbnail(url) {
   try {
     const request = `${url}${url.indexOf('?') > -1 ? '&' : '?'}imw=400&imh=400&ima=fit&impolicy=Letterbox`;
-    const content = Buffer.from(await (await fetch(request, { signal: AbortSignal.timeout(15000), size: 20000000 })).arrayBuffer());
+    const content = await fetchBuffer(request, { signal: AbortSignal.timeout(15000) }, 20000000);
     const asset = `${CRC32.buf(content)}_${content.length}`;
     if(!Config.resolveAsset(asset))
       fs.writeFileSync(`${Config.directory('assets')}/${asset}`, content);

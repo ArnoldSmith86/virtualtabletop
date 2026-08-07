@@ -1,15 +1,14 @@
-import JSZip from 'jszip';
-
 import convertPCIO from '../../server/pcioimport.mjs';
+import Zip from '../../server/zip.mjs';
 
 async function importWidgets(widgets, schemaVersion, files={}) {
-  const zip = new JSZip();
-  zip.file('widgets.json', JSON.stringify(widgets));
+  const entries = { 'widgets.json': JSON.stringify(widgets) };
   if(schemaVersion !== undefined)
-    zip.file('schemaVersion', String(schemaVersion));
+    entries['schemaVersion'] = String(schemaVersion);
+  // a null content means a folder entry, which is stored as an empty entry ending in a slash
   for(const [ name, content ] of Object.entries(files))
-    content === null ? zip.folder(name) : zip.file(name, content);
-  return await convertPCIO(await zip.generateAsync({ type: 'nodebuffer' }));
+    entries[content === null ? `${name}/` : name] = content === null ? new Uint8Array(0) : content;
+  return await convertPCIO(await Zip.create(entries));
 }
 
 const deck = {
