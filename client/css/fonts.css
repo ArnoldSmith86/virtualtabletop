@@ -553,15 +553,11 @@
   background: var(--url);
 }
 
+/* every icon and category heading carries data-family=image|font, so the restriction to one of the two
+   families is a single pair of selectors - and symbols.js can count what is left with the same attribute */
 #symbolPickerOverlay .hidden,
-#symbolPickerOverlay.hideImages h2.imageCategory,
-#symbolPickerOverlay.hideImages .emoji-color,
-#symbolPickerOverlay.hideImages .gameicons,
-#symbolPickerOverlay.hideFonts h2.fontCategory,
-#symbolPickerOverlay.hideFonts .symbols,
-#symbolPickerOverlay.hideFonts .material-symbols,
-#symbolPickerOverlay.hideFonts .material-symbols-nofill,
-#symbolPickerOverlay.hideFonts .emoji-monochrome {
+#symbolPickerOverlay.hideImages [data-family=image],
+#symbolPickerOverlay.hideFonts [data-family=font] {
   display: none;
 }
 
