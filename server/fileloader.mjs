@@ -44,7 +44,7 @@ async function downloadLink(link) {
     let states = null;
     const content = Buffer.from(await response.arrayBuffer());
     if(TTS.isTTSlink(link)) {
-      states = await TTS.fromBSON(content);
+      states = await TTS.fromBSON(content, link);
     } else {
       states = await readStatesFromBuffer(content, true);
     }
@@ -168,7 +168,7 @@ async function readStatesFromLink(linkAndPath, includeVariantNameList) {
 async function readVariantsFromBuffer(buffer) {
   const entries = Zip.list(buffer);
   if(Object.keys(entries).filter(f=>f.match(/WorkshopUpload/)).length) {
-    return [ await TTS.fromZip(buffer) ];
+    return [ await TTS.fromZIP(buffer) ];
   } else if(entries['widgets.json'] !== undefined) {
     return [ await PCIO(buffer) ];
   } else {

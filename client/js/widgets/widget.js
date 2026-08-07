@@ -1,8 +1,8 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -835,14 +835,16 @@ export class Widget extends StateManaged {
 
     const displayError = (field, error) => {
       const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
-      div(dom.parentElement, 'inputError', error);
+      // the message carries what the field defines (regexHint, min, max, regex),
+      // so it goes into the DOM as text and not as HTML
+      div(dom.parentElement, 'inputError').textContent = error;
     };
 
     for(const field of o.fields || []) {
       if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
         isValid = displayError(field, `Please select at least ${field.min}.`);
       if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
-        isValid = displayError(field, `Please select at most ${field.min}.`);
+        isValid = displayError(field, `Please select at most ${field.max || 1}.`);
       if(field.type == 'number' && variables[field.variable] < field.min)
         isValid = displayError(field, `Please enter a number above ${field.min}.`);
       if(field.type == 'number' && variables[field.variable] > field.max)
@@ -2165,18 +2167,21 @@ export class Widget extends StateManaged {
           }
         };
         if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          // a "minutes:seconds" string in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
+          const seconds = timeToMS(a.seconds);
+          const milliseconds = seconds !== a.seconds ? seconds : a.seconds*1000 || a.value;
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
               await w(a.timer, async widget=>{
                 if(widget.setMilliseconds)
-                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await widget.setMilliseconds(milliseconds, a.mode);
               });
             }
           } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setMilliseconds)
-                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await c.setMilliseconds(milliseconds, a.mode);
             } else {
               problems.push(`Collection ${a.collection} is empty.`);
             }
@@ -2491,6 +2496,7 @@ export class Widget extends StateManaged {
 
     await this.bringToFront();
     await this.set('dragging', playerName);
+    delete this.lastMoveCoord;
 
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
@@ -2534,6 +2540,8 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
 
+    this.lastMoveCoord = coordGlobal;
+
     await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
     await this.snapToGrid();
 
@@ -2541,6 +2549,15 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
+      // The hit test below asks the DOM where this widget is, but the delta that
+      // carries the position set above only reaches the DOM when the batch around
+      // the mouse event ends. Without the flush the drop target is computed for the
+      // position of the *previous* mouse event - so a drag that moves further than
+      // half a holder between two events resolves the drop against the square the
+      // widget has already left, and the piece lands next to where it was dropped
+      // (or the game rejects the move and sends it back).
+      if(this.domElement.style.transform != this.cssTransform())
+        flushDelta();
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
@@ -2685,6 +2702,23 @@ export class Widget extends StateManaged {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, localAnchor });
 
+    // dropLimit constrains manual drops only, and every pile this widget can
+    // still form from here on is one. Dropping into a holder reparents it,
+    // which runs updatePiles() before the call at the end of this method, so
+    // the marker has to cover the whole drop rather than just that call.
+    this.pileUpdateFromDrag = true;
+
+    // The drop belongs where the button was released, not where the last mousemove
+    // reported: a fast drag can end with a mouseup at coordinates no mousemove ever
+    // delivered, and everything below - the drop target, the line stop, the position -
+    // would then be resolved for a spot the widget has already been dragged away from.
+    // Applying the release coordinates first also makes the drop target match what the
+    // player last saw highlighted, since move() recomputes it.
+    const releasedElsewhere = coordGlobal && (!this.lastMoveCoord || this.lastMoveCoord.x != coordGlobal.x || this.lastMoveCoord.y != coordGlobal.y);
+    if(releasedElsewhere)
+      await this.move(coordGlobal, localAnchor);
+    delete this.lastMoveCoord;
+
     await this.hideShadowWidget();
     await this.set('dragging', null);
 
@@ -2717,6 +2751,7 @@ export class Widget extends StateManaged {
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+    delete this.pileUpdateFromDrag;
   }
 
   async hideShadowWidget() {
@@ -3180,6 +3215,12 @@ export class Widget extends StateManaged {
     const thisOwner = this.get('owner');
     const thisOnPileCreation = this.get('onPileCreation');
     const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
+
+    // A pile that is already at its dropLimit takes no more cards - but only
+    // when this update comes from a drag. Everything else that piles cards up
+    // (a MOVE or CLONE in a routine, "Split the pile", the JSON editor) ignores
+    // dropLimit elsewhere too, and games rely on that, so it stays ignored here.
+    const isFull = (pile, count) => this.pileUpdateFromDrag && exceedsDropLimit(pile, count);
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -3198,6 +3239,11 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
+          // the pile that would be created is bound by the dropLimit it would
+          // be created with, so a limit below 2 rules the pile out entirely
+          const newPileDropLimit = thisOnPileCreation && thisOnPileCreation.dropLimit;
+          if(this.pileUpdateFromDrag && newPileDropLimit > -1 && newPileDropLimit < 2)
+            continue;
           const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
@@ -3217,6 +3263,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(thisType == 'pile' && widgetType == 'pile') {
+          if(isFull(widget, this.children().length))
+            continue;
           for(const w of this.children().reverse()) {
             await w.set('parent', widget.get('id'));
             await w.bringToFront();
@@ -3226,6 +3274,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
         if(thisType == 'pile' && widgetType == 'card') {
+          if(isFull(this, 1))
+            continue;
           for(const w of this.children().reverse())
             await w.bringToFront();
           await this.set('x', widget.get('x'));
@@ -3236,6 +3286,8 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
         if(thisType == 'card' && widgetType == 'pile') {
+          if(isFull(widget, 1))
+            continue;
           await this.bringToFront();
           await this.set('parent', widget.get('id'));
           break;

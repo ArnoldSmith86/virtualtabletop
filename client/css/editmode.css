@@ -207,7 +207,7 @@
   height: 100%;
 }
 
-@media only screen and (max-width: 500px) {
+@container roomArea (max-width: 500px) {
   #editJSONoverlay textarea {
     min-height: 100%;
   }

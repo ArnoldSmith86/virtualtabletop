@@ -196,8 +196,9 @@ const jeCommands = [
       { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
       { label: 'Inherit properties',     type: 'string', value: '' },
       { label: 'Copy recursively',       type: 'checkbox', value: true  },
-      { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
+      // getters because jeCommands is built at load time, before the game's viewport is known
+      { label: 'X offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetWidth  }, get max() { return viewportConfig.targetWidth  } },
+      { label: 'Y offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetHeight }, get max() { return viewportConfig.targetHeight } },
       { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
       { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
     ],
@@ -508,17 +509,35 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
-      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', opacity: null, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null, hoverOpacity: null };
-      if(Array.isArray(jeGetValueAt('icon'))) {
-        const current = jeGetValueAt('icon');
-        const name = current[jeGetKeyAfter('icon')];
-        current[jeGetKeyAfter('icon')] = newValue;
-        await jeSetValueAt('icon', current, name);
+      // fill in the default advanced options while keeping whatever is already
+      // set (name/scale/color/...), then put the cursor back on the icon name
+      const defaults = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', opacity: null, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null, hoverOpacity: null };
+      const expand = current => {
+        const isObject = typeof current == 'object' && current !== null;
+        const merged = isObject ? Object.assign({}, defaults, current) : Object.assign({}, defaults);
+        const name = isObject ? current.name : current;
+        merged.name = '###SELECT ME###';
+        return { merged, name: typeof name == 'undefined' ? '' : name };
+      };
+      const icon = jeGetValueAt('icon');
+      if(Array.isArray(icon)) {
+        const index = jeGetKeyAfter('icon');
+        const { merged, name } = expand(icon[index]);
+        icon[index] = merged;
+        await jeSetValueAt('icon', icon, name);
       } else {
-        await jeSetValueAt('icon', newValue, jeGetValueAt('icon'));
+        const { merged, name } = expand(icon);
+        await jeSetValueAt('icon', merged, name);
       }
     },
-    show: _=>typeof jeGetValueAt('icon') == 'string' || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'string'
+    show: _=>{
+      const icon = jeGetValueAt('icon');
+      if(Array.isArray(icon)) {
+        const element = icon[jeGetKeyAfter('icon')];
+        return typeof element == 'string' || typeof element == 'object' && element !== null;
+      }
+      return typeof icon == 'string' || typeof icon == 'object' && icon !== null;
+    }
   },
   {
     id: 'je_iconToString',
@@ -542,6 +561,18 @@ const jeCommands = [
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
     call: async function() {
       const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_audioPicker',
+    name: 'pick a sound from the sound picker',
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
+    call: async function() {
+      const a = await pickAudio();
       if(a) {
         jeInsert(null, jeGetLastKey(), a);
         await jeApplyChanges();
@@ -1367,8 +1398,8 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
-  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
-  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
+  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result', collection: 'result' });
+  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6', count: 1 });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
@@ -1378,10 +1409,10 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
-  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "", player: null, block: false } );
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "", player: null, block: false, randomRotation: 5 } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, z: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null, byDistance: false });
   jeAddRoutineOperationCommands('RESET', { property: 'resetProperties' });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
@@ -1521,7 +1552,7 @@ function jeAddAlignmentCommands() {
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
-      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? viewportConfig.targetWidth : viewportConfig.targetHeight);
       jeStateNow[key] = '###SELECT ME###';
       jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
     }
@@ -1752,9 +1783,9 @@ function jeAddLimitCommand(key, value) {
       jeStateNow.dragLimit[key] = '###SELECT ME###';
       let limit = value;
       if (key == 'maxX')
-        limit = 1600 - w.get('width');
+        limit = viewportConfig.targetWidth - w.get('width');
       else if (key == 'maxY')
-        limit = 1000 - w.get('height');
+        limit = viewportConfig.targetHeight - w.get('height');
       jeSetAndSelect(limit);
     }
   });
@@ -3980,8 +4011,8 @@ function jeInitEventListeners() {
     if(!jeEnabled)
       return;
     const surfaceRect = $('#topSurface').getBoundingClientRect();
-    const scaleX = 1600 / surfaceRect.width;
-    const scaleY = 1000 / surfaceRect.height;
+    const scaleX = viewportConfig.targetWidth / surfaceRect.width;
+    const scaleY = viewportConfig.targetHeight / surfaceRect.height;
 
     jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
     jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);

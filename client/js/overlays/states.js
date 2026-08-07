@@ -561,6 +561,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' savedGame';
     if(state.usesAIImagery)
       entry.className += ' has-ai-badge';
+    if(Array.isArray(state.importerWarnings) && state.importerWarnings.length)
+      entry.className += ' hasImportNotes';
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
@@ -762,6 +764,19 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   loadGameFromURLproperties(states);
 }
 
+// everything an importer could not translate - one line per note so that a long
+// report scans instead of reading as one wall of text
+function fillImportNotes(warnings) {
+  warnings = Array.isArray(warnings) ? warnings : [];
+  $('#importNotesHeading').textContent = warnings.length ? `Import notes (${warnings.length})` : 'Import notes';
+  $('#importNotes').innerHTML = '';
+  for(const warning of warnings) {
+    const li = document.createElement('li');
+    li.textContent = warning;
+    $('#importNotes').appendChild(li);
+  }
+}
+
 function fillStateDetails(states, state, dom) {
   toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
   if(!detailsInSidebar)
@@ -774,6 +789,7 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
+  fillImportNotes(state.importerWarnings);
   const sn = typeof state.showName === 'undefined' ? true : state.showName;
   $('#showName').checked = sn === true || sn === 'only main';
   $('#showNameSimilar').checked = sn === true || sn === 'only similar';
@@ -1147,10 +1163,16 @@ function fillStateDetails(states, state, dom) {
   };
 }
 
+// Whether the game details are shown as a sidebar next to the shelf instead of as an overlay of
+// their own. What that sidebar looks like comes from `@container roomArea ((min-width: 1421px) and
+// (min-height: 888px))` in states.css, so this has to measure the same box with the same numbers:
+// measuring the window instead claims a sidebar the CSS never gives a `display` in the band where
+// the board is smaller than the window, and clicking a game there does nothing at all.
+// Called from setScale(), i.e. every time the board is laid out - including when a game brings its
+// own board size along, which changes the container without any window resize.
 function setSidebar() {
-  const vw = Math.max(document.documentElement.clientWidth  || 0, window.innerWidth  || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const bigEnough = vw >= 1421 && vh >= 888;
+  const board = $('#roomArea').getBoundingClientRect();
+  const bigEnough = board.width >= 1421 && board.height >= 888;
 
   if(detailsInSidebar != bigEnough) {
     detailsInSidebar = bigEnough;
@@ -1301,10 +1323,9 @@ onLoad(function() {
       alert('Please enter a link.');
   });
 
-  window.addEventListener('resize', function() {
-    setSidebar();
-    updateFilterOverflow();
-  });
+  // setSidebar() is not called here: a resize reaches this listener before setScale() has given the
+  // board its new size, so it would decide on the old one - setScale() calls it itself instead.
+  window.addEventListener('resize', updateFilterOverflow);
   document.addEventListener('dragover', function(e) {
     if($('#statesOverlay').style.display == 'flex' && e.dataTransfer.types.includes('Files')) {
       e.preventDefault();
