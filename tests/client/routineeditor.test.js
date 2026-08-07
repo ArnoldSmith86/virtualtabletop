@@ -1526,18 +1526,21 @@ describe('routine editor state handling', () => {
     let routine = [ { func: 'FLIP' } ];
     for(let level = 0; level < 12; level++)
       routine = [ { func: 'IF', operand1: 1, thenRoutine: routine } ];
-    const original = RoutineOperationEditor.prototype.render;
+    // counting on RoutineEditor rather than on the operation editors: it is the
+    // one class that renders a block, so no subclass can render without being
+    // counted here
+    const original = RoutineEditor.prototype.render;
     let renders = 0;
-    RoutineOperationEditor.prototype.render = function(...args) {
+    RoutineEditor.prototype.render = function(...args) {
       renders++;
       return original.apply(this, args);
     };
     try {
       new RoutineEditor({ state: {} }, routine);
     } finally {
-      RoutineOperationEditor.prototype.render = original;
+      RoutineEditor.prototype.render = original;
     }
-    expect(renders).toBe(13); // one per operation
+    expect(renders).toBe(13); // the routine itself plus one per nested block
   });
 
   test('ignores echoes of its own edits but applies remote changes', () => {
