@@ -31,6 +31,14 @@ const gzip = content => util.promisify(zlib.gzip)(content, { level: zlib.constan
 // (window, { $, widgets, Widget, ... }), where the key stays and only the value gets renamed) and
 // edit mode hands back its half as module exports. Globals that neither bundle declares - fflate,
 // loaded on demand from /scripts/fflate, being the interesting one - are left alone anyway.
+//
+// This only works because neither bundle contains a *direct* eval anymore (widget.js used to have
+// one and now uses the indirect form): a direct eval can read every name of every enclosing scope,
+// so terser refuses to rename anything up to and including the top level of the bundle it is in.
+// Terser's mangle.eval option lifts that refusal but is not a way around it - with the client JS
+// going through terser twice (here and again as the inline <script> of room.html) it produces a
+// bundle in which a renamed local shadows a renamed top level function that a closure next to it
+// calls, which fails at runtime as "x is not a function".
 function jsMinifyOptions() {
   return {
     module: true,  // implies toplevel mangling and dropping of unused top-level definitions

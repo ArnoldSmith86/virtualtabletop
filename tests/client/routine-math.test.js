@@ -4,7 +4,8 @@ import { createWidget, removeWidget } from './client-util.js';
 // strict mode: a leading zero is a legacy octal literal in sloppy mode, so "var result = 010 + 1"
 // would quietly come out as 9 instead of being reported as a problem - and the variables of the
 // routine are spliced into the expression verbatim, so a zero padded value ("007") ends up there
-// easily.
+// easily. The eval is the indirect form, which is sloppy mode by default, so widget.js prepends a
+// "use strict" directive to keep this - these tests pin that it stays there.
 describe("Scenarios: Math expressions in routines", () => {
   const testName = "routine-math";
   beforeAll(() => {

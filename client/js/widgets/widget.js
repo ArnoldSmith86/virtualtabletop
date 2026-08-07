@@ -1088,16 +1088,21 @@ export class Widget extends StateManaged {
             const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
             const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
             if(mathExpression) {
+              // Everything the regex above lets through is arithmetic already - its character
+              // class has no letters, quotes or brackets, so nothing can be named, called or
+              // constructed. Stripping the rest anyway puts that guarantee next to the eval
+              // instead of a dozen lines above it, where it also survives a widened regex.
+              const expression = mathExpression[5].replace(/[^() 0-9.&|!*/+-]/g, '');
               let result = null;
               try {
-                // the expression is digits and operators only (see the regex above), so this uses
-                // the indirect form which evaluates in global scope instead of in this function -
-                // a direct eval() would additionally stop the minifier from renaming anything here.
-                // Indirect eval is sloppy mode while this module is strict, so the directive keeps
-                // the strictness: without it "010" would quietly be octal 8 instead of a problem
-                result = +(0,eval)('"use strict";' + mathExpression[5]);
+                // the indirect form evaluates in global scope instead of in this function - a
+                // direct eval() would additionally stop the minifier from renaming anything here,
+                // because it could read every name around it. Indirect eval is sloppy mode while
+                // this module is strict, so the directive keeps the strictness: without it "010"
+                // would quietly be octal 8 instead of being reported as a problem
+                result = +(0,eval)('"use strict";' + expression);
               } catch(e) {
-                problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
+                problems.push(`The expression "${expression}" threw an exception: ${e}.`);
                 result = null;
               }
               const variable = mathExpression[1] !== undefined ? variables[unescape(mathExpression[2])] : unescape(mathExpression[2]);

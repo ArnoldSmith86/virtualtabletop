@@ -26,6 +26,10 @@ function windowAPINames() {
   return assign.split(',').map(name => name.trim()).filter(name => /^[\w$]+$/.test(name));
 }
 
+function topLevelFunctionNames(js) {
+  return [ ...new Set([ ...js.matchAll(/^(?:async\s+)?function\s+([\w$]+)/gm) ].map(match => match[1])) ];
+}
+
 // terser leaves `export function foo` alone and collects the rest into an `export{a as foo}` list,
 // so reading the names out of a bundle has to cover both forms and the renamed left half.
 function exportedNames(js) {
@@ -69,12 +73,12 @@ describe('minifyHTML with minifyJavascript disabled', () => {
 
 describe('minifyHTML with minifyJavascript enabled', () => {
   let build;
-  let exportedByEditMode;
+  let readableBuild;
 
   beforeAll(async () => {
-    // the readable build still has the export statements, so it is where the list of names that
-    // have to survive the minified one comes from
-    exportedByEditMode = exportedNames((await buildWith('false')).editorJSmin);
+    // the readable build still has the names and the export statements, so it is where the lists
+    // of what has to survive - or disappear from - the minified one come from
+    readableBuild = await buildWith('false');
     build = await buildWith('true');
   }, 60000);
 
@@ -86,6 +90,19 @@ describe('minifyHTML with minifyJavascript enabled', () => {
     expect(build.editorJSmin).not.toMatch(readableJS);
   });
 
+  // Renaming the top level is where most of the compression of this bundle comes from, and it
+  // silently stops happening as soon as anything in it uses a direct eval - terser then leaves
+  // every name that eval could see alone. A few names survive because they are also used as a
+  // property or in a string somewhere, hence the ratio instead of an empty list.
+  test('renames the top level of the client bundle', () => {
+    const minified = inlineClientJS(build);
+    const internal = topLevelFunctionNames(inlineClientJS(readableBuild))
+      .filter(name => !windowAPINames().includes(name));
+    expect(internal.length).toBeGreaterThan(100);  // the readable build was read, not an empty match
+    const survivors = internal.filter(name => new RegExp(`\\b${name}\\b`).test(minified));
+    expect(survivors.length).toBeLessThan(internal.length / 10);
+  });
+
   // Top level names get renamed, which is only safe as long as the names that cross the bundle
   // boundary survive: the keys main.js copies onto window for edit mode and the exports edit mode
   // hands back. Both are what terser considers external, so it keeps them - but a future option
@@ -94,11 +111,12 @@ describe('minifyHTML with minifyJavascript enabled', () => {
     const script = inlineClientJS(build);
     const names = windowAPINames();
     expect(names.length).toBeGreaterThan(50);  // the block was found, not an empty match
-    for(const name of names)
-      expect(script).toMatch(new RegExp(`[,{]${name.replace(/\$/g, '\\$')}:`));
+    const missing = names.filter(name => !script.includes(`,${name}:`) && !script.includes(`{${name}:`));
+    expect(missing).toEqual([]);
   });
 
   test('keeps the names edit mode hands back to the client bundle', () => {
+    const exportedByEditMode = exportedNames(readableBuild.editorJSmin);
     const stillExported = exportedNames(build.editorJSmin);
     expect(exportedByEditMode.length).toBeGreaterThan(10);
     for(const name of exportedByEditMode)
