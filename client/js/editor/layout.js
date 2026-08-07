@@ -45,6 +45,10 @@ function initializeEditor(currentMetaData) {
 
     new ToolbarDivider(),
 
+    new DeckEditorButton(),
+
+    new ToolbarDivider(),
+
     new TutorialsButton(),
     new WikiButton()
     
@@ -69,7 +73,6 @@ function initializeEditor(currentMetaData) {
     new UndoModule(),
     new JsonModule(),
     new WidgetsModule(),
-    new TreeModule(),
     new DebugModule(),
     new AssetsModule(),
     new ToolboxModule(),
@@ -98,6 +101,8 @@ export function openEditor() {
 
 function closeEditor() {
   setJEroutineLogging(jeRoutineLogging = false);
+
+  deckEditor.close();
 
   for(const module of sidebarModules)
     module.onEditorClose();
@@ -135,11 +140,12 @@ function editorModulesResizer() {
   let mouseReference;
   let resizerReference;
   let percentage = editorState.modulesWidth || 50;
-  $('#editorModules').style.setProperty('--modulesWidth', percentage + '%');
+  // On the root element (not #editorModules) so the deck editor can mirror the module panel's width.
+  document.documentElement.style.setProperty('--modulesWidth', percentage + '%');
 
   function resize(e) {
     percentage = (1 - e.x / window.innerWidth) * 100;
-    $('#editorModules').style.setProperty('--modulesWidth', percentage + '%');
+    document.documentElement.style.setProperty('--modulesWidth', percentage + '%');
     setScale();
   }
 
@@ -169,6 +175,12 @@ function hint(html) {
 }
 
 export function getAvailableRoomRectangle() {
+  // The deck editor's "Card view" toggle turns its card stage into a window onto the room, so while it is off
+  // the room is fitted into exactly that window instead of into the whole (mostly covered) play area.
+  if(deckEditor.isOpen() && deckEditor.roomVisible) {
+    const stage = $('#deckEditorMain').getBoundingClientRect();
+    return { top: stage.top, right: stage.right, left: stage.left, bottom: stage.bottom };
+  }
   return {
     top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? $('#editorToolbar').getBoundingClientRect().bottom : window.innerHeight/2,
     right: (window.innerWidth/window.innerHeight > 1 && ($('#editor.moduleActive') || $('body.draggingEditorSidebarModule')) ? $('#editorModules') : $('#editorSidebar')).offsetLeft,
@@ -182,6 +194,12 @@ export function scaleHasChanged(scale) {
   if(selectedWidgets.length && selectionModeActive)
     updateDragToolbar();
 
+  // The deck editor spans the play area, so module panel open/close and the modules resizer change its size.
+  if(deckEditor.isOpen()) {
+    deckEditor.renderMain();
+    deckEditor.updateDragToolbar();
+  }
+
   if(!fullToolbarWidth)
     fullToolbarWidth = $('#editorToolbar > :last-child').getBoundingClientRect().right + 1;
   $('body').classList.toggle('compactEditorToolbar', window.innerWidth < fullToolbarWidth);
@@ -189,7 +207,7 @@ export function scaleHasChanged(scale) {
 }
 
 window.addEventListener('keydown', function(e) {
-  if(!getEdit())
+  if(!getEdit() || deckEditor.isOpen())
     return;
 
   if([ 'TEXTAREA', 'INPUT' ].indexOf(e.target.tagName) != -1 || e.target.isContentEditable)

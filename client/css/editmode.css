@@ -74,6 +74,127 @@
   cursor: pointer;
 }
 
+#browseLibraryDecks::before{
+  content:'[style]';
+}
+
+#libraryDecksOverlay {
+  width: var(--roomWidth);
+  height: var(--roomHeight);
+  transform: scale(var(--scale));
+  transform-origin: left top;
+  padding: 20px 40px;
+  gap: 10px;
+}
+
+#libraryDecksClose {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
+#libraryDecksHeader {
+  text-align: center;
+}
+
+#libraryDecksHeader h1, #libraryDecksHeader p {
+  margin: 0;
+}
+
+#libraryDecksControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+#libraryDecksFilter {
+  width: 50%;
+  max-width: 400px;
+  padding: 5px 10px;
+}
+
+#libraryDecksSort {
+  padding: 5px;
+}
+
+.libraryDeckGameStat {
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--VTTblue);
+  margin-left: 10px;
+}
+
+.libraryDecksBrowseButton {
+  margin: 8px 0;
+}
+
+#libraryDecksList {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.libraryDeckGame {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.libraryDeckGame > h2 {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  color: black;
+}
+
+.libraryDeckEntry {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.libraryDeckEntry:hover {
+  background: var(--roomColor);
+}
+
+.libraryDeckPreview {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.libraryDeckPreviewCards {
+  position: relative;
+}
+
+.libraryDeckPreviewScale {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: left top;
+}
+
+.libraryDeckPreviewCards .widget {
+  pointer-events: none;
+}
+
+.libraryDeckCaption {
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
 #editJSONoverlay {
   padding: 10px;
 }
@@ -86,7 +207,7 @@
   height: 100%;
 }
 
-@media only screen and (max-width: 500px) {
+@container roomArea (max-width: 500px) {
   #editJSONoverlay textarea {
     min-height: 100%;
   }

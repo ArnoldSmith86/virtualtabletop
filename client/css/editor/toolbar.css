@@ -51,6 +51,11 @@
   display: block;
 }
 
+/* A hover tooltip must never intercept a click meant for whatever is underneath it. */
+#editorToolbar button span, #editorDragToolbar button span {
+  pointer-events: none;
+}
+
 #editorToolbar .divider, #editorDragToolbar .divider {
   border-left: 1px solid #fff8;
   margin: 5px;

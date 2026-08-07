@@ -5,6 +5,8 @@ class JsonModule extends SidebarModule {
 
   onClose() {
     jeToggle();
+    jeToggleTreeDropdown(true);
+    $('#jsonEditor').append($('#jeWidgetSwitcher'));
     $('#jsonEditor').append($('#jeTextHighlight'));
     $('#jsonEditor').append($('#jeText'));
     $('#jsonEditor').append($('#jeCommands'));
@@ -13,6 +15,9 @@ class JsonModule extends SidebarModule {
 
   onDeltaReceivedWhileActive(delta) {
     jeApplyDelta(delta);
+    if(jeTreeIsVisible())
+      jeUpdateTree(delta.s);
+    jeUpdateWidgetSwitcher();
   }
 
   onEditorClose() {
@@ -31,65 +36,50 @@ class JsonModule extends SidebarModule {
     if(jeDeltaIsOurs)
       return;
 
-    if(newSelection.length == 1) {
+    // Just opened while the deck editor covers the play area: show the deck being edited rather than whatever
+    // the (invisible) room selection behind it happens to be - that deck is what is on screen.
+    if(this.showDeckEditorDeck) {
+      delete this.showDeckEditorDeck;
+      jeSelectWidget(deckEditor.deck());
+    } else if(newSelection.length == 1) {
       jeSelectWidget(newSelection[0]);
     } else if(newSelection.length) {
       jeSelectSetMulti(newSelection);
+    } else if(deckEditor.isOpen() && deckEditor.deck()) {
+      jeSelectWidget(deckEditor.deck());
     } else {
       jeEmpty();
-    }
-    $('#jeText').blur();
-  }
-
-  renderModule(target) {
-    jeToggle();
-    target.append($('#jeTextHighlight'));
-    target.append($('#jeText'));
-    target.append($('#jeCommands'));
-    target.append($('#jeWidgetLayers'));
-    $('#jsonEditor').style.display = 'none';
-  }
-}
-
-class TreeModule extends SidebarModule {
-  constructor() {
-    super('account_tree', 'Tree', 'View and select your widgets in a tree based on their parents.');
-  }
-
-  onClose() {
-    $('#jsonEditor').append($('#jeTree'));
-  }
-
-  onDeltaReceivedWhileActive(delta) {
-    jeUpdateTree(delta.s);
-  }
-
-  onSelectionChangedWhileActive(newSelection) {
-    if(jeDeltaIsOurs) {
-      jeCenterSelection();
-      return;
-    }
-
-    if(newSelection.length == 1) {
-      jeSelectWidget(newSelection[0]);
-    } else if(newSelection.length) {
-      jeSelectSetMulti(newSelection);
-    } else {
-      jeEmpty();
-      jeCenterSelection();
     }
     $('#jeText').blur();
   }
 
   onStateReceivedWhileActive() {
-    jeDisplayTree();
+    if(jeTreeIsVisible())
+      jeDisplayTree();
+    jeUpdateWidgetSwitcher();
   }
 
   renderModule(target) {
-    target.append($('#jeTree'));
-    jeInitTree();
-    jeDisplayTree();
+    // openInTarget() fires onSelectionChanged() right after this, which is where the deck is picked up.
+    this.showDeckEditorDeck = deckEditor.isOpen() && !!deckEditor.deck();
+    jeToggle();
+    target.append($('#jeWidgetSwitcher'));
+    target.append($('#jeTextHighlight'));
+    target.append($('#jeText'));
+    target.append($('#jeCommands'));
+    target.append($('#jeWidgetLayers'));
+    $('#jsonEditor').style.display = 'none';
+    jeUpdateWidgetSwitcher();
+    if(jeTreeIsPinned())
+      jeToggleTreeDropdown();
   }
+}
+
+// Called by the deck editor when it closes: the deck that was being edited is what the user was looking at,
+// so leave the JSON editor on it instead of on a stale room selection made before the editor was opened.
+function jeSelectDeckEditorDeck(deck) {
+  if(jeEnabled && deck && widgets.has(deck.get('id')))
+    jeSelectWidget(deck);
 }
 
 class DebugModule extends SidebarModule {
@@ -99,7 +89,7 @@ class DebugModule extends SidebarModule {
   }
 
   button_clearButton() {
-    jeLoggingHTML = '';
+    jeLoggingClear();
     $('#jeLog').innerHTML = '';
   }
 
@@ -108,7 +98,7 @@ class DebugModule extends SidebarModule {
 
     $('#clearLogButton').disabled = $('#autoClearLog').checked;
     if($('#clearLogButton').disabled)
-      jeLoggingHTML = '';
+      jeLoggingClear();
   }
 
   button_filter() {
