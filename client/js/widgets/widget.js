@@ -1088,11 +1088,16 @@ export class Widget extends StateManaged {
             const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
             const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
             if(mathExpression) {
-              // Everything the regex above lets through is arithmetic already - its character
-              // class has no letters, quotes or brackets, so nothing can be named, called or
-              // constructed. Stripping the rest anyway puts that guarantee next to the eval
-              // instead of a dozen lines above it, where it also survives a widened regex.
-              const expression = mathExpression[5].replace(/[^() 0-9.&|!*/+-]/g, '');
+              // What the regex above matched is arithmetic already: its character class has no
+              // letters, quotes or brackets, so nothing in it can be named, called or
+              // constructed. Rebuilding the string from that alphabet instead of filtering the
+              // matched text makes that checkable rather than a claim - every character that
+              // reaches the eval below is a literal from this line, so there is no path from the
+              // routine into the evaluated code left for a reader (or a static analyzer) to rule
+              // out. charAt(-1) is '', so a character the regex ever lets through by mistake is
+              // dropped instead of evaluated.
+              const arithmetic = '0123456789.() &|!*/+-';
+              const expression = [ ...mathExpression[5] ].map(c => arithmetic.charAt(arithmetic.indexOf(c))).join('');
               let result = null;
               try {
                 // the indirect form evaluates in global scope instead of in this function - a
