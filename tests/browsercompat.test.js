@@ -137,6 +137,22 @@ describe('the JavaScript scanner', () => {
     expect(blanked).not.toMatch('hasOwn');
   });
 
+  test('finds the end of a regular expression literal', () => {
+    // a slash inside a character class does not end the literal, and a slash that divides does
+    // not start one
+    expect(blankNonCode('const r = /Object.hasOwn[/]/g; Object.hasOwn(a, b);')).toMatch('; Object.hasOwn(a, b);');
+    expect(blankNonCode('const r = /Object.hasOwn[/]/g;')).not.toMatch('hasOwn');
+    expect(blankNonCode('const half = size / 2; Object.hasOwn(a, b);')).toMatch('Object.hasOwn(a, b)');
+  });
+
+  // What the ReDoS alert on this was about: a pattern that matches regular expressions needs an
+  // alternation inside a repetition, and this is the input that makes one take forever. The
+  // scanner is linear, so the test failing by timeout is the assertion that matters.
+  test('does not backtrack over something that only looks like the start of one', () => {
+    const nonsense = `/[${'\\\\'.repeat(2000)}`;
+    expect(blankNonCode(nonsense)).toHaveLength(nonsense.length);
+  });
+
   test('names globals, members of globals and static members of the built ins', () => {
     const found = scanJS('new ResizeObserver(f); document.fullscreenElement; Object.hasOwn(a, b);', { globalPath: lookup.globalPath });
     expect(features(found)).toEqual(expect.arrayContaining([
