@@ -902,7 +902,16 @@ export class Widget extends StateManaged {
     // where the widget is, put through the rectangle as well: it is a hard
     // bound, so a widget sitting outside it (a routine moved it, a side moved
     // under it) must not be able to stay there through the fallbacks below
-    const current = clamped({ x: (+this.get('x') || 0) + offset.x, y: (+this.get('y') || 0) + offset.y });
+    // Read off x and y - except for the one move where they cannot be: taking a
+    // widget out of a holder does not convert them out of the holder's
+    // coordinates, so between moveStart() and the first position a drag writes
+    // they are the holder's numbers read as the room's. dragLimitStartCoord is
+    // where the widget was, in the room, taken while its parent still said what
+    // x and y meant (see moveStart), and it stands in for exactly that move.
+    const at = this.dragLimitStartCoord
+      ? this.coordParentFromCoordGlobal(this.dragLimitStartCoord)
+      : { x: +this.get('x') || 0, y: +this.get('y') || 0 };
+    const current = clamped({ x: at.x + offset.x, y: at.y + offset.y });
     const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
     // A widget that is not inside its area is let go - but a widget sitting
     // exactly on the edge of a strict inequality ("x < 200" at x == 200, put
@@ -2756,6 +2765,14 @@ export class Widget extends StateManaged {
     await this.set('dragging', playerName);
     delete this.lastMoveCoord;
 
+    // Where the widget is, in the coordinates of the room, taken while its
+    // parent is still the one x and y are measured against. Dropping that
+    // parent below does not convert them, so from here until the first position
+    // move() writes they are a holder's numbers read as the room's - and a
+    // dragLimit walks the drag from where the widget is, so it would walk it
+    // from the wrong end of the board once. Cleared again by that first move.
+    this.dragLimitStartCoord = this.coordGlobalFromCoordParent({ x: +this.get('x') || 0, y: +this.get('y') || 0 });
+
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
     // dragged in play: a stop is usually placed in edit mode.
@@ -2785,6 +2802,9 @@ export class Widget extends StateManaged {
     this.lastMoveCoord = coordGlobal;
 
     await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
+    // x and y are the drag's own numbers now, in whatever the widget is
+    // parented to, so they say where it is again
+    delete this.dragLimitStartCoord;
     await this.snapToGrid();
 
     if(!this.get('fixedParent') && this.get('movable')) {
@@ -2960,6 +2980,9 @@ export class Widget extends StateManaged {
     if(releasedElsewhere)
       await this.move(coordGlobal, localAnchor);
     delete this.lastMoveCoord;
+    // a click is a moveStart and a moveEnd with no move in between, so what it
+    // took for that first move has to go whether one happened or not
+    delete this.dragLimitStartCoord;
 
     await this.hideShadowWidget();
     await this.set('dragging', null);

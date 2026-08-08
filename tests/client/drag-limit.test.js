@@ -316,6 +316,43 @@ describe('a drag across a hole in the area', () => {
   });
 });
 
+// Taking a widget out of a holder does not convert x and y out of the holder's
+// coordinates, so between moveStart() and the first position a drag writes they
+// are the holder's numbers read as the room's - for a score marker sitting in a
+// track holder at the bottom right of the board, "2, 2". A drag is walked from
+// where the widget is, so that one move used to be walked from the corner of
+// the room and put the marker on the far side of the track. moveStart() takes
+// down where the widget really is while its parent still says what x and y
+// mean, and this is what dragLimitedCoord does with it.
+describe('a drag that starts inside a holder', () => {
+  // the shape of the Shell Game's score track: a ring around the board, holding
+  // the middle of the marker, with a holder of the track at 700, 300
+  const track = { minX: 0, maxX: 800, minY: 0, maxY: 600, alignX: 0.5, alignY: 0.5,
+                  condition: 'x < 200 || x > 600 || y < 200 || y > 400' };
+
+  test('is walked from where the widget is, not from the holder\'s numbers', () => {
+    const w = widgetAt(5, 5, track);
+    w.dragLimitStartCoord = { x: 705, y: 305 };
+    // a step to the right stays on the arm of the ring the widget is on
+    expect(w.dragLimitedCoord({ x: 745, y: 305 })).toMatchObject({ x: 745, y: 305 });
+    // and the arm on the far side of the hole is still not reachable in one
+    // move, however plainly the pointer asks for it
+    expect(w.dragLimitedCoord({ x: 100, y: 305 }).x).toBeGreaterThan(400);
+  });
+
+  test('reads x and y again as soon as the drag has written them', () => {
+    const w = widgetAt(705, 305, track);
+    expect(w.dragLimitedCoord({ x: 745, y: 305 })).toMatchObject({ x: 745, y: 305 });
+  });
+
+  test('would otherwise be walked from wherever the holder puts the widget', () => {
+    // the bug this guards against: "5, 5" reads as the top left corner of the
+    // board, which is inside the ring as well, so the walk starts over there
+    const w = widgetAt(5, 5, track);
+    expect(w.dragLimitedCoord({ x: 745, y: 305 }).x).toBeLessThan(600);
+  });
+});
+
 // what the editor's "Show on board" preview asks of every point it samples -
 // not where a refused drag ends up, only whether the point is in the area
 describe('dragLimitAllows', () => {

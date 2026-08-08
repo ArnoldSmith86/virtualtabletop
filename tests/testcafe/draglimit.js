@@ -81,6 +81,33 @@ test('A dragLimit side that reads the position is evaluated where that position 
   await t.expect(dropped.x).lte(dropped.y);
 });
 
+test('A drag out of a parent starts where the widget is, not where its coordinates read', async t => {
+  await t.resizeWindow(1280, 800);
+  // Taking a widget out of its parent leaves x and y in that parent's
+  // coordinates until the drag writes the first position, so for one move they
+  // read as the room's - "5, 5" for a piece sitting in a holder at 700, 300.
+  // A drag is walked from where the widget is, so that move used to be walked
+  // from the top left corner of this ring and put the piece over there.
+  const version = (await getMeta()).version;
+  await setRoomState({
+    _meta: { version },
+    frame: { id: 'frame', type: 'basic', x: 700, y: 300, width: 60, height: 60, movable: false, clickable: false, layer: -3 },
+    piece: { id: 'piece', type: 'basic', x: 5, y: 5, width: 50, height: 50, parent: 'frame', dragLimit: {
+      minX: 0, maxX: 800, minY: 0, maxY: 600, alignX: 0.5, alignY: 0.5,
+      condition: 'x < 200 || x > 600 || y < 200 || y > 400'
+    } }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  const before = await waitForStableState();
+  await t.drag('#w_piece', 40, 0);
+  const dropped = await position(before);
+  // still on the arm of the ring it was dragged on, and moved with the pointer
+  await t.expect(dropped.x).gt(700);
+  await t.expect(dropped.y).gt(280);
+  await t.expect(dropped.y).lt(380);
+});
+
 test('A dragLimit side written as an expression is evaluated while dragging', async t => {
   await t.resizeWindow(1280, 800);
   const before = await roomWith(t, { maxX: '${PROPERTY width OF piece} * 4' });
