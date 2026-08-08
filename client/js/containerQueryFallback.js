@@ -186,6 +186,7 @@ const readStyles = new WeakSet();
 const observedContainers = new WeakSet();
 let containerObserver = null;
 let updateScheduled = false;
+let announced = false;
 
 function readNewStyleElements() {
   // Only <head>: both sheets that have @container rules are there (room.html's inlined one and
@@ -265,6 +266,13 @@ export function needsContainerQueryFallback() {
 export function updateContainerQueryFallback() {
   if(!needsContainerQueryFallback())
     return;
+
+  if(!announced) {
+    announced = true;
+    // the fallback only implements the features the stylesheets query today, so a query written
+    // with something else silently evaluates to false - worth one line in a bug report's console
+    console.warn('This browser has no CSS container queries. Laying the overlays out from containerQueryFallback.js instead.');
+  }
 
   readNewStyleElements();
 
