@@ -67,6 +67,7 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
 // returns how the URL was passed on so callers can tell the user what happened
 export async function shareURL(url) {
   try {
+    // compat-fallback api.Navigator.share: a browser without it throws here and the URL goes to the clipboard instead
     await navigator.share({ url });
   } catch(e) {
     try {

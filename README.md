@@ -115,7 +115,17 @@ If you want to contribute to virtualtabletop.io development, please read [Helpin
 
 ### Browser support
 
-There is no build step: the JavaScript and CSS that are written here are the ones the browser gets, so the features used in the source are the support line. That line is written down as the `browserslist` key in `package.json` — currently **Chrome/Edge 87, Firefox 79, Safari 14.1 (iOS 14.5), Samsung Internet 14**, roughly spring 2021. Nothing reads it automatically today; it is there so the question "may I use this?" has an answer, and so that any tooling added later inherits it. Newer features are fine as long as they are guarded (`@supports`, a capability check, or a fallback) — see `client/js/containerQueryFallback.js` for how CSS container queries are handled.
+There is no build step: the JavaScript and CSS that are written here are the ones the browser gets, so the features used in the source are the support line. That line is written down as the `browserslist` key in `package.json` — currently **Chrome/Edge 88, Firefox 79, Safari 14.1 (iOS 14.5), Samsung Internet 15**, roughly spring 2021.
+
+`npm run browsercompat` checks the client against it, and the *Browser compatibility* workflow runs the same check on every pull request. It reads the browser support data from [@mdn/browser-compat-data](https://github.com/mdn/browser-compat-data) and reports every at-rule, selector, property, value, global, built-in and syntax construct that is newer than the oldest browser in the key.
+
+Newer features are still fine where they degrade or where something stands in for them. Declaring a property twice (`overflow: hidden; overflow: clip`) or next to its vendor prefixed spelling, and asking with `@supports`, are recognised as such by themselves. Anything else says so where it is used:
+
+```css
+/* compat-fallback css.at-rules.container: containerQueryFallback.js applies these blocks by hand where they are dropped */
+```
+
+`compat-fallback-file` instead of `compat-fallback` covers a whole file, and `tools/browsercompat/exceptions.mjs` lists the features that need no fallback anywhere. All three have to keep excusing something: once the last use of the feature is gone, the check asks for the marker to go too.
 
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
 
