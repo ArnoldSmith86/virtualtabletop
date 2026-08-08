@@ -48,12 +48,22 @@ const signatures = [
   // an mp3 either carries an ID3 tag or starts straight on a frame header: eleven set sync bits
   { type: 'audio/mpeg',    test: c=>matches(c, 0, 'ID3') || (c[0] === 0xff && (c[1] & 0xe0) === 0xe0) },
   // SVGs are the only text format in here, and they are stored with or without an xml prolog
-  { type: 'image/svg+xml', test: c=>matches(c, 0, '<') }
+  { type: 'image/svg+xml', test: isSVG }
 ];
 
+// Assets are served from the site's own origin and anyone can PUT one, so what we call an SVG
+// gets to run script there - "it starts with a <" is not enough to earn that. It has to open
+// like an SVG (a prolog, a doctype or the tag itself, with an optional byte order mark before
+// it) and the tag has to actually turn up. Every one of the 1800 markup assets in the library
+// does both; anything else keeps the no Content-Type answer the caller gives unknown bytes.
+function isSVG(content) {
+  const start = content.toString('utf8', 0, 1024).replace(/^\uFEFF/, '');
+  return /^\s*(<svg[\s/>]|<\?xml[\s?]|<!doctype\s+svg)/i.test(start) && /<svg[\s/>]/i.test(start);
+}
+
 // Returns the Content-Type for an asset buffer, or null when the bytes say nothing recognisable.
-// The caller decides what to do with that - server.mjs logs it and sends no type, which leaves
-// the browser's own sniffing in place instead of turning the asset into a download.
+// The caller decides what to do with that - server.mjs logs it and sets no type, which leaves
+// express to send it as application/octet-stream: no rendering, but no guessing either.
 function contentType(content) {
   if(!content || content.length < 4)
     return null;

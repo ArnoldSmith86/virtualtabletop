@@ -9,7 +9,7 @@
 import { appendFileSync } from 'fs';
 
 import exceptions from './exceptions.mjs';
-import { checkFiles, clientFiles, describeMissing, describeTarget } from './index.mjs';
+import { bundledFiles, checkFiles, clientFiles, describeMissing, describeTarget } from './index.mjs';
 import { createLookup, loadCompatData, resolveTargets } from './support.mjs';
 
 const files = process.argv.slice(2).filter(argument => !argument.startsWith('-'));
@@ -22,7 +22,7 @@ if(!targets.length) {
 
 const lookup = createLookup(loadCompatData(), targets);
 const { findings, stale, files: checked } = checkFiles({
-  files: files.length ? files : clientFiles(),
+  files: files.length ? files : [ ...clientFiles(), ...bundledFiles() ],
   lookup,
   exceptions,
   partial: files.length > 0
@@ -40,6 +40,8 @@ for(const finding of unsupported) {
   console.log(`${finding.file}:${finding.line}`);
   console.log(`  ${finding.source}`);
   console.log(`  ${finding.feature} is missing from ${describeMissing(finding.missing)}`);
+  if(finding.overriddenBy)
+    console.log(`  "${finding.overriddenBy.source}" on line ${finding.overriddenBy.line} comes after it and works everywhere, so every browser uses that one - put the fallback first`);
   if(finding.mdn)
     console.log(`  ${finding.mdn}`);
   if(process.env.GITHUB_ACTIONS)
