@@ -449,6 +449,43 @@ function conditionOutlinePath(box, step, inside) {
   return paths.join(' ');
 }
 
+// How many lattice points the dots of a grid are drawn one by one for. A
+// condition is read at every one of them on every keystroke that changes it,
+// and a lattice this fine draws its points closer together than a dot is wide
+// anyway, so past this the plain repeating background stays.
+const gridConditionDotLimit = 4000;
+
+// The lattice points inside the box that `applies` holds at, i.e. the positions
+// a grid limited by a condition can actually put a widget on. The lattice is
+// offsetX/offsetY plus whole steps; what lands on it is the point alignX/alignY
+// picks out of the widget, so `applies` is asked about the corner an align
+// away from each point - the coordinates a condition is written in.
+// null rather than a list when the lattice has more points than `limit`, so the
+// caller can leave the drawing to the background layer.
+function gridDotPositions(entry, box, align, limit, applies) {
+  const stepX = +entry.x, stepY = +entry.y;
+  if(!(stepX > 0) || !(stepY > 0) || !(box.width > 0) || !(box.height > 0))
+    return null;
+  const columns = Math.floor(box.width / stepX), rows = Math.floor(box.height / stepY);
+  if((columns + 1) * (rows + 1) > limit)
+    return null;
+
+  // the first lattice point at or after the box begins
+  const firstOf = (offset, start, step)=>start + (((offset - start) % step) + step) % step;
+  const firstX = firstOf(+entry.offsetX || 0, box.left, stepX);
+  const firstY = firstOf(+entry.offsetY || 0, box.top, stepY);
+
+  const dots = [];
+  for(let column = 0; column <= columns; ++column)
+    for(let row = 0; row <= rows; ++row) {
+      const x = firstX + column * stepX, y = firstY + row * stepY;
+      if(x <= box.left + box.width && y <= box.top + box.height
+          && applies({ x: x - align.x, y: y - align.y }))
+        dots.push({ x: Math.round(x * 100) / 100, y: Math.round(y * 100) / 100 });
+    }
+  return dots;
+}
+
 // A grid of the widget's own DOM box, i.e. widgets end up edge to edge.
 function squareGridForSize(width, height) {
   return [ { x: width, y: height } ];
@@ -5438,13 +5475,30 @@ class PropertiesModule extends SidebarModule {
       const lineX = (+entry.offsetX || 0) - left, lineY = (+entry.offsetY || 0) - top;
       overlay.style.backgroundPosition =
         `${lineX - stepX / 2}px ${lineY - stepY / 2}px, ${lineX}px ${lineY}px, ${lineX}px ${lineY}px`;
-      this.drawGridConditionOutline(widget, entry, overlay, {
+      const box = {
         left,
         top,
         width: Math.max(0, (maxX !== null ? maxX : container.offsetWidth) - left),
         height: Math.max(0, (maxY !== null ? maxY : container.offsetHeight) - top)
-      });
+      };
+      this.drawGridConditionOutline(widget, entry, overlay, box);
+      // the dots the background draws are the whole lattice, the ones drawn
+      // here are only the positions that are left of it
+      if(this.drawGridConditionDots(widget, entry, overlay, box))
+        overlay.classList.add('ownDots');
     });
+  }
+
+  // An SVG the size of the box and in the coordinates the box is measured in,
+  // so a path in it is written down as the positions it describes.
+  conditionOverlaySVG(overlay, box, className) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', className);
+    svg.setAttribute('viewBox', `${box.left} ${box.top} ${box.width} ${box.height}`);
+    svg.style.width = `${box.width}px`;
+    svg.style.height = `${box.height}px`;
+    overlay.appendChild(svg);
+    return svg;
   }
 
   // The rectangle a grid is limited to is outlined by the overlay's own dashed
@@ -5462,17 +5516,47 @@ class PropertiesModule extends SidebarModule {
     if(!path)
       return;
 
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'gridConditionOutline');
-    // the box the outline was traced in, in the coordinates it was traced in,
-    // so the path can be written down as the positions it describes
-    svg.setAttribute('viewBox', `${box.left} ${box.top} ${box.width} ${box.height}`);
-    svg.style.width = `${box.width}px`;
-    svg.style.height = `${box.height}px`;
     const outline = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     outline.setAttribute('d', path);
-    svg.appendChild(outline);
-    overlay.appendChild(svg);
+    this.conditionOverlaySVG(overlay, box, 'gridConditionOutline').appendChild(outline);
+  }
+
+  // The dots of a grid limited by a condition. The background layer repeats one
+  // across the whole rectangle, which is every point the widget could land on
+  // before a condition - with one, the points on the far side of its boundary
+  // are no positions at all, and marking them says the widget snaps where it
+  // does not. So they are drawn one by one instead, asking the widget the same
+  // question snapToGrid asks of a lattice point it weighs up.
+  // Each dot is a zero-length subpath with a round cap rather than a circle,
+  // which keeps every dot of one grid in a single path.
+  // Returns whether it drew them: a lattice fine enough to have more points
+  // than a condition can be read at while it is being typed keeps the
+  // background layer, where the dots are barely apart anyway.
+  drawGridConditionDots(widget, entry, overlay, box) {
+    if(!conditionsOf(entry).length)
+      return false;
+    const align = {
+      x: (+entry.alignX || 0) * (+widget.get('width') || 0),
+      y: (+entry.alignY || 0) * (+widget.get('height') || 0)
+    };
+    const dots = gridDotPositions(entry, box, align, gridConditionDotLimit,
+      coord=>widget.gridAppliesAt(entry, coord));
+    if(!dots)
+      return false;
+    if(!dots.length)
+      return true;
+
+    const svg = this.conditionOverlaySVG(overlay, box, 'gridConditionDots');
+    // the halo first, so every dot's white ring sits behind every core rather
+    // than behind its own only - two dots less than a ring apart would cut
+    // pieces out of each other
+    for(const className of [ 'dotHalo', 'dotCore' ]) {
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('class', className);
+      path.setAttribute('d', dots.map(dot=>`M ${dot.x} ${dot.y} l 0 0`).join(' '));
+      svg.appendChild(path);
+    }
+    return true;
   }
 
   // --- drag limits ---

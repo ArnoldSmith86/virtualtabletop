@@ -55,7 +55,7 @@
     "clickable": false,
     "layer": -1,
     "z": 10,
-    "html": "A grid can be limited to a rectangle with <b>minX</b>, <b>maxX</b>, <b>minY</b> and <b>maxY</b> - the <i>Area Limit</i> variant of this tutorial. A <b>condition</b> limits it to any area that can be written down as maths: one inequality in <b>x</b> and <b>y</b>, the position the widget is dropped at, or a list of them. Outside the area the grid is not tried at all, so the widget snaps to whichever other grid covers the position, and to nothing where none does. Inside it the widget lands on the nearest lattice point that is inside the area as well, never on the one just past its edge. In edit mode the <b>Conditions</b> field sits under <b>Position &rarr; Snap grid &rarr; More options</b>, and the area is outlined on the board with a dashed line."
+    "html": "A grid can be limited to a rectangle with <b>minX</b>, <b>maxX</b>, <b>minY</b> and <b>maxY</b> - the <i>Area Limit</i> variant of this tutorial. A <b>condition</b> limits it to any area that can be written down as maths: one inequality in <b>x</b> and <b>y</b>, the position the widget is dropped at, or a list of them. Outside the area the grid is not tried at all, so the widget snaps to whichever other grid covers the position, and to nothing where none does. Inside it the widget lands on the nearest lattice point that is inside the area as well, never on the one just past its edge. In edit mode the <b>Conditions</b> field sits under <b>Position &rarr; Snap grid &rarr; More options</b>, and the area is outlined on the board, with a snap point marked only inside it."
   },
 
   "areaA": {

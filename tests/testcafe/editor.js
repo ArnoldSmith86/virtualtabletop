@@ -371,6 +371,13 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
   // that is not one. The Conditions field sits right under the X/Y rows and
   // stores what the engine reads - one condition as a string, several as a list
   const conditionOutline = Selector('.gridConditionOutline');
+  // every dot of one grid is one zero-length subpath of one path, so the marked
+  // positions can be read back out of it and held against the conditions
+  const conditionDots = ClientFunction(() => {
+    const path = document.querySelector('.gridConditionDots .dotCore');
+    const dots = path ? path.getAttribute('d').split('M ').slice(1).map(dot => dot.split(' ').map(Number)) : [];
+    return { count: dots.length, outside: dots.filter(([ x, y ]) => !(y > x && x > 200)).length };
+  });
   await t
     .click(gridBody.find('.gridEntry [icon=delete]').nth(1))
     .click(gridBody.find('.gridEntry [icon=delete]').nth(0))
@@ -386,6 +393,10 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     // the boundary of that area is traced onto the board in the same dashed
     // line the rectangle is outlined with
     .expect(conditionOutline.exists).ok()
+    // and the dots are drawn one by one, so only the lattice points the widget
+    // can be put on are marked rather than the whole rectangle
+    .expect(Selector('.gridPreviewOverlay.ownDots').exists).ok()
+    .expect(conditionDots()).eql({ count: 28, outside: 0 })
     // a line that is not a comparison is a number, and a number is true
     // wherever it is not 0 - so it is reported rather than left behind
     .typeText(gridBody.find('.gridLimits textarea'), 'x - 100', { replace: true })

@@ -106,6 +106,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'ex
     gridEntryList,
     conditionsOf,
     conditionOutlinePath,
+    gridDotPositions,
+    gridConditionDotLimit,
     gridExtraProperties,
     gridExtraValue,
     gridExtraText,
@@ -619,6 +621,52 @@ describe('the outline of a condition', () => {
       expect(x).toBeCloseTo(1250, 0);
       expect(y).toBeGreaterThanOrEqual(500);
     }
+  });
+});
+
+// the dots of a grid a condition limits are drawn one by one, so that only the
+// positions the widget can be put on are marked
+describe('the dots of a limited grid', () => {
+  const box = { left: 0, top: 0, width: 400, height: 400 };
+  const noAlign = { x: 0, y: 0 };
+  const positions = (entry, applies, area = box, align = noAlign) =>
+    cssHelpers.gridDotPositions(entry, area, align, cssHelpers.gridConditionDotLimit, applies);
+
+  test('marks the lattice points the grid applies at and no others', () => {
+    const dots = positions({ x: 100, y: 100 }, coord=>coord.x < 250);
+    expect(dots).toEqual([
+      { x: 0, y: 0 }, { x: 0, y: 100 }, { x: 0, y: 200 }, { x: 0, y: 300 }, { x: 0, y: 400 },
+      { x: 100, y: 0 }, { x: 100, y: 100 }, { x: 100, y: 200 }, { x: 100, y: 300 }, { x: 100, y: 400 },
+      { x: 200, y: 0 }, { x: 200, y: 100 }, { x: 200, y: 200 }, { x: 200, y: 300 }, { x: 200, y: 400 }
+    ]);
+  });
+
+  test('stays on the lattice the widget lands on, offset and all', () => {
+    // a step of 150 from an offset of 20, and nothing past the box - which is
+    // the rectangle the grid is limited to
+    expect(positions({ x: 150, y: 500, offsetX: 20 }, _=>true).map(dot=>dot.x)).toEqual([ 20, 170, 320 ]);
+    // an offset outside the box is still the same lattice inside it
+    expect(positions({ x: 150, y: 500, offsetX: -280 }, _=>true).map(dot=>dot.x)).toEqual([ 20, 170, 320 ]);
+  });
+
+  test('asks about the corner rather than the point that lands on the lattice', () => {
+    const asked = [];
+    positions({ x: 200, y: 200 }, coord=>{ asked.push(coord.x); return true; }, box, { x: 25, y: 50 });
+    expect(asked).toEqual([ -25, -25, -25, 175, 175, 175, 375, 375, 375 ]);
+  });
+
+  test('is traced in the coordinates it is asked in, so it can be drawn where it holds', () => {
+    const dots = positions({ x: 200, y: 200 }, coord=>coord.x > 1100, { left: 1000, top: 500, width: 400, height: 400 });
+    expect(dots).toEqual([
+      { x: 1200, y: 600 }, { x: 1200, y: 800 }, { x: 1400, y: 600 }, { x: 1400, y: 800 }
+    ]);
+  });
+
+  test('leaves a lattice with more points than the limit to the background layer', () => {
+    expect(positions({ x: 1, y: 1 }, _=>true)).toBe(null);
+    expect(positions({ x: 0, y: 100 }, _=>true)).toBe(null);
+    // an area nothing satisfies is a list of no dots, not "draw them all"
+    expect(positions({ x: 100, y: 100 }, _=>false)).toEqual([]);
   });
 });
 

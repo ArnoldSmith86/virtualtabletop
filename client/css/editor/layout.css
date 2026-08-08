@@ -173,6 +173,9 @@ body.gridLines33 #topSurface {
      line width below is compensated */
   --gridPreviewDotRadius: calc(3px / (var(--scale, 1) * var(--zoom, 1)));
   --gridPreviewDots: radial-gradient(circle at center, var(--gridPreviewColor) 0 var(--gridPreviewDotRadius), #fff9 var(--gridPreviewDotRadius) calc(var(--gridPreviewDotRadius) + 1.5px), transparent calc(var(--gridPreviewDotRadius) + 1.5px));
+  /* every lattice point of the rectangle, unless the dots are drawn one by one
+     because a condition leaves only some of them (see .ownDots below) */
+  --gridPreviewDotLayer: var(--gridPreviewDots);
   /* the overlay is drawn inside the scaled room, so a 1px line ends up thinner
      than one device pixel and the rasterizer drops some of the lines entirely
      instead of only dimming them - one device pixel is the thinnest that keeps
@@ -186,7 +189,7 @@ body.gridLines33 #topSurface {
   pointer-events: none;
   z-index: 2000000;
   background-image:
-    var(--gridPreviewDots),
+    var(--gridPreviewDotLayer),
     repeating-linear-gradient(to right, var(--gridPreviewLine) 0 var(--gridPreviewLineWidth), transparent var(--gridPreviewLineWidth) var(--gridPreviewX)),
     repeating-linear-gradient(to bottom, var(--gridPreviewLine) 0 var(--gridPreviewLineWidth), transparent var(--gridPreviewLineWidth) var(--gridPreviewY));
   background-size: var(--gridPreviewX) var(--gridPreviewY), auto, auto;
@@ -195,14 +198,23 @@ body.gridLines33 #topSurface {
 
 /* several lattices at once (a hex grid) only agree on their snap points */
 .gridPreviewOverlay.dotsOnly {
-  background-image: var(--gridPreviewDots);
+  background-image: var(--gridPreviewDotLayer);
 }
 
-/* the area a grid's conditions describe, traced into the same overlay and drawn
-   in the dashed line the rectangle above is outlined with. The stroke does not
-   scale with the room (the outline's does not either), so the boundary stays
-   one device pixel wide at every zoom rather than disappearing at small ones. */
-.gridConditionOutline {
+/* a condition holds in part of the rectangle only, so the dots are drawn one
+   by one where it does (.gridConditionDots below) and the layer that repeats
+   one across the whole rectangle goes - the lattice lines stay, as the mesh
+   the area is read against */
+.gridPreviewOverlay.ownDots {
+  --gridPreviewDotLayer: none;
+}
+
+/* what a grid's conditions add to the lattice overlay: the boundary of the area
+   they describe, and the snap points inside it. Both are drawn into the overlay
+   itself and in the coordinates it is placed in, so they are cleared and
+   redrawn with it and sit exactly on the positions they are about. */
+.gridConditionOutline,
+.gridConditionDots {
   position: absolute;
   left: 0;
   top: 0;
@@ -210,6 +222,10 @@ body.gridLines33 #topSurface {
   pointer-events: none;
 }
 
+/* the boundary, in the dashed line the rectangle around it is outlined with.
+   Its stroke does not scale with the room (the outline's does not either), so
+   it stays one device pixel wide at every zoom rather than disappearing at
+   small ones. */
 .gridConditionOutline path {
   fill: none;
   /* the color the dots use rather than the fainter one of the lattice lines:
@@ -220,6 +236,29 @@ body.gridLines33 #topSurface {
   stroke-width: 1px;
   stroke-dasharray: 6 4;
   vector-effect: non-scaling-stroke;
+}
+
+/* the snap points of a grid a condition limits, drawn one by one where it
+   holds instead of repeated across the whole rectangle. Each one is a
+   zero-length subpath with a round cap, so a dot is a stroke width - the same
+   dot the background layer paints, a core in the lattice's color of twice
+   --gridPreviewDotRadius inside a white ring 1.5px wider on every side, and
+   the same compensation of the room's scale so it keeps its size at every
+   zoom (a stroke of the drawing itself, so non-scaling-stroke would leave the
+   room's own transform on top of it). */
+.gridConditionDots path {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.gridConditionDots .dotHalo {
+  stroke: #fff9;
+  stroke-width: calc(2 * var(--gridPreviewDotRadius) + 3px / (var(--scale, 1) * var(--zoom, 1)));
+}
+
+.gridConditionDots .dotCore {
+  stroke: var(--gridPreviewColor);
+  stroke-width: calc(2 * var(--gridPreviewDotRadius));
 }
 
 /* live preview of the area a widget can be dragged in, drawn into its parent
