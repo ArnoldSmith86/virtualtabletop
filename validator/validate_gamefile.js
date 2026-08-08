@@ -313,23 +313,45 @@ function parseStringOperation(a) {
 
 function parsePropertySyntax(string) {
     const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
-    const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
+    const identifier          = identifierWithSpace.replace(/ /, '');
+    const path                = `((?:\\.\\$?${identifier})*)`;
+    const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)${path}(?: OF (\\$)?(${identifierWithSpace}))?`;
     const match               = string.match(new RegExp(`^\\$\\{(?:${property})\\}` + '\x24'));
 
     return match;
 }
 
-function validateGetProperty(value, context, propertyPath = []) {
+// The variables used as keys in the ".a.$b.c" part of a ${PROPERTY ...} or ${variable} expression.
+function pathVariables(path) {
+    return (path || '').split('.').filter(key=>key[0] == '$').map(key=>key.substr(1));
+}
+
+// The property of GET and SET is either a property name or an array of the property name followed
+// by the keys leading to a value inside it.
+function validatePropertyPath(value, context, propertyPath = []) {
+    const func = context.operation && context.operation.func || 'GET/SET';
     if (typeof value === 'string' && value.length > 0) {
         return validators.property(value, context);
     }
     if (Array.isArray(value) && value.length > 0) {
-        return validators.property(value[0], context);
+        const nameProblem = validators.property(value[0], context);
+        const problems = typeof nameProblem === 'string' ? [{ widget: context.widgetId, property: propertyPath, message: nameProblem }] : [];
+        // everything after the property name is a key leading into it
+        for (const key of value.slice(1)) {
+            if (typeof key !== 'string' && typeof key !== 'number') {
+                problems.push({
+                    widget: context.widgetId,
+                    property: propertyPath,
+                    message: `${func} property key ${JSON.stringify(key)} must be a string or a number`
+                });
+            }
+        }
+        return problems;
     }
     return [{
         widget: context.widgetId,
         property: propertyPath,
-        message: 'GET property must be a non-empty string or array'
+        message: `${func} property must be a non-empty string or array`
     }];
 }
 
@@ -459,36 +481,47 @@ function validateRoutine(routine, context, propertyPath = []) {
                 // No validation for Set-based properties
                 continue;
             } else if (propMatch = parsePropertySyntax(String(operation[prop]))) {
+                // keys of the path leading into the property can be variables as well
+                const undefinedKeyVariable = pathVariables(propMatch[3]).find(v=>!context.validVariables[v]);
                 if(propMatch[1] && !context.validVariables[propMatch[2]])
                     problems.push({
                         widget: context.widgetId,
                         property: propPath,
                         message: `${func} uses undefined variable '${propMatch[2]}'`
                     });
-                else if(propMatch[3] && !context.validVariables[propMatch[4]])
+                else if(undefinedKeyVariable)
                     problems.push({
                         widget: context.widgetId,
                         property: propPath,
-                        message: `${func} uses undefined variable '${propMatch[4]}'`
+                        message: `${func} uses undefined variable '${undefinedKeyVariable}'`
                     });
-                else if(!propMatch[3] && propMatch[4] && !context.widgets[propMatch[4]])
+                else if(propMatch[4] && !context.validVariables[propMatch[5]])
                     problems.push({
                         widget: context.widgetId,
                         property: propPath,
-                        message: `${func} uses invalid widget '${propMatch[4]}'`
+                        message: `${func} uses undefined variable '${propMatch[5]}'`
+                    });
+                else if(!propMatch[4] && propMatch[5] && !context.widgets[propMatch[5]])
+                    problems.push({
+                        widget: context.widgetId,
+                        property: propPath,
+                        message: `${func} uses invalid widget '${propMatch[5]}'`
                     });
                 else
                     continue;
-            } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)(?:\.[^.}]+)?\}$/)) {
-                if(context.validVariables[varMatch[1]])
+            } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)((?:\.[^.}]+)*)\}$/)) {
+                const undefinedVariable = context.validVariables[varMatch[1]]
+                    ? pathVariables(varMatch[2]).find(v=>!context.validVariables[v])
+                    : varMatch[1];
+                if(!undefinedVariable)
                     continue;
                 problems.push({
                     widget: context.widgetId,
                     property: propPath,
-                    message: `${func} uses undefined variable '${varMatch[1]}'`
+                    message: `${func} uses undefined variable '${undefinedVariable}'`
                 });
                 continue;
-            } else if(typeof operation[prop] === 'string' && operation[prop].match(/\$\{([^.}]+)(?:\.[^.}]+)?\}/)) {
+            } else if(typeof operation[prop] === 'string' && operation[prop].match(/\$\{([^.}]+)(?:\.[^.}]+)*\}/)) {
                 continue;
             } else {
                 const validator = validators[knownProps[prop]] || knownProps[prop];
@@ -692,7 +725,7 @@ const operationProps = {
     },
     'GET': {
         'collection':  'inCollection',
-        'property':    validateGetProperty,
+        'property':    validatePropertyPath,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
@@ -779,7 +812,7 @@ const operationProps = {
     },
     'SET': {
         'collection': 'inCollection',
-        'property': 'string',
+        'property': validatePropertyPath,
         'relation': 'string',
         'value': 'any'
     },
@@ -951,7 +984,8 @@ function getCustomPropertyUsage(data) {
             let match;
             while ((match = regex.exec(value)) !== null) {
                 if (match && match[2]) {
-                    customProperties.add(match[2]);
+                    // everything after the first dot indexes into the property, it is not part of its name
+                    customProperties.add(match[2].split('.')[0]);
                 }
             }
         }
@@ -1044,6 +1078,8 @@ function getCustomPropertyUsage(data) {
                 } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
                     addPropertyUsage(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
+                    addPropertyUsage(value);
+                } else if (func === 'SET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
                     addPropertyUsage(value);
                 }
             }

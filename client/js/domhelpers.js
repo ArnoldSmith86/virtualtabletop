@@ -623,6 +623,70 @@ export function mod(a, b) {
   return ((a % b) + b) % b;
 }
 
+// Many widget properties hold nested objects (css, cardTypes, faces, ...). Routines address a value
+// inside them by a path of keys - the two helpers below read and write such a path. Routines come
+// from shared games, so a key must never lead out of the property and into the prototype chain:
+// only own properties are read and __proto__, constructor and prototype are refused entirely.
+
+// A key is an array index if it is a non-negative integer, written as a JSON number or as a plain
+// decimal string. "007" and "1e3" are object keys.
+function isArrayIndex(key) {
+  return typeof key == 'number' ? Number.isInteger(key) && key >= 0 : !!String(key).match(/^(0|[1-9][0-9]*)$/);
+}
+
+export function getNestedValue(object, path) {
+  let value = object;
+  for(const key of path) {
+    if(value === null || value === undefined || !Object.prototype.hasOwnProperty.call(value, key))
+      return undefined;
+    value = value[key];
+  }
+  return value;
+}
+
+// Returns the (possibly new) container so that a missing or non-object value can be replaced by the
+// object/array needed to hold the path. Modifies the given object - pass a copy if that matters.
+// Refused keys are collected in problems and leave the object unchanged - check whether problems
+// grew before using the result. A value that had to be replaced along the way is reported in
+// warnings: the write did happen, but something the author wrote is gone.
+export function setNestedValue(object, path, value, problems=[], warnings=[]) {
+  if(!path.length)
+    return value;
+
+  // a primitive key so that what is checked here is exactly what is written below
+  const key = typeof path[0] == 'number' ? path[0] : String(path[0]);
+  if(key === '__proto__' || key === 'constructor' || key === 'prototype') {
+    problems.push(`Key ${JSON.stringify(key)} is a reserved JavaScript key and cannot be used in a property path, so the SET was ignored.`);
+    return object;
+  }
+
+  // Only a JSON number creates an array: a string key like "1754300000000" is a map key and would
+  // otherwise create an array of a million nulls that is synced to every client.
+  const container = object !== null && typeof object == 'object' ? object : (typeof key == 'number' && isArrayIndex(key) ? [] : {});
+  if(Array.isArray(container)) {
+    if(!isArrayIndex(key)) {
+      problems.push(`Key ${JSON.stringify(String(key))} is not an array index - only an index can be set inside an array, so the SET was ignored.`);
+      return object;
+    }
+    if(+key > container.length) {
+      problems.push(`Index ${key} is out of range - an array of length ${container.length} can only be written at index 0 to ${container.length} because a SET appends at most one element, so the SET was ignored.`);
+      return object;
+    }
+  }
+
+  const oldValue = Object.prototype.hasOwnProperty.call(container, key) ? container[key] : null;
+  const problemsSoFar = problems.length;
+  const newValue = setNestedValue(oldValue, path.slice(1), value, problems, warnings);
+  if(problems.length > problemsSoFar)
+    return object;
+  // the value under this key had to make room for the rest of the path - say so, it is now lost
+  if(path.length > 1 && oldValue !== null && typeof oldValue != 'object')
+    warnings.push(`Key ${JSON.stringify(String(key))} was not an object - its value ${JSON.stringify(oldValue)} was replaced.`);
+  // defineProperty instead of an assignment so that no setter inherited from the prototype can run
+  Object.defineProperty(container, key, { value: newValue, writable: true, enumerable: true, configurable: true });
+  return container;
+}
+
 export function funhash(s) {
   for(var i = 0, h = 0xdeadbeef; i < s.length; i++)
   h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
