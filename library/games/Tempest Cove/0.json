@@ -1,0 +1,7288 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Tempest Cove",
+      "image": "/assets/-432217213_47290",
+      "rules": "https://spielgezeug.de/images/selecta_piratissimo.pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/20953/piratissimo",
+      "year": "2005",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "<div>Layout, design and the library preview image by VTT-AI-Agent, released to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Source of the layout: https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games/Tempest%20Cove</div>\n<div><br></div>\n<div>AI disclosure: this layout (the JSON file) and all of its texts were written by the AI agent Claude by Anthropic (https://claude.ai), from the instruction &quot;add a game to the VirtualTabletop public library that plays like Piratissimo&quot;. No AI generated imagery is used anywhere in this game: the board, the ships, the dice faces and the wind wheel are drawn with CSS gradients and with the icons listed below, and the library preview image is a screenshot of that board taken in a headless Chromium browser (Playwright, https://playwright.dev) and saved as .webp.</div>\n<div><br></div>\n<div>Board pieces, islands, sea creatures and symbols use icons that ship with VirtualTabletop and are available under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) from https://game-icons.net, as detailed on the About page:</div>\n<div><br></div>\n<div>Delapouite:</div>\n<div>&nbsp;&nbsp;Caravel - https://game-icons.net/1x1/delapouite/caravel.html</div>\n<div>&nbsp;&nbsp;Cave entrance - https://game-icons.net/1x1/delapouite/cave-entrance.html</div>\n<div>&nbsp;&nbsp;Chest - https://game-icons.net/1x1/delapouite/chest.html</div>\n<div>&nbsp;&nbsp;Coconuts - https://game-icons.net/1x1/delapouite/coconuts.html</div>\n<div>&nbsp;&nbsp;Coins - https://game-icons.net/1x1/delapouite/coins.html</div>\n<div>&nbsp;&nbsp;Dolphin - https://game-icons.net/1x1/delapouite/dolphin.html</div>\n<div>&nbsp;&nbsp;Harbor dock - https://game-icons.net/1x1/delapouite/harbor-dock.html</div>\n<div>&nbsp;&nbsp;Hut - https://game-icons.net/1x1/delapouite/hut.html</div>\n<div>&nbsp;&nbsp;Huts village - https://game-icons.net/1x1/delapouite/huts-village.html</div>\n<div>&nbsp;&nbsp;Island - https://game-icons.net/1x1/delapouite/island.html</div>\n<div>&nbsp;&nbsp;Jungle - https://game-icons.net/1x1/delapouite/jungle.html</div>\n<div>&nbsp;&nbsp;Kraken tentacle - https://game-icons.net/1x1/delapouite/kraken-tentacle.html</div>\n<div>&nbsp;&nbsp;Mermaid - https://game-icons.net/1x1/delapouite/mermaid.html</div>\n<div>&nbsp;&nbsp;Palm tree - https://game-icons.net/1x1/delapouite/palm-tree.html</div>\n<div>&nbsp;&nbsp;Rolling dices - https://game-icons.net/1x1/delapouite/rolling-dices.html</div>\n<div>&nbsp;&nbsp;Sailboat - https://game-icons.net/1x1/delapouite/sailboat.html</div>\n<div>&nbsp;&nbsp;Sea turtle - https://game-icons.net/1x1/delapouite/sea-turtle.html</div>\n<div>&nbsp;&nbsp;Shark fin - https://game-icons.net/1x1/delapouite/shark-fin.html</div>\n<div>&nbsp;&nbsp;Ship wreck - https://game-icons.net/1x1/delapouite/ship-wreck.html</div>\n<div>&nbsp;&nbsp;Sperm whale - https://game-icons.net/1x1/delapouite/sperm-whale.html</div>\n<div>&nbsp;&nbsp;Three friends - https://game-icons.net/1x1/delapouite/three-friends.html</div>\n<div>&nbsp;&nbsp;Tropical fish - https://game-icons.net/1x1/delapouite/tropical-fish.html</div>\n<div><br></div>\n<div>Lorc:</div>\n<div>&nbsp;&nbsp;Anchor - https://game-icons.net/1x1/lorc/anchor.html</div>\n<div>&nbsp;&nbsp;Compass - https://game-icons.net/1x1/lorc/compass.html</div>\n<div>&nbsp;&nbsp;Crab - https://game-icons.net/1x1/lorc/crab.html</div><div>&nbsp;&nbsp;Cycle - https://game-icons.net/1x1/lorc/cycle.html</div>\n<div>&nbsp;&nbsp;Galleon - https://game-icons.net/1x1/lorc/galleon.html</div>\n<div>&nbsp;&nbsp;Laurel crown - https://game-icons.net/1x1/lorc/laurel-crown.html</div><div>&nbsp;&nbsp;Monkey - https://game-icons.net/1x1/lorc/monkey.html</div>\n<div>&nbsp;&nbsp;Mountains - https://game-icons.net/1x1/lorc/mountains.html</div>\n<div>&nbsp;&nbsp;Octopus - https://game-icons.net/1x1/lorc/octopus.html</div>\n<div>&nbsp;&nbsp;Parrot head - https://game-icons.net/1x1/lorc/parrot-head.html</div>\n<div>&nbsp;&nbsp;Sea serpent - https://game-icons.net/1x1/lorc/sea-serpent.html</div>\n<div>&nbsp;&nbsp;Spyglass - https://game-icons.net/1x1/lorc/spyglass.html</div>\n<div>&nbsp;&nbsp;Tornado - https://game-icons.net/1x1/lorc/tornado.html</div>\n<div>&nbsp;&nbsp;Volcano - https://game-icons.net/1x1/lorc/volcano.html</div>\n<div>&nbsp;&nbsp;Water splash - https://game-icons.net/1x1/lorc/water-splash.html</div>\n<div>&nbsp;&nbsp;Waves - https://game-icons.net/1x1/lorc/waves.html</div>\n<div>&nbsp;&nbsp;Wind slap - https://game-icons.net/1x1/lorc/wind-slap.html</div>\n<div><br></div>\n<div>Skoll:</div>\n<div>&nbsp;&nbsp;Open treasure chest - https://game-icons.net/1x1/skoll/open-treasure-chest.html</div>\n<div><br></div>\n<div>The arrows that show the sailing route, the storm direction and the goal are /i/icons/arrow_right.svg, one of the user interface icons bundled with VirtualTabletop (https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/icons/arrow_right.svg). Per the About page of virtualtabletop.io, those bundled symbols are either Google Material Symbols under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or symbols made by the VirtualTabletop community and released under CC0.</div>\n<div><br></div>\n<div>The library preview image (assets/633675787_42484) is a screenshot of this board, made by VTT-AI-Agent and released under CC0 1.0. Everything visible on it is covered by the licenses above.</div>\n<div><br></div>\n<div>The game is inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005, https://boardgamegeek.com/boardgame/20953/piratissimo). No artwork, text or component of that game is used here; the rules were reimplemented from the publisher&#39;s rulebook.</div>",
+      "lastUpdate": 1786007110693,
+      "showName": true,
+      "skill": "low",
+      "language": "en-US",
+      "description": "Pirate ships race around a ring of islands digging up buried treasure. Every island you stop at hands you treasure, forces treasure on you or lets you rob the captain moored there, while a wandering storm blows ships and cargo across the sea and a hold of more than seven treasure capsizes. The first captain to land ten treasure in their own harbour wins.",
+      "similarImage": "",
+      "similarName": "Piratissimo",
+      "similarDesigner": "Manfred Ludwig",
+      "similarAwards": "",
+      "ruleText": "<div>Several pirate ships cruise a ring of 28 lonely islands looking for buried treasure. Dig it up, load it on board and be the first to bring ten pieces safely into your own harbour - while a wandering storm, greedy rivals and your own overloaded hold do their best to stop you.</div>\n<div><br></div>\n<div>On your turn you roll one die. A number sails your ship that many islands onward, following the arrows; an island has room for two ships, a third one sails on to the next free island. Islands with an open chest let you take as much of the treasure as you like, up to the number on the chest - half of them hold at most one, the other half up to three; a closed red chest blinds you with greed and forces two on board; on an island without a chest the arriving captain may take up to two treasure from the ship moored there, or push up to two onto it. A hold takes seven treasure at most - one too many and the ship capsizes and the whole cargo sinks.</div>\n<div><br></div>\n<div>Each colour has a harbour beside its own entrance island. Only its owner may turn in, and the rest of the move is lost when they do; the treasure is unloaded there and the ship sets out again on the next turn.</div>\n<div><br></div>\n<div>The storm face of the die lets you sail one single island and then drift the storm against the sailing direction - up to five islands with two players, four with three, three with four. If the storm comes to rest on an island with ships, the wind wheel decides their fate: blown one island on, one treasure to every other captain, swept safely home, or two treasure washed into the sea.</div>",
+      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat - the coloured sailboat at the left of each seat row shows which ship that seat commands - then somebody presses the round brown <b>new voyage</b> button (the circling arrows) on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts. Until then a hint plate in the middle of the sea points at that button.</div>\n<h4>Your turn</h4>\n<div>Press the big gold <b>dice</b> button on the right (or click the die itself); its border is drawn in the colour of the captain whose turn it is. Everything that follows is worked out for you; you only answer the questions. The <b>?</b> button at the top of the panel repeats all of this at the table.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 1</b> - load as much treasure as you like, 0 or 1.</li>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. Half of the open chests are the small ones, half the big ones. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose <i>nothing</i> to leave both ships alone.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and it sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Ships and the storm can simply be dragged</b> from island to island, and the two counters next to your seat can be clicked to correct the cargo on board (⛵) and the treasure in your harbour (⚓) - useful for house rules, for taking a move back or for setting up a position. A piece that is not on a space glows red, so a ship left in open water is easy to spot and to drop onto an island. The dice button is only the comfortable way to play.</div>\n<h4>Winning</h4>\n<div>The winner is announced on a laurel banner in the middle of the sea; click the banner to push it aside. The hint plate underneath points back at the new-voyage button.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
+      "players": "2-4",
+      "usesAIImagery": false
+    }
+  },
+  "bg": {
+    "id": "bg",
+    "type": "basic",
+    "x": 0,
+    "y": 0,
+    "width": 1600,
+    "height": 1000,
+    "z": 0,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background:radial-gradient(circle at 30% 30%, #1b6b8f 0%, #0c3d5c 60%, #06202f 100%)"
+  },
+  "sea": {
+    "id": "sea",
+    "type": "basic",
+    "x": 51,
+    "y": 16,
+    "width": 968,
+    "height": 968,
+    "z": 0,
+    "layer": -7,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 44,
+    "css": "background:radial-gradient(circle at 46% 40%, #8ad8f2 0%, #5cbde6 38%, #2f97cd 72%, #1d76ad 100%);box-shadow:0 0 0 8px #f4e3b8, 0 0 0 12px #b98f4a, 0 18px 40px #00000066"
+  },
+  "swell0": {
+    "id": "swell0",
+    "type": "basic",
+    "x": 150,
+    "y": 130,
+    "width": 140,
+    "height": 59,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/lorc/waves.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.18"
+  },
+  "swell1": {
+    "id": "swell1",
+    "type": "basic",
+    "x": 820,
+    "y": 155,
+    "width": 125,
+    "height": 53,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 12,
+    "image": "/i/game-icons.net/lorc/waves.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.18"
+  },
+  "swell2": {
+    "id": "swell2",
+    "type": "basic",
+    "x": 175,
+    "y": 820,
+    "width": 135,
+    "height": 57,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -8,
+    "image": "/i/game-icons.net/lorc/waves.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.18"
+  },
+  "swell3": {
+    "id": "swell3",
+    "type": "basic",
+    "x": 800,
+    "y": 835,
+    "width": 140,
+    "height": 59,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 6,
+    "image": "/i/game-icons.net/lorc/waves.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.18"
+  },
+  "swell4": {
+    "id": "swell4",
+    "type": "basic",
+    "x": 480,
+    "y": 92,
+    "width": 115,
+    "height": 48,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/lorc/waves.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.18"
+  },
+  "swell5": {
+    "id": "swell5",
+    "type": "basic",
+    "x": 480,
+    "y": 878,
+    "width": 115,
+    "height": 48,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/lorc/waves.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.18"
+  },
+  "life0": {
+    "id": "life0",
+    "type": "basic",
+    "x": 264,
+    "y": 229,
+    "width": 104,
+    "height": 104,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -14,
+    "image": "/i/game-icons.net/delapouite/sperm-whale.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.34"
+  },
+  "life1": {
+    "id": "life1",
+    "type": "basic",
+    "x": 506,
+    "y": 223,
+    "width": 74,
+    "height": 74,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 12,
+    "image": "/i/game-icons.net/delapouite/dolphin.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.3"
+  },
+  "life2": {
+    "id": "life2",
+    "type": "basic",
+    "x": 704,
+    "y": 231,
+    "width": 100,
+    "height": 100,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/lorc/sea-serpent.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.34"
+  },
+  "life3": {
+    "id": "life3",
+    "type": "basic",
+    "x": 740,
+    "y": 473,
+    "width": 70,
+    "height": 70,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/delapouite/shark-fin.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.3"
+  },
+  "life4": {
+    "id": "life4",
+    "type": "basic",
+    "x": 704,
+    "y": 669,
+    "width": 100,
+    "height": 100,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/lorc/octopus.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.34"
+  },
+  "life5": {
+    "id": "life5",
+    "type": "basic",
+    "x": 506,
+    "y": 703,
+    "width": 74,
+    "height": 74,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/delapouite/sea-turtle.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.3"
+  },
+  "life6": {
+    "id": "life6",
+    "type": "basic",
+    "x": 268,
+    "y": 671,
+    "width": 96,
+    "height": 96,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/delapouite/mermaid.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.34"
+  },
+  "life7": {
+    "id": "life7",
+    "type": "basic",
+    "x": 260,
+    "y": 473,
+    "width": 70,
+    "height": 70,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/delapouite/tropical-fish.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.3"
+  },
+  "life8": {
+    "id": "life8",
+    "type": "basic",
+    "x": 362,
+    "y": 136,
+    "width": 86,
+    "height": 86,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -8,
+    "image": "/i/game-icons.net/lorc/galleon.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.28"
+  },
+  "life9": {
+    "id": "life9",
+    "type": "basic",
+    "x": 817,
+    "y": 331,
+    "width": 78,
+    "height": 78,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 6,
+    "image": "/i/game-icons.net/delapouite/ship-wreck.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.28"
+  },
+  "life10": {
+    "id": "life10",
+    "type": "basic",
+    "x": 622,
+    "y": 778,
+    "width": 86,
+    "height": 86,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 8,
+    "image": "/i/game-icons.net/delapouite/caravel.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.28"
+  },
+  "life11": {
+    "id": "life11",
+    "type": "basic",
+    "x": 177,
+    "y": 593,
+    "width": 74,
+    "height": 74,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/delapouite/kraken-tentacle.svg",
+    "color": "#0e5f8c",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.28"
+  },
+  "wind0": {
+    "id": "wind0",
+    "type": "basic",
+    "x": 505,
+    "y": 275,
+    "width": 60,
+    "height": 60,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -180,
+    "image": "/i/game-icons.net/lorc/wind-slap.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.45"
+  },
+  "wind1": {
+    "id": "wind1",
+    "type": "basic",
+    "x": 700,
+    "y": 470,
+    "width": 60,
+    "height": 60,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -90,
+    "image": "/i/game-icons.net/lorc/wind-slap.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.45"
+  },
+  "wind2": {
+    "id": "wind2",
+    "type": "basic",
+    "x": 505,
+    "y": 665,
+    "width": 60,
+    "height": 60,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 0,
+    "image": "/i/game-icons.net/lorc/wind-slap.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.45"
+  },
+  "wind3": {
+    "id": "wind3",
+    "type": "basic",
+    "x": 310,
+    "y": 470,
+    "width": 60,
+    "height": 60,
+    "z": 0,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 90,
+    "image": "/i/game-icons.net/lorc/wind-slap.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.45"
+  },
+  "arr0": {
+    "id": "arr0",
+    "type": "basic",
+    "x": 210,
+    "y": 99,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 4,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr1": {
+    "id": "arr1",
+    "type": "basic",
+    "x": 320,
+    "y": 78,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -45,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr2": {
+    "id": "arr2",
+    "type": "basic",
+    "x": 414,
+    "y": 87,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 28,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr3": {
+    "id": "arr3",
+    "type": "basic",
+    "x": 515,
+    "y": 94,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -40,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr4": {
+    "id": "arr4",
+    "type": "basic",
+    "x": 603,
+    "y": 89,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 24,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr5": {
+    "id": "arr5",
+    "type": "basic",
+    "x": 714,
+    "y": 83,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -27,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr6": {
+    "id": "arr6",
+    "type": "basic",
+    "x": 836,
+    "y": 73,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 17,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr7": {
+    "id": "arr7",
+    "type": "basic",
+    "x": 894,
+    "y": 175,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 94,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr8": {
+    "id": "arr8",
+    "type": "basic",
+    "x": 915,
+    "y": 285,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 45,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr9": {
+    "id": "arr9",
+    "type": "basic",
+    "x": 906,
+    "y": 379,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 118,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr10": {
+    "id": "arr10",
+    "type": "basic",
+    "x": 899,
+    "y": 480,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 50,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr11": {
+    "id": "arr11",
+    "type": "basic",
+    "x": 904,
+    "y": 568,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 114,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr12": {
+    "id": "arr12",
+    "type": "basic",
+    "x": 910,
+    "y": 679,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 63,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr13": {
+    "id": "arr13",
+    "type": "basic",
+    "x": 920,
+    "y": 801,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 107,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr14": {
+    "id": "arr14",
+    "type": "basic",
+    "x": 818,
+    "y": 859,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -176,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr15": {
+    "id": "arr15",
+    "type": "basic",
+    "x": 708,
+    "y": 880,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 135,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr16": {
+    "id": "arr16",
+    "type": "basic",
+    "x": 614,
+    "y": 871,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -152,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr17": {
+    "id": "arr17",
+    "type": "basic",
+    "x": 513,
+    "y": 864,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 140,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr18": {
+    "id": "arr18",
+    "type": "basic",
+    "x": 425,
+    "y": 869,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -156,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr19": {
+    "id": "arr19",
+    "type": "basic",
+    "x": 314,
+    "y": 875,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": 153,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr20": {
+    "id": "arr20",
+    "type": "basic",
+    "x": 192,
+    "y": 885,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -163,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr21": {
+    "id": "arr21",
+    "type": "basic",
+    "x": 134,
+    "y": 783,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -86,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr22": {
+    "id": "arr22",
+    "type": "basic",
+    "x": 113,
+    "y": 673,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -135,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr23": {
+    "id": "arr23",
+    "type": "basic",
+    "x": 122,
+    "y": 579,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -62,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr24": {
+    "id": "arr24",
+    "type": "basic",
+    "x": 129,
+    "y": 478,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -130,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr25": {
+    "id": "arr25",
+    "type": "basic",
+    "x": 124,
+    "y": 390,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -66,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr26": {
+    "id": "arr26",
+    "type": "basic",
+    "x": 118,
+    "y": 279,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -117,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "arr27": {
+    "id": "arr27",
+    "type": "basic",
+    "x": 108,
+    "y": 157,
+    "width": 42,
+    "height": 42,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "rotation": -73,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#08324c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.75"
+  },
+  "i0": {
+    "id": "i0",
+    "type": "basic",
+    "x": 160,
+    "y": 125,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
+    "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
+    "iconColor": "#ffffff",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#d55e00;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #d55e00aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#d55e00"
+  },
+  "s0": {
+    "id": "s0",
+    "type": "holder",
+    "x": 90,
+    "y": 55,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 0
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b0": {
+    "id": "b0",
+    "type": "basic",
+    "x": 222,
+    "y": 187,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background-color:#d55e00;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
+  },
+  "i1": {
+    "id": "i1",
+    "type": "basic",
+    "x": 267,
+    "y": 80,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "58% 42% 44% 56% / 46% 58% 42% 54%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s1": {
+    "id": "s1",
+    "type": "holder",
+    "x": 267,
+    "y": 80,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 1,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 1
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b1": {
+    "id": "b1",
+    "type": "basic",
+    "x": 267,
+    "y": 61,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "1",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i2": {
+    "id": "i2",
+    "type": "basic",
+    "x": 322,
+    "y": 26,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "40% 60% 55% 45% / 60% 40% 60% 40%",
+    "image": "/i/game-icons.net/delapouite/palm-tree.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s2": {
+    "id": "s2",
+    "type": "holder",
+    "x": 322,
+    "y": 26,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 2
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i3": {
+    "id": "i3",
+    "type": "basic",
+    "x": 455,
+    "y": 98,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "52% 48% 38% 62% / 44% 56% 44% 56%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s3": {
+    "id": "s3",
+    "type": "holder",
+    "x": 455,
+    "y": 98,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 3
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 3
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b3": {
+    "id": "b3",
+    "type": "basic",
+    "x": 476,
+    "y": 72,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i4": {
+    "id": "i4",
+    "type": "basic",
+    "x": 525,
+    "y": 40,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "61% 39% 52% 48% / 55% 46% 54% 45%",
+    "image": "/i/game-icons.net/delapouite/jungle.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s4": {
+    "id": "s4",
+    "type": "holder",
+    "x": 525,
+    "y": 40,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 4
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 4
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i5": {
+    "id": "i5",
+    "type": "basic",
+    "x": 632,
+    "y": 88,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "44% 56% 60% 40% / 39% 61% 39% 61%",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s5": {
+    "id": "s5",
+    "type": "holder",
+    "x": 632,
+    "y": 88,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "red",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 5
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b5": {
+    "id": "b5",
+    "type": "basic",
+    "x": 677,
+    "y": 65,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i6": {
+    "id": "i6",
+    "type": "basic",
+    "x": 746,
+    "y": 29,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "46% 54% 61% 39% / 52% 43% 57% 48%",
+    "image": "/i/game-icons.net/lorc/volcano.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s6": {
+    "id": "s6",
+    "type": "holder",
+    "x": 746,
+    "y": 29,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 6
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 6
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i7": {
+    "id": "i7",
+    "type": "basic",
+    "x": 792,
+    "y": 125,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
+    "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
+    "iconColor": "#ffffff",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#0072b2;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #0072b2aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#0072b2"
+  },
+  "s7": {
+    "id": "s7",
+    "type": "holder",
+    "x": 862,
+    "y": 55,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 7
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 7
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b7": {
+    "id": "b7",
+    "type": "basic",
+    "x": 770,
+    "y": 187,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background-color:#0072b2;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
+  },
+  "i8": {
+    "id": "i8",
+    "type": "basic",
+    "x": 863,
+    "y": 232,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "40% 60% 55% 45% / 60% 40% 60% 40%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s8": {
+    "id": "s8",
+    "type": "holder",
+    "x": 863,
+    "y": 232,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 1,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 8
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 8
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b8": {
+    "id": "b8",
+    "type": "basic",
+    "x": 934,
+    "y": 232,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "1",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i9": {
+    "id": "i9",
+    "type": "basic",
+    "x": 917,
+    "y": 287,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "52% 48% 38% 62% / 44% 56% 44% 56%",
+    "image": "/i/game-icons.net/delapouite/cave-entrance.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s9": {
+    "id": "s9",
+    "type": "holder",
+    "x": 917,
+    "y": 287,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 9
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 9
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i10": {
+    "id": "i10",
+    "type": "basic",
+    "x": 845,
+    "y": 420,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "61% 39% 52% 48% / 55% 46% 54% 45%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s10": {
+    "id": "s10",
+    "type": "holder",
+    "x": 845,
+    "y": 420,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 10
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 10
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b10": {
+    "id": "b10",
+    "type": "basic",
+    "x": 923,
+    "y": 441,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i11": {
+    "id": "i11",
+    "type": "basic",
+    "x": 903,
+    "y": 490,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "44% 56% 60% 40% / 39% 61% 39% 61%",
+    "image": "/i/game-icons.net/delapouite/hut.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s11": {
+    "id": "s11",
+    "type": "holder",
+    "x": 903,
+    "y": 490,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 11
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 11
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i12": {
+    "id": "i12",
+    "type": "basic",
+    "x": 855,
+    "y": 597,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "46% 54% 61% 39% / 52% 43% 57% 48%",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s12": {
+    "id": "s12",
+    "type": "holder",
+    "x": 855,
+    "y": 597,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "red",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 12
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 12
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b12": {
+    "id": "b12",
+    "type": "basic",
+    "x": 930,
+    "y": 642,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i13": {
+    "id": "i13",
+    "type": "basic",
+    "x": 914,
+    "y": 711,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "58% 42% 44% 56% / 46% 58% 42% 54%",
+    "image": "/i/game-icons.net/lorc/mountains.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s13": {
+    "id": "s13",
+    "type": "holder",
+    "x": 914,
+    "y": 711,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 13
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 13
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i14": {
+    "id": "i14",
+    "type": "basic",
+    "x": 792,
+    "y": 757,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
+    "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
+    "iconColor": "#ffffff",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#009e73;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #009e73aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#009e73"
+  },
+  "s14": {
+    "id": "s14",
+    "type": "holder",
+    "x": 862,
+    "y": 827,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 14
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 14
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b14": {
+    "id": "b14",
+    "type": "basic",
+    "x": 770,
+    "y": 735,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background-color:#009e73;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
+  },
+  "i15": {
+    "id": "i15",
+    "type": "basic",
+    "x": 711,
+    "y": 828,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "52% 48% 38% 62% / 44% 56% 44% 56%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s15": {
+    "id": "s15",
+    "type": "holder",
+    "x": 711,
+    "y": 828,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 1,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 15
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 15
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b15": {
+    "id": "b15",
+    "type": "basic",
+    "x": 763,
+    "y": 899,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "1",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i16": {
+    "id": "i16",
+    "type": "basic",
+    "x": 656,
+    "y": 882,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "61% 39% 52% 48% / 55% 46% 54% 45%",
+    "image": "/i/game-icons.net/delapouite/coconuts.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s16": {
+    "id": "s16",
+    "type": "holder",
+    "x": 656,
+    "y": 882,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 16
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 16
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i17": {
+    "id": "i17",
+    "type": "basic",
+    "x": 523,
+    "y": 810,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "44% 56% 60% 40% / 39% 61% 39% 61%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s17": {
+    "id": "s17",
+    "type": "holder",
+    "x": 523,
+    "y": 810,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 17
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 17
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b17": {
+    "id": "b17",
+    "type": "basic",
+    "x": 554,
+    "y": 888,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i18": {
+    "id": "i18",
+    "type": "basic",
+    "x": 453,
+    "y": 868,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "46% 54% 61% 39% / 52% 43% 57% 48%",
+    "image": "/i/game-icons.net/lorc/monkey.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s18": {
+    "id": "s18",
+    "type": "holder",
+    "x": 453,
+    "y": 868,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 18
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 18
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i19": {
+    "id": "i19",
+    "type": "basic",
+    "x": 346,
+    "y": 820,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "58% 42% 44% 56% / 46% 58% 42% 54%",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s19": {
+    "id": "s19",
+    "type": "holder",
+    "x": 346,
+    "y": 820,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "red",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 19
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 19
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b19": {
+    "id": "b19",
+    "type": "basic",
+    "x": 353,
+    "y": 895,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i20": {
+    "id": "i20",
+    "type": "basic",
+    "x": 232,
+    "y": 879,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "40% 60% 55% 45% / 60% 40% 60% 40%",
+    "image": "/i/game-icons.net/lorc/parrot-head.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s20": {
+    "id": "s20",
+    "type": "holder",
+    "x": 232,
+    "y": 879,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 20
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 20
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i21": {
+    "id": "i21",
+    "type": "basic",
+    "x": 160,
+    "y": 757,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "48% 52% 55% 45% / 52% 48% 55% 45%",
+    "image": "/i/game-icons.net/delapouite/harbor-dock.svg",
+    "iconColor": "#ffffff",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#cc79a7;border:5px solid #ffffffcc;box-shadow:inset 0 0 0 7px #ffffff33, inset 0 -22px 26px -14px #00000055, 0 0 20px #cc79a7aa, 0 6px 14px #00000066;background-repeat:no-repeat;background-size:36px;background-position:center 12px",
+    "color": "#cc79a7"
+  },
+  "s21": {
+    "id": "s21",
+    "type": "holder",
+    "x": 90,
+    "y": 827,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 29,
+    "dropOffsetY": 48,
+    "stackOffsetX": 22,
+    "kind": "entrance",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 21
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 21
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b21": {
+    "id": "b21",
+    "type": "basic",
+    "x": 222,
+    "y": 735,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background-color:#cc79a7;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077;background-repeat:no-repeat;background-size:80%;background-position:center",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#ffffff40",
+    "svgReplaces": {
+      "#000": "iconColor"
+    }
+  },
+  "i22": {
+    "id": "i22",
+    "type": "basic",
+    "x": 115,
+    "y": 676,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "61% 39% 52% 48% / 55% 46% 54% 45%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s22": {
+    "id": "s22",
+    "type": "holder",
+    "x": 115,
+    "y": 676,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 1,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 22
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 22
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b22": {
+    "id": "b22",
+    "type": "basic",
+    "x": 96,
+    "y": 728,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "1",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i23": {
+    "id": "i23",
+    "type": "basic",
+    "x": 61,
+    "y": 621,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "44% 56% 60% 40% / 39% 61% 39% 61%",
+    "image": "/i/game-icons.net/delapouite/huts-village.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s23": {
+    "id": "s23",
+    "type": "holder",
+    "x": 61,
+    "y": 621,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 23
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 23
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i24": {
+    "id": "i24",
+    "type": "basic",
+    "x": 133,
+    "y": 488,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "46% 54% 61% 39% / 52% 43% 57% 48%",
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s24": {
+    "id": "s24",
+    "type": "holder",
+    "x": 133,
+    "y": 488,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "green",
+    "amount": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 24
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 24
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b24": {
+    "id": "b24",
+    "type": "basic",
+    "x": 107,
+    "y": 519,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i25": {
+    "id": "i25",
+    "type": "basic",
+    "x": 75,
+    "y": 418,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "58% 42% 44% 56% / 46% 58% 42% 54%",
+    "image": "/i/game-icons.net/lorc/crab.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s25": {
+    "id": "s25",
+    "type": "holder",
+    "x": 75,
+    "y": 418,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 25
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 25
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "i26": {
+    "id": "i26",
+    "type": "basic",
+    "x": 123,
+    "y": 311,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "40% 60% 55% 45% / 60% 40% 60% 40%",
+    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "iconColor": "#5a3a12",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s26": {
+    "id": "s26",
+    "type": "holder",
+    "x": 123,
+    "y": 311,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "red",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 26
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 26
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "b26": {
+    "id": "b26",
+    "type": "basic",
+    "x": 100,
+    "y": 318,
+    "width": 40,
+    "height": 40,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #00000077"
+  },
+  "i27": {
+    "id": "i27",
+    "type": "basic",
+    "x": 64,
+    "y": 197,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "52% 48% 38% 62% / 44% 56% 44% 56%",
+    "image": "/i/game-icons.net/lorc/spyglass.svg",
+    "iconColor": "#1d5c26",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 5px #ffffff99, 0 0 0 11px #ffffff44, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:44px;background-position:center 16px"
+  },
+  "s27": {
+    "id": "s27",
+    "type": "holder",
+    "x": 64,
+    "y": 197,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      },
+      {
+        "isStorm": true
+      }
+    ],
+    "dropOffsetX": 10,
+    "dropOffsetY": 36,
+    "stackOffsetX": 22,
+    "kind": "meet",
+    "amount": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 27
+      },
+      {
+        "func": "SELECT",
+        "property": "isStorm",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVEDSTORM"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVEDSTORM"
+        ],
+        "property": "tpos",
+        "value": 27
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "ship1": {
+    "id": "ship1",
+    "type": "basic",
+    "parent": "dock1",
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
+    "z": 2,
+    "layer": 1,
+    "movable": true,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "isShip": true,
+    "seatIdx": 1,
+    "pos": 0,
+    "cargo": 0,
+    "color": "#d55e00",
+    "iconColor": "#ffffff",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#d55e00;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
+    "cargoChangeRoutine": [
+      "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${cb}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      },
+      "var ind = 'cargoInd' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship1"
+            ],
+            "property": "css",
+            "value": "background-color:#d55e00;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship1"
+            ],
+            "property": "css",
+            "value": "background-color:#d55e00;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
+    ]
+  },
+  "cargoBadge1": {
+    "id": "cargoBadge1",
+    "type": "basic",
+    "parent": "ship1",
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
+    "z": 3,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "ship2": {
+    "id": "ship2",
+    "type": "basic",
+    "parent": "dock2",
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
+    "z": 2,
+    "layer": 1,
+    "movable": true,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "isShip": true,
+    "seatIdx": 2,
+    "pos": 7,
+    "cargo": 0,
+    "color": "#0072b2",
+    "iconColor": "#ffffff",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#0072b2;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
+    "cargoChangeRoutine": [
+      "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${cb}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      },
+      "var ind = 'cargoInd' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship2"
+            ],
+            "property": "css",
+            "value": "background-color:#0072b2;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship2"
+            ],
+            "property": "css",
+            "value": "background-color:#0072b2;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
+    ]
+  },
+  "cargoBadge2": {
+    "id": "cargoBadge2",
+    "type": "basic",
+    "parent": "ship2",
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
+    "z": 3,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "ship3": {
+    "id": "ship3",
+    "type": "basic",
+    "parent": "dock3",
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
+    "z": 2,
+    "layer": 1,
+    "movable": true,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "isShip": true,
+    "seatIdx": 3,
+    "pos": 14,
+    "cargo": 0,
+    "color": "#009e73",
+    "iconColor": "#ffffff",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#009e73;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
+    "cargoChangeRoutine": [
+      "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${cb}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      },
+      "var ind = 'cargoInd' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship3"
+            ],
+            "property": "css",
+            "value": "background-color:#009e73;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship3"
+            ],
+            "property": "css",
+            "value": "background-color:#009e73;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
+    ]
+  },
+  "cargoBadge3": {
+    "id": "cargoBadge3",
+    "type": "basic",
+    "parent": "ship3",
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
+    "z": 3,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "ship4": {
+    "id": "ship4",
+    "type": "basic",
+    "parent": "dock4",
+    "x": 27,
+    "y": 44,
+    "width": 38,
+    "height": 38,
+    "z": 2,
+    "layer": 1,
+    "movable": true,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "isShip": true,
+    "seatIdx": 4,
+    "pos": 21,
+    "cargo": 0,
+    "color": "#cc79a7",
+    "iconColor": "#ffffff",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#cc79a7;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa",
+    "cargoChangeRoutine": [
+      "var cb = 'cargoBadge' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${cb}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      },
+      "var ind = 'cargoInd' + ${PROPERTY seatIdx}",
+      {
+        "func": "SET",
+        "collection": [
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship4"
+            ],
+            "property": "css",
+            "value": "background-color:#cc79a7;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 2px 6px #000000aa"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ship4"
+            ],
+            "property": "css",
+            "value": "background-color:#cc79a7;border:3px solid #ffffffee;background-size:74%;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 5px #c0392b, 0 0 18px 8px #c0392b99"
+          }
+        ]
+      }
+    ]
+  },
+  "cargoBadge4": {
+    "id": "cargoBadge4",
+    "type": "basic",
+    "parent": "ship4",
+    "x": -3,
+    "y": 21,
+    "width": 20,
+    "height": 20,
+    "z": 3,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "borderRadius": "50%",
+    "text": "0",
+    "css": "background:#fdf3dc;color:#3a2a10;border:2px solid #3a2a10;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "tornado": {
+    "id": "tornado",
+    "type": "basic",
+    "parent": "s25",
+    "x": 10,
+    "y": 36,
+    "width": 42,
+    "height": 42,
+    "z": 4,
+    "layer": 2,
+    "movable": true,
+    "clickable": false,
+    "tpos": 25,
+    "image": "/i/game-icons.net/lorc/tornado.svg",
+    "color": "#20384a",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 6px #ffffffcc)",
+    "isStorm": true,
+    "overlap": true,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "tornado"
+            ],
+            "property": "css",
+            "value": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 6px #ffffffcc)"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "tornado"
+            ],
+            "property": "css",
+            "value": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 4px #c0392b) drop-shadow(0 0 12px #c0392b)"
+          }
+        ]
+      }
+    ]
+  },
+  "centerPlate": {
+    "id": "centerPlate",
+    "type": "basic",
+    "x": 387,
+    "y": 352,
+    "width": 296,
+    "height": 296,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "css": "background:radial-gradient(circle at 50% 32%, #d9f2ff 0%, #a3dcf1 52%, #6bb8da 100%);border:7px solid #f4e3b8;box-shadow:0 8px 24px #00000066, 0 0 0 3px #b98f4a"
+  },
+  "deco": {
+    "id": "deco",
+    "type": "basic",
+    "x": 407,
+    "y": 372,
+    "width": 256,
+    "height": 256,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/lorc/compass.svg",
+    "color": "#0d3f5e",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-position:center;background-repeat:no-repeat;opacity:0.14"
+  },
+  "wheelRing": {
+    "id": "wheelRing",
+    "type": "basic",
+    "x": 461,
+    "y": 426,
+    "width": 148,
+    "height": 148,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "css": "background:#ffffff33;box-shadow:0 0 0 4px #f4e3b8aa"
+  },
+  "vane0": {
+    "id": "vane0",
+    "type": "basic",
+    "x": 430,
+    "y": 395,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/lorc/wind-slap.svg",
+    "color": "#0d3f5e",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.7"
+  },
+  "vane1": {
+    "id": "vane1",
+    "type": "basic",
+    "x": 580,
+    "y": 395,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/three-friends.svg",
+    "color": "#0d3f5e",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.7"
+  },
+  "vane2": {
+    "id": "vane2",
+    "type": "basic",
+    "x": 580,
+    "y": 545,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "color": "#0d3f5e",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.7"
+  },
+  "vane3": {
+    "id": "vane3",
+    "type": "basic",
+    "x": 430,
+    "y": 545,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/lorc/water-splash.svg",
+    "color": "#0d3f5e",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;opacity:0.7"
+  },
+  "wheel": {
+    "id": "wheel",
+    "type": "dice",
+    "x": 477,
+    "y": 442,
+    "width": 116,
+    "height": 116,
+    "z": 2,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "color": "#fdf3dc",
+    "borderColor": "#b98f4a",
+    "borderRadius": "50%",
+    "rollTime": 900,
+    "css": "box-shadow:0 6px 16px #00000088",
+    "faces": [
+      {
+        "value": "push",
+        "image": "/i/game-icons.net/lorc/wind-slap.svg",
+        "text": " "
+      },
+      {
+        "value": "share",
+        "image": "/i/game-icons.net/delapouite/three-friends.svg",
+        "text": " "
+      },
+      {
+        "value": "home",
+        "image": "/i/game-icons.net/lorc/anchor.svg",
+        "text": " "
+      },
+      {
+        "value": "sink",
+        "image": "/i/game-icons.net/lorc/water-splash.svg",
+        "text": " "
+      }
+    ]
+  },
+  "panel": {
+    "id": "panel",
+    "type": "basic",
+    "x": 1062,
+    "y": 16,
+    "width": 522,
+    "height": 968,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background:linear-gradient(180deg,#3b2a17 0%,#241708 100%);box-shadow:inset 0 0 0 8px #f4e3b8, inset 0 0 0 12px #b98f4a, 0 18px 40px #00000066",
+    "borderRadius": 44
+  },
+  "goalPlate": {
+    "id": "goalPlate",
+    "type": "basic",
+    "x": 1090,
+    "y": 34,
+    "width": 470,
+    "height": 80,
+    "z": 0,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 14,
+    "css": "background:#fdf3dc;border:3px solid #c9922b;box-shadow:0 3px 8px #00000066"
+  },
+  "goalIcon": {
+    "id": "goalIcon",
+    "type": "basic",
+    "x": 1429,
+    "y": 46,
+    "width": 56,
+    "height": 56,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "color": "#4a2f10",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "goalText": {
+    "id": "goalText",
+    "type": "basic",
+    "x": 1257,
+    "y": 46,
+    "width": 90,
+    "height": 56,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "10",
+    "css": "color:#4a2f10;font-size:40px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "goalChest": {
+    "id": "goalChest",
+    "type": "basic",
+    "x": 1185,
+    "y": 46,
+    "width": 56,
+    "height": 56,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/coins.svg",
+    "color": "#4a2f10",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "seat1": {
+    "id": "seat1",
+    "type": "seat",
+    "index": 1,
+    "x": 1166,
+    "y": 122,
+    "width": 224,
+    "height": 80,
+    "z": 1,
+    "layer": -1,
+    "color": "#d55e00",
+    "borderRadius": 12,
+    "css": "font-size:22px",
+    "playerChangeRoutine": [
+      "var sh = 'ship' + ${PROPERTY index}",
+      "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "cargoInd1": {
+    "id": "cargoInd1",
+    "type": "basic",
+    "x": 1404,
+    "y": 130,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "iconColor": "#ffffff44",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#d55e00;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship1}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 1"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship1"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
+  },
+  "landInd1": {
+    "id": "landInd1",
+    "type": "basic",
+    "x": 1496,
+    "y": 130,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#00000030",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock1}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 1"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock1"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
+  },
+  "seat2": {
+    "id": "seat2",
+    "type": "seat",
+    "index": 2,
+    "x": 1166,
+    "y": 218,
+    "width": 224,
+    "height": 80,
+    "z": 1,
+    "layer": -1,
+    "color": "#0072b2",
+    "borderRadius": 12,
+    "css": "font-size:22px",
+    "playerChangeRoutine": [
+      "var sh = 'ship' + ${PROPERTY index}",
+      "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "cargoInd2": {
+    "id": "cargoInd2",
+    "type": "basic",
+    "x": 1404,
+    "y": 226,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "iconColor": "#ffffff44",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#0072b2;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship2}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 2"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship2"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
+  },
+  "landInd2": {
+    "id": "landInd2",
+    "type": "basic",
+    "x": 1496,
+    "y": 226,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#00000030",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock2}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 2"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock2"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
+  },
+  "seat3": {
+    "id": "seat3",
+    "type": "seat",
+    "index": 3,
+    "x": 1166,
+    "y": 314,
+    "width": 224,
+    "height": 80,
+    "z": 1,
+    "layer": -1,
+    "color": "#009e73",
+    "borderRadius": 12,
+    "css": "font-size:22px",
+    "playerChangeRoutine": [
+      "var sh = 'ship' + ${PROPERTY index}",
+      "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "cargoInd3": {
+    "id": "cargoInd3",
+    "type": "basic",
+    "x": 1404,
+    "y": 322,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "iconColor": "#ffffff44",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#009e73;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship3}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 3"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship3"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
+  },
+  "landInd3": {
+    "id": "landInd3",
+    "type": "basic",
+    "x": 1496,
+    "y": 322,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#00000030",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock3}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 3"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock3"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
+  },
+  "seat4": {
+    "id": "seat4",
+    "type": "seat",
+    "index": 4,
+    "x": 1166,
+    "y": 410,
+    "width": 224,
+    "height": 80,
+    "z": 1,
+    "layer": -1,
+    "color": "#cc79a7",
+    "borderRadius": 12,
+    "css": "font-size:22px",
+    "playerChangeRoutine": [
+      "var sh = 'ship' + ${PROPERTY index}",
+      "var cb = 'cargoBadge' + ${PROPERTY index}",
+      "var ci = 'cargoInd' + ${PROPERTY index}",
+      "var li = 'landInd' + ${PROPERTY index}",
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}",
+              "${cb}",
+              "${ci}",
+              "${li}"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "cargoInd4": {
+    "id": "cargoInd4",
+    "type": "basic",
+    "x": 1404,
+    "y": 418,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "iconColor": "#ffffff44",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#cc79a7;border:3px solid #ffffffcc;color:#fff;font-size:26px;font-weight:900;background-size:80%;background-position:center;display:flex;align-items:center;justify-content:center;text-shadow:0 0 4px #000,0 0 4px #000;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var cargo = ${PROPERTY cargo OF ship4}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⛵ 4"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the cargo on board by hand."
+          },
+          {
+            "type": "number",
+            "label": "⛵",
+            "variable": "c",
+            "value": "${cargo}",
+            "min": 0,
+            "max": 7
+          }
+        ]
+      },
+      "var c = min ${c} 7",
+      "var c = max ${c} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "ship4"
+        ],
+        "property": "cargo",
+        "value": "${c}"
+      }
+    ]
+  },
+  "landInd4": {
+    "id": "landInd4",
+    "type": "basic",
+    "x": 1496,
+    "y": 418,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "borderRadius": "50%",
+    "text": "0",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#00000030",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#fdf3dc;border:3px solid #c9922b;color:#4a2f10;font-size:26px;font-weight:900;background-size:76%;background-position:center;display:flex;align-items:center;justify-content:center;cursor:pointer",
+    "display": false,
+    "clickRoutine": [
+      "var landed = ${PROPERTY landed OF dock4}",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "⚓ 4"
+          },
+          {
+            "type": "subtitle",
+            "text": "Correct the treasure in the harbour by hand."
+          },
+          {
+            "type": "number",
+            "label": "⚓",
+            "variable": "l",
+            "value": "${landed}",
+            "min": 0,
+            "max": 99
+          }
+        ]
+      },
+      "var l = min ${l} 99",
+      "var l = max ${l} 0",
+      {
+        "func": "SET",
+        "collection": [
+          "dock4"
+        ],
+        "property": "landed",
+        "value": "${l}"
+      }
+    ]
+  },
+  "die": {
+    "id": "die",
+    "type": "dice",
+    "x": 1090,
+    "y": 502,
+    "width": 104,
+    "height": 104,
+    "z": 1,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#fdf3dc",
+    "pipColor": "#3a2a10",
+    "borderColor": "#8a6d3b",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      {
+        "value": "T",
+        "image": "/i/game-icons.net/lorc/tornado.svg",
+        "text": " "
+      }
+    ],
+    "css": "box-shadow:0 4px 12px #000000aa",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "rollBtn"
+        ]
+      }
+    ]
+  },
+  "rollBtn": {
+    "id": "rollBtn",
+    "type": "button",
+    "x": 1212,
+    "y": 516,
+    "width": 224,
+    "height": 76,
+    "z": 1,
+    "layer": 1,
+    "borderRadius": 40,
+    "backgroundColor": "#c9922b",
+    "backgroundColorOH": "#8a6220",
+    "borderColor": "#5b3f12",
+    "borderColorOH": "#c9922b",
+    "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#ffffff",
+    "css": "background-size:44px;background-position:center;background-repeat:no-repeat",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "TS"
+      },
+      {
+        "func": "COUNT",
+        "collection": "TS",
+        "variable": "nTurn"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nTurn}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Start a voyage first"
+              },
+              {
+                "type": "subtitle",
+                "text": "Take a seat, then press the anchor button to start a new voyage."
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "GET",
+            "collection": "TS",
+            "property": "index",
+            "variable": "turnIdx"
+          },
+          "var mine = 0",
+          {
+            "func": "FOREACH",
+            "collection": "playerSeats",
+            "loopRoutine": [
+              "var si = ${PROPERTY index OF $widgetID}",
+              {
+                "func": "IF",
+                "operand1": "${si}",
+                "operand2": "${turnIdx}",
+                "thenRoutine": [
+                  "var mine = 1"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${mine}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "engine",
+                "routine": "turnRoutine",
+                "arguments": {
+                  "idx": "${turnIdx}"
+                }
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "cancelButtonText": null,
+                "cancelButtonIcon": null,
+                "confirmButtonText": "OK",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Not your turn"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "The glowing seat shows whose turn it is."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "resetBtn": {
+    "id": "resetBtn",
+    "type": "button",
+    "x": 1456,
+    "y": 502,
+    "width": 104,
+    "height": 104,
+    "z": 1,
+    "layer": 1,
+    "borderRadius": 16,
+    "backgroundColor": "#7a4b16",
+    "backgroundColorOH": "#a8670f",
+    "borderColor": "#c9922b",
+    "borderColorOH": "#fdf3dc",
+    "image": "/i/game-icons.net/lorc/cycle.svg",
+    "iconColor": "#ffffff",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-size:52px;background-position:center;background-repeat:no-repeat",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "confirmButtonText": "New voyage",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Start a new voyage?"
+          },
+          {
+            "type": "subtitle",
+            "text": "All ships return to their harbours and all treasure goes back into the sea."
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "engine",
+        "routine": "resetRoutine"
+      }
+    ]
+  },
+  "legIcon0": {
+    "id": "legIcon0",
+    "type": "basic",
+    "x": 1098,
+    "y": 614,
+    "width": 52,
+    "height": 52,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "color": "#f0dfb8",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "legBadge0": {
+    "id": "legBadge0",
+    "type": "basic",
+    "x": 1162,
+    "y": 620,
+    "width": 40,
+    "height": 40,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "1",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "legText0": {
+    "id": "legText0",
+    "type": "basic",
+    "x": 1220,
+    "y": 618,
+    "width": 110,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0 – 1",
+    "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legIcon1": {
+    "id": "legIcon1",
+    "type": "basic",
+    "x": 1098,
+    "y": 730,
+    "width": 52,
+    "height": 52,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/chest.svg",
+    "color": "#f0dfb8",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "legBadge1": {
+    "id": "legBadge1",
+    "type": "basic",
+    "x": 1162,
+    "y": 736,
+    "width": 40,
+    "height": 40,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "2",
+    "css": "background:#c0392b;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "legText1": {
+    "id": "legText1",
+    "type": "basic",
+    "x": 1220,
+    "y": 734,
+    "width": 110,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "+2",
+    "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legIcon2": {
+    "id": "legIcon2",
+    "type": "basic",
+    "x": 1098,
+    "y": 788,
+    "width": 52,
+    "height": 52,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/island.svg",
+    "color": "#f0dfb8",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "legText2": {
+    "id": "legText2",
+    "type": "basic",
+    "x": 1162,
+    "y": 792,
+    "width": 158,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "±2",
+    "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legIcon3": {
+    "id": "legIcon3",
+    "type": "basic",
+    "x": 1098,
+    "y": 846,
+    "width": 52,
+    "height": 52,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#f0dfb8",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "legText3": {
+    "id": "legText3",
+    "type": "basic",
+    "x": 1162,
+    "y": 850,
+    "width": 158,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "max 7",
+    "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legIcon4": {
+    "id": "legIcon4",
+    "type": "basic",
+    "x": 1098,
+    "y": 904,
+    "width": 52,
+    "height": 52,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "color": "#f0dfb8",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "legText4": {
+    "id": "legText4",
+    "type": "basic",
+    "x": 1162,
+    "y": 908,
+    "width": 158,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "10",
+    "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "winBanner": {
+    "id": "winBanner",
+    "type": "basic",
+    "x": 235,
+    "y": 380,
+    "width": 600,
+    "height": 150,
+    "z": 40,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": true,
+    "display": false,
+    "borderRadius": 20,
+    "text": "",
+    "css": "cursor:pointer;background:#fdf3dc;border:6px solid #c9922b;color:#4a2f10;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;padding-left:90px;box-shadow:0 10px 30px #000000aa",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "winBanner",
+          "winIcon",
+          "hintPlate",
+          "hintText",
+          "hintIcon"
+        ],
+        "property": "display",
+        "value": false
+      }
+    ]
+  },
+  "engine": {
+    "id": "engine",
+    "type": "basic",
+    "x": 20,
+    "y": 20,
+    "width": 60,
+    "height": 60,
+    "z": 0,
+    "layer": 0,
+    "display": false,
+    "movable": false,
+    "clickable": false,
+    "text": "engine",
+    "turnRoutine": [
+      "var ship = 'ship' + ${idx}",
+      {
+        "func": "CLICK",
+        "collection": [
+          "die"
+        ],
+        "mode": "ignoreAll"
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 850
+      },
+      "var roll = ${PROPERTY value OF die}",
+      {
+        "func": "IF",
+        "operand1": "${roll}",
+        "operand2": "T",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "stormTurnRoutine",
+            "arguments": {
+              "ship": "${ship}"
+            }
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "sailRoutine",
+            "arguments": {
+              "ship": "${ship}",
+              "steps": "${roll}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turn": 1,
+        "turnCycle": "forward"
+      },
+      {
+        "func": "CALL",
+        "routine": "turnColorRoutine"
+      }
+    ],
+    "sailRoutine": [
+      "var pos = ${PROPERTY pos OF $ship}",
+      "var sidx = ${PROPERTY seatIdx OF $ship}",
+      "var home = ${sidx} - 1",
+      "var home = ${home} * 7",
+      "var docked = 0",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          "${steps}",
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${docked}",
+            "operand2": 0,
+            "thenRoutine": [
+              "var pos = ${pos} + 1",
+              "var pos = ${pos} % 28",
+              {
+                "func": "IF",
+                "operand1": "${pos}",
+                "operand2": "${home}",
+                "thenRoutine": [
+                  "var cargo = ${PROPERTY cargo OF $ship}",
+                  {
+                    "func": "IF",
+                    "operand1": "${cargo}",
+                    "relation": ">",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      {
+                        "func": "INPUT",
+                        "cancelButtonText": null,
+                        "cancelButtonIcon": null,
+                        "confirmButtonText": "OK",
+                        "fields": [
+                          {
+                            "type": "title",
+                            "text": "Your harbour"
+                          },
+                          {
+                            "type": "subtitle",
+                            "text": "Sail in and unload your cargo? The rest of your move is lost."
+                          },
+                          {
+                            "type": "switch",
+                            "label": "Sail in and unload",
+                            "variable": "dock",
+                            "value": "on"
+                          }
+                        ]
+                      },
+                      {
+                        "func": "IF",
+                        "operand1": "${dock}",
+                        "operand2": "on",
+                        "thenRoutine": [
+                          "var docked = 1"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${docked}",
+        "operand2": 1,
+        "thenRoutine": [
+          "var target = 'dock' + ${sidx}"
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "freeSpaceRoutine",
+            "variable": "freePos",
+            "arguments": {
+              "ship": "${ship}",
+              "pos": "${pos}"
+            }
+          },
+          "var pos = ${freePos}",
+          "var target = 's' + ${pos}"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${ship}",
+        "collection": "MOVER"
+      },
+      {
+        "func": "MOVE",
+        "collection": "MOVER",
+        "to": "${target}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${ship}"
+        ],
+        "property": "pos",
+        "value": "${pos}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${docked}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "unloadRoutine",
+            "arguments": {
+              "ship": "${ship}"
+            }
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "islandRoutine",
+            "arguments": {
+              "ship": "${ship}",
+              "pos": "${pos}",
+              "allowMeet": 1
+            }
+          }
+        ]
+      }
+    ],
+    "islandRoutine": [
+      "var sp = 's' + ${pos}",
+      "var kind = ${PROPERTY kind OF $sp}",
+      "var amount = ${PROPERTY amount OF $sp}",
+      "var room = 7 - ${PROPERTY cargo OF $ship}",
+      "var suggest = min ${amount} ${room}",
+      "var suggest = max ${suggest} 0",
+      {
+        "func": "IF",
+        "operand1": "${kind}",
+        "operand2": "green",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "Load",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Treasure!"
+              },
+              {
+                "type": "subtitle",
+                "text": "Take as much as you like, up to ${amount}. More than 7 on board and the ship capsizes."
+              },
+              {
+                "type": "number",
+                "label": "Treasure",
+                "variable": "take",
+                "value": "${suggest}",
+                "min": 0,
+                "max": "${amount}"
+              }
+            ]
+          },
+          "var take = min ${take} ${amount}",
+          "var take = max ${take} 0",
+          {
+            "func": "CALL",
+            "routine": "loadRoutine",
+            "arguments": {
+              "ship": "${ship}",
+              "n": "${take}",
+              "quiet": 0
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${kind}",
+        "operand2": "red",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "loadRoutine",
+            "arguments": {
+              "ship": "${ship}",
+              "n": 2,
+              "quiet": 0
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${allowMeet}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${kind}",
+            "relation": "!=",
+            "operand2": "green",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${kind}",
+                "relation": "!=",
+                "operand2": "red",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "meetRoutine",
+                    "arguments": {
+                      "ship": "${ship}",
+                      "pos": "${pos}"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "loadRoutine": [
+      "var cargo = ${PROPERTY cargo OF $ship}",
+      "var cargo = ${cargo} + ${n}",
+      {
+        "func": "IF",
+        "operand1": "${cargo}",
+        "relation": ">",
+        "operand2": 7,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${ship}"
+            ],
+            "property": "cargo",
+            "value": 0
+          },
+          {
+            "func": "IF",
+            "operand1": "${quiet}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "cancelButtonText": null,
+                "cancelButtonIcon": null,
+                "confirmButtonText": "Oh no",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Overloaded!"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "More than 7 treasure on board - the ship capsizes and the whole cargo sinks."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${ship}"
+            ],
+            "property": "cargo",
+            "value": "${cargo}"
+          }
+        ]
+      }
+    ],
+    "meetRoutine": [
+      "var sp = 's' + ${pos}",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${sp}",
+        "collection": "MEET"
+      },
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "collection": "MEET",
+        "mode": "intersect"
+      },
+      {
+        "func": "SELECT",
+        "property": "display",
+        "value": true,
+        "collection": "MEET",
+        "mode": "intersect"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${ship}",
+        "collection": "MEET",
+        "mode": "remove"
+      },
+      {
+        "func": "COUNT",
+        "collection": "MEET",
+        "variable": "nMeet"
+      },
+      {
+        "func": "GET",
+        "collection": "MEET",
+        "property": "id",
+        "variable": "firstRival"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nMeet}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "Do it",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Ships meet!"
+              },
+              {
+                "type": "subtitle",
+                "text": "Take up to 2 treasure from a rival - or push up to 2 of yours onto them to sink their ship. 0 does nothing."
+              },
+              {
+                "type": "choose",
+                "label": "Rival ship",
+                "source": "MEET",
+                "collection": "VICTIM",
+                "max": 1,
+                "scale": 2,
+                "value": "${firstRival}",
+                "variable": "chosen"
+              },
+              {
+                "type": "select",
+                "label": "What do you do?",
+                "variable": "act",
+                "options": [
+                  {
+                    "value": "take2",
+                    "text": "take 2 from them"
+                  },
+                  {
+                    "value": "take1",
+                    "text": "take 1 from them"
+                  },
+                  {
+                    "value": "none",
+                    "text": "nothing",
+                    "selected": true
+                  },
+                  {
+                    "value": "give1",
+                    "text": "push 1 onto them"
+                  },
+                  {
+                    "value": "give2",
+                    "text": "push 2 onto them"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "COUNT",
+            "collection": "VICTIM",
+            "variable": "nVictim"
+          },
+          {
+            "func": "IF",
+            "operand1": "${nVictim}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": "VICTIM",
+                "property": "id",
+                "variable": "victim"
+              },
+              "var amt = 0",
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "take2",
+                "thenRoutine": [
+                  "var amt = 2"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "take1",
+                "thenRoutine": [
+                  "var amt = 1"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "give1",
+                "thenRoutine": [
+                  "var amt = -1"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${act}",
+                "operand2": "give2",
+                "thenRoutine": [
+                  "var amt = -2"
+                ]
+              },
+              "var myCargo = ${PROPERTY cargo OF $ship}",
+              "var hisCargo = ${PROPERTY cargo OF $victim}",
+              {
+                "func": "IF",
+                "operand1": "${amt}",
+                "relation": ">",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var n = min ${amt} ${hisCargo}",
+                  "var hisCargo = ${hisCargo} - ${n}",
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${victim}"
+                    ],
+                    "property": "cargo",
+                    "value": "${hisCargo}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "loadRoutine",
+                    "arguments": {
+                      "ship": "${ship}",
+                      "n": "${n}",
+                      "quiet": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${amt}",
+                "relation": "<",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var give = 0 - ${amt}",
+                  "var n = min ${give} ${myCargo}",
+                  "var myCargo = ${myCargo} - ${n}",
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${ship}"
+                    ],
+                    "property": "cargo",
+                    "value": "${myCargo}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "loadRoutine",
+                    "arguments": {
+                      "ship": "${victim}",
+                      "n": "${n}",
+                      "quiet": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "unloadRoutine": [
+      "var sidx = ${PROPERTY seatIdx OF $ship}",
+      "var cargo = ${PROPERTY cargo OF $ship}",
+      {
+        "func": "SET",
+        "collection": [
+          "${ship}"
+        ],
+        "property": "cargo",
+        "value": 0
+      },
+      {
+        "func": "CALL",
+        "routine": "landRoutine",
+        "arguments": {
+          "sidx": "${sidx}",
+          "n": "${cargo}"
+        }
+      }
+    ],
+    "stormTurnRoutine": [
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Storm!"
+          },
+          {
+            "type": "subtitle",
+            "text": "You may sail on one island before the storm drifts."
+          },
+          {
+            "type": "switch",
+            "label": "Sail one island first",
+            "variable": "go",
+            "value": "off"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${go}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "sailRoutine",
+            "arguments": {
+              "ship": "${ship}",
+              "steps": 1
+            }
+          }
+        ]
+      },
+      {
+        "func": "COUNT",
+        "collection": "activeSeats",
+        "variable": "nPlayers"
+      },
+      "var maxStep = 7 - ${nPlayers}",
+      "var maxStep = max ${maxStep} 1",
+      "var maxStep = min ${maxStep} 5",
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "Blow",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Drift the storm"
+          },
+          {
+            "type": "subtitle",
+            "text": "The storm drifts against the sailing direction, up to ${maxStep} islands. 0 leaves it where it is."
+          },
+          {
+            "type": "number",
+            "label": "Islands",
+            "variable": "k",
+            "value": 0,
+            "min": 0,
+            "max": "${maxStep}"
+          }
+        ]
+      },
+      "var k = min ${k} ${maxStep}",
+      "var k = max ${k} 0",
+      {
+        "func": "IF",
+        "operand1": "${k}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "var tp = ${PROPERTY tpos OF tornado}",
+          "var tp = ${tp} - ${k}",
+          "var tp = ${tp} + 28",
+          "var tp = ${tp} % 28",
+          "var ts = 's' + ${tp}",
+          {
+            "func": "SET",
+            "collection": [
+              "tornado"
+            ],
+            "property": "tpos",
+            "value": "${tp}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "tornado"
+            ],
+            "property": "parent",
+            "value": "${ts}"
+          },
+          {
+            "func": "CALL",
+            "routine": "stormHitRoutine",
+            "arguments": {
+              "pos": "${tp}"
+            }
+          }
+        ]
+      }
+    ],
+    "stormHitRoutine": [
+      "var sp = 's' + ${pos}",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${sp}",
+        "collection": "HIT"
+      },
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "collection": "HIT",
+        "mode": "intersect"
+      },
+      {
+        "func": "SELECT",
+        "property": "display",
+        "value": true,
+        "collection": "HIT",
+        "mode": "intersect"
+      },
+      {
+        "func": "COUNT",
+        "collection": "HIT",
+        "variable": "nHit"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nHit}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "wheel"
+            ],
+            "mode": "ignoreAll"
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 900
+          },
+          "var wind = ${PROPERTY value OF wheel}",
+          {
+            "func": "IF",
+            "operand1": "${wind}",
+            "operand2": "push",
+            "thenRoutine": [
+              "var np = ${pos} + 1",
+              "var np = ${np} % 28",
+              "var nt = 's' + ${np}",
+              {
+                "func": "FOREACH",
+                "collection": "HIT",
+                "loopRoutine": [
+                  "var blown = ${widgetID}",
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "value": "${blown}",
+                    "collection": "ONE"
+                  },
+                  {
+                    "func": "MOVE",
+                    "collection": "ONE",
+                    "to": "${nt}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${blown}"
+                    ],
+                    "property": "pos",
+                    "value": "${np}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "islandRoutine",
+                    "arguments": {
+                      "ship": "${blown}",
+                      "pos": "${np}",
+                      "allowMeet": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${wind}",
+            "operand2": "share",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "isShip",
+                "value": true,
+                "collection": "FLEET"
+              },
+              {
+                "func": "SELECT",
+                "property": "display",
+                "value": true,
+                "collection": "FLEET",
+                "mode": "intersect"
+              },
+              {
+                "func": "FOREACH",
+                "collection": "HIT",
+                "loopRoutine": [
+                  "var giver = ${widgetID}",
+                  {
+                    "func": "FOREACH",
+                    "collection": "FLEET",
+                    "loopRoutine": [
+                      "var taker = ${widgetID}",
+                      {
+                        "func": "IF",
+                        "operand1": "${taker}",
+                        "relation": "!=",
+                        "operand2": "${giver}",
+                        "thenRoutine": [
+                          "var gc = ${PROPERTY cargo OF $giver}",
+                          {
+                            "func": "IF",
+                            "operand1": "${gc}",
+                            "relation": ">",
+                            "operand2": 0,
+                            "thenRoutine": [
+                              "var gc = ${gc} - 1",
+                              {
+                                "func": "SET",
+                                "collection": [
+                                  "${giver}"
+                                ],
+                                "property": "cargo",
+                                "value": "${gc}"
+                              },
+                              {
+                                "func": "CALL",
+                                "routine": "giveRoutine",
+                                "arguments": {
+                                  "ship": "${taker}"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${wind}",
+            "operand2": "home",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "collection": "HIT",
+                "loopRoutine": [
+                  "var saved = ${widgetID}",
+                  "var si = ${PROPERTY seatIdx OF $saved}",
+                  "var hm = ${si} - 1",
+                  "var hm = ${hm} * 7",
+                  "var hs = 'dock' + ${si}",
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "value": "${saved}",
+                    "collection": "ONE"
+                  },
+                  {
+                    "func": "MOVE",
+                    "collection": "ONE",
+                    "to": "${hs}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${saved}"
+                    ],
+                    "property": "pos",
+                    "value": "${hm}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "unloadRoutine",
+                    "arguments": {
+                      "ship": "${saved}"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${wind}",
+            "operand2": "sink",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "collection": "HIT",
+                "loopRoutine": [
+                  "var hitShip = ${widgetID}",
+                  "var c = ${PROPERTY cargo OF $hitShip}",
+                  "var c = ${c} - 2",
+                  "var c = max ${c} 0",
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${hitShip}"
+                    ],
+                    "property": "cargo",
+                    "value": "${c}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "resetRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "winBanner",
+          "winIcon",
+          "hintPlate",
+          "hintText",
+          "hintIcon"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4,
+          1
+        ],
+        "loopRoutine": [
+          "var sh = 'ship' + ${value}",
+          "var cb = 'cargoBadge' + ${value}",
+          "var ci = 'cargoInd' + ${value}",
+          "var li = 'landInd' + ${value}",
+          "var seatId = 'seat' + ${value}",
+          "var hm = ${value} - 1",
+          "var hm = ${hm} * 7",
+          "var hs = 'dock' + ${value}",
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}"
+            ],
+            "property": "cargo",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${sh}"
+            ],
+            "property": "pos",
+            "value": "${hm}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${sh}",
+            "collection": "ONE"
+          },
+          {
+            "func": "MOVE",
+            "collection": "ONE",
+            "to": "${hs}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${hs}"
+            ],
+            "property": "landed",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${cb}"
+            ],
+            "property": "text",
+            "value": 0
+          },
+          "var who = ${PROPERTY player OF $seatId}",
+          {
+            "func": "IF",
+            "condition": "${who}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${sh}",
+                  "${cb}",
+                  "${ci}",
+                  "${li}"
+                ],
+                "property": "display",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "${sh}",
+                  "${cb}",
+                  "${ci}",
+                  "${li}"
+                ],
+                "property": "display",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      "var tp = randInt 0 27",
+      "var ts = 's' + ${tp}",
+      {
+        "func": "SET",
+        "collection": [
+          "tornado"
+        ],
+        "property": "tpos",
+        "value": "${tp}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tornado"
+        ],
+        "property": "parent",
+        "value": "${ts}"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "CALL",
+        "routine": "turnColorRoutine"
+      }
+    ],
+    "freeSpaceRoutine": [
+      "var placed = 0",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          28,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${placed}",
+            "operand2": 0,
+            "thenRoutine": [
+              "var sp = 's' + ${pos}",
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${sp}",
+                "collection": "OCC"
+              },
+              {
+                "func": "SELECT",
+                "property": "isShip",
+                "value": true,
+                "collection": "OCC",
+                "mode": "intersect"
+              },
+              {
+                "func": "SELECT",
+                "property": "display",
+                "value": true,
+                "collection": "OCC",
+                "mode": "intersect"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "${ship}",
+                "collection": "OCC",
+                "mode": "remove"
+              },
+              {
+                "func": "COUNT",
+                "collection": "OCC",
+                "variable": "nOcc"
+              },
+              {
+                "func": "IF",
+                "operand1": "${nOcc}",
+                "relation": "<",
+                "operand2": 2,
+                "thenRoutine": [
+                  "var placed = 1"
+                ],
+                "elseRoutine": [
+                  "var pos = ${pos} + 1",
+                  "var pos = ${pos} % 28"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "var result = ${pos}"
+    ],
+    "landRoutine": [
+      "var hs = 'dock' + ${sidx}",
+      "var landed = ${PROPERTY landed OF $hs}",
+      "var landed = ${landed} + ${n}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hs}"
+        ],
+        "property": "landed",
+        "value": "${landed}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${landed}",
+        "relation": ">=",
+        "operand2": 10,
+        "thenRoutine": [
+          "var seatId = 'seat' + ${sidx}",
+          "var winner = ${PROPERTY player OF $seatId}",
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner"
+            ],
+            "property": "text",
+            "value": "${winner}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "hintText"
+            ],
+            "property": "text",
+            "value": "Press for a new voyage"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner",
+              "winIcon",
+              "hintPlate",
+              "hintText",
+              "hintIcon"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "giveRoutine": [
+      "var si = ${PROPERTY seatIdx OF $ship}",
+      "var hs = 'dock' + ${si}",
+      "var par = ${PROPERTY parent OF $ship}",
+      {
+        "func": "IF",
+        "operand1": "${par}",
+        "operand2": "${hs}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "landRoutine",
+            "arguments": {
+              "sidx": "${si}",
+              "n": 1
+            }
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "loadRoutine",
+            "arguments": {
+              "ship": "${ship}",
+              "n": 1,
+              "quiet": 1
+            }
+          }
+        ]
+      }
+    ],
+    "turnColorRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "TC"
+      },
+      {
+        "func": "COUNT",
+        "collection": "TC",
+        "variable": "nTC"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nTC}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "TC",
+            "property": "index",
+            "variable": "tcIdx"
+          },
+          "var tcShip = 'ship' + ${tcIdx}",
+          "var tcCol = ${PROPERTY color OF $tcShip}",
+          {
+            "func": "SET",
+            "collection": [
+              "rollBtn"
+            ],
+            "property": "borderColor",
+            "value": "${tcCol}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "rollBtn"
+            ],
+            "property": "borderColor",
+            "value": "#5b3f12"
+          }
+        ]
+      }
+    ]
+  },
+  "dock1": {
+    "id": "dock1",
+    "type": "holder",
+    "x": 160,
+    "y": 125,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 1,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 0
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "dock2": {
+    "id": "dock2",
+    "type": "holder",
+    "x": 792,
+    "y": 125,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 2,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 7
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "dock3": {
+    "id": "dock3",
+    "type": "holder",
+    "x": 792,
+    "y": 757,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 3,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 14
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "dock4": {
+    "id": "dock4",
+    "type": "holder",
+    "x": 160,
+    "y": 757,
+    "width": 92,
+    "height": 92,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isShip": true
+      }
+    ],
+    "dropOffsetX": 27,
+    "dropOffsetY": 44,
+    "stackOffsetX": 22,
+    "kind": "harbour",
+    "amount": 0,
+    "harbourOf": 4,
+    "landed": 0,
+    "landedChangeRoutine": [
+      "var si = ${PROPERTY harbourOf}",
+      "var bi = ${si} - 1",
+      "var bi = ${bi} * 7",
+      "var hb = 'b' + ${bi}",
+      "var ind = 'landInd' + ${si}",
+      {
+        "func": "SET",
+        "collection": [
+          "${hb}",
+          "${ind}"
+        ],
+        "property": "text",
+        "value": "${value}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "isShip",
+        "value": true,
+        "source": "child",
+        "collection": "ARRIVED"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ARRIVED"
+        ],
+        "property": "pos",
+        "value": 21
+      }
+    ],
+    "stackOffsetY": 8
+  },
+  "entArt1": {
+    "id": "entArt1",
+    "type": "basic",
+    "x": 90,
+    "y": 55,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #d55e00, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "entArt2": {
+    "id": "entArt2",
+    "type": "basic",
+    "x": 862,
+    "y": 55,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #0072b2, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "entArt3": {
+    "id": "entArt3",
+    "type": "basic",
+    "x": 862,
+    "y": 827,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #009e73, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "entArt4": {
+    "id": "entArt4",
+    "type": "basic",
+    "x": 90,
+    "y": 827,
+    "width": 118,
+    "height": 118,
+    "z": 0,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "42% 58% 46% 54% / 50% 44% 56% 50%",
+    "image": "/i/game-icons.net/lorc/anchor.svg",
+    "iconColor": "#08324c",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "css": "background-color:#5aa83f;box-shadow:inset 0 0 0 10px #ecd7a4, inset 0 0 0 13px #f7ecd0, inset 0 -26px 26px -16px #2a6b24, 0 0 0 6px #cc79a7, 0 0 0 12px #ffffff55, 0 7px 14px #00000055;background-repeat:no-repeat;background-size:40px;background-position:center 16px"
+  },
+  "goalArrow": {
+    "id": "goalArrow",
+    "type": "basic",
+    "x": 1363,
+    "y": 50,
+    "width": 48,
+    "height": 48,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/icons/arrow_right.svg",
+    "color": "#4a2f10",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;background-position:center"
+  },
+  "helpBtn": {
+    "id": "helpBtn",
+    "type": "button",
+    "x": 1100,
+    "y": 44,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "layer": 1,
+    "borderRadius": "50%",
+    "backgroundColor": "#7a4b16",
+    "backgroundColorOH": "#a8670f",
+    "borderColor": "#c9922b",
+    "borderColorOH": "#fdf3dc",
+    "text": "?",
+    "css": "font-size:38px;font-weight:900",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "cancelButtonText": null,
+        "cancelButtonIcon": null,
+        "confirmButtonText": "OK",
+        "fields": [
+          {
+            "type": "title",
+            "text": "How to play"
+          },
+          {
+            "type": "subtitle",
+            "text": "Goal: be the first captain to land 10 treasure in your own harbour."
+          },
+          {
+            "type": "text",
+            "text": "1. Press the round brown button to start a new voyage - every ship goes back to its own harbour and the storm is placed at random."
+          },
+          {
+            "type": "text",
+            "text": "2. On your turn press the gold button (or the die). Sail your ship that many islands along the arrows."
+          },
+          {
+            "type": "text",
+            "text": "3. Green island with a green number: take up to that many treasure. Island with a red 2: you must take 2."
+          },
+          {
+            "type": "text",
+            "text": "4. Plain island: if a rival ship is there you may take up to 2 treasure from it - or push up to 2 of yours onto it to sink it."
+          },
+          {
+            "type": "text",
+            "text": "5. More than 7 treasure on board and your ship capsizes: the whole cargo sinks."
+          },
+          {
+            "type": "text",
+            "text": "6. Sail past your own harbour to turn in and unload. The rest of the move is lost, the treasure is safe."
+          },
+          {
+            "type": "text",
+            "text": "7. Tornado on the die: you may sail one island, then you drift the storm backwards along the route. Every ship the storm reaches spins the wind wheel in the middle of the sea."
+          },
+          {
+            "type": "subtitle",
+            "text": "The wind wheel"
+          },
+          {
+            "type": "text",
+            "text": "Gust (top left): the ship is blown one island onwards. Three friends (top right): the ship gives one treasure to every other ship. Anchor (bottom right): the ship is carried home and unloads. Splash (bottom left): the ship loses 2 treasure."
+          },
+          {
+            "type": "subtitle",
+            "text": "Playing by hand"
+          },
+          {
+            "type": "text",
+            "text": "Nothing is ever blocked: you can drag the ships and the storm anywhere yourself, and click the two round counters beside your name to correct the cargo on board and the treasure landed. A ship that is not on a space glows red."
+          }
+        ]
+      }
+    ]
+  },
+  "seatShip1": {
+    "id": "seatShip1",
+    "type": "basic",
+    "x": 1090,
+    "y": 130,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#d55e00;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "seatShip2": {
+    "id": "seatShip2",
+    "type": "basic",
+    "x": 1090,
+    "y": 226,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#0072b2;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "seatShip3": {
+    "id": "seatShip3",
+    "type": "basic",
+    "x": 1090,
+    "y": 322,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#009e73;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "seatShip4": {
+    "id": "seatShip4",
+    "type": "basic",
+    "x": 1090,
+    "y": 418,
+    "width": 64,
+    "height": 64,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/delapouite/sailboat.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-color:#cc79a7;border:3px solid #ffffffcc;box-shadow:0 2px 6px #00000088;background-size:74%;background-position:center;background-repeat:no-repeat"
+  },
+  "legCap0": {
+    "id": "legCap0",
+    "type": "basic",
+    "x": 1330,
+    "y": 618,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "take what you like",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap1": {
+    "id": "legCap1",
+    "type": "basic",
+    "x": 1330,
+    "y": 734,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "you must take 2",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap2": {
+    "id": "legCap2",
+    "type": "basic",
+    "x": 1330,
+    "y": 792,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "meet: rob or dump 2",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap3": {
+    "id": "legCap3",
+    "type": "basic",
+    "x": 1330,
+    "y": 850,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "8 or more capsizes",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap4": {
+    "id": "legCap4",
+    "type": "basic",
+    "x": 1330,
+    "y": 908,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "land 10 to win",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "hintPlate": {
+    "id": "hintPlate",
+    "type": "basic",
+    "x": 300,
+    "y": 566,
+    "width": 420,
+    "height": 84,
+    "z": 39,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 20,
+    "css": "pointer-events:none;background:#fdf3dc;border:5px solid #c9922b;box-shadow:0 8px 24px #000000aa"
+  },
+  "hintText": {
+    "id": "hintText",
+    "type": "basic",
+    "x": 323,
+    "y": 566,
+    "width": 300,
+    "height": 84,
+    "z": 41,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "Take a seat, then press",
+    "css": "pointer-events:none;color:#4a2f10;font-size:25px;font-weight:700;display:flex;align-items:center;justify-content:flex-end"
+  },
+  "hintIcon": {
+    "id": "hintIcon",
+    "type": "basic",
+    "x": 641,
+    "y": 580,
+    "width": 56,
+    "height": 56,
+    "z": 41,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "image": "/i/game-icons.net/lorc/cycle.svg",
+    "color": "#ffffff",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "pointer-events:none;background-color:#7a4b16;border:3px solid #c9922b;background-size:34px;background-position:center;background-repeat:no-repeat"
+  },
+  "winIcon": {
+    "id": "winIcon",
+    "type": "basic",
+    "x": 276,
+    "y": 418,
+    "width": 74,
+    "height": 74,
+    "z": 41,
+    "layer": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "display": false,
+    "image": "/i/game-icons.net/lorc/laurel-crown.svg",
+    "color": "#4a2f10",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center"
+  },
+  "legIcon5": {
+    "id": "legIcon5",
+    "type": "basic",
+    "x": 1098,
+    "y": 672,
+    "width": 52,
+    "height": 52,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "color": "#f0dfb8",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain"
+  },
+  "legBadge5": {
+    "id": "legBadge5",
+    "type": "basic",
+    "x": 1162,
+    "y": 678,
+    "width": 40,
+    "height": 40,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "text": "3",
+    "css": "background:#2f8f3f;color:#fff;border:3px solid #ffffffdd;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center"
+  },
+  "legText5": {
+    "id": "legText5",
+    "type": "basic",
+    "x": 1220,
+    "y": 676,
+    "width": 110,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0 – 3",
+    "css": "color:#f0dfb8;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "legCap5": {
+    "id": "legCap5",
+    "type": "basic",
+    "x": 1330,
+    "y": 676,
+    "width": 226,
+    "height": 44,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "take what you like",
+    "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  }
+}
