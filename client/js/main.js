@@ -888,9 +888,11 @@ onLoad(function() {
       // the returned promises reject when the browser denies the request (for
       // example inside an iframe without allowfullscreen) - don't treat that
       // as a client error
+      // compat-fallback api.Document.fullscreenElement: only read where requestFullscreen exists, the webkit branch below covers the rest
       if(!document.fullscreenElement)
         document.documentElement.requestFullscreen().catch(e=>console.warn(`Could not enter fullscreen mode: ${e.message}`));
       else
+        // compat-fallback api.Document.exitFullscreen: same branch, webkitExitFullscreen below
         document.exitFullscreen().catch(e=>console.warn(`Could not exit fullscreen mode: ${e.message}`));
     } else if(document.documentElement.webkitRequestFullscreen) {
       if(!document.webkitFullscreenElement)
