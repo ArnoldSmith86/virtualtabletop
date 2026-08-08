@@ -2363,3 +2363,22 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await t.expect(Selector('#jeLog .jeLogNote').innerText).contains('could not be recorded');
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
+
+test('Send feedback', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#statesButton')
+    .click('#feedbackButton')
+    .expect(Selector('#feedbackOverlay').visible).ok()
+    .expect(Selector('#statesButton').hasClass('active')).notOk()
+    .typeText('#feedbackOverlay textarea', 'TestCafe feedback test', { replace: true })
+    .click('#feedbackOverlay button[icon=check]')
+    .expect(Selector('#feedbackOverlay .feedbackThanks').visible).ok()
+    // after the thanks message, the previously open overlay and its active tab come back
+    .expect(Selector('#statesOverlay').visible).ok({ timeout: 5000 })
+    .expect(Selector('#feedbackOverlay').visible).notOk()
+    .expect(Selector('#statesButton').hasClass('active')).ok();
+});

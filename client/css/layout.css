@@ -532,6 +532,11 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
       content: '[hide_side_bar]';
     }
 
+    #feedbackButton::before {
+      content: 'feedback';
+      font-family: 'Material Symbols' !important;
+    }
+
     #aboutButton::before {
       content: '[vtt_logo]';
     }
