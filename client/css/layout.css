@@ -474,7 +474,7 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
     }
 
     #playersButton::before {
-      content: '[users_settings]';
+      content: '[people]';
     }
 
     #editButton::before {
@@ -756,6 +756,16 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
   background: #00000022;
 }
 
+/* the stack is scrolled inside the overlay instead of stretching it. cqh, not vh: the overlay is
+   the board, which can be a lot shorter than the window - 40vh was taller than the whole overlay
+   on a wide board in a tall window */
+#clientErrorStack {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 40cqh;
+  overflow: auto;
+}
+
 div[icon] {
   background: var(--roomColor);
   position: relative;
@@ -925,8 +935,7 @@ body:not(.edit) .widget.limbo {
   position: fixed;
   top: 5vh;
   left: 5vw;
-  transition: opacity 200ms ease;
-  transition-delay: 400ms, 400ms;
+  transition: opacity 200ms ease 400ms;
   transform-origin: top left;
   pointer-events: none;
 }

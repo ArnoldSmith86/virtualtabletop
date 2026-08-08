@@ -418,7 +418,12 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
   white-space: normal;
 }
 
-#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers {
+/* This panel covers the command buttons underneath it and only lists what the cursor is hovering in the room,
+   so it hides while the cursor is over the editor. An open overlay (the symbol picker, a dialog) takes the
+   cursor away from the room in the same way, but does not necessarily put it over the editor - without
+   body.overlayActive the panel stayed up over the commands for as long as the overlay was open. */
+#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers,
+body.overlayActive #jeWidgetLayers {
   display: none;
 }
 

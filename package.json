@@ -10,6 +10,7 @@
     "debug": "nodemon -e js,mjs,css,html,json --ignore save/ --ignore coverage/ --ignore tests/ --inspect server.mjs",
     "start": "node server.mjs",
     "stresstest": "node tests/server/loadtest.js",
+    "corpus-census": "node tests/server/corpus-census.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "test-debug": "node --experimental-vm-modules --inspect-brk=9239 node_modules/.bin/jest",
     "test-cont": "nodemon -e js,mjs,css,html --ignore save/ --ignore coverage/ --experimental-vm-modules node_modules/.bin/jest",
@@ -51,9 +52,8 @@
     "crc-32": "^1.2.2",
     "dompurify": "^3.3.0",
     "express": "^5.1.0",
+    "fflate": "^0.8.2",
     "html-minifier-terser": "^7.2.0",
-    "jszip": "^3.10.1",
-    "node-fetch": "^3.3.2",
     "terser": "^5.49.0",
     "ws": "^8.18.3"
   },

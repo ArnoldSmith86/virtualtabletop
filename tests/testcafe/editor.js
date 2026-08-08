@@ -943,10 +943,24 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#deckEditorTreeAdd')
     .click('#deckEditorAddImage')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // this picker shows images only, so a search that only a font icon answers has to say so instead of
+    // showing the empty list ("10k" is a material symbol and matches nothing among the images)
+    .typeText('#symbolPickerOverlay input', '10k')
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolList').visible).notOk()
+    .selectText('#symbolPickerOverlay input')
+    .pressKey('delete')
+    .expect(Selector('#symbolNoResults').visible).notOk()
     .click(Selector('#symbolList .gameicons').nth(0))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // the same search in the unrestricted picker does find its one match
+    .typeText('#symbolPickerOverlay input', '10k')
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList i:not(.hidden)').count).eql(1)
+    .selectText('#symbolPickerOverlay input')
+    .pressKey('delete')
     .click(Selector('#symbolList .material-symbols').nth(0))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 1 });
 
@@ -957,6 +971,33 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .pressKey('esc')
     .pressKey('esc');
   await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
+});
+
+test('The symbol picker says an image-only search found nothing', async t => {
+  await setRoomState({
+    // the "Pick a symbol" button only shows up while the text is in symbol mode, which the class decides
+    w: { id: 'w', type: 'basic', x: 200, y: 200, text: 'home', classes: 'material-symbols' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // that picker offers the font icons only, so a search that only an image answers ("abbot" is a
+  // game-icon) leaves the list empty and has to explain that rather than show a blank card
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_w')
+    .click(Selector('#editorModuleTopLeft button[icon=emoji_symbols]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .typeText('#symbolPickerOverlay input', 'abbot')
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolNoResults').innerText).contains('abbot')
+    .expect(Selector('#symbolList').visible).notOk()
+    .typeText('#symbolPickerOverlay input', '10k', { replace: true })
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList .material-symbols').filterVisible().count).eql(1)
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk();
 });
 
 test('Deck editor: breadcrumb undo and redo', async t => {

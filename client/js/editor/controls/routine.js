@@ -3276,7 +3276,10 @@ class RoutineOperationEditor {
       this.notifyChangeListeners(this.operation);
     });
     this.subroutineEditors[property] = routineEditor;
-    dom.append(routineEditor.render());
+    // the constructor already rendered the block into domElement - rendering it a
+    // second time here would do the whole nested subtree twice per level, which
+    // is 2^depth renders for a deeply nested routine
+    dom.append(routineEditor.domElement);
   }
 
   resolveParameter(property) {
