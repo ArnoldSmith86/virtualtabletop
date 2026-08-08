@@ -110,8 +110,7 @@ onLoad(function() {
       widgetsState: [...widgets.keys()].map(id=>widgets.get(id).state),
       url: location.href,
       userAgent: navigator.userAgent,
-      playerName,
-      html: document.documentElement.outerHTML
+      playerName
     };
 
     const button = $('#clientErrorOverlay button');
