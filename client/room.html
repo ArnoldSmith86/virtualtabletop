@@ -710,18 +710,41 @@
        support. The versions are the browserslist key of package.json, kept in step with it by
        tests/browsercompat.test.js. -->
   <div id="unsupportedBrowser" class="unsupportedBrowser" hidden>
+    <img src="i/branding/logo.svg" alt="VirtualTabletop">
     <h1>This browser is too old for VirtualTabletop</h1>
-    <p id="unsupportedBrowserReason">It is missing something VirtualTabletop is built on.</p>
-    <p id="unsupportedBrowserVersions">VirtualTabletop needs <b>Chrome 88</b>, <b>Edge 88</b>, <b>Firefox 79</b>, <b>Safari 14.1</b>, <b>Safari on iOS 14.5</b> or <b>Samsung Internet 15</b> - or any version newer than those. Please update this browser, or open the room in one of them.</p>
+    <p>Please update this browser, or open this page in one of these - or anything newer:</p>
+    <ul id="unsupportedBrowserVersions">
+      <li><b>Chrome 88</b></li>
+      <li><b>Edge 88</b></li>
+      <li><b>Firefox 79</b></li>
+      <li><b>Safari 14.1</b></li>
+      <li><b>Safari on iOS 14.5</b></li>
+      <li><b>Samsung Internet 15</b></li>
+    </ul>
+    <p class="unsupportedBrowserURL">This page:<br><span id="unsupportedBrowserURL"></span></p>
     <p><a href="#" id="unsupportedBrowserContinue">Let me try anyway</a></p>
+    <p id="unsupportedBrowserReason" class="unsupportedBrowserReason">(this browser is missing something VirtualTabletop is built on)</p>
   </div>
+  <a href="#" id="unsupportedBrowserReopen" class="unsupportedBrowserReopen" hidden>Why this may not work</a>
   <script>
     function unsupportedBrowser(missing) {
-      document.getElementById('unsupportedBrowserReason').innerHTML = 'It has no ' + missing + ', which VirtualTabletop is built on.';
+      document.getElementById('unsupportedBrowserReason').innerHTML = '(this browser is missing ' + missing + ', which VirtualTabletop is built on)';
       document.getElementById('unsupportedBrowser').removeAttribute('hidden');
+      document.getElementById('unsupportedBrowserReopen').setAttribute('hidden', '');
     }
+    // whoever has to move to another browser has to take the link with them, and they are on the
+    // machine that cannot open it - so spell the URL out instead of leaving it in the address bar
+    document.getElementById('unsupportedBrowserURL').textContent = window.location.href;
     document.getElementById('unsupportedBrowserContinue').onclick = function() {
       document.getElementById('unsupportedBrowser').setAttribute('hidden', '');
+      // dismissing is not final: the app may well do nothing at all, and then the loading screen
+      // is all that is left of the explanation
+      document.getElementById('unsupportedBrowserReopen').removeAttribute('hidden');
+      return false;
+    };
+    document.getElementById('unsupportedBrowserReopen').onclick = function() {
+      document.getElementById('unsupportedBrowser').removeAttribute('hidden');
+      document.getElementById('unsupportedBrowserReopen').setAttribute('hidden', '');
       return false;
     };
     // A browser can be new enough to run this file and still be too old for the room. These are
@@ -739,6 +762,7 @@
   <script nomodule>unsupportedBrowser('JavaScript modules');</script>
   <noscript>
     <div class="unsupportedBrowser">
+      <img src="i/branding/logo.svg" alt="VirtualTabletop">
       <h1>VirtualTabletop needs JavaScript</h1>
       <p>This page is a JavaScript application - there is nothing to show without it.</p>
       <p>Please enable JavaScript for this site and reload the page.</p>

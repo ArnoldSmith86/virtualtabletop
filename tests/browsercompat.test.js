@@ -298,10 +298,21 @@ describe('the fallbacks CSS has itself', () => {
 describe('the message a browser too old for the client gets', () => {
   test('names every browser in the browserslist key, at the version the key asks for', () => {
     const room = readFileSync('client/room.html', 'utf8');
-    const message = room.match(/<p id="unsupportedBrowserVersions">([\s\S]*?)<\/p>/)[1];
+    const message = room.match(/<ul id="unsupportedBrowserVersions">([\s\S]*?)<\/ul>/)[1];
     const named = [ ...message.matchAll(/<b>(.*?)<\/b>/g) ].map(match => match[1]);
     const { targets } = resolveTargets(undefined, { path: process.cwd() });
     expect(named.sort()).toEqual(targets.map(target => describeTarget(target).replace(/\.0$/, '')).sort());
+  });
+
+  // one sentence with five things pasted into it, and nobody sees four of the five without an
+  // ancient browser to hand - 'It has no ' + 'the fetch API' shipped exactly that way
+  test('reads as a sentence with every feature name it pastes into it', () => {
+    const room = readFileSync('client/room.html', 'utf8');
+    const [ , before, after ] = room.match(/unsupportedBrowserReason'\)\.innerHTML = '(.*?)' \+ missing \+ '(.*?)';/);
+    const named = [ ...room.matchAll(/unsupportedBrowser\('(.*?)'\)/g) ].map(match => match[1]);
+    expect(named.length).toBeGreaterThan(1);
+    for(const missing of named)
+      expect(before + missing + after).not.toMatch(/\b(a|an|the|no) (a|an|the)\b/);
   });
 });
 
