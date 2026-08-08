@@ -79,6 +79,10 @@ body.loadingEditMode * {
   line-height: 1.5;
 }
 
+.unsupportedBrowser a {
+  color: #ffffff;
+}
+
 /* the overlays are children of #roomArea, so their size is the board's, not the window's.
    Their breakpoints are container queries against this box: as media queries they measured
    the window, which only said something about how much room an overlay has back when every

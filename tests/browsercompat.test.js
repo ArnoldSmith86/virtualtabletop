@@ -1,6 +1,8 @@
+import { readFileSync } from 'fs';
+
 import { scanCSS } from '../tools/browsercompat/css.mjs';
 import { blankNonCode, scanJS } from '../tools/browsercompat/js.mjs';
-import { checkFiles, checkSource, clientFiles, collectAnnotations } from '../tools/browsercompat/index.mjs';
+import { checkFiles, checkSource, clientFiles, collectAnnotations, describeTarget } from '../tools/browsercompat/index.mjs';
 import { compareVersions, createLookup, loadCompatData, resolveTargets } from '../tools/browsercompat/support.mjs';
 import exceptions from '../tools/browsercompat/exceptions.mjs';
 
@@ -224,6 +226,19 @@ describe('the fallbacks CSS has itself', () => {
 
   test('does not let a declaration in another rule count', () => {
     expect(check('.a { overflow: hidden } .b { overflow: clip }').some(finding => finding.status == 'unsupported')).toBe(true);
+  });
+});
+
+// A browser that is too old to run the client is told so by client/room.html, including which
+// version it would need. Nothing at runtime reads the browserslist key, so this is what keeps
+// that list from drifting away from it.
+describe('the message a browser too old for the client gets', () => {
+  test('names every browser in the browserslist key, at the version the key asks for', () => {
+    const room = readFileSync('client/room.html', 'utf8');
+    const message = room.match(/<p id="unsupportedBrowserVersions">([\s\S]*?)<\/p>/)[1];
+    const named = [ ...message.matchAll(/<b>(.*?)<\/b>/g) ].map(match => match[1]);
+    const { targets } = resolveTargets(undefined, { path: process.cwd() });
+    expect(named.sort()).toEqual(targets.map(target => describeTarget(target).replace(/\.0$/, '')).sort());
   });
 });
 
