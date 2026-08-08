@@ -11,8 +11,8 @@
 // rules around it, and the blocks are then enabled and disabled from the container's measured
 // size. Splitting in place rather than appending the blocks at the end keeps every rule's
 // specificity and its position in the cascade. What the copies lose is being scoped to the
-// container's subtree, which only matters for the one block whose selectors don't name the
-// overlay they belong to.
+// container's subtree, so every block's selectors name what they apply to - see the note on the
+// last @container in fonts.css.
 //
 // A browser that has container queries never runs a line of this.
 
@@ -165,16 +165,30 @@ export function parseContainerQueries(cssText) {
   return { containers, blocks };
 }
 
-// getComputedStyle resolves width and height to the used content box size, which is what a
-// container query is evaluated against. clientWidth/clientHeight would be that size rounded to
-// whole pixels and with a scrollbar subtracted, and #roomArea is calc(var(--roomWidth) *
-// var(--scale)) - routinely fractional, so rounding it flips a breakpoint a pixel early or late.
-function contentBoxSize(element) {
+// A size query is evaluated against the container's content box. getComputedStyle resolves
+// width and height to their used value, which is fractional and has no scrollbar subtracted -
+// unlike clientWidth/clientHeight, which round to whole pixels, and #roomArea is
+// calc(var(--roomWidth) * var(--scale)), routinely fractional, so rounding it flips a breakpoint
+// a pixel early or late. What the used value is measured across is whichever box box-sizing
+// names though, so a border-box container - which every .overlay is, and the symbol picker has
+// 10px/20px of padding on top of that - has to have its padding and border taken back off.
+export function contentBoxSize(element) {
   const style = getComputedStyle(element);
   const size = { width: parseFloat(style.width), height: parseFloat(style.height) };
   // a display:none container has no box and resolves both to 'auto'. Nothing inside it is
   // visible either, so leave it unmeasured rather than call it zero sized
-  return isNaN(size.width) || isNaN(size.height) ? null : size;
+  if(isNaN(size.width) || isNaN(size.height))
+    return null;
+
+  if(style.boxSizing == 'border-box') {
+    const px = value => parseFloat(value) || 0;
+    size.width  -= px(style.paddingLeft) + px(style.paddingRight)  + px(style.borderLeftWidth) + px(style.borderRightWidth);
+    size.height -= px(style.paddingTop)  + px(style.paddingBottom) + px(style.borderTopWidth)  + px(style.borderBottomWidth);
+    // a box smaller than its own padding keeps a content box of zero rather than a negative one
+    size.width  = Math.max(0, size.width);
+    size.height = Math.max(0, size.height);
+  }
+  return size;
 }
 
 // a media query that never matches, which is how a block that does not apply is switched off
