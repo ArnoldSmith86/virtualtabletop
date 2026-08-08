@@ -367,6 +367,36 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .click(gridButton.nth(1))
     .expect(grid()).eql('[{"x":136.5,"y":78.81,"offsetX":68.25,"offsetY":39.405},{"x":136.5,"y":78.81,"offsetX":0,"offsetY":0}]');
 
+  // the area one grid applies in: the rectangle, plus conditions for an area
+  // that is not one. The Conditions field sits right under the X/Y rows and
+  // stores what the engine reads - one condition as a string, several as a list
+  const conditionOutline = Selector('.gridConditionOutline');
+  await t
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(1))
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0))
+    .click(gridButton.nth(0))
+    .click(gridBody.find('.gridEntry .collapsibleHeader').withText('More options'))
+    .expect(conditionOutline.exists).notOk()
+    .click(gridBody.find('.gridLimitToggle label.switchbox'))
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000}]')
+    .typeText(gridBody.find('.gridLimits textarea'), 'y > x')
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000,"condition":"y > x"}]')
+    .typeText(gridBody.find('.gridLimits textarea'), '\nx > 200')
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000,"condition":["y > x","x > 200"]}]')
+    // the boundary of that area is traced onto the board in the same dashed
+    // line the rectangle is outlined with
+    .expect(conditionOutline.exists).ok()
+    // a line that is not a comparison is a number, and a number is true
+    // wherever it is not 0 - so it is reported rather than left behind
+    .typeText(gridBody.find('.gridLimits textarea'), 'x - 100', { replace: true })
+    .expect(gridBody.find('.propertyInputProblem').withText('comparison').exists).ok()
+    // and switching the area off drops the conditions with the four sides
+    .typeText(gridBody.find('.gridLimits textarea'), 'y > x', { replace: true })
+    .click(gridBody.find('.gridLimitToggle label.switchbox'))
+    .expect(grid()).eql('[{"x":91,"y":91}]')
+    .expect(conditionOutline.exists).notOk()
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0));
+
   // the replacements are read out of the SVG: its stroke-width placeholder is
   // offered as a replacement for a borderWidth, and gets a number input
   const swatch = text => Selector('#editorModules .svgColorSwatch').withText(text);

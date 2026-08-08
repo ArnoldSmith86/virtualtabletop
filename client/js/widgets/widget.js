@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, mod, timeToMS } from '../domhelpers.js';
 import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
@@ -767,13 +767,14 @@ export class Widget extends StateManaged {
     return corner;
   }
 
-  // How a name in a dragLimit expression is answered: x and y are the position
-  // being tested rather than where the widget currently is, so they mean in an
+  // How a name in an expression about a position is answered - a dragLimit
+  // side or condition, a snap grid's condition: x and y are the position being
+  // tested rather than where the widget currently is, so they mean in an
   // expression what minX/maxX/minY/maxY mean next to it. A property is written
   // the way routines write one - ${PROPERTY name} for this widget's,
   // ${PROPERTY name OF id} for another widget's - and nothing else is a name,
   // so the two languages agree on what a bare word is.
-  dragLimitResolver(coord) {
+  positionResolver(coord) {
     return (name, widgetID, explicit)=>{
       if(!explicit)
         return name == 'x' || name == 'y' ? coord[name] : undefined;
@@ -812,7 +813,7 @@ export class Widget extends StateManaged {
     if(!limit || typeof limit != 'object' || Array.isArray(limit))
       return null;
 
-    const resolve = this.dragLimitResolver(coord);
+    const resolve = this.positionResolver(coord);
     const bound = key=>limit[key] === undefined ? undefined : expressionNumber(limit[key], resolve);
     const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
 
@@ -843,7 +844,7 @@ export class Widget extends StateManaged {
     if(!rules)
       return true;
     return rules.clampX(coord.x) === coord.x && rules.clampY(coord.y) === coord.y
-      && rules.conditions.every(c=>expressionCondition(c, this.dragLimitResolver(coord)));
+      && rules.conditions.every(c=>expressionCondition(c, this.positionResolver(coord)));
   }
 
   // Where a drag is allowed to put the widget's top left corner. minX/maxX/
@@ -3438,6 +3439,8 @@ export class Widget extends StateManaged {
           continue;
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
+        if(!this.gridConditionsHold(grid, { x, y }))
+          continue;
 
         const snapX = x + alignX + grid.x/2 - mod(x + alignX + grid.x/2 - (grid.offsetX || 0), grid.x);
         const snapY = y + alignY + grid.y/2 - mod(y + alignY + grid.y/2 - (grid.offsetY || 0), grid.y);
@@ -3452,10 +3455,30 @@ export class Widget extends StateManaged {
       if(closest) {
         await this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ].indexOf(p) == -1)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY', 'condition' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
     }
+  }
+
+  // Where one grid applies, beyond the rectangle minX/maxX/minY/maxY bound it
+  // to: a condition is an inequality in x and y - the position the widget would
+  // be dropped at, the same coordinates the four sides are measured in - or a
+  // list of them, all of which have to hold. It is written in the language a
+  // dragLimit condition is written in (client/js/expression.js), so
+  // "(x - 800)^2 + (y - 500)^2 < 300^2" is a round area and
+  // "${PROPERTY width OF board}" reads the state while the game is played.
+  // Outside the area this grid is simply not one of the grids tried, so the
+  // widget snaps to whichever other grid covers the position - and to nothing
+  // at all where none does - exactly as the rectangle already behaves. A
+  // condition that cannot be read (a typo, a widget that is gone) holds, so a
+  // mistyped grid keeps snapping rather than silently stopping.
+  gridConditionsHold(grid, coord) {
+    if(!grid || grid.condition === undefined || grid.condition === null)
+      return true;
+    const resolve = this.positionResolver(coord);
+    return asArray(grid.condition).every(condition=>condition === null || condition === undefined
+      || expressionCondition(condition, resolve));
   }
 
   supportsPiles() {

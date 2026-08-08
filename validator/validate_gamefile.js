@@ -1,4 +1,4 @@
-import { dragLimitNames, expressionError } from '../client/js/expression.js';
+import { positionNames, expressionError } from '../client/js/expression.js';
 
 const validators = {
     asset: v=>!!String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
@@ -90,7 +90,7 @@ const COMMON_PROPERTIES = {
                     problems.push(`${key} must be a number or an expression`);
                     continue;
                 }
-                const problem = typeof v[key] === 'string' && expressionError(v[key], dragLimitNames);
+                const problem = typeof v[key] === 'string' && expressionError(v[key], positionNames);
                 if(problem)
                     problems.push(`${key} is not a valid expression: ${problem}`);
             } else if(key === 'condition') {
@@ -102,7 +102,7 @@ const COMMON_PROPERTIES = {
                 for(const condition of conditions) {
                     // a condition has to be an inequality: one written as maths
                     // holds wherever it is not 0, i.e. it limits nothing
-                    const problem = expressionError(condition, dragLimitNames, true);
+                    const problem = expressionError(condition, positionNames, true);
                     if(problem)
                         problems.push(`condition '${condition}' is not a valid expression: ${problem}`);
                 }
@@ -122,7 +122,34 @@ const COMMON_PROPERTIES = {
     movableInEdit: 'boolean',
     clickable: 'boolean',
     clickSound: 'any',
-    grid: 'any',
+    // A grid entry is a lattice plus any number of widget properties to set
+    // when something snaps to it, so its keys are not a list this can check.
+    // Its condition is: one inequality in x and y (the position being snapped)
+    // or a list of them, limiting the grid to the area they describe. A
+    // mistyped one is read as "this grid applies" at snap time, so without
+    // this its only symptom would be a grid that applies where it should not.
+    grid: v=>{
+        if(!Array.isArray(v))
+            return true;
+        const problems = [];
+        v.forEach((entry, index)=>{
+            if(typeof entry !== 'object' || entry === null || Array.isArray(entry) || entry.condition === undefined || entry.condition === null)
+                return;
+            const conditions = asArray(entry.condition).filter(c=>c !== null);
+            if(!conditions.every(c=>typeof c === 'string')) {
+                problems.push(`grid ${index}: condition must be an expression or a list of expressions`);
+                return;
+            }
+            for(const condition of conditions) {
+                // a condition has to be an inequality: one written as maths
+                // holds wherever it is not 0, i.e. it limits nothing
+                const problem = expressionError(condition, positionNames, true);
+                if(problem)
+                    problems.push(`grid ${index}: condition '${condition}' is not a valid expression: ${problem}`);
+            }
+        });
+        return problems.length ? problems.join('; ') : true;
+    },
     enlarge: 'any',
     overlap: 'any',
     ignoreOnLeave: 'any',

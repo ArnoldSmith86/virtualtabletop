@@ -287,6 +287,45 @@ async function fetchSvgReplaceCandidates(image) {
   }
 }
 
+// --- conditions ---
+
+// An area that is not a rectangle is written down as conditions - inequalities
+// in x and y that all have to hold (client/js/expression.js). Both the drag
+// limit and a snap grid are limited that way and both edit them in the same
+// multiline field, one condition per line.
+
+// the conditions of a dragLimit or of one grid entry, whichever holds them
+function conditionsOf(holder) {
+  const condition = isObjectLike(holder) ? holder.condition : undefined;
+  return condition === undefined || condition === null ? [] : asArray(condition);
+}
+
+// the conditions of the multiline input, one per line and blank lines dropped
+function conditionList(text) {
+  return String(text === null || text === undefined ? '' : text).split('\n').map(c=>c.trim()).filter(c=>c !== '');
+}
+
+// the first line that is not a condition the engine can read, if any: one line
+// it cannot read makes the whole condition do nothing, so it is worth saying
+// which - and a line that is maths rather than an inequality ("x - 100") does
+// nothing just as quietly, so it is judged here too
+function conditionProblem(text) {
+  for(const condition of conditionList(text)) {
+    const problem = expressionError(condition, positionNames, true);
+    if(problem)
+      return `"${condition}": ${problem}`;
+  }
+  return null;
+}
+
+// what a multiline field's text is stored as: one condition as a string,
+// several as a list, none dropping the key - the shapes the engine and the
+// JSON editor already read
+function conditionValue(text) {
+  const conditions = conditionList(text);
+  return conditions.length ? (conditions.length == 1 ? conditions[0] : conditions) : null;
+}
+
 // --- snap grid helpers ---
 
 // The grid property is an array of snap definitions; anything that isn't an
@@ -297,10 +336,117 @@ function gridEntryList(value) {
 
 // The keys snapToGrid() consumes itself - everything else in an entry is
 // copied onto the widget when it snaps to that grid.
-const gridGeometryKeys = [ 'x', 'y', 'offsetX', 'offsetY', 'alignX', 'alignY', 'minX', 'maxX', 'minY', 'maxY' ];
+const gridGeometryKeys = [ 'x', 'y', 'offsetX', 'offsetY', 'alignX', 'alignY', 'minX', 'maxX', 'minY', 'maxY', 'condition' ];
 
 function gridExtraProperties(entry) {
   return Object.keys(entry || {}).filter(key => gridGeometryKeys.indexOf(key) == -1);
+}
+
+// The boundary of the area a condition describes, as SVG path data in the
+// coordinates `inside` is asked in - so the editor can draw the same dashed
+// line around it that outlines the min/max rectangle.
+// A condition can describe any shape at all, so the boundary is not computed
+// but traced: the area is sampled on a lattice of `step` px, every lattice edge
+// whose two ends disagree is bisected for the point the answer changes at (a
+// few bisections turn what would be a staircase of the sampling step into the
+// circle it describes), and the segments those points make are joined end to
+// end - a dash pattern has to run along the boundary rather than start over at
+// every sample.
+function conditionOutlinePath(box, step, inside) {
+  const columns = Math.max(1, Math.ceil(box.width / step));
+  const rows = Math.max(1, Math.ceil(box.height / step));
+  // the last row/column lands exactly on the far edge rather than past it, so
+  // the outline is traced in the box it is drawn into and no further
+  const pointAt = (column, row)=>({
+    x: box.left + Math.min(column * step, box.width),
+    y: box.top + Math.min(row * step, box.height)
+  });
+
+  const samples = [];
+  for(let column = 0; column <= columns; ++column) {
+    samples[column] = [];
+    for(let row = 0; row <= rows; ++row)
+      samples[column][row] = !!inside(pointAt(column, row));
+  }
+
+  const crossing = (inPoint, outPoint)=>{
+    let a = inPoint, b = outPoint;
+    for(let i = 0; i < 6; ++i) {
+      const middle = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      if(inside(middle))
+        a = middle;
+      else
+        b = middle;
+    }
+    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  };
+
+  // One point object per lattice edge, shared by the two cells that meet there
+  // - that is what lets the segments below be joined by identity.
+  const points = new Map();
+  const edgePoint = (column1, row1, column2, row2)=>{
+    if(samples[column1][row1] == samples[column2][row2])
+      return null;
+    const key = `${column1},${row1},${column2},${row2}`;
+    if(!points.has(key))
+      points.set(key, samples[column1][row1]
+        ? crossing(pointAt(column1, row1), pointAt(column2, row2))
+        : crossing(pointAt(column2, row2), pointAt(column1, row1)));
+    return points.get(key);
+  };
+
+  const segments = [];
+  for(let column = 0; column < columns; ++column)
+    for(let row = 0; row < rows; ++row) {
+      const top = edgePoint(column, row, column + 1, row);
+      const right = edgePoint(column + 1, row, column + 1, row + 1);
+      const bottom = edgePoint(column, row + 1, column + 1, row + 1);
+      const left = edgePoint(column, row, column, row + 1);
+      const ends = [ top, right, bottom, left ].filter(Boolean);
+      if(ends.length == 2)
+        segments.push(ends);
+      else if(ends.length == 4) {
+        // Two opposite corners are inside and two are outside: the four
+        // crossings can be paired two ways, and which of them the middle of
+        // the cell agrees with says which two corners are cut off by an arc.
+        const corner = pointAt(column, row), opposite = pointAt(column + 1, row + 1);
+        const withTopLeft = inside({ x: (corner.x + opposite.x) / 2, y: (corner.y + opposite.y) / 2 }) == samples[column][row];
+        segments.push(...(withTopLeft ? [ [ top, right ], [ bottom, left ] ] : [ [ top, left ], [ right, bottom ] ]));
+      }
+    }
+
+  const used = new Set();
+  const ends = new Map();
+  for(const segment of segments)
+    for(const point of segment) {
+      if(!ends.has(point))
+        ends.set(point, []);
+      ends.get(point).push(segment);
+    }
+
+  const paths = [];
+  for(const segment of segments) {
+    if(used.has(segment))
+      continue;
+    used.add(segment);
+    const line = [ segment[0], segment[1] ];
+    // extend at both ends for as long as another segment continues the line
+    for(const forward of [ true, false ])
+      for(;;) {
+        const end = forward ? line[line.length - 1] : line[0];
+        const next = (ends.get(end) || []).find(candidate=>!used.has(candidate));
+        if(!next)
+          break;
+        used.add(next);
+        const other = next[0] === end ? next[1] : next[0];
+        if(forward)
+          line.push(other);
+        else
+          line.unshift(other);
+      }
+    paths.push(`M ${line.map(point=>`${Math.round(point.x * 100) / 100} ${Math.round(point.y * 100) / 100}`).join(' L ')}`);
+  }
+  return paths.join(' ');
 }
 
 // A grid of the widget's own DOM box, i.e. widgets end up edge to edge.
@@ -349,7 +495,7 @@ function gridExtraText(value) {
 // left corner unless alignX/alignY move it. The four sides are only meaningful
 // together, so the editor adds and drops them as a set; the engine reads a
 // missing side as "no limit on that side".
-// dragLimitNames (client/js/expression.js) is the other half of the shape: the
+// positionNames (client/js/expression.js) is the other half of the shape: the
 // bare words an expression in a limit answers itself, everything else being a
 // property written the way routines write one.
 const dragLimitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
@@ -360,53 +506,30 @@ function dragLimitValue(dragLimit, key) {
 }
 
 function dragLimitIsSet(dragLimit) {
-  return dragLimitKeys.some(key => dragLimitValue(dragLimit, key) !== null) || dragLimitConditions(dragLimit).length > 0;
-}
-
-function dragLimitConditions(dragLimit) {
-  const condition = isObjectLike(dragLimit) ? dragLimit.condition : undefined;
-  return condition === undefined || condition === null ? [] : asArray(condition);
-}
-
-// the conditions of the multiline input, one per line and blank lines dropped
-function dragLimitConditionList(text) {
-  return String(text === null || text === undefined ? '' : text).split('\n').map(c=>c.trim()).filter(c=>c !== '');
-}
-
-// the first line that is not a condition the engine can read, if any: one line
-// it cannot read makes the whole condition do nothing, so it is worth saying
-// which - and a line that is maths rather than an inequality ("x - 100") does
-// nothing just as quietly, so it is judged here too
-function dragLimitConditionProblem(text) {
-  for(const condition of dragLimitConditionList(text)) {
-    const problem = expressionError(condition, dragLimitNames, true);
-    if(problem)
-      return `"${condition}": ${problem}`;
-  }
-  return null;
+  return dragLimitKeys.some(key => dragLimitValue(dragLimit, key) !== null) || conditionsOf(dragLimit).length > 0;
 }
 
 // all the text of a limit that the engine reads as an expression
 function dragLimitExpressions(dragLimit) {
-  return [ ...dragLimitKeys.map(key=>dragLimitValue(dragLimit, key)), ...dragLimitConditions(dragLimit) ];
+  return [ ...dragLimitKeys.map(key=>dragLimitValue(dragLimit, key)), ...conditionsOf(dragLimit) ];
 }
 
-// Which widget properties the sides and conditions of a limit read, so the
-// drawing can follow them: ${PROPERTY name} is a property of the limited
-// widget, ${PROPERTY name OF id} that widget's, and a bare word is the position
-// being tested rather than a property at all - and the drawing lives in the
-// parent's box, so its size counts too.
-function dragLimitDependencies(widget) {
+// Which widget properties a set of expressions reads, so a drawing made from
+// them can follow the state: ${PROPERTY name} is a property of the widget the
+// expressions belong to, ${PROPERTY name OF id} that widget's, and a bare word
+// is the position being tested rather than a property at all - and the drawing
+// lives in the parent's box, so its size counts too.
+function expressionDependencies(widget, texts) {
   const dependencies = {};
   const add = (id, property)=>{
     if(dependencies[id] !== true)
       (dependencies[id] = dependencies[id] || new Set()).add(property);
   };
-  for(const text of dragLimitExpressions(widget.get('dragLimit')))
+  for(const text of texts)
     for(const name of expressionNames(text))
       if(name.explicit)
         add(name.widget === null ? widget.id : name.widget, name.name);
-  // The drawing is a canvas inside the parent's DOM element, and a parent that
+  // The drawing is drawn into the parent's DOM element, and a parent that
   // renders its own content (a basicwidget with text, a card, a spinner) does
   // it by emptying that element - which takes the drawing with it. So every
   // property of the parent is worth redrawing for, not just the width and
@@ -416,10 +539,19 @@ function dragLimitDependencies(widget) {
   return dependencies;
 }
 
+function dragLimitDependencies(widget) {
+  return expressionDependencies(widget, dragLimitExpressions(widget.get('dragLimit')));
+}
+
+// the same, for the conditions of every grid of a widget
+function gridDependencies(widget) {
+  return expressionDependencies(widget, gridEntryList(widget.get('grid')).flatMap(conditionsOf));
+}
+
 // A widget that is gone (or back) changes what the expressions reading it
 // amount to just as much as a new value does, so a delta that only removes one
 // counts as well.
-function dragLimitDeltaMatters(dependencies, deltaState) {
+function dependencyDeltaMatters(dependencies, deltaState) {
   for(const id in deltaState || {})
     if(dependencies[id] && (!deltaState[id] || dependencies[id] === true
         || Object.keys(deltaState[id]).some(property=>dependencies[id].has(property))))
@@ -4930,6 +5062,14 @@ class PropertiesModule extends SidebarModule {
       });
       for(const property of [ 'width', 'height', 'parent' ])
         this.addPropertyListener(widget, property, _=>updatePreview());
+      // a condition can read any property of any widget ("${PROPERTY width OF
+      // board}"), which no list written down here could know - so every delta
+      // is held against the names the conditions actually read, and the drawn
+      // area follows a button that moves it just as the snapping does
+      this.addDeltaListener(deltaState=>{
+        if(dependencyDeltaMatters(gridDependencies(widget), deltaState))
+          updatePreview();
+      });
     }, target, `${widget.id}:grid`, {
       renderSummary: summary=>{
         this.addPropertyListener(widget, 'grid', w=>{
@@ -5114,8 +5254,9 @@ class PropertiesModule extends SidebarModule {
     return row;
   }
 
-  // min/max limit the area in which a grid applies; they are only meaningful
-  // as a set, so one checkbox adds or drops all four at once
+  // min/max limit the area in which a grid applies, and a condition limits it
+  // to an area that is not a rectangle at all; the four sides are only
+  // meaningful as a set, so one checkbox adds or drops the whole area at once.
   renderGridLimits(widget, index, target) {
     const limitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
     const host = div(target, 'gridLimits');
@@ -5136,8 +5277,10 @@ class PropertiesModule extends SidebarModule {
     div(y, 'numberPairLabel', 'Y from/to');
     this.renderGridNumber(widget, index, 'minY', 'min', y, { unit: 'px' });
     this.renderGridNumber(widget, index, 'maxY', 'max', y, { unit: 'px' });
+    this.renderGridCondition(widget, index, host);
 
-    const hasLimits = _=>limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null);
+    const hasLimits = _=>limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null)
+      || conditionsOf(gridEntryList(widget.get('grid'))[index]).length > 0;
     const updateVisibility = _=>host.style.display = hasLimits() ? '' : 'none';
     this.addPropertyListener(widget, 'grid', updateVisibility);
     updateVisibility();
@@ -5151,13 +5294,30 @@ class PropertiesModule extends SidebarModule {
           minX: 0, minY: 0,
           maxX: parent ? +parent.get('width') || 1600 : 1600,
           maxY: parent ? +parent.get('height') || 1000 : 1000
-        } : { minX: null, maxX: null, minY: null, maxY: null });
+        } : { minX: null, maxX: null, minY: null, maxY: null, condition: null });
       },
-      hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids. A 0 counts as "no limit" on that side.'
+      hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids. A 0 counts as "no limit" on that side. Outside the area the widget snaps to whichever other grid covers the position, or to nothing at all where none does.'
       // its own host so the label can take the size of the numberPairLabels of
       // the X/Y rows around it instead of reading as a heading between them
     }).render(div(target, 'gridLimitToggle'));
     target.appendChild(host);
+  }
+
+  // The area a grid applies to does not have to be a rectangle either: a
+  // condition is an inequality in x and y - the position being snapped, in the
+  // same coordinates as the four sides above - that has to hold for this grid
+  // to be one of the grids tried. One per line, all of which have to hold.
+  renderGridCondition(widget, index, target) {
+    return new TextInput(this, widget, 'Conditions (one per line)', {
+      listenTo: [ 'grid' ],
+      multiline: true,
+      rows: 2,
+      placeholder: 'none',
+      getValue: _=>conditionsOf(gridEntryList(widget.get('grid'))[index]).join('\n'),
+      setValue: value=>this.updateGridEntry(widget, index, { condition: conditionValue(value) }),
+      hint: 'An inequality this grid needs to be true where the widget is dropped, so "y > x" applies it below the diagonal only. Ordinary maths: x and y are the position being snapped, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "(x - 800)^2 + (y - 500)^2 < 300^2" is a round area. Every line has to be true; && and || combine within one line. Each line has to be a comparison rather than a sum: "x - 100" is a number, and a number is true wherever it is not 0.',
+      validate: conditionProblem
+    }).render(target);
   }
 
   // Anything in a grid entry that snapToGrid() does not use as geometry is
@@ -5277,7 +5437,41 @@ class PropertiesModule extends SidebarModule {
       const lineX = (+entry.offsetX || 0) - left, lineY = (+entry.offsetY || 0) - top;
       overlay.style.backgroundPosition =
         `${lineX - stepX / 2}px ${lineY - stepY / 2}px, ${lineX}px ${lineY}px, ${lineX}px ${lineY}px`;
+      this.drawGridConditionOutline(widget, entry, overlay, {
+        left,
+        top,
+        width: Math.max(0, (maxX !== null ? maxX : container.offsetWidth) - left),
+        height: Math.max(0, (maxY !== null ? maxY : container.offsetHeight) - top)
+      });
     });
+  }
+
+  // The rectangle a grid is limited to is outlined by the overlay's own dashed
+  // border; an area a condition describes has no border to give it, so it is
+  // traced and drawn in the same line. The outline lives inside the overlay, so
+  // it is cleared and redrawn with it, and it is asked of the widget itself -
+  // the same question snapToGrid asks, at the position rather than for it.
+  drawGridConditionOutline(widget, entry, overlay, box) {
+    if(!conditionsOf(entry).length || !(box.width > 0) || !(box.height > 0))
+      return;
+    // a step small enough to show the shape and coarse enough to stay quick
+    // while a condition is being typed (~10k samples either way)
+    const step = Math.max(4, Math.round(Math.sqrt(box.width * box.height / 10000)));
+    const path = conditionOutlinePath(box, step, coord=>widget.gridConditionsHold(entry, coord));
+    if(!path)
+      return;
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'gridConditionOutline');
+    // the box the outline was traced in, in the coordinates it was traced in,
+    // so the path can be written down as the positions it describes
+    svg.setAttribute('viewBox', `${box.left} ${box.top} ${box.width} ${box.height}`);
+    svg.style.width = `${box.width}px`;
+    svg.style.height = `${box.height}px`;
+    const outline = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    outline.setAttribute('d', path);
+    svg.appendChild(outline);
+    overlay.appendChild(svg);
   }
 
   // --- drag limits ---
@@ -5394,7 +5588,7 @@ class PropertiesModule extends SidebarModule {
       // limit actually reads, and the drawing follows a button that moves the
       // area just as a real drag does
       this.addDeltaListener(deltaState=>{
-        if(dragLimitDeltaMatters(dragLimitDependencies(widget), deltaState))
+        if(dependencyDeltaMatters(dragLimitDependencies(widget), deltaState))
           updatePreview();
       });
     }, target, `${widget.id}:dragLimit`, {
@@ -5402,7 +5596,7 @@ class PropertiesModule extends SidebarModule {
         // a condition-only limit leaves the four sides empty, so the summary
         // says how many conditions do the limiting instead of just "on"
         this.addPropertyListener(widget, 'dragLimit', w=>{
-          const conditions = dragLimitConditions(w.get('dragLimit')).length;
+          const conditions = conditionsOf(w.get('dragLimit')).length;
           summary.textContent = !dragLimitIsSet(w.get('dragLimit')) ? 'off'
             : conditions ? `on · ${conditions} condition${conditions == 1 ? '' : 's'}` : 'on';
         });
@@ -5494,7 +5688,7 @@ class PropertiesModule extends SidebarModule {
     // refuse, so even an inverted rectangle ("minX": 500, "maxX": 100) leaves
     // the one line it clamps everything onto - which the lattice would miss and
     // report as empty.
-    report(allowed == 0 && dragLimitConditions(widget.get('dragLimit')).length > 0);
+    report(allowed == 0 && conditionsOf(widget.get('dragLimit')).length > 0);
     if(draw)
       container.appendChild(canvas);
   }
@@ -5524,7 +5718,7 @@ class PropertiesModule extends SidebarModule {
       setValue: value=>this.updateDragLimit(widget, { [key]: value }),
       // a mistyped expression limits nothing at all, so it is reported right
       // here rather than only in the Debug module's validation table
-      validate: value=>typeof value == 'string' ? expressionError(value, dragLimitNames) : null
+      validate: value=>typeof value == 'string' ? expressionError(value, positionNames) : null
     }).render(target);
   }
 
@@ -5553,15 +5747,10 @@ class PropertiesModule extends SidebarModule {
       multiline: true,
       rows: 3,
       placeholder: 'none',
-      getValue: _=>dragLimitConditions(widget.get('dragLimit')).join('\n'),
-      setValue: value=>{
-        const conditions = dragLimitConditionList(value);
-        // one condition is stored as a string, several as a list, none drops
-        // the key - the shapes the engine and the JSON editor already read
-        this.updateDragLimit(widget, { condition: conditions.length ? (conditions.length == 1 ? conditions[0] : conditions) : null });
-      },
+      getValue: _=>conditionsOf(widget.get('dragLimit')).join('\n'),
+      setValue: value=>this.updateDragLimit(widget, { condition: conditionValue(value) }),
       hint: 'An inequality the drag keeps true, so "y > x" keeps the widget below the diagonal. Ordinary maths: x and y are the limited point, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "2x^2 + y > 4" is written as it looks. Every line has to be true; && and || combine within one line. Each line has to be a comparison rather than a sum: "x - 100" is a number, and a number is true wherever it is not 0. Conditions nothing can satisfy limit nothing at all, because a widget outside its area is always let go.',
-      validate: dragLimitConditionProblem
+      validate: conditionProblem
     }).render(target);
   }
 

@@ -37,11 +37,12 @@ const functions = Object.assign(Object.create(null), {
   sqrt: Math.sqrt, tan: x=>Math.tan(x*perDegree), trunc: Math.trunc
 });
 
-// The bare words a dragLimit expression answers itself: the position being
-// tested. Everything else is a widget property and is written the way routines
-// write one, so the engine, the sidebar and the validator have to agree on this
-// one list - a bare word outside it is a mistake rather than a property.
-export const dragLimitNames = [ 'x', 'y' ];
+// The bare words an expression about a position answers itself - a dragLimit
+// side or condition, a snap grid's condition: the position being tested.
+// Everything else is a widget property and is written the way routines write
+// one, so the engine, the sidebar and the validator have to agree on this one
+// list - a bare word outside it is a mistake rather than a property.
+export const positionNames = [ 'x', 'y' ];
 
 const constants = Object.assign(Object.create(null), {
   E: Math.E, LN10: Math.LN10, LN2: Math.LN2, LOG10E: Math.LOG10E, LOG2E: Math.LOG2E,

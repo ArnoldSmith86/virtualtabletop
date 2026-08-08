@@ -198,6 +198,30 @@ body.gridLines33 #topSurface {
   background-image: var(--gridPreviewDots);
 }
 
+/* the area a grid's conditions describe, traced into the same overlay and drawn
+   in the dashed line the rectangle above is outlined with. The stroke does not
+   scale with the room (the outline's does not either), so the boundary stays
+   one device pixel wide at every zoom rather than disappearing at small ones. */
+.gridConditionOutline {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.gridConditionOutline path {
+  fill: none;
+  /* the color the dots use rather than the fainter one of the lattice lines:
+     a dash of a curve is antialiased across two device pixels where the
+     rectangle's straight outline lands on one, which at the transparency of
+     the lattice leaves nothing visible at all */
+  stroke: var(--gridPreviewColor);
+  stroke-width: 1px;
+  stroke-dasharray: 6 4;
+  vector-effect: non-scaling-stroke;
+}
+
 /* live preview of the area a widget can be dragged in, drawn into its parent
    (the coordinate space dragLimitedCoord works in) while the "Drag limits"
    editor section is open. The canvas holds one pixel per sampled position and
