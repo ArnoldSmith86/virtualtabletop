@@ -115,7 +115,7 @@ If you want to contribute to virtualtabletop.io development, please read [Helpin
 
 ### Browser support
 
-There is no build step: the JavaScript and CSS that are written here are the ones the browser gets, so the features used in the source are the support line. That line is written down as the `browserslist` key in `package.json` — currently **Chrome/Edge 85, Firefox 79, Safari 14.1 (iOS 14.5), Samsung Internet 14**, roughly spring 2021. Nothing reads it automatically today; it is there so the question "may I use this?" has an answer, and so that any tooling added later inherits it. Newer features are fine as long as they are guarded (`@supports`, a capability check, or a fallback) — see `client/js/containerQueryFallback.js` for how CSS container queries are handled.
+There is no build step: the JavaScript and CSS that are written here are the ones the browser gets, so the features used in the source are the support line. That line is written down as the `browserslist` key in `package.json` — currently **Chrome/Edge 87, Firefox 79, Safari 14.1 (iOS 14.5), Samsung Internet 14**, roughly spring 2021. Nothing reads it automatically today; it is there so the question "may I use this?" has an answer, and so that any tooling added later inherits it. Newer features are fine as long as they are guarded (`@supports`, a capability check, or a fallback) — see `client/js/containerQueryFallback.js` for how CSS container queries are handled.
 
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
 

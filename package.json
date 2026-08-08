@@ -47,8 +47,8 @@
   },
   "homepage": "https://github.com/ArnoldSmith86/virtualtabletop#readme",
   "browserslist": [
-    "chrome >= 85",
-    "edge >= 85",
+    "chrome >= 87",
+    "edge >= 87",
     "firefox >= 79",
     "safari >= 14.1",
     "ios_saf >= 14.5",
