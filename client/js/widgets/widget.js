@@ -427,15 +427,57 @@ export class Widget extends StateManaged {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
-  async checkParent(forceDetach) {
+  // hideUntilOutside is used by the drag that is on its way out of a holder: the widget is
+  // detached as soon as another holder becomes the drop target, which is while it is still
+  // completely inside its own holder when that other holder is stacked on top of it. owner
+  // and hoverParent are what keeps the widget out of sight of the other players, so they are
+  // put back until it has really left - otherwise a card is shown to the whole table before
+  // it has even left the hand it is being dragged around in. Detaching itself is unchanged:
+  // parent, hoverParent and owner are cleared and onLeave / leaveRoutine run in the same
+  // place with the same values as before, so whatever the leave hooks assign is what the
+  // widget gets back once it is outside (see checkDetachedParent).
+  async checkParent(forceDetach, hideUntilOutside) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
+      const parent = this.currentParent;
+      const hidden = hideUntilOutside && overlap(this.domElement, parent.domElement)
+        ? { hoverParent: this.get('hoverParent'), owner: this.get('owner') } : null;
+
       await this.set('parent', null);
       await this.set('hoverParent', null);
-      if(this.currentParent.get('childrenPerOwner'))
+      // remembered with the rest of the state below, so that the reveal restores exactly the
+      // properties that were cleared here even if a leave hook changes the flag mid-drag
+      const perOwner = parent.get('childrenPerOwner');
+      if(perOwner)
         await this.set('owner',  null);
-      if(this.currentParent.dispenseCard)
-        await this.currentParent.dispenseCard(this);
+      if(parent.dispenseCard)
+        await parent.dispenseCard(this);
       delete this.currentParent;
+
+      // nothing to hide (and nothing to restore later) if a leave hook just removed the widget
+      if(hidden && !this.isBeingRemoved && !this.inRemovalQueue) {
+        this.detachedParent = parent;
+        this.detachedParentState = { hoverParent: this.get('hoverParent'), owner: this.get('owner'), perOwner };
+        await this.set('hoverParent', hidden.hoverParent);
+        if(perOwner)
+          await this.set('owner',  hidden.owner);
+      }
+    }
+  }
+
+  // Reveals a widget that checkParent() hid in the holder it was detached from, by restoring
+  // the state the detaching left it in. Called on every move so that the widget becomes
+  // visible to the other players as soon as it no longer overlaps that holder, and with
+  // force when the drag ends, before the drop, so that the holder it lands in has the last
+  // word.
+  async checkDetachedParent(force) {
+    if(this.detachedParent && (force || !overlap(this.domElement, this.detachedParent.domElement))) {
+      const state = this.detachedParentState;
+      delete this.detachedParent;
+      delete this.detachedParentState;
+
+      await this.set('hoverParent', state.hoverParent);
+      if(state.perOwner)
+        await this.set('owner',  state.owner);
     }
   }
 
@@ -619,6 +661,9 @@ export class Widget extends StateManaged {
     await this.set('dropShadowWidget', (await shadowWidget.clone({
         'movable': false,
         'dropShadowOwner': playerName,
+        // the dragged widget can still carry the hoverParent of the holder it is on its way
+        // out of - the shadow sits in the target holder and must not inherit that
+        'hoverParent': null,
         'parent': null}, true)).get('id'));
   }
 
@@ -2512,6 +2557,10 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
     delete this.lastMoveCoord;
+    // a previous drag that did not reach checkDetachedParent(true) must not restore its state
+    // onto this one
+    delete this.detachedParent;
+    delete this.detachedParentState;
 
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
@@ -2573,6 +2622,12 @@ export class Widget extends StateManaged {
       // (or the game rejects the move and sends it back).
       if(this.domElement.style.transform != this.cssTransform())
         flushDelta();
+
+      // after the flush, so that a widget that was detached while it was still inside its
+      // holder is measured against where it is now: the last mouse event of a drag is the
+      // one that takes the widget out of the holder, and there is no next one to notice it
+      await this.checkDetachedParent();
+
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
@@ -2616,7 +2671,7 @@ export class Widget extends StateManaged {
       if (lastHoverTarget != this.hoverTarget) {
         await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
         if(this.hoverTarget != this.currentParent)
-          await this.checkParent(true);
+          await this.checkParent(true, true);
 
         // When the hover target changes we may need to create or remove the shadow widget.
         // Only create a shadow widget if the holder is shared and doesn't already have one in it.
@@ -2743,6 +2798,9 @@ export class Widget extends StateManaged {
     delete this.stopDropLines;
 
     await this.set('hoverTarget', null);
+    // the drag is over, so the widget is not on its way out of anything any more - this runs
+    // before the drop below so that a holder taking the widget in still has the last word
+    await this.checkDetachedParent(true);
 
     if(!this.get('fixedParent') && this.get('movable')) {
       for(const t of this.dropTargets)
