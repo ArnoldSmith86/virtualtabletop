@@ -48,6 +48,32 @@ const syntax = [
   { pattern: /\bimport\s*\(/, path: 'javascript.statements.import.dynamic_import' }
 ];
 
+// How far a regular expression literal at the start of this text reaches, or null if it turns
+// out not to be one. Written by hand rather than as a pattern: a regular expression that matches
+// regular expression literals needs an alternation inside a repetition (an escape, a character
+// class, an ordinary character), and that is the shape that takes exponential time to fail on
+// input built to make it - which CodeQL rightly complains about.
+function regexLiteral(text) {
+  let inClass = false;
+  for(let i=1; i<text.length; ++i) {
+    if(text[i] == '\n')
+      return null;
+    if(text[i] == '\\')
+      ++i;
+    else if(inClass)
+      inClass = text[i] != ']';
+    else if(text[i] == '[')
+      inClass = true;
+    else if(text[i] == '/') {
+      let end = i+1;
+      while(end < text.length && /[a-z]/.test(text[end]))
+        ++end;
+      return text.slice(0, end);
+    }
+  }
+  return null;
+}
+
 // Blanking keeps the length and the line breaks of what it removes, so every index into the
 // result still points at the same place in the original file.
 export function blankNonCode(text) {
@@ -64,7 +90,7 @@ export function blankNonCode(text) {
     else if(rest[0] == '"' || rest[0] == "'" || rest[0] == '`')
       match = rest.match(new RegExp(`^${rest[0]}(\\\\[\\s\\S]|[^\\\\${rest[0]}])*(${rest[0]}|$)`))[0];
     else if(rest[0] == '/' && canBeRegex())
-      match = (rest.match(/^\/(\\.|\[(\\.|[^\]\n])*\]|[^\\/\n])+\/[a-z]*/) || [])[0];
+      match = regexLiteral(rest);
     if(match) {
       out += blank(match);
       i += match.length;
