@@ -2,6 +2,7 @@ import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js
 import { startWebSocket, toServer } from './connection.js';
 import { calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 import { setCurrentOverlayId, getCurrentOverlayId, getEditMode } from './overlaystate.js';
+import { updateContainerQueryFallback } from './containerQueryFallback.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -260,6 +261,9 @@ function setScale() {
   document.documentElement.style.setProperty('--scale', scale);
   updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
+  // the board just changed size, which is what every container query in the overlays asks
+  // about - on a browser that has them this does nothing (see containerQueryFallback.js)
+  updateContainerQueryFallback();
   setSidebar(); // the game details sidebar is a container query on the board, so it flips with it
   if(edit)
     scaleHasChanged(scale);
