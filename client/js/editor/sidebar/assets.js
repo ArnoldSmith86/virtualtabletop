@@ -251,9 +251,18 @@ class AssetsModule extends SidebarModule {
 
       const createOriginalCell = (isSVG, asset, blob) => {
         const cell = row.insertCell();
-        const img = new Image();
         const sizeLabel = document.createElement('label');
 
+        // An asset that is not an image at all - a sound - has nothing to show in an <img> but
+        // the broken image icon, and its onload never comes, so the label would keep the
+        // placeholder text below forever. Name what it is instead.
+        if(!blob.type.match(/^image/)) {
+          sizeLabel.textContent = `${blob.type || 'unknown type'}\n\n${(blob.size / 1024).toFixed(2)} KB`;
+          cell.appendChild(sizeLabel);
+          return;
+        }
+
+        const img = new Image();
         sizeLabel.textContent = `${asset.asset}\n${blob.type}`;
         img.onload = function() {
           const sizeInKB = (blob.size / 1024).toFixed(2);
