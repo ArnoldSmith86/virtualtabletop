@@ -345,9 +345,13 @@ function gridExtraText(value) {
 
 // --- drag limits ---
 
-// dragLimit is the rectangle move() keeps the widget's top left corner in.
-// The four sides are only meaningful together, so the editor adds and drops
-// them as a set; the engine reads a missing side as "no limit on that side".
+// dragLimit is the rectangle move() keeps a point of the widget in - its top
+// left corner unless alignX/alignY move it. The four sides are only meaningful
+// together, so the editor adds and drops them as a set; the engine reads a
+// missing side as "no limit on that side".
+// dragLimitNames (client/js/expression.js) is the other half of the shape: the
+// bare words an expression in a limit answers itself, everything else being a
+// property written the way routines write one.
 const dragLimitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
 
 function dragLimitValue(dragLimit, key) {
@@ -373,7 +377,7 @@ function dragLimitConditionList(text) {
 // makes the whole condition do nothing, so it is worth saying which
 function dragLimitConditionProblem(text) {
   for(const condition of dragLimitConditionList(text)) {
-    const problem = expressionError(condition);
+    const problem = expressionError(condition, dragLimitNames);
     if(problem)
       return `"${condition}": ${problem}`;
   }
@@ -386,10 +390,10 @@ function dragLimitExpressions(dragLimit) {
 }
 
 // Which widget properties the sides and conditions of a limit read, so the
-// drawing can follow them: a name without a widget is a property of the limited
-// widget (except x and y, which are the position being tested), one with a
-// widget is that widget's property - and the drawing lives in the parent's box,
-// so its size counts too.
+// drawing can follow them: ${PROPERTY name} is a property of the limited
+// widget, ${PROPERTY name OF id} that widget's, and a bare word is the position
+// being tested rather than a property at all - and the drawing lives in the
+// parent's box, so its size counts too.
 function dragLimitDependencies(widget) {
   const dependencies = {};
   const add = (id, property)=>{
@@ -398,10 +402,8 @@ function dragLimitDependencies(widget) {
   };
   for(const text of dragLimitExpressions(widget.get('dragLimit')))
     for(const name of expressionNames(text))
-      if(name.widget !== null)
-        add(name.widget, name.name);
-      else if(name.name != 'x' && name.name != 'y')
-        add(widget.id, name.name);
+      if(name.explicit)
+        add(name.widget === null ? widget.id : name.widget, name.name);
   // The drawing is a canvas inside the parent's DOM element, and a parent that
   // renders its own content (a basicwidget with text, a card, a spinner) does
   // it by emptying that element - which takes the drawing with it. So every
@@ -1123,7 +1125,7 @@ const editorPropertyHints = {
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
-  dragLimit: 'An area the widget\'s top left corner is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. Each side can be an expression instead of a number, and a condition like "2x^2 + y > 4" cuts any other shape. It only limits dragging - a routine can still move the widget anywhere.',
+  dragLimit: 'An area the widget is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. Each side can be an expression instead of a number, and a condition like "2x^2 + y > 4" cuts any other shape. The limited point of the widget is its top left corner unless alignX/alignY move it. It only limits dragging - a routine can still move the widget anywhere.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
   lineWidth: 'The brush width used for new canvas strokes.',
   activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
@@ -5290,8 +5292,6 @@ class PropertiesModule extends SidebarModule {
 
     let updatePreview = _=>{};
     const section = this.renderCollapsibleSection('Drag limits', true, body=>{
-      div(body, 'gridHelp', 'Keeps this widget inside an area while it is dragged, so it cannot be dropped somewhere it is hard to get back from. The four sides make a rectangle around its top left corner, measured in the coordinates of its parent. A condition is an inequality in x and y - that same corner - which has to stay true, so "y > x" keeps the widget below the diagonal.');
-
       const host = div(body, 'gridLimits');
       const previewHost = div(body, 'dragLimitPreviewToggle');
       // renderRebuildable: the four inputs listen to dragLimit, so the ones of
@@ -5314,8 +5314,8 @@ class PropertiesModule extends SidebarModule {
         const y = div(host, 'propertyInlineRow dragLimitRow');
         this.renderDragLimitNumber(widget, 'minY', 'Y min', y);
         this.renderDragLimitNumber(widget, 'maxY', 'Y max', y);
+        this.renderDragLimitAnchor(widget, host);
         this.renderDragLimitCondition(widget, host);
-        div(host, 'gridHelp', 'x and y are the widget\'s top left corner in its parent. Every line has to be true.');
       });
 
       // an area a condition describes cannot be read off the numbers that
@@ -5330,7 +5330,7 @@ class PropertiesModule extends SidebarModule {
           this.dragLimitPreviewEnabled = value;
           updatePreview();
         },
-        hint: 'Shades every position this widget\'s top left corner can be dragged to, drawn into the widget\'s parent. Only ever visible in edit mode.'
+        hint: 'Shades every position the limited point of this widget can be dragged to, drawn into the widget\'s parent. Only ever visible in edit mode.'
       }).render(previewHost);
 
       new CheckboxInput(this, widget, 'Limit where it can be dragged', {
@@ -5343,16 +5343,23 @@ class PropertiesModule extends SidebarModule {
           const parent = widgets.get(widget.get('parent'));
           const areaWidth = parent ? +parent.get('width') || 1600 : 1600;
           const areaHeight = parent ? +parent.get('height') || 1000 : 1000;
-          this.inputValueUpdated(widget, 'dragLimit', value ? {
+          // a reference point on its own limits nothing, so a limit written as
+          // alignX/alignY alone reads as off here - but it is what the widget
+          // says about itself, so switching the limit on keeps it
+          const align = {};
+          for(const key of [ 'alignX', 'alignY' ])
+            if(dragLimitValue(widget.get('dragLimit'), key) !== null)
+              align[key] = dragLimitValue(widget.get('dragLimit'), key);
+          this.inputValueUpdated(widget, 'dragLimit', value ? Object.assign(align, {
             minX: 0, minY: 0,
             maxX: Math.max(0, areaWidth - (+widget.get('width') || 0)),
             maxY: Math.max(0, areaHeight - (+widget.get('height') || 0))
           // an empty object is the engine default, so unchecking drops the
           // property rather than storing a rectangle that limits nothing
-          } : {});
+          }) : {});
           rebuildLimits();
         },
-        hint: 'Only the corner is limited, so a widget can still stick out of the area by its own width and height. Clearing one of the four fields removes the limit on that side; switching this off drops the whole limit, conditions included.'
+        hint: 'Keeps the widget inside an area while it is dragged, so it cannot be dropped somewhere it is hard to get back from. Only the point below is limited, so a widget whose top left corner is limited can still stick out of the area by its own width and height. Clearing one of the four fields removes the limit on that side; switching this off drops the whole limit, conditions included.'
         // its own host so the label can take the size of the side labels of the
         // X/Y rows below it instead of reading as a heading above them
       }).render(div(body, 'gridLimitToggle'));
@@ -5422,10 +5429,12 @@ class PropertiesModule extends SidebarModule {
     }, 100);
   }
 
-  // Draws the area a drag can put the widget's top left corner in, into the
-  // widget's parent - the coordinate space dragLimitedCoord() works in, so the
-  // shading covers exactly the corner positions a drag will accept. A condition
-  // can describe any shape at all, so the area is not computed but sampled: one
+  // Draws the area a drag can put the limited point of the widget in (its top
+  // left corner unless alignX/alignY move it), into the widget's parent - the
+  // coordinate space the limit is written in, so the shading covers exactly the
+  // positions a drag will accept and a condition is drawn as written. A
+  // condition can describe any shape at all, so the area is not computed but
+  // sampled: one
   // canvas pixel per sampled point, asking the widget itself whether its limit
   // allows that point, blown up to the parent's box by the browser.
   drawDragLimitPreview(widget, show) {
@@ -5490,12 +5499,28 @@ class PropertiesModule extends SidebarModule {
       setValue: value=>this.updateDragLimit(widget, { [key]: value }),
       // a mistyped expression limits nothing at all, so it is reported right
       // here rather than only in the Debug module's validation table
-      validate: value=>typeof value == 'string' ? expressionError(value) : null
+      validate: value=>typeof value == 'string' ? expressionError(value, dragLimitNames) : null
     }).render(target);
   }
 
+  // 3x3 picker for alignX/alignY - the same one a snap grid uses to say which
+  // point of the widget lands on a grid line, here saying which point of it the
+  // area holds.
+  renderDragLimitAnchor(widget, target) {
+    const positions = [ 0, 0.5, 1 ];
+    return this.renderAnchorPicker(target, {
+      label: 'Limited point',
+      hint: 'The point of the widget box the area holds, and what x and y mean in the fields above and in a condition. Top left is what the engine uses unless you change it, and then the widget can stick out of the area by its own width and height; the middle keeps the widget itself on the area.',
+      onPick: (row, column)=>this.updateDragLimit(widget, { alignX: positions[column] || null, alignY: positions[row] || null }),
+      listen: update=>this.addPropertyListener(widget, 'dragLimit', _=>update({
+        row: positions.indexOf(+dragLimitValue(widget.get('dragLimit'), 'alignY') || 0),
+        column: positions.indexOf(+dragLimitValue(widget.get('dragLimit'), 'alignX') || 0)
+      }))
+    });
+  }
+
   // The area does not have to be a rectangle: a condition is an inequality in
-  // x and y - the corner being tested, in the same coordinates as the four
+  // x and y - the point being tested, in the same coordinates as the four
   // sides - that a drag keeps true. One per line, all of which have to hold.
   renderDragLimitCondition(widget, target) {
     return new TextInput(this, widget, 'Conditions (one per line)', {
@@ -5510,7 +5535,7 @@ class PropertiesModule extends SidebarModule {
         // the key - the shapes the engine and the JSON editor already read
         this.updateDragLimit(widget, { condition: conditions.length ? (conditions.length == 1 ? conditions[0] : conditions) : null });
       },
-      hint: 'Ordinary maths: x and y are the widget\'s top left corner, width, height or any other property of the widget can be used by name, and ${PROPERTY name OF id} reads another widget\'s. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "2x^2 + y > 4" is written as it looks. Every line has to be true; && and || combine within one line.',
+      hint: 'An inequality the drag keeps true, so "y > x" keeps the widget below the diagonal. Ordinary maths: x and y are the limited point, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "2x^2 + y > 4" is written as it looks. Every line has to be true; && and || combine within one line.',
       validate: dragLimitConditionProblem
     }).render(target);
   }

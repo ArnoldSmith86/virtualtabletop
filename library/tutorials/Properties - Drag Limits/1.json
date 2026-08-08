@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1786034915395,
+      "lastUpdate": 1786155956975,
       "showName": false,
       "skill": "",
       "description": "",
@@ -114,11 +114,13 @@
     "z": 20,
     "css": "background: #e8b04b; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.5);",
     "dragLimit": {
+      "alignX": 0.5,
+      "alignY": 0.5,
       "condition": [
-        "x + width/2 > 450",
-        "x + width/2 < 1150",
-        "y + height/2 > 175",
-        "y + height/2 < 825"
+        "x > 450",
+        "x < 1150",
+        "y > 175",
+        "y < 825"
       ]
     }
   },
@@ -148,7 +150,7 @@
     "clickable": false,
     "layer": -1,
     "z": 10,
-    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a condition: an inequality in x and y representing the widget's top left corner that has to stay true while it is dragged. <br><br>Every example here adds half the piece to x and y, so the shape drawn is where its middle can go rather than its corner."
+    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a condition: an inequality in x and y - the point of the widget the limit holds - that has to stay true while it is dragged. <br><br>Every example here sets <b>alignX</b> and <b>alignY</b> to 0.5, so that point is the middle of the piece and the shape drawn is where its middle can go."
   },
   "btnsides": {
     "type": "button",
@@ -169,11 +171,13 @@
         "func": "SET",
         "property": "dragLimit",
         "value": {
+          "alignX": 0.5,
+          "alignY": 0.5,
           "condition": [
-            "x + width/2 > 450",
-            "x + width/2 < 1150",
-            "y + height/2 > 175",
-            "y + height/2 < 825"
+            "x > 450",
+            "x < 1150",
+            "y > 175",
+            "y < 825"
           ]
         }
       },
@@ -215,7 +219,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"condition\": [\n    \"x + width/2 > 450\",\n    \"x + width/2 < 1150\",\n    \"y + height/2 > 175\",\n    \"y + height/2 < 825\"\n  ]\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 450\",\n    \"x < 1150\",\n    \"y > 175\",\n    \"y < 825\"\n  ]\n}"
       },
       {
         "func": "SELECT",
@@ -248,7 +252,9 @@
         "func": "SET",
         "property": "dragLimit",
         "value": {
-          "condition": "(x + width/2 - 800)^2 + (y + height/2 - 500)^2 < 500^2"
+          "alignX": 0.5,
+          "alignY": 0.5,
+          "condition": "(x - 800)^2 + (y - 500)^2 < 500^2"
         }
       },
       {
@@ -289,7 +295,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"condition\":\n    \"(x + width/2 - 800)^2\n   + (y + height/2 - 500)^2\n   < 500^2\"\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"condition\":\n    \"(x - 800)^2\n   + (y - 500)^2\n   < 500^2\"\n}"
       },
       {
         "func": "SELECT",
@@ -322,11 +328,13 @@
         "func": "SET",
         "property": "dragLimit",
         "value": {
-          "minX": "550 - width/2",
-          "maxX": "1050 - width/2",
+          "alignX": 0.5,
+          "alignY": 0.5,
+          "minX": 550,
+          "maxX": 1050,
           "condition": [
-            "abs(y + height/2 - 500) < 250 * sqrt(3)/2",
-            "abs(y + height/2 - 500) < sqrt(3) * (250 - abs(x + width/2 - 800))"
+            "abs(y - 500) < 250 * sqrt(3)/2",
+            "abs(y - 500) < sqrt(3) * (250 - abs(x - 800))"
           ]
         }
       },
@@ -368,7 +376,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"minX\": \"550 - width/2\",\n  \"maxX\": \"1050 - width/2\",\n  \"condition\": [\n    \"abs(y + height/2 - 500)\n      < 250 * sqrt(3)/2\",\n    \"abs(y + height/2 - 500)\n      < sqrt(3) * (250\n      - abs(x + width/2 - 800))\"\n  ]\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"minX\": 550,\n  \"maxX\": 1050,\n  \"condition\": [\n    \"abs(y - 500)\n      < 250 * sqrt(3)/2\",\n    \"abs(y - 500)\n      < sqrt(3) * (250\n      - abs(x - 800))\"\n  ]\n}"
       },
       {
         "func": "SELECT",
@@ -401,11 +409,13 @@
         "func": "SET",
         "property": "dragLimit",
         "value": {
-          "minX": "400 - width/2",
-          "maxX": "1200 - width/2",
-          "minY": "120 - height/2",
-          "maxY": "880 - height/2",
-          "condition": "x + width/2 < 650 || x + width/2 > 950 || y + height/2 < 350 || y + height/2 > 650"
+          "alignX": 0.5,
+          "alignY": 0.5,
+          "minX": 400,
+          "maxX": 1200,
+          "minY": 120,
+          "maxY": 880,
+          "condition": "x < 650 || x > 950 || y < 350 || y > 650"
         }
       },
       {
@@ -456,7 +466,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"minX\": \"400 - width/2\",\n  \"maxX\": \"1200 - width/2\",\n  \"minY\": \"120 - height/2\",\n  \"maxY\": \"880 - height/2\",\n  \"condition\":\n    \"x + width/2 < 650\n  || x + width/2 > 950\n  || y + height/2 < 350\n  || y + height/2 > 650\"\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"minX\": 400,\n  \"maxX\": 1200,\n  \"minY\": 120,\n  \"maxY\": 880,\n  \"condition\":\n    \"x < 650\n  || x > 950\n  || y < 350\n  || y > 650\"\n}"
       },
       {
         "func": "SELECT",
@@ -544,7 +554,7 @@
     "clickable": false,
     "layer": -1,
     "z": 10,
-    "html": "Every button writes one <b>dragLimit</b> onto the piece and puts it back in the middle of the new area.<br><br>\n\nIn Edit Widgets, select the piece and look at Position > Drag limits: the same four sides and conditions are there as fields, and &quotShow on board&quot shades the whole area for you while you type it."
+    "html": "Every button writes one <b>dragLimit</b> onto the piece and puts it back in the middle of the new area.<br><br>\n\nIn Edit Widgets, select the piece and look at Position > Drag limits: the four sides, the conditions and the &quotLimited point&quot picker are all there as fields, and &quotShow on board&quot shades the whole area for you while you type it."
   },
   "language": {
     "id": "language",
@@ -558,7 +568,7 @@
     "clickable": false,
     "layer": -1,
     "z": 10,
-    "html": "The math is the one <b>var</b> uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. A bare name is a property of the widget: width, height, anything your game puts on it. ${PROPERTY name OF id} reads another widget's. && and || combine within one line."
+    "html": "The math is the one <b>var</b> uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. x and y are the limited point; a property is read the way a routine reads it, &#36;{PROPERTY name} for this widget and ${PROPERTY name OF id} for another. && and || combine within one line."
   },
   "codePanel": {
     "id": "codePanel",
@@ -567,7 +577,7 @@
     "width": 280,
     "height": 330,
     "css": "font-size: 17px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
-    "text": "\"dragLimit\": {\n  \"condition\": [\n    \"x + width/2 > 450\",\n    \"x + width/2 < 1150\",\n    \"y + height/2 > 175\",\n    \"y + height/2 < 825\"\n  ]\n}",
+    "text": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 450\",\n    \"x < 1150\",\n    \"y > 175\",\n    \"y < 825\"\n  ]\n}",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,

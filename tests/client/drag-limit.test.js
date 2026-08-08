@@ -105,9 +105,21 @@ describe('a dragLimit condition', () => {
 
   test('reads the widget and other widgets, not just x and y', () => {
     createWidget({ id: 'board', type: 'basic', size: 300 });
-    const w = widgetAt(0, 0, { condition: 'x + width < ${PROPERTY size OF board}' });
+    const w = widgetAt(0, 0, { condition: 'x + ${PROPERTY width} < ${PROPERTY size OF board}' });
     expect(w.dragLimitedCoord({ x: 200, y: 5 })).toMatchObject({ x: 200, y: 5 });
     expect(w.dragLimitedCoord({ x: 280, y: 5 })).toMatchObject({ x: 249, y: 5 });
+  });
+
+  test('reads a property only where it is written as one', () => {
+    // a bare word is a name of the limit itself (x and y) and nothing else, the
+    // same way a routine only reads a property through ${PROPERTY ...}; "width"
+    // therefore reads as nothing at all, which limits nothing
+    const w = widgetAt(0, 0, { condition: 'x + width < 300' });
+    expect(w.dragLimitedCoord({ x: 900, y: 5 })).toMatchObject({ x: 900, y: 5 });
+    // and ${PROPERTY x} is this widget's x property rather than the position
+    // being tested, so it is the same number wherever the drag goes
+    const own = widgetAt(40, 0, { condition: '${PROPERTY x} < 100' });
+    expect(own.dragLimitedCoord({ x: 900, y: 5 })).toMatchObject({ x: 900, y: 5 });
   });
 
   test('does not hold a widget that starts outside its area in place', () => {
@@ -225,6 +237,82 @@ describe('a drag along the edge of an area', () => {
     // point that lies in the direction it is being pulled, (71,-71)
     expect(w.get('x')).toBeGreaterThan(65);
     expect(w.get('y')).toBeGreaterThan(-77);
+  });
+});
+
+// alignX/alignY move the point of the widget the limit is about, the same
+// fractions of the widget box a snap grid aligns to
+describe('the dragLimit reference point', () => {
+  test('limits the middle of the widget instead of its corner', () => {
+    const w = widgetAt(0, 0, { maxX: 500, maxY: 500, alignX: 0.5, alignY: 0.5 });
+    // the widget is 50 x 50, so its middle stops at 500 with the corner at 475
+    expect(w.dragLimitedCoord({ x: 900, y: 900 })).toMatchObject({ x: 475, y: 475 });
+    expect(w.dragLimitedCoord({ x: 100, y: 100 })).toMatchObject({ x: 100, y: 100 });
+  });
+
+  test('is what x and y are in a condition', () => {
+    // a disc of radius 100 around (200,200) for the middle of the widget
+    const w = widgetAt(175, 175, { condition: '(x - 200)^2 + (y - 200)^2 < 100^2', alignX: 0.5, alignY: 0.5 });
+    const to = w.dragLimitedCoord({ x: 400, y: 175 });
+    expect(Math.hypot(to.x + 25 - 200, to.y + 25 - 200)).toBeLessThan(100);
+    expect(Math.hypot(to.x + 25 - 200, to.y + 25 - 200)).toBeGreaterThan(98);
+  });
+
+  test('leaves the corner on whole pixels', () => {
+    // half of an odd width is half a pixel, which the widget must not end up on
+    const w = createWidget({ id: 'odd', type: 'basic', x: 0, y: 0, width: 51, height: 51,
+      dragLimit: { maxX: 300, condition: 'y > x', alignX: 0.5, alignY: 0.5 } });
+    const to = w.dragLimitedCoord({ x: 900, y: 100 });
+    expect(to.x).toBe(Math.round(to.x));
+    expect(to.y).toBe(Math.round(to.y));
+  });
+
+  test('takes any other fraction of the widget box', () => {
+    // 1/1 is the bottom right corner, so the whole widget stays left of maxX
+    const w = widgetAt(0, 0, { maxX: 500, alignX: 1 });
+    expect(w.dragLimitedCoord({ x: 900, y: 0 })).toMatchObject({ x: 450, y: 0 });
+  });
+
+  test('is the top left corner unless it says otherwise', () => {
+    const w = widgetAt(0, 0, { maxX: 500, alignX: 0, alignY: 0 });
+    expect(w.dragLimitedCoord({ x: 900, y: 0 })).toMatchObject({ x: 500, y: 0 });
+  });
+});
+
+// An area does not have to be one piece: a ring, a track around the board or a
+// box with a box cut out of it can only be crossed by going around. The widget
+// follows the mouse rather than the pointer, so it never appears on the far
+// side of a hole the pointer crossed.
+describe('a drag across a hole in the area', () => {
+  const ring = { condition: [ '(x - 500)^2 + (y - 500)^2 < 300^2', '(x - 500)^2 + (y - 500)^2 > 200^2' ] };
+
+  test('does not jump over it, however the pointer got to the other side', () => {
+    const w = createWidget({ id: 'w', type: 'basic', x: 250, y: 500, width: 0, height: 0, dragLimit: ring });
+    // straight across the hole to the other side of the ring, which is inside
+    // the area: the widget has to stay on the near side of the hole and wait
+    // for the pointer to come back round to it
+    const to = w.dragLimitedCoord({ x: 750, y: 500 });
+    expect(w.dragLimitAllows(to)).toBe(true);
+    expect(to.x).toBeLessThan(500);
+  });
+
+  test('follows a pointer that goes round it', () => {
+    const w = createWidget({ id: 'w', type: 'basic', x: 250, y: 500, width: 0, height: 0, dragLimit: ring });
+    // the pointer traces the ring over the top, a few degrees at a time, and
+    // the widget travels with it - the drag along a track this is meant for
+    let highest = 500;
+    for(let degrees = 180; degrees >= 0; degrees -= 5) {
+      const to = w.dragLimitedCoord({
+        x: 500 + 250*Math.cos(degrees*Math.PI/180),
+        y: 500 - 250*Math.sin(degrees*Math.PI/180)
+      });
+      expect(w.dragLimitAllows(to)).toBe(true);
+      w.state.x = to.x;
+      w.state.y = to.y;
+      highest = Math.min(highest, to.y);
+    }
+    expect(w.get('x')).toBeGreaterThan(700);
+    expect(highest).toBeLessThan(300);
   });
 });
 

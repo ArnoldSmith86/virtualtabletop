@@ -1,4 +1,4 @@
-import { expressionError } from '../client/js/expression.js';
+import { dragLimitNames, expressionError } from '../client/js/expression.js';
 
 const validators = {
     asset: v=>!!String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
@@ -69,12 +69,13 @@ const COMMON_PROPERTIES = {
     scale: v=>typeof v === 'number' || typeof v === 'string' && !!String(v).match(/^-[0-9.]+,[0-9.]+$|^[0-9.]+,-[0-9.]+$/) || 'number expected (or special string for flipping: -x,y or x,-y)',
     ignoreZoom: 'boolean',
     // a side is a number or an expression that evaluates to one, condition is
-    // one inequality in x and y or a list of them (see client/js/expression.js).
-    // Both are parsed here: a mistyped expression is ignored at drag time, so
+    // one inequality in x and y or a list of them (see client/js/expression.js),
+    // alignX/alignY move the point of the widget all of that is about. The
+    // expressions are parsed here: a mistyped one is ignored at drag time, so
     // without this its only symptom would be a limit that does nothing.
     dragLimit: v=>{
         if(typeof v !== 'object' || v === null || Array.isArray(v))
-            return 'object expected (minX/maxX/minY/maxY and/or condition)';
+            return 'object expected (minX/maxX/minY/maxY, condition and/or alignX/alignY)';
         // every problem is collected: stopping at the first one would hide the
         // second typo until the first is fixed, and they are usually typed
         // in the same sitting
@@ -89,7 +90,7 @@ const COMMON_PROPERTIES = {
                     problems.push(`${key} must be a number or an expression`);
                     continue;
                 }
-                const problem = typeof v[key] === 'string' && expressionError(v[key]);
+                const problem = typeof v[key] === 'string' && expressionError(v[key], dragLimitNames);
                 if(problem)
                     problems.push(`${key} is not a valid expression: ${problem}`);
             } else if(key === 'condition') {
@@ -99,12 +100,15 @@ const COMMON_PROPERTIES = {
                     continue;
                 }
                 for(const condition of conditions) {
-                    const problem = expressionError(condition);
+                    const problem = expressionError(condition, dragLimitNames);
                     if(problem)
                         problems.push(`condition '${condition}' is not a valid expression: ${problem}`);
                 }
+            } else if(key === 'alignX' || key === 'alignY') {
+                if(typeof v[key] !== 'number')
+                    problems.push(`${key} must be a number: the fraction of the widget's ${key === 'alignX' ? 'width' : 'height'} the limit applies to (0 is its ${key === 'alignX' ? 'left' : 'top'} edge, 0.5 its middle, 1 its ${key === 'alignX' ? 'right' : 'bottom'} edge)`);
             } else {
-                problems.push(`unknown key '${key}' (valid: minX, maxX, minY, maxY, condition)`);
+                problems.push(`unknown key '${key}' (valid: minX, maxX, minY, maxY, condition, alignX, alignY)`);
             }
         }
         return problems.length ? problems.join('; ') : true;

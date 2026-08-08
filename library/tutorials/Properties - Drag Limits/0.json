@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1786034915393,
+      "lastUpdate": 1786155956975,
       "showName": false,
       "skill": "",
       "description": "",
@@ -56,7 +56,7 @@
     "clickable": false,
     "layer": -1,
     "z": 10,
-    "html": "The <b>dragLimit</b> property keeps a widget inside an area while a player drags it. Its simplest form is a rectangle: <b>minX</b>, <b>maxX</b>, <b>minY</b>, and <b>maxY</b>, measured in the coordinates of the widget's parent. Only dragging is limited. A routine can still move the widget anywhere. What is kept inside is the widget's top left corner, which is what the two examples below are about. A side you leave out is not limited at all."
+    "html": "The <b>dragLimit</b> property keeps a widget inside an area while a player drags it. Its simplest form is a rectangle: <b>minX</b>, <b>maxX</b>, <b>minY</b>, and <b>maxY</b>, measured in the coordinates of the widget's parent. Only dragging is limited. A routine can still move the widget anywhere. What is kept inside is the widget's top left corner unless <b>alignX</b>/<b>alignY</b> pick another point of it, which is what the two examples below are about. A side you leave out is not limited at all."
   },
   "frameA": {
     "id": "frameA",
@@ -139,9 +139,9 @@
     "css": "background: #3b82f6; border-radius: 12px; color: white; font-size: 26px; text-align: center; line-height: 80px;",
     "dragLimit": {
       "minX": "${PROPERTY x OF frameB}",
-      "maxX": "${PROPERTY x OF frameB} + ${PROPERTY width OF frameB} - width",
+      "maxX": "${PROPERTY x OF frameB} + ${PROPERTY width OF frameB} - ${PROPERTY width}",
       "minY": "${PROPERTY y OF frameB}",
-      "maxY": "${PROPERTY y OF frameB} + ${PROPERTY height OF frameB} - height"
+      "maxY": "${PROPERTY y OF frameB} + ${PROPERTY height OF frameB} - ${PROPERTY height}"
     }
   },
   "codeB": {
@@ -151,7 +151,7 @@
     "width": 560,
     "height": 175,
     "css": "font-size: 18px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
-    "text": "\"dragLimit\": {\n  \"minX\": \"${PROPERTY x OF frameB}\",\n  \"maxX\": \"${PROPERTY x OF frameB}\n         + ${PROPERTY width OF frameB} - width\",\n  ...\n}",
+    "text": "\"dragLimit\": {\n  \"minX\": \"${PROPERTY x OF frameB}\",\n  \"maxX\": \"${PROPERTY x OF frameB}\n         + ${PROPERTY width OF frameB}\n         - ${PROPERTY width}\",\n  ...\n}",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -165,7 +165,7 @@
     "width": 560,
     "height": 150,
     "css": "font-size: 21px;",
-    "text": "A side can be an expression instead of a number. These read the frame and take off B's own size, so B stays completely inside. Use the button to resize the frame and B stays inside the new boundaries. A widget left outside its rectangle is free until it is back inside, so nothing can get stuck.",
+    "text": "A side can be an expression instead of a number, and a property is read the way a routine reads one. These read the frame and take off B's own size, so B stays completely inside. Use the button to resize the frame and B stays inside the new boundaries. A widget left outside its rectangle is free until it is back inside, so nothing can get stuck.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,

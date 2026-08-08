@@ -313,6 +313,14 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":"y > x"}')
     .typeText(dragLimitBody.find('textarea'), '\n2x^2 + y > 4')
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
+    // which point of the widget all of that holds - the same 3x3 picker a snap
+    // grid uses to say which point of it lands on a grid line
+    .click(dragLimitBody.find('.gridAnchorRow .gridAnchor').nth(4))
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"],"alignX":0.5,"alignY":0.5}')
+    // and the top left corner is what the engine uses anyway, so picking it
+    // drops the two keys again
+    .click(dragLimitBody.find('.gridAnchorRow .gridAnchor').nth(0))
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
     // the area a condition describes is sampled onto the board while the
     // section is open, and the switch next to it takes it away again
     .expect(areaPreview.exists).ok()

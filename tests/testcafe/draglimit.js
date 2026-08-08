@@ -46,6 +46,29 @@ test('A dragLimit condition bounds a drag to an area no rectangle can describe',
   await t.expect(slid.x).gt(100);
 });
 
+test('A dragLimit with alignX/alignY limits that point of the widget', async t => {
+  await t.resizeWindow(1280, 800);
+  // the same rectangle as the first test, but about the middle of the 50 x 50
+  // piece - so the corner stops 25 short of each side
+  const before = await roomWith(t, { minX: 0, maxX: 200, minY: 0, maxY: 400, alignX: 0.5, alignY: 0.5 });
+  await t.drag('#w_piece', 300, 300);
+  const dropped = await position(before);
+  await t.expect(dropped.x).eql(175);
+  await t.expect(dropped.y).eql(375);
+});
+
+test('A drag does not jump across a hole in the area', async t => {
+  await t.resizeWindow(1280, 800);
+  // a ring around (400,300) with the piece on its left edge: the pointer crosses
+  // the hole in the middle towards the far side of the ring, and the piece has
+  // to stop at the near edge of the hole rather than appear over there
+  const before = await roomWith(t, { condition: [ '(x - 400)^2 + (y - 300)^2 < 400^2', '(x - 400)^2 + (y - 300)^2 > 200^2' ] });
+  await t.drag('#w_piece', 400, 0);
+  const stopped = await position(before);
+  await t.expect(stopped.x).lt(400);
+  await t.expect(Math.hypot(stopped.x - 400, stopped.y - 300)).gte(199);
+});
+
 test('A dragLimit side that reads the position is evaluated where that position is', async t => {
   await t.resizeWindow(1280, 800);
   // "maxX": "y" is a different rectangle at every point - together with the

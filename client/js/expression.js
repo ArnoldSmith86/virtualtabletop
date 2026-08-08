@@ -4,12 +4,12 @@
 //
 // An expression is ordinary infix maths: numbers, + - * / % ^, parentheses,
 // comparisons (< <= > >= == === != !==), logic (&& || !), the functions and
-// constants "var" has, and names. A name is resolved by the caller - for
-// dragLimit, x and y are the position being tested and every other name is a
-// property of the widget - as
-// is ${PROPERTY name} / ${PROPERTY name OF widgetID}, the same reference
-// routines use. A number directly in front of a name or a bracket multiplies,
-// so "2x" and "3(x+1)" mean what they look like.
+// constants "var" has, and names. A name is resolved by the caller: a bare word
+// (for dragLimit, x and y - the position being tested) and ${PROPERTY name} /
+// ${PROPERTY name OF widgetID}, the same reference routines use, which is the
+// only way to read a widget property here as well. A number directly in front
+// of a name or a bracket multiplies, so "2x" and "3(x+1)" mean what they look
+// like.
 //
 // Nothing here reads the room state or the DOM: it evaluates what the resolve
 // callback answers, which is what makes it testable and safe to run on every
@@ -36,6 +36,12 @@ const functions = Object.assign(Object.create(null), {
   min: Math.min, pow: Math.pow, round: Math.round, sign: Math.sign, sin: x=>Math.sin(x*perDegree),
   sqrt: Math.sqrt, tan: x=>Math.tan(x*perDegree), trunc: Math.trunc
 });
+
+// The bare words a dragLimit expression answers itself: the position being
+// tested. Everything else is a widget property and is written the way routines
+// write one, so the engine, the sidebar and the validator have to agree on this
+// one list - a bare word outside it is a mistake rather than a property.
+export const dragLimitNames = [ 'x', 'y' ];
 
 const constants = Object.assign(Object.create(null), {
   E: Math.E, LN10: Math.LN10, LN2: Math.LN2, LOG10E: Math.LOG10E, LOG2E: Math.LOG2E,
@@ -82,12 +88,15 @@ function tokenizeText(text) {
       throw new Error(`cannot read "${text.substr(start).trim()}"`);
     }
     if(match[1] !== undefined) {
+      // explicit: written as ${PROPERTY ...}, so it is a widget property even
+      // when it is spelled like one of the caller's own names ("${PROPERTY x}"
+      // is the widget's x property, "x" the position being tested)
       const reference = match[1].split(/\s+OF\s+/);
-      tokens.push({ type: 'name', value: reference[0].trim(), widget: reference.length > 1 ? reference[1].trim() : null });
+      tokens.push({ type: 'name', value: reference[0].trim(), widget: reference.length > 1 ? reference[1].trim() : null, explicit: true });
     } else if(match[2] !== undefined) {
       tokens.push({ type: 'number', value: +match[2] });
     } else if(match[3] !== undefined) {
-      tokens.push({ type: 'name', value: match[3], widget: null });
+      tokens.push({ type: 'name', value: match[3], widget: null, explicit: false });
     } else {
       tokens.push({ type: 'operator', value: match[4] == '**' ? '^' : match[4] });
     }
@@ -95,10 +104,13 @@ function tokenizeText(text) {
   return tokens;
 }
 
-// Evaluates text, asking resolve(name, widgetID) for every name in it. Throws
-// on anything it cannot read or on a name that does not answer with a number,
-// so a caller can decide what a broken expression should mean.
-export function evaluateExpression(text, resolve) {
+// Evaluates text, asking resolve(name, widgetID, explicit) for every name in
+// it. Throws on anything it cannot read or on a name that does not answer with
+// a number, so a caller can decide what a broken expression should mean.
+// freeNames lists the bare words the caller answers ("x", "y" for dragLimit);
+// given one, any other bare word is a mistake rather than a name, and saying so
+// is what points at ${PROPERTY ...} for reading a widget property.
+export function evaluateExpression(text, resolve, freeNames = null) {
   const tokens = tokenize(String(text));
   let position = 0;
 
@@ -156,7 +168,7 @@ export function evaluateExpression(text, resolve) {
 
     // a name directly in front of a bracket is a function call, everything
     // else is a value the caller resolves
-    if(token.widget === null && functions[token.value] && isOperator('(')) {
+    if(!token.explicit && functions[token.value] && isOperator('(')) {
       ++position;
       const args = [];
       if(!isOperator(')')) {
@@ -169,9 +181,13 @@ export function evaluateExpression(text, resolve) {
       expect(')');
       return functions[token.value](...args);
     }
-    if(token.widget === null && constants[token.value] !== undefined)
+    if(!token.explicit && constants[token.value] !== undefined)
       return constants[token.value];
-    return number(skipping ? 0 : resolve(token.value, token.widget));
+    // "width" reads like a property but is none: every property is written the
+    // way routines write it, so the two languages agree on what a name is
+    if(!token.explicit && freeNames && freeNames.indexOf(token.value) == -1)
+      throw new Error(`"${token.value}" is not a name here - write "\${PROPERTY ${token.value}}" for a property of this widget, "\${PROPERTY ${token.value} OF someID}" for another widget's`);
+    return number(skipping ? 0 : resolve(token.value, token.widget, token.explicit));
   }
 
   // right associative, and binding tighter than a unary minus so -x^2 is -(x^2)
@@ -311,10 +327,11 @@ export function expressionNumber(text, resolve, fallback = null) {
 // with 1 and what a value turns out to be is none of its business, so only the
 // syntax is judged - a property that does not exist yet is not an error here,
 // but "2x^^2 > 4" or "0 < x < 500" are, and they are reported in edit mode
-// instead of quietly limiting nothing.
-export function expressionError(text) {
+// instead of quietly limiting nothing. With freeNames given, a bare word that
+// is not one of them is judged too: the engine would read it as nothing.
+export function expressionError(text, freeNames = null) {
   try {
-    evaluateExpression(text, _=>1);
+    evaluateExpression(text, _=>1, freeNames);
     return null;
   } catch(e) {
     return e.isValueError ? null : e.message;
@@ -340,9 +357,9 @@ export function expressionNames(text) {
   }
   const isCall = token=>token && token.type == 'operator' && token.value == '(';
   return tokens
-    .filter((token, index)=>token.type == 'name' && !(token.widget === null
+    .filter((token, index)=>token.type == 'name' && !(!token.explicit
       && (constants[token.value] !== undefined || (functions[token.value] && isCall(tokens[index+1])))))
-    .map(token=>({ name: token.value, widget: token.widget }));
+    .map(token=>({ name: token.value, widget: token.widget, explicit: !!token.explicit }));
 }
 
 export function expressionCondition(text, resolve, fallback = true) {

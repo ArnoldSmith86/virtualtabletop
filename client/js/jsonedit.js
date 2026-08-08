@@ -1457,6 +1457,10 @@ function jeAddCommands() {
   // Default max limits are computed dynamically.
   jeAddLimitCommand('maxX');
   jeAddLimitCommand('maxY');
+  // which point of the widget the limit is about: 0.5 is its middle, i.e. the
+  // value that is wanted often enough to be the one the button inserts
+  jeAddLimitCommand('alignX', 0.5);
+  jeAddLimitCommand('alignY', 0.5);
   jeAddLimitConditionCommand();
 
   // Default values computed dynamically.
@@ -1793,8 +1797,9 @@ function jeAddLimitCommand(key, value) {
 }
 
 // The area a widget can be dragged in does not have to be a rectangle: a
-// condition is an inequality in x and y (the top left corner, in the same
-// coordinates as the four sides) that the drag keeps true. The starting point
+// condition is an inequality in x and y (the point alignX/alignY pick out of
+// the widget, in the same coordinates as the four sides) that the drag keeps
+// true. A widget property is read as ${PROPERTY name}. The starting point
 // is the half-plane below the diagonal - short, and it shows the syntax. The
 // second command turns one condition into the list of them that a shape needs
 // more than one inequality for.

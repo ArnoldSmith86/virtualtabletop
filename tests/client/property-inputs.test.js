@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { expressionError, expressionNames } from '../../client/js/expression.js';
+import { dragLimitNames, expressionError, expressionNames } from '../../client/js/expression.js';
 import { asArray } from '../../client/js/domhelpers.js';
 
 // The editor files are plain scripts that get concatenated by server/minify.mjs,
@@ -54,7 +54,7 @@ const testWidgets = new Map();
 // buildDiceFace (properties.js) calls replaceExclusiveProperties (propertyInputs.js) -
 // both files are concatenated into one bundle in the browser, so evaluate them
 // together here too instead of propertiesSource alone
-const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', 'expressionNames', 'asArray', inputsSource + propertiesSource + `;
+const cssHelpers = new Function('SidebarModule', 'widgets', 'dragLimitNames', 'expressionError', 'expressionNames', 'asArray', inputsSource + propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
@@ -127,7 +127,7 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'expressionError', '
     courtSuitLetter,
     deckGeneratorDesignHint
   };
-`)(class {}, testWidgets, expressionError, expressionNames, asArray);
+`)(class {}, testWidgets, dragLimitNames, expressionError, expressionNames, asArray);
 
 describe('css declaration rows', () => {
   test('declarations are listed in order from both the string and the object form', () => {
@@ -362,11 +362,15 @@ describe('css helpers', () => {
     expect(cssHelpers.dragLimitConditionProblem('')).toBe(null);
     // the message names the line it is about - the other lines are fine
     expect(cssHelpers.dragLimitConditionProblem('y > x\n0 < x < 500')).toMatch(/^"0 < x < 500": /);
+    // a property has to be written as one, so a bare word is reported as it is
+    // typed rather than read as nothing while dragging
+    expect(cssHelpers.dragLimitConditionProblem('x + width < 500')).toMatch(/\$\{PROPERTY width\}/);
+    expect(cssHelpers.dragLimitConditionProblem('x + ${PROPERTY width} < 500')).toBe(null);
   });
 
   test('the drawing follows every property its expressions read', () => {
     const widget = { id: 'piece', get: property=>({
-      dragLimit: { maxX: '${PROPERTY edge OF board} - limitWidth', condition: 'y > ${PROPERTY top OF rail}' },
+      dragLimit: { maxX: '${PROPERTY edge OF board} - ${PROPERTY limitWidth}', condition: 'y > ${PROPERTY top OF rail}' },
       parent: 'holder'
     })[property] };
     const dependencies = cssHelpers.dragLimitDependencies(widget);

@@ -192,6 +192,17 @@ describe('the syntax check', () => {
     expect(expressionError('(x + 1')).toEqual(expect.any(String));
     expect(expressionError('')).toEqual(expect.any(String));
   });
+
+  test('reports a bare word that is not one of the names the caller answers', () => {
+    // dragLimit answers x and y and nothing else: a property is written the way
+    // routines write one, so "width" is a mistake rather than a property - and
+    // one that would silently limit nothing
+    expect(expressionError('x + width < 500', [ 'x', 'y' ])).toContain('${PROPERTY width}');
+    expect(expressionError('x + ${PROPERTY width} < 500', [ 'x', 'y' ])).toBe(null);
+    expect(expressionError('sqrt(x) + 2PI > y', [ 'x', 'y' ])).toBe(null);
+    // and without a list every name is the caller's business, as before
+    expect(expressionError('x + width < 500')).toBe(null);
+  });
 });
 
 // what the editor's drawing asks: which of the names an expression reads are
@@ -199,22 +210,30 @@ describe('the syntax check', () => {
 // from one that does not and redraw when a property it reads changes
 describe('the names an expression reads', () => {
   test('are the ones the caller resolves', () => {
-    expect(expressionNames('2x^2 + y > 4')).toEqual([ { name: 'x', widget: null }, { name: 'y', widget: null } ]);
-    expect(expressionNames('${PROPERTY edge OF board} - limitWidth')).toEqual([
-      { name: 'edge', widget: 'board' }, { name: 'limitWidth', widget: null }
+    expect(expressionNames('2x^2 + y > 4')).toEqual([ { name: 'x', widget: null, explicit: false }, { name: 'y', widget: null, explicit: false } ]);
+    expect(expressionNames('${PROPERTY edge OF board} - ${PROPERTY limitWidth}')).toEqual([
+      { name: 'edge', widget: 'board', explicit: true }, { name: 'limitWidth', widget: null, explicit: true }
+    ]);
+  });
+
+  test('say whether a name is a property or one of the caller\'s own', () => {
+    // "x" is the position being tested, "${PROPERTY x}" the widget's own x -
+    // which is why the two cannot be told apart by their spelling
+    expect(expressionNames('x + ${PROPERTY x}')).toEqual([
+      { name: 'x', widget: null, explicit: false }, { name: 'x', widget: null, explicit: true }
     ]);
   });
 
   test('leave out what the language answers itself', () => {
-    expect(expressionNames('sqrt(x) + 2PI')).toEqual([ { name: 'x', widget: null } ]);
-    // a property called sqrt is still a property when it is not called
-    expect(expressionNames('sqrt + 1')).toEqual([ { name: 'sqrt', widget: null } ]);
+    expect(expressionNames('sqrt(x) + 2PI')).toEqual([ { name: 'x', widget: null, explicit: false } ]);
+    // a property called sqrt is still a property when it is written as one
+    expect(expressionNames('${PROPERTY sqrt} + 1')).toEqual([ { name: 'sqrt', widget: null, explicit: true } ]);
   });
 
   test('are read off the words, so half written text still answers', () => {
     // reporting a name too many only costs a redraw, so text that does not
     // parse (yet) still says what it reads
-    expect(expressionNames('2x^^2 > 4')).toEqual([ { name: 'x', widget: null } ]);
+    expect(expressionNames('2x^^2 > 4')).toEqual([ { name: 'x', widget: null, explicit: false } ]);
     expect(expressionNames('x @ 1')).toEqual([]); // nothing that can even be read as words
     expect(expressionNames(400)).toEqual([]);
     expect(expressionNames(null)).toEqual([]);

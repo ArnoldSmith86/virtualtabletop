@@ -768,23 +768,41 @@ export class Widget extends StateManaged {
   }
 
   // How a name in a dragLimit expression is answered: x and y are the position
-  // being tested rather than where the widget currently is, every other name is
-  // a property of this widget, and ${PROPERTY name OF id} reads another one.
-  // That makes "x" and "y" mean in an expression what minX/maxX/minY/maxY mean
-  // next to it - the top left corner in the coordinates of the parent.
+  // being tested rather than where the widget currently is, so they mean in an
+  // expression what minX/maxX/minY/maxY mean next to it. A property is written
+  // the way routines write one - ${PROPERTY name} for this widget's,
+  // ${PROPERTY name OF id} for another widget's - and nothing else is a name,
+  // so the two languages agree on what a bare word is.
   dragLimitResolver(coord) {
-    return (name, widgetID)=>{
-      if(widgetID === null && (name == 'x' || name == 'y'))
-        return coord[name];
+    return (name, widgetID, explicit)=>{
+      if(!explicit)
+        return name == 'x' || name == 'y' ? coord[name] : undefined;
       if(widgetID === null)
         return this.get(name);
       return widgets.has(widgetID) ? widgets.get(widgetID).get(name) : undefined;
     };
   }
 
-  // What the dragLimit says, read for one position: the two clamps of the
-  // rectangle (each side a number or an expression that computes one) and the
-  // conditions to test there. null when there is no limit to obey at all.
+  // Which point of the widget the limit applies to, as an offset from its top
+  // left corner: the corner itself unless alignX/alignY move it, the same
+  // fractions of the widget box a snap grid aligns to (0.5/0.5 is its middle).
+  // Everything below works on that point, so x, y and the four sides all mean
+  // the same thing wherever it sits.
+  dragLimitOffset() {
+    const limit = this.get('dragLimit');
+    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+      return { x: 0, y: 0 };
+    return {
+      x: (+limit.alignX || 0) * (+this.get('width') || 0),
+      y: (+limit.alignY || 0) * (+this.get('height') || 0)
+    };
+  }
+
+  // What the dragLimit says, read for one position - the point of the widget
+  // the limit applies to (see dragLimitOffset), not necessarily its corner: the
+  // two clamps of the rectangle (each side a number or an expression that
+  // computes one) and the conditions to test there. null when there is no limit
+  // to obey at all.
   // `varies` says whether these rules hold for one position only: a side that
   // reads x or y ("maxX": "y") is a different number at every point, so both
   // callers - the drag and the editor's drawing - have to read it again for
@@ -800,7 +818,7 @@ export class Widget extends StateManaged {
 
     return {
       varies: [ 'minX', 'maxX', 'minY', 'maxY' ].some(key=>expressionNames(limit[key])
-        .some(name=>name.widget === null && (name.name == 'x' || name.name == 'y'))),
+        .some(name=>!name.explicit && (name.name == 'x' || name.name == 'y'))),
       clampX: value=>{
         if(minX !== undefined && minX !== null) value = Math.max(minX, value);
         if(maxX !== undefined && maxX !== null) value = Math.min(maxX, value);
@@ -836,18 +854,28 @@ export class Widget extends StateManaged {
   // mouse move, so an area that depends on the state follows it. A side can
   // read x and y like a condition can ("maxX": "y"), and then the rectangle is
   // judged where the position it bounds is rather than where the pointer is.
+  // All of that is about the point alignX/alignY picks out of the widget - its
+  // top left corner unless they say otherwise - so only the two conversions at
+  // the ends of this method deal in corners.
   //
   // A refused position does not stop the drag where the last accepted one was:
   // the widget goes where its area comes closest to the pointer, so it comes to
   // rest against the boundary itself rather than a whole mouse step before it,
   // and it keeps sliding along that boundary while the pointer moves - along a
-  // straight edge at any angle and around a curve alike.
+  // straight edge at any angle and around a curve alike. It gets there the way
+  // the mouse went: every position it is moved to is one it can reach from
+  // where it is without leaving the area on the way, so a widget limited to a
+  // ring or a track walks around it instead of appearing on the far side of the
+  // hole when the pointer crosses it.
   // A widget that starts outside its area (a condition that changed under it,
   // a routine that put it there) is not held in place: it is free until it is
   // inside, so it can never get stuck - only a widget that is on the boundary
   // of its area rather than away from it is carried along that boundary.
   dragLimitedCoord(coord) {
-    const rules = this.dragLimitRules(coord);
+    // the corner a drag reports, as the point the limit is written about
+    const offset = this.dragLimitOffset();
+    const point = { x: coord.x + offset.x, y: coord.y + offset.y };
+    const rules = this.dragLimitRules(point);
     if(!rules)
       return coord;
 
@@ -859,8 +887,9 @@ export class Widget extends StateManaged {
       const { clampX, clampY } = rulesAt(position);
       return { x: clampX(position.x), y: clampY(position.y) };
     };
-    const target = clamped(coord);
-    const asCoord = position=>Object.assign({}, coord, position);
+    const target = clamped(point);
+    // and back to the corner, which is what a drag writes
+    const asCoord = position=>Object.assign({}, coord, { x: position.x - offset.x, y: position.y - offset.y });
 
     // a fixed rectangle and nothing else is what clamping already answered
     if(!rules.varies && !rules.conditions.length)
@@ -869,13 +898,11 @@ export class Widget extends StateManaged {
     // the rectangle is part of the question everywhere below, so a position
     // reached by sliding or by rounding can never leave it either
     const inside = position=>this.dragLimitAllows(position, rulesAt(position));
-    if(inside(target))
-      return asCoord(target);
 
     // where the widget is, put through the rectangle as well: it is a hard
     // bound, so a widget sitting outside it (a routine moved it, a side moved
     // under it) must not be able to stay there through the fallbacks below
-    const current = clamped({ x: +this.get('x') || 0, y: +this.get('y') || 0 });
+    const current = clamped({ x: (+this.get('x') || 0) + offset.x, y: (+this.get('y') || 0) + offset.y });
     const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
     // A widget that is not inside its area is let go - but a widget sitting
     // exactly on the edge of a strict inequality ("x < 200" at x == 200, put
@@ -898,18 +925,31 @@ export class Widget extends StateManaged {
     if(!start)
       return asCoord(target);
 
-    // How far along the way from an allowed position to a refused one the area
-    // reaches. Bisection rather than maths: a condition is an arbitrary
-    // expression, so the only thing that can be asked of it is whether a point
-    // is in it - and halving until the answer is a twentieth of a pixel wide is
-    // both invisibly precise and a handful of evaluations of an already
-    // tokenized string.
+    // How far along the way from an allowed position to another one the widget
+    // gets without leaving the area - the far end itself when the whole way is
+    // inside it. Walked rather than halved: what is being answered is where the
+    // mouse took the widget, so an area the way crosses out of and back into
+    // (the hole of a ring, the middle of a track) has to stop it at the near
+    // side rather than let it carry on beyond the gap. The samples are a few
+    // pixels apart, and the last step between the one that was allowed and the
+    // one that was not is halved until the boundary is a twentieth of a pixel
+    // wide, so the widget rests against it rather than a sample short of it.
     const reach = (from, to)=>{
-      if(inside(to))
-        return to;
+      const distance = Math.hypot(to.x - from.x, to.y - from.y);
       const at = part=>({ x: from.x + (to.x - from.x) * part, y: from.y + (to.y - from.y) * part });
+      // bounded, so one long jump of a fast mouse costs no more than a slow one
+      const samples = Math.min(128, Math.max(1, Math.ceil(distance / 4)));
       let reached = 0, refused = 1;
-      for(let steps = Math.min(20, Math.ceil(Math.log2(Math.hypot(to.x - from.x, to.y - from.y) * 20))); steps > 0; --steps) {
+      for(let sample = 1; sample <= samples; ++sample) {
+        if(!inside(at(sample / samples))) {
+          refused = sample / samples;
+          break;
+        }
+        reached = sample / samples;
+      }
+      if(reached == 1)
+        return to;
+      for(let steps = Math.min(20, Math.ceil(Math.log2(distance / samples * 20))); steps > 0; --steps) {
         const middle = (reached + refused) / 2;
         if(inside(at(middle)))
           reached = middle;
@@ -918,6 +958,13 @@ export class Widget extends StateManaged {
       }
       return at(reached);
     };
+
+    // straight at the pointer, as far as the area lets the widget go: getting
+    // all the way there is the ordinary drag, and there is nothing to slide
+    // along then
+    const straight = reach(start, target);
+    if(straight === target)
+      return asCoord(target);
 
     // The widget ends up where its area comes closest to the pointer. Straight
     // at the pointer is one candidate; the others are that same movement turned
@@ -936,7 +983,7 @@ export class Widget extends StateManaged {
         const cos = Math.cos(angle), sin = Math.sin(angle);
         return { x: position.x + (dx*cos - dy*sin)*cos, y: position.y + (dx*sin + dy*cos)*cos };
       };
-      let closest = reach(position, target);
+      let closest = round == 0 ? straight : reach(position, target);
       // as many halvings of the quarter turn as it takes for the last one to
       // move the widget by less than a twentieth of a pixel
       const halvings = Math.min(16, Math.max(1, Math.ceil(Math.log2(Math.hypot(dx, dy) * 32))));
@@ -949,7 +996,9 @@ export class Widget extends StateManaged {
           else
             straighter = middle;
         }
-        const slid = turnedBy(turn);
+        // the turned movement is walked as well, so a turn that ends up in the
+        // area but crosses out of it on the way is taken only as far as it goes
+        const slid = reach(position, turnedBy(turn));
         if(away(slid) < away(closest))
           closest = slid;
       }
@@ -964,11 +1013,13 @@ export class Widget extends StateManaged {
     // writes, and this one is on the edge of its area: rounded the usual way it
     // would be just outside it half the time. So the four whole positions
     // around it are tried, the one nearest the pointer first, and the widget
-    // stays where it was only if the area is too thin to hold any of them.
+    // stays where it was only if the area is too thin to hold any of them. It
+    // is the corner that is whole, so an alignX of 0.5 on an odd width does not
+    // put the widget on half a pixel.
     const whole = [];
-    for(const x of new Set([ Math.floor(position.x), Math.ceil(position.x) ]))
-      for(const y of new Set([ Math.floor(position.y), Math.ceil(position.y) ]))
-        whole.push({ x, y });
+    for(const x of new Set([ Math.floor(position.x - offset.x), Math.ceil(position.x - offset.x) ]))
+      for(const y of new Set([ Math.floor(position.y - offset.y), Math.ceil(position.y - offset.y) ]))
+        whole.push({ x: x + offset.x, y: y + offset.y });
     whole.sort((a, b)=>away(a) - away(b));
     return asCoord(whole.find(inside) || start);
   }
