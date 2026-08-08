@@ -14,6 +14,7 @@ export default class Room {
   state = {};
   deltaID = 0;
   lastStatisticsDeltaID = 0;
+  lastMouseStateByPlayer = {};
 
   constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
@@ -51,6 +52,10 @@ export default class Room {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
     } else {
       player.send('state', this.state);
+      for (const other of this.players) {
+        if (other !== player && this.lastMouseStateByPlayer[other.name])
+          player.send('mouse', { player: other.name, mouseState: this.lastMouseStateByPlayer[other.name] });
+      }
     }
 
     if(this.traceIsEnabled()) {
@@ -750,6 +755,7 @@ export default class Room {
   }
 
   mouseMove(player, mouseState) {
+    this.lastMouseStateByPlayer[player.name] = mouseState;
     this.broadcast('mouse', { player: player.name, mouseState });
   }
 
@@ -785,6 +791,11 @@ export default class Room {
       }
     }
     delta.id = ++this.deltaID;
+
+    if(delta.deltaSendId) {
+      player.send('deltaConfirm', { id: delta.deltaSendId });
+      delete delta.deltaSendId;
+    }
 
     if(this.waitingForDeltaFromPlayer == player) {
       delete this.waitingForDeltaFromPlayer;
@@ -873,7 +884,7 @@ export default class Room {
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
-
+    delete this.lastMouseStateByPlayer[player.name];
     this.players = this.players.filter(e => e != player);
     this.cleanupInputForPlayer(player);
     if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
@@ -930,6 +941,11 @@ export default class Room {
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
     if(this.state._meta.players[newName] === undefined)
       this.state._meta.players[newName] = sessionID == null ? this.state._meta.players[oldName] : this.newPlayerColor();
+    if(this.lastMouseStateByPlayer[oldName]) {
+      this.lastMouseStateByPlayer[newName] = this.lastMouseStateByPlayer[oldName];
+      if(sessionID == null)
+        delete this.lastMouseStateByPlayer[oldName];
+    }
 
     for(const player of renamedSessions)
       player.rename(newName);

@@ -1,4 +1,5 @@
 import { asArray, onLoad, rand, shareURL } from '../domhelpers.js';
+import { setStatusMessage, setMyName, setActivePlayersList } from './status.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -10,6 +11,7 @@ let mouseCoords = [];
 let mySessionID = null;
 let metaUpdateResolves = [];
 let inviteStatusTimeout = null;
+let prevActivePlayers = [];
 localStorage.setItem('playerName', playerName);
 
 export {
@@ -38,6 +40,37 @@ function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName].setAttribute("data-player",playerName);
   $('#playerCursors').appendChild(playerCursors[playerName]);
   playerCursorsTimeout[playerName] = setTimeout(()=>{}, 0);
+}
+
+function countBy(arr) {
+  const c = {};
+  for(const x of arr)
+    c[x] = (c[x] || 0) + 1;
+  return c;
+}
+
+// announces joins, leaves and renames by comparing the new active player list (one entry per client) to the previous one
+function announcePlayerChanges(active) {
+  if(!prevActivePlayers.length)
+    return;
+  const prevCount = countBy(prevActivePlayers);
+  const currCount = countBy(active);
+  const gone  = Object.keys(prevCount).filter(n=>!currCount[n]);
+  const fresh = Object.keys(currCount).filter(n=>!prevCount[n]);
+
+  const parts = [];
+  if(gone.length == 1 && fresh.length == 1 && prevCount[gone[0]] == currCount[fresh[0]]) {
+    // a self-rename is already announced by the 'rename' message handler
+    if(fresh[0] != playerName)
+      parts.push(`${gone[0]} renamed to ${fresh[0]}`);
+  } else {
+    for(const n of gone)
+      parts.push(`${n} left`);
+    for(const n of fresh)
+      parts.push(`${n} joined`);
+  }
+  if(parts.length)
+    setStatusMessage(parts.join('; '));
 }
 
 // resolves once a meta update arrives for which isApplied returns true so the UI can show that a
@@ -118,8 +151,10 @@ function showInviteStatus(text, isError) {
 }
 
 function fillPlayerList(players, active, sessions) {
+  active = active || [];
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
+  setActivePlayersList(activePlayers);
   removeFromDOM('#playersTable tbody > tr, #playerCursors > .cursor');
 
   if(players[playerName] !== undefined)
@@ -231,6 +266,9 @@ function fillPlayerList(players, active, sessions) {
   $('#addLocalPlayerButton').title = (sessionsByPlayer[playerName] || []).length > 1
     ? 'Add a player and switch this browser tab to them'
     : 'Add a player who shares this device';
+  setMyName(playerName);
+  announcePlayerChanges(active);
+  prevActivePlayers = [...active];
   updatePlayerCountDisplay();
 }
 
@@ -279,7 +317,7 @@ onLoad(function() {
       playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {
         playerCursors[args.player].classList.remove('pressed','active','foreign');
-      } else {
+      } else if(args.mouseState.x !== undefined) {
         const x = args.mouseState.x*scale;
         const y = args.mouseState.y*scale;
         playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
@@ -306,6 +344,7 @@ onLoad(function() {
   onMessage('rename', function(args) {
     const oldName = playerName;
     playerName = args;
+    setStatusMessage(`You renamed to ${playerName}`);
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
