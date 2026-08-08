@@ -3435,19 +3435,16 @@ export class Widget extends StateManaged {
         const alignX = (grid.alignX || 0) * this.get('width');
         const alignY = (grid.alignY || 0) * this.get('height');
 
-        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
-          continue;
-        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
-          continue;
-        if(!this.gridConditionsHold(grid, { x, y }))
+        if(!this.gridAppliesAt(grid, { x, y }))
           continue;
 
-        const snapX = x + alignX + grid.x/2 - mod(x + alignX + grid.x/2 - (grid.offsetX || 0), grid.x);
-        const snapY = y + alignY + grid.y/2 - mod(y + alignY + grid.y/2 - (grid.offsetY || 0), grid.y);
+        const snapped = this.gridSnapCoord(grid, { x, y }, { x: alignX, y: alignY });
+        if(!snapped)
+          continue;
 
-        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
+        const distance = (snapped.x - x) ** 2 + (snapped.y - y) ** 2;
         if(distance < closestDistance) {
-          closest = [ snapX - alignX, snapY - alignY, grid ];
+          closest = [ snapped.x - alignX, snapped.y - alignY, grid ];
           closestDistance = distance;
         }
       }
@@ -3459,6 +3456,88 @@ export class Widget extends StateManaged {
             await this.set(p, closest[2][p]);
       }
     }
+  }
+
+  // Which point of one grid's lattice a widget dropped at coord is snapped to,
+  // as the point alignX/alignY aligns to it (the widget's corner is that minus
+  // the alignment): the lattice point nearest the position it was dropped at,
+  // moved on to the nearest one this grid applies at as well.
+  // A grid limited to a rectangle and nothing else keeps snapping to the
+  // nearest lattice point wherever that lies, which is what it has always done
+  // and what games are built on. A condition can bound the grid to an area of
+  // any shape, and there it is not enough that the position the widget was
+  // dropped at is inside it: the lattice point nearest to that position is up
+  // to half a cell away in each direction, and a boundary that runs wherever it
+  // likes can easily be in between, so snapping there would drop the widget
+  // just outside the very area the grid is limited to. The lattice is walked
+  // outwards in square rings around that point instead, ranked by how far the
+  // widget actually moves, until no ring further out can hold anything closer
+  // than the best point already found.
+  // null when no lattice point within reach is one this grid applies at - an
+  // area narrower than the grid step need not contain one at all - and then
+  // this grid does not apply here either, exactly as outside its rectangle.
+  gridSnapCoord(grid, coord, align) {
+    const nearest = (position, offset, step)=>position + step/2 - mod(position + step/2 - offset, step);
+    const snap = {
+      x: nearest(coord.x + align.x, grid.offsetX || 0, grid.x),
+      y: nearest(coord.y + align.y, grid.offsetY || 0, grid.y)
+    };
+    if(!this.gridConditions(grid).length)
+      return snap;
+
+    const appliesAt = point=>this.gridAppliesAt(grid, { x: point.x - align.x, y: point.y - align.y });
+    if(appliesAt(snap))
+      return snap;
+
+    const stepX = Math.abs(grid.x), stepY = Math.abs(grid.y);
+    if(!(stepX > 0) || !(stepY > 0))
+      return null;
+
+    // far enough to step over a boundary that cuts between the widget and the
+    // lattice point it would snap to, and short enough to stay a handful of
+    // expressions rather than a search of the whole board
+    const searchRings = 8;
+    let best = null;
+    let bestDistance = Infinity;
+    for(let ring = 1; ring <= searchRings; ++ring) {
+      // a lattice point `ring` cells away is at least `ring` minus the half
+      // cell the widget itself sits off the lattice from it, so once a point is
+      // found the rings that cannot come closer are not looked at at all
+      if(best && ((ring - 0.5) * Math.min(stepX, stepY)) ** 2 >= bestDistance)
+        break;
+      for(let column = -ring; column <= ring; ++column)
+        for(let row = -ring; row <= ring; ++row) {
+          if(Math.max(Math.abs(column), Math.abs(row)) != ring)
+            continue;
+          const candidate = { x: snap.x + column * grid.x, y: snap.y + row * grid.y };
+          const distance = (candidate.x - align.x - coord.x) ** 2 + (candidate.y - align.y - coord.y) ** 2;
+          if(distance < bestDistance && appliesAt(candidate)) {
+            best = candidate;
+            bestDistance = distance;
+          }
+        }
+    }
+    return best;
+  }
+
+  // Whether one grid applies at a position at all: inside the rectangle its
+  // four sides bound it to, and inside the area its conditions describe. This
+  // is asked of the position a widget was dropped at - is this grid one of the
+  // grids tried - and of every lattice point gridSnapCoord() weighs up snapping
+  // it to, so a grid that only applies in part of the parent cannot put a
+  // widget down outside that part either.
+  gridAppliesAt(grid, coord) {
+    return coord.x >= (grid.minX || -99999) && coord.x <= (grid.maxX || 99999)
+      && coord.y >= (grid.minY || -99999) && coord.y <= (grid.maxY || 99999)
+      && this.gridConditionsHold(grid, coord);
+  }
+
+  // The conditions one grid entry carries, as a list: none, one, or a list of
+  // them with the empty ones dropped.
+  gridConditions(grid) {
+    if(!grid || grid.condition === undefined || grid.condition === null)
+      return [];
+    return asArray(grid.condition).filter(condition=>condition !== null && condition !== undefined);
   }
 
   // Where one grid applies, beyond the rectangle minX/maxX/minY/maxY bound it
@@ -3474,11 +3553,8 @@ export class Widget extends StateManaged {
   // condition that cannot be read (a typo, a widget that is gone) holds, so a
   // mistyped grid keeps snapping rather than silently stopping.
   gridConditionsHold(grid, coord) {
-    if(!grid || grid.condition === undefined || grid.condition === null)
-      return true;
     const resolve = this.positionResolver(coord);
-    return asArray(grid.condition).every(condition=>condition === null || condition === undefined
-      || expressionCondition(condition, resolve));
+    return this.gridConditions(grid).every(condition=>expressionCondition(condition, resolve));
   }
 
   supportsPiles() {

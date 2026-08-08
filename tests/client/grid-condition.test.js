@@ -72,6 +72,44 @@ describe('a condition on a snap grid', () => {
     expect(await snappedTo(grid, 330, 130)).toEqual({ x: 330, y: 130 });
   });
 
+  test('lands the widget inside the area rather than on the lattice point next to it', async () => {
+    // dropped inside the disc, but the lattice point nearest to that position
+    // is on the far side of the boundary: the next one in is what the widget
+    // snaps to, so it is never left just outside the area it was dropped in
+    const grid = [ { x: 80, y: 80, condition: '(x - 290)^2 + (y - 440)^2 < 170^2' } ];
+    expect(await snappedTo(grid, 440, 430)).toEqual({ x: 400, y: 400 });
+    expect(await snappedTo(grid, 300, 290)).toEqual({ x: 320, y: 320 });
+  });
+
+  test('ranks the lattice points by how far the widget moves, not the point it aligns', async () => {
+    const grid = [ { x: 100, y: 100, alignX: 0.5, alignY: 0.5, condition: 'x < 260' } ];
+    expect(await snappedTo(grid, 240, 240)).toEqual({ x: 175, y: 275 });
+  });
+
+  test('stays inside the rectangle while it looks for a point inside the area', async () => {
+    const grid = [ { x: 180, y: 180, minX: 560, maxX: 900, minY: 270, maxY: 610, condition: 'y <= x - 290' } ];
+    // (540, 360) is the nearest lattice point and outside the area; of the ones
+    // around it (540, 180) is nearest, but the grid does not apply out there
+    expect(await snappedTo(grid, 600, 300)).toEqual({ x: 720, y: 360 });
+  });
+
+  test('does not apply where the area holds no lattice point at all', async () => {
+    // the area is inside one cell of the grid, so there is nothing to snap to
+    // in it and the widget stays exactly where it was let go
+    const grid = [ { x: 100, y: 100, condition: '(x - 250)^2 + (y - 250)^2 < 30^2' } ];
+    expect(await snappedTo(grid, 250, 250)).toEqual({ x: 250, y: 250 });
+  });
+
+  test('leaves the position to a grid that has a nearer point for it', async () => {
+    const grid = [
+      { x: 200, y: 200, condition: 'x < 150' },
+      { x: 50, y: 50 }
+    ];
+    // the first grid holds here, but the nearest point of it inside its area is
+    // 150 px away and the second grid has one 14 px away
+    expect(await snappedTo(grid, 140, 140)).toEqual({ x: 150, y: 150 });
+  });
+
   test('is not copied onto the widget when it snaps there', async () => {
     const w = widgetWithGrid([ { x: 100, y: 100, condition: 'x < 500', rotation: 45 } ], { x: 130, y: 130 });
     await w.snapToGrid();

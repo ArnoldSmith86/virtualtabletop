@@ -5306,7 +5306,8 @@ class PropertiesModule extends SidebarModule {
   // The area a grid applies to does not have to be a rectangle either: a
   // condition is an inequality in x and y - the position being snapped, in the
   // same coordinates as the four sides above - that has to hold for this grid
-  // to be one of the grids tried. One per line, all of which have to hold.
+  // to be one of the grids tried, and where the widget ends up as well. One per
+  // line, all of which have to hold.
   renderGridCondition(widget, index, target) {
     return new TextInput(this, widget, 'Conditions (one per line)', {
       listenTo: [ 'grid' ],
@@ -5315,7 +5316,7 @@ class PropertiesModule extends SidebarModule {
       placeholder: 'none',
       getValue: _=>conditionsOf(gridEntryList(widget.get('grid'))[index]).join('\n'),
       setValue: value=>this.updateGridEntry(widget, index, { condition: conditionValue(value) }),
-      hint: 'An inequality this grid needs to be true where the widget is dropped, so "y > x" applies it below the diagonal only. Ordinary maths: x and y are the position being snapped, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "(x - 800)^2 + (y - 500)^2 < 300^2" is a round area. Every line has to be true; && and || combine within one line. Each line has to be a comparison rather than a sum: "x - 100" is a number, and a number is true wherever it is not 0.',
+      hint: 'An inequality this grid needs to be true where the widget is dropped, so "y > x" applies it below the diagonal only. Ordinary maths: x and y are the position being snapped, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "(x - 800)^2 + (y - 500)^2 < 300^2" is a round area. Every line has to be true; && and || combine within one line. Each line has to be a comparison rather than a sum: "x - 100" is a number, and a number is true wherever it is not 0. The widget lands on the nearest lattice point inside the area rather than on the one just past its edge, and where the area holds no lattice point at all this grid does not apply.',
       validate: conditionProblem
     }).render(target);
   }
