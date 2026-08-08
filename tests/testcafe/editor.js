@@ -430,17 +430,55 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .expect(nestedSection.withExactText('Drag limits').exists).ok();
 
   const dragLimitBody = Selector('#editorModules .collapsibleHeader').withText('Drag limits').sibling('.collapsibleBody');
+  const areaPreview = Selector('.dragLimitPreviewOverlay');
   await t
     .click(Selector('#editorModules .collapsibleHeader').withText('Drag limits'))
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
     // the whole table minus the widget's own box
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":1509,"maxY":909}')
-    .typeText(dragLimitBody.find('.gridLimits input[type=number]').nth(1), '800', { replace: true })
+    .typeText(dragLimitBody.find('.dragLimitRow input').nth(1), '800', { replace: true })
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":800,"maxY":909}')
+    // a side takes an expression instead of a number, and the area does not
+    // have to be a rectangle at all - one condition per line
+    .typeText(dragLimitBody.find('.dragLimitRow input').nth(1), '${PROPERTY width OF checker} * 10', { replace: true })
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909}')
+    .typeText(dragLimitBody.find('textarea'), 'y > x')
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":"y > x"}')
+    .typeText(dragLimitBody.find('textarea'), '\n2x^2 + y > 4')
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
+    // which point of the widget all of that holds - the same 3x3 picker a snap
+    // grid uses to say which point of it lands on a grid line
+    .click(dragLimitBody.find('.gridAnchorRow .gridAnchor').nth(4))
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"],"alignX":0.5,"alignY":0.5}')
+    // and the top left corner is what the engine uses anyway, so picking it
+    // drops the two keys again
+    .click(dragLimitBody.find('.gridAnchorRow .gridAnchor').nth(0))
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
+    // a condition that is not a comparison is a number, and a number is true
+    // wherever it is not 0 - so it is reported like one that cannot be read at
+    // all rather than left behind as a limit that limits nothing
+    .typeText(dragLimitBody.find('textarea'), 'x - 100', { replace: true })
+    .expect(dragLimitBody.find('.propertyInputProblem').withText('comparison').exists).ok()
+    // and conditions that hold nowhere at all are said out loud too: no single
+    // line of that is wrong, but together they describe no area, and an area
+    // nothing satisfies limits nothing
+    .typeText(dragLimitBody.find('textarea'), 'x < 200\nx > 800', { replace: true })
+    .expect(dragLimitBody.find('.dragLimitEmptyArea').innerText).contains('satisfies')
+    .typeText(dragLimitBody.find('textarea'), 'y > x', { replace: true })
+    .expect(dragLimitBody.find('.dragLimitEmptyArea').innerText).eql('')
+    // the area a condition describes is sampled onto the board while the
+    // section is open, and the switch next to it takes it away again
+    .expect(areaPreview.exists).ok()
+    .click(dragLimitBody.find('.dragLimitPreviewToggle label.switchbox'))
+    .expect(areaPreview.exists).notOk()
+    .click(dragLimitBody.find('.dragLimitPreviewToggle label.switchbox'))
+    .expect(areaPreview.exists).ok()
     // the four sides only mean something together, so the switch drops all of
     // them - and an empty rectangle is the default, i.e. no property at all
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
-    .expect(dragLimit()).eql('null');
+    .expect(dragLimit()).eql('null')
+    // and a widget that can be dragged anywhere has no area to draw
+    .expect(areaPreview.exists).notOk();
 
   // nothing tells the editor whether an image is a hexagon, let alone which way
   // up, so both orientations are offered and the user picks one
@@ -461,6 +499,47 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .click(gridBody.find('.gridEntry [icon=delete]').nth(0))
     .click(gridButton.nth(1))
     .expect(grid()).eql('[{"x":136.5,"y":78.81,"offsetX":68.25,"offsetY":39.405},{"x":136.5,"y":78.81,"offsetX":0,"offsetY":0}]');
+
+  // the area one grid applies in: the rectangle, plus conditions for an area
+  // that is not one. The Conditions field sits right under the X/Y rows and
+  // stores what the engine reads - one condition as a string, several as a list
+  const conditionOutline = Selector('.gridConditionOutline');
+  // every dot of one grid is one zero-length subpath of one path, so the marked
+  // positions can be read back out of it and held against the conditions
+  const conditionDots = ClientFunction(() => {
+    const path = document.querySelector('.gridConditionDots .dotCore');
+    const dots = path ? path.getAttribute('d').split('M ').slice(1).map(dot => dot.split(' ').map(Number)) : [];
+    return { count: dots.length, outside: dots.filter(([ x, y ]) => !(y > x && x > 200)).length };
+  });
+  await t
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(1))
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0))
+    .click(gridButton.nth(0))
+    .click(gridBody.find('.gridEntry .collapsibleHeader').withText('More options'))
+    .expect(conditionOutline.exists).notOk()
+    .click(gridBody.find('.gridLimitToggle label.switchbox'))
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000}]')
+    .typeText(gridBody.find('.gridLimits textarea'), 'y > x')
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000,"condition":"y > x"}]')
+    .typeText(gridBody.find('.gridLimits textarea'), '\nx > 200')
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000,"condition":["y > x","x > 200"]}]')
+    // the boundary of that area is traced onto the board in the same dashed
+    // line the rectangle is outlined with
+    .expect(conditionOutline.exists).ok()
+    // and the dots are drawn one by one, so only the lattice points the widget
+    // can be put on are marked rather than the whole rectangle
+    .expect(Selector('.gridPreviewOverlay.ownDots').exists).ok()
+    .expect(conditionDots()).eql({ count: 28, outside: 0 })
+    // a line that is not a comparison is a number, and a number is true
+    // wherever it is not 0 - so it is reported rather than left behind
+    .typeText(gridBody.find('.gridLimits textarea'), 'x - 100', { replace: true })
+    .expect(gridBody.find('.propertyInputProblem').withText('comparison').exists).ok()
+    // and switching the area off drops the conditions with the four sides
+    .typeText(gridBody.find('.gridLimits textarea'), 'y > x', { replace: true })
+    .click(gridBody.find('.gridLimitToggle label.switchbox'))
+    .expect(grid()).eql('[{"x":91,"y":91}]')
+    .expect(conditionOutline.exists).notOk()
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0));
 
   // the replacements are read out of the SVG: its stroke-width placeholder is
   // offered as a replacement for a borderWidth, and gets a number input

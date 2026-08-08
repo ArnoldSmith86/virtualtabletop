@@ -1914,6 +1914,45 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   min-width: 0;
 }
 
+/* a side of the drag limit takes a number or an expression that computes one:
+   the two sides of an axis stay side by side at the width a number needs, and
+   only a side actually holding an expression takes a line of its own */
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput.nonNumericValue {
+  flex: 1 1 100%;
+}
+
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput.nonNumericValue input[type=text] {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* what is wrong with the value, under the input holding it */
+.editorModule .propertyInput .propertyInputProblem:not(:empty) {
+  flex: 1 1 100%;
+  margin-left: 132px;
+  color: #e05d5d;
+  font-size: 12px;
+}
+
+.editorModule .propertyInlineRow .propertyInput .propertyInputProblem:not(:empty) {
+  margin-left: 0;
+}
+
+.editorModule .propertyInput.hasProblem input,
+.editorModule .propertyInput.hasProblem textarea {
+  outline: 1px solid #e05d5d;
+}
+
+/* the sampling behind the drag limit preview found no position the conditions
+   allow. Not a red error - every line of it is written correctly, it is the
+   area they describe together that is not there - so it warns in its own
+   colour rather than in the one an unreadable expression uses. */
+.editorModule .dragLimitEmptyArea:not(:empty) {
+  color: #e0a15d;
+  font-size: 12px;
+  margin: 2px 0 4px;
+}
+
 .editorModule .gridExtraRow {
   display: flex;
   align-items: center;

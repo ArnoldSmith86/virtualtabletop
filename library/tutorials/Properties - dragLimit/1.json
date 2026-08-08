@@ -1,0 +1,601 @@
+{
+  "_meta": {
+    "version": 22,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Properties - dragLimit",
+      "image": "/assets/1304805849_8659",
+      "rules": "",
+      "bgg": "",
+      "year": "2026",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1786155956975,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Other shapes",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -4,
+    "width": 800,
+    "height": 60,
+    "css": "font-size: 60px;text-align: center;",
+    "text": "Drag Limits",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 100
+  },
+  "intro": {
+    "id": "intro",
+    "x": 60,
+    "y": 68,
+    "width": 1480,
+    "height": 125,
+    "css": "font-size: 24px;",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3,
+    "z": 10,
+    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a <b>condition</b>: an inequality in x and y - the point of the widget the limit holds - that a drag has to keep true, so the area can be any shape you can write down. Every button below writes one onto the piece and puts it back inside the new area. All of them also set <b>alignX</b> and <b>alignY</b> to 0.5, so the point being limited is the middle of the piece and the shape drawn is exactly where that middle can go."
+  },
+  "language": {
+    "id": "language",
+    "x": 60,
+    "y": 192,
+    "width": 1480,
+    "height": 80,
+    "css": "font-size: 19px;",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3,
+    "z": 10,
+    "html": "The maths is the one <b>var</b> uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. A property is read the way a routine reads it, &#36;{PROPERTY name} for this widget and &#36;{PROPERTY name OF id} for another. Every line has to be a comparison and every line has to be true; &amp;&amp; and || combine within one line."
+  },
+  "btnsides": {
+    "type": "button",
+    "id": "btnsides",
+    "x": 60,
+    "y": 282,
+    "width": 280,
+    "height": 50,
+    "z": 30,
+    "text": "Four sides",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "piece"
+      },
+      {
+        "func": "SET",
+        "property": "dragLimit",
+        "value": {
+          "alignX": 0.5,
+          "alignY": 0.5,
+          "condition": [
+            "x > 460",
+            "x < 1140",
+            "y > 350",
+            "y < 710"
+          ]
+        }
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 770
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 500
+      },
+      {
+        "func": "SELECT",
+        "property": "shape",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "display: none"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shapeRect"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY show OF shapeRect}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "codePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 460\", \"x < 1140\",\n    \"y > 350\", \"y < 710\"\n  ]\n}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "notePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "The rectangle minX/maxX/minY/maxY already make, written as four conditions instead. Nothing is won here - but every line is an expression, so a side like this can depend on anything the game knows."
+      }
+    ]
+  },
+  "btncircle": {
+    "type": "button",
+    "id": "btncircle",
+    "x": 360,
+    "y": 282,
+    "width": 280,
+    "height": 50,
+    "z": 30,
+    "text": "Circle",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "piece"
+      },
+      {
+        "func": "SET",
+        "property": "dragLimit",
+        "value": {
+          "alignX": 0.5,
+          "alignY": 0.5,
+          "condition": "(x - 800)^2 + (y - 530)^2 < 180^2"
+        }
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 770
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 500
+      },
+      {
+        "func": "SELECT",
+        "property": "shape",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "display: none"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shapeCircle"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY show OF shapeCircle}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "codePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"condition\":\n    \"(x - 800)^2 + (y - 530)^2 < 180^2\"\n}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "notePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "A disc around the middle of the demo, radius 180. Push the piece against the edge and it slides along the circle instead of stopping - a refused position puts the widget where its area comes closest to the mouse."
+      }
+    ]
+  },
+  "btnhexagon": {
+    "type": "button",
+    "id": "btnhexagon",
+    "x": 660,
+    "y": 282,
+    "width": 280,
+    "height": 50,
+    "z": 30,
+    "text": "Hexagon",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "piece"
+      },
+      {
+        "func": "SET",
+        "property": "dragLimit",
+        "value": {
+          "alignX": 0.5,
+          "alignY": 0.5,
+          "minX": 590,
+          "maxX": 1010,
+          "condition": [
+            "abs(y - 530) < 210 * sqrt(3)/2",
+            "abs(y - 530) < sqrt(3) * (210 - abs(x - 800))"
+          ]
+        }
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 770
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 500
+      },
+      {
+        "func": "SELECT",
+        "property": "shape",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "display: none"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shapeHex"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY show OF shapeHex}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "codePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"minX\": 590, \"maxX\": 1010,\n  \"condition\": [\n    \"abs(y - 530) < 210 * sqrt(3)/2\",\n    \"abs(y - 530)\n      < sqrt(3) * (210 - abs(x - 800))\"\n  ]\n}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "notePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "A regular hexagon, 420 across, using both halves at once: the two upright sides are minX and maxX, the flat top and bottom are the first condition, and all four slanted sides are the second one - one abs() folds it left to right, the other top to bottom."
+      }
+    ]
+  },
+  "btnboxinbox": {
+    "type": "button",
+    "id": "btnboxinbox",
+    "x": 960,
+    "y": 282,
+    "width": 280,
+    "height": 50,
+    "z": 30,
+    "text": "Box in a box",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "piece"
+      },
+      {
+        "func": "SET",
+        "property": "dragLimit",
+        "value": {
+          "alignX": 0.5,
+          "alignY": 0.5,
+          "minX": 430,
+          "maxX": 1170,
+          "minY": 350,
+          "maxY": 710,
+          "condition": "x < 680 || x > 920 || y < 460 || y > 600"
+        }
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 470
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 500
+      },
+      {
+        "func": "SELECT",
+        "property": "shape",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "display: none"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shapeBox"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY show OF shapeBox}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shapeHole"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY show OF shapeHole}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "codePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"minX\": 430, \"maxX\": 1170,\n  \"minY\": 350, \"maxY\": 710,\n  \"condition\":\n    \"x < 680 || x > 920\n  || y < 460 || y > 600\"\n}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "notePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "The four sides make the outer box and the condition cuts the inner one out of it, so the piece can only be dragged in the ring between them. Drag it at the hole and it goes around it."
+      }
+    ]
+  },
+  "btnnone": {
+    "type": "button",
+    "id": "btnnone",
+    "x": 1260,
+    "y": 282,
+    "width": 280,
+    "height": 50,
+    "z": 30,
+    "text": "No limit",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "piece"
+      },
+      {
+        "func": "SET",
+        "property": "dragLimit",
+        "value": {}
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 770
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 500
+      },
+      {
+        "func": "SELECT",
+        "property": "shape",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "display: none"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "codePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "\"dragLimit\": {}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "notePanel"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "Nothing is limited and the piece goes anywhere. An empty object is also what the editor writes when you switch the whole limit off."
+      }
+    ]
+  },
+  "shapeRect": {
+    "id": "shapeRect",
+    "x": 460,
+    "y": 350,
+    "width": 680,
+    "height": 360,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);"
+  },
+  "shapeCircle": {
+    "id": "shapeCircle",
+    "x": 620,
+    "y": 350,
+    "width": 360,
+    "height": 360,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.16); border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "display: none"
+  },
+  "shapeHex": {
+    "id": "shapeHex",
+    "x": 590,
+    "y": 348,
+    "width": 420,
+    "height": 364,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.3); clip-path: polygon(100% 50%, 75% 100%, 25% 100%, 0% 50%, 25% 0%, 75% 0%);",
+    "css": "display: none"
+  },
+  "shapeBox": {
+    "id": "shapeBox",
+    "x": 430,
+    "y": 350,
+    "width": 740,
+    "height": 360,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "display: none"
+  },
+  "shapeHole": {
+    "id": "shapeHole",
+    "x": 680,
+    "y": 460,
+    "width": 240,
+    "height": 140,
+    "z": 2,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(20,26,34,0.85); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "display: none"
+  },
+  "piece": {
+    "id": "piece",
+    "x": 770,
+    "y": 500,
+    "width": 60,
+    "height": 60,
+    "z": 20,
+    "css": "background: #e8b04b; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.5);",
+    "dragLimit": {
+      "alignX": 0.5,
+      "alignY": 0.5,
+      "condition": [
+        "x > 460",
+        "x < 1140",
+        "y > 350",
+        "y < 710"
+      ]
+    }
+  },
+  "codePanel": {
+    "id": "codePanel",
+    "x": 60,
+    "y": 730,
+    "width": 520,
+    "height": 255,
+    "css": "font-size: 18px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
+    "text": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 460\", \"x < 1140\",\n    \"y > 350\", \"y < 710\"\n  ]\n}",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3,
+    "z": 10
+  },
+  "notePanel": {
+    "id": "notePanel",
+    "x": 620,
+    "y": 730,
+    "width": 540,
+    "height": 255,
+    "css": "font-size: 21px;",
+    "text": "The rectangle minX/maxX/minY/maxY already make, written as four conditions instead. Nothing is won here - but every line is an expression, so a side like this can depend on anything the game knows.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3,
+    "z": 10
+  },
+  "outro": {
+    "id": "outro",
+    "x": 1200,
+    "y": 730,
+    "width": 340,
+    "height": 255,
+    "css": "font-size: 19px;",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3,
+    "z": 10,
+    "html": "In Edit Widgets, select the piece and open Position &gt; Drag limits: the four sides, the conditions and the <b>Limited point</b> picker are all fields there, and <b>Show on board</b> shades the whole area while you type it."
+  }
+}

@@ -1451,12 +1451,18 @@ function jeAddCommands() {
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
+  jeAddConditionCommands('grid', '^[^ ]* ↦ grid ↦ [0-9]+', _=>jeStateNow.grid[+jeContext[2]]);
 
   jeAddLimitCommand('minX', 0);
   jeAddLimitCommand('minY', 0);
   // Default max limits are computed dynamically.
   jeAddLimitCommand('maxX');
   jeAddLimitCommand('maxY');
+  // which point of the widget the limit is about: 0.5 is its middle, i.e. the
+  // value that is wanted often enough to be the one the button inserts
+  jeAddLimitCommand('alignX', 0.5);
+  jeAddLimitCommand('alignY', 0.5);
+  jeAddConditionCommands('limit', '^[^ ]* ↦ dragLimit', _=>jeStateNow.dragLimit);
 
   // Default values computed dynamically.
   jeAddResetPropertiesCommand('parent');
@@ -1787,6 +1793,39 @@ function jeAddLimitCommand(key, value) {
       else if (key == 'maxY')
         limit = viewportConfig.targetHeight - w.get('height');
       jeSetAndSelect(limit);
+    }
+  });
+}
+
+// Neither the area a widget can be dragged in nor the area a snap grid applies
+// to has to be a rectangle: a condition is an inequality in x and y (the
+// position being judged, in the same coordinates as the four sides next to it)
+// that the drag keeps true, respectively that the grid needs to apply. A widget
+// property is read as ${PROPERTY name}. The starting point is the half-plane
+// below the diagonal - short, and it shows the syntax. The second command turns
+// one condition into the list of them that a shape needs more than one
+// inequality for. `owner` is a function because the object the buttons write
+// into is looked up again on every click (a grid entry is one of an array).
+function jeAddConditionCommands(idPrefix, context, owner) {
+  const object = _=>typeof owner() == "object" && owner() !== null ? owner() : null;
+  jeCommands.push({
+    id: idPrefix + '_condition',
+    name: 'add condition',
+    context,
+    show: _=>!!object() && object().condition === undefined,
+    call: async function() {
+      object().condition = '###SELECT ME###';
+      jeSetAndSelect('y > x');
+    }
+  });
+  jeCommands.push({
+    id: idPrefix + '_condition_add',
+    name: 'add another condition',
+    context,
+    show: _=>!!object() && object().condition !== undefined,
+    call: async function() {
+      object().condition = asArray(object().condition).concat([ '###SELECT ME###' ]);
+      jeSetAndSelect('x > y');
     }
   });
 }

@@ -124,6 +124,7 @@ export default async function minifyHTML() {
     'client/js/legacymodes.js',
     'client/js/geometry.js',
     'client/js/compute.js',
+    'client/js/expression.js',
     'client/js/mousehandling.js',
     'client/js/zoom.js',
     'client/js/tracing.js',

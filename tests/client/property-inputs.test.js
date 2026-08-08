@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { positionNames, expressionError, expressionNames } from '../../client/js/expression.js';
+import { asArray } from '../../client/js/domhelpers.js';
+
 // The editor files are plain scripts that get concatenated by server/minify.mjs,
 // so evaluate the sources and grab the pure helpers from their scope.
 const dir = path.dirname(fileURLToPath(import.meta.url));
@@ -51,7 +54,7 @@ const testWidgets = new Map();
 // buildDiceFace (properties.js) calls replaceExclusiveProperties (propertyInputs.js) -
 // both files are concatenated into one bundle in the browser, so evaluate them
 // together here too instead of propertiesSource alone
-const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + propertiesSource + `;
+const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'expressionError', 'expressionNames', 'asArray', inputsSource + propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
@@ -90,6 +93,10 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     svgReplacePropertyForAttributes,
     dragLimitIsSet,
     dragLimitValue,
+    conditionList,
+    conditionProblem,
+    dragLimitDependencies,
+    dependencyDeltaMatters,
     positionSummary: PropertiesModule.prototype.positionSummary,
     dicePreviewRotation,
     dicePreviewActiveFace,
@@ -97,6 +104,10 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     textValueFromSymbol,
     classesWithSymbolClass,
     gridEntryList,
+    conditionsOf,
+    conditionOutlinePath,
+    gridDotPositions,
+    gridConditionDotLimit,
     gridExtraProperties,
     gridExtraValue,
     gridExtraText,
@@ -120,7 +131,7 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     courtSuitLetter,
     deckGeneratorDesignHint
   };
-`)(class {}, testWidgets);
+`)(class {}, testWidgets, positionNames, expressionError, expressionNames, asArray);
 
 describe('css declaration rows', () => {
   test('declarations are listed in order from both the string and the object form', () => {
@@ -348,6 +359,47 @@ describe('css helpers', () => {
     expect(cssHelpers.dragLimitValue({ minX: 0 }, 'maxX')).toBe(null);
   });
 
+  test('the condition field is one condition per line, and says which line does not parse', () => {
+    expect(cssHelpers.conditionList('y > x\n\n  2x^2 + y > 4  \n')).toEqual([ 'y > x', '2x^2 + y > 4' ]);
+    expect(cssHelpers.conditionList(null)).toEqual([]);
+    expect(cssHelpers.conditionProblem('y > x\n2x^2 + y > 4')).toBe(null);
+    expect(cssHelpers.conditionProblem('')).toBe(null);
+    // the message names the line it is about - the other lines are fine
+    expect(cssHelpers.conditionProblem('y > x\n0 < x < 500')).toMatch(/^"0 < x < 500": /);
+    // a property has to be written as one, so a bare word is reported as it is
+    // typed rather than read as nothing while dragging
+    expect(cssHelpers.conditionProblem('x + width < 500')).toMatch(/\$\{PROPERTY width\}/);
+    expect(cssHelpers.conditionProblem('x + ${PROPERTY width} < 500')).toBe(null);
+    // and so is a line that is a sum rather than an inequality: it reads as
+    // true wherever it is not 0, i.e. it limits nothing
+    expect(cssHelpers.conditionProblem('y > x\nx - 100')).toMatch(/^"x - 100": .*comparison/);
+  });
+
+  test('the drawing follows every property its expressions read', () => {
+    const widget = { id: 'piece', get: property=>({
+      dragLimit: { maxX: '${PROPERTY edge OF board} - ${PROPERTY limitWidth}', condition: 'y > ${PROPERTY top OF rail}' },
+      parent: 'holder'
+    })[property] };
+    const dependencies = cssHelpers.dragLimitDependencies(widget);
+    expect([ ...dependencies.board ]).toEqual([ 'edge' ]);
+    expect([ ...dependencies.rail ]).toEqual([ 'top' ]);
+    expect([ ...dependencies.piece ]).toEqual([ 'limitWidth' ]);
+    // the drawing is a canvas inside the parent, which empties itself when it
+    // renders its own content - so every property of the parent counts
+    expect(dependencies.holder).toBe(true);
+
+    // a button that moves the area redraws it, an unrelated change does not
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { board: { edge: 900 } })).toBe(true);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { piece: { limitWidth: 20 } })).toBe(true);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { holder: { text: 'hi' } })).toBe(true);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { board: { z: 5 } })).toBe(false);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { other: { x: 5 } })).toBe(false);
+    // x and y are the position being tested, not a property any delta carries
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { piece: { x: 5 } })).toBe(false);
+    // a widget the limit reads being deleted changes the area as well
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { rail: null })).toBe(true);
+  });
+
   test('cssTextFromValue renders all value shapes', () => {
     expect(cssHelpers.cssTextFromValue(null)).toBe('');
     expect(cssHelpers.cssTextFromValue('color: red')).toBe('color: red');
@@ -479,9 +531,16 @@ describe('snap grid helpers', () => {
   });
 
   test('everything that is not grid geometry is a property applied on snapping', () => {
-    expect(cssHelpers.gridExtraProperties({ x: 1, y: 2, offsetX: 3, alignY: 1, minX: 0, maxY: 9, rotation: 90, image: 'a.svg' }))
+    expect(cssHelpers.gridExtraProperties({ x: 1, y: 2, offsetX: 3, alignY: 1, minX: 0, maxY: 9, condition: 'x > 0', rotation: 90, image: 'a.svg' }))
       .toEqual([ 'rotation', 'image' ]);
     expect(cssHelpers.gridExtraProperties(undefined)).toEqual([]);
+  });
+
+  test('a dragLimit or a grid entry takes one condition or a list of them', () => {
+    expect(cssHelpers.conditionsOf({ x: 10, y: 10 })).toEqual([]);
+    expect(cssHelpers.conditionsOf({ condition: null })).toEqual([]);
+    expect(cssHelpers.conditionsOf({ condition: 'y > x' })).toEqual([ 'y > x' ]);
+    expect(cssHelpers.conditionsOf({ condition: [ 'y > x', 'x > 100' ] })).toEqual([ 'y > x', 'x > 100' ]);
   });
 
   test('typed snap-point values become numbers/booleans when they look like JSON', () => {
@@ -514,6 +573,100 @@ describe('snap grid helpers', () => {
     // background-size: contain, so a 60x100 box draws the same hexagon as 60x60
     expect(cssHelpers.hexGridForSize(60, 100, 'flat')).toEqual(cssHelpers.hexGridForSize(60, 60, 'flat'));
     expect(cssHelpers.hexGridForSize(100, 60, 'point')).toEqual(cssHelpers.hexGridForSize(60, 60, 'point'));
+  });
+});
+
+// the dashed line the editor draws around the area a condition describes -
+// sampled and traced, because the shape itself is never computed
+describe('the outline of a condition', () => {
+  const box = { left: 0, top: 0, width: 400, height: 400 };
+  const points = path=>path.split(/M |L /).slice(1).map(pair=>pair.trim().split(' ').map(Number));
+
+  test('is empty where the whole box is on one side of it', () => {
+    expect(cssHelpers.conditionOutlinePath(box, 10, _=>true)).toBe('');
+    expect(cssHelpers.conditionOutlinePath(box, 10, _=>false)).toBe('');
+  });
+
+  test('follows a straight boundary between the two sides', () => {
+    const path = cssHelpers.conditionOutlinePath(box, 10, coord=>coord.x < 250);
+    // one line, every point of it on the boundary rather than on the lattice
+    expect(path.match(/M /g).length).toBe(1);
+    for(const [ x, y ] of points(path)) {
+      expect(x).toBeCloseTo(250, 0);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y).toBeLessThanOrEqual(400);
+    }
+  });
+
+  test('traces a circle as a closed line rather than a staircase of the sampling step', () => {
+    const path = cssHelpers.conditionOutlinePath(box, 10, coord=>(coord.x - 200) ** 2 + (coord.y - 200) ** 2 < 150 ** 2);
+    const line = points(path);
+    // joined end to end, so a dash pattern runs along the circle instead of
+    // starting over at every sample
+    expect(path.match(/M /g).length).toBe(1);
+    expect(line.length).toBeGreaterThan(50);
+    expect(line[0]).toEqual(line[line.length - 1]);
+    for(const [ x, y ] of line)
+      expect(Math.hypot(x - 200, y - 200)).toBeCloseTo(150, 0);
+  });
+
+  test('traces every part of an area that is in several pieces', () => {
+    const path = cssHelpers.conditionOutlinePath(box, 10, coord=>coord.x < 100 || coord.x > 300);
+    expect(path.match(/M /g).length).toBe(2);
+  });
+
+  test('is traced in the coordinates it is asked in, so it can be drawn where it holds', () => {
+    const path = cssHelpers.conditionOutlinePath({ left: 1000, top: 500, width: 400, height: 400 }, 10, coord=>coord.x < 1250);
+    for(const [ x, y ] of points(path)) {
+      expect(x).toBeCloseTo(1250, 0);
+      expect(y).toBeGreaterThanOrEqual(500);
+    }
+  });
+});
+
+// the dots of a grid a condition limits are drawn one by one, so that only the
+// positions the widget can be put on are marked
+describe('the dots of a limited grid', () => {
+  const box = { left: 0, top: 0, width: 400, height: 400 };
+  const noAlign = { x: 0, y: 0 };
+  const positions = (entry, applies, area = box, align = noAlign) =>
+    cssHelpers.gridDotPositions(entry, area, align, cssHelpers.gridConditionDotLimit, applies);
+
+  test('marks the lattice points the grid applies at and no others', () => {
+    const dots = positions({ x: 100, y: 100 }, coord=>coord.x < 250);
+    expect(dots).toEqual([
+      { x: 0, y: 0 }, { x: 0, y: 100 }, { x: 0, y: 200 }, { x: 0, y: 300 }, { x: 0, y: 400 },
+      { x: 100, y: 0 }, { x: 100, y: 100 }, { x: 100, y: 200 }, { x: 100, y: 300 }, { x: 100, y: 400 },
+      { x: 200, y: 0 }, { x: 200, y: 100 }, { x: 200, y: 200 }, { x: 200, y: 300 }, { x: 200, y: 400 }
+    ]);
+  });
+
+  test('stays on the lattice the widget lands on, offset and all', () => {
+    // a step of 150 from an offset of 20, and nothing past the box - which is
+    // the rectangle the grid is limited to
+    expect(positions({ x: 150, y: 500, offsetX: 20 }, _=>true).map(dot=>dot.x)).toEqual([ 20, 170, 320 ]);
+    // an offset outside the box is still the same lattice inside it
+    expect(positions({ x: 150, y: 500, offsetX: -280 }, _=>true).map(dot=>dot.x)).toEqual([ 20, 170, 320 ]);
+  });
+
+  test('asks about the corner rather than the point that lands on the lattice', () => {
+    const asked = [];
+    positions({ x: 200, y: 200 }, coord=>{ asked.push(coord.x); return true; }, box, { x: 25, y: 50 });
+    expect(asked).toEqual([ -25, -25, -25, 175, 175, 175, 375, 375, 375 ]);
+  });
+
+  test('is traced in the coordinates it is asked in, so it can be drawn where it holds', () => {
+    const dots = positions({ x: 200, y: 200 }, coord=>coord.x > 1100, { left: 1000, top: 500, width: 400, height: 400 });
+    expect(dots).toEqual([
+      { x: 1200, y: 600 }, { x: 1200, y: 800 }, { x: 1400, y: 600 }, { x: 1400, y: 800 }
+    ]);
+  });
+
+  test('leaves a lattice with more points than the limit to the background layer', () => {
+    expect(positions({ x: 1, y: 1 }, _=>true)).toBe(null);
+    expect(positions({ x: 0, y: 100 }, _=>true)).toBe(null);
+    // an area nothing satisfies is a list of no dots, not "draw them all"
+    expect(positions({ x: 100, y: 100 }, _=>false)).toEqual([]);
   });
 });
 
