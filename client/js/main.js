@@ -788,6 +788,16 @@ async function toggleEditMode() {
 }
 
 onLoad(function() {
+  // overflow: clip does not create a scroll container, the overflow: hidden that browsers
+  // predating it fall back to (layout.css) does. Nothing ever wants to scroll the board, but
+  // scrollIntoView() - what the JSON editor uses to reveal a widget and the game shelf to reveal
+  // a state - scrolls every scrollable ancestor along with its target, which would slide the
+  // board out from under the toolbar with no scrollbar and no gesture to put it back.
+  if(!(window.CSS && CSS.supports && CSS.supports('overflow', 'clip')))
+    on('#roomArea', 'scroll', function() {
+      this.scrollTop = this.scrollLeft = 0;
+    });
+
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
   on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());

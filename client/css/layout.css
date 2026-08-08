@@ -60,7 +60,8 @@ body.loadingEditMode * {
 #roomArea {
   container: roomArea / size;
   position: fixed;
-  /* hidden first for the browsers that predate clip: without it the board does not clip at all */
+  /* hidden first for the browsers that predate clip: without it the board does not clip at all.
+     Unlike clip, hidden makes this a scroll container, so main.js pins it back to 0/0 there */
   overflow: hidden;
   overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
