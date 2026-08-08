@@ -131,6 +131,18 @@ describe('the CSS scanner', () => {
     expect(guard('@supports not (width: fit-content) { .a { width: fit-content } }')).toBe(undefined);
   });
 
+  // an "or" is only true of one of its sides, so a browser can be inside the block without the
+  // feature the other side asks about - only what every branch tests is guaranteed
+  test('reads the boolean operators of an @supports condition', () => {
+    const guard = source => scanCSS(source).find(candidate => candidate.feature == 'css.properties.width.fit-content')?.guardedBy;
+    expect(guard('@supports (display: grid) and (width: fit-content) { .a { width: fit-content } }')).toMatch('@supports');
+    expect(guard('@supports (display: grid) or (width: fit-content) { .a { width: fit-content } }')).toBe(undefined);
+    expect(guard('@supports ((display: grid) or (color: red)) and (width: fit-content) { .a { width: fit-content } }')).toMatch('@supports');
+    expect(guard('@supports not ((display: grid) or (width: fit-content)) { .a { width: fit-content } }')).toBe(undefined);
+    expect(guard('@supports selector(:has(a)) and (width: fit-content) { .a { width: fit-content } }')).toMatch('@supports');
+    expect(guard('@supports (width: fit-content) { @supports (display: grid) { .a { width: fit-content } } }')).toMatch('@supports');
+  });
+
   test('puts every spelling of a property in one group', () => {
     const found = scanCSS('.a { -webkit-appearance: none; appearance: none }');
     const groups = new Set(found.filter(candidate => candidate.group).map(candidate => candidate.group));
@@ -145,6 +157,18 @@ describe('the JavaScript scanner', () => {
     expect(blanked).toHaveLength(source.length);
     expect(blanked.split('\n')).toHaveLength(2);
     expect(blanked).not.toMatch('hasOwn');
+  });
+
+  // what is between ${ and } is code, and there are well over a thousand of those in the client
+  test('looks at what a template literal interpolates, not at its text', () => {
+    const found = source => features(scanJS(source, { globalPath: lookup.globalPath }));
+    expect(found('const v = `${Object.hasOwn(o, k)}`;')).toContain('javascript.builtins.Object.hasOwn');
+    expect(found('const v = `${a ??= b}`;')).toContain('javascript.operators.nullish_coalescing_assignment');
+    expect(found('const v = `<b>${ f(`${document.fullscreenElement}`) }</b>`;')).toContain('api.Document.fullscreenElement');
+    expect(found('const v = `${ {Object: 1} } document.fullscreenElement`;')).toEqual([]);
+    // a brace inside the interpolation is not the one that ends it, and neither is one in a
+    // string, a comment or a regular expression there
+    expect(found('const v = `${ x }${ /}/.test(s) ? "}" : {}/*}*/ } Object.hasOwn`;')).toEqual([]);
   });
 
   test('finds the end of a regular expression literal', () => {

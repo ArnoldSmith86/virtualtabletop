@@ -77,12 +77,31 @@ function regexLiteral(text) {
   return null;
 }
 
+// How far the text of a template literal reaches: up to the closing backtick, or up to the ${
+// that ends it, whichever comes first. Only the text is a string - what is between ${ and } is
+// code like any other, and the client has well over a thousand of those, so blanking a template
+// whole would hide a good part of the file from the scan.
+function templateText(text) {
+  for(let i=0; i<text.length; ++i) {
+    if(text[i] == '\\')
+      ++i;
+    else if(text[i] == '`')
+      return { match: text.slice(0, i+1), closed: true };
+    else if(text[i] == '$' && text[i+1] == '{')
+      return { match: text.slice(0, i+2), closed: false };
+  }
+  return { match: text, closed: true };
+}
+
 // Blanking keeps the length and the line breaks of what it removes, so every index into the
 // result still points at the same place in the original file.
 export function blankNonCode(text) {
-  let out = '', i = 0, previous = '';
+  let out = '', i = 0, previous = '', depth = 0;
   const blank = string => string.replace(/[^\n]/g, ' ');
   const canBeRegex = () => !/[\w$)\]]$/.test(previous);
+  // the brace depth each template literal whose interpolation is currently open was opened at,
+  // so that the } belonging to it is told apart from the } of a block or an object in between
+  const templates = [];
   while(i < text.length) {
     const rest = text.slice(i);
     let match = null;
@@ -90,15 +109,31 @@ export function blankNonCode(text) {
       match = rest.match(/^\/\/[^\n]*/)[0];
     else if(rest.startsWith('/*'))
       match = rest.match(/^\/\*[\s\S]*?(\*\/|$)/)[0];
-    else if(rest[0] == '"' || rest[0] == "'" || rest[0] == '`')
+    else if(rest[0] == '"' || rest[0] == "'")
       match = rest.match(new RegExp(`^${rest[0]}(\\\\[\\s\\S]|[^\\\\${rest[0]}])*(${rest[0]}|$)`))[0];
-    else if(rest[0] == '/' && canBeRegex())
+    else if(rest[0] == '`') {
+      const part = templateText(rest.slice(1));
+      match = '`' + part.match;
+      if(!part.closed)
+        templates.push(depth);
+    } else if(rest[0] == '}' && templates[templates.length-1] === depth) {
+      // the interpolation ends here and the text of the template goes on
+      templates.pop();
+      const part = templateText(rest.slice(1));
+      match = '}' + part.match;
+      if(!part.closed)
+        templates.push(depth);
+    } else if(rest[0] == '/' && canBeRegex())
       match = regexLiteral(rest);
     if(match) {
       out += blank(match);
       i += match.length;
       continue;
     }
+    if(text[i] == '{')
+      ++depth;
+    else if(text[i] == '}')
+      --depth;
     out += text[i];
     if(/\S/.test(text[i]))
       previous = text[i];

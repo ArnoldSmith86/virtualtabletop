@@ -51,17 +51,62 @@ function declarationFeatures(property, value) {
 
 // What the @supports conditions around a declaration actually test - a condition only excuses
 // the very feature it asks about, so "@supports (width: 1px)" says nothing about fit-content.
-// A negated condition (@supports not (...)) says the opposite and is skipped.
-const conditionPattern = /\(\s*(-?[a-zA-Z][\w-]*)\s*:\s*((?:[^()]|\([^()]*\))*)\)/g;
-function supportsFeatures(prelude) {
-  const paths = new Set();
-  for(const match of prelude.matchAll(conditionPattern)) {
-    if(/\bnot\s*\(?\s*$/i.test(prelude.slice(0, match.index)))
-      continue;
-    for(const path of declarationFeatures(match[1].toLowerCase(), bareValue(match[2])))
-      paths.add(path);
+// Which of them it is guaranteed to have tested is what the boolean operators decide: "and"
+// adds up both sides, "or" keeps only what both sides ask for - a browser can be inside
+// "(display: grid) or (width: fit-content)" without having fit-content - and "not", or anything
+// this does not understand, guarantees nothing at all.
+function supportsFeatures(condition) {
+  let at = 0;
+  const skipSpace = () => {
+    while(at < condition.length && /\s/.test(condition[at]))
+      ++at;
+  };
+  // the ( ... ) starting here, with the parentheses inside it balanced
+  const group = () => {
+    const start = at;
+    for(let depth = 0; at < condition.length; ++at) {
+      if(condition[at] == '(')
+        ++depth;
+      else if(condition[at] == ')' && --depth == 0) {
+        ++at;
+        break;
+      }
+    }
+    return condition.slice(start+1, at-1);
+  };
+  const term = () => {
+    skipSpace();
+    if(/^not\b/i.test(condition.slice(at))) {
+      at += 3;
+      term();
+      return new Set();
+    }
+    if(condition[at] != '(') {
+      // selector(...), font-tech(...) and whatever else may still be added to the syntax
+      at += condition.slice(at).match(/^[^\s()]*/)[0].length;
+      if(condition[at] == '(')
+        group();
+      return new Set();
+    }
+    const inside = group();
+    const declaration = inside.match(/^\s*(-?[a-zA-Z][\w-]*)\s*:([\s\S]*)$/);
+    return declaration
+      ? new Set(declarationFeatures(declaration[1].toLowerCase(), bareValue(declaration[2])))
+      : supportsFeatures(inside);
+  };
+
+  let paths = term();
+  for(;;) {
+    skipSpace();
+    const operator = condition.slice(at).match(/^(and|or)\b/i);
+    if(!operator)
+      return paths;
+    at += operator[0].length;
+    const next = term();
+    paths = operator[1].toLowerCase() == 'and'
+      ? new Set([ ...paths, ...next ])
+      : new Set([ ...paths ].filter(path => next.has(path)));
   }
-  return paths;
 }
 
 export function scanCSS(text, { startLine = 1 } = {}) {
@@ -110,8 +155,9 @@ export function scanCSS(text, { startLine = 1 } = {}) {
       // browser keeps the last declaration it understands. The vendor prefixed spelling of a
       // property is the same thing under a different name, so it belongs to the same group.
       group: `${block.id}:${property.replace(vendorPrefix, '')}`,
-      // and the other way of asking first
-      supports: stack.filter(open => open.atRule == 'supports').map(open => open.prelude).join(' ')
+      // and the other way of asking first - one condition per @supports the declaration is
+      // inside of, which are all true together, so what each one guarantees adds up
+      supports: stack.filter(open => open.atRule == 'supports').map(open => open.prelude.replace(/^@supports/i, ''))
     });
   };
 
@@ -129,7 +175,7 @@ export function scanCSS(text, { startLine = 1 } = {}) {
         prefixedValue: /(^|[\s,(])-[a-z]+-[a-z]/.test(value) });
       if(vendorPrefix.test(property))
         continue;
-      const guards = supportsFeatures(supports);
+      const guards = new Set(supports.flatMap(condition => [ ...supportsFeatures(condition) ]));
       for(const path of declarationFeatures(property, value))
         found.push({
           line, source, feature: path, declaration: id, group, property, order,
