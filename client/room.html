@@ -27,6 +27,7 @@
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Game Shelf</span></button>
     <button id="activeGameButton" class="toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Players</span></button>
+    <button id="roomsButton" data-overlay="roomsOverlay" class="toolbarButton toolbarTab"><span class="tooltip">Rooms</span></button>
     <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton toolbarTab"><span class="tooltip">About</span></button>
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
@@ -171,6 +172,51 @@
           </ul>
         </div>
       </details>
+    </div>
+
+    <div id="roomsOverlay" class="overlay">
+      <div class="heading">
+        <h1>Rooms</h1>
+        <div class="instructionalText">Every room you visit with this browser is collected here. Use the menu on a tile to manage or copy a room and the big button to switch to it.</div>
+      </div>
+      <div id="roomsList">
+        <template id="template-roomslist-entry" type="text/template">
+          <img>
+          <div class="roomIcons">
+            <i class="material-symbols lockedIcon" title="This room is locked.">lock</i>
+            <i class="material-symbols passwordIcon" title="This room is password protected.">key</i>
+            <i class="material-symbols adminIcon" title="This room is claimed by your collection.">verified_user</i>
+          </div>
+          <button icon="more_vert" class="menuButton"></button>
+          <div class="roomMenu hidden"></div>
+          <div class="details">
+            <h3>Name</h3>
+            <h4>Game</h4>
+          </div>
+          <div class="roomPlayers"></div>
+          <button icon="login" class="switchButton">Switch to this room</button>
+        </template>
+        <p id="emptyRoomsList"></p>
+      </div>
+      <div id="roomsCollectionBox" icon="key">
+        <h2>Collection ID</h2>
+        <p>Your room collection is stored under this automatically generated ID. It works like a password: enter the same ID in another browser to get the same room collection there. Keep it secret &mdash; anyone who knows it can manage the rooms it has claimed.</p>
+        <input id="collectionIDinput" spellcheck="false">
+        <div class="buttons">
+          <button icon="content_copy" id="copyCollectionID">Copy</button>
+          <button icon="check" id="applyCollectionID">Use this ID</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="passwordOverlay" class="overlay">
+      <p>This room is password protected. Please enter the password to join:</p>
+      <p class="wrongPassword">Wrong password. Please try again.</p>
+      <input id="roomPasswordInput" type="password">
+      <div class="buttons">
+        <button icon="login" class="join">Join</button>
+        <button icon="undo" class="cancel">Back</button>
+      </div>
     </div>
 
     <div id="returnOverlay" class="overlay">

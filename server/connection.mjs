@@ -24,6 +24,14 @@ export default class Connection {
     this.messageHandlers.push(callback);
   }
 
+  removeCloseHandler(callback) {
+    this.closeHandlers = this.closeHandlers.filter(handler=>handler!=callback);
+  }
+
+  removeMessageHandler(callback) {
+    this.messageHandlers = this.messageHandlers.filter(handler=>handler!=callback);
+  }
+
   close() {
     this.connection.close();
   }

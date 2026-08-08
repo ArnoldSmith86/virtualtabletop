@@ -537,6 +537,11 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
       font-family: 'Material Symbols' !important;
     }
 
+    #roomsButton::before {
+      font-family: 'Material Symbols' !important;
+      content: 'meeting_room';
+    }
+
     #aboutButton::before {
       content: '[vtt_logo]';
     }
