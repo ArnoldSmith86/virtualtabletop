@@ -130,10 +130,22 @@ MinifyHTML().then(function(result) {
 
   router.use('/i', express.static(path.resolve() + '/assets'));
 
-  router.get('/scripts/:name', function(req, res) {
+  function sendMinified(req, res, minified, gzipped) {
+    // the body depends on the request header, so anything caching this in between has to key on it
+    res.setHeader('Vary', 'Accept-Encoding');
+    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+      res.setHeader('Content-Encoding', 'gzip');
+      res.send(gzipped);
+    } else {
+      res.send(minified);
+    }
+  }
+
+  router.get('/scripts/:name', function(req, res, next) {
+    if(req.params.name != 'fflate')
+      return next();  // without this the request would just hang
     res.setHeader('Content-Type', 'application/javascript');
-    if(req.params.name == 'fflate')
-      res.send(fs.readFileSync('node_modules/fflate/umd/index.js'));
+    sendMinified(req, res, result.fflateMin, result.fflateGzipped);
   });
 
   router.post('/assetcheck', express.json({ limit: '10mb' }), function(req, res) {
@@ -426,12 +438,7 @@ MinifyHTML().then(function(result) {
 
   router.get('/edit.js', function(req, res, next) {
     res.setHeader('Content-Type', 'text/javascript');
-    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-      res.setHeader('Content-Encoding', 'gzip');
-      res.send(result.editorJSgzipped);
-    } else {
-      res.send(result.editorJSmin);
-    }
+    sendMinified(req, res, result.editorJSmin, result.editorJSgzipped);
   });
 
   function createBotPattern(crawlers) {
@@ -503,12 +510,7 @@ MinifyHTML().then(function(result) {
         res.send(ogOutput);
       } else {
         res.setHeader('Content-Type', 'text/html');
-        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-          res.setHeader('Content-Encoding', 'gzip');
-          res.send(result.gzipped);
-        } else {
-          res.send(result.min);
-        }
+        sendMinified(req, res, result.min, result.gzipped);
       }
     } catch(e) {
       next(e);
