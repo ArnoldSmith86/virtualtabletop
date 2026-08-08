@@ -46,6 +46,14 @@
     "url": "https://github.com/ArnoldSmith86/virtualtabletop/issues"
   },
   "homepage": "https://github.com/ArnoldSmith86/virtualtabletop#readme",
+  "browserslist": [
+    "chrome >= 87",
+    "edge >= 87",
+    "firefox >= 79",
+    "safari >= 14.1",
+    "ios_saf >= 14.5",
+    "samsung >= 14"
+  ],
   "dependencies": {
     "bson": "^6.10.4",
     "clean-css": "^5.3.3",

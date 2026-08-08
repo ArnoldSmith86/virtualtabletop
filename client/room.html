@@ -702,6 +702,25 @@
     <button icon="add_reaction"></button>
   </template>
 
+  <!-- The client is a single <script type="module">, so a browser that does not support modules
+       (or has JavaScript turned off) runs nothing at all and is left staring at the empty loading
+       screen with no hint of what went wrong. These two say what happened instead. The nomodule
+       script is deliberately ES5 and does not touch anything else - it is the one piece of the
+       page that has to run on a browser we do not support. -->
+  <div id="unsupportedBrowser" class="unsupportedBrowser" hidden>
+    <h1>This browser is too old for VirtualTabletop</h1>
+    <p>VirtualTabletop is loaded as a JavaScript module, which this browser does not support.</p>
+    <p>Please update your browser, or open this room in a current version of Chrome, Edge, Firefox or Safari.</p>
+  </div>
+  <script nomodule>document.getElementById('unsupportedBrowser').removeAttribute('hidden');</script>
+  <noscript>
+    <div class="unsupportedBrowser">
+      <h1>VirtualTabletop needs JavaScript</h1>
+      <p>This page is a JavaScript application - there is nothing to show without it.</p>
+      <p>Please enable JavaScript for this site and reload the page.</p>
+    </div>
+  </noscript>
+
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
 </body>
