@@ -1,4 +1,4 @@
-import { parseContainerQueries, evaluateCondition } from '../client/js/containerQueryFallback.js';
+import { parseContainerQueries, evaluateCondition, contentBoxSize } from '../client/js/containerQueryFallback.js';
 import minifyHTML from '../server/minify.mjs';
 
 describe('evaluateCondition', () => {
@@ -32,6 +32,40 @@ describe('evaluateCondition', () => {
     expect(evaluateCondition('(max-width: 30em)', size)).toBe(false);
     expect(evaluateCondition('(aspect-ratio: 16/10)', size)).toBe(false);
     expect(evaluateCondition('style(--columns: 10)', size)).toBe(false);
+  });
+});
+
+describe('contentBoxSize', () => {
+  function measure(style) {
+    const element = document.createElement('div');
+    element.setAttribute('style', style);
+    document.body.appendChild(element);
+    try {
+      return contentBoxSize(element);
+    } finally {
+      element.remove();
+    }
+  }
+
+  test('takes a content box element as it is', () => {
+    expect(measure('box-sizing: content-box; width: 610px; height: 400px; padding: 20px 10px')).toEqual({ width: 610, height: 400 });
+  });
+
+  // #symbolPickerOverlay is a .overlay, which is border-box, with 20px/10px of its own padding -
+  // measuring its border box would move both of the picker's breakpoints by that much
+  test('takes the padding and the border off a border box element', () => {
+    expect(measure('box-sizing: border-box; width: 610px; height: 400px; padding: 20px 10px')).toEqual({ width: 590, height: 360 });
+    expect(measure('box-sizing: border-box; width: 610px; height: 400px; padding: 20px 10px; border: 3px solid red')).toEqual({ width: 584, height: 354 });
+  });
+
+  test('keeps a box smaller than its own padding at zero rather than negative', () => {
+    expect(measure('box-sizing: border-box; width: 10px; height: 10px; padding: 20px')).toEqual({ width: 0, height: 0 });
+  });
+
+  // a display:none container resolves both to auto: nothing in it is visible either way, and the
+  // ResizeObserver fires when it is shown - the symbol picker is display:none until it opens
+  test('leaves a container without a box unmeasured', () => {
+    expect(measure('display: none')).toBe(null);
   });
 });
 
@@ -150,6 +184,33 @@ describe('the stylesheets the client is served', () => {
     // so a selector clean-css merged with another one would resolve to the wrong element
     for(const name in containers)
       expect(containers[name]).toMatch(/^[.#]?[-\w]+$/);
+  });
+
+  // The fallback can only copy a block's contents, so a rule inside one applies document-wide
+  // while the block is on instead of only inside the container. Every selector the client ships
+  // therefore names what it belongs to by id or by class - fonts.css' p[icon] was the one that
+  // did not, which is why the welcome overlay's warning is named there.
+  test('name what every rule inside an @container block applies to', () => {
+    const unscoped = [];
+    for(const name in sheets) {
+      for(const block of parseContainerQueries(sheets[name]).blocks) {
+        let depth = 0, prelude = '';  // the selectors of a rule are what precedes its own brace
+        for(const character of block.css) {
+          if(character == '{') {
+            if(depth++ == 0 && prelude.trim() && prelude.trim()[0] != '@')
+              for(const selector of prelude.split(','))
+                if(!/[.#]/.test(selector))
+                  unscoped.push(`${name}: ${selector.trim()}`);
+            prelude = '';
+          } else if(character == '}') {
+            depth--;
+          } else if(depth == 0) {
+            prelude += character;
+          }
+        }
+      }
+    }
+    expect(unscoped).toEqual([]);
   });
 
   test('can be split along the block boundaries without unbalancing a rule', () => {
