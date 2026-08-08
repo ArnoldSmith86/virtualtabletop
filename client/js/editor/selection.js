@@ -154,18 +154,22 @@ function applySelectionRectangle(addToSelection) {
   if(newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
     return;
 
-  if(!addToSelection) {
-    setSelection(newlySelected);
-  } else {
-    let selectionToApply = [...selectedWidgets];
-    for(const widget of newlySelected) {
-      if(selectedWidgets.indexOf(widget) == -1)
-        selectionToApply.push(widget);
-      else
-        selectionToApply = selectionToApply.filter(w=>w!=widget);
+  // a band drawn in the room is the one selection change a running picker owns:
+  // it is how widgets are picked with a band rather than a click
+  selectWidgetsInRoom(_=>{
+    if(!addToSelection) {
+      setSelection(newlySelected);
+    } else {
+      let selectionToApply = [...selectedWidgets];
+      for(const widget of newlySelected) {
+        if(selectedWidgets.indexOf(widget) == -1)
+          selectionToApply.push(widget);
+        else
+          selectionToApply = selectionToApply.filter(w=>w!=widget);
+      }
+      setSelection(selectionToApply);
     }
-    setSelection(selectionToApply);
-  }
+  });
 }
 
 // whether a selection is a different set of widgets than the one before it -
@@ -182,13 +186,21 @@ function setSelection(newSelectedWidgets) {
   // against what actually ends up selected rather than what was asked for
   const widgetsToSelect = smartCloneProcessSelection(newSelectedWidgets);
 
-  // The sound library is an overlay that outlives the editor it was opened from
-  // (it does not cover the sidebar, and a widget can also be selected without
-  // clicking in the room): whoever opened it edits the widget that was shown
-  // then, so a sound picked in it now would go to a widget that is no longer on
-  // screen. A widget picker is not affected - it restores the selection it
-  // started from after every pick, which is not the editor moving on.
-  if(!isWidgetPickerActive() && selectionChanged(previousSelectedWidgets, widgetsToSelect))
+  // Whatever the editor has open belongs to the widget that was being edited, so
+  // moving on to another one takes it along: the sound library is an overlay
+  // that outlives the editor it was opened from (it does not cover the sidebar,
+  // and a widget can also be selected without clicking in the room), and the
+  // popups hang off controls this very selection change is about to throw away -
+  // the ones that let widgets be picked in the room ignore clicks in there, so
+  // nothing else ever closes them. Picking widgets in the room is not the editor
+  // moving on: the picker restores the selection it started from after every
+  // pick. Every other way to select another widget is - a picker waiting for a
+  // click in the room does not make the JSON editor's tree or an "Edit line ..."
+  // link something else than the editor moving on, so it ends with its popup.
+  endWidgetPickerWithoutTarget();
+  const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
+                        && selectionChanged(previousSelectedWidgets, widgetsToSelect);
+  if(editorMovedOn)
     cancelAudioPicker();
 
   selectedWidgets = widgetsToSelect;
@@ -207,6 +219,13 @@ function setSelection(newSelectedWidgets) {
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
 
   updateDragToolbar();
+
+  // last, once the editor really is on the new selection: closing a popup that
+  // applies on close writes the picked value to the widget it belonged to, and
+  // that delta can come straight back in here (a widget dropping out of the
+  // selection re-enters setSelection) - which must not happen half way through.
+  if(editorMovedOn)
+    closeEditorPopups();
 }
 
 export async function editClick(widget) {

@@ -2382,3 +2382,323 @@ test('Send feedback', async t => {
     .expect(Selector('#feedbackOverlay').visible).notOk()
     .expect(Selector('#statesButton').hasClass('active')).ok();
 });
+
+// drags a selection rectangle around the given widgets - the events go to the
+// window, where the editor listens for them, so they need no element to start
+// from. A rectangle around a single widget is treated like a click on it, which
+// is why the callers put the widget being edited in the band as well.
+const rubberBandOver = ClientFunction(selector => {
+  const from = { x: Infinity, y: Infinity };
+  const to = { x: -Infinity, y: -Infinity };
+  document.querySelectorAll(selector).forEach(element=>{
+    const rect = element.getBoundingClientRect();
+    from.x = Math.min(from.x, rect.left - 20);
+    from.y = Math.min(from.y, rect.top - 20);
+    to.x = Math.max(to.x, rect.right + 20);
+    to.y = Math.max(to.y, rect.bottom + 20);
+  });
+  const at = (type, point)=>document.body.dispatchEvent(new MouseEvent(type, { bubbles: true, button: 0, clientX: point.x, clientY: point.y }));
+  at('mousedown', from);
+  at('mousemove', to);
+  at('mouseup', to);
+});
+
+test('A routine parameter popup goes away with the widget it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] },
+    holder1: { id: 'holder1', type: 'holder', x: 300, y: 100 },
+    holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const fromChip = Selector('.routine-editor-operation [data-parameter=from]');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+  const openFromPopup = async _=>{
+    await t.click('#w_button');
+    if(await routineHeader.getAttribute('aria-expanded') == 'false')
+      await t.click(routineHeader);
+    await t.click(fromChip).expect(popup.exists).ok();
+  };
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  await openFromPopup();
+
+  // The popup hangs off a chip of the routine of the widget being edited, so a
+  // click that moves the editor on to another widget takes it along - without
+  // this it stays on screen over an editor for a widget it has nothing to do
+  // with. Its own "Pick in the room" is what makes a click in the room fill the
+  // parameter instead, which is why nothing else ever closed it.
+  await t
+    .click('#w_holder2')
+    .expect(popup.exists).notOk()
+    .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
+
+  // A rubber band is the other way to pick in the room, and the only one that
+  // goes through the selection: it selects what it caught, and the picker puts
+  // the widget it belongs to back afterwards - which is not the editor moving on
+  // either. The property builder picks a single widget, so its picker is already
+  // gone by the time that restore arrives.
+  await openFromPopup();
+  const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
+  await t
+    .click(propertySection.find('h3'))
+    .click(propertySection.find('.propertyExpandButton'))
+    .click(propertySection.find('button[icon=colorize]'));
+  await rubberBandOver('#w_button, #w_holder1');
+  await t
+    .expect(popup.exists).ok()
+    .expect(propertySection.find('.popup-property-widget').value).eql('holder1')
+    .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+
+  // with the picker armed the same click belongs to the popup, which stays open
+  await t.click(popup.find('.popup-close'));
+  await openFromPopup();
+  await t
+    .click(popup.find('button').withText('Pick in the room'))
+    .click('#w_holder2')
+    .expect(popup.exists).ok()
+    .expect(popup.find('.widgetPickerEntry.selected').withText('holder2').exists).ok()
+    .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+
+  // The route that reads as a pick least of all: the JSON editor, which selects
+  // widgets in its own tree. Opening it also replaces the module the popup hangs
+  // off, which takes the popup along by itself - either way nothing of the
+  // editor for the other widget is left over the new one.
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  await t.click(popup.find('.popup-close'));
+  await openFromPopup();
+  await t
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok()
+    .click('#editorSidebar [icon=data_object]')
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk()
+    .click('#jeShowTree')
+    .click(Selector('#jeTree .jeTreeWidget').find('.key').withExactText('holder2'))
+    .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
+});
+
+// An armed picker only explains the selection changes it makes itself - a click
+// or a band in the room. Every other way to select another widget is the editor
+// moving on, waiting picker or not: without that, arming the picker would leave
+// the popup floating over whatever the editor moved on to, with the picker still
+// armed for a widget that is not on screen any more. The sidebar has such a
+// route of its own, so it does not even take another module: a widget attached
+// to a line offers a way back to the line it rides on.
+test('An armed picker does not keep a popup open when the sidebar moves the editor on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    route: {
+      id: 'route', type: 'line', lineStart: { x: 100, y: 300 }, lineEnd: { x: 600, y: 300 },
+      stops: [ { widget: 'stop1', position: 0.5 } ]
+    },
+    stop1: {
+      id: 'stop1', type: 'basic', parent: 'route', x: 340, y: 290, width: 40, height: 20,
+      clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ]
+    },
+    holder1: { id: 'holder1', type: 'holder', x: 300, y: 100 },
+    holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_stop1');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok();
+
+  // "Edit line route" in the widget header selects the line - a selection change
+  // that never touches the room, with the widget the picker belongs to still
+  // there. It is the editor moving on all the same.
+  await t
+    .click(Selector('.widgetHeaderLineButton'))
+    .expect(Selector('#w_route').hasClass('selectedInEdit')).ok()
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk();
+
+  // Leaving edit mode is the most complete way of moving on, and it goes past
+  // the module being closed: the editor is only hidden, so a popup left open
+  // lives on inside it and an armed picker keeps the crosshair over the whole
+  // page while playing. An armed picker also makes the popup ignore the click on
+  // the edit button itself, so nothing else takes it along.
+  await t.click('#w_stop1');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok()
+    .click('#editorToolbar button[icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk()
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk();
+});
+
+test('An editor popup does not outlive the widget it belongs to without a click either', async t => {
+  await t.resizeWindow(1280, 800);
+  const roomState = {
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'CANVAS', mode: 'change', color: '#1f5ca6' } ] },
+    holder: { id: 'holder', type: 'holder', x: 500, y: 100 }
+  };
+  await setRoomState(roomState);
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const colorChip = Selector('.routine-editor-operation [data-parameter=color]');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+  const routineColor = ClientFunction(_=>widgets.get('button').get('clickRoutine')[0].color);
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  const notes = Selector('#editorNotes');
+  const openColorPopup = async _=>{
+    await t.click('#w_button');
+    if(await routineHeader.getAttribute('aria-expanded') == 'false')
+      await t.click(routineHeader);
+    await t.click(colorChip).expect(popup.exists).ok();
+  };
+  const armRoomPicker = async _=>{
+    const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
+    await t
+      .click(propertySection.find('h3'))
+      .click(propertySection.find('.propertyExpandButton'))
+      .click(propertySection.find('button[icon=colorize]'))
+      .expect(picking).ok();
+  };
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  await openColorPopup();
+
+  // The color, icon and sound pickers only write their parameter when the popup
+  // goes away, so closing it applies what was picked - to the widget the popup
+  // belongs to, exactly as a click outside the popup would. That widget is off
+  // screen by then, so the editor says what it wrote where: without that, having
+  // kept the pick and having thrown it away look exactly the same.
+  await t
+    .click(popup.find('.propertyColorChip[data-value="#3cb44b"]'))
+    .click('#w_holder')
+    .expect(popup.exists).notOk()
+    .expect(routineColor()).eql('#3cb44b')
+    .expect(notes.innerText).contains('CANVAS color set to #3cb44b on button');
+
+  // The routes without any click: the widget being edited is removed, which is
+  // what a delete, an undo and a dissolving pile all arrive as. An armed room
+  // picker keeps the popup through the selection changes it causes itself, but
+  // not through this one - the widget it would write to is gone.
+  await openColorPopup();
+  await armRoomPicker();
+  await ClientFunction(_=>removeWidgetLocal('button'))();
+  await t
+    .expect(popup.exists).notOk()
+    .expect(ClientFunction(_=>widgets.has('button'))()).notOk()
+    .expect(picking).notOk()
+    // the crosshair over the room is all there is to see of an armed picker, so
+    // it ending on its own is said out loud as well
+    .expect(notes.innerText).contains('picking in the room ended: button is gone');
+
+  // The other route without a click: a new state from the server, which replaces
+  // every widget in the room. It usually brings the same ids back (an undo, the
+  // same game loaded again), so the widget the popup belongs to can only be told
+  // apart from its replacement by identity - going by the id alone would leave
+  // the popup floating over an editor that has nothing selected at all.
+  await setRoomState(roomState);
+  await t.expect(ClientFunction(_=>widgets.has('button'))()).ok();
+  await openColorPopup();
+  await armRoomPicker();
+  await setRoomState(roomState);
+  await t
+    .expect(popup.exists).notOk()
+    .expect(ClientFunction(_=>widgets.has('button'))()).ok()
+    .expect(picking).notOk();
+});
+
+test('A property info tip goes away with the widget it explains', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: { id: 'button', type: 'button', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const infoTip = Selector('#editor > .inline-popup');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_button')
+    .click(Selector('#editorModules .collapsibleHeader').withText('CSS').find('.info-button'))
+    .expect(infoTip.exists).ok();
+
+  // An info tip hangs off a sidebar control just like the popups do. Its own
+  // outside-click handler covers every route with a click in it, but not the
+  // selection changing on its own - here the widget it explains is removed.
+  await ClientFunction(_=>removeWidgetLocal('button'))();
+  await t.expect(infoTip.exists).notOk();
+});
+
+test('A long list of widget ids shrinks instead of pushing the apply button out of the popup', async t => {
+  await t.resizeWindow(1280, 500);
+  const roomState = {
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] }
+  };
+  // more holders than the list of ids can show, so it wants to be at its tallest
+  for(let i=1; i<=30; ++i)
+    roomState[`holder${i}`] = { id: `holder${i}`, type: 'holder', x: 300+i%6*60, y: 100+Math.floor(i/6)*60 };
+  await setRoomState(roomState);
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_button');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .expect(popup.find('.widgetPickerList').exists).ok();
+
+  // The button that applies the picked widgets is the last thing in the section,
+  // so a list of ids that is taller than the popup has room for pushes it out of
+  // sight - and a popup that scrolls says nothing about there being more below
+  // it. The list scrolls anyway, so it is what gives way.
+  const fit = await ClientFunction(_=>{
+    const popup = document.querySelector('.inline-popup');
+    const apply = popup.querySelector('button.primary'); // "Use these widgets"
+    const popupRect = popup.getBoundingClientRect(), applyRect = apply.getBoundingClientRect();
+    const list = popup.querySelector('.widgetPickerList');
+    return {
+      popupScrollsBy: popup.scrollHeight - popup.clientHeight,
+      applyInPopup: applyRect.top >= popupRect.top && applyRect.bottom <= popupRect.bottom + 1,
+      listScrolls: list.scrollHeight > list.clientHeight
+    };
+  })();
+  await t.expect(fit).eql({ popupScrollsBy: 0, applyInPopup: true, listScrolls: true });
+});
