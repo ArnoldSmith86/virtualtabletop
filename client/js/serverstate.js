@@ -345,7 +345,7 @@ function receiveDelta(delta) {
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined)
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined && widgets.has(widgetID))
       widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
@@ -363,6 +363,8 @@ function receiveDelta(delta) {
       } else {
         widgets.get(widgetID).applyDelta(delta.s[widgetID]);
       }
+    } else if(delta.s[widgetID] !== null && delta.s[widgetID].id === undefined) { // check id because adding a widget can legitimately be deferred until its parent or deck arrives
+      console.error(`Could not apply delta for widget ${widgetID}!`, delta.s[widgetID], 'this client does not have the widget - it might be out of sync with the server');
     }
   }
 
@@ -391,7 +393,7 @@ function mergeDeltas(firstDelta, secondDelta) {
   return merged;
 }
 
-function addDeltaEntryToUndoProtocol(delta) {
+export function addDeltaEntryToUndoProtocol(delta) {
   const undoDelta = {};
 
   for(const widgetID in delta.s) {
@@ -400,6 +402,10 @@ function addDeltaEntryToUndoProtocol(delta) {
         undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
     } else if(delta.s[widgetID].id) {
       undoDelta[widgetID] = null;
+    } else if(!widgets.has(widgetID)) {
+      // the delta changes properties of a widget this client does not have (adding it earlier might have
+      // failed) - there is nothing to restore and removing it could delete a widget that others do have
+      continue;
     } else {
       undoDelta[widgetID] = {};
       for(const property in delta.s[widgetID]) {
@@ -454,7 +460,7 @@ function addStateEntryToUndoProtocol(state) {
   undoProtocol.push({ delta: {s:redoDelta,c:'received complete room state'}, undoDelta });
 }
 
-function getUndoProtocol() {
+export function getUndoProtocol() {
   return undoProtocol;
 }
 
