@@ -974,18 +974,20 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
 });
 
 test('The symbol picker says an image-only search found nothing', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     // the "Pick a symbol" button only shows up while the text is in symbol mode, which the class decides
     w: { id: 'w', type: 'basic', x: 200, y: 200, text: 'home', classes: 'material-symbols' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   // that picker offers the font icons only, so a search that only an image answers ("abbot" is a
   // game-icon) leaves the list empty and has to explain that rather than show a blank card
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_w')
     .click(Selector('#editorModuleTopLeft button[icon=emoji_symbols]'))
     .expect(Selector('#symbolPickerOverlay').visible).ok()
@@ -998,6 +1000,7 @@ test('The symbol picker says an image-only search found nothing', async t => {
     .expect(Selector('#symbolList .material-symbols').filterVisible().count).eql(1)
     .click('#symbolPickerOverlay [icon=close]')
     .expect(Selector('#symbolPickerOverlay').visible).notOk();
+  await setEditorState(null);
 });
 
 test('Deck editor: breadcrumb undo and redo', async t => {
