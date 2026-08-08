@@ -132,7 +132,20 @@ export function parseContainerQueries(cssText) {
   }
 
   const blocks = [];
-  for(let index = 0; (index = cssText.indexOf('@container', index)) != -1; ) {
+  for(let index = 0, depth = 0; index < cssText.length; index++) {
+    if(cssText[index] == '{') {
+      depth++;
+      continue;
+    }
+    if(cssText[index] == '}') {
+      depth--;
+      continue;
+    }
+    // an @container nested inside another at-rule is left where it is: the sheet is split along
+    // the block's boundaries, which would cut the rule around it in half
+    if(depth || cssText[index] != '@' || !cssText.startsWith('@container', index))
+      continue;
+
     const braceIndex = cssText.indexOf('{', index);
     if(braceIndex == -1)
       break;
@@ -146,19 +159,26 @@ export function parseContainerQueries(cssText) {
     }
     if(queries.length)
       blocks.push({ start: index, end: end + 1, css: cssText.slice(braceIndex + 1, end), queries });
-    index = end + 1;
+    index = end;  // the loop's index++ then moves past the closing brace
   }
 
   return { containers, blocks };
 }
 
+// getComputedStyle resolves width and height to the used content box size, which is what a
+// container query is evaluated against. clientWidth/clientHeight would be that size rounded to
+// whole pixels and with a scrollbar subtracted, and #roomArea is calc(var(--roomWidth) *
+// var(--scale)) - routinely fractional, so rounding it flips a breakpoint a pixel early or late.
 function contentBoxSize(element) {
   const style = getComputedStyle(element);
-  return {
-    width:  element.clientWidth  - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight),
-    height: element.clientHeight - parseFloat(style.paddingTop)  - parseFloat(style.paddingBottom)
-  };
+  const size = { width: parseFloat(style.width), height: parseFloat(style.height) };
+  // a display:none container has no box and resolves both to 'auto'. Nothing inside it is
+  // visible either, so leave it unmeasured rather than call it zero sized
+  return isNaN(size.width) || isNaN(size.height) ? null : size;
 }
+
+// a media query that never matches, which is how a block that does not apply is switched off
+const OFF = 'not all';
 
 const containerSelectors = {};
 const fallbackBlocks = [];
@@ -168,9 +188,14 @@ let containerObserver = null;
 let updateScheduled = false;
 
 function readNewStyleElements() {
-  // a widget's stylesheet is found and replaced by its id (#STYLES_<widget>), so those keep
-  // their identity - splitting one would leave the widget updating a detached element
-  for(const styleElement of document.querySelectorAll('style:not([id]):not([data-container-query-fallback])')) {
+  // Only <head>: both sheets that have @container rules are there (room.html's inlined one and
+  // the one edit mode appends), while a card widget builds a <style> element out of its game's
+  // own CSS and puts it in the body. Reading those would let a game declare itself as a
+  // container and take over a name the overlays query, and split a copy of it off on every
+  // re-render. A widget's stylesheet is found and replaced by its id (#STYLES_<widget>), so
+  // those keep their identity as well - splitting one would leave the widget updating a
+  // detached element.
+  for(const styleElement of document.head.querySelectorAll('style:not([id]):not([data-container-query-fallback])')) {
     if(readStyles.has(styleElement))
       continue;
     readStyles.add(styleElement);
@@ -200,11 +225,14 @@ function readNewStyleElements() {
       const pieceElement = document.createElement('style');
       pieceElement.dataset.containerQueryFallback = piece.queries ? 'block' : 'rules';
       pieceElement.textContent = piece.css;
+      if(piece.queries)
+        // media, not the disabled property: media is an attribute and therefore survives the
+        // sheet being copied by its outerHTML, which is how the deck editor hands the document's
+        // stylesheets to its print window. A disabled block would arrive there switched on.
+        pieceElement.media = OFF;
       styleElement.parentNode.insertBefore(pieceElement, styleElement);
-      if(piece.queries) {
-        pieceElement.disabled = true; // only takes effect once the element has a sheet
+      if(piece.queries)
         fallbackBlocks.push({ queries: piece.queries, style: pieceElement });
-      }
     }
     styleElement.remove();
   }
@@ -248,16 +276,25 @@ export function updateContainerQueryFallback() {
     const element = document.querySelector(containerSelectors[name]);
     if(!element)
       continue;
-    sizes[name] = contentBoxSize(element);
+    const size = contentBoxSize(element);
+    if(size)
+      sizes[name] = size;
     if(containerObserver && !observedContainers.has(element)) {
       observedContainers.add(element);
       containerObserver.observe(element);
     }
   }
 
+  // What a real container has and this cannot give it is size containment: there, a container's
+  // size never depends on what a query put inside it, which is what makes container queries
+  // non-cyclic. Here a content sized container would measure differently once a block is on,
+  // which could turn it off again - one flip per animation frame. Both containers are sized
+  // explicitly (#roomArea by --roomWidth/--scale, .overlay by its 100%), so this stays a rule
+  // about which elements may declare themselves as containers rather than a live problem.
   for(const block of fallbackBlocks) {
     const matches = block.queries.some(query => sizes[query.name] && evaluateCondition(query.condition, sizes[query.name]));
-    if(block.style.disabled == matches)
-      block.style.disabled = !matches;
+    const media = matches ? '' : OFF;
+    if(block.style.media != media)
+      block.style.media = media;
   }
 }

@@ -1,4 +1,5 @@
 import { parseContainerQueries, evaluateCondition } from '../client/js/containerQueryFallback.js';
+import minifyHTML from '../server/minify.mjs';
 
 describe('evaluateCondition', () => {
   const size = { width: 500, height: 300 };
@@ -80,5 +81,94 @@ describe('parseContainerQueries', () => {
     expect(containers).toEqual([ { name: 'roomArea', selector: '#roomArea' } ]);
     expect(blocks[0].queries).toEqual([ { name: 'roomArea', condition: '(max-width:500px)' } ]);
     expect(blocks[0].css).toBe('#b{margin:0}');
+  });
+
+  // an @container the parser does not recognise is left in the sheet, where the browsers this
+  // is for drop it - so the block simply has no fallback and nothing says so
+  test('leaves an @container inside another at-rule alone', () => {
+    const { blocks } = parseContainerQueries('@media print{@container roomArea (max-width:500px){#b{margin:0}}}@container roomArea (max-width:400px){#c{margin:0}}');
+    expect(blocks.length).toBe(1);
+    expect(blocks[0].css).toBe('#c{margin:0}');
+  });
+});
+
+// The parser reads the stylesheets as text, so every way it can stop recognising a block is
+// silent: the block keeps its at-rule, the browsers this is for drop it, and the only symptom
+// is the layout these tests exist to fix coming back. CI runs a browser that has container
+// queries and would not see any of it, so the shipped stylesheets are checked here instead.
+describe('the stylesheets the client is served', () => {
+  let sheets;
+
+  beforeAll(async () => {
+    process.env.MINIFYJAVASCRIPT = 'false';  // only the CSS is read below, and terser is slow
+    try {
+      const build = await minifyHTML();
+      sheets = {
+        // as inlined into room.html, i.e. after clean-css and after html-minifier-terser's own
+        // pass over the <style> element - the exact text the fallback parses in the browser
+        room: build.min.match(/<style>([\s\S]*?)<\/style>/)[1],
+        // edit mode appends its sheet from a template literal in initializeEditMode
+        editor: build.editorJSmin.match(/style\.appendChild\(document\.createTextNode\(`([\s\S]*?)`\)\)/)[1]
+      };
+    } finally {
+      delete process.env.MINIFYJAVASCRIPT;
+    }
+  }, 300000);
+
+  test('are read out of the build, not out of an empty match', () => {
+    expect(sheets.room.length).toBeGreaterThan(10000);
+    expect(sheets.editor.length).toBeGreaterThan(10000);
+  });
+
+  // an unnamed query, or one nested in another at-rule, is skipped rather than reported
+  test('have every @container block recognised', () => {
+    const counted = {}, recognised = {};
+    for(const name in sheets) {
+      counted[name] = (sheets[name].match(/@container/g) || []).length;
+      recognised[name] = parseContainerQueries(sheets[name]).blocks.length;
+    }
+    expect(recognised).toEqual(counted);
+    expect(counted.room).toBeGreaterThan(0);
+    expect(counted.editor).toBeGreaterThan(0);
+  });
+
+  test('declare every container their queries name', () => {
+    const containers = {};
+    const undeclared = [];
+    for(const name of [ 'room', 'editor' ]) {  // the order the client reads them in: the
+      const { containers: declared, blocks } = parseContainerQueries(sheets[name]);  // editor
+      for(const container of declared)                       // sheet queries #roomArea without
+        containers[container.name] = container.selector;     // declaring it as a container
+      for(const block of blocks)
+        for(const query of block.queries)
+          if(!containers[query.name])
+            undeclared.push(`${name}: ${query.name}`);
+    }
+    expect(undeclared).toEqual([]);
+    expect(Object.keys(containers).length).toBeGreaterThan(1);
+    // document.querySelector takes the first match in the document, not in the selector list,
+    // so a selector clean-css merged with another one would resolve to the wrong element
+    for(const name in containers)
+      expect(containers[name]).toMatch(/^[.#]?[-\w]+$/);
+  });
+
+  test('can be split along the block boundaries without unbalancing a rule', () => {
+    for(const name in sheets) {
+      const { blocks } = parseContainerQueries(sheets[name]);
+      const pieces = [];
+      let cursor = 0;
+      for(const block of blocks) {
+        pieces.push(sheets[name].slice(cursor, block.start), block.css);
+        cursor = block.end;
+      }
+      pieces.push(sheets[name].slice(cursor));
+
+      for(const piece of pieces) {
+        let depth = 0, lowest = 0;
+        for(const brace of piece.match(/[{}]/g) || [])
+          lowest = Math.min(lowest, depth += brace == '{' ? 1 : -1);
+        expect([ name, depth, lowest ]).toEqual([ name, 0, 0 ]);
+      }
+    }
   });
 });
