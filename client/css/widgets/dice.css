@@ -334,6 +334,7 @@
 }
 
 .d6.animateBegin.dice.widget {
+  overflow: hidden;
   overflow: clip;
 }
 

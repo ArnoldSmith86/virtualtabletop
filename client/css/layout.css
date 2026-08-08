@@ -60,6 +60,8 @@ body.loadingEditMode * {
 #roomArea {
   container: roomArea / size;
   position: fixed;
+  /* hidden first for the browsers that predate clip: without it the board does not clip at all */
+  overflow: hidden;
   overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
@@ -545,6 +547,7 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
 
     body.toolbarOverflow #toolbar {
       overflow-y: auto;
+      overflow-x: hidden;
       overflow-x: clip;
       scrollbar-width: none;
       padding-top: 0;
@@ -559,6 +562,7 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
 
     body.horizontalToolbar.toolbarOverflow #toolbar {
       overflow-x: auto;
+      overflow-y: hidden;
       overflow-y: clip;
       padding-left: 0;
       padding-right: 0;
@@ -989,6 +993,7 @@ button[icon]::before {
   font-weight: normal;
   line-height: 1;
   width: 24px;
+  overflow: hidden;
   overflow: clip;
 }
 button[icon]:empty {
