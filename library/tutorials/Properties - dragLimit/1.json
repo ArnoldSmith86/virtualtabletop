@@ -30,107 +30,13 @@
       "usesAIImagery": false
     }
   },
-  "shapeRect": {
-    "id": "shapeRect",
-    "x": 450,
-    "y": 175,
-    "width": 700,
-    "height": 650,
-    "z": 1,
-    "layer": -2,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "shape": true,
-    "show": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
-    "css": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);"
-  },
-  "shapeCircle": {
-    "id": "shapeCircle",
-    "x": 300,
-    "y": 0,
-    "width": 1000,
-    "height": 1000,
-    "z": 1,
-    "layer": -2,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "shape": true,
-    "show": "background: rgba(96,165,250,0.16); border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
-    "css": "display: none"
-  },
-  "shapeHex": {
-    "id": "shapeHex",
-    "x": 550,
-    "y": 283.5,
-    "width": 500,
-    "height": 433,
-    "z": 1,
-    "layer": -2,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "shape": true,
-    "show": "background: rgba(96,165,250,0.3); clip-path: polygon(100% 50%, 75% 100%, 25% 100%, 0% 50%, 25% 0%, 75% 0%);",
-    "css": "display: none"
-  },
-  "shapeBox": {
-    "id": "shapeBox",
-    "x": 400,
-    "y": 120,
-    "width": 800,
-    "height": 760,
-    "z": 1,
-    "layer": -2,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "shape": true,
-    "show": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
-    "css": "display: none"
-  },
-  "shapeHole": {
-    "id": "shapeHole",
-    "x": 650,
-    "y": 350,
-    "width": 300,
-    "height": 300,
-    "z": 2,
-    "layer": -2,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "shape": true,
-    "show": "background: rgba(20,26,34,0.85); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
-    "css": "display: none"
-  },
-  "piece": {
-    "id": "piece",
-    "x": 770,
-    "y": 470,
-    "width": 60,
-    "height": 60,
-    "z": 20,
-    "css": "background: #e8b04b; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.5);",
-    "dragLimit": {
-      "alignX": 0.5,
-      "alignY": 0.5,
-      "condition": [
-        "x > 450",
-        "x < 1150",
-        "y > 175",
-        "y < 825"
-      ]
-    }
-  },
   "title": {
     "id": "title",
-    "x": 20,
-    "y": 8,
-    "width": 280,
-    "height": 56,
-    "css": "font-size: 44px;",
+    "x": 400,
+    "y": -4,
+    "width": 800,
+    "height": 60,
+    "css": "font-size: 60px;text-align: center;",
     "text": "Drag Limits",
     "movable": false,
     "movableInEdit": false,
@@ -140,25 +46,39 @@
   },
   "intro": {
     "id": "intro",
-    "x": 20,
+    "x": 60,
     "y": 68,
-    "width": 280,
-    "height": 260,
+    "width": 1480,
+    "height": 125,
+    "css": "font-size: 24px;",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3,
+    "z": 10,
+    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a <b>condition</b>: an inequality in x and y - the point of the widget the limit holds - that a drag has to keep true, so the area can be any shape you can write down. Every button below writes one onto the piece and puts it back inside the new area. All of them also set <b>alignX</b> and <b>alignY</b> to 0.5, so the point being limited is the middle of the piece and the shape drawn is exactly where that middle can go."
+  },
+  "language": {
+    "id": "language",
+    "x": 60,
+    "y": 192,
+    "width": 1480,
+    "height": 80,
     "css": "font-size: 19px;",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "layer": -1,
+    "layer": -3,
     "z": 10,
-    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a condition: an inequality in x and y - the point of the widget the limit holds - that has to stay true while it is dragged. <br><br>Every example here sets <b>alignX</b> and <b>alignY</b> to 0.5, so that point is the middle of the piece and the shape drawn is where its middle can go."
+    "html": "The maths is the one <b>var</b> uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. A property is read the way a routine reads it, &#36;{PROPERTY name} for this widget and &#36;{PROPERTY name OF id} for another. Every line has to be a comparison and every line has to be true; &amp;&amp; and || combine within one line."
   },
   "btnsides": {
     "type": "button",
     "id": "btnsides",
-    "x": 20,
-    "y": 350,
+    "x": 60,
+    "y": 282,
     "width": 280,
-    "height": 48,
+    "height": 50,
     "z": 30,
     "text": "Four sides",
     "clickRoutine": [
@@ -174,10 +94,10 @@
           "alignX": 0.5,
           "alignY": 0.5,
           "condition": [
-            "x > 450",
-            "x < 1150",
-            "y > 175",
-            "y < 825"
+            "x > 460",
+            "x < 1140",
+            "y > 350",
+            "y < 710"
           ]
         }
       },
@@ -189,7 +109,7 @@
       {
         "func": "SET",
         "property": "y",
-        "value": 470
+        "value": 500
       },
       {
         "func": "SELECT",
@@ -219,7 +139,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 450\",\n    \"x < 1150\",\n    \"y > 175\",\n    \"y < 825\"\n  ]\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 460\", \"x < 1140\",\n    \"y > 350\", \"y < 710\"\n  ]\n}"
       },
       {
         "func": "SELECT",
@@ -236,10 +156,10 @@
   "btncircle": {
     "type": "button",
     "id": "btncircle",
-    "x": 20,
-    "y": 408,
+    "x": 360,
+    "y": 282,
     "width": 280,
-    "height": 48,
+    "height": 50,
     "z": 30,
     "text": "Circle",
     "clickRoutine": [
@@ -254,7 +174,7 @@
         "value": {
           "alignX": 0.5,
           "alignY": 0.5,
-          "condition": "(x - 800)^2 + (y - 500)^2 < 500^2"
+          "condition": "(x - 800)^2 + (y - 530)^2 < 180^2"
         }
       },
       {
@@ -265,7 +185,7 @@
       {
         "func": "SET",
         "property": "y",
-        "value": 470
+        "value": 500
       },
       {
         "func": "SELECT",
@@ -295,7 +215,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"condition\":\n    \"(x - 800)^2\n   + (y - 500)^2\n   < 500^2\"\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"condition\":\n    \"(x - 800)^2 + (y - 530)^2 < 180^2\"\n}"
       },
       {
         "func": "SELECT",
@@ -305,17 +225,17 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "A disc around the middle of the room, radius 500. Push the piece against the edge and it slides along the circle instead of stopping - a refused position puts the widget where its area comes closest to the mouse."
+        "value": "A disc around the middle of the demo, radius 180. Push the piece against the edge and it slides along the circle instead of stopping - a refused position puts the widget where its area comes closest to the mouse."
       }
     ]
   },
   "btnhexagon": {
     "type": "button",
     "id": "btnhexagon",
-    "x": 20,
-    "y": 466,
+    "x": 660,
+    "y": 282,
     "width": 280,
-    "height": 48,
+    "height": 50,
     "z": 30,
     "text": "Hexagon",
     "clickRoutine": [
@@ -330,11 +250,11 @@
         "value": {
           "alignX": 0.5,
           "alignY": 0.5,
-          "minX": 550,
-          "maxX": 1050,
+          "minX": 590,
+          "maxX": 1010,
           "condition": [
-            "abs(y - 500) < 250 * sqrt(3)/2",
-            "abs(y - 500) < sqrt(3) * (250 - abs(x - 800))"
+            "abs(y - 530) < 210 * sqrt(3)/2",
+            "abs(y - 530) < sqrt(3) * (210 - abs(x - 800))"
           ]
         }
       },
@@ -346,7 +266,7 @@
       {
         "func": "SET",
         "property": "y",
-        "value": 470
+        "value": 500
       },
       {
         "func": "SELECT",
@@ -376,7 +296,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"minX\": 550,\n  \"maxX\": 1050,\n  \"condition\": [\n    \"abs(y - 500)\n      < 250 * sqrt(3)/2\",\n    \"abs(y - 500)\n      < sqrt(3) * (250\n      - abs(x - 800))\"\n  ]\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"minX\": 590, \"maxX\": 1010,\n  \"condition\": [\n    \"abs(y - 530) < 210 * sqrt(3)/2\",\n    \"abs(y - 530)\n      < sqrt(3) * (210 - abs(x - 800))\"\n  ]\n}"
       },
       {
         "func": "SELECT",
@@ -386,17 +306,17 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "A regular hexagon, 500 across, using both halves at once: the two upright sides are minX and maxX, the flat top and bottom are the first condition, and all four slanted sides are the second one - one abs() folds it left to right, the other top to bottom."
+        "value": "A regular hexagon, 420 across, using both halves at once: the two upright sides are minX and maxX, the flat top and bottom are the first condition, and all four slanted sides are the second one - one abs() folds it left to right, the other top to bottom."
       }
     ]
   },
   "btnboxinbox": {
     "type": "button",
     "id": "btnboxinbox",
-    "x": 20,
-    "y": 524,
+    "x": 960,
+    "y": 282,
     "width": 280,
-    "height": 48,
+    "height": 50,
     "z": 30,
     "text": "Box in a box",
     "clickRoutine": [
@@ -411,11 +331,11 @@
         "value": {
           "alignX": 0.5,
           "alignY": 0.5,
-          "minX": 400,
-          "maxX": 1200,
-          "minY": 120,
-          "maxY": 880,
-          "condition": "x < 650 || x > 950 || y < 350 || y > 650"
+          "minX": 430,
+          "maxX": 1170,
+          "minY": 350,
+          "maxY": 710,
+          "condition": "x < 680 || x > 920 || y < 460 || y > 600"
         }
       },
       {
@@ -426,7 +346,7 @@
       {
         "func": "SET",
         "property": "y",
-        "value": 470
+        "value": 500
       },
       {
         "func": "SELECT",
@@ -466,7 +386,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"minX\": 400,\n  \"maxX\": 1200,\n  \"minY\": 120,\n  \"maxY\": 880,\n  \"condition\":\n    \"x < 650\n  || x > 950\n  || y < 350\n  || y > 650\"\n}"
+        "value": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"minX\": 430, \"maxX\": 1170,\n  \"minY\": 350, \"maxY\": 710,\n  \"condition\":\n    \"x < 680 || x > 920\n  || y < 460 || y > 600\"\n}"
       },
       {
         "func": "SELECT",
@@ -483,10 +403,10 @@
   "btnnone": {
     "type": "button",
     "id": "btnnone",
-    "x": 20,
-    "y": 582,
+    "x": 1260,
+    "y": 282,
     "width": 280,
-    "height": 48,
+    "height": 50,
     "z": 30,
     "text": "No limit",
     "clickRoutine": [
@@ -508,7 +428,7 @@
       {
         "func": "SET",
         "property": "y",
-        "value": 470
+        "value": 500
       },
       {
         "func": "SELECT",
@@ -542,60 +462,140 @@
       }
     ]
   },
-  "outro": {
-    "id": "outro",
-    "x": 20,
-    "y": 660,
-    "width": 280,
-    "height": 330,
-    "css": "font-size: 19px;",
+  "shapeRect": {
+    "id": "shapeRect",
+    "x": 460,
+    "y": 350,
+    "width": 680,
+    "height": 360,
+    "z": 1,
+    "layer": -2,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "layer": -1,
-    "z": 10,
-    "html": "Every button writes one <b>dragLimit</b> onto the piece and puts it back in the middle of the new area.<br><br>\n\nIn Edit Widgets, select the piece and look at Position > Drag limits: the four sides, the conditions and the &quotLimited point&quot picker are all there as fields, and &quotShow on board&quot shades the whole area for you while you type it."
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);"
   },
-  "language": {
-    "id": "language",
-    "x": 1310,
-    "y": 68,
-    "width": 280,
-    "height": 250,
-    "css": "font-size: 19px;",
+  "shapeCircle": {
+    "id": "shapeCircle",
+    "x": 620,
+    "y": 350,
+    "width": 360,
+    "height": 360,
+    "z": 1,
+    "layer": -2,
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "layer": -1,
-    "z": 10,
-    "html": "The math is the one <b>var</b> uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. x and y are the limited point; a property is read the way a routine reads it, &#36;{PROPERTY name} for this widget and ${PROPERTY name OF id} for another. && and || combine within one line."
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.16); border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "display: none"
+  },
+  "shapeHex": {
+    "id": "shapeHex",
+    "x": 590,
+    "y": 348,
+    "width": 420,
+    "height": 364,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.3); clip-path: polygon(100% 50%, 75% 100%, 25% 100%, 0% 50%, 25% 0%, 75% 0%);",
+    "css": "display: none"
+  },
+  "shapeBox": {
+    "id": "shapeBox",
+    "x": 430,
+    "y": 350,
+    "width": 740,
+    "height": 360,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(96,165,250,0.16); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "display: none"
+  },
+  "shapeHole": {
+    "id": "shapeHole",
+    "x": 680,
+    "y": 460,
+    "width": 240,
+    "height": 140,
+    "z": 2,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "shape": true,
+    "show": "background: rgba(20,26,34,0.85); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.8);",
+    "css": "display: none"
+  },
+  "piece": {
+    "id": "piece",
+    "x": 770,
+    "y": 500,
+    "width": 60,
+    "height": 60,
+    "z": 20,
+    "css": "background: #e8b04b; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.5);",
+    "dragLimit": {
+      "alignX": 0.5,
+      "alignY": 0.5,
+      "condition": [
+        "x > 460",
+        "x < 1140",
+        "y > 350",
+        "y < 710"
+      ]
+    }
   },
   "codePanel": {
     "id": "codePanel",
-    "x": 1310,
-    "y": 330,
-    "width": 280,
-    "height": 330,
-    "css": "font-size: 17px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
-    "text": "\"dragLimit\": {\n  \"alignX\": 0.5,\n  \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 450\",\n    \"x < 1150\",\n    \"y > 175\",\n    \"y < 825\"\n  ]\n}",
+    "x": 60,
+    "y": 730,
+    "width": 520,
+    "height": 255,
+    "css": "font-size: 18px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
+    "text": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 460\", \"x < 1140\",\n    \"y > 350\", \"y < 710\"\n  ]\n}",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "layer": -1,
+    "layer": -3,
     "z": 10
   },
   "notePanel": {
     "id": "notePanel",
-    "x": 1310,
-    "y": 680,
-    "width": 280,
-    "height": 310,
-    "css": "font-size: 19px;",
+    "x": 620,
+    "y": 730,
+    "width": 540,
+    "height": 255,
+    "css": "font-size: 21px;",
     "text": "The rectangle minX/maxX/minY/maxY already make, written as four conditions instead. Nothing is won here - but every line is an expression, so a side like this can depend on anything the game knows.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
-    "layer": -1,
+    "layer": -3,
     "z": 10
+  },
+  "outro": {
+    "id": "outro",
+    "x": 1200,
+    "y": 730,
+    "width": 340,
+    "height": 255,
+    "css": "font-size: 19px;",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3,
+    "z": 10,
+    "html": "In Edit Widgets, select the piece and open Position &gt; Drag limits: the four sides, the conditions and the <b>Limited point</b> picker are all fields there, and <b>Show on board</b> shades the whole area while you type it."
   }
 }

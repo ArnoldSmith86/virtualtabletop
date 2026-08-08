@@ -1940,6 +1940,16 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   outline: 1px solid #e05d5d;
 }
 
+/* the sampling behind the drag limit preview found no position the conditions
+   allow. Not a red error - every line of it is written correctly, it is the
+   area they describe together that is not there - so it warns in its own
+   colour rather than in the one an unreadable expression uses. */
+.editorModule .dragLimitEmptyArea:not(:empty) {
+  color: #e0a15d;
+  font-size: 12px;
+  margin: 2px 0 4px;
+}
+
 .editorModule .gridExtraRow {
   display: flex;
   align-items: center;

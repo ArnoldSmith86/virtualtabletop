@@ -366,6 +366,9 @@ describe('css helpers', () => {
     // typed rather than read as nothing while dragging
     expect(cssHelpers.dragLimitConditionProblem('x + width < 500')).toMatch(/\$\{PROPERTY width\}/);
     expect(cssHelpers.dragLimitConditionProblem('x + ${PROPERTY width} < 500')).toBe(null);
+    // and so is a line that is a sum rather than an inequality: it reads as
+    // true wherever it is not 0, i.e. it limits nothing
+    expect(cssHelpers.dragLimitConditionProblem('y > x\nx - 100')).toMatch(/^"x - 100": .*comparison/);
   });
 
   test('the drawing follows every property its expressions read', () => {

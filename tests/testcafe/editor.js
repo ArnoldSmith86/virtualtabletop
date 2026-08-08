@@ -321,6 +321,18 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     // drops the two keys again
     .click(dragLimitBody.find('.gridAnchorRow .gridAnchor').nth(0))
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
+    // a condition that is not a comparison is a number, and a number is true
+    // wherever it is not 0 - so it is reported like one that cannot be read at
+    // all rather than left behind as a limit that limits nothing
+    .typeText(dragLimitBody.find('textarea'), 'x - 100', { replace: true })
+    .expect(dragLimitBody.find('.propertyInputProblem').withText('comparison').exists).ok()
+    // and conditions that hold nowhere at all are said out loud too: no single
+    // line of that is wrong, but together they describe no area, and an area
+    // nothing satisfies limits nothing
+    .typeText(dragLimitBody.find('textarea'), 'x < 200\nx > 800', { replace: true })
+    .expect(dragLimitBody.find('.dragLimitEmptyArea').innerText).contains('satisfies')
+    .typeText(dragLimitBody.find('textarea'), 'y > x', { replace: true })
+    .expect(dragLimitBody.find('.dragLimitEmptyArea').innerText).eql('')
     // the area a condition describes is sampled onto the board while the
     // section is open, and the switch next to it takes it away again
     .expect(areaPreview.exists).ok()

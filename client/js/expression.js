@@ -329,13 +329,22 @@ export function expressionNumber(text, resolve, fallback = null) {
 // but "2x^^2 > 4" or "0 < x < 500" are, and they are reported in edit mode
 // instead of quietly limiting nothing. With freeNames given, a bare word that
 // is not one of them is judged too: the engine would read it as nothing.
-export function expressionError(text, freeNames = null) {
+// requireCondition asks for the third member of that family: what an expression
+// answers with is a number or a true/false, and which of the two it is does not
+// depend on any value - so a condition written as maths rather than as an
+// inequality ("x - 100", a plausible slip while a shape is being written down
+// as an equation) is caught here as well, instead of reading as true at every
+// position but the single line it is 0 on.
+export function expressionError(text, freeNames = null, requireCondition = false) {
+  let value;
   try {
-    evaluateExpression(text, _=>1, freeNames);
-    return null;
+    value = evaluateExpression(text, _=>1, freeNames);
   } catch(e) {
     return e.isValueError ? null : e.message;
   }
+  if(requireCondition && typeof value != 'boolean')
+    return 'a condition has to be a comparison like "x < 500" - this one is a number, so it is true wherever it is not 0';
+  return null;
 }
 
 // Which names an expression reads: the ones the caller resolves, so the

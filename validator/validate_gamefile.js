@@ -100,12 +100,15 @@ const COMMON_PROPERTIES = {
                     continue;
                 }
                 for(const condition of conditions) {
-                    const problem = expressionError(condition, dragLimitNames);
+                    // a condition has to be an inequality: one written as maths
+                    // holds wherever it is not 0, i.e. it limits nothing
+                    const problem = expressionError(condition, dragLimitNames, true);
                     if(problem)
                         problems.push(`condition '${condition}' is not a valid expression: ${problem}`);
                 }
             } else if(key === 'alignX' || key === 'alignY') {
-                if(typeof v[key] !== 'number')
+                // the engine reads it with +, so "0.5" is the 0.5 it looks like
+                if(typeof v[key] !== 'number' && !(typeof v[key] === 'string' && v[key].trim() !== '' && isFinite(+v[key])))
                     problems.push(`${key} must be a number: the fraction of the widget's ${key === 'alignX' ? 'width' : 'height'} the limit applies to (0 is its ${key === 'alignX' ? 'left' : 'top'} edge, 0.5 its middle, 1 its ${key === 'alignX' ? 'right' : 'bottom'} edge)`);
             } else {
                 problems.push(`unknown key '${key}' (valid: minX, maxX, minY, maxY, condition, alignX, alignY)`);

@@ -203,6 +203,25 @@ describe('the syntax check', () => {
     // and without a list every name is the caller's business, as before
     expect(expressionError('x + width < 500')).toBe(null);
   });
+
+  test('asks for a comparison where only a comparison means anything', () => {
+    // "x - 100" is a number, and a condition reads a number as true wherever it
+    // is not 0 - a limit that limits nothing, exactly like "0 < x < 500"
+    expect(expressionError('x - 100', [ 'x', 'y' ], true)).toContain('comparison');
+    expect(expressionError('x', [ 'x', 'y' ], true)).toContain('comparison');
+    expect(expressionError('abs(x)', [ 'x', 'y' ], true)).toContain('comparison');
+    expect(expressionError('${PROPERTY seats OF board}', null, true)).toContain('comparison');
+    // whether it is a comparison does not depend on what anything resolves to,
+    // so this is decided once and for all rather than at some position
+    expect(expressionError('x < 500', [ 'x', 'y' ], true)).toBe(null);
+    expect(expressionError('!(x > 200 && y > 200)', [ 'x', 'y' ], true)).toBe(null);
+    expect(expressionError('(x - 260)^2 + (y - 380)^2 < 200^2', [ 'x', 'y' ], true)).toBe(null);
+    expect(expressionError('x > 0 || y > 0', [ 'x', 'y' ], true)).toBe(null);
+    // and a side of the rectangle is a number, so it is not asked for one
+    expect(expressionError('x - 100', [ 'x', 'y' ])).toBe(null);
+    // what cannot be read at all is still named as that rather than as this
+    expect(expressionError('2x^^2', [ 'x', 'y' ], true)).not.toContain('comparison');
+  });
 });
 
 // what the editor's drawing asks: which of the names an expression reads are

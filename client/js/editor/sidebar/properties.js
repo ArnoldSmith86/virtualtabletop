@@ -373,11 +373,13 @@ function dragLimitConditionList(text) {
   return String(text === null || text === undefined ? '' : text).split('\n').map(c=>c.trim()).filter(c=>c !== '');
 }
 
-// the first line that will not parse, if any: one line the engine cannot read
-// makes the whole condition do nothing, so it is worth saying which
+// the first line that is not a condition the engine can read, if any: one line
+// it cannot read makes the whole condition do nothing, so it is worth saying
+// which - and a line that is maths rather than an inequality ("x - 100") does
+// nothing just as quietly, so it is judged here too
 function dragLimitConditionProblem(text) {
   for(const condition of dragLimitConditionList(text)) {
-    const problem = expressionError(condition, dragLimitNames);
+    const problem = expressionError(condition, dragLimitNames, true);
     if(problem)
       return `"${condition}": ${problem}`;
   }
@@ -5291,9 +5293,16 @@ class PropertiesModule extends SidebarModule {
       return;
 
     let updatePreview = _=>{};
+    // said by the sampling below rather than by the limit itself: whether an
+    // area exists at all cannot be read off two contradicting conditions
+    let reportEmptyArea = _=>{};
     const section = this.renderCollapsibleSection('Drag limits', true, body=>{
       const host = div(body, 'gridLimits');
       const previewHost = div(body, 'dragLimitPreviewToggle');
+      const emptyHost = div(body, 'dragLimitEmptyArea');
+      reportEmptyArea = empty=>{
+        emptyHost.textContent = empty ? 'None of the positions tested in this widget\'s parent satisfies these conditions. An area nothing satisfies limits nothing: a widget that is not inside its area is always let go, so that it can never be stuck.' : '';
+      };
       // renderRebuildable: the four inputs listen to dragLimit, so the ones of
       // a discarded generation have to stop listening with it
       let rebuildLimits = _=>{};
@@ -5365,6 +5374,7 @@ class PropertiesModule extends SidebarModule {
       }).render(div(body, 'gridLimitToggle'));
       body.appendChild(host);
       body.appendChild(previewHost);
+      body.appendChild(emptyHost);
 
       // resync on undo / remote updates while the section stays open - and
       // redraw the area on every edit, whether the fields were rebuilt for it
@@ -5403,7 +5413,7 @@ class PropertiesModule extends SidebarModule {
     // the body is rendered even while the section is collapsed, so the area on
     // the board follows the headers rather than appearing on every selection -
     // the Position section around it folds this one away just as well
-    updatePreview = _=>this.updateDragLimitPreview(widget, this.dragLimitPreviewEnabled !== false && !section.closest('.collapsibleSection.collapsed'));
+    updatePreview = _=>this.updateDragLimitPreview(widget, !section.closest('.collapsibleSection.collapsed'), this.dragLimitPreviewEnabled !== false, empty=>reportEmptyArea(empty));
     for(let block = section; block; block = block.parentElement && block.parentElement.closest('.collapsibleSection'))
       $('.collapsibleHeader', block).addEventListener('click', _=>updatePreview());
     updatePreview();
@@ -5419,13 +5429,13 @@ class PropertiesModule extends SidebarModule {
   // A drawing samples thousands of positions, so it waits for a short pause
   // instead of being redrawn between two keystrokes of the very condition it
   // is drawing.
-  updateDragLimitPreview(widget, show) {
+  updateDragLimitPreview(widget, sample, draw, report) {
     clearTimeout(this.dragLimitPreviewTimer);
-    this.dragLimitPreviewRequest = { widget, show };
+    this.dragLimitPreviewRequest = { widget, sample, draw, report };
     this.dragLimitPreviewTimer = setTimeout(_=>{
       const request = this.dragLimitPreviewRequest;
       if(request)
-        this.drawDragLimitPreview(request.widget, request.show);
+        this.drawDragLimitPreview(request.widget, request.sample, request.draw, request.report);
     }, 100);
   }
 
@@ -5437,15 +5447,21 @@ class PropertiesModule extends SidebarModule {
   // sampled: one
   // canvas pixel per sampled point, asking the widget itself whether its limit
   // allows that point, blown up to the parent's box by the browser.
-  drawDragLimitPreview(widget, show) {
+  // The samples also answer a question the limit cannot be asked directly -
+  // whether there is any area at all. Two conditions that contradict each other
+  // hold nowhere, and a limit that holds nowhere lets the widget go anywhere
+  // (nothing may ever be stuck), so it is worth saying out loud; that is why
+  // the sampling happens while the section is open whether the area is drawn on
+  // the board or not. `empty` is reported as null when nothing was sampled.
+  drawDragLimitPreview(widget, sample, draw, report = _=>{}) {
     this.clearDragLimitPreview();
     const container = widget.domElement && widget.domElement.parentNode;
-    if(!show || !container || !dragLimitIsSet(widget.get('dragLimit')))
-      return;
+    if(!sample || !container || !dragLimitIsSet(widget.get('dragLimit')))
+      return report(null);
 
     const width = container.offsetWidth, height = container.offsetHeight;
     if(!(width > 0) || !(height > 0))
-      return;
+      return report(null);
     // a step small enough to show the shape and coarse enough to stay quick
     // while a condition is being typed (~10k points either way)
     const step = Math.max(4, Math.round(Math.sqrt(width * height / 10000)));
@@ -5465,13 +5481,22 @@ class PropertiesModule extends SidebarModule {
     canvas.height = rows;
     const context = canvas.getContext('2d');
     context.fillStyle = '#2f9e44';
+    let allowed = 0;
     for(let row = 0; row < rows; ++row)
       for(let column = 0; column < columns; ++column)
         // the middle of the cell the pixel stands for, so a boundary running
         // along the sampling lattice does not depend on rounding
-        if(widget.dragLimitAllows({ x: (column + 0.5) * step, y: (row + 0.5) * step }, fixedRules))
+        if(widget.dragLimitAllows({ x: (column + 0.5) * step, y: (row + 0.5) * step }, fixedRules)) {
+          ++allowed;
           context.fillRect(column, row, 1, 1);
-    container.appendChild(canvas);
+        }
+    // Only conditions can hold nowhere: the four sides clamp rather than
+    // refuse, so even an inverted rectangle ("minX": 500, "maxX": 100) leaves
+    // the one line it clamps everything onto - which the lattice would miss and
+    // report as empty.
+    report(allowed == 0 && dragLimitConditions(widget.get('dragLimit')).length > 0);
+    if(draw)
+      container.appendChild(canvas);
   }
 
   updateDragLimit(widget, change) {
@@ -5535,7 +5560,7 @@ class PropertiesModule extends SidebarModule {
         // the key - the shapes the engine and the JSON editor already read
         this.updateDragLimit(widget, { condition: conditions.length ? (conditions.length == 1 ? conditions[0] : conditions) : null });
       },
-      hint: 'An inequality the drag keeps true, so "y > x" keeps the widget below the diagonal. Ordinary maths: x and y are the limited point, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "2x^2 + y > 4" is written as it looks. Every line has to be true; && and || combine within one line.',
+      hint: 'An inequality the drag keeps true, so "y > x" keeps the widget below the diagonal. Ordinary maths: x and y are the limited point, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "2x^2 + y > 4" is written as it looks. Every line has to be true; && and || combine within one line. Each line has to be a comparison rather than a sum: "x - 100" is a number, and a number is true wherever it is not 0. Conditions nothing can satisfy limit nothing at all, because a widget outside its area is always let go.',
       validate: dragLimitConditionProblem
     }).render(target);
   }
