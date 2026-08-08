@@ -115,7 +115,10 @@ class AssetsModule extends SidebarModule {
       updateProgress(`Fetching asset ${i+1}/${assets.length}`, (i+1)/assets.length);
       const blob = await (await fetch(assetObj.asset.substr(1))).blob();
       const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
-      files[assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin')] = new Uint8Array(await blob.arrayBuffer());
+      // an asset whose bytes name no type at all is served without a Content-Type, which leaves
+      // blob.type empty - it still belongs in the zip, just without a real extension
+      const extension = (blob.type.match(/[^\/]+$/) || [ 'bin' ])[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin');
+      files[`${assetFileName}.${extension}`] = new Uint8Array(await blob.arrayBuffer());
     }
 
     updateProgress('Building file...');
@@ -251,9 +254,18 @@ class AssetsModule extends SidebarModule {
 
       const createOriginalCell = (isSVG, asset, blob) => {
         const cell = row.insertCell();
-        const img = new Image();
         const sizeLabel = document.createElement('label');
 
+        // An asset that is not an image at all - a sound - has nothing to show in an <img> but
+        // the broken image icon, and its onload never comes, so the label would keep the
+        // placeholder text below forever. Name what it is instead.
+        if(!blob.type.match(/^image/)) {
+          sizeLabel.textContent = `${blob.type || 'unknown type'}\n\n${(blob.size / 1024).toFixed(2)} KB`;
+          cell.appendChild(sizeLabel);
+          return;
+        }
+
+        const img = new Image();
         sizeLabel.textContent = `${asset.asset}\n${blob.type}`;
         img.onload = function() {
           const sizeInKB = (blob.size / 1024).toFixed(2);

@@ -49,6 +49,40 @@ body.loadingEditMode * {
   cursor: wait;
 }
 
+/* The "this browser cannot run VirtualTabletop" message at the end of room.html. It is the only
+   thing on the page that has to render on a browser we do not support, so it stays on plain,
+   ancient CSS - no custom properties, no flexbox, no shorthand insets. Declaring no display keeps
+   the hidden attribute working; the nomodule script removes it. */
+.unsupportedBrowser {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  overflow: auto;
+  padding: 60px 20px;
+  background: #484848;
+  color: #ffffff;
+  text-align: center;
+}
+
+.unsupportedBrowser h1 {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.unsupportedBrowser p {
+  max-width: 600px;
+  margin: 16px auto;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.unsupportedBrowser a {
+  color: #ffffff;
+}
+
 /* the overlays are children of #roomArea, so their size is the board's, not the window's.
    Their breakpoints are container queries against this box: as media queries they measured
    the window, which only said something about how much room an overlay has back when every
@@ -60,6 +94,9 @@ body.loadingEditMode * {
 #roomArea {
   container: roomArea / size;
   position: fixed;
+  /* hidden first for the browsers that predate clip: without it the board does not clip at all.
+     Unlike clip, hidden makes this a scroll container, so main.js pins it back to 0/0 there */
+  overflow: hidden;
   overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
@@ -545,6 +582,7 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
 
     body.toolbarOverflow #toolbar {
       overflow-y: auto;
+      overflow-x: hidden;
       overflow-x: clip;
       scrollbar-width: none;
       padding-top: 0;
@@ -559,6 +597,7 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
 
     body.horizontalToolbar.toolbarOverflow #toolbar {
       overflow-x: auto;
+      overflow-y: hidden;
       overflow-y: clip;
       padding-left: 0;
       padding-right: 0;
@@ -989,6 +1028,7 @@ button[icon]::before {
   font-weight: normal;
   line-height: 1;
   width: 24px;
+  overflow: hidden;
   overflow: clip;
 }
 button[icon]:empty {
@@ -1513,6 +1553,7 @@ button[icon]:disabled:hover {
   line-height:19.6px;
   padding:16px 8px;
   position:relative;
+  -webkit-text-size-adjust:100%;
   text-size-adjust:100%;
   font-style: italic;
   margin: 0;
@@ -1568,6 +1609,7 @@ button[icon]:disabled:hover {
 .inputstring input,
 .inputselect select
 {
+  -webkit-appearance: none;
   appearance: none;
   padding: 0 5px 0px 5px;
   margin: 0 0 0 0;

@@ -702,6 +702,49 @@
     <button icon="add_reaction"></button>
   </template>
 
+  <!-- The client is a single <script type="module">, so a browser that does not support modules
+       (or has JavaScript turned off) runs nothing at all and is left staring at the empty loading
+       screen with no hint of what went wrong. This says what happened instead, which part of the
+       browser is missing, and which version has it. The two scripts are deliberately ES5 and touch
+       nothing else - they are the one piece of the page that has to run on a browser we do not
+       support. The versions are the browserslist key of package.json, kept in step with it by
+       tests/browsercompat.test.js. -->
+  <div id="unsupportedBrowser" class="unsupportedBrowser" hidden>
+    <h1>This browser is too old for VirtualTabletop</h1>
+    <p id="unsupportedBrowserReason">It is missing something VirtualTabletop is built on.</p>
+    <p id="unsupportedBrowserVersions">VirtualTabletop needs <b>Chrome 88</b>, <b>Edge 88</b>, <b>Firefox 79</b>, <b>Safari 14.1</b>, <b>Safari on iOS 14.5</b> or <b>Samsung Internet 15</b> - or any version newer than those. Please update this browser, or open the room in one of them.</p>
+    <p><a href="#" id="unsupportedBrowserContinue">Let me try anyway</a></p>
+  </div>
+  <script>
+    function unsupportedBrowser(missing) {
+      document.getElementById('unsupportedBrowserReason').innerHTML = 'It has no ' + missing + ', which VirtualTabletop is built on.';
+      document.getElementById('unsupportedBrowser').removeAttribute('hidden');
+    }
+    document.getElementById('unsupportedBrowserContinue').onclick = function() {
+      document.getElementById('unsupportedBrowser').setAttribute('hidden', '');
+      return false;
+    };
+    // A browser can be new enough to run this file and still be too old for the room. These are
+    // the pieces of the platform the client cannot do without at all - each of them arrived years
+    // before the oldest browser above, so a browser we do support never reads any of this.
+    if(!window.WebSocket)
+      unsupportedBrowser('WebSockets');
+    else if(!window.fetch)
+      unsupportedBrowser('the fetch API');
+    else if(!window.ResizeObserver)
+      unsupportedBrowser('ResizeObserver');
+    else if(!window.CSS || !CSS.supports || !CSS.supports('color', 'var(--a)'))
+      unsupportedBrowser('CSS custom properties');
+  </script>
+  <script nomodule>unsupportedBrowser('JavaScript modules');</script>
+  <noscript>
+    <div class="unsupportedBrowser">
+      <h1>VirtualTabletop needs JavaScript</h1>
+      <p>This page is a JavaScript application - there is nothing to show without it.</p>
+      <p>Please enable JavaScript for this site and reload the page.</p>
+    </div>
+  </noscript>
+
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
 </body>
