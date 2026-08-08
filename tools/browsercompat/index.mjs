@@ -18,11 +18,19 @@
 // too, so that a fallback nobody needs anymore does not quietly stay in the code.
 //
 // Two fallbacks are recognised without being marked, because CSS has them built in: asking
-// with @supports, and declaring the same property more than once - in either order, and
-// counting the vendor prefixed spelling as the same property - so that the cascade leaves
-// every browser with a declaration it understands.
+// with @supports for the very feature that is used, and declaring the same property more than
+// once - counting the vendor prefixed spelling as the same property - so that the cascade
+// leaves every browser with a declaration it understands. Under one property name the fallback
+// has to come first, or it wins everywhere and the newer declaration is dead; the prefixed
+// spelling is a name of its own and may stand on either side.
+//
+// What it reads is client/, plus the two dependencies that are served to the browser as they
+// are: dompurify (inlined into the bundle) and fflate (loaded from /scripts/fflate). Those are
+// minified, so only their syntax is looked at - see scanJS - which is what says the language
+// level they were built to. Whether a global they call is old enough is not checked and stays
+// a question for whoever bumps them.
 
-import { readdirSync, readFileSync, statSync } from 'fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { join, sep } from 'path';
 
 import { scanCSS } from './css.mjs';
@@ -70,16 +78,22 @@ export function checkSource({ path, source, lookup, exceptions = [] }) {
   const findings = [];
   const seen = new Set();
   const groups = new Map();
-  const missingPerDeclaration = new Map();
+  const declarations = new Map();
+
+  // a dependency comes minified, so there are no names in it worth looking up - only syntax
+  const syntaxOnly = path.startsWith('node_modules/');
 
   for(const block of blocks(path, source)) {
-    for(const candidate of block.scan(block.text, { startLine: block.startLine, globalPath: lookup.globalPath })) {
+    for(const candidate of block.scan(block.text, { startLine: block.startLine, globalPath: lookup.globalPath, syntaxOnly })) {
       if(candidate.group) {
         if(!groups.has(candidate.group))
           groups.set(candidate.group, new Set());
         groups.get(candidate.group).add(candidate.declaration);
-        if(!missingPerDeclaration.has(candidate.declaration))
-          missingPerDeclaration.set(candidate.declaration, new Set());
+        if(!declarations.has(candidate.declaration))
+          declarations.set(candidate.declaration, {
+            property: candidate.property, order: candidate.order, line: candidate.line,
+            source: candidate.source, prefixedValue: candidate.prefixedValue, missing: new Set()
+          });
       }
       if(!candidate.feature)
         continue;
@@ -87,7 +101,7 @@ export function checkSource({ path, source, lookup, exceptions = [] }) {
       if(!missing)
         continue;
       for(const target of missing.missing)
-        missingPerDeclaration.get(candidate.declaration)?.add(target.id);
+        declarations.get(candidate.declaration)?.missing.add(target.id);
       const key = `${missing.path}:${candidate.line}`;
       if(seen.has(key))
         continue;
@@ -100,6 +114,7 @@ export function checkSource({ path, source, lookup, exceptions = [] }) {
         mdn: missing.mdn,
         source: candidate.source,
         group: candidate.group,
+        declaration: candidate.declaration,
         guardedBy: candidate.guardedBy
       });
     }
@@ -110,9 +125,20 @@ export function checkSource({ path, source, lookup, exceptions = [] }) {
     // declares the same property more than once - image-rendering: crisp-edges next to
     // image-rendering: pixelated, or a property next to its vendor prefixed spelling - is
     // covered as soon as every browser we support understands one of them.
-    const alternatives = [ ...groups.get(finding.group) || [] ].map(declaration => missingPerDeclaration.get(declaration));
-    if(!finding.guardedBy && alternatives.length > 1 && !lookup.targets.some(target => alternatives.every(missing => missing.has(target.id))))
-      finding.guardedBy = 'the other declarations of the same property in the same rule';
+    const group = [ ...groups.get(finding.group) || [] ].map(id => declarations.get(id));
+    const self = declarations.get(finding.declaration);
+    // ... as long as the fallback comes first. Under the same property name, a declaration
+    // that every browser understands takes the cascade away from every earlier one, so it is
+    // not a fallback for them, it replaces them - on new browsers as much as on old ones.
+    // Two different property names (the vendor prefixed spelling) do not do that to each other.
+    const overridden = self && group.find(other =>
+      other.property == self.property && other.order > self.order && !other.missing.size && !other.prefixedValue);
+    if(!finding.guardedBy && group.length > 1 && !lookup.targets.some(target => group.every(other => other.missing.has(target.id)))) {
+      if(overridden)
+        finding.overriddenBy = overridden;
+      else
+        finding.guardedBy = 'the other declarations of the same property in the same rule';
+    }
 
     const annotation = annotations.find(a => excuses(a, finding));
     const exception = exceptions.find(e => excuses({ ...e, scope: 'file' }, finding));
@@ -166,6 +192,16 @@ export function clientFiles(root = '.', directory = 'client') {
   walk(directory);
   // custom.css is whatever the person running the server put there, not something we ship
   return files.filter(file => file != 'client/css/custom.css');
+}
+
+// The dependencies that reach the browser unchanged: dompurify is inlined into the bundle by
+// server/minify.mjs, fflate is served from node_modules as /scripts/fflate. They are part of
+// what the browser has to run, so a bump that raises their language level has to show up here.
+export function bundledFiles(root = '.') {
+  return [
+    'node_modules/dompurify/dist/purify.js',
+    'node_modules/fflate/umd/index.js'
+  ].filter(file => existsSync(join(root, file)));
 }
 
 export function describeTarget(target) {

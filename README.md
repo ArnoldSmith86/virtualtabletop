@@ -117,9 +117,9 @@ If you want to contribute to virtualtabletop.io development, please read [Helpin
 
 There is no build step: the JavaScript and CSS that are written here are the ones the browser gets, so the features used in the source are the support line. That line is written down as the `browserslist` key in `package.json` — currently **Chrome/Edge 88, Firefox 79, Safari 14.1 (iOS 14.5), Samsung Internet 15**, roughly spring 2021.
 
-`npm run browsercompat` checks the client against it, and the *Browser compatibility* workflow runs the same check on every pull request. It reads the browser support data from [@mdn/browser-compat-data](https://github.com/mdn/browser-compat-data) and reports every at-rule, selector, property, value, global, built-in and syntax construct that is newer than the oldest browser in the key.
+`npm run browsercompat` checks the client against it, and the *Browser compatibility* workflow runs the same check on every pull request. It reads the browser support data from [@mdn/browser-compat-data](https://github.com/mdn/browser-compat-data) and reports every at-rule, selector, property, value, global, built-in and syntax construct that is newer than the oldest browser in the key. The two dependencies that reach the browser as they are — dompurify and fflate — are checked too, but only for the syntax they were built to: names say nothing useful once they are minified.
 
-Newer features are still fine where they degrade or where something stands in for them. Declaring a property twice (`overflow: hidden; overflow: clip`) or next to its vendor prefixed spelling, and asking with `@supports`, are recognised as such by themselves. Anything else says so where it is used:
+Newer features are still fine where they degrade or where something stands in for them. Two of those the check recognises by itself: asking with `@supports` for the very feature that is then used, and declaring a property twice — `overflow: hidden; overflow: clip`, in that order, because the browser keeps the last declaration it understands — or next to its vendor prefixed spelling, which is a property name of its own and may stand on either side. Anything else says so where it is used:
 
 ```css
 /* compat-fallback css.at-rules.container: containerQueryFallback.js applies these blocks by hand where they are dropped */

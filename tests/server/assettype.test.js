@@ -35,6 +35,17 @@ describe('server/assettype.mjs', function() {
     expect(AssetType.contentType(asset([ 0x1a, 0x45, 0xdf, 0xa3 ]))).toEqual('video/webm');
   });
 
+  // an asset is served from our own origin, so image/svg+xml is permission to run script there.
+  // The library's SVGs open in all of these ways; markup that is not an SVG gets no type at all.
+  test('calls an SVG an SVG and other markup nothing', function() {
+    expect(AssetType.contentType(asset([ 0xef, 0xbb, 0xbf ], '<?xml version="1.0"?>\n<!-- a comment -->\n<svg/>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN">\n<svg></svg>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('\n  <svg version="1.1"></svg>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('<html><body><script>alert(1)</script></body></html>'))).toEqual(null);
+    expect(AssetType.contentType(asset('<?xml version="1.0"?><rss><item/></rss>'))).toEqual(null);
+    expect(AssetType.contentType(asset('<html>', ' '.repeat(1100), '<svg></svg>'))).toEqual(null);
+  });
+
   test('says nothing rather than guessing', function() {
     expect(AssetType.contentType(asset([ 0x00, 0x01, 0x02, 0x03 ]))).toEqual(null);
     expect(AssetType.contentType(asset([ 0, 0, 0, 0x20 ], 'ftyp', 'qt  '))).toEqual(null);

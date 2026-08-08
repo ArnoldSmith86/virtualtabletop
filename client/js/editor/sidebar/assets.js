@@ -115,7 +115,10 @@ class AssetsModule extends SidebarModule {
       updateProgress(`Fetching asset ${i+1}/${assets.length}`, (i+1)/assets.length);
       const blob = await (await fetch(assetObj.asset.substr(1))).blob();
       const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
-      files[assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin')] = new Uint8Array(await blob.arrayBuffer());
+      // an asset whose bytes name no type at all is served without a Content-Type, which leaves
+      // blob.type empty - it still belongs in the zip, just without a real extension
+      const extension = (blob.type.match(/[^\/]+$/) || [ 'bin' ])[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin');
+      files[`${assetFileName}.${extension}`] = new Uint8Array(await blob.arrayBuffer());
     }
 
     updateProgress('Building file...');

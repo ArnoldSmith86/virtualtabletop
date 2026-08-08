@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 
 import { scanCSS } from '../tools/browsercompat/css.mjs';
-import { blankNonCode, scanJS } from '../tools/browsercompat/js.mjs';
-import { checkFiles, checkSource, clientFiles, collectAnnotations, describeTarget } from '../tools/browsercompat/index.mjs';
+import { blankNonCode, scanJS, syntax } from '../tools/browsercompat/js.mjs';
+import { bundledFiles, checkFiles, checkSource, clientFiles, collectAnnotations, describeTarget } from '../tools/browsercompat/index.mjs';
 import { compareVersions, createLookup, loadCompatData, resolveTargets } from '../tools/browsercompat/support.mjs';
 import exceptions from '../tools/browsercompat/exceptions.mjs';
 
@@ -121,6 +121,16 @@ describe('the CSS scanner', () => {
     expect(found.find(candidate => candidate.feature == 'css.types.color.color-mix').guardedBy).toMatch('@supports');
   });
 
+  // it excuses the feature the condition tests and nothing else: asking whether width works
+  // says nothing about whether fit-content does, and neither does asking about another property
+  test('only marks the feature the @supports condition actually asks about', () => {
+    const guard = source => scanCSS(source).find(candidate => candidate.feature == 'css.properties.width.fit-content')?.guardedBy;
+    expect(guard('@supports (width: fit-content) { .a { width: fit-content } }')).toMatch('@supports');
+    expect(guard('@supports (width: 1px) { .a { width: fit-content } }')).toBe(undefined);
+    expect(guard('@supports (height: fit-content) { .a { width: fit-content } }')).toBe(undefined);
+    expect(guard('@supports not (width: fit-content) { .a { width: fit-content } }')).toBe(undefined);
+  });
+
   test('puts every spelling of a property in one group', () => {
     const found = scanCSS('.a { -webkit-appearance: none; appearance: none }');
     const groups = new Set(found.filter(candidate => candidate.group).map(candidate => candidate.group));
@@ -171,6 +181,25 @@ describe('the JavaScript scanner', () => {
   test('names the syntax a browser would refuse to parse', () => {
     expect(features(scanJS('a ??= b;'))).toContain('javascript.operators.nullish_coalescing_assignment');
     expect(features(scanJS('class A { #x = 1 }'))).toContain('javascript.classes.private_class_fields');
+  });
+
+  // a path bcd does not have reports nothing, which is indistinguishable from a feature every
+  // browser has - so the syntax table has to be checked against the data, not just written
+  test('names its syntax the way the compatibility data does', () => {
+    const data = loadCompatData();
+    const unknown = syntax.filter(({ path }) => !createLookup(data, targets).has(path));
+    expect(unknown.map(entry => entry.path)).toEqual([]);
+  });
+
+  // the dependencies that reach the browser are minified: their names say nothing (fflate calls
+  // Error.captureStackTrace behind a check for it), while their syntax says what they were built to
+  test('looks at nothing but syntax in a minified dependency', () => {
+    const source = 'try { Error.captureStackTrace(e) } catch {}\nconst a = b?.c;';
+    expect(features(scanJS(source, { globalPath: lookup.globalPath, syntaxOnly: true }))).toEqual([
+      'javascript.operators.optional_chaining',
+      'javascript.statements.try_catch.optional_catch_binding'
+    ]);
+    expect(features(scanJS(source, { globalPath: lookup.globalPath }))).toContain('javascript.builtins.Error.captureStackTrace');
   });
 });
 
@@ -229,11 +258,29 @@ describe('the fallbacks CSS has itself', () => {
 
   test('takes a second declaration of the same property for one', () => {
     expect(check('.a { overflow: hidden; overflow: clip }').every(finding => finding.status != 'unsupported')).toBe(true);
-    expect(check('.a { overflow: clip; overflow: hidden }').every(finding => finding.status != 'unsupported')).toBe(true);
+  });
+
+  // the browser keeps the last declaration it understands, so the fallback has to come first
+  test('does not take one that comes after and wins everywhere', () => {
+    const reported = check('.a { overflow: clip; overflow: hidden }').filter(finding => finding.status == 'unsupported');
+    expect(reported.map(finding => finding.feature)).toEqual([ 'css.properties.overflow.clip' ]);
+    expect(reported[0].overriddenBy.source).toBe('overflow: hidden');
   });
 
   test('takes the vendor prefixed spelling next to it for one', () => {
     expect(check('.a { -webkit-appearance: none; appearance: none }').every(finding => finding.status != 'unsupported')).toBe(true);
+  });
+
+  // a different property name, so both are kept and each browser applies the one it knows -
+  // unlike two declarations of one property, that works whichever way round they are written
+  test('takes it in either order, because it is a property of its own', () => {
+    expect(check('.a { appearance: none; -webkit-appearance: none }').every(finding => finding.status != 'unsupported')).toBe(true);
+  });
+
+  // ... and the same goes for a prefixed spelling in the value: bcd knows no -moz-fit-content,
+  // so "nothing missing" on that declaration means nothing was looked up, not that it is safe
+  test('does not let a prefixed value it cannot look up override anything', () => {
+    expect(check('.a { overflow: clip; overflow: -moz-clip }').every(finding => finding.status != 'unsupported')).toBe(true);
   });
 
   test('needs the declarations to cover every browser between them', () => {
@@ -267,7 +314,7 @@ describe('the client we serve', () => {
     expect(untestable).toEqual([]);
 
     const { findings, stale } = checkFiles({
-      files: clientFiles(),
+      files: [ ...clientFiles(), ...bundledFiles() ],
       lookup: createLookup(loadCompatData(), targets),
       exceptions
     });

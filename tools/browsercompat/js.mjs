@@ -34,7 +34,10 @@ const globalObjects = {
   visualViewport: 'VisualViewport'
 };
 
-const syntax = [
+// Every path in here has to be one bcd knows: a path that resolves to nothing reports nothing,
+// which looks exactly like a feature that is supported everywhere (tests/browsercompat.test.js
+// checks them for that reason - both of these were spelled the way bcd used to spell them).
+export const syntax = [
   { pattern: /\?\./, path: 'javascript.operators.optional_chaining' },
   { pattern: /\?\?=/, path: 'javascript.operators.nullish_coalescing_assignment' },
   { pattern: /\?\?[^=]/, path: 'javascript.operators.nullish_coalescing' },
@@ -42,10 +45,10 @@ const syntax = [
   { pattern: /&&=/, path: 'javascript.operators.logical_and_assignment' },
   { pattern: /(^|[^\w$.])#[A-Za-z_$][\w$]*/, path: 'javascript.classes.private_class_fields' },
   { pattern: /\bfor\s+await\b/, path: 'javascript.statements.for_await_of' },
-  { pattern: /\bstatic\s*{/, path: 'javascript.classes.static_initialization_blocks' },
+  { pattern: /\bstatic\s*{/, path: 'javascript.classes.static.initialization_blocks' },
   { pattern: /\bcatch\s*{/, path: 'javascript.statements.try_catch.optional_catch_binding' },
   { pattern: /\.{3}[A-Za-z_$[{]/, path: 'javascript.operators.spread' },
-  { pattern: /\bimport\s*\(/, path: 'javascript.statements.import.dynamic_import' }
+  { pattern: /\bimport\s*\(/, path: 'javascript.operators.import' }
 ];
 
 // How far a regular expression literal at the start of this text reaches, or null if it turns
@@ -136,7 +139,10 @@ function lineIndex(text) {
   };
 }
 
-export function scanJS(text, { startLine = 1, globalPath = () => null } = {}) {
+// syntaxOnly leaves out everything that goes by a name: on minified code the mangled names make
+// the lookups above guess wrong far more often than right, while syntax survives minification
+// unchanged - which is exactly what says which language level a bundled dependency was built to.
+export function scanJS(text, { startLine = 1, globalPath = () => null, syntaxOnly = false } = {}) {
   const code = blankNonCode(text);
   const lineOf = lineIndex(code);
   const local = locallyDeclared(code);
@@ -147,7 +153,7 @@ export function scanJS(text, { startLine = 1, globalPath = () => null } = {}) {
   };
   const add = (feature, offset) => found.push({ feature, line: startLine + lineOf(offset), source: sourceAt(offset) });
 
-  for(const match of code.matchAll(/(^|[^\w$.])([A-Za-z_$][\w$]*)\s*\??\.\s*([A-Za-z_$][\w$]*)/g)) {
+  for(const match of syntaxOnly ? [] : code.matchAll(/(^|[^\w$.])([A-Za-z_$][\w$]*)\s*\??\.\s*([A-Za-z_$][\w$]*)/g)) {
     const offset = match.index + match[1].length;
     if(local.has(match[2]))
       continue;
@@ -159,7 +165,7 @@ export function scanJS(text, { startLine = 1, globalPath = () => null } = {}) {
       add(globalPath(match[3]) || `api.Window.${match[3]}`, offset);
   }
 
-  for(const match of code.matchAll(/(^|[^\w$.])([A-Za-z_$][\w$]*)/g))
+  for(const match of syntaxOnly ? [] : code.matchAll(/(^|[^\w$.])([A-Za-z_$][\w$]*)/g))
     if(!local.has(match[2]) && globalPath(match[2]))
       add(globalPath(match[2]), match.index + match[1].length);
 
