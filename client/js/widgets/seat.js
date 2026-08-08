@@ -1,3 +1,6 @@
+import { Widget } from './widget.js';
+import { playerName, playerColor } from '../overlays/widget.js';
+
 class Seat extends Widget {
   constructor(id) {
     super(id);
@@ -20,6 +23,7 @@ class Seat extends Widget {
 
       color: '#999999',
       colorEmpty: '#999999',
+      glowColor: null,
       layer: -1,
       borderRadius: 5
     });
@@ -81,23 +85,73 @@ class Seat extends Widget {
     if(this.get('color'))
       css += '; --color:' + this.get('color');
 
+    if(this.get('glowColor'))
+      css += '; --glowColor:' + this.get('glowColor');
+
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
     p.push('color');
+    p.push('glowColor');
     return p;
   }
 
-  //need to add a condition here to change the turn if the turn is in a seat that is empty
   async setPlayer() {
-    if(this.get('player') == '') {
-      await this.set('player', playerName);
-      await this.set('color', playerColor);
-    } else {
-      await this.set('player', null);
-      await this.set('color', this.get('colorEmpty'));
+
+    const seatColors = ["#000000","#dddddd","#f44336","#f06292","#9c27b0","#3f51b5","#1976d2","#00bcd4",
+      "#009688","#4caf50","#8bc34a","#cddc39","#ffeb3b","#ffc107","#ff9800","#bf360c","#795548","#607d8b"];
+    const defaultColorOption = seatColors.includes(playerColor) ? playerColor : '#dddddd';
+    const seatOverlayEmpty = {
+      func: 'INPUT',
+      header: 'Enter your name and choice of player color.',
+      fields: [
+        {type: 'string', label: 'Your Name:', variable: 'name', value: playerName},
+        {type: 'palette', label: 'Your Color:', colors: seatColors, variable: 'color', value: defaultColorOption}
+      ],
+    };
+    const seatOverlaySelf = {
+      func: 'INPUT',
+      header: 'Enter your name and choice of player color.',
+      fields: [
+        {type: 'string', label: 'Your Name:', variable: 'name', value: playerName},
+        {type: 'palette', label: 'Your Color:', colors: seatColors, variable: 'color', value: defaultColorOption},
+        {type: 'subtitle', text: 'All done?', css: 'background-color: var(--VTTblue);color:white'},
+        {type: 'checkbox', label: 'Stand up from seat', variable: 'leaveSeat', value: false},
+      ],
+    };
+    const seatOverlayOther = {
+      func: 'INPUT',
+      header: 'Do you want to remove ' + this.get('player') + ' from this seat?',
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Remove',
+      fields: []
+    };
+
+    try {
+      const player = this.get('player');
+      const overlay = player == '' ? seatOverlayEmpty : player == playerName ? seatOverlaySelf : seatOverlayOther;
+    
+      const seatChoices = await this.showInputOverlay(overlay);
+    
+      if (seatChoices) {
+        const { name, color, leaveSeat } = seatChoices.variables;
+        if (overlay == seatOverlayOther || leaveSeat) {
+          this.set('player', null);
+          this.set('color', this.get('colorEmpty'));
+        } else {
+          this.set('player', name);
+          this.set('color', color);
+          this.set('glowColor', contrastAnyColor(color, 0.3));
+          localStorage.setItem('playerName', name);
+          localStorage.setItem('playerColor', color);
+          playerName = name;
+          playerColor = color;
+          // The playerOverlay div is not updating with the new color
+        }
+      }
+    } catch(e) {
     }
   }
 
