@@ -178,16 +178,20 @@ function selectionChanged(previousSelection, newSelection) {
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
 
+  // selecting a child of a smart clone selects the clone itself, so compare
+  // against what actually ends up selected rather than what was asked for
+  const widgetsToSelect = smartCloneProcessSelection(newSelectedWidgets);
+
   // The sound library is an overlay that outlives the editor it was opened from
   // (it does not cover the sidebar, and a widget can also be selected without
   // clicking in the room): whoever opened it edits the widget that was shown
   // then, so a sound picked in it now would go to a widget that is no longer on
   // screen. A widget picker is not affected - it restores the selection it
   // started from after every pick, which is not the editor moving on.
-  if(!isWidgetPickerActive() && selectionChanged(previousSelectedWidgets, newSelectedWidgets))
+  if(!isWidgetPickerActive() && selectionChanged(previousSelectedWidgets, widgetsToSelect))
     cancelAudioPicker();
 
-  selectedWidgets = newSelectedWidgets;
+  selectedWidgets = widgetsToSelect;
 
   for(const widget of previousSelectedWidgets)
     widget.setHighlighted(false);
@@ -228,9 +232,14 @@ export function editorReceiveDelta(delta) {
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
+  // the smart clone source map points at widget objects of the state that was
+  // just replaced, so it is rebuilt from the new one
+  smartCloneInit();
+
   // A new state replaces every widget in the room, so anything still selected
   // points at a widget object that is gone by the time this runs. Clearing the
   // selection first is the same notification the modules got before - just

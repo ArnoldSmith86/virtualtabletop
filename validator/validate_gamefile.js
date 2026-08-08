@@ -108,7 +108,8 @@ const COMMON_PROPERTIES = {
     animatePropertyChange: 'any',
     resetProperties: 'object',
     clonedFrom: 'string',
-    editorGroup: 'boolean'
+    editorGroup: 'boolean',
+    editorSmartClone: 'object'
 };
 
 const WIDGET_PROPERTIES = {

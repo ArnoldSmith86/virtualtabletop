@@ -1689,42 +1689,56 @@ class PropertiesModule extends SidebarModule {
       this.inputUpdaters[widget.id] = {};
     this.otherPropertiesHeader = null;
 
-    if(newSelection.length > 1) {
-      this.renderForMulti(newSelection);
-    } else if(newSelection.length == 1) {
-      const widget = newSelection[0];
-      switch(widget.get('type')) {
-        case 'button':     this.renderForButton(widget);     break;
-        case 'canvas':     this.renderForCanvas(widget);     break;
-        case 'card':       this.renderForCard(widget);       break;
-        case 'deck':       this.renderForDeck(widget);       break;
-        case 'dice':       this.renderForDice(widget);       break;
-        case 'holder':     this.renderForHolder(widget);     break;
-        case 'label':      this.renderForLabel(widget);      break;
-        case 'line':       this.renderForLine(widget);       break;
-        case 'pile':       this.renderForPile(widget);       break;
-        case 'scoreboard': this.renderForScoreboard(widget); break;
-        case 'seat':       this.renderForSeat(widget);       break;
-        case 'spinner':    this.renderForSpinner(widget);    break;
-        case 'timer':      this.renderForTimer(widget);      break;
+    // A smart clone mirrors its source, so anything edited on it here would be
+    // overwritten by the next update: it gets the clone options and the unlink
+    // button instead of the widget editor - one panel each, because a smart
+    // clone drag ends with all of the new clones selected.
+    const smartClones = newSelection.filter(widget=>widget.get('editorSmartClone'));
+    const editableWidgets = newSelection.filter(widget=>!widget.get('editorSmartClone'));
+    for(const clone of smartClones)
+      this.renderForSmartClone(clone);
 
-        default:
-          this.renderForBasic(widget);
-          break;
-      }
-
-      // every widget can have routines, so the section is always there - piles
-      // are the exception because they are temporary and not editable, and a
-      // deck hands the module over to the deck editor, leaving no DOM to render
-      // into (its routines are edited there)
-      if(widget.get('type') != 'pile' && this.moduleDOM)
-        this.renderEvents(widget);
-    } else {
+    if(editableWidgets.length > 1) {
+      this.renderForMulti(editableWidgets);
+    } else if(editableWidgets.length == 1) {
+      this.renderForSingle(editableWidgets[0]);
+    } else if(!smartClones.length) {
       this.addDeck();
     }
 
     if(keepScrollTop !== null)
       this.moduleDOM.scrollTop = keepScrollTop;
+  }
+
+  // The editor of one widget: its type-specific panel and the routines every
+  // widget can have.
+  renderForSingle(widget) {
+    switch(widget.get('type')) {
+      case 'button':     this.renderForButton(widget);     break;
+      case 'canvas':     this.renderForCanvas(widget);     break;
+      case 'card':       this.renderForCard(widget);       break;
+      case 'deck':       this.renderForDeck(widget);       break;
+      case 'dice':       this.renderForDice(widget);       break;
+      case 'holder':     this.renderForHolder(widget);     break;
+      case 'label':      this.renderForLabel(widget);      break;
+      case 'line':       this.renderForLine(widget);       break;
+      case 'pile':       this.renderForPile(widget);       break;
+      case 'scoreboard': this.renderForScoreboard(widget); break;
+      case 'seat':       this.renderForSeat(widget);       break;
+      case 'spinner':    this.renderForSpinner(widget);    break;
+      case 'timer':      this.renderForTimer(widget);      break;
+
+      default:
+        this.renderForBasic(widget);
+        break;
+    }
+
+    // every widget can have routines, so the section is always there - piles
+    // are the exception because they are temporary and not editable, and a
+    // deck hands the module over to the deck editor, leaving no DOM to render
+    // into (its routines are edited there)
+    if(widget.get('type') != 'pile' && this.moduleDOM)
+      this.renderEvents(widget);
   }
 
   // Merged editor for a multi-widget selection.
@@ -10207,6 +10221,27 @@ class PropertiesModule extends SidebarModule {
 
     this.renderAppearanceSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'options', 'angle', 'value' ]);
+  }
+
+  // A widget created with the smart clone tool follows its source, so instead of
+  // the normal editor it offers the clone options and the way out of the link.
+  renderForSmartClone(widget) {
+    this.addHeader(`Smart Clone ${widget.id}`);
+    const cloneDiv = div(this.moduleDOM, '', `
+      <p>This widget was created using the smart clone tool. This means that the editor will keep it and its children updated when you change the source.</p>
+      <p>Click the button below to unlink this widget from its source if you want to make changes to its children.</p>
+      <label><input type=checkbox class=flipX> Flip X</label><br>
+      <label><input type=checkbox class=flipY> Flip Y</label><br>
+      <label><input type=checkbox class=includeCards> Include cards without their deck</label><br>
+      <button icon=link_off>Unlink</button>
+    `);
+    $('.flipX', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipX: e.target.checked }));
+    $('.flipY', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipY: e.target.checked }));
+    $('.includeCards', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { includeCards: e.target.checked }));
+    $('.flipX', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipX;
+    $('.flipY', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipY;
+    $('.includeCards', cloneDiv).checked = (widget.get('editorSmartClone') || {}).includeCards;
+    $('[icon=link_off]', cloneDiv).onclick = e=>smartCloneUnlink(widget.id);
   }
 
   /**
