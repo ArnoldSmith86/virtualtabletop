@@ -22,6 +22,14 @@ document.addEventListener('mousedown', e=>{
   popupMouseDownTarget = e.target;
 }, true);
 
+// The lists inside a popup that scroll on their own anyway (the widget ids, the
+// property names, the operations). Where the popup does not fit the room it has,
+// they are what gives way - see fitScrollAreas.
+const popupScrollAreas = '.widgetPickerList, .popup-property-list, .popup-operation-list';
+// three rows or so: a list shorter than that shows less than it takes to scroll
+// it, so the popup scrolls after all instead of shrinking it any further
+const popupScrollAreaMinHeight = 66;
+
 class Popup {
   constructor(source) {
     this.source = source;
@@ -83,6 +91,8 @@ class Popup {
   hide() {
     if(openPopups.indexOf(this) != -1)
       openPopups.splice(openPopups.indexOf(this), 1);
+    if(this.source && this.source.classList)
+      this.source.classList.remove('popupSource');
     // a popup opened from a button inside this one (the info tip of a section
     // title) belongs to it: every popup is appended to #editor rather than to
     // the one it came from, so without this it stays on screen anchored to an
@@ -94,6 +104,10 @@ class Popup {
     if(this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = null;
+    }
+    if(this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
     }
     document.removeEventListener('click', this.boundOnOutsideClick);
     document.removeEventListener('keydown', this.boundOnKeyDown, true);
@@ -130,15 +144,99 @@ class Popup {
     return strips[0] || limits; // no strip is usable: covering the room beats being unusable
   }
 
+  // Whether the control the popup hangs off has to stay readable while it is
+  // open. It does where the popup edits that control - a routine chip is the
+  // sentence the parameter belongs to. An info tip is not about its own button:
+  // that button is a 14px glyph with nothing to read on it, while the tip is
+  // prose that wants every line of height it can get.
+  avoidsSource() {
+    return true;
+  }
+
+  // The popup is the control it hangs off, opened up: a parameter popup that
+  // lands on its own chip hides the sentence it is about (on a phone it swallows
+  // the whole routine), and the chip going away with the popup is what says the
+  // editor has moved on. So the popup keeps to the strip above or below that
+  // control - the roomier of the two - as long as one of them can hold a popup
+  // at all; where neither can, being usable still beats being clear of it.
+  limitsAroundSource(limits) {
+    if(!this.avoidsSource() || !this.source || !this.source.isConnected)
+      return limits;
+    const source = this.source.getBoundingClientRect();
+    if(!source.width && !source.height)
+      return limits;
+    const above = Object.assign({}, limits, { bottom: Math.min(limits.bottom, source.top) });
+    const below = Object.assign({}, limits, { top: Math.max(limits.top, source.bottom) });
+    const height = strip=>strip.bottom-strip.top;
+    const strip = height(below) >= height(above) ? below : above;
+    return height(strip) >= 240 ? strip : limits;
+  }
+
+  // A popup that is taller than the room it has scrolls, which puts whatever is
+  // at its bottom out of sight with nothing saying it is there: the button a
+  // section is for is the last thing in it, so "Use these widgets" is exactly
+  // what a too-long list of widget ids pushes below the fold. The lists in a
+  // popup scroll on their own anyway, so the height that is missing is taken
+  // from them rather than from the popup - the list gets shorter, everything
+  // around it stays where it can be seen and reached.
+  fitScrollAreas() {
+    const lists = [ ...$a(popupScrollAreas, this.domElement) ].filter(list=>list.offsetParent !== null);
+    if(!lists.length)
+      return;
+    // start from their full height every time: what does not fit changes with
+    // the section that is open, the search term and the size of the window
+    for(const list of lists)
+      list.style.maxHeight = '';
+    // shrinking a list reflows what is around it, so ask again rather than
+    // assume the popup got shorter by exactly as much as the list did
+    for(let pass=0; pass<3; ++pass) {
+      let missing = this.domElement.scrollHeight - this.domElement.clientHeight;
+      if(missing <= 0)
+        break;
+      let shrank = false;
+      for(const list of lists) {
+        if(missing <= 0)
+          break;
+        const height = list.getBoundingClientRect().height;
+        const shrunk = Math.max(popupScrollAreaMinHeight, height-missing);
+        if(shrunk >= height)
+          continue;
+        list.style.maxHeight = `${shrunk}px`;
+        missing -= height-shrunk;
+        shrank = true;
+      }
+      if(!shrank) // nothing left to give: the popup scrolls after all
+        break;
+    }
+    // the mark that says a list is cut off (a rule and a fade below its last
+    // row) is set when the list is filled, before it is known how tall it may be
+    for(const list of lists)
+      if(list.classList.contains('popup-property-list'))
+        list.classList.toggle('popup-property-list-complete', list.scrollHeight <= list.clientHeight);
+  }
+
   moveIntoView() {
-    const limits = this.placementLimits();
+    const limits = this.limitsAroundSource(this.placementLimits());
     // shrink into the available strip instead of hanging out of it
     this.domElement.style.maxWidth = `${Math.min(window.innerWidth/2, limits.right-limits.left-20)}px`;
     this.domElement.style.maxHeight = `${Math.min(window.innerHeight-20, limits.bottom-limits.top-20)}px`;
+    const wanted = this.domElement.getBoundingClientRect(); // where it wants to be
+    // How wide the popup lays itself out is limited by how far its left edge is
+    // from the right edge of the screen (it is fixed, with no right), so its
+    // width where it currently sits is not the width it will have where it is
+    // about to be put - and moving it would change the width again, in circles.
+    // Measured at the left end of the room it may use, it is the width it keeps
+    // at every position that fits it, which is every position placed below.
+    this.domElement.style.left = `${limits.left+10}px`;
+    // at the width it keeps as well: how tall the content is depends on it
+    this.fitScrollAreas();
     const rect = this.domElement.getBoundingClientRect();
     const fit = (position, size, from, to)=>Math.min(Math.max(position, from+10), Math.max(from+10, to-10-size));
-    this.domElement.style.left = `${fit(rect.left, rect.width, limits.left, limits.right)}px`;
-    this.domElement.style.top = `${fit(rect.top, rect.height, limits.top, limits.bottom)}px`;
+    this.domElement.style.left = `${fit(wanted.left, rect.width, limits.left, limits.right)}px`;
+    this.domElement.style.top = `${fit(wanted.top, rect.height, limits.top, limits.bottom)}px`;
+    // the size it was placed with, so that a later resize is only followed when
+    // the content really changed
+    this.placedSize = { width: rect.width, height: rect.height };
   }
 
   notifyChangeListeners(value) {
@@ -225,6 +323,11 @@ class Popup {
 
   show() {
     const sourceRect = this.source.getBoundingClientRect();
+    // which control this popup belongs to, in that control's own color: the
+    // outline appearing and going away is what ties the two together, in
+    // particular when the editor moves on and takes the popup with it
+    if(this.source.classList)
+      this.source.classList.add('popupSource');
     $('#editor').append(this.domElement);
     this.domElement.style.left = `${sourceRect.left}px`;
     this.domElement.style.top = `${sourceRect.bottom}px`;
@@ -246,7 +349,106 @@ class Popup {
       this.mutationObserver = new MutationObserver(_=>this.moveIntoView());
       this.mutationObserver.observe(this.domElement, { childList: true, subtree: true });
     }
+    // The popup also changes size without its content changing - a picker lays
+    // itself out, a swatch grid rewraps once the width is clamped - and the
+    // position computed for the size before that hangs it over the module button
+    // strip or over the control it belongs to. Only a real change of size is
+    // followed, so moveIntoView's own writes (which leave the size as it found
+    // it) cannot feed themselves back in here.
+    if(typeof ResizeObserver != 'undefined' && !this.resizeObserver) {
+      this.resizeObserver = new ResizeObserver(_=>{
+        const rect = this.domElement.getBoundingClientRect();
+        if(!this.placedSize || Math.abs(rect.width-this.placedSize.width) >= 1 || Math.abs(rect.height-this.placedSize.height) >= 1)
+          this.moveIntoView();
+      });
+      this.resizeObserver.observe(this.domElement);
+    }
   }
+}
+
+// Every popup of the editor belongs to the widget that is being edited: it hangs
+// off a control (a chip of a routine, the button that adds one) that is thrown
+// away as soon as the editor moves on to another widget, so it would be left
+// floating over the new one with nothing behind it. A click outside dismisses a
+// popup, but a click that selects another widget in the room is not one for the
+// popups that read the room - the widget pickers take the clicks in there - and
+// a selection also changes without any click at all: deleting the widget, an
+// undo, or a new state arriving from the server.
+// Closing is not always a pure dismissal: the pickers that only write their
+// parameter when the popup goes away (color, icon, sound, key/value and string
+// lists) apply what was picked, exactly as they do on a click outside. That
+// write goes to the widget the popup belonged to, which is why this runs after
+// the editor has moved on rather than in the middle of it - and why it is said
+// out loud: the widget that was written to is not on screen any more, so "it was
+// saved" and "I lost it" would look exactly the same.
+function closeEditorPopups() {
+  const applied = [];
+  for(const popup of [ ...openPopups ]) {
+    popup.hide();
+    if(popup.appliedOnHide) {
+      applied.push(popup.appliedOnHide);
+      popup.appliedOnHide = null;
+    }
+  }
+  closePropertyInfoPopup();
+  for(const write of applied)
+    editorNote(writeWords(write));
+}
+
+// Which of the widgets a write goes to are still there to take it, told apart
+// exactly the way the sidebar tells them apart before writing (widgetStillExists
+// in properties.js - the jest harness loads this file without it, so fall back
+// to the identity half of that test there).
+function writtenWidgets(widget) {
+  const exists = typeof widgetStillExists == 'function'
+    ? widgetStillExists
+    : w=>!!w && !w.isBeingRemoved && widgets.get(w.id) === w;
+  const targets = !widget ? [] : (widget.isMulti ? widget.widgets : [ widget ]);
+  return { kept: targets.filter(exists), gone: targets.filter(w=>!exists(w)) };
+}
+
+// What a write that happened off screen reads like. A multi-selection can be
+// half gone, and saying "set" for it would be as wrong as saying "not set": name
+// the widgets it reached and the ones it did not.
+function writeWords(write) {
+  if(!write.goneIDs.length)
+    return `${write.parameter} set to ${write.value} on ${write.widgetID}`;
+  if(!write.keptIDs.length)
+    return `${write.parameter} was not set to ${write.value}: ${write.widgetID} is gone`;
+  return `${write.parameter} set to ${write.value} on ${write.keptIDs.join(', ')}: ${write.goneIDs.join(', ')} is gone`;
+}
+
+// a value in a line of feedback: what was typed for text, the JSON for the rest,
+// cut off where it stops being a line
+function shortValueWords(value) {
+  const text = typeof value == 'string' ? value : JSON.stringify(value);
+  if(typeof text != 'string')
+    return 'nothing';
+  return text.length > 40 ? `${text.slice(0, 39)}…` : text;
+}
+
+// A line of feedback for something the editor did that the user cannot see
+// happening, in the corner of the module panel where the editing is: a write to
+// a widget that has just left the screen, a mode that ended on its own. It says
+// its piece and fades, so it never becomes part of the layout.
+function editorNote(text) {
+  const editor = $('#editor');
+  if(!editor)
+    return;
+  let notes = $('#editorNotes');
+  if(!notes) {
+    notes = div(editor);
+    notes.id = 'editorNotes';
+  }
+  // only the last few, so a burst of them cannot wall off the module panel
+  while(notes.children.length >= 3)
+    notes.firstChild.remove();
+  const note = div(notes, 'editorNote');
+  note.textContent = text;
+  note.title = 'Click to dismiss';
+  note.onclick = _=>note.remove();
+  setTimeout(_=>note.classList.add('editorNoteFading'), 4000);
+  setTimeout(_=>note.remove(), 5000);
 }
 
 // what a tutorial is called in words: the title of the popup it is offered from
@@ -265,6 +467,12 @@ class InfoPopup extends Popup {
     this.tutorialName = tutorialName;
     this.videoFilename = videoFilename;
     this.title = title;
+  }
+
+  // several paragraphs of prose about a 14px "i": covering that button costs
+  // nothing, halving the height the text may use costs a scrollbar
+  avoidsSource() {
+    return false;
   }
 
   show() {
@@ -385,6 +593,36 @@ class RoutinePopup extends Popup {
     if(isWidgetPickerActive(null, routineWidgetPickerKey))
       stopWidgetPicker();
     super.hide();
+  }
+
+  // The pickers that keep what is picked in a working value and write it to the
+  // routine only when the popup goes away: a color is picked by dragging and a
+  // list is edited row by row, so there is no single moment to write on before
+  // that. Closing is that moment however the popup is closed - the close button,
+  // a click outside, or the editor moving on to another widget. That last one is
+  // why the write is remembered here: closeEditorPopups() says it out loud,
+  // because the widget it went to is off screen by then.
+  applyWorkingValueOnHide() {
+    // notifyChangeListeners makes newRoutineValues call hide() again, so guard
+    // against re-entering the notify
+    if(!this.workingChanged || this.applied)
+      return;
+    this.applied = true;
+    const parameter = this.parameterNames[0];
+    const widget = this.widget;
+    // Exactly the test the write itself goes through, so the note cannot claim
+    // a value the sidebar then drops: a pile that is dissolving is still in
+    // widgets under its own id for the three property changes it takes to get
+    // there, and widgetStillExists is the only thing that knows that.
+    const written = writtenWidgets(widget);
+    this.appliedOnHide = {
+      parameter: `${(this.operation && this.operation.func) || 'var'} ${parameter}`,
+      value: shortValueWords(this.workingValue),
+      widgetID: widget && widget.id,
+      keptIDs: written.kept.map(w=>w.id),
+      goneIDs: written.gone.map(w=>w.id)
+    };
+    this.notifyChangeListeners({ [parameter]: this.workingValue });
   }
 
   // the property builder's widget picker needs the room visible while it is open
@@ -1488,11 +1726,7 @@ class RoutineStringListPopup extends RoutinePopup {
   }
 
   hide() {
-    // the same apply-on-close as the pairs list: several entries in one go
-    if(this.workingChanged && !this.applied) {
-      this.applied = true;
-      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
-    }
+    this.applyWorkingValueOnHide(); // several entries in one go
     super.hide();
   }
 
@@ -1602,12 +1836,7 @@ class RoutineKeyValuePopup extends RoutinePopup {
   }
 
   hide() {
-    // the same apply-on-close as the color/icon pickers: notifyChangeListeners
-    // makes newRoutineValues call hide() again, so guard against re-entering it
-    if(this.workingChanged && !this.applied) {
-      this.applied = true;
-      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
-    }
+    this.applyWorkingValueOnHide(); // one row of the pairs at a time
     super.hide();
   }
 
@@ -1796,14 +2025,9 @@ class RoutinePickerPopup extends RoutinePopup {
   }
 
   hide() {
-    // apply the picked value on close (before super.hide()'s cancel listener, so
-    // its resolve(undefined) is ignored once we have resolved with the value).
-    // notifyChangeListeners triggers newRoutineValues to call hide() again, so
-    // guard against re-entering the notify.
-    if(this.workingChanged && !this.applied) {
-      this.applied = true;
-      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
-    }
+    // before super.hide()'s cancel listener, so its resolve(undefined) is
+    // ignored once we have resolved with the value
+    this.applyWorkingValueOnHide();
     super.hide();
   }
 

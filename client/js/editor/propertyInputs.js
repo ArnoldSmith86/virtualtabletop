@@ -392,6 +392,16 @@ function searchImageIndex(query, limit=100) {
 
 let activePropertyInfoPopup = null;
 
+// An info tip hangs off a sidebar control that is thrown away whenever the
+// editor re-renders for another widget, so closeEditorPopups() takes it along
+// with the popups of controls/popup.js. Its own outside-click handler only
+// helps when there is a click - a deleted widget, an undo or a new state
+// arriving change the selection without one.
+function closePropertyInfoPopup() {
+  if(activePropertyInfoPopup)
+    activePropertyInfoPopup();
+}
+
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup
 // opens on hover or click. Hovered popups close when leaving the icon; clicked
