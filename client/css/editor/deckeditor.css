@@ -1419,6 +1419,13 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: pointer;
 }
 
+/* The global button:hover fill (layout.css) is more specific than the rule above, so without this the header
+   turned VTTblueDark on hover while its label stayed --textColor - black on navy, unreadable in light mode.
+   Highlight it with the theme's own lighter shade, which keeps the label readable in both themes. */
+.deckEditorGroupHeader:hover {
+  background: var(--backgroundHighlightColor2);
+}
+
 /* Focus ring like the Edit Widget sidebar's collapsible headers (propertyInputs.css), which this mirrors. */
 .deckEditorGroupHeader:focus-visible {
   outline: 2px solid var(--VTTblue);
