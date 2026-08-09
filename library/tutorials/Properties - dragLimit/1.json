@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1786155956975,
+      "lastUpdate": 1786284307179,
       "showName": false,
       "skill": "",
       "description": "",
@@ -37,7 +37,7 @@
     "width": 800,
     "height": 60,
     "css": "font-size: 60px;text-align: center;",
-    "text": "Drag Limits",
+    "text": "dragLimit - Other Shapes",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -56,7 +56,7 @@
     "clickable": false,
     "layer": -3,
     "z": 10,
-    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a <b>condition</b>: an inequality in x and y - the point of the widget the limit holds - that a drag has to keep true, so the area can be any shape you can write down. Every button below writes one onto the piece and puts it back inside the new area. All of them also set <b>alignX</b> and <b>alignY</b> to 0.5, so the point being limited is the middle of the piece and the shape drawn is exactly where that middle can go."
+    "html": "A rectangle is not always the shape you want. <b>dragLimit</b> also takes a <b>condition</b>: an inequality in x and y. The condition describes the point of the widget that a drag has to keep true. The area can be any shape described by math. Every button below writes one onto the piece and puts it back inside the new area. All of them also set <b>alignX</b> and <b>alignY</b> to 0.5, so the point being limited is the middle of the piece and the shape drawn is exactly where that middle can go. The math is the one <b>var</b> uses. A property is read the way a routine reads it, <b>&#36;{PROPERTY name}</b> for this widget and <b>&#36;{PROPERTY name OF id}</b> for another. Every line has to be a comparison and every line has to be true."
   },
   "language": {
     "id": "language",
@@ -70,7 +70,7 @@
     "clickable": false,
     "layer": -3,
     "z": 10,
-    "html": "The maths is the one <b>var</b> uses, so a formula reads the same in both: + - * / % ^ and brackets, abs, sqrt, hypot, min, max, sin, cos, tan and atan2 in degrees, PI. A property is read the way a routine reads it, &#36;{PROPERTY name} for this widget and &#36;{PROPERTY name OF id} for another. Every line has to be a comparison and every line has to be true; &amp;&amp; and || combine within one line."
+    "html": ""
   },
   "btnsides": {
     "type": "button",
@@ -561,7 +561,7 @@
     "x": 60,
     "y": 730,
     "width": 520,
-    "height": 255,
+    "height": 200,
     "css": "font-size: 18px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
     "text": "\"dragLimit\": {\n  \"alignX\": 0.5, \"alignY\": 0.5,\n  \"condition\": [\n    \"x > 460\", \"x < 1140\",\n    \"y > 350\", \"y < 710\"\n  ]\n}",
     "movable": false,
