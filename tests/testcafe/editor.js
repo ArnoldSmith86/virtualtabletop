@@ -908,34 +908,48 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
   await compareState(t, '3e20074150f78219095df84abeeb74dc');
 });
 
-// The css of an html face object is put into a style element and scoped to a class built from the card's id.
-// Every preview card the editor renders is created without one, so they used to share that class and the last
-// preview rendered restyled all the others - a strip in which every card type wore the last one's colors.
-test('Deck editor: every card type preview keeps its own html face css', async t => {
+// Both the object form of the css property and the css of an html face object are put into a style element
+// and scoped to the widget's id. Every preview card the editor renders is created without one, so they used
+// to share that scope and the last preview rendered restyled all the others - a strip in which every card
+// type wore the last one's colors. The room card with a space in its id covers the other half: an id that is
+// not a valid class name made classList.add() throw, so that card rendered no html face objects at all.
+test('Deck editor: every card type preview keeps its own css', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
     deck: { id: 'deck', type: 'deck', x: 20, y: 20,
-      cardDefaults: { width: 100, height: 150 },
+      cardDefaults: { width: 100, height: 150, css: { default: { 'border-color': '${PROPERTY tint}' } } },
       cardTypes: { red: { tint: '#ff0000' }, green: { tint: '#008000' }, blue: { tint: '#0000ff' } },
       faceTemplates: [ { objects: [] }, { objects: [ {
         type: 'html', x: 0, y: 0, width: 100, height: 150,
         value: '<div>tinted</div>', css: { body: { 'background-color': '${PROPERTY tint}' } }
       } ] } ]
-    }
+    },
+    'my card': { id: 'my card', type: 'card', deck: 'deck', cardType: 'green', x: 300, y: 20, activeFace: 1 }
   });
   await ClientFunction(prepareClient)();
   await setEditorState(null);
 
+  const roomCardColor = ClientFunction(() => {
+    const object = document.querySelector('#w_my_x0020_card .cardFace.active .cardFaceObject');
+    return object && getComputedStyle(object).backgroundColor;
+  });
   const stripColors = ClientFunction(() => {
     const colors = [];
     document.querySelectorAll('#deckEditorStrip .cardFace.active .cardFaceObject').forEach(o=>colors.push(getComputedStyle(o).backgroundColor));
     return colors;
   });
+  const stripBorderColors = ClientFunction(() => {
+    const colors = [];
+    document.querySelectorAll('#deckEditorStrip .card').forEach(c=>colors.push(getComputedStyle(c).borderTopColor));
+    return colors;
+  });
   await t
+    .expect(roomCardColor()).eql('rgb(0, 128, 0)', 'a card whose id is not a valid class name renders its html face object')
     .click('#editButton')
     .click('#w_deck')
     .click('#propertiesOpenDeckEditor')
-    .expect(stripColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own tint')
+    .expect(stripColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own html face object tint')
+    .expect(stripBorderColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own css property tint')
     .pressKey('esc');
 });
 
