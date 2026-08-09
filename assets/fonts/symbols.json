@@ -1,10 +1,10 @@
 {
   "VTT Icons - Cards": {
     "[rotate_card_down_ccw]": [
-    "card",
-    "counterclockwise",
-    "down",
-    "rotate"
+      "card",
+      "counterclockwise",
+      "down",
+      "rotate"
     ],
     "[rotate_card_down_cw]": [
       "card",
@@ -72,7 +72,7 @@
       "group",
       "remove"
     ],
-      "[card]": [
+    "[card]": [
       "card",
       "item",
       "piece"
@@ -117,7 +117,7 @@
       "card",
       "clubs",
       "suit"
-    ] ,
+    ],
     "[card_diamonds]": [
       "card",
       "diamonds",
@@ -133,7 +133,7 @@
       "spades",
       "suit"
     ],
-      "[card_0]": [
+    "[card_0]": [
       "card",
       "number",
       "zero"
@@ -5001,7 +5001,7 @@
     "delapouite/chef-toque": [
       546,
       "cooking hat",
-      "chef\u2019s hat",
+      "chef’s hat",
       "kitchen headgear"
     ],
     "delapouite/chelsea-boot": [
@@ -25784,7 +25784,8 @@
       "plus",
       "social",
       "sweet",
-      "symbol"],
+      "symbol"
+    ],
     "campaign (FILL+NOFILL)": [
       "alert",
       "announcement",
@@ -34391,7 +34392,8 @@
       "measure",
       "metrics",
       "statistics",
-      "tracking"],
+      "tracking"
+    ],
     "flowchart (FILL+NOFILL)": [
       "account",
       "analytics",
@@ -74014,6 +74016,12 @@
       "night",
       "zzz"
     ],
+    "🫩": [
+      "face with bags under eyes",
+      "tired",
+      "sleepy",
+      "exhausted"
+    ],
     "😷": [
       "face_with_medical_mask",
       "face",
@@ -74215,6 +74223,12 @@
       "blush",
       "shy",
       "flattered"
+    ],
+    "🫪": [
+      "distorted face",
+      "surprised",
+      "fluttered",
+      "wide-eyed"
     ],
     "🥺": [
       "pleading_face",
@@ -74733,6 +74747,11 @@
       "anger_symbol",
       "angry",
       "mad"
+    ],
+    "🫯": [
+      "fight cloud",
+      "brawl",
+      "conflict"
     ],
     "💥": [
       "collision",
@@ -76267,6 +76286,12 @@
       "mystical",
       "monster"
     ],
+    "🫈": [
+      "hairy creature",
+      "sasquatch",
+      "bigfoot",
+      "treeman"
+    ],
     "💆": [
       "person_getting_massage",
       "relax"
@@ -76462,6 +76487,9 @@
     ],
     "🏃‍♂️‍➡️": [
       "man running facing right"
+    ],
+    "🧑‍🩰": [
+      "ballet dancer"
     ],
     "💃": [
       "woman_dancing",
@@ -77214,6 +77242,9 @@
       "tracking",
       "walking",
       "beach"
+    ],
+    "🫆": [
+      "fingerprint"
     ]
   },
   "Emoji - Animals & Nature": {
@@ -77865,6 +77896,13 @@
       "fins",
       "beach"
     ],
+    "🫍": [
+      "orca",
+      "ocean",
+      "whale",
+      "dolphin",
+      "animal"
+    ],
     "🦭": [
       "seal",
       "animal",
@@ -78209,6 +78247,9 @@
       "mushroom",
       "plant",
       "vegetable"
+    ],
+    "🪾": [
+      "leafless tree"
     ]
   },
   "Emoji - Food & Drink": {
@@ -78437,6 +78478,10 @@
       "fungus",
       "nature",
       "vegetable"
+    ],
+    "🫜": [
+      "root vegetable",
+      "radish"
     ],
     "🍞": [
       "bread",
@@ -79186,6 +79231,11 @@
       "photo",
       "nature",
       "environment"
+    ],
+    "🛘": [
+      "landslide",
+      "disaster",
+      "accident"
     ],
     "🌋": [
       "volcano",
@@ -81623,6 +81673,11 @@
       "music",
       "brass"
     ],
+    "🪊": [
+      "trombone",
+      "music",
+      "instrument"
+    ],
     "🎻": [
       "violin",
       "music",
@@ -81658,6 +81713,11 @@
       "music",
       "instrument",
       "pied piper"
+    ],
+    "🪉": [
+      "harp",
+      "music",
+      "instrument"
     ],
     "📱": [
       "mobile_phone",
@@ -81996,6 +82056,15 @@
       "payment",
       "coins",
       "sale"
+    ],
+    "🪎": [
+      "treasure chest",
+      "gold",
+      "haul",
+      "mimic",
+      "crate",
+      "jewelry",
+      "riches"
     ],
     "🪙": [
       "coin",
@@ -82513,6 +82582,11 @@
     "🪜": [
       "ladder",
       "tools"
+    ],
+    "🪏": [
+      "shovel",
+      "tool",
+      "dig"
     ],
     "⚗️": [
       "alembic",
@@ -83688,6 +83762,9 @@
       "law",
       "legal"
     ],
+    "🫟": [
+      "splatter"
+    ],
     "#️⃣": [
       "keycap_",
       "symbol",
@@ -84751,6 +84828,12 @@
     ],
     "🇨🇵": [
       "flag_clipperton_island"
+    ],
+    "🇨🇶": [
+      "flag_sark",
+      "cq",
+      "flag",
+      "banner"
     ],
     "🇨🇷": [
       "flag_costa_rica",

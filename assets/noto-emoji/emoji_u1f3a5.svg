@@ -1,58 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 24.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 26.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
-<path style="fill:#595858;" d="M32,80L20,64h-8c-4.42,0-8,3.58-8,8v44c0,4.42,3.58,8,8,8h8l12-16h20V80H32z"/>
-<g>
-	<rect x="16" y="64" style="fill:#3A3A3A;" width="3" height="60"/>
-</g>
-<path style="fill:#595858;" d="M121.11,73.45L116,76h-16v12h16l5.11,2.55c1.33,0.66,2.89-0.3,2.89-1.79V75.24
-	C124,73.75,122.44,72.78,121.11,73.45z"/>
-<rect x="64" y="48" style="fill:#3F3F3F;" width="28" height="28"/>
+<path style="fill:#595858;" d="M76,80v28h20l12,16h8c4.4,0,8-3.6,8-8V72c0-4.4-3.6-8-8-8h-8L96,80H76z"/>
+<rect x="109" y="64" style="fill:#3A3A3A;" width="3" height="60"/>
+<path style="fill:#595858;" d="M4,75.2v13.5c0,1.5,1.6,2.5,2.9,1.8l5.1-2.6h16v-12H12l-5.1-2.6C5.6,72.6,4,73.6,4,75.1V75.2z"/>
+<rect x="36" y="48" style="fill:#3F3F3F;" width="28" height="28"/>
 <g style="opacity:0.5;">
-	<rect x="31.5" y="80" style="fill:#787676;" width="3" height="28"/>
+	<rect x="93.5" y="80" style="fill:#787676;" width="3" height="28"/>
+</g>
+<rect x="84.2" y="80" style="fill:#3A3A3A;" width="3" height="28"/>
+<circle style="fill:#504F4F;" cx="80" cy="36" r="32"/>
+<circle style="fill:#504F4F;" cx="27" cy="46" r="22"/>
+<path style="fill:#504F4F;" d="M16,112V76c0-4.4,3.6-8,8-8h52c4.4,0,8,3.6,8,8v36c0,4.4-3.6,8-8,8H24C19.6,120,16,116.4,16,112z"/>
+<g>
+	<path style="fill:#3A3A3A;" d="M74,94c1.1,0,2,0.9,2,2s-0.9,2-2,2s-2-0.9-2-2S72.9,94,74,94 M70,96c0,2.2,1.8,4,4,4s4-1.8,4-4
+		s-1.8-4-4-4S70,93.8,70,96z"/>
+	<path style="fill:#3A3A3A;" d="M74,102c1.1,0,2,0.9,2,2s-0.9,2-2,2s-2-0.9-2-2S72.9,102,74,102 M70,104c0,2.2,1.8,4,4,4s4-1.8,4-4
+		s-1.8-4-4-4S70,101.8,70,104z"/>
 </g>
 <g>
-	<g>
-		<rect x="40.75" y="80" style="fill:#3A3A3A;" width="3" height="28"/>
-	</g>
-</g>
-<circle style="fill:#504F4F;" cx="48" cy="36" r="32"/>
-<circle style="fill:#504F4F;" cx="101" cy="46" r="22"/>
-<path style="fill:#504F4F;" d="M104,120H52c-4.42,0-8-3.58-8-8V76c0-4.42,3.58-8,8-8h52c4.42,0,8,3.58,8,8v36
-	C112,116.42,108.42,120,104,120z"/>
-<g>
-	<path style="fill:#3A3A3A;" d="M54,94c1.1,0,2,0.9,2,2s-0.9,2-2,2s-2-0.9-2-2S52.9,94,54,94 M54,92c-2.21,0-4,1.79-4,4s1.79,4,4,4
-		s4-1.79,4-4S56.21,92,54,92z"/>
-	<path style="fill:#3A3A3A;" d="M54,102c1.1,0,2,0.9,2,2s-0.9,2-2,2s-2-0.9-2-2S52.9,102,54,102 M54,100c-2.21,0-4,1.79-4,4
-		s1.79,4,4,4s4-1.79,4-4S56.21,100,54,100z"/>
+	<path style="fill:#504F4F;" d="M32,107c-1.7,0-3-1.3-3-3v-8c0-1.7,1.3-3,3-3h32c1.7,0,3,1.3,3,3v8c0,1.7-1.3,3-3,3H32z"/>
+	<path style="fill:#3A3A3A;" d="M32,94.5h32c0.8,0,1.5,0.7,1.5,1.5v8c0,0.8-0.7,1.5-1.5,1.5H32c-0.8,0-1.5-0.7-1.5-1.5v-8
+		C30.5,95.2,31.2,94.5,32,94.5 M32,91.5c-2.5,0-4.5,2-4.5,4.5v8c0,2.5,2,4.5,4.5,4.5h32c2.5,0,4.5-2,4.5-4.5v-8c0-2.5-2-4.5-4.5-4.5
+		H32z"/>
 </g>
 <g>
-	<path style="fill:#504F4F;" d="M64,107c-1.65,0-3-1.35-3-3v-8c0-1.65,1.35-3,3-3h32c1.65,0,3,1.35,3,3v8c0,1.65-1.35,3-3,3H64z"/>
-	<path style="fill:#3A3A3A;" d="M96,94.5c0.83,0,1.5,0.67,1.5,1.5v8c0,0.83-0.67,1.5-1.5,1.5H64c-0.83,0-1.5-0.67-1.5-1.5v-8
-		c0-0.83,0.67-1.5,1.5-1.5H96 M96,91.5H64c-2.48,0-4.5,2.02-4.5,4.5v8c0,2.48,2.02,4.5,4.5,4.5h32c2.48,0,4.5-2.02,4.5-4.5v-8
-		C100.5,93.52,98.48,91.5,96,91.5L96,91.5z"/>
+	<circle style="fill:#504F4F;" cx="80" cy="36" r="22.5"/>
+	<path style="fill:#3A3A3A;" d="M80,15c11.6,0,21,9.4,21,21s-9.4,21-21,21s-21-9.4-21-21S68.4,15,80,15 M80,12
+		c-13.2,0-24,10.7-24,24c0,13.2,10.7,24,24,24s24-10.7,24-24C104,22.8,93.3,12,80,12L80,12z"/>
 </g>
 <g>
-	<circle style="fill:#504F4F;" cx="48" cy="36" r="22.5"/>
-	<path style="fill:#3A3A3A;" d="M48,15c11.58,0,21,9.42,21,21s-9.42,21-21,21s-21-9.42-21-21S36.42,15,48,15 M48,12
-		c-13.25,0-24,10.75-24,24s10.75,24,24,24s24-10.75,24-24S61.25,12,48,12L48,12z"/>
+	<circle style="fill:#504F4F;" cx="27" cy="46" r="12.5"/>
+	<path style="fill:#3A3A3A;" d="M27,35c6.1,0,11,4.9,11,11s-4.9,11-11,11s-11-4.9-11-11S20.9,35,27,35 M27,32c-7.7,0-14,6.3-14,14
+		s6.3,14,14,14s14-6.3,14-14S34.7,32,27,32L27,32z"/>
 </g>
-<g>
-	<circle style="fill:#504F4F;" cx="101" cy="46" r="12.5"/>
-	<path style="fill:#3A3A3A;" d="M101,35c6.07,0,11,4.93,11,11s-4.93,11-11,11s-11-4.93-11-11S94.93,35,101,35 M101,32
-		c-7.73,0-14,6.27-14,14s6.27,14,14,14s14-6.27,14-14S108.73,32,101,32L101,32z"/>
-</g>
-<circle style="fill:#636262;" cx="48" cy="36" r="8"/>
-<circle style="fill:#636262;" cx="101" cy="46" r="8"/>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="54" y1="34.1398" x2="54" y2="30.1218" gradientTransform="matrix(1 0 0 -1 0 127.8898)">
+<circle style="fill:#636262;" cx="80" cy="36" r="8"/>
+<circle style="fill:#636262;" cx="27" cy="46" r="8"/>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-1736" y1="-135.9" x2="-1736" y2="-139.9" gradientTransform="matrix(-1 0 0 -1 -1662 -42.1)">
 	<stop  offset="0" style="stop-color:#FF1744"/>
 	<stop  offset="1" style="stop-color:#D50000"/>
 </linearGradient>
-<circle style="fill:url(#SVGID_1_);" cx="54" cy="96" r="2"/>
-<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="54" y1="26.1398" x2="54" y2="22.1198" gradientTransform="matrix(1 0 0 -1 0 127.8898)">
+<circle style="fill:url(#SVGID_1_);" cx="74" cy="96" r="2"/>
+<linearGradient id="SVGID_00000026135485271506415040000014384600665447827617_" gradientUnits="userSpaceOnUse" x1="-1736" y1="-143.9" x2="-1736" y2="-147.9" gradientTransform="matrix(-1 0 0 -1 -1662 -42.1)">
 	<stop  offset="0" style="stop-color:#76FF03"/>
 	<stop  offset="1" style="stop-color:#64DD17"/>
 </linearGradient>
-<circle style="fill:url(#SVGID_2_);" cx="54" cy="104" r="2"/>
+<circle style="fill:url(#SVGID_00000026135485271506415040000014384600665447827617_);" cx="74" cy="104" r="2"/>
 </svg>
