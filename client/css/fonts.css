@@ -527,10 +527,21 @@
   vertical-align: top;
 }
 
-#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
-  background: var(--url) center no-repeat;
+/* the color emoji are drawn from the SVG VTT ships rather than from the browser's emoji font: the font only
+   knows the emoji that existed when it was built, so anything newer showed up as an empty box. The character
+   stays in the element (transparent) because it is what gets inserted into rich text. --url arrives with
+   .showImage once the tile is scrolled into view, see loadSymbolPicker. */
+#symbolPickerOverlay .emoji-color {
+  display: inline-block;
+  width: var(--symbolSize);
+  height: var(--symbolSize);
+  vertical-align: top;
+  overflow: hidden;
   color: transparent;
-  top: -3px;
+}
+
+#symbolPickerOverlay .emoji-color.showImage {
+  background: var(--url) center/contain no-repeat;
 }
 
 #symbolPickerOverlay .gameicons {

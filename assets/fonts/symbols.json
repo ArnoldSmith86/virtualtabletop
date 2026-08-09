@@ -74017,10 +74017,12 @@
       "zzz"
     ],
     "🫩": [
-      "face with bags under eyes",
+      "face_with_bags_under_eyes",
       "tired",
       "sleepy",
-      "exhausted"
+      "exhausted",
+      "eyebags",
+      "weary"
     ],
     "😷": [
       "face_with_medical_mask",
@@ -74225,10 +74227,12 @@
       "flattered"
     ],
     "🫪": [
-      "distorted face",
+      "distorted_face",
       "surprised",
       "fluttered",
-      "wide-eyed"
+      "wide_eyed",
+      "warped",
+      "shocked"
     ],
     "🥺": [
       "pleading_face",
@@ -74749,9 +74753,13 @@
       "mad"
     ],
     "🫯": [
-      "fight cloud",
+      "fight_cloud",
       "brawl",
-      "conflict"
+      "conflict",
+      "fight",
+      "dust_cloud",
+      "scuffle",
+      "punch"
     ],
     "💥": [
       "collision",
@@ -76287,10 +76295,12 @@
       "monster"
     ],
     "🫈": [
-      "hairy creature",
+      "hairy_creature",
       "sasquatch",
       "bigfoot",
-      "treeman"
+      "treeman",
+      "yeti",
+      "monster"
     ],
     "💆": [
       "person_getting_massage",
@@ -76489,7 +76499,11 @@
       "man running facing right"
     ],
     "🧑‍🩰": [
-      "ballet dancer"
+      "ballet_dancer",
+      "ballet",
+      "dance",
+      "dancer",
+      "ballerina"
     ],
     "💃": [
       "woman_dancing",
@@ -77244,7 +77258,12 @@
       "beach"
     ],
     "🫆": [
-      "fingerprint"
+      "fingerprint",
+      "thumbprint",
+      "id",
+      "biometric",
+      "security",
+      "identity"
     ]
   },
   "Emoji - Animals & Nature": {
@@ -77901,7 +77920,8 @@
       "ocean",
       "whale",
       "dolphin",
-      "animal"
+      "animal",
+      "killer_whale"
     ],
     "🦭": [
       "seal",
@@ -78249,7 +78269,12 @@
       "vegetable"
     ],
     "🪾": [
-      "leafless tree"
+      "leafless_tree",
+      "dead_tree",
+      "bare_tree",
+      "winter",
+      "branch",
+      "nature"
     ]
   },
   "Emoji - Food & Drink": {
@@ -78480,8 +78505,12 @@
       "vegetable"
     ],
     "🫜": [
-      "root vegetable",
-      "radish"
+      "root_vegetable",
+      "radish",
+      "turnip",
+      "beet",
+      "vegetable",
+      "food"
     ],
     "🍞": [
       "bread",
@@ -79235,7 +79264,10 @@
     "🛘": [
       "landslide",
       "disaster",
-      "accident"
+      "accident",
+      "rockslide",
+      "mountain",
+      "avalanche"
     ],
     "🌋": [
       "volcano",
@@ -81676,7 +81708,9 @@
     "🪊": [
       "trombone",
       "music",
-      "instrument"
+      "instrument",
+      "brass",
+      "jazz"
     ],
     "🎻": [
       "violin",
@@ -81717,7 +81751,9 @@
     "🪉": [
       "harp",
       "music",
-      "instrument"
+      "instrument",
+      "strings",
+      "orchestra"
     ],
     "📱": [
       "mobile_phone",
@@ -82058,7 +82094,7 @@
       "sale"
     ],
     "🪎": [
-      "treasure chest",
+      "treasure_chest",
       "gold",
       "haul",
       "mimic",
@@ -82586,7 +82622,9 @@
     "🪏": [
       "shovel",
       "tool",
-      "dig"
+      "dig",
+      "spade",
+      "garden"
     ],
     "⚗️": [
       "alembic",
@@ -83763,7 +83801,12 @@
       "legal"
     ],
     "🫟": [
-      "splatter"
+      "splatter",
+      "splash",
+      "stain",
+      "paint",
+      "blob",
+      "spill"
     ],
     "#️⃣": [
       "keycap_",
@@ -84831,9 +84874,11 @@
     ],
     "🇨🇶": [
       "flag_sark",
-      "cq",
       "flag",
-      "banner"
+      "nation",
+      "country",
+      "banner",
+      "sark"
     ],
     "🇨🇷": [
       "flag_costa_rica",

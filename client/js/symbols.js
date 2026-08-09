@@ -58,6 +58,19 @@ function skipForNotoMonochrome(emoji) {
   return emoji.match(/^[\u{1f3c3}-\u{1f3cc}]\u{fe0f}?\u{200d}[\u{2640}\u{2642}]\u{fe0f}(\u{200d}\u{27a1}\u{fe0f})?|\u{1f468}|\u{1f468}\u{200d}[\u{1f33e}\u{1f373}\u{1f37c}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}\u{1f9b1}\u{1f9b2}\u{1f9bc}\u{1f9bd}]|\u{1f468}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f468}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f468}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f468}|\u{1f48b}\u{200d}\u{1f468})|\u{1f469}\u{200d}[\u{1f33e}\u{1f373}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}-\u{1f9b3}\u{1f9bc}\u{1f9bd}]|\u{1f469}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f469}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f469}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f48b}\u{200d})?[\u{1f468}\u{1f469}]|\u{1f46b}|\u{1f46c}|\u{200d}[\u{2640}\u{2642}]|\u{1f478}|\u{1f57a}|\u{1f934}|\u{1f936}|\u{1f9d1}\u{200d}(\u{1f37c}|\u{1f384}|\u{1f91d}\u{200d}\u{1f9d1})|\u{1fac3}|\u{1fac4}$/u);
 }
 
+// the picker's tooltip used to be the CSS class plus the character ("emoji-color: 🫍"), which says nothing
+// about an emoji whose glyph the reader's browser cannot draw. symbols.json leads with the emoji's name,
+// so use that instead and only name the flavour the tile shows.
+function emojiTitle(keywords, flavour) {
+  return `${String(keywords[0]).replace(/_/g, ' ')} (${flavour} emoji)`;
+}
+
+// the picker searches a flattened keyword string, so that a name written as "root_vegetable" in symbols.json
+// is also found by typing "root vegetable" and vice versa (same idea as the audio picker)
+function searchableKeywords(string) {
+  return string.toLowerCase().replace(/[-_/]+/g, ' ');
+}
+
 let symbolData = null;
 export async function loadSymbolPicker() {
   if(symbolData === null) {
@@ -72,12 +85,14 @@ export async function loadSymbolPicker() {
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category == 'Emoji - Flags')
         continue;
-      list += `<h2 data-family="${category.match(/Material|VTT|Emoji/)?'font':'image'}">${category}</h2>`;
+      // every emoji is listed twice, as a font glyph here and as an image below - say which is which, so the
+      // two identically named sections are not just the same duck twice
+      list += `<h2 data-family="${category.match(/Material|VTT|Emoji/)?'font':'image'}">${category}${category.match(/^Emoji/)?' (monochrome)':''}</h2>`;
       for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${searchableKeywords(`${symbol.split('/')[1]},${keywords.join()}`)}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
           symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
@@ -88,28 +103,40 @@ export async function loadSymbolPicker() {
             className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
             const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
-            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+            const title = className == 'emoji-monochrome' ? emojiTitle(keywords, 'monochrome') : `${className}: ${symbol}`;
+            list += `<i class="${className}" data-family="font" title="${title}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${searchableKeywords(`${symbol},${keywords.join()}`)}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
           }
           if(className == 'material-symbols' && hasNoFillVariant)
-            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${searchableKeywords(`${symbol},${keywords.join()}`)}">${symbol}</i>`;
         }
       }
     }
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category.match(/Emoji/)) {
-        list += `<h2 data-family="image">${category}</h2>`;
-        for(const [ symbol, keywords ] of Object.entries(symbols)) {
-          let className = 'emoji-color';
-          if(category == 'Emoji - Flags')
-            className += ' emojiFlag';
-          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
-        }
+        list += `<h2 data-family="image">${category} (color)</h2>`;
+        for(const [ symbol, keywords ] of Object.entries(symbols))
+          list += `<i class="emoji-color" data-family="image" title="${emojiTitle(keywords, 'color')}" data-type="emoji-color" data-symbol="${symbol}" data-keywords="${searchableKeywords(`${symbol},${keywords.join()}`)}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
       }
     }
     $('#symbolList').innerHTML = list;
 
+    // The color emoji tiles show the shipped SVG instead of the browser's emoji font, which has no glyph at
+    // all for emoji newer than itself and drew those as empty boxes. Browsers fetch every background-image of
+    // a rendered element up front though, and that would be ~1900 files (20 MB) whenever the picker opens -
+    // so a tile only gets .showImage, and with it its --url, once it has been scrolled anywhere near.
+    const emojiObserver = new IntersectionObserver(function(entries) {
+      for(const entry of entries) {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('showImage');
+          emojiObserver.unobserve(entry.target);
+        }
+      }
+    }, { root: $('#symbolList'), rootMargin: '300px' });
+    for(const icon of $a('#symbolList .emoji-color'))
+      emojiObserver.observe(icon);
+
     $('#symbolPickerOverlay input').onkeyup = function() {
-      const text = regexEscape($('#symbolPickerOverlay input').value.toLowerCase());
+      const text = regexEscape(searchableKeywords($('#symbolPickerOverlay input').value));
       for(const icon of $a('#symbolList i'))
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h2'))

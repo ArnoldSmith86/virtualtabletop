@@ -467,8 +467,7 @@
 .editorModule .propertyPickerChips .symbols,
 .editorModule .propertyPickerChips .material-symbols,
 .editorModule .propertyPickerChips .material-symbols-nofill,
-.editorModule .propertyPickerChips .emoji-monochrome,
-.editorModule .propertyPickerChips .emojiColorChip {
+.editorModule .propertyPickerChips .emoji-monochrome {
   font-size: 24px;
   overflow: hidden;
 }
@@ -484,8 +483,7 @@
 .editorModule .iconInput .propertyPickerChips .symbols,
 .editorModule .iconInput .propertyPickerChips .material-symbols,
 .editorModule .iconInput .propertyPickerChips .material-symbols-nofill,
-.editorModule .iconInput .propertyPickerChips .emoji-monochrome,
-.editorModule .iconInput .propertyPickerChips .emojiColorChip {
+.editorModule .iconInput .propertyPickerChips .emoji-monochrome {
   font-size: 36px;
 }
 
@@ -1097,8 +1095,7 @@
 .editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .symbols,
 .editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols,
 .editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols-nofill,
-.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emoji-monochrome,
-.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emojiColorChip {
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emoji-monochrome {
   font-size: 120px;
 }
 

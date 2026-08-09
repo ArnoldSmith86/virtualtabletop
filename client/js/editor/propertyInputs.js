@@ -302,7 +302,10 @@ function renderIconChip(value, target) {
   } else if(icon.match(/^\(.*\)$/)) {
     glyph = div(chip, 'emoji-monochrome', html(toNotoMonochrome(icon.replace(/^\((.*)\)$/, '$1'))));
   } else {
-    div(chip, 'emojiColorChip', html(icon)); // raw emoji: native color rendering
+    // raw emoji: the same shipped SVG the widget itself gets (see getIconDetails), not the browser's emoji
+    // font - that has no glyph for emoji newer than itself and left the chip blank. The character is the alt
+    // text, so anything without an SVG still shows something rather than a broken image.
+    chip.innerHTML = `<img src="${html(imageURLFromSymbol(icon))}" alt="${html(icon)}">`;
   }
   if(glyph) {
     if(iconColor)
