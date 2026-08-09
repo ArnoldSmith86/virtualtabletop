@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import v8 from 'v8';
+import zlib from 'zlib';
 
 import express from 'express';
 import http from 'http';
@@ -127,6 +128,29 @@ MinifyHTML().then(function(result) {
   router.get('/fonts.css', cache5m);
   router.get('/i/fonts/', cache5m);
   router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
+
+  // symbols.json lists the name and the search keywords of every icon and is by
+  // far the biggest asset the editor fetches (3 MB, and it compresses to a tenth
+  // of that). express.static sends files as they are, so compress it once on the
+  // first request and serve that copy afterwards.
+  let symbolsGzipped = null;
+  router.get('/i/fonts/symbols.json', function(req, res, next) {
+    if(!(req.headers['accept-encoding'] || '').match(/\bgzip\b/))
+      return next();
+    if(!symbolsGzipped)
+      symbolsGzipped = new Promise(function(resolve, reject) {
+        zlib.gzip(fs.readFileSync(path.resolve() + '/assets/fonts/symbols.json'), { level: zlib.constants.Z_BEST_COMPRESSION }, (e, data) => e ? reject(e) : resolve(data));
+      }).catch(function(e) {
+        symbolsGzipped = null; // fall back to the uncompressed file and retry next time
+        throw e;
+      });
+    symbolsGzipped.then(function(data) {
+      res.setHeader('Vary', 'Accept-Encoding');
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.setHeader('Content-Encoding', 'gzip');
+      res.send(data);
+    }, _=>next());
+  });
 
   router.use('/i', express.static(path.resolve() + '/assets'));
 

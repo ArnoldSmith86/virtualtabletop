@@ -837,16 +837,29 @@ describe('property input helpers', () => {
     expect(arrayChip.children[0].style.color).toBeUndefined();
   });
 
-  test('searchIconIndex preserves symbols.json order', () => {
+  test('searchIconIndex ranks the icon named like the query first, then keeps symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
-      { value: 'star',           keywords: 'star,favorite', image: false },
-      { value: 'grade',          keywords: 'star,grade',    image: false },
-      { value: 'lorc/star',      keywords: 'star,shiny',    image: true },
-      { value: 'delapouite/sun', keywords: 'sun,light',     image: true }
+      { value: 'grade',          keywords: 'star,grade',      image: false },
+      { value: 'star_rate',      keywords: 'star,rate',       image: false },
+      { value: 'stadium',        keywords: 'stadium,star',    image: false },
+      { value: 'star',           keywords: 'star,favorite',   image: false },
+      { value: 'lorc/star',      keywords: 'star,shiny',      image: true },
+      { value: 'delapouite/sun', keywords: 'sun,light',       image: true }
     ]);
-    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'grade', 'lorc/star' ]);
+    // exact name matches (both families), then prefix matches, then keyword-only matches
+    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'lorc/star', 'star_rate', 'grade', 'stadium' ]);
     expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
     expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
+  });
+
+  test('an icon can be found by its own name even when it matches later than the result limit', () => {
+    const index = Array.from({ length: 120 }, (_, i) => ({ value: `icon_${i}`, keywords: `icon_${i},save`, image: false }));
+    index.push({ value: 'save', keywords: 'save,disk', image: false });
+    inputHelpers.setIconSearchIndex(index);
+
+    const results = inputHelpers.searchIconIndex('save');
+    expect(results).toHaveLength(100);
+    expect(results[0]).toBe('save');
   });
 
   test('searchImageIndex returns image URLs for matching glyphs', () => {

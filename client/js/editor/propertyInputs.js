@@ -366,12 +366,31 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
-// Keep matches in symbols.json order so related icon families stay together.
+// An icon matches when it has every search term somewhere in its keywords, so a
+// popular word like "save" matches hundreds of icons - more than the result
+// limit. Rank the icon actually named like the query first, then the ones whose
+// name starts with it, so typing an icon name always finds that icon. Within a
+// rank, matches keep symbols.json order so related icon families stay together.
+function iconMatchRank(entry, query) {
+  const name = (entry.value.includes('/') ? entry.value.split('/')[1] : entry.value).toLowerCase();
+  if(name == query)
+    return 0;
+  if(name.startsWith(query))
+    return 1;
+  return 2;
+}
+
+function rankedIconMatches(query, limit, isMatch) {
+  const terms = query.split(/\s+/).filter(t=>t);
+  const byRank = [ [], [], [] ];
+  for(const entry of iconSearchIndex || [])
+    if(terms.every(term=>entry.keywords.includes(term)) && isMatch(entry))
+      byRank[iconMatchRank(entry, query)].push(entry);
+  return [ ...byRank[0], ...byRank[1], ...byRank[2] ].slice(0, limit);
+}
+
 function searchIconIndex(query, limit=100, enabledTypes=null) {
-  const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  return (iconSearchIndex || [])
-    .filter(entry => terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
-    .slice(0, limit)
+  return rankedIconMatches(query.toLowerCase(), limit, entry => !enabledTypes || enabledTypes.has(entry.type))
     .map(entry => entry.value);
 }
 
@@ -383,10 +402,7 @@ function imageURLFromSymbol(symbol) {
 }
 
 function searchImageIndex(query, limit=100) {
-  const terms = query.toLowerCase().split(/\s+/).filter(term => term);
-  return (iconSearchIndex || [])
-    .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
-    .slice(0, limit)
+  return rankedIconMatches(query.toLowerCase(), limit, entry => entry.image)
     .map(entry => imageURLFromSymbol(entry.value));
 }
 
