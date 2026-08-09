@@ -955,10 +955,10 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
-    // the same search in the unrestricted picker does find its one match
+    // the same search in the unrestricted picker does find its match (filled and outlined variant)
     .typeText('#symbolPickerOverlay input', '10k')
     .expect(Selector('#symbolNoResults').visible).notOk()
-    .expect(Selector('#symbolList i:not(.hidden)').count).eql(1)
+    .expect(Selector('#symbolList i:not(.hidden)').count).eql(2)
     .selectText('#symbolPickerOverlay input')
     .pressKey('delete')
     .click(Selector('#symbolList .material-symbols').nth(0))
@@ -970,7 +970,7 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
     .pressKey('esc');
-  await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
+  await compareState(t, 'c39fcfd05c40487994c2dd66172c3792');
 });
 
 test('The symbol picker says an image-only search found nothing', async t => {

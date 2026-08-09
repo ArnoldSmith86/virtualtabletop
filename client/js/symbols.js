@@ -63,6 +63,13 @@ export async function loadSymbolPicker() {
   if(symbolData === null) {
     symbolData = 'loading';
     try {
+      // the "Material Symbols - *" categories, names and keywords come from Google's icon metadata:
+      // https://fonts.google.com/metadata/icons?incomplete=true&key=material_symbols (strip the )]}' prefix).
+      // The two font files are the instances Google Fonts itself serves, which are much smaller than the
+      // variable fonts in the material-design-icons repository:
+      // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0 (NoFill)
+      // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0 (Fill)
+      // An icon is marked "(FILL+NOFILL)" only if those two files actually render it differently.
       symbolData = await (await fetch('i/fonts/symbols.json')).json();
     } catch(e) {
       symbolData = null; // a failed fetch must not leave the picker stuck in 'loading' for the whole session
