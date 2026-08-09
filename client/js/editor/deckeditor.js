@@ -241,6 +241,7 @@ class DeckEditor {
     this.applyingHistory = false;
     this.maxHistory = 60;
     this.actionSeq = 0;
+    this.previewCardSeq = 0; // numbers the cards rendered by renderCard() so each one gets its own widget id
 
     this.groupCollapsed = {}; // which sidebar property groups the user folded away, keyed "tab:group"
   }
@@ -1415,8 +1416,17 @@ class DeckEditor {
     return `Face ${face}`;
   }
 
+  // Every card rendered here gets an id of its own. An html face object scopes its css to a class built from
+  // the card's id, and those rules end up in a <style> element in the document - so cards without an id all
+  // shared one scope and whichever was rendered last styled every other one, which is why the card type strip
+  // showed the same design for all card types instead of what the room shows. A running number keeps the
+  // scopes apart without consuming the room's random sequence the way generateUniqueWidgetID() would.
   renderCard(cardType, face, target) {
-    const card = new Card();
+    let id;
+    do {
+      id = `deckEditorPreview${++this.previewCardSeq}`;
+    } while(widgets.has(id));
+    const card = new Card(id);
     return card.renderReadonlyCopyRaw({ deck: this.deckID, cardType, activeFace: face }, target);
   }
 
