@@ -75,7 +75,9 @@ export async function loadSymbolPicker() {
       symbolData = null; // a failed fetch must not leave the picker stuck in 'loading' for the whole session
       throw e;
     }
-    let list = '';
+    // the search floats its best matches to the top of the list (see filterSymbolList), so this separates
+    // them from the rest of the matches, which stay in their symbols.json order below
+    let list = '<h2 id="symbolMoreMatches" class="hidden">More matches</h2>';
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category == 'Emoji - Flags')
         continue;
@@ -84,7 +86,7 @@ export async function loadSymbolPicker() {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-name="${symbol.split('/')[1]}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
           symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
@@ -95,10 +97,12 @@ export async function loadSymbolPicker() {
             className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
             const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
-            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
           }
+          // "material-symbols-nofill: save" told the reader nothing about why the same glyph is listed
+          // twice, and the value it inserts (save_NOFILL) is not what a tooltip should be teaching
           if(className == 'material-symbols' && hasNoFillVariant)
-            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols: ${symbol} (outlined)" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
         }
       }
     }
@@ -109,65 +113,131 @@ export async function loadSymbolPicker() {
           let className = 'emoji-color';
           if(category == 'Emoji - Flags')
             className += ' emojiFlag';
-          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
     $('#symbolList').innerHTML = list;
 
-    $('#symbolPickerOverlay input').onkeyup = function() {
-      const text = regexEscape($('#symbolPickerOverlay input').value.toLowerCase());
-      for(const icon of $a('#symbolList i'))
-        toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
-      for(const title of $a('#symbolList h2'))
-        toggleClass(title, 'hidden', text);
-      // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
-      // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
-      const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
-                         : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
-      const matches = $a(`#symbolList i:not(.hidden)${hiddenFamily ? `:not([data-family=${hiddenFamily}])` : ''}`).length;
-      toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
-      toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
-      $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}".`;
-    };
+    // Filtering visits every one of the ~14000 entries, so read what it needs out of the DOM once here
+    // instead of parsing the (three times longer since the 2025 Material Symbols update) data-keywords
+    // attribute of every element again on every keystroke. The cached shown/order/big is what the entry
+    // currently looks like, so a keystroke only writes to the elements that actually change.
+    for(const el of $a('#symbolList i'))
+      symbolIndex.push({ el, name: (el.dataset.name || '').toLowerCase(), keywords: el.dataset.keywords.toLowerCase(), family: el.dataset.family, shown: true, order: 0, big: false });
+
+    $('#symbolPickerOverlay input').onkeyup = scheduleSymbolFilter;
   }
+}
+
+// Even though a keystroke only writes to the entries that change, showing and hiding hundreds of them costs
+// the browser a layout pass over the whole 14000-entry list - which is a stutter per character while typing.
+// Filter once the typing pauses instead.
+let symbolFilterTimeout = null;
+function scheduleSymbolFilter() {
+  clearTimeout(symbolFilterTimeout);
+  symbolFilterTimeout = setTimeout(filterSymbolList, 120);
+}
+
+// The best matches are shown large, the rest of them in the compact grid below the "More matches" heading.
+const bigPreviewLimit = 100;
+const symbolIndex = [];
+
+// Same ranking as the inline icon search of the property editor (see rankedIconMatches in
+// editor/propertyInputs.js): the icon actually named like the query first, then the ones whose name starts
+// with it, then keyword-only matches - keeping symbols.json order within each rank. A common word like
+// "star" is a keyword of 400 icons, so without this the icon called "star" is somewhere in the middle of
+// them. The list is not reordered in the DOM (that would mean moving thousands of nodes per keystroke):
+// #symbolList is a flex container, so setting the rank as the CSS order is enough.
+function filterSymbolList() {
+  clearTimeout(symbolFilterTimeout);
+  if(!symbolIndex.length)
+    return; // the list is still being fetched/built - nothing to filter yet
+
+  const query = $('#symbolPickerOverlay input').value.toLowerCase().trim();
+  const terms = query.split(/\s+/).filter(term=>term);
+  // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
+  // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
+  const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
+                     : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
+
+  const byRank = [ [], [], [] ];
+  for(const entry of symbolIndex) {
+    entry.match = terms.every(term=>entry.keywords.includes(term));
+    entry.rank = 4; // everything below the "More matches" heading (which is 3)
+    if(entry.match && entry.family != hiddenFamily) {
+      entry.bucket = entry.name == query ? 0 : entry.name.startsWith(query) ? 1 : 2;
+      byRank[entry.bucket].push(entry);
+    }
+  }
+  const ranked = [ ...byRank[0], ...byRank[1], ...byRank[2] ];
+  ranked.forEach((entry, index) => entry.rank = index < bigPreviewLimit ? entry.bucket : 4);
+
+  for(const entry of symbolIndex) {
+    const order = query ? entry.rank : 0; // unfiltered, the list keeps its category order
+    const big = !!query && entry.rank < 3;
+    if(entry.shown != entry.match)
+      toggleClass(entry.el, 'hidden', !(entry.shown = entry.match));
+    if(entry.order != order)
+      entry.el.style.order = (entry.order = order) || '';
+    if(entry.big != big)
+      toggleClass(entry.el, 'bigPreview', entry.big = big);
+  }
+
+  for(const title of $a('#symbolList h2:not(#symbolMoreMatches)'))
+    toggleClass(title, 'hidden', query);
+  toggleClass($('#symbolMoreMatches'), 'hidden', !query || ranked.length <= bigPreviewLimit);
+  toggleClass($('#symbolPickerOverlay'), 'fewResults', ranked.length <= bigPreviewLimit);
+  toggleClass($('#symbolPickerOverlay'), 'noResults', !ranked.length);
+  $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}".`;
 }
 
 export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
   if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
     $('#statesButton').dataset.overlay = detailsOverlay;
 
-  await loadSymbolPicker();
-  return new Promise((resolve, reject) => {
-    showOverlay('symbolPickerOverlay');
-    $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
-    $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
-    $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
-    $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
-    $('#symbolPickerOverlay input').value = '';
-    $('#symbolPickerOverlay input').focus();
-    $('#symbolPickerOverlay input').onkeyup();
+  let resolve;
+  const symbol = new Promise(r => resolve = r);
 
-    $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+  // symbols.json is half a megabyte, so the first open of the picker waits on a fetch: show the (empty,
+  // "Loading...") card right away instead of leaving the user with nothing at all after their click
+  $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
+  $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
+  $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
+  $('#symbolPickerOverlay').classList.remove('fewResults', 'noResults');
+  $('#symbolPickerOverlay input').value = '';
+  showOverlay('symbolPickerOverlay');
+  $('#symbolPickerOverlay input').focus();
+  $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+    if(closeOverlay)
+      showOverlay(null);
+    resolve(null);
+  };
+
+  try {
+    await loadSymbolPicker();
+  } catch(e) {
+    if(closeOverlay)
+      showOverlay(null); // do not leave the "Loading..." card up when the list never arrives
+    throw e;
+  }
+  $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
+  filterSymbolList();
+
+  for(const icon of $a('#symbolList i')) {
+    icon.onclick = function(e) {
       if(closeOverlay)
         showOverlay(null);
-      resolve(null);
+      const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
+      let url = null;
+      if(icon.dataset.type == 'emoji-color')
+        url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
+      if(icon.dataset.type == 'game-icons')
+        url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
+      resolve(Object.assign({...icon.dataset}, { isImage, url }));
     };
-
-    for(const icon of $a('#symbolList i')) {
-      icon.onclick = function(e) {
-        if(closeOverlay)
-          showOverlay(null);
-        const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
-        let url = null;
-        if(icon.dataset.type == 'emoji-color')
-          url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
-        if(icon.dataset.type == 'game-icons')
-          url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
-        resolve(Object.assign({...icon.dataset}, { isImage, url }));
-      };
-    }
-  });
+  }
+  return symbol;
 }
 
 export function addRichtextControls(dom) {
@@ -245,7 +315,7 @@ export function addRichtextControls(dom) {
       $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
-    $('#symbolPickerOverlay input').onkeyup();
+    filterSymbolList();
 
     $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
 

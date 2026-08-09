@@ -261,6 +261,12 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   return symbol;
 }
 
+// "save_NOFILL" is how the outlined variant of a Material Symbol is stored, but as the tooltip of a chip it
+// is developer vocabulary that does not explain why the same-looking glyph is offered twice.
+function iconChipTitle(value) {
+  return /^[a-z0-9].*_NOFILL$/.test(value) ? `${value.replace(/_NOFILL$/, '')} (outlined)` : value;
+}
+
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
@@ -275,7 +281,7 @@ function renderIconChip(value, target) {
     icon = Array.isArray(value) ? value[0] : value;
     icon = icon && typeof icon == 'object' ? icon.name : icon;
   } else {
-    chip.title = value;
+    chip.title = iconChipTitle(value);
   }
   if(typeof icon != 'string')
     return chip; // nothing renderable (e.g. an empty or malformed icon object)
@@ -380,18 +386,24 @@ function iconMatchRank(entry, query) {
   return 2;
 }
 
-function rankedIconMatches(query, limit, isMatch) {
+function rankedIconMatches(query, isMatch) {
   const terms = query.split(/\s+/).filter(t=>t);
   const byRank = [ [], [], [] ];
   for(const entry of iconSearchIndex || [])
     if(terms.every(term=>entry.keywords.includes(term)) && isMatch(entry))
       byRank[iconMatchRank(entry, query)].push(entry);
-  return [ ...byRank[0], ...byRank[1], ...byRank[2] ].slice(0, limit);
+  return [ ...byRank[0], ...byRank[1], ...byRank[2] ];
+}
+
+// The limit is what keeps the result list short enough to scan, but a one-word query now matches hundreds
+// of icons, so it hides most of them - report how many were left out instead of pretending that's all.
+function searchIconIndexWithTotal(query, limit=100, enabledTypes=null) {
+  const matches = rankedIconMatches(query.toLowerCase(), entry => !enabledTypes || enabledTypes.has(entry.type));
+  return { values: matches.slice(0, limit).map(entry => entry.value), total: matches.length };
 }
 
 function searchIconIndex(query, limit=100, enabledTypes=null) {
-  return rankedIconMatches(query.toLowerCase(), limit, entry => !enabledTypes || enabledTypes.has(entry.type))
-    .map(entry => entry.value);
+  return searchIconIndexWithTotal(query, limit, enabledTypes).values;
 }
 
 function imageURLFromSymbol(symbol) {
@@ -402,7 +414,8 @@ function imageURLFromSymbol(symbol) {
 }
 
 function searchImageIndex(query, limit=100) {
-  return rankedIconMatches(query.toLowerCase(), limit, entry => entry.image)
+  return rankedIconMatches(query.toLowerCase(), entry => entry.image)
+    .slice(0, limit)
     .map(entry => imageURLFromSymbol(entry.value));
 }
 
@@ -1346,7 +1359,7 @@ class IconInput extends PickerInput {
     searchSection.appendChild(search);
     const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
 
-    const showResults = values=>{
+    const showResults = (values, total)=>{
       results.innerHTML = '';
       for(const iconValue of values) {
         const chip = renderIconChip(iconValue, results);
@@ -1356,6 +1369,7 @@ class IconInput extends PickerInput {
       }
       if(!values.length)
         div(results, 'propertyPickerEmpty', 'No results.');
+      searchNote.textContent = total > values.length ? `Showing the ${values.length} best matches of ${total} - keep typing to narrow it down.` : '';
     };
 
     const frequentlyUsed = _=>[...new Set(usedGameIcons().concat(topUsedLibraryIcons))]
@@ -1363,9 +1377,20 @@ class IconInput extends PickerInput {
       .slice(0, 100);
     const updateResults = async _=>{
       const query = search.value.trim();
-      if(query)
+      if(query && !iconSearchIndex) {
+        // the index is a half-megabyte fetch: say so instead of leaving the frequently-used icons up, which
+        // look like the (wrong) answer to what was just typed
+        results.innerHTML = '';
+        div(results, 'propertyPickerEmpty', 'Loading icons…');
+        searchNote.textContent = '';
         await loadIconSearchIndex().catch(_=>null);
-      showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
+        if(search.value.trim() != query)
+          return; // the user kept typing while it loaded - that keystroke's own update is in charge now
+      }
+      if(!query)
+        return showResults(frequentlyUsed(), 0);
+      const { values, total } = searchIconIndexWithTotal(query, 100, enabledTypes);
+      showResults(values, total);
     };
 
     const typeToggles = div(searchSection, 'iconPickerFilterChips');
@@ -1391,7 +1416,8 @@ class IconInput extends PickerInput {
     }
 
     const results = div(searchSection, 'propertyPickerChips');
-    showResults(frequentlyUsed());
+    const searchNote = div(searchSection, 'propertyPickerNote');
+    showResults(frequentlyUsed(), 0);
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');

@@ -14,6 +14,8 @@ const inputHelpers = new Function(inputsSource + `;
     propertyInputValueSet,
     numericInputValue,
     searchIconIndex,
+    searchIconIndexWithTotal,
+    iconChipTitle,
     searchImageIndex,
     iconValueType,
     usedGameIconValue,
@@ -888,6 +890,21 @@ describe('property input helpers', () => {
       { value: 'star', type: 'material-symbols', keywords: 'star', image: false }
     ]);
     expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ]))).toEqual([ 'star' ]);
+  });
+
+  test('a truncated icon search reports how many matches it left out', () => {
+    inputHelpers.setIconSearchIndex(Array.from({ length: 120 }, (_, i) => ({ value: `icon_${i}`, keywords: `icon_${i},save`, image: false })));
+
+    expect(inputHelpers.searchIconIndexWithTotal('save').values).toHaveLength(100);
+    expect(inputHelpers.searchIconIndexWithTotal('save').total).toBe(120);
+    // nothing was left out, so there is nothing to report
+    expect(inputHelpers.searchIconIndexWithTotal('icon_77').total).toBe(1);
+  });
+
+  test('the outlined variant of a Material Symbol says so instead of showing _NOFILL', () => {
+    expect(inputHelpers.iconChipTitle('save_NOFILL')).toBe('save (outlined)');
+    expect(inputHelpers.iconChipTitle('save')).toBe('save');
+    expect(inputHelpers.iconChipTitle('lorc/star')).toBe('lorc/star');
   });
 
   test('picker searches show up to 100 results', () => {
