@@ -27,6 +27,25 @@ const fakeData = {
         chrome: [ { version_added: '84' }, { prefix: '-webkit-', version_added: '1' } ],
         safari: [ { version_added: '15.4' }, { prefix: '-webkit-', version_added: '3' } ]
       } } },
+      // the shape of something one browser only ever had under a prefix and the other never had
+      'text-size-adjust': { __compat: { support: {
+        chrome: { version_added: '54' },
+        safari: { version_added: false }
+      } } },
+      // ... and of a keyword value with a prefixed spelling of its own
+      width: {
+        __compat: { support: { chrome: { version_added: '1' }, safari: { version_added: '1' } } },
+        stretch: { __compat: { support: {
+          chrome: [ { version_added: '129' }, { prefix: '-webkit-', version_added: '22' } ],
+          safari: [ { version_added: '18.4' }, { prefix: '-webkit-', version_added: '7' } ]
+        } } }
+      },
+      // the shape of something a browser had, lost again, and got back later: what a developer
+      // on version 88 waits for is 120, not the 16 it had in 2017
+      'mask-image': { __compat: { support: {
+        chrome: [ { version_added: '120' }, { version_added: '16', version_removed: '79' } ],
+        safari: { version_added: '1' }
+      } } },
       // the shape bcd uses for "it was there all along, but incomplete until 94"
       outline: { __compat: { support: {
         chrome: [ { version_added: '94' }, { partial_implementation: true, version_added: '1', version_removed: '94' } ],
@@ -74,6 +93,18 @@ describe('the browser support data', () => {
   test('does not count support that needs a different spelling', () => {
     // -webkit-appearance is support for -webkit-appearance, not for appearance
     expect(lookup.feature('css.properties.appearance').missing.map(target => target.id)).toEqual([ 'safari' ]);
+  });
+
+  // ... unless the prefixed spelling is what is being asked about, which is how a -webkit-
+  // declaration next to an unprefixed one is told from one that helps nobody
+  test('answers for the prefixed spelling when one is asked for', () => {
+    expect(lookup.feature('css.properties.appearance', '-webkit-')).toBe(null);
+    expect(lookup.feature('css.properties.text-size-adjust', '-webkit-').missing.map(target => target.id)).toEqual([ 'chrome', 'safari' ]);
+  });
+
+  // the version a developer needs is the next one that has it, not one that had it and lost it
+  test('names a version that actually has the feature', () => {
+    expect(lookup.feature('css.properties.mask-image').missing).toEqual([ { id: 'chrome', version: '88', since: '120' } ]);
   });
 
   test('counts a version range in which the feature was there but incomplete', () => {
@@ -177,6 +208,24 @@ describe('the JavaScript scanner', () => {
     expect(blankNonCode('const r = /Object.hasOwn[/]/g; Object.hasOwn(a, b);')).toMatch('; Object.hasOwn(a, b);');
     expect(blankNonCode('const r = /Object.hasOwn[/]/g;')).not.toMatch('hasOwn');
     expect(blankNonCode('const half = size / 2; Object.hasOwn(a, b);')).toMatch('Object.hasOwn(a, b)');
+  });
+
+  // Reading "return /['x]/" as a division leaves the apostrophe inside it opening a string that
+  // never closes, which blanks the rest of the file - a check that reports nothing, silently.
+  test('takes a slash behind a keyword for a regular expression, not a division', () => {
+    const source = 'function g(s){ return /[\'x]/.test(s); }\nObject.hasOwn(a, b);';
+    expect(blankNonCode(source)).toMatch('Object.hasOwn(a, b);');
+    expect(features(scanJS(source, { globalPath: lookup.globalPath }))).toContain('javascript.builtins.Object.hasOwn');
+    for(const keyword of [ 'case', 'typeof', 'in', 'of', 'delete', 'throw' ])
+      expect(blankNonCode(`x ${keyword} /['y]/; Object.hasOwn(a, b);`)).toMatch('Object.hasOwn(a, b);');
+    // but a property that happens to be spelled like one still divides
+    expect(blankNonCode('const half = a.in / 2; Object.hasOwn(a, b);')).toMatch('Object.hasOwn(a, b);');
+  });
+
+  test('takes what a destructuring or an import binds for a name of ours', () => {
+    const found = source => features(scanJS(source, { globalPath: lookup.globalPath }));
+    expect(found('const { ResizeObserver } = shims; new ResizeObserver();')).not.toContain('api.ResizeObserver');
+    expect(found('import { ResizeObserver } from "./shims.js"; new ResizeObserver();')).not.toContain('api.ResizeObserver');
   });
 
   // What the ReDoS alert on this was about: a pattern that matches regular expressions needs an
@@ -301,10 +350,29 @@ describe('the fallbacks CSS has itself', () => {
     expect(check('.a { appearance: none; -webkit-appearance: none }').every(finding => finding.status != 'unsupported')).toBe(true);
   });
 
-  // ... and the same goes for a prefixed spelling in the value: bcd knows no -moz-fit-content,
-  // so "nothing missing" on that declaration means nothing was looked up, not that it is safe
-  test('does not let a prefixed value it cannot look up override anything', () => {
-    expect(check('.a { overflow: clip; overflow: -moz-clip }').every(finding => finding.status != 'unsupported')).toBe(true);
+  // a prefixed value is a fallback the same way, and bcd files it under the unprefixed keyword
+  test('takes a prefixed value next to it for one, where the data says the prefix works', () => {
+    expect(check('.a { width: -webkit-stretch; width: stretch }').every(finding => finding.status != 'unsupported')).toBe(true);
+  });
+
+  // The hole this closes: nothing is looked up under a prefixed name, so an empty "missing" set
+  // used to read as "covers everyone" - which passed a pair that leaves some browser with
+  // neither spelling.
+  test('does not take a prefixed spelling for one where the prefix never worked either', () => {
+    const property = check('.a { -webkit-text-size-adjust: 100%; text-size-adjust: 100% }');
+    expect(property.filter(finding => finding.status == 'unsupported').map(finding => finding.feature))
+      .toEqual([ 'css.properties.text-size-adjust' ]);
+    const value = check('.a { width: -moz-stretch; width: stretch }');
+    expect(value.filter(finding => finding.status == 'unsupported').map(finding => finding.feature))
+      .toEqual([ 'css.properties.width.stretch' ]);
+  });
+
+  // ... and a prefixed value still does not take the cascade away from the declaration before
+  // it: the browsers it is not meant for never see it
+  test('does not let a prefixed value override the declaration before it', () => {
+    const reported = check('.a { overflow: clip; overflow: -moz-clip }').filter(finding => finding.status == 'unsupported');
+    expect(reported.map(finding => finding.feature)).toEqual([ 'css.properties.overflow.clip' ]);
+    expect(reported[0].overriddenBy).toBeUndefined();
   });
 
   test('needs the declarations to cover every browser between them', () => {
@@ -313,6 +381,24 @@ describe('the fallbacks CSS has itself', () => {
 
   test('does not let a declaration in another rule count', () => {
     expect(check('.a { overflow: hidden } .b { overflow: clip }').some(finding => finding.status == 'unsupported')).toBe(true);
+  });
+
+  // two rules on one line are two findings, so reporting one of them per line would hide the
+  // unguarded one behind the guarded one
+  test('reports every rule on a line, not the first one', () => {
+    const reported = check('.a { overflow: hidden; overflow: clip } .b { overflow: clip }')
+      .filter(finding => finding.status == 'unsupported');
+    expect(reported.map(finding => finding.source)).toEqual([ 'overflow: clip' ]);
+    expect(reported).toHaveLength(1);
+  });
+
+  // ... and the same goes for two <style> blocks: a scanner numbers its rules from one, so
+  // without the block they are in, the second block's rule 1 is the first block's rule 1
+  test('does not let a declaration in another style block count', () => {
+    const html = '<style>.a { overflow: hidden; overflow: clip }</style><style>.b { overflow: clip }</style>';
+    const reported = checkSource({ path: 'test.html', source: html, lookup }).findings
+      .filter(finding => finding.status == 'unsupported');
+    expect(reported.map(finding => finding.source)).toEqual([ 'overflow: clip' ]);
   });
 });
 
@@ -355,5 +441,11 @@ describe('the client we serve', () => {
     });
     expect(findings.filter(finding => finding.status == 'unsupported').map(finding => `${finding.file}:${finding.line} ${finding.feature}`)).toEqual([]);
     expect(stale.map(entry => `${entry.file}:${entry.line} ${entry.feature}`)).toEqual([]);
+  });
+
+  // a bump that moves one of the bundled dependencies is the thing this check is here to catch,
+  // so the file disappearing from the scan has to be an error rather than a green run
+  test('says so when a bundled dependency is not where it was', () => {
+    expect(() => bundledFiles('tools')).toThrow(/dompurify/);
   });
 });

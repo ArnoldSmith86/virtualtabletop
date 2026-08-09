@@ -83,8 +83,14 @@ export function checkSource({ path, source, lookup, exceptions = [] }) {
   // a dependency comes minified, so there are no names in it worth looking up - only syntax
   const syntaxOnly = path.startsWith('node_modules/');
 
-  for(const block of blocks(path, source)) {
+  for(const [ index, block ] of blocks(path, source).entries()) {
     for(const candidate of block.scan(block.text, { startLine: block.startLine, globalPath: lookup.globalPath, syntaxOnly })) {
+      // a scanner numbers its rules from one, so a second <style> in the same file would reuse
+      // the ids of the first and let a declaration there excuse one here
+      if(candidate.declaration) {
+        candidate.declaration = `${index}/${candidate.declaration}`;
+        candidate.group = `${index}/${candidate.group}`;
+      }
       if(candidate.group) {
         if(!groups.has(candidate.group))
           groups.set(candidate.group, new Set());
@@ -97,12 +103,17 @@ export function checkSource({ path, source, lookup, exceptions = [] }) {
       }
       if(!candidate.feature)
         continue;
-      const missing = lookup.feature(candidate.feature);
+      const missing = lookup.feature(candidate.feature, candidate.prefix);
       if(!missing)
         continue;
       for(const target of missing.missing)
         declarations.get(candidate.declaration)?.missing.add(target.id);
-      const key = `${missing.path}:${candidate.line}`;
+      // a prefixed spelling is looked up only to know what it covers - it is the fallback
+      if(candidate.prefix)
+        continue;
+      // one report per feature and line, but not per line alone: two rules on the same line can
+      // each use it, and only one of them may have the fallback
+      const key = `${missing.path}:${candidate.line}:${candidate.declaration || ''}`;
       if(seen.has(key))
         continue;
       seen.add(key);
@@ -198,10 +209,17 @@ export function clientFiles(root = '.', directory = 'client') {
 // server/minify.mjs, fflate is served from node_modules as /scripts/fflate. They are part of
 // what the browser has to run, so a bump that raises their language level has to show up here.
 export function bundledFiles(root = '.') {
-  return [
+  const files = [
     'node_modules/dompurify/dist/purify.js',
     'node_modules/fflate/umd/index.js'
-  ].filter(file => existsSync(join(root, file)));
+  ];
+  // A bump that moves one of these is the very thing this is here to catch, so a path that is
+  // no longer there has to be an error - dropping it would leave a green check over a file
+  // nobody looked at. The same paths are in server/minify.mjs and need the same correction.
+  for(const file of files)
+    if(!existsSync(join(root, file)))
+      throw new Error(`${file} is not there anymore - update the path here and in server/minify.mjs`);
+  return files;
 }
 
 export function describeTarget(target) {

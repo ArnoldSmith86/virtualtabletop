@@ -4,8 +4,9 @@
 // which is all it takes to find the constructs whose browser support we want to know about.
 //
 // A vendor prefixed name (-webkit-mask-image, ::-moz-range-thumb) is never reported: it is
-// already the fallback, and the browsers it is not meant for ignore it. It does count as one,
-// though - an unprefixed property declared in the same rule as its prefixed spelling is fine.
+// already the fallback, and the browsers it is not meant for ignore it. Which browsers it does
+// reach is still looked up - an unprefixed property declared next to its prefixed spelling is
+// only covered where the prefixed one is actually understood.
 
 const vendorPrefix = /^-(webkit|moz|ms|o|epub|khtml)-/;
 
@@ -47,6 +48,23 @@ function declarationFeatures(property, value) {
     paths.push(`css.types.length.${unitGroups[name] || name}`);
   }
   return paths;
+}
+
+// The vendor prefixed spellings a declaration uses, each as the unprefixed bcd path plus the
+// prefix to ask for: bcd files prefixed support as a statement under the unprefixed path, so
+// that is the only way to find out which browsers a -webkit- declaration actually reaches -
+// and that is what decides whether it is a fallback for the unprefixed one next to it.
+function prefixedFeatures(property, value) {
+  const prefix = (property.match(vendorPrefix) || [])[0];
+  if(prefix)
+    return [ { path: `css.properties.${property.slice(prefix.length)}`, prefix } ];
+  return [ ...new Set(value.match(/(?:^|[\s,(])(-[a-z]+-[\w-]+)/g) || []) ]
+    .map(keyword => keyword.trim().replace(/^[,(]/, ''))
+    .filter(keyword => vendorPrefix.test(keyword))
+    .map(keyword => ({
+      path: `css.properties.${property}.${keyword.replace(vendorPrefix, '')}`,
+      prefix: keyword.match(vendorPrefix)[0]
+    }));
 }
 
 // What the @supports conditions around a declaration actually test - a condition only excuses
@@ -168,11 +186,14 @@ export function scanCSS(text, { startLine = 1 } = {}) {
     for(const { property, value, line, id, order, group, supports } of block.declarations) {
       const source = `${property}: ${value}`;
       // A declaration is only ever excused by the others in its group, so every one of them has
-      // to be on record - even a vendor prefixed one, which is never reported itself. The same
-      // goes for a prefixed spelling in the value (width: -moz-fit-content): bcd has no keyword
-      // by that name, so "nothing missing" there means "nothing looked up", not "safe".
+      // to be on record - even a vendor prefixed one, which is never reported itself.
       found.push({ line, source, declaration: id, group, property, order,
         prefixedValue: /(^|[\s,(])-[a-z]+-[a-z]/.test(value) });
+      // A prefixed spelling - of the property (-webkit-appearance) or of a keyword in the value
+      // (width: -moz-fit-content) - is looked up so that its own reach is on record, but it is
+      // the fallback, so it is never a finding itself.
+      for(const { path, prefix } of prefixedFeatures(property, value))
+        found.push({ line, source, feature: path, prefix, declaration: id, group, property, order });
       if(vendorPrefix.test(property))
         continue;
       const guards = new Set(supports.flatMap(condition => [ ...supportsFeatures(condition) ]));

@@ -1640,6 +1640,7 @@ button[icon]:disabled:hover {
   padding:16px 8px;
   position:relative;
   -webkit-text-size-adjust:100%;
+  /* compat-fallback css.properties.text-size-adjust: 100% asks a browser that inflates text to leave it alone - one that never inflates it needs no asking */
   text-size-adjust:100%;
   font-style: italic;
   margin: 0;
@@ -1948,6 +1949,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   border: 0px none transparent;
   background: transparent;
   -moz-appearance: textfield;
+  /* compat-fallback css.properties.appearance: the spin buttons this hides are hidden on WebKit by the ::-webkit-inner-spin-button rule below */
   appearance: textfield;
   margin: 0;
   color: black

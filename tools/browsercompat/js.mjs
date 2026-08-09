@@ -96,9 +96,13 @@ function templateText(text) {
 // Blanking keeps the length and the line breaks of what it removes, so every index into the
 // result still points at the same place in the original file.
 export function blankNonCode(text) {
-  let out = '', i = 0, previous = '', depth = 0;
+  let out = '', i = 0, previous = '', depth = 0, word = '', wordIsMember = false;
   const blank = string => string.replace(/[^\n]/g, ' ');
-  const canBeRegex = () => !/[\w$)\]]$/.test(previous);
+  // A / behind a name, a number or a closing bracket divides. Behind a keyword it does not,
+  // however name-like the keyword looks: "return /['x]/.test(s)" is one regular expression, and
+  // reading it as a division leaves an apostrophe open that blanks the rest of the file.
+  const keywordsBeforeRegex = /^(await|case|delete|do|else|in|instanceof|new|of|return|throw|typeof|void|yield)$/;
+  const canBeRegex = () => !/[\w$)\]]$/.test(previous) || (!wordIsMember && keywordsBeforeRegex.test(word));
   // the brace depth each template literal whose interpolation is currently open was opened at,
   // so that the } belonging to it is told apart from the } of a block or an object in between
   const templates = [];
@@ -128,15 +132,29 @@ export function blankNonCode(text) {
     if(match) {
       out += blank(match);
       i += match.length;
+      // a comment is not a token, everything else blanked here stands for a value - and a value
+      // is something a / behind it divides
+      if(!rest.startsWith('//') && !rest.startsWith('/*')) {
+        previous = match.endsWith('${') ? '{' : ')';
+        word = '';
+      }
       continue;
     }
-    if(text[i] == '{')
+    const c = text[i];
+    if(c == '{')
       ++depth;
-    else if(text[i] == '}')
+    else if(c == '}')
       --depth;
-    out += text[i];
-    if(/\S/.test(text[i]))
-      previous = text[i];
+    if(/[\w$]/.test(c)) {
+      if(!/[\w$]/.test(text[i-1] || '')) {
+        word = '';
+        wordIsMember = previous == '.';
+      }
+      word += c;
+    }
+    out += c;
+    if(/\S/.test(c))
+      previous = c;
     ++i;
   }
   return out;
@@ -153,6 +171,12 @@ function locallyDeclared(code) {
       names.add(parameter);
   for(const match of code.matchAll(/(^|[^\w$.])([A-Za-z_$][\w$]*)\s*=>/g))
     names.add(match[2]);
+  // what a destructuring or an import binds is ours too - const { history } = state
+  for(const match of code.matchAll(/\b(?:const|let|var|import)\s*[\w$,\s*]*\{([^{}]*)\}/g))
+    for(const name of match[1].match(/[A-Za-z_$][\w$]*/g) || [])
+      names.add(name);
+  for(const match of code.matchAll(/\bimport\s+(?:\*\s*as\s+)?([A-Za-z_$][\w$]*)/g))
+    names.add(match[1]);
   return names;
 }
 

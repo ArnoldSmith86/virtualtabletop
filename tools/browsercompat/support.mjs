@@ -95,17 +95,20 @@ function version(added) {
 
 // A feature can have several support statements per browser - behind a flag, under a prefix,
 // under a different name, or for a version range in which it was there but incomplete. Only
-// the plain ones count: the source we scan spells the feature the standard way, so support
-// that needs a different spelling is no support at all. A partial implementation does count -
-// it is a rough edge, not a browser that cannot run the code.
+// the ones spelled the way the source spells it count: support that needs a different spelling
+// is no support at all. A partial implementation does count - it is a rough edge, not a browser
+// that cannot run the code. When a prefix is asked for it is the other way round: the prefixed
+// spelling is exactly what is being looked up, and a browser bcd files no prefixed statement
+// for simply never had it (bcd records prefixed support on the unprefixed path, so "no
+// statement" there is an answer, not a gap in the data).
 //
 // Returns true when this version of the browser has the feature, false when it does not, and
 // null when bcd has no data either way.
-function supportedIn(support, id, target) {
+function supportedIn(support, id, target, prefix) {
   const statements = [].concat(support?.[id] ?? []);
-  let earliest = null, known = false;
+  let earliest = null, known = !!prefix;
   for(const statement of statements) {
-    if(statement.flags || statement.prefix || statement.alternative_name)
+    if(statement.flags || statement.alternative_name || (statement.prefix || '') != (prefix || ''))
       continue;
     const added = version(statement.version_added);
     if(added === null)
@@ -116,7 +119,10 @@ function supportedIn(support, id, target) {
     const removed = statement.version_removed === true ? '0' : version(statement.version_removed);
     if(compareVersions(target, added) >= 0 && (!removed || compareVersions(target, removed) < 0))
       return true;
-    if(earliest === null || compareVersions(added, earliest) < 0)
+    // Which release fixes it is the one a developer needs, so a version that came and went
+    // again before the target does not count: mask-image was in Edge 16 and gone again in 79,
+    // and what Edge 88 waits for is 120.
+    if(compareVersions(added, target) > 0 && (earliest === null || compareVersions(added, earliest) < 0))
       earliest = added;
   }
   return known ? { since: earliest === null ? false : earliest } : null;
@@ -136,23 +142,25 @@ export function createLookup(data, targets) {
   const cache = new Map();
 
   // null when every target has the feature (or when nobody has data on it), otherwise the
-  // list of targets that are too old for it
-  function feature(path) {
-    if(cache.has(path))
-      return cache.get(path);
+  // list of targets that are too old for it. A prefix asks about the vendor prefixed spelling
+  // of the same path - which browsers a -webkit- declaration actually reaches.
+  function feature(path, prefix) {
+    const key = prefix ? `${prefix}${path}` : path;
+    if(cache.has(key))
+      return cache.get(key);
     const compat = walk(data, path)?.__compat;
     let result = null;
     if(compat) {
       const missing = [];
       for(const target of targets) {
-        const supported = supportedIn(compat.support, target.id, target.version);
+        const supported = supportedIn(compat.support, target.id, target.version, prefix);
         if(supported && supported !== true)
           missing.push({ ...target, since: supported.since });
       }
       if(missing.length)
         result = { path, missing, mdn: compat.mdn_url };
     }
-    cache.set(path, result);
+    cache.set(key, result);
     return result;
   }
 
