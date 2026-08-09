@@ -908,6 +908,37 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
   await compareState(t, '3e20074150f78219095df84abeeb74dc');
 });
 
+// The css of an html face object is put into a style element and scoped to a class built from the card's id.
+// Every preview card the editor renders is created without one, so they used to share that class and the last
+// preview rendered restyled all the others - a strip in which every card type wore the last one's colors.
+test('Deck editor: every card type preview keeps its own html face css', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 100, height: 150 },
+      cardTypes: { red: { tint: '#ff0000' }, green: { tint: '#008000' }, blue: { tint: '#0000ff' } },
+      faceTemplates: [ { objects: [] }, { objects: [ {
+        type: 'html', x: 0, y: 0, width: 100, height: 150,
+        value: '<div>tinted</div>', css: { body: { 'background-color': '${PROPERTY tint}' } }
+      } ] } ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+
+  const stripColors = ClientFunction(() => {
+    const colors = [];
+    document.querySelectorAll('#deckEditorStrip .cardFace.active .cardFaceObject').forEach(o=>colors.push(getComputedStyle(o).backgroundColor));
+    return colors;
+  });
+  await t
+    .click('#editButton')
+    .click('#w_deck')
+    .click('#propertiesOpenDeckEditor')
+    .expect(stripColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own tint')
+    .pressKey('esc');
+});
+
 test('Deck editor: symbol pickers and JSON fallback', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

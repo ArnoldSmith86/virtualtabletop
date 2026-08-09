@@ -1,6 +1,16 @@
+// Counts the cards that were created without an id so each of them still gets a css scope of its own - see
+// the cssScope below.
+let unnamedCardCount = 0;
+
 class Card extends Widget {
   constructor(id) {
     super(id);
+
+    // The css of an html face object is written into a style element and scoped to this class (see
+    // createFaces). A card in a room has a unique id, but the read-only copies the editor renders (deck
+    // editor, card type list, widget picker) are all created without one - they would end up sharing a class,
+    // so the last copy rendered would restyle every other one with its own card type's properties.
+    this.cssScope = id !== undefined ? escapeID(id) : `unnamed${++unnamedCardCount}`;
 
     this.addDefaults({
       width: 103,
@@ -184,7 +194,7 @@ class Card extends Widget {
                     if (typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
                         const faceIndex = faceTemplates.indexOf(face);
                         const objectIndex = face.objects.indexOf(original);
-                        const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
+                        const uniqueScope = `html-object-${this.cssScope}-${faceIndex}-${objectIndex}`;
                         objectDiv.classList.add(uniqueScope);
 
                         let styleString = '';
