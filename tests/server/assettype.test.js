@@ -33,6 +33,12 @@ describe('server/assettype.mjs', function() {
     expect(AssetType.contentType(asset([ 0, 0, 0, 0x20 ], 'ftyp', 'avif'))).toEqual('image/avif');
     expect(AssetType.contentType(asset([ 0, 0, 0, 0x18 ], 'ftyp', 'mp42'))).toEqual('video/mp4');
     expect(AssetType.contentType(asset([ 0x1a, 0x45, 0xdf, 0xa3 ]))).toEqual('video/webm');
+    expect(AssetType.contentType(asset('BM', [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 40, 0, 0, 0 ]))).toEqual('image/bmp');
+  });
+
+  // "BM" is two bytes that anything can begin with, so the DIB header size behind them decides
+  test('does not call every asset that begins BM a bitmap', function() {
+    expect(AssetType.contentType(asset('BMorewhateverthisis'))).toEqual(null);
   });
 
   // an asset is served from our own origin, so image/svg+xml is permission to run script there.
@@ -44,6 +50,15 @@ describe('server/assettype.mjs', function() {
     expect(AssetType.contentType(asset('<html><body><script>alert(1)</script></body></html>'))).toEqual(null);
     expect(AssetType.contentType(asset('<?xml version="1.0"?><rss><item/></rss>'))).toEqual(null);
     expect(AssetType.contentType(asset('<html>', ' '.repeat(1100), '<svg></svg>'))).toEqual(null);
+    expect(AssetType.contentType(asset('<!-- <svg> in a comment is not one -->\n<html></html>'))).toEqual(null);
+  });
+
+  // an editor writes its name into a comment above the tag, and a hand written file often carries
+  // a licence header there - neither is a reason to stop serving a picture that used to render
+  test('reads past whatever an editor put in front of the tag', function() {
+    expect(AssetType.contentType(asset('<!-- Generator: Adobe Illustrator 19.0.0 --><svg xmlns="http://www.w3.org/2000/svg"></svg>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset(`<?xml version="1.0"?>\n<!-- ${'GPL-3.0 '.repeat(400)}-->\n<svg></svg>`))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [\n<!ENTITY ns_svg "http://www.w3.org/2000/svg">\n]>\n<svg></svg>'))).toEqual('image/svg+xml');
   });
 
   test('says nothing rather than guessing', function() {
