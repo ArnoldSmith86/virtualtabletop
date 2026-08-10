@@ -131,38 +131,29 @@ MinifyHTML().then(function(result) {
 
   // symbols.json lists the name and the search keywords of every icon and is by
   // far the biggest asset the editor fetches (3 MB, and it compresses to a tenth
-  // of that). express.static sends files as they are, so compress it once on the
-  // first request and serve that copy afterwards. The cache is keyed on the
-  // file's mtime so an instance that is updated while running (a git pull) does
-  // not keep handing out the old copy to gzip-capable clients only.
+  // of that). express.static sends files as they are, so compress it once at
+  // startup and serve that copy from memory afterwards - the same deal as the
+  // minified client scripts below, which the server also inlines at boot. Until
+  // it is ready (and if it fails) express.static serves the file uncompressed.
   let symbolsGzipped = null;
-  let symbolsGzippedMtime = null;
-  router.get('/i/fonts/symbols.json', function(req, res, next) {
-    if(!(req.headers['accept-encoding'] || '').match(/\bgzip\b/))
-      return next();
+  let symbolsLastModified = null;
+  (async function() {
     const file = path.resolve() + '/assets/fonts/symbols.json';
-    let mtime;
-    try {
-      mtime = fs.statSync(file).mtime;
-    } catch(e) {
+    const [ stat, content ] = await Promise.all([ fs.promises.stat(file), fs.promises.readFile(file) ]);
+    symbolsGzipped = await new Promise(function(resolve, reject) {
+      zlib.gzip(content, { level: zlib.constants.Z_BEST_COMPRESSION }, (e, data) => e ? reject(e) : resolve(data));
+    });
+    symbolsLastModified = stat.mtime.toUTCString();
+  })().catch(e=>Logging.handleGenericException('gzipSymbols', e));
+
+  router.get('/i/fonts/symbols.json', function(req, res, next) {
+    if(!symbolsGzipped || !(req.headers['accept-encoding'] || '').match(/\bgzip\b/))
       return next();
-    }
-    if(!symbolsGzipped || +symbolsGzippedMtime != +mtime) {
-      symbolsGzippedMtime = mtime;
-      symbolsGzipped = fs.promises.readFile(file).then(content => new Promise(function(resolve, reject) {
-        zlib.gzip(content, { level: zlib.constants.Z_BEST_COMPRESSION }, (e, data) => e ? reject(e) : resolve(data));
-      })).catch(function(e) {
-        symbolsGzipped = null; // fall back to the uncompressed file and retry next time
-        throw e;
-      });
-    }
-    symbolsGzipped.then(function(data) {
-      res.setHeader('Vary', 'Accept-Encoding');
-      res.setHeader('Content-Type', 'application/json; charset=utf-8');
-      res.setHeader('Content-Encoding', 'gzip');
-      res.setHeader('Last-Modified', mtime.toUTCString()); // express.static sent this - keep revalidation working
-      res.send(data);
-    }, _=>next());
+    res.setHeader('Vary', 'Accept-Encoding');
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Content-Encoding', 'gzip');
+    res.setHeader('Last-Modified', symbolsLastModified); // express.static sent this - keep revalidation working
+    res.send(symbolsGzipped);
   });
 
   router.use('/i', express.static(path.resolve() + '/assets'));
