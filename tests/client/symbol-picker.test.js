@@ -21,13 +21,21 @@ function loadPicker(symbolData, fetchGate=Promise.resolve()) {
     </div>
   `;
 
-  const scope = new Function('$', '$a', 'showOverlay', 'toggleClass', 'fetch', 'detailsOverlay', `
+  const scope = new Function('$', '$a', 'showOverlay', 'showStatesOverlay', 'domByTemplate', 'toggleClass', 'fetch', 'detailsOverlay', `
     ${symbolsSource};
-    return { pickSymbol, loadSymbolPicker };
+    return { pickSymbol, loadSymbolPicker, addRichtextControls };
   `)(
     (selector, parent=document) => parent.querySelector(selector),
     (selector, parent=document) => [ ...parent.querySelectorAll(selector) ],
     () => {},
+    () => {},
+    // stands in for template-richtext-controls: only the buttons addRichtextControls binds
+    _=>{
+      const controls = document.createElement('div');
+      controls.innerHTML = [ 'format_size', 'palette', 'art_track', 'add_photo_alternate', 'movie', 'add_reaction' ]
+        .map(icon => `<button icon="${icon}"></button>`).join('');
+      return controls;
+    },
     (element, className, active) => element.classList.toggle(className, !!active),
     async () => { await fetchGate; return { json: async () => symbolData }; },
     null
@@ -95,6 +103,57 @@ describe('the icon picker overlay', () => {
     await new Promise(resolve => setTimeout(resolve, 0));
     picker.icon('star').click();
     expect((await picked).symbol).toBe('star');
+  });
+
+  test('the richtext emoji button waits for the same load before binding its icons', async () => {
+    let symbolsJsonArrived;
+    const picker = loadPicker(smallSymbolData, new Promise(resolve => symbolsJsonArrived = resolve));
+    const inserted = [];
+    document.execCommand = (command, _showUI, payload)=>inserted.push([ command, payload ]);
+
+    const richtext = document.createElement('div');
+    richtext.textContent = 'text';
+    document.body.appendChild(richtext);
+    picker.addRichtextControls(richtext); // starts the preload, unawaited
+
+    const range = document.createRange();
+    range.selectNodeContents(richtext);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+    document.querySelector('button[icon=add_reaction]').click(); // the author is quicker than the fetch
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(picker.icon('star')).toBe(null); // the list is still the "Loading..." card
+
+    symbolsJsonArrived();
+    await new Promise(resolve => setTimeout(resolve, 0));
+    picker.icon('star').click();
+    expect(inserted.map(([ command ]) => command)).toEqual([ 'inserthtml' ]);
+    expect(inserted[0][1]).toContain('richtextSymbol');
+  });
+
+  test('an icon name typed with spaces ranks like the underscored/hyphenated name', async () => {
+    const picker = loadPicker({
+      'Material Symbols - Navigation': {
+        'keyboard_arrow_back': [ 'arrow', 'back' ],
+        'arrow_back_ios': [ 'arrow', 'back' ],
+        'arrow_back': [ 'previous', 'left' ]
+      },
+      'game-icons.net - Arrows': {
+        'lorc/arrow-back': [ 0, 'return' ]
+      }
+    });
+    picker.pickSymbol();
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    // "arrow back" is how Google's icon site spells arrow_back, so it has to rank the icons named that way
+    // first - underscores in the name and hyphens in the game-icons name alike
+    await picker.search('arrow back');
+    expect(picker.visibleOrder()).toEqual([ 'arrow_back', 'lorc/arrow-back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
+
+    // typing the underscored name still ranks the same (it just does not reach the hyphenated game-icon)
+    await picker.search('arrow_back');
+    expect(picker.visibleOrder()).toEqual([ 'arrow_back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
   });
 
   test('clearing the search brings back the categories and the original order', async () => {

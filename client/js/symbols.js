@@ -128,8 +128,10 @@ async function buildSymbolPicker() {
   // instead of parsing the (three times longer since the 2025 Material Symbols update) data-keywords
   // attribute of every element again on every keystroke. The cached shown/order/big is what the entry
   // currently looks like, so a keystroke only writes to the elements that actually change.
-  for(const el of $a('#symbolList i'))
-    symbolIndex.push({ el, name: (el.dataset.name || '').toLowerCase(), keywords: el.dataset.keywords.toLowerCase(), family: el.dataset.family, shown: true, order: 0, big: false });
+  for(const el of $a('#symbolList i')) {
+    const name = (el.dataset.name || '').toLowerCase();
+    symbolIndex.push({ el, name, spacedName: name.replace(/[_-]+/g, ' '), keywords: el.dataset.keywords.toLowerCase(), family: el.dataset.family, shown: true, order: 0, big: false });
+  }
 
   $('#symbolPickerOverlay input').onkeyup = scheduleSymbolFilter;
 }
@@ -160,6 +162,9 @@ function filterSymbolList() {
 
   const query = $('#symbolPickerOverlay input').value.toLowerCase().trim();
   const terms = query.split(/\s+/).filter(term=>term);
+  // icon names are separated by underscores (arrow_back) or hyphens (game-icons: acid-tube), but spaces are
+  // the natural way to type them - and the spelling Google's own icon site uses - so rank on that spelling
+  const spacedQuery = query.replace(/[_-]+/g, ' ');
   // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
   // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
   const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
@@ -170,7 +175,8 @@ function filterSymbolList() {
     entry.match = terms.every(term=>entry.keywords.includes(term));
     entry.rank = 4; // everything below the "More matches" heading (which is 3)
     if(entry.match && entry.family != hiddenFamily) {
-      entry.bucket = entry.name == query ? 0 : entry.name.startsWith(query) ? 1 : 2;
+      entry.bucket = entry.name == query || entry.spacedName == spacedQuery ? 0
+                   : entry.name.startsWith(query) || entry.spacedName.startsWith(spacedQuery) ? 1 : 2;
       byRank[entry.bucket].push(entry);
     }
   }
@@ -314,14 +320,23 @@ export function addRichtextControls(dom) {
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
-    $('#symbolList').scrollTop = 0;
     for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
       $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
-    filterSymbolList();
 
     $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
+
+    // the preload started above may still be running: binding the handlers now would bind them to the
+    // "Loading..." card, so the icons that appear a moment later would do nothing when clicked
+    try {
+      await loadSymbolPicker();
+    } catch(e) {
+      showStatesOverlay(detailsOverlay);
+      throw e;
+    }
+    $('#symbolList').scrollTop = 0;
+    filterSymbolList();
 
     for(const icon of $a('#symbolList i')) {
       icon.onclick = function() {

@@ -132,22 +132,35 @@ MinifyHTML().then(function(result) {
   // symbols.json lists the name and the search keywords of every icon and is by
   // far the biggest asset the editor fetches (3 MB, and it compresses to a tenth
   // of that). express.static sends files as they are, so compress it once on the
-  // first request and serve that copy afterwards.
+  // first request and serve that copy afterwards. The cache is keyed on the
+  // file's mtime so an instance that is updated while running (a git pull) does
+  // not keep handing out the old copy to gzip-capable clients only.
   let symbolsGzipped = null;
+  let symbolsGzippedMtime = null;
   router.get('/i/fonts/symbols.json', function(req, res, next) {
     if(!(req.headers['accept-encoding'] || '').match(/\bgzip\b/))
       return next();
-    if(!symbolsGzipped)
-      symbolsGzipped = new Promise(function(resolve, reject) {
-        zlib.gzip(fs.readFileSync(path.resolve() + '/assets/fonts/symbols.json'), { level: zlib.constants.Z_BEST_COMPRESSION }, (e, data) => e ? reject(e) : resolve(data));
-      }).catch(function(e) {
+    const file = path.resolve() + '/assets/fonts/symbols.json';
+    let mtime;
+    try {
+      mtime = fs.statSync(file).mtime;
+    } catch(e) {
+      return next();
+    }
+    if(!symbolsGzipped || +symbolsGzippedMtime != +mtime) {
+      symbolsGzippedMtime = mtime;
+      symbolsGzipped = fs.promises.readFile(file).then(content => new Promise(function(resolve, reject) {
+        zlib.gzip(content, { level: zlib.constants.Z_BEST_COMPRESSION }, (e, data) => e ? reject(e) : resolve(data));
+      })).catch(function(e) {
         symbolsGzipped = null; // fall back to the uncompressed file and retry next time
         throw e;
       });
+    }
     symbolsGzipped.then(function(data) {
       res.setHeader('Vary', 'Accept-Encoding');
       res.setHeader('Content-Type', 'application/json; charset=utf-8');
       res.setHeader('Content-Encoding', 'gzip');
+      res.setHeader('Last-Modified', mtime.toUTCString()); // express.static sent this - keep revalidation working
       res.send(data);
     }, _=>next());
   });

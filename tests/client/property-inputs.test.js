@@ -854,6 +854,20 @@ describe('property input helpers', () => {
     expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
   });
 
+  test('an icon name typed with spaces ranks like the underscored/hyphenated name', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'keyboard_arrow_back', keywords: 'keyboard_arrow_back,arrow,back', image: false },
+      { value: 'arrow_back_ios',      keywords: 'arrow_back_ios,arrow,back',      image: false },
+      { value: 'arrow_back',          keywords: 'arrow_back,previous,left',       image: false },
+      { value: 'lorc/arrow-back',     keywords: 'arrow-back,return',              image: true  }
+    ]);
+    // "arrow back" is how Google's icon site spells arrow_back, so it has to rank the icons named that way
+    // first - underscores in the name and hyphens in the game-icons name alike
+    expect(inputHelpers.searchIconIndex('arrow back')).toEqual([ 'arrow_back', 'lorc/arrow-back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
+    // typing the underscored name still ranks the same (it just does not reach the hyphenated game-icon)
+    expect(inputHelpers.searchIconIndex('arrow_back')).toEqual([ 'arrow_back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
+  });
+
   test('an icon can be found by its own name even when it matches later than the result limit', () => {
     const index = Array.from({ length: 120 }, (_, i) => ({ value: `icon_${i}`, keywords: `icon_${i},save`, image: false }));
     index.push({ value: 'save', keywords: 'save,disk', image: false });

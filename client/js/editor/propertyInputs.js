@@ -377,11 +377,17 @@ function loadIconSearchIndex() {
 // limit. Rank the icon actually named like the query first, then the ones whose
 // name starts with it, so typing an icon name always finds that icon. Within a
 // rank, matches keep symbols.json order so related icon families stay together.
+// Icon names are separated by underscores (arrow_back) or hyphens (game-icons:
+// acid-tube), but spaces are the natural way to type them - and the spelling
+// Google's own icon site uses - so compare that spelling as well, otherwise a
+// two-word query can never reach the first two ranks.
 function iconMatchRank(entry, query) {
   const name = (entry.value.includes('/') ? entry.value.split('/')[1] : entry.value).toLowerCase();
-  if(name == query)
+  const spacedName = name.replace(/[_-]+/g, ' ');
+  const spacedQuery = query.replace(/[_-]+/g, ' ');
+  if(name == query || spacedName == spacedQuery)
     return 0;
-  if(name.startsWith(query))
+  if(name.startsWith(query) || spacedName.startsWith(spacedQuery))
     return 1;
   return 2;
 }
@@ -1386,6 +1392,12 @@ class IconInput extends PickerInput {
         await loadIconSearchIndex().catch(_=>null);
         if(search.value.trim() != query)
           return; // the user kept typing while it loaded - that keystroke's own update is in charge now
+        if(!iconSearchIndex) {
+          // the fetch failed - "No results." would blame the query for it
+          results.innerHTML = '';
+          div(results, 'propertyPickerEmpty', 'Could not load the icon list.');
+          return;
+        }
       }
       if(!query)
         return showResults(frequentlyUsed(), 0);
@@ -1491,8 +1503,20 @@ class ImageInput extends PickerInput {
     searchSection.appendChild(showAll);
 
     search.oninput = async _=>{
-      await loadIconSearchIndex().catch(_=>null);
-      showResults(search.value.trim() ? searchImageIndex(search.value.trim()) : frequentlyUsed);
+      const query = search.value.trim();
+      if(query && !iconSearchIndex) {
+        results.innerHTML = '';
+        div(results, 'propertyPickerEmpty', 'Loading icons…');
+        await loadIconSearchIndex().catch(_=>null);
+        if(search.value.trim() != query)
+          return; // the user kept typing while it loaded - that keystroke's own update is in charge now
+        if(!iconSearchIndex) {
+          results.innerHTML = '';
+          div(results, 'propertyPickerEmpty', 'Could not load the icon list.');
+          return;
+        }
+      }
+      showResults(query ? searchImageIndex(query) : frequentlyUsed);
     };
     loadIconSearchIndex().catch(_=>null);
 
