@@ -1846,7 +1846,7 @@ body.deckEditorPanning #deckEditorMain * {
   bottom: 0;
   text-align: center;
   font-size: 12px;
-  opacity: 0.7;
+  opacity: 0.9; /* it is the only hint that the big card is interactive, so it has to be readable */
   padding: 4px 10px;
   pointer-events: none;
 }
@@ -1866,6 +1866,34 @@ body.deckEditorPanning #deckEditorMain * {
   flex-shrink: 0;
 }
 
+/* A deck of 13 (let alone 52) card types is far wider than the strip, so it scrolls sideways - and since every
+   tile now carries its own card type's colors, the strip is the fastest way to find a type by sight, which it
+   can only be if it doesn't look like it ends where its box does. The platform draws an overlay scrollbar that
+   is invisible while the strip sits still, so fade out whichever edge still has tiles behind it (the classes
+   come from updateStripOverflow). Sticky flex items with a negative margin: pinned to the visible edge without
+   adding to the scrollable width, and above the preview cards' own z-index (1000000). */
+#deckEditorStrip.deckEditorStripMoreLeft::before,
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  content: '';
+  position: sticky;
+  flex: 0 0 48px;
+  align-self: stretch;
+  z-index: 1000002;
+  pointer-events: none;
+}
+
+#deckEditorStrip.deckEditorStripMoreLeft::before {
+  left: -10px; /* cancels the strip's own padding, so the fade reaches its edge */
+  margin-right: -53px; /* fade width plus the flex gap */
+  background: linear-gradient(to right, var(--backgroundColor), transparent);
+}
+
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  right: -10px;
+  margin-left: -53px;
+  background: linear-gradient(to left, var(--backgroundColor), transparent);
+}
+
 .deckEditorStripCard {
   display: flex;
   flex-direction: column;
@@ -1883,8 +1911,15 @@ body.deckEditorPanning #deckEditorMain * {
   border-color: var(--backgroundHighlightColor1);
 }
 
+/* The tiles are as saturated as the card types they show, so an outline alone is easy to lose among them: the
+   selected tile also gets the plate and the bold label. */
 .deckEditorStripCard.selected {
   border-color: var(--textHighlightColor2);
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorStripCard.selected > span {
+  font-weight: bold;
 }
 
 .deckEditorStripCard.selectedInactive {
