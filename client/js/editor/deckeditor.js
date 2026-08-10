@@ -499,10 +499,13 @@ class DeckEditor {
     }, { passive: false });
     $('#deckEditorMain').addEventListener('touchend', e=>{ if(e.touches.length < 2) pinchStartDist = 0; if(!e.touches.length) touchPanning = false; });
 
+    $('#deckEditorStrip').addEventListener('scroll', _=>this.updateStripOverflow());
+
     window.addEventListener('resize', _=>{
       if(this.isOpen()) {
         this.renderMain();
         this.updateDragToolbar();
+        this.updateStripOverflow();
       }
     });
     window.addEventListener('keydown', e=>this.onKeyDown(e));
@@ -1428,7 +1431,7 @@ class DeckEditor {
     if(!this.deck())
       return;
     if(this.deckSymbolSelected)
-      return div(container, 'deckEditorEmpty', '<p>Edit the default properties of every card in this deck to the right, or select a card type below to edit that card.</p>');
+      return div(container, 'deckEditorEmpty', '<p>Edit the default properties of every card in this deck in the properties panel, or select a card type in the "Card types" strip to edit that card.</p>');
     if(this.cardType === null)
       return div(container, 'deckEditorEmpty', '<p>This deck does not have any card types yet. Add one using the button in the bottom strip.</p>');
     if(!this.faceTemplates.length)
@@ -1904,7 +1907,7 @@ class DeckEditor {
     const prevScroll = strip.scrollLeft; // rebuilding the tiles must not snap the strip back to the start
     strip.innerHTML = '';
     if(!this.deck())
-      return;
+      return this.updateStripOverflow(); // an empty strip hides nothing behind either edge
 
     // The card-type toolbar's copy/delete need a selected card type; "± All" needs at least one card type.
     $('#deckEditorStripCopy').disabled = this.cardType === null;
@@ -1963,7 +1966,7 @@ class DeckEditor {
       };
       // Per-card-type "cards in game" count with +/- right under the tile.
       const count = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card' && w.get('cardType') == cardType).length;
-      const countRow = div(button, 'deckEditorStripCount', `<button icon=remove title="One fewer card of this type"></button><span class=deckEditorStripCountVal>${count}</span><button icon=add title="One more card of this type"></button>`);
+      const countRow = div(button, 'deckEditorStripCount', `<button icon=remove title="One fewer card of this type"></button><span class=deckEditorStripCountVal title="Cards of this type in the game">${count}</span><button icon=add title="One more card of this type"></button>`);
       countRow.draggable = false;
       countRow.onmousedown = e=>e.stopPropagation();
       countRow.ondragstart = e=>{ e.preventDefault(); e.stopPropagation(); };
@@ -1979,6 +1982,15 @@ class DeckEditor {
     if(selectedTile && selectedTile.scrollIntoView && this.stripScrolledTo !== selectionKey)
       selectedTile.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     this.stripScrolledTo = selectionKey;
+    this.updateStripOverflow();
+  }
+
+  // Which side of the strip still has card types hidden behind its edge, for the fades in deckeditor.css.
+  updateStripOverflow() {
+    const strip = $('#deckEditorStrip');
+    const hidden = strip.scrollWidth - strip.clientWidth;
+    strip.classList.toggle('deckEditorStripMoreLeft',  hidden > 1 && strip.scrollLeft > 1);
+    strip.classList.toggle('deckEditorStripMoreRight', hidden > 1 && strip.scrollLeft < hidden - 1);
   }
 
   renderSidebar() {
@@ -3368,7 +3380,7 @@ class DeckEditor {
     if(!hint)
       return;
     const show = this.deck() && !this.deckSymbolSelected && this.selectedObject === null && this.faceTemplates.length;
-    hint.textContent = show ? 'Click a face object above or on the list to the left to select, edit, or drag it around.' : '';
+    hint.textContent = show ? 'Click a face object on the card, or in the "Face objects" list, to select, edit, or drag it around.' : '';
     hint.classList.toggle('active', !!show);
   }
 
