@@ -2502,7 +2502,7 @@
     "version": 3,
     "info": {
       "name": "Hangman",
-      "image": "/assets/1987339207_48902",
+      "image": "/assets/-1862619361_4254",
       "rules": "https://www.ultraboardgames.com/hangman/game-rules.php",
       "bgg": "https://boardgamegeek.com/boardgame/5314/hangman",
       "year": "1976",
@@ -2514,7 +2514,7 @@
       "attribution": "The room design, library image, and all game elements (except for the chat system) are by LawDawg96 and are released to the Public Domain by CC0.\n\nThe chat system and an explanation of how to include it in any room are on the GitHub wiki.\n\n--\n\nThe room design, library image, and all game elements (except for the chat system) are by LawDawg96 and are released to the Public Domain by CC0.  Portuguese word list provided by RaphaelAlvez.\n\nThe chat system and an explanation of how to include it in any room are on the GitHub wiki.",
       "similarName": "Hangman",
       "description": "Guess letters to complete a word before the hangman image is filled in.",
-      "showName": true,
+      "showName": false,
       "lastUpdate": 1622843648000
     }
   },

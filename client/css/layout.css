@@ -6,7 +6,6 @@
   --roomLeft: 0px;
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
-  --editColor: #7ba5f5;
   --overlayFontColor: #222326;
   --VTTblue: #1f5ca6;
   --VTTblueDark: #0d2f5e;
@@ -24,6 +23,10 @@
   --positiveInput: #009502;
   --negativeInput: #950000;
   --neutralInput: #1f5ca6;
+  --zoom: 1;
+  --roomZoom: 1;
+  --roomPanX: 0px;
+  --roomPanY: 0px;
 }
 
 body {
@@ -34,7 +37,28 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+body.edit.darkMode input {
+  --overlayFontColor: #ffffff;
+}
+
+body.edit.darkMode input::placeholder {
+  color: #ffffff;
+}
+
+body.loadingEditMode * {
+  cursor: wait;
+}
+
+/* the overlays are children of #roomArea, so their size is the board's, not the window's.
+   Their breakpoints are container queries against this box: as media queries they measured
+   the window, which only said something about how much room an overlay has back when every
+   board was 1600x1000. A square or portrait board now leaves a much smaller overlay in the
+   same window and would still have gotten the layout of a wide one.
+   Only for overlays that stay in here: an element the deck editor re-parents into #editor (the
+   symbol picker, its own dialogs) has no roomArea container left, and a @container rule on it
+   silently stops matching at any size - those keep their media queries. */
 #roomArea {
+  container: roomArea / size;
   position: fixed;
   overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
@@ -44,11 +68,14 @@ body {
   z-index: 1;
 }
 
-@media (min-aspect-ratio: 1600/1000) {
-  body {
-    --roomTop: 0px;
-    --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
-  }
+/* the window is wider than the board, so the toolbar sits beside it - this used to be a
+   media query against the hardcoded 1600/1000 aspect ratio, but that is exactly what
+   setScale already decides when it picks the toolbar layout for the board's own size.
+   .edit is excluded explicitly: edit mode positions the room itself (editor/layout.css)
+   and would otherwise only win this on source order */
+body:not(.edit,.horizontalToolbar,.aspectTooGood) {
+  --roomTop: 0px;
+  --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
 }
 
 body.aspectTooGood {
@@ -60,29 +87,34 @@ body.aspectTooGood.hiddenToolbar {
   --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
-@media (orientation: portrait) {
-  body:not(.lightsOff,.jsonEdit) {
-    background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
-    background-size: calc(100% - 40px) calc(var(--roomTop) - 40px);
-    background-repeat: no-repeat;
-    background-position: 20px 20px;
-    height: 100vh;
-  }
-  body:not(.lightsOff,.jsonEdit)::after {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* the branding wash and the "rotate your device" hint above the board. This used to be
+   @media (orientation: portrait), which told a player with a portrait board in a portrait
+   window - the best fit there is - to rotate away from it. isOrientationMismatch decides it
+   from the board's own shape now, so only a landscape board asks to be turned landscape.
+   The heights are clamped because --roomTop goes negative on a board that nearly fills the
+   window, which dropped the declaration and left the text sliced across the board. */
+body.orientationMismatch:not(.lightsOff,.jsonEdit) {
+  background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
+  background-size: calc(100% - 40px) max(0px, calc(var(--roomTop) - 40px));
+  background-repeat: no-repeat;
+  background-position: 20px 20px;
+  height: 100vh;
+}
+body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
-    bottom: 0;
-    height: calc(var(--roomTop) - 40px);
-    width: calc(100vw - 40px);
+  bottom: 0;
+  height: max(0px, calc(var(--roomTop) - 40px));
+  width: calc(100vw - 40px);
 
-    content: "Please rotate your device to landscape orientation and switch to fullscreen.";
-    margin: 20px;
-    font-size: 20px;
-    color: #fff2;
-  }
+  content: "Please rotate your device to landscape orientation and switch to fullscreen.";
+  margin: 20px;
+  font-size: 20px;
+  color: #fff2;
 }
 
 
@@ -105,8 +137,17 @@ body.aspectTooGood.hiddenToolbar {
       height: 100%;
 
       --toolbarColor: var(--VTTblue);
+      --toolbarTextColor: #fff;
+      --toolbarArrowSize: 24px;
       background: var(--toolbarColor);
       padding: 20px 0 10px 0;
+    }
+
+    /* the toolbar contents never shrink - updateToolbarLayout in main.js applies the lowest
+       toolbarCompact* level that makes everything fit and switches the toolbar to scrolling
+       (body.toolbarOverflow) if even the most compact one does not */
+    #toolbar > * {
+      flex-shrink: 0;
     }
 
     #toolbar > img {
@@ -137,16 +178,72 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (min-height: 440px) {
-      body.wideToolbar #toolbar > img {
-        display: block;
-        margin: 10px 20px 3px 20px;
-        height: 52px;
-      }
-      body.wideToolbar #toolbar .divider:nth-child(2) {
-        display: block;
-        margin: 20px 10%;
-      }
+    /* hiding the toolbar used to be one way - with the board size configurable, aspectTooGood
+       is something a game can put every player in, so there has to be a way back. A thin strip
+       at the left edge, out of the way until it is hovered. */
+    #showToolbarButton {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      z-index: 3;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+
+      margin: 0;
+      padding: 0;
+      width: 10px;
+      height: 80px;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      background: var(--wcMain);
+      color: var(--wcFont);
+      opacity: 0.4;
+      overflow: hidden;
+      cursor: pointer;
+      transition: width 0.15s ease, opacity 0.15s ease;
+    }
+
+    #showToolbarButton::before {
+      font-size: 20px;
+      width: auto;
+    }
+
+    #showToolbarButton:hover, #showToolbarButton:focus-visible {
+      width: var(--toolbarSize);
+      opacity: 1;
+    }
+
+    /* edit mode hides the whole toolbar anyway, so there is nothing to bring back there */
+    body.aspectTooGood.hiddenToolbar:not(.edit) #showToolbarButton {
+      display: flex;
+    }
+
+    body.loading #toolbar, body.loading #toolbar * {
+      cursor: not-allowed;
+    }
+
+    body.wideToolbar #toolbar > img {
+      display: block;
+      margin: 10px 20px 3px 20px;
+      height: 52px;
+    }
+
+    body.wideToolbar.toolbarCompact1 #toolbar > img {
+      margin: 10px 20px;
+    }
+
+    body.wideToolbar.toolbarCompact4 #toolbar > img {
+      display: none;
+    }
+
+    body.toolbarCompact1:not(.horizontalToolbar) #toolbar {
+      padding: 0;
+    }
+
+    body.horizontalToolbar.toolbarCompact3 #toolbar {
+      padding: 0 5px;
     }
 
   /* dividers */
@@ -156,7 +253,7 @@ body.aspectTooGood.hiddenToolbar {
       margin: 10px 10%;
     }
 
-    #toolbar .divider:nth-child(2) {
+    #toolbar .logoDivider {
       display: none;
     }
 
@@ -168,6 +265,20 @@ body.aspectTooGood.hiddenToolbar {
       border-left: 1px solid #fff8;
       height: 80%;
       margin: auto 10px;
+    }
+
+    body.wideToolbar #toolbar .logoDivider {
+      display: block;
+      margin: 20px 10%;
+    }
+
+    body.wideToolbar.toolbarCompact1 #toolbar .logoDivider {
+      margin: 10px 10%;
+    }
+
+    body.toolbarCompact2:not(.horizontalToolbar) #toolbar .divider,
+    body.horizontalToolbar.toolbarCompact4 #toolbar .divider {
+      display: none;
     }
 
   /* buttons */
@@ -202,6 +313,10 @@ body.aspectTooGood.hiddenToolbar {
       background-color: rgba(0, 0, 0, 0.1);
     }
 
+    body.loading .toolbarButton:hover {
+      background-color: transparent;
+    }
+
     .toolbarButton:focus {
       outline-style: none;
       box-shadow: none;
@@ -215,6 +330,19 @@ body.aspectTooGood.hiddenToolbar {
 
     body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
       justify-content: flex-end;
+    }
+
+    body.wideToolbar.toolbarCompact1 .toolbarButton:not(.toolbarTab) {
+      padding: 0 10%;
+    }
+
+    body.toolbarCompact1:not(.wideToolbar,.horizontalToolbar) .toolbarButton:not(.toolbarTab) {
+      padding: 2px;
+    }
+
+    body.horizontalToolbar.toolbarCompact3 .toolbarButton:not(.toolbarTab) {
+      padding: 2px;
+      margin: 0;
     }
 
   /* tabs */
@@ -246,15 +374,26 @@ body.aspectTooGood.hiddenToolbar {
       width: unset;
     }
 
-    @media (min-width: 760px) {
-      body.horizontalToolbar .toolbarTab::before {
-        font-size: 24px;
-      }
+    body.toolbarCompact3:not(.horizontalToolbar) .toolbarTab {
+      height: 30px;
+    }
+
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab::before {
+      font-size: 24px;
+    }
+
+    /* the horizontal toolbar first shrinks the tab labels and only removes them one level later */
+    body.horizontalToolbar.toolbarCompact1:not(.toolbarCompact2) .toolbarTab {
+      padding: 0 10px;
+    }
+
+    body.horizontalToolbar.toolbarCompact3 .toolbarTab {
+      padding: 0 8px;
     }
 
   /* button tooltips */
 
-    .toolbarButton .tooltip, #options {
+    .toolbarButton .tooltip, #options, #zoomControls {
       display: none;
       position: absolute;
       left: 46px;
@@ -262,13 +401,14 @@ body.aspectTooGood.hiddenToolbar {
       font-size: 14px;
       border-radius: 4px;
       white-space: nowrap;
-      color: #fff;
+      color: var(--toolbarTextColor);
       background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
+      transition: color 0.3s ease;   
     }
 
-    .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
+    body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
       display: block;
     }
 
@@ -295,30 +435,32 @@ body.aspectTooGood.hiddenToolbar {
       bottom: 46px;
     }
 
-    @media (min-width: 760px) {
-      body.horizontalToolbar .toolbarTab .tooltip {
-        box-shadow: unset;
-        background: none;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
+      box-shadow: unset;
+      background: none;
+    }
 
-      body.horizontalToolbar .toolbarButton .tooltip {
-        margin-left: -4px;
-        font-size: 12px;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarButton .tooltip {
+      margin-left: -4px;
+      font-size: 12px;
+    }
 
-      body.horizontalToolbar .toolbarTab .tooltip {
-        font-size: 20px;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
+      font-size: 20px;
+    }
 
-      body.horizontalToolbar .active.toolbarTab .tooltip {
-        color: var(--toolbarColor);
-      }
+    body.horizontalToolbar.toolbarCompact1:not(.toolbarCompact2) .toolbarTab .tooltip {
+      font-size: 15px;
+    }
 
-      body.horizontalToolbar .toolbarTab .tooltip {
-        display: block;
-        position: static;
-        padding-right: 0;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .active.toolbarTab .tooltip {
+      color: var(--toolbarColor);
+    }
+
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
+      display: block;
+      position: static;
+      padding-right: 0;
     }
 
   /* button specific styles */
@@ -332,7 +474,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     #playersButton::before {
-      content: '[users_settings]';
+      content: '[people]';
     }
 
     #editButton::before {
@@ -345,6 +487,10 @@ body.aspectTooGood.hiddenToolbar {
 
     #optionsButton::before {
       content: '[volume_up]';
+    }
+
+    #zoom2xButton::before {
+      content: '[zoom_in]';
     }
 
     html:not(:fullscreen) #fullscreenButton::before {
@@ -395,100 +541,101 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (max-height: 520px) {
-      body.wideToolbar #editButton, body.wideToolbar #addButton {
-        display: none;
-      }
+  /* scrolling (when even the most compact layout does not fit) */
+
+    body.toolbarOverflow #toolbar {
+      overflow-y: auto;
+      overflow-x: clip;
+      scrollbar-width: none;
+      padding-top: 0;
+      padding-bottom: 0;
+      /* every compaction level changes the size of the contents, so scroll anchoring would keep
+         adjusting scrollTop while the window is resized until the toolbar sits at its end */
+      overflow-anchor: none;
+      /* scrolling comes to rest on a button instead of cutting one in half behind an arrow */
+      scroll-snap-type: y proximity;
+      scroll-padding: var(--toolbarArrowSize) 0;
     }
 
-    @media (max-width: 760px) {
-      body.aspectTooGood #editButton, body.aspectTooGood #addButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar {
+      overflow-x: auto;
+      overflow-y: clip;
+      padding-left: 0;
+      padding-right: 0;
+      scroll-snap-type: x proximity;
+      scroll-padding: 0 var(--toolbarArrowSize);
     }
 
-    @media (max-height: 420px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #editButton, body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #addButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar > * {
+      scroll-snap-align: start;
     }
 
-    @media (max-height: 340px) {
-      body:not(.horizontalToolbar,.aspectTooGood) .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar::-webkit-scrollbar {
+      display: none;
     }
 
-    @media (max-width: 630px) {
-      body.aspectTooGood .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
-        display: none;
-      }
+    /* the arrows hint that scrolling reveals more buttons and scroll on click - they get a strip
+       of their own at both ends (which doubles as padding) so that they never cover a button;
+       they stay in place while the content scrolls underneath them and only turn invisible when
+       there is nothing left to scroll to, so that the buttons never jump */
+    body.toolbarOverflow #toolbar::before,
+    body.toolbarOverflow #toolbar::after {
+      display: flex;
+      visibility: hidden;
+      position: sticky;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      height: var(--toolbarArrowSize);
+      font-family: "Material Symbols";
+      font-size: var(--toolbarArrowSize);
+      color: var(--toolbarTextColor);
+      background: var(--toolbarColor);
+      cursor: pointer;
     }
 
-    @media (max-height: 240px) {
-      body:not(.horizontalToolbar) #aboutButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar::before {
+      content: 'keyboard_arrow_up';
+      top: 0;
     }
 
-    @media (max-width: 490px) {
-      body.aspectTooGood #aboutButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar::after {
+      content: 'keyboard_arrow_down';
+      bottom: 0;
     }
 
-    @media (max-height: 200px) {
-      body:not(.horizontalToolbar) #playersButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar::before,
+    body.horizontalToolbar.toolbarOverflow #toolbar::after {
+      top: auto;
+      bottom: auto;
+      width: var(--toolbarArrowSize);
+      height: auto;
     }
 
-    @media (max-width: 420px) {
-      body.aspectTooGood #playersButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar::before {
+      content: 'keyboard_arrow_left';
+      left: 0;
     }
 
-    @media (max-width: 350px) {
-      body.aspectTooGood #hideToolbarButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar::after {
+      content: 'keyboard_arrow_right';
+      right: 0;
     }
 
-    @media (max-width: 960px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: none;
-      }
+    body.toolbarOverflow.toolbarScrollBack #toolbar::before,
+    body.toolbarOverflow.toolbarScrollForward #toolbar::after {
+      visibility: visible;
     }
 
-    @media (max-width: 759px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 530px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 430px) {
-      body.horizontalToolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 340px) {
-      body.horizontalToolbar #aboutButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 270px) {
-      body.horizontalToolbar #playersButton {
-        display: none;
-      }
+    /* popups and tooltips reach outside of the toolbar and would be clipped by the scroll
+       container - positionToolbarPopups and positionToolbarTooltip in main.js place them
+       relative to the viewport instead (the wide toolbar has its tooltips inside of it) */
+    body.toolbarOverflow #options,
+    body.toolbarOverflow #zoomControls,
+    body.toolbarOverflow:not(.wideToolbar) .toolbarButton .tooltip {
+      position: fixed;
+      bottom: auto;
     }
 
   /* sound settings */
@@ -522,6 +669,41 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     body.horizontalToolbar #options {
+      top: -42px;
+      left: unset;
+      right: -32px;
+    }
+
+    #zoomAnchor {
+      position: relative;
+    }
+
+    #zoomControls {
+      display: flex;
+      left: calc(var(--toolbarSize) + 4px);
+      top: -2px;
+      padding: 2px;
+      pointer-events: unset;
+    }
+
+    #zoomControls.hidden {
+      display: none;
+    }
+
+    #lockZoomButton {
+      padding: 5px;
+    }
+
+    #lockZoomButton::before {
+      font-family: "Material Symbols" !important;
+      content: 'lock_open_right';
+    }
+
+    #lockZoomButton.locked::before {
+      content: 'lock';
+    }
+
+    body.horizontalToolbar #zoomControls {
       top: -42px;
       left: unset;
       right: -32px;
@@ -574,6 +756,16 @@ body.aspectTooGood.hiddenToolbar {
   background: #00000022;
 }
 
+/* the stack is scrolled inside the overlay instead of stretching it. cqh, not vh: the overlay is
+   the board, which can be a lot shorter than the window - 40vh was taller than the whole overlay
+   on a wide board in a tall window */
+#clientErrorStack {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 40cqh;
+  overflow: auto;
+}
+
 div[icon] {
   background: var(--roomColor);
   position: relative;
@@ -585,7 +777,7 @@ div[icon] {
 
 div[icon]::before {
   content: attr(icon);
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   color: #f8f8f8;
   font-size: 250px;
   line-height: 250px;
@@ -615,6 +807,39 @@ div[icon] .buttons {
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
+}
+
+body.zoom2x #roomArea {
+  overflow: hidden;
+}
+
+body.zoom2x #room {
+  transform: translate(var(--roomPanX), var(--roomPanY)) scale(calc(var(--scale) * var(--zoom))) ;
+  transform-origin: left top;
+}
+
+body.panning {
+  cursor: grabbing;
+}
+
+body.zoom2x #roomArea {
+  cursor: grab;
+}
+
+body.panning #roomArea {
+  cursor: grabbing;
+}
+
+body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomArea, body.zoom2x.overlayActive #roomArea {
+  cursor: default;
+}
+
+body.zoom2x.edit.spacePanActive #roomArea {
+  cursor: grab;
+}
+
+body.zoom2x.edit.spacePanActive.panning #roomArea {
+  cursor: grabbing;
 }
 
 ::-webkit-scrollbar {
@@ -658,11 +883,15 @@ div[icon] .buttons {
   -moz-user-select: none;
 }
 
-body:not(.jsonEdit) .widget.foreign {
+.widget.foreign {
+  --foreign:true;
+}
+
+body:not(.edit) .widget.foreign, body:not(.edit) .widget.hidden {
   display: none !important;
 }
 
-body.jsonEdit:not(.hitTest) .widget.foreign {
+body.edit:not(.hitTest) .widget.foreign, body.edit:not(.hitTest):not(.showHiddenWidgets) .widget.hidden {
   /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
      we hide and pass pointer events through the element but don't use display: none here
      to prevent invalidating all layout every time the mouse moves. When hit testing
@@ -670,6 +899,20 @@ body.jsonEdit:not(.hitTest) .widget.foreign {
      is presented to the user). */
   visibility: hidden;
   pointer-events: none;
+}
+
+.widget.limbo {
+  opacity: 0.5;
+  border: 5px dashed darkred;
+}
+.widget.limbo::before {
+  content: 'Invalid Parent';
+  font-size: 16px;
+  color: darkred;
+}
+
+body:not(.edit) .widget.limbo {
+  display: none;
 }
 
 #clientPointer {
@@ -692,8 +935,7 @@ body.jsonEdit:not(.hitTest) .widget.foreign {
   position: fixed;
   top: 5vh;
   left: 5vw;
-  transition: opacity 200ms ease;
-  transition-delay: 400ms, 400ms;
+  transition: opacity 200ms ease 400ms;
   transform-origin: top left;
   pointer-events: none;
 }
@@ -719,6 +961,11 @@ button {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin: 1px;
+  transition: color 0.3s ease
+}
+
+button.playerChange .tooltip.playerChange {
+  color: yellow
 }
 
 button:hover {
@@ -735,12 +982,14 @@ button[icon] {
 }
 button[icon]::before {
   content: attr(icon);
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   text-transform: lowercase;
   margin-right: .25rem;
   font-size: 24px;
   font-weight: normal;
   line-height: 1;
+  width: 24px;
+  overflow: clip;
 }
 button[icon]:empty {
   padding: 5px;
@@ -759,6 +1008,9 @@ button[icon].green {
 }
 button[icon].green:hover {
   background-color: #004f00;
+}
+button[icon].green:disabled:hover {
+  background-color: darkgreen;
 }
 
 .prettyButton {
@@ -787,6 +1039,15 @@ button[icon].green:hover {
   line-height: 18px;
 }
 
+button.visualProgress {
+  --stripesColor1: #006400;
+  --stripesColor2: #006400;
+  position: relative;
+  background-image: linear-gradient(135deg, #006400 0%, #006400 100%);
+  background-size: calc(var(--progress) * 100%) 100%;
+  background-repeat: no-repeat;
+}
+
 .richtext-controls {
   position: sticky;
   top: 10px;
@@ -795,6 +1056,7 @@ button[icon].green:hover {
   border-radius: 4px;
   padding: 2px;
   font-size: 0;
+  z-index: 1;
 }
 
 .richtext-controls button {
@@ -825,17 +1087,27 @@ button[icon].green:hover {
   margin: 0 20px 20px 0;
 }
 
-.richtextSymbol.richtextSymbol {
-  font-size: 18px;
+.richtextSymbol.richtextSymbol:not(.emoji), img.emoji {
+  display: inline-block;
+  font-size: 1.15em;
   position: relative;
-  line-height: 10px;
+  line-height: 1em;
   font-style: normal;
+  height: 1em;
+  width: 1em;
 }
 .richtextSymbol.symbols {
-  top: 2px;
+  top: 0.15em;
 }
-.richtextSymbol.material-icons {
-  top: 4px;
+.richtextSymbol.material-symbols, .richtextSymbol.material-symbols-nofill {
+  top: 0.2em;
+}
+.richtextSymbol.gameicons, img.emoji {
+  vertical-align: bottom;
+}
+.richtextSymbol.emoji-monochrome {
+  font-size: 1em !important;
+  width: 1.2em !important;
 }
 
 .symbols {
@@ -932,9 +1204,16 @@ button.add::before {
 
 button:disabled,
 button:disabled:hover {
-  background: #808080;
+  background-color: #808080;
   color: #d3d3d3;
   cursor: not-allowed;
+}
+
+/* The colored variants above are more specific than button:disabled, so a disabled green/red icon button
+   would keep its full color and not look disabled at all. */
+button[icon]:disabled,
+button[icon]:disabled:hover {
+  background-color: #808080;
 }
 
 .ui-button {
@@ -968,7 +1247,36 @@ button:disabled:hover {
 .ui-button.blue {
   background-color: var(--neutralInput);
 }
-
+#gridOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+.gridFields {
+  color: #fff;
+  background-color: var(--VTTblue);
+  width: 60px;
+}
+.gridFields::placeholder{
+  color: #a9a;
+}
+#gridOverlay .modal{
+  width: 200px;
+}
+#gridOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+#pileOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
 #buttonInputOverlay{
   justify-content: center;
   align-items: center;
@@ -977,6 +1285,30 @@ button:disabled:hover {
 }
 #buttonInputOverlay h1{
   display: none;
+}
+#inputBlockOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+#inputBlockOverlay h1{
+  display: flex;
+  background: var(--VTTblue);
+}
+#inputBlockOverlay .modal{
+  width: 200px;
+}
+#inputBlockText{
+  padding: 16px 16px 8px;
+  text-align: center;
+  white-space: pre-line;
+}
+#inputBlockGuidance{
+  color: #666;
+  padding: 8px 16px 16px;
+  text-align: center;
 }
 .modal{
   color: var(--modalTextColor);
@@ -990,9 +1322,10 @@ button:disabled:hover {
   border-radius: 8px;
   border-top: 3px solid var(--VTTblue);
   border-bottom: 3px solid var(--VTTblue);
+  position: relative;
 }
 
-.modal h1{
+.modal h1 {
   margin: 0;
   padding: 4px 8px;
   text-align: left;
@@ -1010,22 +1343,21 @@ button:disabled:hover {
 }
 
 .modal h1:after {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
+  content: '';
+  position: absolute;
+  background-color: var(--modalBorderColor);
+  display: block;
+  z-index: 15;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
 }
 
-.modal .footer{
- margin-top: 16px;
-  padding: 4px;
+.modal .footer {
+  padding: 16px 4px 4px 4px;
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -1050,7 +1382,7 @@ button:disabled:hover {
 }
 
 
-.modal .footer > button{
+.modal .footer > button {
   font-family: 'Roboto';
   display: flex;
   height: 32px;
@@ -1067,12 +1399,11 @@ button:disabled:hover {
   font-weight: 500;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
-
 }
-.modal .footer > button label{
+.modal .footer > button label {
   font-size: 1rem;
 }
-.modal .footer > button *{
+.modal .footer > button * {
   cursor: pointer;
 }
 
@@ -1137,6 +1468,9 @@ button:disabled:hover {
 #buttonInputFields input{
   position: relative;
 }
+#buttonInputFields label:not(.switchbox):empty {
+  display: none;
+}
 .modal *:focus {
   outline: none;
   box-shadow: 0 0 0 3px #159ce4;
@@ -1147,23 +1481,9 @@ button:disabled:hover {
   display: flex;
   position: relative;
   padding: 3px;
+  border-bottom: 1px solid var(--modalBorderColor);
 }
-#buttonInputFields > div::after {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
-}
-#buttonInputFields > div:last-of-type::after {
-    background-color: transparent;
-}
+
 .inputtitle{
   background: var(--VTTblue);
   color: white;
@@ -1197,10 +1517,19 @@ button:disabled:hover {
   font-style: italic;
   margin: 0;
 }
+
+.inputunderline{
+  background-color: #aaaaaa;
+  margin: -5px 5px 5px 5px;
+  height: 1px;
+}
+
 .inputnumber,
 .inputstring,
 .inputselect,
-.inputpalette{
+.inputpalette,
+.inputchoose,
+.inputslider{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1210,7 +1539,9 @@ button:disabled:hover {
 .inputnumber label,
 .inputstring label,
 .inputselect label,
-.inputpalette label{
+.inputpalette label,
+.inputchoose label,
+.inputslider label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1219,6 +1550,7 @@ button:disabled:hover {
     font-weight: 400;
     line-height: 15.6px;
     min-height: 15px;
+    box-sizing: border-box;
 }
 
 .inputcheckbox input{
@@ -1231,19 +1563,43 @@ button:disabled:hover {
   flex-shrink: 0;
   order: 1;
 }
+
 .inputnumber input,
 .inputstring input,
 .inputselect select
 {
   appearance: none;
-  padding: 20.6px 5px 0px 5px;
-  margin: -20.6px 0 0 0;
+  padding: 0 5px 0px 5px;
+  margin: 0 0 0 0;
   font-size: 16px;
   color: var(--modalTextColor);
   background-color: transparent;
   border: 0px none transparent;
   line-height: 36px;
   border-radius: 4px;
+}
+
+.inputselect select{
+  padding-right: 25px;
+}
+
+.inputexpandselect {
+  text-align: right;
+  font-family: "Material Symbols";
+  font-size: 20px;
+  line-height: 20px;
+  position: absolute;
+  right: 5px;
+  bottom: 12px;
+  z-index: -1;
+}
+
+.inputnumber label:empty ~ input,
+.inputstring label:empty ~ input,
+.inputselect label:empty ~ select
+{
+  padding: 0 5px 0px 5px;
+  margin: 0;
 }
 .inputselect select option{
   background-color: var(--modalBackgroundColor);
@@ -1350,11 +1706,164 @@ input.switchbox[type="checkbox"]:checked + .switchbox::before {
 input.switchbox[type="checkbox"]:checked + .switchbox{
   background-color: var(--VTTblue);
 }
+.modal input[type=range] {
+  -webkit-appearance: none;
+  margin: 0;
+  width: 100%;
+  background: none;
+  height: 42px;
+}
+.modal input[type=range]:focus {
+  border-radius: 100px;
+}
+.modal input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 42px;
+  cursor: pointer;
+  background: #3071a9;
+  border-radius: 42px;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+.modal input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 38px;
+  width: 38px;
+  border-radius: 42px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+.modal input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+.modal input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 38px;
+  cursor: pointer;
+  background: #3071a9;
+  border-radius: 42px;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+.modal input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 36px;
+  border-radius: 36px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+.countInput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  line-height: 42px;
+  padding: 8px 8px 0;
+
+}
+.inputslider .countInput{
+  width: 100%;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 0;
+}
+.inputslider .inputSliderValue{
+  padding: 0;
+  font-size: 16px;
+  min-width: var(--input-slider-value-ch, 4ch);
+  text-align: right;
+  color: var(--modalTextColor);
+}
+.inputslider input[type=range] {
+  height: 24px;
+  margin: 4px;
+}
+@-moz-document url-prefix() {
+  .inputslider input[type=range] {
+    margin-right: 6px;
+  }
+}
+.inputslider input[type=range]::-moz-range-track {
+  background-color: var(--VTTblue);
+  height: 24px;
+  padding: 2px;
+}
+.inputslider input[type=range]::-webkit-slider-runnable-track {
+  background-color: var(--VTTblue);
+  height: 28px;
+  padding: 2px;
+}
+.inputslider input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
+}
+.inputslider input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
+}
+.countInput input[type=number]{
+  font-size: 1.5rem;
+  text-align: center;
+  width: 3ch;
+  padding: 0 5px;
+  border: 0px none transparent;
+  background: transparent;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+  color: black
+}
+.countInput input[type=number]::-webkit-inner-spin-button,
+.countInput input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+}
+#pileOverlay .modal{
+  width: 200px;
+}
+#pileOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+/* .inputtext.optiontext label{
+  text-align: center;
+} */
+#pileOverlay > .modal .inputtext.optiontext{
+  display: none;
+}
+.modal .button-bar{
+  box-sizing: border-box;
+  padding: 8px 32px;
+}
+.modal .button-bar button {
+  margin-left: 0;
+  margin-right: 0;
+}
+.pilecancelbutton{
+  position: absolute;
+  height: 38px;
+  width: auto!important;
+  top: -5px;
+  right: 5px;
+  background-color: black;
+}
 input:invalid{
   color: red;
 }
-input:invalid+span:after {
-  font-family: 'Material Icons';
+input:invalid+span::after, .inputError::before {
+  font-family: 'Material Symbols';
   content: 'error';
   position: absolute;
   right: 5px;
@@ -1363,7 +1872,15 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-.inputpalette > div{
+.inputError {
+  color: red;
+  align-items: center;
+}
+.inputError::before {
+  position: unset;
+  margin-right: 5px;
+}
+.inputpalette > div, .inputchoose > div, .inputError {
   display: flex;
   flex-wrap: wrap;
   padding: 0 3px;
@@ -1381,11 +1898,11 @@ input:invalid+span:after {
   padding: 0;
   margin: -1.5px;
 }
-.inputpalette > div input[type="radio"]:checked+label{
+.inputpalette > div input[type="radio"]:checked+label, .inputchoose .selected.inputchooseWidgetWrapper {
   border: 3px solid var(--VTTblue);
 }
-.inputpalette > div input[type="radio"]:checked+label::after{
-  font-family: 'Material Icons';
+.inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.inputchooseWidgetWrapper::after {
+  font-family: 'Material Symbols';
   line-height: 1.25em;
   text-align: center;
   height: 1.25em;
@@ -1417,4 +1934,24 @@ input:invalid+span:after {
   background-color: inherit;
   border-radius: 5px;
   z-index: -2;
+}
+
+.inputchoose .inputchooseWidgetWrapper {
+  position: relative;
+  border: 3px solid transparent;
+  border-radius: 8px;
+}
+
+.inputchoose .selected.inputchooseWidgetWrapper {
+  overflow: hidden;
+}
+.inputchoose .selected.inputchooseWidgetWrapper::after {
+  border: unset;
+  z-index: 2;
+}
+
+.inputchoose .inputchooseWidgetWrapper > .widget {
+  position: relative !important;
+  transform-origin: top left !important;
+  z-index: 1 !important;
 }

@@ -1,4 +1,8 @@
+import { viewportConfig } from './calculateLayout.js';
+
+let usedTouch = false;
 let mouseTarget = null;
+let doubleClickTimeout = null;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -9,26 +13,28 @@ function eventCoords(name, e) {
     coords = e.targetTouches[0];
   else
     coords = e;
-  let x = (coords.clientX - roomRectangle.left) / scale;
-  let y = (coords.clientY - roomRectangle.top) / scale;
-  if(!jeZoomOut) {
-    x = Math.max(0, Math.min(1600, x));
-    y = Math.max(0, Math.min(1000, y));
+  let x = (coords.clientX - roomRectangle.left) / scale / zoomScale;
+  let y = (coords.clientY - roomRectangle.top) / scale / zoomScale;
+  if (!edit || zoom == 1) {
+    x = Math.max(0, Math.min(viewportConfig.targetWidth, x));
+    y = Math.max(0, Math.min(viewportConfig.targetHeight, y));
   }
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
 async function inputHandler(name, e) {
-  if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
+  const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
+  if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
 
-  const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey;
+  if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
+    return;
+
+  const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
   if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
-
-  e.preventDefault();
 
   if(name == 'mousedown' || name == 'touchstart') {
     if (!window.getSelection().isCollapsed)
@@ -36,8 +42,18 @@ async function inputHandler(name, e) {
     document.activeElement.blur();
   }
   let target = e.target;
-  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2)))))
+  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
+    if(target.id == 'editor')
+      return;
     target = target.parentNode;
+  }
+
+  if(!usedTouch && name == 'touchstart') {
+    usedTouch = true;
+    $('body').classList.add('usedTouch');
+  }
+
+  e.preventDefault();
 
   const coords = eventCoords(name, e);
   mouseCoords = [Math.round(coords.x), Math.round(coords.y)];
@@ -48,66 +64,134 @@ async function inputHandler(name, e) {
 
   if(target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
+    // A widget can be replaced while an input event is still in flight (for
+    // example, immediately after its ID is renamed in the properties editor).
+    // The saved mouse target then refers to a removed DOM node, not a widget.
+    if(!widget) {
+      if(name == 'mouseup')
+        mouseTarget = null;
+      return;
+    }
     batchStart();
-    if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
-      if(name == 'mousedown' || name == 'touchstart') {
-        await widget.mouseRaw('down', coords);
-      } else if (name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
-        await widget.mouseRaw('up', coords);
-      } else if (name == 'mousemove' || name == 'touchmove') {
-        await widget.mouseRaw('move', coords);
-      }
-    } else if(name == 'mousedown' || name == 'touchstart') {
-      mouseStatus[target.id] = {
-        status: 'initial',
-        start: new Date(),
-        downCoords: coords,
-        moveTarget: widget
-      };
-      const ms = mouseStatus[target.id];
-      let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-      while (ms.moveTarget && !movable) {
-        let parent = ms.moveTarget.get('parent');
-        if(parent && widgets.has(parent)) {
-          ms.moveTarget = widgets.get(parent);
-          movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-        } else {
-          ms.moveTarget = null;
-          movable = false;
+    // batchEnd() has to run even if a routine triggered by the drop or click below
+    // throws: batchStart() increments batchDepth and sendDelta() only sends anything
+    // while that is 0, so a leaked batch stops this client from syncing altogether.
+    try {
+      if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
+        if(name == 'mousedown' || name == 'touchstart') {
+          await widget.mouseRaw('down', coords);
+        } else if (name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
+          await widget.mouseRaw('up', coords);
+        } else if (name == 'mousemove' || name == 'touchmove') {
+          await widget.mouseRaw('move', coords);
+        }
+      } else if(name == 'mousedown' || name == 'touchstart') {
+        mouseStatus[target.id] = {
+          status: 'initial',
+          start: new Date(),
+          downCoords: coords,
+          moveTarget: widget
+        };
+        const ms = mouseStatus[target.id];
+        let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+        while (ms.moveTarget && !movable) {
+          let parent = ms.moveTarget.get('parent');
+          if(parent && widgets.has(parent)) {
+            ms.moveTarget = widgets.get(parent);
+            movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+          } else {
+            ms.moveTarget = null;
+            movable = false;
+          }
+        }
+        if (movable) {
+          ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
+        }
+      } else if((name == 'mouseup' || name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
+        const ms = mouseStatus[target.id];
+        // End the drag synchronously, before the first await below: a mousemove that
+        // is delivered while the drop is still being processed would otherwise queue
+        // another move and drag the widget back out of where it was just dropped.
+        delete mouseStatus[target.id];
+        const timeSinceStart = +new Date() - ms.start;
+        const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
+        if(ms.status != 'initial' && ms.moveTarget) {
+          setDeltaCause(`${playerName} dragged ${widget.id}`);
+          // let every mousemove that is still being processed finish first so that the
+          // drop happens after the last one instead of racing with it
+          await ms.dragChain;
+          await ms.moveTarget.moveEnd(coords, ms.localAnchor);
+        }
+        if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
+          let editClickHandled = false;
+          if(edit && !isMiddleMouseButton)
+            editClickHandled = await editClick(widget, e.button);
+          else if(jeEnabled && !isMiddleMouseButton)
+            editClickHandled = await jeClick(widget, e);
+
+          if(!editClickHandled) {
+            if(!target.classList.contains('longtouch')) {
+              if(!widget.get('doubleClickRoutine')) {
+                setDeltaCause(`${playerName} clicked ${widget.id}`);
+                await widget.click();
+              } else if(doubleClickTimeout) {
+                clearTimeout(doubleClickTimeout);
+                doubleClickTimeout = null;
+                setDeltaCause(`${playerName} double clicked ${widget.id}`);
+                await widget.doubleClick();
+              } else {
+                doubleClickTimeout = setTimeout(async () => {
+                  doubleClickTimeout = null;
+                  batchStart();
+                  try {
+                    setDeltaCause(`${playerName} clicked ${widget.id}`);
+                    await widget.click();
+                  } finally {
+                    batchEnd();
+                  }
+                }, 350);
+              }
+            } else {
+              widget.domElement.classList.remove('longtouch');
+            }
+          }
+        }
+      } else if((name == 'mousemove' || name == 'touchmove') && mouseStatus[target.id]) {
+        const ms = mouseStatus[target.id];
+        setDeltaCause(`${playerName} dragged ${widget.id}`);
+        const isFirstMove = ms.status == 'initial';
+        if(isFirstMove)
+          ms.status = 'moving';
+        ms.coords = coords;
+        if(ms.moveTarget) {
+          setDeltaCause(`${playerName} dragged ${widget.id}`);
+          // Mouse events are handled asynchronously, so several of them can be in
+          // flight at once. Queue the moves instead of running them in parallel so
+          // the widget always ends up where the most recent event put it - and so
+          // that the drop in the mouseup branch above happens after all of them.
+          ms.dragChain = Promise.resolve(ms.dragChain).then(async _ => {
+            // a move that a newer mousemove already replaced does not need to run:
+            // that one will put the widget, its hover target and its parent where
+            // the cursor is now. Without this the queue can grow under load and the
+            // widget visibly lags behind the cursor.
+            if(!isFirstMove && ms.coords !== coords)
+              return;
+            if(isFirstMove)
+              await ms.moveTarget.moveStart();
+            await ms.moveTarget.move(coords, ms.localAnchor);
+          }).catch(error => {
+            // keep the chain resolvable - a rejected one would make every later move
+            // and the drop in the mouseup branch above fail as well - but still let
+            // the error reach the client error reporter in tracing.js, which is where
+            // it would have ended up as an unhandled rejection before the chain
+            setTimeout(_=>{ throw error; });
+          });
+          await ms.dragChain;
         }
       }
-      if (movable) {
-        ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
-      }
-    } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
-      const ms = mouseStatus[target.id];
-      const timeSinceStart = +new Date() - ms.start;
-      const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
-      if(ms.status != 'initial' && ms.moveTarget)
-        await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
-      if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(typeof jeEnabled == 'boolean' && jeEnabled)
-          await jeClick(widget, e);
-        else if(edit)
-          editClick(widget);
-        else
-          if(!target.classList.contains('longtouch'))
-            await widget.click();
-        else
-          widget.domElement.classList.remove('longtouch');
-      }
-      delete mouseStatus[target.id];
-    } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
-      if(mouseStatus[target.id].status == 'initial') {
-        mouseStatus[target.id].status = 'moving';
-        if(mouseStatus[target.id].moveTarget)
-          await mouseStatus[target.id].moveTarget.moveStart();
-      }
-      mouseStatus[target.id].coords = coords;
-      if(mouseStatus[target.id].moveTarget)
-        await mouseStatus[target.id].moveTarget.move(coords, mouseStatus[target.id].localAnchor);
+    } finally {
+      batchEnd();
     }
-    batchEnd();
   }
 
   if(name == 'mouseup')
@@ -116,17 +200,34 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  toServer('mouse',
-    {
-      x: Math.round(coords.x),
-      y: Math.round(coords.y),
-      pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
-      target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
-    });
+  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(coords.clientX, coords.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
+
+  if(hoveredWidgetsWithHiddenCursor.length) {
+    toServer('mouse', { hidden: true });
+  } else {
+    toServer('mouse',
+      {
+        x: Math.round(coords.x),
+        y: Math.round(coords.y),
+        pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
+        target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
+      });
+  }
+}
+
+async function keyHandler(e) {
+  if(isLoading || overlayActive || $('body').classList.contains('edit') || e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')
+    return;
+
+  batchStart();
+  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key&&w.isVisible()).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
+    await widget.click();
+  batchEnd();
 }
 
 onLoad(function() {
   [ 'touchstart', 'touchend', 'touchmove', 'touchcancel', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
     window.addEventListener(event, e => inputHandler(event, e));
   });
+  window.addEventListener('keydown', e => keyHandler(e));
 });

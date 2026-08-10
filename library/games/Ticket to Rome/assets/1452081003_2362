@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40"
+   height="60"
+   viewBox="0 0 10.583333 15.875"
+   version="1.1"
+   id="svg347"
+   sodipodi:docname="green-4.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview349"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="11.313709"
+     inkscape:cx="18.738329"
+     inkscape:cy="28.947183"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs344" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4085"
+       style="fill:#00bf00;fill-opacity:1">
+      <path
+         id="rect520"
+         style="fill:#00bf00;fill-opacity:1;stroke-width:0.542925;stroke-miterlimit:5"
+         d="M 2.6458333,0 H 7.9375 L 10.583333,5.820833 9.525,11.641666 H 1.0583333 L 0,5.820833 Z"
+         sodipodi:nodetypes="ccccccc" />
+      <circle
+         style="fill:#00bf00;fill-opacity:1;stroke:none;stroke-width:0.564444;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+         id="path6862-0"
+         cx="5.2916665"
+         cy="11.641666"
+         inkscape:label="path6862-0"
+         r="4.2333331" />
+    </g>
+    <path
+       style="font-weight:bold;font-size:5.29167px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;stroke-width:0.264583"
+       d="M 6.2399297,5.3082046 H 6.6662605 V 5.9102354 H 6.2399297 V 6.7241397 H 5.4932048 V 5.9102354 H 3.9506624 L 3.9170727,5.4399796 5.4854534,2.9620932 h 0.7544763 z m -1.5787159,0 h 0.831991 V 3.9801195 l -0.049093,0.085266 z"
+       id="text1"
+       aria-label="4" />
+  </g>
+</svg>

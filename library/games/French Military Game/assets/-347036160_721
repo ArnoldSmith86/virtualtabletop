@@ -1,0 +1,15 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+	<title>French Military Game</title>
+	<style>
+		.s0 { fill: none;stroke: #000000;stroke-miterlimit:100;stroke-width: 2 } 
+		.s1 { fill: #000000 } 
+	</style>
+	<path id="Sq1" class="s0" d="m100 0h100v100h-100z"/>
+	<path id="Sq2" class="s0" d="m200 0h100v100h-100z"/>
+	<path id="Sq3" class="s0" d="m100 100h100v100h-100z"/>
+	<path id="Sq4" class="s0" d="m200 100h100v100h-100z"/>
+	<path id="Sq5" class="s0" d="m2 100l99-100 99 100-99 100z"/>
+	<path id="Sq6" class="s0" d="m201 100l99.5-100 99.5 100-99.5 100z"/>
+	<path id="Line1" class="s1" d="m4 101v-2h97v2z"/>
+	<path id="Line2" class="s1" d="m301 101v-2h98v2z"/>
+</svg>

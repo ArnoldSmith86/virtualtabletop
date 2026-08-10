@@ -1,0 +1,1928 @@
+.editorModule h1 {
+  color: var(--VTTblue);
+  text-align: center;
+  position: relative;
+}
+
+/* The button that closes the module (SidebarModule.addCloseButton). Out of the flow so it doesn't
+   push the centered header text off center, and the header keeps room for it on the right. */
+.editorModule .moduleCloseButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.editorModule h1 .moduleCloseButton {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* In the modules that render no header (JSON, Debug, Assets) it sits in the module's own top right
+   corner instead, where it has to stay above what they put there. */
+.editorModule > .moduleCloseButton {
+  z-index: 3;
+}
+
+/* except in the JSON module, where that corner is the command pane - it goes to the right end of the
+   widget switcher bar above the text instead */
+.data_object.editorModule > .moduleCloseButton {
+  right: calc(var(--commandPaneWidth) + 5px);
+  top: 6px;
+}
+
+/* the Debug module's filter row is right-aligned, so it has to leave that corner free */
+.pest_control.editorModule > .buttonBar:first-child {
+  padding-right: 40px;
+}
+
+.editorModule h2 {
+  color: white;
+  background: var(--VTTblue);
+  padding: 5px;
+  border-radius: 5px;
+  padding-left: 20px;
+}
+
+/* the blue info icon would disappear on the blue section header */
+.editorModule h2 .info-button {
+  margin-left: 6px;
+  color: white;
+}
+
+.editorModule .buttonBar {
+  text-align: right;
+}
+
+.editorModule .buttonBar button {
+  display: inline-flex;
+}
+
+/* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
+   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. */
+.editorModule .goButton.buttonBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
+   text color so the intro is readable in both themes (white on the dark editor theme, dark in light mode). */
+.editorModule .noSelectionIntro {
+  color: var(--textColor);
+  margin: 10px 5px 15px;
+}
+
+.editorModule .noSelectionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 420px; /* the panel can be half the window wide - without this they become banners */
+  margin: 8px auto; /* and without the auto they hug the left edge of a wide panel */
+  padding: 10px;
+  justify-content: center;
+}
+
+/* properties */
+
+.editorModule .widgetSelectionButton {
+  height: 150px;
+  width: 150px;
+  margin: 3px;
+  position: relative;
+  display: inline-flex;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+  border-radius: 10px;
+  border: 3px solid #ccc;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.editorModule .widgetSelectionButton:hover, .editorModule .widgetSelectionButton.selected {
+  border: 3px solid var(--VTTblue);
+}
+.editorModule .widgetSelectionButton.selected::after {
+  font-family: 'Material Symbols';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: #fff;
+  border-top-right-radius: 40%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview {
+  perspective: 300px;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .shape3D.dice.widget {
+  transform-style: preserve-3d;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d4.shape3D.dice.widget > .diceFaces,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6.shape3D.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot) var(--editorPreviewRotation);
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d4,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6 {
+  overflow: visible;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D > .diceFaces > .diceFace {
+  box-shadow: -5px -0px 02px #FFFd, -6px -0px 0 var(--borderColor);
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6.shape3D > * > .diceFace {
+  border-radius: 0;
+}
+.editorModule .widgetSelectionButton .spinner > svg.background {
+  left: 0;
+}
+
+.tune.editorModule .faceTemplateEdit {
+  margin-bottom: 40px;
+}
+
+.tune.editorModule .faceTemplateEdit > div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.tune.editorModule .faceTemplateProperty {
+  margin-left: 20px;
+}
+
+
+/* The deck creation flows disable their "Add to game" until something is picked. button[icon].green
+   (specificity 0,2,1) beats the generic button:disabled (0,1,1), so without this the greyed-out state never
+   applies and a button that does nothing still looks clickable. */
+.tune.editorModule button[icon].green:disabled,
+.tune.editorModule button[icon].green:disabled:hover {
+  background-color: #808080;
+  color: #d3d3d3;
+}
+
+
+/* custom deck: one compact row per suit (icon, name, color, ranks, remove) */
+
+.tune.editorModule .deckGeneratorHint {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* One grid for the whole list, so the header labels and every row share the same columns. The rows and their
+   pickers are display: contents, i.e. their children are the grid items. */
+.tune.editorModule .deckGeneratorSuits {
+  display: grid;
+  grid-template-columns: auto minmax(60px, 1fr) auto minmax(80px, 2fr) auto;
+  align-items: center;
+  gap: 4px 6px;
+}
+
+.tune.editorModule .deckGeneratorSuitHeader,
+.tune.editorModule .deckGeneratorSuit,
+.tune.editorModule .deckGeneratorSuitPickers {
+  display: contents;
+}
+
+.tune.editorModule .deckGeneratorSuitHeader > span {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+/* An open picker sits right below the row it belongs to and spans the full width; a closed one is display:
+   none and takes no grid row at all. */
+.tune.editorModule .deckGeneratorSuitPickers > .propertyPicker {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.tune.editorModule .deckGeneratorSuit > .propertyInput {
+  margin: 0;
+}
+
+/* an icon chip in a suit color (see tintIconChip): the icon masks the color */
+.tune.editorModule .deckGeneratorSuitTint {
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+
+.tune.editorModule .deckGeneratorSuitName,
+.tune.editorModule .deckGeneratorSuitRanks {
+  width: 100%;
+  min-width: 0;
+}
+
+/* the name this suit's card types actually get differs from what is typed (see showResolvedSuitNames) */
+.tune.editorModule .deckGeneratorSuitName.deckGeneratorSuitRenamed {
+  border-color: var(--VTTred, #c0392b);
+}
+
+/* destructive, so red rather than the accent color the rest of the row uses */
+.tune.editorModule .deckGeneratorSuitRemove:not(:disabled) {
+  background: var(--VTTred, #c0392b);
+}
+
+.tune.editorModule .deckGeneratorSuitRemove:hover:not(:disabled) {
+  background: #922b21;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.tune.editorModule .deckGeneratorSuitAddLabel {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* these are suit shortcuts, not transparency swatches, so no checkerboard behind them */
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip {
+  cursor: pointer;
+  background: #fff;
+}
+
+.tune.editorModule .deckGeneratorSuitAdd .propertyValueChip:hover {
+  outline: 2px solid var(--VTTblue);
+}
+
+.tune.editorModule .deckGeneratorLinkedRanks {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+/* Card design gallery: one tile per design, filling the dialog in as many columns as fit so no design ends up
+   cut off or alone on a row. The name goes below the preview instead of on top of the artwork. */
+.tune.editorModule .deckGeneratorDesigns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  gap: 10px 6px;
+  margin-bottom: 12px;
+}
+
+.tune.editorModule .deckDesignTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* a card design is not a transparency preview, so a flat neutral reads better than the checkerboard */
+.tune.editorModule .deckDesignButton {
+  margin: 0;
+  background: #ededed;
+}
+
+.tune.editorModule .deckDesignLabel {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
+.tune.editorModule .traditionalDeckDetails {
+  margin: 5px 0;
+}
+
+.tune.editorModule .traditionalDeckDetails .name {
+  font-weight: bold;
+}
+
+.tune.editorModule .traditionalDeckDetails .attribution {
+  margin-top: 5px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+
+.tune.editorModule .cardFrontPreview {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .cardFrontPreview > div {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.tune.editorModule .cardFrontPreview img {
+  max-width: 50%;
+}
+
+.tune.editorModule .cardFrontPreview [type=number] {
+  vertical-align: super;
+  width: 50px;
+}
+
+
+/* Front/back image upload: two side-by-side lists, one row per uploaded file, numbered in the order the files
+   are paired in - so row n of the fronts and row n of the backs line up as the pair they are. */
+.tune.editorModule .imagePairColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  align-items: start;
+}
+
+.tune.editorModule .imagePairHint {
+  margin-bottom: 5px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairList {
+  margin-bottom: 5px;
+}
+
+.tune.editorModule .imagePairList:empty::before {
+  content: attr(data-empty-hint);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairEntry {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .imagePairEntry b {
+  min-width: 20px;
+  text-align: right;
+}
+
+.tune.editorModule .imagePairEntry img {
+  width: 48px;
+  height: 64px;
+  object-fit: contain;
+  background: #0002;
+}
+
+/* The delete button follows the file name directly instead of being pushed to the far edge of the column. */
+.tune.editorModule .imagePairEntry span {
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tune.editorModule .imagePairStatus,
+.tune.editorModule .textCardsStatus {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .imagePairStatus.imagePairMismatch {
+  color: var(--negativeInput);
+  opacity: 1;
+}
+
+.tune.editorModule .imagePairOptions {
+  margin: 5px 0;
+}
+
+.tune.editorModule .imagePairOptions label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .imagePairOptions [type=number] {
+  width: 60px;
+}
+
+
+/* Text cards: the text input, then the design grid and the preview of the first card side by side. */
+.tune.editorModule .textCardsInput {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  font-family: inherit;
+}
+
+/* How the typed text is cut into cards - one row of radios right under the textarea it describes. */
+.tune.editorModule .textCardsSplit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .textCardsSplit label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .textCardsSplit span {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsColumns {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tune.editorModule .textCardsColumn {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tune.editorModule .textCardsPreviewColumn {
+  flex: 0 0 auto;
+}
+
+.tune.editorModule .textCardsDesign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 16px;
+  margin-bottom: 5px;
+}
+
+/* Each input hugs its own label: right-aligning them across a 1fr column would park the input of one field
+   next to the label of the next one. */
+.tune.editorModule .textCardsDesign label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabelWrap,
+.tune.editorModule .textCardsDesign .textCardsHint {
+  grid-column: 1 / -1;
+}
+
+.tune.editorModule .textCardsDesign .textCardsHint {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tune.editorModule .textCardsDesign input {
+  width: 60px;
+}
+
+/* Distinguish the color swatches from the number fields at a glance - a white swatch at input width reads as
+   an empty text box. */
+.tune.editorModule .textCardsDesign input[type=color] {
+  width: 40px;
+  height: 24px;
+  padding: 1px;
+}
+
+/* A textarea, so a deck label can carry the line breaks it is shown with on the card backs. */
+.tune.editorModule .textCardsDesign .textCardsLabelWrap {
+  align-items: flex-start;
+}
+
+.tune.editorModule .textCardsDesign .textCardsLabel {
+  flex-grow: 1;
+  width: auto;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.tune.editorModule .textCardsPreview {
+  position: relative;
+  overflow: hidden;
+}
+
+.tune.editorModule .textCardsPreviewCard {
+  position: relative;
+  transform-origin: top left;
+}
+
+
+.tune.editorModule .ttsImportLink {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .ttsImportLink input {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+/* caption bar of a preview tile: the card count of a TTS deck */
+.tune.editorModule .ttsDeckButton .deckCardCount {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2px 0;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fffb;
+  color: black;
+  z-index: 1;
+}
+
+
+.tune.editorModule .cardTypeEdit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 10px auto;
+  padding: 10px;
+}
+.tune.editorModule .cardCountDiv button {
+  display: inline-flex;
+}
+.tune.editorModule .cardCountDiv input {
+  font-size: 30px;
+  width: 54px;
+  text-align: right;
+}
+.tune.editorModule .renderedWidget {
+  margin: 5px;
+}
+.tune.editorModule .cardDeckButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+
+.editorModule .genericInput {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 4px 0;
+}
+.editorModule .genericInput input, .editorModule .genericInput textarea {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 120px;
+}
+.editorModule .genericInput textarea {
+  height: 200px;
+}
+.editorModule .genericInputLabel {
+  flex: 0 1 132px;
+  width: 132px;
+  overflow-wrap: anywhere;
+}
+.editorModule .genericInput select {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+.editorModule .genericAddPropertyRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.editorModule .genericAddPropertyRow input {
+  flex: 0 1 140px;
+  width: 140px;
+  min-width: 0;
+}
+
+.editorModule .genericAddPropertyRow button,
+.editorModule .suggestionListButton {
+  width: 28px;
+  min-width: 28px;
+  padding: 2px;
+}
+
+/* validation */
+
+
+.pest_control.editorModule .validation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.pest_control.editorModule .validation-table th {
+  background-color: var(--VTTblue);
+  color: white;
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: bold;
+  border: 1px solid var(--textColor);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.pest_control.editorModule .validation-table td {
+  padding: 6px 8px;
+  border: 1px solid var(--textColor);
+  vertical-align: top;
+  word-break: break-word;
+  max-width: 200px;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(1) {
+  max-width: 150px;
+  font-weight: bold;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(2) {
+  max-width: 200px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(3) {
+  max-width: 300px;
+}
+
+.pest_control.editorModule .validation-table tbody tr:nth-child(even) {
+  background-color: var(--backgroundHighlightColor1);
+}
+
+.pest_control.editorModule .validation-table tbody tr:hover {
+  background-color: var(--backgroundHighlightColor2);
+  cursor: pointer;
+}
+
+.pest_control.editorModule .success {
+  color: #28a745;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.pest_control.editorModule .validation-controls {
+  background-color: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.pest_control.editorModule .validation-time {
+  color: var(--textColor);
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* undo */
+
+.undo.editorModule > .undoEntry {
+  padding: 2px;
+  color: var(--textDimColor1);
+  cursor: pointer;
+}
+
+.undo.editorModule > .active.undoEntry {
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  cursor: unset;
+}
+
+.undo.editorModule > .active.undoEntry ~ div {
+  color: var(--textColor);
+}
+
+
+/* assets */
+
+.image.editorModule .externalLink {
+  display: flex;
+  position: relative;
+}
+
+.image.editorModule .externalLink:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+
+.image.editorModule .externalLink::after {
+  font-family: "Material Symbols";
+  font-size: 40px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  text-shadow: 0 0 4px white;
+}
+
+.image.editorModule .externalLink.queued::after {
+  content: "hourglass_empty";
+}
+
+.image.editorModule .externalLink.processing::after {
+  content: "cloud_download";
+}
+
+.image.editorModule .externalLink.done::after {
+  content: "check_circle";
+}
+
+.image.editorModule .externalLink:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+
+.image.editorModule .externalLink img {
+  height: 100px;
+  width: 100px;
+  min-width: 100px;
+  object-fit: contain;
+}
+
+.image.editorModule .externalLink span {
+  word-break: break-all;
+  padding: 5px;
+}
+.image.editorModule tr:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+.image.editorModule td {
+  padding: 10px;
+}
+.image.editorModule td > img {
+  display: block;
+  width: 100px;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+  margin-bottom: 5px;
+}
+.image.editorModule td > input[type=checkbox] {
+  float: left;
+}
+.image.editorModule td > label {
+  white-space: pre;
+  display: inline-block;
+}
+
+/* widgets */
+
+@keyframes flash {
+  0% { background-color: rgba(0, 150, 255, 0.3); }
+  100% { background-color: transparent; }
+}
+
+.flash {
+  animation: flash 1s ease-out;
+}
+
+.editorModule.widgets .buttonBar {
+  position: relative;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.editorModule.widgets .buttonBar .actions {
+  flex-grow: 0;
+  display: flex;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.editorModule .segmented-control button.active {
+  background:var(--VTTblueDark);
+  color:#fff;
+}
+
+/* open line vs closed shape is a mode, not a curve preset, so it gets the
+   sidebar's segmented control above the presets - and the presets below stay
+   in place (greyed out for a closed shape) instead of the grid reflowing */
+.editorModule .lineShapeSwitch {
+  margin: 6px 0;
+}
+.editorModule .lineShapeSwitch button {
+  flex: 1 1 50%;
+  height: 30px;
+}
+.editorModule .lineShapePresets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 8px 0;
+}
+.editorModule button.lineShapePreset {
+  min-width: 0;
+  height: 48px;
+  padding: 3px;
+  background: #3b3b3b;
+  color: white;
+}
+/* the glyphs are drawn with currentColor, so the text color has to darken with
+   the background or the icon all but disappears on hover */
+.editorModule button.lineShapePreset:hover:not(:disabled) {
+  background: #bbb;
+  color: #222;
+}
+.editorModule button.lineShapePreset:disabled {
+  background: #3b3b3b;
+  opacity: .35;
+  cursor: default;
+}
+.editorModule button.lineShapePreset svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.editorModule button.lineShapePreset path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.editorModule button.lineShapePreset.selected {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+/* line color and line width share one row below the style buttons */
+.editorModule .lineAppearanceRow {
+  gap: 4px 12px;
+}
+.editorModule .lineAppearanceRow > .propertyInput > label {
+  white-space: nowrap;
+}
+.editorModule .lineAppearanceRow .numberInput input[type=number] {
+  width: 52px;
+}
+.editorModule .lineDashPresets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 5px 0 8px;
+}
+.editorModule button.lineDashPreset {
+  min-width: 0;
+  padding: 5px 3px;
+  background: #3b3b3b;
+  color: white;
+}
+.editorModule button.lineDashPreset:hover {
+  background: #bbb;
+  color: #222;
+}
+.editorModule button.lineDashPreset svg {
+  display: block;
+  width: 100%;
+  height: 16px;
+}
+.editorModule button.lineDashPreset path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+}
+.editorModule button.lineDashPreset span {
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.editorModule button.lineDashPreset.selected {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.editorModule .lineStopList .genericInput {
+  display: flex;
+  align-items: center;
+  /* the row reads left to right as picture, name, position, buttons and is
+     built from groups so a narrow sidebar wraps them as units instead of
+     tearing e.g. the percentage away from its % sign */
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 7px;
+  padding: 6px;
+  border: 1px solid #777;
+  border-radius: 6px;
+}
+.editorModule .lineStopList .lineStopGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.editorModule .lineStopList .lineStopIdGroup {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.editorModule .lineStopList .genericInput > .lineStopGroup > label {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .lineStopList .genericInput input.lineStopPosition {
+  width: 42px;
+  min-width: 42px;
+}
+/* clicking the picture or the "Stop n" caption selects the stop in the room */
+.editorModule .lineStopList .lineStopSelect {
+  cursor: pointer;
+}
+.editorModule .lineStopList .lineStopSelect:hover {
+  text-decoration: underline;
+}
+/* same dashed-underline rename affordance as the widget header id; it starts at
+   the width of a generated stop id but grows into the row's free space so a
+   hand-given name like PiccadillyCircus stays readable */
+.editorModule .lineStopList input.lineStopIdInput {
+  color: inherit;
+  font: inherit;
+  flex: 1 1 75px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 190px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+}
+.editorModule .lineStopList input.lineStopIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+.editorModule .lineStopList input.lineStopIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
+.editorModule .lineStopPreview {
+  position: relative;
+  flex: 0 0 52px;
+  width: 52px;
+  height: 38px;
+  overflow: hidden;
+  border: 1px solid #777;
+  border-radius: 5px;
+  background: #fff1;
+  cursor: pointer;
+}
+.editorModule .lineStopPreview:hover,
+.editorModule .lineStopPreview:focus-visible {
+  border-color: var(--VTTblueDark);
+  outline: 1px solid var(--VTTblueDark);
+}
+.editorModule input.lineConnectPosition,
+.editorModule input.lineConnectStartOffset,
+.editorModule input.lineConnectEndOffset {
+  width: 52px;
+  min-width: 52px;
+}
+/* "<End> point id:" label, the id field and the widget picker caret on one line,
+   with the end point name keeping the blue sub-title look */
+.editorModule .propertyInput.lineConnectRow > label {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .propertyInput.lineConnectRow > label .appearanceSubTitle {
+  display: inline;
+  margin: 0;
+}
+.editorModule .propertyInput.lineConnectRow input[type=text] {
+  flex: 1 1 80px;
+  min-width: 60px;
+}
+/* the "Connect at ... offset ..." row belongs to the end point above it, so it
+   is indented; each half stays together when the sidebar gets narrow */
+.editorModule .lineConnectDetails {
+  margin-top: 0;
+  padding-left: 10px;
+}
+.editorModule .lineConnectGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+/* one italic line that explains a state of the section above it - the same look
+   the drop target editor uses for its empty state */
+.editorModule .lineHint {
+  margin: -2px 0 6px;
+  font-style: italic;
+  opacity: .7;
+}
+/* dropTarget editor: one indented block per match, its widget type on the
+   header row and the extra property/value conditions indented below it, with
+   an "or" between the blocks to show that any one of them is enough */
+.editorModule .dropTargetEditor {
+  margin: 4px 0;
+  padding-right: 6px;
+}
+.editorModule .dropTargetEditor > label {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.editorModule .dropTargetEditor > label .info-button {
+  margin-left: 4px;
+}
+.editorModule .dropTargetMatches {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.editorModule .dropTargetMatch {
+  border-left: 2px solid var(--VTTblueDark);
+  padding: 4px 0 4px 6px;
+  background: #ffffff0d;
+}
+.editorModule .dropTargetMatchHeader,
+.editorModule .dropTargetCondition {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.editorModule .dropTargetCondition {
+  margin-top: 4px;
+  padding-left: 10px;
+}
+.editorModule .dropTargetMatchHeader > select {
+  flex: 1 1 100px;
+  min-width: 80px;
+  max-width: 100%;
+}
+.editorModule .dropTargetCondition input[type=text] {
+  flex: 1 1 60px;
+  min-width: 50px;
+}
+.editorModule .dropTargetEditor button[icon] {
+  flex: 0 0 auto;
+  padding: 3px;
+  min-width: 0;
+}
+.editorModule .dropTargetOr,
+.editorModule .dropTargetEmpty,
+.editorModule .dropTargetUnsupported {
+  font-style: italic;
+  opacity: .7;
+}
+.editorModule .dropTargetUnsupported {
+  flex: 1 1 auto;
+}
+.editorModule button.dropTargetAddMatch {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 4px 8px 4px 4px;
+}
+/* The deck shortcuts under the matches. A deck preview is a picture of cards,
+   so at the full 150px above the list it read as a statement ("this holder
+   takes cards") rather than as a button - they are thumbnails now, dimmed
+   until their match is in the list above and checked when it is. */
+.editorModule .dropTargetDeckShortcuts {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #8888;
+}
+.editorModule .dropTargetDecks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton {
+  width: 70px;
+  min-width: 70px;
+  height: 70px;
+  margin: 0;
+  border-width: 2px;
+  opacity: .45;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton:hover,
+.editorModule .dropTargetDecks .widgetSelectionButton.selected {
+  opacity: 1;
+}
+/* deleting a stop is destructive, so it gets the shared red icon-button look
+   (white glyph on dark red, darker on hover) from button[icon].red */
+.editorModule .lineStopList button.lineRemoveStop {
+  display: inline-flex;
+  flex: 0 0 auto;
+  margin-left: 3px;
+  padding: 3px;
+  vertical-align: middle;
+}
+.editorModule .lineStopOrder {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+/* the two arrows stack, so each one keeps the sidebar's ~24px target size */
+.editorModule .lineStopOrder button {
+  width: 26px;
+  min-width: 26px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  font-size: 11px;
+  line-height: 22px;
+}
+.editorModule .lineStopOrder button:disabled {
+  opacity: .4;
+}
+/* the three ways to add a stop live behind one button: it opens the menu below
+   it, and picking an entry there swaps the menu for that option's own row */
+.editorModule .lineAddStopSection {
+  margin: 6px 0;
+}
+.editorModule button.lineAddStop {
+  width: 100%;
+  justify-content: center;
+  padding: 5px 8px 5px 4px;
+}
+.editorModule button.lineAddStop.open {
+  background: var(--VTTblueDark);
+}
+.editorModule .lineAddStopMenu,
+.editorModule .lineAddStopOptions > .lineAddStopOption {
+  display: none;
+}
+.editorModule .lineAddStopMenu.open {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 6px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+}
+.editorModule button.lineAddStopMenuEntry {
+  justify-content: flex-start;
+  width: 100%;
+  padding: 5px 8px 5px 4px;
+  text-align: left;
+}
+.editorModule .lineAddStopMenuLabel,
+.editorModule .lineAddStopMenuHint {
+  display: block;
+  white-space: normal;
+}
+.editorModule .lineAddStopMenuHint {
+  font-size: 11px;
+  line-height: 13px;
+  opacity: .75;
+  text-transform: none;
+}
+.editorModule .lineAddStopOptions > .lineAddStopOption.open {
+  display: flex;
+  margin-top: 4px;
+  padding: 6px 6px 0 6px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+}
+.editorModule .lineAddStopOption > label {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+.editorModule .lineAddStopOption input.lineInheritID {
+  flex: 1 1 60px;
+  min-width: 48px;
+}
+.editorModule .lineAddStopOption button.lineAddStopBack {
+  flex: 0 0 auto;
+  padding: 2px;
+  min-width: 30px;
+  justify-content: center;
+}
+.editorModule .lineAddStopOption button.lineAddStopConfirm {
+  flex: 0 0 auto;
+  padding: 4px 8px 4px 4px;
+  white-space: nowrap;
+}
+/* the picker options are nothing but their caret, so it goes to the far right */
+.editorModule .lineExistingStopRow > label,
+.editorModule .lineLibraryStopRow > label {
+  flex: 1 1 auto;
+}
+.editorModule .lineLibraryStopEntry .lineLibraryStopPreview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  overflow: hidden;
+}
+.editorModule .lineLibraryStopEntry .lineLibraryStopPreview * {
+  max-width: 100%;
+  max-height: 100%;
+  font-size: 24px;
+}
+
+.widgets.editorModule .buttonBar input[type=text]{
+  line-height: 33px;
+  padding: 0 5px;
+  border: 1px solid #0005;
+  border-radius: 5px;
+  padding-left: 25px;
+  margin: 0;
+}
+
+.widgets.editorModule .buttonBar .widgetFilerIcon {
+  font-family: "Material Symbols";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 34px;
+  width: 24px;
+  text-align: right;
+  line-height: 36px;
+}
+
+.widgets.editorModule .editing [icon=delete], .widgets.editorModule .editing [icon=download], .widgets.editorModule .editing [icon=upload] {
+  display: inline-block;
+}
+
+.widgets.editorModule [icon=delete], 
+.widgets.editorModule [icon=download], 
+.widgets.editorModule [icon=upload],
+.widgets.editorModule .editing [icon=add], 
+.widgets.editorModule .editing .widget-type {
+    display: none;
+}
+
+.widgets.editorModule li input {
+    pointer-events: none;
+    border: none;
+    font-weight: bold;
+    background: transparent;
+    padding: 2px 0;
+    color: var(--textColor);
+}
+
+.widgets.editorModule .editing li input {
+    pointer-events: auto;
+    border-bottom: 1px solid #ccc;
+    font-weight: normal;
+    background: transparent;
+    padding: 1px;
+}
+
+.widgets.editorModule .drag-handle {
+  display: none;
+  cursor: grab;
+  margin-right: 5px;
+}
+
+.widgets.editorModule .editing .drag-handle {
+  display: inline-block;
+}
+
+.widgets.editorModule li.dragging {
+  opacity: 0.5;
+}
+.widgets.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+.widgets.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+.widgets.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+
+.widgets.editorModule > ul {
+  border-top: 1px solid #ccc;
+}
+
+.widgets.editorModule .widget-group ul {
+  border-top: 0px none transparent;
+}
+
+.widgets.editorModule .widget-group + ul {
+  border-top: 3px double var(--textColor);
+}
+
+.widgets.editorModule ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widgets.editorModule li {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.widgets.editorModule li .widget-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.widgets.editorModule li .widget-info .widget-type {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.legend-text {
+  font-size: 0.9em;
+  margin-top: -1.5em;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg{
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0 0 0 3px;
+}
+
+.explainer-text svg, .legend-text svg{
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg.hasRoutine, .widgets.editorModule .legend-text svg.hasRoutine{
+  fill: orange;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg.isUnique, .widgets.editorModule .legend-text svg.isUnique{
+  fill: red;
+}
+
+.widgets.editorModule li .actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.widgets.editorModule #editWidgetsButton.active {
+  color: #ff0;
+  background: var(--VTTblueDark);
+}
+
+.widgets.editorModule .widget-label, .widgets.editorModule .preview-url-input {
+  display: none;
+}
+
+.widgets.editorModule .editing .widget-label, .widgets.editorModule .editing .preview-url-input {
+  display: flex;
+}
+
+.widget-label > span {
+  margin-bottom: -2px;
+}
+
+.widgets.editorModule .editing .unique-widget-label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+  color: var(--textColor);
+  font-size: 0.9em;
+}
+
+.widget-list-container{
+  margin-bottom: 1em;
+}
+
+.widget-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--VTTblue);
+  color: white;
+  padding: 0 5px;
+  border-radius: 5px 5px 0 0;
+  min-height: 40px;
+}
+
+.collapsed .widget-list-header{
+  border-radius: 5px;
+}
+
+.widget-list-actions {
+  display: flex;
+  gap: 0px;
+}
+
+.sidebarButton.sort-widgets:hover {
+  background: var(--VTTblueDark) !important;
+}
+
+.widgets.editorModule li.readonly .unique-widget-label {
+  display: none;
+}
+
+.widgets.editorModule li.readonly input {
+  pointer-events: none;
+  border: none;
+}
+
+.sidebarButton {
+  position: relative;
+}
+
+.sidebarButton[icon] {
+  padding-right: 0px;
+}
+
+.sidebarButton span {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+  margin-bottom: 5px;
+  background: var(--VTTblueDark);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-transform: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.sidebarButton span::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--VTTblueDark) transparent transparent transparent;
+}
+
+.sidebarButton:hover span {
+  display: block;
+}
+
+.explainer-text {
+  padding: 10px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+body.darkMode .widget-group-header {
+    background: #666;
+}
+
+.widget-group-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.widget-group-header .group-name-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    color: var(--textColor);
+    padding: 0;
+    pointer-events: none;
+}
+
+.editing .widget-group-header .group-name-input {
+    pointer-events: auto;
+    border: 1px solid #ccc;
+    font-weight: normal;
+    padding: 1px;
+}
+
+.widget-list .new-group-drop-target {
+  border: 2px dashed lightgray;
+  color: lightgray;
+  padding: 20px;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 14px;
+  font-style: italic;
+  height: auto;
+}
+
+.widget-list .new-group-drop-target::before {
+  content: '+';
+  font-style: normal;
+}
+
+.widget-list .new-group-drop-target.drag-over {
+  background-color: var(--backgroundHighlightColor1);
+  color: white;
+}
+
+.widget-list-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.widget-list-container.collapsed .widget-list {
+  display: none;
+}
+
+.widget-list-header-text {
+  flex-grow: 1;
+}
+
+
+.editing .sort-control {
+  display: none;
+}
+
+.widget-list-actions {
+  margin: 3px 0;
+}
+
+div.widget-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 5px;
+}
+
+div.widget-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #222;
+  border-radius: 3px;
+  flex-basis: 100px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  height: 75px;
+  width: 75px;
+  max-width: 75px;
+}
+
+div.widget-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 0 0 2px white;
+  padding: 2px 5px;
+  box-sizing: border-box;
+  line-height: 1;
+  background-color: #fffb;
+  z-index: 1;
+  color: black;
+}
+
+.editorModule.widgets .widget-preview {
+  height: 75px;
+  width: 75px;
+  max-width: 75px;
+  background-color: #bbbbbb;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.editorModule.widgets .widget-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  height: 70px;
+  object-fit: contain;
+}
+
+.editorModule.widgets .add-to-room-grid {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  z-index: 2;
+}
+
+.segmented-control {
+  display: flex;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #fff5 #0005 #0005 #fff5;
+}
+
+.segmented-control button{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  border-radius: 0;
+  border-left: 1px solid #fff5;
+  border-right: 1px solid #0005;
+  flex-basis: 33px;
+  min-width: 33px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 34px;
+}
+
+.segmented-control button::before {
+  margin: 0;
+}
+
+.segmented-control.sort-control button{
+  max-height: 32px;
+}
+
+.collapsed .sort-control {
+  display: none;
+}
+
+.segmented-control.sort-control .sort-label {
+  padding-top: 2px;
+  margin-bottom: -2px;
+}
+
+
+
+.segmented-control button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-left: none;
+}
+
+.segmented-control button:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-right: none;
+}
+
+.editing-widgets .widget-list li .widget-label {
+  display: block;
+  align-items: center;
+  font-size: 10px;
+  color: #888;
+  margin-right: 5px;
+}
+
+.widget-group {
+  margin-bottom: 10px;
+}
+
+.widget-group-header {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.widget-group-header .drag-handle {
+  width: 10px;
+  height: 20px;
+  margin-right: 5px;
+  cursor: move;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='20' viewBox='0 0 10 20'%3E%3Cpath d='M1,3 H9 M1,7 H9 M1,11 H9 M1,15 H9' stroke='%23888' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+.widget-group-header .collapseArrow {
+  margin-right: 5px;
+}
+
+.widget-group-header .group-name-input {
+  flex-grow: 1;
+  border: none;
+  background: none;
+}
+
+.new-group-drop-target {
+  height: 30px;
+  border: 2px dashed #ccc;
+  margin-top: 10px;
+}
+
+.drag-over {
+  background-color: #f0f0f0;
+}
+
+/* The tiles in the Game Settings module. The legacy mode and cursor tiles used to repeat
+   this as inline styles on every tile; it lives here now so every tile in the module is
+   framed the same way and follows theme changes. */
+.settings-tile {
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 4px;
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+.boardSizeSetting .boardSizeHeader {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeDescription {
+  font-size: 0.9em;
+}
+
+.boardSizeSetting .boardSizeInputs {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* so the preview stays next to the fields it previews instead of drifting off to the far
+     edge of a wide panel */
+  max-width: 480px;
+  margin-top: 12px;
+  gap: 12px;
+}
+
+/* the fields stay a tight cluster instead of stretching across the whole panel - a four digit
+   number does not need 500px, and the × and the swap button belong next to what they act on */
+.boardSizeSetting .boardSizeFields {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* the × between the two fields */
+.boardSizeSetting .boardSizeFields > span {
+  flex: 0 0 auto;
+  opacity: 0.7;
+  padding-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeFields > button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.boardSizeSetting .boardSizeField {
+  flex: 0 0 auto;
+  width: 7em;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.boardSizeSetting .boardSizeField label {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizeField input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* the shape the numbers describe, which is what the whole setting is about. The board the
+   room is on stays behind it as a dashed outline whenever the two differ, so it is obvious
+   whether the pending board is wider, taller or just bigger. */
+.boardSizeSetting .boardSizePreview {
+  flex: 0 0 auto;
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.boardSizeSetting .boardSizePreview > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+}
+
+.boardSizeSetting .boardSizePreviewCurrent {
+  border: 1px dashed var(--textColor);
+  opacity: 0.4;
+}
+
+.boardSizeSetting .boardSizePreviewPending {
+  border: 1px solid var(--wcMain);
+  background: var(--wcMain);
+  opacity: 0.35;
+}
+
+/* min-height so the tile does not jump every time the line is emptied mid-typing */
+.boardSizeSetting .boardSizeRatio {
+  margin-top: 6px;
+  min-height: 1.2em;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizePresetLabel {
+  margin-top: 10px;
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizePresets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.boardSizeSetting .boardSizePresets button {
+  margin: 0;
+  font-size: 0.85em;
+}
+
+/* the preset the fields currently match - the buttons are already in the theme's blue, so
+   the ring has to be the text color to be visible on them */
+.boardSizeSetting .boardSizePresets button.active {
+  outline: 2px solid var(--textColor);
+  outline-offset: 1px;
+}
+
+.boardSizeSetting .boardSizeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* the messages come and go by whole lines, so the block keeps one line of space to stop the
+   tile from resizing under the pointer */
+.boardSizeSetting .boardSizeMessages {
+  margin-top: 10px;
+  min-height: 1.2em;
+  font-size: 0.9em;
+}
+
+/* only the range error blocks Apply, so only it gets the error red - the advisories used to
+   share it while Apply stayed enabled, which reads as "something is broken" for what is
+   advice. The dark mode variants are lighter: #950000 on the near black editor background
+   sits right at the readable edge. */
+.boardSizeSetting .boardSizeMessage {
+  margin-top: 4px;
+}
+
+.boardSizeSetting .boardSizeMessage.error {
+  color: var(--negativeInput);
+}
+
+.boardSizeSetting .boardSizeMessage.warning {
+  color: #8a5300;
+}
+
+.boardSizeSetting .boardSizeMessage.success {
+  color: var(--positiveInput);
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.error {
+  color: #ff8f8f;
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.warning {
+  color: #f0be5a;
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.success {
+  color: #7ed07e;
+}
+
+.boardSizeSetting .boardSizeMessage button {
+  margin: 4px 0 0 0;
+  font-size: 1em;
+}

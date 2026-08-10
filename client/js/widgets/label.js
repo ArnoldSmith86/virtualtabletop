@@ -12,6 +12,8 @@ export class Label extends Widget {
       typeClasses: 'widget label',
       clickable: false,
       spellCheck: false,
+      tabIndex: null,
+      placeholderText: '',
 
       text: '',
       editable: false,
@@ -27,33 +29,43 @@ export class Label extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
+    if(this.input && (delta.text !== undefined || delta.twoRowBottomAlign !== undefined || delta.height !== undefined || delta.width !== undefined || delta.css !== undefined)) {
+      const css = JSON.stringify(this.get('css'));
+      const fontSizeMatch = css.match(/font-size"?:"? *([0-9]+) *px/);
+      const fontSize = fontSizeMatch ? +fontSizeMatch[1] : 16;
+      if(css.match(/line-height/))
+        this.input.style.removeProperty('line-height');
+      else
+        this.input.style.lineHeight = `${Math.round(fontSize*1.2)}px`;
+
       this.input.value = this.get('text');
-      if(this.get('twoRowBottomAlign')) {
-        this.input.style.height = '20px';
-        this.input.style.minHeight = 'unset';
-        this.input.style.paddingTop = '0';
-        const contentHeight = this.input.scrollHeight;
-        if(contentHeight < this.get('height')) {
-          this.input.style.paddingTop = `${this.get('height')-contentHeight}px`;
-          this.input.style.height = 'auto';
-          this.input.style.minHeight = `${contentHeight}px`;
-        } else {
-          this.input.style.minHeight = '100%';
-        }
+      this.input.style.height = '5px';
+      this.input.style.paddingTop = '0';
+      const contentHeight = this.input.scrollHeight;
+      const offset = this.get('twoRowBottomAlign') && contentHeight < this.get('height') ? this.get('height')-contentHeight : 0;
+      this.input.style.height = (this.get('height')-offset) + 'px';
+      this.input.style.paddingTop = `${offset}px`;
+      this.input.style.overflowY = contentHeight-this.get('height') < 5 ? 'hidden' : 'scroll';
+    }
+
+    if(delta.placeholderText !== undefined)
+      this.input.setAttribute('placeholder', this.get('placeholderText'));
+
+    if(delta.editable !== undefined || delta.tabIndex !== undefined) {
+      if(this.get('editable')) {
+        this.input.removeAttribute('readonly');
+        if(this.get('tabIndex') !== null)
+          this.input.setAttribute('tabindex', this.get('tabIndex'));
+        else
+          this.input.removeAttribute('tabindex');
       } else {
-        this.input.style.minHeight = '100%';
-        this.input.style.paddingTop = 'unset';
+        this.input.setAttribute('readonly', true);
+        this.input.setAttribute('tabindex', -1);
       }
     }
-    if(delta.editable !== undefined) {
-      if(delta.editable)
-        this.input.removeAttribute("readonly");
-      else
-        this.input.setAttribute("readonly", !delta.editable);
-    }
-    if(delta.spellCheck !== undefined) {
-      this.input.setAttribute('spellcheck', this.get('spellCheck') === true)
-    }
+
+    if(delta.spellCheck !== undefined)
+      this.input.setAttribute('spellcheck', this.get('spellCheck') === true);
+
   }
 }

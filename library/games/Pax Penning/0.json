@@ -1,0 +1,5786 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Pax Penning",
+      "image": "/assets/1151297541_15880",
+      "rules": "https://boardgamegeek.com/filepage/273737/pax-penning-rules",
+      "bgg": "https://boardgamegeek.com/boardgame/381591/pax-penning",
+      "year": "",
+      "mode": "vs",
+      "time": "60 - 120",
+      "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries). Game name and all art assets copyright by, and used with permission from, the rights holder, Milda Matilda Games. \"Wrong Answer\" audio source&nbsp;by UNIVERSFIELD available under the Pixabay License from https://pixabay.com/sound-effects/wrong-answer-129254/.",
+      "lastUpdate": 1712269073309,
+      "showName": true,
+      "skill": "medium",
+      "description": "Participate in early attempts at Swedish nationbuilding... or do not.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Matilda Simonsson",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Players choose a seat by clicking any \"click to sit\" buttons, then type their name into the popup window. Sit down by clicking the green \"Go\" button.<div><br></div><div>After all players have chosen seats, any one player must click the \"Setup\" button, click the check box in the popup window, and then click the \"Reset the game!\" button. This will randomly determine the starting player, and place all player's hierarchy stones onto the track in the correct order.</div><div><br></div><div>Clicking on any chess piece will hide/reveal that pieces name.<br><div><div><br></div><div>Once done with their turn, the player should click the \"Click to end turn\" button above their name, which will move to the next player in order. The next player will hear a soft sound and a text alert on screen, reminding them that their turn has begun. Clicking anywhere on the screen will remove the text alert. Any players who do not want to hear the sound and/or see the text alert when it is their turn can click the \"Turn Settings\" button in the bottom left corner and change their preference.<br><div><br></div><div>Hovering your mouse over the \"Rules Reference\" box in the middle-left of the screen will reveal the rules reference player aid.</div></div></div></div><div><br></div><div>Coins are automatically flipped, and dice are automatically rolled, when taken from their holders.</div><div><br></div><div>Clicking on the King's Coin on the hierarchy track&nbsp;will flip it over.</div><div><br></div><div>Drag and drop stones from under your name to the area under an opponent's name in order to give them that stone.</div><div><br></div><div>Clicking on a \"Reveal Stones\" button, and confirming the popup box, will reveal all stones in your area to all players. These stones may be hidden by clicking that button again.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3 - 5"
+    }
+  },
+  "qig11": {
+    "image": "/assets/280534976_2768",
+    "id": "qig11",
+    "z": 86773,
+    "y": 225,
+    "x": 832,
+    "width": 40,
+    "height": 60,
+    "defaultX": 832,
+    "defaultY": 225
+  },
+  "1_anchor": {
+    "id": "1_anchor",
+    "x": 121,
+    "y": -140,
+    "width": 50.4,
+    "height": 90,
+    "z": 82133,
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "movable": false
+  },
+  "1_seat": {
+    "type": "seat",
+    "id": "1_seat",
+    "parent": "1_anchor",
+    "fixedParent": true,
+    "y": 924,
+    "width": 10,
+    "height": 50,
+    "borderRadius": 8,
+    "z": 78757,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "min-width": "182px",
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box",
+        "padding": "0 15px"
+      },
+      ".sea ted.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "205px",
+        "top": "2px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "audio_enabled": true,
+    "background_color_transparent": "#bf360c48",
+    "colorContrast": "#000000",
+    "color_change_index": 1,
+    "outlineColor": "#000000bb",
+    "text": "C",
+    "textColor": "#ffffff",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      "var LeaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "LeaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "LeaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${LeaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "colorx",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "property": "colorx",
+            "value": "#000000"
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButtonx",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var playerColor = ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var playerName = ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButtonx",
+                "property": "mainColor",
+                "value": "${playerColor}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              "var color_transparent = ${PROPERTY mainColor} concat '48'",
+              {
+                "func": "SET",
+                "collection": "thisButtonx",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButtonx",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              },
+              {
+                "func": "SELECT",
+                "property": "colorx_change_index",
+                "value": "${PROPERTY index}",
+                "mode": "set"
+              },
+              {
+                "func": "SET",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "property": "background_color_transparent",
+                "value": "${color_transparent}"
+              },
+              {
+                "func": "SET",
+                "property": "background_color_solid",
+                "value": "${color}"
+              },
+              {
+                "func": "SELECT",
+                "property": "image",
+                "relation": "==",
+                "value": "/i/game-pieces/3D/Marble-3D.svg",
+                "collection": "all_beads"
+              },
+              {
+                "func": "SELECT",
+                "property": "color_change_index",
+                "relation": "==",
+                "value": "${PROPERTY index}",
+                "source": "all_beads",
+                "collection": "player_beads"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "relation": "==",
+                "value": "${PROPERTY index}_hand",
+                "source": "player_beads",
+                "collection": "held_beads"
+              },
+              {
+                "func": "FOREACH",
+                "collection": "held_beads",
+                "loopRoutine": [
+                  {
+                    "func": "GET",
+                    "collection": [
+                      "${widgetID}"
+                    ],
+                    "property": "color_change_index"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": [
+                      "${color_change_index}_seat"
+                    ],
+                    "property": "player"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${widgetID}"
+                    ],
+                    "property": "owner",
+                    "relation": "=",
+                    "value": "${player}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerx}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY index}_seat"
+            ],
+            "property": "background_color_transparent",
+            "value": "white"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          {
+            "func": "SELECT",
+            "property": "color_change_index",
+            "value": "${PROPERTY index}",
+            "mode": "set"
+          },
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "property": "background_color_transparent",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "property": "background_color_solid",
+            "value": "#dddddd"
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "color": "#bf360c",
+    "mainColor": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "x": -43,
+    "turn_alert_enabled": false,
+    "glowColor": "#ff8359",
+    "colorx": "#dddddd",
+    "hideWhenUnused": true
+  },
+  "1_hand": {
+    "type": "holder",
+    "id": "1_hand",
+    "parent": "1_anchor",
+    "fixedParent": true,
+    "width": 254,
+    "z": 785,
+    "movableInEdit": false,
+    "css": {
+      "": {
+        "background": "${PROPERTY background_color_transparent}",
+        "border": "2px solid black",
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "top",
+        "align-items": "flex-start",
+        "padding": 0
+      },
+      " .dragging-shadow": {
+        "filter": "brightness(80%)",
+        "opacity": "60%"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY z}"
+      }
+    },
+    "dropOffsetX": 3,
+    "dropShadow": true,
+    "dropTarget": {
+      "stone": true
+    },
+    "preventPiles": true,
+    "height": 155,
+    "x": -115,
+    "y": 978,
+    "linkedToSeat": "1_seat",
+    "childrenPerOwner": true,
+    "enterRoutine": [
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_seat"
+        ],
+        "property": "player"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "owner",
+        "relation": "=",
+        "value": "${player}"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "background_color_solid"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "color",
+        "relation": "=",
+        "value": "${background_color_solid}"
+      }
+    ],
+    "color_change_index": 1,
+    "color": "#bf360c",
+    "background_color_transparent": "#bf360c48",
+    "background_color_solid": "#bf360c",
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "color",
+        "relation": "=",
+        "value": "#eeeeee"
+      }
+    ]
+  },
+  "2_anchor": {
+    "id": "2_anchor",
+    "x": 119,
+    "y": -879,
+    "width": 50.4,
+    "height": 90,
+    "z": 86816,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "movable": false
+  },
+  "2_seat": {
+    "type": "seat",
+    "id": "2_seat",
+    "parent": "2_anchor",
+    "fixedParent": true,
+    "index": 2,
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": false,
+    "audio_enabled": true,
+    "background_color_transparent": "#dddddd48",
+    "textColor": "#000000",
+    "color_change_index": 2,
+    "z": 78758,
+    "color": "#dddddd",
+    "mainColor": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "turn_alert_enabled": false,
+    "glowColor": "#919191",
+    "colorx": "#dddddd",
+    "hideWhenUnused": true
+  },
+  "2_hand": {
+    "type": "holder",
+    "id": "2_hand",
+    "parent": "2_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_hand",
+    "linkedToSeat": "2_seat",
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd"
+  },
+  "3_anchor": {
+    "id": "3_anchor",
+    "x": 1411,
+    "y": -876,
+    "width": 50.4,
+    "height": 90,
+    "z": 85159,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "movable": false
+  },
+  "3_seat": {
+    "type": "seat",
+    "id": "3_seat",
+    "parent": "3_anchor",
+    "fixedParent": true,
+    "index": 3,
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": false,
+    "audio_enabled": true,
+    "background_color_transparent": "#ffeb3b48",
+    "textColor": "#000000",
+    "color_change_index": 3,
+    "z": 78759,
+    "x": -116,
+    "y": 924,
+    "color": "#ffeb3b",
+    "mainColor": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "turn_alert_enabled": false,
+    "glowColor": "#b39f00",
+    "colorx": "#dddddd",
+    "hideWhenUnused": true
+  },
+  "3_hand": {
+    "type": "holder",
+    "id": "3_hand",
+    "parent": "3_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_hand",
+    "linkedToSeat": "3_seat",
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b"
+  },
+  "4_anchor": {
+    "id": "4_anchor",
+    "x": 1454,
+    "y": -533,
+    "width": 50.4,
+    "height": 90,
+    "z": 87012,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "movable": false
+  },
+  "4_seat": {
+    "type": "seat",
+    "id": "4_seat",
+    "parent": "4_anchor",
+    "fixedParent": true,
+    "index": 4,
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": false,
+    "audio_enabled": true,
+    "background_color_transparent": "#1976d248",
+    "textColor": "#ffffff",
+    "x": -116,
+    "y": 924,
+    "color_change_index": 4,
+    "z": 78760,
+    "turn_alert_enabled": false,
+    "color": "#1976d2",
+    "mainColor": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "glowColor": "#66c3ff",
+    "colorx": "#dddddd",
+    "hideWhenUnused": true
+  },
+  "4_hand": {
+    "type": "holder",
+    "id": "4_hand",
+    "parent": "4_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_hand",
+    "linkedToSeat": "4_seat",
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2"
+  },
+  "5_anchor": {
+    "id": "5_anchor",
+    "x": 1379,
+    "y": -137,
+    "width": 50.4,
+    "height": 90,
+    "z": 86814,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "movable": false
+  },
+  "5_seat": {
+    "type": "seat",
+    "id": "5_seat",
+    "parent": "5_anchor",
+    "fixedParent": true,
+    "index": 5,
+    "color": "#000000",
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": true,
+    "audio_enabled": true,
+    "background_color_solid": "#696969",
+    "background_color_transparent": "#69696948",
+    "mainColor": "#000000",
+    "textColor": "#ffffff",
+    "x": -116,
+    "y": 924,
+    "color_change_index": 5,
+    "z": 78761,
+    "turn_alert_enabled": true,
+    "glowColor": "#4d4d4d",
+    "colorx": "#dddddd",
+    "hideWhenUnused": true
+  },
+  "5_hand": {
+    "type": "holder",
+    "id": "5_hand",
+    "parent": "5_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_hand",
+    "linkedToSeat": "5_seat",
+    "color": "#000000",
+    "background_color_transparent": "#00000048",
+    "background_color_solid": "#000000",
+    "color_change_index": 5
+  },
+  "qig12": {
+    "image": "/assets/280534976_2768",
+    "id": "qig12",
+    "z": 85689,
+    "y": 310,
+    "x": 1023,
+    "width": 40,
+    "height": 60,
+    "defaultX": 1023,
+    "defaultY": 310
+  },
+  "qig13": {
+    "image": "/assets/280534976_2768",
+    "id": "qig13",
+    "z": 86772,
+    "y": 294,
+    "x": 586,
+    "width": 40,
+    "height": 60,
+    "defaultX": 586,
+    "defaultY": 294
+  },
+  "1_hand_blocker": {
+    "id": "1_hand_blocker",
+    "width": 254,
+    "height": 155,
+    "borderRadius": 9,
+    "z": 1608,
+    "css": {
+      "default": {
+        "background": "${PROPERTY background_color_solid}",
+        "pointer-events": "none"
+      }
+    },
+    "color_change_index": 1,
+    "color": "#bf360c",
+    "background_color_transparent": "#bf360c48",
+    "background_color_solid": "#bf360c",
+    "parent": "1_anchor",
+    "fixedParent": true,
+    "movable": false,
+    "movableInEdit": false,
+    "y": 978,
+    "onlyVisibleForSeat": [
+      "2_seat",
+      "3_seat",
+      "4_seat",
+      "5_seat"
+    ],
+    "x": -9115
+  },
+  "2_hand_blocker": {
+    "id": "2_hand_blocker",
+    "parent": "2_anchor",
+    "fixedParent": true,
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "3_seat",
+      "4_seat",
+      "5_seat"
+    ],
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "inheritFrom": "1_hand_blocker",
+    "onlyVisibleForSeats": [
+      "#009688"
+    ],
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd"
+  },
+  "3_hand_blocker": {
+    "id": "3_hand_blocker",
+    "parent": "3_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_hand_blocker",
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "2_seat",
+      "4_seat",
+      "5_seat"
+    ],
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b"
+  },
+  "4_hand_blocker": {
+    "id": "4_hand_blocker",
+    "parent": "4_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_hand_blocker",
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "2_seat",
+      "3_seat",
+      "5_seat"
+    ],
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "onlyVisibleForSeats": [
+      "#f44336"
+    ],
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2"
+  },
+  "5_hand_blocker": {
+    "id": "5_hand_blocker",
+    "parent": "5_anchor",
+    "fixedParent": true,
+    "color": "#000000",
+    "inheritFrom": "1_hand_blocker",
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "2_seat",
+      "3_seat",
+      "4_seat"
+    ],
+    "background_color_solid": "#000000",
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "onlyVisibleForSeats": [
+      "#3f51b5"
+    ],
+    "owner": "Jonathan"
+  },
+  "jcl9": {
+    "type": "dice",
+    "x": 4,
+    "y": 4,
+    "z": 86659,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 45,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl9",
+    "clickRoutine": [],
+    "activeFace": 3,
+    "parent": "dice_supply"
+  },
+  "jcl10": {
+    "type": "dice",
+    "x": 4,
+    "y": 4,
+    "z": 86778,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 63,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl10",
+    "clickRoutine": [],
+    "activeFace": 5,
+    "parent": "dice_supply"
+  },
+  "jcl11": {
+    "type": "dice",
+    "x": 4,
+    "y": 4,
+    "z": 86687,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 55,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl11",
+    "clickRoutine": [],
+    "activeFace": 5,
+    "parent": "dice_supply"
+  },
+  "jcl12": {
+    "type": "dice",
+    "x": 4,
+    "y": 4,
+    "z": 86655,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 63,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl12",
+    "clickRoutine": [],
+    "activeFace": 4,
+    "parent": "dice_supply"
+  },
+  "jcl13": {
+    "type": "dice",
+    "y": 4,
+    "z": 86689,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 77,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl13",
+    "clickRoutine": [],
+    "x": 4,
+    "activeFace": 1,
+    "parent": "dice_supply"
+  },
+  "jcl14": {
+    "type": "dice",
+    "y": 4,
+    "z": 87049,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 62,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl14",
+    "clickRoutine": [],
+    "x": 4,
+    "activeFace": 1,
+    "parent": "dice_supply"
+  },
+  "jcl15": {
+    "type": "dice",
+    "x": 4,
+    "y": 4,
+    "z": 86661,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 63,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl15",
+    "clickRoutine": [],
+    "activeFace": 1,
+    "parent": "dice_supply"
+  },
+  "jcl16": {
+    "type": "dice",
+    "x": 4,
+    "y": 4,
+    "z": 86680,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 72,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl16",
+    "activeFace": 5,
+    "clickRoutine": [],
+    "parent": "dice_supply"
+  },
+  "jcl17": {
+    "type": "dice",
+    "y": 4,
+    "z": 87052,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 96,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl17",
+    "x": 4,
+    "clickRoutine": [],
+    "activeFace": 2,
+    "parent": "dice_supply"
+  },
+  "jcl18": {
+    "type": "dice",
+    "y": 4,
+    "z": 86732,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 75,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl18",
+    "x": 4,
+    "clickRoutine": [],
+    "activeFace": 2,
+    "parent": "dice_supply"
+  },
+  "jcl19": {
+    "type": "dice",
+    "x": 4,
+    "y": 4,
+    "z": 86016,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 79,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl19",
+    "clickRoutine": [],
+    "activeFace": 1,
+    "parent": "dice_supply"
+  },
+  "jcl20": {
+    "type": "dice",
+    "y": 4,
+    "z": 86881,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 101,
+    "shape3d": true,
+    "width": 35,
+    "height": 35,
+    "die": true,
+    "movable": true,
+    "id": "jcl20",
+    "clickRoutine": [],
+    "x": 4,
+    "parent": "dice_supply"
+  },
+  "h7x3": {
+    "id": "h7x3",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "image",
+        "relation": "==",
+        "value": "/i/game-pieces/3D/Marble-3D.svg"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "color_change_index"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${color_change_index}_seat"
+            ],
+            "property": "player"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "owner",
+            "relation": "=",
+            "value": "${player}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "parent",
+            "relation": "=",
+            "value": "${color_change_index}_hand"
+          }
+        ]
+      }
+    ],
+    "z": 78661,
+    "x": 1098,
+    "y": -167,
+    "type": "button"
+  },
+  "info_game_structure_parent": {
+    "id": "info_game_structure_parent",
+    "x": 20,
+    "y": 464,
+    "width": 84,
+    "height": 32,
+    "z": 86894,
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "css": {
+      "default": {
+        "border": "3px solid black",
+        "border-radius": "0%",
+        "overflow": "hidden",
+        "cursor": "pointer"
+      }
+    },
+    "inheritFrom": "info_template_parent",
+    "note": "The overflow CSS declaration means anything larger than this widget won't be visible.",
+    "passed": false
+  },
+  "info_game_structure_asset": {
+    "id": "info_game_structure_asset",
+    "parent": "info_game_structure_parent",
+    "width": 300,
+    "height": 300,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 3.2,
+    "image": "/assets/-837854727_142186",
+    "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon.",
+    "passed": false
+  },
+  "info_game_structure_icon": {
+    "id": "info_game_structure_icon",
+    "parent": "info_game_structure_parent",
+    "x": -1,
+    "y": -1,
+    "width": 84,
+    "height": 35,
+    "layer": 10,
+    "z": 3,
+    "movable": true,
+    "movableInEdit": true,
+    "css": {
+      "default": {
+        "border": "1px solid black",
+        "border-radius": "0%",
+        "background": "white",
+        "text-align": "center",
+        "line-height": "16px",
+        "font-size": "15px",
+        "pointer-events": "none"
+      }
+    },
+    "inheritFrom": "info_template_icon",
+    "text": "Rules Reference",
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "passed": false
+  },
+  "bead_template": {
+    "id": "bead_template",
+    "x": 989,
+    "y": -145,
+    "width": 35,
+    "height": 35,
+    "z": 81773,
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "color_change_index": 0,
+    "secondaryColor": "#000000",
+    "stone": true,
+    "draggingChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY dragging}",
+        "relation": "==",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${thisID}"
+            ],
+            "property": "color",
+            "relation": "=",
+            "value": "${PROPERTY background_color_solid}"
+          }
+        ]
+      }
+    ]
+  },
+  "bead1": {
+    "id": "bead1",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 2,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "hoverParent": "4_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead2": {
+    "id": "bead2",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 15,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "activeFace": 0,
+    "hoverParent": "3_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead3": {
+    "id": "bead3",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 87026,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead4": {
+    "id": "bead4",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 4,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead5": {
+    "id": "bead5",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 3,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "activeFace": 0,
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead6": {
+    "id": "bead6",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 9,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "activeFace": 0,
+    "hoverParent": "5_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead7": {
+    "id": "bead7",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 87035,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead8": {
+    "id": "bead8",
+    "x": 663,
+    "y": 851,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 86623,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "defaultX": 663,
+    "defaultY": 851,
+    "activeFace": 0,
+    "linkedToSeat": "1_seat"
+  },
+  "bead9": {
+    "id": "bead9",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 87029,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "activeFace": 0,
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead11": {
+    "id": "bead11",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 10,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "hoverParent": "5_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead12": {
+    "id": "bead12",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 5,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead13": {
+    "id": "bead13",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 12,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead14": {
+    "id": "bead14",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 17,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "hoverParent": "1_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead15": {
+    "id": "bead15",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 14,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "hoverParent": "3_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead16": {
+    "id": "bead16",
+    "x": 663,
+    "y": 884,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 86626,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "defaultX": 663,
+    "defaultY": 884,
+    "linkedToSeat": "1_seat"
+  },
+  "bead17": {
+    "id": "bead17",
+    "x": 663,
+    "y": 918,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 84828,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "defaultX": 663,
+    "defaultY": 918,
+    "linkedToSeat": "1_seat"
+  },
+  "bead18": {
+    "id": "bead18",
+    "x": 663,
+    "y": 952,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 84831,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "defaultX": 663,
+    "defaultY": 952,
+    "linkedToSeat": "1_seat"
+  },
+  "bead19": {
+    "id": "bead19",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 87043,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "hoverParent": "4_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead20": {
+    "id": "bead20",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 6,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead21": {
+    "id": "bead21",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "z": 8,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#bf360c",
+    "background_color_solid": "#bf360c",
+    "hoverParent": "5_hand",
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "bead22": {
+    "id": "bead22",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 16,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "hoverParent": "1_hand",
+    "parent": "2_hand",
+    "owner": ""
+  },
+  "bead23": {
+    "id": "bead23",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 17,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "hoverParent": "1_hand",
+    "parent": "2_hand",
+    "owner": ""
+  },
+  "bead24": {
+    "id": "bead24",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 2,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead25": {
+    "id": "bead25",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 4,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead26": {
+    "id": "bead26",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 5,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "parent": "2_hand",
+    "owner": ""
+  },
+  "bead27": {
+    "id": "bead27",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 3,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "hoverParent": "5_hand",
+    "parent": "2_hand",
+    "owner": ""
+  },
+  "bead28": {
+    "id": "bead28",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 6,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead29": {
+    "id": "bead29",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 15,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "parent": "2_hand",
+    "owner": ""
+  },
+  "bead30": {
+    "id": "bead30",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 13,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "parent": "2_hand",
+    "owner": ""
+  },
+  "bead31": {
+    "id": "bead31",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 7,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead32": {
+    "id": "bead32",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 14,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "parent": "2_hand",
+    "owner": ""
+  },
+  "bead33": {
+    "id": "bead33",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 9,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead34": {
+    "id": "bead34",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 11,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead35": {
+    "id": "bead35",
+    "x": 703,
+    "y": 952,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 84892,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 703,
+    "defaultY": 952,
+    "linkedToSeat": "2_seat",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd"
+  },
+  "bead36": {
+    "id": "bead36",
+    "x": 703,
+    "y": 918,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 84685,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 703,
+    "defaultY": 918,
+    "linkedToSeat": "2_seat",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd"
+  },
+  "bead37": {
+    "id": "bead37",
+    "x": 703,
+    "y": 851,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 84520,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 703,
+    "defaultY": 851,
+    "linkedToSeat": "2_seat",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd"
+  },
+  "bead38": {
+    "id": "bead38",
+    "x": 703,
+    "y": 884,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 84585,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 703,
+    "defaultY": 884,
+    "linkedToSeat": "2_seat",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd"
+  },
+  "bead39": {
+    "id": "bead39",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 12,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": "",
+    "parent": "2_hand"
+  },
+  "bead41": {
+    "id": "bead41",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 10,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead42": {
+    "id": "bead42",
+    "x": 744,
+    "y": 952,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 81943,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 744,
+    "defaultY": 952,
+    "linkedToSeat": "3_seat",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b"
+  },
+  "bead43": {
+    "id": "bead43",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "z": 8,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "2_hand",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "owner": ""
+  },
+  "bead44": {
+    "id": "bead44",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 14,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead45": {
+    "id": "bead45",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 5,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "3_hand",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "owner": ""
+  },
+  "bead46": {
+    "id": "bead46",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 3,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "3_hand",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "owner": ""
+  },
+  "bead47": {
+    "id": "bead47",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 4,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "3_hand",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "owner": ""
+  },
+  "bead48": {
+    "id": "bead48",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 2,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "3_hand",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "owner": ""
+  },
+  "bead49": {
+    "id": "bead49",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 16,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead50": {
+    "id": "bead50",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 10,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "owner": "",
+    "parent": "3_hand"
+  },
+  "bead51": {
+    "id": "bead51",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 9,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "owner": "",
+    "parent": "3_hand"
+  },
+  "bead52": {
+    "id": "bead52",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 15,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead53": {
+    "id": "bead53",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 8,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead54": {
+    "id": "bead54",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 7,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead55": {
+    "id": "bead55",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 6,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead56": {
+    "id": "bead56",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 11,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "owner": "",
+    "parent": "3_hand"
+  },
+  "bead57": {
+    "id": "bead57",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 17,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead58": {
+    "id": "bead58",
+    "x": 744,
+    "y": 918,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 85362,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 744,
+    "defaultY": 918,
+    "linkedToSeat": "3_seat",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b"
+  },
+  "bead59": {
+    "id": "bead59",
+    "x": 744,
+    "y": 884,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 86633,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 744,
+    "defaultY": 884,
+    "linkedToSeat": "3_seat",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b"
+  },
+  "bead60": {
+    "id": "bead60",
+    "x": 744,
+    "y": 851,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 86600,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 744,
+    "defaultY": 851,
+    "linkedToSeat": "3_seat",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b"
+  },
+  "bead62": {
+    "id": "bead62",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 12,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead63": {
+    "id": "bead63",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "z": 13,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "parent": "3_hand",
+    "owner": ""
+  },
+  "bead64": {
+    "id": "bead64",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 17,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "parent": "4_hand",
+    "owner": ""
+  },
+  "bead65": {
+    "id": "bead65",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 87036,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "parent": "4_hand",
+    "owner": ""
+  },
+  "bead66": {
+    "id": "bead66",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 4,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead67": {
+    "id": "bead67",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 2,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead68": {
+    "id": "bead68",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 3,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead69": {
+    "id": "bead69",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 5,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead70": {
+    "id": "bead70",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 15,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead71": {
+    "id": "bead71",
+    "x": 785,
+    "y": 952,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 84713,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 785,
+    "defaultY": 952,
+    "linkedToSeat": "4_seat",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2"
+  },
+  "bead72": {
+    "id": "bead72",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 6,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead73": {
+    "id": "bead73",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 11,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead74": {
+    "id": "bead74",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 12,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead75": {
+    "id": "bead75",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 9,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead76": {
+    "id": "bead76",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 8,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead77": {
+    "id": "bead77",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 14,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "hoverParent": "5_hand",
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead78": {
+    "id": "bead78",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 7,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead79": {
+    "id": "bead79",
+    "x": 785,
+    "y": 918,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 85331,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 785,
+    "defaultY": 918,
+    "linkedToSeat": "4_seat",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2"
+  },
+  "bead80": {
+    "id": "bead80",
+    "x": 785,
+    "y": 884,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 85328,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 785,
+    "defaultY": 884,
+    "linkedToSeat": "4_seat",
+    "hoverParent": "5_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2"
+  },
+  "bead81": {
+    "id": "bead81",
+    "x": 785,
+    "y": 851,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 84306,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "defaultX": 785,
+    "defaultY": 851,
+    "linkedToSeat": "4_seat",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2"
+  },
+  "bead82": {
+    "id": "bead82",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 10,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead84": {
+    "id": "bead84",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "z": 13,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "parent": "4_hand",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": ""
+  },
+  "bead99": {
+    "id": "bead99",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 15,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead100": {
+    "id": "bead100",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 13,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead101": {
+    "id": "bead101",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 6,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead103": {
+    "id": "bead103",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 7,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead104": {
+    "id": "bead104",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 12,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "hoverParent": "3_hand",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead105": {
+    "id": "bead105",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 16,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead106": {
+    "id": "bead106",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 9,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "hoverParent": "1_hand",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead107": {
+    "id": "bead107",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 14,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead108": {
+    "id": "bead108",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 3,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead109": {
+    "id": "bead109",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 10,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "activeFace": 0,
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead110": {
+    "id": "bead110",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 17,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead111": {
+    "id": "bead111",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 4,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead112": {
+    "id": "bead112",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 11,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead113": {
+    "id": "bead113",
+    "x": 823,
+    "y": 952,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 86540,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "defaultX": 823,
+    "defaultY": 952,
+    "linkedToSeat": "5_seat"
+  },
+  "bead114": {
+    "id": "bead114",
+    "x": 823,
+    "y": 918,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 86556,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "defaultX": 823,
+    "defaultY": 918,
+    "linkedToSeat": "5_seat",
+    "hoverParent": "5_hand"
+  },
+  "bead115": {
+    "id": "bead115",
+    "x": 823,
+    "y": 884,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 86360,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "defaultX": 823,
+    "defaultY": 884,
+    "linkedToSeat": "5_seat"
+  },
+  "bead116": {
+    "id": "bead116",
+    "x": 823,
+    "y": 851,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 86226,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "defaultX": 823,
+    "defaultY": 851,
+    "linkedToSeat": "5_seat"
+  },
+  "bead117": {
+    "id": "bead117",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 5,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead118": {
+    "id": "bead118",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 8,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "activeFace": 0,
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "bead119": {
+    "id": "bead119",
+    "x": 3,
+    "y": 4,
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 2,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "color": "#000000",
+    "background_color_solid": "#000000",
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "1_reveal_button": {
+    "type": "button",
+    "id": "1_reveal_button",
+    "y": 925,
+    "z": 78732,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "==",
+        "value": "${PROPERTY color_change_index}_hand",
+        "collection": "beads"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": "==",
+        "operand2": "Reveal Stones",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "checkbox",
+                "label": "Check this box and click the green button to reveal this player's stones.",
+                "variable": "checkbox",
+                "value": false
+              }
+            ],
+            "confirmButtonText": "Reveal Stones!",
+            "cancelButtonIcon": "cancel"
+          },
+          {
+            "func": "IF",
+            "operand1": "${checkbox}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              "var new_owner = null",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "relation": "=",
+                "value": "Hide Stones"
+              },
+              "var index = ${thisID} charAt 0",
+              {
+                "func": "SET",
+                "collection": [
+                  "${index}_screen"
+                ],
+                "property": "layer",
+                "relation": "=",
+                "value": -50
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${PROPERTY color_change_index}_seat"
+            ],
+            "property": "player"
+          },
+          "var new_owner = ${player}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "relation": "=",
+            "value": "Reveal Stones"
+          },
+          "var index = ${thisID} charAt 0",
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_screen"
+            ],
+            "property": "layer",
+            "relation": "=",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "collection": "beads",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "owner",
+            "relation": "=",
+            "value": "${new_owner}"
+          }
+        ]
+      }
+    ],
+    "text": "Reveal Stones",
+    "color_change_index": 1,
+    "color": "#bf360c",
+    "background_color_transparent": "#bf360c48",
+    "background_color_solid": "#bf360c",
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "15px",
+        "background-color": "${PROPERTY background_color_transparent}",
+        "border": "5px solid ${PROPERTY background_color_solid}"
+      }
+    },
+    "height": 50,
+    "width": 70,
+    "borderRadius": 10,
+    "parent": "1_anchor",
+    "fixedParent": true,
+    "x": -115,
+    "linkedToSeat": "1_seat",
+    "reveal_button": true
+  },
+  "2_reveal_button": {
+    "type": "button",
+    "id": "2_reveal_button",
+    "inheritFrom": "1_reveal_button",
+    "parent": "2_anchor",
+    "fixedParent": true,
+    "color_change_index": 2,
+    "background_color_transparent": "#dddddd48",
+    "text": "Reveal Stones",
+    "linkedToSeat": "2_seat",
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd"
+  },
+  "3_reveal_button": {
+    "type": "button",
+    "id": "3_reveal_button",
+    "inheritFrom": "1_reveal_button",
+    "parent": "3_anchor",
+    "fixedParent": true,
+    "color_change_index": 3,
+    "background_color_transparent": "#ffeb3b48",
+    "text": "Reveal Stones",
+    "x": 69,
+    "y": 925,
+    "linkedToSeat": "3_seat",
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b"
+  },
+  "4_reveal_button": {
+    "type": "button",
+    "id": "4_reveal_button",
+    "inheritFrom": "1_reveal_button",
+    "parent": "4_anchor",
+    "fixedParent": true,
+    "color_change_index": 4,
+    "background_color_transparent": "#1976d248",
+    "text": "Reveal Stones",
+    "x": 69,
+    "linkedToSeat": "4_seat",
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2"
+  },
+  "5_reveal_button": {
+    "type": "button",
+    "id": "5_reveal_button",
+    "parent": "5_anchor",
+    "fixedParent": true,
+    "x": 69,
+    "color": "#000000",
+    "inheritFrom": "1_reveal_button",
+    "text": "Reveal Stones",
+    "background_color_solid": "#000000",
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "z": 78668,
+    "y": 925,
+    "linkedToSeat": "5_seat"
+  },
+  "setup": {
+    "type": "button",
+    "id": "setup",
+    "x": 20,
+    "y": 503,
+    "height": 40,
+    "borderRadius": 10,
+    "z": 78777,
+    "backgroundColor": "grey",
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "18px",
+        "background-color": "grey",
+        "border": "5px solid #dacebd"
+      }
+    },
+    "text": "Setup",
+    "player_count": 0,
+    "clickRoutine": [
+      {
+        "note": "Get player count",
+        "func": "SELECT",
+        "type": "seat",
+        "collection": "seatedPlayers",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT",
+        "collection": "seatedPlayers",
+        "variable": "player_count"
+      },
+      {
+        "func": "SET",
+        "property": "player_count",
+        "relation": "=",
+        "value": "${player_count}",
+        "collection": [
+          "setup"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Check this box and click the green button to reset the game.",
+            "variable": "checkbox",
+            "value": false
+          }
+        ],
+        "confirmButtonText": "Reset the game!",
+        "cancelButtonIcon": "cancel"
+      },
+      {
+        "func": "IF",
+        "operand1": "${checkbox}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "setup_complete",
+            "relation": "=",
+            "value": false,
+            "collection": [
+              "general_routines"
+            ]
+          },
+          {
+            "note": "Place widgets on default positions"
+          },
+          {
+            "func": "SELECT",
+            "property": "image",
+            "relation": "==",
+            "value": "/i/game-pieces/3D/Marble-3D.svg"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "color_change_index"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${color_change_index}_seat"
+                ],
+                "property": "player"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "owner",
+                "relation": "=",
+                "value": "${player}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "parent",
+                "relation": "=",
+                "value": "${color_change_index}_hand"
+              }
+            ]
+          },
+          {
+            "note": "Recall all necessary holders",
+            "func": "SELECT",
+            "type": "holder",
+            "property": "recall_with_setup",
+            "relation": "==",
+            "value": true,
+            "collection": "recall_holders"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "recall_holders",
+            "loopRoutine": [
+              {
+                "func": "RECALL",
+                "holder": "${widgetID}",
+                "owned": false
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "isClone",
+            "relation": "==",
+            "value": true
+          },
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SELECT",
+            "property": "defaultParent",
+            "relation": "!=",
+            "value": null,
+            "collection": "widgets_to_move"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "widgets_to_move",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${PROPERTY defaultParent OF $widgetID}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "defaultX",
+            "relation": "!=",
+            "value": null,
+            "collection": "holdersXpos"
+          },
+          {
+            "func": "SELECT",
+            "property": "defaultY",
+            "relation": "!=",
+            "value": null,
+            "collection": "holdersYpos"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "holdersXpos",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "keep_parent",
+                "variable": "keep_parent"
+              },
+              {
+                "func": "IF",
+                "operand1": "${keep_parent}",
+                "relation": "!=",
+                "operand2": true,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "property": "parent",
+                    "value": null,
+                    "collection": [
+                      "${widgetID}"
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "defaultX",
+                "aggregation": "first",
+                "variable": "newX"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${newX}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              },
+              {
+                "func": "SET",
+                "property": "owner",
+                "value": null,
+                "collection": [
+                  "${widgetID}"
+                ]
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "background_color_solid"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "color",
+                "relation": "=",
+                "value": "${background_color_solid}"
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": "holdersYpos",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "keep_parent",
+                "variable": "keep_parent"
+              },
+              {
+                "func": "IF",
+                "operand1": "${keep_parent}",
+                "relation": "!=",
+                "operand2": true,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "property": "parent",
+                    "value": null,
+                    "collection": [
+                      "${widgetID}"
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "defaultY",
+                "aggregation": "first",
+                "variable": "newY"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${newY}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              }
+            ]
+          },
+          {
+            "note": "Reset all labels counters",
+            "func": "SELECT",
+            "type": "label",
+            "property": "zero_on_setup",
+            "relation": "==",
+            "value": true,
+            "collection": "reset_counters"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "reset_counters",
+            "loopRoutine": [
+              {
+                "func": "LABEL",
+                "label": "${widgetID}",
+                "mode": "set",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "note": "Player count specific stuff",
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "<=",
+            "operand2": 2,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 3,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 4,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 5,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 6,
+            "thenRoutine": []
+          },
+          {
+            "func": "LABEL",
+            "collection": [
+              "history_label"
+            ],
+            "mode": "set",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "turn_button"
+            ],
+            "property": "current_turn_index",
+            "relation": "=",
+            "value": 0
+          },
+          {
+            "func": "TURN",
+            "turnCycle": "random"
+          },
+          {
+            "func": "CALL",
+            "routine": "SetCurrentTurnIndexRoutine",
+            "widget": "turn_button"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "king_coin"
+            ],
+            "property": "activeFace",
+            "relation": "=",
+            "value": 1
+          },
+          "var positions_array = ${PROPERTY initial_figure_positions}",
+          "var index_array = ${PROPERTY index_array}",
+          "var index_array = ${index_array} shuffle",
+          {
+            "func": "FOREACH",
+            "range": [
+              0,
+              3,
+              1
+            ],
+            "loopRoutine": [
+              "var newX = ${positions_array.$value}",
+              "var newX = ${newX.x}",
+              "var newY = ${positions_array.$value}",
+              "var newY = ${newY.y}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${index_array.$value}_figure"
+                ],
+                "property": "x",
+                "relation": "=",
+                "value": "${newX}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${index_array.$value}_figure"
+                ],
+                "property": "y",
+                "relation": "=",
+                "value": "${newY}"
+              }
+            ]
+          },
+          "var hierarchy_positions_array = ${PROPERTY initial_hierarchy_positions}",
+          "var newX = ${hierarchy_positions_array.0}",
+          "var newX = ${newX.x}",
+          "var newY = ${hierarchy_positions_array.0}",
+          "var newY = ${newY.y}",
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY current_turn_index OF turn_button}_order_bead"
+            ],
+            "property": "parent",
+            "relation": "=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY current_turn_index OF turn_button}_order_bead"
+            ],
+            "property": "owner",
+            "relation": "=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY current_turn_index OF turn_button}_order_bead"
+            ],
+            "property": "x",
+            "relation": "=",
+            "value": "${newX}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY current_turn_index OF turn_button}_order_bead"
+            ],
+            "property": "y",
+            "relation": "=",
+            "value": "${newY}"
+          },
+          {
+            "func": "CALL",
+            "widget": "${PROPERTY current_turn_index OF turn_button}_order_bead",
+            "routine": "draggingChangeRoutine"
+          },
+          "var seated_indexes = []",
+          {
+            "func": "FOREACH",
+            "collection": "seatedPlayers",
+            "loopRoutine": [
+              "var new_index = ${widgetID} charAt 0",
+              {
+                "func": "IF",
+                "operand1": "${new_index}",
+                "relation": "!=",
+                "operand2": "${PROPERTY current_turn_index OF turn_button}",
+                "thenRoutine": [
+                  "var seated_indexes = push ${new_index}"
+                ]
+              }
+            ]
+          },
+          "var seated_indexes = shuffle ${seated_indexes}",
+          "var loop_count = 1",
+          {
+            "func": "FOREACH",
+            "in": "${seated_indexes}",
+            "loopRoutine": [
+              "var one_less_count = ${loop_count} - 1",
+              "var newX = ${hierarchy_positions_array.$loop_count}",
+              "var newX = ${newX.x}",
+              "var newY = ${hierarchy_positions_array.$loop_count}",
+              "var newY = ${newY.y}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${seated_indexes.$one_less_count}_order_bead"
+                ],
+                "property": "parent",
+                "relation": "=",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${seated_indexes.$one_less_count}_order_bead"
+                ],
+                "property": "owner",
+                "relation": "=",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${seated_indexes.$one_less_count}_order_bead"
+                ],
+                "property": "x",
+                "relation": "=",
+                "value": "${newX}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${seated_indexes.$one_less_count}_order_bead"
+                ],
+                "property": "y",
+                "relation": "=",
+                "value": "${newY}"
+              },
+              {
+                "func": "CALL",
+                "widget": "${seated_indexes.$one_less_count}_order_bead",
+                "routine": "draggingChangeRoutine"
+              },
+              "var loop_count = ${loop_count} + 1"
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": "seatedPlayers",
+            "loopRoutine": [
+              "var index = ${widgetID} charAt 0",
+              {
+                "func": "GET",
+                "collection": "thisButton",
+                "property": "${index}_coin_positions",
+                "variable": "coin_positions_array"
+              },
+              {
+                "func": "IF",
+                "operand1": "${player_count}",
+                "relation": ">",
+                "operand2": 3,
+                "thenRoutine": [
+                  "var starting_coins = 1"
+                ],
+                "elseRoutine": [
+                  "var starting_coins = 2"
+                ]
+              },
+              {
+                "func": "FOREACH",
+                "range": [
+                  0,
+                  "${starting_coins}",
+                  1
+                ],
+                "loopRoutine": [
+                  "var sub_positions = ${coin_positions_array.$value}",
+                  {
+                    "func": "MOVEXY",
+                    "from": "coins_supply",
+                    "x": "${sub_positions.x}",
+                    "y": "${sub_positions.y}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "die",
+            "relation": "==",
+            "value": true,
+            "collection": "all_dice"
+          },
+          {
+            "func": "SET",
+            "collection": "all_dice",
+            "property": "parent",
+            "relation": "=",
+            "value": "dice_supply"
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": ">",
+            "operand2": 3,
+            "thenRoutine": [
+              "var pass_count = 2"
+            ],
+            "elseRoutine": [
+              "var pass_count = 4"
+            ]
+          },
+          {
+            "note": "broke this because it isn't needed. Keeping code for the future.",
+            "func": "SELECT",
+            "property": "st one",
+            "relation": "==",
+            "value": true,
+            "collection": "all_beads"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "seatedPlayers",
+            "loopRoutine": [
+              "var index = ${widgetID} charAt 0",
+              {
+                "func": "SELECT",
+                "source": "all_beads",
+                "property": "parent",
+                "relation": "==",
+                "value": "${index}_hand",
+                "collection": "${index}_held_beads"
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": "seatedPlayers",
+            "loopRoutine": [
+              "var primary_index = ${widgetID} charAt 0",
+              {
+                "func": "FOREACH",
+                "collection": "seatedPlayers",
+                "loopRoutine": [
+                  "var secondary_index = ${widgetID} charAt 0",
+                  {
+                    "func": "SELECT",
+                    "source": "${secondary_index}_held_beads",
+                    "property": "parent",
+                    "relation": "==",
+                    "value": "${secondary_index}_hand",
+                    "collection": "beads_to_move",
+                    "max": "${pass_count}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "beads_to_move",
+                    "property": "parent",
+                    "relation": "=",
+                    "value": "${primary_index}_hand"
+                  }
+                ]
+              },
+              {
+                "func": "SORT",
+                "holder": "${primary_index}_hand",
+                "key": "color_change_index"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "reveal_button",
+            "relation": "==",
+            "value": true,
+            "collection": "reveal_buttons"
+          },
+          {
+            "func": "SET",
+            "collection": "reveal_buttons",
+            "property": "text",
+            "relation": "=",
+            "value": "Reveal Stones"
+          },
+          {
+            "func": "SET",
+            "property": "setup_complete",
+            "relation": "=",
+            "value": true,
+            "collection": [
+              "general_routines"
+            ]
+          }
+        ]
+      }
+    ],
+    "initial_figure_positions": [
+      {
+        "x": 570,
+        "y": 56
+      },
+      {
+        "x": 443,
+        "y": 137
+      },
+      {
+        "x": 369,
+        "y": 255
+      },
+      {
+        "x": 354,
+        "y": 401
+      }
+    ],
+    "initial_hierarchy_positions": [
+      {
+        "x": 1137,
+        "y": 460
+      },
+      {
+        "x": 1135,
+        "y": 508
+      },
+      {
+        "x": 1127,
+        "y": 558
+      },
+      {
+        "x": 1112,
+        "y": 613
+      },
+      {
+        "x": 1094,
+        "y": 662
+      }
+    ],
+    "index_array": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "1_coin_positions": [
+      {
+        "x": 309,
+        "y": 801
+      },
+      {
+        "x": 364,
+        "y": 858
+      },
+      {
+        "x": 269,
+        "y": 741
+      }
+    ],
+    "2_coin_positions": [
+      {
+        "x": 319,
+        "y": 125
+      },
+      {
+        "x": 273,
+        "y": 185
+      },
+      {
+        "x": 371,
+        "y": 65
+      }
+    ],
+    "3_coin_positions": [
+      {
+        "x": 1110,
+        "y": 91
+      },
+      {
+        "x": 1157,
+        "y": 145
+      },
+      {
+        "x": 1054,
+        "y": 44
+      }
+    ],
+    "4_coin_positions": [
+      {
+        "x": 1257,
+        "y": 384
+      },
+      {
+        "x": 1261,
+        "y": 459
+      },
+      {
+        "x": 1260,
+        "y": 531
+      }
+    ],
+    "5_coin_positions": [
+      {
+        "x": 1123,
+        "y": 828
+      },
+      {
+        "x": 1071,
+        "y": 878
+      },
+      {
+        "x": 1169,
+        "y": 772
+      }
+    ],
+    "width": 88,
+    "movableInEdit": false,
+    "color": "#4caf50"
+  },
+  "king_coin": {
+    "type": "dice",
+    "id": "king_coin",
+    "x": 1025,
+    "y": 711,
+    "width": 90,
+    "height": 90,
+    "borderRadius": 100,
+    "z": 86767,
+    "movable": true,
+    "borderColor": "#eeeeee",
+    "faceCSS": {
+      "background": "eeeeee"
+    },
+    "faces": [
+      {
+        "image": "/assets/-1790665491_8706",
+        "imageScale": 1
+      },
+      {
+        "image": "/assets/1095900827_7560",
+        "imageScale": 1
+      }
+    ],
+    "pipSymbols": false,
+    "rollCount": 45,
+    "shape3d": true,
+    "coin": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "activeFace",
+            "relation": "=",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "activeFace",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "defaultX": 1025,
+    "defaultY": 711,
+    "activeFace": 1
+  },
+  "nkpr": {
+    "image": "/assets/-2114450604_178616",
+    "movable": false,
+    "width": 1600,
+    "layer": -4,
+    "id": "nkpr",
+    "movableInEdit": false,
+    "height": 1000,
+    "x": -39,
+    "y": -6
+  },
+  "0_figure": {
+    "id": "0_figure",
+    "width": 85,
+    "height": 120,
+    "z": 86760,
+    "image": "/assets/-18447732_3166",
+    "figure": true,
+    "x": 354,
+    "clickRoutine": [
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_figure_text"
+        ],
+        "property": "text",
+        "variable": "figure_text"
+      },
+      {
+        "func": "IF",
+        "operand1": "${figure_text}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": "Knight"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "y": 401
+  },
+  "history_holder": {
+    "type": "holder",
+    "id": "history_holder",
+    "x": 533,
+    "y": 158,
+    "width": 530,
+    "height": 455,
+    "layer": 230,
+    "z": 1272,
+    "movable": false,
+    "css": {
+      "": {
+        "border": "5px solid white",
+        "background": "#ca9f6a"
+      }
+    },
+    "dropTarget": {
+      "label": "ledger_label"
+    },
+    "onlyVisibleForSeat": [],
+    "passed": false
+  },
+  "wfln": {
+    "type": "label",
+    "id": "wfln",
+    "parent": "history_holder",
+    "fixedParent": true,
+    "x": 146,
+    "y": 3,
+    "width": 300,
+    "height": 50,
+    "z": 502,
+    "movable": false,
+    "css": {
+      "default": {
+        "font-size": "27px",
+        "color": "white",
+        "text-align": "left",
+        "padding": "0 15px"
+      }
+    },
+    "text": "Full Game History",
+    "passed": false
+  },
+  "history_label": {
+    "id": "history_label",
+    "parent": "history_holder",
+    "fixedParent": true,
+    "x": 7,
+    "y": 36,
+    "width": 510,
+    "height": 405,
+    "layer": 5,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "overflow": "scroll",
+        "background": "#FFFFFF"
+      }
+    },
+    "passed": false,
+    "AddendumRoutine": [
+      "var previous_ledger = ${PROPERTY text}",
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${addendum}\n${previous_ledger}",
+        "collection": [
+          "${PROPERTY id}"
+        ]
+      }
+    ],
+    "CopyThisToMakeAddendumRoutine": [
+      {
+        "note": "ADDENDUM ADDED TO HISTORY",
+        "func": "CALL",
+        "widget": "history_label",
+        "routine": "AddendumRoutine",
+        "arguments": {
+          "addendum": ""
+        }
+      }
+    ]
+  },
+  "history_toggle": {
+    "type": "button",
+    "id": "history_toggle",
+    "x": -148,
+    "y": 255,
+    "width": 80,
+    "height": 70,
+    "borderRadius": 10,
+    "z": 78752,
+    "movable": false,
+    "backgroundColor": "grey",
+    "css": {
+      "default": {
+        "color": "${PROPERTY textColor}",
+        "font-size": "16px",
+        "background-color": "${PROPERTY backgroundColor}",
+        "border": "5px solid white"
+      }
+    },
+    "text": "VIEW FULL HISTORY",
+    "passed": false,
+    "CopyThisToMakeAddendumRoutine": [
+      {
+        "note": "ADDENDUM ADDED TO HISTORY",
+        "func": "CALL",
+        "widget": "history_label",
+        "routine": "AddendumRoutine",
+        "arguments": {
+          "addendum": ""
+        }
+      }
+    ],
+    "clickRoutine": [
+      "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF history_holder}",
+      "var checkArray = ${visibleToSeats} isArray",
+      {
+        "func": "IF",
+        "condition": "${checkArray}",
+        "elseRoutine": [
+          "var visibleToSeats = []"
+        ]
+      },
+      "var inVisibility = ${visibleToSeats} indexOf ${seatID}",
+      {
+        "func": "IF",
+        "operand1": "${inVisibility}",
+        "relation": ">",
+        "operand2": -1,
+        "thenRoutine": [
+          "var visibleToSeats = remove ${inVisibility} 1"
+        ],
+        "elseRoutine": [
+          "var visibleToSeats = push ${seatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "history_holder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visibleToSeats}"
+      }
+    ]
+  },
+  "1_turn_holder": {
+    "type": "holder",
+    "id": "1_turn_holder",
+    "parent": "1_anchor",
+    "fixedParent": true,
+    "x": -119,
+    "y": 883,
+    "width": 80,
+    "height": 38,
+    "layer": 5,
+    "z": 184,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black",
+        "border-radius": "5px",
+        "display": "flex",
+        "text-align": "center",
+        "font-size": "11px",
+        "align-items": "center"
+      }
+    },
+    "dropTarget": {
+      "turn_holder": true
+    },
+    "passed": false,
+    "enterRoutine": [
+      "var index = ${PROPERTY id} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_seat"
+        ],
+        "property": "background_color_solid"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${index}_board"
+        ],
+        "property": "background_color",
+        "relation": "=",
+        "value": "${background_color_solid}"
+      }
+    ],
+    "leaveRoutine": [
+      "var index = ${PROPERTY id} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_seat"
+        ],
+        "property": "background_color_transparent"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${index}_board"
+        ],
+        "property": "background_color",
+        "relation": "=",
+        "value": "${background_color_transparent}"
+      }
+    ]
+  },
+  "2_turn_holder": {
+    "type": "holder",
+    "id": "2_turn_holder",
+    "parent": "2_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder"
+  },
+  "3_turn_holder": {
+    "type": "holder",
+    "id": "3_turn_holder",
+    "parent": "3_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder"
+  },
+  "4_turn_holder": {
+    "type": "holder",
+    "id": "4_turn_holder",
+    "parent": "4_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder"
+  },
+  "5_turn_holder": {
+    "type": "holder",
+    "id": "5_turn_holder",
+    "parent": "5_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder"
+  },
+  "turn_button": {
+    "type": "button",
+    "id": "turn_button",
+    "height": 34,
+    "borderRadius": 10,
+    "layer": 10,
+    "z": 50853,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "15px",
+        "border": "2px solid black",
+        "font-weight": "900",
+        "background": "${PROPERTY button_border_color}",
+        "text-align": "center"
+      }
+    },
+    "button_background_color": "grey",
+    "button_border_color": "#000000",
+    "current_turn_index": 0,
+    "defaultX": 1093,
+    "defaultY": -144,
+    "turn_holder": true,
+    "ModifyButtonRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "player",
+        "variable": "current_player"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "color",
+        "variable": "current_player_color"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "relation": "=",
+        "property": "button_border_color",
+        "value": "${current_player_color}"
+      }
+    ],
+    "SetCurrentTurnIndexRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "collection": "seatedPlayers",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "FOREACH",
+        "collection": "seatedPlayers",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY turn OF $widgetID}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              "var index = ${widgetID} charAt 0",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "current_turn_index",
+                "relation": "=",
+                "value": "${index}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "parent",
+                "relation": "=",
+                "value": "${index}_turn_holder"
+              },
+              {
+                "func": "CALL",
+                "routine": "ModifyButtonRoutine"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${index}_seat"
+                ],
+                "property": "player",
+                "variable": "player_name"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${index}_seat"
+                ],
+                "property": "background_color_solid"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${index}_seat"
+                ],
+                "property": "background_color_transparent"
+              },
+              {
+                "note": "ADDENDUM ADDED TO HISTORY",
+                "func": "CALL",
+                "widget": "history_label",
+                "routine": "AddendumRoutine",
+                "arguments": {
+                  "addendum": "--- ${player_name}'s Turn ---"
+                }
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${index}_seat"
+                ],
+                "property": "turn_alert_enabled"
+              },
+              {
+                "func": "IF",
+                "operand1": "${turn_alert_enabled}",
+                "relation": "==",
+                "operand2": true,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "your_turn_label"
+                    ],
+                    "property": "background_color_solid",
+                    "relation": "=",
+                    "value": "${background_color_solid}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "your_turn_button"
+                    ],
+                    "property": "background_color_solid",
+                    "relation": "=",
+                    "value": "${background_color_solid}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "your_turn_button"
+                    ],
+                    "property": "background_color_transparent",
+                    "relation": "=",
+                    "value": "${background_color_transparent}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "your_turn_label"
+                    ],
+                    "property": "background_color_transparent",
+                    "relation": "=",
+                    "value": "${background_color_transparent}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "your_turn_button"
+                    ],
+                    "property": "onlyVisibleForSeat",
+                    "relation": "=",
+                    "value": "${index}_seat"
+                  }
+                ]
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${index}_seat"
+                ],
+                "property": "audio_enabled",
+                "variable": "audio_enabled"
+              },
+              {
+                "func": "IF",
+                "operand1": "${audio_enabled}",
+                "relation": "==",
+                "operand2": true,
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "TurnSoundRoutine"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "TurnSoundRoutine": [
+      {
+        "func": "AUDIO",
+        "source": "/assets/687121058_105325",
+        "maxVolume": 0.5,
+        "length": 2000,
+        "player": "${player_name}"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "collection": "seatedPlayers",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": "seatedPlayers",
+        "property": "turn",
+        "relation": "=",
+        "value": false
+      },
+      "var new_index = 0",
+      "var next_index = ${PROPERTY current_turn_index}",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          5,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${new_index}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${next_index}",
+                "relation": "==",
+                "operand2": 5,
+                "thenRoutine": [
+                  "var next_index = 1"
+                ],
+                "elseRoutine": [
+                  "var next_index = ${next_index} + 1"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${next_index}_seat"
+            ],
+            "property": "player"
+          },
+          {
+            "func": "IF",
+            "operand1": "${player}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              "var new_index = ${next_index}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${new_index}_seat"
+        ],
+        "property": "turn",
+        "relation": "=",
+        "value": true
+      },
+      {
+        "func": "CALL",
+        "routine": "SetCurrentTurnIndexRoutine"
+      }
+    ],
+    "x": 1093,
+    "y": -144,
+    "width": 254
+  },
+  "turn_button_label": {
+    "type": "label",
+    "id": "turn_button_label",
+    "parent": "turn_button",
+    "fixedParent": true,
+    "x": 8,
+    "width": 230,
+    "height": 30,
+    "layer": 100,
+    "z": 78737,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "23px",
+        "border": "0px solid black",
+        "font-weight": "900",
+        "background": "${PROPERTY color}",
+        "text-align": "center",
+        "pointer-events": "none"
+      },
+      " > textarea": {
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "text": "Click to end turn",
+    "passed": false,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": "==",
+        "operand2": "Passed",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "relation": "=",
+            "value": 9
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "relation": "=",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "y": 2
+  },
+  "your_turn_button": {
+    "type": "button",
+    "id": "your_turn_button",
+    "width": 1600,
+    "height": 1000,
+    "borderRadius": 0,
+    "layer": 100,
+    "z": 78732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border-radius": "5px",
+        "border": "0px solid ${PROPERTY background_color_solid}",
+        "background": "transparent",
+        "font-size": "120px",
+        "font-weight": "900",
+        "text-align": "center",
+        "padding-top": "400px",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "onlyVisibleForSeat": "",
+    "passed": false,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "your_turn_button"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": ""
+      }
+    ],
+    "background_color_solid": "#696969",
+    "background_color_transparent": "#69696948",
+    "onlyVi sibleForSeat": "5_seat"
+  },
+  "your_turn_label": {
+    "type": "label",
+    "id": "your_turn_label",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 418,
+    "y": 426,
+    "width": 700,
+    "height": 110,
+    "layer": 10,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border-radius": "5px",
+        "border": "30px solid ${PROPERTY background_color_solid}",
+        "font-size": "90px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "text": "It's Your Turn!",
+    "background_color_solid": "#696969",
+    "background_color_transparent": "#69696948"
+  },
+  "your_turn_label1": {
+    "type": "label",
+    "id": "your_turn_label1",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 413,
+    "y": 421,
+    "width": 710,
+    "height": 120,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border-radius": "5px",
+        "border": "30px solid black",
+        "font-size": "90px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "text": "It's Your Turn!",
+    "background_color_solid": "#bf360c",
+    "background_color_transparent": "#bf360c48"
+  },
+  "3_order_bead": {
+    "id": "3_order_bead",
+    "x": 3,
+    "y": 4,
+    "z": 86755,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "background_color_transparent": "#ffeb3b48",
+    "color_change_index": 3,
+    "color": "#ffeb3b",
+    "background_color_solid": "#ffeb3b",
+    "activeFace": 0,
+    "owner": "",
+    "parent": "3_hand"
+  },
+  "1_order_bead": {
+    "id": "1_order_bead",
+    "z": 86748,
+    "color": "#bf360c",
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "background_color_solid": "#bf360c",
+    "background_color_transparent": "#bf360c48",
+    "color_change_index": 1,
+    "x": 3,
+    "y": 4,
+    "activeFace": 0,
+    "parent": "1_hand",
+    "owner": ""
+  },
+  "2_order_bead": {
+    "id": "2_order_bead",
+    "x": 3,
+    "y": 4,
+    "z": 84279,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "background_color_transparent": "#dddddd48",
+    "color_change_index": 2,
+    "color": "#dddddd",
+    "background_color_solid": "#dddddd",
+    "activeFace": 0,
+    "owner": "",
+    "parent": "2_hand"
+  },
+  "4_order_bead": {
+    "id": "4_order_bead",
+    "x": 3,
+    "y": 4,
+    "z": 87053,
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "background_color_transparent": "#1976d248",
+    "color_change_index": 4,
+    "activeFace": 0,
+    "color": "#1976d2",
+    "background_color_solid": "#1976d2",
+    "owner": "",
+    "parent": "4_hand"
+  },
+  "5_order_bead": {
+    "id": "5_order_bead",
+    "x": 3,
+    "y": 4,
+    "z": 86756,
+    "color": "#000000",
+    "inheritFrom": {
+      "bead_template": [
+        "!parent"
+      ]
+    },
+    "background_color_solid": "#000000",
+    "background_color_transparent": "#00000048",
+    "color_change_index": 5,
+    "activeFace": 0,
+    "parent": "5_hand",
+    "owner": ""
+  },
+  "coins_supply": {
+    "type": "holder",
+    "id": "coins_supply",
+    "x": 18,
+    "y": 606,
+    "width": 90,
+    "height": 88,
+    "z": 855,
+    "classes": "transpa rent",
+    "css": {
+      "": {
+        "background": "#dacebd",
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "center",
+        "align-items": "flex-start",
+        "padding": 0,
+        "box-shadow": "2px 2px 5px black inset, -1px -1px 3px gray inset"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY z}"
+      }
+    },
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "coin": true
+    },
+    "preventPiles": true,
+    "active": true,
+    "color": "#999999",
+    "doubleLeaveRoutineCompensation": true,
+    "hex_type1": "straight",
+    "hex_type2": "gentle",
+    "supply_total": 80,
+    "token_type": "hex1",
+    "UpdateCountRoutine": [
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "relation": "==",
+        "value": "${PROPERTY hex_type1}",
+        "collection": "all_hexes",
+        "mode": "add"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "relation": "==",
+        "value": "${PROPERTY hex_type2}",
+        "collection": "all_hexes",
+        "mode": "add"
+      },
+      {
+        "func": "COUNT",
+        "collection": "all_hexes",
+        "variable": "number_hexes"
+      },
+      "var accurate_number = ${number_hexes} - 2",
+      "var supply_number = ${PROPERTY supply_total} - ${accurate_number}",
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY token_type}_supply_label"
+        ],
+        "property": "text",
+        "relation": "=",
+        "value": "${supply_number}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "isClone",
+        "relation": "==",
+        "value": true,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "CALL",
+        "routine": "UpdateCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY active}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": 0,
+            "relation": "==",
+            "operand2": "${COUNT}",
+            "thenRoutine": [
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              },
+              {
+                "func": "MOVE",
+                "from": "${thisID}",
+                "to": "${thisID}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "UpdateCountRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "isClone",
+        "relation": "=",
+        "value": true
+      },
+      "var new_face = randInt 0 5",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "activeFace",
+        "relation": "=",
+        "value": "${new_face}"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rollCount",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "coin_supply_blocker": {
+    "id": "coin_supply_blocker",
+    "x": 27,
+    "y": 613,
+    "width": 75,
+    "height": 75,
+    "z": 86897,
+    "image": "/assets/-1790665491_8706",
+    "css": {
+      "default": {
+        "text-align": "center",
+        "pointer-events": "none"
+      }
+    }
+  },
+  "1_figure": {
+    "id": "1_figure",
+    "x": 570,
+    "y": 56,
+    "width": 85,
+    "height": 120,
+    "z": 86663,
+    "image": "/assets/1292264721_1880",
+    "figure": true,
+    "clickRoutine": [
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_figure_text"
+        ],
+        "property": "text",
+        "variable": "figure_text"
+      },
+      {
+        "func": "IF",
+        "operand1": "${figure_text}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": "Pawn"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "2_figure": {
+    "id": "2_figure",
+    "x": 369,
+    "width": 85,
+    "height": 120,
+    "z": 86895,
+    "image": "/assets/-1596275860_2770",
+    "figure": true,
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "outlineColor": "#FFFFFFbb",
+    "clickRoutine": [
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_figure_text"
+        ],
+        "property": "text",
+        "variable": "figure_text"
+      },
+      {
+        "func": "IF",
+        "operand1": "${figure_text}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": "Rook"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "y": 255
+  },
+  "3_figure": {
+    "id": "3_figure",
+    "x": 443,
+    "width": 85,
+    "height": 120,
+    "z": 86896,
+    "image": "/assets/-1474847286_2974",
+    "figure": true,
+    "clickRoutine": [
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_figure_text"
+        ],
+        "property": "text",
+        "variable": "figure_text"
+      },
+      {
+        "func": "IF",
+        "operand1": "${figure_text}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": "Bishop"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "y": 137
+  },
+  "dice_supply": {
+    "type": "holder",
+    "id": "dice_supply",
+    "x": 111,
+    "y": 464,
+    "width": 90,
+    "height": 230,
+    "z": 856,
+    "css": {
+      "": {
+        "background": "#dacebd",
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "center",
+        "align-items": "flex-start",
+        "padding": 0,
+        "box-shadow": "2px 2px 5px black inset, -1px -1px 3px gray inset"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY z}"
+      }
+    },
+    "dropTarget": {
+      "die": true
+    },
+    "preventPiles": true,
+    "leaveRoutine": [
+      "var new_face = randInt 0 5",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "activeFace",
+        "relation": "=",
+        "value": "${new_face}"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rollCount",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "2_figure_text": {
+    "type": "label",
+    "id": "2_figure_text",
+    "parent": "2_figure",
+    "fixedParent": true,
+    "x": 10,
+    "y": 92,
+    "height": 30,
+    "z": 544,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "17px",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "pointer-events": "none",
+        "text-align": "center"
+      }
+    },
+    "outlineColor": "#FFFFFFbb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "width": 60,
+    "movableInEdit": false,
+    "text": "Rook"
+  },
+  "3_figure_text": {
+    "type": "label",
+    "id": "3_figure_text",
+    "parent": "3_figure",
+    "fixedParent": true,
+    "y": 91,
+    "width": 80,
+    "height": 40,
+    "z": 544,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "17px",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "pointer-events": "none",
+        "text-align": "center"
+      }
+    },
+    "outlineColor": "#FFFFFFbb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "x": 1,
+    "text": "Bishop"
+  },
+  "1_figure_text": {
+    "type": "label",
+    "id": "1_figure_text",
+    "parent": "1_figure",
+    "fixedParent": true,
+    "x": 11,
+    "y": 95,
+    "width": 60,
+    "height": 30,
+    "z": 544,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "16px",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "pointer-events": "none",
+        "text-align": "center"
+      }
+    },
+    "outlineColor": "#FFFFFFbb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "text": "Pawn"
+  },
+  "0_figure_text": {
+    "type": "label",
+    "id": "0_figure_text",
+    "parent": "0_figure",
+    "fixedParent": true,
+    "x": 14,
+    "y": 91,
+    "width": 60,
+    "height": 30,
+    "z": 544,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "17px",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "pointer-events": "none",
+        "text-align": "center"
+      }
+    },
+    "outlineColor": "#FFFFFFbb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "text": "Knight"
+  },
+  "turn_settings_button": {
+    "type": "button",
+    "id": "turn_settings_button",
+    "x": 20,
+    "y": 545,
+    "width": 88,
+    "height": 60,
+    "borderRadius": 10,
+    "z": 78778,
+    "backgroundColor": "grey",
+    "color": "#4caf50",
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "18px",
+        "background-color": "grey",
+        "border": "5px solid #dacebd"
+      }
+    },
+    "text": "Turn Settings",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "audio_enabled"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "turn_alert_enabled"
+      },
+      {
+        "func": "INPUT",
+        "confirmButtonText": "Turn Settings",
+        "cancelButtonIcon": "cancel",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Player Settings"
+          },
+          {
+            "type": "checkbox",
+            "label": "Play a sound when it is your turn?",
+            "variable": "audio_check",
+            "value": "${audio_enabled}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Show the Its Your Turn alert?",
+            "variable": "banner_check",
+            "value": "${turn_alert_enabled}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "audio_enabled",
+        "relation": "=",
+        "value": "${audio_check}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "turn_alert_enabled",
+        "relation": "=",
+        "value": "${banner_check}"
+      }
+    ],
+    "movableInEdit": false
+  },
+  "7cuk": {
+    "image": "/assets/1081878481_17662",
+    "id": "7cuk",
+    "z": 86877,
+    "y": 255,
+    "x": 6,
+    "width": 210,
+    "height": 210,
+    "movable": false
+  },
+  "king_figure": {
+    "id": "king_figure",
+    "x": 525,
+    "y": 825,
+    "width": 60,
+    "height": 105,
+    "z": 86683,
+    "image": "/assets/-1719926899_5002",
+    "defaultX": 525,
+    "defaultY": 825,
+    "clickRoutine": [
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "king_figure_text"
+        ],
+        "property": "text",
+        "variable": "figure_text"
+      },
+      {
+        "func": "IF",
+        "operand1": "${figure_text}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "king_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": "King"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "king_figure_text"
+            ],
+            "property": "text",
+            "relation": "=",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "king_figure_text": {
+    "type": "label",
+    "id": "king_figure_text",
+    "parent": "king_figure",
+    "fixedParent": true,
+    "y": 73,
+    "width": 60,
+    "height": 30,
+    "z": 544,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "20px",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "pointer-events": "none",
+        "text-align": "center"
+      }
+    },
+    "outlineColor": "#FFFFFFbb",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "x": 2,
+    "text": "King"
+  },
+  "1_screen": {
+    "id": "1_screen",
+    "parent": "1_anchor",
+    "fixedParent": true,
+    "x": -115,
+    "y": 978,
+    "width": 254,
+    "height": 155,
+    "borderRadius": 8,
+    "z": 86914,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "pointer-events": "none"
+      }
+    },
+    "image": "/assets/-11211877_16728",
+    "linkedToSeat": "1_seat",
+    "onlyVisibleForSeat": [
+      "2_seat",
+      "3_seat",
+      "4_seat",
+      "5_seat"
+    ]
+  },
+  "2_screen": {
+    "id": "2_screen",
+    "parent": "2_anchor",
+    "fixedParent": true,
+    "x": -115,
+    "y": 978,
+    "width": 254,
+    "height": 155,
+    "borderRadius": 8,
+    "z": 86914,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "pointer-events": "none"
+      }
+    },
+    "image": "/assets/1353511927_8810",
+    "linkedToSeat": "2_seat",
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "3_seat",
+      "4_seat",
+      "5_seat"
+    ]
+  },
+  "3_screen": {
+    "id": "3_screen",
+    "parent": "3_anchor",
+    "fixedParent": true,
+    "x": -115,
+    "y": 978,
+    "width": 254,
+    "height": 155,
+    "borderRadius": 8,
+    "z": 86914,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "pointer-events": "none"
+      }
+    },
+    "image": "/assets/-1041186687_11182",
+    "linkedToSeat": "3_seat",
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "2_seat",
+      "4_seat",
+      "5_seat"
+    ]
+  },
+  "4_screen": {
+    "id": "4_screen",
+    "parent": "4_anchor",
+    "fixedParent": true,
+    "x": -115,
+    "y": 978,
+    "width": 254,
+    "height": 155,
+    "borderRadius": 8,
+    "z": 86914,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "pointer-events": "none"
+      }
+    },
+    "image": "/assets/1418006525_9162",
+    "linkedToSeat": "4_seat",
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "2_seat",
+      "3_seat",
+      "5_seat"
+    ],
+    "layer": 20
+  },
+  "5_screen": {
+    "id": "5_screen",
+    "parent": "5_anchor",
+    "fixedParent": true,
+    "x": -115,
+    "y": 978,
+    "width": 254,
+    "height": 155,
+    "borderRadius": 8,
+    "z": 86914,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "pointer-events": "none"
+      }
+    },
+    "image": "/assets/-1878465882_8680",
+    "linkedToSeat": "5_seat",
+    "onlyVisibleForSeat": [
+      "1_seat",
+      "2_seat",
+      "3_seat",
+      "4_seat"
+    ]
+  },
+  "bscz": {
+    "type": "dice",
+    "width": 65,
+    "height": 65,
+    "borderRadius": 100,
+    "z": 87065,
+    "borderColor": "#eeeeee",
+    "faceCSS": {
+      "background": "eeeeee"
+    },
+    "faces": [
+      {
+        "image": "/assets/-1790665491_8706",
+        "imageScale": 1
+      },
+      {
+        "image": "/assets/1095900827_7560",
+        "imageScale": 1
+      }
+    ],
+    "pipSymbols": false,
+    "rollCount": 45,
+    "shape3d": true,
+    "coin": true,
+    "movable": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "activeFace",
+            "relation": "=",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "activeFace",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "activeFace": 3,
+    "y": 2,
+    "x": 2,
+    "dragging": "Jonathan",
+    "hoverParent": "coins_supply",
+    "clonedFrom": "9bou",
+    "id": "bscz",
+    "parent": "coins_supply"
+  }
+}

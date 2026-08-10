@@ -1134,7 +1134,7 @@
     "version": 7,
     "info": {
       "name": "Speedy Fruits",
-      "image": "/assets/1560517833_99964",
+      "image": "/assets/630875058_35426",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/2944/halli-galli",
       "year": "1990",
@@ -1147,7 +1147,8 @@
       "similarName": "Halli Galli",
       "description": "Flip cards to reveal matching fruits and ring bell when 5 of a kind are displayed to win opponent cards.  Player with most cards wins.",
       "showName": true,
-      "lastUpdate": 1662819167000
+      "lastUpdate": 1662819167000,
+      "similarDesigner": "Haim Shafir"
     }
   },
   "p2": {

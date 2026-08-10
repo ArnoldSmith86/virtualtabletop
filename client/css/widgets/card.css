@@ -1,9 +1,6 @@
 .card {
   overflow: hidden;
-}
-
-body.edit .card {
-  display: none;
+  color: black;
 }
 
 .card > .cardFace {
@@ -19,10 +16,14 @@ body.edit .card {
   box-sizing: border-box;
 }
 
-.card > .active.cardFace > .cardFaceObject {
+.card > .cardFace > .cardFaceObject {
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   box-sizing: border-box;
+}
+
+.card > .cardFace > .cardFaceObject.html {
+  white-space: collapse;
 }

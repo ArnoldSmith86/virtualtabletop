@@ -73,7 +73,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_1",
     "text": "",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "parent": "guesses_1"
   },
   "g6l1_1": {
@@ -894,19 +894,17 @@
         }
       },
       {
-        "func": "SET",
-        "collection": [
-          "shadow_guesses_1",
-          "shadow_guesses_2"
-        ],
-        "property": "y",
-        "value": 0
+        "func": "CALL",
+        "routine": "showPlayerLettersPanelRoutine",
+        "arguments": {
+          "player": "${first}"
+        }
       },
       {
         "func": "CALL",
         "routine": "showPlayerLettersPanelRoutine",
         "arguments": {
-          "player": "${first}"
+          "player": "${second}"
         }
       },
       {
@@ -938,9 +936,38 @@
         }
       },
       {
+        "func": "SET",
+        "collection": [
+          "guesses_1",
+          "guesses_2",
+          "shadow_guesses_1",
+          "shadow_guesses_2"
+        ],
+        "property": "y",
+        "value": 0
+      },
+      {
         "func": "TURN",
         "turn": "${first}",
         "turnCycle": "position"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "guessPanel_1",
+          "guessPanel_2"
+        ],
+        "property": "y",
+        "value": 100
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "alphabet_1",
+          "alphabet_2"
+        ],
+        "property": "y",
+        "value": 275
       }
     ],
     "showPlayerPanelsRoutine": [
@@ -1023,7 +1050,7 @@
       {
         "func": "SET",
         "collection": [
-          "guessPanel_${player}"
+          "guessButton_${player}"
         ],
         "property": "y",
         "value": 1100
@@ -1033,10 +1060,10 @@
       {
         "func": "SET",
         "collection": [
-          "guessPanel_${player}"
+          "guessButton_${player}"
         ],
         "property": "y",
-        "value": 100
+        "value": 70
       }
     ],
     "notInWordCss": "--wcMain:#ec7063; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
@@ -1160,7 +1187,38 @@
         "property": "turn",
         "value": true
       }
-    ]
+    ],
+    "setSuggestionRoutine": [
+      "var suggestionButton = 'say' + ${numCorr}",
+      "var suggestionButton = ${suggestionButton} + '_'",
+      "var suggestionButton = ${suggestionButton} + ${other}",
+      "var thisGuess = 'guess_' + ${player}",
+      "var thisGuess = ${PROPERTY text OF $thisGuess}",
+      {
+        "func": "SET",
+        "collection": [
+          "${suggestionButton}"
+        ],
+        "property": "mainColor",
+        "value": "#008000"
+      },
+      {
+        "func": "IF",
+        "operand1": "${thisGuess}",
+        "operand2": "${hiddenWordStatic}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "sayCorrect_${other}"
+            ],
+            "property": "mainColor",
+            "value": "#008000"
+          }
+        ]
+      }
+    ],
+    "maybeInWordCss": "--wcMain:#f0e68c; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0"
   },
   "g14l1_1": {
     "type": "button",
@@ -1502,26 +1560,6 @@
     "text": "",
     "sqColor": "white",
     "parent": "guesses_1"
-  },
-  "_meta": {
-    "version": 6,
-    "info": {
-      "name": "Find the Word",
-      "image": "/assets/1812480044_38290",
-      "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/11821/jotto",
-      "year": "1956",
-      "mode": "vs",
-      "time": "30",
-      "players": "2",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "Room layout and background image by Roger Lipsett and released to the public domain (CC0).",
-      "similarName": "Jotto",
-      "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
-      "showName": true,
-      "lastUpdate": 1647037629000
-    }
   },
   "corr1_1": {
     "type": "button",
@@ -2081,7 +2119,7 @@
   "clear1": {
     "id": "clear1",
     "x": 20,
-    "y": 120,
+    "y": 170,
     "width": 40,
     "height": 40,
     "movable": false,
@@ -2096,7 +2134,7 @@
     "width": 200,
     "x": 80,
     "css": "font-size:16pt",
-    "y": 130,
+    "y": 180,
     "height": 40,
     "parent": "status_1"
   },
@@ -2225,9 +2263,10 @@
     "fixedParent": true,
     "css": "color:black;font-size:16pt",
     "x": 10,
-    "y": 113,
+    "y": 105,
     "width": 150,
-    "parent": "scorePanel_1"
+    "parent": "scorePanel_1",
+    "height": 45
   },
   "awti2": {
     "type": "label",
@@ -2250,7 +2289,8 @@
     "height": 130,
     "z": 7,
     "css": "background-color:lightgray;border:2px solid black",
-    "onlyVisibleForSeat": "P1"
+    "onlyVisibleForSeat": "P1",
+    "hoverInheritVisibleForSeat": false
   },
   "guess_1": {
     "type": "label",
@@ -2261,14 +2301,13 @@
     "width": 160,
     "height": 40,
     "z": 1,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessButton_1": {
     "type": "button",
     "id": "guessButton_1",
     "parent": "guessPanel_1",
     "x": 30,
-    "y": 70,
     "width": 120,
     "height": 40,
     "z": 7,
@@ -2290,6 +2329,10 @@
             "property": "numGuesses",
             "value": "${numGuesses}"
           },
+          "var other = 3 - ${PROPERTY player}",
+          "var hiddenWord = 'chosen_' + ${other}",
+          "var hiddenWord = ${PROPERTY text OF $hiddenWord}",
+          "var hiddenWordStatic = ${hiddenWord}",
           {
             "func": "FOREACH",
             "in": [
@@ -2306,6 +2349,21 @@
               "var letNum = ${value} + 1",
               "var square = ${square} concat ${letNum}",
               "var square = ${square} concat '_1'",
+              {
+                "comment": "Calculate the number of correct letters in the guess."
+              },
+              "var hiddenIndex = ${hiddenWord} indexOf ${char}",
+              {
+                "func": "IF",
+                "operand1": "${hiddenIndex}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var hiddenWord = remove ${hiddenIndex} 1"
+                ]
+              },
+              "var hiddenLen = length ${hiddenWord}",
+              "var numCorr = 5 - ${hiddenLen}",
               {
                 "func": "SET",
                 "collection": [
@@ -2355,6 +2413,14 @@
             ]
           },
           {
+            "func": "CALL",
+            "widget": "functions",
+            "routine": "setSuggestionRoutine",
+            "arguments": {
+              "player": "${PROPERTY player}"
+            }
+          },
+          {
             "func": "SET",
             "collection": [
               "guess_1"
@@ -2393,20 +2459,14 @@
             "arguments": {
               "player": 1
             }
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "lA_1"
-            ],
-            "property": "clickable",
-            "value": false
           }
         ]
       }
     ],
     "css": "--wcMain:blue;--wcMainOH:dodgerblue;border:3px solid black",
-    "text": "Guess"
+    "text": "Guess",
+    "player": 1,
+    "y": 70
   },
   "alphabet_1": {
     "type": "holder",
@@ -2417,6 +2477,7 @@
     "z": 8,
     "css": "background-color:lightgray;border:2px solid black",
     "x": 350,
+    "hoverInheritVisibleForSeat": false,
     "onlyVisibleForSeat": "P1"
   },
   "guesses_1": {
@@ -2428,8 +2489,9 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
-    "y": 1100,
-    "onlyVisibleForSeat": "P1"
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "P1",
+    "y": 1100
   },
   "scorePanel_1": {
     "type": "holder",
@@ -2440,7 +2502,8 @@
     "z": 26,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "x": 120
+    "x": 120,
+    "hoverInheritVisibleForSeat": false
   },
   "chosen_1": {
     "type": "label",
@@ -2452,7 +2515,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessed_1": {
     "type": "label",
@@ -2464,7 +2527,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "say0_1": {
     "type": "button",
@@ -2545,11 +2608,31 @@
         "func": "TURN",
         "turn": 1,
         "turnCycle": "forward"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "say0_1",
+          "say1_1",
+          "say2_1",
+          "say3_1",
+          "say4_1",
+          "say5_1",
+          "say0_2",
+          "say1_2",
+          "say2_2",
+          "say3_2",
+          "say4_2",
+          "say5_2"
+        ],
+        "property": "mainColor",
+        "value": "#000000"
       }
     ],
-    "css": "--wcMain:green;--wcMainOH:lightgreen;border:3px solid black;font-size:24pt",
+    "css": "--wcMain:${PROPERTY mainColor};--wcMainOH:${PROPERTY mainColor}80;border:3px solid black;font-size:24pt",
     "text": "0",
-    "player": 1
+    "player": 1,
+    "mainColor": "#000000"
   },
   "say1_1": {
     "type": "button",
@@ -2560,7 +2643,8 @@
     "y": 180,
     "z": 28,
     "inheritFrom": "say0_1",
-    "text": 1
+    "text": 1,
+    "mainColor": "#000000"
   },
   "say2_1": {
     "type": "button",
@@ -2569,7 +2653,8 @@
     "x": 131,
     "z": 29,
     "inheritFrom": "say0_1",
-    "text": 2
+    "text": 2,
+    "mainColor": "#000000"
   },
   "say3_1": {
     "type": "button",
@@ -2578,7 +2663,8 @@
     "x": 188,
     "z": 30,
     "inheritFrom": "say0_1",
-    "text": 3
+    "text": 3,
+    "mainColor": "#000000"
   },
   "say4_1": {
     "type": "button",
@@ -2587,7 +2673,8 @@
     "x": 245,
     "z": 31,
     "inheritFrom": "say0_1",
-    "text": 4
+    "text": 4,
+    "mainColor": "#000000"
   },
   "say5_1": {
     "type": "button",
@@ -2596,7 +2683,8 @@
     "x": 302,
     "z": 32,
     "inheritFrom": "say0_1",
-    "text": 5
+    "text": 5,
+    "mainColor": "#000000"
   },
   "sayCorrect_1": {
     "type": "button",
@@ -2608,7 +2696,7 @@
     "width": 140,
     "height": 45,
     "z": 26,
-    "css": "--wcMain:green;--wcMainOH:lightgreen;border:3px solid black;font-size:24pt",
+    "css": "--wcMain:${PROPERTY mainColor};--wcMainOH:${PROPERTY mainColor}80;border:3px solid black;font-size:24pt",
     "text": "Correct!",
     "player": 1,
     "clickRoutine": [
@@ -2621,6 +2709,20 @@
       "var corrSlot = ${corrSlot} concat ${other}",
       "var toBeDone = ${PROPERTY text OF $corrSlot} == ''",
       "var valid = ${valid} && ${toBeDone}",
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Ending game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "The other player will win and the game will end. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
       {
         "func": "IF",
         "condition": "${valid}",
@@ -2644,7 +2746,8 @@
           "winner": "${other}"
         }
       }
-    ]
+    ],
+    "mainColor": "#000000"
   },
   "g1l2_1": {
     "type": "button",
@@ -2726,7 +2829,8 @@
     "height": 130,
     "z": 7,
     "css": "background-color:lightgray;border:2px solid black",
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "guess_2": {
     "type": "label",
@@ -2737,14 +2841,14 @@
     "width": 160,
     "height": 40,
     "z": 1,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessButton_2": {
     "type": "button",
     "id": "guessButton_2",
     "parent": "guessPanel_2",
     "x": 30,
-    "y": 70,
+    "y": 1100,
     "width": 120,
     "height": 40,
     "z": 7,
@@ -2767,6 +2871,10 @@
             "property": "numGuesses",
             "value": "${numGuesses}"
           },
+          "var other = 3 - ${PROPERTY player}",
+          "var hiddenWord = 'chosen_' + ${other}",
+          "var hiddenWord = ${PROPERTY text OF $hiddenWord}",
+          "var hiddenWordStatic = ${hiddenWord}",
           {
             "func": "FOREACH",
             "in": [
@@ -2783,6 +2891,21 @@
               "var letNum = ${value} + 1",
               "var square = ${square} concat ${letNum}",
               "var square = ${square} concat '_2'",
+              {
+                "comment": "Calculate the number of correct letters in the guess."
+              },
+              "var hiddenIndex = ${hiddenWord} indexOf ${char}",
+              {
+                "func": "IF",
+                "operand1": "${hiddenIndex}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var hiddenWord = remove ${hiddenIndex} 1"
+                ]
+              },
+              "var hiddenLen = length ${hiddenWord}",
+              "var numCorr = 5 - ${hiddenLen}",
               {
                 "func": "SET",
                 "collection": [
@@ -2832,6 +2955,14 @@
             ]
           },
           {
+            "func": "CALL",
+            "widget": "functions",
+            "routine": "setSuggestionRoutine",
+            "arguments": {
+              "player": "${PROPERTY player}"
+            }
+          },
+          {
             "func": "SET",
             "collection": [
               "guess_2"
@@ -2870,20 +3001,13 @@
             "arguments": {
               "player": 2
             }
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "lA_2"
-            ],
-            "property": "clickable",
-            "value": false
           }
         ]
       }
     ],
     "css": "--wcMain:blue;--wcMainOH:dodgerblue;border:3px solid black",
-    "text": "Guess"
+    "text": "Guess",
+    "player": 2
   },
   "scorePanel_2": {
     "type": "holder",
@@ -2894,7 +3018,8 @@
     "z": 22,
     "css": "background-color:lightgray;border:2px solid black",
     "x": 1120,
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "awti3": {
     "type": "label",
@@ -2915,10 +3040,11 @@
     "id": "awti4",
     "fixedParent": true,
     "css": "color:black;font-size:16pt",
-    "x": 10,
-    "y": 113,
+    "y": 105,
     "width": 150,
-    "parent": "scorePanel_2"
+    "parent": "scorePanel_2",
+    "height": 45,
+    "x": 10
   },
   "chosen_2": {
     "type": "label",
@@ -2930,7 +3056,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "guessed_2": {
     "type": "label",
@@ -2942,7 +3068,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "sayCorrect_2": {
     "type": "button",
@@ -2958,7 +3084,8 @@
     "player": 2,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "sayCorrect_1"
+    "inheritFrom": "sayCorrect_1",
+    "mainColor": "#000000"
   },
   "guesses_2": {
     "type": "holder",
@@ -2969,8 +3096,9 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "numGuesses": 0,
-    "y": 1100,
-    "onlyVisibleForSeat": "P2"
+    "hoverInheritVisibleForSeat": false,
+    "onlyVisibleForSeat": "P2",
+    "y": 1100
   },
   "g6l1_2": {
     "type": "button",
@@ -3046,7 +3174,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l1_2": {
@@ -3057,7 +3185,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g6l2_2": {
@@ -3332,7 +3460,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g12l3_2": {
@@ -3343,7 +3471,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g12l4_2": {
@@ -3354,7 +3482,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g12l5_2": {
@@ -3365,7 +3493,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l2_2": {
@@ -3376,7 +3504,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l3_2": {
@@ -3387,7 +3515,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l4_2": {
@@ -3398,7 +3526,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g13l5_2": {
@@ -3409,7 +3537,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l1_2": {
@@ -3420,7 +3548,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l2_2": {
@@ -3431,7 +3559,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l3_2": {
@@ -3442,7 +3570,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l4_2": {
@@ -3453,7 +3581,7 @@
     "inheritFrom": "g1l1_2",
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g14l5_2": {
@@ -3464,7 +3592,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l1_2": {
@@ -3475,7 +3603,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l1_2": {
@@ -3486,7 +3614,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l1_2": {
@@ -3497,7 +3625,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l1_2": {
@@ -3508,7 +3636,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l1_2": {
@@ -3519,7 +3647,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l2_2": {
@@ -3530,7 +3658,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l3_2": {
@@ -3541,7 +3669,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l4_2": {
@@ -3552,7 +3680,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g15l5_2": {
@@ -3563,7 +3691,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l2_2": {
@@ -3574,7 +3702,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l3_2": {
@@ -3585,7 +3713,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l4_2": {
@@ -3596,7 +3724,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g16l5_2": {
@@ -3607,7 +3735,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l2_2": {
@@ -3618,7 +3746,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l3_2": {
@@ -3629,7 +3757,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l4_2": {
@@ -3640,7 +3768,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g17l5_2": {
@@ -3651,7 +3779,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l2_2": {
@@ -3662,7 +3790,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l3_2": {
@@ -3673,7 +3801,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l4_2": {
@@ -3684,7 +3812,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g18l5_2": {
@@ -3695,7 +3823,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l2_2": {
@@ -3706,7 +3834,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l3_2": {
@@ -3717,7 +3845,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l4_2": {
@@ -3728,7 +3856,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g19l5_2": {
@@ -3739,7 +3867,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l2_2": {
@@ -3750,7 +3878,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l3_2": {
@@ -3761,7 +3889,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l4_2": {
@@ -3772,7 +3900,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "g20l5_2": {
@@ -3783,7 +3911,7 @@
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
     "text": "",
-    "sqColor": "gray",
+    "sqColor": "white",
     "parent": "guesses_2"
   },
   "corr1_2": {
@@ -4135,7 +4263,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4146,7 +4274,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4157,7 +4285,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4168,7 +4296,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4179,7 +4307,7 @@
     "y": 105,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "notInWord",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -4307,7 +4435,8 @@
     "player": 2,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "say0_1"
+    "inheritFrom": "say0_1",
+    "mainColor": "#000000"
   },
   "say1_2": {
     "type": "button",
@@ -4318,7 +4447,8 @@
     "y": 180,
     "z": 28,
     "inheritFrom": "say0_2",
-    "text": 1
+    "text": 1,
+    "mainColor": "#000000"
   },
   "say2_2": {
     "type": "button",
@@ -4327,7 +4457,8 @@
     "x": 131,
     "z": 29,
     "inheritFrom": "say0_2",
-    "text": 2
+    "text": 2,
+    "mainColor": "#000000"
   },
   "say3_2": {
     "type": "button",
@@ -4336,7 +4467,8 @@
     "x": 188,
     "z": 30,
     "inheritFrom": "say0_2",
-    "text": 3
+    "text": 3,
+    "mainColor": "#000000"
   },
   "say4_2": {
     "type": "button",
@@ -4345,7 +4477,8 @@
     "x": 245,
     "z": 31,
     "inheritFrom": "say0_2",
-    "text": 4
+    "text": 4,
+    "mainColor": "#000000"
   },
   "say5_2": {
     "type": "button",
@@ -4354,7 +4487,8 @@
     "x": 302,
     "z": 32,
     "inheritFrom": "say0_2",
-    "text": 5
+    "text": 5,
+    "mainColor": "#000000"
   },
   "choosePanel_1": {
     "type": "holder",
@@ -4365,7 +4499,8 @@
     "z": 35,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "x": 296
+    "x": 296,
+    "hoverInheritVisibleForSeat": false
   },
   "word_1": {
     "type": "label",
@@ -4377,7 +4512,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;font-family:Arial"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;font-family:Arial;line-height:1.2em"
   },
   "wordButton_1": {
     "type": "button",
@@ -4463,7 +4598,8 @@
     "height": 185,
     "z": 23,
     "css": "background-color:lightgray;border:2px solid black",
-    "onlyVisibleForSeat": "P2"
+    "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false
   },
   "awti5": {
     "type": "label",
@@ -4487,7 +4623,7 @@
     "width": 160,
     "height": 40,
     "z": 12,
-    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white"
+    "css": "font-size:24pt;color:black;border:3px solid black;background-color:white;line-height:1.2em"
   },
   "wordButton_2": {
     "type": "button",
@@ -4507,14 +4643,15 @@
   "status_1": {
     "type": "holder",
     "id": "status_1",
-    "x": 210,
+    "x": 250,
     "width": 270,
-    "height": 190,
+    "height": 230,
     "layer": 2,
     "z": 2,
-    "invoker": "g1l4_1",
+    "invoker": "g1l5_1",
     "onlyVisibleForSeat": "P1",
-    "y": 1100
+    "y": 1100,
+    "hoverInheritVisibleForSeat": false
   },
   "setIn_1": {
     "type": "button",
@@ -4613,7 +4750,7 @@
     "id": "setEmpty_1",
     "parent": "status_1",
     "x": 0,
-    "y": 120,
+    "y": 170,
     "inheritFrom": "setIn_1",
     "setColor": "white"
   },
@@ -4662,12 +4799,13 @@
     "id": "status_2",
     "x": 1005,
     "width": 270,
-    "height": 190,
+    "height": 230,
     "layer": 2,
     "z": 3,
     "invoker": "g1l1_2",
     "onlyVisibleForSeat": "P2",
-    "y": 1100
+    "y": 1100,
+    "hoverInheritVisibleForSeat": false
   },
   "inWord2": {
     "id": "inWord2",
@@ -4716,7 +4854,7 @@
   "clear2": {
     "id": "clear2",
     "x": 20,
-    "y": 120,
+    "y": 170,
     "width": 40,
     "height": 40,
     "movable": false,
@@ -4731,7 +4869,7 @@
     "width": 200,
     "x": 80,
     "css": "font-size:16pt",
-    "y": 130,
+    "y": 180,
     "height": 40,
     "parent": "status_2"
   },
@@ -4766,7 +4904,7 @@
     "id": "setEmpty_2",
     "parent": "status_2",
     "x": 0,
-    "y": 120,
+    "y": 170,
     "inheritFrom": "setIn_2",
     "setColor": "white"
   },
@@ -4798,6 +4936,15 @@
         ],
         "property": "y",
         "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "guessButton_1",
+          "guessButton_2"
+        ],
+        "property": "y",
+        "value": 100
       },
       {
         "func": "SET",
@@ -4945,7 +5092,9 @@
         "func": "SET",
         "collection": [
           "guesses_1",
-          "guesses_2"
+          "guesses_2",
+          "shadow_guesses_1",
+          "shadow_guesses_2"
         ],
         "property": "numGuesses",
         "value": 0
@@ -4965,6 +5114,11 @@
         "func": "SET",
         "property": "css",
         "value": "${PROPERTY whiteCss OF functions}"
+      },
+      {
+        "func": "SET",
+        "property": "sqColor",
+        "value": "white"
       },
       {
         "Note": "Clear all shadow values",
@@ -5051,6 +5205,15 @@
         "value": "P1"
       },
       {
+        "Note": "Show first move panel",
+        "func": "SET",
+        "collection": [
+          "firstMovePanel"
+        ],
+        "property": "y",
+        "value": 90
+      },
+      {
         "func": "SET",
         "collection": [
           "guesses_2",
@@ -5079,15 +5242,6 @@
         "value": 200
       },
       {
-        "Note": "Show first move panel",
-        "func": "SET",
-        "collection": [
-          "firstMovePanel"
-        ],
-        "property": "y",
-        "value": 90
-      },
-      {
         "func": "SET",
         "collection": [
           "word_1",
@@ -5099,15 +5253,6 @@
         ],
         "property": "text",
         "value": ""
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "lA_1",
-          "lA_2"
-        ],
-        "property": "clickable",
-        "value": true
       },
       "var ready = ${PROPERTY playersReady OF table}",
       "var ready.0 = false",
@@ -5127,6 +5272,38 @@
         ],
         "property": "gameStarted",
         "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "guess_1",
+          "guess_2",
+          "chosenWord_1",
+          "chosenWord_2"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sayCorrect_1",
+          "sayCorrect_2",
+          "say0_1",
+          "say1_1",
+          "say2_1",
+          "say3_1",
+          "say4_1",
+          "say5_1",
+          "say0_2",
+          "say1_2",
+          "say2_2",
+          "say3_2",
+          "say4_2",
+          "say5_2"
+        ],
+        "property": "mainColor",
+        "value": "#000000"
       }
     ]
   },
@@ -5137,7 +5314,7 @@
     "y": 955,
     "css": "--wcMain:white; --wcMainOH:lightgray; color: black; font-family: Arial; font-size: 24pt; border: 2px solid white; border-radius:0",
     "inheritFrom": "g1l1_2",
-    "sqColor": "gray",
+    "sqColor": "white",
     "text": "",
     "parent": "guesses_2"
   },
@@ -5147,7 +5324,7 @@
     "height": 1000,
     "layer": -4,
     "movable": false,
-    "image": "/assets/453039333_2103645",
+    "image": "/assets/124254282_890182",
     "gameStarted": false,
     "playersReady": [
       false,
@@ -5218,6 +5395,7 @@
     "z": 8,
     "css": "background-color:lightgray;border:2px solid black",
     "x": 998,
+    "hoverInheritVisibleForSeat": false,
     "onlyVisibleForSeat": "P2"
   },
   "lA_2": {
@@ -5535,7 +5713,7 @@
     "width": 310,
     "height": 185,
     "z": 36,
-    "css": "background-color:#e7321f;border:2px solid black"
+    "css": "background-color:#27e921;border:2px solid black"
   },
   "chosenWord_1": {
     "type": "label",
@@ -5544,10 +5722,10 @@
     "y": 100,
     "z": 16,
     "parent": "chosenHolder_1",
-    "css": "font-size:30pt; text-align:center;color:black",
+    "css": "font-size:30pt; text-align:center;color:black;line-height:1em",
     "width": 306,
     "movableInEdit": false,
-    "text": "UVWXY"
+    "height": 40
   },
   "chosenHolder_2": {
     "type": "holder",
@@ -5557,7 +5735,7 @@
     "width": 310,
     "height": 185,
     "z": 36,
-    "css": "background-color:#27e921;border:2px solid black"
+    "css": "background-color:#e7321f;border:2px solid black"
   },
   "chosenWord_2": {
     "type": "label",
@@ -5566,10 +5744,10 @@
     "y": 100,
     "z": 16,
     "parent": "chosenHolder_2",
-    "css": "font-size:30pt; text-align:center;color:black",
+    "css": "font-size:30pt; text-align:center;color:black;line-height:1em",
     "width": 306,
     "movableInEdit": false,
-    "text": "PQRST"
+    "height": 40
   },
   "chosenText_1": {
     "type": "label",
@@ -5580,8 +5758,9 @@
     "width": 306,
     "z": 15,
     "movableInEdit": false,
-    "css": "font-size:24pt; text-align:center;color:black",
-    "text": "You were looking for"
+    "css": "font-size:24pt; text-align:center;color:black;line-height:1.2em",
+    "text": "You won!",
+    "height": 40
   },
   "chosenText_2": {
     "type": "label",
@@ -5592,8 +5771,9 @@
     "width": 306,
     "z": 15,
     "movableInEdit": false,
-    "css": "font-size:24pt; text-align:center;color:black",
-    "text": "You won!"
+    "css": "font-size:24pt; text-align:center;color:black;line-height:1.2em",
+    "text": "You were looking for",
+    "height": 40
   },
   "shadow_guesses_1": {
     "type": "holder",
@@ -5604,6 +5784,8 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P2",
+    "hoverInheritVisibleForSeat": false,
+    "numGuesses": 0,
     "y": 1100
   },
   "shadow_g1l3_1": {
@@ -6751,8 +6933,9 @@
     "z": 2,
     "css": "background-color:lightgray;border:2px solid black",
     "onlyVisibleForSeat": "P1",
-    "numGuesses": 2,
+    "numGuesses": 0,
     "player": 2,
+    "hoverInheritVisibleForSeat": false,
     "y": 1100
   },
   "shadow_g1l3_2": {
@@ -7978,5 +8161,94 @@
     "css": "background-color:lightgray",
     "layer": 0,
     "invoker": "shadow_corr3_1"
+  },
+  "k17cg": {
+    "id": "k17cg",
+    "movable": false,
+    "width": 200,
+    "x": 80,
+    "css": "font-size:16pt",
+    "y": 130,
+    "height": 40,
+    "parent": "status_1",
+    "text": "Maybe in word"
+  },
+  "setMaybe_1": {
+    "type": "button",
+    "id": "setMaybe_1",
+    "parent": "status_1",
+    "x": 0,
+    "y": 120,
+    "inheritFrom": "setIn_1",
+    "setColor": "maybeInWord"
+  },
+  "maybe1": {
+    "id": "maybe1",
+    "parent": "status_1",
+    "x": 20,
+    "y": 120,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-color:#f0e68c"
+  },
+  "setMaybe_2": {
+    "type": "button",
+    "id": "setMaybe_2",
+    "parent": "status_2",
+    "x": 0,
+    "y": 120,
+    "inheritFrom": "setIn_2",
+    "setColor": "maybeInWord"
+  },
+  "k18cg": {
+    "id": "k18cg",
+    "movable": false,
+    "width": 200,
+    "x": 80,
+    "css": "font-size:16pt",
+    "y": 130,
+    "height": 40,
+    "parent": "status_2",
+    "text": "Maybe in word"
+  },
+  "maybe2": {
+    "id": "maybe2",
+    "parent": "status_2",
+    "x": 20,
+    "y": 120,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-color:#f0e68c"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Find the Word",
+      "image": "/assets/1812480044_38290",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/11821/jotto",
+      "year": "1956",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "Room layout and background image by Roger Lipsett, with edits by LawDawg96, and released to the public domain (CC0).",
+      "similarName": "Jotto",
+      "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
+      "showName": true,
+      "lastUpdate": 1710281580731,
+      "skill": "",
+      "similarImage": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Players take seats and choose a player to go first by clicking on the box with the hand icon.<div><br></div><div>Enter the 5-letter word the other player is supposed to guess by clicking on the letters in the \"keyboard\" displayed on the screen. Click the green \"Use this word\" to confirm.</div><div><br></div><div>When it is your turn, enter the 5-letter word that you want to guess.&nbsp; Press the blue \"Guess\" button.&nbsp; When it is not your turn, you can still enter letters to pre-load your next guess.</div><div><br></div><div>After a player guesses, the word will appear in the long vertical column that lists the words near the player's seat. The other player will be presented with a confirmation box that shows the correct number of letters in the word in green. The player should confirm the guessed letters appear in the hidden word then press the green button.</div><div><br></div><div>After the non-guessing player confirms the correct number of letters, that number appears in the circle by the guessed word in the long vertical word list. Players can press a letter in the word list and choose to change the color of that letter everywhere it appears to either red, green, or white.</div><div><br></div><div>If the guessing player guesses the word correctly, then the \"Correct\" button turns green on the non-guessing player's overlay. The non-guessing player should confirm the guess and then press the green \"Correct\" button to end the game and reveal the hidden words.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2"
+    }
   }
 }

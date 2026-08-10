@@ -1,0 +1,8228 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Business Guy",
+      "image": "/assets/931640373_12516",
+      "showName": true,
+      "time": "30",
+      "mode": "vs",
+      "skill": "",
+      "description": "Stock holding game powered by the original No Thanks auction. Bid to have a chance at stock and infrastructure investments, or cash out and take the pot.",
+      "similarImage": "",
+      "similarName": "Mogul",
+      "year": "2015",
+      "similarDesigner": "Michael Schacht",
+      "similarAwards": "",
+      "bgg": "https://boardgamegeek.com/boardgame/174744/mogul",
+      "rules": "https://www.riograndegames.com/wp-content/uploads/2013/02/Mogul-Rules.pdf",
+      "ruleText": "",
+      "helpText": "Have everyone take a seat and start the game via the the \"Game Setup\" button.&nbsp;<div><br></div><div>All accounting is automated. For this to work, you should always use the \"Deal &amp; Dividend\" button, rather than manually revealing the next card up for auction. Similarly, there are buttons available for bidding, cashing out, selling shares and for the lifeline of buying 3 bidding chips if you run out. The only things that need to be dragged manually are claiming a share and placing buildings on the infrastructure investment tracks.&nbsp;</div><div><br></div><div>If you need to edit the scores for any reason, you can simply click on the VP counter.</div><div><div><br></div><div>At the end of the game, use the three final scoring buttons to add the end-game scoring opportunities and get the total VP for each player. (These will appear once the Market Crash card is drawn)</div></div>",
+      "attribution": "Implementation and Layout by Tobias Lunte (Tobl on bgg) and released to the Public Domain under CC0.",
+      "lastUpdate": 1720201032297,
+      "players": "3-5",
+      "language": "en-US",
+      "variant": "Business Guy",
+      "variantImage": ""
+    }
+  },
+  "uh2y 9 of round-star": {
+    "type": "card",
+    "id": "uh2y 9 of round-star",
+    "deck": "stocksDeck",
+    "cardType": "star",
+    "z": 37526,
+    "parent": "bzmd"
+  },
+  "uh2y 7 of hearts": {
+    "type": "card",
+    "id": "uh2y 7 of hearts",
+    "deck": "stocksDeck",
+    "cardType": "heart",
+    "z": 37578,
+    "parent": "bzmd"
+  },
+  "stocksDeck": {
+    "type": "deck",
+    "id": "stocksDeck",
+    "cardDefaults": {
+      "isCrash": false,
+      "isNotCrash": true,
+      "white": "#fff8\" stroke=\"#fff2\" stroke-width=\"00",
+      "onPileCreation": {
+        "handleSize": 60,
+        "handleCSS": "background:white;left:0;right:0;bottom:0;top:35%;margin:auto"
+      }
+    },
+    "cardTypes": {
+      "star": {
+        "stockType": "star",
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f29e50",
+        "2suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "2suitColor": "#908ff0",
+        "rank": "9"
+      },
+      "flower": {
+        "stockType": "flower",
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#73bf5f",
+        "2suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "2suitColor": "#f29e50",
+        "rank": "8"
+      },
+      "heart": {
+        "stockType": "heart",
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#f764c8",
+        "2suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "2suitColor": "#73bf5f",
+        "rank": "7"
+      },
+      "diamond": {
+        "stockType": "diamond",
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#908ff0",
+        "2suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "2suitColor": "#aaa",
+        "rank": "7"
+      },
+      "air": {
+        "stockType": "air",
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#aaa",
+        "2suit": "/i/game-icons.net/skoll/hearts.svg",
+        "2suitColor": "#f764c8",
+        "rank": "6"
+      },
+      "crashCard": {
+        "stockType": "crash",
+        "suitColor": "#111",
+        "isCrash": true,
+        "isNotCrash": false
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/1B.svg"
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "width": 55,
+            "height": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 20,
+            "fontSize": 32,
+            "textAlign": "right",
+            "color": "white",
+            "width": 90,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 85,
+            "width": 83,
+            "height": 64,
+            "borderRadius": "10px",
+            "dynamicProperties": {
+              "color": "2suitColor",
+              "display": "isNotCrash"
+            },
+            "css": {
+              "border-radius": "10px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 105,
+            "width": 83,
+            "height": 37,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "2suit",
+              "display": "isNotCrash"
+            }
+          },
+          {
+            "type": "text",
+            "y": 90,
+            "fontSize": 12,
+            "textAlign": "center",
+            "width": 103,
+            "color": "#ddd",
+            "value": "sell / build",
+            "dynamicProperties": {
+              "display": "isNotCrash"
+            }
+          },
+          {
+            "type": "text",
+            "y": 14,
+            "fontSize": 22,
+            "textAlign": "center",
+            "width": 103,
+            "color": "#ddd",
+            "value": "Market\nCrash:\n\nGame\nEnds",
+            "dynamicProperties": {
+              "display": "isCrash"
+            }
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "width": 55,
+            "height": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 20,
+            "fontSize": 32,
+            "textAlign": "right",
+            "color": "white",
+            "width": 90,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 9,
+            "y": 22,
+            "fontSize": 12,
+            "textAlign": "center",
+            "width": 85,
+            "color": "#ddd",
+            "value": "1) Final dividends\n\n2) 5 chips\n→ 1VP\n\n3) Buildings per track squared",
+            "dynamicProperties": {
+              "display": "isCrash"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 28208,
+    "parent": "stocksDeckHolder",
+    "fixedParent": true,
+    "x": 239,
+    "y": -220
+  },
+  "jnk4": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "jnk4",
+    "z": 37548,
+    "parent": "bzmd"
+  },
+  "rw68": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "rw68",
+    "z": 37584,
+    "text": 4,
+    "deltaVal": 6,
+    "parent": "bzmd"
+  },
+  "44xw": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "44xw",
+    "z": 37550,
+    "text": 4,
+    "deltaVal": 6,
+    "parent": "bzmd"
+  },
+  "xo8j": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "xo8j",
+    "z": 37572,
+    "text": 5,
+    "deltaVal": 6,
+    "parent": "bzmd"
+  },
+  "mk70": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "mk70",
+    "z": 37532,
+    "parent": "bzmd"
+  },
+  "so29": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "so29",
+    "z": 37558,
+    "text": 4,
+    "deltaVal": 6,
+    "parent": "bzmd"
+  },
+  "iyen": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "iyen",
+    "z": 37536,
+    "deltaVal": 6,
+    "parent": "bzmd"
+  },
+  "g4ho": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "star",
+    "id": "g4ho",
+    "z": 37580,
+    "text": 4,
+    "deltaVal": 6,
+    "parent": "bzmd"
+  },
+  "8and": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "8and",
+    "z": 37564,
+    "parent": "bzmd"
+  },
+  "k3dn": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "k3dn",
+    "z": 37562,
+    "parent": "bzmd"
+  },
+  "ezlx": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "ezlx",
+    "z": 37546,
+    "parent": "bzmd"
+  },
+  "zmyu": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "zmyu",
+    "z": 37530,
+    "parent": "bzmd"
+  },
+  "53gy": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "53gy",
+    "z": 37525,
+    "parent": "bzmd"
+  },
+  "xvvz": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "xvvz",
+    "z": 37552,
+    "parent": "bzmd"
+  },
+  "cjhm": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "heart",
+    "id": "cjhm",
+    "z": 37576,
+    "parent": "bzmd"
+  },
+  "9bsh": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "heart",
+    "id": "9bsh",
+    "z": 37538,
+    "parent": "bzmd"
+  },
+  "7hie": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "heart",
+    "id": "7hie",
+    "z": 37534,
+    "parent": "bzmd"
+  },
+  "5akp": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "heart",
+    "id": "5akp",
+    "z": 37554,
+    "parent": "bzmd"
+  },
+  "ukm2": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "heart",
+    "id": "ukm2",
+    "z": 37566,
+    "parent": "bzmd"
+  },
+  "ux2n": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "diamond",
+    "id": "ux2n",
+    "z": 37560,
+    "parent": "bzmd"
+  },
+  "60jk": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "diamond",
+    "id": "60jk",
+    "z": 37544,
+    "parent": "bzmd"
+  },
+  "9nw3": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "diamond",
+    "id": "9nw3",
+    "z": 37524,
+    "parent": "bzmd"
+  },
+  "q1af": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "diamond",
+    "id": "q1af",
+    "z": 37586,
+    "parent": "bzmd"
+  },
+  "bvc7": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "diamond",
+    "id": "bvc7",
+    "z": 37570,
+    "parent": "bzmd"
+  },
+  "1rzf": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "diamond",
+    "id": "1rzf",
+    "z": 37540,
+    "parent": "bzmd"
+  },
+  "f7m8": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "air",
+    "id": "f7m8",
+    "z": 37556,
+    "parent": "bzmd"
+  },
+  "b5ab": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "air",
+    "id": "b5ab",
+    "z": 37568,
+    "parent": "bzmd"
+  },
+  "i4vy": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "air",
+    "id": "i4vy",
+    "z": 37588,
+    "parent": "bzmd"
+  },
+  "nk9z": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "air",
+    "id": "nk9z",
+    "z": 37594,
+    "parent": "bzmd"
+  },
+  "fgmh": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "air",
+    "id": "fgmh",
+    "z": 37592,
+    "parent": "bzmd"
+  },
+  "crashCard": {
+    "type": "card",
+    "id": "crashCard",
+    "deck": "stocksDeck",
+    "cardType": "crashCard",
+    "z": 37523,
+    "parent": "bzmd"
+  },
+  "dummyHolder": {
+    "type": "holder",
+    "id": "dummyHolder",
+    "x": -129,
+    "z": 1,
+    "y": 4
+  },
+  "cardOffer": {
+    "type": "holder",
+    "id": "cardOffer",
+    "x": 295,
+    "y": 80,
+    "z": 2,
+    "scale": 1.3
+  },
+  "stocksDeckHolder": {
+    "type": "holder",
+    "id": "stocksDeckHolder",
+    "x": 70,
+    "y": 107,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "otsy": {
+    "id": "otsy",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/round-star.svg",
+    "z": 1,
+    "parent": "starHolder1",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "starHolder1": {
+    "type": "holder",
+    "id": "starHolder1",
+    "x": 180,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "star"
+    },
+    "fixedParent": "true",
+    "parent": "seat1",
+    "y": -6,
+    "movableInEdit": false,
+    "stockType": "star",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy1": {
+    "id": "otsy1",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/flower-emblem.svg",
+    "z": 1,
+    "parent": "flowerHolder1",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "otsy2": {
+    "id": "otsy2",
+    "x": 23,
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "z": 1,
+    "parent": "heartHolder1",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 65,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "otsy3": {
+    "id": "otsy3",
+    "x": 22,
+    "image": "/i/game-icons.net/skoll/diamonds.svg",
+    "z": 1,
+    "parent": "diamondHolder1",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "otsy4": {
+    "id": "otsy4",
+    "x": 22,
+    "image": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+    "z": 1,
+    "parent": "airHolder1",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 68,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "flowerHolder1": {
+    "type": "holder",
+    "id": "flowerHolder1",
+    "x": 295,
+    "y": -6,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "flower"
+    },
+    "parent": "seat1",
+    "fixedParent": "true",
+    "movableInEdit": false,
+    "stockType": "flower",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 725,
+    "y": 20,
+    "index": 1,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seatProto": "!parent"
+    },
+    "color": "#bbb",
+    "occupied": 0,
+    "turn": false,
+    "skipTurn": false,
+    "z": 0
+  },
+  "heartHolder1": {
+    "type": "holder",
+    "id": "heartHolder1",
+    "parent": "seat1",
+    "fixedParent": "true",
+    "x": 410,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "heart"
+    },
+    "stockType": "heart",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "diamondHolder1": {
+    "type": "holder",
+    "id": "diamondHolder1",
+    "parent": "seat1",
+    "fixedParent": "true",
+    "x": 525,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "diamond"
+    },
+    "stockType": "diamond",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "airHolder1": {
+    "type": "holder",
+    "id": "airHolder1",
+    "parent": "seat1",
+    "fixedParent": "true",
+    "x": 640,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "air"
+    },
+    "stockType": "air",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "9riq 1 of round-star": {
+    "type": "card",
+    "id": "9riq 1 of round-star",
+    "deck": "buildingTrackDeck",
+    "cardType": "1 of round-star",
+    "z": 7463,
+    "x": 122,
+    "fixedParent": true,
+    "parent": "buildArea",
+    "y": 10
+  },
+  "9riq 1 of flower-emblem": {
+    "type": "card",
+    "id": "9riq 1 of flower-emblem",
+    "deck": "buildingTrackDeck",
+    "cardType": "1 of flower-emblem",
+    "x": 244,
+    "y": 10,
+    "z": 7465,
+    "fixedParent": true,
+    "parent": "buildArea"
+  },
+  "9riq 1 of diamonds": {
+    "type": "card",
+    "id": "9riq 1 of diamonds",
+    "deck": "buildingTrackDeck",
+    "cardType": "1 of diamonds",
+    "x": 20,
+    "y": 10,
+    "z": 7461,
+    "fixedParent": true,
+    "parent": "buildArea"
+  },
+  "9riq 1 of fluffy-trefoil": {
+    "type": "card",
+    "id": "9riq 1 of fluffy-trefoil",
+    "deck": "buildingTrackDeck",
+    "cardType": "1 of fluffy-trefoil",
+    "x": 346,
+    "z": 7466,
+    "fixedParent": true,
+    "parent": "buildArea",
+    "y": 10
+  },
+  "buildHearts": {
+    "type": "card",
+    "id": "buildHearts",
+    "deck": "buildingTrackDeck",
+    "cardType": "1 of hearts",
+    "x": 448,
+    "y": 10,
+    "z": 7469,
+    "fixedParent": true,
+    "parent": "buildArea"
+  },
+  "uw8u": {
+    "type": "holder",
+    "x": 399,
+    "y": 170,
+    "z": 4,
+    "id": "uw8u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderWideProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "air",
+    "investmentType2": "heart"
+  },
+  "uw16u": {
+    "type": "holder",
+    "x": 294,
+    "y": 170,
+    "z": 4,
+    "id": "uw16u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderWideProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "flower",
+    "investmentType2": "air"
+  },
+  "uw32u": {
+    "type": "holder",
+    "z": 4,
+    "id": "uw32u",
+    "layer": 1,
+    "inheritFrom": {
+      "houseHolderWideProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "css": "background: #fff5;",
+    "fixedParent": true,
+    "parent": "buildArea",
+    "y": 99,
+    "x": 71,
+    "investmentType": "diamond",
+    "investmentType2": "star"
+  },
+  "uw33u": {
+    "type": "holder",
+    "x": 71,
+    "y": 170,
+    "z": 4,
+    "id": "uw33u",
+    "layer": 1,
+    "inheritFrom": {
+      "houseHolderWideProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "css": "background: #fff5;",
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "diamond",
+    "investmentType2": "star"
+  },
+  "uw34u": {
+    "type": "holder",
+    "x": 35,
+    "y": 241,
+    "z": 4,
+    "id": "uw34u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "diamond"
+  },
+  "uw35u": {
+    "type": "holder",
+    "x": 35,
+    "y": 312,
+    "z": 4,
+    "id": "uw35u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "diamond"
+  },
+  "uw36u": {
+    "type": "holder",
+    "x": 35,
+    "y": 383,
+    "z": 4,
+    "id": "uw36u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "diamond"
+  },
+  "uw37u": {
+    "type": "holder",
+    "x": 35,
+    "y": 454,
+    "z": 4,
+    "id": "uw37u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "diamond"
+  },
+  "uw38u": {
+    "type": "holder",
+    "x": 35,
+    "y": 525,
+    "z": 4,
+    "id": "uw38u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "diamond"
+  },
+  "uw39u": {
+    "type": "holder",
+    "x": 35,
+    "y": 596,
+    "z": 4,
+    "id": "uw39u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "diamond"
+  },
+  "qce16": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 1,
+    "id": "qce16",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 4,
+    "parent": "generalCoinSupply"
+  },
+  "buildArea": {
+    "id": "buildArea",
+    "y": 300,
+    "width": 480,
+    "height": 590,
+    "movable": false,
+    "movableInEdit": false,
+    "x": 10
+  },
+  "x7kn": {
+    "id": "x7kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "starHolder1",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "prototypes": {
+    "id": "prototypes",
+    "y": -500,
+    "text": "Basic widget"
+  },
+  "sellButtonProto": {
+    "type": "button",
+    "id": "sellButtonProto",
+    "parent": "prototypes",
+    "fixedParent": true,
+    "x": 13,
+    "y": 134,
+    "width": 85,
+    "height": 20,
+    "layer": 4,
+    "movableInEdit": false,
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "text": "Sell",
+    "textColor": "#666",
+    "textColorOH": "#fff",
+    "clickRoutine": [
+      "var p = ${PROPERTY parent}",
+      "var sT = ${PROPERTY stockType OF $p}",
+      "var gP = ${PROPERTY parent OF $p}",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY parent}"
+      },
+      "var ownStocks = ${COUNT}",
+      {
+        "func": "IF",
+        "operand1": "${ownStocks}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "text",
+                "text": "You don't own any of this stock."
+              }
+            ],
+            "confirmButtonText": "OK",
+            "cancelButtonIcon": null,
+            "cancelButtonText": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "type",
+            "relation": "==",
+            "value": "holder"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "stockType",
+            "relation": "==",
+            "value": "${sT}"
+          },
+          {
+            "func": "GET",
+            "aggregation": "array"
+          },
+          {
+            "func": "SELECT",
+            "property": "_ancestor",
+            "relation": "in",
+            "value": "${id}",
+            "type": "card"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var totalStocks = ${COUNT}",
+          "var payout = ${ownStocks} * ${totalStocks}",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "text",
+                "text": "Sell ${ownStocks} stock for ${payout} VP?"
+              }
+            ],
+            "confirmButtonText": "Yes",
+            "cancelButtonText": "No"
+          },
+          {
+            "func": "SELECT",
+            "type": "vpCounter",
+            "property": "parent",
+            "value": "${gP}",
+            "max": 1
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "vpCounterID"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateValRoutine",
+            "widget": "${vpCounterID}",
+            "arguments": {
+              "_deltaVal": "${payout}"
+            }
+          },
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY parent}",
+            "to": "dummyHolder",
+            "count": 0
+          }
+        ]
+      }
+    ],
+    "xBACKUP": 13,
+    "yBACKUP": 134,
+    "gameStartRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          "var p = ${PROPERTY parent}",
+          "var gP = ${PROPERTY parent OF $p}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "onlyVisibleForSeat",
+            "value": "${gP}"
+          }
+        ]
+      }
+    ],
+    "css": "font-size:15px",
+    "inheritFrom": {
+      "btnGSRoutineProto": "gameStartRoutine"
+    }
+  },
+  "houseHolderWideProto": {
+    "type": "holder",
+    "id": "houseHolderWideProto",
+    "parent": "prototypes",
+    "fixedParent": "true",
+    "x": 216,
+    "y": -19,
+    "width": 90,
+    "height": 60,
+    "layer": 1,
+    "z": 4,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "css": "background: #fff5;",
+    "dropLimit": 1,
+    "dropOffsetX": 19,
+    "dropTarget": {
+      "type": "house"
+    }
+  },
+  "houseHolderProto": {
+    "type": "holder",
+    "id": "houseHolderProto",
+    "y": -18,
+    "width": 60,
+    "height": 60,
+    "layer": 1,
+    "z": 4,
+    "css": "background: #fff5;",
+    "dropLimit": 1,
+    "dropTarget": {
+      "type": "house"
+    },
+    "classes": "transparent",
+    "x": 142,
+    "parent": "prototypes",
+    "fixedParent": "true"
+  },
+  "x8kn": {
+    "id": "x8kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "flowerHolder1",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "x9kn": {
+    "id": "x9kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "heartHolder1",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "x10kn": {
+    "id": "x10kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "diamondHolder1",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "x11kn": {
+    "id": "x11kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "airHolder1",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "ezlx1": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "ezlx1",
+    "z": 37590,
+    "parent": "bzmd"
+  },
+  "xvvz1": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "flower",
+    "id": "xvvz1",
+    "z": 37542,
+    "parent": "bzmd"
+  },
+  "6akp": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "heart",
+    "id": "6akp",
+    "z": 37582,
+    "parent": "bzmd"
+  },
+  "fgmh1": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "air",
+    "id": "fgmh1",
+    "z": 37528,
+    "parent": "bzmd"
+  },
+  "vpProto": {
+    "type": "vpCounter",
+    "id": "vpProto",
+    "parent": "prototypes",
+    "fixedParent": true,
+    "x": 755,
+    "y": 23,
+    "width": 105,
+    "height": 70,
+    "z": 10017,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 50px;text-align:center;color:#666;padding-top:25px",
+    "text": 0,
+    "val": 0,
+    "setValToZeroRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "val",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "${this}",
+        "value": "${PROPERTY val}"
+      }
+    ],
+    "updateValRoutine": [
+      "var this = ${PROPERTY id}",
+      "var _val = ${PROPERTY val}",
+      "var _oldVal = ${_val}",
+      "var _tmp = ${_val} + ${_deltaVal}",
+      "var _val = ${_tmp} * 1",
+      {
+        "func": "IF",
+        "operand1": "${_tmp}",
+        "operand2": "${_val}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "val",
+            "value": "${_val}"
+          },
+          {
+            "func": "LABEL",
+            "label": "${this}",
+            "value": "${PROPERTY val}"
+          }
+        ],
+        "relation": "=="
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Update Victory Point total"
+          },
+          {
+            "type": "subtitle",
+            "text": "Current value: ${PROPERTY val}"
+          },
+          {
+            "note": "This can also have'min' and 'max' parameters.",
+            "type": "number",
+            "label": "Amount to add or subtract from the total.",
+            "variable": "updateNumber",
+            "value": 0
+          }
+        ],
+        "confirmButtonText": "Update",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "CALL",
+        "routine": "updateValRoutine",
+        "arguments": {
+          "_deltaVal": "${updateNumber}"
+        }
+      }
+    ]
+  },
+  "vpC1": {
+    "type": "vpCounter",
+    "id": "vpC1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "inheritFrom": {
+      "vpProto": "*"
+    },
+    "val": 0,
+    "text": 0
+  },
+  "houseSupplyProto": {
+    "type": "holder",
+    "id": "houseSupplyProto",
+    "parent": "prototypes",
+    "fixedParent": "true",
+    "x": 85,
+    "y": 60,
+    "width": 70,
+    "height": 102,
+    "z": 5,
+    "classes": "transparent",
+    "dropOffsetX": 10,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "house"
+    },
+    "stackOffsetY": 10,
+    "yBACKUP": 60,
+    "xBACKUP": 85,
+    "holderType": "houseSupply"
+  },
+  "houseProto": {
+    "type": "house",
+    "id": "houseProto",
+    "x": 122,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "color": "white",
+    "gameStartRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          "var p = ${PROPERTY parent}",
+          "var gP = ${PROPERTY parent OF $p}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "origHolder",
+            "value": "${p}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inheritFrom",
+            "value": {
+              "houseProto": [
+                "!color"
+              ],
+              "${gP}": [
+                "color"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "prototypes",
+    "y": 55
+  },
+  "houseSupply1": {
+    "type": "holder",
+    "id": "houseSupply1",
+    "parent": "seat1",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "houseSupplyProto": "*"
+    },
+    "x": 88,
+    "y": 60
+  },
+  "house1": {
+    "type": "house",
+    "id": "house1",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat1": [
+        "color"
+      ]
+    },
+    "z": 1,
+    "x": 10,
+    "y": 0,
+    "activeFace": 0,
+    "hoverParent": "houseSupply1",
+    "parent": "houseSupply1",
+    "origHolder": "houseSupply1"
+  },
+  "coinSupply1": {
+    "type": "holder",
+    "id": "coinSupply1",
+    "parent": "seat1",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "playerCoinSupplyProto": "*"
+    },
+    "onlyVisibleForSeat": "seat1",
+    "x": -2,
+    "y": 60
+  },
+  "seatProto": {
+    "type": "seat",
+    "id": "seatProto",
+    "x": 639,
+    "y": 202,
+    "width": 160,
+    "color": "#bbb",
+    "clickRoutine": [
+      "var seatStatus = ${PROPERTY occupied}",
+      {
+        "func": "IF",
+        "operand1": "${seatStatus}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Getting up ...",
+            "fields": [
+              {
+                "type": "text",
+                "text": "Do you want to get up from your seat?"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "occupied",
+            "value": 0
+          },
+          {
+            "func": "CLICK",
+            "collection": "thisButton",
+            "mode": "ignoreClickRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#bbb"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "color",
+                "label": "Color",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          },
+          "var playerColor = ${color}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "occupied",
+            "value": 1
+          },
+          {
+            "func": "CLICK",
+            "collection": "thisButton",
+            "mode": "ignoreClickRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": "${playerName}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ]
+      }
+    ],
+    "fixedParent": true,
+    "parent": "prototypes",
+    "_dropOutRoutine": [
+      {
+        "func": "SELECT",
+        "type": "btnContainer",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "skipTurn",
+        "relation": "==",
+        "value": false
+      },
+      {
+        "func": "COUNT",
+        "collection": "DEFAULT",
+        "variable": "remainingPlayerCount"
+      },
+      "var remainingPlayerCount = min ${remainingPlayerCount} 3",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": "${remainingPlayerCount}"
+      },
+      {
+        "func": "SET",
+        "property": "skipTurn",
+        "value": true,
+        "collection": "thisButton"
+      }
+    ],
+    "_dropOutResetRoutine": [
+      {
+        "func": "SET",
+        "property": "skipTurn",
+        "value": false,
+        "collection": "thisButton"
+      },
+      {
+        "func": "SELECT",
+        "type": "btnContainer",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "house4": {
+    "type": "house",
+    "id": "house4",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat1": [
+        "color"
+      ]
+    },
+    "z": 2,
+    "x": 10,
+    "y": 10,
+    "activeFace": 0,
+    "origHolder": "houseSupply1",
+    "parent": "houseSupply1"
+  },
+  "playerStockHolderProto": {
+    "type": "holder",
+    "id": "playerStockHolderProto",
+    "parent": "prototypes",
+    "fixedParent": "true",
+    "x": 640,
+    "y": -25,
+    "z": 3,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 2
+    },
+    "dividendRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "ownStocks"
+      },
+      {
+        "func": "SELECT",
+        "type": "vpCounter",
+        "property": "parent",
+        "value": "${PROPERTY parent}",
+        "max": 1
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "vpCounterID"
+      },
+      {
+        "func": "CALL",
+        "routine": "updateValRoutine",
+        "widget": "${vpCounterID}",
+        "arguments": {
+          "_deltaVal": "${ownStocks}"
+        }
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "seat",
+        "turn": "${PROPERTY parent}"
+      }
+    ],
+    "holderType": "playerStockHolder",
+    "onLeave": {
+      "activeFace": 1
+    }
+  },
+  "playerCoinSupplyProto": {
+    "type": "holder",
+    "id": "playerCoinSupplyProto",
+    "parent": "prototypes",
+    "fixedParent": "true",
+    "x": -5,
+    "y": 60,
+    "xBACKUP": -5,
+    "yBACKUP": 60,
+    "gameStartRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          "var p = ${PROPERTY parent}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "onlyVisibleForSeat",
+            "value": "${p}"
+          }
+        ]
+      }
+    ],
+    "inheritFrom": {
+      "coinSupplyProto": "*"
+    },
+    "holderType": "coinSupply"
+  },
+  "coinSupplyProto": {
+    "type": "holder",
+    "id": "coinSupplyProto",
+    "parent": "prototypes",
+    "fixedParent": "true",
+    "x": -87,
+    "y": 60,
+    "width": 82,
+    "height": 102,
+    "z": 5,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropOffsetY": 50,
+    "dropTarget": {
+      "type": "coin"
+    },
+    "stackOffsetY": -10
+  },
+  "currentPot": {
+    "type": "holder",
+    "id": "currentPot",
+    "x": 460,
+    "y": 670,
+    "inheritFrom": {
+      "coinSupplyProto": "*"
+    }
+  },
+  "resetGameButton": {
+    "type": "button",
+    "id": "resetGameButton",
+    "y": 30,
+    "width": 140,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Game Setup",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Check this box and click the green button to reset the game.",
+            "variable": "checkbox",
+            "value": false
+          }
+        ],
+        "confirmButtonText": "Reset the game!",
+        "cancelButtonIcon": "cancel"
+      },
+      {
+        "func": "IF",
+        "operand1": "${checkbox}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "_resetGameComponentsRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "_recallDeckRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "_determineStartPlayerRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "_dealStartingCardsRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "_stackStocksDeckRoutine"
+          }
+        ]
+      }
+    ],
+    "x": 35,
+    "_dealStartingCardsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT",
+        "collection": "DEFAULT",
+        "variable": "playerCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${playerCount}",
+        "operand2": 3,
+        "relation": "<",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "text",
+                "text": "Make sure at least 3 seats are occupied"
+              }
+            ],
+            "cancelButtonIcon": null,
+            "cancelButtonText": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          "var startingCardSet = ${PROPERTY _startingCardSets} getIndex ${playerCount}",
+          {
+            "func": "FOREACH",
+            "in": "${startingCardSet}",
+            "loopRoutine": [
+              {
+                "func": "TURN"
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "turnID",
+                "collection": "TURN"
+              },
+              {
+                "func": "FOREACH",
+                "in": "${value}",
+                "loopRoutine": [
+                  {
+                    "func": "SELECT",
+                    "type": "card",
+                    "property": "cardType",
+                    "value": "${value}",
+                    "relation": "=="
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "_ancestor",
+                    "value": "dummyHolder",
+                    "source": "DEFAULT",
+                    "collection": "sharesOfType"
+                  },
+                  {
+                    "func": "SELECT",
+                    "type": "holder",
+                    "property": "parent",
+                    "value": "${turnID}"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "stockType",
+                    "value": "${value}",
+                    "source": "DEFAULT"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "shareHolderID"
+                  },
+                  {
+                    "func": "MOVE",
+                    "to": "${shareHolderID}",
+                    "count": 1,
+                    "collection": "sharesOfType"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "_determineStartPlayerRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "value": null,
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "skipTurn",
+        "value": false
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "_recallDeckRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "stocksDeckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "stocksDeckHolder",
+        "face": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "stocksDeckHolder",
+        "to": "dummyHolder",
+        "count": 0
+      }
+    ],
+    "_resetGameComponentsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "finalBtnContainer"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "vpCounter",
+        "property": "parent",
+        "value": "prototypes",
+        "relation": "!="
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "setValToZeroRoutine",
+            "widget": "${widgetID}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "holderType",
+        "value": "houseSupply",
+        "relation": "==",
+        "collection": "houseSupplyColl"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "houseSupplyColl",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "house",
+            "property": "origHolder",
+            "value": "${widgetID}",
+            "relation": "=="
+          },
+          {
+            "func": "MOVE",
+            "to": "${widgetID}",
+            "collection": "DEFAULT"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "coin",
+        "property": "id",
+        "value": null,
+        "relation": "!="
+      },
+      {
+        "func": "MOVE",
+        "to": "generalCoinSupply",
+        "collection": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "holderType",
+        "value": "coinSupply",
+        "relation": "==",
+        "collection": "coinSupplyColl"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "coinSupplyColl",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "to": "${widgetID}",
+            "from": "generalCoinSupply",
+            "fillTo": 6
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "buttonType",
+        "value": "lifelineBtn",
+        "relation": "=="
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "CALL",
+        "routine": "_resetBiddingRoutine",
+        "widget": "dealBtn"
+      }
+    ],
+    "_stackStocksDeckRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "crashCard",
+        "collection": "crashCardCollection"
+      },
+      {
+        "func": "MOVE",
+        "collection": "crashCardCollection",
+        "to": "stocksDeckHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "dummyHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "dummyHolder",
+        "to": "stocksDeckHolder",
+        "count": 3
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "stocksDeckHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "dummyHolder",
+        "to": "stocksDeckHolder",
+        "count": 0
+      }
+    ],
+    "_startingCardSets": [
+      [
+        "First three entries left empty as minimum player count is 3"
+      ],
+      [
+        "starting hand of the first player is the last entry in the array"
+      ],
+      [
+        "e.g. for 5 players the hands are given in the order (2,3,4,5,1) "
+      ],
+      [
+        [
+          "star",
+          "flower",
+          "heart",
+          "diamond",
+          "air"
+        ],
+        [
+          "star",
+          "flower",
+          "heart",
+          "diamond",
+          "air"
+        ],
+        [
+          "star",
+          "flower",
+          "heart",
+          "diamond",
+          "air"
+        ]
+      ],
+      [
+        [
+          "star",
+          "heart",
+          "diamond"
+        ],
+        [
+          "star",
+          "flower",
+          "air"
+        ],
+        [
+          "star",
+          "heart",
+          "diamond"
+        ],
+        [
+          "star",
+          "flower",
+          "air"
+        ]
+      ],
+      [
+        [
+          "flower",
+          "heart",
+          "diamond"
+        ],
+        [
+          "star",
+          "diamond",
+          "air"
+        ],
+        [
+          "flower",
+          "heart",
+          "diamond"
+        ],
+        [
+          "star",
+          "flower",
+          "air"
+        ],
+        [
+          "star",
+          "heart",
+          "air"
+        ]
+      ]
+    ],
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "css": "font-size:15px",
+    "textColor": "#666",
+    "textColorOH": "#fff"
+  },
+  "buildingTrackDeck": {
+    "type": "deck",
+    "id": "buildingTrackDeck",
+    "x": -107,
+    "z": 28205,
+    "cardDefaults": {
+      "movable": false,
+      "movableInEdit": false,
+      "width": 90,
+      "height": 660,
+      "white": "#fff8\" stroke=\"#fff2\" stroke-width=\"00"
+    },
+    "cardTypes": {
+      "1 of round-star": {
+        "stockType": "star",
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f29e50",
+        "2suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "2suitColor": "#908ff0",
+        "rank": "9"
+      },
+      "1 of flower-emblem": {
+        "stockType": "flower",
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#73bf5f",
+        "2suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "2suitColor": "#f29e50",
+        "rank": "8"
+      },
+      "1 of hearts": {
+        "stockType": "heart",
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#f764c8",
+        "2suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "2suitColor": "#73bf5f",
+        "rank": "7"
+      },
+      "1 of diamonds": {
+        "stockType": "diamond",
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#908ff0",
+        "2suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "2suitColor": "#aaa",
+        "rank": "7"
+      },
+      "1 of fluffy-trefoil": {
+        "stockType": "air",
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#aaa",
+        "2suit": "/i/game-icons.net/skoll/hearts.svg",
+        "2suitColor": "#f764c8",
+        "rank": "6"
+      }
+    },
+    "faceTemplates": [
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 90,
+            "height": 660,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 18,
+            "y": 10,
+            "width": 55,
+            "height": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          }
+        ]
+      }
+    ],
+    "y": 876
+  },
+  "uw40u": {
+    "type": "holder",
+    "x": 137,
+    "y": 241,
+    "z": 4,
+    "id": "uw40u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "star"
+  },
+  "uw41u": {
+    "type": "holder",
+    "x": 259,
+    "y": 241,
+    "z": 4,
+    "id": "uw41u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "flower"
+  },
+  "uw42u": {
+    "type": "holder",
+    "x": 361,
+    "y": 241,
+    "z": 4,
+    "id": "uw42u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "air"
+  },
+  "uw43u": {
+    "type": "holder",
+    "x": 463,
+    "y": 241,
+    "z": 4,
+    "id": "uw43u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "heart"
+  },
+  "uw44u": {
+    "type": "holder",
+    "x": 137,
+    "y": 312,
+    "z": 4,
+    "id": "uw44u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "star"
+  },
+  "uw45u": {
+    "type": "holder",
+    "x": 259,
+    "y": 312,
+    "z": 4,
+    "id": "uw45u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "flower"
+  },
+  "uw46u": {
+    "type": "holder",
+    "x": 361,
+    "y": 312,
+    "z": 4,
+    "id": "uw46u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "air"
+  },
+  "uw47u": {
+    "type": "holder",
+    "x": 463,
+    "y": 312,
+    "z": 4,
+    "id": "uw47u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "heart"
+  },
+  "uw48u": {
+    "type": "holder",
+    "x": 137,
+    "y": 383,
+    "z": 4,
+    "id": "uw48u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "star"
+  },
+  "uw49u": {
+    "type": "holder",
+    "x": 259,
+    "y": 383,
+    "z": 4,
+    "id": "uw49u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "flower"
+  },
+  "uw50u": {
+    "type": "holder",
+    "x": 361,
+    "y": 383,
+    "z": 4,
+    "id": "uw50u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "air"
+  },
+  "uw51u": {
+    "type": "holder",
+    "x": 463,
+    "y": 383,
+    "z": 4,
+    "id": "uw51u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "heart"
+  },
+  "uw52u": {
+    "type": "holder",
+    "x": 137,
+    "y": 454,
+    "z": 4,
+    "id": "uw52u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "star"
+  },
+  "uw53u": {
+    "type": "holder",
+    "x": 259,
+    "y": 454,
+    "z": 4,
+    "id": "uw53u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "flower"
+  },
+  "uw54u": {
+    "type": "holder",
+    "x": 361,
+    "y": 454,
+    "z": 4,
+    "id": "uw54u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "air"
+  },
+  "uw55u": {
+    "type": "holder",
+    "x": 463,
+    "y": 454,
+    "z": 4,
+    "id": "uw55u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "heart"
+  },
+  "uw56u": {
+    "type": "holder",
+    "x": 137,
+    "y": 525,
+    "z": 4,
+    "id": "uw56u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "star"
+  },
+  "uw57u": {
+    "type": "holder",
+    "x": 259,
+    "y": 525,
+    "z": 4,
+    "id": "uw57u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "flower"
+  },
+  "uw58u": {
+    "type": "holder",
+    "x": 361,
+    "y": 525,
+    "z": 4,
+    "id": "uw58u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "air"
+  },
+  "uw60u": {
+    "type": "holder",
+    "x": 137,
+    "y": 596,
+    "z": 4,
+    "id": "uw60u",
+    "layer": 1,
+    "css": "background: #fff5;",
+    "inheritFrom": {
+      "houseHolderProto": [
+        "!x",
+        "!y"
+      ]
+    },
+    "fixedParent": true,
+    "parent": "buildArea",
+    "investmentType": "star"
+  },
+  "house20": {
+    "type": "house",
+    "id": "house20",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat1": [
+        "color"
+      ]
+    },
+    "z": 3,
+    "x": 10,
+    "y": 20,
+    "activeFace": 0,
+    "origHolder": "houseSupply1",
+    "parent": "houseSupply1"
+  },
+  "house24": {
+    "type": "house",
+    "id": "house24",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat1": [
+        "color"
+      ]
+    },
+    "z": 4,
+    "x": 10,
+    "y": 30,
+    "activeFace": 0,
+    "origHolder": "houseSupply1",
+    "parent": "houseSupply1"
+  },
+  "house26": {
+    "type": "house",
+    "id": "house26",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat1": [
+        "color"
+      ]
+    },
+    "z": 5,
+    "x": 10,
+    "y": 40,
+    "activeFace": 0,
+    "origHolder": "houseSupply1",
+    "parent": "houseSupply1"
+  },
+  "house27": {
+    "type": "house",
+    "id": "house27",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat1": [
+        "color"
+      ]
+    },
+    "z": 6,
+    "x": 10,
+    "y": 50,
+    "activeFace": 0,
+    "origHolder": "houseSupply1",
+    "parent": "houseSupply1"
+  },
+  "cashoutBtnProto": {
+    "type": "button",
+    "id": "cashoutBtnProto",
+    "x": 5,
+    "y": 110,
+    "height": 55,
+    "z": 2,
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "css": "font-size:20px;border-radius:15px",
+    "text": "CASH OUT",
+    "textColor": "#666",
+    "textColorOH": "#fff",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "${PROPERTY _seat}"
+      },
+      {
+        "func": "SELECT",
+        "property": "holderType",
+        "value": "coinSupply",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "coinSupplyID"
+      },
+      {
+        "func": "MOVE",
+        "from": "currentPot",
+        "to": "${coinSupplyID}",
+        "count": 0
+      },
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "CALL",
+        "routine": "_dropOutRoutine",
+        "widget": "${PROPERTY _seat}"
+      }
+    ],
+    "parent": "prototypes",
+    "fixedParent": true,
+    "width": 85,
+    "inheritFrom": {
+      "btnGSRoutineProto": "gameStartRoutine"
+    }
+  },
+  "bidBtnProto": {
+    "type": "button",
+    "id": "bidBtnProto",
+    "x": 5,
+    "y": 45,
+    "height": 55,
+    "z": 2,
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "css": "font-size:20px;border-radius:15px",
+    "text": "BID",
+    "textColor": "#666",
+    "textColorOH": "#fff",
+    "parent": "prototypes",
+    "fixedParent": true,
+    "width": 85,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "${PROPERTY _seat}"
+      },
+      {
+        "func": "SELECT",
+        "property": "holderType",
+        "value": "coinSupply",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "coinSupplyID"
+      },
+      {
+        "func": "MOVE",
+        "from": "${coinSupplyID}",
+        "to": "currentPot"
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "inheritFrom": {
+      "btnGSRoutineProto": "gameStartRoutine"
+    }
+  },
+  "lifelineBtnProto": {
+    "type": "button",
+    "id": "lifelineBtnProto",
+    "x": 773,
+    "height": 20,
+    "z": 2,
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "css": "font-size:15px;border-radius:15px",
+    "text": "Lifeline",
+    "textColor": "#666",
+    "textColorOH": "#fff",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Once per game, you may spend 3 VP to buy 3 bidding chips. Do you want to do so?"
+          }
+        ],
+        "cancelButtonText": "No",
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "SELECT",
+        "type": "vpCounter",
+        "property": "parent",
+        "value": "${PROPERTY _seat}",
+        "max": 1
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "vpCounterID"
+      },
+      {
+        "func": "CALL",
+        "routine": "updateValRoutine",
+        "widget": "${vpCounterID}",
+        "arguments": {
+          "_deltaVal": -3
+        }
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "${PROPERTY _seat}"
+      },
+      {
+        "func": "SELECT",
+        "property": "holderType",
+        "value": "coinSupply",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "coinSupplyID"
+      },
+      {
+        "func": "MOVE",
+        "from": "generalCoinSupply",
+        "to": "${coinSupplyID}",
+        "count": 3
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "collection": "thisButton",
+        "value": false
+      }
+    ],
+    "parent": "prototypes",
+    "fixedParent": true,
+    "buttonType": "lifelineBtn",
+    "width": 65,
+    "y": 128,
+    "gameStartRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          "var p = ${PROPERTY parent}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "onlyVisibleForSeat",
+            "value": "${p}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "_seat",
+            "value": "${p}"
+          }
+        ]
+      }
+    ]
+  },
+  "btnContainerProto": {
+    "id": "btnContainerProto",
+    "x": -115,
+    "y": 5,
+    "width": 90,
+    "height": 170,
+    "z": 10116,
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "prototypes",
+    "gameStartRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          "var p = ${PROPERTY parent}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "onlyVisibleForSeat",
+            "value": "${p}"
+          }
+        ]
+      }
+    ],
+    "type": "btnContainer",
+    "display": false
+  },
+  "qce24": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "activeFace": 1,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 1,
+    "id": "qce24",
+    "type": "coin",
+    "parent": "coinSupply5",
+    "y": 50
+  },
+  "qce25": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 2,
+    "id": "qce25",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 40,
+    "parent": "coinSupply5"
+  },
+  "qce26": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 3,
+    "id": "qce26",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 30,
+    "parent": "coinSupply5"
+  },
+  "qce27": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 44,
+    "id": "qce27",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 90,
+    "parent": "generalCoinSupply"
+  },
+  "qce28": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 45,
+    "id": "qce28",
+    "type": "coin",
+    "y": 92,
+    "parent": "generalCoinSupply"
+  },
+  "qce29": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 46,
+    "id": "qce29",
+    "type": "coin",
+    "parent": "generalCoinSupply",
+    "activeFace": 1,
+    "y": 94
+  },
+  "qce30": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "activeFace": 1,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 38,
+    "id": "qce30",
+    "type": "coin",
+    "y": 78,
+    "parent": "generalCoinSupply"
+  },
+  "qce31": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 39,
+    "id": "qce31",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 80,
+    "parent": "generalCoinSupply"
+  },
+  "qce32": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 40,
+    "id": "qce32",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "generalCoinSupply",
+    "y": 82
+  },
+  "qce33": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 41,
+    "id": "qce33",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 84,
+    "parent": "generalCoinSupply"
+  },
+  "qce34": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 42,
+    "id": "qce34",
+    "type": "coin",
+    "y": 86,
+    "parent": "generalCoinSupply"
+  },
+  "qce35": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 43,
+    "id": "qce35",
+    "type": "coin",
+    "parent": "generalCoinSupply",
+    "activeFace": 1,
+    "y": 88
+  },
+  "generalCoinSupply": {
+    "type": "holder",
+    "id": "generalCoinSupply",
+    "x": -131,
+    "y": 217,
+    "z": 6,
+    "dropTarget": {
+      "type": "coin"
+    },
+    "stackOffsetY": 2
+  },
+  "qce17": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 2,
+    "id": "qce17",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 6,
+    "parent": "generalCoinSupply"
+  },
+  "qce48": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 3,
+    "id": "qce48",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 8,
+    "parent": "generalCoinSupply"
+  },
+  "qce49": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 4,
+    "id": "qce49",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 10,
+    "parent": "generalCoinSupply"
+  },
+  "qce50": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 5,
+    "id": "qce50",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 12,
+    "parent": "generalCoinSupply"
+  },
+  "qce51": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 6,
+    "id": "qce51",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 14,
+    "parent": "generalCoinSupply"
+  },
+  "qce52": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 7,
+    "id": "qce52",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 16,
+    "parent": "generalCoinSupply"
+  },
+  "qce53": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 8,
+    "id": "qce53",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 18,
+    "parent": "generalCoinSupply"
+  },
+  "qce54": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 9,
+    "id": "qce54",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 20,
+    "parent": "generalCoinSupply"
+  },
+  "qce55": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 10,
+    "id": "qce55",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 22,
+    "parent": "generalCoinSupply"
+  },
+  "qce56": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 11,
+    "id": "qce56",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 24,
+    "parent": "generalCoinSupply"
+  },
+  "qce57": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 12,
+    "id": "qce57",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 26,
+    "parent": "generalCoinSupply"
+  },
+  "qce58": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 13,
+    "id": "qce58",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 28,
+    "parent": "generalCoinSupply"
+  },
+  "qce59": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 14,
+    "id": "qce59",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 30,
+    "parent": "generalCoinSupply"
+  },
+  "qce60": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 15,
+    "id": "qce60",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 32,
+    "parent": "generalCoinSupply"
+  },
+  "qce61": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 16,
+    "id": "qce61",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 34,
+    "parent": "generalCoinSupply"
+  },
+  "qce62": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 17,
+    "id": "qce62",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 36,
+    "parent": "generalCoinSupply"
+  },
+  "qce63": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 18,
+    "id": "qce63",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 38,
+    "parent": "generalCoinSupply"
+  },
+  "qce64": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 19,
+    "id": "qce64",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 40,
+    "parent": "generalCoinSupply"
+  },
+  "qce65": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 20,
+    "id": "qce65",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 42,
+    "parent": "generalCoinSupply"
+  },
+  "qce66": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 21,
+    "id": "qce66",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 44,
+    "parent": "generalCoinSupply"
+  },
+  "qce67": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 22,
+    "id": "qce67",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 46,
+    "parent": "generalCoinSupply"
+  },
+  "qce68": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 23,
+    "id": "qce68",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 48,
+    "parent": "generalCoinSupply"
+  },
+  "qce69": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 24,
+    "id": "qce69",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 50,
+    "parent": "generalCoinSupply"
+  },
+  "qce70": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 25,
+    "id": "qce70",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 52,
+    "parent": "generalCoinSupply"
+  },
+  "qce71": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 26,
+    "id": "qce71",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 54,
+    "parent": "generalCoinSupply"
+  },
+  "qce72": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 27,
+    "id": "qce72",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 56,
+    "parent": "generalCoinSupply"
+  },
+  "qce73": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 28,
+    "id": "qce73",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 58,
+    "parent": "generalCoinSupply"
+  },
+  "qce74": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 29,
+    "id": "qce74",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 60,
+    "parent": "generalCoinSupply"
+  },
+  "qce75": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 30,
+    "id": "qce75",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 62,
+    "parent": "generalCoinSupply"
+  },
+  "qce76": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 31,
+    "id": "qce76",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 64,
+    "parent": "generalCoinSupply"
+  },
+  "qce77": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 32,
+    "id": "qce77",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 66,
+    "parent": "generalCoinSupply"
+  },
+  "qce78": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 33,
+    "id": "qce78",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 68,
+    "parent": "generalCoinSupply"
+  },
+  "qce79": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 34,
+    "id": "qce79",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 70,
+    "parent": "generalCoinSupply"
+  },
+  "qce80": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 35,
+    "id": "qce80",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 72,
+    "parent": "generalCoinSupply"
+  },
+  "qce81": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 36,
+    "id": "qce81",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 74,
+    "parent": "generalCoinSupply"
+  },
+  "qce82": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 37,
+    "id": "qce82",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 76,
+    "parent": "generalCoinSupply"
+  },
+  "qce83": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 4,
+    "id": "qce83",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 20,
+    "parent": "coinSupply5"
+  },
+  "qce84": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 5,
+    "id": "qce84",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 10,
+    "parent": "coinSupply5"
+  },
+  "qce85": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 6,
+    "id": "qce85",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply5"
+  },
+  "btnContainer1": {
+    "id": "btnContainer1",
+    "parent": "seat1",
+    "inheritFrom": {
+      "btnContainerProto": "*"
+    },
+    "onlyVisibleForSeat": "seat1",
+    "type": "btnContainer",
+    "display": true,
+    "activeFace": 0
+  },
+  "lifelineBtn1": {
+    "id": "lifelineBtn1",
+    "parent": "seat1",
+    "inheritFrom": {
+      "lifelineBtnProto": "*"
+    },
+    "type": "button",
+    "scale": 1,
+    "onlyVisibleForSeat": "seat1",
+    "_seat": "seat1",
+    "display": true
+  },
+  "bidBtn1": {
+    "id": "bidBtn1",
+    "parent": "btnContainer1",
+    "inheritFrom": {
+      "bidBtnProto": "*"
+    },
+    "z": 10119,
+    "type": "button",
+    "_seat": "seat1"
+  },
+  "cashoutBtn1": {
+    "id": "cashoutBtn1",
+    "parent": "btnContainer1",
+    "inheritFrom": {
+      "cashoutBtnProto": "*"
+    },
+    "type": "button",
+    "_seat": "seat1"
+  },
+  "btnGSRoutineProto": {
+    "id": "btnGSRoutineProto",
+    "parent": "prototypes",
+    "fixedParent": true,
+    "x": 880,
+    "y": -30,
+    "text": "gameStart routine for buttons",
+    "gameStartRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          "var p = ${PROPERTY parent}",
+          "var gP = ${PROPERTY parent OF $p}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "_seat",
+            "value": "${gP}"
+          }
+        ]
+      }
+    ]
+  },
+  "qce137": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 1,
+    "id": "qce137",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 50,
+    "parent": "coinSupply4"
+  },
+  "qce138": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 2,
+    "id": "qce138",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 40,
+    "parent": "coinSupply4"
+  },
+  "qce139": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 3,
+    "id": "qce139",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 30,
+    "parent": "coinSupply4"
+  },
+  "qce140": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 4,
+    "id": "qce140",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 20,
+    "parent": "coinSupply4"
+  },
+  "qce141": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 5,
+    "id": "qce141",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply4",
+    "y": 10
+  },
+  "qce142": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 1,
+    "id": "qce142",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "playerCoinSupplyProto",
+    "y": 50
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 725,
+    "y": 215,
+    "index": 2,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seatProto": "!parent"
+    },
+    "color": "#bbb",
+    "occupied": 0,
+    "turn": true,
+    "skipTurn": false,
+    "z": 1
+  },
+  "starHolder2": {
+    "type": "holder",
+    "id": "starHolder2",
+    "x": 180,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "star"
+    },
+    "fixedParent": "true",
+    "parent": "seat2",
+    "y": -6,
+    "movableInEdit": false,
+    "stockType": "star",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy5": {
+    "id": "otsy5",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/round-star.svg",
+    "z": 1,
+    "parent": "starHolder2",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x12kn": {
+    "id": "x12kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "starHolder2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "flowerHolder2": {
+    "type": "holder",
+    "id": "flowerHolder2",
+    "x": 295,
+    "y": -6,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "flower"
+    },
+    "parent": "seat2",
+    "fixedParent": "true",
+    "movableInEdit": false,
+    "stockType": "flower",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy6": {
+    "id": "otsy6",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/flower-emblem.svg",
+    "z": 1,
+    "parent": "flowerHolder2",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x13kn": {
+    "id": "x13kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "flowerHolder2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "heartHolder2": {
+    "type": "holder",
+    "id": "heartHolder2",
+    "parent": "seat2",
+    "fixedParent": "true",
+    "x": 410,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "heart"
+    },
+    "stockType": "heart",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy7": {
+    "id": "otsy7",
+    "x": 23,
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "z": 1,
+    "parent": "heartHolder2",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 65,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x14kn": {
+    "id": "x14kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "heartHolder2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "diamondHolder2": {
+    "type": "holder",
+    "id": "diamondHolder2",
+    "parent": "seat2",
+    "fixedParent": "true",
+    "x": 525,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "diamond"
+    },
+    "stockType": "diamond",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy8": {
+    "id": "otsy8",
+    "x": 22,
+    "image": "/i/game-icons.net/skoll/diamonds.svg",
+    "z": 1,
+    "parent": "diamondHolder2",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x15kn": {
+    "id": "x15kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "diamondHolder2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "airHolder2": {
+    "type": "holder",
+    "id": "airHolder2",
+    "parent": "seat2",
+    "fixedParent": "true",
+    "x": 640,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "air"
+    },
+    "stockType": "air",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy9": {
+    "id": "otsy9",
+    "x": 22,
+    "image": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+    "z": 1,
+    "parent": "airHolder2",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 68,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x16kn": {
+    "id": "x16kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "airHolder2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "vpC2": {
+    "type": "vpCounter",
+    "id": "vpC2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "inheritFrom": {
+      "vpProto": "*"
+    },
+    "val": 0,
+    "text": 0
+  },
+  "houseSupply2": {
+    "type": "holder",
+    "id": "houseSupply2",
+    "parent": "seat2",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "houseSupplyProto": "*"
+    },
+    "x": 88,
+    "y": 60
+  },
+  "house2": {
+    "type": "house",
+    "id": "house2",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat2": [
+        "color"
+      ]
+    },
+    "z": 1,
+    "x": 10,
+    "y": 0,
+    "activeFace": 0,
+    "hoverParent": "houseSupply1",
+    "parent": "houseSupply2",
+    "origHolder": "houseSupply2"
+  },
+  "house5": {
+    "type": "house",
+    "id": "house5",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat2": [
+        "color"
+      ]
+    },
+    "z": 2,
+    "x": 10,
+    "y": 10,
+    "activeFace": 0,
+    "origHolder": "houseSupply2",
+    "parent": "houseSupply2"
+  },
+  "house21": {
+    "type": "house",
+    "id": "house21",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat2": [
+        "color"
+      ]
+    },
+    "z": 3,
+    "x": 10,
+    "y": 20,
+    "activeFace": 0,
+    "origHolder": "houseSupply2",
+    "parent": "houseSupply2"
+  },
+  "house25": {
+    "type": "house",
+    "id": "house25",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat2": [
+        "color"
+      ]
+    },
+    "z": 4,
+    "x": 10,
+    "y": 30,
+    "activeFace": 0,
+    "origHolder": "houseSupply2",
+    "parent": "houseSupply2"
+  },
+  "house28": {
+    "type": "house",
+    "id": "house28",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat2": [
+        "color"
+      ]
+    },
+    "z": 5,
+    "x": 10,
+    "y": 40,
+    "activeFace": 0,
+    "origHolder": "houseSupply2",
+    "parent": "houseSupply2"
+  },
+  "house29": {
+    "type": "house",
+    "id": "house29",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat2": [
+        "color"
+      ]
+    },
+    "z": 6,
+    "x": 10,
+    "y": 50,
+    "activeFace": 0,
+    "origHolder": "houseSupply2",
+    "parent": "houseSupply2"
+  },
+  "coinSupply2": {
+    "type": "holder",
+    "id": "coinSupply2",
+    "parent": "seat2",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "playerCoinSupplyProto": "*"
+    },
+    "onlyVisibleForSeat": "seat2",
+    "x": -2,
+    "y": 60
+  },
+  "qce86": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 2,
+    "id": "qce86",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 40,
+    "parent": "playerCoinSupplyProto"
+  },
+  "qce87": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 3,
+    "id": "qce87",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 30,
+    "parent": "playerCoinSupplyProto"
+  },
+  "qce88": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 4,
+    "id": "qce88",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 20,
+    "parent": "playerCoinSupplyProto"
+  },
+  "qce143": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 5,
+    "id": "qce143",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 10,
+    "parent": "playerCoinSupplyProto"
+  },
+  "qce144": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 6,
+    "id": "qce144",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "playerCoinSupplyProto"
+  },
+  "qce145": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 6,
+    "id": "qce145",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply4"
+  },
+  "btnContainer2": {
+    "id": "btnContainer2",
+    "parent": "seat2",
+    "inheritFrom": {
+      "btnContainerProto": "*"
+    },
+    "onlyVisibleForSeat": "seat2",
+    "type": "btnContainer",
+    "display": true,
+    "activeFace": 0
+  },
+  "bidBtn2": {
+    "id": "bidBtn2",
+    "parent": "btnContainer2",
+    "inheritFrom": {
+      "bidBtnProto": "*"
+    },
+    "z": 10119,
+    "type": "button",
+    "_seat": "seat2"
+  },
+  "cashoutBtn2": {
+    "id": "cashoutBtn2",
+    "parent": "btnContainer2",
+    "inheritFrom": {
+      "cashoutBtnProto": "*"
+    },
+    "type": "button",
+    "_seat": "seat2",
+    "z": 10122,
+    "x": 5,
+    "y": 110
+  },
+  "lifelineBtn2": {
+    "id": "lifelineBtn2",
+    "parent": "seat2",
+    "inheritFrom": {
+      "lifelineBtnProto": "*"
+    },
+    "type": "button",
+    "scale": 1,
+    "onlyVisibleForSeat": "seat2",
+    "_seat": "seat2",
+    "display": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 725,
+    "y": 410,
+    "index": 3,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seatProto": "!parent"
+    },
+    "color": "#bbb",
+    "occupied": 0,
+    "turn": false,
+    "skipTurn": false,
+    "z": 2
+  },
+  "starHolder3": {
+    "type": "holder",
+    "id": "starHolder3",
+    "x": 180,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "star"
+    },
+    "fixedParent": "true",
+    "parent": "seat3",
+    "y": -6,
+    "movableInEdit": false,
+    "stockType": "star",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy10": {
+    "id": "otsy10",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/round-star.svg",
+    "z": 1,
+    "parent": "starHolder3",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x17kn": {
+    "id": "x17kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "starHolder3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "flowerHolder3": {
+    "type": "holder",
+    "id": "flowerHolder3",
+    "x": 295,
+    "y": -6,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "flower"
+    },
+    "parent": "seat3",
+    "fixedParent": "true",
+    "movableInEdit": false,
+    "stockType": "flower",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy11": {
+    "id": "otsy11",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/flower-emblem.svg",
+    "z": 1,
+    "parent": "flowerHolder3",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x18kn": {
+    "id": "x18kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "flowerHolder3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "heartHolder3": {
+    "type": "holder",
+    "id": "heartHolder3",
+    "parent": "seat3",
+    "fixedParent": "true",
+    "x": 410,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "heart"
+    },
+    "stockType": "heart",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy12": {
+    "id": "otsy12",
+    "x": 23,
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "z": 1,
+    "parent": "heartHolder3",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 65,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x19kn": {
+    "id": "x19kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "heartHolder3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "diamondHolder3": {
+    "type": "holder",
+    "id": "diamondHolder3",
+    "parent": "seat3",
+    "fixedParent": "true",
+    "x": 525,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "diamond"
+    },
+    "stockType": "diamond",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy13": {
+    "id": "otsy13",
+    "x": 22,
+    "image": "/i/game-icons.net/skoll/diamonds.svg",
+    "z": 1,
+    "parent": "diamondHolder3",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x20kn": {
+    "id": "x20kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "diamondHolder3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "airHolder3": {
+    "type": "holder",
+    "id": "airHolder3",
+    "parent": "seat3",
+    "fixedParent": "true",
+    "x": 640,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "air"
+    },
+    "stockType": "air",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy14": {
+    "id": "otsy14",
+    "x": 22,
+    "image": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+    "z": 1,
+    "parent": "airHolder3",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 68,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x21kn": {
+    "id": "x21kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "airHolder3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "vpC3": {
+    "type": "vpCounter",
+    "id": "vpC3",
+    "parent": "seat3",
+    "fixedParent": true,
+    "inheritFrom": {
+      "vpProto": "*"
+    },
+    "val": 0,
+    "text": 0
+  },
+  "houseSupply3": {
+    "type": "holder",
+    "id": "houseSupply3",
+    "parent": "seat3",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "houseSupplyProto": "*"
+    },
+    "x": 88,
+    "y": 60
+  },
+  "house3": {
+    "type": "house",
+    "id": "house3",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat3": [
+        "color"
+      ]
+    },
+    "z": 1,
+    "x": 10,
+    "y": 0,
+    "activeFace": 0,
+    "hoverParent": "houseSupply1",
+    "parent": "houseSupply3",
+    "origHolder": "houseSupply3"
+  },
+  "house6": {
+    "type": "house",
+    "id": "house6",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat3": [
+        "color"
+      ]
+    },
+    "z": 2,
+    "x": 10,
+    "y": 10,
+    "activeFace": 0,
+    "origHolder": "houseSupply3",
+    "parent": "houseSupply3"
+  },
+  "house22": {
+    "type": "house",
+    "id": "house22",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat3": [
+        "color"
+      ]
+    },
+    "z": 3,
+    "x": 10,
+    "y": 20,
+    "activeFace": 0,
+    "parent": "houseSupply3",
+    "origHolder": "houseSupply3"
+  },
+  "house30": {
+    "type": "house",
+    "id": "house30",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat3": [
+        "color"
+      ]
+    },
+    "z": 4,
+    "x": 10,
+    "y": 30,
+    "activeFace": 0,
+    "origHolder": "houseSupply3",
+    "parent": "houseSupply3"
+  },
+  "house31": {
+    "type": "house",
+    "id": "house31",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat3": [
+        "color"
+      ]
+    },
+    "z": 5,
+    "x": 10,
+    "y": 40,
+    "activeFace": 0,
+    "origHolder": "houseSupply3",
+    "parent": "houseSupply3"
+  },
+  "house32": {
+    "type": "house",
+    "id": "house32",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat3": [
+        "color"
+      ]
+    },
+    "z": 6,
+    "x": 10,
+    "y": 50,
+    "activeFace": 0,
+    "origHolder": "houseSupply3",
+    "parent": "houseSupply3"
+  },
+  "coinSupply3": {
+    "type": "holder",
+    "id": "coinSupply3",
+    "parent": "seat3",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "playerCoinSupplyProto": "*"
+    },
+    "onlyVisibleForSeat": "seat3",
+    "x": -2,
+    "y": 60
+  },
+  "qce89": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 1,
+    "id": "qce89",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 50,
+    "parent": "coinSupply3"
+  },
+  "qce90": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 2,
+    "id": "qce90",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 40,
+    "parent": "coinSupply3"
+  },
+  "qce91": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 3,
+    "id": "qce91",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 30,
+    "parent": "coinSupply3"
+  },
+  "qce146": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 4,
+    "id": "qce146",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply3",
+    "y": 20
+  },
+  "qce147": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 5,
+    "id": "qce147",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 10,
+    "parent": "coinSupply3"
+  },
+  "qce148": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 6,
+    "id": "qce148",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply3"
+  },
+  "btnContainer3": {
+    "id": "btnContainer3",
+    "parent": "seat3",
+    "inheritFrom": {
+      "btnContainerProto": "*"
+    },
+    "onlyVisibleForSeat": "seat3",
+    "type": "btnContainer",
+    "display": true,
+    "activeFace": 0
+  },
+  "bidBtn3": {
+    "id": "bidBtn3",
+    "parent": "btnContainer3",
+    "inheritFrom": {
+      "bidBtnProto": "*"
+    },
+    "z": 10119,
+    "type": "button",
+    "_seat": "seat3"
+  },
+  "cashoutBtn3": {
+    "id": "cashoutBtn3",
+    "parent": "btnContainer3",
+    "inheritFrom": {
+      "cashoutBtnProto": "*"
+    },
+    "type": "button",
+    "_seat": "seat3"
+  },
+  "lifelineBtn3": {
+    "id": "lifelineBtn3",
+    "parent": "seat3",
+    "inheritFrom": {
+      "lifelineBtnProto": "*"
+    },
+    "type": "button",
+    "scale": 1,
+    "onlyVisibleForSeat": "seat3",
+    "_seat": "seat3",
+    "display": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 725,
+    "y": 605,
+    "index": 4,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seatProto": "!parent"
+    },
+    "color": "#bbb",
+    "occupied": 0,
+    "turn": false,
+    "skipTurn": false,
+    "z": 3
+  },
+  "starHolder4": {
+    "type": "holder",
+    "id": "starHolder4",
+    "x": 180,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "star"
+    },
+    "fixedParent": "true",
+    "parent": "seat4",
+    "y": -6,
+    "movableInEdit": false,
+    "stockType": "star",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy15": {
+    "id": "otsy15",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/round-star.svg",
+    "z": 1,
+    "parent": "starHolder4",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x22kn": {
+    "id": "x22kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "starHolder4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "flowerHolder4": {
+    "type": "holder",
+    "id": "flowerHolder4",
+    "x": 295,
+    "y": -6,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "flower"
+    },
+    "parent": "seat4",
+    "fixedParent": "true",
+    "movableInEdit": false,
+    "stockType": "flower",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy16": {
+    "id": "otsy16",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/flower-emblem.svg",
+    "z": 1,
+    "parent": "flowerHolder4",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x23kn": {
+    "id": "x23kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "flowerHolder4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "heartHolder4": {
+    "type": "holder",
+    "id": "heartHolder4",
+    "parent": "seat4",
+    "fixedParent": "true",
+    "x": 410,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "heart"
+    },
+    "stockType": "heart",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy17": {
+    "id": "otsy17",
+    "x": 23,
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "z": 1,
+    "parent": "heartHolder4",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 65,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x24kn": {
+    "id": "x24kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "heartHolder4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "diamondHolder4": {
+    "type": "holder",
+    "id": "diamondHolder4",
+    "parent": "seat4",
+    "fixedParent": "true",
+    "x": 525,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "diamond"
+    },
+    "stockType": "diamond",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy18": {
+    "id": "otsy18",
+    "x": 22,
+    "image": "/i/game-icons.net/skoll/diamonds.svg",
+    "z": 1,
+    "parent": "diamondHolder4",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x25kn": {
+    "id": "x25kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "diamondHolder4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "airHolder4": {
+    "type": "holder",
+    "id": "airHolder4",
+    "parent": "seat4",
+    "fixedParent": "true",
+    "x": 640,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "air"
+    },
+    "stockType": "air",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy19": {
+    "id": "otsy19",
+    "x": 22,
+    "image": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+    "z": 1,
+    "parent": "airHolder4",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 68,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x26kn": {
+    "id": "x26kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "airHolder4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "vpC4": {
+    "type": "vpCounter",
+    "id": "vpC4",
+    "parent": "seat4",
+    "fixedParent": true,
+    "inheritFrom": {
+      "vpProto": "*"
+    },
+    "val": 0,
+    "text": 0
+  },
+  "houseSupply4": {
+    "type": "holder",
+    "id": "houseSupply4",
+    "parent": "seat4",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "houseSupplyProto": "*"
+    },
+    "x": 88,
+    "y": 60
+  },
+  "house7": {
+    "type": "house",
+    "id": "house7",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat4": [
+        "color"
+      ]
+    },
+    "z": 1,
+    "x": 10,
+    "y": 0,
+    "activeFace": 0,
+    "hoverParent": "houseSupply1",
+    "parent": "houseSupply4",
+    "origHolder": "houseSupply4"
+  },
+  "house8": {
+    "type": "house",
+    "id": "house8",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat4": [
+        "color"
+      ]
+    },
+    "z": 2,
+    "x": 10,
+    "y": 10,
+    "activeFace": 0,
+    "origHolder": "houseSupply4",
+    "parent": "houseSupply4"
+  },
+  "house23": {
+    "type": "house",
+    "id": "house23",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat4": [
+        "color"
+      ]
+    },
+    "z": 3,
+    "x": 10,
+    "y": 20,
+    "activeFace": 0,
+    "origHolder": "houseSupply4",
+    "parent": "houseSupply4"
+  },
+  "house33": {
+    "type": "house",
+    "id": "house33",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat4": [
+        "color"
+      ]
+    },
+    "z": 4,
+    "x": 10,
+    "y": 30,
+    "activeFace": 0,
+    "origHolder": "houseSupply4",
+    "parent": "houseSupply4"
+  },
+  "house34": {
+    "type": "house",
+    "id": "house34",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat4": [
+        "color"
+      ]
+    },
+    "z": 5,
+    "x": 10,
+    "y": 40,
+    "activeFace": 0,
+    "origHolder": "houseSupply4",
+    "parent": "houseSupply4"
+  },
+  "house35": {
+    "type": "house",
+    "id": "house35",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat4": [
+        "color"
+      ]
+    },
+    "z": 6,
+    "x": 10,
+    "y": 50,
+    "activeFace": 0,
+    "origHolder": "houseSupply4",
+    "parent": "houseSupply4"
+  },
+  "coinSupply4": {
+    "type": "holder",
+    "id": "coinSupply4",
+    "parent": "seat4",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "playerCoinSupplyProto": "*"
+    },
+    "onlyVisibleForSeat": "seat4",
+    "x": -2,
+    "y": 60
+  },
+  "qce92": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 1,
+    "id": "qce92",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 50,
+    "parent": "coinSupply2"
+  },
+  "qce93": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 2,
+    "id": "qce93",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 40,
+    "parent": "coinSupply2"
+  },
+  "qce94": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 3,
+    "id": "qce94",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 30,
+    "parent": "coinSupply2"
+  },
+  "qce149": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 4,
+    "id": "qce149",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 20,
+    "parent": "coinSupply2"
+  },
+  "qce150": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 5,
+    "id": "qce150",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 10,
+    "parent": "coinSupply2"
+  },
+  "qce151": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 6,
+    "id": "qce151",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply2"
+  },
+  "btnContainer4": {
+    "id": "btnContainer4",
+    "parent": "seat4",
+    "inheritFrom": {
+      "btnContainerProto": "*"
+    },
+    "onlyVisibleForSeat": "seat4",
+    "type": "btnContainer",
+    "display": true,
+    "activeFace": 0
+  },
+  "bidBtn4": {
+    "id": "bidBtn4",
+    "parent": "btnContainer4",
+    "inheritFrom": {
+      "bidBtnProto": "*"
+    },
+    "z": 10119,
+    "type": "button",
+    "_seat": "seat4"
+  },
+  "cashoutBtn4": {
+    "id": "cashoutBtn4",
+    "parent": "btnContainer4",
+    "inheritFrom": {
+      "cashoutBtnProto": "*"
+    },
+    "type": "button",
+    "_seat": "seat4"
+  },
+  "lifelineBtn4": {
+    "id": "lifelineBtn4",
+    "parent": "seat4",
+    "inheritFrom": {
+      "lifelineBtnProto": "*"
+    },
+    "type": "button",
+    "scale": 1,
+    "onlyVisibleForSeat": "seat4",
+    "_seat": "seat4",
+    "display": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 725,
+    "y": 800,
+    "index": 5,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seatProto": "!parent"
+    },
+    "color": "#bbb",
+    "occupied": 0,
+    "turn": false,
+    "skipTurn": false,
+    "z": 4
+  },
+  "starHolder5": {
+    "type": "holder",
+    "id": "starHolder5",
+    "x": 180,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "star"
+    },
+    "fixedParent": "true",
+    "parent": "seat5",
+    "y": -6,
+    "movableInEdit": false,
+    "stockType": "star",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy20": {
+    "id": "otsy20",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/round-star.svg",
+    "z": 1,
+    "parent": "starHolder5",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x27kn": {
+    "id": "x27kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "starHolder5",
+    "onlyVisibleForSeat": "seat5"
+  },
+  "flowerHolder5": {
+    "type": "holder",
+    "id": "flowerHolder5",
+    "x": 295,
+    "y": -6,
+    "z": 3,
+    "dropTarget": {
+      "stockType": "flower"
+    },
+    "parent": "seat5",
+    "fixedParent": "true",
+    "movableInEdit": false,
+    "stockType": "flower",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy21": {
+    "id": "otsy21",
+    "x": 22,
+    "image": "/i/game-icons.net/delapouite/flower-emblem.svg",
+    "z": 1,
+    "parent": "flowerHolder5",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x28kn": {
+    "id": "x28kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "flowerHolder5",
+    "onlyVisibleForSeat": "seat5"
+  },
+  "heartHolder5": {
+    "type": "holder",
+    "id": "heartHolder5",
+    "parent": "seat5",
+    "fixedParent": "true",
+    "x": 410,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "heart"
+    },
+    "stockType": "heart",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy22": {
+    "id": "otsy22",
+    "x": 23,
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "z": 1,
+    "parent": "heartHolder5",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 65,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x29kn": {
+    "id": "x29kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "heartHolder5",
+    "onlyVisibleForSeat": "seat5"
+  },
+  "diamondHolder5": {
+    "type": "holder",
+    "id": "diamondHolder5",
+    "parent": "seat5",
+    "fixedParent": "true",
+    "x": 525,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "diamond"
+    },
+    "stockType": "diamond",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy23": {
+    "id": "otsy23",
+    "x": 22,
+    "image": "/i/game-icons.net/skoll/diamonds.svg",
+    "z": 1,
+    "parent": "diamondHolder5",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 70,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x30kn": {
+    "id": "x30kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "diamondHolder5",
+    "onlyVisibleForSeat": "seat5"
+  },
+  "airHolder5": {
+    "type": "holder",
+    "id": "airHolder5",
+    "parent": "seat5",
+    "fixedParent": "true",
+    "x": 640,
+    "y": -6,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {
+      "stockType": "air"
+    },
+    "stockType": "air",
+    "inheritFrom": {
+      "playerStockHolderProto": "*"
+    }
+  },
+  "otsy24": {
+    "id": "otsy24",
+    "x": 22,
+    "image": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+    "z": 1,
+    "parent": "airHolder5",
+    "fixedParent": true,
+    "y": 31,
+    "movable": false,
+    "width": 68,
+    "svgReplaces": {
+      "#000": "suitColor"
+    },
+    "layer": 0,
+    "suitColor": "#ccc",
+    "movableInEdit": false
+  },
+  "x31kn": {
+    "id": "x31kn",
+    "type": "button",
+    "inheritFrom": {
+      "sellButtonProto": "*"
+    },
+    "parent": "airHolder5",
+    "onlyVisibleForSeat": "seat5"
+  },
+  "vpC5": {
+    "type": "vpCounter",
+    "id": "vpC5",
+    "parent": "seat5",
+    "fixedParent": true,
+    "inheritFrom": {
+      "vpProto": "*"
+    },
+    "val": 0,
+    "text": 0
+  },
+  "houseSupply5": {
+    "type": "holder",
+    "id": "houseSupply5",
+    "parent": "seat5",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "houseSupplyProto": "*"
+    },
+    "x": 88,
+    "y": 60
+  },
+  "house9": {
+    "type": "house",
+    "id": "house9",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat5": [
+        "color"
+      ]
+    },
+    "z": 1,
+    "x": 10,
+    "y": 0,
+    "activeFace": 0,
+    "hoverParent": "houseSupply1",
+    "parent": "houseSupply5",
+    "origHolder": "houseSupply5"
+  },
+  "house10": {
+    "type": "house",
+    "id": "house10",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat5": [
+        "color"
+      ]
+    },
+    "z": 2,
+    "x": 10,
+    "y": 10,
+    "activeFace": 0,
+    "origHolder": "houseSupply5",
+    "parent": "houseSupply5"
+  },
+  "house36": {
+    "type": "house",
+    "id": "house36",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat5": [
+        "color"
+      ]
+    },
+    "z": 3,
+    "x": 10,
+    "y": 20,
+    "activeFace": 0,
+    "parent": "houseSupply5",
+    "origHolder": "houseSupply5"
+  },
+  "house37": {
+    "type": "house",
+    "id": "house37",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat5": [
+        "color"
+      ]
+    },
+    "z": 4,
+    "x": 10,
+    "y": 30,
+    "activeFace": 0,
+    "origHolder": "houseSupply5",
+    "parent": "houseSupply5"
+  },
+  "house38": {
+    "type": "house",
+    "id": "house38",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat5": [
+        "color"
+      ]
+    },
+    "z": 5,
+    "x": 10,
+    "y": 40,
+    "activeFace": 0,
+    "parent": "houseSupply5",
+    "origHolder": "houseSupply5"
+  },
+  "house39": {
+    "type": "house",
+    "id": "house39",
+    "inheritFrom": {
+      "houseProto": [
+        "!color"
+      ],
+      "seat5": [
+        "color"
+      ]
+    },
+    "z": 6,
+    "x": 10,
+    "y": 50,
+    "activeFace": 0,
+    "origHolder": "houseSupply5",
+    "parent": "houseSupply5"
+  },
+  "coinSupply5": {
+    "type": "holder",
+    "id": "coinSupply5",
+    "parent": "seat5",
+    "fixedParent": "true",
+    "inheritFrom": {
+      "playerCoinSupplyProto": "*"
+    },
+    "onlyVisibleForSeat": "seat5",
+    "x": -2,
+    "y": 60
+  },
+  "qce95": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 1,
+    "id": "qce95",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 50,
+    "parent": "coinSupply1"
+  },
+  "qce96": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 2,
+    "id": "qce96",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 40,
+    "parent": "coinSupply1"
+  },
+  "qce97": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 3,
+    "id": "qce97",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 30,
+    "parent": "coinSupply1"
+  },
+  "qce152": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 4,
+    "id": "qce152",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply1",
+    "y": 20
+  },
+  "qce153": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 5,
+    "id": "qce153",
+    "type": "coin",
+    "activeFace": 1,
+    "y": 10,
+    "parent": "coinSupply1"
+  },
+  "qce154": {
+    "x": 4,
+    "width": 75,
+    "height": 54.75,
+    "classes": "chip3D",
+    "color": "#f7e845",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 6,
+    "id": "qce154",
+    "type": "coin",
+    "activeFace": 1,
+    "parent": "coinSupply1"
+  },
+  "btnContainer5": {
+    "id": "btnContainer5",
+    "parent": "seat5",
+    "inheritFrom": {
+      "btnContainerProto": "*"
+    },
+    "onlyVisibleForSeat": "seat5",
+    "type": "btnContainer",
+    "display": true,
+    "activeFace": 0
+  },
+  "bidBtn5": {
+    "id": "bidBtn5",
+    "parent": "btnContainer5",
+    "inheritFrom": {
+      "bidBtnProto": "*"
+    },
+    "z": 10119,
+    "type": "button",
+    "_seat": "seat5"
+  },
+  "cashoutBtn5": {
+    "id": "cashoutBtn5",
+    "parent": "btnContainer5",
+    "inheritFrom": {
+      "cashoutBtnProto": "*"
+    },
+    "type": "button",
+    "_seat": "seat5"
+  },
+  "lifelineBtn5": {
+    "id": "lifelineBtn5",
+    "parent": "seat5",
+    "inheritFrom": {
+      "lifelineBtnProto": "*"
+    },
+    "type": "button",
+    "scale": 1,
+    "onlyVisibleForSeat": "seat5",
+    "_seat": "seat5",
+    "display": true
+  },
+  "passIndicatorDeck": {
+    "type": "deck",
+    "id": "passIndicatorDeck",
+    "x": 622,
+    "y": -119,
+    "cardDefaults": {
+      "movable": false,
+      "clickable": false,
+      "width": 85,
+      "height": 120,
+      "white": "#fff4\" stroke=\"#fff4\" stroke-width=\"20"
+    },
+    "cardTypes": {
+      "passIndicator": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": []
+      },
+      {
+        "radius": 15,
+        "objects": [
+          {
+            "type": "image",
+            "width": 85,
+            "height": 120,
+            "color": "#48a"
+          },
+          {
+            "type": "text",
+            "y": 20,
+            "fontSize": 30,
+            "textAlign": "center",
+            "color": "white",
+            "width": 85,
+            "value": "1st\nPick"
+          }
+        ]
+      },
+      {
+        "radius": 15,
+        "objects": [
+          {
+            "type": "image",
+            "width": 85,
+            "height": 120,
+            "color": "#468"
+          },
+          {
+            "type": "text",
+            "y": 20,
+            "fontSize": 30,
+            "textAlign": "center",
+            "color": "white",
+            "width": 85,
+            "value": "2nd\nPick"
+          }
+        ]
+      },
+      {
+        "radius": 15,
+        "objects": [
+          {
+            "type": "image",
+            "width": 85,
+            "height": 120,
+            "color": "#444"
+          },
+          {
+            "type": "text",
+            "y": 20,
+            "fontSize": 30,
+            "textAlign": "center",
+            "color": "#bbb",
+            "width": 85,
+            "value": "I'm\nOut"
+          }
+        ]
+      }
+    ],
+    "z": 28207
+  },
+  "passIndicator1": {
+    "type": "card",
+    "id": "passIndicator1",
+    "deck": "passIndicatorDeck",
+    "cardType": "passIndicator",
+    "x": -111,
+    "y": 50,
+    "fixedParent": true,
+    "parent": "seat1",
+    "layer": -1
+  },
+  "passIndicator2": {
+    "type": "card",
+    "id": "passIndicator2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "deck": "passIndicatorDeck",
+    "cardType": "passIndicator",
+    "x": -111,
+    "y": 50,
+    "layer": -1
+  },
+  "passIndicator3": {
+    "type": "card",
+    "id": "passIndicator3",
+    "parent": "seat3",
+    "fixedParent": true,
+    "deck": "passIndicatorDeck",
+    "cardType": "passIndicator",
+    "x": -111,
+    "y": 50,
+    "layer": -1,
+    "movable": false
+  },
+  "passIndicator4": {
+    "type": "card",
+    "id": "passIndicator4",
+    "parent": "seat4",
+    "fixedParent": true,
+    "deck": "passIndicatorDeck",
+    "cardType": "passIndicator",
+    "x": -111,
+    "y": 50,
+    "layer": -1,
+    "movable": false
+  },
+  "passIndicator5": {
+    "type": "card",
+    "id": "passIndicator5",
+    "parent": "seat5",
+    "fixedParent": true,
+    "deck": "passIndicatorDeck",
+    "cardType": "passIndicator",
+    "x": -111,
+    "y": 50,
+    "layer": -1,
+    "movable": false
+  },
+  "dealBtn": {
+    "type": "button",
+    "id": "dealBtn",
+    "parent": "cardOffer",
+    "fixedParent": true,
+    "x": 16,
+    "y": 43,
+    "z": 1,
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "css": "font-size:15px;border-radius:15px",
+    "text": "DEAL\n&\nDIVIDEND",
+    "textColor": "#666",
+    "textColorOH": "#fff",
+    "_resetBiddingRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "parent",
+        "relation": "!=",
+        "value": "prototypes"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "_dropOutResetRoutine",
+            "widget": "${widgetID}"
+          }
+        ]
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "stocksDeckHolder",
+        "to": "cardOffer",
+        "fillTo": 1
+      },
+      {
+        "func": "FLIP",
+        "holder": "cardOffer",
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "cardOffer",
+        "max": 1
+      },
+      {
+        "func": "GET",
+        "property": "stockType",
+        "variable": "sT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${sT}",
+        "operand2": "crash",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "_gameEndRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "stockType",
+            "value": "${sT}"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "CALL",
+                "routine": "dividendRoutine",
+                "widget": "${widgetID}"
+              }
+            ]
+          },
+          {
+            "func": "CALL",
+            "routine": "_resetBiddingRoutine"
+          }
+        ]
+      }
+    ],
+    "_gameEndRoutine": [
+      {
+        "func": "SELECT",
+        "type": "btnContainer",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "passIndicator"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "buttonType",
+        "value": "finalBtn"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "enableRoutine",
+            "widget": "${widgetID}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "finalBtnContainer"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ],
+    "oldClickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "stocksDeckHolder",
+        "to": "cardOffer",
+        "fillTo": 1
+      },
+      {
+        "func": "FLIP",
+        "holder": "cardOffer",
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "cardOffer",
+        "max": 1
+      },
+      {
+        "func": "GET",
+        "property": "stockType",
+        "variable": "sT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${sT}",
+        "operand2": "crash",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "stockType",
+            "relation": "!=",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "stockType",
+            "value": "${sT}"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "dividendRoutine",
+            "widget": "${widgetID}"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "_resetBiddingRoutine"
+      }
+    ]
+  },
+  "uh2y diamond": {
+    "type": "card",
+    "id": "uh2y diamond",
+    "deck": "stocksDeck",
+    "cardType": "diamond",
+    "z": 37574,
+    "parent": "bzmd"
+  },
+  "finalBtnProto": {
+    "type": "button",
+    "id": "finalBtnProto",
+    "parent": "prototypes",
+    "fixedParent": true,
+    "x": 371,
+    "y": 203,
+    "width": 180,
+    "height": 55,
+    "z": 2,
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "clickable": "false",
+    "css": "font-size:20px;border-radius:15px",
+    "text": "Final Btn Proto",
+    "textColor": "#666",
+    "textColorOH": "#fff",
+    "disableRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": false,
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "backgroundColor",
+            "value": "#8c9",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "backgroundColorOH",
+            "value": "#8c9",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "borderColor",
+            "value": "#8c9",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "borderColorOH",
+            "value": "#8c9",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "textColor",
+            "value": "#fff",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "textColorOH",
+            "value": "#fff",
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "enableRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "prototypes",
+        "relation": "!=",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": true,
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "backgroundColor",
+            "value": "#fff",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "backgroundColorOH",
+            "value": "#666",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "borderColor",
+            "value": "#fff",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "borderColorOH",
+            "value": "#666",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "textColor",
+            "value": "#666",
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "property": "textColorOH",
+            "value": "#fff",
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "buttonType": "finalBtn"
+  },
+  "finalBtnContainer": {
+    "id": "finalBtnContainer",
+    "x": 458,
+    "y": 55,
+    "movable": false,
+    "width": 180,
+    "height": 218,
+    "Xcss": "background:#faa",
+    "display": false
+  },
+  "finalDividendBtn": {
+    "type": "button",
+    "id": "finalDividendBtn",
+    "parent": "finalBtnContainer",
+    "x": 0,
+    "y": 10,
+    "clickable": true,
+    "inheritFrom": {
+      "finalBtnProto": "*"
+    },
+    "text": "Final dividend",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "holderType",
+        "value": "playerStockHolder"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "dividendRoutine",
+            "widget": "${widgetID}"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "disableRoutine"
+      }
+    ],
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "textColor": "#666",
+    "textColorOH": "#fff"
+  },
+  "finalChipsBtn": {
+    "type": "button",
+    "id": "finalChipsBtn",
+    "parent": "finalBtnContainer",
+    "x": 0,
+    "y": 80,
+    "clickable": true,
+    "inheritFrom": {
+      "finalBtnProto": "*"
+    },
+    "text": "1 VP / 5 Chips",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "parent",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "SELECT",
+            "property": "holderType",
+            "value": "coinSupply",
+            "source": "DEFAULT"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "coinSupplyID"
+          },
+          {
+            "func": "COUNT",
+            "holder": "${coinSupplyID}"
+          },
+          "var vpFromCoins = ${COUNT} / 5",
+          "var vpFromCoins = floor ${vpFromCoins}",
+          {
+            "func": "SELECT",
+            "type": "vpCounter",
+            "property": "parent",
+            "value": "${widgetID}",
+            "max": 1
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "vpCounterID"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateValRoutine",
+            "widget": "${vpCounterID}",
+            "arguments": {
+              "_deltaVal": "${vpFromCoins}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "disableRoutine"
+      }
+    ],
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "textColor": "#666",
+    "textColorOH": "#fff"
+  },
+  "finalHousesBtn": {
+    "type": "button",
+    "id": "finalHousesBtn",
+    "parent": "finalBtnContainer",
+    "x": 0,
+    "y": 150,
+    "clickable": true,
+    "inheritFrom": {
+      "finalBtnProto": "*"
+    },
+    "text": "Buildings",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "parent",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "SELECT",
+            "property": "holderType",
+            "value": "houseSupply",
+            "source": "DEFAULT"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "houseHolderID"
+          },
+          {
+            "func": "SELECT",
+            "type": "house",
+            "property": "origHolder",
+            "value": "${houseHolderID}",
+            "collection": "houses"
+          },
+          {
+            "func": "GET",
+            "property": "parent",
+            "collection": "houses",
+            "aggregation": "array",
+            "skipMissing": true,
+            "variable": "houseParents"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY _investmentTypes}",
+            "loopRoutine": [
+              "var ${value} = 0"
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "in": "${houseParents}",
+            "loopRoutine": [
+              "var iT = ${PROPERTY investmentType OF $value}",
+              "var isDiamond = ${iT} == 'diamond'",
+              "var diamond = ${diamond} + ${isDiamond}",
+              "var isStar = ${iT} == 'star'",
+              "var star = ${star} + ${isStar}",
+              "var isFlower = ${iT} == 'flower'",
+              "var flower = ${flower} + ${isFlower}",
+              "var isAir = ${iT} == 'air'",
+              "var air = ${air} + ${isAir}",
+              "var isHeart = ${iT} == 'heart'",
+              "var heart = ${heart} + ${isHeart}",
+              "//",
+              "var iT = ${PROPERTY investmentType2 OF $value}",
+              "var isDiamond = ${iT} == 'diamond'",
+              "var diamond = ${diamond} + ${isDiamond}",
+              "var isStar = ${iT} == 'star'",
+              "var star = ${star} + ${isStar}",
+              "var isFlower = ${iT} == 'flower'",
+              "var flower = ${flower} + ${isFlower}",
+              "var isAir = ${iT} == 'air'",
+              "var air = ${air} + ${isAir}",
+              "var isHeart = ${iT} == 'heart'",
+              "var heart = ${heart} + ${isHeart}"
+            ]
+          },
+          "var diamondSquared = ${diamond}*${diamond}",
+          "var starSquared = ${star}*${star}",
+          "var flowerSquared = ${flower}*${flower}",
+          "var airSquared = ${air}*${air}",
+          "var heartSquared = ${heart}*${heart}",
+          "var total = ${diamondSquared}+${starSquared}+${flowerSquared}+${airSquared}+${heartSquared}",
+          {
+            "func": "SELECT",
+            "type": "vpCounter",
+            "property": "parent",
+            "value": "${widgetID}",
+            "max": 1
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "vpCounterID"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateValRoutine",
+            "widget": "${vpCounterID}",
+            "arguments": {
+              "_deltaVal": "${total}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "disableRoutine"
+      }
+    ],
+    "_investmentTypes": [
+      "star",
+      "diamond",
+      "flower",
+      "air",
+      "heart"
+    ],
+    "backgroundColor": "#fff",
+    "backgroundColorOH": "#666",
+    "borderColor": "#fff",
+    "borderColorOH": "#666",
+    "textColor": "#666",
+    "textColorOH": "#fff"
+  },
+  "izqp": {
+    "type": "button",
+    "text": "call _gameEndRoutine",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "_gameEndRoutine",
+        "widget": "dealBtn"
+      }
+    ],
+    "x": 162,
+    "y": -121,
+    "z": 10121,
+    "id": "izqp"
+  },
+  "bzmd": {
+    "type": "pile",
+    "parent": "stocksDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "handleSize": 60,
+    "handleCSS": "background:white;left:0;right:0;bottom:0;top:35%;margin:auto",
+    "id": "bzmd"
+  }
+}

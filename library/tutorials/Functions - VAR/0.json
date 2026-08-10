@@ -1,0 +1,130 @@
+{
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - VAR",
+      "image": "/assets/-1047355116_3370",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1768621612324,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: VAR",
+    "x": 400
+  },
+  "406b": {
+    "id": "406b",
+    "x": 108,
+    "y": 114,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "css": "font-size: 25px; ",
+    "text": "VAR can be used as a function or 'var' can be used as a direct way to set a dynamic variable. Both methods are demonstrated in the buttons below. View the button JSON (press CTRL-J and then make sure the {} JSON button on the far right is selected). Click the button and see the results in the debugger (make sure the Debug button on the far right is selected).",
+    "movable": false
+  },
+  "bm4j": {
+    "text": "Use 'var' directly in a routine to set or calculate the value of a dynamic variable. Limitations: many special characters are not available and you cannot directly set arrays or objects except to set them as empty (but you can use ${PROPERTY p OF widgetID} and set the object or array to be equal to a widget property).",
+    "id": "bm4j",
+    "z": 185,
+    "width": 300,
+    "movable": false,
+    "y": 700,
+    "x": 410
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "x": 808,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "text": "'VAR' as a function can be used to do many of the things that 'var' cannot such as setting special characters, objects, and arrays. However, it also has limitations as demonstrated in the button above.",
+    "movable": false
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 501,
+    "y": 550,
+    "z": 10,
+    "text": "var",
+    "myObject": {
+      "someKey": "someValue",
+      "anotherKey": "anotherValue"
+    },
+    "clickRoutine": [
+      "var currentX = ${PROPERTY x}",
+      "var blackJack = 21",
+      "var someNumber = ${blackJack} + ${currentX}",
+      "var mystring = 'Hello'",
+      "var myObject = ${PROPERTY myObject}",
+      "// Note that you cannot set objects or arrays directly (except for empty arrays and objects. For example, the following will not work and creates an error.",
+      "var myArray = [1,2,3,4]",
+      "// Note that many special characters cannot be set using this method. For example, the following Unicode symbol does not work.",
+      "var myUnicode = '⏳'"
+    ]
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 900,
+    "y": 550,
+    "z": 11,
+    "text": "VAR",
+    "clickRoutine": [
+      {
+        "func": "VAR",
+        "variables": {
+          "currentX": "${PROPERTY x}",
+          "blackJack": 21,
+          "someNumber": "${blackJack} + ${currentX}",
+          "mystring": "Hello",
+          "myUnicode": "⏳",
+          "myObject": {
+            "someKey": "someValue",
+            "anotherKey": "anotherValue"
+          }
+        }
+      },
+      "// Note that VAR in a function cannot be used to calculate values. For example, someNumber above does not work in the function format the way it does in the direct dynamic variable format. And it does not display the value of blackJack or currentX because those are not set until the function finishes executing.",
+      "// But on the other hand, myObject is being set directly in the variable without needing an object property to be the reference and the Unicode symbol works.",
+      {
+        "func": "VAR",
+        "variables": {
+          "anotherNumber": "${blackJack} + ${currentX}"
+        }
+      },
+      "// Here the values of blackJack and currentX are now available from the output of the previous function, but the plus is just used as a text object and not a mathematical operand."
+    ]
+  }
+}

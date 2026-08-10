@@ -1,0 +1,843 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Functions - RECALL",
+      "image": "/assets/294741276_3738",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1749068415209,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: RECALL"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "holder1",
+        "inHolder": false
+      }
+    ],
+    "text": "inHolder"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 208,
+    "y": 80,
+    "width": 1200,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "The RECALL function (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#recall'>wiki</a>) works in connection with cards, holders, and decks to return cards to a holder. Use RECALL on a holder that has a deck as a child widget. Cards belonging to that deck will be returned to that holder. This also works with multiple decks in a holder. By default recalled cards are returned to the holder in a consistent order over which the game designer has no control. The point is, RECALL is not random and designers should use the SHUFFLE function to randomize cards. Adding a default deck of cards to a room includes a button that RECALLs, SHUFFLEs, and FLIPs the cards.",
+    "height": 150
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "holder1",
+        "owned": false
+      }
+    ],
+    "text": "owned"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "rank",
+        "relation": "in",
+        "value": [
+          "2J",
+          "3Q",
+          "4K"
+        ],
+        "collection": "faceCards"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder1",
+        "excludeCollection": "faceCards"
+      }
+    ],
+    "text": "exclude\nCollection"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "holder1",
+        "byDistance": true
+      }
+    ],
+    "text": "by\nDistance"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above is a typical RECALL scenario. Just specify which holder <b>id</b> (or array of <b>id</b>s) has the deck(s) you want to recall. To see how the order of the cards is always the same after RECALL, drag the entire pile and drop it into the hand holder below.",
+    "layer": -3
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "holder1"
+      }
+    ],
+    "text": "RECALL"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "You can limit the cards being recalled to only those that are not in holders. The button above sets the <b>inHolder</b> parameter to false and only cards not in holders are recalled. The parameter default is true.",
+    "layer": -3
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The <b>owned</b> parameter controls whether cards 'owned' by a player (because the <b>owner</b> property is not null) are recalled or not. The button above sets the parameter to false and the cards in the hand are not recalled. The parameter default is true.",
+    "layer": -3
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The RECALL function can exclude cards in a specified collection. The button above creates a collection of all the face cards and prevents them from being recalled.",
+    "layer": -3
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The <b>byDistance</b> parameter is an exception to the rule that cards are recalled in a standard order. When set to true, the cards closest to their deck are recalled first. In this case the deck is in the holder in the upper left. Drag the pile to the hand below to see.",
+    "layer": -3
+  },
+  "ewewD": {
+    "type": "deck",
+    "id": "ewewD",
+    "parent": "holder1",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 50,
+    "y": 820,
+    "width": 1500,
+    "height": 180,
+    "id": "hand"
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 44,
+    "y": 87,
+    "z": 134,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "9t1i": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 01",
+    "id": "9t1i",
+    "z": 2450,
+    "activeFace": 1,
+    "parent": "k54x"
+  },
+  "8lrb": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 02",
+    "id": "8lrb",
+    "z": 2452,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "wdkb": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 03",
+    "id": "wdkb",
+    "z": 2454,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "kwnn": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 04",
+    "id": "kwnn",
+    "z": 2456,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "h7vn": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 05",
+    "id": "h7vn",
+    "z": 2458,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "a20u": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 06",
+    "id": "a20u",
+    "z": 2460,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "8hxu": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 07",
+    "id": "8hxu",
+    "z": 2462,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "uhtw": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 08",
+    "id": "uhtw",
+    "z": 2464,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "mwuz": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 09",
+    "id": "mwuz",
+    "z": 2466,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "qnxn": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 10",
+    "id": "qnxn",
+    "z": 2468,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "62pa": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 2J",
+    "id": "62pa",
+    "z": 2470,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "u5s0": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 3Q",
+    "id": "u5s0",
+    "z": 2472,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "6bk0": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "C 4K",
+    "id": "6bk0",
+    "z": 2474,
+    "activeFace": 1,
+    "parent": "k54x"
+  },
+  "cfan": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 01",
+    "id": "cfan",
+    "z": 2476,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "fscc": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 02",
+    "id": "fscc",
+    "z": 2478,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "bcfn": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 03",
+    "id": "bcfn",
+    "z": 2480,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "llx9": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 04",
+    "id": "llx9",
+    "z": 2482,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "hmhu": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 05",
+    "id": "hmhu",
+    "z": 2484,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "xxc1": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 06",
+    "id": "xxc1",
+    "z": 2486,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "kmpq": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 07",
+    "id": "kmpq",
+    "z": 2488,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "ucnt": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 08",
+    "id": "ucnt",
+    "z": 2490,
+    "parent": "k54x",
+    "activeFace": 1
+  },
+  "4we9": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 09",
+    "id": "4we9",
+    "z": 2492,
+    "activeFace": 1,
+    "parent": "k54x"
+  },
+  "43dl": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 10",
+    "id": "43dl",
+    "z": 2494,
+    "activeFace": 1,
+    "parent": "k54x"
+  },
+  "a0iy": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 2J",
+    "id": "a0iy",
+    "z": 2496,
+    "activeFace": 1,
+    "parent": "k54x"
+  },
+  "o433": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 3Q",
+    "id": "o433",
+    "z": 2498,
+    "activeFace": 1,
+    "parent": "k54x"
+  },
+  "2hyi": {
+    "deck": "ewewD",
+    "type": "card",
+    "cardType": "D 4K",
+    "id": "2hyi",
+    "z": 2500,
+    "activeFace": 1,
+    "parent": "k54x"
+  },
+  "62ri": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder1",
+        "to": "holder2",
+        "count": 3
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "holder2"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1050
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 236
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder1",
+        "x": 1175,
+        "y": 236
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder1",
+        "x": 1300,
+        "y": 236
+      },
+      {
+        "func": "MOVE",
+        "from": "holder1",
+        "to": "hand",
+        "count": 13
+      },
+      {
+        "func": "MOVE",
+        "from": "holder1",
+        "to": "holder2",
+        "count": "all"
+      }
+    ],
+    "x": 49,
+    "y": 34,
+    "z": 22844,
+    "id": "62ri",
+    "height": 41,
+    "width": 100,
+    "text": "Move Cards"
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 1450,
+    "y": 87,
+    "z": 135,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "overview1": {
+    "id": "overview1",
+    "x": 208,
+    "y": 280,
+    "width": 820,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "To use this room, make sure the cards are in the holder to the left (use the `RECALL` button in the row below). Then press the `Move Cards` button to simulate cards being distributed around the room. Then press the button related to the parameter you want to see demonstrated.",
+    "height": 50
+  },
+  "k54x": {
+    "type": "pile",
+    "parent": "holder1",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "k54x"
+  }
+}

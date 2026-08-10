@@ -1,16 +1,25 @@
 {
+  "serverName": "VirtualTabletop.io",
   "port": 8272,
   "externalURL": "http://localhost:8272",
   "urlPrefix": "",
   "minifyJavascript": false,
   "forceTracing": false,
+  "simulateServerLag": 0,
+  "customTab": null,
 
+  "roomNamesCaseSensitive": true,
   "allowPublicLibraryEdits": false,
+  "adminURL": null,
 
   "directories": {
     "library": "library",
     "save": "save",
     "assets": "save/assets"
+  },
+  "libraries": {
+    "Games": "games",
+    "Tutorials": "tutorials"
   },
 
   "betaServers": {},

@@ -3663,7 +3663,7 @@
     "version": 2,
     "info": {
       "name": "Mancala",
-      "image": "/assets/-2048017129_95680",
+      "image": "/assets/-77129450_53402",
       "rules": "https://mancala.fandom.com/wiki/Kalah",
       "bgg": "https://www.boardgamegeek.com/boardgame/2448/kalah",
       "year": "700",
@@ -3676,7 +3676,8 @@
       "similarName": "Mancala",
       "description": "Move marbles around pits in board to collect your own and opponents marbles.  Player with most marbles wins.",
       "showName": true,
-      "lastUpdate": 1619036880000
+      "lastUpdate": 1619036880000,
+      "similarDesigner": "William Julius Champion Jr."
     }
   },
   "oo4f": {

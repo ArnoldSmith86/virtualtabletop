@@ -1,0 +1,692 @@
+{
+  "py7d": {
+    "type": "button",
+    "x": 35,
+    "y": 333,
+    "z": 4083,
+    "id": "py7d",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [
+      {
+        "func": "VAR",
+        "variables": {
+          "url1": "${PROPERTY website1 OF zdwu1}",
+          "url2": "${PROPERTY website2 OF zdwu1}",
+          "url3": "${PROPERTY website3 OF zdwu1}"
+        }
+      }
+    ]
+  },
+  "8fr3": {
+    "text": "CSS: Shapes",
+    "css": "font-size: 60px;text-align:center",
+    "height": 60,
+    "width": 800,
+    "x": 400,
+    "y": -2,
+    "z": 74,
+    "id": "8fr3",
+    "movableInEdit": false
+  },
+  "070n": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 1556,
+    "y": 277,
+    "z": 4061,
+    "id": "070n",
+    "css": "writing-mode: vertical-lr",
+    "width": 20,
+    "height": 150,
+    "movable": true,
+    "borderRadius": "0px 17px 17px 0px"
+  },
+  "ilw9": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 1360,
+    "y": 277,
+    "z": 4064,
+    "id": "ilw9",
+    "css": "writing-mode: vertical-lr",
+    "width": 20,
+    "height": 150,
+    "movable": true,
+    "borderRadius": "17px 0px 0px 17px"
+  },
+  "mjkx": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 1392,
+    "y": 407,
+    "z": 4065,
+    "id": "mjkx",
+    "width": 150,
+    "height": 20,
+    "movable": true,
+    "borderRadius": "0px 0px 17px 17px"
+  },
+  "1jyt": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 1392,
+    "y": 277,
+    "z": 4062,
+    "id": "1jyt",
+    "width": 150,
+    "height": 20,
+    "movable": true,
+    "borderRadius": "17px 17px 0px 0px"
+  },
+  "tlbu": {
+    "id": "tlbu",
+    "text": "The basic concept for changing shapes is using border-radius. borderRadius is a specific property of widgets, or it can be added in the css string or object. If one value is set, it applies to all 4 corners. If two values are set, the first applies to the top-left and bottom-right corner and the second applies to the top-right and bottom-left corner. Four values apply to the top-left, top-right, bottom-right, bottom-left corner in that order. With three values, the second value applies to top-right and also bottom-left and the other two are the same as in the four value case. The examples in this variant all use buttons, but the same concept applies to holder, basic widgets, etc.",
+    "z": 75,
+    "x": 300,
+    "y": 100,
+    "width": 1000,
+    "css": {
+      "font-size": "20px"
+    }
+  },
+  "7lk2": {
+    "type": "button",
+    "x": 305,
+    "y": 331,
+    "z": 4033,
+    "id": "7lk2",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "5px 20px 5px"
+  },
+  "qwlj": {
+    "type": "button",
+    "x": 412,
+    "y": 331,
+    "z": 4034,
+    "id": "qwlj",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "10px/30px"
+  },
+  "0d1s": {
+    "type": "button",
+    "x": 521,
+    "y": 361,
+    "z": 4035,
+    "id": "0d1s",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "height": 50,
+    "width": 100,
+    "borderRadius": "35%"
+  },
+  "j190": {
+    "type": "button",
+    "x": 651,
+    "y": 361,
+    "z": 4036,
+    "id": "j190",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "height": 50,
+    "width": 100,
+    "borderRadius": "50%"
+  },
+  "6e3z": {
+    "type": "button",
+    "x": 27,
+    "y": 490,
+    "z": 4121,
+    "id": "6e3z",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "css": "border-left: 1px; border-right: 1px; border-bottom: 1px; border-width: 20px",
+    "height": 50,
+    "width": 100
+  },
+  "e2cs": {
+    "type": "button",
+    "x": 1255,
+    "y": 311,
+    "z": 4057,
+    "id": "e2cs",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "height": 100,
+    "width": 70,
+    "borderRadius": "50% 50% 50% 50%/60% 60% 40% 40%"
+  },
+  "pa4h": {
+    "type": "button",
+    "x": 173,
+    "y": 480,
+    "z": 4123,
+    "id": "pa4h",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "css": "border-left: 1px; border-right: 1px; border-bottom: 1px; border-width: 30px"
+  },
+  "r0gt": {
+    "type": "button",
+    "x": 196,
+    "y": 331,
+    "z": 4031,
+    "id": "r0gt",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": 0
+  },
+  "v46j": {
+    "type": "button",
+    "x": 558,
+    "y": 554,
+    "z": 4138,
+    "id": "v46j",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "rotation": 45,
+    "borderRadius": 0
+  },
+  "v9hk": {
+    "type": "button",
+    "x": 29,
+    "y": 587,
+    "z": 4122,
+    "id": "v9hk",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "css": "border-left:50px solid transparent"
+  },
+  "g0t9": {
+    "type": "button",
+    "x": 805,
+    "y": 331,
+    "z": 4037,
+    "id": "g0t9",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "50px 0px 50px"
+  },
+  "7s05": {
+    "type": "button",
+    "x": 1037,
+    "y": 331,
+    "z": 4054,
+    "id": "7s05",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "50px 50px 0px"
+  },
+  "qkq8": {
+    "type": "button",
+    "x": 1150,
+    "y": 331,
+    "z": 4055,
+    "id": "qkq8",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0px 50px 50px"
+  },
+  "40le": {
+    "type": "button",
+    "x": 927,
+    "y": 331,
+    "z": 4038,
+    "id": "40le",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0px 50px 0px"
+  },
+  "cd5e": {
+    "type": "button",
+    "x": 25,
+    "y": 879,
+    "z": 4051,
+    "id": "cd5e",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "css": "box-shadow: 10px 10px 18px black"
+  },
+  "0aap": {
+    "type": "button",
+    "x": 134,
+    "y": 877,
+    "z": 4052,
+    "id": "0aap",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "css": "box-shadow: 12px 12px 5px grey",
+    "borderRadius": "5px"
+  },
+  "56xy": {
+    "type": "button",
+    "x": 799,
+    "y": 435,
+    "z": 4039,
+    "id": "56xy",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "height": 50,
+    "width": 100,
+    "borderRadius": "0px 50px 0px"
+  },
+  "36hi": {
+    "type": "button",
+    "x": 924,
+    "y": 435,
+    "z": 4040,
+    "id": "36hi",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "width": 100,
+    "height": 50,
+    "borderRadius": "50px 0px 50px"
+  },
+  "i6gs": {
+    "type": "button",
+    "x": 869,
+    "y": 876,
+    "z": 4005,
+    "id": "i6gs",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 0% 0% 100%"
+  },
+  "6xon": {
+    "type": "button",
+    "x": 955,
+    "y": 876,
+    "z": 4004,
+    "id": "6xon",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 0% 100% 0%"
+  },
+  "an9k": {
+    "type": "button",
+    "x": 955,
+    "y": 791,
+    "z": 4137,
+    "id": "an9k",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 100% 0% 0%"
+  },
+  "x6dh": {
+    "type": "button",
+    "x": 869,
+    "y": 791,
+    "z": 4006,
+    "id": "x6dh",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "100% 0% 0% 0%"
+  },
+  "60ws": {
+    "type": "button",
+    "x": 1142,
+    "y": 876,
+    "z": 4000,
+    "id": "60ws",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 0% 50% 50% / 0% 0% 100% 100%"
+  },
+  "7bln": {
+    "type": "button",
+    "x": 1055,
+    "y": 831,
+    "z": 4002,
+    "id": "7bln",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "100% 0% 0% 100% / 50% 0% 0% 50%"
+  },
+  "md4b": {
+    "type": "button",
+    "x": 1143,
+    "y": 791,
+    "z": 4001,
+    "id": "md4b",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "50% 50% 0% 0% / 100% 100% 0% 0%"
+  },
+  "96o8": {
+    "type": "button",
+    "x": 1227,
+    "y": 831,
+    "z": 3999,
+    "id": "96o8",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 100% 100% 0% / 0% 50% 50% 0%"
+  },
+  "6qfa": {
+    "type": "button",
+    "x": 751,
+    "y": 791,
+    "z": 4012,
+    "id": "6qfa",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "50% 50% 100% 0% / 100% 50% 50% 0%"
+  },
+  "baqm": {
+    "type": "button",
+    "x": 751,
+    "y": 876,
+    "z": 4014,
+    "id": "baqm",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 100% 50% 50% / 0% 50% 50% 100%"
+  },
+  "kk3i": {
+    "type": "button",
+    "x": 664,
+    "y": 876,
+    "z": 4013,
+    "id": "kk3i",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "100% 0% 50% 50% / 50% 0% 100% 50%"
+  },
+  "yk60": {
+    "type": "button",
+    "x": 664,
+    "y": 791,
+    "z": 4011,
+    "id": "yk60",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "50% 50% 0% 100% / 50% 100% 0% 50%"
+  },
+  "x6d0": {
+    "type": "button",
+    "x": 452,
+    "y": 831,
+    "z": 4029,
+    "id": "x6d0",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 100% 0% 100%"
+  },
+  "0d2y": {
+    "type": "button",
+    "x": 545,
+    "y": 831,
+    "z": 4030,
+    "id": "0d2y",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "100% 0% 100% 0%"
+  },
+  "jzof": {
+    "type": "button",
+    "x": 1400,
+    "y": 791,
+    "z": 3993,
+    "id": "jzof",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "50% 50% 0% 0%"
+  },
+  "3fq0": {
+    "type": "button",
+    "x": 1400,
+    "y": 876,
+    "z": 3994,
+    "id": "3fq0",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 0% 50% 50%"
+  },
+  "9uk3": {
+    "type": "button",
+    "x": 1313,
+    "y": 831,
+    "z": 3995,
+    "id": "9uk3",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "50% 0% 0% 50%"
+  },
+  "uyz6": {
+    "type": "button",
+    "x": 1483,
+    "y": 831,
+    "z": 3991,
+    "id": "uyz6",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "borderRadius": "0% 50% 50% 0%"
+  },
+  "p0sg": {
+    "text": "Default button",
+    "x": 25,
+    "y": 289,
+    "z": 69,
+    "id": "p0sg",
+    "width": 120,
+    "height": 30
+  },
+  "zdwu": {
+    "text": "Changing the dimensions can enhance the effect.",
+    "x": 1376,
+    "y": 210,
+    "z": 57,
+    "width": 200,
+    "height": 30,
+    "id": "zdwu"
+  },
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Appearance - CSS",
+      "image": "/assets/1323294024_5493",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1763600448102,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Shapes",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "odoe": {
+    "text": "Changing the border width can also create some interesting effects.",
+    "x": 315,
+    "y": 537,
+    "z": 78,
+    "width": 200,
+    "height": 30,
+    "id": "odoe"
+  },
+  "47lv": {
+    "text": "You can add rotation to any shape, but be careful about text.",
+    "x": 698,
+    "y": 578,
+    "z": 82,
+    "width": 230,
+    "height": 30,
+    "id": "47lv"
+  },
+  "ycei": {
+    "text": "Use box-shadow to create shadows. In order, the values represent: h-offset, v-offset, blur, spread, color, inset.",
+    "x": 57,
+    "y": 755,
+    "z": 64,
+    "width": 250,
+    "height": 30,
+    "id": "ycei"
+  },
+  "a21w": {
+    "type": "button",
+    "x": 250,
+    "y": 871,
+    "z": 4082,
+    "id": "a21w",
+    "movable": true,
+    "text": "DEAL",
+    "clickRoutine": [],
+    "height": 100,
+    "css": "box-shadow: 10px 5px 8px 2px  inset",
+    "width": 70,
+    "borderRadius": "50% 50% 50% 50%/60% 60% 40% 40%"
+  },
+  "o9u0": {
+    "text": "Separate x/y radius can be applied to each corner by listing values as \n 'top-left-x top-right-x bottom-right-x bottom-left x / top-left-y top-right-y bottom-right-y bottom-left-y'.\n Use a website like https://9elements.github.io/fancy-border-radius/ to help.",
+    "x": 502,
+    "y": 715,
+    "z": 68,
+    "width": 950,
+    "height": 30,
+    "id": "o9u0"
+  },
+  "ji2x": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 174,
+    "y": 588,
+    "z": 4124,
+    "id": "ji2x",
+    "css": "border-width: 5px 0 10px 0; border-color:#1f5ca6 #0d2f5e #0d2f5e #0d2f5e; ",
+    "borderRadius": "10px"
+  },
+  "yhvg": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "y": 592,
+    "z": 4131,
+    "id": "yhvg",
+    "css": {
+      "border": "none",
+      "clip-path": "path('m 28.8 57.6 l 43.2 -50.4 l 21.6 -7.2 l -7.2 21.6 l -50.4 43.2 c 7.2 7.2 7.2 14.4 14.4 7.2 c 0 7.2 7.2 14.4 0 14.4 a 10.22 10.22 0 0 1 -7.2 7.2 a 36 36 90 0 0 -14.4 -21.6 q -3.6 -0.72 -3.6 3.6 t -10.8 9.36 t -5.76 -5.76 t 9.36 -10.8 t 3.6 -3.6 a 36 36 90 0 0 -21.6 -14.4 a 10.22 10.22 0 0 1 7.2 -7.2 c 0 -7.2 7.2 0 14.4 0 c -7.2 7.2 0 7.2 7.2 14.4 m 43.2 -50.4 l 0 14.4 l 14.4 0 l -12.96 -1.44 l -1.44 -12.96')"
+    },
+    "width": 93.6,
+    "borderRadius": 0,
+    "height": 93.6,
+    "x": 1306
+  },
+  "9bpm": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 1452,
+    "y": 596,
+    "z": 4130,
+    "id": "9bpm",
+    "borderRadius": 0,
+    "css": {
+      "border": "none",
+      "clip-path": "path('M 25.2 0 C 11.1 0 0 11.3 0 25.2 C 0 53.5 28.5 60.8 47.8 88.7 C 66.2 61 95.8 52.4 95.8 25.2 C 95.8 11.3 84.5 0 70.6 0 C 60.6 0 51.8 5.9 47.8 14.5 C 43.8 5.9 35.2 0 25.2 0 Z')"
+    },
+    "width": 95.8,
+    "height": 88.7
+  },
+  "11bpm": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 1059,
+    "y": 588,
+    "z": 4133,
+    "id": "11bpm",
+    "borderRadius": 0,
+    "css": {
+      "border": "none",
+      "clip-path": "path('M 0 0 V 100 H 100 V 0 H 20 V 20 H 80 V 80 H 20 V 0 H 0 M 40 40 V 60 H 60 V 40 Z')"
+    },
+    "width": 100,
+    "height": 100
+  },
+  "12bpm": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [],
+    "x": 1184,
+    "y": 584,
+    "z": 4132,
+    "id": "12bpm",
+    "borderRadius": 0,
+    "css": {
+      "border": "none",
+      "clip-path": "path('M 50 0 L 65.95 30.62 L 100 36.33 L 75.8 60.96 L 80.9 95.1 L 50 79.7 L 19.1 95.1 L 24.2 60.96 L 0 36.33 L 34.05 30.62 Z')"
+    },
+    "width": 100,
+    "height": 95.1
+  },
+  "zdwu1": {
+    "x": 1062,
+    "y": 494,
+    "z": 84,
+    "width": 500,
+    "height": 30,
+    "id": "zdwu1",
+    "text": "If you want very specific shapes you can also use the 'clip-path' CSS-Property. These Examples show the use of the 'path('')' command. A great way to visualize and get familiar with this syntax is using the links that you can find as properties of this widget.",
+    "website1": "https://svg-path-visualizer.netlify.app/#M140%2020C73%2020%2020%2074%2020%20140c0%20135%20136%20170%20228%20303%2088-132%20229-173%20229-303%200-66-54-120-120-120-48%200-90%2028-109%2069-19-41-60-69-108-69z",
+    "website2": "https://yqnn.github.io/svg-path-editor/",
+    "website3": "https://www.cssportal.com/css-clip-path-generator/"
+  }
+}

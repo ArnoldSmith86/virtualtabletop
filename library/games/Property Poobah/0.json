@@ -1,0 +1,4885 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "importerTime": 1720633561024,
+      "lastUpdate": 1723436187154,
+      "importer": "PCIO",
+      "image": "/assets/2084218649_43390",
+      "name": "Property Poobah",
+      "showName": true,
+      "time": "30",
+      "mode": "vs",
+      "skill": "",
+      "description": "Bid for the right to invest in the city's 13 districts. Smart investors will get a lot of value for little investment. Money is tight, so you'll have to take loans — but the more loans you take, the less money you get, and the more you'll have to pay them back at the end of the game.",
+      "similarImage": "",
+      "similarName": "Big Shot",
+      "year": "2001",
+      "similarDesigner": "Alex Randolph",
+      "similarAwards": "",
+      "bgg": "https://boardgamegeek.com/boardgame/1125/big-shot",
+      "rules": "",
+      "ruleText": "The goal of the game is to have the most money at the end. Win auctions to acquire player tokens and place them on the board. For each district, the player with the most tokens will earn money at the end of the game — but ties cancel out! Players may also take loans during the game, but there are diminishing returns, and each one is worth negative points/money at the end.<div><br></div><div>After setup, there are 18 groups of 4 tokens each, and a black token that moves around a track near the groups. Each space on the track corresponds to one of the 18 groups of tokens. On a player's turn, they roll the die (for the first turn the die is already rolled), and move the black token that many spaces clockwise around the track, skipping any spaces that are empty of tokens. Where the black token lands, the corresponding group of four tokens is auctioned off to the highest bidder.</div><div><br></div><div>Starting with the current player, players in turn make a bid on how much they are willing to pay to acquire the group of tokens. On their turn to bid, a player may either increase the current highest bid by at least 1, or pass. Once they pass, they are out of the auction and cannot re-enter. After all players pass but one, the remaining player pays their bid to the bank and acquires the four tokens.</div><div><br></div><div>Players may not bid more than the amount of money they possess. However, once per auction, a player may take a loan. The first loan taken grants 9 money, the second loan grants 8 money, and so on. Loans cannot be paid back. At the end of the game, subtract 10 from your score for every loan you've taken.</div><div><br></div><div>The winning bidder acquires the four tokens and places them on any empty spaces on the board. They can be in the same district or spread out among multiple districts. Once placed, tokens are never moved or removed and remain there until the end of the game.</div><div><br></div><div>There are seven spaces in each of 13 districts. No district can have more than seven tokens.&nbsp;</div><div><br></div><div>After the auction winner places all four tokens in any districts they wish, it is the next player's turn, who rolls the die and advances the black token around the track as described previously (skipping any spaces that no longer have any tokens). Gameplay continues until all tokens have been placed in the districts.</div><div><br></div><div>At the end of the game, the player with the most tokens of their colour in a district gains money/VP as outlined below. However, if two or three players tie for the most, <i>their tokens are ignored. </i>The winner of the district is the player who has the most tokens in that district who isn't involved in a tie.</div><div><ul><li>Downtown districts are worth the value printed in their upper-right corner (16-21).</li><li>Suburban districts are worth the value printed in their upper-right corner (9-11). However, if the winner of the district also owns the neighbouring park, the suburb's value is doubled.</li><li>Park districts (showing 2x) are worth nothing themselves. However, a player who wins a park district doubles the value of any neighbouring suburban districts they have also won. The suburban districts won by other players are not affected.</li></ul><div>Players add the value of the districts they own to any remaining money they possess. From this, they subtract 10 money/VPs for every loan they had taken over the course of the game. The player with the most money wins.</div></div><div><br></div><div><i>In the original, there was also a rule that a player cannot win the game unless they win at least two districts. This is optional; the game works fine without this rule. Players should agree beforehand whether to apply this rule.</i></div><div><br><div>This implementation is for three or four players. A three-player game works identically to a four-player game. The colour corresponding to the seat not taken is a \"dummy\" colour. Players still place tokens of this colour, and these tokens still count toward determining ties in a district.</div><div><br></div></div>",
+      "helpText": "After everyone has been seated, click Setup to initialize the game. This will populate the groups of tokens (each group containing at least two different colours of tokens), determine a random start player and roll the die for that player. When the turn ends, click the die to advance the turn to the next player.<div><br></div><div>When a player drops out of an auction, they should click their \"IN AUCTION\" card to flip it to the \"OUT OF AUCTION\" side, so all players can see who is still in and who has passed.</div>",
+      "attribution": "Coding and layout by Darryl Boone and released to the public domain under CC0. Library image and game images available under the Pexels License from https://www.pexels.com.<div><br></div><div>Downtown districts:&nbsp;<a href=\"https://www.pexels.com/photo/bird-s-eye-view-of-city-2246476/\">https://www.pexels.com/photo/bird-s-eye-view-of-city-2246476/</a></div><div>Suburban districts:&nbsp;<a href=\"https://www.pexels.com/photo/high-angle-shot-of-suburban-neighborhood-1546168/\">https://www.pexels.com/photo/high-angle-shot-of-suburban-neighborhood-1546168/</a></div><div>Park districts:&nbsp;<a href=\"https://www.pexels.com/photo/green-grass-near-trees-1770809/\">https://www.pexels.com/photo/green-grass-near-trees-1770809/</a></div><div>Thumbnail:&nbsp;<a href=\"https://www.pexels.com/photo/green-leafed-trees-near-concrete-buildings-409127/\">https://www.pexels.com/photo/green-leafed-trees-near-concrete-buildings-409127/</a></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "3-4"
+    }
+  },
+  "79d20264-5a0d-4f59-bb66-7bbf94e823ad": {
+    "id": "79d20264-5a0d-4f59-bb66-7bbf94e823ad",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space13"
+  },
+  "4a5e98d8-6827-4adf-ba9d-709a20048238": {
+    "id": "4a5e98d8-6827-4adf-ba9d-709a20048238",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space10"
+  },
+  "4354e649-e999-4f17-baa8-0355ab279569": {
+    "id": "4354e649-e999-4f17-baa8-0355ab279569",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space14"
+  },
+  "dbd1b27f-da6a-4d6e-8622-f2ae8ada0b5f": {
+    "id": "dbd1b27f-da6a-4d6e-8622-f2ae8ada0b5f",
+    "x": 1050,
+    "y": 510,
+    "z": 21,
+    "type": "label",
+    "text": "20",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "158a3943-4059-4107-98c6-edd0d9df3c7b": {
+    "id": "158a3943-4059-4107-98c6-edd0d9df3c7b",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space02"
+  },
+  "f7cc5d3d-4566-4ed2-af6a-278633c62959": {
+    "id": "f7cc5d3d-4566-4ed2-af6a-278633c62959",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space12"
+  },
+  "d3b539ef-17a0-4233-9490-cbadb6a32c4e": {
+    "id": "d3b539ef-17a0-4233-9490-cbadb6a32c4e",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space09"
+  },
+  "0057ba22-710c-49df-9fda-b3d5c7f3108c": {
+    "id": "0057ba22-710c-49df-9fda-b3d5c7f3108c",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space07"
+  },
+  "0ff07d1f-f203-4a7a-9957-4f313cde5568": {
+    "id": "0ff07d1f-f203-4a7a-9957-4f313cde5568",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space04"
+  },
+  "2e33ad9f-dd92-422e-968a-ddaf397a278f": {
+    "id": "2e33ad9f-dd92-422e-968a-ddaf397a278f",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space06"
+  },
+  "39b20715-cc19-4d7e-b0a1-6b6574a81178": {
+    "id": "39b20715-cc19-4d7e-b0a1-6b6574a81178",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space07"
+  },
+  "9238638d-f02b-41f5-a142-941e6f477c77": {
+    "id": "9238638d-f02b-41f5-a142-941e6f477c77",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space00"
+  },
+  "6632ec51-8783-4d30-b75c-d3ff069aabfc": {
+    "id": "6632ec51-8783-4d30-b75c-d3ff069aabfc",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space17"
+  },
+  "782a0354-a9d8-4788-af42-73056d5c31f6": {
+    "id": "782a0354-a9d8-4788-af42-73056d5c31f6",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space06"
+  },
+  "a60bb6cc-6239-443f-ab28-341b1b7b3867": {
+    "id": "a60bb6cc-6239-443f-ab28-341b1b7b3867",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space12"
+  },
+  "435ed070-e884-43e5-a671-c9a9d6826d9d": {
+    "id": "435ed070-e884-43e5-a671-c9a9d6826d9d",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space17"
+  },
+  "30a5ebf8-f468-4b89-95ef-d009b887799e": {
+    "id": "30a5ebf8-f468-4b89-95ef-d009b887799e",
+    "x": 650,
+    "y": 710,
+    "z": 17,
+    "type": "label",
+    "text": "9",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "39e3981b-bd2f-4ec5-95ac-1b04f727767a": {
+    "id": "39e3981b-bd2f-4ec5-95ac-1b04f727767a",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space00"
+  },
+  "f8bcd133-82d1-4f80-a4c5-e6307f2f349d": {
+    "id": "f8bcd133-82d1-4f80-a4c5-e6307f2f349d",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space13"
+  },
+  "c6ee4c16-40ac-411d-a258-55ddf0196903": {
+    "id": "c6ee4c16-40ac-411d-a258-55ddf0196903",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space02"
+  },
+  "bbc0fcb0-d8ba-446c-8276-fb7f736b2d73": {
+    "id": "bbc0fcb0-d8ba-446c-8276-fb7f736b2d73",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space10"
+  },
+  "f0bc9051-5b36-4d29-a14b-83f12e245364": {
+    "id": "f0bc9051-5b36-4d29-a14b-83f12e245364",
+    "z": 34929,
+    "type": "card",
+    "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c",
+    "cardType": "black",
+    "x": 6,
+    "y": 2,
+    "parent": "track-pawn-space00"
+  },
+  "4bd0ef08-6af8-477b-91e6-3b8e09d7d467": {
+    "id": "4bd0ef08-6af8-477b-91e6-3b8e09d7d467",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space05"
+  },
+  "c4265028-c034-4260-9dff-4b7f92bb0c09": {
+    "id": "c4265028-c034-4260-9dff-4b7f92bb0c09",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space05"
+  },
+  "449e2960-008a-4a24-a117-150797695a5d": {
+    "id": "449e2960-008a-4a24-a117-150797695a5d",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space13"
+  },
+  "a867d43a-a0f6-4e13-a462-941b23738d61": {
+    "id": "a867d43a-a0f6-4e13-a462-941b23738d61",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space11"
+  },
+  "9a47dd8f-5927-4036-9e9e-9185da3d822c": {
+    "id": "9a47dd8f-5927-4036-9e9e-9185da3d822c",
+    "x": 623,
+    "y": 891,
+    "z": 7410,
+    "type": "deck",
+    "cardTypes": {
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#666565",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 34,
+            "height": 44,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 34,
+            "height": 44,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 34,
+      "height": 44
+    },
+    "parent": "track-pawn-space00"
+  },
+  "7e6c5b28-75fe-4753-829a-0228c9e93450": {
+    "id": "7e6c5b28-75fe-4753-829a-0228c9e93450",
+    "x": 850,
+    "z": 23,
+    "type": "label",
+    "text": "x2",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center",
+        "color": "white"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "y": 10,
+    "width": 50
+  },
+  "89cf56bb-1870-492b-ba94-cfe99545bb42": {
+    "id": "89cf56bb-1870-492b-ba94-cfe99545bb42",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space11"
+  },
+  "ce528b90-cb10-4636-83c2-8f6538d08ffb": {
+    "id": "ce528b90-cb10-4636-83c2-8f6538d08ffb",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space10"
+  },
+  "697ef43c-7af3-4016-b20c-5371e85029c8": {
+    "id": "697ef43c-7af3-4016-b20c-5371e85029c8",
+    "x": 1050,
+    "y": 710,
+    "z": 19,
+    "type": "label",
+    "text": "10",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "a80d07c5-01eb-4a2d-8e18-ca688ef11d32": {
+    "id": "a80d07c5-01eb-4a2d-8e18-ca688ef11d32",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space03"
+  },
+  "24092c9f-d7c7-436d-82a6-d1245a16af70": {
+    "id": "24092c9f-d7c7-436d-82a6-d1245a16af70",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space09"
+  },
+  "3b5494ff-6f13-4959-903f-e9ec3b1c570b": {
+    "id": "3b5494ff-6f13-4959-903f-e9ec3b1c570b",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space04"
+  },
+  "5e508555-1308-46e7-93d0-4d6b4cf6696a": {
+    "id": "5e508555-1308-46e7-93d0-4d6b4cf6696a",
+    "x": 650,
+    "y": 310,
+    "z": 16,
+    "type": "label",
+    "text": "16",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "491d6d28-85aa-4f92-bb69-18b07bd0de82": {
+    "id": "491d6d28-85aa-4f92-bb69-18b07bd0de82",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space01"
+  },
+  "0a8219ac-277f-40a6-8737-b6a99c4e0e5a": {
+    "id": "0a8219ac-277f-40a6-8737-b6a99c4e0e5a",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space16"
+  },
+  "a606e5bc-e8c6-4836-b3fc-2722b4639f3e": {
+    "id": "a606e5bc-e8c6-4836-b3fc-2722b4639f3e",
+    "x": 1323,
+    "y": 9,
+    "z": 136,
+    "type": "button",
+    "text": "Setup",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Are you sure? This will reset the game to its initial state.",
+        "confirmButtonText": "Setup",
+        "fields": []
+      },
+      {
+        "func": "CALL",
+        "routine": "setUpRoutine"
+      }
+    ],
+    "setUpRoutine": [
+      {
+        "func": "LABEL",
+        "label": [
+          "money-p1",
+          "money-p2",
+          "money-p3",
+          "money-p4"
+        ],
+        "value": 10
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "loans-p1",
+          "loans-p2",
+          "loans-p3",
+          "loans-p4"
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "bid-p1",
+          "bid-p2",
+          "bid-p3",
+          "bid-p4"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "token-holder-all"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "token-holder-all"
+      },
+      {
+        "func": "MOVE",
+        "to": [
+          "token-space00",
+          "token-space01",
+          "token-space02",
+          "token-space03",
+          "token-space04",
+          "token-space05",
+          "token-space06",
+          "token-space07",
+          "token-space08",
+          "token-space09",
+          "token-space10",
+          "token-space11",
+          "token-space12",
+          "token-space13",
+          "token-space14",
+          "token-space15",
+          "token-space16",
+          "token-space17"
+        ],
+        "fillTo": 4,
+        "from": "token-holder-all"
+      },
+      {
+        "func": "RECALL",
+        "holder": "track-pawn-space00"
+      },
+      {
+        "func": "FLIP",
+        "collection": [
+          "auction-state-p1",
+          "auction-state-p2",
+          "auction-state-p3",
+          "auction-state-p4"
+        ],
+        "face": 1
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "die1"
+        ],
+        "mode": "ignoreAll"
+      },
+      {
+        "func": "SELECT",
+        "property": "tokenSpaceHolder",
+        "value": true
+      },
+      "var thisArray = []",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          "var thisArray = []",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "cardType"
+              },
+              "var thisArray = push ${cardType}"
+            ]
+          },
+          "var noDupesArray = []",
+          {
+            "func": "FOREACH",
+            "in": "${thisArray}",
+            "loopRoutine": [
+              "var firstIndex = ${thisArray} indexOf ${value}",
+              {
+                "func": "IF",
+                "operand1": "${key}",
+                "relation": "==",
+                "operand2": "${firstIndex}",
+                "thenRoutine": [
+                  "var noDupesArray = push ${value}"
+                ]
+              }
+            ]
+          },
+          "var noDupesArrayLen = length ${noDupesArray}",
+          {
+            "func": "IF",
+            "operand1": "${noDupesArrayLen}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "setUpRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "42a9d139-0447-4a0d-a879-827690333f5a": {
+    "id": "42a9d139-0447-4a0d-a879-827690333f5a",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space01"
+  },
+  "dd05065d-448e-45bc-99e0-4459fb818fda": {
+    "id": "dd05065d-448e-45bc-99e0-4459fb818fda",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space15"
+  },
+  "b9496b68-03b4-4c77-b44a-6d3d1a5c369a": {
+    "id": "b9496b68-03b4-4c77-b44a-6d3d1a5c369a",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space16"
+  },
+  "000e947d-393b-4d84-a5a0-ec2e88beaa61": {
+    "id": "000e947d-393b-4d84-a5a0-ec2e88beaa61",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space12"
+  },
+  "1b703e75-c7b4-483d-adb6-3d889686e787": {
+    "id": "1b703e75-c7b4-483d-adb6-3d889686e787",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space15"
+  },
+  "0a71bb74-40bc-438e-86d2-17334fe2e0e8": {
+    "id": "0a71bb74-40bc-438e-86d2-17334fe2e0e8",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space06"
+  },
+  "b8a08511-79ce-4d28-b8a8-a2559731e705": {
+    "id": "b8a08511-79ce-4d28-b8a8-a2559731e705",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space08"
+  },
+  "c470cc12-fdb0-4135-82ef-7f0f6aaba9ad": {
+    "id": "c470cc12-fdb0-4135-82ef-7f0f6aaba9ad",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space02"
+  },
+  "ec6c13ed-00d2-4d8b-b6f3-e60f069b46d4count": {
+    "id": "ec6c13ed-00d2-4d8b-b6f3-e60f069b46d4count",
+    "parent": "seat-p1-old",
+    "x": -40,
+    "y": 2,
+    "layer": 3,
+    "height": 38,
+    "width": 30,
+    "movable": false,
+    "movableInEdit": false,
+    "TYPE": "count",
+    "text": 0,
+    "css": "background: white; color: black;font-size:18px; border:1px solid lightgrey;display: flex;justify-content: center;align-items: center;",
+    "borderRadius": 4,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var player = ${PROPERTY player OF $parent}",
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${player}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "owner": []
+  },
+  "ec6c13ed-00d2-4d8b-b6f3-e60f069b46d4count1": {
+    "id": "ec6c13ed-00d2-4d8b-b6f3-e60f069b46d4count1",
+    "parent": "seat-p1-old",
+    "x": -40,
+    "y": 2,
+    "layer": 2,
+    "height": 38,
+    "width": 30,
+    "rotation": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "TYPE": "count",
+    "css": "background: white; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left",
+    "borderRadius": 4,
+    "owner": []
+  },
+  "ec6c13ed-00d2-4d8b-b6f3-e60f069b46d4count2": {
+    "id": "ec6c13ed-00d2-4d8b-b6f3-e60f069b46d4count2",
+    "parent": "seat-p1-old",
+    "x": -40,
+    "y": 2,
+    "layer": 1,
+    "height": 38,
+    "width": 30,
+    "rotation": -12,
+    "movable": false,
+    "movableInEdit": false,
+    "TYPE": "count",
+    "css": "background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left",
+    "borderRadius": 4,
+    "owner": []
+  },
+  "9697e705-7a42-48eb-8db3-67cd7fc4ecd6": {
+    "id": "9697e705-7a42-48eb-8db3-67cd7fc4ecd6",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space00"
+  },
+  "15a3d251-7ac9-4360-bbc8-21f69c82c636": {
+    "id": "15a3d251-7ac9-4360-bbc8-21f69c82c636",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space11"
+  },
+  "799d0706-141f-47ff-b6f4-6b90269cbcba": {
+    "id": "799d0706-141f-47ff-b6f4-6b90269cbcba",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space04"
+  },
+  "0d3b9057-317d-4597-97fe-8d6acce729b8": {
+    "id": "0d3b9057-317d-4597-97fe-8d6acce729b8",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space16"
+  },
+  "450b541b-f1a7-4a1f-8096-f7beb12ce228": {
+    "id": "450b541b-f1a7-4a1f-8096-f7beb12ce228",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space04"
+  },
+  "37ace9ec-7c0a-462f-a52f-098ae616c13b": {
+    "id": "37ace9ec-7c0a-462f-a52f-098ae616c13b",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space12"
+  },
+  "26fd0a09-f8b1-43c7-bb53-a5a70f9bddbd": {
+    "id": "26fd0a09-f8b1-43c7-bb53-a5a70f9bddbd",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space10"
+  },
+  "22925d69-63a4-4ba0-8242-616a7e70c049": {
+    "id": "22925d69-63a4-4ba0-8242-616a7e70c049",
+    "x": 650,
+    "y": 510,
+    "z": 18,
+    "type": "label",
+    "text": "17",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "f053142d-2088-4fda-94dd-641bc61437b8": {
+    "id": "f053142d-2088-4fda-94dd-641bc61437b8",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space15"
+  },
+  "46ecc625-7d15-4c9a-9b24-05c3765f165c": {
+    "id": "46ecc625-7d15-4c9a-9b24-05c3765f165c",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space14"
+  },
+  "9af46b87-e45c-4016-8991-737158d3686c": {
+    "id": "9af46b87-e45c-4016-8991-737158d3686c",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space08"
+  },
+  "eee08054-645a-4e62-a835-d4486f98220b": {
+    "id": "eee08054-645a-4e62-a835-d4486f98220b",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space05"
+  },
+  "3f5fc7ec-9702-4eb6-a15a-d31eb9b1a22e": {
+    "id": "3f5fc7ec-9702-4eb6-a15a-d31eb9b1a22e",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space09"
+  },
+  "9e564189-b8ed-49f0-a174-6ca136fee2f5": {
+    "id": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "x": 81,
+    "y": -19,
+    "z": 8569,
+    "type": "deck",
+    "cardTypes": {
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#9458f4",
+        "sortingOrder": 1
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#ffce00",
+        "sortingOrder": 2
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#2fd1cd",
+        "sortingOrder": 3
+      },
+      "red": {
+        "label": "Red",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#ed1b43",
+        "sortingOrder": 4
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 40,
+            "height": 40,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 40,
+            "height": 40,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 40,
+      "height": 40
+    },
+    "parent": "token-holder-all"
+  },
+  "d4de3a54-b2e4-4979-a68d-ebd556815630": {
+    "id": "d4de3a54-b2e4-4979-a68d-ebd556815630",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space17"
+  },
+  "7729cf88-74aa-47d8-b280-3166b5affc50": {
+    "id": "7729cf88-74aa-47d8-b280-3166b5affc50",
+    "x": 1050,
+    "y": 310,
+    "z": 25,
+    "type": "label",
+    "text": "18",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "6fb39d73-85a7-43d1-a086-c27ca59de0b2": {
+    "id": "6fb39d73-85a7-43d1-a086-c27ca59de0b2",
+    "x": 850,
+    "y": 410,
+    "z": 22,
+    "type": "label",
+    "text": "21",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "bc42b9c5-047d-4863-9e01-112733b282ee": {
+    "id": "bc42b9c5-047d-4863-9e01-112733b282ee",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space07"
+  },
+  "1ec22acf-604b-4208-aea6-f903ee319769": {
+    "id": "1ec22acf-604b-4208-aea6-f903ee319769",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space03"
+  },
+  "eb4ec325-2f7a-4706-aad8-539b266cf7b8": {
+    "id": "eb4ec325-2f7a-4706-aad8-539b266cf7b8",
+    "x": 1050,
+    "y": 110,
+    "z": 20,
+    "type": "label",
+    "text": "10",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "2bb90a79-6afb-4305-90f7-8880f0bc22a2": {
+    "id": "2bb90a79-6afb-4305-90f7-8880f0bc22a2",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space07"
+  },
+  "22e8352d-a266-4fed-839f-105dd26ff43d": {
+    "id": "22e8352d-a266-4fed-839f-105dd26ff43d",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space11"
+  },
+  "f8735bb1-a9e7-4c6d-8e93-93e0aace8b4d": {
+    "id": "f8735bb1-a9e7-4c6d-8e93-93e0aace8b4d",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space15"
+  },
+  "09e0398f-b3c2-488b-8566-c4e1426f04fa": {
+    "id": "09e0398f-b3c2-488b-8566-c4e1426f04fa",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space03"
+  },
+  "fec1c43c-974e-4c7a-acc8-1419a44bc292": {
+    "id": "fec1c43c-974e-4c7a-acc8-1419a44bc292",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space08"
+  },
+  "6ad4ab1d-5ea4-4934-a341-1ce5ef57b88b": {
+    "id": "6ad4ab1d-5ea4-4934-a341-1ce5ef57b88b",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space09"
+  },
+  "f3a0543b-d81a-4b0a-b39e-a4bea0eecb29": {
+    "id": "f3a0543b-d81a-4b0a-b39e-a4bea0eecb29",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space00"
+  },
+  "e58d646e-4385-4aac-a23d-6ad202e0a857": {
+    "id": "e58d646e-4385-4aac-a23d-6ad202e0a857",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space03"
+  },
+  "ab2750e5-f60f-4264-b560-5c9542786255": {
+    "id": "ab2750e5-f60f-4264-b560-5c9542786255",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space01"
+  },
+  "de8bd1c8-552d-427e-a7d4-8c434e3a7d64": {
+    "id": "de8bd1c8-552d-427e-a7d4-8c434e3a7d64",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space14"
+  },
+  "d90ac773-08df-41fe-8b9c-31fe0b78c3a2": {
+    "id": "d90ac773-08df-41fe-8b9c-31fe0b78c3a2",
+    "x": 850,
+    "y": 610,
+    "z": 26,
+    "type": "label",
+    "text": "11",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "f6e7b6c3-698c-43c9-be61-66182a408d57": {
+    "id": "f6e7b6c3-698c-43c9-be61-66182a408d57",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space08"
+  },
+  "4666ae12-c78d-473f-bcd4-1e8ba79e079f": {
+    "id": "4666ae12-c78d-473f-bcd4-1e8ba79e079f",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "purple",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space02"
+  },
+  "766dad75-35ec-4cc1-b5a5-99b6972ec84d": {
+    "id": "766dad75-35ec-4cc1-b5a5-99b6972ec84d",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space06"
+  },
+  "e81dd458-2ebb-491a-b550-b0d0b2cea450": {
+    "id": "e81dd458-2ebb-491a-b550-b0d0b2cea450",
+    "z": 2,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 44,
+    "y": 4,
+    "parent": "token-space17"
+  },
+  "7adefe8c-c024-4707-b200-80f0b051a48c": {
+    "id": "7adefe8c-c024-4707-b200-80f0b051a48c",
+    "z": 1,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 4,
+    "y": 4,
+    "parent": "token-space01"
+  },
+  "fa10f0bf-6f34-41dc-82d3-9812bf05cc5e": {
+    "id": "fa10f0bf-6f34-41dc-82d3-9812bf05cc5e",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space05"
+  },
+  "d991c403-9187-42b8-9f85-71c98b9e45ec": {
+    "id": "d991c403-9187-42b8-9f85-71c98b9e45ec",
+    "z": 3,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "teal",
+    "x": 84,
+    "y": 4,
+    "parent": "token-space13"
+  },
+  "e09803ef-e808-44c0-aa44-1fd7b0418794": {
+    "id": "e09803ef-e808-44c0-aa44-1fd7b0418794",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "yellow",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space16"
+  },
+  "4741551e-1b0f-43ed-aa55-25d6023e1c25": {
+    "id": "4741551e-1b0f-43ed-aa55-25d6023e1c25",
+    "z": 4,
+    "type": "card",
+    "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5",
+    "cardType": "red",
+    "x": 124,
+    "y": 4,
+    "parent": "token-space14"
+  },
+  "money-p1": {
+    "type": "label",
+    "id": "money-p1",
+    "x": 155,
+    "y": 110,
+    "width": 140,
+    "height": 60,
+    "z": 98,
+    "css": {
+      "font-size": "50px",
+      "color": "#000000",
+      "font-weight": "bold"
+    },
+    "editable": true,
+    "linkedToSeat": "seat-p1",
+    "text": 10
+  },
+  "money-p2": {
+    "type": "label",
+    "id": "money-p2",
+    "x": 155,
+    "y": 360,
+    "z": 10,
+    "editable": true,
+    "linkedToSeat": "seat-p2",
+    "text": 10,
+    "inheritFrom": "money-p1"
+  },
+  "money-p3": {
+    "type": "label",
+    "id": "money-p3",
+    "y": 610,
+    "z": 7,
+    "editable": true,
+    "linkedToSeat": "seat-p3",
+    "text": 10,
+    "x": 155,
+    "inheritFrom": "money-p1"
+  },
+  "money-p4": {
+    "type": "label",
+    "id": "money-p4",
+    "x": 155,
+    "y": 860,
+    "z": 3,
+    "editable": true,
+    "linkedToSeat": "seat-p4",
+    "text": 10,
+    "inheritFrom": "money-p1"
+  },
+  "bid-p4": {
+    "type": "label",
+    "id": "bid-p4",
+    "x": 350,
+    "y": 860,
+    "z": 5,
+    "editable": true,
+    "linkedToSeat": "seat-p4",
+    "text": 0,
+    "inheritFrom": "bid-p1"
+  },
+  "loans-p4": {
+    "type": "label",
+    "id": "loans-p4",
+    "y": 860,
+    "z": 85,
+    "editable": true,
+    "linkedToSeat": "seat-p4",
+    "text": 0,
+    "x": 70,
+    "inheritFrom": "loans-p1"
+  },
+  "loans-p3": {
+    "type": "label",
+    "id": "loans-p3",
+    "y": 610,
+    "z": 6,
+    "editable": true,
+    "linkedToSeat": "seat-p3",
+    "text": 0,
+    "x": 70,
+    "inheritFrom": "loans-p1"
+  },
+  "loans-p2": {
+    "type": "label",
+    "id": "loans-p2",
+    "y": 360,
+    "z": 83,
+    "editable": true,
+    "linkedToSeat": "seat-p2",
+    "text": 0,
+    "x": 70,
+    "inheritFrom": "loans-p1"
+  },
+  "loans-p1": {
+    "type": "label",
+    "id": "loans-p1",
+    "y": 110,
+    "width": 44,
+    "height": 60,
+    "z": 103,
+    "css": {
+      "font-size": "50px",
+      "color": "#990000"
+    },
+    "editable": true,
+    "linkedToSeat": "seat-p1",
+    "x": 70,
+    "text": 0
+  },
+  "bid-p1": {
+    "type": "label",
+    "id": "bid-p1",
+    "x": 350,
+    "y": 110,
+    "height": 60,
+    "z": 107,
+    "css": {
+      "font-size": "50px",
+      "color": "#009900"
+    },
+    "editable": true,
+    "linkedToSeat": "seat-p1",
+    "text": 0,
+    "width": 80
+  },
+  "bid-p2": {
+    "type": "label",
+    "id": "bid-p2",
+    "x": 350,
+    "y": 360,
+    "z": 14,
+    "editable": true,
+    "linkedToSeat": "seat-p2",
+    "text": 0,
+    "inheritFrom": "bid-p1"
+  },
+  "bid-p3": {
+    "type": "label",
+    "id": "bid-p3",
+    "x": 350,
+    "y": 610,
+    "z": 8,
+    "editable": true,
+    "linkedToSeat": "seat-p3",
+    "text": 0,
+    "inheritFrom": "bid-p1"
+  },
+  "die1": {
+    "type": "dice",
+    "id": "die1",
+    "x": 1314,
+    "z": 148,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "rollCount": 148,
+    "shape3d": true,
+    "movable": true,
+    "y": 804,
+    "width": 100,
+    "height": 100,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      },
+      {
+        "func": "FLIP",
+        "collection": [
+          "auction-state-p1",
+          "auction-state-p2",
+          "auction-state-p3",
+          "auction-state-p4"
+        ],
+        "face": 1
+      }
+    ]
+  },
+  "token-holder-all": {
+    "type": "holder",
+    "id": "token-holder-all",
+    "x": 211,
+    "y": -99,
+    "width": 52,
+    "height": 52,
+    "z": 36,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "7e6c5b28-75fe-4753-829a-0228c9e93451": {
+    "id": "7e6c5b28-75fe-4753-829a-0228c9e93451",
+    "x": 850,
+    "z": 23,
+    "type": "label",
+    "text": "x2",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center",
+        "color": "white"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "y": 810,
+    "width": 50
+  },
+  "30a5ebf8-f468-4b89-95ef-d009b887800e": {
+    "id": "30a5ebf8-f468-4b89-95ef-d009b887800e",
+    "x": 650,
+    "y": 110,
+    "z": 17,
+    "type": "label",
+    "text": "9",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "d90ac773-08df-41fe-8b9c-31fe0b78c3a3": {
+    "id": "d90ac773-08df-41fe-8b9c-31fe0b78c3a3",
+    "x": 850,
+    "y": 210,
+    "z": 26,
+    "type": "label",
+    "text": "11",
+    "css": {
+      "default": {
+        "line-height": "26px",
+        "font-size": "26px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 30,
+    "width": 50
+  },
+  "5ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 150,
+    "z": 90,
+    "id": "5ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "6ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 300,
+    "z": 79,
+    "id": "6ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "7ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 375,
+    "z": 79,
+    "id": "7ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "8ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 450,
+    "z": 79,
+    "id": "8ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "9ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 525,
+    "z": 79,
+    "id": "9ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "10ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 600,
+    "z": 79,
+    "id": "10ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "11ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 225,
+    "z": 91,
+    "id": "11ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "12ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 150,
+    "z": 79,
+    "id": "12ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "13ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 225,
+    "z": 79,
+    "id": "13ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "14ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 300,
+    "z": 79,
+    "id": "14ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "15ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 375,
+    "z": 79,
+    "id": "15ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "16ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 450,
+    "z": 79,
+    "id": "16ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "17ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 525,
+    "z": 79,
+    "id": "17ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "18ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 600,
+    "z": 79,
+    "id": "18ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "cell-s1-4": {
+    "type": "holder",
+    "id": "cell-s1-4",
+    "x": 575,
+    "y": 180,
+    "width": 44,
+    "height": 44,
+    "z": 37,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-s1-1": {
+    "type": "holder",
+    "id": "cell-s1-1",
+    "x": 550,
+    "y": 130,
+    "width": 44,
+    "height": 44,
+    "z": 40,
+    "inheritChildZ": true,
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "cell-s1-2": {
+    "type": "holder",
+    "id": "cell-s1-2",
+    "x": 600,
+    "y": 130,
+    "width": 44,
+    "height": 44,
+    "z": 43,
+    "inheritChildZ": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1",
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "cell-s1-3": {
+    "type": "holder",
+    "id": "cell-s1-3",
+    "x": 525,
+    "y": 180,
+    "width": 44,
+    "height": 44,
+    "z": 39,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-s1-5": {
+    "type": "holder",
+    "id": "cell-s1-5",
+    "x": 625,
+    "y": 180,
+    "width": 44,
+    "height": 44,
+    "z": 38,
+    "inheritChildZ": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1",
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "cell-s1-6": {
+    "type": "holder",
+    "id": "cell-s1-6",
+    "x": 550,
+    "y": 230,
+    "width": 44,
+    "height": 44,
+    "z": 41,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-s1-7": {
+    "type": "holder",
+    "id": "cell-s1-7",
+    "x": 600,
+    "y": 230,
+    "width": 44,
+    "height": 44,
+    "z": 42,
+    "inheritChildZ": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1",
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "cell-d1-1": {
+    "type": "holder",
+    "id": "cell-d1-1",
+    "x": 550,
+    "y": 330,
+    "width": 44,
+    "height": 44,
+    "z": 110,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-d1-2": {
+    "type": "holder",
+    "id": "cell-d1-2",
+    "x": 600,
+    "y": 330,
+    "width": 44,
+    "height": 44,
+    "z": 111,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d1-1"
+  },
+  "cell-d1-3": {
+    "type": "holder",
+    "id": "cell-d1-3",
+    "x": 525,
+    "y": 380,
+    "width": 44,
+    "height": 44,
+    "z": 109,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d1-1"
+  },
+  "cell-d1-4": {
+    "type": "holder",
+    "id": "cell-d1-4",
+    "x": 575,
+    "y": 380,
+    "width": 44,
+    "height": 44,
+    "z": 107,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d1-1"
+  },
+  "cell-d1-5": {
+    "type": "holder",
+    "id": "cell-d1-5",
+    "x": 625,
+    "y": 380,
+    "width": 44,
+    "height": 44,
+    "z": 108,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d1-1"
+  },
+  "cell-d1-6": {
+    "type": "holder",
+    "id": "cell-d1-6",
+    "x": 550,
+    "y": 430,
+    "width": 44,
+    "height": 44,
+    "z": 112,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d1-1"
+  },
+  "cell-d1-7": {
+    "type": "holder",
+    "id": "cell-d1-7",
+    "x": 600,
+    "y": 430,
+    "width": 44,
+    "height": 44,
+    "z": 113,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d1-1"
+  },
+  "cell-d2-1": {
+    "type": "holder",
+    "id": "cell-d2-1",
+    "x": 550,
+    "y": 530,
+    "width": 44,
+    "height": 44,
+    "z": 90,
+    "inheritChildZ": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1",
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "cell-s4-1": {
+    "type": "holder",
+    "id": "cell-s4-1",
+    "x": 550,
+    "y": 730,
+    "width": 44,
+    "height": 44,
+    "z": 117,
+    "inheritChildZ": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1",
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "cell-s2-1": {
+    "type": "holder",
+    "id": "cell-s2-1",
+    "x": 755,
+    "y": 230,
+    "width": 44,
+    "height": 44,
+    "z": 56,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-p1-1": {
+    "type": "holder",
+    "id": "cell-p1-1",
+    "x": 755,
+    "y": 30,
+    "width": 44,
+    "height": 44,
+    "z": 51,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-d3-1": {
+    "type": "holder",
+    "id": "cell-d3-1",
+    "x": 755,
+    "y": 430,
+    "width": 44,
+    "height": 44,
+    "z": 60,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-s5-1": {
+    "type": "holder",
+    "id": "cell-s5-1",
+    "x": 755,
+    "y": 630,
+    "width": 44,
+    "height": 44,
+    "z": 75,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-p2-1": {
+    "type": "holder",
+    "id": "cell-p2-1",
+    "x": 755,
+    "y": 830,
+    "width": 44,
+    "height": 44,
+    "z": 79,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-s6-1": {
+    "type": "holder",
+    "id": "cell-s6-1",
+    "x": 955,
+    "y": 730,
+    "width": 44,
+    "height": 44,
+    "z": 125,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-d5-1": {
+    "type": "holder",
+    "id": "cell-d5-1",
+    "x": 955,
+    "y": 530,
+    "width": 44,
+    "height": 44,
+    "z": 95,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-d4-1": {
+    "type": "holder",
+    "id": "cell-d4-1",
+    "x": 955,
+    "y": 330,
+    "width": 44,
+    "height": 44,
+    "z": 103,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-s3-1": {
+    "type": "holder",
+    "id": "cell-s3-1",
+    "x": 955,
+    "y": 130,
+    "width": 44,
+    "height": 44,
+    "z": 46,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-s1-1"
+  },
+  "cell-d2-2": {
+    "type": "holder",
+    "id": "cell-d2-2",
+    "x": 600,
+    "y": 530,
+    "width": 44,
+    "height": 44,
+    "z": 89,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d2-1"
+  },
+  "cell-d2-3": {
+    "type": "holder",
+    "id": "cell-d2-3",
+    "x": 525,
+    "y": 580,
+    "width": 44,
+    "height": 44,
+    "z": 86,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d2-1"
+  },
+  "cell-d2-4": {
+    "type": "holder",
+    "id": "cell-d2-4",
+    "x": 575,
+    "y": 580,
+    "width": 44,
+    "height": 44,
+    "z": 88,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d2-1"
+  },
+  "cell-d2-5": {
+    "type": "holder",
+    "id": "cell-d2-5",
+    "x": 625,
+    "y": 580,
+    "width": 44,
+    "height": 44,
+    "z": 87,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d2-1"
+  },
+  "cell-d2-6": {
+    "type": "holder",
+    "id": "cell-d2-6",
+    "x": 550,
+    "y": 630,
+    "width": 44,
+    "height": 44,
+    "z": 92,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d2-1"
+  },
+  "cell-s4-2": {
+    "type": "holder",
+    "id": "cell-s4-2",
+    "x": 600,
+    "y": 730,
+    "width": 44,
+    "height": 44,
+    "z": 120,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s4-1"
+  },
+  "cell-s4-3": {
+    "type": "holder",
+    "id": "cell-s4-3",
+    "x": 525,
+    "y": 780,
+    "width": 44,
+    "height": 44,
+    "z": 116,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s4-1"
+  },
+  "cell-s4-4": {
+    "type": "holder",
+    "id": "cell-s4-4",
+    "x": 575,
+    "y": 780,
+    "width": 44,
+    "height": 44,
+    "z": 114,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s4-1"
+  },
+  "cell-s4-5": {
+    "type": "holder",
+    "id": "cell-s4-5",
+    "x": 625,
+    "y": 780,
+    "width": 44,
+    "height": 44,
+    "z": 115,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s4-1"
+  },
+  "cell-s4-6": {
+    "type": "holder",
+    "id": "cell-s4-6",
+    "x": 550,
+    "y": 830,
+    "width": 44,
+    "height": 44,
+    "z": 118,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s4-1"
+  },
+  "cell-s4-7": {
+    "type": "holder",
+    "id": "cell-s4-7",
+    "x": 600,
+    "y": 830,
+    "width": 44,
+    "height": 44,
+    "z": 119,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s4-1"
+  },
+  "cell-p1-2": {
+    "type": "holder",
+    "id": "cell-p1-2",
+    "x": 805,
+    "y": 30,
+    "width": 44,
+    "height": 44,
+    "z": 52,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p1-1"
+  },
+  "cell-p1-3": {
+    "type": "holder",
+    "id": "cell-p1-3",
+    "x": 730,
+    "y": 80,
+    "width": 44,
+    "height": 44,
+    "z": 50,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p1-1"
+  },
+  "cell-p1-4": {
+    "type": "holder",
+    "id": "cell-p1-4",
+    "x": 780,
+    "y": 80,
+    "width": 44,
+    "height": 44,
+    "z": 48,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p1-1"
+  },
+  "cell-p1-5": {
+    "type": "holder",
+    "id": "cell-p1-5",
+    "x": 830,
+    "y": 80,
+    "width": 44,
+    "height": 44,
+    "z": 49,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p1-1"
+  },
+  "cell-p1-6": {
+    "type": "holder",
+    "id": "cell-p1-6",
+    "x": 755,
+    "y": 130,
+    "width": 44,
+    "height": 44,
+    "z": 68,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p1-1"
+  },
+  "cell-p1-7": {
+    "type": "holder",
+    "id": "cell-p1-7",
+    "x": 805,
+    "y": 130,
+    "width": 44,
+    "height": 44,
+    "z": 69,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p1-1"
+  },
+  "cell-p2-3": {
+    "type": "holder",
+    "id": "cell-p2-3",
+    "x": 730,
+    "y": 880,
+    "width": 44,
+    "height": 44,
+    "z": 78,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p2-1"
+  },
+  "cell-p2-4": {
+    "type": "holder",
+    "id": "cell-p2-4",
+    "x": 780,
+    "y": 880,
+    "width": 44,
+    "height": 44,
+    "z": 76,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p2-1"
+  },
+  "cell-p2-5": {
+    "type": "holder",
+    "id": "cell-p2-5",
+    "x": 830,
+    "y": 880,
+    "width": 44,
+    "height": 44,
+    "z": 77,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p2-1"
+  },
+  "cell-p2-6": {
+    "type": "holder",
+    "id": "cell-p2-6",
+    "x": 755,
+    "y": 930,
+    "width": 44,
+    "height": 44,
+    "z": 84,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p2-1"
+  },
+  "cell-p2-7": {
+    "type": "holder",
+    "id": "cell-p2-7",
+    "x": 805,
+    "y": 930,
+    "width": 44,
+    "height": 44,
+    "z": 85,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p2-1"
+  },
+  "cell-p2-2": {
+    "type": "holder",
+    "id": "cell-p2-2",
+    "x": 805,
+    "y": 830,
+    "width": 44,
+    "height": 44,
+    "z": 80,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-p2-1"
+  },
+  "cell-s2-2": {
+    "type": "holder",
+    "id": "cell-s2-2",
+    "x": 805,
+    "y": 230,
+    "width": 44,
+    "height": 44,
+    "z": 57,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s2-1"
+  },
+  "cell-s2-3": {
+    "type": "holder",
+    "id": "cell-s2-3",
+    "x": 730,
+    "y": 280,
+    "width": 44,
+    "height": 44,
+    "z": 55,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s2-1"
+  },
+  "cell-s2-4": {
+    "type": "holder",
+    "id": "cell-s2-4",
+    "x": 780,
+    "y": 280,
+    "width": 44,
+    "height": 44,
+    "z": 53,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s2-1"
+  },
+  "cell-s2-5": {
+    "type": "holder",
+    "id": "cell-s2-5",
+    "x": 830,
+    "y": 280,
+    "width": 44,
+    "height": 44,
+    "z": 54,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s2-1"
+  },
+  "cell-s2-6": {
+    "type": "holder",
+    "id": "cell-s2-6",
+    "x": 755,
+    "y": 330,
+    "width": 44,
+    "height": 44,
+    "z": 66,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s2-1"
+  },
+  "cell-s2-7": {
+    "type": "holder",
+    "id": "cell-s2-7",
+    "x": 805,
+    "y": 330,
+    "width": 44,
+    "height": 44,
+    "z": 67,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s2-1"
+  },
+  "cell-d3-2": {
+    "type": "holder",
+    "id": "cell-d3-2",
+    "x": 805,
+    "y": 430,
+    "width": 44,
+    "height": 44,
+    "z": 63,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d3-1"
+  },
+  "cell-d3-3": {
+    "type": "holder",
+    "id": "cell-d3-3",
+    "x": 730,
+    "y": 480,
+    "width": 44,
+    "height": 44,
+    "z": 65,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d3-1"
+  },
+  "cell-d3-4": {
+    "type": "holder",
+    "id": "cell-d3-4",
+    "x": 780,
+    "y": 480,
+    "width": 44,
+    "height": 44,
+    "z": 58,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d3-1"
+  },
+  "cell-d3-5": {
+    "type": "holder",
+    "id": "cell-d3-5",
+    "x": 830,
+    "y": 480,
+    "width": 44,
+    "height": 44,
+    "z": 59,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d3-1"
+  },
+  "cell-d3-6": {
+    "type": "holder",
+    "id": "cell-d3-6",
+    "x": 755,
+    "y": 530,
+    "width": 44,
+    "height": 44,
+    "z": 61,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d3-1"
+  },
+  "cell-d3-7": {
+    "type": "holder",
+    "id": "cell-d3-7",
+    "x": 805,
+    "y": 530,
+    "width": 44,
+    "height": 44,
+    "z": 62,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d3-1"
+  },
+  "cell-s5-2": {
+    "type": "holder",
+    "id": "cell-s5-2",
+    "x": 805,
+    "y": 630,
+    "width": 44,
+    "height": 44,
+    "z": 81,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s5-1"
+  },
+  "cell-s5-3": {
+    "type": "holder",
+    "id": "cell-s5-3",
+    "x": 730,
+    "y": 680,
+    "width": 44,
+    "height": 44,
+    "z": 74,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s5-1"
+  },
+  "cell-s5-4": {
+    "type": "holder",
+    "id": "cell-s5-4",
+    "x": 780,
+    "y": 680,
+    "width": 44,
+    "height": 44,
+    "z": 72,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s5-1"
+  },
+  "cell-s5-5": {
+    "type": "holder",
+    "id": "cell-s5-5",
+    "x": 830,
+    "y": 680,
+    "width": 44,
+    "height": 44,
+    "z": 73,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s5-1"
+  },
+  "cell-s5-6": {
+    "type": "holder",
+    "id": "cell-s5-6",
+    "x": 755,
+    "y": 730,
+    "width": 44,
+    "height": 44,
+    "z": 82,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s5-1"
+  },
+  "cell-s5-7": {
+    "type": "holder",
+    "id": "cell-s5-7",
+    "x": 805,
+    "y": 730,
+    "width": 44,
+    "height": 44,
+    "z": 83,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s5-1"
+  },
+  "cell-s6-2": {
+    "type": "holder",
+    "id": "cell-s6-2",
+    "x": 1005,
+    "y": 730,
+    "width": 44,
+    "height": 44,
+    "z": 126,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s6-1"
+  },
+  "cell-s6-3": {
+    "type": "holder",
+    "id": "cell-s6-3",
+    "x": 930,
+    "y": 780,
+    "width": 44,
+    "height": 44,
+    "z": 124,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s6-1"
+  },
+  "cell-s6-4": {
+    "type": "holder",
+    "id": "cell-s6-4",
+    "x": 980,
+    "y": 780,
+    "width": 44,
+    "height": 44,
+    "z": 122,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s6-1"
+  },
+  "cell-s6-5": {
+    "type": "holder",
+    "id": "cell-s6-5",
+    "x": 1030,
+    "y": 780,
+    "width": 44,
+    "height": 44,
+    "z": 123,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s6-1"
+  },
+  "cell-s6-6": {
+    "type": "holder",
+    "id": "cell-s6-6",
+    "x": 955,
+    "y": 830,
+    "width": 44,
+    "height": 44,
+    "z": 127,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s6-1"
+  },
+  "cell-s6-7": {
+    "type": "holder",
+    "id": "cell-s6-7",
+    "x": 1005,
+    "y": 830,
+    "width": 44,
+    "height": 44,
+    "z": 128,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s6-1"
+  },
+  "cell-s3-2": {
+    "type": "holder",
+    "id": "cell-s3-2",
+    "x": 1005,
+    "y": 130,
+    "width": 44,
+    "height": 44,
+    "z": 47,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s3-1"
+  },
+  "cell-s3-3": {
+    "type": "holder",
+    "id": "cell-s3-3",
+    "x": 930,
+    "y": 180,
+    "width": 44,
+    "height": 44,
+    "z": 64,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s3-1"
+  },
+  "cell-s3-4": {
+    "type": "holder",
+    "id": "cell-s3-4",
+    "x": 980,
+    "y": 180,
+    "width": 44,
+    "height": 44,
+    "z": 44,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s3-1"
+  },
+  "cell-s3-5": {
+    "type": "holder",
+    "id": "cell-s3-5",
+    "x": 1030,
+    "y": 180,
+    "width": 44,
+    "height": 44,
+    "z": 45,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s3-1"
+  },
+  "cell-s3-6": {
+    "type": "holder",
+    "id": "cell-s3-6",
+    "x": 955,
+    "y": 230,
+    "width": 44,
+    "height": 44,
+    "z": 70,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s3-1"
+  },
+  "cell-s3-7": {
+    "type": "holder",
+    "id": "cell-s3-7",
+    "x": 1005,
+    "y": 230,
+    "width": 44,
+    "height": 44,
+    "z": 71,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-s3-1"
+  },
+  "cell-d2-7": {
+    "type": "holder",
+    "id": "cell-d2-7",
+    "x": 600,
+    "y": 630,
+    "width": 44,
+    "height": 44,
+    "z": 91,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "inheritFrom": "cell-d2-1"
+  },
+  "cell-d4-2": {
+    "type": "holder",
+    "id": "cell-d4-2",
+    "x": 1005,
+    "y": 330,
+    "width": 44,
+    "height": 44,
+    "z": 104,
+    "inheritChildZ": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d4-1",
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "dell-d4-3": {
+    "type": "holder",
+    "id": "dell-d4-3",
+    "x": 930,
+    "y": 380,
+    "width": 44,
+    "height": 44,
+    "z": 102,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d4-1"
+  },
+  "cell-d4-4": {
+    "type": "holder",
+    "id": "cell-d4-4",
+    "x": 980,
+    "y": 380,
+    "width": 44,
+    "height": 44,
+    "z": 100,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d4-1"
+  },
+  "cell-d4-5": {
+    "type": "holder",
+    "id": "cell-d4-5",
+    "x": 1030,
+    "y": 380,
+    "width": 44,
+    "height": 44,
+    "z": 101,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d4-1"
+  },
+  "cell-d4-6": {
+    "type": "holder",
+    "id": "cell-d4-6",
+    "x": 955,
+    "y": 430,
+    "width": 44,
+    "height": 44,
+    "z": 105,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d4-1"
+  },
+  "cell-d4-7": {
+    "type": "holder",
+    "id": "cell-d4-7",
+    "x": 1005,
+    "y": 430,
+    "width": 44,
+    "height": 44,
+    "z": 106,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d4-1"
+  },
+  "cell-d5-2": {
+    "type": "holder",
+    "id": "cell-d5-2",
+    "x": 1005,
+    "y": 530,
+    "width": 44,
+    "height": 44,
+    "z": 96,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d5-1"
+  },
+  "cell-d5-3": {
+    "type": "holder",
+    "id": "cell-d5-3",
+    "x": 930,
+    "y": 580,
+    "width": 44,
+    "height": 44,
+    "z": 97,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d5-1"
+  },
+  "cell-d5-4": {
+    "type": "holder",
+    "id": "cell-d5-4",
+    "x": 980,
+    "y": 580,
+    "width": 44,
+    "height": 44,
+    "z": 93,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d5-1"
+  },
+  "cell-d5-5": {
+    "type": "holder",
+    "id": "cell-d5-5",
+    "x": 1030,
+    "y": 580,
+    "width": 44,
+    "height": 44,
+    "z": 94,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d5-1"
+  },
+  "cell-d5-6": {
+    "type": "holder",
+    "id": "cell-d5-6",
+    "x": 955,
+    "y": 630,
+    "width": 44,
+    "height": 44,
+    "z": 98,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d5-1"
+  },
+  "cell-d5-7": {
+    "type": "holder",
+    "id": "cell-d5-7",
+    "x": 1005,
+    "y": 630,
+    "width": 44,
+    "height": 44,
+    "z": 99,
+    "inheritChildZ": true,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "cell-d5-1",
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ]
+  },
+  "8b22": {
+    "image": "/assets/-322339246_50232",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "8b22"
+  },
+  "f6e7b6c3-698c-43c9-be61-66182a408d58": {
+    "id": "f6e7b6c3-698c-43c9-be61-66182a408d58",
+    "x": 162,
+    "y": 584,
+    "z": 15520,
+    "type": "card",
+    "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c",
+    "cardType": "yellow",
+    "parent": "cell-s3-7"
+  },
+  "track-pawn-space04": {
+    "type": "holder",
+    "id": "track-pawn-space04",
+    "x": 1300,
+    "y": 400,
+    "width": 46,
+    "height": 48,
+    "z": 140,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space00": {
+    "type": "holder",
+    "id": "track-pawn-space00",
+    "x": 1300,
+    "y": 700,
+    "width": 46,
+    "height": 48,
+    "z": 144,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space01": {
+    "type": "holder",
+    "id": "track-pawn-space01",
+    "x": 1300,
+    "y": 625,
+    "width": 46,
+    "height": 48,
+    "z": 143,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space02": {
+    "type": "holder",
+    "id": "track-pawn-space02",
+    "x": 1300,
+    "y": 550,
+    "width": 46,
+    "height": 48,
+    "z": 142,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space03": {
+    "type": "holder",
+    "id": "track-pawn-space03",
+    "x": 1300,
+    "y": 475,
+    "width": 46,
+    "height": 48,
+    "z": 141,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space05": {
+    "type": "holder",
+    "id": "track-pawn-space05",
+    "x": 1300,
+    "y": 325,
+    "width": 46,
+    "height": 48,
+    "z": 139,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space06": {
+    "type": "holder",
+    "id": "track-pawn-space06",
+    "x": 1300,
+    "y": 250,
+    "width": 46,
+    "height": 48,
+    "z": 138,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space07": {
+    "type": "holder",
+    "id": "track-pawn-space07",
+    "x": 1300,
+    "y": 175,
+    "width": 46,
+    "height": 48,
+    "z": 137,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space08": {
+    "type": "holder",
+    "id": "track-pawn-space08",
+    "x": 1300,
+    "y": 100,
+    "width": 46,
+    "height": 48,
+    "z": 136,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space09": {
+    "type": "holder",
+    "id": "track-pawn-space09",
+    "x": 1375,
+    "y": 100,
+    "width": 46,
+    "height": 48,
+    "z": 145,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space10": {
+    "type": "holder",
+    "id": "track-pawn-space10",
+    "x": 1375,
+    "y": 175,
+    "width": 46,
+    "height": 48,
+    "z": 15,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space11": {
+    "type": "holder",
+    "id": "track-pawn-space11",
+    "x": 1375,
+    "y": 250,
+    "width": 46,
+    "height": 48,
+    "z": 6,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space12": {
+    "type": "holder",
+    "id": "track-pawn-space12",
+    "x": 1375,
+    "y": 325,
+    "width": 46,
+    "height": 48,
+    "z": 2,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space13": {
+    "type": "holder",
+    "id": "track-pawn-space13",
+    "x": 1375,
+    "y": 400,
+    "width": 46,
+    "height": 48,
+    "z": 5,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space14": {
+    "type": "holder",
+    "id": "track-pawn-space14",
+    "x": 1375,
+    "y": 475,
+    "width": 46,
+    "height": 48,
+    "z": 7,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space15": {
+    "type": "holder",
+    "id": "track-pawn-space15",
+    "x": 1375,
+    "y": 550,
+    "width": 46,
+    "height": 48,
+    "z": 4,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space17": {
+    "type": "holder",
+    "id": "track-pawn-space17",
+    "x": 1375,
+    "y": 700,
+    "width": 46,
+    "height": 48,
+    "z": 17,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "track-pawn-space16": {
+    "type": "holder",
+    "id": "track-pawn-space16",
+    "x": 1375,
+    "y": 625,
+    "width": 46,
+    "height": 48,
+    "z": 3,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 2,
+    "dropTarget": [
+      {
+        "deck": "9a47dd8f-5927-4036-9e9e-9185da3d822c"
+      }
+    ]
+  },
+  "token-space00": {
+    "type": "holder",
+    "id": "token-space00",
+    "x": 1125,
+    "y": 700,
+    "width": 170,
+    "height": 48,
+    "z": 133,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space01": {
+    "type": "holder",
+    "id": "token-space01",
+    "x": 1125,
+    "y": 625,
+    "width": 170,
+    "height": 48,
+    "z": 21,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space02": {
+    "type": "holder",
+    "id": "token-space02",
+    "x": 1125,
+    "y": 550,
+    "width": 170,
+    "height": 48,
+    "z": 32,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space03": {
+    "type": "holder",
+    "id": "token-space03",
+    "x": 1125,
+    "y": 475,
+    "width": 170,
+    "height": 48,
+    "z": 22,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space04": {
+    "type": "holder",
+    "id": "token-space04",
+    "x": 1125,
+    "y": 400,
+    "width": 170,
+    "height": 48,
+    "z": 24,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space05": {
+    "type": "holder",
+    "id": "token-space05",
+    "x": 1125,
+    "y": 325,
+    "width": 170,
+    "height": 48,
+    "z": 31,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space06": {
+    "type": "holder",
+    "id": "token-space06",
+    "x": 1125,
+    "y": 250,
+    "width": 170,
+    "height": 48,
+    "z": 23,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space07": {
+    "type": "holder",
+    "id": "token-space07",
+    "x": 1125,
+    "y": 175,
+    "width": 170,
+    "height": 48,
+    "z": 30,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space08": {
+    "type": "holder",
+    "id": "token-space08",
+    "x": 1125,
+    "y": 100,
+    "width": 170,
+    "height": 48,
+    "z": 27,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space09": {
+    "type": "holder",
+    "id": "token-space09",
+    "x": 1425,
+    "y": 100,
+    "width": 170,
+    "height": 50,
+    "z": 146,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space10": {
+    "type": "holder",
+    "id": "token-space10",
+    "x": 1425,
+    "y": 175,
+    "width": 170,
+    "height": 50,
+    "z": 26,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space11": {
+    "type": "holder",
+    "id": "token-space11",
+    "x": 1425,
+    "y": 250,
+    "width": 170,
+    "height": 50,
+    "z": 25,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space12": {
+    "type": "holder",
+    "id": "token-space12",
+    "x": 1425,
+    "y": 325,
+    "width": 170,
+    "height": 50,
+    "z": 29,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space13": {
+    "type": "holder",
+    "id": "token-space13",
+    "x": 1425,
+    "y": 400,
+    "width": 170,
+    "height": 50,
+    "z": 35,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space14": {
+    "type": "holder",
+    "id": "token-space14",
+    "x": 1425,
+    "y": 475,
+    "width": 170,
+    "height": 50,
+    "z": 33,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space16": {
+    "type": "holder",
+    "id": "token-space16",
+    "x": 1425,
+    "y": 550,
+    "width": 170,
+    "height": 50,
+    "z": 34,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space17": {
+    "type": "holder",
+    "id": "token-space17",
+    "x": 1425,
+    "y": 625,
+    "width": 170,
+    "height": 50,
+    "z": 19,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "token-space15": {
+    "type": "holder",
+    "id": "token-space15",
+    "x": 1425,
+    "y": 700,
+    "width": 170,
+    "height": 50,
+    "z": 20,
+    "dropTarget": [
+      {
+        "deck": "9e564189-b8ed-49f0-a174-6ca136fee2f5"
+      }
+    ],
+    "preventPiles": true,
+    "stackOffsetX": 40,
+    "tokenSpaceHolder": true
+  },
+  "19ssu": {
+    "type": "label",
+    "x": 1303,
+    "y": 675,
+    "z": 79,
+    "id": "19ssu",
+    "text": "↑",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "20ssu": {
+    "type": "label",
+    "x": 1378,
+    "y": 675,
+    "z": 79,
+    "id": "20ssu",
+    "text": "↓",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "21ssu": {
+    "type": "label",
+    "x": 1342,
+    "y": 715,
+    "z": 79,
+    "id": "21ssu",
+    "text": "←",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40
+  },
+  "22ssu": {
+    "type": "label",
+    "x": 1342,
+    "y": 115,
+    "z": 79,
+    "id": "22ssu",
+    "css": "font-size: 20px; text-align:center",
+    "height": 40,
+    "width": 40,
+    "text": "→"
+  },
+  "seat-label-p1-old": {
+    "id": "seat-label-p1-old",
+    "parent": "seat-p1-old",
+    "x": -71,
+    "y": 36,
+    "width": 180,
+    "height": 44,
+    "borderRadius": "36%",
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:white;border:1px solid lightgrey;font-size:18px;display: flex;justify-content: center;align-items: center;",
+    "text": "Player 1",
+    "TYPE": "label",
+    "mainColor": "#9458f4",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "seat-p1-old": {
+    "type": "seat",
+    "id": "seat-p1-old",
+    "x": 125,
+    "y": -251,
+    "width": 42,
+    "height": 42,
+    "borderRadius": "50%",
+    "z": 118,
+    "color": "#9458f4",
+    "colorEmpty": "#9458f4",
+    "css": "box-sizing:border-box;border-width:5px;",
+    "display": "seatIndex",
+    "displayEmpty": "seatIndex",
+    "hideWhenUnused": true,
+    "score": 0,
+    "playerChangeRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY id}",
+        "type": "button"
+      },
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY id}",
+        "collection": "LABEL"
+      },
+      {
+        "func": "SELECT",
+        "source": "LABEL",
+        "property": "TYPE",
+        "value": "label",
+        "collection": "LABEL"
+      },
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY id}",
+        "collection": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "source": "COUNT",
+        "property": "TYPE",
+        "value": "count",
+        "collection": "COUNT"
+      },
+      {
+        "func": "IF",
+        "condition": "${value}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": []
+          },
+          {
+            "func": "SET",
+            "collection": "LABEL",
+            "property": "text",
+            "value": "${playerName}"
+          },
+          {
+            "func": "SET",
+            "collection": "COUNT",
+            "property": "owner"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "owner"
+          },
+          {
+            "func": "SET",
+            "collection": "LABEL",
+            "property": "text",
+            "value": "Player ${PROPERTY index}"
+          },
+          {
+            "func": "SET",
+            "collection": "COUNT",
+            "property": "owner",
+            "value": []
+          }
+        ]
+      }
+    ]
+  },
+  "seat-p1-sit-old": {
+    "type": "button",
+    "id": "seat-p1-sit-old",
+    "parent": "seat-p1-old",
+    "x": -23.5,
+    "y": 74,
+    "width": 85,
+    "height": 28,
+    "borderRadius": 4,
+    "layer": 1,
+    "movableInEdit": false,
+    "css": "background: white; color: black;font-size:16px; border:1px solid lightgrey",
+    "text": "Sit Here",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 25,
+    "y": 25,
+    "z": 120,
+    "hideWhenUnused": true,
+    "mainColor": "#9458f4",
+    "colorEmpty": "#9458f4",
+    "color": "#9458f4",
+    "width": 450,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY mainColor}",
+        "border": "5px solid #000000"
+      },
+      ".seated.turn": {
+        "border": "5px dotted #000000"
+      }
+    }
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "index": 2,
+    "x": 25,
+    "y": 275,
+    "z": 123,
+    "mainColor": "#ffce00",
+    "inheritFrom": {
+      "seat-p1": [
+        "css",
+        "width",
+        "hideWhenUnused"
+      ]
+    },
+    "color": "#999999",
+    "turn": false
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "index": 3,
+    "y": 525,
+    "z": 122,
+    "mainColor": "#2fd1cd",
+    "x": 25,
+    "inheritFrom": {
+      "seat-p1": [
+        "css",
+        "width",
+        "hideWhenUnused"
+      ]
+    },
+    "color": "#999999",
+    "turn": true
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "index": 4,
+    "x": 25,
+    "y": 775,
+    "z": 121,
+    "mainColor": "#ed1b43",
+    "inheritFrom": {
+      "seat-p1": [
+        "css",
+        "width",
+        "hideWhenUnused"
+      ]
+    },
+    "color": "#999999",
+    "turn": false
+  },
+  "pkui": {
+    "x": 25,
+    "y": 249,
+    "width": 450,
+    "height": 0,
+    "borderRadius": "2px",
+    "css": {
+      "border": "2px solid #666"
+    },
+    "z": 140,
+    "id": "pkui"
+  },
+  "pkui1": {
+    "x": 25,
+    "y": 499,
+    "width": 450,
+    "height": 0,
+    "borderRadius": "2px",
+    "css": {
+      "border": "2px solid #666"
+    },
+    "z": 140,
+    "id": "pkui1"
+  },
+  "pkui2": {
+    "x": 25,
+    "y": 749,
+    "width": 450,
+    "height": 0,
+    "borderRadius": "2px",
+    "css": {
+      "border": "2px solid #666"
+    },
+    "z": 140,
+    "id": "pkui2"
+  },
+  "auction-state-p1": {
+    "type": "basic",
+    "id": "auction-state-p1",
+    "x": 365,
+    "y": 170,
+    "height": 50,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#EEEEEE",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "26px",
+          "text-align": "center"
+        },
+        "text": "OUT OF AUCTION"
+      },
+      {
+        "css": {
+          "background": "#88FF88",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "26px",
+          "text-align": "center"
+        },
+        "text": "IN AUCTION"
+      }
+    ],
+    "linkedToSeat": "seat-p1",
+    "activeFace": 1
+  },
+  "auction-state-p2": {
+    "type": "basic",
+    "id": "auction-state-p2",
+    "x": 365,
+    "y": 420,
+    "height": 50,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#EEEEEE",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "26px",
+          "text-align": "center"
+        },
+        "text": "OUT OF AUCTION"
+      },
+      {
+        "css": {
+          "background": "#88FF88",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "26px",
+          "text-align": "center"
+        },
+        "text": "IN AUCTION"
+      }
+    ],
+    "linkedToSeat": "seat-p2",
+    "activeFace": 1
+  },
+  "auction-state-p3": {
+    "type": "basic",
+    "id": "auction-state-p3",
+    "x": 365,
+    "y": 670,
+    "height": 50,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#EEEEEE",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "26px",
+          "text-align": "center"
+        },
+        "text": "OUT OF AUCTION"
+      },
+      {
+        "css": {
+          "background": "#88FF88",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "26px",
+          "text-align": "center"
+        },
+        "text": "IN AUCTION"
+      }
+    ],
+    "linkedToSeat": "seat-p3",
+    "activeFace": 1
+  },
+  "auction-state-p4": {
+    "type": "basic",
+    "id": "auction-state-p4",
+    "x": 365,
+    "y": 920,
+    "height": 50,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#EEEEEE",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "25px",
+          "text-align": "center"
+        },
+        "text": "OUT OF AUCTION"
+      },
+      {
+        "css": {
+          "background": "#88FF88",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "20px",
+          "line-height": "26px",
+          "text-align": "center"
+        },
+        "text": "IN AUCTION"
+      }
+    ],
+    "linkedToSeat": "seat-p4",
+    "activeFace": 1
+  },
+  "money-edit-p1": {
+    "type": "button",
+    "id": "money-edit-p1",
+    "x": 30,
+    "y": 60,
+    "text": "Edit Money",
+    "parent": "money-p1",
+    "css": {
+      "font-size": "18px",
+      "font-weight": "normal"
+    },
+    "height": 55,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Modify Money",
+            "css": "background-color:var(--VTTblue);color:white;"
+          },
+          {
+            "type": "number",
+            "label": "Type the number of money gained or lost. Put a - before the number to lose money.",
+            "variable": "value_change",
+            "value": 0
+          }
+        ],
+        "confirmButtonText": "Modify Money",
+        "cancelButtonIcon": "cancel"
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": "${value_change}"
+      }
+    ]
+  },
+  "money-label-p1": {
+    "type": "label",
+    "id": "money-label-p1",
+    "parent": "money-p1",
+    "x": 20,
+    "y": -28,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "18px",
+      "color": "#000000",
+      "font-weight": "bold"
+    },
+    "text": "Money"
+  },
+  "loans-label-p1": {
+    "type": "label",
+    "id": "loans-label-p1",
+    "parent": "loans-p1",
+    "x": -29,
+    "y": -27,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "18px",
+      "color": "#990000"
+    },
+    "text": "Loans"
+  },
+  "loans-label-p2": {
+    "type": "label",
+    "id": "loans-label-p2",
+    "parent": "loans-p2",
+    "x": -29,
+    "y": -27,
+    "movableInEdit": false,
+    "text": "Loans",
+    "inheritFrom": "loans-label-p1"
+  },
+  "loans-label-p3": {
+    "type": "label",
+    "id": "loans-label-p3",
+    "parent": "loans-p3",
+    "x": -29,
+    "y": -27,
+    "movableInEdit": false,
+    "text": "Loans",
+    "inheritFrom": "loans-label-p1"
+  },
+  "loans-label-p4": {
+    "type": "label",
+    "id": "loans-label-p4",
+    "parent": "loans-p4",
+    "x": -29,
+    "y": -27,
+    "movableInEdit": false,
+    "text": "Loans",
+    "inheritFrom": "loans-label-p1"
+  },
+  "loans-inc-p1": {
+    "type": "button",
+    "id": "loans-inc-p1",
+    "parent": "loans-p1",
+    "x": -34,
+    "y": 60,
+    "width": 110,
+    "height": 55,
+    "z": 134,
+    "css": {
+      "font-size": "18px"
+    },
+    "text": "Take Loan (-10 VP)",
+    "loanCounter": "loans-p1",
+    "moneyCounter": "money-p1",
+    "clickRoutine": [
+      "var loanCounter = ${PROPERTY loanCounter}",
+      "var newLoanInc = ${PROPERTY text OF $loanCounter} + 1",
+      "var newLoanValue = min ${newLoanInc} 9",
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY loanCounter}",
+        "value": "${newLoanValue}"
+      },
+      "var moneyCounter = ${PROPERTY moneyCounter}",
+      "var newMoneyValue = ${PROPERTY text OF $moneyCounter} + 10 - ${newLoanInc}",
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY moneyCounter}",
+        "value": "${newMoneyValue}"
+      }
+    ]
+  },
+  "bid-label-p1": {
+    "type": "label",
+    "id": "bid-label-p1",
+    "parent": "bid-p1",
+    "x": -10,
+    "y": -26,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "18px",
+      "color": "#009900"
+    },
+    "text": "Bid"
+  },
+  "bid-dec-p1": {
+    "type": "button",
+    "id": "bid-dec-p1",
+    "parent": "bid-p1",
+    "x": -37,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      "var bidCounter = ${PROPERTY bidCounter}",
+      "var newBidDec = ${PROPERTY text OF $bidCounter} - 1",
+      "var newBidVal = max ${newBidDec} 0",
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY bidCounter}",
+        "mode": "set",
+        "value": "${newBidVal}"
+      }
+    ],
+    "bidCounter": "bid-p1"
+  },
+  "bid-inc-p1": {
+    "type": "button",
+    "id": "bid-inc-p1",
+    "parent": "bid-p1",
+    "x": 80,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "+",
+    "bidCounter": "bid-p1",
+    "moneyCounter": "money-p1",
+    "clickRoutine": [
+      "var bidCounter = ${PROPERTY bidCounter}",
+      "var moneyCounter = ${PROPERTY moneyCounter}",
+      "var newBidInc = ${PROPERTY text OF $bidCounter} + 1",
+      "var newBidValue = min ${newBidInc} ${PROPERTY text OF $moneyCounter}",
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY bidCounter}",
+        "value": "${newBidValue}"
+      }
+    ]
+  },
+  "button-pay-p1": {
+    "type": "button",
+    "id": "button-pay-p1",
+    "x": 307,
+    "y": 170,
+    "width": 45,
+    "height": 55,
+    "z": 133,
+    "css": {
+      "font-size": "18px"
+    },
+    "linkedToSeat": "seat-p1",
+    "text": "Pay Bid",
+    "bidCounter": "bid-p1",
+    "moneyCounter": "money-p1",
+    "clickRoutine": [
+      "var bidCounter = ${PROPERTY bidCounter}",
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY moneyCounter}",
+        "mode": "dec",
+        "value": "${PROPERTY text OF $bidCounter}"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var bidLabelName = 'bid-p' + ${value}",
+          "var auctionStateName = 'auction-state-p' + ${value}",
+          {
+            "func": "LABEL",
+            "label": "${bidLabelName}",
+            "mode": "set",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  "bid-dec-p2": {
+    "type": "button",
+    "id": "bid-dec-p2",
+    "parent": "bid-p2",
+    "x": -37,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "bidCounter": "bid-p2",
+    "movable": false,
+    "inheritFrom": "bid-dec-p1"
+  },
+  "bid-dec-p3": {
+    "type": "button",
+    "id": "bid-dec-p3",
+    "parent": "bid-p3",
+    "x": -37,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "bidCounter": "bid-p3",
+    "movable": false,
+    "inheritFrom": "bid-dec-p1"
+  },
+  "bid-dec-p4": {
+    "type": "button",
+    "id": "bid-dec-p4",
+    "parent": "bid-p4",
+    "x": -37,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "bidCounter": "bid-p4",
+    "inheritFrom": "bid-dec-p1"
+  },
+  "bid-inc-p4": {
+    "type": "button",
+    "id": "bid-inc-p4",
+    "parent": "bid-p4",
+    "x": 80,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "inheritFrom": "bid-inc-p1",
+    "text": "+",
+    "bidCounter": "bid-p4",
+    "moneyCounter": "money-p4"
+  },
+  "bid-inc-p3": {
+    "type": "button",
+    "id": "bid-inc-p3",
+    "parent": "bid-p3",
+    "x": 80,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "inheritFrom": "bid-inc-p1",
+    "text": "+",
+    "bidCounter": "bid-p3",
+    "moneyCounter": "money-p3"
+  },
+  "bid-inc-p2": {
+    "type": "button",
+    "id": "bid-inc-p2",
+    "parent": "bid-p2",
+    "x": 80,
+    "y": 10,
+    "width": 36,
+    "height": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "inheritFrom": "bid-inc-p1",
+    "text": "+",
+    "bidCounter": "bid-p2",
+    "moneyCounter": "money-p2"
+  },
+  "loans-inc-p2": {
+    "type": "button",
+    "id": "loans-inc-p2",
+    "parent": "loans-p2",
+    "x": -34,
+    "y": 60,
+    "width": 110,
+    "height": 55,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "loans-inc-p1",
+    "loanCounter": "loans-p2",
+    "moneyCounter": "money-p2"
+  },
+  "loans-inc-p3": {
+    "type": "button",
+    "id": "loans-inc-p3",
+    "parent": "loans-p3",
+    "x": -34,
+    "y": 60,
+    "width": 110,
+    "height": 55,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "loans-inc-p1",
+    "loanCounter": "loans-p3",
+    "moneyCounter": "money-p3"
+  },
+  "loans-inc-p4": {
+    "type": "button",
+    "id": "loans-inc-p4",
+    "parent": "loans-p4",
+    "x": -34,
+    "y": 60,
+    "width": 110,
+    "height": 55,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "loans-inc-p1",
+    "loanCounter": "loans-p4",
+    "moneyCounter": "money-p4"
+  },
+  "bid-label-p2": {
+    "type": "label",
+    "id": "bid-label-p2",
+    "parent": "bid-p2",
+    "movableInEdit": false,
+    "text": "Bid",
+    "width": 100,
+    "height": 20,
+    "movable": false,
+    "inheritFrom": "bid-label-p1",
+    "x": -10,
+    "y": -26
+  },
+  "bid-label-p3": {
+    "type": "label",
+    "id": "bid-label-p3",
+    "parent": "bid-p3",
+    "x": -10,
+    "y": -26,
+    "movableInEdit": false,
+    "text": "Bid",
+    "width": 100,
+    "height": 20,
+    "movable": false,
+    "inheritFrom": "bid-label-p1"
+  },
+  "bid-label-p4": {
+    "type": "label",
+    "id": "bid-label-p4",
+    "parent": "bid-p4",
+    "x": -10,
+    "y": -26,
+    "movableInEdit": false,
+    "text": "Bid",
+    "width": 100,
+    "height": 20,
+    "movable": false,
+    "inheritFrom": "bid-label-p1"
+  },
+  "button-pay-p2": {
+    "type": "button",
+    "id": "button-pay-p2",
+    "x": 307,
+    "y": 420,
+    "width": 45,
+    "height": 55,
+    "z": 130,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "button-pay-p1",
+    "linkedToSeat": "seat-p2",
+    "bidCounter": "bid-p2",
+    "moneyCounter": "money-p2"
+  },
+  "button-pay-p3": {
+    "type": "button",
+    "id": "button-pay-p3",
+    "x": 307,
+    "y": 670,
+    "width": 45,
+    "height": 55,
+    "z": 19,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "button-pay-p1",
+    "linkedToSeat": "seat-p3",
+    "bidCounter": "bid-p3",
+    "moneyCounter": "money-p3"
+  },
+  "button-pay-p4": {
+    "type": "button",
+    "id": "button-pay-p4",
+    "x": 307,
+    "y": 920,
+    "width": 45,
+    "height": 55,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "button-pay-p1",
+    "linkedToSeat": "seat-p4",
+    "bidCounter": "bid-p4",
+    "moneyCounter": "money-p4"
+  },
+  "money-label-p4": {
+    "type": "label",
+    "id": "money-label-p4",
+    "parent": "money-p4",
+    "x": 20,
+    "y": -28,
+    "width": 100,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "inheritFrom": "money-label-p1",
+    "text": "Money"
+  },
+  "money-label-p3": {
+    "type": "label",
+    "id": "money-label-p3",
+    "parent": "money-p3",
+    "x": 20,
+    "y": -28,
+    "movableInEdit": false,
+    "text": "Money",
+    "width": 100,
+    "height": 20,
+    "movable": false,
+    "inheritFrom": "money-label-p1"
+  },
+  "money-label-p2": {
+    "type": "label",
+    "id": "money-label-p2",
+    "parent": "money-p2",
+    "x": 20,
+    "y": -28,
+    "movableInEdit": false,
+    "text": "Money",
+    "width": 100,
+    "height": 20,
+    "movable": false,
+    "inheritFrom": "money-label-p1"
+  },
+  "money-edit-p2": {
+    "type": "button",
+    "id": "money-edit-p2",
+    "x": 30,
+    "y": 60,
+    "parent": "money-p2",
+    "inheritFrom": "money-edit-p1"
+  },
+  "money-edit-p3": {
+    "type": "button",
+    "id": "money-edit-p3",
+    "x": 30,
+    "y": 60,
+    "parent": "money-p3",
+    "inheritFrom": "money-edit-p1"
+  },
+  "money-edit-p4": {
+    "type": "button",
+    "id": "money-edit-p4",
+    "x": 30,
+    "y": 60,
+    "parent": "money-p4",
+    "inheritFrom": "money-edit-p1"
+  }
+}

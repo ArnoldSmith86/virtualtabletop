@@ -541,7 +541,7 @@
     "version": 1,
     "info": {
       "name": "Quad Line 3D",
-      "image": "/assets/1605565033_95736",
+      "image": "/assets/755917281_11330",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/3656/score-four",
       "year": "1967",
@@ -552,6 +552,7 @@
       "variant": "",
       "attribution": "Room layout and library image by ArnoldSmith86 and put into public domain (CC0)",
       "similarName": "Connect Four 3D",
+      "similarDesigner": "H. Heller, A. P. Nienstaedt",
       "description": "Stack checkers in 3-dimensional columns to link 4 horizontally, vertically, or diagonally.  First to connect four in a row wins.",
       "showName": true,
       "lastUpdate": 1618589525000

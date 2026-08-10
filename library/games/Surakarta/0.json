@@ -1,0 +1,1187 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Surakarta",
+      "image": "/assets/-310035565_36552",
+      "rules": "https://en.wikipedia.org/wiki/Surakarta_(game)",
+      "bgg": "https://boardgamegeek.com/boardgame/13715/surakarta",
+      "year": "",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "Room design, layout, and library image by LawDawg96.&nbsp; Released to the Public Domain under CC0.<div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/<br></div><div><br></div>",
+      "lastUpdate": 1716910264397,
+      "showName": true,
+      "skill": "",
+      "description": "An abstract strategy game from Java. Pieces must loop around the board corners to capture opposing pieces. First to remove all the opposing pieces wins.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "Players take turn moving pieces or making captures.<div><br></div><div>To move, a piece moves one intersection in any direction (vertically, horizontally, or diagonally) to a vacant intersection. Pieces may not jump other pieces.</div><div><br></div><div>To capture, a piece moves around one of the red or blue circular loops at the corners of the board followed by landing on an opposing piece. The capturing piece must use at least one loop, but can use more than one. During a capture move, all intervening intersections must be empty. Dropping a piece onto an opposing piece will automatically send it to the holder on the side of the board.</div><div><br></div><div>To win, capture all of the opponent's pieces. If capturing all pieces is not possible, then by agreement, the player with the most pieces remaining wins.</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "gold1": {
+    "id": "gold1",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder1",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder1"
+  },
+  "green1": {
+    "id": "green1",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder31",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "holder31",
+    "set": 2
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "movable": false,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "board": {
+    "id": "board",
+    "x": 300,
+    "width": 1000,
+    "height": 1000,
+    "movable": false,
+    "image": "/assets/-48526874_5834",
+    "z": 1
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "parent": "board",
+    "x": 215,
+    "y": 215,
+    "width": 70,
+    "height": 70,
+    "borderRadius": 100,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {},
+    "classes": "transparent",
+    "dropLimit": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "mode": "remove",
+        "property": "id",
+        "value": "${id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "set"
+          },
+          {
+            "func": "IF",
+            "operand1": "${set}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "offHolder2"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "offHolder1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "holder2": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder2",
+    "x": 315,
+    "y": 215,
+    "z": 1
+  },
+  "holder3": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder3",
+    "x": 415,
+    "y": 215,
+    "z": 1
+  },
+  "holder4": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder4",
+    "x": 515,
+    "y": 215,
+    "z": 1
+  },
+  "holder5": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder5",
+    "x": 615,
+    "y": 215,
+    "z": 1
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "x": 715,
+    "y": 215,
+    "z": 1
+  },
+  "holder7": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder7",
+    "x": 215,
+    "y": 315,
+    "z": 1
+  },
+  "holder8": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder8",
+    "x": 315,
+    "y": 315,
+    "z": 1
+  },
+  "holder9": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder9",
+    "x": 415,
+    "y": 315,
+    "z": 1
+  },
+  "holder10": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder10",
+    "x": 515,
+    "y": 315,
+    "z": 1
+  },
+  "holder11": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder11",
+    "x": 615,
+    "y": 315,
+    "z": 1
+  },
+  "holder12": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder12",
+    "x": 715,
+    "y": 315,
+    "z": 1
+  },
+  "holder13": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder13",
+    "x": 215,
+    "y": 415,
+    "z": 1
+  },
+  "holder14": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder14",
+    "x": 315,
+    "y": 415,
+    "z": 1
+  },
+  "holder15": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder15",
+    "x": 415,
+    "y": 415,
+    "z": 1
+  },
+  "holder16": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder16",
+    "x": 515,
+    "y": 415,
+    "z": 1
+  },
+  "holder17": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder17",
+    "x": 615,
+    "y": 415,
+    "z": 1
+  },
+  "holder18": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder18",
+    "x": 715,
+    "y": 415,
+    "z": 1
+  },
+  "holder19": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder19",
+    "x": 215,
+    "y": 515,
+    "z": 1
+  },
+  "holder20": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder20",
+    "x": 315,
+    "y": 515,
+    "z": 1
+  },
+  "holder21": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder21",
+    "x": 415,
+    "y": 515,
+    "z": 1
+  },
+  "holder22": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder22",
+    "x": 515,
+    "y": 515,
+    "z": 1
+  },
+  "holder23": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder23",
+    "x": 615,
+    "y": 515,
+    "z": 1
+  },
+  "holder24": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder24",
+    "x": 715,
+    "y": 515,
+    "z": 1
+  },
+  "holder25": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder25",
+    "x": 215,
+    "y": 615,
+    "z": 1
+  },
+  "holder26": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder26",
+    "x": 315,
+    "y": 615,
+    "z": 1
+  },
+  "holder27": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder27",
+    "x": 415,
+    "y": 615,
+    "z": 1
+  },
+  "holder28": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder28",
+    "x": 515,
+    "y": 615,
+    "z": 1
+  },
+  "holder29": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder29",
+    "x": 615,
+    "y": 615,
+    "z": 1
+  },
+  "holder30": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder30",
+    "x": 715,
+    "y": 615,
+    "z": 1
+  },
+  "holder31": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder31",
+    "x": 215,
+    "y": 715,
+    "z": 1
+  },
+  "holder32": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder32",
+    "x": 315,
+    "y": 715,
+    "z": 1
+  },
+  "holder33": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder33",
+    "x": 415,
+    "y": 715,
+    "z": 1
+  },
+  "holder34": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder34",
+    "x": 515,
+    "y": 715,
+    "z": 1
+  },
+  "holder35": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder35",
+    "x": 615,
+    "y": 715,
+    "z": 1
+  },
+  "holder36": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder36",
+    "x": 715,
+    "y": 715,
+    "z": 1
+  },
+  "gold2": {
+    "id": "gold2",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder2",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder2"
+  },
+  "gold3": {
+    "id": "gold3",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder3",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder3"
+  },
+  "gold4": {
+    "id": "gold4",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder4",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "holder4",
+    "set": 1
+  },
+  "gold5": {
+    "id": "gold5",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder5",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder5"
+  },
+  "gold6": {
+    "id": "gold6",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder6",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "holder6",
+    "set": 1
+  },
+  "gold7": {
+    "id": "gold7",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder7",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder7"
+  },
+  "gold8": {
+    "id": "gold8",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder8",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder8"
+  },
+  "gold9": {
+    "id": "gold9",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder9",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder9"
+  },
+  "gold10": {
+    "id": "gold10",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder10",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder10"
+  },
+  "gold11": {
+    "id": "gold11",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder11",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder11"
+  },
+  "gold12": {
+    "id": "gold12",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "gold",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder12",
+      "x": 0,
+      "y": 0
+    },
+    "set": 1,
+    "parent": "holder12"
+  },
+  "green2": {
+    "id": "green2",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder32",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder32"
+  },
+  "green3": {
+    "id": "green3",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder33",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder33"
+  },
+  "green4": {
+    "id": "green4",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder34",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder34"
+  },
+  "green5": {
+    "id": "green5",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder35",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "holder35",
+    "set": 2
+  },
+  "green6": {
+    "id": "green6",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder36",
+      "x": 0,
+      "y": 0
+    },
+    "parent": "holder36",
+    "set": 2
+  },
+  "green7": {
+    "id": "green7",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder25",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder25"
+  },
+  "green8": {
+    "id": "green8",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder26",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder26"
+  },
+  "green9": {
+    "id": "green9",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder27",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder27"
+  },
+  "green10": {
+    "id": "green10",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder28",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder28"
+  },
+  "green11": {
+    "id": "green11",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder29",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder29"
+  },
+  "green12": {
+    "id": "green12",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "parent": "holder30",
+      "x": 0,
+      "y": 0
+    },
+    "set": 2,
+    "parent": "holder30"
+  },
+  "offHolder1": {
+    "type": "holder",
+    "id": "offHolder1",
+    "x": 130,
+    "y": 250,
+    "width": 75,
+    "height": 500,
+    "z": 1,
+    "css": {
+      "background": "gold",
+      "border": "5px solid black"
+    },
+    "dropTarget": {},
+    "stackOffsetY": 38,
+    "dropOffsetX": 0,
+    "dropOffsetY": 2,
+    "borderRadius": 30
+  },
+  "offHolder2": {
+    "type": "holder",
+    "id": "offHolder2",
+    "x": 1400,
+    "y": 250,
+    "width": 75,
+    "height": 500,
+    "z": 1,
+    "css": {
+      "background": "green",
+      "border": "5px solid black"
+    },
+    "dropTarget": {},
+    "stackOffsetY": 38,
+    "dropOffsetX": 0,
+    "dropOffsetY": 2,
+    "borderRadius": 30
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  }
+}

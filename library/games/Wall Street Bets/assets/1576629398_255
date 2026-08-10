@@ -1,0 +1,14 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="600"
+    height="200"
+    viewbox="0 0 600 200"
+>
+    <rect
+        x="0"
+        y="0"
+        width="600"
+        height="200"
+        style="fill:none;stroke:#000000;stroke-width:1px"
+    />
+</svg>

@@ -1,0 +1,1632 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Lines of Action",
+      "image": "/assets/-1337463453_22912",
+      "rules": "https://en.wikipedia.org/wiki/Lines_of_Action",
+      "bgg": "https://boardgamegeek.com/boardgame/3406/lines-of-action",
+      "year": "1969",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "Room design, layout, and library image by LawDawg96.&nbsp; Released to the Public Domain under CC0.<div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
+      "lastUpdate": 1717040547853,
+      "showName": true,
+      "skill": "",
+      "description": "An abstract strategy games using a checkerboard and pieces. Move all the pieces so they fill a linked chain of adjacent spaces.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Claude Soucie",
+      "similarAwards": "1988 Spiel des Jahres Recommended",
+      "ruleText": "Players take turns moving. A move consists of moving one piece horizontally, vertically, or diagonally a specific number of spaces. The number of spaces is equal to the total number of pieces of both colors in the row, column, or diagonal in which the piece is moving.<div><br></div><div>During a move, a piece can jump over its own pieces, but not opposing pieces. Players capture an opposing piece when the piece that is moving lands on square occupied by the opponent.&nbsp;<span style=\"color: var(--overlayFontColor);\">Dropping a piece onto an opposing piece will automatically send it to the holder on the side of the board.</span></div><div><br></div><div>To win, a player brings all of their pieces into a chain that is continuously linked vertically, horizontally, or diagonally.&nbsp; A player that only has one piece remaining automatically wins.&nbsp; If a move causes both players to simultaneously have a linked chain, then this is usually a win for the player moving (but by agreement, can be a draw).</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "rollCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "text": "restart",
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    }
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "scale": 1.09,
+    "z": 1,
+    "image": "/assets/-52589506_548214"
+  },
+  "offHolder1": {
+    "type": "holder",
+    "id": "offHolder1",
+    "x": 130,
+    "y": 250,
+    "width": 88,
+    "height": 500,
+    "z": 1,
+    "css": {
+      "background": "#85000080",
+      "border": "5px solid black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "color": "darkred"
+    },
+    "stackOffsetY": 33
+  },
+  "offHolder2": {
+    "type": "holder",
+    "id": "offHolder2",
+    "x": 1400,
+    "y": 250,
+    "width": 88,
+    "height": 500,
+    "z": 1,
+    "css": {
+      "background": "#00000080",
+      "border": "5px solid black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "color": "black"
+    },
+    "stackOffsetY": 33
+  },
+  "A1": {
+    "id": "A1",
+    "type": "holder",
+    "classes": "transparentx",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 0,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "mode": "remove",
+        "property": "id",
+        "value": "${id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "position"
+          },
+          {
+            "func": "IF",
+            "operand1": "${position}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "offHolder2"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "offHolder1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "inheritFrom": {},
+    "parent": "boardBack",
+    "z": 0,
+    "borderRadius": 0,
+    "css": {
+      "background": "#888"
+    },
+    "cell": true
+  },
+  "A2": {
+    "id": "A2",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 0,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "A3": {
+    "id": "A3",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 0,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "A4": {
+    "id": "A4",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 0,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "A5": {
+    "id": "A5",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 0,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "A6": {
+    "id": "A6",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 0,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "A7": {
+    "id": "A7",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 0,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "A8": {
+    "id": "A8",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 0,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "B1": {
+    "id": "B1",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 100,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0,
+    "css": {
+      "background": "#ccc"
+    },
+    "cell": true
+  },
+  "B2": {
+    "id": "B2",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 100,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "B3": {
+    "id": "B3",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 100,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "B4": {
+    "id": "B4",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 100,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "B5": {
+    "id": "B5",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 100,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "B6": {
+    "id": "B6",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 100,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "B7": {
+    "id": "B7",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 100,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "B8": {
+    "id": "B8",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 100,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C1": {
+    "id": "C1",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C2": {
+    "id": "C2",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C3": {
+    "id": "C3",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C4": {
+    "id": "C4",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C5": {
+    "id": "C5",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C6": {
+    "id": "C6",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C7": {
+    "id": "C7",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "C8": {
+    "id": "C8",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 200,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D1": {
+    "id": "D1",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D2": {
+    "id": "D2",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D3": {
+    "id": "D3",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D4": {
+    "id": "D4",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D5": {
+    "id": "D5",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D6": {
+    "id": "D6",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D7": {
+    "id": "D7",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "D8": {
+    "id": "D8",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 300,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "E1": {
+    "id": "E1",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 400,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "E2": {
+    "id": "E2",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 400,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "E3": {
+    "id": "E3",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 400,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "E4": {
+    "id": "E4",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 400,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "E5": {
+    "id": "E5",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 400,
+    "cell": true,
+    "parent": "boardBack",
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "property": "color"
+          },
+          {
+            "func": "GET",
+            "aggregation": "sum",
+            "property": "value",
+            "variable": "sum"
+          },
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY id}",
+            "to": "${color}OffHolder"
+          },
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          "var sum = ${sum} - 1",
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": "${sum}"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "clickable",
+        "value": false
+      }
+    ],
+    "inheritFrom": {
+      "A1": "*"
+    }
+  },
+  "E6": {
+    "id": "E6",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 400,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "E7": {
+    "id": "E7",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 400,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "E8": {
+    "id": "E8",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 400,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F1": {
+    "id": "F1",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F2": {
+    "id": "F2",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F3": {
+    "id": "F3",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F4": {
+    "id": "F4",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F5": {
+    "id": "F5",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F6": {
+    "id": "F6",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F7": {
+    "id": "F7",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "F8": {
+    "id": "F8",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 500,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G1": {
+    "id": "G1",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G2": {
+    "id": "G2",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G3": {
+    "id": "G3",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G4": {
+    "id": "G4",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G5": {
+    "id": "G5",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G6": {
+    "id": "G6",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G7": {
+    "id": "G7",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "G8": {
+    "id": "G8",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 600,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H1": {
+    "id": "H1",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 700,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H2": {
+    "id": "H2",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 600,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H3": {
+    "id": "H3",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 500,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H4": {
+    "id": "H4",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 400,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H5": {
+    "id": "H5",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 300,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H6": {
+    "id": "H6",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 200,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H7": {
+    "id": "H7",
+    "type": "holder",
+    "width": 100,
+    "height": 100,
+    "y": 100,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "B1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "H8": {
+    "id": "H8",
+    "type": "holder",
+    "dropTarget": {},
+    "width": 100,
+    "height": 100,
+    "y": 0,
+    "x": 700,
+    "cell": true,
+    "inheritFrom": {
+      "A1": "*"
+    },
+    "parent": "boardBack",
+    "z": 0
+  },
+  "boardBack": {
+    "id": "boardBack",
+    "width": 800,
+    "height": 800,
+    "layer": -3,
+    "movable": false,
+    "color": "#00008B",
+    "css": {
+      "border": "2px solid black"
+    },
+    "y": 100,
+    "x": 400
+  },
+  "red2": {
+    "id": "red2",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 6,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "B1",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "B1",
+    "position": 1,
+    "x": 10
+  },
+  "red3": {
+    "id": "red3",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 7,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "C1",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "C1",
+    "position": 1,
+    "x": 10
+  },
+  "red4": {
+    "id": "red4",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 8,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "D1",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "D1",
+    "position": 1,
+    "x": 10
+  },
+  "red5": {
+    "id": "red5",
+    "x": 10,
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 306,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "E1",
+      "x": 10,
+      "y": 10
+    },
+    "position": 1,
+    "parent": "E1"
+  },
+  "red6": {
+    "id": "red6",
+    "x": 10,
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 135,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "F1",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "F1",
+    "position": 1
+  },
+  "red7": {
+    "id": "red7",
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 1,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "G1",
+      "x": 10,
+      "y": 10
+    },
+    "position": 1,
+    "parent": "G1",
+    "x": 10,
+    "y": 10
+  },
+  "red10": {
+    "id": "red10",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 5,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "B8",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "B8",
+    "position": 1,
+    "x": 10
+  },
+  "red11": {
+    "id": "red11",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 4,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "C8",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "C8",
+    "position": 1,
+    "x": 10
+  },
+  "red12": {
+    "id": "red12",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 3,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "D8",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "D8",
+    "position": 1,
+    "x": 10
+  },
+  "red13": {
+    "id": "red13",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 2,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "E8",
+      "x": 10,
+      "y": 10
+    },
+    "position": 1,
+    "parent": "E8",
+    "x": 10
+  },
+  "red14": {
+    "id": "red14",
+    "x": 10,
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 135,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "F8",
+      "x": 10,
+      "y": 10
+    },
+    "parent": "F8",
+    "position": 1
+  },
+  "red15": {
+    "id": "red15",
+    "width": 80,
+    "height": 80,
+    "color": "darkred",
+    "z": 256,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "G8",
+      "x": 10,
+      "y": 10
+    },
+    "position": 1,
+    "x": 10,
+    "y": 10,
+    "parent": "G8"
+  },
+  "black1": {
+    "id": "black1",
+    "width": 80,
+    "height": 80,
+    "z": 7,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "A2",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "A2",
+    "position": 2,
+    "x": 10
+  },
+  "black2": {
+    "id": "black2",
+    "width": 80,
+    "height": 80,
+    "z": 8,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "A3",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "A3",
+    "position": 2,
+    "x": 10
+  },
+  "black3": {
+    "id": "black3",
+    "width": 80,
+    "height": 80,
+    "z": 9,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "A4",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "A4",
+    "position": 2,
+    "x": 10
+  },
+  "black4": {
+    "id": "black4",
+    "width": 80,
+    "height": 80,
+    "z": 10,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "A5",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "A5",
+    "position": 2,
+    "x": 10
+  },
+  "black5": {
+    "id": "black5",
+    "width": 80,
+    "height": 80,
+    "z": 11,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "A6",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "A6",
+    "position": 2,
+    "x": 10
+  },
+  "black6": {
+    "id": "black6",
+    "width": 80,
+    "height": 80,
+    "z": 12,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "A7",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "A7",
+    "position": 2,
+    "x": 10
+  },
+  "black7": {
+    "id": "black7",
+    "width": 80,
+    "height": 80,
+    "z": 6,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "H2",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "H2",
+    "position": 2,
+    "x": 10
+  },
+  "black8": {
+    "id": "black8",
+    "width": 80,
+    "height": 80,
+    "z": 5,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "H3",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "parent": "H3",
+    "position": 2,
+    "x": 10
+  },
+  "black9": {
+    "id": "black9",
+    "width": 80,
+    "height": 80,
+    "z": 1,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "H4",
+      "x": 10,
+      "y": 10
+    },
+    "position": 2,
+    "parent": "H4",
+    "x": 10,
+    "y": 10
+  },
+  "black10": {
+    "id": "black10",
+    "width": 80,
+    "height": 80,
+    "z": 2,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "H5",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "position": 2,
+    "parent": "H5",
+    "x": 10
+  },
+  "black11": {
+    "id": "black11",
+    "width": 80,
+    "height": 80,
+    "z": 2,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "H6",
+      "x": 10,
+      "y": 10
+    },
+    "y": 10,
+    "position": 2,
+    "parent": "H6",
+    "x": 10
+  },
+  "black12": {
+    "id": "black12",
+    "width": 80,
+    "height": 80,
+    "z": 1,
+    "classes": "checkersPiece",
+    "resetProperties": {
+      "parent": "H7",
+      "x": 10,
+      "y": 10
+    },
+    "position": 2,
+    "parent": "H7",
+    "x": 10,
+    "y": 10
+  }
+}

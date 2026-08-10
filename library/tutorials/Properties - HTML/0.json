@@ -1,0 +1,243 @@
+{
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Properties - HTML",
+      "image": "/assets/1996187690_4074",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1765415953763,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic Widgets",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "example1": {
+    "id": "example1",
+    "x": 7,
+    "y": 208,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "<p><b>Bold Text</b></p><p><i>Italicized Text</i></p><p><b><i>Bold and Italics</b></i></p><p><u>Underlined Text</u></p><p><mark>Highlighted Text</mark></p><p style='color:red'>Colored Text</p><p><span style='color:red'>Color</span><span style='color:blue'> Per</span><span style='color:green'> Word</span></p><p style='background-color:red;color:white'>Colored Background</p><p><p> <sup>Super</sup>scripted Text</p><p><sub>Sub</sub>scripted Text</p><p><del>Deleted</del> Text</p><p><q>Quoted</q> Text</p><p style='font-size:30px'>Change Font-Size</p></p><p style='font-family:${PROPERTY newFont}'>Change Font-Family</p>",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 700,
+    "newFont": "courier"
+  },
+  "example2": {
+    "id": "example2",
+    "x": 271,
+    "y": 208,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "\n    <h1>Heading 1</h1>\n    <h2>Heading 2</h2>\n    <h3>Heading 3</h3>\n    <h4>Heading 4</h4>\n    <h5>Heading 5</h5>\n    <h6>Heading 6</h6>\n  ",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 350
+  },
+  "example3": {
+    "id": "example3",
+    "x": 271,
+    "y": 567,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "\n    <p>\n      This shows how to use the\n      <q style='color:teal'>${PROPERTY}</q>\n      feature to build a list. You could then make or update the\n      list dynamically by changing the properties. Click on this\n      widget to see an example.\n    </p>\n    <ul>\n      <li>${PROPERTY item1}</li>\n      <li>\n        <span style='color:${PROPERTY item2Color}'>${PROPERTY item2}</span>\n      </li>\n      <li>${PROPERTY item3}</li>\n    </ul>\n  ",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 342,
+    "item2": "playerColor",
+    "item1": "playerName",
+    "item3": "mouseCoords",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item1",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item2",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item2Color",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "item3",
+        "value": "${mouseCoords}"
+      }
+    ],
+    "item2Color": ""
+  },
+  "example4": {
+    "id": "example4",
+    "x": 536,
+    "y": 208,
+    "width": 450,
+    "z": 440,
+    "movable": false,
+    "html": "\n    <p style='text-align:center'>\n      You can make tables using static or dynamically generated\n      data. Click to add your name.\n    </p>\n    <table style='width: 100%; text-align:left'>\n      <tr>\n        <th>Player Name</th>\n        <th>Player Team</th>\n        <th>Player Color</th>\n      </tr>\n      <tr>\n        <td>Greg</td>\n        <td>Kangaroos</td>\n        <td>Teal</td>\n      </tr>\n      <tr>\n        <td>Katie</td>\n        <td>Koalas</td>\n        <td>Gold</td>\n      </tr>\n    </tr>\n      <tr>\n        <td>Alex</td>\n        <td>Dingos</td>\n        <td>Purple</td>\n      </tr>\n    </tr>\n      <tr>\n        <td>${PROPERTY player4}</td>\n        <td>Kookaburras</td>\n        <td>Silver</td>\n      </tr>\n    </table>\n  ",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 350,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "player4",
+        "value": "${playerName}"
+      }
+    ]
+  },
+  "basicInfo": {
+    "id": "basicInfo",
+    "y": 79,
+    "width": 1350,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "20px"
+    },
+    "html": "You can use most html functions for formatting and stylying of basic widgets (but not buttons, labels, etc). You can also use inline css styling within the html and/or use the css property on the widget. There are many examples in this room. Open the JSON Editor and have a look. Some older examples have all of the html crammed into one long line. Later changes allowed more traditional formatting. For an old-style example, see the widget on the far left. Place the cursor on the html in the editor and there is a button that will automatically format it the new way. The other examples use standard html formatting.  Everything you see in the first column of text on the left is a single widget. You can use the <q style='color:teal'>${PROPERTY}</q> feature anywhere.",
+    "x": 125
+  },
+  "example5": {
+    "id": "example5",
+    "x": 536,
+    "y": 567,
+    "width": 450,
+    "z": 440,
+    "movable": false,
+    "html": "\n    <p>\n      You can insert images on their own, or inline with the text.\n      You can change their color with an inline css filter.\n      Because the VTT icons start as black, the filter is\n      complicated. Try experimenting with the hue-rotate value,\n      but you will not get all colors.\n    </p>\n    <div style='text-align:center; filter: invert(100%) sepia() saturate(10000%) hue-rotate(270deg)'>\n      <img src='i/icons/face.svg' height='50' />\n      <img src='i/icons/people.svg' height='50' />\n      <img src='i/icons/group.svg' height='50' />\n    </div>\n    <p>\n      You can also put images inline\n      <img src='i/icons/vtt_logo.svg' style='vertical-align:middle'/>\n      with text. Use 'height:1em' (inline or by using the img\n      <span style='font-size:25px'>\n      selector) to have the size adjust automatically\n      <img src='i/icons/auto_awesome.svg'/>\n      as the size of the font changes.\n    </p>\n  ",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "border": "1px solid black"
+      },
+      " p > img": {
+        "height": "1em",
+        "vertical-align": "middle"
+      }
+    },
+    "height": 342
+  },
+  "example6": {
+    "id": "example6",
+    "x": 1007,
+    "y": 208,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "\n    <h3>\n      <center>\n      Tooltips\n    </h3>\n    </center>\n    <p title='See, I told you there was a tooltip.'>\n      This paragraph has a tooltip if you hover over it. But\n      changing the appearance of the tooltip, (if it is even\n      possible) is beyond the scope of this tutorial.\n    </p>\n    <p>\n      <abbr title='VirtualTabletop'>VTT</abbr> has an excellent\n      wiki and many tutorials. Did you hover over the dashed\n      underlined VTT above?\n    </p>\n  ",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "height": 350
+  },
+  "example7": {
+    "id": "example7",
+    "x": 1007,
+    "y": 567,
+    "width": 250,
+    "z": 440,
+    "movable": false,
+    "html": "\n    <p>Links also work.</p>\n    <p>\n      For example, here are links to the VTT\n      <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki'>wiki page</a>\n      and\n      <a href='https://virtualtabletop.io/Tutorials#tutorials'>tutorials room</a>\n      . They open in new tabs.\n    </p>\n    <p>\n      You could use this, for example, to reference another VTT\n      room related to your game.\n    </p>\n    <p>\n      Scrolling does not work on mobile. But you can enable that\n      by setting the 'overflow' property of the widget's css.\n    </p>\n  ",
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black",
+      "overflow": "auto"
+    },
+    "height": 342
+  },
+  "example8": {
+    "id": "example8",
+    "x": 1277,
+    "y": 208,
+    "width": 300,
+    "z": 442,
+    "movable": false,
+    "html": "\n    <h2>Style Sheets vs Inline</h2>\n    <p>\n      This area shows how to use a style sheet (css) to control\n      the layout of most of the widget, and inline css to override\n      the style sheet settings.\n    </p>\n    <p>\n      The widget gets its overall formatting in the css 'defaut'\n      section. Additional formatting for the 'p', 'h2', and 'li'\n      elements are defined in the css with those labelsand a class\n      is added. You must have the space between the first\n      quotation mark and the element like this:\n      <q> h2</q>.\n    </p>\n    <p>\n      Following the rules for css specificity you can see the\n      default font for this widget is 20px. The 'p' element\n      overrides that and sets 19px. But this inline css set with\n      'span' snd 'style' has the\n      <span style='font-size:23px'>hightest specificity</span> and\n      overrides anything else. This works for any html elements,\n      such as lists:\n    </p>\n    <ul>\n      <li>\n        Item 1 is blue because of the 'li' setting in the widget css\n      </li>\n      <li style='color:red'>\n        Item 2 is red because of the inline css in the html property\n      </li>\n      <li class='special'>\n        Item 3 is green because of a class specified in the css\n        property\n      </li>\n    </ul>\n  ",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "border": "1px solid black"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "25px",
+        "line-height": "1.1em",
+        "color": "maroon",
+        "border-bottom": "1px solid maroon",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 0"
+      },
+      " p": {
+        "line-height": "1.1em",
+        "margin": "5px",
+        "padding": "0",
+        "text-align": "left",
+        "font-size": "19px"
+      },
+      " li": {
+        "color": "blue",
+        "font-size": "17px"
+      },
+      " .special": {
+        "color": "green"
+      }
+    },
+    "height": 700
+  },
+  "8fr3": {
+    "type": "label",
+    "id": "8fr3",
+    "x": 290,
+    "y": 1,
+    "width": 1000,
+    "height": 70,
+    "z": 26392,
+    "movable": false,
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "text": "HTML: Basic Widgets"
+  }
+}

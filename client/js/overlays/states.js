@@ -1,3 +1,5 @@
+let currentMetaData = null;
+
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
@@ -6,36 +8,124 @@ let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
 
-function loadJSZip() {
+function setLibraryTypeTab(type) {
+  $('#filterByType').value = type;
+  localStorage.setItem('libraryTypeTab', type);
+  for(const b of $a('.libraryTypeTabs button'))
+    toggleClass(b, 'active', b.dataset.type === type);
+  updateLibraryFilter();
+}
+
+const loadedLibraryImages = {};
+
+function loadZipLibrary() {
   const node = document.createElement('script');
-  node.src = 'scripts/jszip';
+  node.src = 'scripts/fflate';
   $('head').appendChild(node);
 }
 
-async function waitForJSZip() {
-  while(typeof JSZip == 'undefined')
+async function waitForZipLibrary() {
+  while(typeof fflate == 'undefined')
     await sleep(50)
+}
+
+// fflate's callback API does the actual (de)compression in a web worker so that
+// uploading or building a big file doesn't freeze the UI. The worker is created from a
+// blob URL, which a content security policy can forbid, so both helpers fall back to
+// doing the work right here in that case - a frozen tab beats a broken upload. Whether
+// that is necessary is checked once instead of by trying, so that a broken zip file is
+// not unpacked a second time synchronously before its error is reported.
+let workersAvailable = null;
+function canUseWorkers() {
+  if(workersAvailable === null) {
+    try {
+      const url = URL.createObjectURL(new Blob([ '' ], { type: 'text/javascript' }));
+      new Worker(url).terminate();
+      URL.revokeObjectURL(url);
+      workersAvailable = true;
+    } catch(e) {
+      console.log('Zip files are (un)packed in the main thread because web workers are not available:', e.toString());
+      workersAvailable = false;
+    }
+  }
+  return workersAvailable;
+}
+
+async function unzipBuffer(buffer, keepEntry) {
+  const options = { filter: e=>keepEntry(e.name) };
+  if(!canUseWorkers())
+    return fflate.unzipSync(buffer, options);
+  return await new Promise((resolve, reject)=>fflate.unzip(buffer, options, (e, files)=>e ? reject(e) : resolve(files)));
+}
+
+async function zipBlob(files, compress) {
+  const options = { level: compress ? 6 : 0 };
+  if(!canUseWorkers())
+    return new Blob([ fflate.zipSync(files, options) ]);
+  return new Blob([ await new Promise((resolve, reject)=>fflate.zip(files, options, (e, data)=>e ? reject(e) : resolve(data))) ]);
+}
+
+// the index at the end of a zip file, which lists every entry along with the CRC-32 and
+// the size of its contents - that is what assets are named after, so knowing which assets
+// a file contains does not require decompressing (or even holding on to) any of them
+function zipIndex(buffer) {
+  const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+
+  let end = buffer.length - 22;
+  while(end < 0 || view.getUint32(end, true) != 0x06054b50)
+    if(--end < 0 || buffer.length - end > 65558)
+      throw new Error('Could not find the index of the zip file.');
+
+  const entries = {};
+  let offset = view.getUint32(end + 16, true);
+  if(offset == 0xffffffff)
+    throw new Error('ZIP64 files are not supported.');
+  for(let i=view.getUint16(end + 8, true); i>0; --i) {
+    // without this, anything the walk does not understand yields plausible looking garbage
+    if(view.getUint32(offset, true) != 0x02014b50)
+      throw new Error('Could not read the index of the zip file.');
+    const nameLength = view.getUint16(offset + 28, true);
+    // filenames are UTF-8 if bit 11 of the flags is set and latin1 otherwise, same as fflate
+    const name = fflate.strFromU8(buffer.subarray(offset + 46, offset + 46 + nameLength), !(view.getUint16(offset + 8, true) & 2048));
+    const size = view.getUint32(offset + 24, true);
+    if(size == 0xffffffff)
+      throw new Error('ZIP64 files are not supported.');
+    entries[name] = { crc: view.getInt32(offset + 16, true), size };
+    offset += 46 + nameLength + view.getUint16(offset + 30, true) + view.getUint16(offset + 32, true);
+  }
+  return entries;
+}
+
+function toBase64(data) {
+  let binary = '';
+  for(let i=0; i<data.length; i+=32768)
+    binary += String.fromCharCode.apply(null, data.subarray(i, i+32768));
+  return btoa(binary);
 }
 
 async function resolveStateCollections(file, callback) {
   if(file.name.match(/\.vttc$/)) {
-    await waitForJSZip();
-    for(const [ filename, f ] of Object.entries((await JSZip.loadAsync(file)).files))
-      callback(new File([await f.async('blob')], filename));
+    await waitForZipLibrary();
+    const buffer = new Uint8Array(await file.arrayBuffer());
+    for(const [ filename, content ] of Object.entries(await unzipBuffer(buffer, name=>!name.match(/\/$/))))
+      callback(new File([ content ], filename));
   } else {
     callback(file);
   }
 }
 
 function selectVTTfile(callback) {
-  selectFile(false, file=>resolveStateCollections(file, callback));
+  selectFile(false, file=>resolveStateCollections(file, callback)).catch(e=>{
+    if(e.message !== 'File selection cancelled.')
+      alert(`Error: ${e.toString()}`);
+  });
 }
 
 function addStateFile(f) {
   const stateDOM = domByTemplate('template-stateslist-entry');
   let id;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
   } while($(`.roomState[data-id="${id}"]`));
   stateDOM.dataset.id = id;
   stateDOM.className = 'uploading visible roomState noImage';
@@ -71,11 +161,15 @@ function addStateFile(f) {
 }
 
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
-  await waitForJSZip();
+  await waitForZipLibrary();
 
-  let zip = null;
+  const buffer = new Uint8Array(await sourceFile.arrayBuffer());
+
+  let entries = null;
+  let jsonFiles = null;
   try {
-    zip = await JSZip.loadAsync(sourceFile);
+    entries = zipIndex(buffer);
+    jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
   } catch(e) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
@@ -83,9 +177,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let json = null;
   const assets = {};
-  for(const [ filename, file ] of Object.entries(zip.files)) {
-    if(filename.match(/json$/)) {
-      const content = JSON.parse(await file.async('string'));
+  for(const [ filename, entry ] of Object.entries(entries)) {
+    if(jsonFiles[filename]) {
+      const content = JSON.parse(fflate.strFromU8(jsonFiles[filename]));
       if(!json) {
         json = content;
         if(json._meta)
@@ -94,8 +188,8 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(json._meta)
         json._meta.info.variants.push(content._meta.info);
     }
-    if(filename.match(/^\/?(user)?assets/) && file._data && file._data.crc32)
-      assets[file._data.crc32 + '_' + file._data.uncompressedSize] = filename;
+    if(filename.match(/^\/?(user)?assets/) && entry.size)
+      assets[entry.crc + '_' + entry.size] = filename;
   }
 
   if(json === null) {
@@ -109,8 +203,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     if(json._meta.info.image) {
       if(json._meta.info.image.match(/^http/)) {
         imageURL = json._meta.info.image;
-      } else if(zip.files[json._meta.info.image.substr(1)]) {
-        const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
+      } else if(entries[json._meta.info.image.substr(1)]) {
+        const imageFile = json._meta.info.image.substr(1);
+        const image = toBase64((await unzipBuffer(buffer, name=>name == imageFile))[imageFile]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
             imageURL = `data:image/${type};base64,${image}`;
@@ -130,19 +225,24 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let total = 0;
   let removed = 0;
+  const removedFiles = {};
   for(const asset in exist) {
     ++total;
     if(exist[asset]) {
       ++removed;
-      zip.remove(assets[asset]);
+      removedFiles[assets[asset]] = true;
     }
   }
 
   let blob = sourceFile;
   if(removed > total/2) {
-    zip.file('asset-map.json', JSON.stringify(assets));
     console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
-    blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
+    // only a rebuild needs the contents of the file, so this is the first time it is
+    // unpacked - which means the source file, the kept entries and the new file are all in
+    // memory at once here, so this could be streamed entry by entry if that ever hurts
+    const files = await unzipBuffer(buffer, name=>!removedFiles[name] && !name.match(/\/$/));
+    files['asset-map.json'] = fflate.strToU8(JSON.stringify(assets));
+    blob = await zipBlob(files, total-removed < 5);
   }
 
   var req = new XMLHttpRequest();
@@ -187,7 +287,7 @@ async function addState(e, type, src, id, addAsVariant) {
   if(type == 'link' && (!src || !src.match(/^http/)))
     return;
   if(!id)
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
 
   const blob = new Blob([ src ], { type: 'text/plain' });
 
@@ -237,7 +337,13 @@ async function saveState(e) {
 
 function updateEmptyLibraryHint() {
   const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
+  const hasPublicLibrary = Object.keys(config.libraries || {}).length > 0;
   $('#emptyLibrary').style.display = isEmpty ? 'block' : 'none';
+  if(isEmpty) {
+    $('#emptyLibrary').innerHTML = hasPublicLibrary
+      ? 'Your personal game library is currently empty.<br>Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.'
+      : 'Your personal game library is currently empty.<br>Use the "Add game" button above or drag VTT files here.';
+  }
   $('#emptyLibraryByFilter').style.display = $('#statesList > div:nth-of-type(2) .visible.roomState') || isEmpty ? 'none' : 'block';
 }
 
@@ -260,18 +366,25 @@ function updateLibraryFilter() {
     players:  $('#filterByPlayers').value,
     duration: $('#filterByDuration').value,
     language: $('#filterByLanguage').value,
-    mode:     $('#filterByMode').value
+    mode:     $('#filterByMode').value,
+    ai:       $('#filterByAi').value
   };
 
   function applyFilters(filters, callback) {
     for(const [ dom, dataset ] of states) {
-      const textMatch     = dataset.text.match(filters.text);
-      const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
-      const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
-      const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
-      const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
-      const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-      callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+      if(dom.classList.contains('uploading')) {
+        callback(dom, true);
+      } else {
+        const isPublicLibrary = dom.classList.contains('inPublicLibraryCategory');
+        const textMatch     = dataset.text.match(filters.text);
+        const typeMatch     = !isPublicLibrary || (filters.type !== '' && dataset.type.split(/[,;] */).indexOf(filters.type) != -1);
+        const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
+        const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
+        const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
+        const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
+        const aiMatch       = filters.ai       == 'Any' || (filters.ai === 'ai') === (dataset.usesaiimagery === '1');
+        callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch && aiMatch);
+      }
     }
   }
 
@@ -296,7 +409,7 @@ function updateLibraryFilter() {
 
 function parsePlayers(players) {
   const validPlayers = [];
-  for(const token of players.split(',')) {
+  for(const token of String(players||'').split(',')) {
     const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
     if(match)
       for(let i=+match[1]; i<=(match[2] ? +match[3]||20 : +match[1]); ++i)
@@ -310,13 +423,11 @@ function loadGameFromURLproperties(states) {
   if(widgets.size || !urlProperties.load)
     return;
 
-  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36));
+  const match = String(urlProperties.load).match(`^${regexEscape(getBaseURL())}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);
   if(match) {
     let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
     if(match[1].match(/^Tutorial%20-%20/))
       targetStateID = 'PL:tutorials:'+match[1].substr(15, match[1].length-19);
-    else if(match[1].match(/^Assets%20-%20/))
-      targetStateID = 'PL:assets:'+match[1].substr(13, match[1].length-17);
 
     if(states[targetStateID])
       toServer('loadState', { stateID: targetStateID, variantID: match[3] || 0 });
@@ -326,7 +437,7 @@ function loadGameFromURLproperties(states) {
     addState(null, 'link', urlProperties.load);
     loadedFromURLproperties = true;
   } else if(urlProperties.load) {
-    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36))
+    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?$`)
     const foundStates = (Object.values(states).filter(s=>s.link && s.link.match(`^${regexEscape(urlMatch[1])}`)));
     if(foundStates.length) {
       toServer('loadState', { stateID: foundStates[0].id, variantID: urlMatch[3] || 0 });
@@ -346,6 +457,7 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
   } else {
     $('h4', dom).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
   }
+  emojis2images(dom);
 }
 
 let sortBy = $('#librarySort').value;
@@ -437,23 +549,43 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.className = state.image ? 'roomState' : 'roomState noImage';
     if(state.publicLibrary)
       entry.className += ' publicLibraryGame';
-    if(state.showName === false)
-      entry.className += ' hideName';
+    if(target == 'Public Library')
+      entry.className += ' inPublicLibraryCategory';
+    if(state.showName === false || state.showName === 'only similar')
+      entry.className += ' hideMainName';
+    if(state.showName === false || state.showName === 'only main')
+      entry.className += ' hideSimilarName';
     if(state.link)
       entry.className += ' linkedGame';
     if(state.savePlayers)
       entry.className += ' savedGame';
+    if(state.usesAIImagery)
+      entry.className += ' has-ai-badge';
+    if(Array.isArray(state.importerWarnings) && state.importerWarnings.length)
+      entry.className += ' hasImportNotes';
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
-      if(activeState.saveStateID)
+      if(activeState.saveStateID && states[activeState.saveStateID] && states[activeState.saveStateID].savePlayers)
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    if(state.image)
-      $('img', entry).src = mapAssetURLs(state.image);
-
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
+
+    const aiBadge = $('.ai-badge', entry);
+    if(aiBadge) {
+      toggleClass(aiBadge, 'hidden', !state.usesAIImagery);
+    }
+
+    if(state.image) {
+      const mappedURL = mapAssetURLs(state.image);
+      if(loadedLibraryImages[mappedURL]) {
+        $('img:not(.emoji)', entry).dataset.src = $('img:not(.emoji)', entry).src = mappedURL;
+      } else {
+        $('img:not(.emoji)', entry).dataset.src = mappedURL;
+        lazyImageObserver.observe($('img:not(.emoji)', entry));
+      }
+    }
 
     const validPlayers = [];
     const validLanguages = [];
@@ -468,7 +600,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
       validPlayers.push(...parsePlayers(variant.players));
       validLanguages.push(variant.language);
-      for(const lang of variant.language.split(/[,;] */)) {
+      for(const lang of String(variant.language||'').split(/[,;] */)) {
         languageOptions[lang] = true;
         if(lang && !lang.match(/^en/))
           languageOptions[`${lang} + None`] = true;
@@ -508,17 +640,20 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
+    const variantText = Object.values(state.variants || {}).map(v => {
+      const variant = v.plStateID && states[v.plStateID] ? states[v.plStateID].variants[v.plVariantID] : v;
+      return variant && variant.variant;
+    }).filter(Boolean).join(' ');
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers} ${state.helpText} ${state.attribution} ${variantText}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
+    entry.dataset.usesaiimagery = state.usesAIImagery ? '1' : '0';
 
-    if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
-      entry.dataset.type = 'Tutorials';
-    else if(state.publicLibrary && state.publicLibrary.match(/assets/))
-      entry.dataset.type = 'Assets';
+    if(state.publicLibraryCategory)
+      entry.dataset.type = state.publicLibraryCategory;
     else
       entry.dataset.type = 'Games';
 
@@ -539,8 +674,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     for(const uploadingState of categoryUploadingStates)
       insertUploadingState(uploadingState, Object.values(categories)[categoryIndex]);
 
+  const libraryTypeKeys = Object.keys(config.libraries);
   for(const [ title, category ] of Object.entries(categories)) {
-    $('.title', category).textContent = title;
+    const displayTitle = (title === 'Public Library' && libraryTypeKeys.length === 1) ? libraryTypeKeys[0] : title;
+    $('.title', category).prepend(displayTitle);
     $('#statesList').appendChild(category);
   }
 
@@ -558,16 +695,51 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('.buttons', categories['Game Shelf']).appendChild(addButton);
   updateEmptyLibraryHint();
 
+  const libraryTypes = Object.keys(config.libraries);
+
+  if(libraryTypes.length === 0) {
+    categories['Public Library'].classList.add('empty');
+  }
+
+  let previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : (localStorage.getItem('libraryTypeTab') || libraryTypes[0] || '');
+  if(previousType && libraryTypes.indexOf(previousType) === -1)
+    previousType = libraryTypes[0] || '';
+  if(libraryTypes.length === 1)
+    previousType = libraryTypes[0];
+  $('#filterByType').dataset.initialized = 'true';
+  let typeHTML = `<option value="" ${previousType === '' ? 'selected' : ''}></option>`;
+  for(const typeOption of libraryTypes)
+    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${html(typeOption)}</option>`;
+  $('#filterByType').innerHTML = typeHTML;
+
+  if(libraryTypes.length > 1) {
+    const typeTabs = $('.libraryTypeTabs', categories['Public Library']);
+    for(const typeOption of libraryTypes) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = typeOption;
+      btn.dataset.type = typeOption;
+      if(previousType === typeOption)
+        btn.classList.add('active');
+      btn.addEventListener('click', function() {
+        const current = $('#filterByType').value;
+        const next = current === typeOption ? '' : typeOption;
+        setLibraryTypeTab(next);
+      });
+      typeTabs.appendChild(btn);
+    }
+  }
+
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
   for(const languageOption of Object.keys(languageOptions).sort())
-    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${languageOption}">${languageOption.replace(/^$/, 'None')}</option>`;
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${html(languageOption)}">${html(languageOption.replace(/^$/, 'None'))}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
   const previousMode = $('#filterByMode').value;
   let modeHTML = '<option>Any</option>';
   for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
-    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
+    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${html(modeOption)}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
@@ -584,12 +756,25 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   }
 
   $('#stateAddOverlay button[icon=upload]').onclick = function() {
-    loadJSZip();
+    loadZipLibrary();
     showStatesOverlay('statesOverlay');
     selectVTTfile(addStateFile);
   };
 
   loadGameFromURLproperties(states);
+}
+
+// everything an importer could not translate - one line per note so that a long
+// report scans instead of reading as one wall of text
+function fillImportNotes(warnings) {
+  warnings = Array.isArray(warnings) ? warnings : [];
+  $('#importNotesHeading').textContent = warnings.length ? `Import notes (${warnings.length})` : 'Import notes';
+  $('#importNotes').innerHTML = '';
+  for(const warning of warnings) {
+    const li = document.createElement('li');
+    li.textContent = warning;
+    $('#importNotes').appendChild(li);
+  }
 }
 
 function fillStateDetails(states, state, dom) {
@@ -604,19 +789,26 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
+  fillImportNotes(state.importerWarnings);
+  const sn = typeof state.showName === 'undefined' ? true : state.showName;
+  $('#showName').checked = sn === true || sn === 'only main';
+  $('#showNameSimilar').checked = sn === true || sn === 'only similar';
   toggleClass($('#mainDetails'), 'noImage', !state.image);
   toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
+  toggleClass($('#mainDetails'), 'has-ai-badge', !!state.usesAIImagery);
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
-  toggleClass($('#mainImage > i'),                     'hidden', !state.link);
-  toggleClass($('#stateDetailsOverlay [icon=upload]'), 'hidden', state.publicLibrary || !config.allowPublicLibraryEdits);
+  toggleClass($('#mainImage > i'),                     'hidden', !state.link && !state.savePlayers);
+  toggleClass($('#publicLibraryUploadButtons'),        'hidden', !config.allowPublicLibraryEdits || (!!state.publicLibrary && Object.keys(config.libraries).length <= 1));
+
+  $('#mainImage > i').textContent = state.savePlayers ? 'save' : 'link';
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
     if(targetDom) {
       arrowDom.dataset.id = targetDom.dataset.id;
-      $('img', arrowDom).src = $('img', targetDom).src;
+      $('img', arrowDom).src = $('img', targetDom).dataset.src;
       toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
       $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
       $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
@@ -636,13 +828,15 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit]'), 'hidden', !editable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
-  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers || !!state.publicLibrary);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=settings]'), 'hidden', !state.savePlayers);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('#similarRulesDomain').innerText = String(state.rules).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('.hideForEdit [data-field=similarAwards]').innerText = String(state.similarAwards);
+    emojis2images($('.hideForEdit [data-field=similarAwards]'));
   }
   updateStateDetailsDomains(state);
 
@@ -774,12 +968,12 @@ function fillStateDetails(states, state, dom) {
     enableEditing(vEntry, emptyVariant);
   };
   $('#variantAddOverlay button[icon=upload]').onclick = function(e) {
-    loadJSZip();
+    loadZipLibrary();
     selectVTTfile(function(f) {
       $('#stateDetailsOverlay').classList.add('uploading');
 
       const variantDOM = [];
-      const filenameSuffix = Math.random().toString(36).substring(3, 11);
+      const filenameSuffix = rand().toString(36).substring(3, 11);
 
       function metaCallback(name, similarName, image, variants) {
         variantOperationQueue.push({
@@ -833,7 +1027,7 @@ function fillStateDetails(states, state, dom) {
     document.addEventListener('click', e=>$('#stateDetailsOverlay .buttons > div').classList.add('hidden'));
   };
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
-    window.open(`dl/${roomID}/${state.id}`);
+    window.open(`dl/${roomID}/${encodeURIComponent(state.id)}`);
   };
   $('#stateDetailsOverlay .buttons [icon=link]').onclick = function() {
     shareLink(state);
@@ -843,14 +1037,7 @@ function fillStateDetails(states, state, dom) {
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
-  $('#shareLinkOverlay button[icon=link]').onclick = async function() {
-    try {
-      await navigator.clipboard.writeText($('#shareLinkOverlay input').value.replace(/( \(copied\))+$/, ''));
-      $('#shareLinkOverlay input').value += ' (copied)';
-    } catch(e) {
-      $('#shareLinkOverlay input').value += ' (NOT copied)';
-    }
-  }
+  shareButton($('#shareLinkOverlay button[icon=share]'), _=>$('#shareLinkOverlay input').value);
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     const type     = state.savePlayers ? 'saved game'        : 'game';
@@ -866,9 +1053,41 @@ function fillStateDetails(states, state, dom) {
       showStatesOverlay(detailsOverlay);
     }
   };
-  $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
-    toServer('addStateToPublicLibrary', state.id);
+  $('#stateDetailsOverlay .buttons [icon=settings]').onclick = function() {
+    toServer('editState', {
+      id: state.id,
+      meta: {
+        saveState:     null,
+        saveVariant:   null,
+        saveLinkState: null,
+        savePlayers:   null,
+        saveDate:      null
+      },
+      variantInput: {},
+      variantOperationQueue: []
+    });
   };
+  const uploadButtonsContainer = $('#publicLibraryUploadButtons');
+  uploadButtonsContainer.innerHTML = '';
+  for (const [category, folder] of Object.entries(config.libraries)) {
+    if (state.publicLibrary && state.publicLibraryCategory === category) {
+      continue;
+    }
+    const button = document.createElement('button');
+    button.setAttribute('icon', 'upload');
+    if (state.publicLibrary) {
+      button.textContent = `Move to ${category}`;
+      button.onclick = function() {
+        toServer('moveStateWithinPublicLibrary', { id: state.id, newLibrary: folder, newCategory: category });
+      };
+    } else {
+      button.textContent = `Add to public library: ${category}`;
+      button.onclick = function() {
+        toServer('addStateToPublicLibrary', { id: state.id, library: folder, category: category });
+      };
+    }
+    uploadButtonsContainer.appendChild(button);
+  }
 
   $('#stateDetailsOverlay .star').onclick = function(e) {
     e.currentTarget.classList.toggle('active');
@@ -920,6 +1139,8 @@ function fillStateDetails(states, state, dom) {
   };
   $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
+    const main = $('#showName').checked, similar = $('#showNameSimilar').checked;
+    meta.showName = main && similar ? true : !main && !similar ? false : main ? 'only main' : 'only similar';
 
     const variantInput = [];
     for(const variantDOM of $a('#variantsList .variant')) {
@@ -942,10 +1163,16 @@ function fillStateDetails(states, state, dom) {
   };
 }
 
+// Whether the game details are shown as a sidebar next to the shelf instead of as an overlay of
+// their own. What that sidebar looks like comes from `@container roomArea ((min-width: 1421px) and
+// (min-height: 888px))` in states.css, so this has to measure the same box with the same numbers:
+// measuring the window instead claims a sidebar the CSS never gives a `display` in the band where
+// the board is smaller than the window, and clicking a game there does nothing at all.
+// Called from setScale(), i.e. every time the board is laid out - including when a game brings its
+// own board size along, which changes the container without any window resize.
 function setSidebar() {
-  const vw = Math.max(document.documentElement.clientWidth  || 0, window.innerWidth  || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const bigEnough = vw >= 1421 && vh >= 888;
+  const board = $('#roomArea').getBoundingClientRect();
+  const bigEnough = board.width >= 1421 && board.height >= 888;
 
   if(detailsInSidebar != bigEnough) {
     detailsInSidebar = bigEnough;
@@ -955,7 +1182,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'stateDetailsOverlay') {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.add('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
       $('#statesOverlay').append($('#stateDetailsOverlay'));
@@ -964,7 +1191,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails')) {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.remove('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
     }
@@ -1034,19 +1261,42 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
 
 async function shareLink(state) {
   showStatesOverlay('shareLinkOverlay');
-  let url = state.link;
-  if(!url) {
-    const name = state.name.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`share/${roomID}/${state.id}`);
-    url = `${location.origin}${await url.text()}/${name}.vtt`;
+
+  const name = state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '');
+  let url = null;
+
+  $('#shareLinkOverlay').classList.toggle('plGame', !!state.publicLibrary);
+  $('#shareLinkOverlay').classList.toggle('customGame', !state.publicLibrary);
+
+  if(state.publicLibrary) {
+    const isStandard = state.publicLibraryCategory.toLowerCase() === 'games' || state.publicLibraryCategory.toLowerCase() === 'tutorials';
+    const type = isStandard ? (state.publicLibraryCategory.toLowerCase() === 'tutorials' ? 'tutorial' : 'game') : `library/${state.publicLibrary.split('/')[0]}`;
+    url = `${getBaseURL()}/${type}/${name}`;
+  } else {
+    url = state.link;
+    if(!url) {
+      url = await fetch(`share/${roomID}/${state.id}`);
+      url = `${location.origin}${await url.text()}/${name}`;
+    } else {
+      const baseURL = getBaseURL();
+      if(url.startsWith(`${baseURL}/s/`))
+        url = `${baseURL}/game/${url.substr(baseURL.length + 3, 8)}/${name}`;
+      const gameWithHash = url.match(/^(.*\/game\/[0-9a-z]{8}\/.*)(#VTT.*)$/);
+      if(gameWithHash)
+        url = gameWithHash[1];
+    }
   }
+
   $('#sharedLink').value = url;
 }
 
 onLoad(function() {
   setSidebar();
 
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers));
+  onMessage('meta', args=>{
+    currentMetaData = args;
+    fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers);
+  });
 
   on('#filterOverflow > div', 'click', e=>e.stopPropagation());
   on('#filterOverflow > button', 'click', function(e) {
@@ -1073,12 +1323,11 @@ onLoad(function() {
       alert('Please enter a link.');
   });
 
-  window.addEventListener('resize', function() {
-    setSidebar();
-    updateFilterOverflow();
-  });
+  // setSidebar() is not called here: a resize reaches this listener before setScale() has given the
+  // board its new size, so it would decide on the old one - setScale() calls it itself instead.
+  window.addEventListener('resize', updateFilterOverflow);
   document.addEventListener('dragover', function(e) {
-    if(e.dataTransfer.types.includes('Files')) {
+    if($('#statesOverlay').style.display == 'flex' && e.dataTransfer.types.includes('Files')) {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
       $('#statesButton').click();
@@ -1087,9 +1336,19 @@ onLoad(function() {
   document.addEventListener('drop', function(e) {
     if(e.dataTransfer.files.length) {
       e.preventDefault();
-      loadJSZip();
+      loadZipLibrary();
       for(const file of e.dataTransfer.files)
         resolveStateCollections(file, addStateFile);
     }
   });
+});
+
+const lazyImageObserver = new IntersectionObserver(entries => {
+  for(const entry of entries) {
+    if(entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.src;
+      lazyImageObserver.unobserve(entry.target);
+      loadedLibraryImages[entry.target.dataset.src] = true;
+    }
+  }
 });

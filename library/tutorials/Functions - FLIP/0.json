@@ -1,20 +1,32 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 20,
     "info": {
       "name": "Functions - FLIP",
-      "image": "/assets/1974620792_4954",
+      "image": "/assets/1328801173_3316",
       "rules": "",
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1768609341905,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
       "players": "1",
       "language": "en-US",
       "variant": "",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1639024855000
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "8fr3": {
@@ -38,7 +50,7 @@
     "layer": -3,
     "z": 129,
     "css": "font-size: 25px; ",
-    "text": "FLIP works on cards and any widget with a face, including checkers and basic widgets that have multiple faces assigned.  It works on holders and collections. There are a variety of parameters, demonstrated below, that can be applied. As part of the FLIP function, the 'activeFace' property of the widget will be updated to indicate which face is being displayed."
+    "text": "FLIP works on cards and any widget with a face, including checkers and basic widgets that have multiple faces assigned.  It works on holders and collections. There are a variety of parameters, demonstrated below, that can be applied. As part of the FLIP function, the 'activeFace' property of the widget will be updated to indicate which face is being displayed. The 'count' parameter limits how many widgets will be flipped. It defaults to 'all'."
   },
   "bm4j": {
     "text": "The button above performs a simple FLIP function on the card. This card has 7 faces (a back and 6 numbered faces). FLIP moves through each in sequence.",
@@ -236,7 +248,7 @@
     "y": 700,
     "z": 9732,
     "width": 300,
-    "text": "This button flips the same 7-faced card to a specific face. In this example, that is face 3, which shows the number two.",
+    "text": "This button flips the same 7-faced card to a specific face. In this example, that is face 2, which shows the number three.",
     "movable": false
   },
   "jkmt": {
@@ -416,24 +428,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",

@@ -1,0 +1,7 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+	<title>Cougar-svg</title>
+	<style>
+		.s0 { fill: fillColor; stroke: strokeColor; stroke-linejoin: round; stroke-width: 8 }
+	</style>
+	<path id="Shape 1" fill-rule="evenodd" class="s0" d="m250.5 0l216.5 125v250l-216.5 125-216.5-125v-250z" transform="rotate(rotDeg 250 250)"/>
+</svg>

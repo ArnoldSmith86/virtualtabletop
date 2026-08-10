@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40"
+   height="60"
+   viewBox="0 0 10.583333 15.875"
+   version="1.1"
+   id="svg347"
+   sodipodi:docname="gray-1.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview349"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="11.313709"
+     inkscape:cx="18.738329"
+     inkscape:cy="31.156891"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs344" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4085"
+       style="fill:#9f9f9f;fill-opacity:1">
+      <path
+         id="rect520"
+         style="fill:#9f9f9f;stroke-width:0.542925;stroke-miterlimit:5;fill-opacity:1"
+         d="m 0,0 h 2.6458333 2.6458332 2.6458333 2.6458332 c 0,0 -2.645833,0.0324443 -2.645833,2.9104165 0,2.807814 2.645833,2.9104165 2.645833,2.9104165 v 5.820833 H 0 V 5.820833 c 0,0 2.6116177,0.014283 2.6458333,-2.9104165 C 2.6789539,0.07931361 0,0 0,0 Z"
+         sodipodi:nodetypes="cccccsccccsc" />
+      <circle
+         style="fill:#9f9f9f;fill-opacity:1;stroke:none;stroke-width:0.564444;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+         id="path6862-0"
+         cx="5.2916665"
+         cy="11.641666"
+         inkscape:label="path6862-0"
+         r="4.2333331" />
+    </g>
+    <path
+       style="font-weight:bold;font-size:5.29167px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;stroke-width:0.264583"
+       d="M 5.8446048,6.7241397 H 5.0978799 V 3.8457607 L 4.2064609,4.1222298 V 3.5150313 L 5.7645063,2.9569255 h 0.080099 z"
+       id="text1"
+       aria-label="1" />
+  </g>
+</svg>

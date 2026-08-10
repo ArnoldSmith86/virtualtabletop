@@ -1,6 +1,8 @@
-class Holder extends Widget {
+class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
+    // if legacy mode disableHolderImageWidget is enabled, skip the intermediary ImageWidget prototype and use the Widget prototype instead so that image/icon/text properties "work" like they did before the change
+    this.base = legacyMode('disableHolderImageWidget') ? Widget.prototype : ImageWidget.prototype;
 
     this.addDefaults({
       width: 111,
@@ -8,15 +10,17 @@ class Holder extends Widget {
       movable: false,
       layer: -3,
       typeClasses: 'widget holder',
+      color: 'white',
+      textColor: '#0004',
 
       dropTarget: { type: 'card' },
       dropOffsetX: 4,
       dropOffsetY: 4,
-      dropLimit: -1,
       dropShadow: false,
       alignChildren: true,
       preventPiles: false,
       childrenPerOwner: false,
+      showInactiveFaceToSeat: null,
 
       onEnter: {},
       onLeave: {},
@@ -27,9 +31,17 @@ class Holder extends Widget {
     });
   }
 
+  applyDeltaToDOM(delta) {
+    this.base.applyDeltaToDOM.call(this, delta, true);
+    if(this.textWrapper && !this.get('text')) {
+      this.textWrapper.remove();
+      this.textWrapper = null;
+    }
+  }
+
   children() {
     let children = this.childrenFilter(super.children(), true);
-    if(children.length == 1 && children[0].get('type') == 'pile') //this needs to be improoved so that it can support holders with multiple piles. (allignChildren = false)
+    if(children.length == 1 && children[0].get('type') == 'pile')
       children = this.childrenFilter(children[0].children(), false);
     return children;
   }
@@ -41,6 +53,41 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  classes(includeTemporary=false) {
+    let className = this.base.classes.call(this, includeTemporary);
+
+    if(this.get('showInactiveFaceToSeat'))
+      if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
+        className += ' showCardBack';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = this.base.classesProperties.call(this);
+    p.push('showInactiveFaceToSeat');
+    return p;
+  }
+
+  css() {
+    let css = this.base.css.call(this, true);
+
+    if(!legacyMode('disableHolderImageWidget')) {
+      css += '; --bgColor: ' + this.get('color');
+      css += '; --holderTextColor: ' + this.get('textColor');
+      css += '; --bgImage: url("' + this.getImage() + '")';
+    }
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = this.base.cssProperties.call(this);
+    if(!legacyMode('disableHolderImageWidget'))
+      p.push('color', 'textColor');
+    return p;
   }
 
   async dispenseCard(card) {
@@ -60,6 +107,14 @@ class Holder extends Widget {
       await this.receiveCard(null);
     if(Array.isArray(this.get('leaveRoutine')))
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
+  }
+
+  getDefaultIconScale() {
+    return 0.85;
+  }
+
+  getDefaultIconOpacity() {
+    return 0.2;
   }
 
   async onChildAdd(child, oldParentID) {
@@ -169,6 +224,29 @@ class Holder extends Widget {
       await this.rearrangeChildren(children.filter(c=>!c.get('owner') || c.get('owner')===owner).sort((a, b)=>{
         return a.get('z') - b.get('z');
       }));
+    }
+  }
+
+  updateIcon() {
+    if(legacyMode('disableHolderImageWidget'))
+      return;
+
+    if(this.textWrapper) {
+      this.textWrapper.remove();
+      this.textWrapper = null;
+    }
+
+    if(this.get('text') && !this.get('icon')) {
+      if(this.symbolWrapper)
+        this.symbolWrapper.remove();
+      this.textWrapper = document.createElement('div');
+      this.textWrapper.className = 'holderTextOnly';
+      this.textWrapper.textContent = this.get('text');
+      this.domElement.appendChild(this.textWrapper);
+
+      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.textWrapper.clientWidth, this.textWrapper.clientHeight, 25, 1);
+    } else {
+      super.updateIcon();
     }
   }
 }

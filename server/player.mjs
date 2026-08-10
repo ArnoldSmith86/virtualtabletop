@@ -1,10 +1,14 @@
+import Config from './config.mjs';
 import Logging from './logging.mjs';
 
 export default class Player {
+  static nextSessionID = 1;
+
   constructor(connection, name, room) {
     this.connection = connection;
     this.name = name;
     this.room = room;
+    this.sessionID = Player.nextSessionID++;
 
     this.latestDeltaIDbyDifferentPlayer = this.room.deltaID;
     this.waitingForStateConfirmation = false;
@@ -23,8 +27,12 @@ export default class Player {
       this.trace('messageReceived', { func, args });
 
     try {
+      if(func == 'addLocalPlayer')
+        this.room.addLocalPlayer(this, args.player);
       if(func == 'addStateToPublicLibrary')
         this.room.addStateToPublicLibrary(this, args);
+      if(func == 'audio')
+        this.room.playAudio(args);
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
       if(func == 'delta')
@@ -35,14 +43,20 @@ export default class Player {
         await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID, args.delayForGameStartRoutine);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
+      if(func == 'moveStateWithinPublicLibrary')
+        this.room.moveStateWithinPublicLibrary(this, args);
       if(func == 'playerColor')
         this.room.recolorPlayer(this, args.player, args.color);
+      if(func == 'removeLocalPlayer')
+        this.room.removeLocalPlayer(this, args.player);
       if(func == 'removeState')
         this.room.removeState(this, args);
       if(func == 'rename')
-        this.room.renamePlayer(this, args.oldName, args.newName);
+        this.room.renamePlayer(this, args.oldName, args.newName, args.updateWidgets, args.sessionID);
       if(func == 'saveState')
         this.room.saveState(this, args.players, args.updateCurrentSave);
+      if(func == 'setGameSettings')
+        this.room.setGameSettings(this, args);
       if(func == 'setRedirect')
         this.room.setRedirect(this, args);
       if(func == 'toggleStateStar')
@@ -51,6 +65,18 @@ export default class Player {
         this.trace('client', args);
       if(func == 'unlinkState')
         await this.room.unlinkState(this, args);
+      if(func == 'requestInput')
+        this.room.requestInput(this, args);
+      if(func == 'inputResult')
+        this.room.inputResult(this, args);
+      if(func == 'abortInput')
+        this.room.abortInput(this, args);
+      if(func == 'cancelInput')
+        this.room.cancelInput(this, args);
+      if(func == 'inputBlock')
+        this.room.inputBlock(this, args);
+      if(func == 'inputBlockAnswered')
+        this.room.inputBlockAnswered(this, args);
     } catch(e) {
       if(e instanceof Logging.UserError) {
         this.send('error', `${e.code} - ${e.message}`);
@@ -71,26 +97,29 @@ export default class Player {
     if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
       this.trace('receiveDelta', { status: 'idTooLow', delta, possiblyConflicting: this.possiblyConflictingDeltas });
       for(const conflictDelta of this.possiblyConflictingDeltas) {
-        for(const widgetID in delta.s) {
-          if(conflictDelta.id > delta.id && conflictDelta.s[widgetID] !== undefined) {
-            // widget was deleted in both deltas - no problem
-            if(delta.s[widgetID] === null && conflictDelta.s[widgetID] === null)
-              continue;
-            // widget was deleted in ONE of the deltas -> conflict
-            if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null) {
-              this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key: '<deletion>' });
-              this.waitingForStateConfirmation = true;
-              this.room.receiveInvalidDelta(this, delta, widgetID, '<deletion>');
-              return;
-            }
-            for(const key in delta.s[widgetID]) {
-              // a property of the widget was changed in both deltas and not to the same value -> conflict
-              if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key]) {
-                this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
-                this.waitingForStateConfirmation = true;
-                this.room.receiveInvalidDelta(this, delta, widgetID, key);
-                return;
+        if(conflictDelta.id > delta.id) {
+          for(const widgetID in delta.s) {
+            if(conflictDelta.s[widgetID] !== undefined) {
+              // widget was deleted in both deltas - no problem
+              if(delta.s[widgetID] === null && conflictDelta.s[widgetID] === null)
+                continue;
+              // widget was deleted in ONE of the deltas -> conflict
+              if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null)
+                return this.triggerDeltaConflict(delta, conflictDelta, widgetID, '<deletion>');
+              for(const key in delta.s[widgetID]) {
+                // a property of the widget was changed in both deltas and not to the same value -> conflict
+                if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key])
+                  return this.triggerDeltaConflict(delta, conflictDelta, widgetID, key);
               }
+            }
+            // a parent or deck of a widget was changed to a widget that was deleted in the other delta -> conflict
+            for(const key of [ 'parent', 'deck' ]) {
+              if(delta.s[widgetID] !== null && delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null)
+                return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
+              if(delta.s[widgetID] === null)
+                for(const conflictDeltaWidgetID in conflictDelta.s)
+                  if(conflictDelta.s[conflictDeltaWidgetID] !== null && conflictDelta.s[conflictDeltaWidgetID][key] === widgetID)
+                    return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
             }
           }
         }
@@ -120,7 +149,10 @@ export default class Player {
       this.possiblyConflictingDeltas.push(args);
       this.latestDeltaIDbyDifferentPlayer = args.id;
     }
-    this.connection.toClient(func, args);
+    if(Config.get('simulateServerLag'))
+      setTimeout(_=>this.connection.toClient(func, args), Config.get('simulateServerLag'));
+    else
+      this.connection.toClient(func, args);
   }
 
   trace(source, payload) {
@@ -128,5 +160,11 @@ export default class Player {
       payload.player = this.name;
       this.room.trace(source, payload);
     }
+  }
+
+  triggerDeltaConflict(delta, conflictDelta, widgetID, key) {
+    this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
+    this.waitingForStateConfirmation = true;
+    this.room.receiveInvalidDelta(this, delta, widgetID, key);
   }
 }

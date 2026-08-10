@@ -1,4 +1,6 @@
-export const VERSION = 50;
+import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
+
+export const VERSION = 21;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -8,6 +10,8 @@ export default function FileUpdater(state) {
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
   const globalProperties = computeGlobalProperties(state, v);
+
+  updateMeta(state._meta, v, state);
   for(const id in state)
     updateProperties(state[id], v, globalProperties);
 
@@ -34,6 +38,9 @@ function computeGlobalProperties(state, v) {
         break;
     }
   }
+
+  v<20 && v20WhiteSpacePreWrapRoutineCheck(state, globalProperties);
+
   return globalProperties;
 }
 
@@ -67,6 +74,33 @@ function hasPropertyCondition(properties, condition) {
   return false;
 }
 
+function updateMeta(meta, v, state) {
+  updateLegacyModes(meta, v, state);
+}
+
+// Every legacy mode is enabled for games that were saved before the version that introduced
+// it and whose state trips its detector. Both facts live in LEGACY_MODES, so a new mode needs
+// no change here - see client/js/legacymoderegistry.js.
+function updateLegacyModes(meta, v, state) {
+  // a pre-v18 save cannot carry legacy modes of its own, but it can carry sibling game settings
+  if(v < 18)
+    meta.gameSettings = Object.assign({}, meta.gameSettings, { legacyModes: {} });
+
+  for(const [ name, mode ] of Object.entries(LEGACY_MODES))
+    if(v < mode.since && mode.detect(state))
+      legacyModesOf(meta)[name] = true;
+}
+
+// Created on demand so that a save which needs no legacy mode keeps the _meta shape it was
+// saved with. Missing objects are tolerated: hand-written saves and importer output do occur.
+function legacyModesOf(meta) {
+  if(!meta.gameSettings)
+    meta.gameSettings = {};
+  if(!meta.gameSettings.legacyModes)
+    meta.gameSettings.legacyModes = {};
+  return meta.gameSettings.legacyModes;
+}
+
 function updateProperties(properties, v, globalProperties) {
   if(typeof properties != 'object')
     return;
@@ -95,6 +129,11 @@ function updateProperties(properties, v, globalProperties) {
   v<8 && v8HoverInheritVisibleForSeat(properties);
   v<10 && v10GridOffset(properties);
   v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
+  v<13 && v13EnlargeTinyLabels(properties);
+  v<14 && v14HidePlayerCursors(properties);
+  v<15 && v15SkipTurnProperty(properties);
+  v<17 && v17MaterialSymbols(properties);
+  v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -118,7 +157,8 @@ function updateRoutine(routine, v, globalProperties) {
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
   v<9 && v9NumericStringSort(routine);
   v<11 && v11OwnerMOVEXY(routine);
-  v<50 && v50InputsUpdate(routine);
+  v<15 && v15SkipTurnRoutine(routine);
+  v<16 && v16UpdateCountParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -436,15 +476,130 @@ function v12HandDropShadow(properties) {
   }
 }
 
-function v50InputsUpdate(routine) {
-  for(const operation of routine)
-    if(operation.func == 'ROTATE'){
-      if (operation.collection) {
-        operation.target = operation.collection;
-        delete operation.collection;
-      }
-      if (typeof operation.holder == "string") {
-        operation.holder = [operation.holder];
+function v13EnlargeTinyLabels(properties) {
+  if(properties.type == 'label') {
+    const match = JSON.stringify(properties.css || '').match(/font-size"?:"? *([0-9]+) *px/);
+    const fontSize = match ? +match[1] : 16;
+    if((properties.height || 20) < fontSize + 2)
+      properties.height = fontSize + 2;
+  }
+}
+
+function v14HidePlayerCursors(properties) {
+  if(properties.type == 'holder' && properties.childrenPerOwner)
+    properties.hidePlayerCursors = true;
+}
+
+// There are 2 functions for v15 for skipTurn
+function v15SkipTurnProperty(properties) {
+  if(properties.skipTurn !== undefined) {
+    properties.skipTurnFileUpdater = properties.skipTurn;
+    delete properties.skipTurn;
+  }
+}
+function v15SkipTurnRoutine(routine) {
+  for(const key in routine)
+    routine[key] = JSON.parse(JSON.stringify(routine[key]).replace(/\bskipTurn\b/g, 'skipTurnFileUpdater'));
+}
+
+function v16UpdateCountParameter(routine) {
+  for(const key in routine) {
+    if(routine[key] && [ 'FLIP', 'MOVE', 'MOVEXY', 'ROTATE' ].indexOf(routine[key].func) != -1) {
+      if(typeof routine[key].count != 'undefined' && (key != 'MOVE' || !routine[key].fillTo || String(routine[key].fillTo).includes('$'))) {
+        if(!routine[key].count) {
+          routine[key].count = 'all';
+        } else if(typeof routine[key].count == 'string' && routine[key].count.includes('$')) {
+          routine[key] = {
+            note: `This was added by the automatic file migration because the behavior of ${routine[key].func} with count=0 changed.`,
+            func: 'IF',
+            condition: routine[key].count,
+            thenRoutine: [
+              {...routine[key]}
+            ],
+            elseRoutine: [
+              Object.assign({}, routine[key], { count: 'all' })
+            ]
+          };
+        }
       }
     }
+  }
+}
+
+function v17MaterialSymbols(properties) {
+  for (const key in properties) {
+    if (typeof properties[key] === 'object' && properties[key] !== null) {
+      v17MaterialSymbols(properties[key]);
+    } else if (typeof properties[key] === 'string') {
+      properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+    }
+  }
+}
+
+function v20WhiteSpacePreWrapRoutineCheck(obj, globalProperties) {
+  // recursively check all objects in state to see if any SET operation sets html
+  if(Array.isArray(obj)) {
+    for(const operation of obj) {
+      if(v20WhiteSpacePreWrapRoutineCheck(operation, globalProperties))
+        return true;
+    }
+  }
+  if(typeof obj == 'object' && obj !== null) {
+    for(const subObj of Object.values(obj)) {
+      if(v20WhiteSpacePreWrapRoutineCheck(subObj, globalProperties))
+        return true;
+    }
+    if(obj.func == 'SET' && obj.property == 'html')
+      return globalProperties.v20WhiteSpacePreWrapForAllHtml = true;
+  }
+  return false;
+}
+
+function v20WhiteSpacePreWrap(properties, globalProperties) {
+  function hasMultipleWhitespaceOrNewline(str) {
+    return typeof str == 'string' && (/[\r\n]|\s{2,}/.test(str));
+  }
+
+  function cssHasWhiteSpace(css) {
+    if(typeof css == 'string')
+      return /\bwhite-space(-collapse)?\s*:/i.test(css);
+    if(isNestedCSS(css))
+      return cssHasWhiteSpace(css['']) || cssHasWhiteSpace(css['inline']) || cssHasWhiteSpace(css['default']);
+    if(typeof css == 'object' && css !== null)
+      return css['white-space'] || css['white-space-collapse'];
+    return false;
+  }
+
+  function isNestedCSS(css) {
+    if(typeof css == 'object' && css !== null)
+      for(const key in css)
+        if(typeof css[key] == 'object' && css[key] !== null)
+          return true;
+    return false;
+  }
+
+  function addWhiteSpacePreWrapToCss(css) {
+    if(!css)
+      return 'white-space: pre-wrap';
+    if(typeof css == 'string')
+      return `${css}; white-space: pre-wrap`;
+    if(isNestedCSS(css)) {
+      css['default'] = addWhiteSpacePreWrapToCss(css['default'] || {});
+      return css;
+    }
+    if(typeof css == 'object' && css !== null)
+      css['white-space'] = 'pre-wrap';
+    return css;
+  }
+
+  if(properties.type == 'deck' && Array.isArray(properties.faceTemplates))
+    for(const face of properties.faceTemplates)
+      if(Array.isArray(face.objects))
+        for(const object of face.objects)
+          if(object.type == 'html' && object.value && hasMultipleWhitespaceOrNewline(String(object.value)))
+            if(!cssHasWhiteSpace(object.css))
+              object.css = addWhiteSpacePreWrapToCss(object.css);
+
+  if(!properties.type && (hasMultipleWhitespaceOrNewline(String(properties.html)) || String(JSON.stringify(properties.inheritFrom)).match(/"html"/)) || (typeof properties.html == 'string' && globalProperties.v20WhiteSpacePreWrapForAllHtml) && !cssHasWhiteSpace(properties.css))
+    properties.css = addWhiteSpacePreWrapToCss(properties.css);
 }

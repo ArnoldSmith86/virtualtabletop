@@ -1299,64 +1299,63 @@
       "Reset Button": "css"
     }
   },
-  "Reset Button1": {
-    "inheritFrom": {
-      "Reset Button": "css"
-    },
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Chess",
+      "image": "/assets/206546051_6734",
+      "rules": "https://www.officialgamerules.org/chess",
+      "bgg": "https://boardgamegeek.com/boardgame/171/chess",
+      "year": "1475",
+      "mode": "vs",
+      "time": "60",
+      "type": "file",
+      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&amp;picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0.",
+      "lastUpdate": 1698188353510,
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "Add Piece Button": {
     "type": "button",
-    "id": "Reset Button1",
+    "id": "Add Piece Button",
     "x": 160,
     "y": 660,
     "z": 9,
+    "inheritFrom": {
+      "Reset Button": "css"
+    },
     "text": "Add\nPiece",
     "clickRoutine": [
       {
         "func": "INPUT",
         "fields": [
           {
-            "type": "select",
-            "options": [
-              {
-                "text": "White",
-                "value": "White"
-              },
-              {
-                "text": "Black",
-                "value": "Black"
-              }
+            "type": "choose",
+            "source": [
+              "White Pawn A",
+              "White Knight B",
+              "White Bishop C",
+              "White Rook A",
+              "White Queen",
+              "White King",
+              "Black Pawn A",
+              "Black Knight B",
+              "Black Bishop C",
+              "Black Rook A",
+              "Black Queen",
+              "Black King"
             ],
-            "label": "Color",
-            "variable": "color"
-          },
-          {
-            "type": "select",
-            "options": [
-              {
-                "value": "Pawn A",
-                "text": "Pawn"
-              },
-              {
-                "value": "Knight B",
-                "text": "Knight"
-              },
-              {
-                "value": "Bishop C",
-                "text": "Bishop"
-              },
-              {
-                "value": "Rook A",
-                "text": "Rook"
-              },
-              {
-                "value": "Queen",
-                "text": "Queen"
-              },
-              {
-                "value": "King",
-                "text": "King"
-              }
-            ],
-            "label": "Piece",
             "variable": "piece"
           },
           {
@@ -1387,7 +1386,7 @@
       {
         "func": "CLONE",
         "source": [
-          "${color} ${piece}"
+          "${piece}"
         ],
         "properties": {
           "x": 150,
@@ -1398,32 +1397,5 @@
         }
       }
     ]
-  },
-  "_meta": {
-    "version": 8,
-    "info": {
-      "name": "Chess",
-      "image": "/assets/206546051_6734",
-      "rules": "https://www.officialgamerules.org/chess",
-      "bgg": "https://boardgamegeek.com/boardgame/171/chess",
-      "year": "1475",
-      "mode": "vs",
-      "time": "60",
-      "type": "file",
-      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&amp;picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0.",
-      "lastUpdate": 1671813976118,
-      "showName": true,
-      "skill": "",
-      "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": "2",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
-    }
   }
 }

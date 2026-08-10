@@ -5,6 +5,7 @@
 }
 
 .widget.label > textarea {
+  display: block;
   border: none;
   background: none;
   padding: 0;
@@ -13,20 +14,9 @@
   text-align: inherit;
   font: inherit;
   width: 100%;
-  min-height: 100%;
   resize: none;
   text-transform: inherit;
-}
-
-body.edit .widget.label {
-  border: none;
-  box-sizing: content-box;
-  box-shadow:0 0 0 3px var(--editColor);
-}
-
-body.edit .widget.label > * {
-  left: 0;
-  top: 0;
+  scrollbar-width: thin;
 }
 
 .widget.label > textarea:read-only {

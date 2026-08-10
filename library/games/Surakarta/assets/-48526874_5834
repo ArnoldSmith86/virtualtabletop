@@ -1,0 +1,77 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+	<title>Gird-svg-svg</title>
+	<style>
+		.s0 { fill: transparent;stroke: #ff0000;stroke-miterlimit:100;stroke-width: 2 }
+		.s1 { fill: transparent;stroke: #0000ff;stroke-miterlimit:100;stroke-width: 2 }
+		.s2 { fill: #ff0000;stroke: #000000;stroke-miterlimit:100;stroke-width: 3 }
+		.s3 { fill: #c6bdaa;stroke: #000000;stroke-miterlimit:100;stroke-width: 2 }
+		.s4 { fill: #ff0000;stroke: #ff0000;stroke-miterlimit:100;stroke-width: 0 }
+		.s5 { fill: #0000ff;stroke: #0000ff;stroke-miterlimit:100;stroke-width: 0 }
+	</style>
+	<path id="Shape 3" class="s0" d="m249 450c-110.6 0-200-89.4-200-200 0-110.6 89.4-200 200-200 110.6 0 200 89.4 200 200 0 110.6-89.4 200-200 200z"/>
+	<path id="Shape 3 copy" class="s0" d="m749 450c-110.6 0-200-89.4-200-200 0-110.6 89.4-200 200-200 110.6 0 200 89.4 200 200 0 110.6-89.4 200-200 200z"/>
+	<path id="Shape 3 copy 2" class="s0" d="m249 950c-110.6 0-200-89.4-200-200 0-110.6 89.4-200 200-200 110.6 0 200 89.4 200 200 0 110.6-89.4 200-200 200z"/>
+	<path id="Shape 3 copy 3" class="s0" d="m749 950c-110.6 0-200-89.4-200-200 0-110.6 89.4-200 200-200 110.6 0 200 89.4 200 200 0 110.6-89.4 200-200 200z"/>
+	<path id="Shape 2" class="s1" d="m249 350c-55.3 0-100-44.7-100-100 0-55.3 44.7-100 100-100 55.3 0 100 44.7 100 100 0 55.3-44.7 100-100 100z"/>
+	<path id="Shape 2 copy" class="s1" d="m749 350c-55.3 0-100-44.7-100-100 0-55.3 44.7-100 100-100 55.3 0 100 44.7 100 100 0 55.3-44.7 100-100 100z"/>
+	<path id="Shape 2 copy 2" class="s1" d="m249 850c-55.3 0-100-44.7-100-100 0-55.3 44.7-100 100-100 55.3 0 100 44.7 100 100 0 55.3-44.7 100-100 100z"/>
+	<path id="Shape 2 copy 3" class="s1" d="m749 850c-55.3 0-100-44.7-100-100 0-55.3 44.7-100 100-100 55.3 0 100 44.7 100 100 0 55.3-44.7 100-100 100z"/>
+	<path id="Shape 1" class="s2" d="m251 250h100v100h-100z"/>
+	<path id="Shape 1 copy" class="s3" d="m349 250h100v100h-100z"/>
+	<path id="Shape 1 copy 2" class="s3" d="m449 250h100v100h-100z"/>
+	<path id="Shape 1 copy 3" class="s3" d="m549 250h100v100h-100z"/>
+	<path id="Shape 1 copy 4" class="s3" d="m649 250h100v100h-100z"/>
+	<path id="Shape 1 copy 10" class="s3" d="m251 250h100v100h-100z"/>
+	<path id="Shape 1 copy 11" class="s3" d="m349 250h100v100h-100z"/>
+	<path id="Shape 1 copy 12" class="s3" d="m449 250h100v100h-100z"/>
+	<path id="Shape 1 copy 13" class="s3" d="m549 250h100v100h-100z"/>
+	<path id="Shape 1 copy 14" class="s3" d="m649 250h100v100h-100z"/>
+	<path id="Shape 1 copy 40" class="s3" d="m251 650h100v100h-100z"/>
+	<path id="Shape 1 copy 41" class="s3" d="m349 650h100v100h-100z"/>
+	<path id="Shape 1 copy 42" class="s3" d="m449 650h100v100h-100z"/>
+	<path id="Shape 1 copy 43" class="s3" d="m549 650h100v100h-100z"/>
+	<path id="Shape 1 copy 44" class="s3" d="m649 650h100v100h-100z"/>
+	<path id="Shape 1 copy 45" class="s3" d="m251 650h100v100h-100z"/>
+	<path id="Shape 1 copy 46" class="s3" d="m349 650h100v100h-100z"/>
+	<path id="Shape 1 copy 47" class="s3" d="m449 650h100v100h-100z"/>
+	<path id="Shape 1 copy 48" class="s3" d="m549 650h100v100h-100z"/>
+	<path id="Shape 1 copy 49" class="s3" d="m649 650h100v100h-100z"/>
+	<path id="Shape 1 copy 30" class="s3" d="m251 550h100v100h-100z"/>
+	<path id="Shape 1 copy 31" class="s3" d="m349 550h100v100h-100z"/>
+	<path id="Shape 1 copy 32" class="s3" d="m449 550h100v100h-100z"/>
+	<path id="Shape 1 copy 33" class="s3" d="m549 550h100v100h-100z"/>
+	<path id="Shape 1 copy 34" class="s3" d="m649 550h100v100h-100z"/>
+	<path id="Shape 1 copy 35" class="s3" d="m251 550h100v100h-100z"/>
+	<path id="Shape 1 copy 36" class="s3" d="m349 550h100v100h-100z"/>
+	<path id="Shape 1 copy 37" class="s3" d="m449 550h100v100h-100z"/>
+	<path id="Shape 1 copy 38" class="s3" d="m549 550h100v100h-100z"/>
+	<path id="Shape 1 copy 39" class="s3" d="m649 550h100v100h-100z"/>
+	<path id="Shape 1 copy 20" class="s3" d="m251 450h100v100h-100z"/>
+	<path id="Shape 1 copy 21" class="s3" d="m349 450h100v100h-100z"/>
+	<path id="Shape 1 copy 22" class="s3" d="m449 450h100v100h-100z"/>
+	<path id="Shape 1 copy 23" class="s3" d="m549 450h100v100h-100z"/>
+	<path id="Shape 1 copy 24" class="s3" d="m649 450h100v100h-100z"/>
+	<path id="Shape 1 copy 25" class="s3" d="m251 450h100v100h-100z"/>
+	<path id="Shape 1 copy 26" class="s3" d="m349 450h100v100h-100z"/>
+	<path id="Shape 1 copy 27" class="s3" d="m449 450h100v100h-100z"/>
+	<path id="Shape 1 copy 28" class="s3" d="m549 450h100v100h-100z"/>
+	<path id="Shape 1 copy 29" class="s3" d="m649 450h100v100h-100z"/>
+	<path id="Shape 1 copy 15" class="s3" d="m251 350h100v100h-100z"/>
+	<path id="Shape 1 copy 16" class="s3" d="m349 350h100v100h-100z"/>
+	<path id="Shape 1 copy 17" class="s3" d="m449 350h100v100h-100z"/>
+	<path id="Shape 1 copy 18" class="s3" d="m549 350h100v100h-100z"/>
+	<path id="Shape 1 copy 19" class="s3" d="m649 350h100v100h-100z"/>
+	<path id="Shape 1 copy 5" class="s3" d="m251 350h100v100h-100z"/>
+	<path id="Shape 1 copy 6" class="s3" d="m349 350h100v100h-100z"/>
+	<path id="Shape 1 copy 7" class="s3" d="m449 350h100v100h-100z"/>
+	<path id="Shape 1 copy 8" class="s3" d="m549 350h100v100h-100z"/>
+	<path id="Shape 1 copy 9" class="s3" d="m649 350h100v100h-100z"/>
+	<path id="Shape 4" class="s4" d="m448 248.5h2.1l0.4 499.9-2.1 0.1z"/>
+	<path id="Shape 4 copy" class="s4" d="m548 248.5h2.1l0.4 499.9-2.1 0.1z"/>
+	<path id="Shape 4 copy 2" class="s4" d="m749.5 449v2.1l-499.9 0.4-0.1-2.1z"/>
+	<path id="Shape 4 copy 3" class="s4" d="m749.5 549v2.1l-499.9 0.4-0.1-2.1z"/>
+	<path id="Shape 5" class="s5" d="m348 248.5h2.1l0.4 499.9-2.1 0.1z"/>
+	<path id="Shape 5 copy" class="s5" d="m648 248.5h2.1l0.4 499.9-2.1 0.1z"/>
+	<path id="Shape 5 copy 2" class="s5" d="m750.5 349v2.1l-499.9 0.4-0.1-2.1z"/>
+	<path id="Shape 5 copy 3" class="s5" d="m750.5 649v2.1l-499.9 0.4-0.1-2.1z"/>
+</svg>

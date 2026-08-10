@@ -6,10 +6,11 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf coverage",
-    "clobber": "npm clean && rm -rf save",
+    "clobber": "npm run clean && rm -rf save",
     "debug": "nodemon -e js,mjs,css,html,json --ignore save/ --ignore coverage/ --ignore tests/ --inspect server.mjs",
     "start": "node server.mjs",
     "stresstest": "node tests/server/loadtest.js",
+    "corpus-census": "node tests/server/corpus-census.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "test-debug": "node --experimental-vm-modules --inspect-brk=9239 node_modules/.bin/jest",
     "test-cont": "nodemon -e js,mjs,css,html --ignore save/ --ignore coverage/ --experimental-vm-modules node_modules/.bin/jest",
@@ -46,24 +47,24 @@
   },
   "homepage": "https://github.com/ArnoldSmith86/virtualtabletop#readme",
   "dependencies": {
-    "@node-minify/clean-css": "^7.1.0",
-    "@node-minify/core": "^7.1.0",
-    "@node-minify/html-minifier": "^7.1.0",
-    "@node-minify/no-compress": "^7.1.0",
-    "@node-minify/uglify-es": "^7.1.0",
+    "bson": "^6.10.4",
+    "clean-css": "^5.3.3",
     "crc-32": "^1.2.2",
-    "dompurify": "^2.4.3",
-    "express": "^4.18.2",
-    "jszip": "^3.10.1",
-    "node-fetch": "^2.6.9",
-    "ws": "^8.12.0"
+    "dompurify": "^3.3.0",
+    "express": "^5.1.0",
+    "fflate": "^0.8.2",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.49.0",
+    "ws": "^8.18.3"
+  },
+  "optionalDependencies": {
+    "crawler-user-agents": "^1.21.0"
   },
   "devDependencies": {
-    "jest": "^29.4.1",
-    "jest-environment-jsdom": "^29.4.1",
-    "jest-environment-jsdom-global": "^4.0.0",
-    "json-diff": "^1.0.0",
-    "nodemon": "^2.0.20",
-    "testcafe": "^2.3.0"
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "json-diff": "^1.0.6",
+    "nodemon": "^3.1.10",
+    "testcafe": "^3.7.3"
   }
 }

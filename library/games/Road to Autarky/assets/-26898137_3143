@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   style="height: 75px; width: 75px;"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg28576"
+   sodipodi:docname="4p.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview28578"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.6347656"
+     inkscape:cx="208.89845"
+     inkscape:cy="256.30585"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg28576" />
+  <defs
+     id="defs28568">
+    <filter
+       id="shadow-1"
+       height="1.1636415"
+       width="1.1636361"
+       x="-0.081818041"
+       y="-0.081820741">
+      <feFlood
+         flood-color="rgba(0, 0, 0, 1)"
+         result="flood"
+         id="feFlood28557" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="atop"
+         result="composite"
+         id="feComposite28559" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="15"
+         result="blur"
+         id="feGaussianBlur28561" />
+      <feOffset
+         dx="0"
+         dy="0"
+         result="offset"
+         id="feOffset28563" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         id="feComposite28565" />
+    </filter>
+  </defs>
+  <rect
+     fill="#d0021b"
+     fill-opacity="1"
+     height="512"
+     width="512"
+     rx="50"
+     ry="50"
+     id="rect28570"
+     style="fill:#9f2fff;fill-opacity:1" />
+  <g
+     class=""
+     style=""
+     transform="translate(0,0)"
+     id="g28574">
+    <path
+       d="M81.524 176.5C47.946 133.786 38.598 114.37 36 106.534a27.408 27.408 0 0 1 30.514-7.851l230.6 84.722a52.994 52.994 0 0 1 31.474 31.474l84.722 230.6a27.408 27.408 0 0 1-7.851 30.514c-7.794-2.584-27.252-11.946-69.966-45.524-40.342-31.714-87.815-74.428-133.664-120.277-45.848-45.849-88.59-93.35-120.305-133.692zm104.307 149.676c-49.576-49.577-96.569-102.245-128.905-144.494a692.302 692.302 0 0 1-13.259-17.862l47.91 109.842a164.502 164.502 0 0 1 4.59 119.783l-11.932 34.313 34.313-11.932a164.502 164.502 0 0 1 119.783 4.59l109.842 47.91a692.283 692.283 0 0 1-17.862-13.26c-42.234-32.363-94.903-79.356-144.48-128.932zm281.56-281.56a29.413 29.413 0 0 0-41.585 0L387.33 83.08l41.556 41.556 38.52-38.52a29.413 29.413 0 0 0 0-41.556zM339.319 187.712l60.35-60.35-15.066-15.01-60.35 60.293a73.92 73.92 0 0 1 15.066 15.067z"
+       fill="#dfdfbf"
+       fill-opacity="1"
+       filter="url(#shadow-1)"
+       transform="translate(25.6, 25.6) scale(0.9, 0.9) rotate(0, 256, 256) skewX(0) skewY(0)"
+       id="path28572" />
+  </g>
+</svg>

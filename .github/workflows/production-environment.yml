@@ -1,4 +1,4 @@
-name: Production Environment (checks if server starts)
+name: Production Environment (checks if the server starts and the minified client works)
 
 on:
   push:
@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+concurrency:
+  group: production-environment-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -14,10 +17,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Install Node.js 16.x
+    - name: Install Node.js 18.x
       uses: actions/setup-node@v1
       with:
-        node-version: 16.x
+        node-version: 18.x
     - name: Install dependencies
       run: npm ci
     - name: Start virtualtabletop server with production settings
@@ -25,5 +28,12 @@ jobs:
         cp config.template.json config.json
         sed -i 's/minifyJavascript": false/minifyJavascript": true/' config.json
         npm start &
-        sleep 10
+        timeout 120 bash -c 'until curl -sf http://localhost:8272 -o /dev/null; do sleep 0.5; done'
         curl -I http://localhost:8272
+    # the other TestCafe workflows run against a readable client, so this is the only place where a
+    # test drives the minified one and would notice top level mangling breaking edit mode
+    - name: Run TestCafe tests against the minified client
+      uses: DevExpress/testcafe-action@latest
+      with:
+        version: "3.7.3"
+        args: "chrome:headless tests/testcafe/editor.js tests/testcafe/routines.js"

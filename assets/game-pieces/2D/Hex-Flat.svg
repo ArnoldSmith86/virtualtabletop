@@ -1,0 +1,8 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+	<title>Hex Flat</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #primaryColor; stroke: #borderColor; stroke-width:#borderWidth; }
+	</style>
+	<polygon id="Layer" class="shp0" points="100,50 75,93.33 25,93.33 0,50 25,6.67 75,6.67"/>
+</svg>

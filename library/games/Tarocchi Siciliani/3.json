@@ -1,0 +1,3161 @@
+{
+  "f4d20311-d669-483c-bd5d-17f712e5ed64": {
+    "id": "f4d20311-d669-483c-bd5d-17f712e5ed64",
+    "z": 5949,
+    "type": "card",
+    "cardType": "type-389b84d8-738b-48a1-8cf3-6f773a7334ae",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "8e566805-d786-4be6-94ff-4c4d3bb89f22": {
+    "id": "8e566805-d786-4be6-94ff-4c4d3bb89f22",
+    "z": 8515,
+    "type": "card",
+    "cardType": "diamonds-6",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "bb9cb3e8-0c0f-40fa-9451-54d5e65759c1": {
+    "id": "bb9cb3e8-0c0f-40fa-9451-54d5e65759c1",
+    "z": 6134,
+    "type": "card",
+    "cardType": "spades-8",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "3f7375f8-69b5-4128-bb10-d7183d81bc8b": {
+    "id": "3f7375f8-69b5-4128-bb10-d7183d81bc8b",
+    "z": 1318,
+    "type": "card",
+    "cardType": "hearts-3",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "6ba0eef1-9225-465d-870c-ac2c216e0fe6": {
+    "id": "6ba0eef1-9225-465d-870c-ac2c216e0fe6",
+    "z": 249,
+    "type": "card",
+    "cardType": "joker-blue",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "de97e293-92ea-4b7d-9b91-0b6e7fefa9f6": {
+    "id": "de97e293-92ea-4b7d-9b91-0b6e7fefa9f6",
+    "z": 8938,
+    "type": "card",
+    "cardType": "diamonds-5",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "b64145cc-f0ea-4c92-9f97-86a089c8bada": {
+    "id": "b64145cc-f0ea-4c92-9f97-86a089c8bada",
+    "z": 1145,
+    "type": "card",
+    "cardType": "joker-black",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "3617060e-a828-4b73-89ac-9588ef30096c": {
+    "id": "3617060e-a828-4b73-89ac-9588ef30096c",
+    "z": 94,
+    "type": "card",
+    "cardType": "clubs-6",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "e707358b-6e13-49e9-a341-66bef7fa6118_label": {
+    "id": "e707358b-6e13-49e9-a341-66bef7fa6118_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Pigliate",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "HolderPigliateWest",
+    "css": "font-size: 18px; font-weight: bold; color: #ff2a2aff; text-align: center;"
+  },
+  "b739283b-f1b6-4922-b6cf-f386d50b4569": {
+    "id": "b739283b-f1b6-4922-b6cf-f386d50b4569",
+    "z": 17,
+    "type": "card",
+    "cardType": "hearts-8",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "26107670-a321-4f2a-b60a-79d2ebead162_label": {
+    "id": "26107670-a321-4f2a-b60a-79d2ebead162_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Pigliate",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "HolderPigliateNorth",
+    "css": "font-size: 18px; font-weight: bold; color: #e47f2aff; text-align: center;"
+  },
+  "1ef9c671-76f1-4eca-8d63-9e31074aa36f": {
+    "id": "1ef9c671-76f1-4eca-8d63-9e31074aa36f",
+    "z": 428,
+    "type": "card",
+    "cardType": "diamonds-2",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "69d67cb4-71ea-476b-a60b-4e529c706821": {
+    "id": "69d67cb4-71ea-476b-a60b-4e529c706821",
+    "z": 7897,
+    "type": "card",
+    "cardType": "diamonds-3",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "0eb3822c-e0b6-4c6e-a81f-776dd63f82d5": {
+    "id": "0eb3822c-e0b6-4c6e-a81f-776dd63f82d5",
+    "z": 2554,
+    "type": "card",
+    "cardType": "type-7f344907-2d8e-4527-886c-d0df52e21429",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "4bc1bff7-da84-4ee2-8263-7243340b9a66": {
+    "id": "4bc1bff7-da84-4ee2-8263-7243340b9a66",
+    "z": 2410,
+    "type": "card",
+    "cardType": "hearts-k",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "b83b63ae-e335-426c-bb07-fd732f1fce22": {
+    "id": "b83b63ae-e335-426c-bb07-fd732f1fce22",
+    "z": 8569,
+    "type": "card",
+    "cardType": "diamonds-8",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "cc87e708-7566-4046-ad21-9222bdcd9808": {
+    "id": "cc87e708-7566-4046-ad21-9222bdcd9808",
+    "z": 2152,
+    "type": "card",
+    "cardType": "diamonds-9",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "f0784e1c-a1f2-4071-9353-12f921d86fc8": {
+    "id": "f0784e1c-a1f2-4071-9353-12f921d86fc8",
+    "z": 8155,
+    "type": "card",
+    "cardType": "clubs-k",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "213ef86a-3e4d-4bdf-a92b-ebb8bfc8b7e3": {
+    "id": "213ef86a-3e4d-4bdf-a92b-ebb8bfc8b7e3",
+    "z": 6451,
+    "type": "card",
+    "cardType": "clubs-3",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "0fcf4966-3493-4b1e-98fd-57a1cdacd2b6": {
+    "id": "0fcf4966-3493-4b1e-98fd-57a1cdacd2b6",
+    "z": 5147,
+    "type": "card",
+    "cardType": "type-26545cb6-a46d-4d59-84c4-bb50ccb85794",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "bf9662bd-f469-4b6e-ba84-d6b24b45e7b2": {
+    "id": "bf9662bd-f469-4b6e-ba84-d6b24b45e7b2",
+    "z": 6617,
+    "type": "card",
+    "cardType": "clubs-a",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "cdf32c05-97cc-4940-8b39-d203bd8fa524": {
+    "id": "cdf32c05-97cc-4940-8b39-d203bd8fa524",
+    "z": 9778,
+    "type": "card",
+    "cardType": "hearts-9",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "117ccf05-f1ee-495f-af57-bb85dea0e835": {
+    "id": "117ccf05-f1ee-495f-af57-bb85dea0e835",
+    "z": 9483,
+    "type": "card",
+    "cardType": "hearts-7",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "af9adc64-a99d-4fc9-84b5-68691b6cd08d": {
+    "id": "af9adc64-a99d-4fc9-84b5-68691b6cd08d",
+    "z": 5325,
+    "type": "card",
+    "cardType": "diamonds-4",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "b6b504de-a152-4af0-9a9f-8c022a759da9": {
+    "id": "b6b504de-a152-4af0-9a9f-8c022a759da9",
+    "z": 9893,
+    "type": "card",
+    "cardType": "hearts-6",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "63212f68-8c17-42cc-a29d-53bc97fa9fd3": {
+    "id": "63212f68-8c17-42cc-a29d-53bc97fa9fd3",
+    "z": 8530,
+    "type": "card",
+    "cardType": "spades-6",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "b8e6d99b-f465-4e9d-afe6-bdae3e9e14ca": {
+    "id": "b8e6d99b-f465-4e9d-afe6-bdae3e9e14ca",
+    "z": 336,
+    "type": "card",
+    "cardType": "type-13f2eeea-5417-48ff-8e07-e2c365090b9e",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "72b2bbb1-c73c-4be6-861b-85b586617b6a": {
+    "id": "72b2bbb1-c73c-4be6-861b-85b586617b6a",
+    "z": 1537,
+    "type": "card",
+    "cardType": "hearts-4",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "208d4e14-1e98-4f0a-a7cd-203ad3b2be0d": {
+    "id": "208d4e14-1e98-4f0a-a7cd-203ad3b2be0d",
+    "z": 4157,
+    "type": "card",
+    "cardType": "spades-7",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "4f9bca17-5098-4e39-a739-3219542898f6_label": {
+    "id": "4f9bca17-5098-4e39-a739-3219542898f6_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Won Tricks",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "WonTricksSouth",
+    "css": "font-size: 18px; font-weight: bold; color: #2a7fffff; text-align: center;"
+  },
+  "da57a668-d6b6-465d-b2c9-f63d519154d9": {
+    "id": "da57a668-d6b6-465d-b2c9-f63d519154d9",
+    "y": -2.5,
+    "z": 4056,
+    "type": "label",
+    "text": "Sicilian Tarot",
+    "css": "font-family: Cardinal Alternate, sans-serif; font-size: 46px; font-weight: bold; text-align: center; color: #002b11ff",
+    "width": 400,
+    "height": 105,
+    "x": -8
+  },
+  "4c0e8b86-d363-4a14-b6e5-ba138fa889c6": {
+    "id": "4c0e8b86-d363-4a14-b6e5-ba138fa889c6",
+    "z": 9092,
+    "type": "card",
+    "cardType": "clubs-j",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "99448b78-760d-4ced-be8b-ba021bd82eee_label": {
+    "id": "99448b78-760d-4ced-be8b-ba021bd82eee_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Won Tricks",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "WonTricksNorth",
+    "css": "font-size: 18px; font-weight: bold; color: #e47f2aff; text-align: center;"
+  },
+  "8327f79b-fc02-4ed2-b459-744282d361b6_label": {
+    "id": "8327f79b-fc02-4ed2-b459-744282d361b6_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Won Tricks",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "WonTricksEast",
+    "css": "font-size: 18px; font-weight: bold; color: #008000ff; text-align: center;"
+  },
+  "6fa3105a-6fd6-4437-ad78-2046063b2dc4": {
+    "id": "6fa3105a-6fd6-4437-ad78-2046063b2dc4",
+    "z": 3131,
+    "type": "card",
+    "cardType": "type-f54fe422-9ec1-444c-a36f-671951f2d070",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "0fd68732-f1f2-4da0-be8e-413eaf2be129": {
+    "id": "0fd68732-f1f2-4da0-be8e-413eaf2be129",
+    "z": 4843,
+    "type": "card",
+    "cardType": "clubs-q",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "63690295-55e9-4d20-bf0a-5f97598d0bad": {
+    "id": "63690295-55e9-4d20-bf0a-5f97598d0bad",
+    "z": 6870,
+    "type": "card",
+    "cardType": "diamonds-7",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "8bdcc59e-5a84-4174-91b6-f80467e922d7": {
+    "id": "8bdcc59e-5a84-4174-91b6-f80467e922d7",
+    "z": 6169,
+    "type": "card",
+    "cardType": "type-221f3dea-519c-473b-bb34-45a9fd837b4e",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "ae55d44c-4fc7-42dd-9e58-694122eb9706_label": {
+    "id": "ae55d44c-4fc7-42dd-9e58-694122eb9706_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Pigliate",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "HolderPigliateSouth",
+    "css": "font-size: 18px; font-weight: bold; color: #2a7fffff; text-align: center;"
+  },
+  "2075d3a1-8b76-4839-b490-ecf26a2831aa": {
+    "id": "2075d3a1-8b76-4839-b490-ecf26a2831aa",
+    "z": 4194,
+    "type": "card",
+    "cardType": "clubs-9",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "40beb1a1-6a9a-41b8-837c-f6fe9948662a": {
+    "id": "40beb1a1-6a9a-41b8-837c-f6fe9948662a",
+    "z": 510,
+    "type": "card",
+    "cardType": "clubs-2",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "ce583e41-f10b-40d3-8b28-9ab993fcba7f": {
+    "id": "ce583e41-f10b-40d3-8b28-9ab993fcba7f",
+    "z": 427,
+    "type": "card",
+    "cardType": "hearts-2",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "1396af9d-0f30-42d5-b1f3-a6a5bfad18ed": {
+    "id": "1396af9d-0f30-42d5-b1f3-a6a5bfad18ed",
+    "z": 8964,
+    "type": "card",
+    "cardType": "diamonds-q",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "b4204e99-8404-4b9f-b345-12addef10df3": {
+    "id": "b4204e99-8404-4b9f-b345-12addef10df3",
+    "z": 7787,
+    "type": "card",
+    "cardType": "spades-5",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "d7de0622-41fc-48f2-925c-7c196b92fa8b": {
+    "id": "d7de0622-41fc-48f2-925c-7c196b92fa8b",
+    "z": 5477,
+    "type": "card",
+    "cardType": "type-55783e10-050a-4702-ae23-4a7b9770e685",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "58834760-e50d-4338-88ae-a4b6deb65a6a": {
+    "id": "58834760-e50d-4338-88ae-a4b6deb65a6a",
+    "z": 6044,
+    "type": "card",
+    "cardType": "clubs-4",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "9d8774f5-3b22-478a-a742-031a5100f6f2": {
+    "id": "9d8774f5-3b22-478a-a742-031a5100f6f2",
+    "z": 1327,
+    "type": "card",
+    "cardType": "spades-4",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "ebc82fca-a25c-438f-992d-317ce78d51d8": {
+    "id": "ebc82fca-a25c-438f-992d-317ce78d51d8",
+    "z": 5401,
+    "type": "card",
+    "cardType": "spades-a",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "30278f1d-ade0-4ff3-8778-d23e3b8006a8": {
+    "id": "30278f1d-ade0-4ff3-8778-d23e3b8006a8",
+    "z": 4724,
+    "type": "card",
+    "cardType": "diamonds-j",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "2fdd993e-a702-454d-b320-62615c9790ca_label": {
+    "id": "2fdd993e-a702-454d-b320-62615c9790ca_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Won Tricks",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "WonTricksWest",
+    "css": "font-size: 18px; font-weight: bold; color: #ff2a2aff; text-align: center;"
+  },
+  "2eaa01a1-8747-422b-8d09-ff3527a8b992": {
+    "id": "2eaa01a1-8747-422b-8d09-ff3527a8b992",
+    "z": 5243,
+    "type": "card",
+    "cardType": "diamonds-k",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "hand": {
+    "id": "hand",
+    "y": 809,
+    "z": 4264,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "stackOffsetX": 75,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 1400,
+    "height": 190,
+    "x": 50,
+    "css": "background-color: #5aa02cff; border-color: #165016ff;",
+    "dropShadow": true
+  },
+  "0c122dc6-733e-469a-af39-29d523e3c5be": {
+    "id": "0c122dc6-733e-469a-af39-29d523e3c5be",
+    "z": 3502,
+    "type": "card",
+    "cardType": "type-5265ab76-1bed-4bf7-8cec-fa870621828e",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "3515a9eb-235b-442e-8723-f0358cad7247": {
+    "id": "3515a9eb-235b-442e-8723-f0358cad7247",
+    "z": 2447,
+    "type": "card",
+    "cardType": "spades-2",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "2eac038e-24a3-4d15-96eb-78787e88893d": {
+    "id": "2eac038e-24a3-4d15-96eb-78787e88893d",
+    "z": 1805,
+    "type": "card",
+    "cardType": "hearts-5",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "b1c5e98c-e4f5-40e5-8416-58951247b289": {
+    "id": "b1c5e98c-e4f5-40e5-8416-58951247b289",
+    "z": 5050,
+    "type": "card",
+    "cardType": "spades-j",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "40206230-667b-436f-a246-64513f8d7b9b": {
+    "id": "40206230-667b-436f-a246-64513f8d7b9b",
+    "z": 1362,
+    "type": "card",
+    "cardType": "clubs-10",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "399e517a-18a8-4d4f-ae50-1a4cfb39e678": {
+    "id": "399e517a-18a8-4d4f-ae50-1a4cfb39e678",
+    "z": 1490,
+    "type": "card",
+    "cardType": "spades-9",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "8a533508-0309-4c9e-8f09-3e63a91bfd27": {
+    "id": "8a533508-0309-4c9e-8f09-3e63a91bfd27",
+    "z": 1994,
+    "type": "card",
+    "cardType": "joker-red",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "48f446bd-2595-467b-956d-0e44cb283eb0": {
+    "id": "48f446bd-2595-467b-956d-0e44cb283eb0",
+    "z": 4440,
+    "type": "card",
+    "cardType": "spades-q",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "249daa9b-3489-4f58-afc2-3d178609de40": {
+    "id": "249daa9b-3489-4f58-afc2-3d178609de40",
+    "z": 372,
+    "type": "card",
+    "cardType": "diamonds-10",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "9a2c24cb-da0f-4ad0-801d-2c647fbe9251": {
+    "id": "9a2c24cb-da0f-4ad0-801d-2c647fbe9251",
+    "z": 4315,
+    "type": "card",
+    "cardType": "clubs-8",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "5e792dac-717b-4a54-81c1-402d76118d47": {
+    "id": "5e792dac-717b-4a54-81c1-402d76118d47",
+    "z": 3107,
+    "type": "card",
+    "cardType": "hearts-q",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "061f753e-940a-4394-a7f4-fa6e6fe4236b": {
+    "id": "061f753e-940a-4394-a7f4-fa6e6fe4236b",
+    "z": 8632,
+    "type": "card",
+    "cardType": "spades-k",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "0062dddf-b7a1-4c26-a833-4270804accee": {
+    "id": "0062dddf-b7a1-4c26-a833-4270804accee",
+    "z": 5086,
+    "type": "card",
+    "cardType": "hearts-j",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "6b0eb30e-2408-4194-8f8e-3b5968b67b72": {
+    "id": "6b0eb30e-2408-4194-8f8e-3b5968b67b72",
+    "z": 5959,
+    "type": "card",
+    "cardType": "hearts-10",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "1118875a-4a14-4fb6-b1ff-fd3969497266": {
+    "id": "1118875a-4a14-4fb6-b1ff-fd3969497266",
+    "z": 2161,
+    "type": "card",
+    "cardType": "spades-3",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "e87cdb2a-ff1a-4699-8579-186f41e50aa1": {
+    "id": "e87cdb2a-ff1a-4699-8579-186f41e50aa1",
+    "z": 9529,
+    "type": "card",
+    "cardType": "spades-10",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "0cd5969d-229b-4fa8-a79f-a84758ffb34e": {
+    "id": "0cd5969d-229b-4fa8-a79f-a84758ffb34e",
+    "z": 9832,
+    "type": "card",
+    "cardType": "diamonds-a",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "9e02f593-fe20-48d6-ad14-71d33d911706": {
+    "id": "9e02f593-fe20-48d6-ad14-71d33d911706",
+    "z": 2157,
+    "type": "card",
+    "cardType": "clubs-5",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "5c073290-c8a0-445a-a1bd-53243d805295": {
+    "id": "5c073290-c8a0-445a-a1bd-53243d805295",
+    "z": 4970,
+    "type": "card",
+    "cardType": "hearts-a",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "815f6178-e601-4633-873c-814193c637c0": {
+    "id": "815f6178-e601-4633-873c-814193c637c0",
+    "z": 941,
+    "type": "card",
+    "cardType": "clubs-7",
+    "deck": "Deck",
+    "parent": "mg0x"
+  },
+  "9fd9a7c7-2ab1-4e88-be5c-363cdbc5c456_label": {
+    "id": "9fd9a7c7-2ab1-4e88-be5c-363cdbc5c456_label",
+    "x": -6,
+    "y": -40,
+    "width": 120,
+    "height": 40,
+    "type": "label",
+    "text": "Pigliate",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "HolderPigliateEast",
+    "css": "font-size: 18px; font-weight: bold; color: #008000ff; text-align: center;"
+  },
+  "ButtonTakeTrickWest": {
+    "id": "ButtonTakeTrickWest",
+    "x": 288,
+    "y": 315,
+    "z": 20120,
+    "type": "button",
+    "text": "Take Trick",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "HolderSouth",
+          "HolderEast",
+          "HolderNorth",
+          "HolderWest"
+        ],
+        "count": 1,
+        "to": "WonTricksWest",
+        "face": 0
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #ff2a2aff; text-align: center; background-color: #ffe6e2ff; border-width: 3px; border-color: #ff2a2aff",
+    "width": 80,
+    "height": 80
+  },
+  "ButtonTakeTrickNorth": {
+    "id": "ButtonTakeTrickNorth",
+    "x": 534,
+    "y": 54,
+    "z": 20122,
+    "type": "button",
+    "text": "Take Trick",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "HolderSouth",
+          "HolderEast",
+          "HolderNorth",
+          "HolderWest"
+        ],
+        "count": 1,
+        "to": "WonTricksNorth",
+        "face": 0
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #e47f2aff; text-align: center; background-color: #ffeeaaff; border-width: 3px; border-color: #ffa702ff",
+    "width": 80,
+    "height": 80
+  },
+  "HolderSouth": {
+    "id": "HolderSouth",
+    "x": 520,
+    "y": 420,
+    "z": 5826,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #d7eef4ff; border-width: 2px; border-color: #2a7fffff;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderEast": {
+    "id": "HolderEast",
+    "x": 660,
+    "y": 314,
+    "z": 4302,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #e5ffd5ff; border-width: 2px; border-color: #008000ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderNorth": {
+    "id": "HolderNorth",
+    "x": 520,
+    "y": 212,
+    "z": 5827,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #ffeeaaff; border-width: 2px; border-color: #ffa702ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderWest": {
+    "id": "HolderWest",
+    "x": 380,
+    "y": 314,
+    "z": 4350,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #ffe6e2ff; border-width: 2px; border-color: #ff2a2aff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "WonTricksWest": {
+    "id": "WonTricksWest",
+    "x": 160,
+    "y": 314,
+    "z": 5834,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #ffe6e2ff; border-width: 1px; border-color: #ff2a2aff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "ButtonTakeTrickSouth": {
+    "id": "ButtonTakeTrickSouth",
+    "x": 534,
+    "y": 668,
+    "z": 20125,
+    "type": "button",
+    "text": "Take Trick",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "HolderSouth",
+          "HolderEast",
+          "HolderNorth",
+          "HolderWest"
+        ],
+        "count": 1,
+        "to": "WonTricksSouth",
+        "face": 0
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #2a7fffff; text-align: center; background-color: #d7eef4ff; border-width: 3px; border-color: #2a7fffff",
+    "width": 80,
+    "height": 80
+  },
+  "WonTricksSouth": {
+    "id": "WonTricksSouth",
+    "x": 388,
+    "y": 619,
+    "z": 4322,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #d7eef4ff;border-width: 1px; border-color: #2a7fffff;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "ButtonTakeTrickEast": {
+    "id": "ButtonTakeTrickEast",
+    "x": 792,
+    "y": 315,
+    "z": 20121,
+    "type": "button",
+    "text": "Take Trick",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "HolderSouth",
+          "HolderEast",
+          "HolderNorth",
+          "HolderWest"
+        ],
+        "count": 1,
+        "to": "WonTricksEast",
+        "face": 0
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #008000ff; text-align: center; background-color: #e5ffd5ff; border-width: 3px; border-color: #008000ff",
+    "width": 80,
+    "height": 80
+  },
+  "WonTricksEast": {
+    "id": "WonTricksEast",
+    "x": 885,
+    "y": 314,
+    "z": 4372,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #e5ffd5ff; border-width: 1px; border-color: #008000ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "WonTricksNorth": {
+    "id": "WonTricksNorth",
+    "x": 650,
+    "y": 30,
+    "z": 4297,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #ffeeaaff; border-width: 1px; border-color: #ffa702ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderDeck": {
+    "id": "HolderDeck",
+    "x": 1169,
+    "y": 49,
+    "z": 4362,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #dee3dbff;  border-width: 1px; border-color: #002b11ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "Deck": {
+    "id": "Deck",
+    "x": 4,
+    "y": 4,
+    "z": 10683,
+    "type": "deck",
+    "cardTypes": {
+      "joker-black": {
+        "label": "The Fool",
+        "image": "/assets/-405547012_44914",
+        "cardPoints": 9.333,
+        "rank": 63,
+        "scommessa": 1
+      },
+      "joker-red": {
+        "label": "5 of Clubs",
+        "image": "/assets/-1325044762_23591",
+        "cardPoints": 0.333,
+        "rank": 1
+      },
+      "joker-blue": {
+        "label": "6 of Clubs",
+        "image": "/assets/-1661840288_26839",
+        "cardPoints": 0.333,
+        "rank": 2
+      },
+      "diamonds-a": {
+        "label": "7 of Clubs",
+        "image": "/assets/2109946594_27986",
+        "cardPoints": 0.333,
+        "rank": 3
+      },
+      "diamonds-2": {
+        "label": "8 of Clubs",
+        "image": "/assets/-2001295143_30623",
+        "cardPoints": 0.333,
+        "rank": 4
+      },
+      "diamonds-3": {
+        "label": "9 of Clubs",
+        "image": "/assets/-1903441921_32526",
+        "cardPoints": 0.333,
+        "rank": 5
+      },
+      "diamonds-4": {
+        "label": "10 of Clubs",
+        "image": "/assets/-1608248877_32334",
+        "cardPoints": 0.333,
+        "rank": 6
+      },
+      "diamonds-5": {
+        "label": "Maid of Clubs",
+        "image": "/assets/278945290_44543",
+        "cardPoints": 1.333,
+        "rank": 7
+      },
+      "diamonds-6": {
+        "label": "Knight of Clubs",
+        "image": "/assets/583167330_44561",
+        "cardPoints": 2.333,
+        "rank": 8
+      },
+      "diamonds-7": {
+        "label": "Queen of Clubs",
+        "image": "/assets/-1700976633_42660",
+        "cardPoints": 3.333,
+        "rank": 9
+      },
+      "diamonds-8": {
+        "label": "King of Clubs",
+        "image": "/assets/1918155084_47045",
+        "cardPoints": 4.333,
+        "rank": 10,
+        "king": 1
+      },
+      "diamonds-9": {
+        "label": "5 of Cups",
+        "image": "/assets/-1263260001_15950",
+        "cardPoints": 0.333,
+        "rank": 11
+      },
+      "diamonds-10": {
+        "label": "6 of Cups",
+        "image": "/assets/439144244_18726",
+        "cardPoints": 0.333,
+        "rank": 12
+      },
+      "diamonds-j": {
+        "label": "7 of Cups",
+        "image": "/assets/-720824649_18995",
+        "cardPoints": 0.333,
+        "rank": 13
+      },
+      "diamonds-q": {
+        "label": "8 of Cups",
+        "image": "/assets/-1788542856_22169",
+        "cardPoints": 0.333,
+        "rank": 14
+      },
+      "diamonds-k": {
+        "label": "9 of Cups",
+        "image": "/assets/-2048614779_23970",
+        "cardPoints": 0.333,
+        "rank": 15
+      },
+      "hearts-a": {
+        "label": "10 of Cups",
+        "image": "/assets/1900762173_24888",
+        "cardPoints": 0.333,
+        "rank": 16
+      },
+      "hearts-2": {
+        "label": "Maid of Cups",
+        "image": "/assets/-1164691169_44155",
+        "cardPoints": 1.333,
+        "rank": 17
+      },
+      "hearts-3": {
+        "label": "Knight of Cups",
+        "image": "/assets/2009514848_42347",
+        "cardPoints": 2.333,
+        "rank": 18
+      },
+      "hearts-4": {
+        "label": "Queen of Cups",
+        "image": "/assets/1495800857_45359",
+        "cardPoints": 3.333,
+        "rank": 19
+      },
+      "hearts-5": {
+        "label": "King of Cups",
+        "image": "/assets/705131500_48838",
+        "cardPoints": 4.333,
+        "rank": 20,
+        "king": 1
+      },
+      "hearts-6": {
+        "label": "4 of Coins",
+        "image": "/assets/1232915731_20827",
+        "cardPoints": 0.333,
+        "rank": 21
+      },
+      "hearts-7": {
+        "label": "5 of Coins",
+        "image": "/assets/357177177_19547",
+        "cardPoints": 0.333,
+        "rank": 22
+      },
+      "hearts-8": {
+        "label": "6 of Coins",
+        "image": "/assets/352910617_19369",
+        "cardPoints": 0.333,
+        "rank": 23
+      },
+      "hearts-9": {
+        "label": "7 of Coins",
+        "image": "/assets/1969512434_17864",
+        "cardPoints": 0.333,
+        "rank": 24
+      },
+      "hearts-10": {
+        "label": "8 of Coins",
+        "image": "/assets/-969761051_19717",
+        "cardPoints": 0.333,
+        "rank": 25
+      },
+      "hearts-j": {
+        "label": "9 of Coins",
+        "image": "/assets/-517315353_21642",
+        "cardPoints": 0.333,
+        "rank": 26
+      },
+      "hearts-q": {
+        "label": "10 of Coins",
+        "image": "/assets/1264206251_22724",
+        "cardPoints": 0.333,
+        "rank": 27
+      },
+      "hearts-k": {
+        "label": "Maid of Coins",
+        "image": "/assets/-934201128_41641",
+        "cardPoints": 1.333,
+        "rank": 28
+      },
+      "spades-a": {
+        "label": "Knight of Coins",
+        "image": "/assets/907184460_46252",
+        "cardPoints": 2.333,
+        "rank": 29
+      },
+      "spades-2": {
+        "label": "Queen of Coins",
+        "image": "/assets/-1741823560_45492",
+        "cardPoints": 3.333,
+        "rank": 30
+      },
+      "spades-3": {
+        "label": "King of Coins",
+        "image": "/assets/1139218037_47387",
+        "cardPoints": 4.333,
+        "rank": 31,
+        "king": 1
+      },
+      "spades-4": {
+        "label": "5 of Swords",
+        "image": "/assets/-404970728_18249",
+        "cardPoints": 0.333,
+        "rank": 32
+      },
+      "spades-5": {
+        "label": "6 of Swords",
+        "image": "/assets/-1034411643_20728",
+        "cardPoints": 0.333,
+        "rank": 33
+      },
+      "spades-6": {
+        "label": "7 of Swords",
+        "image": "/assets/423617541_21377",
+        "cardPoints": 0.333,
+        "rank": 34
+      },
+      "spades-7": {
+        "label": "8 of Swords",
+        "image": "/assets/-910708641_24206",
+        "cardPoints": 0.333,
+        "rank": 35
+      },
+      "spades-8": {
+        "label": "9 of Swords",
+        "image": "/assets/275108755_26210",
+        "cardPoints": 0.333,
+        "rank": 36
+      },
+      "spades-9": {
+        "label": "10 of Swords",
+        "image": "/assets/-241231926_25592",
+        "cardPoints": 0.333,
+        "rank": 37
+      },
+      "spades-10": {
+        "label": "Maid of Swords",
+        "image": "/assets/-436373480_40144",
+        "cardPoints": 1.333,
+        "rank": 38
+      },
+      "spades-j": {
+        "label": "Knight of Swords",
+        "image": "/assets/-1183774916_46401",
+        "cardPoints": 2.333,
+        "rank": 39
+      },
+      "spades-q": {
+        "label": "Queen of Swords",
+        "image": "/assets/53251224_43169",
+        "cardPoints": 3.333,
+        "rank": 40
+      },
+      "spades-k": {
+        "label": "King of Swords",
+        "image": "/assets/1515439325_45001",
+        "cardPoints": 4.333,
+        "rank": 41,
+        "king": 1
+      },
+      "clubs-a": {
+        "label": "Miseria",
+        "image": "/assets/2041826353_43912",
+        "cardPoints": 0.333,
+        "rank": 42
+      },
+      "clubs-2": {
+        "label": "1 of Trumps",
+        "image": "/assets/500961267_44511",
+        "cardPoints": 9.333,
+        "rank": 43,
+        "scommessa": 1
+      },
+      "clubs-3": {
+        "label": "2 of Trumps",
+        "image": "/assets/-843815539_42950",
+        "cardPoints": 0.333,
+        "rank": 44
+      },
+      "clubs-4": {
+        "label": "3 of Trumps",
+        "image": "/assets/1009279450_42959",
+        "cardPoints": 0.333,
+        "rank": 45
+      },
+      "clubs-5": {
+        "label": "4 of Trumps",
+        "image": "/assets/831505130_43593",
+        "cardPoints": 0.333,
+        "rank": 46
+      },
+      "clubs-6": {
+        "label": "5 of Trumps",
+        "image": "/assets/-1751413192_43892",
+        "cardPoints": 0.333,
+        "rank": 47
+      },
+      "clubs-7": {
+        "label": "6 of Trumps",
+        "image": "/assets/-1242954059_43785",
+        "cardPoints": 0.333,
+        "rank": 48
+      },
+      "clubs-8": {
+        "label": "7 of Trumps",
+        "image": "/assets/1731998448_44056",
+        "cardPoints": 0.333,
+        "rank": 49
+      },
+      "clubs-9": {
+        "label": "8 of Trumps",
+        "image": "/assets/-1166359886_45618",
+        "cardPoints": 0.333,
+        "rank": 50
+      },
+      "clubs-10": {
+        "label": "9 of Trumps",
+        "image": "/assets/81075180_45452",
+        "cardPoints": 0.333,
+        "rank": 51
+      },
+      "clubs-j": {
+        "label": "10 of Trumps",
+        "image": "/assets/-784481494_44707",
+        "cardPoints": 0.333,
+        "rank": 52
+      },
+      "clubs-q": {
+        "label": "11 of Trumps",
+        "image": "/assets/914173777_39622",
+        "cardPoints": 0.333,
+        "rank": 53
+      },
+      "clubs-k": {
+        "label": "12 of Trumps",
+        "image": "/assets/-175910621_39560",
+        "cardPoints": 0.333,
+        "rank": 54
+      },
+      "type-7f344907-2d8e-4527-886c-d0df52e21429": {
+        "image": "/assets/407358677_46901",
+        "label": "13 of Trumps",
+        "cardPoints": 0.333,
+        "rank": 55
+      },
+      "type-55783e10-050a-4702-ae23-4a7b9770e685": {
+        "image": "/assets/65008069_43667",
+        "label": "14 of Trumps",
+        "cardPoints": 0.333,
+        "rank": 56
+      },
+      "type-f54fe422-9ec1-444c-a36f-671951f2d070": {
+        "image": "/assets/482332512_43760",
+        "label": "15 of Trumps",
+        "cardPoints": 0.333,
+        "rank": 57
+      },
+      "type-26545cb6-a46d-4d59-84c4-bb50ccb85794": {
+        "image": "/assets/-235026333_43476",
+        "label": "16 of Trumps",
+        "cardPoints": 4.333,
+        "rank": 58,
+        "arie": 1
+      },
+      "type-221f3dea-519c-473b-bb34-45a9fd837b4e": {
+        "image": "/assets/-450645731_44038",
+        "label": "17 of Trumps",
+        "cardPoints": 4.333,
+        "rank": 59,
+        "arie": 1
+      },
+      "type-13f2eeea-5417-48ff-8e07-e2c365090b9e": {
+        "image": "/assets/-104555611_46158",
+        "label": "18 of Trumps",
+        "cardPoints": 4.333,
+        "rank": 60,
+        "arie": 1
+      },
+      "type-5265ab76-1bed-4bf7-8cec-fa870621828e": {
+        "image": "/assets/-604388781_48011",
+        "label": "19 of Trumps",
+        "cardPoints": 4.333,
+        "rank": 61,
+        "arie": 1
+      },
+      "type-389b84d8-738b-48a1-8cf3-6f773a7334ae": {
+        "image": "/assets/-1547800648_44541",
+        "label": "20 of Trumps",
+        "cardPoints": 9.333,
+        "rank": 62,
+        "twenty": 1,
+        "scommessa": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1330525166_45498",
+            "width": 110,
+            "height": 180
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 110,
+            "height": 180,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 110,
+      "height": 180,
+      "enlarge": 3,
+      "ignoreOnLeave": true
+    },
+    "parent": "HolderDeck"
+  },
+  "ButtonDealMonte": {
+    "id": "ButtonDealMonte",
+    "x": 1317,
+    "y": 153,
+    "z": 20113,
+    "type": "button",
+    "text": "Deal 'Monte'",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "HolderDeck",
+        "count": 1,
+        "to": [
+          "HolderMonte1",
+          "HolderMonte2",
+          "HolderMonte3"
+        ]
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #5f5fd3ff; text-align: center; background-color: #d7d7f4ff; border-width: 3px; border-color: #5f5fd3ff ;",
+    "width": 100,
+    "height": 70
+  },
+  "HolderMonte2": {
+    "id": "HolderMonte2",
+    "x": 1312,
+    "y": 240,
+    "z": 4364,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #dee3dbff; border-width: 1px; border-color: #002b11ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderMonte3": {
+    "id": "HolderMonte3",
+    "x": 1455,
+    "y": 241,
+    "z": 4366,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #dee3dbff; border-width: 1px; border-color: #002b11ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "ButtonDeal5Cards": {
+    "id": "ButtonDeal5Cards",
+    "x": 1321,
+    "y": 49,
+    "z": 20114,
+    "type": "button",
+    "text": "Deal 5 cards",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "HolderDeck",
+        "count": 5,
+        "to": [
+          "HolderSouth",
+          "HolderEast",
+          "HolderNorth",
+          "HolderWest"
+        ],
+        "face": 0
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #5f5fd3ff; text-align: center; background-color: #d7d7f4ff; border-width: 3px; border-color: #5f5fd3ff ",
+    "width": 90,
+    "height": 90
+  },
+  "ButtonRecallShuffleDeck": {
+    "id": "ButtonRecallShuffleDeck",
+    "x": 1446,
+    "y": 52,
+    "z": 20111,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Raccogli carte...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Raccolgo e mischio il mazzo?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "HolderDeck"
+      },
+      {
+        "func": "FLIP",
+        "holder": "HolderDeck",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "HolderDeck"
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #5f5fd3ff; text-align: center; background-color: #d7d7f4ff; border-width: 3px; border-color: #5f5fd3ff;",
+    "width": 130,
+    "height": 80
+  },
+  "HolderMonte1": {
+    "id": "HolderMonte1",
+    "x": 1170,
+    "y": 241,
+    "z": 4376,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #dee3dbff;  border-width: 1px; border-color: #002b11ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "ButtonFlipMonte": {
+    "id": "ButtonFlipMonte",
+    "x": 1463,
+    "y": 153,
+    "z": 20112,
+    "type": "button",
+    "text": "Flip 'Monte'",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": [
+          "HolderMonte1",
+          "HolderMonte2",
+          "HolderMonte3"
+        ]
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #5f5fd3ff; text-align: center; background-color: #d7d7f4ff; border-width: 3px; border-color: #5f5fd3ff;",
+    "width": 100,
+    "height": 70
+  },
+  "HolderPigliateNorth": {
+    "id": "HolderPigliateNorth",
+    "x": 771,
+    "y": 30,
+    "z": 4298,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #ffeeaaff; border-width: 1px; border-color: #ffa702ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderPigliateEast": {
+    "id": "HolderPigliateEast",
+    "x": 1011,
+    "y": 314,
+    "z": 4371,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #e5ffd5ff;  border-width: 1px; border-color: #008000ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderPigliateSouth": {
+    "id": "HolderPigliateSouth",
+    "x": 263,
+    "y": 618,
+    "z": 4295,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #d7eef4ff; border-width: 1px; border-color: #2a7fffff;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "HolderPigliateWest": {
+    "id": "HolderPigliateWest",
+    "x": 29,
+    "y": 314,
+    "z": 4360,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #ffe6e2ff; border-width: 1px; border-color: #ff2a2aff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "4nup": {
+    "type": "button",
+    "text": "Add Up",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "parent",
+        "relation": "=",
+        "value": "HolderAddingUp",
+        "collection": "cards"
+      },
+      {
+        "func": "GET",
+        "collection": "cards",
+        "property": "cardPoints",
+        "aggregation": "sum",
+        "variable": "totalPoints"
+      },
+      "var roundedPoints = round ${totalPoints}",
+      {
+        "func": "LABEL",
+        "label": "addedUp",
+        "mode": "set",
+        "value": "${roundedPoints}"
+      },
+      {
+        "func": "GET",
+        "collection": "cards",
+        "property": "king",
+        "aggregation": "sum",
+        "variable": "numberOfKings"
+      },
+      "var FourKingsNotWon = 4 != ${numberOfKings}",
+      {
+        "func": "LABEL",
+        "label": "kingLabel",
+        "mode": "set",
+        "value": "4 KINGS: NO"
+      },
+      {
+        "func": "LABEL",
+        "label": "kingLabel",
+        "mode": "set",
+        "value": "4 KINGS: YES!",
+        "skip": "${FourKingsNotWon}"
+      },
+      {
+        "func": "GET",
+        "collection": "cards",
+        "property": "arie",
+        "aggregation": "sum",
+        "variable": "numberOfArie"
+      },
+      "var ArieNotWon = 4 != ${numberOfArie}",
+      {
+        "func": "LABEL",
+        "label": "arieLabel",
+        "mode": "set",
+        "value": "4 ARIE: NO"
+      },
+      {
+        "func": "LABEL",
+        "label": "arieLabel",
+        "mode": "set",
+        "value": "4 Arie: YES!",
+        "skip": "${ArieNotWon}"
+      },
+      {
+        "func": "GET",
+        "collection": "cards",
+        "property": "twenty",
+        "aggregation": "sum",
+        "variable": "twentyWon"
+      },
+      "var totalArieNumber = ${twentyWon} + ${numberOfArie}",
+      "var FiveArieNotWon = 5 != ${totalArieNumber}",
+      {
+        "func": "LABEL",
+        "label": "arieLabel",
+        "mode": "set",
+        "value": "5 ARIE: YES!",
+        "skip": "${FiveArieNotWon}"
+      },
+      {
+        "func": "GET",
+        "collection": "cards",
+        "property": "scommessa",
+        "aggregation": "sum",
+        "variable": "scommessaNumber"
+      },
+      "var scommessaNotAllThree = 3 != ${scommessaNumber}",
+      "var scommessaAtLeastOne = 0 != ${scommessaNumber}",
+      {
+        "func": "LABEL",
+        "label": "scommessaLabel",
+        "mode": "set",
+        "value": "Split Scommessa"
+      },
+      {
+        "func": "LABEL",
+        "label": "scommessaLabel",
+        "mode": "set",
+        "value": "Scommessa: YES!",
+        "skip": "${scommessaNotAllThree}"
+      },
+      {
+        "func": "LABEL",
+        "label": "scommessaLabel",
+        "mode": "set",
+        "value": "Scommessa: NO",
+        "skip": "${scommessaAtLeastOne}"
+      }
+    ],
+    "x": 1288.5,
+    "y": 691,
+    "z": 20115,
+    "id": "4nup",
+    "css": "font-size: 18px; font-weight: bold; color: #5f5fd3ff; text-align: center; background-color: #d7d7f4ff; border-width: 3px; border-color: #5f5fd3ff;",
+    "width": 85,
+    "height": 70
+  },
+  "addedUp": {
+    "type": "label",
+    "text": 0,
+    "x": 1227,
+    "y": 768.5,
+    "z": 3945,
+    "id": "addedUp",
+    "css": "font-size: 28px; font-weight: bold; color: #5f5fd3ff; text-align: center;",
+    "width": 200,
+    "height": 105
+  },
+  "ButtonSortHand": {
+    "type": "button",
+    "text": "Sort Hand",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "rank",
+        "reverse": false
+      }
+    ],
+    "x": 1474,
+    "y": 856,
+    "z": 20118,
+    "id": "ButtonSortHand",
+    "css": "font-size: 22px; font-weight: bold; color: #5f5fd3ff; text-align: center; background-color: #d7d7f4ff; border-width: 3px; border-color: #5f5fd3ff;",
+    "width": 100,
+    "height": 100
+  },
+  "kingLabel": {
+    "type": "label",
+    "text": "4 KINGS: NO",
+    "x": 1435,
+    "y": 636,
+    "z": 3949,
+    "id": "kingLabel",
+    "width": 200,
+    "height": 40,
+    "css": "font-size: 18px; font-weight: bold; color: #002b11ff; text-align: center;"
+  },
+  "arieLabel": {
+    "type": "label",
+    "text": "4 ARIE: NO",
+    "x": 1435,
+    "y": 704,
+    "z": 3951,
+    "id": "arieLabel",
+    "width": 200,
+    "height": 40,
+    "css": "font-size: 18px; font-weight: bold; color: #002b11ff; text-align: center;"
+  },
+  "scommessaLabel": {
+    "type": "label",
+    "text": "Scommessa: NO",
+    "x": 1417,
+    "y": 768,
+    "z": 3952,
+    "id": "scommessaLabel",
+    "width": 200,
+    "height": 40,
+    "css": "font-size: 18px; font-weight: bold; color: #002b11ff; text-align: center;"
+  },
+  "HolderAddingUp": {
+    "id": "HolderAddingUp",
+    "x": 1170,
+    "y": 621,
+    "z": 4367,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 112,
+    "height": 182,
+    "css": "background-color: #dee3dbff; border-width: 1px; border-color: #002b11ff",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "scoreNorthLabel": {
+    "id": "scoreNorthLabel",
+    "parent": "scoreNorth",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Score"
+  },
+  "spsu": {
+    "type": "label",
+    "text": 0,
+    "id": "spsu",
+    "x": 937,
+    "y": 551,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px; font-weight: bold; color: #008000ff",
+    "editable": true,
+    "z": 4074
+  },
+  "spsuD": {
+    "id": "spsuD",
+    "parent": "spsu",
+    "x": 10,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "spsu",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "spsuU": {
+    "id": "spsuU",
+    "parent": "spsu",
+    "x": 93,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "spsu",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "xt50": {
+    "type": "label",
+    "text": 0,
+    "id": "xt50",
+    "x": 922,
+    "y": 100,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px; font-weight: bold; color: #e47f2aff",
+    "editable": true,
+    "z": 4061
+  },
+  "xt50D": {
+    "id": "xt50D",
+    "parent": "xt50",
+    "x": 10,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "xt50",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "xt50U": {
+    "id": "xt50U",
+    "parent": "xt50",
+    "x": 93,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "xt50",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "p1vl": {
+    "type": "label",
+    "text": 0,
+    "id": "p1vl",
+    "x": 88,
+    "y": 691,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px; font-weight: bold; color: #2a7fffff",
+    "editable": true,
+    "z": 4069
+  },
+  "p1vlD": {
+    "id": "p1vlD",
+    "parent": "p1vl",
+    "x": 10,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p1vl",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "p1vlU": {
+    "id": "p1vlU",
+    "parent": "p1vl",
+    "x": 93,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p1vl",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "NorthScoreLabel": {
+    "type": "label",
+    "text": "Victory Points -'Jochi' Win/Lost",
+    "x": 893,
+    "y": 46,
+    "z": 4060,
+    "id": "NorthScoreLabel",
+    "css": "font-size: 20px; font-weight: bold; color: #e47f2aff; text-align: center;",
+    "width": 200,
+    "height": 70
+  },
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "Tarocchi Siciliani",
+      "image": "/assets/1271589522_38643",
+      "rules": "https://giocotarocchisiciliani.jimdofree.com/imparare/",
+      "bgg": "https://giocotarocchisiciliani.jimdofree.com/giocare/software-free/",
+      "year": "1600",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "<div><b>ENGLISH:</b></div><div>References and license of use:\n- module project: George Witty\n- Design of graphic elements (tiles, cards, library image, etc.) and automation implementation: Salvo Bonaccorsi\n- Card illustrator: Lelio Bonaccorso\nAll the self-produced graphic material is licensed under a Creative Commons BY-NC-ND license for which sharing is permitted subject to the correct attribution (BY) of the authors to be reported in the sources with the credits: \"Salvatore Bonaccorsi for AC Gioco Tarocchi Siciliani Michael Dummett - Catania, site: https://giocotarocchisiciliani.jimdofree.com/ and Lelio Bonaccorso for artistic illustrations, site: https: //www.facebook.com/LelioBonaccorsoArt/ \", only for non-commercial use (NC), and without being able to share derivative works or remixes (ND).</div><div><br></div><div><b>ITALIAN:</b><div>Referenze e licenza d'uso:\n- progetto modulo: George Witty\n- design degli elementi grafici (tessere, carte, layout) ed implementazione automazioni: Salvo Bonaccorsi\n- Illustratore delle carte: Lelio Bonaccorso\nTutto il materiale grafico autoprodotto è concesso con licenza Creative Commons BY-NC-ND per cui è concessa la condivisione condizionata alla corretta attribuzione (BY) degli autori da riportare nelle fonti con i credits: \"Per tutti gli elementi grafici (carte, tessere, layouts) Salvatore Bonaccorsi per A.C. Gioco Tarocchi Siciliani Michael Dummett - Catania, sito: https://giocotarocchisiciliani.jimdofree.com/ e Lelio Bonaccorso per le illustrazioni artistiche, sito: https://www.facebook.com/LelioBonaccorsoArt/\", solo per usi non commerciali (NC), e senza poter condividere lavori derivati o remix (ND).&nbsp;&nbsp;</div></div>",
+      "showName": false,
+      "skill": "",
+      "description": "This is an ancient classic game played with Tarot cards. Sicilian Tarot is a point trick game with trumps. Il più antico gioco di prese a punti praticato in Sicilia, oggi nel Registro delle Eredità Immateriali - UNESCO della Regione Sicilia.",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "<div><b style=\"color: var(--overlayFontColor);\">ENGLISH:</b><br></div><div><b style=\"color: var(--overlayFontColor);\">Sicilian Tarots - 4 players rules</b></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">We want to thank and acknowledge as the main source of most of the passages of this concise English version of the rules John McLeod at https://www.pagat.com/tarot/sicilian.html)</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Like all classic games played with Tarot cards, Sicilian Tarot is a point trick game with trumps.<br></div><div><br></div><div><b>CARDS</b><br></div><div>• 21 Trumps numbered from 0 to 20 (from 16 to 20 are denominated 'Arie')<br></div><div>• The Fool (*)\n• 10 cards in each of the suits (Clubs, Swords, and Cups) with card rank from low to high: 5 6 7 8 9 10 J C Q K, and 11 cards in Coins/Money (Oro/Denari): 4 5 6 7 8 9 10 J C Q K.<br></div><div><br></div><div><b>CARD POINTS. </b>In total, there are 109 card points, counted automatically in the this implementation of the game.&nbsp;<span style=\"color: var(--overlayFontColor);\">In actual game practice, the counting method provides card values, for a card customarily </span><b style=\"color: var(--overlayFontColor);\">counted in batches of three with another two no value cards</b><span style=\"color: var(--overlayFontColor);\">. In this method, the values are as follows:&nbsp;</span></div><div><b>VALUE CARDS</b> (CS in example)&nbsp;</div><div>• Trumps 1 (the ‘Picciotti’),&nbsp;<span style=\"color: var(--overlayFontColor);\">20 (Giove) and the Fool (the ‘Fujutu’): 10 points</span></div><div><span style=\"color: var(--overlayFontColor);\">• Trumps 16, 17, 18, 19: 5 points</span></div><div><span style=\"color: var(--overlayFontColor);\">• King: 5 points</span></div><div><span style=\"color: var(--overlayFontColor);\">• Queen: 4 points</span></div><div><span style=\"color: var(--overlayFontColor);\">• Knight: 3 points</span></div><div><span style=\"color: var(--overlayFontColor);\">• Jack: 2 point</span></div><div><b>NO VALUE CARDS</b> (CQ in example) (Trumps 0 and 2-15 and numeral cards in suits)\n• Any other card: 1/3 point (three no value cards = 1 point)</div><div><b>LAST TRICK BONUS</b>\n• Last trick: 5 card points extra (for the player or team that wins it)</div><div><br></div><div>COUNTING CARD-POINTS EXAMPLES:</div><div>a) one Value Card (CS) and two No Value Cards (CQ) = Value of CS<br></div><div>b) two Value Cards (CS) and one No Value Card (CQ) = CS1+CS2 - 1<br></div><div>c) three Value Cards (CS) = CS1 + CS2 + CS3 - 2<br></div><div>d) three No Value Cards (CQ) = 1 Point<br></div><div>Finally, having always the foresight to leave some No Value Cards as any residuals of 1 or 2 cards, are counted:\ne) two No Value Card (CQ) = 1 Point</div><div>f) one No Value Card (CQ) = 0 Point&nbsp;</div><div><br></div><div><b>GOALS OF THE GAME</b> (for each team of opponents)</div><div>■’Rimaura’ (most Card-points, ≥55) : 1 Victory-point (‘Gioco’ in Italian, Jocu in Sicilian)&nbsp;</div><div>■Vanto (Vaunt, last trick): 1 Victory-point<br></div><div>■4 Re (4 Kings) - Final possession of 4 King: 1 Victory-point<br></div><div>■4 Arie - Possession of 4 ‘Arie’ (Trumps 16, 17, 18, 19): 1 Victory-point<br></div><div>■5 Arie - Possession of Trump 20 together with 4 ‘Arie’: 1 Victory-point<br></div><div>■Pigliate (Captured Trumps 1 or 16, 17,18, 19 to the opponent team: 1 Victory-point for each<br></div><div><b>Other goals </b>(<b>if you bet these at the beginning</b>):\n■Scommessa (‘The Bet’), final possession of 1, 20 and Fool (bid if there was alredy in hand at least 20 and Fool)<br></div><div>■Rivanto (Re-vaunt, last trick declared): 1 Victory-point added<br></div><div><br></div><div><b>THE DEAL AND THE BIDS</b></div><div>In the <b>four-player version</b> of the Mineo game, most deals are played two against two in variable partnerships chosen by calling a card. It is also possible for one person to play alone against a team of three opponents:</div><div>• anticlockwise in batches of <b>5 cards</b> at a time, beginning to dealer's righ<span style=\"color: var(--overlayFontColor);\">t</span></div><div><span style=\"color: var(--overlayFontColor);\">• after the first round of the deal, the dealer pauses and the players look at their 5 cards and speak in turn, beginning with the player to dealer's right. The options are (with the corresponding tiles to be played in the digital version):&nbsp;</span></div><div><span style=\"color: var(--overlayFontColor);\">o <b>Vado solo <i>(I play alone</i>)</b>. On the basis of the first five cards, the player undertakes to play a solo, playing alone against the other three players. The deal is completed without further announcements. The final score will be doubled</span></div><div>o <b>Passo (Pass)</b>. The player does not wish to commit to playing alone at this stage, and the deal should continue.<font color=\"rgba(0, 0, 0, 0)\"><br></font></div><div>• <b>Two more rounds of 5 cards</b> each are dealt and the last three cards are placed face down on the space provided in the Deck window, forming the Stack (the Monte). Only the dealer can now secretly look at the three cards of the Monte. Each player now has 15 cards and if Solo was not&nbsp;bid after the first round of the deal there is a round of bidding, beginning again with the player to dealer's right, in which the possibilities are:&nbsp;</div><div><b>o Passo (Pass).</b> The player does not want to play, even with the help of a partner.<br></div><div><b>o Chiamo… (I Call)</b>. The player wishes to play with the help of a partner, and names the highest trump that they do not hold: they must call the 20 if they do not have it; if they have the 20 they must call the 19 if they do not have it; holding 20-19 but not the 18 they call the 18, and so on.\n<b>o Vado solo (I play alone)</b>. The player undertakes to play alone against the other three players.\nEach player has just one chance to speak. If a player calls a trump, subsequent players must either pass or say 'vado solo', which supersedes the call. If a player says 'vado solo' that ends the bidding. If all four players pass the player who holds the 20 (Giove) is forced to call, but has the advantage of first showing and taking the Monte and discarding and then calling the highest missing Trump.<br></div><div><br></div><div><b>Calling and Exchanging the Monte</b></div><div>If the final bid was a Call (Chiamo), the holder of the called trump becomes the bidder's partner, but is not allowed to reveal their identity until the called trump appears in the course of play. The Monte is then turned up for all to see. If the called trump is in the Monte, the caller has no partner and has to play alone against the other three players, as ‘forced alone’. In digital version can replace the calling tile with the tile:&nbsp;</div><div>o Solo forzato (forced alone)<br></div><div>In a Solo there is of course no calling. The Monte is exposed and picked up by the soloist. The player who picked up the Monte must then discard three cards face down under those restrictions: it is illegal to discard any Trumps, the Fool (Fujutu) or any King. Other cards in the suits (Queens [Q], Cavaliers [C], Maids [J] and numeral cards) may be discarded, and any points in these discarded cards count towards the soloist's tricks.<br></div><div><br></div><div><b>The Bets and the Play</b></div><div><b></b>After discarding the soloist says 'fatto è' (it's done) when ready for the play to begin. Before the first lead there are two types of announcement that can be made, exposed in ‘Other goals’ paragraph: othe Soloist can announce Scommessa (1+20+Fool). Since the 20 and Fool cannot be lost, to make this announcement the soloists normally needs to hold these two cards, and either to hold the 1 and expect to bring it home or (more rarely) to be confident of capturing the 1 from the opponents.\noan opponent of the soloist can announce Rivanto, which doubles the score for winning the last trick.\nThe player to the right of the soloist (or of the caller) always leads to the first trick, so that the soloist plays last to this first trick.&nbsp;</div><div>• The player to the bidder's right leads to the first trick (any card except the Fool may be led to a trick)</div><div>• The others must follow suit if able to</div><div>• If unable to follow suit, they must play a trump if they have one, and there is no obligation to overtake cards played by the previous player</div><div>• If one cannot follow suit nor play a Trump, can play any card.&nbsp;</div><div>The Fool can be played anytime, without respect of the precedent rules. It is only shown to others and placed on the stack of your own tricks. The card of the opening suit with highter position in the rank win the trick. If there are Trumps on the table the highter win the trick. The winner take the trick and play a new card.<br></div><div><br></div><div><b>Scoring</b></div><div>At the end of the hand the partners combine the cards into a single tricks-deck and settle up in Giochi (Victory-points) described in ‘Goals of the game’ paragraph. The Soloist (or the Caller’s team) form the side ‘ATTACCO’ (Attack) in the digital version; the Soloist's (or Caller’s) opponents form the other partnership ‘DIFESA’ (Defence), and pay equal amounts to or receive equal amounts from the Soloist. Any achievement such as winning the last trick or capture of a counting trump by one of the soloist's opponents benefits both of them.\nThe players add up the Giochi won by each side, and the losing side pays the net amount to the winners. For example if the Soloist wins the last trick but the opponents take the majority of card points, and there are no announcements or scoring events, then then each side has won one Gioco and there is no payment.\nIn the unusual case where a player announced a Solo after being dealt only 5 cards, all the payments are doubled.</div>",
+      "helpText": "<div>ENGLISH:</div><div><b>HOW TO PLAY</b>\n1] Click, hold and drag the cards to move them.\n2] Quick click on the cards to flip them.\n3] Hover over it with the mouse to view an enlarged view of the card (from an Android touch device, click and hold down longer; it doesn't work on iOS-Apple).\n4] Insert the cards only within the fields provided to keep the game space tidy.\n5] When you put cards into your Hand (the dark green space at the bottom of the screen), they will only be visible to you. The 'Sort Hand' button on the right allows you to automatically rearrange all the cards previously inserted into it by suit, for all players.\n6] At the end of each trick, when all players have placed a card in their play space, the winner can use his 'Take Trick' button to automatically bring all the cards into his 'Won Tricks' pile; when a player sets the Fujuto he must remember to turn it over and place it among his tricks, before the winner of the trick collects it.\n7] The 'Recall &amp; Shuffle' button takes all the cards on the board and from the players' hands, puts them back in the Start Deck space and shuffles them.<br></div><div><br></div><div><b>STACKS OR PACKS OF CARDS</b>\n1] When you put the cards on top of each other, a bunch or pile is automatically created\n2] Piles show the total number of cards included in a gray circle/handle at the top right.\n3] If you click, hold and drag on the cards you will move only the top card of the pile.\n4] When you want to move the whole stack, click, hold and drag on the handle.\n5] Click on the handle with the number to open an options menu window offering: flip the entire deck, shuffle and split the stack: to translate a selected number of cards and view them only partially overlapping.<br></div><div><br></div><div><b>OTHER AIDS TO THE FLOW OF THE GAME: INDICATOR CARDS AND AUTOMATIONS</b>\n1] The blue card that indicates the current Dealer is initially in the East position. At the end of the deal, it can be moved manually to the relative space of the new player who must deal (counterclockwise).\n2] In the DECK AND DISTRIBUTION area the following are available: the '<i><b>Deal 5 cards</b></i>' button which automates the distribution of a round of cards; the '<i><b>Recall and shuffle</b></i>' button to collect at the end of the hand and shuffle the cards; the buttons '<i><b>Deal Monte</b></i>', to arrange the three cards of the Monte face down in the spaces below and '<i><b>Flip 'Monte</b>',</i> to make them visible to everyone.\n3] BID TOKENS allow players, placing them in their '<i>Bid</i>:' space, to have everyone see, on their turn to speak, what their declaration is, helping in case of non-use of the associated text or audio-video chat or of interruptions of the same; the underlying '<i><b>Recall Bids</b></i>' button allows you to return all the tiles previously placed on the table to the initial space, in order;\n4] At the end of the deal, just place all the tricks of one of the two sides in the game, usually the caller or lead side, in the '<b><i>?</i></b>' space of the CARD POINTS ANF 'JOCHI' INSPECTION&nbsp; area, and then click the '<b><i>Add up</i>'</b> button: in addition to calculating and displaying the total number of card points made in the number below, it will automatically carry out the verification check of the achievement of the Objectives: 4 Kings, 4 (or 5) Arias and Bet (possession of 20, 1 and Fujuto); the Bet will clearly then be counted as a Game made only if initially declared, and the players must remember, as at a normal table, whether the Bet was initially made.\n5] Using the counter available in each player's game areas, the '<i>Victory points-jochi Win/Lost</i>' it will be possible to update and view the relative scores at the end of each round. It is possible either to click on the '+' or '-' buttons or to click directly on the number and enter the new value from the keyboard.<br></div><div><br></div><div>ITALIAN:</div><div></div><div>Tutorial video uso modulo:&nbsp;https://youtu.be/Nq5OswQeklg</div><div><br></div><div><b>COME GIOCARE</b>\n1] Clicca, tieni premuto e trascina le carte per spostarle.\n2] Fare clic rapido sulle carte per capovolgerle.\n3] Fermati sopra col mouse per visualizzare un ingrandimento della carta (da dispositivo touch Android clicca tenendo premuto più a lungo; su iOS-Apple non funziona).\n4] Inserisci le carte solo all’interno dei campi predisposti per mantenere ordinato lo spazio di gioco.\n5] Quando metti le carte nella tua Mano (lo spazio verde scuro nella parte bassa dello schermo), saranno visibili solo a te. Il pulsante a destra ‘<i>Ordina Mano</i>’ consente di riordinare automaticamente per seme tutte le carte prima inserite al suo interno, per tutti i giocatori.\n6] Alla fine di ogni presa, quando tutti i giocatori hanno calato una carta nel loro spazio di gioco, il vincitore può usare il proprio pulsante ‘<i>Raccogli Presa</i>’ per portare automaticamente tutte le carte nel suo mazzetto ‘<i>Prese Vinte</i>’; quando un giocatore cala il Fujuto deve ricordare di girarlo e metterlo tra le proprie Prese, prima che il vincitore della presa la raccolga.\n7] Il pulsante ‘<i>Raccogli &amp; Mischia</i>’ estrae tutte le carte sul tabellone e dalle mani dei giocatori, le riposiziona nello spazio Mazzo iniziale e le mescola.\n<br></div><div><b>PILE O MAZZETTI DI CARTE</b>\n1] Quando metti le carte una sull'altra si crea automaticamente un mazzetto o pila\n2] I mazzetti mostrano il numero totale di carte in esso comprese in un cerchietto/maniglia grigio in alto a destra.\n3] Se clicchi, tieni premuto e trascini in corrispondenza delle carte sposterai solo la prima carta della pila.\n4] Quando vuoi spostare l’intera pila, clicca, tieni premuto e trascina in corrispondenza della maniglia.<br>&nbsp;5] Fai clic sulla maniglia con numero per aprire una finestra menu di opzioni che propone: capovolgi intero mazzo (flip), mescola (shuffle) e separa pila (split: per traslare un numero di carte selezionato e visualizzarle solo in parte sovrapposte)</div><div>\n<b>ALTRI AIUTI AL FLUSSO DEL GIOCO: TESSERE INDICATRICI E AUTOMAZIONI</b>\n1] La tessera blu che indica il Mazziere di turno è inizialmente nella posizione Est. A fine smazzata si può spostare manualmente nello spazio relativo del nuovo giocatore che deve dare carte (in senso antiorario).\n2] Nell’area <i>MAZZO E DISTRIBUZIONE</i> sono disponibili: il pulsante ‘<i>Dai 5 carte</i>’ che rende automatica la distribuzione di un giro di carte; il pulsante ‘<i>Raccogli e mischia</i>’ per raccogliere al termine della mano e rimischiare le carte; i pulsanti <i>‘Dai il Monte</i>’, per disporre coperte le tre carte del Monte negli spazi sottostanti e ‘<i>Scopri il Monte</i>’, per renderle visibili a tutti.\n3] Le <i>TESSERE DICHIARAZIONI</i> consentono ai giocatori, disponendole nel loro spazio ‘Dichiaro:’ di far visualizzare a tutti, al loro turno di parola, quale è la loro dichiarazione, aiutando in caso di mancato uso di chat testuale o audio-video associata o di interruzioni della stessa; il sottostante pulsante ‘<i>Raccogli Dichiarazioni</i>’ consente di riportare nello spazio iniziale, in ordine, tutte le tessere prima posizionate sul tavolo;\n4] A fine smazzata basta disporre tutte le prese di una delle due parti in gioco, solitamente la parte del chiamante o solista, nello spazio ‘<b><i>?</i></b>’ dell’area <i>CONTEGGIO PUNTI E VERIFICA GIOCHI</i>, e cliccare poi il pulsante ‘<i>Verifica Punti</i>’: esso oltre a calcolare e visualizzare nel numero sottostante il totale di Punti-carta effettuati, eseguirà automaticamente il controllo di verifica della realizzazione degli Obiettivi: 4 Re, 4 (o 5) Arie e Scommessa (possesso di 20, 1 e Fujuto); quest’ultimo chiaramente sarà poi conteggiato come Gioco effettuato solo se inizialmente dichiarato, e devono essere i giocatori a ricordare, come ad un normale tavolo, se la Scommessa era stata inizialmente effettuata.\n5] Utilizzando i due contatori disponibili nelle aree di gioco di ciascun giocatore, quello dei ‘Giochi Vinti/Persi’ e quello ‘Somma Tot.Giochi’ Giochi totali effettuati (utile da registrare solo in caso di Campionati o Tornei) sarà possibile aggiornare e visualizzare alla fine di ogni smazzata i relativi punteggi. E’ possibile sia cliccare sui pulsanti ‘+’ o ‘-‘ sia cliccare direttamente sul numero e inserire da tastiera il nuovo valore.</div>",
+      "lastUpdate": 1689861354882,
+      "variantImage": "",
+      "variant": "4 Players",
+      "language": "en-US",
+      "players": "4"
+    }
+  },
+  "tzfo": {
+    "type": "label",
+    "text": "Player?",
+    "x": 663,
+    "y": 495.5,
+    "z": 4139,
+    "id": "tzfo",
+    "editable": true,
+    "css": "font-size: 24px; font-weight: bold; color: #008000ff; text-align: left;",
+    "width": 120,
+    "height": 65
+  },
+  "5l2e": {
+    "type": "label",
+    "text": "West",
+    "x": 381,
+    "y": 387,
+    "z": 3779,
+    "css": "font-size: 26px; font-weight: bold; color: #ff2a2aff; text-align: center;",
+    "width": 100,
+    "height": 35,
+    "id": "5l2e"
+  },
+  "2p1j": {
+    "type": "label",
+    "text": "North",
+    "x": 523,
+    "y": 283.5,
+    "z": 3994,
+    "css": "font-size: 26px; font-weight: bold; color: #e47f2aff; text-align: center;",
+    "width": 100,
+    "height": 35,
+    "id": "2p1j"
+  },
+  "mc2a": {
+    "type": "label",
+    "text": "South",
+    "x": 525,
+    "y": 495.5,
+    "z": 3987,
+    "css": "font-size: 26px; font-weight: bold; color: #2a7fffff; text-align: center;",
+    "width": 100,
+    "height": 35,
+    "id": "mc2a"
+  },
+  "hsj7": {
+    "type": "label",
+    "text": "East",
+    "x": 664,
+    "y": 387,
+    "z": 3704,
+    "css": "font-size: 26px; font-weight: bold; color: #008000ff; text-align: center;",
+    "width": 100,
+    "height": 35,
+    "id": "hsj7"
+  },
+  "58ts": {
+    "type": "label",
+    "text": "Player?",
+    "x": 520,
+    "y": 602.5,
+    "z": 4138,
+    "editable": true,
+    "css": "font-size: 24px; font-weight: bold; color: #2a7fffff; text-align: left;",
+    "width": 120,
+    "height": 65,
+    "id": "58ts"
+  },
+  "nd0s": {
+    "type": "label",
+    "text": "Player?",
+    "x": 383,
+    "y": 282.5,
+    "z": 4137,
+    "editable": true,
+    "css": "font-size: 24px; font-weight: bold; color: #ff2a2aff; text-align: left;",
+    "width": 120,
+    "height": 65,
+    "id": "nd0s"
+  },
+  "qsr0": {
+    "type": "label",
+    "text": "Victory Points -'Jochi' Win/Lost",
+    "x": 54,
+    "y": 201,
+    "z": 4064,
+    "id": "qsr0",
+    "css": "font-size: 20px; font-weight: bold; color: #ff2a2aff; text-align: center;",
+    "width": 200,
+    "height": 60
+  },
+  "BidSud": {
+    "type": "label",
+    "text": "Dichiaro:",
+    "x": 632,
+    "y": 595,
+    "z": 3711,
+    "id": "BidSud",
+    "movableInEdit": false,
+    "parent": "HoldBidSud"
+  },
+  "HoldBidSud": {
+    "x": 640,
+    "y": 638,
+    "z": 5886,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "HoldBidSud",
+    "css": "background-color: #d7eef4ff; border-width: 1px; border-color: #2a7fffff;"
+  },
+  "l96k": {
+    "type": "label",
+    "text": "Player?",
+    "x": 522,
+    "y": 180.5,
+    "z": 4136,
+    "editable": true,
+    "css": "font-size: 24px; font-weight: bold; color: #e47f2aff; text-align: left;",
+    "width": 120,
+    "height": 65,
+    "id": "l96k"
+  },
+  "HoldBidEst": {
+    "x": 793,
+    "y": 425,
+    "z": 5840,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "HoldBidEst",
+    "css": "background-color: #e5ffd5ff; border-width: 1px; border-color: #008000ff"
+  },
+  "258r": {
+    "y": 593,
+    "z": 4142,
+    "type": "label",
+    "text": "CARD-POINTS AND 'JOCHI' INSPECTION",
+    "css": "font-size: 24px; font-weight: bold; text-align: center; color: #002b11ff",
+    "width": 450,
+    "height": 30,
+    "id": "258r",
+    "x": 1155
+  },
+  "3xr4": {
+    "y": 12,
+    "z": 4062,
+    "type": "label",
+    "text": "DECK AND DISTRIBUTION",
+    "css": "font-size: 24px; font-weight: bold; text-align: center; color: #002b11ff",
+    "width": 300,
+    "height": 30,
+    "x": 1159,
+    "id": "3xr4"
+  },
+  "114v": {
+    "image": "/assets/-32264034_53224",
+    "id": "114v",
+    "z": 4422,
+    "x": 799,
+    "y": 525,
+    "width": 60,
+    "height": 60
+  },
+  "HoldBidOvest": {
+    "x": 291,
+    "y": 424,
+    "z": 4369,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "HoldBidOvest",
+    "css": "background-color: #ffe6e2ff; border-width: 1px; border-color: #ff2a2aff"
+  },
+  "po94": {
+    "x": 425,
+    "y": 133,
+    "z": 4373,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "po94",
+    "css": "background-color: #ffeeaaff; border-width: 1px; border-color: #ffa702ff"
+  },
+  "9fhq": {
+    "type": "label",
+    "text": "Bid:",
+    "x": 627,
+    "y": 619,
+    "z": 4111,
+    "id": "9fhq",
+    "css": "font-size: 16px; font-weight: normal; color: #2a7fffff; text-align: center;"
+  },
+  "taf1": {
+    "type": "label",
+    "text": "Bid:",
+    "x": 784,
+    "y": 404.5,
+    "z": 3997,
+    "id": "taf1",
+    "css": "font-size: 18px; font-weight: normal; color: #008000ff; text-align: center;",
+    "width": 90,
+    "height": 25
+  },
+  "wndn": {
+    "type": "label",
+    "text": "Bid:",
+    "x": 279,
+    "y": 403.5,
+    "z": 3931,
+    "id": "wndn",
+    "css": "font-size: 18px; font-weight: normal; color: #ff2a2aff; text-align: center;",
+    "width": 90,
+    "height": 25
+  },
+  "adu7": {
+    "type": "label",
+    "text": "Bid:",
+    "x": 412,
+    "y": 111.5,
+    "z": 3936,
+    "id": "adu7",
+    "css": "font-size: 18px; font-weight: normal; color: #e47f2aff; text-align: center;",
+    "width": 90,
+    "height": 25
+  },
+  "ud1e": {
+    "y": 435,
+    "z": 4079,
+    "type": "label",
+    "text": "BID TOKENS",
+    "css": "font-size: 24px; font-weight: bold; color: black; text-align: center; color: #002b11ff",
+    "width": 400,
+    "height": 40,
+    "id": "ud1e",
+    "x": 1030
+  },
+  "1p87": {
+    "x": 793,
+    "y": 521,
+    "z": 4356,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "1p87",
+    "css": "background-color: #e5ffd5ff;  border-width: 1px; border-color: #008000ff"
+  },
+  "o0h1": {
+    "type": "label",
+    "text": "Dealer",
+    "x": 781,
+    "y": 497.5,
+    "z": 3934,
+    "id": "o0h1",
+    "css": "font-size: 18px; font-weight: normal; color: #008000ff; text-align: center;",
+    "width": 90,
+    "height": 25
+  },
+  "vpjb": {
+    "x": 641,
+    "y": 731,
+    "z": 5880,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "vpjb",
+    "css": "background-color: #d7eef4ff; border-width: 1px; border-color: #2a7fffff;"
+  },
+  "6sy3": {
+    "type": "label",
+    "text": "Dealer",
+    "x": 626,
+    "y": 711,
+    "z": 4112,
+    "id": "6sy3",
+    "css": "font-size: 16px; font-weight: normal; color: #2a7fffff; text-align: center;"
+  },
+  "kw5k": {
+    "x": 291,
+    "y": 515,
+    "z": 4374,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "kw5k",
+    "css": "background-color: #ffe6e2ff; border-width: 1px; border-color: #ff2a2aff"
+  },
+  "356k": {
+    "type": "label",
+    "text": "Dealer",
+    "x": 277,
+    "y": 494.5,
+    "z": 4071,
+    "id": "356k",
+    "css": "font-size: 18px; font-weight: normal; color: #ff2a2aff; text-align: center;",
+    "width": 90,
+    "height": 25
+  },
+  "n4z8": {
+    "x": 424,
+    "y": 33,
+    "z": 4345,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 70,
+    "height": 70,
+    "id": "n4z8",
+    "css": "background-color: #ffeeaaff; border-width: 1px; border-color: #ffa702ff"
+  },
+  "dpv9": {
+    "type": "label",
+    "text": "Dealer",
+    "x": 412,
+    "y": 10.5,
+    "z": 3937,
+    "id": "dpv9",
+    "css": "font-size: 18px; font-weight: normal; color: #e47f2aff; text-align: center;",
+    "width": 90,
+    "height": 25
+  },
+  "2bfc": {
+    "type": "label",
+    "text": 0,
+    "id": "2bfc",
+    "x": 81,
+    "y": 255,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px; font-weight: bold; color: #ff2a2aff",
+    "editable": true,
+    "z": 4065
+  },
+  "2bfcD": {
+    "id": "2bfcD",
+    "parent": "2bfc",
+    "x": 10,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "2bfc",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "2bfcU": {
+    "id": "2bfcU",
+    "parent": "2bfc",
+    "x": 93,
+    "y": -2,
+    "width": 33,
+    "height": 33,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "2bfc",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "hzig": {
+    "type": "label",
+    "text": "Victory Points -'Jochi' Win/Lost",
+    "x": 902,
+    "y": 500,
+    "z": 4073,
+    "css": "font-size: 20px; font-weight: bold; color: #008000ff; text-align: center;",
+    "width": 200,
+    "height": 60,
+    "id": "hzig"
+  },
+  "xsmy": {
+    "type": "label",
+    "text": "Victory Points -'Jochi' Win/Lost",
+    "x": 60,
+    "y": 639,
+    "z": 4070,
+    "css": "font-size: 20px; font-weight: bold; color: #2a7fffff; text-align: center;",
+    "width": 200,
+    "height": 60,
+    "id": "xsmy"
+  },
+  "qccr": {
+    "image": "/assets/-9287943_72272",
+    "id": "qccr",
+    "z": 215,
+    "x": 1428,
+    "y": 630,
+    "width": 50,
+    "height": 50,
+    "enlarge": 3,
+    "movable": false
+  },
+  "b6z0": {
+    "image": "/assets/615654805_124876",
+    "id": "b6z0",
+    "z": 217,
+    "x": 1427,
+    "y": 689,
+    "width": 50,
+    "height": 50,
+    "enlarge": 3,
+    "movable": false
+  },
+  "w1dx": {
+    "type": "label",
+    "text": "N.B. Remember to count:",
+    "x": 943,
+    "y": 596,
+    "z": 4124,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: right;",
+    "id": "w1dx",
+    "width": 210,
+    "height": 20
+  },
+  "fyx4": {
+    "image": "/assets/1698336381_96806",
+    "id": "fyx4",
+    "z": 212,
+    "x": 1377,
+    "y": 690,
+    "width": 50,
+    "height": 50,
+    "enlarge": 3,
+    "movable": false
+  },
+  "fx3k": {
+    "image": "/assets/800833772_118823",
+    "id": "fx3k",
+    "z": 209,
+    "x": 1379,
+    "y": 751,
+    "width": 50,
+    "height": 50,
+    "enlarge": 3,
+    "movable": false
+  },
+  "rmym": {
+    "image": "/assets/-897010430_3939",
+    "id": "rmym",
+    "z": 197,
+    "y": 623,
+    "x": 1297,
+    "width": 60,
+    "height": 60,
+    "enlarge": 3,
+    "movable": false
+  },
+  "xyon": {
+    "y": 662.5,
+    "z": 3961,
+    "type": "label",
+    "text": "?",
+    "css": "font-size: 80px; font-family: sans-serif; font-weight: bold; text-align: center; color: #002b11ff",
+    "width": 95,
+    "height": 95,
+    "x": 1177.5,
+    "id": "xyon"
+  },
+  "dq0e": {
+    "type": "label",
+    "text": "A.C. Gioco Tarocchi Siciliani for Cards and Token",
+    "x": 134,
+    "y": 150,
+    "z": 4078,
+    "css": "font-size: 16px; font-weight: normal; color: #000000ff; text-align: left;",
+    "width": 250,
+    "height": 40,
+    "id": "dq0e"
+  },
+  "vq39": {
+    "image": "/assets/-620765_58305",
+    "id": "vq39",
+    "z": 4441,
+    "x": 26,
+    "width": 350,
+    "height": 110,
+    "movable": false,
+    "y": 44
+  },
+  "3avz": {
+    "image": "/assets/-1018852101_2024",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "3avz",
+    "z": 5827,
+    "x": 0,
+    "y": 0
+  },
+  "usbeB": {
+    "id": "usbeB",
+    "y": 80,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Raccogli Dichiarazioni",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "HoldDichiara"
+      }
+    ],
+    "parent": "HoldDichiara",
+    "x": 900
+  },
+  "usbe_A_C": {
+    "id": "usbe_A_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 01"
+  },
+  "usbe_2_C": {
+    "id": "usbe_2_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 02"
+  },
+  "usbe_3_C": {
+    "id": "usbe_3_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 03"
+  },
+  "usbe_4_C": {
+    "id": "usbe_4_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 04"
+  },
+  "usbe_5_C": {
+    "id": "usbe_5_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 05"
+  },
+  "usbe_6_C": {
+    "id": "usbe_6_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 06"
+  },
+  "usbe_7_C": {
+    "id": "usbe_7_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 07"
+  },
+  "usbe_8_C": {
+    "id": "usbe_8_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 08"
+  },
+  "usbe_9_C": {
+    "id": "usbe_9_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 09"
+  },
+  "usbe_T_C": {
+    "id": "usbe_T_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 10"
+  },
+  "usbe_J_C": {
+    "id": "usbe_J_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 2J"
+  },
+  "usbe_Q_C": {
+    "id": "usbe_Q_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 3Q"
+  },
+  "usbe_K_C": {
+    "id": "usbe_K_C",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "C 4K"
+  },
+  "usbe_A_D": {
+    "id": "usbe_A_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 01"
+  },
+  "usbe_2_D": {
+    "id": "usbe_2_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 02"
+  },
+  "usbe_3_D": {
+    "id": "usbe_3_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 03"
+  },
+  "usbe_4_D": {
+    "id": "usbe_4_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 04"
+  },
+  "usbe_5_D": {
+    "id": "usbe_5_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 05"
+  },
+  "usbe_6_D": {
+    "id": "usbe_6_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 06"
+  },
+  "usbe_7_D": {
+    "id": "usbe_7_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 07"
+  },
+  "usbe_8_D": {
+    "id": "usbe_8_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 08"
+  },
+  "usbe_9_D": {
+    "id": "usbe_9_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 09"
+  },
+  "usbe_T_D": {
+    "id": "usbe_T_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 10"
+  },
+  "usbe_J_D": {
+    "id": "usbe_J_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 2J"
+  },
+  "usbe_Q_D": {
+    "id": "usbe_Q_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 3Q"
+  },
+  "usbe_K_D": {
+    "id": "usbe_K_D",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "D 4K"
+  },
+  "usbe_A_H": {
+    "id": "usbe_A_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 01"
+  },
+  "usbe_2_H": {
+    "id": "usbe_2_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 02"
+  },
+  "usbe_3_H": {
+    "id": "usbe_3_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 03"
+  },
+  "usbe_4_H": {
+    "id": "usbe_4_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 04"
+  },
+  "usbe_5_H": {
+    "id": "usbe_5_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 05"
+  },
+  "usbe_6_H": {
+    "id": "usbe_6_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 06"
+  },
+  "usbe_7_H": {
+    "id": "usbe_7_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 07"
+  },
+  "usbe_8_H": {
+    "id": "usbe_8_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 08"
+  },
+  "usbe_9_H": {
+    "id": "usbe_9_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 09"
+  },
+  "usbe_T_H": {
+    "id": "usbe_T_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 10"
+  },
+  "usbe_J_H": {
+    "id": "usbe_J_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 2J"
+  },
+  "usbe_Q_H": {
+    "id": "usbe_Q_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 3Q"
+  },
+  "usbe_K_H": {
+    "id": "usbe_K_H",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "H 4K"
+  },
+  "usbe_A_S": {
+    "id": "usbe_A_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 01"
+  },
+  "usbe_2_S": {
+    "id": "usbe_2_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 02"
+  },
+  "usbe_3_S": {
+    "id": "usbe_3_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 03"
+  },
+  "usbe_4_S": {
+    "id": "usbe_4_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 04"
+  },
+  "usbe_5_S": {
+    "id": "usbe_5_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 05"
+  },
+  "usbe_6_S": {
+    "id": "usbe_6_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 06"
+  },
+  "usbe_7_S": {
+    "id": "usbe_7_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 07"
+  },
+  "usbe_8_S": {
+    "id": "usbe_8_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 08"
+  },
+  "usbe_9_S": {
+    "id": "usbe_9_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 09"
+  },
+  "usbe_T_S": {
+    "id": "usbe_T_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 10"
+  },
+  "usbe_J_S": {
+    "id": "usbe_J_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 2J"
+  },
+  "usbe_Q_S": {
+    "id": "usbe_Q_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 3Q"
+  },
+  "usbe_K_S": {
+    "id": "usbe_K_S",
+    "parent": "usbeP",
+    "type": "card",
+    "cardType": "S 4K"
+  },
+  "hjzb": {
+    "type": "card",
+    "cardType": "T 1J",
+    "id": "hjzb",
+    "z": 13043,
+    "parent": "usbeP"
+  },
+  "mfvk": {
+    "type": "card",
+    "cardType": "T 2J",
+    "id": "mfvk",
+    "z": 13045,
+    "parent": "usbeP"
+  },
+  "DichiaraDeck": {
+    "type": "deck",
+    "id": "DichiaraDeck",
+    "x": 5,
+    "y": 7,
+    "cardTypes": {
+      "PASSO 01": {
+        "image": "/assets/-877277163_5876",
+        "rank": 1
+      },
+      "PASSO 02": {
+        "image": "/assets/-877277163_5876",
+        "rank": 2
+      },
+      "PASSO 03": {
+        "image": "/assets/-877277163_5876",
+        "rank": 3
+      },
+      "PASS0 04": {
+        "image": "/assets/-877277163_5876",
+        "rank": 4
+      },
+      "CHIAMO 20": {
+        "image": "/assets/-810806987_7405",
+        "rank": 5
+      },
+      "CHIAMO 19": {
+        "image": "/assets/479836260_7355",
+        "rank": 6
+      },
+      "CHIAMO 18": {
+        "image": "/assets/306992294_7235",
+        "rank": 7
+      },
+      "CHIAMO 17": {
+        "image": "/assets/-1820591620_6691",
+        "rank": 8
+      },
+      "CHIAMO 16": {
+        "image": "/assets/-1658495498_7155",
+        "rank": 9
+      },
+      "SOLO": {
+        "image": "/assets/-1066508307_5694",
+        "rank": 10
+      },
+      "SOLO 5CARTE": {
+        "image": "/assets/-1405842221_6771",
+        "rank": 11
+      },
+      "SOLO FORZATO": {
+        "image": "/assets/-1287187718_5714",
+        "rank": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "image",
+            "width": 60,
+            "height": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 60,
+      "height": 60,
+      "enlarge": 3,
+      "ignoreOnLeave": true
+    },
+    "z": 10685,
+    "parent": "HoldDichiara"
+  },
+  "HoldDichiara": {
+    "type": "holder",
+    "id": "HoldDichiara",
+    "x": 1160.5,
+    "y": 468.5,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 5839,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "width": 435,
+    "height": 75,
+    "dropOffsetX": 5,
+    "dropOffsetY": 7,
+    "stackOffsetX": 33,
+    "layer": -3,
+    "css": "background-color: #dee3dbff; border-width: 1px; border-color: #002b11ff"
+  },
+  "11c0": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "PASSO 01",
+    "id": "11c0",
+    "z": 1,
+    "activeFace": 1,
+    "x": 5,
+    "y": 7,
+    "parent": "HoldDichiara"
+  },
+  "dwjs": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "PASSO 02",
+    "id": "dwjs",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 38,
+    "y": 7
+  },
+  "tood": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "PASSO 03",
+    "id": "tood",
+    "z": 3,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 71,
+    "y": 7
+  },
+  "v1n1": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "PASS0 04",
+    "id": "v1n1",
+    "z": 4,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 104,
+    "y": 7
+  },
+  "ntri": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "CHIAMO 20",
+    "id": "ntri",
+    "z": 5,
+    "activeFace": 1,
+    "x": 137,
+    "y": 7,
+    "parent": "HoldDichiara"
+  },
+  "5hki": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "CHIAMO 19",
+    "id": "5hki",
+    "z": 6,
+    "activeFace": 1,
+    "x": 170,
+    "y": 7,
+    "parent": "HoldDichiara"
+  },
+  "a5bv": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "CHIAMO 18",
+    "id": "a5bv",
+    "z": 7,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 203,
+    "y": 7
+  },
+  "jwjf": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "CHIAMO 17",
+    "id": "jwjf",
+    "z": 8,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 236,
+    "y": 7
+  },
+  "9fdp": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "CHIAMO 16",
+    "id": "9fdp",
+    "z": 9,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 269,
+    "y": 7
+  },
+  "1s4t": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "SOLO",
+    "id": "1s4t",
+    "z": 10,
+    "activeFace": 1,
+    "x": 302,
+    "y": 7,
+    "parent": "HoldDichiara"
+  },
+  "4y38": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "SOLO 5CARTE",
+    "id": "4y38",
+    "z": 11,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 335,
+    "y": 7
+  },
+  "rklo": {
+    "deck": "DichiaraDeck",
+    "type": "card",
+    "cardType": "SOLO FORZATO",
+    "id": "rklo",
+    "z": 12,
+    "activeFace": 1,
+    "parent": "HoldDichiara",
+    "x": 368,
+    "y": 7
+  },
+  "y8qs": {
+    "x": 1419,
+    "y": 551.5,
+    "z": 20124,
+    "type": "button",
+    "text": "BIDS RECALL",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "HoldDichiara"
+      },
+      {
+        "func": "SORT",
+        "holder": "HoldDichiara",
+        "key": "rank",
+        "reverse": false
+      }
+    ],
+    "css": "font-size: 20px; font-weight: bold; color: #5f5fd3ff; text-align: center; background-color: #d7d7f4ff; border-width: 3px; border-color: #5f5fd3ff;",
+    "width": 150,
+    "height": 35,
+    "id": "y8qs"
+  },
+  "nwjs": {
+    "type": "label",
+    "text": "a. 5 additional card-points for the faction who takes the Last Trick;",
+    "x": 961,
+    "y": 614,
+    "z": 4134,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: right;",
+    "width": 200,
+    "height": 90,
+    "id": "nwjs"
+  },
+  "m18k": {
+    "type": "label",
+    "text": "c. 1 Victory-Point for Last Trick (doubling for possible initial bet to Rivanto)",
+    "x": 965,
+    "y": 710,
+    "z": 4132,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: right;",
+    "width": 200,
+    "height": 80,
+    "id": "m18k"
+  },
+  "b9zl": {
+    "type": "label",
+    "text": "b. possible 'Pigliata' as additional Victory-Point;",
+    "x": 933,
+    "y": 670,
+    "z": 4131,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: right;",
+    "width": 230,
+    "height": 210,
+    "id": "b9zl"
+  },
+  "qh3m": {
+    "image": "/assets/1785923663_226231",
+    "id": "qh3m",
+    "z": 5890,
+    "y": 645,
+    "x": 791,
+    "movable": false,
+    "layer": -3,
+    "width": 200,
+    "height": 140,
+    "enlarge": 5
+  },
+  "dzbl": {
+    "image": "/assets/1445821851_279867",
+    "id": "dzbl",
+    "z": 5887,
+    "y": 640,
+    "x": 657,
+    "movable": false,
+    "layer": -3,
+    "width": 230,
+    "height": 160,
+    "enlarge": 5
+  },
+  "29fg": {
+    "type": "label",
+    "text": "Card-Points Summary",
+    "x": 725,
+    "y": 602,
+    "z": 4114,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: center;",
+    "width": 90,
+    "height": 50,
+    "id": "29fg"
+  },
+  "2mld": {
+    "type": "label",
+    "text": "Victory-Points (Jochi) Chart",
+    "x": 825,
+    "y": 601,
+    "z": 4135,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: center;",
+    "width": 120,
+    "height": 90,
+    "id": "2mld"
+  },
+  "7p4g": {
+    "image": "/assets/2146703432_26397",
+    "id": "7p4g",
+    "z": 4442,
+    "y": 120,
+    "x": 28
+  },
+  "mg0x": {
+    "type": "pile",
+    "parent": "HolderDeck",
+    "x": 0,
+    "y": 0,
+    "width": 110,
+    "height": 180,
+    "id": "mg0x"
+  },
+  "sdj5": {
+    "image": "/assets/515062536_291638",
+    "id": "sdj5",
+    "z": 5879,
+    "y": 544,
+    "x": 1334,
+    "movable": false,
+    "layer": -3,
+    "width": 50,
+    "height": 50,
+    "enlarge": 17
+  },
+  "mw0d": {
+    "type": "label",
+    "text": "Bids Explanation Chart:",
+    "x": 1144,
+    "y": 559,
+    "z": 4140,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: center;",
+    "width": 200,
+    "height": 50,
+    "id": "mw0d"
+  },
+  "tmye": {
+    "type": "label",
+    "text": "d. doubling Victory-points won/lost for Solo with 5 cards;",
+    "x": 936,
+    "y": 769,
+    "z": 4123,
+    "css": "font-size: 16px; font-weight: normal; color: #5f5fd3ff; text-align: right;",
+    "width": 230,
+    "height": 210,
+    "id": "tmye"
+  }
+}

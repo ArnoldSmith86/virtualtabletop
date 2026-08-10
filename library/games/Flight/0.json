@@ -19,11 +19,11 @@
     "version": 8,
     "info": {
       "name": "Flight",
-      "image": "/assets/-1836942428_526536",
+      "image": "/assets/1033807215_50578",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/266192/wingspan",
       "year": "2019",
-      "mode": "vs",
+      "mode": "vs, solo",
       "time": "40-70",
       "attribution": "The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:\n\nBird card background texture: https://pixabay.com/photos/paper-old-texture-parchment-1074131/\nBonus card (gear) back face: https://pixabay.com/illustrations/gears-wallpaper-banner-header-1311171/\nBonus card (feather) back face https://pixabay.com/photos/wing-feather-bird-macaw-parrot-6861729/\nSkull and crossbones icon: https://pixabay.com/vectors/skull-and-crossbones-skull-30325/\nBirdhouse: https://pixabay.com/vectors/birdhouse-aviary-house-home-bird-48965/\nPurple sky background on scoresheet: https://pixabay.com/photos/palm-trees-miami-venice-beach-beach-2203737/\nRoom (feather) background: https://pixabay.com/photos/ostrich-feather-feather-strauss-1457994/\n\nThe following items are available as CC BY 3.0:\n\nFlying bird profile icon: https://game-icons.net/1x1/delapouite/peace-dove.html\nFeather icon: https://game-icons.net/1x1/lorc/feather.html\nWing icon: https://game-icons.net/1x1/lorc/feathered-wing.html\nNext eggs icon: https://game-icons.net/1x1/delapouite/nest-eggs.html\nEgg clutch icon: https://game-icons.net/1x1/lorc/egg-clutch.html\nBowl icon: https://game-icons.net/1x1/lorc/dinosaur-egg.html\nWater icon: https://game-icons.net/1x1/lorc/waves.html\nGrass icon: https://game-icons.net/1x1/delapouite/grass.html\nTree icon: https://game-icons.net/1x1/lorc/pine-tree.html\nFish icon: https://game-icons.net/1x1/various-artists/salmon.html\nFruit icon: https://game-icons.net/1x1/delapouite/cherry.html\nRat icon: https://game-icons.net/1x1/delapouite/rat.html\nSeed icon: https://game-icons.net/1x1/lorc/sprout.html\nSnail icon: https://game-icons.net/1x1/lorc/snail.html\n\nThe following items are available as CC BY-NC 4.0:\n\nThe bird card (feather) back face was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"bright, colorful bunch of feathers on a black background, fancy details, illustrated manuscript --ar 2:3\"\n\nAll bird sketches were created using Midjourney using a prompt similar to: \"[name of bird] perched on a branch, colored pencil drawing on plain parchment background, highly realistic, detailed, scientific nature journal style, side view, beak, wing, feathers, feet\". The bird sketches are only rough approximations of what the actual birds look like.\n\nThe forest/grassland/wetland background image on the player mat was created using the following Midjourney prompt: \"landscape photograph:: 8k:: green forest of pine trees in background:: yellow grassland:: blue pond in foreground:: daylight:: --v 4\".\n\n",
       "lastUpdate": 1672721679551,
@@ -39,7 +39,9 @@
       "similarName": "Wingspan",
       "similarAwards": "2020 JUG Adult Game of the Year Winner\n2020 Japan Boardgame Prize Voters' Selection Nominee\n2020 Guldbrikken Best Adult Game Nominee\n2020 Gra Roku Family Game of the Year Nominee\n2020 American Tabletop Strategy Games Winner\n2019 Tric Trac Nominee\n2019 Tric Trac d'Argent\n2019 Swiss Gamers Award Winner\n2019 Nederlandse Spellenprijs Best Expert Game Nominee\n2019 Meeples' Choice Nominee\n2019 Lys Passioné Finalist\n2019 Kennerspiel des Jahres Winner\n2019 International Gamers Award - General Strategy: Multi-player Nominee\n2019 Gouden Ludo Best Expert Game Winner\n2019 Golden Geek Most Innovative Board Game Winner\n2019 Golden Geek Board Game of the Year Winner\n2019 Golden Geek Best Strategy Board Game Winner\n2019 Golden Geek Best Solo Board Game Winner\n2019 Golden Geek Best Family Board Game Winner\n2019 Golden Geek Best Card Game Winner\n2019 Golden Geek Best Board Game Artwork & Presentation Winner\n2019 Deutscher Spiele Preis Best Family/Adult Game Winner\n2019 Cardboard Republic Architect Laurel Nominee\n2019 Board Game Quest Awards Game of the Year Winner\n2019 Board Game Quest Awards Best Production Values Winner\n2019 5 Seasons Best International Strategy Winner",
       "ruleText": "",
-      "helpText": "Players sit in seat. Press Start button in bottom-right corner and select from the options to begin. A random player is chosen to begin. Drag and drop cards, food, eggs, and action cubes on to the main player mat as needed. To tuck a bird card, just drop it in the holder. Once you tuck a card, those cards and pile become unmovable for the remainder of the game so that scoring routines work properly.\n\nYou can view other players' mats and food tokens (but not cards) by pressing on the eye icon below each seat. The small text below the seat shows which player's mat that seat is viewing. Viewing another seat prevents you out from taking most other actions except changing the view again. When looking at another seat, clicking anywhere on the board will automatically return the view to your own mat.\n\nPlace dice removed from the birdfeeder in the area above the 3 common bird cards and the used dice can be rolled as a group by pressing the roll button. The refill button will recall and roll all 5 dice. The discard holder in the bottom-right corner can be used for both bird cards and bonus cards.\n\nAt the end of a round, drag an action cube for each player to the green or blue end-of-round board. Once the correct number of cubes are placed into holders on that board, the button to start the next round will display in the bottom-right corner.\n\nScorekeeping is automatic in all rounds except in round 4, players must calculate and enter their own scores for bonus cards. Use the + and - buttons that display at the end of round 4.\n\nThe bird icon near the seat indicates the starting player. During a round, you can change the glow indicator on the seat by pressing the turn button in the bottom-right corner. This will also refill the common cards holder with 3 cards if needed. At the end of each round, the bird icon will advance to the next player automatically.\n\nFor solo mode, sit in the far left seat (seat #1). The automa cards and other objects are at the top of the screen. The automa uses maroon action cubes. Place the cubes on the goal cards for the current round. At the end of the round, move one of the cubes into the green (or blue) end-of-round goal scoring cards just like you move your own cube. For the automa, use the end-of-round goal card that covers the scoresheet for seats 3-5. Eggs should be placed in the small holder below the maroon action cubes. All scoring for the automa is automatically calculated.\n\nThe automa's actions are not automated. You must manually move cards and other objects in accordance with the rules. At the beginning of each round, the automa's action cards will be set up for the round, but during each turn, you must flip over a new card."
+      "helpText": "Players sit in seat. Press Start button in bottom-right corner and select from the options to begin. A random player is chosen to begin. Drag and drop cards, food, eggs, and action cubes on to the main player mat as needed. To tuck a bird card, just drop it in the holder. Once you tuck a card, those cards and pile become unmovable for the remainder of the game so that scoring routines work properly.\n\nYou can view other players' mats and food tokens (but not cards) by pressing on the eye icon below each seat. The small text below the seat shows which player's mat that seat is viewing. Viewing another seat prevents you out from taking most other actions except changing the view again. When looking at another seat, clicking anywhere on the board will automatically return the view to your own mat.\n\nPlace dice removed from the birdfeeder in the area above the 3 common bird cards and the used dice can be rolled as a group by pressing the roll button. The refill button will recall and roll all 5 dice. The discard holder in the bottom-right corner can be used for both bird cards and bonus cards.\n\nAt the end of a round, drag an action cube for each player to the green or blue end-of-round board. Once the correct number of cubes are placed into holders on that board, the button to start the next round will display in the bottom-right corner.\n\nScorekeeping is automatic in all rounds except in round 4, players must calculate and enter their own scores for bonus cards. Use the + and - buttons that display at the end of round 4.\n\nThe bird icon near the seat indicates the starting player. During a round, you can change the glow indicator on the seat by pressing the turn button in the bottom-right corner. This will also refill the common cards holder with 3 cards if needed. At the end of each round, the bird icon will advance to the next player automatically.\n\nFor solo mode, sit in the far left seat (seat #1). The automa cards and other objects are at the top of the screen. The automa uses maroon action cubes. Place the cubes on the goal cards for the current round. At the end of the round, move one of the cubes into the green (or blue) end-of-round goal scoring cards just like you move your own cube. For the automa, use the end-of-round goal card that covers the scoresheet for seats 3-5. Eggs should be placed in the small holder below the maroon action cubes. All scoring for the automa is automatically calculated.\n\nThe automa's actions are not automated. You must manually move cards and other objects in accordance with the rules. At the beginning of each round, the automa's action cards will be set up for the round, but during each turn, you must flip over a new card.",
+      "similarDesigner": "Elizabeth Hargrave",
+      "usesAIImagery": true
     }
   },
   "birdDeck": {
@@ -58,7 +60,7 @@
             "y": 0,
             "width": 111,
             "height": 168,
-            "value": "/assets/1623288221_767129"
+            "value": "/assets/313374753_69156"
           }
         ]
       },
@@ -77,7 +79,7 @@
             "width": 111,
             "height": 168,
             "color": "transparent",
-            "value": "/assets/-140133127_456839"
+            "value": "/assets/-424396185_35698"
           },
           {
             "note": "top left background color",
@@ -303,7 +305,7 @@
     ],
     "cardTypes": {
       "Acorn Woodpecker": {
-        "species": "/assets/1967530648_212077",
+        "species": "/assets/-342578113_9504",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -318,7 +320,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the birdfeeder (if available). You may cache it on this card."
       },
       "American Avocet": {
-        "species": "/assets/-2069356629_225373",
+        "species": "/assets/97198742_9062",
         "points": 6,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -333,7 +335,7 @@
         "power": "ONCE BETWEEN TURNS: When another player takes the lay eggs action, this bird lays 1 egg on another bird with a ground nest."
       },
       "American Bittern": {
-        "species": "/assets/-1011537370_192131",
+        "species": "/assets/1074551536_12374",
         "points": 7,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -348,7 +350,7 @@
         "power": "WHEN ACTIVATED: Player(s) with the fewest water habitat birds draw 1 bird card."
       },
       "American Coot": {
-        "species": "/assets/-152403015_258376",
+        "species": "/assets/-1514825395_9382",
         "points": 3,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/91808388_983",
@@ -363,7 +365,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, draw 1 bird card."
       },
       "American Crow": {
-        "species": "/assets/-632693341_216918",
+        "species": "/assets/-869884315_10320",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -377,7 +379,7 @@
         "power": "WHEN ACTIVATED: Discard 1 egg from any of your other birds to gain 1 food of your choice from the supply."
       },
       "American Goldfinch": {
-        "species": "/assets/1625480587_191712",
+        "species": "/assets/399847391_7722",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -391,7 +393,7 @@
         "power": "WHEN PLAYED: Gain 3 seeds from the supply."
       },
       "American Kestrel": {
-        "species": "/assets/-1605663432_221577",
+        "species": "/assets/-1659356192_11590",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -406,7 +408,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are rodents, gain 1 rodent and cache it on this card."
       },
       "American Oystercatcher": {
-        "species": "/assets/1352705494_223590",
+        "species": "/assets/1964738714_13294",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -420,7 +422,7 @@
         "power": "WHEN PLAYED: Draw bird cards equal to number of players +1. Starting with you and going clockwise, each player selects 1 of those cards and adds it to their hand. You keep the extra."
       },
       "American Robin": {
-        "species": "/assets/-1791574382_237346",
+        "species": "/assets/653413988_12128",
         "points": 1,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-636695754_820",
@@ -436,7 +438,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this card. If you do, draw 1 bird card."
       },
       "American White Pelican": {
-        "species": "/assets/-1321572897_213707",
+        "species": "/assets/1653206906_9216",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-150374768_333",
@@ -451,7 +453,7 @@
         "power": "WHEN ACTIVATED: Discard 1 fish to tuck 2 bird cards from the deck behind this bird."
       },
       "American Woodcock": {
-        "species": "/assets/-214999827_196591",
+        "species": "/assets/1203577194_9510",
         "points": 9,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -465,7 +467,7 @@
         "bottom": "t"
       },
       "Anhinga": {
-        "species": "/assets/1913354522_178354",
+        "species": "/assets/341407352_10940",
         "points": 6,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -480,7 +482,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are fish, gain 1 fish and cache it on this card."
       },
       "Anna's Hummingbird": {
-        "species": "/assets/1791401887_240980",
+        "species": "/assets/-1049838155_7440",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -494,7 +496,7 @@
         "power": "WHEN ACTIVATED: Each player gains 1 dice from the birdfeeder, starting with the player of your choice."
       },
       "Ash-Throated Flycatcher": {
-        "species": "/assets/1135593054_197608",
+        "species": "/assets/1834110392_9490",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -509,7 +511,7 @@
         "power": "WHEN PLAYED: Lay 1 egg on each of your birds with a cavity nest."
       },
       "Atlantic Puffin": {
-        "species": "/assets/-1117845366_193918",
+        "species": "/assets/1124541364_9448",
         "points": 8,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-150374768_333",
@@ -524,7 +526,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Baird's Sparrow": {
-        "species": "/assets/823969782_194727",
+        "species": "/assets/-1594007651_7628",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -538,7 +540,7 @@
         "power": "WHEN ACTIVATED: Lay 1 egg on any bird."
       },
       "Bald Eagle": {
-        "species": "/assets/1533929494_195009",
+        "species": "/assets/1235122528_10460",
         "points": 9,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-150374768_333",
@@ -553,7 +555,7 @@
         "power": "WHEN PLAYED: Gain all fish that are in the birdfeeder."
       },
       "Baltimore Oriole": {
-        "species": "/assets/-239745010_220187",
+        "species": "/assets/1607344027_6436",
         "points": 9,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -568,7 +570,7 @@
         "power": "WHEN ACTIVATED: All players gain 1 fruit from the supply."
       },
       "Barn Owl": {
-        "species": "/assets/-1717688876_163103",
+        "species": "/assets/-229992553_6384",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -585,7 +587,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are rodents, gain 1 rodent and cache it on this card."
       },
       "Barn Swallow": {
-        "species": "/assets/853750846_146955",
+        "species": "/assets/-2024570215_7760",
         "points": 1,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-1347727600_657",
@@ -599,7 +601,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, draw 1 bird card."
       },
       "Barred Owl": {
-        "species": "/assets/-988667741_251279",
+        "species": "/assets/1419279267_12666",
         "points": 3,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-647970708_494",
@@ -612,7 +614,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <75cm, tuck it behind this card. If not, discard it."
       },
       "Barrow's Goldeneye": {
-        "species": "/assets/1551707798_176587",
+        "species": "/assets/-61505588_11598",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -627,7 +629,7 @@
         "power": "ONCE BETWEEN TURNS: When another player takes the lay eggs action, this bird lays 1 egg on another bird with a cavity nest."
       },
       "Bell's Vireo": {
-        "species": "/assets/-583074343_481327",
+        "species": "/assets/-1295505542_8998",
         "points": 4,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -642,7 +644,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Belted Kingfisher": {
-        "species": "/assets/-490750571_206729",
+        "species": "/assets/-1426380507_10746",
         "points": 4,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-636695754_820",
@@ -656,7 +658,7 @@
         "power": "ONCE BETWEEN TURNS: When another player plays a water habitat bird, gain 1 fish from the supply."
       },
       "Bewick's Wren": {
-        "species": "/assets/1987387879_185067",
+        "species": "/assets/2085266954_7868",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -673,7 +675,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "Black Skimmer": {
-        "species": "/assets/1761685343_184875",
+        "species": "/assets/-822469004_9062",
         "points": 6,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -688,7 +690,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are fish, gain 1 fish and cache it on this card."
       },
       "Black Tern": {
-        "species": "/assets/1241986404_188375",
+        "species": "/assets/94735541_7000",
         "points": 4,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -702,7 +704,7 @@
         "power": "WHEN ACTIVATED: Draw 1 bird card. If you do, discard 1 bird card from your hand at the end of your turn."
       },
       "Black Vulture": {
-        "species": "/assets/1068778549_184930",
+        "species": "/assets/286444915_10602",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-150374768_333",
@@ -714,7 +716,7 @@
         "power": "ONCE BETWEEN TURNS: When another players predator action succeeds, gain 1 dice from the birdfeeder."
       },
       "Black-Bellied Whistling-Duck": {
-        "species": "/assets/130010704_187349",
+        "species": "/assets/2013124457_10464",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/91808388_983",
@@ -729,7 +731,7 @@
         "power": "WHEN ACTIVATED: Discard 1 seed to tuck 2 bird cards from the deck behind this bird."
       },
       "Black-Billed Magpie": {
-        "species": "/assets/1649781769_186119",
+        "species": "/assets/231564657_8512",
         "points": 3,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-1347727600_657",
@@ -743,7 +745,7 @@
         "power": "ONCE BETWEEN TURNS: When another players predator action succeeds, gain 1 dice drom the birdfeeder."
       },
       "Black-Crowned Night-Heron": {
-        "species": "/assets/-425679150_259106",
+        "species": "/assets/612835220_8696",
         "points": 9,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -758,7 +760,7 @@
         "power": "WHEN ACTIVATED: Discard 1 egg from any of your other birds to gain 1 food of your choice from the supply."
       },
       "Black-Necked Stilt": {
-        "species": "/assets/410509008_241016",
+        "species": "/assets/1978775576_6728",
         "points": 4,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -772,7 +774,7 @@
         "power": "WHEN PLAYED: Draw 2 bird cards."
       },
       "Blue Grosbeak": {
-        "species": "/assets/1102355892_252787",
+        "species": "/assets/299894139_8662",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -789,7 +791,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "Blue Jay": {
-        "species": "/assets/-2135097838_194726",
+        "species": "/assets/1509339182_10166",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -803,7 +805,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the birdfeeder (if available). You may cache it on this card."
       },
       "Blue-Gray Gnatcatcher": {
-        "species": "/assets/1055719020_241645",
+        "species": "/assets/-1086550197_9668",
         "points": 1,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -815,7 +817,7 @@
         "power": "WHEN ACTIVATED: Gain 1 invertebrate from the supply."
       },
       "Blue-Winged Warbler": {
-        "species": "/assets/1043476989_229747",
+        "species": "/assets/-207125840_17268",
         "points": 8,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -830,7 +832,7 @@
         "power": ""
       },
       "Bobolink": {
-        "species": "/assets/-1624944158_191526",
+        "species": "/assets/-1715824852_10268",
         "points": 4,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -845,7 +847,7 @@
         "power": "WHEN PLAYED: Lay 1 egg on each of your birds with a ground nest."
       },
       "Brewer's Blackbird": {
-        "species": "/assets/1230494885_242198",
+        "species": "/assets/754216719_11072",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -860,7 +862,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, also lay 1 egg on this bird."
       },
       "Bronzed Cowbird": {
-        "species": "/assets/-264597813_215874",
+        "species": "/assets/-841382568_8564",
         "points": 5,
         "span": "36cm",
         "grassland": "/assets/-153054565_1528",
@@ -872,7 +874,7 @@
         "power": "ONCE BETWEEN TURNS: When another player takes the lay eggs action, this bird lays 1 egg on another bird with a bowl nest."
       },
       "Brown Pelican": {
-        "species": "/assets/883712362_189128",
+        "species": "/assets/-1052832994_10604",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -886,7 +888,7 @@
         "power": "WHEN PLAYED: Gain 3 fish from the supply."
       },
       "Brown-Headed Cowbird": {
-        "species": "/assets/-770279987_216009",
+        "species": "/assets/-1723620351_8106",
         "points": 3,
         "span": "30cm",
         "grassland": "/assets/-153054565_1528",
@@ -896,7 +898,7 @@
         "power": "ONCE BETWEEN TURNS: When another player takes the lay eggs action, this bird lays 1 egg on another bird with a bowl nest."
       },
       "Burrowing Owl": {
-        "species": "/assets/-1996553540_259072",
+        "species": "/assets/-1496085472_10824",
         "points": 5,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-636695754_820",
@@ -911,7 +913,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are rodents, gain 1 rodent and cache it on this card."
       },
       "Bushtit": {
-        "species": "/assets/-1420123273_159282",
+        "species": "/assets/236824898_8282",
         "points": 2,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/91808388_983",
@@ -928,7 +930,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, also lay 1 egg on this bird."
       },
       "California Condor": {
-        "species": "/assets/-547250000_224330",
+        "species": "/assets/-1784536186_13740",
         "points": 1,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-150374768_333",
@@ -942,7 +944,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "California Quail": {
-        "species": "/assets/-1699113640_202850",
+        "species": "/assets/1120804695_15306",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/851419461_1146",
@@ -958,7 +960,7 @@
         "power": "WHEN ACTIVATED: Lay 1 egg on this bird."
       },
       "Canada Goose": {
-        "species": "/assets/1566712948_217540",
+        "species": "/assets/1869419342_14702",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -974,7 +976,7 @@
         "power": "WHEN ACTIVATED: Discard 1 seed to tuck 2 bird cards from the deck behind this bird."
       },
       "Carolina Chickadee": {
-        "species": "/assets/1613907093_175351",
+        "species": "/assets/-1053427892_8268",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -988,7 +990,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the supply and cache it on this card."
       },
       "Carolina Wren": {
-        "species": "/assets/1766251567_264575",
+        "species": "/assets/-946845029_9514",
         "points": 1,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/91808388_983",
@@ -1002,7 +1004,7 @@
         "power": "WHEN PLAYED: Draw 2 bird cards."
       },
       "Cassin's Finch": {
-        "species": "/assets/492915936_238076",
+        "species": "/assets/43240971_10116",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -1016,7 +1018,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Cassin's Sparrow": {
-        "species": "/assets/-57221247_261089",
+        "species": "/assets/1671635675_6938",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -1030,7 +1032,7 @@
         "power": "WHEN ACTIVATED: Lay 1 egg on any bird."
       },
       "Cedar Waxwing": {
-        "species": "/assets/1949991807_230872",
+        "species": "/assets/-1528708972_8572",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -1046,7 +1048,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, gain 1 fruit from the supply."
       },
       "Cerulean Warbler": {
-        "species": "/assets/1274045197_199266",
+        "species": "/assets/-1658279677_9206",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -1060,7 +1062,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Chestnut-Collared Longspur": {
-        "species": "/assets/-1426680767_405886",
+        "species": "/assets/2127441587_12740",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -1075,7 +1077,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Chihuahuan Raven": {
-        "species": "/assets/333848750_238535",
+        "species": "/assets/1884432650_12324",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-1347727600_657",
@@ -1090,7 +1092,7 @@
         "power": "WHEN ACTIVATED: Discard 1 egg from any of your other birds to gain 2 foods of your choice from the supply."
       },
       "Chimney Swift": {
-        "species": "/assets/-1755332467_192086",
+        "species": "/assets/1854139274_6266",
         "points": 3,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -1106,7 +1108,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "Chipping Sparrow": {
-        "species": "/assets/1918506238_262614",
+        "species": "/assets/-1573598316_9754",
         "points": 1,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -1121,7 +1123,7 @@
         "power": "WHEN ACTIVATED: Lay 1 egg on any bird."
       },
       "Clark's Grebe": {
-        "species": "/assets/1054479154_246771",
+        "species": "/assets/423427115_6896",
         "points": 5,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -1133,7 +1135,7 @@
         "power": "WHEN ACTIVATED: Draw 1 bird card. If you do, discard 1 bird card from your hand at the end of your turn."
       },
       "Clark's Nutcracker": {
-        "species": "/assets/-1647115084_230535",
+        "species": "/assets/940575657_7374",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1150,7 +1152,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the birdfeeder (if available). You may cache it on this card."
       },
       "Common Grackle": {
-        "species": "/assets/-725391296_229879",
+        "species": "/assets/-1115255887_7272",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -1167,7 +1169,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, also lay 1 egg on this bird."
       },
       "Common Loon": {
-        "species": "/assets/-241632986_198219",
+        "species": "/assets/1216577532_13304",
         "points": 6,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-150374768_333",
@@ -1181,7 +1183,7 @@
         "power": "WHEN ACTIVATED: Player(s) with the fewest water habitat birds draw 1 bird card."
       },
       "Common Merganser": {
-        "species": "/assets/339203847_210132",
+        "species": "/assets/-1694846615_10162",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -1196,7 +1198,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are fish, gain 1 fish and cache it on this card."
       },
       "Common Nighthawk": {
-        "species": "/assets/580804250_246498",
+        "species": "/assets/373097871_10550",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -1212,7 +1214,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "Common Raven": {
-        "species": "/assets/-1467580527_248577",
+        "species": "/assets/-199173645_8164",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1229,7 +1231,7 @@
         "power": "WHEN ACTIVATED: Discard 1 egg from any of your other birds to gain  2 foods of your choice from the supply."
       },
       "Common Yellowthroat": {
-        "species": "/assets/-2033309255_234368",
+        "species": "/assets/1454279532_13184",
         "points": 1,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-636695754_820",
@@ -1241,7 +1243,7 @@
         "power": "WHEN ACTIVATED: Draw 2 bird cards.  If you do, discard 1 bird card at the end of your turn."
       },
       "Cooper's Hawk": {
-        "species": "/assets/-576320269_263601",
+        "species": "/assets/1994449467_10508",
         "points": 3,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1254,7 +1256,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <75cm, tuck it behind this card. If not, discard it."
       },
       "Dark-Eyed Junco": {
-        "species": "/assets/-1205514593_241502",
+        "species": "/assets/35762273_10438",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -1270,7 +1272,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, gain 1 seed from the supply."
       },
       "Dickcissel": {
-        "species": "/assets/247904124_226408",
+        "species": "/assets/-1401708285_8252",
         "points": 4,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -1286,7 +1288,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, also lay 1 egg on this bird."
       },
       "Double-Crested Cormorant": {
-        "species": "/assets/-1242523715_172887",
+        "species": "/assets/849778024_8912",
         "points": 3,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-1347727600_657",
@@ -1301,7 +1303,7 @@
         "power": "WHEN ACTIVATED: Discard 1 fish to tuck 2 bird cards from the deck behind this bird."
       },
       "Downy Woodpecker": {
-        "species": "/assets/1204441573_223240",
+        "species": "/assets/-1018218702_11758",
         "points": 3,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-647970708_494",
@@ -1316,7 +1318,7 @@
         "power": "WHEN ACTIVATED: Play a second bird in your forest habitat. Pay its normal cost."
       },
       "Eastern Bluebird": {
-        "species": "/assets/-1209612091_169502",
+        "species": "/assets/-903352056_9598",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/91808388_983",
@@ -1330,7 +1332,7 @@
         "power": "WHEN PLAYED: Play a second bird in your grassland habitat. Pay its normal cost."
       },
       "Eastern Kingbird": {
-        "species": "/assets/80569500_168732",
+        "species": "/assets/1387899598_7554",
         "points": 2,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -1346,7 +1348,7 @@
         "power": "ONCE BETWEEN TURNS: When another player plays a forest habitat bird, gain 1 invertebrate from the supply."
       },
       "Eastern Phoebe": {
-        "species": "/assets/323705137_205570",
+        "species": "/assets/856480464_6260",
         "points": 3,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-636695754_820",
@@ -1362,7 +1364,7 @@
         "power": "WHEN ACTIVATED: All players gain 1 invertebrate from the supply."
       },
       "Eastern Screech-Owl": {
-        "species": "/assets/-955457032_270363",
+        "species": "/assets/-1124562392_11128",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-647970708_494",
@@ -1377,7 +1379,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are rodents, gain 1 rodent and cache it on this card."
       },
       "Ferruginous Hawk": {
-        "species": "/assets/-747395337_239939",
+        "species": "/assets/923871502_11042",
         "points": 6,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1392,7 +1394,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are rodents, gain 1 rodent and cache it on this card."
       },
       "Fish Crow": {
-        "species": "/assets/-1754370206_212404",
+        "species": "/assets/-1861334599_10526",
         "points": 6,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1408,7 +1410,7 @@
         "power": "WHEN ACTIVATED: Discard 1 egg from any of your other birds to gain 1 food of your choice from the supply."
       },
       "Forster's Tern": {
-        "species": "/assets/1646918171_240398",
+        "species": "/assets/756011260_7136",
         "points": 4,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -1422,7 +1424,7 @@
         "power": "WHEN ACTIVATED: Draw 1 bird card. If you do, discard 1 bird card from your hand at the end of your turn."
       },
       "Franklin's Gull": {
-        "species": "/assets/262369407_200309",
+        "species": "/assets/92824899_7104",
         "points": 3,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -1437,7 +1439,7 @@
         "power": "WHEN ACTIVATED: Discard 1 egg to draw 2 bird cards."
       },
       "Golden Eagle": {
-        "species": "/assets/1440237702_235331",
+        "species": "/assets/679536975_13588",
         "points": 8,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-150374768_333",
@@ -1454,7 +1456,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <100cm, tuck it behind this bird. if not, discard it."
       },
       "Grasshopper Sparrow": {
-        "species": "/assets/-84302413_264754",
+        "species": "/assets/-1034610384_7070",
         "points": 2,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -1468,7 +1470,7 @@
         "power": "WHEN ACTIVATED: Lay 1 egg on any bird."
       },
       "Gray Catbird": {
-        "species": "/assets/658052771_274118",
+        "species": "/assets/2049496151_8356",
         "points": 5,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -1485,7 +1487,7 @@
         "power": "WHEN ACTIVATED: Repeat a brown power on 1 other bird in this habitat."
       },
       "Great Blue Heron": {
-        "species": "/assets/770000363_177211",
+        "species": "/assets/-1138001571_9288",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1499,7 +1501,7 @@
         "power": "WHEN PLAYED: Play a second bird in your wetland habitat. Pay its normal cost."
       },
       "Great Crested Flycatcher": {
-        "species": "/assets/151173467_180005",
+        "species": "/assets/-1363389327_9142",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -1513,7 +1515,7 @@
         "power": "WHEN ACTIVATED: Gain 1 invertebrate from the birdfeeder, if there is one."
       },
       "Great Egret": {
-        "species": "/assets/2086292474_258197",
+        "species": "/assets/233819194_5922",
         "points": 7,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-1347727600_657",
@@ -1528,7 +1530,7 @@
         "power": "WHEN PLAYED: Play a second bird in your water habitat. Pay its normal cost."
       },
       "Great Horned Owl": {
-        "species": "/assets/2129347958_223337",
+        "species": "/assets/-1817270335_15142",
         "points": 8,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1544,7 +1546,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <100cm, tuck it behind this bird. If not, discard it."
       },
       "Greater Prairie-Chicken": {
-        "species": "/assets/-2068636710_235764",
+        "species": "/assets/-1421949678_14008",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -1559,7 +1561,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Greater Roadrunner": {
-        "species": "/assets/-1727470985_197940",
+        "species": "/assets/-2069042755_11706",
         "points": 7,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1575,7 +1577,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <50cm, tuck it behind this card. If not, discard it."
       },
       "Green Heron": {
-        "species": "/assets/-480225691_242956",
+        "species": "/assets/-846167188_8520",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-1347727600_657",
@@ -1589,7 +1591,7 @@
         "power": "WHEN ACTIVATED: Trade any 1 food for any other food from the supply."
       },
       "Hermit Thrush": {
-        "species": "/assets/-665555996_249459",
+        "species": "/assets/-635308618_8280",
         "points": 7,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -1604,7 +1606,7 @@
         "power": "WHEN ACTIVATED: Player(s) with fewest forest habitat birds gain 1 dice from birdfeeder."
       },
       "Hooded Merganser": {
-        "species": "/assets/1483100250_161157",
+        "species": "/assets/-258567810_9804",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -1618,7 +1620,7 @@
         "power": "WHEN ACTIVATED: Repeat 1 predator action power in this habitat."
       },
       "Hooded Warbler": {
-        "species": "/assets/-576710162_252931",
+        "species": "/assets/-2128854808_9976",
         "points": 7,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -1630,7 +1632,7 @@
         "bottom": "t"
       },
       "Horned Lark": {
-        "species": "/assets/1965135351_221041",
+        "species": "/assets/1517931669_11264",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -1645,7 +1647,7 @@
         "power": "ONCE BETWEEN TURNS: When another player plays a grassland habitat bird, tuck 1 bird card from your hand behind this bird."
       },
       "House Finch": {
-        "species": "/assets/-2061567164_201726",
+        "species": "/assets/1050471517_7200",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/851419461_1146",
@@ -1662,7 +1664,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, draw 1 bird card."
       },
       "House Wren": {
-        "species": "/assets/1987387879_185067",
+        "species": "/assets/2085266954_7868",
         "points": 1,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/91808388_983",
@@ -1675,7 +1677,7 @@
         "power": "WHEN PLAYED: Play a second bird in your grassland or forest habitats. Pay its normal cost."
       },
       "Inca Dove": {
-        "species": "/assets/697210770_173827",
+        "species": "/assets/-673839445_6794",
         "points": 2,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-636695754_820",
@@ -1689,7 +1691,7 @@
         "power": "WHEN PLAYED: Lay 1 egg on each of your birds with a platform nest."
       },
       "Indigo Bunting": {
-        "species": "/assets/340024236_228050",
+        "species": "/assets/-2136327226_12498",
         "points": 5,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -1705,7 +1707,7 @@
         "power": "WHEN ACTIVATED: Gain 1 invertebrate or fruit from the birdfeeder, if there is one."
       },
       "Juniper Titmouse": {
-        "species": "/assets/-1825609296_202479",
+        "species": "/assets/747713799_7844",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -1719,7 +1721,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the supply and cache it on this card."
       },
       "Killdeer": {
-        "species": "/assets/-110085302_274176",
+        "species": "/assets/1015951085_15620",
         "points": 1,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -1734,7 +1736,7 @@
         "power": "WHEN ACTIVATED: Discard 1 egg to draw 2 bird cards."
       },
       "King Rail": {
-        "species": "/assets/618535780_163700",
+        "species": "/assets/448135768_11762",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/851419461_1146",
@@ -1749,7 +1751,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Lazuli Bunting": {
-        "species": "/assets/131772141_190989",
+        "species": "/assets/-1297560146_10914",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-636695754_820",
@@ -1764,7 +1766,7 @@
         "power": "WHEN ACTIVATED: All players lay 1 egg on any 1 bowl nest bird. You may lay 1 egg on 1 additional bowl nest bird."
       },
       "Lincoln's Sparrow": {
-        "species": "/assets/-263330226_194828",
+        "species": "/assets/270689784_7600",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -1780,7 +1782,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "Loggerhead Shrike": {
-        "species": "/assets/1989907152_187110",
+        "species": "/assets/-1567961608_6214",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-636695754_820",
@@ -1795,7 +1797,7 @@
         "power": "ONCE BETWEEN TURNS: When another player takes the gain food action, if they gain any number of rodents, also gain 1 rodent from the supply and cache it on this card."
       },
       "Mallard": {
-        "species": "/assets/-1913727239_156065",
+        "species": "/assets/-1459097621_10544",
         "points": 0,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -1809,7 +1811,7 @@
         "power": "WHEN ACTIVATED: Draw 1 bird card."
       },
       "Mississippi Kite": {
-        "species": "/assets/-667294469_197547",
+        "species": "/assets/-138650394_9942",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-150374768_333",
@@ -1825,7 +1827,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are rodents, gain 1 rodent and cache it on this card."
       },
       "Mountain Bluebird": {
-        "species": "/assets/-515611899_222564",
+        "species": "/assets/-1545576805_10318",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/91808388_983",
@@ -1839,7 +1841,7 @@
         "power": "WHEN PLAYED: Play a second bird in your grassland habitat. Pay its normal cost."
       },
       "Mountain Chickadee": {
-        "species": "/assets/-1854563007_176691",
+        "species": "/assets/1874288257_7926",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -1853,7 +1855,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the supply and cache it on this card."
       },
       "Mourning Dove": {
-        "species": "/assets/1734707556_245292",
+        "species": "/assets/-1525185163_8332",
         "points": 0,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/91808388_983",
@@ -1867,7 +1869,7 @@
         "power": "WHEN ACTIVATED: Lay 1 egg on this bird."
       },
       "Northern Bobwhite": {
-        "species": "/assets/478998934_242049",
+        "species": "/assets/474390864_12260",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/851419461_1146",
@@ -1882,7 +1884,7 @@
         "power": "WHEN ACTIVATED: Lay 1 egg on this bird."
       },
       "Northern Cardinal": {
-        "species": "/assets/-163411245_217725",
+        "species": "/assets/-391523837_15866",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/91808388_983",
@@ -1896,7 +1898,7 @@
         "power": "WHEN ACTIVATED: Gain 1 fruit from the supply."
       },
       "Northern Flicker": {
-        "species": "/assets/1855802445_180761",
+        "species": "/assets/1874177385_10386",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -1912,7 +1914,7 @@
         "power": "WHEN PLAYED: Gain all invertebrates that are in the birdfeeder."
       },
       "Northern Harrier": {
-        "species": "/assets/-1872925629_235146",
+        "species": "/assets/1948136068_22050",
         "points": 3,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1926,7 +1928,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <75cm, tuck it behind this card. If not, discard it."
       },
       "Northern Mockingbird": {
-        "species": "/assets/1459126762_229845",
+        "species": "/assets/-1964082106_11030",
         "points": 2,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-636695754_820",
@@ -1942,7 +1944,7 @@
         "power": "WHEN ACTIVATED: Repeat a brown power on 1 other bird in this habitat."
       },
       "Northern Shoveler": {
-        "species": "/assets/795054749_192395",
+        "species": "/assets/1024817444_9632",
         "points": 7,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -1957,7 +1959,7 @@
         "power": "WHEN ACTIVATED: All players draw 1 bird card from the deck."
       },
       "Osprey": {
-        "species": "/assets/-1781184571_196235",
+        "species": "/assets/-1404734543_10800",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -1969,7 +1971,7 @@
         "power": "WHEN ACTIVATED: All players gain 1 fish from the supply."
       },
       "Painted Bunting": {
-        "species": "/assets/210707399_239041",
+        "species": "/assets/-428770100_9660",
         "points": 5,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-636695754_820",
@@ -1984,7 +1986,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Peregrine Falcon": {
-        "species": "/assets/-495209046_252758",
+        "species": "/assets/1518417133_15098",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2000,7 +2002,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <100cm, tuck it behind this card. If not, discard it."
       },
       "Pied-Billed Grebe": {
-        "species": "/assets/19874590_210938",
+        "species": "/assets/-1171437505_11092",
         "points": 0,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-636695754_820",
@@ -2014,7 +2016,7 @@
         "power": "WHEN ACTIVATED: Draw 2 bird cards. If you do, discard 1 bird card from your hand at the end of your turn."
       },
       "Pileated Woodpecker": {
-        "species": "/assets/311916370_229354",
+        "species": "/assets/-939445804_8244",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-647970708_494",
@@ -2028,7 +2030,7 @@
         "power": "WHEN ACTIVATED: All players lay 1 egg on any 1 cavity nest bird. You may lay 1 edd on 1 additional cavity nest bird."
       },
       "Pine Siskin": {
-        "species": "/assets/454166552_239641",
+        "species": "/assets/372831477_11910",
         "points": 3,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2043,7 +2045,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, gain 1 seed from the supply."
       },
       "Prothonotary Warbler": {
-        "species": "/assets/-1897112408_210197",
+        "species": "/assets/-1566557145_7556",
         "points": 8,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -2057,7 +2059,7 @@
         "bottom": "t"
       },
       "Purple Gallinule": {
-        "species": "/assets/-1674420409_189557",
+        "species": "/assets/1772918563_9112",
         "points": 7,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-636695754_820",
@@ -2072,7 +2074,7 @@
         "power": "WHEN ACTIVATED: All players draw 1 bird card from the deck."
       },
       "Purple Martin": {
-        "species": "/assets/-457352937_240816",
+        "species": "/assets/-2013973629_6970",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2086,7 +2088,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, draw 1 bird card."
       },
       "Pygmy Nuthatch": {
-        "species": "/assets/-1028460594_232066",
+        "species": "/assets/2037965488_7324",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -2101,7 +2103,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, gain 1 invertebrate or 1 seed from the supply."
       },
       "Red Crossbill": {
-        "species": "/assets/710477538_225006",
+        "species": "/assets/-1508264585_11542",
         "points": 6,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2115,7 +2117,7 @@
         "power": "WHEN ACTIVATED: All players gain 1 seed from the supply."
       },
       "Red-Bellied Woodpecker": {
-        "species": "/assets/824705084_220953",
+        "species": "/assets/-298867708_11468",
         "points": 1,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2129,7 +2131,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the birdfeeder (if available). You may cache it on this card."
       },
       "Red-Breasted Nuthatch": {
-        "species": "/assets/1018780476_208670",
+        "species": "/assets/-736388003_9872",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2143,7 +2145,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the supply and cache it on this card."
       },
       "Red-Cockaded Woodpecker": {
-        "species": "/assets/682805662_225444",
+        "species": "/assets/2067662366_9852",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-647970708_494",
@@ -2157,7 +2159,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Red-Eyed Vireo": {
-        "species": "/assets/1013725562_215672",
+        "species": "/assets/1010836063_9502",
         "points": 3,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-647970708_494",
@@ -2171,7 +2173,7 @@
         "power": "WHEN PLAYED: Play a second bird in your forest habitat. Pay its normal cost."
       },
       "Red-Headed Woodpecker": {
-        "species": "/assets/504438614_188706",
+        "species": "/assets/-332694728_6834",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2188,7 +2190,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the birdfeeder (if available). You may cache it on this card."
       },
       "Red-Shouldered Hawk": {
-        "species": "/assets/1823849307_259913",
+        "species": "/assets/-421938501_11992",
         "points": 3,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2200,7 +2202,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <75cm, tuck it under this card. If not, discard it."
       },
       "Red-Tailed Hawk": {
-        "species": "/assets/540372111_199629",
+        "species": "/assets/1146205734_11300",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2217,7 +2219,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <75cm, tuck it under this card. If not, discard it."
       },
       "Red-Winged Blackbird": {
-        "species": "/assets/-1595624538_206110",
+        "species": "/assets/1664153792_10828",
         "points": 2,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -2231,7 +2233,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this card. If you do, also lay 1 egg on this bird."
       },
       "Ring-Billed Gull": {
-        "species": "/assets/101808518_244028",
+        "species": "/assets/-777324309_9452",
         "points": 4,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -2246,7 +2248,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, draw 1 bird card."
       },
       "Rose-Breasted Grosbeak": {
-        "species": "/assets/-1971568075_184232",
+        "species": "/assets/-188821112_12340",
         "points": 6,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -2261,7 +2263,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed or fruit from the birdfeeder, if there is one."
       },
       "Roseate Spoonbill": {
-        "species": "/assets/952855075_218009",
+        "species": "/assets/-142773975_11050",
         "points": 6,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2276,7 +2278,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Ruby-Crowned Kinglet": {
-        "species": "/assets/1060286333_190519",
+        "species": "/assets/1979441118_5732",
         "points": 2,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -2291,7 +2293,7 @@
         "power": "WHEN PLAYED: Play a second bird in your forest habitat. Pay its normal cost."
       },
       "Ruby-Throated Hummingbird": {
-        "species": "/assets/1661100227_201127",
+        "species": "/assets/1846265685_8996",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2305,7 +2307,7 @@
         "power": "WHEN ACTIVATED: Each player gains 1 dice from the birdfeeder, starting with the player of your choice."
       },
       "Ruddy Duck": {
-        "species": "/assets/-1084461751_220760",
+        "species": "/assets/2099157606_7804",
         "points": 0,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/91808388_983",
@@ -2319,7 +2321,7 @@
         "power": "WHEN ACTIVATED: Draw 2 bird cards. If you do, discard 1 bird card from your hand at the end of your turn."
       },
       "Sandhill Crane": {
-        "species": "/assets/-570834831_231690",
+        "species": "/assets/525798722_9082",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-150374768_333",
@@ -2336,7 +2338,7 @@
         "power": "WHEN ACTIVATED: Discard 1 seed to tuck 2 bird cards from the deck behind this bird."
       },
       "Savannah Sparrow": {
-        "species": "/assets/-57221247_261089",
+        "species": "/assets/1671635675_6938",
         "points": 2,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -2350,7 +2352,7 @@
         "power": "WHEN PLAYED: Play a second bird in your grassland habitat."
       },
       "Say's Phoebe": {
-        "species": "/assets/-1161964236_270938",
+        "species": "/assets/-1960121937_7230",
         "points": 5,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -2365,7 +2367,7 @@
         "power": "WHEN PLAYED: Lay 1 egg on each of your birds with a bowl nest."
       },
       "Scissor-Tailed Flycatcher": {
-        "species": "/assets/1466163813_159335",
+        "species": "/assets/-771217343_5986",
         "points": 8,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2380,7 +2382,7 @@
         "power": "WHEN ACTIVATED: All players gain 1 invertebrate from the supply."
       },
       "Snowy Egret": {
-        "species": "/assets/-1705710206_198328",
+        "species": "/assets/-1406465425_8230",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2395,7 +2397,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are fish, gain 1 fish and cache it on this card."
       },
       "Song Sparrow": {
-        "species": "/assets/-1796647558_265058",
+        "species": "/assets/1795467997_9876",
         "points": 0,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/91808388_983",
@@ -2412,7 +2414,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "Spotted Owl": {
-        "species": "/assets/-4649752_234748",
+        "species": "/assets/2042350260_11598",
         "points": 5,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-150374768_333",
@@ -2426,7 +2428,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Spotted Sandpiper": {
-        "species": "/assets/-629899704_225650",
+        "species": "/assets/-208486819_10434",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -2438,7 +2440,7 @@
         "power": "WHEN ACTIVATED: All players draw 1 bird card from the deck."
       },
       "Spotted Towhee": {
-        "species": "/assets/1839395378_246346",
+        "species": "/assets/1132257721_10074",
         "points": 0,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -2454,7 +2456,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the supply."
       },
       "Sprague's Pipit": {
-        "species": "/assets/-1533976395_257648",
+        "species": "/assets/686700586_12024",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -2468,7 +2470,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Steller's Jay": {
-        "species": "/assets/1570031943_205419",
+        "species": "/assets/-112257640_8276",
         "points": 5,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2483,7 +2485,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the birdfeeder (if available). You may cache it on this card."
       },
       "Swainson's Hawk": {
-        "species": "/assets/-1025864414_215636",
+        "species": "/assets/1517709970_10386",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2498,7 +2500,7 @@
         "power": "WHEN ACTIVATED: Look at a bird card from the deck. If <75cm, tuck it under this card. If not, discard it."
       },
       "Tree Swallow": {
-        "species": "/assets/1582162684_165929",
+        "species": "/assets/1941573773_7070",
         "points": 3,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -2513,7 +2515,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this card.  If you do, draw 1 bird card."
       },
       "Trumpter Swan": {
-        "species": "/assets/247741806_191162",
+        "species": "/assets/768046536_12654",
         "points": 9,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -2526,7 +2528,7 @@
         "bottom": "t"
       },
       "Tufted Titmouse": {
-        "species": "/assets/911156634_236420",
+        "species": "/assets/-736462480_7234",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2541,7 +2543,7 @@
         "power": "WHEN PLAYED: Play a second bird in your forest habitat. Pay its normal cost."
       },
       "Turkey Vulture": {
-        "species": "/assets/-1272548256_225751",
+        "species": "/assets/-128279324_10954",
         "points": 1,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-150374768_333",
@@ -2555,7 +2557,7 @@
         "power": "ONCE BETWEEN TURNS: When another players predator action succeeds, gain 1 dice from the birdfeeder."
       },
       "Violet-Green Swallow": {
-        "species": "/assets/501192301_258432",
+        "species": "/assets/-1908986735_12816",
         "points": 3,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2572,7 +2574,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, draw 1 bird card."
       },
       "Western Meadowlark": {
-        "species": "/assets/1938332725_258921",
+        "species": "/assets/-1986337101_9828",
         "points": 2,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -2586,7 +2588,7 @@
         "power": "WHEN ACTIVATED: All players lay 1 egg on any 1 ground nest bird. You may lay 1 egg on 1 additonal ground nest bird."
       },
       "Western Tanager": {
-        "species": "/assets/-1966185293_218104",
+        "species": "/assets/100126359_9068",
         "points": 6,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2601,7 +2603,7 @@
         "power": "WHEN ACTIVATED: Gain 1 invertebrate or fruit from the birdfeeder, if there is one."
       },
       "White-Breasted Nuthatch": {
-        "species": "/assets/1052871164_234422",
+        "species": "/assets/-2116101668_8860",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2615,7 +2617,7 @@
         "power": "WHEN ACTIVATED: Gain 1 seed from the supply and cache it on this card."
       },
       "White-Crowned Sparrow": {
-        "species": "/assets/-386908587_227246",
+        "species": "/assets/-314609791_8978",
         "points": 2,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/91808388_983",
@@ -2631,7 +2633,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "White-Faced Ibis": {
-        "species": "/assets/-337308885_245946",
+        "species": "/assets/895059758_6600",
         "points": 8,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2647,7 +2649,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are fish, gain 1 fish and cache it on this card."
       },
       "Whooping Crane": {
-        "species": "/assets/188052039_192775",
+        "species": "/assets/730823435_6630",
         "points": 6,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-150374768_333",
@@ -2662,7 +2664,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Wild Turkey": {
-        "species": "/assets/1250608201_202181",
+        "species": "/assets/1946063279_14698",
         "points": 8,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/91808388_983",
@@ -2676,7 +2678,7 @@
         "bottom": "t"
       },
       "Willet": {
-        "species": "/assets/1013322597_194221",
+        "species": "/assets/76101396_9214",
         "points": 4,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -2691,7 +2693,7 @@
         "power": "WHEN ACTIVATED: Roll all dice not in birdfeeder. If any are fish, gain 1 fish and cache it on this card."
       },
       "Wilson's Snipe": {
-        "species": "/assets/2088076643_227548",
+        "species": "/assets/-2112727071_14972",
         "points": 5,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -2703,7 +2705,7 @@
         "power": "WHEN ACTIVATED: All players draw 1 bird card from the deck."
       },
       "Wood Duck": {
-        "species": "/assets/-1534505837_251957",
+        "species": "/assets/-1492387706_13810",
         "points": 4,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-636695754_820",
@@ -2719,7 +2721,7 @@
         "power": "WHEN ACTIVATED: Draw 2 bird cards. If you do, discard 1 bird card from your hand at the end of your turn."
       },
       "Wood Stork": {
-        "species": "/assets/-1721436745_159369",
+        "species": "/assets/-763470351_8088",
         "points": 6,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2734,7 +2736,7 @@
         "power": "WHEN PLAYED: Draw 2 new bonus cards and keep 1."
       },
       "Yellow-Bellied Sapsucker": {
-        "species": "/assets/-1312203436_209506",
+        "species": "/assets/564436878_13004",
         "points": 3,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2748,7 +2750,7 @@
         "power": "WHEN ACTIVATED: Gain 1 invertebrate from the supply."
       },
       "Yellow-Billed Cuckoo": {
-        "species": "/assets/134516393_175569",
+        "species": "/assets/1036459246_6698",
         "points": 5,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2763,7 +2765,7 @@
         "power": "ONCE BETWEEN TURNS: When another player takes the lay eggs action, this bird lays 1 egg on another bird with a bowl nest."
       },
       "Yellow-Breasted Chat": {
-        "species": "/assets/-1413979188_205164",
+        "species": "/assets/1243340272_9378",
         "points": 5,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -2780,7 +2782,7 @@
         "power": "WHEN ACTIVATED: If this bird is to the right of all other birds in its habitat, move it to another habitat."
       },
       "Yellow-Headed Blackbird": {
-        "species": "/assets/1729272202_237671",
+        "species": "/assets/267320115_8516",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-1347727600_657",
@@ -2795,7 +2797,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, also lay 1 egg on this bird."
       },
       "Yellow-Rumped Warbler": {
-        "species": "/assets/1867330187_233533",
+        "species": "/assets/340979257_11640",
         "points": 1,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-636695754_820",
@@ -2811,7 +2813,7 @@
         "power": "WHEN ACTIVATED: Tuck a bird card from your hand behind this bird. If you do, draw 1 bird card."
       },
       "American Redstart": {
-        "species": "/assets/-1553392956_207231",
+        "species": "/assets/478564573_8274",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2826,7 +2828,7 @@
         "swift": "true"
       },
       "Black-Chinned Hummingbird": {
-        "species": "/assets/-1577809290_246441",
+        "species": "/assets/268672339_5572",
         "points": 4,
         "nest": "/assets/67624880_1204",
         "eggs": "/assets/-647970708_494",
@@ -2841,7 +2843,7 @@
         "swift": "true"
       },
       "Brant": {
-        "species": "/assets/1410211634_241130",
+        "species": "/assets/311669513_11204",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-647970708_494",
@@ -2856,7 +2858,7 @@
         "swift": "true"
       },
       "Broad-Winged Hawk": {
-        "species": "/assets/-968018674_225833",
+        "species": "/assets/-356264816_12788",
         "points": 4,
         "nest": "/assets/-85484812_1561",
         "eggs": "/assets/-647970708_494",
@@ -2870,7 +2872,7 @@
         "swift": "true"
       },
       "Canvasback": {
-        "species": "/assets/1322690848_186448",
+        "species": "/assets/650043947_7886",
         "points": 4,
         "nest": "/assets/211401650_529",
         "eggs": "/assets/-636695754_820",
@@ -2885,7 +2887,7 @@
         "swift": "true"
       },
       "Painted Whitestart": {
-        "species": "/assets/2117164923_241873",
+        "species": "/assets/-835108891_9812",
         "points": 1,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-1347727600_657",
@@ -2898,7 +2900,7 @@
         "swift": "true"
       },
       "Red-Breasted Merganser": {
-        "species": "/assets/-550639410_192609",
+        "species": "/assets/-874320392_8346",
         "points": 3,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/-636695754_820",
@@ -2913,7 +2915,7 @@
         "swift": "true"
       },
       "Scaled Quail": {
-        "species": "/assets/-1899559893_236857",
+        "species": "/assets/72583335_13816",
         "points": 0,
         "nest": "/assets/-63665515_2247",
         "eggs": "/assets/851419461_1146",
@@ -2926,7 +2928,7 @@
         "swift": "true"
       },
       "Vaux's Swift": {
-        "species": "/assets/1235117599_256767",
+        "species": "/assets/31006953_9012",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-1347727600_657",
@@ -2940,7 +2942,7 @@
         "swift": "true"
       },
       "White-Throated Swift": {
-        "species": "/assets/-1473377756_224684",
+        "species": "/assets/1942977511_10490",
         "points": 2,
         "nest": "/assets/-1177660470_1251",
         "eggs": "/assets/-647970708_494",
@@ -8396,7 +8398,7 @@
     "width": 428,
     "height": 228,
     "z": 10,
-    "image": "/assets/-1984386173_57852",
+    "image": "/assets/622971223_2286",
     "movable": false,
     "layer": 0,
     "scale": 1.05,
@@ -8422,7 +8424,7 @@
     "height": 1200,
     "layer": -5,
     "movable": false,
-    "image": "/assets/2120302606_78596",
+    "image": "/assets/-137939396_20922",
     "movableInEdit": false
   },
   "name1": {
@@ -12500,7 +12502,7 @@
     "movableInEdit": false,
     "css": {
       "box-shadow": "inset 0 0 0 1000px #80808080",
-      "background-image": "url(/assets/1623288221_767129)",
+      "background-image": "url(/assets/313374753_69156)",
       "font-weight": "900",
       "font-size": "1.5rem",
       "line-height": "50px",
@@ -12562,7 +12564,7 @@
     "movableInEdit": false,
     "css": {
       "box-shadow": "inset 0 0 0 1000px #80808080",
-      "background-image": "url(/assets/1623288221_767129)",
+      "background-image": "url(/assets/313374753_69156)",
       "font-weight": "900",
       "font-size": "1.5rem",
       "line-height": "50px",
@@ -13384,7 +13386,7 @@
         "height1": 25,
         "x1": 31,
         "y1": 9,
-        "image2-1": "/assets/1623288221_767129",
+        "image2-1": "/assets/313374753_69156",
         "image2-2": "/assets/-1979048649_1277",
         "width2": 25,
         "height2": 25,
@@ -13394,7 +13396,7 @@
       "Remove3": {
         "removeText": "Remove After Round 3",
         "removeY": 131,
-        "image1-1": "/assets/1623288221_767129",
+        "image1-1": "/assets/313374753_69156",
         "image1-2": "/assets/-1979048649_1277",
         "width1": 25,
         "height1": 25,
@@ -13452,7 +13454,7 @@
         "height2": 45,
         "x2": 22,
         "y2": 41,
-        "image3-1": "/assets/1623288221_767129",
+        "image3-1": "/assets/313374753_69156",
         "image3-2": "/assets/-209170386_1252",
         "width3": 25,
         "height3": 25,
@@ -13484,7 +13486,7 @@
         "height3": 75,
         "x3": 6,
         "y3": 67,
-        "image4-1": "/assets/1623288221_767129",
+        "image4-1": "/assets/313374753_69156",
         "image4-2": "/assets/-209170386_1252",
         "width4": 25,
         "height4": 25,
@@ -13504,7 +13506,7 @@
         "height2": 45,
         "x2": 22,
         "y2": 41,
-        "image3-1": "/assets/1623288221_767129",
+        "image3-1": "/assets/313374753_69156",
         "width3": 25,
         "height3": 25,
         "x3": 31,
@@ -13522,7 +13524,7 @@
         "height1": 25,
         "x1": 31,
         "y1": 9,
-        "image2-1": "/assets/1623288221_767129",
+        "image2-1": "/assets/313374753_69156",
         "width2": 25,
         "height2": 25,
         "x2": 31,
@@ -13541,7 +13543,7 @@
         "y4": 109
       },
       "Basic5": {
-        "image1-1": "/assets/1623288221_767129",
+        "image1-1": "/assets/313374753_69156",
         "image1-2": "/assets/-209170386_1252",
         "width1": 25,
         "height1": 25,
@@ -13608,7 +13610,7 @@
         "height3": 45,
         "x3": 22,
         "y3": 83,
-        "image4-1": "/assets/1623288221_767129",
+        "image4-1": "/assets/313374753_69156",
         "image4-2": "/assets/-1979048649_1277",
         "width4": 25,
         "height4": 25,
@@ -13627,7 +13629,7 @@
             "y": 0,
             "width": 111,
             "height": 168,
-            "value": "/assets/-786528005_233876"
+            "value": "/assets/-713240365_6508"
           }
         ]
       },
@@ -14949,7 +14951,7 @@
         "height1": 25,
         "x1": 31,
         "y1": 9,
-        "image2-1": "/assets/1623288221_767129",
+        "image2-1": "/assets/313374753_69156",
         "image2-2": "/assets/-1979048649_1277",
         "width2": 25,
         "height2": 25,
@@ -14959,7 +14961,7 @@
       "Remove3": {
         "removeText": "Remove After Round 3",
         "removeY": 131,
-        "image1-1": "/assets/1623288221_767129",
+        "image1-1": "/assets/313374753_69156",
         "image1-2": "/assets/-1979048649_1277",
         "width1": 25,
         "height1": 25,
@@ -15017,7 +15019,7 @@
         "height2": 45,
         "x2": 22,
         "y2": 41,
-        "image3-1": "/assets/1623288221_767129",
+        "image3-1": "/assets/313374753_69156",
         "image3-2": "/assets/-209170386_1252",
         "width3": 25,
         "height3": 25,
@@ -15049,7 +15051,7 @@
         "height3": 75,
         "x3": 6,
         "y3": 67,
-        "image4-1": "/assets/1623288221_767129",
+        "image4-1": "/assets/313374753_69156",
         "image4-2": "/assets/-209170386_1252",
         "width4": 25,
         "height4": 25,
@@ -15069,7 +15071,7 @@
         "height2": 45,
         "x2": 22,
         "y2": 41,
-        "image3-1": "/assets/1623288221_767129",
+        "image3-1": "/assets/313374753_69156",
         "width3": 25,
         "height3": 25,
         "x3": 31,
@@ -15087,7 +15089,7 @@
         "height1": 25,
         "x1": 31,
         "y1": 9,
-        "image2-1": "/assets/1623288221_767129",
+        "image2-1": "/assets/313374753_69156",
         "width2": 25,
         "height2": 25,
         "x2": 31,
@@ -15106,7 +15108,7 @@
         "y4": 109
       },
       "Basic5": {
-        "image1-1": "/assets/1623288221_767129",
+        "image1-1": "/assets/313374753_69156",
         "image1-2": "/assets/-209170386_1252",
         "width1": 25,
         "height1": 25,
@@ -15173,7 +15175,7 @@
         "height3": 45,
         "x3": 22,
         "y3": 83,
-        "image4-1": "/assets/1623288221_767129",
+        "image4-1": "/assets/313374753_69156",
         "image4-2": "/assets/-1979048649_1277",
         "width4": 25,
         "height4": 25,
@@ -15192,7 +15194,7 @@
             "y": 0,
             "width": 111,
             "height": 168,
-            "value": "/assets/-786528005_233876"
+            "value": "/assets/-713240365_6508"
           }
         ]
       },

@@ -1,6 +1,9 @@
-#jsonEditor {
+:root {
   --commandPaneWidth: 180px;
   --editorPaneWidth: 320px;
+}
+
+#jsonEditor {
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -19,11 +22,11 @@
   display: none;
 }
 
-#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
-  background: #08090a;
+#jsonEditor > *, #jeWidgetLayers > div {
+  background: var(--backgroundColor);
 }
 #jsonEditor > * {
-  color: #f8f8f2;
+  color: var(--textColor);
   padding: 5px;
   margin: 0;
   position: fixed;
@@ -31,6 +34,149 @@
   resize: none;
   box-sizing: border-box;
 }
+
+/*** Widget switcher (breadcrumbs, back/forward history, tree dropdown) ***/
+#jeWidgetSwitcher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: calc(var(--commandPaneWidth) + 1px);
+  height: 40px;
+  display: none;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 6px 5px 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+  background: var(--backgroundColor);
+  z-index: 2;
+}
+
+/* only used inside the sidebar module; the legacy standalone editor has no room for it */
+.editorModule #jeWidgetSwitcher {
+  display: flex;
+}
+
+#jeWidgetSwitcher > button {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  justify-content: center;
+}
+
+#jeWidgetSwitcher > button::before {
+  font-size: 20px;
+  width: auto;
+  margin: 0;
+}
+
+#jeWidgetSwitcher > button:disabled {
+  background-color: gray;
+  opacity: 0.5;
+}
+
+#jeWidgetSwitcher > button.active {
+  background-color: var(--VTTblueDark);
+  color: yellow;
+}
+
+#jeBreadcrumbs {
+  flex-grow: 1;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#jeBreadcrumbs .jeCrumb {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 3ch;
+}
+
+#jeBreadcrumbs .jeCrumb[data-id] {
+  cursor: pointer;
+  color: var(--textHighlightColor1);
+}
+
+#jeBreadcrumbs .jeCrumb[data-id]:hover {
+  text-decoration: underline;
+}
+
+#jeBreadcrumbs .jeCrumbCurrent {
+  font-weight: bold;
+}
+
+#jeBreadcrumbs .jeCrumbSeparator {
+  font-family: 'Material Symbols';
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+#jeBreadcrumbs .jeCrumbEllipsis {
+  flex-shrink: 0;
+}
+
+#jeBreadcrumbs .jeCrumbInfo {
+  color: var(--textDimColor1);
+}
+
+#jeTreeContainer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  background: var(--backgroundColor);
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-top: none;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+#jeWidgetSwitcher.treeVisible #jeTreeContainer {
+  display: block;
+}
+
+#jeTreeContainer #jeTree {
+  height: auto;
+}
+
+#jePinTree {
+  display: none;
+}
+
+#jeWidgetSwitcher.treeVisible #jePinTree {
+  display: flex;
+}
+
+/* pinned: reserve space for the tree so it stays visible above the JSON;
+   percentages resolve against the module pane so short panes keep a usable JSON area */
+#jeWidgetSwitcher.treeVisible.treePinned {
+  height: max(40%, 140px);
+}
+
+#jeWidgetSwitcher.treeVisible.treePinned #jeTreeContainer {
+  top: 40px;
+  bottom: 0;
+  max-height: none;
+}
+
+#jeWidgetSwitcher.treeVisible.treePinned ~ #jeText,
+#jeWidgetSwitcher.treeVisible.treePinned ~ #jeTextHighlight {
+  top: max(40%, 140px);
+}
+
+.editorModule #jeText, .editorModule #jeTextHighlight {
+  top: 40px;
+}
+
+/*** End of widget switcher ***/
 
 /*** Tree and widget display/edit area ***/
 /**** CSS to set up the grid ****/
@@ -54,54 +200,64 @@
 }
 
 #jeMouseCoords {
-  grid-column: 2 / span 1;
-  grid-row: 1 /span 1;
-  display: block;
-  text-align: right;
-  right: calc(var(--commandPaneWidth) + 20px);
-  border-bottom: 1px solid white;
+  margin: 5px;
 }
 
 #jeTree {
   grid-column: 1 / span 2;
   grid-row: 3 / span 1;
   overflow-wrap: break-word;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  border-top: 1px dashed gray;
-}
-
-#jeWidgetSearch {
-  grid-column: 1 / span 2;
-  grid-row: 2;
-}
-
-#jeWidgetSearchResults {
-  grid-column: 1 / span 2;
-  grid-row: 3;
-  overflow: hidden auto;
-  display: none;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  background-color: #484848;
-}
-
-#jeResize {
-  content: '';
-  grid-column: 1 / span 2;
-  grid-row: 4 / span 1;
-  cursor: ns-resize;
-  background-color: #b8c6db;
-  background-image: linear-gradient(#b8c6db 0%, #f5f7fa 20%, #b8c6db 80%);
+  white-space: pre-wrap;
+  font-family: monospace;
+  user-select: none;
 }
 
 #jeText, #jeTextHighlight {
-  grid-column: 1 / span 2;
-  grid-row: 5 / span 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: calc(var(--commandPaneWidth) + 1px);
+  font-family: monospace;
   white-space: pre-wrap;
   overflow-y: auto;
   overflow-wrap: break-word;
 }
 /**** End of grid layout ****/
+
+/**** line number styles ****/
+
+.jeLineNumber {
+  display: inline-block;
+  /* --linenumbers-digits gets set in jsonedit.js (jeColorize function) depending on the lines of the widget */
+  width: calc(var(--linenumbers-digits) * 8px);
+  text-align: right;
+  padding-right: 2px;
+  color: var(--textDimColor1);
+  vertical-align: top;
+}
+
+.jeLineContent {
+  display: inline-block;
+  width: calc(100% - var(--linenumbers-digits) * 8px - 2px);
+}
+
+#jeText {
+  padding-left: calc(var(--linenumbers-digits) * 8px + 2px);
+}
+#jeText::selection {
+  background-color: var(--backgroundHighlightColor1);
+  color: var(--textColor);
+}
+
+/**** End of line number styles ****/
+
+#jeTree > ul {
+  overflow-y: auto;
+}
 
 #jeTree ul, .jeTreeDisplay, .jeNestedTree {
   margin: 0;
@@ -118,6 +274,13 @@
   cursor: pointer;
 }
 
+#jeTree li.filterNotIncluded:not(.filterChildIncluded) {
+  display: none;
+}
+#jeTree li.filterNotIncluded.filterChildIncluded > span {
+  opacity: 0.2;
+}
+
 /* Style the caret/arrow */
 .jeTreeExpander, .jeTreeExpander-down {
   user-select: none; /* Prevent text selection */
@@ -126,9 +289,12 @@
 /* Create the caret/arrow with a unicode, and style it */
 .jeTreeExpander::before, .jeTreeExpander-down::before {
   content: "\25B6";
-  color: white;
   display: inline-block;
   margin-right: 6px;
+}
+
+body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::before {
+  color: var(--textColor);
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
@@ -142,8 +308,19 @@
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.jeNestedTree.active, .jeLogNested.active {
+.jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
   display: block;
+}
+
+.jeLogFilterMatch {
+  font-weight: bold;
+}
+
+.jeLogFilterNoMatch {
+  opacity: 0.5;
+}
+.jeLogFilterNoMatch:hover {
+  opacity: 1;
 }
 
 #jeText {
@@ -154,14 +331,17 @@
 }
 
 #jeText::selection {
-  background-color: #808080;
-  -webkit-text-fill-color: white;
+  background-color: var(--backgroundHighlightColor1);
+  -webkit-text-fill-color: var(--textColor);
 }
 
 /*** CSS to handle search box for tree widget ***/
+#jeTree > div {
+  display: flex;
+  margin-bottom: 10px;
+}
 #jeWidgetSearchBox {
-  margin-top: 1px;
-  width: 50%;
+  min-width: 50px;
 }
 
 #jeSearchTable {
@@ -169,40 +349,32 @@
 }
 
 .jeHighlightRow {
-  background-color: gray;
+  background-color: var(--backgroundHighlightColor1);
 }
 
 /**** End tree search CSS ****/
 
 /**** Color formatting for widgets ****/
 
-#jsonEditor i {
+#jeTextHighlight i, #jeTree i {
   font-style: normal;
 }
 
-i.key     { color: yellow;  }
-i.custom  { color: orange;  }
-i.extern  { color: red;     }
-.extern   { color: red;     }
-i.string  { color: #7ed07e; }
-i.number  { color: #dda0dd; }
-i.null    { color: blue;    }
-i.default { color: #606060; }
-i.variable{ color: #40e0d0; }
-i.error   { color: red; font-weight: bold; }
-
-body.jsonEdit .selectedInEdit:not(.pile) {
-  box-shadow: 0px 0px 0px 5px yellow;
-}
-
-body.jsonEdit .selectedInEdit.pile .handle {
-  box-shadow: 0px 0px 0px 5px yellow;
-}
-
-body.jsonEdit:not(.edit) .selectedInEdit.deck {
-  visibility: visible;
-  font-size: 0;
-}
+i.key     { color: var(--textHighlightColor1); }
+i.custom  { color: var(--textHighlightColor2); }
+i.extern  { color: var(--textHighlightColor3); }
+.extern   { color: var(--textHighlightColor3); }
+i.string  { color: var(--textHighlightColor4); }
+i.number  { color: var(--textHighlightColor5); }
+i.null    { color: var(--textHighlightColor6); }
+i.default { color: var(--textDimColor1);       }
+i.variable{ color: var(--textHighlightColor7); }
+i.htmltag { color: var(--textHighlightColor1); }
+i.htmlattr{ color: var(--textHighlightColor2); }
+i.htmlvalue{ color: var(--textHighlightColor5); }
+i.csskey  { color: var(--textHighlightColor5); }
+i.cssvalue{ color: var(--textHighlightColor7); }
+i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 
 /**** End color formatting ****/
 
@@ -222,34 +394,121 @@ body.jsonEdit:not(.edit) .selectedInEdit.deck {
 /*** End compute operations CSS ***/
 
 #jeCommands {
-  white-space: pre-wrap;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
   width: var(--commandPaneWidth);
-  right: 0;
-  overflow: auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
+  flex-direction: column;
 }
 
 #jeWidgetLayers {
-  width: 9001px;
-  font-size: 0;
-  padding: 0;
-  background: transparent;
+  background: var(--backgroundColor);
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 10px;
+  width: calc(var(--commandPaneWidth) - 34px);
+  border: 2px solid var(--VTTblue);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px;
+  white-space: normal;
+}
+
+/* This panel covers the command buttons underneath it and only lists what the cursor is hovering in the room,
+   so it hides while the cursor is over the editor. An open overlay (the symbol picker, a dialog) takes the
+   cursor away from the room in the same way, but does not necessarily put it over the editor - without
+   body.overlayActive the panel stayed up over the commands for as long as the overlay was open. */
+#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers,
+body.overlayActive #jeWidgetLayers {
+  display: none;
+}
+
+#jeWidgetLayers > p {
+  font-size: 12px;
+  margin: 0;
 }
 
 #jeWidgetLayers > div {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   padding: 2px;
-  vertical-align: top;
   font-size: 12px;
-  margin-right: 4px;
 }
 
-#jeWidgetLayers > div:empty {
+#jeWidgetLayers > div.hidden {
+  display: none;
+}
+
+#jeWidgetLayers .key {
+  font-size: inherit;
+  line-height: inherit;
+  margin-bottom: 0.4375rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.2rem;
+  box-shadow: 0 0 #d9d9d9, 0 0px #d9d9d9, 0 1px #d9d9d9, 0 2px #d9d9d9, 0 3px #d9d9d9, 0 4px #d9d9d9, 0 5px #d9d9d9, 2px 2.5px 4px #adb5bd, 0 -1px 2.5px #adb5bd;
+  background-color: #fff;
+  border-color: #e6e6e6;
+  color: #343a40;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.25rem;
+  display: inline-block;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 400;
+  text-align: left;
+  transform: translate3d(0, 0, 5px);
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+
+#jeWidgetLayers .key::after {
+  border-style: solid;
+  box-sizing: content-box;
+  content: '';
+  display: block;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  border-color: #cccccc;
+  border-radius: 0.5rem;
+  border-width: 0.125rem;
+  bottom: -9px;
+  left: -0.3125rem;
+  right: -0.3125rem;
+  top: -3px;
+  transform: translate3d(0, 0, -3px);
+}
+
+#jeWidgetLayers .keyDetails {
+  margin-left: 4px;
+}
+
+#jeWidgetLayers .id {
+  color: var(--textHighlightColor1);
+  display: inline-block;
+}
+
+#jeWidgetLayers .type {
+  color: var(--textHighlightColor4);
+}
+
+#jeWidgetLayers .details {
+  color: var(--textHighlightColor3);
+  white-space: pre;
+  display: block;
+}
+
+#jeWidgetLayers .details:empty {
   display: none;
 }
 
@@ -257,8 +516,16 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > button {
-  width: 100%;
+body.jsonEdit #jeTopButtons {
+  margin-bottom: 10px;
+}
+
+body.jsonEdit #jeContextButtons {
+  overflow: hidden auto;
+}
+
+body.jsonEdit #jeContextButtons > button {
+  width: calc(100% - 3px);
   text-align: left;
 }
 
@@ -266,40 +533,10 @@ body.jsonEdit #toolbar {
   display: none;
 }
 
-body.jsonEdit {
-  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  --roomLeft: 0px;
-}
-
-body.jsonEdit.jeZoomOut {
-  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  --roomLeft: 12.5%;
-}
-
-body.jsonEdit.jeZoomOut #roomArea {
-  overflow: visible;
-}
-
-body.jsonEdit.jeZoomOut #topSurface {
-  overflow: visible;
-}
-
 #jeLogWrapper {
   position: fixed;
   bottom: 0;
   white-space: normal;
-}
-
-#jeLog {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: none;
-  height: 90vh;
-  right: calc(var(--commandPaneWidth) + var(--editorPaneWidth));
-  overflow: auto;
-  box-sizing: border-box;
-  border: 3px solid white;
 }
 
 @media (max-width: 1000px) {
@@ -324,32 +561,45 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 .jeLog {
   white-space: normal;
+  font-family: monospace;
   font-size: 12px;
-  background: #ffffff10;
   margin-left: 20px;
-  color:lightgray;
+  color: var(--textColor);
 }
 
-.jeLogSkipped {
-  color: grey;
+#jeLog > .jeLog > .jeExpander {
+  color: var(--textColor);
+  font-weight: bold;
+}
+#jeLog > .jeLog + .jeLog {
+  margin-top: 20px;
 }
 
-.jeLogSummary {
-  color: lightgreen;
+/* a message about the log itself rather than a logged routine, so make it a readable callout */
+.jeLogNote {
+  color: var(--textColor);
+  background-color: var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--textHighlightColor2);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin: 10px 0 10px 20px;
+  font-family: Arial, sans-serif;
+}
+.jeLogNote .jeLogWidget,
+.jeLogNote .jeLogProperty {
+  font-family: monospace;
+  font-weight: bold;
 }
 
-.jeLogResult {
-  color: orange;
-}
-
-.jeLogTime {
-  color: yellow;
-}
+.jeLogSkipped { color: var(--textDimColor1); }
+.jeLogSummary { color: var(--textHighlightColor4); }
+.jeLogResult  { color: var(--textHighlightColor2); }
+.jeLogTime    { color: var(--textDimColor1); }
 
 /* Create the caret/arrow with a unicode, and style it */
 .jeExpander::before {
   content: "\25B6";
-  color: white;
+  color: var(--textColor);
   display: inline-block;
   margin-right: 6px;
 }
@@ -374,11 +624,11 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 /* .jeLogHasProblems and .jeLogHasNoProblems control the text color of the first item displayed. */
 .jeLogHasProblems, .jeLogProblems {
-  color: red;
+  color: var(--textHighlightColor3);
 }
 
 .jeLogHasNoProblems {
-  color: lightgray;
+  color: var(--textColor);
 }
 
 /* .jeLogProblems controls the color and display of the problem text */
@@ -393,7 +643,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogDetails {
   word-break: break-all;
   margin-left: 20px;
-  color: lightgray;
+  color: var(--textColor);
 }
 
 /* Show the details when the user clicks on the caret/arrow */
@@ -424,7 +674,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 [id=jeTopButtons] button.material {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
 }
 
 #jeTopButtons button:disabled {
@@ -452,11 +702,69 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 #jeCommands .context{
   font-weight: bold;
+  margin: 1px;
   margin-top: 8px;
-  width: 100%;
 }
 
-#jeCommands > button > b{
+#jeCommands .key {
+  font-size: inherit;
+  line-height: inherit;
+  margin-bottom: 0.4375rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.2rem;
+  box-shadow: 0 0 #d9d9d9, 0 0px #d9d9d9, 0 1px #d9d9d9, 0 2px #d9d9d9, 0 3px #d9d9d9, 0 4px #d9d9d9, 0 5px #d9d9d9, 2px 2.5px 4px #adb5bd, 0 -1px 2.5px #adb5bd;
+  background-color: #fff;
+  border-color: #e6e6e6;
+  color: #343a40;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.25rem;
+  display: inline-block;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 400;
+  text-align: left;
+  transform: translate3d(0, 0, 5px);
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+
+#jeCommands .key::after {
+  border-style: solid;
+  box-sizing: content-box;
+  content: '';
+  display: block;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  border-color: #cccccc;
+  border-radius: 0.5rem;
+  border-width: 0.125rem;
+  bottom: -9px;
+  left: -0.3125rem;
+  right: -0.3125rem;
+  top: -3px;
+  transform: translate3d(0, 0, -3px);
+}
+
+#jeContextButtons .jeEditorLineDesc {
+  font-size: 11px;
+  margin-left: 8px;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+#jeContextButtons > button.jeHighlight, #jeContextButtons .jeEditorLineDesc mark {
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+}
+
+#jeContextButtons > button > b{
   text-decoration: underline;
   color: yellow;
 }
@@ -483,14 +791,12 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 #je_openParent{
 }
-#je_toggleWide{
-}
 #je_toggleHighlight{
 }
 #je_toggleDebug{
 }
 
-#jeCommands > button::before{
+#jeContextButtons > button::before{
   margin-right: 4px;
   font-family: 'VTT-Symbols';
 }

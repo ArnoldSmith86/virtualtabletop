@@ -227,85 +227,71 @@
     font-family: "Gugi";
 }
 
-
 @font-face {
-    font-family: "Material Icons";
-    font-style: normal;
-    font-weight: 400;
-    src: url("i/fonts/MaterialIcons-Regular.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Material Icons Outlined";
-    font-style: normal;
-    font-weight: 400;
-    src: url("i/fonts/MaterialIconsOutlined-Regular.otf") format("opentype");
+  font-family: "Material Symbols";
+  font-style: normal;
+  font-weight: 400;
+  src: url("i/fonts/MaterialSymbols-Outlined-Fill.woff2") format("woff2");
+  font-display: block;
 }
 
 @font-face {
-    font-family: "Material Icons Round";
-    font-style: normal;
-    font-weight: 400;
-    src: url("i/fonts/MaterialIconsRound-Regular.otf") format("opentype");
+  font-family: "Material Symbols NoFill";
+  font-style: normal;
+  font-weight: 400;
+  src: url("i/fonts/MaterialSymbols-Outlined-NoFill.woff2") format("woff2");
+  font-display: block;
+}
+
+
+.material-symbols, .font-material-symbols {
+  font-family: "Material Symbols";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  word-spacing: -0.75em;
+}
+
+.material-symbols-nofill, .font-material-symbols-nofill {
+  font-family: "Material Symbols NoFill";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  word-spacing: -0.75em;
+}
+
+.material-symbols.intext {
+  font-size: 20px;
 }
 
 @font-face {
-    font-family: "Material Icons Sharp";
-    font-style: normal;
-    font-weight: 400;
-    src: url("i/fonts/MaterialIconsSharp-Regular.otf") format("opentype");
+  font-family: "Noto Emoji";
+  font-style: normal;
+  font-weight: 300 700;
+  src: url("i/fonts/NotoEmoji-VariableFont_wght.ttf") format("truetype");
+  font-display: block;
 }
 
-@font-face {
-    font-family: "Material Icons Two Tone";
-    font-style: normal;
-    font-weight: 400;
-    src: url("i/fonts/MaterialIconsTwoTone-Regular.otf") format("opentype");
-}
-
-.material-icons, .material-icons-outlined, .material-icons-round, .material-icons-sharp, .material-icons-twotone, .font-material-icons {
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: "liga";
-    -webkit-font-smoothing: antialiased;
-    font-feature-settings: "liga";
-}
-
-.material-icons.intext {
-    font-size: 20px;
-}
-
-.material-icons, .font-material-icons {
-    font-family: "Material Icons";
-}
-
-.material-icons-outlined {
-    font-family: "Material Icons Outlined";
-}
-
-.material-icons-round {
-    font-family: "Material Icons Round";
-}
-
-.material-icons-sharp {
-    font-family: "Material Icons Sharp";
-}
-
-.material-icons-twotone {
-    font-family: "Material Icons Two Tone";
+.emoji-monochrome {
+  font-family: "Noto Emoji";
+  font-weight: 400;
 }
 
 @font-face {
     font-family: "VTT-Symbols";
-    src: url("i/fonts/VTT-Symbols.woff?version=6") format("woff");
+    src: url("i/fonts/VTT-Symbols.ttf?version=6") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -313,7 +299,7 @@
 
 .icon {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: "VTT-Symbols", "Material Icons" !important;
+    font-family: "VTT-Symbols", "Material Symbols" !important;
     speak: never;
     font-style: normal;
     font-weight: normal;
@@ -400,6 +386,67 @@
 
 
 
+/* The picker is a dialog, not a document: the title, the search field and the hint stay put and the symbol
+   list is the only part that scrolls. The whole overlay scrolling meant that scrolling down to an icon also
+   scrolled the search field and the close button off the top of the screen. .overlay's own overflow: auto
+   stays as a fallback for a box too short even for the reduced layout below.
+   How much room the parts have is decided by the picker's own box, not by the window: it is opened in three
+   hosts of very different sizes (the room overlays, the deck editor's card column, #editor), which is what
+   the media queries at the end of this block cannot see - so make it a container and query that instead. */
+#symbolPickerOverlay {
+  container: symbolPicker / size;
+  /* .overlay's own 5% 10% is a percentage of the WIDTH, in both directions: the wider the host box the more
+     vertical padding the picker gets - ~90px of dead band above the title in #editor at 1920px, while the
+     small boxes that actually need every pixel of height get almost none. The column below is centered and
+     capped at 1000px anyway, so the horizontal padding only matters once the box is narrower than that. */
+  padding: 20px 10px;
+}
+
+/* In a short or a narrow box the hint is what has to go: it explains the list but costs more height than the
+   list is then left with - 114px of a 250px-tall box, and 700px of a 931px-tall one when the box is only
+   204px wide and every line of the hint holds two words. Same breakpoints as the media queries below, and
+   the same compensation .fewResults makes when it hides the hint for the same reason. */
+@container symbolPicker (max-height: 375px), symbolPicker (max-width: 600px) {
+  #symbolPickerOverlay p[icon] {
+    display: none;
+  }
+  #symbolPickerOverlay input {
+    margin-bottom: 20px;
+  }
+  /* the close button is positioned over the right edge of the title, which the centered "Pick icon" runs
+     into once the box is this narrow */
+  #symbolPickerOverlay h1 {
+    font-size: 20px;
+    margin: 0 40px 10px;
+  }
+}
+
+/* the title and the list are separate children, so they need the same width to line up - the close button
+   sits at the right edge of the title */
+#symbolPickerOverlay > .titleWithCloseButton,
+#symbolPickerOverlay > div:not(.titleWithCloseButton) {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#symbolPickerOverlay > div:not(.titleWithCloseButton),
+#symbolPickerOverlay div[icon] {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* div[icon] clips (overflow: hidden, for its rounded corners and its watermark glyph), so squeezing it below
+   what it holds drops the bottom of the list on the floor with nothing left to scroll. Keep it at least as
+   tall as the reduced layout needs - its own padding, the search field, and the list's floor below. The
+   plain wrapper around it does not clip, so a box that cannot afford even this overflows the overlay, which
+   scrolls (.overlay is overflow: auto), instead of losing the rest of the list. */
+#symbolPickerOverlay div[icon] {
+  min-height: 210px;
+}
+
 #symbolPickerOverlay > button {
   position: absolute;
   right: 10px;
@@ -411,10 +458,46 @@
   box-sizing: border-box;
 }
 
+#symbolPickerOverlay:not(.bigPreviews) p span {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults p {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults input {
+  margin-bottom: 20px;
+}
+
 #symbolList {
+  --symbolSize: 24px;
   color: black;
   overflow-x: hidden;
   overflow-y: auto;
+  word-wrap: anywhere;
+  flex: 1;
+  /* the list takes what is left over, but never less than about four rows: with min-height: 0 whatever sits
+     above it could squeeze it to nothing, and since it is the only scroller that leaves no icon reachable */
+  min-height: 120px;
+}
+#symbolPickerOverlay.bigPreviews.fewResults #symbolList {
+  --symbolSize: 64px;
+}
+
+/* a search that matches nothing left an empty card without saying why - take the list's place instead */
+#symbolNoResults {
+  display: none;
+}
+#symbolPickerOverlay.noResults #symbolList {
+  display: none;
+}
+#symbolPickerOverlay.noResults #symbolNoResults {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   word-wrap: anywhere;
 }
 
@@ -430,22 +513,67 @@
 
 #symbolPickerOverlay i {
   font-style: normal;
-  font-size: 24px;
+  font-size: var(--symbolSize);
   margin-left: 4px;
   cursor: pointer;
 }
 
-#symbolPickerOverlay i.emoji {
+#symbolPickerOverlay .emoji {
   word-break: break-all;
 }
 
-#symbolPickerOverlay .hidden {
+#symbolPickerOverlay .emoji-monochrome {
+  font-size: calc(0.85 * var(--symbolSize));
+  vertical-align: top;
+}
+
+#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
+  background: var(--url) center no-repeat;
+  color: transparent;
+  top: -3px;
+}
+
+#symbolPickerOverlay .gameicons {
+  --spritesheetX: 60;
+  --spritesheetY: 69;
+
+  display: inline-block;
+  background: url(i/game-icons.net/overview24.png);
+  background-position: calc(-1 * var(--symbolSize) * var(--x)) calc(-1 * var(--symbolSize) * var(--y));
+  background-size: calc(var(--spritesheetX) * var(--symbolSize)) calc(var(--spritesheetY) * var(--symbolSize));
+  width: var(--symbolSize);
+  height: var(--symbolSize);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons {
+  background-image: url(i/game-icons.net/overview48.png);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {
+  background: var(--url);
+}
+
+/* every icon and category heading carries data-family=image|font, so the restriction to one of the two
+   families is a single pair of selectors - and symbols.js can count what is left with the same attribute */
+#symbolPickerOverlay .hidden,
+#symbolPickerOverlay.hideImages [data-family=image],
+#symbolPickerOverlay.hideFonts [data-family=font] {
   display: none;
 }
 
+/* stay media queries: the deck editor moves the symbol picker out of the room overlays into #editor
+   or #deckEditorMainCol, so there is no #roomArea container to query while it is open there */
 @media (max-width: 600px), (max-height: 375px) {
   #symbolPickerOverlay {
     padding: 2%;
+  }
+  #symbolPickerOverlay p[icon] {
+    margin: 10px;
+    margin-left: 40px;
+  }
+  #symbolPickerOverlay p[icon]::before {
+    font-size: 150%;
+    left: -30px;
   }
 }
 @media (max-width: 300px), (max-height: 187px) {
@@ -466,6 +594,74 @@
   }
 }
 
+#audioPickerOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#audioPickerOverlay h1 {
+  margin-top: 0;
+}
+
+#audioPickerOverlay h2 {
+  font-size: 16px;
+  border-bottom: 1px solid black;
+  padding-left: 4px;
+}
+
+#audioList {
+  color: black;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#audioList .audioEntry {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 8px 2px 0;
+  cursor: pointer;
+}
+
+#audioList .audioEntry span {
+  word-break: break-word;
+}
+
+#audioList .audioEntry:hover span,
+#audioList .audioEntry.playing span {
+  text-decoration: underline;
+}
+
+#audioList .audioPreview {
+  padding: 2px;
+}
+
+/* show a stop icon while a sound is previewing (see button[icon]::before) */
+#audioList .audioEntry.playing .audioPreview::before {
+  content: 'stop';
+}
+
+#audioList .hidden {
+  display: none;
+}
+
+/* stay media queries for the same reason as the symbol picker above: the deck editor moves
+   the sound picker into #editor, where there is no #roomArea container to query */
+@media (max-width: 600px), (max-height: 375px) {
+  #audioPickerOverlay {
+    padding: 2%;
+  }
+}
+@media (max-width: 300px), (max-height: 187px) {
+  #audioPickerOverlay {
+    padding: 0;
+  }
+  #audioPickerOverlay h1 {
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
+}
+
 p[icon] {
   color: black;
   margin: 20px;
@@ -473,12 +669,15 @@ p[icon] {
 }
 p[icon]::before {
   content: attr(icon);
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   font-size: 200%;
   position: absolute;
   left: -40px;
 }
-@media (max-width: 600px), (max-height: 375px) {
+/* the other one of these is the welcome overlay's user-generated-content warning, which is laid
+   out inside the board - the symbol picker's copy is handled by the media query above, since that
+   overlay is not always in the room */
+@container roomArea ((max-width: 600px) or (max-height: 375px)) {
   p[icon] {
     margin: 10px;
     margin-left: 40px;

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="75.928001"
+   height="44.983002"
+   viewBox="0 0 20.089284 11.901753"
+   version="1.1"
+   id="svg2020"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="bridge-2d.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2022"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4912879"
+     inkscape:cx="227.99085"
+     inkscape:cy="132.43586"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2017">
+    <filter
+       id="shadow-1-7-9-9-4-7-4-9"
+       height="1.3495146"
+       width="1.1558442"
+       x="-0.077922076"
+       y="-0.17475729">
+      <feFlood
+         flood-color="rgba(0, 0, 0, 1)"
+         result="flood"
+         id="feFlood11079-27-7-9-9-4-2-66" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="atop"
+         result="composite"
+         id="feComposite11081-9-3-6-9-0-0-3" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="15"
+         result="blur"
+         id="feGaussianBlur11083-7-3-4-9-2-6-91" />
+      <feOffset
+         dx="0"
+         dy="0"
+         result="offset"
+         id="feOffset11085-0-3-9-0-4-6-5" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         id="feComposite11087-2-3-0-3-1-49-4" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       class=""
+       transform="matrix(0.02583822,0,0,0.02583825,-67.468719,-19.988449)"
+       id="g11096-0-9-8-9-1-2">
+      <rect
+         style="display:inline;fill:#3f3f3f;fill-opacity:1;stroke-width:0.73813;stroke-miterlimit:5;stroke-opacity:0.498039"
+         id="rect2252-1-0-9-6-6-0"
+         width="4300.7993"
+         height="102.39999"
+         x="-733.93207"
+         y="-243.92944"
+         transform="rotate(22.5)" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,349 @@
+:root {
+  --editSidebarWidth: 128px;
+}
+
+#editorSidebar {
+  background: var(--VTTblue);
+  position: absolute;
+  width: var(--editSidebarWidth);
+  right: 0;
+  top: calc(var(--editToolbarHeight) - 1px);
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#editorSidebar button span {
+  display: none;
+  position: absolute;
+  right: calc(var(--editSidebarWidth) + 1px);
+  background: var(--VTTblueDark);
+  margin: 0;
+  padding: 9px;
+  border-radius: 5px;
+  text-transform: none;
+  width: 200px;
+}
+
+#editorSidebar button:hover span {
+  display: block;
+}
+
+#editorSidebar button.active {
+  position: relative;
+  left: -2px;
+  border-radius: 0 5px 5px 0;
+  background: var(--backgroundColor);
+  color: var(--VTTblue);
+}
+body.edit.darkMode #editorSidebar button.active {
+  color: var(--textColor);
+}
+
+#editorSidebar button.active::before {
+  position: relative;
+  left: 2px;
+}
+
+#editorSidebar button.active span {
+  color: white;
+  right: calc(var(--editSidebarWidth) - 2px);
+}
+
+#editorSidebar button[icon=tune],
+#editorSidebar button[icon=settings] {
+  text-align: left;
+  line-height: 0.8;
+}
+
+#editorSidebar button[icon=tune]::before,
+#editorSidebar button[icon=settings]::before {
+  margin-left: 0;
+}
+
+#editorSidebar button.active[icon=tune]::before,
+#editorSidebar button.active[icon=settings]::before {
+  left: 0;
+}
+
+#editorModules {
+  display: none;
+  position: absolute;
+  right: var(--editSidebarWidth);
+  top: var(--editToolbarHeight);
+  bottom: 0;
+  min-width: 250px;
+  max-width: 90vw;
+  width: calc(var(--modulesWidth) - var(--editSidebarWidth));
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 10px;
+  background: var(--backgroundColor);
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  grid-gap: 10px;
+}
+
+/* The module panel that opened itself (the first-run default, see renderSidebar) is sized to its content
+   instead of the stored 50/50 split, so the room stays the dominant thing on screen. Dropped again as soon
+   as a module is opened by hand or the resizer is dragged. min-width/max-width above still apply. */
+body.defaultEditorModuleWidth #editorModules {
+  width: min(420px, 35vw);
+}
+
+#editorModules ::-webkit-scrollbar-track {
+  background: var(--backgroundColor);
+}
+
+#editorModulesResizer {
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  cursor: ew-resize;
+}
+body.editorModulesResizing {
+  cursor: ew-resize !important;
+  height: 100vh;
+}
+
+#editorModules.active {
+  display: grid;
+}
+
+#editor.hasTopLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "topleft topleft";
+}
+
+#editor.hasTopRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "topright topright";
+}
+
+#editor.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "bottomleft bottomleft"
+    "bottomleft bottomleft";
+}
+
+#editor.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "bottomright bottomright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopLeft.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopRight.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopRight.hasTopLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "topleft topright";
+}
+
+#editor.hasBottomRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "bottomleft bottomright"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomright bottomright";
+}
+
+#editor.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopLeft.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomright";
+}
+
+.editorModule {
+  display: none;
+  position: relative;
+  overflow: auto;
+  color: var(--textColor);
+  background-color: var(--backgroundColor);
+}
+
+#editorModuleOverlay {
+  background-color: var(--backgroundColor);
+}
+
+#editorModuleInOverlay {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+}
+
+.editorModule .widget {
+  position: unset;
+}
+
+body.draggingEditorSidebarModule #editorModules {
+  display: grid;
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomright" !important;
+}
+
+body.draggingEditorSidebarModule #editorModuleOverlay {
+  display: flex !important;
+}
+
+body.draggingEditorSidebarModule .editorModule {
+  display: block;
+  border: 2px red dashed;
+}
+
+body.draggingEditorSidebarModule .editorModule.dragHighlight {
+  border: 2px red solid;
+}
+
+
+#editorModuleTopLeft {
+  grid-area: topleft;
+}
+#editorModuleTopRight {
+  grid-area: topright;
+}
+#editorModuleBottomLeft {
+  grid-area: bottomleft;
+}
+#editorModuleBottomRight {
+  grid-area: bottomright;
+}
+
+.active.editorModule {
+  display: block;
+}
+
+body.lightsOff #editorModules {
+  background: #08090a;
+  color: #f8f8f2;
+}
+
+/* iconify sidebar icons - set by isEditSidebarNarrow() because the window width at which the
+   labels stop being affordable depends on the board's shape, which a media query can't know.
+   It used to be @media (max-width: 1600px), which took them away whenever the window was
+   narrower than a 16:10 board at full height, even where the room is limited by its height
+   and does not get any bigger without them. The module panel layouts below always iconify. */
+body.narrowEditSidebar {
+  --editSidebarWidth: 36px;
+}
+body.narrowEditSidebar #editorSidebar button {
+  font-size: 0;
+  padding: 5px;
+}
+body.narrowEditSidebar #editorSidebar button::before {
+  margin: 0;
+}
+body.narrowEditSidebar #editorSidebar button span {
+  font-size: 13px;
+}
+
+/* module above the room - the classes below are set by calculateEditModuleClasses() because the window
+   shape they kick in at depends on the board's shape, which a media query can't know. They used to be two
+   media queries in this order, and just like those they can both be active at once - the overlay comes
+   second, so it still wins where they overlap. Both imply narrowEditSidebar, which is where the 36px
+   sidebar they leave room for comes from. */
+body.edit.editModulesAbove {
+  --roomTop: calc(100 * var(--vh) - var(--roomHeight) * var(--scale) / var(--roomZoom) + (1 - var(--roomZoom)) / 2 * var(--roomHeight) * var(--scale) / var(--roomZoom));
+}
+body.editModulesAbove #editorModules {
+  left: 0;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: calc(var(--roomHeight) * var(--scale) / var(--roomZoom));
+  width: unset !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  height: unset;
+}
+
+/* module as fullscreen overlay */
+body.editModulesOverlay #editorModules {
+  left: 0;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  width: unset !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  height: unset;
+}
+
+body:is(.editModulesAbove, .editModulesOverlay) #editorModulesResizer {
+  display: none;
+}
+
+#editorSidebar button {
+  position: relative;
+}
+
+#editorSidebar button[data-badge]::after {
+  content: attr(data-badge);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #ffd700;
+  color: #000;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  transform: translate(-25%, -25%);
+}
+
+#editorSidebar button[data-badge=""]::after {
+  display: none;
+}

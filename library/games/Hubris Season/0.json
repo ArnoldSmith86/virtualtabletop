@@ -1,0 +1,4039 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Hubris Season",
+      "image": "/assets/1405878058_7440",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/4636/clans",
+      "year": "2002",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "Room layout, custom game pieces, scripting, and library image by Nicolas Weiss / PaladinOfCats, under a CCBY 3.0 licence.<div>http://paladinofcats.free.fr/vtio.htm<br></div><div><br></div><div>---<br></div><div><br></div><div>Icons by the following people under a CCBY 3.0 licence.</div><div><br></div><div><b>Author: Skoll</b></div><div><i>Winchester rifle<br></i></div>https://game-icons.net/1x1/skoll/winchester-rifle.html",
+      "lastUpdate": 1716300067865,
+      "showName": true,
+      "skill": "",
+      "description": "Cautious not to give ammunition to anti-gun lobbyists with yet another shooting accident, hunters start congregating together and at a safe distance from other packs. But the decrease of quality alone time gives rise to their ego, and their sense of self-worth is now tied to family status. They need others to look down onto, and thus can't allow everyone to take part in the most epic chases. Just enough people to spread the tale.",
+      "similarImage": "",
+      "similarName": "Clans",
+      "similarDesigner": "Leo Colovini",
+      "similarAwards": "2003 Spiel des Jahres Nominee\n2003 Spiel der Spiele Hit für Familien Recommended\n2003 Nederlandse Spellenprijs Nominee\n2003 Kinderspielexperten \"8-to-13-year-olds\" Nominee\n2003 Japan Boardgame Prize Best Advanced Game Nominee\n2003 Deutscher Spiele Preis Best Family/Adult Game 3rd Place",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "2-4"
+    }
+  },
+  "board": {
+    "id": "board",
+    "x": 200,
+    "width": 1200,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/300442299_67924"
+  },
+  "board-r": {
+    "id": "board-r",
+    "x": 1400,
+    "width": 200,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/1407315967_37985"
+  },
+  "new-game": {
+    "type": "button",
+    "id": "new-game",
+    "y": 900,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "New game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset the game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to reset the entire game?"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-1",
+          "score-2",
+          "score-3",
+          "score-4",
+          "score-5"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-secret"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-secret"
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-secret",
+        "to": "seat-1h",
+        "count": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-secret",
+        "to": "seat-2h",
+        "count": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-secret",
+        "to": "seat-3h",
+        "count": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-secret",
+        "to": "seat-4h",
+        "count": 1
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-1"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-2"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-3"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-4"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-5"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-1"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-2"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-3"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-4"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-5"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-6"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-7"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-8"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-9"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-10"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-11"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-12"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-1"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-2"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-3"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-4"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-5"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-6"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-7"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-8"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-9"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-10"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-11"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-12"
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-1",
+        "count": 1,
+        "x": 236,
+        "y": 36
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-1",
+        "count": 1,
+        "x": 443,
+        "y": 61
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-1",
+        "count": 1,
+        "x": 329,
+        "y": 130
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-1",
+        "count": 1,
+        "x": 263,
+        "y": 230
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-1",
+        "count": 1,
+        "x": 414,
+        "y": 230
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-2",
+        "count": 1,
+        "x": 281,
+        "y": 340
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-2",
+        "count": 1,
+        "x": 237,
+        "y": 441
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-2",
+        "count": 1,
+        "x": 395,
+        "y": 478
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-2",
+        "count": 1,
+        "x": 253,
+        "y": 541
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-2",
+        "count": 1,
+        "x": 283,
+        "y": 634
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-3",
+        "count": 1,
+        "x": 242,
+        "y": 760
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-3",
+        "count": 1,
+        "x": 401,
+        "y": 775
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-3",
+        "count": 1,
+        "x": 329,
+        "y": 858
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-3",
+        "count": 1,
+        "x": 239,
+        "y": 930
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-3",
+        "count": 1,
+        "x": 431,
+        "y": 934
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-4",
+        "count": 1,
+        "x": 570,
+        "y": 67
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-4",
+        "count": 1,
+        "x": 744,
+        "y": 38
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-4",
+        "count": 1,
+        "x": 812,
+        "y": 160
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-4",
+        "count": 1,
+        "x": 911,
+        "y": 46
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-4",
+        "count": 1,
+        "x": 1073,
+        "y": 82
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-5",
+        "count": 1,
+        "x": 1169,
+        "y": 28
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-5",
+        "count": 1,
+        "x": 1330,
+        "y": 34
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-5",
+        "count": 1,
+        "x": 1297,
+        "y": 107
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-5",
+        "count": 1,
+        "x": 1237,
+        "y": 178
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-5",
+        "count": 1,
+        "x": 1347,
+        "y": 201
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-6",
+        "count": 1,
+        "x": 1331,
+        "y": 320
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-6",
+        "count": 1,
+        "x": 1235,
+        "y": 454
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-6",
+        "count": 1,
+        "x": 1343,
+        "y": 467
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-6",
+        "count": 1,
+        "x": 1340,
+        "y": 574
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-6",
+        "count": 1,
+        "x": 1300,
+        "y": 693
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-7",
+        "count": 1,
+        "x": 1329,
+        "y": 791
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-7",
+        "count": 1,
+        "x": 1331,
+        "y": 941
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-7",
+        "count": 1,
+        "x": 1257,
+        "y": 878
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-7",
+        "count": 1,
+        "x": 1152,
+        "y": 798
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-7",
+        "count": 1,
+        "x": 1144,
+        "y": 931
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-8",
+        "count": 1,
+        "x": 566,
+        "y": 901
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-8",
+        "count": 1,
+        "x": 734,
+        "y": 950
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-8",
+        "count": 1,
+        "x": 906,
+        "y": 941
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-8",
+        "count": 1,
+        "x": 785,
+        "y": 865
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-8",
+        "count": 1,
+        "x": 1015,
+        "y": 894
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-9",
+        "count": 1,
+        "x": 544,
+        "y": 284
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-9",
+        "count": 1,
+        "x": 663,
+        "y": 372
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-9",
+        "count": 1,
+        "x": 563,
+        "y": 454
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-9",
+        "count": 1,
+        "x": 785,
+        "y": 286
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-9",
+        "count": 1,
+        "x": 729,
+        "y": 467
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-10",
+        "count": 1,
+        "x": 570,
+        "y": 573
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-10",
+        "count": 1,
+        "x": 491,
+        "y": 705
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-10",
+        "count": 1,
+        "x": 636,
+        "y": 643
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-10",
+        "count": 1,
+        "x": 752,
+        "y": 723
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-10",
+        "count": 1,
+        "x": 736,
+        "y": 550
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-11",
+        "count": 1,
+        "x": 884,
+        "y": 672
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-11",
+        "count": 1,
+        "x": 907,
+        "y": 575
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-11",
+        "count": 1,
+        "x": 1023,
+        "y": 623
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-11",
+        "count": 1,
+        "x": 1118,
+        "y": 555
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-11",
+        "count": 1,
+        "x": 1081,
+        "y": 716
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-12",
+        "count": 1,
+        "x": 1129,
+        "y": 229
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-12",
+        "count": 1,
+        "x": 921,
+        "y": 283
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-12",
+        "count": 1,
+        "x": 1015,
+        "y": 365
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-12",
+        "count": 1,
+        "x": 893,
+        "y": 436
+      },
+      {
+        "func": "MOVEXY",
+        "from": "holder-group-12",
+        "count": 1,
+        "x": 1116,
+        "y": 434
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-1h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-2h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-3h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-4h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-4"
+      }
+    ],
+    "x": 45
+  },
+  "deck-hunt-1": {
+    "type": "deck",
+    "id": "deck-hunt-1",
+    "parent": "holder-hunt-1",
+    "width": 50,
+    "height": 50,
+    "cardTypes": {
+      "card-h1": {
+        "suit": "gun"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "color": "transparent",
+            "value": "/assets/957645700_3217"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right",
+        "handleSize": 30
+      }
+    }
+  },
+  "holder-hunt-1": {
+    "type": "holder",
+    "id": "holder-hunt-1",
+    "x": 1475,
+    "y": 75,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "card-h1"
+    }
+  },
+  "holder-hunt-2": {
+    "type": "holder",
+    "id": "holder-hunt-2",
+    "x": 1475,
+    "y": 275,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "card-h2"
+    }
+  },
+  "deck-hunt-2": {
+    "type": "deck",
+    "id": "deck-hunt-2",
+    "parent": "holder-hunt-2",
+    "width": 50,
+    "height": 50,
+    "cardTypes": {
+      "card-h2": {
+        "suit": "gun"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "color": "transparent",
+            "value": "/assets/957645700_3217"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right",
+        "handleSize": 30
+      }
+    }
+  },
+  "holder-hunt-3": {
+    "type": "holder",
+    "id": "holder-hunt-3",
+    "x": 1475,
+    "y": 475,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "card-h3"
+    }
+  },
+  "deck-hunt-3": {
+    "type": "deck",
+    "id": "deck-hunt-3",
+    "parent": "holder-hunt-3",
+    "width": 50,
+    "height": 50,
+    "cardTypes": {
+      "card-h3": {
+        "suit": "gun"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "color": "transparent",
+            "value": "/assets/957645700_3217"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right",
+        "handleSize": 30
+      }
+    }
+  },
+  "holder-hunt-4": {
+    "type": "holder",
+    "id": "holder-hunt-4",
+    "x": 1475,
+    "y": 675,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "card-h4"
+    }
+  },
+  "deck-hunt-4": {
+    "type": "deck",
+    "id": "deck-hunt-4",
+    "parent": "holder-hunt-4",
+    "width": 50,
+    "height": 50,
+    "cardTypes": {
+      "card-h4": {
+        "suit": "gun"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "color": "transparent",
+            "value": "/assets/957645700_3217"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right",
+        "handleSize": 30
+      }
+    }
+  },
+  "holder-hunt-5": {
+    "type": "holder",
+    "id": "holder-hunt-5",
+    "x": 1475,
+    "y": 875,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "card-h5"
+    }
+  },
+  "deck-hunt-5": {
+    "type": "deck",
+    "id": "deck-hunt-5",
+    "parent": "holder-hunt-5",
+    "width": 50,
+    "height": 50,
+    "cardTypes": {
+      "card-h5": {
+        "suit": "gun"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "color": "transparent",
+            "value": "/assets/957645700_3217"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right",
+        "handleSize": 30
+      }
+    }
+  },
+  "2cq5": {
+    "deck": "deck-hunt-1",
+    "type": "card",
+    "cardType": "card-h1",
+    "id": "2cq5",
+    "z": 18315,
+    "parent": "h0ca"
+  },
+  "zezf": {
+    "deck": "deck-hunt-1",
+    "type": "card",
+    "cardType": "card-h1",
+    "id": "zezf",
+    "z": 18316,
+    "parent": "h0ca"
+  },
+  "p95m": {
+    "deck": "deck-hunt-1",
+    "type": "card",
+    "cardType": "card-h1",
+    "id": "p95m",
+    "z": 18317,
+    "parent": "h0ca"
+  },
+  "lrir": {
+    "deck": "deck-hunt-1",
+    "type": "card",
+    "cardType": "card-h1",
+    "id": "lrir",
+    "z": 18455,
+    "parent": "h0ca"
+  },
+  "sihl": {
+    "deck": "deck-hunt-2",
+    "type": "card",
+    "cardType": "card-h2",
+    "id": "sihl",
+    "z": 18319,
+    "parent": "clty"
+  },
+  "f4gi": {
+    "deck": "deck-hunt-2",
+    "type": "card",
+    "cardType": "card-h2",
+    "id": "f4gi",
+    "z": 18320,
+    "parent": "clty"
+  },
+  "ibaq": {
+    "deck": "deck-hunt-2",
+    "type": "card",
+    "cardType": "card-h2",
+    "id": "ibaq",
+    "z": 18321,
+    "parent": "clty"
+  },
+  "cfll": {
+    "deck": "deck-hunt-3",
+    "type": "card",
+    "cardType": "card-h3",
+    "id": "cfll",
+    "z": 18322,
+    "parent": "r8c0"
+  },
+  "whnr": {
+    "deck": "deck-hunt-3",
+    "type": "card",
+    "cardType": "card-h3",
+    "id": "whnr",
+    "z": 18323,
+    "parent": "r8c0"
+  },
+  "hz2d": {
+    "deck": "deck-hunt-4",
+    "type": "card",
+    "cardType": "card-h4",
+    "id": "hz2d",
+    "z": 18324,
+    "parent": "m0za"
+  },
+  "gt4g": {
+    "deck": "deck-hunt-4",
+    "type": "card",
+    "cardType": "card-h4",
+    "id": "gt4g",
+    "z": 18325,
+    "parent": "m0za"
+  },
+  "o8r2": {
+    "deck": "deck-hunt-5",
+    "type": "card",
+    "cardType": "card-h5",
+    "id": "o8r2",
+    "z": 18326,
+    "parent": "holder-hunt-5"
+  },
+  "m0za": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "m0za",
+    "z": 17977,
+    "parent": "holder-hunt-4"
+  },
+  "deck-group-1": {
+    "type": "deck",
+    "id": "deck-group-1",
+    "parent": "holder-group-1",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-1": {
+    "type": "holder",
+    "id": "holder-group-1",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 50
+  },
+  "r8c0": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "r8c0",
+    "z": 17975,
+    "parent": "holder-hunt-3"
+  },
+  "holder-group-2": {
+    "type": "holder",
+    "id": "holder-group-2",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 125
+  },
+  "deck-group-2": {
+    "type": "deck",
+    "id": "deck-group-2",
+    "parent": "holder-group-2",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-3": {
+    "type": "holder",
+    "id": "holder-group-3",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 200
+  },
+  "deck-group-3": {
+    "type": "deck",
+    "id": "deck-group-3",
+    "parent": "holder-group-3",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-4": {
+    "type": "holder",
+    "id": "holder-group-4",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 275
+  },
+  "deck-group-4": {
+    "type": "deck",
+    "id": "deck-group-4",
+    "parent": "holder-group-4",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-5": {
+    "type": "holder",
+    "id": "holder-group-5",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 350
+  },
+  "deck-group-5": {
+    "type": "deck",
+    "id": "deck-group-5",
+    "parent": "holder-group-5",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-6": {
+    "type": "holder",
+    "id": "holder-group-6",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 425
+  },
+  "deck-group-6": {
+    "type": "deck",
+    "id": "deck-group-6",
+    "parent": "holder-group-6",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-7": {
+    "type": "holder",
+    "id": "holder-group-7",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 500
+  },
+  "deck-group-7": {
+    "type": "deck",
+    "id": "deck-group-7",
+    "parent": "holder-group-7",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-8": {
+    "type": "holder",
+    "id": "holder-group-8",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 575
+  },
+  "deck-group-8": {
+    "type": "deck",
+    "id": "deck-group-8",
+    "parent": "holder-group-8",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-9": {
+    "type": "holder",
+    "id": "holder-group-9",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 650
+  },
+  "deck-group-9": {
+    "type": "deck",
+    "id": "deck-group-9",
+    "parent": "holder-group-9",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-10": {
+    "type": "holder",
+    "id": "holder-group-10",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 725
+  },
+  "deck-group-10": {
+    "type": "deck",
+    "id": "deck-group-10",
+    "parent": "holder-group-10",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-11": {
+    "type": "holder",
+    "id": "holder-group-11",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 800
+  },
+  "deck-group-11": {
+    "type": "deck",
+    "id": "deck-group-11",
+    "parent": "holder-group-11",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "holder-group-12": {
+    "type": "holder",
+    "id": "holder-group-12",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": -200,
+    "y": 875
+  },
+  "deck-group-12": {
+    "type": "deck",
+    "id": "deck-group-12",
+    "parent": "holder-group-12",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 32,
+      "height": 32
+    },
+    "cardTypes": {
+      "token-g1": {
+        "image": "/assets/-3290015_1759",
+        "suit": "g1",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "1"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g2": {
+        "image": "/assets/1046884807_1766",
+        "suit": "g2",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "2"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g3": {
+        "image": "/assets/1296776529_1874",
+        "suit": "g3",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "3"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g4": {
+        "image": "/assets/949168056_2456",
+        "suit": "g4",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "4"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      },
+      "token-g5": {
+        "image": "/assets/1780506134_2378",
+        "suit": "g5",
+        "onPileCreation": {
+          "handleCSS": {
+            "color": "white",
+            "background": "black",
+            "cat": "5"
+          },
+          "handlePosition": "top right",
+          "handleSize": 25
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "dragLimit": {}
+  },
+  "pp88": {
+    "deck": "deck-group-1",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "pp88",
+    "z": 18390,
+    "parent": "holder-group-1"
+  },
+  "7tbg": {
+    "deck": "deck-group-1",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "7tbg",
+    "z": 18388,
+    "parent": "holder-group-1"
+  },
+  "6onh": {
+    "deck": "deck-group-1",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "6onh",
+    "z": 18391,
+    "parent": "holder-group-1"
+  },
+  "pbyk": {
+    "deck": "deck-group-1",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "pbyk",
+    "z": 18389,
+    "parent": "holder-group-1"
+  },
+  "jwao": {
+    "deck": "deck-group-1",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "jwao",
+    "z": 18387,
+    "parent": "holder-group-1"
+  },
+  "sgav": {
+    "deck": "deck-group-2",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "sgav",
+    "z": 18394,
+    "parent": "holder-group-2"
+  },
+  "ttu7": {
+    "deck": "deck-group-2",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "ttu7",
+    "z": 18395,
+    "parent": "holder-group-2"
+  },
+  "6n11": {
+    "deck": "deck-group-2",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "6n11",
+    "z": 18392,
+    "parent": "holder-group-2"
+  },
+  "oit1": {
+    "deck": "deck-group-2",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "oit1",
+    "z": 18396,
+    "parent": "holder-group-2"
+  },
+  "xfzz": {
+    "deck": "deck-group-2",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "xfzz",
+    "z": 18393,
+    "parent": "holder-group-2"
+  },
+  "9p2l": {
+    "deck": "deck-group-3",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "9p2l",
+    "z": 18401,
+    "parent": "holder-group-3"
+  },
+  "vocd": {
+    "deck": "deck-group-3",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "vocd",
+    "z": 18397,
+    "parent": "holder-group-3"
+  },
+  "10nk": {
+    "deck": "deck-group-3",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "10nk",
+    "z": 18400,
+    "parent": "holder-group-3"
+  },
+  "hna0": {
+    "deck": "deck-group-3",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "hna0",
+    "z": 18398,
+    "parent": "holder-group-3"
+  },
+  "2ild": {
+    "deck": "deck-group-3",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "2ild",
+    "z": 18399,
+    "parent": "holder-group-3"
+  },
+  "467m": {
+    "deck": "deck-group-4",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "467m",
+    "z": 18403,
+    "parent": "holder-group-4"
+  },
+  "2oag": {
+    "deck": "deck-group-4",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "2oag",
+    "z": 18402,
+    "parent": "holder-group-4"
+  },
+  "dlj4": {
+    "deck": "deck-group-4",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "dlj4",
+    "z": 18405,
+    "parent": "holder-group-4"
+  },
+  "fajo": {
+    "deck": "deck-group-4",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "fajo",
+    "z": 18406,
+    "parent": "holder-group-4"
+  },
+  "rmju": {
+    "deck": "deck-group-4",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "rmju",
+    "z": 18404,
+    "parent": "holder-group-4"
+  },
+  "6zxe": {
+    "deck": "deck-group-5",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "6zxe",
+    "z": 18409,
+    "parent": "holder-group-5"
+  },
+  "7pb0": {
+    "deck": "deck-group-5",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "7pb0",
+    "z": 18408,
+    "parent": "holder-group-5"
+  },
+  "svg6": {
+    "deck": "deck-group-5",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "svg6",
+    "z": 18410,
+    "parent": "holder-group-5"
+  },
+  "8t63": {
+    "deck": "deck-group-5",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "8t63",
+    "z": 18411,
+    "parent": "holder-group-5"
+  },
+  "xukx": {
+    "deck": "deck-group-5",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "xukx",
+    "z": 18407,
+    "parent": "holder-group-5"
+  },
+  "cdiv": {
+    "deck": "deck-group-6",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "cdiv",
+    "z": 18413,
+    "parent": "holder-group-6"
+  },
+  "z7g0": {
+    "deck": "deck-group-6",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "z7g0",
+    "z": 18415,
+    "parent": "holder-group-6"
+  },
+  "jrn2": {
+    "deck": "deck-group-6",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "jrn2",
+    "z": 18416,
+    "parent": "holder-group-6"
+  },
+  "7b5a": {
+    "deck": "deck-group-6",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "7b5a",
+    "z": 18412,
+    "parent": "holder-group-6"
+  },
+  "5r0a": {
+    "deck": "deck-group-6",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "5r0a",
+    "z": 18414,
+    "parent": "holder-group-6"
+  },
+  "4k57": {
+    "deck": "deck-group-7",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "4k57",
+    "z": 18419,
+    "parent": "holder-group-7"
+  },
+  "47p7": {
+    "deck": "deck-group-7",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "47p7",
+    "z": 18418,
+    "parent": "holder-group-7"
+  },
+  "s091": {
+    "deck": "deck-group-7",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "s091",
+    "z": 18420,
+    "parent": "holder-group-7"
+  },
+  "t9z0": {
+    "deck": "deck-group-7",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "t9z0",
+    "z": 18417,
+    "parent": "holder-group-7"
+  },
+  "ki5y": {
+    "deck": "deck-group-7",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "ki5y",
+    "z": 18421,
+    "parent": "holder-group-7"
+  },
+  "5mvy": {
+    "deck": "deck-group-8",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "5mvy",
+    "z": 18426,
+    "parent": "holder-group-8"
+  },
+  "xpuz": {
+    "deck": "deck-group-8",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "xpuz",
+    "z": 18423,
+    "parent": "holder-group-8"
+  },
+  "tvzc": {
+    "deck": "deck-group-8",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "tvzc",
+    "z": 18425,
+    "parent": "holder-group-8"
+  },
+  "15i8": {
+    "deck": "deck-group-8",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "15i8",
+    "z": 18422,
+    "parent": "holder-group-8"
+  },
+  "64cm": {
+    "deck": "deck-group-8",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "64cm",
+    "z": 18424,
+    "parent": "holder-group-8"
+  },
+  "qt0u": {
+    "deck": "deck-group-9",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "qt0u",
+    "z": 18427,
+    "parent": "holder-group-9"
+  },
+  "81i0": {
+    "deck": "deck-group-9",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "81i0",
+    "z": 18431,
+    "parent": "holder-group-9"
+  },
+  "q6h6": {
+    "deck": "deck-group-9",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "q6h6",
+    "z": 18430,
+    "parent": "holder-group-9"
+  },
+  "62j3": {
+    "deck": "deck-group-9",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "62j3",
+    "z": 18428,
+    "parent": "holder-group-9"
+  },
+  "g9wz": {
+    "deck": "deck-group-9",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "g9wz",
+    "z": 18429,
+    "parent": "holder-group-9"
+  },
+  "w6ys": {
+    "deck": "deck-group-10",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "w6ys",
+    "z": 18434,
+    "parent": "holder-group-10"
+  },
+  "8r3i": {
+    "deck": "deck-group-10",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "8r3i",
+    "z": 18436,
+    "parent": "holder-group-10"
+  },
+  "qzdo": {
+    "deck": "deck-group-10",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "qzdo",
+    "z": 18432,
+    "parent": "holder-group-10"
+  },
+  "xnnv": {
+    "deck": "deck-group-10",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "xnnv",
+    "z": 18435,
+    "parent": "holder-group-10"
+  },
+  "uw9v": {
+    "deck": "deck-group-10",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "uw9v",
+    "z": 18433,
+    "parent": "holder-group-10"
+  },
+  "uh7s": {
+    "deck": "deck-group-11",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "uh7s",
+    "z": 18440,
+    "parent": "holder-group-11"
+  },
+  "mund": {
+    "deck": "deck-group-11",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "mund",
+    "z": 18437,
+    "parent": "holder-group-11"
+  },
+  "y9sg": {
+    "deck": "deck-group-11",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "y9sg",
+    "z": 18441,
+    "parent": "holder-group-11"
+  },
+  "0zth": {
+    "deck": "deck-group-11",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "0zth",
+    "z": 18438,
+    "parent": "holder-group-11"
+  },
+  "d435": {
+    "deck": "deck-group-11",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "d435",
+    "z": 18439,
+    "parent": "holder-group-11"
+  },
+  "n7ms": {
+    "deck": "deck-group-12",
+    "type": "card",
+    "cardType": "token-g1",
+    "id": "n7ms",
+    "z": 18443,
+    "parent": "holder-group-12"
+  },
+  "ho3q": {
+    "deck": "deck-group-12",
+    "type": "card",
+    "cardType": "token-g2",
+    "id": "ho3q",
+    "z": 18446,
+    "parent": "holder-group-12"
+  },
+  "yo8k": {
+    "deck": "deck-group-12",
+    "type": "card",
+    "cardType": "token-g3",
+    "id": "yo8k",
+    "z": 18444,
+    "parent": "holder-group-12"
+  },
+  "62pu": {
+    "deck": "deck-group-12",
+    "type": "card",
+    "cardType": "token-g4",
+    "id": "62pu",
+    "z": 18445,
+    "parent": "holder-group-12"
+  },
+  "z7lt": {
+    "deck": "deck-group-12",
+    "type": "card",
+    "cardType": "token-g5",
+    "id": "z7lt",
+    "z": 18442,
+    "parent": "holder-group-12"
+  },
+  "clty": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "clty",
+    "z": 17973,
+    "parent": "holder-hunt-2"
+  },
+  "h0ca": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "h0ca",
+    "z": 17971,
+    "parent": "holder-hunt-1"
+  },
+  "seat-1": {
+    "type": "seat",
+    "id": "seat-1",
+    "y": 10,
+    "css": {
+      ".seated": {
+        "border": "7px solid #bfbfbf"
+      }
+    },
+    "x": 19,
+    "hideWhenUnused": true
+  },
+  "seat-1a": {
+    "id": "seat-1a",
+    "parent": "seat-1",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/402675433_1961",
+    "onlyVisibleForSeat": [
+      "seat-2",
+      "seat-3",
+      "seat-4"
+    ]
+  },
+  "seat-1h": {
+    "type": "holder",
+    "id": "seat-1h",
+    "parent": "seat-1",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "cardType": "secret"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onlyVisibleForSeat": "seat-1"
+  },
+  "seat-2": {
+    "type": "seat",
+    "id": "seat-2",
+    "y": 115,
+    "css": {
+      ".seated": {
+        "border": "7px solid #bfbfbf"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 19,
+    "index": 2
+  },
+  "seat-2a": {
+    "id": "seat-2a",
+    "parent": "seat-2",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/402675433_1961",
+    "onlyVisibleForSeat": [
+      "seat-1",
+      "seat-3",
+      "seat-4"
+    ]
+  },
+  "seat-2h": {
+    "type": "holder",
+    "id": "seat-2h",
+    "parent": "seat-2",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "cardType": "secret"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onlyVisibleForSeat": "seat-2"
+  },
+  "seat-3": {
+    "type": "seat",
+    "id": "seat-3",
+    "y": 220,
+    "css": {
+      ".seated": {
+        "border": "7px solid #bfbfbf"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 19,
+    "index": 3
+  },
+  "seat-3a": {
+    "id": "seat-3a",
+    "parent": "seat-3",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/402675433_1961",
+    "onlyVisibleForSeat": [
+      "seat-1",
+      "seat-2",
+      "seat-4"
+    ]
+  },
+  "seat-3h": {
+    "type": "holder",
+    "id": "seat-3h",
+    "parent": "seat-3",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "cardType": "secret"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onlyVisibleForSeat": "seat-3"
+  },
+  "seat-4": {
+    "type": "seat",
+    "id": "seat-4",
+    "y": 325,
+    "css": {
+      ".seated": {
+        "border": "7px solid #bfbfbf"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 19,
+    "index": 4
+  },
+  "seat-4a": {
+    "id": "seat-4a",
+    "parent": "seat-4",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/402675433_1961",
+    "onlyVisibleForSeat": [
+      "seat-1",
+      "seat-2",
+      "seat-3"
+    ]
+  },
+  "seat-4h": {
+    "type": "holder",
+    "id": "seat-4h",
+    "parent": "seat-4",
+    "x": 22,
+    "y": 42,
+    "width": 48,
+    "height": 48,
+    "z": 2,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "cardType": "secret"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onlyVisibleForSeat": "seat-4"
+  },
+  "holder-secret": {
+    "type": "holder",
+    "id": "holder-secret",
+    "x": 50,
+    "y": -200,
+    "width": 48,
+    "height": 48,
+    "z": 3,
+    "dropTarget": {
+      "suit": "secret"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "deck-secret": {
+    "type": "deck",
+    "id": "deck-secret",
+    "parent": "holder-secret",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 48,
+      "height": 48,
+      "movable": false,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right",
+        "handleSize": 30
+      }
+    },
+    "cardTypes": {
+      "card-s1": {
+        "suit": "secret",
+        "image": "/assets/366936223_1761"
+      },
+      "card-s2": {
+        "suit": "secret",
+        "image": "/assets/505817735_1809"
+      },
+      "card-s3": {
+        "suit": "secret",
+        "image": "/assets/78993194_1917"
+      },
+      "card-s4": {
+        "suit": "secret",
+        "image": "/assets/262189486_2456"
+      },
+      "card-s5": {
+        "suit": "secret",
+        "image": "/assets/-1150866544_2421"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "t7l6": {
+    "deck": "deck-secret",
+    "type": "card",
+    "cardType": "card-s1",
+    "id": "t7l6",
+    "z": 18312,
+    "parent": "ib3x"
+  },
+  "wqjy": {
+    "deck": "deck-secret",
+    "type": "card",
+    "cardType": "card-s2",
+    "id": "wqjy",
+    "z": 18313,
+    "parent": "ib3x"
+  },
+  "snmb": {
+    "deck": "deck-secret",
+    "type": "card",
+    "cardType": "card-s3",
+    "id": "snmb",
+    "z": 18314,
+    "parent": "ib3x"
+  },
+  "qq4c": {
+    "deck": "deck-secret",
+    "type": "card",
+    "cardType": "card-s4",
+    "id": "qq4c",
+    "z": 18310,
+    "parent": "ib3x"
+  },
+  "q8bm": {
+    "deck": "deck-secret",
+    "type": "card",
+    "cardType": "card-s5",
+    "id": "q8bm",
+    "z": 18311,
+    "parent": "ib3x"
+  },
+  "scoreboard-1": {
+    "id": "scoreboard-1",
+    "x": 60,
+    "y": 540,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/326443729_1522",
+    "width": 80,
+    "height": 80
+  },
+  "score-1": {
+    "type": "label",
+    "id": "score-1",
+    "parent": "scoreboard-1",
+    "x": 8,
+    "y": 20,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color: black; line-height: 1.3em",
+    "editable": true,
+    "text": 0
+  },
+  "score-1d": {
+    "type": "button",
+    "id": "score-1d",
+    "parent": "score-1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-1u": {
+    "type": "button",
+    "id": "score-1u",
+    "parent": "score-1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "scoreboard-2": {
+    "id": "scoreboard-2",
+    "x": 60,
+    "y": 610,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-153160889_1452",
+    "width": 80,
+    "height": 80
+  },
+  "score-2": {
+    "type": "label",
+    "id": "score-2",
+    "parent": "scoreboard-2",
+    "x": 8,
+    "y": 20,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color: black; line-height: 1.3em",
+    "editable": true,
+    "text": 0
+  },
+  "score-2d": {
+    "type": "button",
+    "id": "score-2d",
+    "parent": "score-2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-2u": {
+    "type": "button",
+    "id": "score-2u",
+    "parent": "score-2",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "scoreboard-3": {
+    "id": "scoreboard-3",
+    "x": 60,
+    "y": 680,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/938264106_1560",
+    "width": 80,
+    "height": 80
+  },
+  "score-3": {
+    "type": "label",
+    "id": "score-3",
+    "parent": "scoreboard-3",
+    "x": 8,
+    "y": 20,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color: black; line-height: 1.3em",
+    "editable": true,
+    "text": 0
+  },
+  "score-3d": {
+    "type": "button",
+    "id": "score-3d",
+    "parent": "score-3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-3u": {
+    "type": "button",
+    "id": "score-3u",
+    "parent": "score-3",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "scoreboard-4": {
+    "id": "scoreboard-4",
+    "x": 60,
+    "y": 750,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/516582418_2158",
+    "width": 80,
+    "height": 80
+  },
+  "score-4": {
+    "type": "label",
+    "id": "score-4",
+    "parent": "scoreboard-4",
+    "x": 8,
+    "y": 20,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color: black; line-height: 1.3em",
+    "editable": true,
+    "text": 0
+  },
+  "score-4d": {
+    "type": "button",
+    "id": "score-4d",
+    "parent": "score-4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-4u": {
+    "type": "button",
+    "id": "score-4u",
+    "parent": "score-4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "scoreboard-5": {
+    "id": "scoreboard-5",
+    "x": 60,
+    "y": 820,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-1023700099_2064",
+    "width": 80,
+    "height": 80
+  },
+  "score-5": {
+    "type": "label",
+    "id": "score-5",
+    "parent": "scoreboard-5",
+    "x": 8,
+    "y": 20,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color: black; line-height: 1.3em",
+    "editable": true,
+    "text": 0
+  },
+  "score-5d": {
+    "type": "button",
+    "id": "score-5d",
+    "parent": "score-5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "score-5u": {
+    "type": "button",
+    "id": "score-5u",
+    "parent": "score-5",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "reveal": {
+    "type": "button",
+    "id": "reveal",
+    "x": 45,
+    "y": 950,
+    "z": 1,
+    "text": "End game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reveal colours?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to reveal each player's colour?"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-1h",
+          "seat-2h",
+          "seat-3h",
+          "seat-4h"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": null
+      }
+    ],
+    "width": 111,
+    "height": 40
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 190,
+    "y": 2000,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Master reset",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": [
+          "score-1",
+          "score-2",
+          "score-3",
+          "score-4",
+          "score-5"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-secret"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-secret"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-1"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-2"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-3"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-4"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-hunt-5"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-1"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-2"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-3"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-4"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-5"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-6"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-7"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-8"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-9"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-10"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-11"
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-group-12"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-1"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-2"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-3"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-4"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-5"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-6"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-7"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-8"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-9"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-10"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-11"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-group-12"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-1h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-2h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-3h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "seat-4h"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "seat-4"
+      }
+    ]
+  },
+  "7qqe": {
+    "image": "/assets/-352378963_5436",
+    "movable": false,
+    "width": 150,
+    "height": 113,
+    "layer": -4,
+    "id": "7qqe",
+    "y": 430,
+    "x": 25
+  },
+  "seat-1g": {
+    "type": "holder",
+    "id": "seat-1g",
+    "parent": "seat-1",
+    "x": 82,
+    "y": 42,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "suit": "gun"
+    }
+  },
+  "seat-1w": {
+    "id": "seat-1w",
+    "parent": "seat-1",
+    "x": 81,
+    "y": 41,
+    "width": 50,
+    "height": 50,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.25
+    },
+    "image": "/assets/957645700_3217",
+    "onlyVisibleForSeat": [
+      "seat-1",
+      "seat-2",
+      "seat-3",
+      "seat-4"
+    ]
+  },
+  "seat-2g": {
+    "type": "holder",
+    "id": "seat-2g",
+    "parent": "seat-2",
+    "x": 82,
+    "y": 42,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "suit": "gun"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "seat-4g": {
+    "type": "holder",
+    "id": "seat-4g",
+    "parent": "seat-4",
+    "x": 82,
+    "y": 42,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "suit": "gun"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "seat-2w": {
+    "id": "seat-2w",
+    "parent": "seat-2",
+    "x": 81,
+    "y": 41,
+    "width": 50,
+    "height": 50,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.25
+    },
+    "image": "/assets/957645700_3217",
+    "onlyVisibleForSeat": [
+      "seat-1",
+      "seat-2",
+      "seat-3",
+      "seat-4"
+    ]
+  },
+  "seat-3w": {
+    "id": "seat-3w",
+    "parent": "seat-3",
+    "x": 81,
+    "y": 41,
+    "width": 50,
+    "height": 50,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.25
+    },
+    "image": "/assets/957645700_3217",
+    "onlyVisibleForSeat": [
+      "seat-1",
+      "seat-2",
+      "seat-3",
+      "seat-4"
+    ]
+  },
+  "seat-4w": {
+    "id": "seat-4w",
+    "parent": "seat-4",
+    "x": 81,
+    "y": 41,
+    "width": 50,
+    "height": 50,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.25
+    },
+    "image": "/assets/957645700_3217",
+    "onlyVisibleForSeat": [
+      "seat-1",
+      "seat-2",
+      "seat-3",
+      "seat-4"
+    ]
+  },
+  "seat-3g": {
+    "type": "holder",
+    "id": "seat-3g",
+    "parent": "seat-3",
+    "x": 82,
+    "y": 42,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropTarget": {
+      "suit": "gun"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "ib3x": {
+    "type": "pile",
+    "parent": "holder-secret",
+    "x": 0,
+    "y": 0,
+    "width": 48,
+    "height": 48,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "ib3x"
+  }
+}

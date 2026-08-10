@@ -1,25 +1,22 @@
 import { onLoad } from './domhelpers.js';
 
-let tracingEnabled = false;
-let tracingActiveIndex = 0;
-let loadedTrace = null;
+export let tracingEnabled = false;
 
 function enableTracing() {
   sendTraceEvent('enable');
   tracingEnabled = true;
 
-  const originalRandom = Math.random;
-  Math.random = function() {
-    const number = originalRandom();
-    sendTraceEvent('random', { number, stack: Error().stack });
-    return number;
-  };
-
   alert('Tracing is now enabled for this room.\nPress F9 again whenever a bug occurs.');
 }
 
+function traceRandom(number) {
+  if(tracingEnabled)
+    sendTraceEvent('random', { number, stack: Error().stack });
+  return number;
+}
+
 function sendTraceEvent(type, payload) {
-  toServer('trace', { time: +new Date, deltaID, type, payload });
+  toServer('trace', { time: +new Date, deltaID: getDeltaID(), type, payload });
 }
 
 function sendUserTraceEvent() {
@@ -28,179 +25,173 @@ function sendUserTraceEvent() {
   sendTraceEvent('user report', { starttime, description });
 }
 
-function loadStateAtIndex(index) {
-  let state = JSON.parse(JSON.stringify(loadedTrace[0].initialState));
-  for(let i=1; i<=index; ++i) {
-    if(loadedTrace[i].func == 'state') {
-      state = JSON.parse(JSON.stringify(loadedTrace[i].args));
-    }
-    if(loadedTrace[i].func == 'delta') {
-      for(const widgetID in loadedTrace[i].args.s) {
-        if(loadedTrace[i].args.s[widgetID] === null) {
-          delete state[widgetID];
-        } else {
-          if(!state[widgetID])
-            state[widgetID] = {};
-          for(const property in loadedTrace[i].args.s[widgetID]) {
-            if(loadedTrace[i].args.s[widgetID][property] === null)
-              delete state[widgetID][property];
-            else
-              state[widgetID][property] = loadedTrace[i].args.s[widgetID][property];
-          }
-        }
-      }
-    }
-  }
-  receiveStateFromServer(state);
-  jeDisplayTrace(index);
-
-  tracingActiveIndex = index;
-  if(+$('#traceInput').value != index)
-    $('#traceInput').value = index;
+// what ends up in an error handler is not necessarily an Error object: the browser reports
+// script errors from other origins and problems like ResizeObserver loops without one, and
+// `throw 'oops'` or Promise.reject() hand over whatever value was used
+export function describeError(error, fallback) {
+  // even reading a property can throw: a rejection reason may be a proxy or have getters
+  try {
+    if(error && (error.message !== undefined || error.stack !== undefined))
+      return [ error.message, error.stack ].filter(part=>part !== undefined).map(stringifyValue).join('\n');
+  } catch(e) {}
+  return fallback + (error === undefined || error === null ? '' : '\n' + stringifyValue(error));
 }
 
-function loadTraceFile(file) {
-  loadedTrace = JSON.parse(file.content);
-  preventReconnect();
-  connection.close();
-
-  $('body').classList.add('trace');
-  $('#traceInput').min = 0;
-  $('#traceInput').max = loadedTrace.length-1;
-  $('#traceInput').value = 0;
-
-  const reportingPlayers = {};
-  for(const i in loadedTrace) {
-    if(loadedTrace[i].exceptPlayer)
-      reportingPlayers[loadedTrace[i].exceptPlayer] = true;
-    if(loadedTrace[i].type == 'user report') {
-      jeCommands.push({
-        id: `je_trace${i}`,
-        name: `${i} - user report: ${loadedTrace[i].payload.description}`,
-        context: '^Trace',
-        call: async function() {
-          loadStateAtIndex(+i);
-        }
-      });
-    }
-  }
-  for(const p in reportingPlayers) {
-    jeCommands.push({
-      id: `je_tracePlayer${p}`,
-      name: `Player ${p}`,
-      context: '^Trace',
-      call: async function() {
-        playerName = p;
-        for(const [ id, widget ] of widgets)
-          widget.updateOwner();
-      }
-    });
-  }
-  jeCommands.push({
-    id: 'je_traceBackToTrace',
-    name: 'Back to Trace',
-    context: '.*',
-    call: async function() {
-      loadStateAtIndex(tracingActiveIndex);
-    }
-  });
-  jeCommands.push({
-    id: 'je_tracePreviousDelta',
-    name: 'Previous delta',
-    context: '^Trace',
-    call: async function() {
-      for(let i=+$('#traceInput').value-1; i>=0; --i) {
-        if(loadedTrace[i].func == 'delta') {
-          loadStateAtIndex(i);
-          break;
-        }
-      }
-    }
-  });
-  jeCommands.push({
-    id: 'je_traceNextDelta',
-    name: 'Next delta',
-    context: '^Trace',
-    call: async function() {
-      for(let i=+$('#traceInput').value+1; i<loadedTrace.length; ++i) {
-        if(loadedTrace[i].func == 'delta') {
-          loadStateAtIndex(i);
-          break;
-        }
-      }
-    }
-  });
-  for(const offset of [ -100, -10, -1, 1, 10, 100 ]) {
-    jeCommands.push({
-      id: `je_traceIndex${offset}`,
-      name: `Index ${offset < 0 ? '-' : '+'} ${Math.abs(offset)}`,
-      context: '^Trace',
-      call: async function() {
-        loadStateAtIndex(+$('#traceInput').value+offset);
-      }
-    });
-  }
-  jeCommands.push({
-    id: 'je_traceReplayMove',
-    name: 'Replay move',
-    context: '^Trace',
-    call: async function() {
-      replayMoveFromTrace();
-    }
-  });
-
-  jeToggle();
-  loadStateAtIndex(0);
-  showOverlay();
+// some error events don't mean that the client is broken: a ResizeObserver loop is simply retried
+// on the next frame and a cross-origin 'Script error.' usually comes from a browser extension.
+// both are reported without an Error object, which is what tells them apart from a real crash.
+export function isNonFatalError(msg, error) {
+  return !error && /^(ResizeObserver loop|Script error\.?$)/.test(`${msg}`);
 }
 
-function replayMoveFromTrace() {
-  const startTime = loadedTrace[tracingActiveIndex].servertime;
-  const startPlayer = loadedTrace[tracingActiveIndex].player;
-  for(let i=tracingActiveIndex; i<loadedTrace.length; ++i) {
-    if(loadedTrace[i].type == 'moveStart' && startPlayer == loadedTrace[i].player)
-      setTimeout(_=>widgets.get(loadedTrace[i].payload.id).moveStart(), loadedTrace[i].servertime-startTime);
-    if(loadedTrace[i].type == 'move' && startPlayer == loadedTrace[i].player)
-      setTimeout(_=>widgets.get(loadedTrace[i].payload.id).move(loadedTrace[i].payload.newX + widgets.get(loadedTrace[i].payload.id).get('width')/2, loadedTrace[i].payload.newY + widgets.get(loadedTrace[i].payload.id).get('height')/2), loadedTrace[i].servertime-startTime);
-    if(loadedTrace[i].type == 'moveEnd' && startPlayer == loadedTrace[i].player) {
-      setTimeout(_=>widgets.get(loadedTrace[i].payload.id).moveEnd(), loadedTrace[i].servertime-startTime);
-      break;
+// a rejection reason is often a plain object like { status: 500 } - String() would turn that
+// into a useless [object Object], while JSON.stringify fails on cyclic values and BigInt
+function stringifyValue(value) {
+  try {
+    if(typeof value == 'object') {
+      const json = JSON.stringify(value);
+      if(json !== undefined)
+        return json;
     }
+  } catch(e) {}
+  try {
+    return String(value);
+  } catch(e) {
+    return `[${typeof value} that could not be converted to text]`;
   }
 }
-
-function jeDisplayTrace(index) {
-  jeMode = 'trace';
-  jeWidget = null;
-  jeStateNow = Object.assign({ index }, loadedTrace[index]);
-  jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '), true);
-  jeGetContext();
-  jeShowCommands();
-}
-
-function updateTraceInput(e) {
-  loadStateAtIndex(+e.target.value);
-}
-
-window.addEventListener('keydown', function(e) {
-  if(!jeEnabled && e.key == 'F9') {
-    if(e.ctrlKey)
-      selectFile('TEXT').then(loadTraceFile);
-    else if(!tracingEnabled)
-      enableTracing();
-    else
-      sendUserTraceEvent();
-  }
-});
 
 onLoad(function() {
+  window.addEventListener('keydown', function(e) {
+    if(!jeEnabled && e.key == 'F9') {
+      if(e.ctrlKey)
+        selectFile('TEXT').then(loadTraceFile).catch(e=>{
+          if(e.message !== 'File selection cancelled.')
+            alert(`Error: ${e.toString()}`);
+        });
+      else if(!tracingEnabled)
+        enableTracing();
+      else
+        sendUserTraceEvent();
+    }
+  });
+
   onMessage('tracing', _=>tracingEnabled=true);
-  on('#traceInput', 'input', updateTraceInput);
+
+  const showClientError = function(text) {
+    $('#clientErrorStack').textContent = text;
+    showOverlay('clientErrorOverlay');
+  }
+
+  // the status line asks the user to copy the technical details, so make sure they are visible
+  const askForManualReport = function() {
+    $('#clientErrorStatus').style.display = '';
+    $('#clientErrorOverlay details').open = true;
+  }
+
+  const reportError = function(description) {
+    // close the connection before collecting the context: if that throws, the user still ends up
+    // with a terminal overlay over a terminated session instead of a still running one
+    preventReconnect();
+    connection.close();
+
+    const details = {
+      error: description,
+      undoProtocol,
+      delta,
+      mouseStatus: Object.fromEntries(Object.entries(mouseStatus).map(([id, ms]) => [id, {...ms, moveTarget: ms.moveTarget ? ms.moveTarget.get('id') : null, dragChain: undefined}])),
+      mouseTarget: mouseTarget && mouseTarget.id ? unescapeID(mouseTarget.id.slice(2)) : null,
+      jeLoggingData: typeof jeLoggingRoutineGetData == 'function' ? jeLoggingRoutineGetData() : null,
+      lastExecutedOperation,
+      bodyClass: $('body').className,
+      activeOverlay: [...$a('.overlay')].filter(o=>o.style.display!='none').map(o=>o.id),
+      jsonEditor: $('#jeText') && $('#jeText').innerText,
+      activeButtons: [...$a('button.active')].map(b=>b.getAttribute('icon') || b.id),
+      widgetsState: [...widgets.keys()].map(id=>widgets.get(id).state),
+      url: location.href,
+      userAgent: navigator.userAgent,
+      playerName,
+      html: document.documentElement.outerHTML
+    };
+
+    const button = $('#clientErrorOverlay button');
+    // what the user typed is the most valuable part of the report - keep the textarea intact
+    // and put the reason for the failure into the technical details instead
+    const submitFailed = function(reason) {
+      button.disabled = false;
+      button.textContent = 'Try again';
+      askForManualReport();
+      $('#clientErrorStack').textContent = `${details.error}\n\nSubmitting the report failed:\n${reason}`;
+    }
+
+    $('#clientErrorOverlay textarea').value = '';
+    showClientError(details.error);
+    button.addEventListener('click', async function() {
+      button.disabled = true;
+      button.textContent = 'Submitting…';
+      $('#clientErrorStatus').style.display = 'none';
+      try {
+        details.message = $('#clientErrorOverlay textarea').value;
+        const ancestors = [];
+        const body = JSON.stringify(details, function(key, value) {
+          if(typeof value != 'object' || value === null)
+            return value;
+          while(ancestors.length && ancestors[ancestors.length-1] != this)
+            ancestors.pop();
+          if(ancestors.includes(value))
+            return '[cyclic]';
+          ancestors.push(value);
+          return value;
+        });
+        const res = await fetch('clientError', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body
+        });
+        const text = await res.text();
+        if(text.match(/^[a-z0-9]{8}$/))
+          window.location.reload();
+        else
+          submitFailed(text);
+      } catch(e) {
+        submitFailed(describeError(e, 'Unknown error'));
+      }
+    });
+  }
+
+  let errorReported = false;
+  const errorHandler = function(error, fallback) {
+    if(errorReported)
+      return; // the first error is the one that broke things - later ones are usually just fallout
+    errorReported = true;
+    let description = fallback;
+    try {
+      description = describeError(error, fallback);
+      reportError(description);
+    } catch(e) {
+      // collecting the context failed, e.g. because the error happened before the room was set
+      // up - show the error itself anyway instead of leaving the user with a frozen page. there
+      // is nothing to submit in that case, so ask for a manual report and offer a plain reload.
+      $('#clientErrorQuestion').style.display = 'none';
+      $('#clientErrorInput').style.display = 'none';
+      askForManualReport();
+      const button = $('#clientErrorOverlay button');
+      button.textContent = 'Reload';
+      button.addEventListener('click', _=>window.location.reload());
+      showClientError(`${description}\n\nThe error reporter itself failed:\n${describeError(e, 'Unknown error')}`);
+    }
+  }
+
+  window.onerror = function(msg, url, line, col, err) {
+    // tearing the session down over a non-fatal event would be worse than ignoring it, which is
+    // what happened anyway before this handler learned to survive a missing Error object
+    if(isNonFatalError(msg, err))
+      return;
+    // when the browser has no real location it passes the document URL with line and column 0 -
+    // reporting 'at <page>:0:0' would just look like a truncation bug, so leave the line out
+    errorHandler(err, `${msg}` + (url && line ? `\n    at ${url}:${line}:${col}` : ''));
+  };
+  window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
+    errorHandler(promiseRejectionEvent.reason, 'Unhandled promise rejection');
+  });
 });
-
-window.onerror = function(msg, url, line, col, err) {
-  sendTraceEvent('error', { msg, url, line, col, err });
-  location.reload();
-}
-
-export { tracingEnabled };

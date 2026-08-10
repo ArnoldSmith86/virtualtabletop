@@ -1,0 +1,8799 @@
+{
+  "4870": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "4870",
+    "z": 89887,
+    "x": -2,
+    "y": -2,
+    "parent": "holder-node-b3"
+  },
+  "ffmqD": {
+    "id": "ffmqD",
+    "parent": "label-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "ffmqU": {
+    "id": "ffmqU",
+    "parent": "label-p1",
+    "fixedParent": true,
+    "x": 58,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "holder-ants-p1": {
+    "type": "holder",
+    "id": "holder-ants-p1",
+    "x": -70,
+    "y": 15,
+    "width": 60,
+    "height": 60,
+    "z": 787,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 3,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "parent": "seat-p1",
+    "preventPiles": true
+  },
+  "holder-queens-p1": {
+    "type": "holder",
+    "id": "holder-queens-p1",
+    "y": 16,
+    "width": 60,
+    "height": 60,
+    "z": 43563,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "parent": "seat-p1",
+    "x": 168,
+    "dropOffsetX": 5,
+    "dropOffsetY": 3,
+    "dropTarget": {
+      "class": "item-sugar-or-queen"
+    }
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 1350,
+    "y": 87,
+    "height": 30,
+    "z": 25,
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "dodgerblue",
+        "border": "5px solid black",
+        "box-shadow": "0 2px 5px #00000066"
+      },
+      ".seated": {
+        "border": "5px solid black"
+      },
+      ".seated.turn": {
+        "border": "5px dotted black"
+      }
+    },
+    "width": 160,
+    "hideWhenUnused": true
+  },
+  "label-p1": {
+    "type": "label",
+    "id": "label-p1",
+    "width": 55,
+    "height": 40,
+    "z": 681,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p1",
+    "y": 38,
+    "x": 55,
+    "onlyVisibleForSeat": "seat-p1"
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "x": 1352,
+    "y": 260,
+    "width": 160,
+    "height": 30,
+    "z": 31,
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "yellowgreen",
+        "border": "5px solid black",
+        "box-shadow": "0 2px 5px #00000066"
+      },
+      ".seated": {
+        "border": "5px solid black"
+      },
+      ".seated.turn": {
+        "border": "5px dotted black"
+      }
+    },
+    "index": 2,
+    "hideWhenUnused": true
+  },
+  "holder-ants-p2": {
+    "type": "holder",
+    "id": "holder-ants-p2",
+    "x": -70,
+    "y": 16,
+    "width": 60,
+    "height": 60,
+    "z": 726,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 3,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "parent": "seat-p2",
+    "preventPiles": true
+  },
+  "holder-queens-p2": {
+    "type": "holder",
+    "id": "holder-queens-p2",
+    "y": 15,
+    "width": 60,
+    "height": 60,
+    "z": 672,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 5,
+    "parent": "seat-p2",
+    "x": 168,
+    "dropOffsetY": 3,
+    "dropTarget": {
+      "class": "item-sugar-or-queen"
+    }
+  },
+  "label-p2": {
+    "type": "label",
+    "id": "label-p2",
+    "width": 55,
+    "height": 40,
+    "z": 674,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p2",
+    "y": 38,
+    "x": 54,
+    "onlyVisibleForSeat": "seat-p2"
+  },
+  "ffmqD1": {
+    "id": "ffmqD1",
+    "parent": "label-p2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "ffmqU1": {
+    "id": "ffmqU1",
+    "parent": "label-p2",
+    "fixedParent": true,
+    "x": 58,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "x": 1352,
+    "y": 437,
+    "width": 160,
+    "height": 30,
+    "z": 43470,
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "darkorange",
+        "border": "5px solid black",
+        "box-shadow": "0 2px 5px #00000066"
+      },
+      ".seated": {
+        "border": "5px solid black"
+      },
+      ".seated.turn": {
+        "border": "5px dotted black"
+      }
+    },
+    "index": 3,
+    "hideWhenUnused": true,
+    "turn": true
+  },
+  "holder-ants-p3": {
+    "type": "holder",
+    "id": "holder-ants-p3",
+    "x": -70,
+    "y": 15,
+    "width": 60,
+    "height": 60,
+    "z": 25,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 3,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "parent": "seat-p3",
+    "preventPiles": true
+  },
+  "holder-queens-p3": {
+    "type": "holder",
+    "id": "holder-queens-p3",
+    "y": 18,
+    "width": 60,
+    "height": 60,
+    "z": 43560,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 5,
+    "parent": "seat-p3",
+    "x": 169,
+    "dropOffsetY": 3,
+    "dropTarget": {
+      "class": "item-sugar-or-queen"
+    }
+  },
+  "label-p3": {
+    "type": "label",
+    "id": "label-p3",
+    "width": 55,
+    "height": 40,
+    "z": 674,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p3",
+    "y": 38,
+    "x": 54,
+    "onlyVisibleForSeat": "seat-p3"
+  },
+  "ffmqD2": {
+    "id": "ffmqD2",
+    "parent": "label-p3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "ffmqU2": {
+    "id": "ffmqU2",
+    "parent": "label-p3",
+    "fixedParent": true,
+    "x": 58,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "x": 1351,
+    "y": 610,
+    "width": 160,
+    "height": 30,
+    "z": 30,
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "pink",
+        "border": "5px solid black",
+        "box-shadow": "0 2px 5px #00000066"
+      },
+      ".seated": {
+        "border": "5px solid black"
+      },
+      ".seated.turn": {
+        "border": "5px dotted black"
+      }
+    },
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "holder-ants-p4": {
+    "type": "holder",
+    "id": "holder-ants-p4",
+    "x": -70,
+    "y": 15,
+    "width": 60,
+    "height": 60,
+    "z": 25,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 3,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "parent": "seat-p4",
+    "preventPiles": true
+  },
+  "holder-queens-p4": {
+    "type": "holder",
+    "id": "holder-queens-p4",
+    "y": 16,
+    "width": 60,
+    "height": 60,
+    "z": 799,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 5,
+    "parent": "seat-p4",
+    "x": 168,
+    "dropOffsetY": 3,
+    "dropTarget": {
+      "class": "item-sugar-or-queen"
+    }
+  },
+  "label-p4": {
+    "type": "label",
+    "id": "label-p4",
+    "width": 55,
+    "height": 40,
+    "z": 674,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "parent": "seat-p4",
+    "y": 38,
+    "x": 54,
+    "text": 0,
+    "onlyVisibleForSeat": "seat-p4"
+  },
+  "ffmqD3": {
+    "id": "ffmqD3",
+    "parent": "label-p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "ffmqU3": {
+    "id": "ffmqU3",
+    "parent": "label-p4",
+    "fixedParent": true,
+    "x": 58,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "board-abilities": {
+    "id": "board-abilities",
+    "x": 22,
+    "y": 85,
+    "width": 300,
+    "height": 500,
+    "layer": -3,
+    "z": 43577,
+    "movable": false,
+    "image": "/assets/997861968_28140",
+    "abilitySpaces": [
+      "holder-ability-3",
+      "holder-ability-2b",
+      "holder-ability-2a",
+      "holder-ability-1b",
+      "holder-ability-1a"
+    ]
+  },
+  "kr57": {
+    "deck": "deck-abilities",
+    "type": "card",
+    "cardType": "MoveYourAnt",
+    "id": "kr57",
+    "z": 89916,
+    "activeFace": 1,
+    "x": 3,
+    "parent": "holder-ability-2b"
+  },
+  "vuow": {
+    "deck": "deck-abilities",
+    "type": "card",
+    "cardType": "PlaceAcrossStitch",
+    "id": "vuow",
+    "z": 89918,
+    "x": 3,
+    "parent": "holder-ability-1b"
+  },
+  "3vaa": {
+    "deck": "deck-abilities",
+    "type": "card",
+    "cardType": "ScoreConnection",
+    "id": "3vaa",
+    "z": 89917,
+    "dropLimit": 1,
+    "x": 3,
+    "activeFace": 1,
+    "parent": "holder-ability-2a"
+  },
+  "p9i1": {
+    "deck": "deck-abilities",
+    "type": "card",
+    "cardType": "SelectSameRowOpponent",
+    "id": "p9i1",
+    "z": 89915,
+    "activeFace": 1,
+    "x": 3,
+    "parent": "holder-ability-3"
+  },
+  "fxyf": {
+    "deck": "deck-abilities",
+    "type": "card",
+    "cardType": "SelectSameRowYourself",
+    "id": "fxyf",
+    "z": 89919,
+    "activeFace": 1,
+    "x": 3,
+    "parent": "holder-ability-1a"
+  },
+  "a84l": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "a84l",
+    "z": 75827,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "q8d7": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "q8d7",
+    "z": 75828,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "yn1g": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "yn1g",
+    "z": 75883,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "pwf0": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "pwf0",
+    "z": 75884,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "holder-abilities": {
+    "type": "holder",
+    "id": "holder-abilities",
+    "x": 1264,
+    "y": 1011,
+    "height": 100,
+    "z": 43584,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 100
+  },
+  "deck-abilities": {
+    "type": "deck",
+    "id": "deck-abilities",
+    "x": 4,
+    "y": 4,
+    "z": 89466,
+    "cardDefaults": {
+      "onPileCreation": {
+        "handlePosition": "static"
+      },
+      "width": 160,
+      "height": 86,
+      "pilesWith": {
+        "type": "card"
+      }
+    },
+    "cardTypes": {
+      "MoveYourAnt": {
+        "image": "/assets/-488007163_11334",
+        "button-2p-reset": {
+          "parent": "holder-abilities"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-abilities"
+        }
+      },
+      "PlaceAcrossStitch": {
+        "image": "/assets/697214175_9618",
+        "button-2p-reset": {
+          "parent": "holder-abilities"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-abilities"
+        }
+      },
+      "SelectSameRowOpponent": {
+        "image": "/assets/495829081_10854",
+        "button-2p-reset": {
+          "parent": "holder-abilities"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-abilities"
+        }
+      },
+      "SelectSameRowYourself": {
+        "image": "/assets/-669566739_9954",
+        "button-2p-reset": {
+          "parent": "holder-abilities"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-abilities"
+        }
+      },
+      "ScoreConnection": {
+        "image": "/assets/-1074017437_8290",
+        "button-2p-reset": {
+          "parent": "holder-abilities"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-abilities"
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-abilities",
+    "parent": "holder-abilities"
+  },
+  "holder-claims-p1": {
+    "type": "holder",
+    "id": "holder-claims-p1",
+    "parent": "seat-p1",
+    "x": -71,
+    "y": 81,
+    "width": 300,
+    "height": 60,
+    "z": 43587,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "center",
+        "align-items": "center",
+        "gap": "0px",
+        "box-shadow": "2px 2px 3px black"
+      },
+      " .dragging-shadow": {
+        "filter": "brightness(80%)",
+        "opacity": "60%"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY rank}"
+      }
+    },
+    "dropOffsetX": 3,
+    "dropTarget": {
+      "class": "item-claim"
+    },
+    "dropOffsetY": 0,
+    "preventPiles": true
+  },
+  "6ojl": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "6ojl",
+    "z": 75885,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "hd7b": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "hd7b",
+    "z": 75886,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "yrtx": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "yrtx",
+    "z": 75887,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "7vgp": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "7vgp",
+    "z": 75888,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "403g": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "403g",
+    "z": 75889,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "th3a": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "th3a",
+    "z": 75890,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "c3la": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "c3la",
+    "z": 75891,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "gia3": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "gia3",
+    "z": 75892,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "szzc": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "szzc",
+    "z": 75893,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "0rtv": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "0rtv",
+    "z": 75894,
+    "parent": "holder-ants-p4",
+    "activeFace": 1,
+    "x": 3,
+    "y": 4
+  },
+  "74z9": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "74z9",
+    "z": 75895,
+    "activeFace": 1,
+    "hoverParent": "holder-tile-h9",
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "fzpw": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "fzpw",
+    "z": 75896,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "hde9": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "hde9",
+    "z": 75897,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "kb81": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "kb81",
+    "z": 75898,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "bwhr": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "bwhr",
+    "z": 75899,
+    "activeFace": 1,
+    "hoverParent": "holder-tile-d7",
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "ak6q": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "ak6q",
+    "z": 75900,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "ig2w": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "ig2w",
+    "z": 75901,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "yrbj": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "yrbj",
+    "z": 75902,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "wmrl": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "wmrl",
+    "z": 75903,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "xu8z": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "xu8z",
+    "z": 75904,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "cmmf": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "cmmf",
+    "z": 75905,
+    "activeFace": 1,
+    "parent": "holder-ants-p4",
+    "x": 3,
+    "y": 4
+  },
+  "jpvt": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "jpvt",
+    "z": 89502,
+    "activeFace": 1,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p4"
+  },
+  "bu94": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "bu94",
+    "z": 89504,
+    "activeFace": 1,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p4"
+  },
+  "m5nw": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antPink",
+    "id": "m5nw",
+    "z": 89506,
+    "activeFace": 1,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p4"
+  },
+  "90l5": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "90l5",
+    "z": 75829,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "k8fo": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "k8fo",
+    "z": 75830,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "e7pb": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "e7pb",
+    "z": 75831,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "uc9u": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "uc9u",
+    "z": 75832,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "ciqw": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "ciqw",
+    "z": 75833,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "lv4y": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "lv4y",
+    "z": 75834,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "37i0": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "37i0",
+    "z": 75835,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "8d14": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "8d14",
+    "z": 75836,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "vt7v": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "vt7v",
+    "z": 75837,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "wmv1": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "wmv1",
+    "z": 75838,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "8bpx": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "8bpx",
+    "z": 75839,
+    "activeFace": 1,
+    "hoverParent": "holder-ants-p2",
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "idfr": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "idfr",
+    "z": 75840,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "2s5b": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "2s5b",
+    "z": 75841,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "b501": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "b501",
+    "z": 75842,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "xv4v": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "xv4v",
+    "z": 75843,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "beab": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "beab",
+    "z": 75844,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "bkly": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "bkly",
+    "z": 75845,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "qatc": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "qatc",
+    "z": 75846,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "bzo2": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "bzo2",
+    "z": 75847,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "tqr6": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "tqr6",
+    "z": 89460,
+    "activeFace": 1,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p2"
+  },
+  "hlw5": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "hlw5",
+    "z": 89498,
+    "activeFace": 1,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p2"
+  },
+  "e80o": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "e80o",
+    "z": 89500,
+    "activeFace": 1,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p2"
+  },
+  "t3bf": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "t3bf",
+    "z": 75826,
+    "activeFace": 1,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "imwp": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antGreen",
+    "id": "imwp",
+    "z": 75825,
+    "parent": "holder-ants-p2",
+    "x": 3,
+    "y": 4
+  },
+  "holder-cubes": {
+    "type": "holder",
+    "id": "holder-cubes",
+    "x": 130,
+    "height": 90,
+    "z": 43579,
+    "dropTarget": {
+      "class": "item-sugar-or-queen"
+    },
+    "width": 90,
+    "css": {
+      "display": "flex",
+      "flex-direction": "row",
+      "flex-wrap": "wrap",
+      "align-content": "center",
+      "justify-content": "center",
+      "align-items": "center",
+      "gap": "0px",
+      "padding": 0,
+      "box-shadow": "1px 1px 2px black"
+    },
+    "dropOffsetX": 20,
+    "preventPiles": true,
+    "y": 622,
+    "dropOffsetY": 20
+  },
+  "holder-tile-b1": {
+    "type": "holder",
+    "id": "holder-tile-b1",
+    "x": 509,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-a1": {
+    "type": "holder",
+    "id": "holder-tile-a1",
+    "x": 435,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-claims-p2": {
+    "type": "holder",
+    "id": "holder-claims-p2",
+    "parent": "seat-p2",
+    "x": -71,
+    "y": 81,
+    "width": 300,
+    "height": 60,
+    "z": 43586,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "center",
+        "align-items": "center",
+        "gap": "0px",
+        "padding": 0,
+        "box-shadow": "2px 2px 3px black"
+      },
+      " .dragging-shadow": {
+        "filter": "brightness(80%)",
+        "opacity": "60%"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY rank}"
+      }
+    },
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "class": "item-claim"
+    },
+    "preventPiles": true
+  },
+  "holder-claims-p3": {
+    "type": "holder",
+    "id": "holder-claims-p3",
+    "parent": "seat-p3",
+    "x": -71,
+    "y": 81,
+    "width": 300,
+    "height": 60,
+    "z": 43352,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "center",
+        "align-items": "center",
+        "gap": "0px",
+        "padding": 0,
+        "box-shadow": "2px 2px 3px black"
+      },
+      " .dragging-shadow": {
+        "filter": "brightness(80%)",
+        "opacity": "60%"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY rank}"
+      }
+    },
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "class": "item-claim"
+    },
+    "preventPiles": true
+  },
+  "holder-ability-3": {
+    "type": "holder",
+    "id": "holder-ability-3",
+    "x": 109,
+    "y": 36,
+    "width": 170,
+    "height": 86,
+    "z": 43466,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "column-reverse",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "box-shadow": "2px 2px 3px black",
+        "background-color": "transparent",
+        "border": "2px solid white"
+      }
+    },
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "deck-abilities"
+    },
+    "dropLimit": 1,
+    "parent": "board-abilities"
+  },
+  "holder-ability-1a": {
+    "type": "holder",
+    "id": "holder-ability-1a",
+    "x": 109,
+    "y": 380,
+    "width": 170,
+    "height": 86,
+    "z": 43484,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "column-reverse",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "box-shadow": "2px 2px 3px black",
+        "background-color": "transparent",
+        "border": "2px solid white"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-abilities"
+    },
+    "preventPiles": true,
+    "parent": "board-abilities"
+  },
+  "holder-ability-1b": {
+    "type": "holder",
+    "id": "holder-ability-1b",
+    "x": 109,
+    "y": 294,
+    "width": 170,
+    "height": 86,
+    "z": 43482,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "column-reverse",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "box-shadow": "2px 2px 3px black",
+        "background-color": "transparent",
+        "border": "2px solid white"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-abilities"
+    },
+    "preventPiles": true,
+    "parent": "board-abilities"
+  },
+  "holder-ability-2a": {
+    "type": "holder",
+    "id": "holder-ability-2a",
+    "x": 109,
+    "y": 208,
+    "width": 170,
+    "height": 86,
+    "z": 43481,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "column-reverse",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "box-shadow": "2px 2px 3px black",
+        "background-color": "transparent",
+        "border": "2px solid white"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-abilities"
+    },
+    "preventPiles": true,
+    "parent": "board-abilities"
+  },
+  "holder-ability-2b": {
+    "type": "holder",
+    "id": "holder-ability-2b",
+    "x": 109,
+    "y": 122,
+    "width": 170,
+    "height": 86,
+    "z": 43469,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "column-reverse",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "box-shadow": "2px 2px 3px black",
+        "background-color": "transparent",
+        "border": "2px solid white"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-abilities"
+    },
+    "preventPiles": true,
+    "parent": "board-abilities"
+  },
+  "buttonRevealPoints": {
+    "type": "button",
+    "id": "buttonRevealPoints",
+    "x": 56,
+    "y": 740,
+    "width": 110,
+    "height": 70,
+    "z": 43613,
+    "css": {
+      "font-size": "20px",
+      "font-weight": "bold"
+    },
+    "text": "Reveal Points",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reveal Points",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reveal points. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "relation": "=",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "buttonEndTurn": {
+    "type": "button",
+    "id": "buttonEndTurn",
+    "x": 185,
+    "y": 740,
+    "z": 43612,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "width": 110,
+    "height": 70,
+    "css": {
+      "font-size": "20px",
+      "font-weight": "bold"
+    }
+  },
+  "board-master-3-4p": {
+    "id": "board-master-3-4p",
+    "width": 1600,
+    "height": 1000,
+    "layer": -5,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-894008250_816700",
+    "nodeSpaces-3-4p": [
+      "holder-node-a1",
+      "holder-node-a2",
+      "holder-node-a3",
+      "holder-node-a4",
+      "holder-node-a5",
+      "holder-node-a6",
+      "holder-node-b1",
+      "holder-node-b2",
+      "holder-node-b3",
+      "holder-node-b4",
+      "holder-node-b5",
+      "holder-node-b6",
+      "holder-node-c1",
+      "holder-node-c2",
+      "holder-node-c3",
+      "holder-node-c4",
+      "holder-node-c5",
+      "holder-node-c6",
+      "holder-node-d1",
+      "holder-node-d2",
+      "holder-node-d3",
+      "holder-node-d4",
+      "holder-node-d5",
+      "holder-node-d6",
+      "holder-node-e1",
+      "holder-node-e2",
+      "holder-node-e3",
+      "holder-node-e4",
+      "holder-node-e5",
+      "holder-node-e6",
+      "holder-node-f1",
+      "holder-node-f2",
+      "holder-node-f3",
+      "holder-node-f4",
+      "holder-node-f5",
+      "holder-node-f6"
+    ]
+  },
+  "holder-node-a1": {
+    "type": "holder",
+    "id": "holder-node-a1",
+    "x": 415,
+    "y": 833,
+    "width": 50,
+    "height": 50,
+    "layer": 0,
+    "z": 77510,
+    "css": {
+      "background": "transparent",
+      "border": "3px solid white",
+      "border-radius": "50px"
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "width": 50
+    },
+    "parent": "board-master-3-4p"
+  },
+  "button-2p": {
+    "type": "button",
+    "id": "button-2p",
+    "x": 91,
+    "y": 840,
+    "width": 70,
+    "height": 70,
+    "z": 43620,
+    "css": {
+      "font-size": "20px",
+      "font-weight": "bold"
+    },
+    "text": "2P",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board for 2P. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RESET",
+        "property": "button-2p-reset"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "Blue",
+          "Green",
+          "Orange",
+          "Pink"
+        ],
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "queen${value}"
+          },
+          {
+            "func": "MOVE",
+            "to": "holder-queens-p${key}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-2p"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-3-4p"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-sweets-2p"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-sweets-3-4p"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-abilities"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-2p",
+        "collection": "nodeGrid-2p"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-sweets-2p"
+      },
+      {
+        "note": "Get the list of tile locations for the 2p node grid",
+        "func": "GET",
+        "collection": "nodeGrid-2p",
+        "property": "nodeSpaces-2p"
+      },
+      {
+        "note": "Deal 1 tile to each of these spaces",
+        "func": "FOREACH",
+        "in": "${nodeSpaces-2p}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-sweets-2p",
+            "to": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-3-4p",
+        "collection": "nodeGrid-3-4p"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-sweets-3-4p"
+      },
+      {
+        "note": "Get the list of tile locations for the 3-4p node grid",
+        "func": "GET",
+        "collection": "nodeGrid-3-4p",
+        "property": "nodeSpaces-3-4p"
+      },
+      {
+        "note": "Deal 1 tile to each of these spaces",
+        "func": "FOREACH",
+        "in": "${nodeSpaces-3-4p}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-sweets-3-4p",
+            "to": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-abilities",
+        "collection": "abilityGrid"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-abilities"
+      },
+      {
+        "note": "Get the list of tile locations for the ability board",
+        "func": "GET",
+        "collection": "abilityGrid",
+        "property": "abilitySpaces"
+      },
+      {
+        "note": "Deal 1 tile to each of these spaces",
+        "func": "FOREACH",
+        "in": "${abilitySpaces}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-abilities",
+            "to": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "relation": "=",
+            "value": "seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ]
+  },
+  "button-3-4p": {
+    "type": "button",
+    "id": "button-3-4p",
+    "x": 187,
+    "y": 840,
+    "width": 70,
+    "height": 70,
+    "z": 43619,
+    "css": {
+      "font-size": "20px",
+      "font-weight": "bold"
+    },
+    "text": "3-4P",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board for 3-4P. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RESET",
+        "property": "button-3-4p-reset"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "Blue",
+          "Green",
+          "Orange",
+          "Pink"
+        ],
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "queen${value}"
+          },
+          {
+            "func": "MOVE",
+            "to": "holder-queens-p${key}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-2p"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-3-4p"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-sweets-2p"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-sweets-3-4p"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-abilities"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-2p",
+        "collection": "nodeGrid-2p"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-sweets-2p"
+      },
+      {
+        "note": "Get the list of tile locations for the 2p node grid",
+        "func": "GET",
+        "collection": "nodeGrid-2p",
+        "property": "nodeSpaces-2p"
+      },
+      {
+        "note": "Deal 1 tile to each of these spaces",
+        "func": "FOREACH",
+        "in": "${nodeSpaces-2p}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-sweets-2p",
+            "to": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-master-3-4p",
+        "collection": "nodeGrid-3-4p"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-sweets-3-4p"
+      },
+      {
+        "note": "Get the list of tile locations for the 3-4p node grid",
+        "func": "GET",
+        "collection": "nodeGrid-3-4p",
+        "property": "nodeSpaces-3-4p"
+      },
+      {
+        "note": "Deal 1 tile to each of these spaces",
+        "func": "FOREACH",
+        "in": "${nodeSpaces-3-4p}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-sweets-3-4p",
+            "to": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board-abilities",
+        "collection": "abilityGrid"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-abilities"
+      },
+      {
+        "note": "Get the list of tile locations for the ability board",
+        "func": "GET",
+        "collection": "abilityGrid",
+        "property": "abilitySpaces"
+      },
+      {
+        "note": "Deal 1 tile to each of these spaces",
+        "func": "FOREACH",
+        "in": "${abilitySpaces}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-abilities",
+            "to": "${value}"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "relation": "=",
+            "value": "seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ]
+  },
+  "odd1": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "odd1",
+    "z": 75794,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "vnl9": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "vnl9",
+    "z": 75795,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "ur5p": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "ur5p",
+    "z": 75796,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "undo": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "undo",
+    "z": 75797,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "t2zz": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "t2zz",
+    "z": 75798,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "w7eo": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "w7eo",
+    "z": 75799,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "3nmi": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "3nmi",
+    "z": 75800,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "avvp": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "avvp",
+    "z": 75801,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "77xm": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "77xm",
+    "z": 75802,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "xkfi": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "xkfi",
+    "z": 75803,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "nqda": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "nqda",
+    "z": 75804,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "c1lc": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "c1lc",
+    "z": 75805,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "340d": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "340d",
+    "z": 75806,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "j6rd": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "j6rd",
+    "z": 75807,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "eykl": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "eykl",
+    "z": 75808,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "rjvh": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "rjvh",
+    "z": 75809,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "pnkn": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "pnkn",
+    "z": 75810,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "7hp3": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "7hp3",
+    "z": 75811,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "4iua": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "4iua",
+    "z": 75812,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "j59i": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "j59i",
+    "z": 75813,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "7eaw": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "7eaw",
+    "z": 75814,
+    "parent": "holder-ants-p1",
+    "x": 3,
+    "y": 4
+  },
+  "ft08": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "ft08",
+    "z": 89456,
+    "x": 3,
+    "y": 4,
+    "hoverParent": "holder-ants-p1",
+    "parent": "holder-ants-p1"
+  },
+  "73ae": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "73ae",
+    "z": 89486,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p1"
+  },
+  "9lv5": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "9lv5",
+    "z": 89488,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p1"
+  },
+  "4lwq": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "4lwq",
+    "z": 89468,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p1"
+  },
+  "l1yl": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antBlue",
+    "id": "l1yl",
+    "z": 89470,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p1"
+  },
+  "deck-queens": {
+    "type": "deck",
+    "id": "deck-queens",
+    "x": 4,
+    "y": 4,
+    "z": 84803,
+    "cardDefaults": {
+      "class": "item-sugar-or-queen",
+      "width": 51,
+      "height": 51,
+      "pilesWith": {
+        "type": "card"
+      },
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "queenBlue": {
+        "image": "/assets/1566146814_6849"
+      },
+      "queenGreen": {
+        "image": "/assets/-1743381266_6980"
+      },
+      "queenOrange": {
+        "image": "/assets/1887860579_6937"
+      },
+      "queenPink": {
+        "image": "/assets/2055770264_7108"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width",
+              "svgReplaces": {
+                "#primaryColor": "primaryColor",
+                "#borderColor": "borderColor",
+                "#borderWidth": "borderWidth"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-queens",
+    "parent": "holder-queens"
+  },
+  "holder-queens": {
+    "type": "holder",
+    "id": "holder-queens",
+    "x": 1495,
+    "y": 1012,
+    "width": 100,
+    "height": 100,
+    "z": 43582,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "g1bg": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenOrange",
+    "id": "g1bg",
+    "z": 89832,
+    "parent": "3m7t"
+  },
+  "qd54": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenOrange",
+    "id": "qd54",
+    "z": 89834,
+    "parent": "3m7t"
+  },
+  "ilos": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenGreen",
+    "id": "ilos",
+    "z": 89829,
+    "parent": "p5k9"
+  },
+  "xesd": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenGreen",
+    "id": "xesd",
+    "z": 89831,
+    "parent": "p5k9"
+  },
+  "afpk": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenBlue",
+    "id": "afpk",
+    "z": 89826,
+    "parent": "sfsy"
+  },
+  "jsp7": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenBlue",
+    "id": "jsp7",
+    "z": 89828,
+    "parent": "sfsy"
+  },
+  "deck-ants": {
+    "type": "deck",
+    "id": "deck-ants",
+    "x": 4,
+    "y": 4,
+    "z": 89399,
+    "cardDefaults": {
+      "width": 49,
+      "height": 49,
+      "pilesWith": {
+        "type": "card"
+      }
+    },
+    "cardTypes": {
+      "antBlue": {
+        "image": "/assets/-1576802884_7633",
+        "button-2p-reset": {
+          "parent": "holder-ants-p1"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-ants-p1"
+        }
+      },
+      "antGreen": {
+        "image": "/assets/337064388_7678",
+        "button-2p-reset": {
+          "parent": "holder-ants-p2"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-ants-p2"
+        }
+      },
+      "antOrange": {
+        "image": "/assets/689221283_7547",
+        "button-2p-reset": {
+          "parent": "holder-ants-p3"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-ants-p3"
+        }
+      },
+      "antPink": {
+        "image": "/assets/-2082168091_7733",
+        "button-2p-reset": {
+          "parent": "holder-ants-p4"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-ants-p4"
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-ants",
+    "parent": "holder-ants"
+  },
+  "holder-ants": {
+    "type": "holder",
+    "id": "holder-ants",
+    "x": 1382,
+    "y": 1012,
+    "width": 100,
+    "height": 100,
+    "z": 43583,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-sweets-3-4p": {
+    "type": "deck",
+    "id": "deck-sweets-3-4p",
+    "x": 4,
+    "y": 4,
+    "z": 83869,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "pilesWith": {
+        "type": "card"
+      },
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:20px; height:20px; background-color:black;color:white;font-size:18px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "Cookie": {
+        "image": "/assets/-1826333385_3870",
+        "button-3-4p-reset": {
+          "parent": "holder-sweets-3-4p"
+        }
+      },
+      "Cupcake": {
+        "image": "/assets/-899959922_4512",
+        "button-3-4p-reset": {
+          "parent": "holder-sweets-3-4p"
+        }
+      },
+      "Cherry": {
+        "image": "/assets/-1048729249_4742",
+        "button-3-4p-reset": {
+          "parent": "holder-sweets-3-4p"
+        }
+      },
+      "Pie": {
+        "image": "/assets/2025619105_3648",
+        "button-3-4p-reset": {
+          "parent": "holder-sweets-3-4p"
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width",
+              "svgReplaces": {
+                "#primaryColor": "primaryColor",
+                "#borderColor": "borderColor",
+                "#borderWidth": "borderWidth"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-sweets-3-4p",
+    "parent": "holder-sweets-3-4p"
+  },
+  "holder-node-a2": {
+    "type": "holder",
+    "id": "holder-node-a2",
+    "x": 415,
+    "y": 689,
+    "width": 50,
+    "height": 50,
+    "parent": "board-master-3-4p",
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-a3": {
+    "type": "holder",
+    "id": "holder-node-a3",
+    "x": 415,
+    "y": 546,
+    "width": 50,
+    "height": 50,
+    "parent": "board-master-3-4p",
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-a4": {
+    "type": "holder",
+    "id": "holder-node-a4",
+    "x": 415,
+    "y": 403,
+    "width": 50,
+    "height": 50,
+    "parent": "board-master-3-4p",
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-a5": {
+    "type": "holder",
+    "id": "holder-node-a5",
+    "x": 415,
+    "y": 259,
+    "width": 50,
+    "height": 50,
+    "parent": "board-master-3-4p",
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-a6": {
+    "type": "holder",
+    "id": "holder-node-a6",
+    "x": 415,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "parent": "board-master-3-4p",
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-b1": {
+    "type": "holder",
+    "id": "holder-node-b1",
+    "parent": "board-master-3-4p",
+    "x": 559,
+    "y": 832,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-b2": {
+    "type": "holder",
+    "id": "holder-node-b2",
+    "parent": "board-master-3-4p",
+    "x": 560,
+    "y": 689,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-b3": {
+    "type": "holder",
+    "id": "holder-node-b3",
+    "parent": "board-master-3-4p",
+    "x": 560,
+    "y": 545,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-b4": {
+    "type": "holder",
+    "id": "holder-node-b4",
+    "parent": "board-master-3-4p",
+    "x": 560,
+    "y": 402,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-b5": {
+    "type": "holder",
+    "id": "holder-node-b5",
+    "parent": "board-master-3-4p",
+    "x": 560,
+    "y": 259,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-b6": {
+    "type": "holder",
+    "id": "holder-node-b6",
+    "parent": "board-master-3-4p",
+    "x": 559,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-c1": {
+    "type": "holder",
+    "id": "holder-node-c1",
+    "parent": "board-master-3-4p",
+    "x": 703,
+    "y": 832,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-c2": {
+    "type": "holder",
+    "id": "holder-node-c2",
+    "parent": "board-master-3-4p",
+    "x": 704,
+    "y": 688,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-c3": {
+    "type": "holder",
+    "id": "holder-node-c3",
+    "parent": "board-master-3-4p",
+    "x": 704,
+    "y": 545,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-c4": {
+    "type": "holder",
+    "id": "holder-node-c4",
+    "parent": "board-master-3-4p",
+    "x": 704,
+    "y": 402,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-c5": {
+    "type": "holder",
+    "id": "holder-node-c5",
+    "parent": "board-master-3-4p",
+    "x": 704,
+    "y": 258,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-c6": {
+    "type": "holder",
+    "id": "holder-node-c6",
+    "parent": "board-master-3-4p",
+    "x": 703,
+    "y": 114,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-d1": {
+    "type": "holder",
+    "id": "holder-node-d1",
+    "parent": "board-master-3-4p",
+    "x": 846,
+    "y": 832,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-d2": {
+    "type": "holder",
+    "id": "holder-node-d2",
+    "parent": "board-master-3-4p",
+    "x": 847,
+    "y": 689,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-d3": {
+    "type": "holder",
+    "id": "holder-node-d3",
+    "parent": "board-master-3-4p",
+    "x": 847,
+    "y": 545,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-d4": {
+    "type": "holder",
+    "id": "holder-node-d4",
+    "parent": "board-master-3-4p",
+    "x": 847,
+    "y": 402,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-d5": {
+    "type": "holder",
+    "id": "holder-node-d5",
+    "parent": "board-master-3-4p",
+    "x": 847,
+    "y": 257,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-d6": {
+    "type": "holder",
+    "id": "holder-node-d6",
+    "parent": "board-master-3-4p",
+    "x": 846,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-e1": {
+    "type": "holder",
+    "id": "holder-node-e1",
+    "parent": "board-master-3-4p",
+    "x": 990,
+    "y": 831,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-e2": {
+    "type": "holder",
+    "id": "holder-node-e2",
+    "parent": "board-master-3-4p",
+    "x": 991,
+    "y": 688,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-e3": {
+    "type": "holder",
+    "id": "holder-node-e3",
+    "parent": "board-master-3-4p",
+    "x": 991,
+    "y": 545,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-e4": {
+    "type": "holder",
+    "id": "holder-node-e4",
+    "parent": "board-master-3-4p",
+    "x": 991,
+    "y": 401,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-e5": {
+    "type": "holder",
+    "id": "holder-node-e5",
+    "parent": "board-master-3-4p",
+    "x": 991,
+    "y": 258,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-e6": {
+    "type": "holder",
+    "id": "holder-node-e6",
+    "parent": "board-master-3-4p",
+    "x": 990,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-f1": {
+    "type": "holder",
+    "id": "holder-node-f1",
+    "parent": "board-master-3-4p",
+    "x": 1134,
+    "y": 832,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-f2": {
+    "type": "holder",
+    "id": "holder-node-f2",
+    "parent": "board-master-3-4p",
+    "x": 1134,
+    "y": 689,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-f3": {
+    "type": "holder",
+    "id": "holder-node-f3",
+    "parent": "board-master-3-4p",
+    "x": 1134,
+    "y": 545,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-f4": {
+    "type": "holder",
+    "id": "holder-node-f4",
+    "parent": "board-master-3-4p",
+    "x": 1134,
+    "y": 402,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-f5": {
+    "type": "holder",
+    "id": "holder-node-f5",
+    "parent": "board-master-3-4p",
+    "x": 1134,
+    "y": 258,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "holder-node-f6": {
+    "type": "holder",
+    "id": "holder-node-f6",
+    "parent": "board-master-3-4p",
+    "x": 1133,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "inheritFrom": "holder-node-a1"
+  },
+  "board-master-2p": {
+    "id": "board-master-2p",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/919667007_627372",
+    "nodeSpaces-2p": [
+      "holder-node-aa1",
+      "holder-node-aa2",
+      "holder-node-aa3",
+      "holder-node-aa4",
+      "holder-node-aa5",
+      "holder-node-bb1",
+      "holder-node-bb2",
+      "holder-node-bb3",
+      "holder-node-bb4",
+      "holder-node-bb5",
+      "holder-node-cc1",
+      "holder-node-cc2",
+      "holder-node-cc3",
+      "holder-node-cc4",
+      "holder-node-cc5",
+      "holder-node-dd1",
+      "holder-node-dd2",
+      "holder-node-dd3",
+      "holder-node-dd4",
+      "holder-node-dd5",
+      "holder-node-ee1",
+      "holder-node-ee2",
+      "holder-node-ee3",
+      "holder-node-ee4",
+      "holder-node-ee5"
+    ],
+    "z": 1,
+    "y": 1,
+    "display": false
+  },
+  "holder-tile-a2": {
+    "type": "holder",
+    "id": "holder-tile-a2",
+    "x": 434,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43549,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a3": {
+    "type": "holder",
+    "id": "holder-tile-a3",
+    "x": 435,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a4": {
+    "type": "holder",
+    "id": "holder-tile-a4",
+    "x": 435,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a5": {
+    "type": "holder",
+    "id": "holder-tile-a5",
+    "x": 435,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a6": {
+    "type": "holder",
+    "id": "holder-tile-a6",
+    "x": 435,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a7": {
+    "type": "holder",
+    "id": "holder-tile-a7",
+    "x": 435,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a8": {
+    "type": "holder",
+    "id": "holder-tile-a8",
+    "x": 435,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a9": {
+    "type": "holder",
+    "id": "holder-tile-a9",
+    "x": 435,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-a10": {
+    "type": "holder",
+    "id": "holder-tile-a10",
+    "x": 435,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43501,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p"
+  },
+  "holder-tile-b2": {
+    "type": "holder",
+    "id": "holder-tile-b2",
+    "x": 510,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b3": {
+    "type": "holder",
+    "id": "holder-tile-b3",
+    "x": 510,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b4": {
+    "type": "holder",
+    "id": "holder-tile-b4",
+    "x": 510,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b5": {
+    "type": "holder",
+    "id": "holder-tile-b5",
+    "x": 510,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b6": {
+    "type": "holder",
+    "id": "holder-tile-b6",
+    "x": 510,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b7": {
+    "type": "holder",
+    "id": "holder-tile-b7",
+    "x": 510,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b8": {
+    "type": "holder",
+    "id": "holder-tile-b8",
+    "x": 510,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b9": {
+    "type": "holder",
+    "id": "holder-tile-b9",
+    "x": 510,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-b10": {
+    "type": "holder",
+    "id": "holder-tile-b10",
+    "x": 509,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true,
+    "parent": "board-master-3-4p",
+    "layer": -1
+  },
+  "holder-tile-c1": {
+    "type": "holder",
+    "id": "holder-tile-c1",
+    "parent": "board-master-3-4p",
+    "x": 582,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d1": {
+    "type": "holder",
+    "id": "holder-tile-d1",
+    "parent": "board-master-3-4p",
+    "x": 655,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e1": {
+    "type": "holder",
+    "id": "holder-tile-e1",
+    "parent": "board-master-3-4p",
+    "x": 728,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f1": {
+    "type": "holder",
+    "id": "holder-tile-f1",
+    "parent": "board-master-3-4p",
+    "x": 801,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g1": {
+    "type": "holder",
+    "id": "holder-tile-g1",
+    "parent": "board-master-3-4p",
+    "x": 874,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h1": {
+    "type": "holder",
+    "id": "holder-tile-h1",
+    "parent": "board-master-3-4p",
+    "x": 947,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i1": {
+    "type": "holder",
+    "id": "holder-tile-i1",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43573,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j1": {
+    "type": "holder",
+    "id": "holder-tile-j1",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 791,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c2": {
+    "type": "holder",
+    "id": "holder-tile-c2",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c3": {
+    "type": "holder",
+    "id": "holder-tile-c3",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c4": {
+    "type": "holder",
+    "id": "holder-tile-c4",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c5": {
+    "type": "holder",
+    "id": "holder-tile-c5",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c6": {
+    "type": "holder",
+    "id": "holder-tile-c6",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c7": {
+    "type": "holder",
+    "id": "holder-tile-c7",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c8": {
+    "type": "holder",
+    "id": "holder-tile-c8",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c9": {
+    "type": "holder",
+    "id": "holder-tile-c9",
+    "parent": "board-master-3-4p",
+    "x": 583,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-c10": {
+    "type": "holder",
+    "id": "holder-tile-c10",
+    "parent": "board-master-3-4p",
+    "x": 582,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43532,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d2": {
+    "type": "holder",
+    "id": "holder-tile-d2",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d3": {
+    "type": "holder",
+    "id": "holder-tile-d3",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d4": {
+    "type": "holder",
+    "id": "holder-tile-d4",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d5": {
+    "type": "holder",
+    "id": "holder-tile-d5",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d6": {
+    "type": "holder",
+    "id": "holder-tile-d6",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d7": {
+    "type": "holder",
+    "id": "holder-tile-d7",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d8": {
+    "type": "holder",
+    "id": "holder-tile-d8",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d9": {
+    "type": "holder",
+    "id": "holder-tile-d9",
+    "parent": "board-master-3-4p",
+    "x": 656,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-d10": {
+    "type": "holder",
+    "id": "holder-tile-d10",
+    "parent": "board-master-3-4p",
+    "x": 655,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43533,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e2": {
+    "type": "holder",
+    "id": "holder-tile-e2",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e3": {
+    "type": "holder",
+    "id": "holder-tile-e3",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e4": {
+    "type": "holder",
+    "id": "holder-tile-e4",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e5": {
+    "type": "holder",
+    "id": "holder-tile-e5",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e6": {
+    "type": "holder",
+    "id": "holder-tile-e6",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e7": {
+    "type": "holder",
+    "id": "holder-tile-e7",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e8": {
+    "type": "holder",
+    "id": "holder-tile-e8",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e9": {
+    "type": "holder",
+    "id": "holder-tile-e9",
+    "parent": "board-master-3-4p",
+    "x": 729,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-e10": {
+    "type": "holder",
+    "id": "holder-tile-e10",
+    "parent": "board-master-3-4p",
+    "x": 728,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43534,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f2": {
+    "type": "holder",
+    "id": "holder-tile-f2",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f3": {
+    "type": "holder",
+    "id": "holder-tile-f3",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f4": {
+    "type": "holder",
+    "id": "holder-tile-f4",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f5": {
+    "type": "holder",
+    "id": "holder-tile-f5",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f6": {
+    "type": "holder",
+    "id": "holder-tile-f6",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f7": {
+    "type": "holder",
+    "id": "holder-tile-f7",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f8": {
+    "type": "holder",
+    "id": "holder-tile-f8",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f9": {
+    "type": "holder",
+    "id": "holder-tile-f9",
+    "parent": "board-master-3-4p",
+    "x": 802,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-f10": {
+    "type": "holder",
+    "id": "holder-tile-f10",
+    "parent": "board-master-3-4p",
+    "x": 801,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43535,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g2": {
+    "type": "holder",
+    "id": "holder-tile-g2",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g3": {
+    "type": "holder",
+    "id": "holder-tile-g3",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g4": {
+    "type": "holder",
+    "id": "holder-tile-g4",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g5": {
+    "type": "holder",
+    "id": "holder-tile-g5",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g6": {
+    "type": "holder",
+    "id": "holder-tile-g6",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g7": {
+    "type": "holder",
+    "id": "holder-tile-g7",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g8": {
+    "type": "holder",
+    "id": "holder-tile-g8",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g9": {
+    "type": "holder",
+    "id": "holder-tile-g9",
+    "parent": "board-master-3-4p",
+    "x": 875,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-g10": {
+    "type": "holder",
+    "id": "holder-tile-g10",
+    "parent": "board-master-3-4p",
+    "x": 874,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43536,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h2": {
+    "type": "holder",
+    "id": "holder-tile-h2",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h3": {
+    "type": "holder",
+    "id": "holder-tile-h3",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h4": {
+    "type": "holder",
+    "id": "holder-tile-h4",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h5": {
+    "type": "holder",
+    "id": "holder-tile-h5",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h6": {
+    "type": "holder",
+    "id": "holder-tile-h6",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h7": {
+    "type": "holder",
+    "id": "holder-tile-h7",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h8": {
+    "type": "holder",
+    "id": "holder-tile-h8",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h9": {
+    "type": "holder",
+    "id": "holder-tile-h9",
+    "parent": "board-master-3-4p",
+    "x": 948,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-h10": {
+    "type": "holder",
+    "id": "holder-tile-h10",
+    "parent": "board-master-3-4p",
+    "x": 947,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43537,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i2": {
+    "type": "holder",
+    "id": "holder-tile-i2",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i3": {
+    "type": "holder",
+    "id": "holder-tile-i3",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i4": {
+    "type": "holder",
+    "id": "holder-tile-i4",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i5": {
+    "type": "holder",
+    "id": "holder-tile-i5",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i6": {
+    "type": "holder",
+    "id": "holder-tile-i6",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i7": {
+    "type": "holder",
+    "id": "holder-tile-i7",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i8": {
+    "type": "holder",
+    "id": "holder-tile-i8",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i9": {
+    "type": "holder",
+    "id": "holder-tile-i9",
+    "parent": "board-master-3-4p",
+    "x": 1021,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-i10": {
+    "type": "holder",
+    "id": "holder-tile-i10",
+    "parent": "board-master-3-4p",
+    "x": 1020,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43538,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j2": {
+    "type": "holder",
+    "id": "holder-tile-j2",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 718,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j3": {
+    "type": "holder",
+    "id": "holder-tile-j3",
+    "parent": "board-master-3-4p",
+    "x": 1094,
+    "y": 645,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43574,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j4": {
+    "type": "holder",
+    "id": "holder-tile-j4",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 572,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j5": {
+    "type": "holder",
+    "id": "holder-tile-j5",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 499,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j6": {
+    "type": "holder",
+    "id": "holder-tile-j6",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 426,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j7": {
+    "type": "holder",
+    "id": "holder-tile-j7",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 353,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j8": {
+    "type": "holder",
+    "id": "holder-tile-j8",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 280,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j9": {
+    "type": "holder",
+    "id": "holder-tile-j9",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 207,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-j10": {
+    "type": "holder",
+    "id": "holder-tile-j10",
+    "parent": "board-master-3-4p",
+    "x": 1093,
+    "y": 134,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43539,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "deck-sweets-2p": {
+    "type": "deck",
+    "id": "deck-sweets-2p",
+    "x": 4,
+    "y": 4,
+    "z": 80814,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "pilesWith": {
+        "type": "card"
+      },
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:20px; height:20px; background-color:black;color:white;font-size:18px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "right"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width",
+              "svgReplaces": {
+                "#primaryColor": "primaryColor",
+                "#borderColor": "borderColor",
+                "#borderWidth": "borderWidth"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-sweets-2p",
+    "cardTypes": {
+      "Cherry": {
+        "image": "/assets/-1048729249_4742",
+        "button-2p-reset": {
+          "parent": "holder-sweets-2p"
+        }
+      },
+      "Cookie": {
+        "image": "/assets/-1826333385_3870",
+        "button-2p-reset": {
+          "parent": "holder-sweets-2p"
+        }
+      },
+      "Cupcake": {
+        "image": "/assets/-899959922_4512",
+        "button-2p-reset": {
+          "parent": "holder-sweets-2p"
+        }
+      },
+      "Lollipop": {
+        "image": "/assets/1402152229_4934",
+        "button-2p-reset": {
+          "parent": "holder-sweets-2p"
+        }
+      },
+      "Pie": {
+        "image": "/assets/2025619105_3648",
+        "button-2p-reset": {
+          "parent": "holder-sweets-2p"
+        }
+      }
+    },
+    "parent": "holder-sweets-2p"
+  },
+  "holder-sweets-2p": {
+    "type": "holder",
+    "id": "holder-sweets-2p",
+    "x": -136,
+    "y": 685,
+    "width": 100,
+    "height": 100,
+    "z": 43558,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "holder-sweets-3-4p": {
+    "type": "holder",
+    "id": "holder-sweets-3-4p",
+    "x": -134,
+    "y": 799,
+    "width": 100,
+    "height": 100,
+    "z": 43557,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "holder-node-aa1": {
+    "type": "holder",
+    "id": "holder-node-aa1",
+    "parent": "board-master-2p",
+    "x": 480,
+    "y": 766,
+    "width": 50,
+    "height": 50,
+    "layer": 0,
+    "z": 77637,
+    "css": {
+      "background": "transparent",
+      "border": "3px solid white",
+      "border-radius": "50px"
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "width": 50
+    }
+  },
+  "holder-node-aa2": {
+    "type": "holder",
+    "id": "holder-node-aa2",
+    "parent": "board-master-2p",
+    "x": 480,
+    "y": 620,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-aa3": {
+    "type": "holder",
+    "id": "holder-node-aa3",
+    "parent": "board-master-2p",
+    "x": 480,
+    "y": 474,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-aa4": {
+    "type": "holder",
+    "id": "holder-node-aa4",
+    "parent": "board-master-2p",
+    "x": 480,
+    "y": 328,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-aa5": {
+    "type": "holder",
+    "id": "holder-node-aa5",
+    "parent": "board-master-2p",
+    "x": 480,
+    "y": 182,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-bb1": {
+    "type": "holder",
+    "id": "holder-node-bb1",
+    "parent": "board-master-2p",
+    "x": 626,
+    "y": 766,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-bb2": {
+    "type": "holder",
+    "id": "holder-node-bb2",
+    "parent": "board-master-2p",
+    "x": 625,
+    "y": 620,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-bb3": {
+    "type": "holder",
+    "id": "holder-node-bb3",
+    "parent": "board-master-2p",
+    "x": 625,
+    "y": 474,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-bb4": {
+    "type": "holder",
+    "id": "holder-node-bb4",
+    "parent": "board-master-2p",
+    "x": 625,
+    "y": 328,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-bb5": {
+    "type": "holder",
+    "id": "holder-node-bb5",
+    "parent": "board-master-2p",
+    "x": 625,
+    "y": 182,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-cc1": {
+    "type": "holder",
+    "id": "holder-node-cc1",
+    "parent": "board-master-2p",
+    "x": 773,
+    "y": 766,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-dd1": {
+    "type": "holder",
+    "id": "holder-node-dd1",
+    "parent": "board-master-2p",
+    "x": 919,
+    "y": 766,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-ee1": {
+    "type": "holder",
+    "id": "holder-node-ee1",
+    "parent": "board-master-2p",
+    "x": 1066,
+    "y": 766,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-cc2": {
+    "type": "holder",
+    "id": "holder-node-cc2",
+    "parent": "board-master-2p",
+    "x": 773,
+    "y": 620,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-cc3": {
+    "type": "holder",
+    "id": "holder-node-cc3",
+    "parent": "board-master-2p",
+    "x": 773,
+    "y": 473,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-cc4": {
+    "type": "holder",
+    "id": "holder-node-cc4",
+    "parent": "board-master-2p",
+    "x": 773,
+    "y": 327,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-cc5": {
+    "type": "holder",
+    "id": "holder-node-cc5",
+    "parent": "board-master-2p",
+    "x": 773,
+    "y": 181,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-dd2": {
+    "type": "holder",
+    "id": "holder-node-dd2",
+    "parent": "board-master-2p",
+    "x": 919,
+    "y": 620,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-dd3": {
+    "type": "holder",
+    "id": "holder-node-dd3",
+    "parent": "board-master-2p",
+    "x": 919,
+    "y": 474,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-dd4": {
+    "type": "holder",
+    "id": "holder-node-dd4",
+    "parent": "board-master-2p",
+    "x": 919,
+    "y": 329,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-dd5": {
+    "type": "holder",
+    "id": "holder-node-dd5",
+    "parent": "board-master-2p",
+    "x": 919,
+    "y": 183,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-ee2": {
+    "type": "holder",
+    "id": "holder-node-ee2",
+    "parent": "board-master-2p",
+    "x": 1066,
+    "y": 620,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-ee3": {
+    "type": "holder",
+    "id": "holder-node-ee3",
+    "parent": "board-master-2p",
+    "x": 1066,
+    "y": 474,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-ee4": {
+    "type": "holder",
+    "id": "holder-node-ee4",
+    "parent": "board-master-2p",
+    "x": 1066,
+    "y": 329,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-node-ee5": {
+    "type": "holder",
+    "id": "holder-node-ee5",
+    "parent": "board-master-2p",
+    "x": 1066,
+    "y": 183,
+    "inheritFrom": "holder-node-aa1"
+  },
+  "holder-tile-aa1": {
+    "type": "holder",
+    "id": "holder-tile-aa1",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-aa2": {
+    "type": "holder",
+    "id": "holder-tile-aa2",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-aa3": {
+    "type": "holder",
+    "id": "holder-tile-aa3",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-aa4": {
+    "type": "holder",
+    "id": "holder-tile-aa4",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-aa5": {
+    "type": "holder",
+    "id": "holder-tile-aa5",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-aa6": {
+    "type": "holder",
+    "id": "holder-tile-aa6",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-aa7": {
+    "type": "holder",
+    "id": "holder-tile-aa7",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-aa8": {
+    "type": "holder",
+    "id": "holder-tile-aa8",
+    "parent": "board-master-2p",
+    "x": 504,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "movable": false,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb1": {
+    "type": "holder",
+    "id": "holder-tile-bb1",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc1": {
+    "type": "holder",
+    "id": "holder-tile-cc1",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd1": {
+    "type": "holder",
+    "id": "holder-tile-dd1",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee1": {
+    "type": "holder",
+    "id": "holder-tile-ee1",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff1": {
+    "type": "holder",
+    "id": "holder-tile-ff1",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg1": {
+    "type": "holder",
+    "id": "holder-tile-gg1",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh1": {
+    "type": "holder",
+    "id": "holder-tile-hh1",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 721,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb2": {
+    "type": "holder",
+    "id": "holder-tile-bb2",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb3": {
+    "type": "holder",
+    "id": "holder-tile-bb3",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb4": {
+    "type": "holder",
+    "id": "holder-tile-bb4",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb5": {
+    "type": "holder",
+    "id": "holder-tile-bb5",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb6": {
+    "type": "holder",
+    "id": "holder-tile-bb6",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb7": {
+    "type": "holder",
+    "id": "holder-tile-bb7",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-bb8": {
+    "type": "holder",
+    "id": "holder-tile-bb8",
+    "parent": "board-master-2p",
+    "x": 577,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc2": {
+    "type": "holder",
+    "id": "holder-tile-cc2",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc3": {
+    "type": "holder",
+    "id": "holder-tile-cc3",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc4": {
+    "type": "holder",
+    "id": "holder-tile-cc4",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc5": {
+    "type": "holder",
+    "id": "holder-tile-cc5",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc6": {
+    "type": "holder",
+    "id": "holder-tile-cc6",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc7": {
+    "type": "holder",
+    "id": "holder-tile-cc7",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-cc8": {
+    "type": "holder",
+    "id": "holder-tile-cc8",
+    "parent": "board-master-2p",
+    "x": 650,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd2": {
+    "type": "holder",
+    "id": "holder-tile-dd2",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd3": {
+    "type": "holder",
+    "id": "holder-tile-dd3",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd4": {
+    "type": "holder",
+    "id": "holder-tile-dd4",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd5": {
+    "type": "holder",
+    "id": "holder-tile-dd5",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd6": {
+    "type": "holder",
+    "id": "holder-tile-dd6",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd7": {
+    "type": "holder",
+    "id": "holder-tile-dd7",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-dd8": {
+    "type": "holder",
+    "id": "holder-tile-dd8",
+    "parent": "board-master-2p",
+    "x": 723,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee2": {
+    "type": "holder",
+    "id": "holder-tile-ee2",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee3": {
+    "type": "holder",
+    "id": "holder-tile-ee3",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee4": {
+    "type": "holder",
+    "id": "holder-tile-ee4",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee5": {
+    "type": "holder",
+    "id": "holder-tile-ee5",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee6": {
+    "type": "holder",
+    "id": "holder-tile-ee6",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee7": {
+    "type": "holder",
+    "id": "holder-tile-ee7",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ee8": {
+    "type": "holder",
+    "id": "holder-tile-ee8",
+    "parent": "board-master-2p",
+    "x": 796,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff2": {
+    "type": "holder",
+    "id": "holder-tile-ff2",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff3": {
+    "type": "holder",
+    "id": "holder-tile-ff3",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff4": {
+    "type": "holder",
+    "id": "holder-tile-ff4",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff5": {
+    "type": "holder",
+    "id": "holder-tile-ff5",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff6": {
+    "type": "holder",
+    "id": "holder-tile-ff6",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff7": {
+    "type": "holder",
+    "id": "holder-tile-ff7",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-ff8": {
+    "type": "holder",
+    "id": "holder-tile-ff8",
+    "parent": "board-master-2p",
+    "x": 869,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg2": {
+    "type": "holder",
+    "id": "holder-tile-gg2",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg3": {
+    "type": "holder",
+    "id": "holder-tile-gg3",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg4": {
+    "type": "holder",
+    "id": "holder-tile-gg4",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg5": {
+    "type": "holder",
+    "id": "holder-tile-gg5",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg6": {
+    "type": "holder",
+    "id": "holder-tile-gg6",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg7": {
+    "type": "holder",
+    "id": "holder-tile-gg7",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-gg8": {
+    "type": "holder",
+    "id": "holder-tile-gg8",
+    "parent": "board-master-2p",
+    "x": 942,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh2": {
+    "type": "holder",
+    "id": "holder-tile-hh2",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 648,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh3": {
+    "type": "holder",
+    "id": "holder-tile-hh3",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 575,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh4": {
+    "type": "holder",
+    "id": "holder-tile-hh4",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 502,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh5": {
+    "type": "holder",
+    "id": "holder-tile-hh5",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 429,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh6": {
+    "type": "holder",
+    "id": "holder-tile-hh6",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 356,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh7": {
+    "type": "holder",
+    "id": "holder-tile-hh7",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 283,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-tile-hh8": {
+    "type": "holder",
+    "id": "holder-tile-hh8",
+    "parent": "board-master-2p",
+    "x": 1015,
+    "y": 210,
+    "width": 73,
+    "height": 73,
+    "layer": -1,
+    "z": 43541,
+    "css": {
+      "background": "transparent",
+      "border": "0px solid white"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 11,
+    "dropOffsetY": 11,
+    "dropTarget": {
+      "deck": "deck-ants"
+    },
+    "preventPiles": true
+  },
+  "holder-claims-sugar": {
+    "type": "holder",
+    "id": "holder-claims-sugar",
+    "x": -138,
+    "y": 567,
+    "width": 100,
+    "height": 100,
+    "z": 43559,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "holder-claims-p4": {
+    "type": "holder",
+    "id": "holder-claims-p4",
+    "parent": "seat-p4",
+    "x": -71,
+    "y": 81,
+    "width": 300,
+    "height": 60,
+    "z": 43589,
+    "css": {
+      "": {
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "align-content": "center",
+        "justify-content": "center",
+        "align-items": "center",
+        "gap": "0px",
+        "padding": 0,
+        "box-shadow": "2px 2px 3px black"
+      },
+      " .dragging-shadow": {
+        "filter": "brightness(80%)",
+        "opacity": "60%"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY rank}"
+      }
+    },
+    "dropOffsetX": 3,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "class": "item-claim"
+    },
+    "preventPiles": true
+  },
+  "xm6c": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "claimPieBlue",
+    "id": "xm6c",
+    "z": 80757,
+    "x": 3,
+    "parent": "holder-claims-p4"
+  },
+  "b613": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "claimCookieGreen",
+    "id": "b613",
+    "z": 80658,
+    "parent": "holder-claims-p4",
+    "x": 3
+  },
+  "ec80": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "claimCupcakeGreen",
+    "id": "ec80",
+    "z": 80659,
+    "parent": "holder-claims-p4",
+    "x": 3
+  },
+  "gsm1": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "claimCherryGreen",
+    "id": "gsm1",
+    "z": 80766,
+    "x": 3,
+    "hoverParent": "holder-claims-p4",
+    "parent": "holder-claims-p4"
+  },
+  "4e14": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "4e14",
+    "z": 89755,
+    "x": -2,
+    "y": -2,
+    "parent": "holder-node-bb2"
+  },
+  "qy00": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCherryBlue",
+    "id": "qy00",
+    "z": 89667,
+    "x": 3,
+    "parent": "holder-claims-p1"
+  },
+  "hvrr": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCookieBlue",
+    "id": "hvrr",
+    "z": 80809,
+    "parent": "holder-claims-p1",
+    "x": 3,
+    "y": null
+  },
+  "sb2n": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCupcakeBlue",
+    "id": "sb2n",
+    "z": 80811,
+    "parent": "holder-claims-p1",
+    "x": 3,
+    "y": null
+  },
+  "rb2w": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimPieBlue",
+    "id": "rb2w",
+    "z": 89665,
+    "x": 3,
+    "hoverParent": "holder-claims-p1",
+    "parent": "holder-claims-p1"
+  },
+  "mk8s": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimLollipopBlue",
+    "id": "mk8s",
+    "z": 89568,
+    "parent": "f9aj"
+  },
+  "pb9o": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimLollipopGreen",
+    "id": "pb9o",
+    "z": 89823,
+    "parent": "f9aj"
+  },
+  "uzmw": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimLollipopOrange",
+    "id": "uzmw",
+    "z": 89824,
+    "parent": "f9aj"
+  },
+  "3t3x": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCherryGreen",
+    "id": "3t3x",
+    "z": 80864,
+    "parent": "holder-claims-p2",
+    "x": 3,
+    "y": null
+  },
+  "zo7d": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCookieGreen",
+    "id": "zo7d",
+    "z": 80866,
+    "parent": "holder-claims-p2",
+    "x": 3,
+    "y": null
+  },
+  "sq5p": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCupcakeGreen",
+    "id": "sq5p",
+    "z": 80868,
+    "parent": "holder-claims-p2",
+    "x": 3,
+    "y": null
+  },
+  "2s0y": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimPieGreen",
+    "id": "2s0y",
+    "z": 84795,
+    "x": 3,
+    "parent": "holder-claims-p2"
+  },
+  "lu7j": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCherryOrange",
+    "id": "lu7j",
+    "z": 80872,
+    "parent": "holder-claims-p3",
+    "x": 3,
+    "y": null
+  },
+  "60ct": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCookieOrange",
+    "id": "60ct",
+    "z": 80874,
+    "parent": "holder-claims-p3",
+    "x": 3,
+    "y": null
+  },
+  "a393": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCupcakeOrange",
+    "id": "a393",
+    "z": 80876,
+    "parent": "holder-claims-p3",
+    "x": 3,
+    "y": null
+  },
+  "dm76": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimPieOrange",
+    "id": "dm76",
+    "z": 86055,
+    "x": 3,
+    "parent": "holder-claims-p3"
+  },
+  "pxhn": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimLollipopPink",
+    "id": "pxhn",
+    "z": 89825,
+    "parent": "f9aj"
+  },
+  "oeiw": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCookiePink",
+    "id": "oeiw",
+    "z": 89521,
+    "x": 3,
+    "hoverParent": "holder-claims-p4",
+    "parent": "holder-claims-p4"
+  },
+  "aqia": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCherryPink",
+    "id": "aqia",
+    "z": 89523,
+    "x": 3,
+    "hoverParent": "holder-claims-p4",
+    "parent": "holder-claims-p4"
+  },
+  "5kky": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimPiePink",
+    "id": "5kky",
+    "z": 89525,
+    "x": 3,
+    "hoverParent": "holder-claims-p4",
+    "parent": "holder-claims-p4"
+  },
+  "1kc0": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "claimCupcakePink",
+    "id": "1kc0",
+    "z": 89527,
+    "x": 3,
+    "hoverParent": "holder-claims-p4",
+    "parent": "holder-claims-p4"
+  },
+  "deck-claims-sugar": {
+    "type": "deck",
+    "id": "deck-claims-sugar",
+    "x": 4,
+    "y": 4,
+    "z": 83867,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "pilesWith": {
+        "type": "card"
+      },
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:20px; height:20px; background-color:black;color:white;font-size:18px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "SugarCube": {
+        "class": "item-sugar-or-queen",
+        "image": "/assets/-1131179813_4118",
+        "button-2p-reset": {
+          "parent": "holder-cubes"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-cubes"
+        }
+      },
+      "claimCherryBlue": {
+        "class": "item-claim",
+        "image": "/assets/1863340393_6008",
+        "button-2p-reset": {
+          "parent": "holder-claims-p1"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p1"
+        }
+      },
+      "claimCookieBlue": {
+        "class": "item-claim",
+        "image": "/assets/-1244615350_4964",
+        "button-2p-reset": {
+          "parent": "holder-claims-p1"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p1"
+        }
+      },
+      "claimCupcakeBlue": {
+        "class": "item-claim",
+        "image": "/assets/-1615392981_4998",
+        "button-2p-reset": {
+          "parent": "holder-claims-p1"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p1"
+        }
+      },
+      "claimLollipopBlue": {
+        "class": "item-claim",
+        "image": "/assets/1306309845_5166",
+        "button-2p-reset": {
+          "parent": "holder-claims-p1"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-sugar"
+        }
+      },
+      "claimPieBlue": {
+        "class": "item-claim",
+        "image": "/assets/400300290_4908",
+        "button-2p-reset": {
+          "parent": "holder-claims-p1"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p1"
+        }
+      },
+      "claimCherryGreen": {
+        "class": "item-claim",
+        "image": "/assets/-382962637_4874",
+        "button-2p-reset": {
+          "parent": "holder-claims-p2"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p2"
+        }
+      },
+      "claimCookieGreen": {
+        "class": "item-claim",
+        "image": "/assets/-32837445_4118",
+        "button-2p-reset": {
+          "parent": "holder-claims-p2"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p2"
+        }
+      },
+      "claimCupcakeGreen": {
+        "class": "item-claim",
+        "image": "/assets/1880921828_4082",
+        "button-2p-reset": {
+          "parent": "holder-claims-p2"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p2"
+        }
+      },
+      "claimLollipopGreen": {
+        "class": "item-claim",
+        "image": "/assets/687561008_4334",
+        "button-2p-reset": {
+          "parent": "holder-claims-p2"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-sugar"
+        }
+      },
+      "claimPieGreen": {
+        "class": "item-claim",
+        "image": "/assets/1752446587_4112",
+        "button-2p-reset": {
+          "parent": "holder-claims-p2"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p2"
+        }
+      },
+      "claimCherryOrange": {
+        "class": "item-claim",
+        "image": "/assets/-839964807_6386",
+        "button-2p-reset": {
+          "parent": "holder-claims-p3"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p3"
+        }
+      },
+      "claimCookieOrange": {
+        "class": "item-claim",
+        "image": "/assets/1987692329_5388",
+        "button-2p-reset": {
+          "parent": "holder-claims-p3"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p3"
+        }
+      },
+      "claimCupcakeOrange": {
+        "class": "item-claim",
+        "image": "/assets/1282268031_5358",
+        "button-2p-reset": {
+          "parent": "holder-claims-p3"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p3"
+        }
+      },
+      "claimLollipopOrange": {
+        "class": "item-claim",
+        "image": "/assets/-1961981366_5540",
+        "button-2p-reset": {
+          "parent": "holder-claims-p3"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-sugar"
+        }
+      },
+      "claimPieOrange": {
+        "class": "item-claim",
+        "image": "/assets/-1482033033_5282",
+        "button-2p-reset": {
+          "parent": "holder-claims-p3"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p3"
+        }
+      },
+      "claimCherryPink": {
+        "class": "item-claim",
+        "image": "/assets/-241654473_4106",
+        "button-2p-reset": {
+          "parent": "holder-claims-p4"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p4"
+        }
+      },
+      "claimCookiePink": {
+        "class": "item-claim",
+        "image": "/assets/-318915116_3504",
+        "button-2p-reset": {
+          "parent": "holder-claims-p4"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p4"
+        }
+      },
+      "claimCupcakePink": {
+        "class": "item-claim",
+        "image": "/assets/625123018_3514",
+        "button-2p-reset": {
+          "parent": "holder-claims-p4"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p4"
+        }
+      },
+      "claimLollipopPink": {
+        "class": "item-claim",
+        "image": "/assets/-409992972_3700",
+        "button-2p-reset": {
+          "parent": "holder-claims-p4"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-sugar"
+        }
+      },
+      "claimPiePink": {
+        "class": "item-claim",
+        "image": "/assets/-48369940_3494",
+        "button-2p-reset": {
+          "parent": "holder-claims-p4"
+        },
+        "button-3-4p-reset": {
+          "parent": "holder-claims-p4"
+        }
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width",
+              "svgReplaces": {
+                "#primaryColor": "primaryColor",
+                "#borderColor": "borderColor",
+                "#borderWidth": "borderWidth"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-claims-sugar",
+    "parent": "holder-claims-sugar"
+  },
+  "09cj": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "09cj",
+    "z": 89749,
+    "parent": "holder-node-aa1",
+    "x": -2,
+    "y": -2
+  },
+  "6a6q": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "6a6q",
+    "z": 89759,
+    "parent": "holder-node-cc1",
+    "x": -2,
+    "y": -2
+  },
+  "tzeh": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "tzeh",
+    "z": 89760,
+    "parent": "holder-node-cc2",
+    "x": -2,
+    "y": -2
+  },
+  "hdvh": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "hdvh",
+    "z": 89762,
+    "parent": "holder-node-cc4",
+    "x": -2,
+    "y": -2
+  },
+  "v81x": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "v81x",
+    "z": 89768,
+    "parent": "holder-node-dd5",
+    "x": -2,
+    "y": -2
+  },
+  "gauz": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "gauz",
+    "z": 89758,
+    "parent": "holder-node-bb5",
+    "x": -2,
+    "y": -2
+  },
+  "jbyt": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "jbyt",
+    "z": 89756,
+    "parent": "holder-node-bb3",
+    "x": -2,
+    "y": -2
+  },
+  "f8zq": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "f8zq",
+    "z": 89767,
+    "parent": "holder-node-dd4",
+    "x": -2,
+    "y": -2
+  },
+  "ifxs": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "ifxs",
+    "z": 89772,
+    "parent": "holder-node-ee4",
+    "x": -2,
+    "y": -2
+  },
+  "ryvk": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "ryvk",
+    "z": 89750,
+    "parent": "holder-node-aa2",
+    "x": -2,
+    "y": -2
+  },
+  "2y3f": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "2y3f",
+    "z": 89752,
+    "parent": "holder-node-aa4",
+    "x": -2,
+    "y": -2
+  },
+  "gzkd": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "gzkd",
+    "z": 89765,
+    "parent": "holder-node-dd2",
+    "x": -2,
+    "y": -2
+  },
+  "okqy": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "okqy",
+    "z": 89761,
+    "parent": "holder-node-cc3",
+    "x": -2,
+    "y": -2
+  },
+  "eg61": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "eg61",
+    "z": 89757,
+    "parent": "holder-node-bb4",
+    "x": -2,
+    "y": -2
+  },
+  "k0t8": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Lollipop",
+    "id": "k0t8",
+    "z": 89766,
+    "parent": "holder-node-dd3",
+    "x": -2,
+    "y": -2
+  },
+  "tmx7": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Lollipop",
+    "id": "tmx7",
+    "z": 89753,
+    "parent": "holder-node-aa5",
+    "x": -2,
+    "y": -2
+  },
+  "vb8k": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Lollipop",
+    "id": "vb8k",
+    "z": 89769,
+    "parent": "holder-node-ee1",
+    "x": -2,
+    "y": -2
+  },
+  "twas": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Lollipop",
+    "id": "twas",
+    "z": 89773,
+    "parent": "holder-node-ee5",
+    "x": -2,
+    "y": -2
+  },
+  "a3sr": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Lollipop",
+    "id": "a3sr",
+    "z": 89751,
+    "parent": "holder-node-aa3",
+    "x": -2,
+    "y": -2
+  },
+  "dyaa": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "dyaa",
+    "z": 89771,
+    "parent": "holder-node-ee3",
+    "x": -2,
+    "y": -2
+  },
+  "1nbo": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "1nbo",
+    "z": 89754,
+    "parent": "holder-node-bb1",
+    "x": -2,
+    "y": -2
+  },
+  "kfih": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "kfih",
+    "z": 89764,
+    "x": -2,
+    "y": -2,
+    "parent": "holder-node-dd1"
+  },
+  "oab0": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "oab0",
+    "z": 89763,
+    "parent": "holder-node-cc5",
+    "x": -2,
+    "y": -2
+  },
+  "md77": {
+    "deck": "deck-sweets-2p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "md77",
+    "z": 89770,
+    "parent": "holder-node-ee2",
+    "x": -2,
+    "y": -2
+  },
+  "a97e": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "a97e",
+    "z": 89894,
+    "parent": "holder-node-c4",
+    "x": -2,
+    "y": -2
+  },
+  "umi3": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenPink",
+    "id": "umi3",
+    "z": 89835,
+    "parent": "aqls"
+  },
+  "rtdy": {
+    "deck": "deck-queens",
+    "type": "card",
+    "cardType": "queenPink",
+    "id": "rtdy",
+    "z": 89837,
+    "parent": "aqls"
+  },
+  "j18g": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "j18g",
+    "z": 89891,
+    "parent": "holder-node-c1",
+    "x": -2,
+    "y": -2
+  },
+  "hwex": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "hwex",
+    "z": 89911,
+    "parent": "holder-node-f3",
+    "x": -2,
+    "y": -2
+  },
+  "vyd8": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "vyd8",
+    "z": 89888,
+    "parent": "holder-node-b4",
+    "x": -2,
+    "y": -2
+  },
+  "xet1": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "xet1",
+    "z": 89880,
+    "parent": "holder-node-a2",
+    "x": -2,
+    "y": -2
+  },
+  "yags": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "yags",
+    "z": 89910,
+    "parent": "holder-node-f2",
+    "x": -2,
+    "y": -2
+  },
+  "5b1c": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "5b1c",
+    "z": 89884,
+    "parent": "holder-node-a6",
+    "x": -2,
+    "y": -2
+  },
+  "zxa4": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "zxa4",
+    "z": 89907,
+    "x": -2,
+    "y": -2,
+    "parent": "holder-node-e5"
+  },
+  "i9oy": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cookie",
+    "id": "i9oy",
+    "z": 89902,
+    "parent": "holder-node-d6",
+    "x": -2,
+    "y": -2
+  },
+  "yz4y": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "yz4y",
+    "z": 89905,
+    "parent": "holder-node-e3",
+    "x": -2,
+    "y": -2
+  },
+  "eenb": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "eenb",
+    "z": 89882,
+    "parent": "holder-node-a4",
+    "x": -2,
+    "y": -2
+  },
+  "us4k": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "us4k",
+    "z": 89897,
+    "parent": "holder-node-d1",
+    "x": -2,
+    "y": -2
+  },
+  "jv9m": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "jv9m",
+    "z": 89912,
+    "parent": "holder-node-f4",
+    "x": -2,
+    "y": -2
+  },
+  "qeqs": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "qeqs",
+    "z": 89914,
+    "x": -2,
+    "y": -2,
+    "parent": "holder-node-f6"
+  },
+  "sm4h": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "sm4h",
+    "z": 89893,
+    "parent": "holder-node-c3",
+    "x": -2,
+    "y": -2
+  },
+  "czgo": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "czgo",
+    "z": 89898,
+    "parent": "holder-node-d2",
+    "x": -2,
+    "y": -2
+  },
+  "sxmf": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "sxmf",
+    "z": 89883,
+    "parent": "holder-node-a5",
+    "x": -2,
+    "y": -2
+  },
+  "9e7y": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cupcake",
+    "id": "9e7y",
+    "z": 89890,
+    "parent": "holder-node-b6",
+    "x": -2,
+    "y": -2
+  },
+  "98kp": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "98kp",
+    "z": 89913,
+    "parent": "holder-node-f5",
+    "x": -2,
+    "y": -2
+  },
+  "s0yq": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "s0yq",
+    "z": 89903,
+    "parent": "holder-node-e1",
+    "x": -2,
+    "y": -2
+  },
+  "1vrq": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "1vrq",
+    "z": 89885,
+    "parent": "holder-node-b1",
+    "x": -2,
+    "y": -2
+  },
+  "ffyl": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "ffyl",
+    "z": 89908,
+    "parent": "holder-node-e6",
+    "x": -2,
+    "y": -2
+  },
+  "8oow": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "8oow",
+    "z": 89899,
+    "parent": "holder-node-d3",
+    "x": -2,
+    "y": -2
+  },
+  "8iut": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "8iut",
+    "z": 89900,
+    "x": -2,
+    "y": -2,
+    "parent": "holder-node-d4"
+  },
+  "fp6g": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "fp6g",
+    "z": 89896,
+    "x": -2,
+    "y": -2,
+    "parent": "holder-node-c6"
+  },
+  "fsrx": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "fsrx",
+    "z": 89892,
+    "parent": "holder-node-c2",
+    "x": -2,
+    "y": -2
+  },
+  "tz1k": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Cherry",
+    "id": "tz1k",
+    "z": 89879,
+    "parent": "holder-node-a1",
+    "x": -2,
+    "y": -2
+  },
+  "k1lm": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "k1lm",
+    "z": 89895,
+    "parent": "holder-node-c5",
+    "x": -2,
+    "y": -2
+  },
+  "9igl": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "9igl",
+    "z": 89901,
+    "parent": "holder-node-d5",
+    "x": -2,
+    "y": -2
+  },
+  "2q9z": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "2q9z",
+    "z": 89904,
+    "parent": "holder-node-e2",
+    "x": -2,
+    "y": -2
+  },
+  "pd2x": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "pd2x",
+    "z": 89889,
+    "parent": "holder-node-b5",
+    "x": -2,
+    "y": -2
+  },
+  "0cnf": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "0cnf",
+    "z": 89881,
+    "parent": "holder-node-a3",
+    "x": -2,
+    "y": -2
+  },
+  "c1um": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "c1um",
+    "z": 89909,
+    "parent": "holder-node-f1",
+    "x": -2,
+    "y": -2
+  },
+  "65v9": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "65v9",
+    "z": 89906,
+    "parent": "holder-node-e4",
+    "x": -2,
+    "y": -2
+  },
+  "dc1t": {
+    "deck": "deck-sweets-3-4p",
+    "type": "card",
+    "cardType": "Pie",
+    "id": "dc1t",
+    "z": 89886,
+    "parent": "holder-node-b2",
+    "x": -2,
+    "y": -2
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Gingham",
+      "image": "/assets/149655361_20606",
+      "rules": "https://drive.google.com/file/d/1foQ65lqMMzUKR7qn-q2t8Ykf-REhgCP8/view",
+      "bgg": "https://boardgamegeek.com/boardgame/440024/gingham",
+      "year": "",
+      "mode": "vs",
+      "time": "20-40",
+      "attribution": "<div>Game design by Robert Hovakimyan.<br><br>Art assets by Alisha Giroux.</div><div><br></div><div>Layout and scripting by Robin Harn, released to the Public Domain under CC0.</div>\nGame name and all art assets used with permission from the rights holder, Bitewing Games.",
+      "lastUpdate": 1743009936684,
+      "showName": false,
+      "skill": "",
+      "description": "Deploy ants on a picnic blanket to connect and stockpile sweets.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Robert Hovakimyan",
+      "similarAwards": "",
+      "ruleText": "(see rules overview link)",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
+    }
+  },
+  "22de": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "22de",
+    "z": 85233,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "4gby": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "4gby",
+    "z": 85234,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "7hfk": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "7hfk",
+    "z": 85235,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "q3qi": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "q3qi",
+    "z": 85236,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "bkgn": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "bkgn",
+    "z": 85237,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "4phf": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "4phf",
+    "z": 85238,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "6xp4": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "6xp4",
+    "z": 85239,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "dcn7": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "dcn7",
+    "z": 85240,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "d6u9": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "d6u9",
+    "z": 85241,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "iwvf": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "iwvf",
+    "z": 85242,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "0ht9": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "0ht9",
+    "z": 85243,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "etuq": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "etuq",
+    "z": 85244,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "44rx": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "44rx",
+    "z": 85245,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "o42s": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "o42s",
+    "z": 85246,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "nwqh": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "nwqh",
+    "z": 85247,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "o0n6": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "o0n6",
+    "z": 85248,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "2w24": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "2w24",
+    "z": 85249,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "w5a5": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "w5a5",
+    "z": 85250,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "f8nh": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "f8nh",
+    "z": 85251,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "ou7s": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "ou7s",
+    "z": 85252,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "de82": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "de82",
+    "z": 85253,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "3r08": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "3r08",
+    "z": 85254,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "gexr": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "gexr",
+    "z": 85255,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "9vuw": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "9vuw",
+    "z": 85256,
+    "parent": "holder-ants-p3",
+    "x": 3,
+    "y": 4
+  },
+  "v5f0": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "v5f0",
+    "z": 89494,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p3"
+  },
+  "5cut": {
+    "deck": "deck-ants",
+    "type": "card",
+    "cardType": "antOrange",
+    "id": "5cut",
+    "z": 89496,
+    "x": 3,
+    "y": 4,
+    "parent": "holder-ants-p3"
+  },
+  "zse6": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "zse6",
+    "z": 88737,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "s9mj": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "s9mj",
+    "z": 88738,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "owdf": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "owdf",
+    "z": 88739,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "5h67": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "5h67",
+    "z": 88740,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "ldkw": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "ldkw",
+    "z": 88741,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "mav6": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "mav6",
+    "z": 88742,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "iszp": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "iszp",
+    "z": 88743,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "5oyx": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "5oyx",
+    "z": 88744,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "g7cz": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "g7cz",
+    "z": 88745,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "64y5": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "64y5",
+    "z": 88746,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "6fle": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "6fle",
+    "z": 88747,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "16u5": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "16u5",
+    "z": 88748,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "lcux": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "lcux",
+    "z": 88749,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "5tma": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "5tma",
+    "z": 88750,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "und5": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "und5",
+    "z": 88751,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "yp51": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "yp51",
+    "z": 88752,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "wixa": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "wixa",
+    "z": 88753,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "mh1p": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "mh1p",
+    "z": 88754,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "pttb": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "pttb",
+    "z": 88755,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "yrmu": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "yrmu",
+    "z": 88756,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "26yd": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "26yd",
+    "z": 88757,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "unvu": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "unvu",
+    "z": 88758,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "0l2y": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "0l2y",
+    "z": 88759,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "t8n6": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "t8n6",
+    "z": 88760,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "v67q": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "v67q",
+    "z": 88761,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "eltu": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "eltu",
+    "z": 88762,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "5g8c": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "5g8c",
+    "z": 88763,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "qeaw": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "qeaw",
+    "z": 88764,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "usfs": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "usfs",
+    "z": 88765,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "n88b": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "n88b",
+    "z": 88766,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "rk93": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "rk93",
+    "z": 88767,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "l2gk": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "l2gk",
+    "z": 88768,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "yffb": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "yffb",
+    "z": 88769,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "0gy4": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "0gy4",
+    "z": 88770,
+    "parent": "holder-cubes",
+    "x": 20,
+    "y": 20
+  },
+  "g9xp": {
+    "deck": "deck-claims-sugar",
+    "type": "card",
+    "cardType": "SugarCube",
+    "id": "g9xp",
+    "z": 88785,
+    "x": 20,
+    "y": 20,
+    "parent": "holder-cubes"
+  },
+  "f9aj": {
+    "type": "pile",
+    "parent": "holder-claims-sugar",
+    "x": 4,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "handleCSS": "position:sticky; width:20px; height:20px; background-color:black;color:white;font-size:18px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "right",
+    "id": "f9aj"
+  },
+  "sfsy": {
+    "type": "pile",
+    "parent": "holder-queens-p1",
+    "x": 5,
+    "y": 3,
+    "width": 51,
+    "height": 51,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "right",
+    "id": "sfsy"
+  },
+  "p5k9": {
+    "type": "pile",
+    "parent": "holder-queens-p2",
+    "x": 5,
+    "y": 3,
+    "width": 51,
+    "height": 51,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "right",
+    "id": "p5k9"
+  },
+  "3m7t": {
+    "type": "pile",
+    "parent": "holder-queens-p3",
+    "x": 5,
+    "y": 3,
+    "width": 51,
+    "height": 51,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "right",
+    "id": "3m7t"
+  },
+  "aqls": {
+    "type": "pile",
+    "parent": "holder-queens-p4",
+    "x": 5,
+    "y": 3,
+    "width": 51,
+    "height": 51,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "right",
+    "id": "aqls"
+  }
+}

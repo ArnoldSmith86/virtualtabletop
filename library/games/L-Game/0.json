@@ -1,0 +1,666 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "L-Game",
+      "image": "/assets/-781471995_10504",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/6474/l-game",
+      "year": "1968",
+      "mode": "vs",
+      "time": "10",
+      "attribution": "Game design and board layout by LawDawg96. Released to the Public Domain as CC0.<div><br></div><div>Background by safrist available under the Pixabay License:&nbsp;&nbsp;https://pixabay.com/illustrations/cosmos-colorful-pastel-cosmic-1584029/</div>",
+      "lastUpdate": 1710512882427,
+      "showName": true,
+      "skill": "",
+      "description": "Move your L-shaped piece on a 4x4 grid and try to block the other player from doing the same.",
+      "similarImage": "",
+      "similarName": "L-Game",
+      "similarDesigner": "Edward de Bono",
+      "similarAwards": "",
+      "ruleText": "Each player chooses an L-shaped piece.<div><br></div><div>During your turn, change the position of your L-shaped piece by moving (and/or rotating by clicking) so that it completely fits on the board and does not overlap any other pieces.<div><br></div><div>Optionally, after moving the L-shaped piece, move either one of the neutral circles to any other square. That ends the player's turn and the next player's turn starts</div><div><br></div><div>You win if you prevent the other player from moving their L-shaped piece.</div></div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "square1": {
+    "type": "holder",
+    "id": "square1",
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square2": {
+    "type": "holder",
+    "id": "square2",
+    "x": 80,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square3": {
+    "type": "holder",
+    "id": "square3",
+    "x": 160,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square4": {
+    "type": "holder",
+    "id": "square4",
+    "x": 240,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square5": {
+    "type": "holder",
+    "id": "square5",
+    "y": 80,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square6": {
+    "type": "holder",
+    "id": "square6",
+    "x": 80,
+    "y": 80,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square7": {
+    "type": "holder",
+    "id": "square7",
+    "x": 160,
+    "y": 80,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square8": {
+    "type": "holder",
+    "id": "square8",
+    "x": 240,
+    "y": 80,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square9": {
+    "type": "holder",
+    "id": "square9",
+    "y": 160,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square10": {
+    "type": "holder",
+    "id": "square10",
+    "x": 80,
+    "y": 160,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square11": {
+    "type": "holder",
+    "id": "square11",
+    "x": 160,
+    "y": 160,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square12": {
+    "type": "holder",
+    "id": "square12",
+    "x": 240,
+    "y": 160,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square13": {
+    "type": "holder",
+    "id": "square13",
+    "y": 240,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square14": {
+    "type": "holder",
+    "id": "square14",
+    "x": 80,
+    "y": 240,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square15": {
+    "type": "holder",
+    "id": "square15",
+    "x": 160,
+    "y": 240,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "square16": {
+    "type": "holder",
+    "id": "square16",
+    "x": 240,
+    "y": 240,
+    "width": 80,
+    "height": 80,
+    "borderRadius": 0,
+    "z": 2,
+    "css": {
+      "border": "2px solid black"
+    },
+    "parent": "boardBase"
+  },
+  "boardBase": {
+    "id": "boardBase",
+    "width": 320,
+    "height": 320,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true,
+    "y": 340,
+    "x": 640
+  },
+  "neutral1": {
+    "id": "neutral1",
+    "x": 645,
+    "y": 345,
+    "width": 70,
+    "height": 70,
+    "classes": "pokerChip",
+    "color": "peru",
+    "grid": [
+      {
+        "x": 80,
+        "y": 80,
+        "offsetY": 25,
+        "offsetX": 5
+      }
+    ],
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "x": 645,
+      "y": 345
+    },
+    "z": 3449,
+    "layer": 2
+  },
+  "neutral2": {
+    "id": "neutral2",
+    "x": 885,
+    "y": 585,
+    "width": 70,
+    "height": 70,
+    "classes": "pokerChip",
+    "color": "peru",
+    "grid": [
+      {
+        "x": 80,
+        "y": 80,
+        "offsetY": 25,
+        "offsetX": 5
+      }
+    ],
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "x": 885,
+      "y": 585
+    },
+    "z": 3445,
+    "layer": 2
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "73px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will reset the game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 1550
+  },
+  "red1": {
+    "id": "red1",
+    "x": 720,
+    "y": 500,
+    "width": 74,
+    "height": 74,
+    "css": {
+      "background": "#f40000",
+      "border": "3px solid #f29999"
+    },
+    "clickRoutine": [
+      "var a = ${PROPERTY customStateproperty} + 1",
+      "var b = ${a} % 8",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customStateproperty",
+        "value": "${b}"
+      },
+      "var rotateDeg = ${b} * 90",
+      {
+        "func": "ROTATE",
+        "collection": "thisButton",
+        "angle": "${rotateDeg}",
+        "mode": "set"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY rotation}",
+        "relation": ">=",
+        "operand2": 360,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "red4"
+            ],
+            "property": "x",
+            "value": -83
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "red4"
+            ],
+            "property": "x",
+            "value": 77
+          }
+        ]
+      }
+    ],
+    "grid": [
+      {
+        "x": 80,
+        "y": 80,
+        "offsetY": 20
+      }
+    ],
+    "customStateproperty": 0,
+    "resetProperties": {
+      "x": 720,
+      "y": 500,
+      "rotation": 0,
+      "customStateproperty": 0
+    },
+    "z": 3457
+  },
+  "red2": {
+    "inheritFrom": {
+      "red1": "*"
+    },
+    "id": "red2",
+    "x": -3,
+    "y": 77,
+    "parent": "red1",
+    "fixedParent": true,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "resetProperties": {},
+    "rotation": 0
+  },
+  "red3": {
+    "inheritFrom": {
+      "red1": "*"
+    },
+    "id": "red3",
+    "x": -3,
+    "y": -83,
+    "parent": "red1",
+    "fixedParent": true,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "resetProperties": {},
+    "rotation": 0
+  },
+  "red4": {
+    "inheritFrom": {
+      "red1": "*"
+    },
+    "id": "red4",
+    "x": 77,
+    "y": 77,
+    "parent": "red1",
+    "fixedParent": true,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "resetProperties": {
+      "x": 77
+    },
+    "rotation": 0
+  },
+  "blue1": {
+    "id": "blue1",
+    "x": 800,
+    "y": 420,
+    "inheritFrom": {
+      "red1": "*"
+    },
+    "css": {
+      "background": "#1e1fff",
+      "border": "3px solid #a5a4f8"
+    },
+    "z": 3464,
+    "rotation": 0,
+    "resetProperties": {
+      "x": 800,
+      "y": 420,
+      "rotation": 0,
+      "customStateproperty": 0
+    },
+    "clickRoutine": [
+      "var a = ${PROPERTY customStateproperty} + 1",
+      "var b = ${a} % 8",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customStateproperty",
+        "value": "${b}"
+      },
+      "var rotateDeg = ${b} * 90",
+      {
+        "func": "ROTATE",
+        "collection": "thisButton",
+        "angle": "${rotateDeg}",
+        "mode": "set"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY rotation}",
+        "relation": ">=",
+        "operand2": 360,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "blue4"
+            ],
+            "property": "x",
+            "value": 77
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "blue4"
+            ],
+            "property": "x",
+            "value": -83
+          }
+        ]
+      }
+    ],
+    "customStateproperty": 0
+  },
+  "blue3": {
+    "id": "blue3",
+    "parent": "blue1",
+    "inheritFrom": {
+      "blue1": "*"
+    },
+    "x": -3,
+    "y": 77,
+    "fixedParent": true,
+    "movable": false,
+    "resetProperties": {},
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "rotation": 0
+  },
+  "blue4": {
+    "id": "blue4",
+    "parent": "blue1",
+    "inheritFrom": {
+      "blue1": "*"
+    },
+    "fixedParent": true,
+    "x": -83,
+    "y": -83,
+    "movable": false,
+    "resetProperties": {
+      "x": -83
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "rotation": 0
+  },
+  "blue2": {
+    "id": "blue2",
+    "parent": "blue1",
+    "inheritFrom": {
+      "blue1": "*"
+    },
+    "fixedParent": true,
+    "x": -3,
+    "y": -83,
+    "movable": false,
+    "resetProperties": {},
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "rotation": 0
+  },
+  "8b58": {
+    "image": "/assets/-1381013603_4238",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "8b58",
+    "css": {
+      "opacity": 0.6
+    }
+  }
+}

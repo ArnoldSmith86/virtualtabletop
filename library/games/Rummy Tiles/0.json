@@ -2166,7 +2166,7 @@
     "version": 1,
     "info": {
       "name": "Rummy Tiles",
-      "image": "/assets/1329361085_73912",
+      "image": "/assets/-1446481078_6022",
       "rules": "",
       "bgg": "https://www.boardgamegeek.com/boardgame/811/rummikub",
       "year": "",
@@ -2177,9 +2177,11 @@
       "variant": "",
       "attribution": "Images and layout created by David Robarts. ©2021 \n\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.\n\nhttp://creativecommons.org/licenses/by-nc/4.0/",
       "similarName": "Rummikub",
+      "similarAwards": "1993 Gra Roku Game of the Year Winner\n1980 Spiel des Jahres Winner",
       "description": "Rearrange the tiles to make sets and runs. First to play all their tiles wins.",
       "showName": true,
-      "lastUpdate": 1617836258000
+      "lastUpdate": 1617836258000,
+      "similarDesigner": "Ephraim Hertzano"
     }
   },
   "6txh": {

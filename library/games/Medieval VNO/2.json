@@ -6329,7 +6329,7 @@
     "version": 3,
     "info": {
       "name": "Medieval VNO",
-      "image": "/assets/1844049714_249128",
+      "image": "/assets/-2062715409_16064",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/2223/uno",
       "year": "1971",
@@ -6342,7 +6342,8 @@
       "similarName": "UNO",
       "description": "Play cards onto discard stack matching color or number.  Use cards with powers to influence play.  First to get rid of all cards wins.",
       "showName": true,
-      "lastUpdate": 1673381158873
+      "lastUpdate": 1673381158873,
+      "similarDesigner": "Merle Robbins"
     }
   },
   "buyPile": {

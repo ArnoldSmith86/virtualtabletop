@@ -25,6 +25,18 @@
   font-size: calc(var(--phSize)/4);
 }
 
+/* "2/3" needs more room than a plain count: the circle becomes a pill so the
+   text keeps its size */
+.pile .handle.withLimit {
+  width: calc(var(--phSize)*1.6);
+  border-radius: var(--phSize);
+}
+
+.pile .handle.small.withLimit {
+  width: calc(var(--phSize)*0.8);
+  border-radius: var(--phSize);
+}
+
 .pile .handle.right {
   left: unset;
   right: var(--phPosition);
@@ -48,8 +60,4 @@
 .pile .handle.center.middle {
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-}
-
-body.edit .pile {
-  display: none;
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="70"
+   height="740"
+   viewBox="0 0 18.520833 195.79167"
+   version="1.1"
+   id="svg856"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="bridge-vendy-b.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview858"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="2.9825758"
+     inkscape:cx="142.32664"
+     inkscape:cy="347.35078"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs853">
+    <filter
+       id="shadow-1-7-3"
+       height="1.3495146"
+       width="1.1558442"
+       x="-0.077922078"
+       y="-0.17475728">
+      <feFlood
+         flood-color="rgba(0, 0, 0, 1)"
+         result="flood"
+         id="feFlood11079-27-76" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="atop"
+         result="composite"
+         id="feComposite11081-9-9" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="15"
+         result="blur"
+         id="feGaussianBlur11083-7-34" />
+      <feOffset
+         dx="0"
+         dy="0"
+         result="offset"
+         id="feOffset11085-0-32" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         id="feComposite11087-2-0" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       class=""
+       transform="matrix(0.02583822,0,0,0.02583822,0,88.490722)"
+       id="g5137">
+      <circle
+         cx="256"
+         cy="256"
+         r="256"
+         fill="#dfdfdf"
+         fill-opacity="1"
+         id="circle5133"
+         transform="translate(0,108)"
+         style="fill:#efefef;fill-opacity:1" />
+      <path
+         d="m 25,265 v 71.11 c 7.526,-4.42 17.73,-10.278 30,-16.98 V 265 Z m 432,0 v 54.205 c 12.277,6.687 22.476,12.524 30,16.93 V 265 Z m -201.49,0.28 c -39.653,0.03 -99.394,23.28 -148.06,46.976 C 62.897,333.95 30.703,353.626 25,357.136 V 471 h 110.387 c 1.88,-32.24 13.54,-69.11 32.552,-99.74 20.797,-33.505 51.085,-60.252 88.058,-60.26 36.985,-0.008 67.298,26.736 88.12,60.244 19.038,30.635 30.72,67.51 32.603,99.756 H 487 V 357.145 c -5.72,-3.51 -38.067,-23.218 -82.82,-44.93 -48.875,-23.713 -108.863,-46.962 -148.67,-46.934 z"
+         fill="#efefef"
+         fill-opacity="1"
+         transform="matrix(0.9,0,0,0.9,25.6,25.6)"
+         id="path5135"
+         style="fill:#dfdfdf;fill-opacity:1" />
+    </g>
+  </g>
+</svg>

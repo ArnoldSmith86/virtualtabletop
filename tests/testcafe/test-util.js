@@ -1,37 +1,74 @@
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
 import crypto from 'crypto';
 
+import { Selector } from 'testcafe';
+
 import { diffString, diff } from 'json-diff';
+
+import { fullLegacyCombination, legacyModeCombinations } from '../../client/js/legacymoderegistry.js';
 
 const referenceDir = path.resolve() + '/save/testcafe-references';
 fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
 
+// hashes that changed because of Chrome updates that altered how some edge-case values get stringified -
+// can hopefully be removed if Chrome changes this back. Keyed by the actual hash, valued by the expected hash.
+const knownHashDrifts = {
+  'aa8d738dfc1eb7886540315e78e42aae': '1a6e301d6510998fa27abeb75bcf0371', // https://github.com/ArnoldSmith86/virtualtabletop/pull/2668
+  '7dbb198bba63663b41191432d8648492': 'bc511e7edd7e40b433f5620534775646'  // Chrome 150
+};
+
+// Every fixture starts from an empty room in the modern combination. Widgets are not the only
+// thing a test leaves behind: setRoomState() keeps the room's gameSettings (see Room.setState),
+// so without the reset a test that switches a legacy mode on hands it to every test that runs
+// after it - within the file and, because the whole suite shares one room, across files too.
 export function setupTestEnvironment() {
-  server = process.env.REFERENCE ? `http://212.47.248.129:${process.env.REFERENCE}` : 'http://localhost:8272';
-  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
+  server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
+  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(resetRoom).after(resetRoom);
+}
+
+// Empty the room and clear its game settings in one request: setState() takes the gameSettings
+// out of the _meta it is handed, so the room is back in the modern combination without a
+// setLegacyMode round trip per mode. Those would be five state messages in a row before every
+// single test - and a state message makes the client rebuild every widget it has.
+export async function resetRoom() {
+  await setRoomState({ _meta: { version: (await getMeta()).version, gameSettings: {} } });
+}
+
+// The page every fixture starts on. A second client in the same room is a second window on the
+// same URL, which is what multiclient.js opens.
+export function roomURL() {
+  return `${server}/testcafe-testing`;
 }
 
 export function prepareClient() {
   // non random random
-  let seed = 1;
-  Math.random = function() {
-    const x = Math.sin(seed++) * 10000;
-    return Math.round((x - Math.floor(x))*1000000)/1000000;
-  };
+  window.customRandomSeed = 1;
 
-  // remove base element because it causes popups on form submit
-  document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
+  // remove base element because it causes popups on form submit - a test that prepares the
+  // same page twice (multiclient.js names its client before it opens the room) finds it gone
+  const base = document.querySelector('base');
+  if(base)
+    base.parentNode.removeChild(base);
 }
 
 export async function setName(t, name, color) {
+  // setRoomState() returns after the server accepts its REST request, before
+  // the browser necessarily receives that state. The first received state
+  // activates the Active Game tab, which closes any overlay opened just before
+  // it - intermittently hiding this color input in CI. Wait for that initial
+  // state transition before opening Players.
+  const loadingIndicator = Selector('#loadingRoomIndicator');
+  const playerOverlay = Selector('#playerOverlay');
+  const playerColor = playerOverlay.find('.myPlayerEntry input[type=color]');
   await t
+    .expect(loadingIndicator.exists).notOk()
     .click('#playersButton')
-    .click('.myPlayerEntry > input[type=color]')
-    .typeText('.myPlayerEntry > input[type=color]', color || '#7F007F', { replace: true })
-    .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
+    .expect(playerOverlay.visible).ok()
+    .click(playerColor)
+    .typeText(playerColor, color || '#7F007F', { replace: true })
+    .typeText('.myPlayerEntry .playerName', name || 'TestCafe', { replace: true })
     .click('#activeGameButton');
 }
 
@@ -45,9 +82,83 @@ export async function setRoomState(state) {
   });
 }
 
+export async function setLegacyMode(name, value) {
+  await fetch(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
+    method: 'PUT'
+  });
+}
+
+// The tiers from the legacy-mode registry: modern (all off), legacy-all (all on), one entry
+// per mode alone and one per declared interaction. Linear in the number of modes.
+export const LEGACY_COMBOS = legacyModeCombinations();
+
+// setLegacyMode() only ever switches one mode, so a combination has to name the false modes as
+// well - fullLegacyCombination() does that - or the room keeps whatever the last caller set.
+export async function applyLegacy(combo) {
+  const modes = typeof combo == 'string' ? LEGACY_COMBOS[combo] : combo;
+  if(!modes)
+    throw Error(`Unknown legacy mode combination '${combo}'.`);
+  for(const [ name, value ] of Object.entries(fullLegacyCombination(modes)))
+    await setLegacyMode(name, value);
+}
+
 export async function getState() {
-  const response = await fetch(`${server}/state/testcafe-testing`);
+  const response = await fetch(`${server}/state/testcafe-testing/false`);
   return await response.text();
+}
+
+export async function getStateObject() {
+  return JSON.parse(await getState());
+}
+
+// Everything a test does arrives at the server asynchronously, so an assertion has to give the
+// delta time to show up. Polls until the value matches or the backoff runs out, then asserts
+// once - so a passing test is fast and a failing one still prints the last value it saw.
+export async function expectEventually(t, get, expected, message) {
+  let actual = null;
+  for(let wait=50; wait<1000; wait*=2) {
+    actual = await get();
+    if(JSON.stringify(actual) == JSON.stringify(expected))
+      break;
+    await new Promise(resolve=>setTimeout(resolve, wait));
+  }
+  await t.expect(actual).eql(expected, message);
+}
+
+// getState leaves _meta out - this is the version and the game settings the room is on
+export async function getMeta() {
+  const response = await fetch(`${server}/state/testcafe-testing`);
+  return JSON.parse(await response.text())._meta;
+}
+
+// Wait until the room state stops changing, i.e. until every routine triggered by
+// the last interaction has finished, and return that stable state. Without this, a
+// test that performs multiple interactions in a row can start the next one while
+// the game is still evaluating the previous one, which makes games that validate
+// moves (like Reversi) reject it.
+//
+// Pass the state from before an interaction as `differentFrom` to also wait for it
+// to arrive: otherwise "stable" can just mean "the interaction has not reached the
+// server yet", which would make a negative assertion afterwards pass vacuously.
+export async function waitForStableState({ differentFrom = null, timeout = 10000 } = {}) {
+  const start = Date.now();
+  let previous = null;
+  let changed = differentFrom === null;
+
+  while(Date.now() - start < timeout) {
+    const state = await getState();
+    if(!changed)
+      changed = state !== differentFrom;
+    else if(state === previous)
+      return state;
+    previous = state;
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  // failing here points at the interaction that never settled instead of letting
+  // the test run on and fail with an unrelated-looking state hash mismatch later
+  throw new Error(changed ? `The room state was still changing after ${timeout}ms.`
+                          : `The room state did not change at all within ${timeout}ms.`);
 }
 
 export async function compareState(t, md5) {
@@ -58,12 +169,11 @@ export async function compareState(t, md5) {
     state = await getState();
     hash = crypto.createHash('md5').update(state).digest('hex');
 
-    // hardcoded hash difference because of https://github.com/ArnoldSmith86/virtualtabletop/issues/1553 - can hopefully be removed if Chrome changes this back
-    if(hash == md5 || hash == 'a1c9e538ab6e1bf3296e4e90cffa0cfb' && md5 == '4403a094826913c3d883dedc619e4924') {
+    if(hash == md5 || knownHashDrifts[hash] == md5) {
       if(!fs.existsSync(refFile))
         fs.writeFileSync(refFile, state);
 
-      if(hash == 'a1c9e538ab6e1bf3296e4e90cffa0cfb' && md5 == '4403a094826913c3d883dedc619e4924')
+      if(knownHashDrifts[hash] == md5)
         await t.expect(md5).eql(md5);
       else
         await t.expect(hash).eql(md5);
@@ -79,4 +189,3 @@ export async function compareState(t, md5) {
 
   await t.expect(hash).eql(md5);
 }
-
