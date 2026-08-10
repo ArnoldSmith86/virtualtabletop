@@ -83,6 +83,22 @@ describe('holder', () => {
   });
 });
 
+test('a list of widget ids leaves no collection behind', async () => {
+  // ids written into a parameter get a collection of their own for the operation to work
+  // on - if those stayed, every CALL and FOREACH after them would carry a growing pile of
+  // them along. The name they get counts up per routine, so the test asks for all of them.
+  const log = console.log;
+  console.log = ()=>{}; // asking for a collection that is not there is reported, 200 times
+  try {
+    const routine = [ { func: 'ROTATE', target: [ 'c1' ], angle: 90, count: 'all' } ];
+    for(let i=1; i<=200; ++i)
+      routine.push({ func: 'ROTATE', target: `$collection_${i}`, angle: 90, count: 'all' });
+    expect(await rotations(routine)).toBe('90,0,0,0,0');
+  } finally {
+    console.log = log;
+  }
+});
+
 describe('the operations that gained target and holder', () => {
   test('COUNT counts the content of a collection of holders', async () => {
     const result = await runRoutineCapturingVariables(state(), [
@@ -146,8 +162,41 @@ describe('MOVE', () => {
     ])).toBe('h2,h2,h2,h2,-');
   });
 
+  test('a leftover empty from still moves what target names', async () => {
+    // the routine editor writes '' for a widget chip that was added but never filled in
+    expect(await parents([
+      { func: 'SELECT', property: 'parent', value: 'h1' },
+      { func: 'MOVE', from: '', to: 'h2', count: 'all' }
+    ])).toBe('h2,h2,h2,h2,-');
+  });
+
   test('a fromHolder that names nothing moves nothing', async () => {
     expect(await parents([ { func: 'MOVE', fromHolder: null, toHolder: [ 'h2' ], count: 'all' } ])).toBe('h1,h1,h2,h2,-');
+  });
+
+  test('deals the next widgets to the next destination', async () => {
+    // the count is spent on the destinations one after the other, so two destinations
+    // asking for one widget each get one widget each and not twice the same one
+    expect(await parents([
+      { func: 'SELECT', property: 'id', relation: 'in', value: [ 'c1', 'c2' ] },
+      { func: 'MOVE', target: 'DEFAULT', toHolder: [ 'h2', 'loose' ], count: 1 }
+    ])).toBe('h2,loose,h2,h2,-');
+  });
+
+  test('deals the next widgets to the next destination under the old spelling too', async () => {
+    expect(await parents([
+      { func: 'SELECT', property: 'id', relation: 'in', value: [ 'c1', 'c2' ] },
+      { func: 'MOVE', collection: 'DEFAULT', to: [ 'h2', 'loose' ], count: 1 }
+    ])).toBe('h2,loose,h2,h2,-');
+  });
+
+  test('fillTo tops the destinations up one after the other', async () => {
+    // h2 already holds two widgets, so filling to three takes one widget and leaves
+    // the other for the empty destination
+    expect(await parents([
+      { func: 'SELECT', property: 'id', relation: 'in', value: [ 'c1', 'c2' ] },
+      { func: 'MOVE', target: 'DEFAULT', toHolder: [ 'h2', 'loose' ], fillTo: 3 }
+    ])).toBe('h2,loose,h2,h2,-');
   });
 
   test('takes a collection of holders on both sides', async () => {

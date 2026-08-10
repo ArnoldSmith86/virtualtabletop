@@ -1102,6 +1102,7 @@ export class Widget extends StateManaged {
 
     for(const original of routine) {
       var problems = [];
+      const temporaryCollectionsBefore = temporaryCollectionCount;
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a)
@@ -1340,7 +1341,8 @@ export class Widget extends StateManaged {
             for(const c of group.slice(0, a.count || 999999))
               await execute(c);
           phrase = `canvas widgets in ${operationWidgetsName(a)}`;
-        } else if(groups) {
+        } else if(groups && a.holder === undefined) {
+          // an empty holder is an expected state, an empty collection was always reported
           problems.push(`Collection ${a.target} is empty.`);
         }
 
@@ -1735,17 +1737,18 @@ export class Widget extends StateManaged {
               else
                 jeLoggingRoutineOperationSummary(`set widgets in '${theItem}' to '${a.value}'`)
             }
-          } else {
+          } else if(a.holder === undefined) {
             problems.push(`Collection ${theItem} is empty.`);
           }
         }
       }
 
       if(a.func == 'MOVE') {
-        // MOVE only ever looked at 'from' while it named something, so a null one
-        // left over in a game means the widgets come from 'target' after all -
-        // unlike the parameters that were checked for being defined at all
-        if(a.from === null)
+        // MOVE only ever looked at 'from' while it named something, so a leftover
+        // empty one in a game means the widgets come from 'target' after all -
+        // unlike the parameters that were checked for being defined at all. The
+        // routine editor writes '' for a chip that was added but never filled in.
+        if(!a.from)
           delete a.from;
         renamedParameters(a, [ 'from', 'fromHolder' ], [ 'to', 'toHolder' ], [ 'collection', 'target' ]);
         setDefaults(a, { count: a.fromHolder ? 1 : 'all', face: null, fillTo: null, target: 'DEFAULT' });
@@ -1821,8 +1824,10 @@ export class Widget extends StateManaged {
           } else {
             const targetWidgets = widgetParameter(a.target);
             if(targetWidgets !== null) {
+              // the offset carries across the destinations so that a count deals
+              // the next widgets to the next destination instead of the same ones
+              let offset = 0;
               for(const target of collections[destinations]) {
-                let offset = 0;
                 for(const c of collections[targetWidgets].slice(offset, offset+count))
                   offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
                 if(target.get('type') == 'holder')
@@ -2282,8 +2287,8 @@ export class Widget extends StateManaged {
               for(const c of targetWidgets)
                 if(c.setPaused)
                   await c.setPaused(a.mode);
-            } else {
-              problems.push(`Collection ${a.target} is empty.`);
+            } else if(a.holder === undefined) {
+              problems.push(`Collection ${operationWidgetsName(a)} is empty.`);
             }
           }
         };
@@ -2296,8 +2301,8 @@ export class Widget extends StateManaged {
               for(const c of targetWidgets)
                 if(c.setMilliseconds)
                   await c.setMilliseconds(milliseconds, a.mode);
-            } else {
-              problems.push(`Collection ${a.target} is empty.`);
+            } else if(a.holder === undefined) {
+              problems.push(`Collection ${operationWidgetsName(a)} is empty.`);
             }
           }
         };
@@ -2419,6 +2424,12 @@ export class Widget extends StateManaged {
           jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
         }
       }
+
+      // a list of widget ids passed to a parameter got a collection of its own -
+      // it belongs to this operation only, so it goes away again with it instead
+      // of piling up in every CALL and FOREACH for the rest of the routine
+      for(let i=temporaryCollectionsBefore+1; i<=temporaryCollectionCount; ++i)
+        delete collections['$collection_' + i];
 
       if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
