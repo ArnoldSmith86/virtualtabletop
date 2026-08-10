@@ -1398,32 +1398,32 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
-  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result', collection: 'result' });
-  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6', count: 1 });
-  jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
-  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
-  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
+  jeAddRoutineOperationCommands('CALL', { target: 'DEFAULT', holder: null, routine: 'clickRoutine', return: true, arguments: {}, variable: 'result', collection: 'result' });
+  jeAddRoutineOperationCommands('CANVAS', { target: 'DEFAULT', holder: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6', count: 1 });
+  jeAddRoutineOperationCommands('CLICK', { target: 'DEFAULT', holder: null, count: 1 , mode:'respect' });
+  jeAddRoutineOperationCommands('CLONE', { target: 'DEFAULT', holder: null, collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
+  jeAddRoutineOperationCommands('COUNT', { target: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
   jeAddRoutineOperationCommands('DELAY', { milliseconds: 0 });
-  jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
-  jeAddRoutineOperationCommands('FLIP', { count: 'all', face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('DELETE', { target: 'DEFAULT', holder: null });
+  jeAddRoutineOperationCommands('FLIP', { count: 'all', face: null, faceCycle: 'forward', holder: null, target: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
+  jeAddRoutineOperationCommands('GET', { variable: 'id', target: 'DEFAULT', holder: null, property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "", player: null, block: false, randomRotation: 5 } );
-  jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, z: 0, snapToGrid: true, resetOwner: true });
-  jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null, byDistance: false });
+  jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', target: 'DEFAULT', holder: null });
+  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, fromHolder: null, toHolder: null, fillTo: null, target: 'DEFAULT' });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, fromHolder: null, target: 'DEFAULT', x: 0, y: 0, z: 0, snapToGrid: true, resetOwner: true });
+  jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, target: 'DEFAULT', excludeCollection: null, byDistance: false });
   jeAddRoutineOperationCommands('RESET', { property: 'resetProperties' });
-  jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, target: 'DEFAULT' });
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###', random: false});
-  jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-  jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
-  jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('SET', { target: 'DEFAULT', holder: null, property: 'parent', relation: '=', value: null });
+  jeAddRoutineOperationCommands('SHUFFLE', { holder: null, source: 'DEFAULT', mode: 'true random', modeValue: 1 });
+  jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, source: 'DEFAULT' });
   jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
-  jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+  jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', target: 'DEFAULT', holder: null });
+  jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', target: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
   jeAddRoutineOperationCommands('VAR', { variables: {} });
 
@@ -1525,9 +1525,13 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
-  jeAddEnumCommands('^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
-  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
-  jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
+  // 'all' is only offered where the engine accepts it as an input collection
+  jeAddEnumCommands('^.*\\((CALL|CANVAS|CLICK|CLONE|COUNT|DELETE|FLIP|GET|LABEL|MOVE|MOVEXY|RECALL|ROTATE|SET|TIMER)\\) ↦ target', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\((CALL|CANVAS|CLICK|CLONE|COUNT|DELETE|FLIP|GET|LABEL|RECALL|ROTATE|SET|SHUFFLE|SORT|TIMER)\\) ↦ holder', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\((MOVE|MOVEXY)\\) ↦ (fromHolder|toHolder)', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\((SHUFFLE|SORT)\\) ↦ source', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ source', collectionNames);
+  jeAddEnumCommands('^.*\\(TURN\\) ↦ target', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
 

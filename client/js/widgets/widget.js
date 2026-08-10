@@ -1333,6 +1333,7 @@ export class Widget extends StateManaged {
         let phrase;
 
         renamedParameters(a, [ 'canvas', 'target' ], [ 'collection', 'target' ]);
+        setDefaults(a, { target: 'DEFAULT' });
         const groups = operationWidgetGroups(a);
         if(groups && groups.flat().length) {
           for(const group of groups)
