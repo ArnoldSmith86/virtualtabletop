@@ -60,7 +60,7 @@
     ],
     "z": 10426,
     "cardDefaults": {
-      "clickSound": "/assets/-277229936_10866"
+      "clickSound": "/i/audio/casino/card-place-2.mp3"
     }
   },
   "headerlabel": {
@@ -154,14 +154,14 @@
     "shape3d": true,
     "z": 75289,
     "id": "vzuv",
-    "clickSound": "/assets/-253074911_10031",
+    "clickSound": "/i/audio/casino/die-throw-3.mp3",
     "width": 100,
     "height": 100,
     "rollCount": 1,
     "activeFace": 5
   },
   "_meta": {
-    "version": 20,
+    "version": 21,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -173,9 +173,9 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.<div><br></div><div>The bell sound and the excerpt of the song are available under CC0 from Wikiemedia Commons at:</div><div><br></div><div><ul><li>https://commons.wikimedia.org/wiki/File:406243_stubb_typewriter-ding-near-mono.wav</li><li>https://commons.wikimedia.org/wiki/File:Beethoven_Piano_Concerto_4_slow_movement,_bars_47-55.wav</li></ul></div>",
+      "attribution": "<div>The bell sound and the excerpt of the song are available under CC0 from Wikiemedia Commons at:</div><div><ul><li>https://commons.wikimedia.org/wiki/File:406243_stubb_typewriter-ding-near-mono.wav</li><li>https://commons.wikimedia.org/wiki/File:Beethoven_Piano_Concerto_4_slow_movement,_bars_47-55.wav</li></ul></div>",
       "showName": false,
-      "lastUpdate": 1768608536353,
+      "lastUpdate": 1785898588860,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -187,7 +187,8 @@
       "variantImage": "",
       "variant": "clickSound",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "406b": {
@@ -207,8 +208,9 @@
     "id": "cjmg",
     "y": 706,
     "x": 370,
-    "image": "/i/noto-emoji/emoji_u1f6ce.svg",
-    "clickSound": "https://upload.wikimedia.org/wikipedia/commons/9/9f/406243_stubb_typewriter-ding-near-mono.wav"
+    "image": "/i/game-icons.net/lord-berandas/power-button.svg",
+    "clickSound": "/i/audio/interface/minimize_008.mp3",
+    "movable": false
   },
   "i2bj": {
     "id": "i2bj",
@@ -222,6 +224,28 @@
       "color": "black"
     },
     "text": "This bell has a 'clickSound' linked to an external URL.",
+    "movable": false
+  },
+  "pickerSpeaker": {
+    "id": "pickerSpeaker",
+    "x": 1102,
+    "y": 690,
+    "image": "/i/noto-emoji/emoji_u1f50a.svg",
+    "clickSound": "",
+    "movable": false
+  },
+  "i4bj": {
+    "id": "i4bj",
+    "x": 902,
+    "y": 800,
+    "width": 500,
+    "height": 50,
+    "z": 75277,
+    "css": {
+      "font-size": "20px",
+      "color": "black"
+    },
+    "text": "This speaker has an empty 'clickSound' and stays silent. You do not need a sound file of your own: open it in the JSON Editor, put the cursor on the 'clickSound' line and use the 'pick a sound from the sound picker' button in the upper right corner. Preview the bundled sounds with ▶, click one to insert its '/i/audio/...' path, then leave edit mode and click the speaker.",
     "movable": false
   }
 }

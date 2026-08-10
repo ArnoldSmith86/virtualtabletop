@@ -1,0 +1,319 @@
+.events-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 8px;
+}
+
+.events-editor-group {
+  color: var(--textColor);
+  opacity: 0.7;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.events-editor-group:first-child {
+  margin-top: 0;
+}
+
+.events-editor-event {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.events-editor-event-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor1);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.events-editor-toggle {
+  font-size: 18px;
+}
+
+.events-editor-label {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* a deck is two things in one place - the widget on the table and the cards it
+   hands out - so each of its routine cards says which of the two runs it */
+.events-editor-where {
+  border: 1px solid var(--textColor);
+  border-radius: 8px;
+  padding: 0 6px;
+  font-size: 11px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.events-editor-property {
+  color: var(--VTTblue);
+  font-family: monospace;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+body.edit.darkMode .events-editor-property {
+  color: var(--textHighlightColor7);
+}
+
+.events-editor-event-header .info-button {
+  cursor: pointer;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+}
+
+.events-editor-event-header .info-button:hover {
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+.events-editor-event-header .events-editor-legend .material-symbols {
+  font-size: 15px;
+}
+
+.events-editor-json {
+  font-size: 15px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+}
+
+.events-editor-json:hover {
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+.events-editor-remove {
+  font-size: 16px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+}
+
+.events-editor-remove:hover {
+  color: var(--textHighlightColor3);
+  opacity: 1;
+}
+
+/* a control with nothing to do says so rather than being left out: a gap where
+   the other cards have an icon reads as an icon that failed to appear */
+.events-editor-event-header .events-editor-disabled,
+.events-editor-event-header .events-editor-disabled:hover {
+  opacity: 0.3;
+  color: var(--textColor);
+  cursor: default;
+}
+
+.events-editor-event-content {
+  padding: 4px 0;
+}
+
+/* only the top-level editor: nested ones get the cutout style from routine.css */
+.events-editor-event-content > .routine-editor {
+  margin: 0 6px;
+}
+
+.events-editor-property-set {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 6px;
+}
+
+.events-editor-property-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.events-editor-property-key {
+  color: var(--VTTblue);
+  font-family: monospace;
+  font-size: 12px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.edit.darkMode .events-editor-property-key {
+  color: var(--textHighlightColor7);
+}
+
+.events-editor-property-value,
+.events-editor-property-name {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 2px 4px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* the name of a new entry sits in the column the names above it are in, and its
+   value in the column of the values above it - an input stretching past where
+   every value starts is not under the column it fills */
+.events-editor-property-name {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+}
+
+.events-editor-property-add .events-editor-property-value {
+  flex: none;
+  width: 50%;
+}
+
+/* what a typed value is stored as, under the rows it applies to */
+.events-editor-property-hint {
+  margin: 4px 6px 0 6px;
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0.7;
+}
+
+.events-editor-property-add-button {
+  border: 1px dashed var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: none;
+  color: var(--textColor);
+  opacity: 0.8;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.events-editor-property-add-button:hover:not(:disabled) {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* nothing to add without a name: saying so beats a button that does nothing */
+.events-editor-property-add-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.events-editor-property-buttons {
+  display: flex;
+  gap: 4px;
+  margin: 4px 6px 0 6px;
+}
+
+.events-editor-property-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: none;
+  color: var(--textColor);
+  opacity: 0.8;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.events-editor-property-buttons button .material-symbols {
+  font-size: 14px;
+}
+
+.events-editor-property-buttons button:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* one shape for every "add something" in the panel: lowercase, dashed outline */
+.events-editor-add,
+.routine-editor-add-operation {
+  align-self: flex-start;
+  border: 1px dashed var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: none;
+  color: var(--textColor);
+  opacity: 0.8;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.events-editor-add:hover,
+.routine-editor-add-operation:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* the only add button that sits on an operation card instead of on the page:
+   the dashed outline of the others is the color of that card, so it takes the
+   page background the same way a nested routine is a hole carved into the card */
+.routine-editor-add-else {
+  background: var(--backgroundColor);
+  border-color: var(--backgroundColor);
+  margin-left: 12px;
+}
+
+.add-event-entry {
+  margin-bottom: 6px;
+}
+
+/* which of the two places of a deck a new routine goes to, above the routines
+   themselves: it decides whether the cards will act on it at all */
+.add-event-target {
+  max-width: 300px;
+  margin-bottom: 8px;
+}
+
+.add-event-target-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+/* every other input of a popup fills its width, which a radio button must not */
+.add-event-target-option input[type=radio] {
+  flex: none;
+  width: auto;
+  margin: 0;
+}
+
+.add-event-target-option label {
+  flex: 1;
+  cursor: pointer;
+}
+
+.add-event-description {
+  font-size: 12px;
+  color: var(--textColor);
+  opacity: 0.8;
+  margin: 1px 2px 4px 2px;
+  max-width: 300px;
+}
+
+/* what "enter" or "leave" means for the widget the section belongs to: the one
+   thing the header cannot say by itself */
+.events-editor-subtitle {
+  font-size: 12px;
+  color: var(--textColor);
+  opacity: 0.8;
+  margin: 0 6px 4px 6px;
+}
