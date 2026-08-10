@@ -1,4 +1,4 @@
-import { ClientFunction } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 
 import { expectEventually, getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
@@ -61,6 +61,86 @@ async function widgetExists(id) {
   return Object.keys(JSON.parse(await getState())).indexOf(id) != -1;
 }
 
+async function widgetPosition(id) {
+  const widget = JSON.parse(await getState())[id];
+  return [ widget.x, widget.y ];
+}
+
+async function widgetDragState(id) {
+  const widget = JSON.parse(await getState())[id];
+  return [ widget.parent || null, widget.dragging || null ];
+}
+
+// the click routine keeps running after the mouse button was released, so mouse
+// movements arriving while it waits must not be treated as a drag of the button.
+// the delay has to outlast the hover that follows the click, even on slow CI
+const delayDuration = 3000;
+
+function delayRoom() {
+  return {
+    delay: { id: 'delay', type: 'button', text: 'delay', x: 100, y: 100, width: 200, height: 100, movable: true, clickRoutine: [
+      { func: 'DELAY', milliseconds: delayDuration },
+      { func: 'SET', collection: 'thisButton', property: 'marked', value: true }
+    ] },
+    far: { id: 'far', type: 'basic', x: 1200, y: 700, width: 200, height: 200 }
+  };
+}
+
+// a routine can open an overlay while a widget is being dragged - the mouseup
+// that follows never reaches the drag handling, so ending the drag has to happen
+// before the checks that swallow it
+function overlayRoom() {
+  return {
+    holder: { id: 'holder', type: 'holder', x: 600, y: 100, width: 300, height: 300, dropTarget: {} },
+    card: { id: 'card', type: 'basic', x: 100, y: 100, width: 200, height: 200, movable: true },
+    ask: { id: 'ask', type: 'button', text: 'ask', x: 100, y: 700, hotkey: 'o', clickRoutine: [
+      { func: 'INPUT', header: 'ask', fields: [ { type: 'string', variable: 'answer' } ] }
+    ] }
+  };
+}
+
+// taking a widget out of a holder runs that holder's leaveRoutine, so the drag
+// step that the first mouse movement starts can still be running when the button
+// is released - the release has to wait for it instead of racing it. this is
+// what a player does when they flick a card out of a holder into another one
+const leaveDuration = 2000;
+
+function leaveRoutineRoom() {
+  return {
+    source: { id: 'source', type: 'holder', x: 100, y: 100, width: 300, height: 300, leaveRoutine: [
+      { func: 'DELAY', milliseconds: leaveDuration }
+    ] },
+    holder: { id: 'holder', type: 'holder', x: 600, y: 100, width: 300, height: 300, dropTarget: {} },
+    card: { id: 'card', type: 'basic', width: 200, height: 200, movable: true, parent: 'source' }
+  };
+}
+
+// drag the card onto the holder without releasing the mouse button - the second
+// move is what a real drag delivers too, and only it sees the widget at its new
+// position and picks up the holder below it. steps adds the positions in between
+// that a real drag delivers as well - they are outdated as soon as the next one
+// arrives, so the widget must not walk through them one by one
+const startDrag = ClientFunction(steps => {
+  const card = document.querySelector('#w_card').getBoundingClientRect();
+  const holder = document.querySelector('#w_holder').getBoundingClientRect();
+  const from = { x: card.x + card.width/2, y: card.y + card.height/2 };
+  const to = { x: holder.x + holder.width/2, y: holder.y + holder.height/2 };
+  const move = (x, y)=>document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 1, clientX: x, clientY: y }));
+  document.querySelector('#w_card').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, buttons: 1, clientX: from.x, clientY: from.y }));
+  move(to.x, to.y);
+  return new Promise(resolve=>setTimeout(()=>{
+    for(let step=1; step<=(steps||0); step++)
+      move(from.x + (to.x - from.x)*step/(steps+1), from.y + (to.y - from.y)*step/(steps+1));
+    move(to.x, to.y);
+    resolve();
+  }, 100));
+});
+
+const releaseDrag = ClientFunction(() => {
+  const holder = document.querySelector('#w_holder').getBoundingClientRect();
+  document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 0, clientX: holder.x + holder.width/2, clientY: holder.y + holder.height/2 }));
+});
+
 async function clickSwap(t, clickRoutine) {
   await setRoomState(swapHandsRoom(clickRoutine));
   await ClientFunction(prepareClient)();
@@ -102,4 +182,43 @@ test('SWAPHANDS does not pass on a card that a routine of an earlier move remove
   await expectEventually(t, ()=>widgetExists('doomed'), false);
   await expectEventually(t, ()=>cardsInHand('hand1'), []);
   await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+test('moving the mouse while a DELAY is running does not drag the clicked widget', async t => {
+  await setRoomState(delayRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_delay');
+  await t.hover('#w_far');
+  // without this the test would pass without ever testing anything if the hover
+  // took longer than the DELAY, because the routine would already be over
+  await t.expect(await markedWidgets()).eql([]);
+  await expectEventually(t, markedWidgets, [ 'delay' ], 'the click routine never finished', 4*delayDuration);
+  await expectEventually(t, ()=>widgetPosition('delay'), [ 100, 100 ]);
+});
+
+test('releasing the button while a leaveRoutine is running still drops the widget', async t => {
+  await setRoomState(leaveRoutineRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await expectEventually(t, ()=>widgetDragState('card'), [ 'source', null ]);
+  // the burst is what a real drag delivers while the routine is running: those
+  // positions are all outdated once it returns, and the widget has to end up
+  // where the button came up instead of walking through them
+  await startDrag(200);
+  await releaseDrag();
+  await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ], 'the card was not dropped into the holder', 4*leaveDuration);
+});
+
+test('releasing a dragged widget while an overlay is open still ends the drag', async t => {
+  await setRoomState(overlayRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await startDrag();
+  await expectEventually(t, ()=>widgetDragState('card'), [ null, 'TestCafe' ]);
+  await t.pressKey('o');
+  await t.expect(Selector('#buttonInputOverlay').visible).ok();
+  await releaseDrag();
+  await t.click('#buttonInputGo');
+  await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ]);
 });
