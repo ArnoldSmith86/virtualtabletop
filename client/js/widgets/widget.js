@@ -1742,6 +1742,11 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
+        // MOVE only ever looked at 'from' while it named something, so a null one
+        // left over in a game means the widgets come from 'target' after all -
+        // unlike the parameters that were checked for being defined at all
+        if(a.from === null)
+          delete a.from;
         renamedParameters(a, [ 'from', 'fromHolder' ], [ 'to', 'toHolder' ], [ 'collection', 'target' ]);
         setDefaults(a, { count: a.fromHolder ? 1 : 'all', face: null, fillTo: null, target: 'DEFAULT' });
         let count = a.fillTo || a.count;
@@ -1800,7 +1805,11 @@ export class Widget extends StateManaged {
         // toHolder is where the widgets end up, fromHolder names holders whose
         // content is moved and target the widgets themselves - fromHolder wins,
         // the same way holder wins over target everywhere else.
-        const destinations = a.toHolder !== undefined ? widgetParameter(a.toHolder) : null;
+        let destinations = null;
+        if(a.toHolder === undefined)
+          problems.push(`MOVE is missing the 'toHolder' parameter.`);
+        else
+          destinations = widgetParameter(a.toHolder);
         if(destinations !== null && (a.fromHolder !== undefined || a.target)) {
           if(a.fromHolder !== undefined) {
             const sources = widgetParameter(a.fromHolder);

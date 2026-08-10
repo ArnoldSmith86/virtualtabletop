@@ -139,6 +139,17 @@ describe('MOVE', () => {
     expect(await parents([ { func: 'MOVE', from: 'h1', to: 'h2', count: 'all' } ])).toBe('h2,h2,h2,h2,-');
   });
 
+  test('a leftover from: null still moves what target names', async () => {
+    expect(await parents([
+      { func: 'SELECT', property: 'parent', value: 'h1' },
+      { func: 'MOVE', from: null, to: 'h2', count: 'all' }
+    ])).toBe('h2,h2,h2,h2,-');
+  });
+
+  test('a fromHolder that names nothing moves nothing', async () => {
+    expect(await parents([ { func: 'MOVE', fromHolder: null, toHolder: [ 'h2' ], count: 'all' } ])).toBe('h1,h1,h2,h2,-');
+  });
+
   test('takes a collection of holders on both sides', async () => {
     expect(await parents([
       { func: 'SELECT', property: 'id', value: 'h2', collection: 'destination' },
