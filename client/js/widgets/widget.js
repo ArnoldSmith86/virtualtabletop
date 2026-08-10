@@ -26,6 +26,11 @@ function linesWithStop(widgetID) {
 const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
 const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ]);
 
+// A list of widget ids passed to a routine parameter is put into a collection of
+// its own so the rest of an operation can treat it like any other collection. The
+// counter keeps two of them in the same routine from overwriting each other.
+let temporaryCollectionCount = 0;
+
 const readOnlyProperties = new Set([
   '_absoluteRotation',
   '_absoluteScale',
@@ -977,7 +982,7 @@ export class Widget extends StateManaged {
       if(Array.isArray(collections[collection]))
         newCollection = collection
       else if (Array.isArray(collection)) {
-        newCollection = '$collection_' + batchDepth;
+        newCollection = '$collection_' + ++temporaryCollectionCount;
         collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
       } else
         problems.push(`Collection ${collection} does not exist or is not an array.`);
@@ -987,6 +992,66 @@ export class Widget extends StateManaged {
     async function w(ids, callback) {
       for(const a of widgetFilter(w=>asArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
+    }
+
+    // Every parameter that names widgets takes the same two things: the name of a
+    // collection or a list of widget ids. Before collections could be passed to
+    // them, the parameters that name widgets directly (holder, label, canvas,
+    // timer, from, to) took a single widget id as a plain string - a string that
+    // names no collection but does name a widget is still read that way, so those
+    // routines keep working. Returns the name of a collection holding the widgets
+    // (getCollection puts a list of ids into a temporary one) or null.
+    const widgetParameter = value=>{
+      if(value === null || value === undefined) {
+        problems.push(`No collection name or widget ID given.`);
+        return null;
+      }
+      if(typeof value == 'string' && !Array.isArray(collections[value])) {
+        if(!widgets.has(value)) {
+          problems.push(`${value} is neither the name of a collection nor a widget ID.`);
+          return null;
+        }
+        value = [ value ];
+      }
+      if(Array.isArray(value))
+        this.isValidID(value, problems);
+      return getCollection(value);
+    };
+
+    // The widgets an operation works on, grouped by where they come from: one
+    // group per widget 'holder' names, holding its content - for a seat that is
+    // what lies in its hand and belongs to its player - or a single group with the
+    // widgets 'target' names. An operation only looks at target when no holder is
+    // given. The grouping is what a count limit is applied to, so counting stays
+    // per holder the way it always was for FLIP and ROTATE.
+    const operationWidgetGroups = (a, targetParameter='target', holderParameter='holder')=>{
+      if(a[holderParameter] !== undefined) {
+        const holders = widgetParameter(a[holderParameter]);
+        return holders === null ? null : collections[holders].map(h=>h.children());
+      }
+      const target = widgetParameter(a[targetParameter]);
+      return target === null ? null : [ collections[target] ];
+    };
+
+    // All of them at once, for the operations that have no count to spread over
+    // the holders.
+    const operationWidgets = (a, targetParameter='target', holderParameter='holder')=>{
+      const groups = operationWidgetGroups(a, targetParameter, holderParameter);
+      return groups === null ? null : groups.flat();
+    };
+
+    // What the log says the widgets of an operation were taken from.
+    const operationWidgetsName = (a, targetParameter='target', holderParameter='holder')=>
+      a[holderParameter] !== undefined ? a[holderParameter] : a[targetParameter];
+
+    // The parameters that name widgets used to be spelled differently per
+    // operation. The old spellings keep working, but an operation only ever reads
+    // the current name: the first old name that is set fills it in. Passing both
+    // an old and the new name uses the new one.
+    function renamedParameters(a, ...renames) {
+      for(const [ oldName, newName ] of renames)
+        if(a[oldName] !== undefined && a[newName] === undefined)
+          a[newName] = a[oldName];
     }
 
     if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
@@ -1178,34 +1243,38 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CALL') {
-        setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
+        renamedParameters(a, [ 'widget', 'target' ]);
+        setDefaults(a, { target: [ this.get('id') ], routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(Array.isArray(a.routine)) {
           if(a.routine.length > 1)
             problems.push('Routine parameter must refer to only one routine, first routine executed.');
           a.routine = a.routine[0]
         }
+        let callWidgets;
         if (typeof a.routine != 'string') {
           problems.push('Routine parameter must be a string');
         } else if (!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
-        } else if(this.isValidID(a.widget, problems)) {
-          if(Array.isArray(a.widget))
-            a.widget = a.widget[0];
-          if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
-            problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
-          } else {
+        } else if(callWidgets = operationWidgets(a)) {
+          // the routine is run once per widget; the last one to run is what the
+          // caller sees in its variable and collection
+          for(const callee of callWidgets) {
+            if(!Array.isArray(callee.get(a.routine))) {
+              problems.push(`Widget ${callee.get('id')} does not contain ${a.routine} (or it is no array).`);
+              continue;
+            }
             // make sure everything is passed in a way that the variables and collections of this routine won't be changed
             const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.arguments);
             const inheritCollections = {};
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const result = await callee.evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
             if(routineLogging) {
-              const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
+              const theWidget = callee != this ? `in ${callee.get('id')}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
                 if(!result.collection.length || result.collection.length >= 5)
@@ -1217,6 +1286,8 @@ export class Widget extends StateManaged {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
             }
+            if(!a.return)
+              break;
           }
         }
         if (!a.return)
@@ -1261,18 +1332,15 @@ export class Widget extends StateManaged {
 
         let phrase;
 
-        if(a.canvas !== undefined) {
-          a.collection = asArray(a.canvas);
-          delete a.canvas
-        }
-        this.isValidID(a.collection, problems); // Validate widget IDs in collection
-        const collection = getCollection(a.collection);
-        if(collections[collection] && collections[collection].length) {
-          for(const c of collections[collection].slice(0, a.count || 999999))
+        renamedParameters(a, [ 'canvas', 'target' ], [ 'collection', 'target' ]);
+        const groups = operationWidgetGroups(a);
+        if(groups && groups.flat().length) {
+          for(const group of groups)
+            for(const c of group.slice(0, a.count || 999999))
               await execute(c);
-          phrase = `canvas widgets in ${a.collection}`;
-        } else {
-          problems.push(`Collection ${a.collection} is empty.`);
+          phrase = `canvas widgets in ${operationWidgetsName(a)}`;
+        } else if(groups) {
+          problems.push(`Collection ${a.target} is empty.`);
         }
 
         if(routineLogging) {
@@ -1288,30 +1356,32 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1, mode: 'respect' });
-        const collection = getCollection(a.collection);
+        renamedParameters(a, [ 'collection', 'target' ]);
+        setDefaults(a, { target: 'DEFAULT', count: 1, mode: 'respect' });
+        const targetWidgets = operationWidgets(a);
 
         if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
           problems.push(`Mode ${a.mode} is unsupported. Using 'respect' mode.`);
           a.mode = 'respect'
         };
-        if(collection) {
+        if(targetWidgets) {
           for(let i=0; i<a.count; ++i)
-            for(const w of collections[collection])
+            for(const w of targetWidgets)
               await w.click(a.mode);
           if(routineLogging) {
             const theCount = a.count ? `${a.count} times` : '';
-            jeLoggingRoutineOperationSummary( `'${a.collection}' ${theCount}`)
+            jeLoggingRoutineOperationSummary( `'${operationWidgetsName(a)}' ${theCount}`)
           }
         }
       }
 
       if(a.func == 'CLONE') {
-        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, recursive: false, collection: 'DEFAULT' });
-        const source = getCollection(a.source);
+        renamedParameters(a, [ 'source', 'target' ]);
+        setDefaults(a, { target: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, recursive: false, collection: 'DEFAULT' });
+        const source = operationWidgets(a);
         if(source) {
           var c=[];
-          for(const w of collections[source]) {
+          for(const w of source) {
             for(let i=1; i<=a.count; ++i) {
               const newWidget = await w.clone(a.properties, a.recursive, problems, a.xOffset * i, a.yOffset * i);
               if(newWidget)
@@ -1322,7 +1392,7 @@ export class Widget extends StateManaged {
           }
           collections[a.collection]=c;
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`);
+            jeLoggingRoutineOperationSummary( `'${operationWidgetsName(a)}'`, `'${JSON.stringify(a.collection)}'`);
         }
       }
 
@@ -1346,29 +1416,20 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'COUNT') {
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', owner: null });
-        let collection;
-        let theItem;
-        if(a.holder !== undefined) {
-          theItem = `${a.holder}`;
-          variables[a.variable] = 0;
-          for (const h of asArray(a.holder)) {
-            if(this.isValidID(h,problems)) {
-              const children = widgets.get(h).children();
-              if(a.owner === null) {
-                variables[a.variable] += children.length;
-              } else {
-                variables[a.variable] += children.filter(widget => widget.get('owner') === a.owner).length;
-              }
-            }
-          }
-        } else if(collection = getCollection(a.collection)) {
+        renamedParameters(a, [ 'collection', 'target' ]);
+        setDefaults(a, { target: 'DEFAULT', variable: 'COUNT', owner: null });
+        const counted = operationWidgets(a);
+        const theItem = `${operationWidgetsName(a)}`;
+        if(counted) {
           if(a.owner === null) {
-            variables[a.variable] = collections[collection].length;
+            variables[a.variable] = counted.length;
           } else {
-            variables[a.variable] = collections[collection].filter(widget => widget.get('owner') === a.owner).length;
+            variables[a.variable] = counted.filter(widget => widget.get('owner') === a.owner).length;
           }
-          theItem = `${a.collection}`
+        } else if(a.holder !== undefined) {
+          // a holder that does not exist counts nothing - only a collection that
+          // does not exist leaves the variable behind untouched
+          variables[a.variable] = 0;
         }
         if(routineLogging)
           jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
@@ -1384,43 +1445,35 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'DELETE') {
-        setDefaults(a, { collection: 'DEFAULT' });
-        const collection = getCollection(a.collection);
-        if(collection) {
-          for(const w of collections[collection]) {
+        renamedParameters(a, [ 'collection', 'target' ]);
+        setDefaults(a, { target: 'DEFAULT' });
+        const targetWidgets = operationWidgets(a);
+        if(targetWidgets) {
+          for(const w of targetWidgets) {
             await removeWidgetLocal(w.get('id'));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `'${a.collection}'`)
+            jeLoggingRoutineOperationSummary( `'${operationWidgetsName(a)}'`)
         }
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 'all', face: null, faceCyle: null, collection: 'DEFAULT' });
+        renamedParameters(a, [ 'collection', 'target' ]);
+        setDefaults(a, { count: 'all', face: null, faceCyle: null, target: 'DEFAULT' });
         if(a.count === 'all')
           a.count = 999999;
 
-        let collection;
-        if(a.holder !== undefined) {
-          if(this.isValidID(a.holder,problems)) {
-            await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count))
-                c.flip && await c.flip(a.face,a.faceCycle);
-            });
-          }
-          if(routineLogging)
-            jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
-        } else if(collection = getCollection(a.collection)) {
-          if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count))
+        const groups = operationWidgetGroups(a);
+        if(groups) {
+          if(a.holder === undefined && !groups.flat().length)
+            problems.push(`Collection ${a.target} is empty.`);
+          for(const group of groups)
+            for(const c of group.slice(0, a.count))
               c.flip && await c.flip(a.face,a.faceCycle);
-          } else {
-            problems.push(`Collection ${a.collection} is empty.`);
-          }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(a.holder !== undefined ? `holder '${a.holder}'` : `collection '${a.target}'`);
         }
       }
 
@@ -1511,11 +1564,12 @@ export class Widget extends StateManaged {
         const propertyPath = asArray(a.property || 'id');
         const mainProperty = String(propertyPath.shift());
 
-        setDefaults(a, { variable: mainProperty, collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
-        const collection = getCollection(a.collection);
-        if(collection) {
+        renamedParameters(a, [ 'collection', 'target' ]);
+        setDefaults(a, { variable: mainProperty, target: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
+        const targetWidgets = operationWidgets(a);
+        if(targetWidgets) {
 
-          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.get(mainProperty))));
+          let c = JSON.parse(JSON.stringify(targetWidgets.map(w=>w.get(mainProperty))));
           for(const subkey of propertyPath)
             c = c.map(v=>v && typeof v == 'object' && v[subkey] || null);
 
@@ -1555,10 +1609,10 @@ export class Widget extends StateManaged {
           } else if(a.aggregation == 'array') {
             variables[a.variable] = [];
           } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            problems.push(`Collection ${operationWidgetsName(a)} is empty.`);
           }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${operationWidgetsName(a)}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
 
@@ -1662,44 +1716,33 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'LABEL') {
-        setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
-        let collection;
+        renamedParameters(a, [ 'label', 'target' ], [ 'collection', 'target' ]);
+        setDefaults(a, { value: 0, mode: 'set', target: 'DEFAULT' });
         if([ 'set', 'dec', 'inc', 'append' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
-        if(a.label !== undefined) {
-          if (this.isValidID(a.label, problems)) {
-            await w(a.label, async widget=>{
-              await widget.setText(a.value, a.mode, problems)
-            });
-            if(routineLogging) {
-              if(a.mode == 'inc' || a.mode == 'dec')
-                jeLoggingRoutineOperationSummary(`${a.mode} '${a.label}' by ${a.value}`)
-              else if(a.mode == 'append')
-                jeLoggingRoutineOperationSummary(`append '${a.value}' to '${a.label}'`)
-              else
-                jeLoggingRoutineOperationSummary(`set '${a.label}' to '${a.value}'`)
-            }
-          }
-        } else if(collection = getCollection(a.collection)) {
-          if(collections[collection].length) {
-            for(const c of collections[collection])
+        const targetWidgets = operationWidgets(a);
+        if(targetWidgets) {
+          const theItem = operationWidgetsName(a);
+          if(targetWidgets.length) {
+            for(const c of targetWidgets)
               await c.setText(a.value, a.mode, problems);
             if(routineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
-                jeLoggingRoutineOperationSummary(`${a.mode} widgets in '${a.collection}' by ${a.value}`)
+                jeLoggingRoutineOperationSummary(`${a.mode} widgets in '${theItem}' by ${a.value}`)
               else if(a.mode == 'append')
-                jeLoggingRoutineOperationSummary(`append '${a.value}' to widgets in '${a.collection}'`)
+                jeLoggingRoutineOperationSummary(`append '${a.value}' to widgets in '${theItem}'`)
               else
-                jeLoggingRoutineOperationSummary(`set widgets in '${a.collection}' to '${a.value}'`)
+                jeLoggingRoutineOperationSummary(`set widgets in '${theItem}' to '${a.value}'`)
             }
           } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            problems.push(`Collection ${theItem} is empty.`);
           }
         }
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
+        renamedParameters(a, [ 'from', 'fromHolder' ], [ 'to', 'toHolder' ], [ 'collection', 'target' ]);
+        setDefaults(a, { count: a.fromHolder ? 1 : 'all', face: null, fillTo: null, target: 'DEFAULT' });
         let count = a.fillTo || a.count;
         if(count === 'all')
           count = 999999;
@@ -1753,42 +1796,48 @@ export class Widget extends StateManaged {
           return moved;
         }
 
-        let collection;
-        if((a.collection || a.from) && this.isValidID(a.to, problems)) {
-          if(a.from) {
-            if(this.isValidID(a.from, problems)) {
-              await w(a.from, async source=>await w(a.to, async target=>{
-                for(const c of source.children().slice(0, count).reverse()) {
-                  await applyMove(source, target, c);
-                }
-              }));
-            } else {
-              problems.push(`Source ${a.from} is invalid.`);
+        // toHolder is where the widgets end up, fromHolder names holders whose
+        // content is moved and target the widgets themselves - fromHolder wins,
+        // the same way holder wins over target everywhere else.
+        const destinations = a.toHolder !== undefined ? widgetParameter(a.toHolder) : null;
+        if(destinations !== null && (a.fromHolder !== undefined || a.target)) {
+          if(a.fromHolder !== undefined) {
+            const sources = widgetParameter(a.fromHolder);
+            if(sources !== null)
+              for(const source of collections[sources])
+                for(const target of collections[destinations])
+                  for(const c of source.children().slice(0, count).reverse())
+                    await applyMove(source, target, c);
+          } else {
+            const targetWidgets = widgetParameter(a.target);
+            if(targetWidgets !== null) {
+              for(const target of collections[destinations]) {
+                let offset = 0;
+                for(const c of collections[targetWidgets].slice(offset, offset+count))
+                  offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
+                if(target.get('type') == 'holder')
+                  await target.updateAfterShuffle();
+              }
             }
-          } else if(collection = getCollection(a.collection)) {
-            let offset = 0;
-            await w(a.to, async target=>{
-              for(const c of collections[collection].slice(offset, offset+count))
-                offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
-              if(target.get('type') == 'holder')
-                await target.updateAfterShuffle();
-            });
           }
           if(routineLogging) {
             const logCount = count==1 ? '1 widget' : `${count == 999999 ? 'all' : count} widgets`;
-            jeLoggingRoutineOperationSummary(`${logCount} from '${a.from || a.collection}' to '${a.to}'`)
+            jeLoggingRoutineOperationSummary(`${logCount} from '${a.fromHolder !== undefined ? a.fromHolder : a.target}' to '${a.toHolder}'`)
           }
         }
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
+        renamedParameters(a, [ 'from', 'fromHolder' ]);
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true, target: 'DEFAULT' });
         if(a.count === 'all')
           a.count = 999999;
 
-        if(this.isValidID(a.from, problems)) {
-          await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count).reverse()) {
+        const groups = operationWidgetGroups(a, 'target', 'fromHolder');
+        if(groups !== null) {
+          for(const group of groups) {
+            // a holder gives its content top down, a target the widgets themselves
+            for(const c of (a.fromHolder !== undefined ? group.slice(0, a.count).reverse() : group.slice(0, a.count))) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.bringToFront();
@@ -1799,10 +1848,10 @@ export class Widget extends StateManaged {
                 await c.snapToGrid();
               await c.set('parent', null);
             }
-          });
+          }
           if(routineLogging) {
             const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to (${a.x}, ${a.y})`)
+            jeLoggingRoutineOperationSummary(`${count} from '${operationWidgetsName(a, 'target', 'fromHolder')}' to (${a.x}, ${a.y})`)
           }
         }
       }
@@ -1819,48 +1868,67 @@ export class Widget extends StateManaged {
           }
         }
 
-        if(this.isValidID(a.holder, problems)) {
-          for(const holder of asArray(a.holder)) {
-            const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
-            if(decks.length) {
-              for(const deck of decks) {
-                let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
-                if(!a.owned)
-                  cards = cards.filter(c=>!c.get('owner'));
-                if(!a.inHolder)
-                  cards = cards.filter(c=>!c.get('_ancestor'));
-                if(a.excludeCollection && excludeCollection)
-                  cards = cards.filter(c=>!excludeCollection.includes(c));
-                
-                if(a.byDistance === true){
-                  cards.sort((c1, c2) => {
-                    const dx1 = deck.get('_centerAbsoluteX') - c1.get('_centerAbsoluteX');
-                    const dy1 = deck.get('_centerAbsoluteY') - c1.get('_centerAbsoluteY');
-                    const d1 = dx1 * dx1 + dy1 * dy1;                    
-                    const dx2 = deck.get('_centerAbsoluteX') - c2.get('_centerAbsoluteX');
-                    const dy2 = deck.get('_centerAbsoluteY') - c2.get('_centerAbsoluteY');
-                    const d2 = dx2 * dx2 + dy2 * dy2;
-                    
-                    if(d1 !== d2)
-                      return d1 - d2;
-                    return c1.get('z') - c2.get('z');
-                  });
-                }
-                
-                for(const c of cards) {
-                  if(c.get('_ancestor') == holder && !c.get('owner'))
-                    await c.bringToFront();
-                  else
-                    await c.moveToHolder(widgets.get(holder));
-                }
-              }
-            } else {
-              problems.push(`Holder ${holder} does not have a deck.`);
-            }
-          };
-          if(routineLogging) {
-            jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
+        // 'holder' recalls into the holders it names, 'target' into whatever the
+        // decks it names sit in - or into the deck itself when it is not in a holder
+        const recallInto = [];
+        if(a.holder !== undefined) {
+          const holders = widgetParameter(a.holder);
+          for(const holder of holders === null ? [] : collections[holders]) {
+            const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder.get('id'));
+            if(decks.length)
+              for(const deck of decks)
+                recallInto.push([ deck, holder ]);
+            else
+              problems.push(`Holder ${holder.get('id')} does not have a deck.`);
           }
+        } else if(a.target !== undefined) {
+          const targets = widgetParameter(a.target);
+          for(const target of targets === null ? [] : collections[targets]) {
+            const isDeck = target.get('type') == 'deck';
+            const decks = isDeck ? [ target ] : widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==target.get('id'));
+            if(decks.length)
+              for(const deck of decks)
+                recallInto.push([ deck, isDeck && widgets.has(target.get('parent')) ? widgets.get(target.get('parent')) : target ]);
+            else
+              problems.push(`${target.get('id')} is not a deck and does not contain one.`);
+          }
+        } else {
+          problems.push(`RECALL is missing the 'holder' or 'target' parameter.`);
+        }
+
+        for(const [ deck, destination ] of recallInto) {
+          let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
+          if(!a.owned)
+            cards = cards.filter(c=>!c.get('owner'));
+          if(!a.inHolder)
+            cards = cards.filter(c=>!c.get('_ancestor'));
+          if(a.excludeCollection && excludeCollection)
+            cards = cards.filter(c=>!excludeCollection.includes(c));
+        
+          if(a.byDistance === true){
+            cards.sort((c1, c2) => {
+              const dx1 = deck.get('_centerAbsoluteX') - c1.get('_centerAbsoluteX');
+              const dy1 = deck.get('_centerAbsoluteY') - c1.get('_centerAbsoluteY');
+              const d1 = dx1 * dx1 + dy1 * dy1;                    
+              const dx2 = deck.get('_centerAbsoluteX') - c2.get('_centerAbsoluteX');
+              const dy2 = deck.get('_centerAbsoluteY') - c2.get('_centerAbsoluteY');
+              const d2 = dx2 * dx2 + dy2 * dy2;
+            
+              if(d1 !== d2)
+                return d1 - d2;
+              return c1.get('z') - c2.get('z');
+            });
+          }
+        
+          for(const c of cards) {
+            if(c.get('_ancestor') == destination.get('id') && !c.get('owner'))
+              await c.bringToFront();
+            else
+              await c.moveToHolder(destination);
+          }
+        }
+        if(routineLogging) {
+          jeLoggingRoutineOperationSummary(`'${a.holder !== undefined ? a.holder : a.target}' ${a.owned ? ' (including hands)' : ''}`);
         }
       }
 
@@ -1881,30 +1949,22 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        renamedParameters(a, [ 'collection', 'target' ]);
+        setDefaults(a, { count: 1, angle: 90, mode: 'add', target: 'DEFAULT' });
         if(a.count === 'all')
           a.count = 999999;
 
-        let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
-        if(a.holder !== undefined) {
-          if(this.isValidID(a.holder, problems)) {
-            await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count))
-                await c.rotate(a.angle, a.mode);
-            });
-            if(routineLogging) {
-              jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
-            }
-          }
-        } else if(collection = getCollection(a.collection)) {
-          if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count))
-              await c.rotate(a.angle, a.mode);
-            if(routineLogging)
-              jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
+        const groups = operationWidgetGroups(a);
+        if(groups !== null) {
+          if(a.holder === undefined && !groups.flat().length) {
+            problems.push(`Collection ${a.target} is empty.`);
           } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            for(const group of groups)
+              for(const c of group.slice(0, a.count))
+                await c.rotate(a.angle, a.mode);
+            if(routineLogging)
+              jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${operationWidgetsName(a)}' ${mode} ${a.angle}`);
           }
         }
       }
@@ -2012,17 +2072,18 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SET') {
-        setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-        let collection;
+        renamedParameters(a, [ 'collection', 'target' ]);
+        setDefaults(a, { target: 'DEFAULT', property: 'parent', relation: '=', value: null });
+        let targetWidgets;
         if(a.relation == '==') {
           problems.push(`Warning: Relation == interpreted as =`);
           a.relation = '=';
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
-        } else if (collection = getCollection(a.collection)) {
+        } else if (targetWidgets = operationWidgets(a)) {
           if (a.property == 'id') {
-            for(const oldWidget of collections[collection]) {
+            for(const oldWidget of targetWidgets) {
               const oldID = oldWidget.get('id');
               let newState = JSON.parse(JSON.stringify(oldWidget.state));
               newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
@@ -2038,7 +2099,7 @@ export class Widget extends StateManaged {
               }
             }
           } else {
-            for(const w of collections[collection]) {
+            for(const w of targetWidgets) {
               if (w.readOnlyProperties().has(a.property)) {
                 problems.push(`Tried setting read-only property ${a.property}.`);
                 continue;
@@ -2054,35 +2115,38 @@ export class Widget extends StateManaged {
           }
         }
         if(routineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
+          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${operationWidgetsName(a)}'`);
       }
 
       if(a.func == 'SHUFFLE') {
-        setDefaults(a, { collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
+        renamedParameters(a, [ 'collection', 'source' ]);
+        setDefaults(a, { source: 'DEFAULT', mode: 'true random', modeValue: 1 });
         let collection;
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder, problems)) {
-            await w(a.holder, async holder=>{
+          const holders = widgetParameter(a.holder);
+          if(holders !== null) {
+            for(const holder of collections[holders]) {
               await shuffleWidgets(holder.children(), a.mode, a.modeValue, true);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
-            });
+            }
             if(routineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
-        } else if(collection = getCollection(a.collection)) {
+        } else if(collection = widgetParameter(a.source)) {
           if(collections[collection].length) {
             await shuffleWidgets(collections[collection], a.mode, a.modeValue);
           } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            problems.push(`Collection ${a.source} is empty.`);
           }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.source}'`);
         }
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
+        renamedParameters(a, [ 'collection', 'source' ]);
+        setDefaults(a, { key: 'value', reverse: false, source: 'DEFAULT', rearrange: true });
         let collection;
         let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
@@ -2091,16 +2155,16 @@ export class Widget extends StateManaged {
           return typeof k == 'string' ? `'${k}'` : k;
         }).join(', ');
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder, problems)) {
-            await w(a.holder, async holder=>{
+          const holders = widgetParameter(a.holder);
+          if(holders !== null)
+            for(const holder of collections[holders]) {
               await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
-            });
-          }
+            }
           if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
-        } else if(collection = getCollection(a.collection)) {
+        } else if(collection = widgetParameter(a.source)) {
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
@@ -2108,10 +2172,10 @@ export class Widget extends StateManaged {
                 await holder.updateAfterShuffle();
             });
           } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            problems.push(`Collection ${a.source} is empty.`);
           }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
+            jeLoggingRoutineOperationSummary(`widgets in '${a.source}' by ${key}${reverse}`);
         }
       }
 
@@ -2174,7 +2238,7 @@ export class Widget extends StateManaged {
                 ? move.contents.filter(w=>!w.isBeingRemoved)
                 : widgetFilter(w=>move.contents.indexOf(w) != -1);
               try {
-                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+                await this.evaluateRoutine([ { func: 'MOVE', target: collection, toHolder: move.to } ], variables, collections, (depth || 0) + 1, true);
               } finally {
                 if(shadowed === undefined)
                   delete collections[collection];
@@ -2195,27 +2259,21 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TIMER') {
-        setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
-        const collection = a.timer === undefined && getCollection(a.collection);
+        renamedParameters(a, [ 'timer', 'target' ], [ 'collection', 'target' ]);
+        setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', target: 'DEFAULT' });
+        const targetWidgets = operationWidgets(a);
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
           a.mode = 'toggle'
         }
         if([ 'set', 'dec', 'inc'].indexOf(a.mode) == -1){
-          if(a.timer !== undefined) {
-            if (this.isValidID(a.timer, problems)) {
-              await w(a.timer, async widget=>{
-                if(widget.setPaused)
-                  await widget.setPaused(a.mode);
-              });
-            }
-          } else if(collection) {
-            if(collections[collection].length) {
-              for(const c of collections[collection])
+          if(targetWidgets) {
+            if(targetWidgets.length) {
+              for(const c of targetWidgets)
                 if(c.setPaused)
                   await c.setPaused(a.mode);
             } else {
-              problems.push(`Collection ${a.collection} is empty.`);
+              problems.push(`Collection ${a.target} is empty.`);
             }
           }
         };
@@ -2223,26 +2281,18 @@ export class Widget extends StateManaged {
           // a "minutes:seconds" string in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
           const seconds = timeToMS(a.seconds);
           const milliseconds = seconds !== a.seconds ? seconds : a.seconds*1000 || a.value;
-          if(a.timer !== undefined) {
-            if (this.isValidID(a.timer, problems)) {
-              await w(a.timer, async widget=>{
-                if(widget.setMilliseconds)
-                  await widget.setMilliseconds(milliseconds, a.mode);
-              });
-            }
-          } else if(collection) {
-            if(collections[collection].length) {
-              for(const c of collections[collection])
+          if(targetWidgets) {
+            if(targetWidgets.length) {
+              for(const c of targetWidgets)
                 if(c.setMilliseconds)
                   await c.setMilliseconds(milliseconds, a.mode);
             } else {
-              problems.push(`Collection ${a.collection} is empty.`);
+              problems.push(`Collection ${a.target} is empty.`);
             }
           }
         };
-        if(routineLogging &&
-           (a.timer != undefined || (collection && collections[collection].length))) {
-          const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
+        if(routineLogging && targetWidgets && targetWidgets.length) {
+          const phrase = `timers in '${operationWidgetsName(a)}'`;
           if(a.mode == 'set')
             jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`);
           else if(a.mode == 'inc' || a.mode == 'dec')
@@ -2267,18 +2317,20 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TURN') {
-        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+        renamedParameters(a, [ 'source', 'target' ]);
+        setDefaults(a, { turn: 1, turnCycle: 'forward', target: 'all', collection: 'TURN' });
         if([ 'forward', 'backward', 'random', 'position', 'seat' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
         }
         
         let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
-        let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
+        const turnSeats = a.target=='all' ? allSeats : (operationWidgets(a) || []).filter(w=>w.get('type')=='seat');
+        let c = turnSeats.filter(w=>w.get('player'));
 
         if (c.length == 0) {
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`No active seats found in collection ${a.source}.`);
+            jeLoggingRoutineOperationSummary(`No active seats found in collection ${a.target}.`);
         } else {
           if (c.length > 1) {
             if (a.turnCycle == 'forward' || a.turnCycle == 'position') {
@@ -2305,7 +2357,7 @@ export class Widget extends StateManaged {
           let target = unskipped[0];
 
           if (unskipped.length === 0) {
-            problems.push(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
+            problems.push(`All seats in collection '${a.target}' have 'skipTurn' set to true. No turn change.`);
           } else {
             // identify the correct target seat
             if (a.turnCycle == 'position') {
@@ -2318,7 +2370,7 @@ export class Widget extends StateManaged {
               // Selecting a specific seat so in this case skipTurn will be ignored
               target = c.find(w => w.get('id') == a.turn);
               if (!target) {
-                problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
+                problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.target}.`);
                 target = c[0];
               }
             } else {
@@ -2342,7 +2394,7 @@ export class Widget extends StateManaged {
               const turn = target.get('index');
               jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
             } else {
-              jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
+              jeLoggingRoutineOperationSummary(`All seats in collection '${a.target}' have 'skipTurn' set to true. No turn change.`);
             }
           }
         }
