@@ -28,7 +28,8 @@ const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ])
 
 // A list of widget ids passed to a routine parameter is put into a collection of
 // its own so the rest of an operation can treat it like any other collection. The
-// counter keeps two of them in the same routine from overwriting each other.
+// counter keeps two of them in the same routine from overwriting each other, and
+// names a game gave its own collections are skipped over.
 let temporaryCollectionCount = 0;
 
 const readOnlyProperties = new Set([
@@ -977,14 +978,24 @@ export class Widget extends StateManaged {
           routine[key] = defaults[key];
     }
 
+    // the temporary collections created for this routine, in the order they were
+    // created, so an operation can take its own out again when it is done
+    const temporaryCollections = [];
+
     function getCollection(collection) {
       let newCollection=null;
-      if(Array.isArray(collections[collection]))
-        newCollection = collection
-      else if (Array.isArray(collection)) {
-        newCollection = '$collection_' + ++temporaryCollectionCount;
+      // a list of ids is checked first: using it as a key would turn it into a
+      // string and find a collection that happens to carry the same name
+      if(Array.isArray(collection)) {
+        // a game is free to name a collection anything, so skip the names taken
+        while(collections['$collection_' + ++temporaryCollectionCount] !== undefined)
+          ;
+        newCollection = '$collection_' + temporaryCollectionCount;
+        temporaryCollections.push(newCollection);
         collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
-      } else
+      } else if(Array.isArray(collections[collection]))
+        newCollection = collection
+      else
         problems.push(`Collection ${collection} does not exist or is not an array.`);
       return newCollection;
     }
@@ -1102,7 +1113,7 @@ export class Widget extends StateManaged {
 
     for(const original of routine) {
       var problems = [];
-      const temporaryCollectionsBefore = temporaryCollectionCount;
+      const temporaryCollectionsBefore = temporaryCollections.length;
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a)
@@ -2428,8 +2439,8 @@ export class Widget extends StateManaged {
       // a list of widget ids passed to a parameter got a collection of its own -
       // it belongs to this operation only, so it goes away again with it instead
       // of piling up in every CALL and FOREACH for the rest of the routine
-      for(let i=temporaryCollectionsBefore+1; i<=temporaryCollectionCount; ++i)
-        delete collections['$collection_' + i];
+      for(const temporaryCollection of temporaryCollections.splice(temporaryCollectionsBefore))
+        delete collections[temporaryCollection];
 
       if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
