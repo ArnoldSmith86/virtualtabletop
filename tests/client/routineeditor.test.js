@@ -2086,50 +2086,52 @@ describe('information about an operation and its parameters', () => {
     editor.setOperationDetails({ state: {} }, { func: 'MOVE', from: 'h1' }, [], []);
     const dom = editor.render();
     document.getElementById('editor').append(dom);
-    expect(infoTextOf(dom.querySelector('.routine-editor-func-info'))).toContain('This function moves widgets into a target');
+    expect(infoTextOf(dom.querySelector('.routine-editor-func-info'))).toContain('This function moves widgets into a destination');
     dom.remove();
   });
 
   test('a parameter popup shows the line its operation describes the parameter with', () => {
     const text = parameterInfo({ func: 'MOVE', from: 'h1' }, [ 'count' ]);
     expect(text).toContain('limits the amount of moved widgets');
-    expect(text).not.toContain('This function moves widgets into a target'); // just the parameter, not everything
+    expect(text).not.toContain('This function moves widgets into a destination'); // just the parameter, not everything
     expect(text).toContain('for the whole operation'); // ...which is one hover away, as a topic link
     expect(text).toContain('See MOVE');
   });
 
   test('a parameter with a topic of its own uses that text', () => {
     expect(parameterInfo({ func: 'MOVE', from: 'h1' }, [ 'from' ]))
-      .toContain('The from parameter specifies the widget(s) that contains the widgets to move');
+      .toContain('The fromHolder parameter specifies the widget(s) that contains the widgets to move');
+  });
+
+  test('a current name opens its own line, an old spelling the line saying it is deprecated', () => {
+    // describedBy is what a chip falls back to, not what it is described with:
+    // both spellings have a line of their own now
+    expect(parameterInfo({ func: 'FLIP', target: 'DEFAULT' }, [ 'target' ])).toContain('the widgets to flip');
+    expect(parameterInfo({ func: 'FLIP', collection: 'DEFAULT' }, [ 'collection' ])).toContain('use target instead');
   });
 
   test('a custom property the operation does not support falls back to the operation text', () => {
     expect(parameterInfo({ func: 'MOVE', from: 'h1', typo: 1 }, [ 'typo' ]))
-      .toContain('This function moves widgets into a target');
+      .toContain('This function moves widgets into a destination');
   });
 
   test('every declared parameter of every operation is described somewhere', () => {
     // The parameters that name the widgets an operation works on are spelled the
-    // same way on every operation now. The wiki texts still spell them the way
-    // each operation used to, which is what describedBy points at - but an
-    // operation that only ever worked on a collection has no line about a holder
-    // yet, and neither has the target MOVEXY and RECALL gained. Those chips open
-    // the text of the whole operation until the wiki catches up.
-    const notInTheWikiTextYet = [
-      'CALL.holder', 'CANVAS.holder', 'CLICK.holder', 'CLONE.holder', 'DELETE.holder', 'GET.holder',
-      'LABEL.holder', 'SET.holder', 'TIMER.holder', 'MOVEXY.target', 'RECALL.target'
-    ];
+    // same way on every operation now, and every one of them has a line of its
+    // own in the text of its operation - the old spellings included, which is
+    // what a chip falls back to through describedBy while it has none.
+    const undescribed = [];
     for(const func in routineOperationMetadata) {
       const topic = commonInfoTopic(func);
       expect(topic).toBeDefined();
       for(const name in routineOperationMetadata[func].parameters) {
-        if(notInTheWikiTextYet.indexOf(`${func}.${name}`) != -1)
-          continue;
         // a chip standing for a part of another parameter is described by that one
-        const described = routineOperationMetadata[func].parameters[name].describedBy || name;
-        expect(commonInfoTopic(`${func}.${described}`) || parameterInfoLine(topic.info, described)).toBeTruthy();
+        const described = [ name, routineOperationMetadata[func].parameters[name].describedBy ].filter(Boolean);
+        if(!described.some(p=>commonInfoTopic(`${func}.${p}`) || parameterInfoLine(topic.info, p)))
+          undescribed.push(`${func}.${name}`);
       }
     }
+    expect(undescribed).toEqual([]);
   });
 
   test('parameters listed together are found by each of their names', () => {
