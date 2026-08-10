@@ -1,9 +1,10 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, getNestedValue, mapAssetURLs, setNestedValue, timeToMS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+import { compute_ops } from '../compute.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
@@ -709,10 +710,13 @@ export class Widget extends StateManaged {
   }
 
   cssReplaceProperties(css, usedProperties) {
-    for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
-      css = css.replace(match[0], this.get(match[1]));
+    for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*)\}/g)) {
+      const [ property, ...keyPath ] = match[1].split('.');
+      const value = keyPath.length ? getNestedValue(this.get(property), keyPath) : this.get(property);
+      // a function as the replacement so that $& and friends in the value are not expanded
+      css = css.replace(match[0], ()=>value === undefined ? '' : value);
       if (usedProperties)
-        usedProperties.add(match[1]);
+        usedProperties.add(property);
     }
     return css;
   }
@@ -929,11 +933,18 @@ export class Widget extends StateManaged {
       return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
     }
 
+    // ".default.background" or ".$type.color" - the keys that index into a variable or property.
+    // A key containing a dot has to use the \u002E escape so it doesn't start a new key here.
+    function evaluatePath(pathMatch) {
+      return (pathMatch || '').split('.').slice(1).map(key=>evaluateIdentifier(key[0] == '$', key.replace(/^\$/, '')));
+    }
+
     const evaluateVariables = string=>{
       const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
       const identifier          = identifierWithSpace.replace(/ /, '');
-      const variable            = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
-      const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
+      const path                = `((?:\\.\\$?${identifier})*)`;
+      const variable            = `(\\$)?(${identifier})${path}`;
+      const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)${path}(?: OF (\\$)?(${identifierWithSpace}))?`;
       const match               = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)\\}` + '\x24'));
 
       // not a match across the whole string; replace any variables inside it
@@ -946,18 +957,24 @@ export class Widget extends StateManaged {
 
       // variable
       if(match[2]) {
-        const varContent = variables[evaluateIdentifier(match[1], match[2])];
+        let varContent = variables[evaluateIdentifier(match[1], match[2])];
         if(varContent === undefined)
-          return match[9] ? false : undefined;
+          return undefined;
 
-        let indexName = evaluateIdentifier(match[3], match[4]);
-        if(varContent === null && indexName !== undefined)
-          problems.push(`Cannot index a variable that evaluates to 'null'.`);
-        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
+        for(const key of evaluatePath(match[3])) {
+          if(varContent === null) {
+            problems.push(`Cannot index a variable that evaluates to 'null'.`);
+            return null;
+          }
+          if(varContent === undefined)
+            return undefined;
+          varContent = getNestedValue(varContent, [ key ]);
+        }
+        return varContent;
       }
 
       // property
-      if(match[6]) {
+      if(match[5]) {
         let widget = this;
         if(match[8]) {
           const id = evaluateIdentifier(match[7], match[8]);
@@ -965,7 +982,8 @@ export class Widget extends StateManaged {
             return null;
           widget = widgets.get(id);
         }
-        return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
+        const value = getNestedValue(widget.get(evaluateIdentifier(match[4], match[5])), evaluatePath(match[6]));
+        return value === undefined ? null : JSON.parse(JSON.stringify(value));
       }
 
       return null;
@@ -1533,9 +1551,7 @@ export class Widget extends StateManaged {
         const collection = getCollection(a.collection);
         if(collection) {
 
-          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.get(mainProperty))));
-          for(const subkey of propertyPath)
-            c = c.map(v=>v && typeof v == 'object' && v[subkey] || null);
+          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>getNestedValue(w.get(mainProperty), propertyPath))));
 
           if (a.skipMissing)
             c = c.filter(v=>v !== null && v !== undefined);
@@ -2031,19 +2047,24 @@ export class Widget extends StateManaged {
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+        const propertyPath = asArray(a.property);
+        const mainProperty = String(propertyPath[0]);
+        const keyPath      = propertyPath.slice(1);
         let collection;
         if(a.relation == '==') {
           problems.push(`Warning: Relation == interpreted as =`);
           a.relation = '=';
         }
-        if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
-          problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        if(keyPath.length && [ 'id', 'parent', 'deck' ].indexOf(mainProperty) != -1) {
+          problems.push(`Property ${JSON.stringify(mainProperty)} holds a widget ID, so it has no values inside it - use a plain property name.`);
+        } else if((mainProperty == 'parent' || mainProperty == 'deck') && a.value !== null && !widgets.has(a.value)) {
+          problems.push(`Tried setting ${mainProperty} to ${a.value} which doesn't exist.`);
         } else if (collection = getCollection(a.collection)) {
-          if (a.property == 'id') {
+          if (mainProperty == 'id') {
             for(const oldWidget of collections[collection]) {
               const oldID = oldWidget.get('id');
               let newState = JSON.parse(JSON.stringify(oldWidget.state));
-              newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
+              newState.id = await compute(a.relation, null, oldWidget.get(mainProperty), a.value);
 
               if(widgets.has(newState.id)) {
                 problems.push(`id ${newState.id} already in use, ignored.`);
@@ -2057,17 +2078,38 @@ export class Widget extends StateManaged {
             }
           } else {
             for(const w of collections[collection]) {
-              if (w.readOnlyProperties().has(a.property)) {
-                problems.push(`Tried setting read-only property ${a.property}.`);
+              if (w.readOnlyProperties().has(mainProperty)) {
+                problems.push(`Tried setting read-only property ${mainProperty}.`);
                 continue;
               }
 
-              if(a.relation == '+' && w.get(String(a.property)) == null)
-                a.relation = '=';
-              if(a.relation == '+' && a.value == null)
+              const property = w.get(mainProperty);
+              const oldValue = keyPath.length ? getNestedValue(property, keyPath) : property;
+              // a local relation: falling back to = for one widget must not change it for the next
+              const relation = a.relation == '+' && oldValue == null ? '=' : a.relation;
+              if(relation == '+' && a.value == null) {
                 problems.push(`null value being appended, SET ignored`);
-              else
-                await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
+              } else {
+                const newValue = await compute(relation, null, oldValue === undefined ? null : oldValue, a.value);
+                if(!keyPath.length) {
+                  await w.set(mainProperty, newValue);
+                } else {
+                  const copy = property !== null && typeof property == 'object' ? JSON.parse(JSON.stringify(property)) : property;
+                  const where = `Property ${JSON.stringify(mainProperty)} of widget ${JSON.stringify(w.get('id'))}`;
+                  const keyProblems = [];
+                  const keyWarnings = [];
+                  const newProperty = setNestedValue(copy, keyPath, newValue, keyProblems, keyWarnings);
+                  if(keyProblems.length) {
+                    problems.push(...keyProblems.map(p=>`${where}: ${p}`));
+                  } else {
+                    // only report the replacement once it actually happened - a refused key changes nothing
+                    if(property !== null && typeof property != 'object')
+                      problems.push(`Warning: ${where} was not an object - its value ${JSON.stringify(property)} was replaced.`);
+                    problems.push(...keyWarnings.map(p=>`Warning: ${where}: ${p}`));
+                    await w.set(mainProperty, newProperty);
+                  }
+                }
+              }
             }
           }
         }
