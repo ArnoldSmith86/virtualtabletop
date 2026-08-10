@@ -193,7 +193,7 @@ test('moving the mouse while a DELAY is running does not drag the clicked widget
   // without this the test would pass without ever testing anything if the hover
   // took longer than the DELAY, because the routine would already be over
   await t.expect(await markedWidgets()).eql([]);
-  await expectEventually(t, markedWidgets, [ 'delay' ], null, 4*delayDuration);
+  await expectEventually(t, markedWidgets, [ 'delay' ], 'the click routine never finished', 4*delayDuration);
   await expectEventually(t, ()=>widgetPosition('delay'), [ 100, 100 ]);
 });
 
@@ -207,7 +207,7 @@ test('releasing the button while a leaveRoutine is running still drops the widge
   // where the button came up instead of walking through them
   await startDrag(200);
   await releaseDrag();
-  await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ], null, 4*leaveDuration);
+  await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ], 'the card was not dropped into the holder', 4*leaveDuration);
 });
 
 test('releasing a dragged widget while an overlay is open still ends the drag', async t => {

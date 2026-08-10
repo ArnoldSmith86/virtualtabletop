@@ -53,10 +53,11 @@ async function endDrag(target) {
 async function inputHandler(name, e) {
   // Releasing the mouse button always ends the drag. Forget the drag target right
   // away, before handleInput() can return early or await a click routine that runs
-  // for a long time (DELAY, INPUT, ...) - the mouse movements arriving until it
-  // returns must not be treated as a drag of the clicked widget. endDrag() then
-  // takes care of a mouseup that never reached the drag handling at all. On touch
-  // devices mouseTarget is never set and mouseStatus alone does the same job.
+  // for a long time (DELAY, INPUT, ...) - until then the released widget would stay
+  // the target of everything below, and of the pointer position sent to the server.
+  // endDrag() then takes care of a mouseup that never reached the drag handling at
+  // all. Touch has no equivalent of mouseTarget, so a touchend is left to
+  // handleInput(), which finds its widget through the element the touch started on.
   const dragTarget = mouseTarget;
   if(name == 'mouseup')
     mouseTarget = null;
