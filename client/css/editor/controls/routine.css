@@ -310,6 +310,23 @@
   white-space: normal;
 }
 
+/* a parameter the engine skips because of how another one is set: it is part of
+   what the game says, so it stays in the sentence - struck through and faded, so
+   that "why is my target doing nothing" is answered by looking at the card. The
+   strike-through is on the words rather than on the chips, which keep their own
+   colors and stay clickable. */
+.routine-editor-clause-ignored {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* the "!" of a skipped parameter is the red of a problem rather than the orange
+   of an old name: nothing the operation was told to do here is happening */
+.routine-editor-parameter-warning.ignored {
+  color: var(--textHighlightColor3);
+  text-decoration: none;
+}
+
 /* the marker that takes an option back out: a minus in a circle rather than a
    bare x, which reads as the letter x when it sits at the end of a word, and it
    turns red on the way to being clicked because it removes something */

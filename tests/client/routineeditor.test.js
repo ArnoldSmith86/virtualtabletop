@@ -240,29 +240,42 @@ describe('operation rendering', () => {
     expect(dom.querySelector('[data-parameter="face"]')).not.toBeNull();
   });
 
-  test('an ignored parameter is neither in the sentence nor offered as an option', () => {
+  test('an ignored parameter is never offered as an option', () => {
     const move = editorForOperation({ func: 'MOVE', fillTo: 3, count: 2 });
     move.setOperationDetails({ state: {} }, { func: 'MOVE', fillTo: 3, count: 2 }, [], []);
     expect(move.ignoredParameters().count).toMatch(/top up to/);
-    expect(move.clauses().map(clause => clause.id)).not.toContain('count');
-    expect(move.render().querySelector('[data-parameter="count"]')).toBeNull();
+    expect(move.clauses().find(clause => clause.id == 'ignored-count').offer).toBe(false);
+    // one the operation does not have at all is not in the sentence either
+    const plain = editorForOperation({ func: 'MOVE', fillTo: 3 });
+    plain.setOperationDetails({ state: {} }, { func: 'MOVE', fillTo: 3 }, [], []);
+    expect(plain.render().querySelector('[data-parameter="count"]')).toBeNull();
   });
 
-  test('the sentence leaves out parameters the engine ignores', () => {
+  test('a parameter the engine ignores stays in the sentence, struck through and with the reason behind it', () => {
+    // the engine works on what a holder holds and never looks at the widgets
+    // themselves then - so a target that is there but does nothing says so
+    // instead of disappearing out of the sentence
+    const set = renderOperation({ func: 'SET', holder: 'h1', target: 'stuff', property: 'x', value: 1 }).dom;
+    expect(set.textContent).toContain('what is in h1');
+    const chip = set.querySelector('[data-parameter="target"]');
+    expect(chip.closest('.routine-editor-clause-ignored')).not.toBeNull();
+    const warning = set.querySelector('.routine-editor-parameter-warning.ignored');
+    expect(warning.previousSibling).toBe(chip);
+    expect(warning.title).toContain('does nothing');
+
     // FLIP flips to the given face, so the cycle direction has no effect
     const flip = renderOperation({ func: 'FLIP', holder: 'h1', face: 1, faceCycle: 'backward' }).dom;
     expect(flip.textContent).toContain('face up');
-    expect(flip.querySelector('[data-parameter="faceCycle"]')).toBeNull();
-
-    // the engine works on what a holder holds and never looks at the widgets
-    // themselves then
-    const set = renderOperation({ func: 'SET', holder: 'h1', target: 'stuff', property: 'x', value: 1 }).dom;
-    expect(set.textContent).toContain('what is in h1');
-    expect(set.querySelector('[data-parameter="target"]')).toBeNull();
+    expect(flip.querySelector('[data-parameter="faceCycle"]').closest('.routine-editor-clause-ignored')).not.toBeNull();
 
     // an explicitly set count is ignored while MOVE fills up to a number
     const move = renderOperation({ func: 'MOVE', fromHolder: 'h1', toHolder: 'h2', fillTo: 3, count: 2 }).dom;
-    expect(move.querySelector('[data-parameter="count"]')).toBeNull();
+    expect(move.querySelector('[data-parameter="count"]').closest('.routine-editor-clause-ignored')).not.toBeNull();
+
+    // and the old spelling of the widgets is skipped for the same reason the
+    // current one is
+    const old = renderOperation({ func: 'SET', holder: 'h1', collection: 'aces', property: 'x', value: 1 }).dom;
+    expect(old.querySelector('[data-parameter="collection"]').closest('.routine-editor-clause-ignored')).not.toBeNull();
   });
 
   test('a deprecated parameter is editable in the sentence and warns about itself', () => {
@@ -310,7 +323,7 @@ describe('operation rendering', () => {
       editor.setOperationDetails({ state: {} }, operation, [], []);
       return editor.render().querySelector('.routine-editor-sentence').textContent;
     };
-    expect(words({ func: 'MOVE', fromHolder: null, toHolder: 'h1' })).toMatch(/all widgets from holder\(s\)\/collection to h1/);
+    expect(words({ func: 'MOVE', fromHolder: null, toHolder: 'h1' })).toMatch(/all widgets from a holder or a group of them to h1/);
     expect(words({ func: 'MOVE', fromHolder: 'deck', toHolder: 'h1' })).toMatch(/1 widget from deck to h1/);
     // switching back to "from a holder" writes the 1 down instead of leaving the
     // sentence and the engine to disagree about it
@@ -348,6 +361,76 @@ describe('operation rendering', () => {
     const move = editorForOperation({ func: 'MOVE', fromHolder: 'h1', target: 'stuff' });
     move.setOperationDetails({ state: {} }, { func: 'MOVE', fromHolder: 'h1', target: 'stuff' }, [], []);
     expect(move.ignoredParameters().target).toMatch(/fromHolder/);
+  });
+
+  test('every operation that can work on the content of a holder offers it under the same phrase', () => {
+    // the point of one vocabulary is that nobody has to remember which operation
+    // they are in - so the editor offers the holder the same way everywhere,
+    // rather than only through a chip on the ones that had it longest
+    for(const func of [ 'CALL', 'CANVAS', 'CLICK', 'CLONE', 'DELETE', 'FLIP', 'GET', 'LABEL', 'ROTATE', 'SET', 'SHUFFLE', 'SORT', 'TIMER' ]) {
+      const editor = editorForOperation({ func });
+      editor.setOperationDetails({ state: {} }, { func }, [], []);
+      const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false).map(clause => clause.label);
+      expect([ func, offered.indexOf('what is in a holder') != -1 ]).toEqual([ func, true ]);
+    }
+    // MOVE, MOVEXY, COUNT and RECALL ask it as a way of working instead, because
+    // their whole sentence reads differently with one - and there it is the
+    // phrase the sentence starts with that offers it
+    expect(routineOperationVariantChoices({ func: 'COUNT' }).map(choice => choice.label)).toContain('Count what is in a holder');
+    expect(routineOperationVariantChoices({ func: 'MOVE' }).map(choice => choice.label)).toContain('Move widgets from a holder');
+    const movexy = editorForOperation({ func: 'MOVEXY' });
+    movexy.setOperationDetails({ state: {} }, { func: 'MOVEXY' }, [], []);
+    expect(movexy.clauses().map(clause => clause.label)).toContain('what is in a holder');
+  });
+
+  test('a widget id written into a widgets parameter reads as that widget, not as a group nobody made', () => {
+    const words = (operation, collections = []) => {
+      const sentence = renderOperation(operation, [], collections).dom.querySelector('.routine-editor-sentence').cloneNode(true);
+      for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+        icon.remove();
+      return sentence.textContent.replace(/\s+/g, ' ').trim();
+    };
+    widgets.set('canvas1', {});
+    try {
+      // the engine reads a string that names no collection but does name a
+      // widget as that one widget, so the recommended spelling may not describe
+      // itself less accurately than the deprecated one it replaces
+      expect(words({ func: 'CANVAS', target: 'canvas1', mode: 'set', value: 3 })).toBe('Set the value of canvas1 to 3');
+      expect(words({ func: 'CANVAS', canvas: 'canvas1', mode: 'set', value: 3 })).toBe('Set the value of canvas1 to 3');
+      // and it is one widget in the colors of the sentence as well
+      expect(renderOperation({ func: 'CANVAS', target: 'canvas1' }).dom.querySelector('[data-parameter="target"]').className).toContain('routine-editor-parameter-widget');
+      // a name no widget in the room has is a group
+      expect(words({ func: 'CANVAS', target: 'myCanvases', mode: 'set', value: 3 })).toBe('Set the value of the canvases called myCanvases to 3');
+      // and so is a group an earlier operation made, whatever it is called
+      expect(words({ func: 'CANVAS', target: 'canvas1', mode: 'set', value: 3 }, [ 'canvas1' ])).toBe('Set the value of the canvases called canvas1 to 3');
+    } finally {
+      widgets.delete('canvas1');
+    }
+  });
+
+  test('a count spent per holder says so, and a holder still being filled in reads as one', () => {
+    const sentenceWords = operation => {
+      const sentence = renderOperation(operation).dom.querySelector('.routine-editor-sentence').cloneNode(true);
+      for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+        icon.remove();
+      return sentence.textContent.replace(/\s+/g, ' ').trim();
+    };
+    // "Rotate 1 widget in holderA and holderB" turns two widgets, which is the
+    // one thing about holders a game author gets wrong - so the sentence says it
+    expect(sentenceWords({ func: 'ROTATE', holder: [ 'h1', 'h2' ], count: 1, angle: 45 })).toBe('Rotate 1 widget in each of h1 and h2 by 45 degrees');
+    expect(sentenceWords({ func: 'ROTATE', holder: 'h1', count: 1, angle: 45 })).toBe('Rotate 1 widget in h1 by 45 degrees');
+    // taking everything out of both of them is not a number spent twice
+    expect(sentenceWords({ func: 'FLIP', holder: [ 'h1', 'h2' ], face: 1 })).toBe('Turn all widgets in h1 and h2 face up');
+    expect(sentenceWords({ func: 'FLIP', holder: [ 'h1', 'h2' ], face: 1, count: 1 })).toBe('Turn 1 widget in each of h1 and h2 face up');
+    // MOVE spends it on both sides: one out of every source, one into every
+    // destination - unless it is topping them up, where the option says it
+    expect(sentenceWords({ func: 'MOVE', fromHolder: [ 'h1', 'h2' ], toHolder: 'd1', count: 1 })).toBe('Move 1 widget from each of h1 and h2 to d1');
+    expect(sentenceWords({ func: 'MOVE', target: 'aces', toHolder: [ 'd1', 'd2' ], count: 1 })).toBe('Move 1 of the widgets called aces to each of d1 and d2');
+    expect(sentenceWords({ func: 'MOVE', target: 'aces', toHolder: [ 'd1', 'd2' ], fillTo: 3 })).toBe('Move the widgets called aces to d1 and d2 until each of them holds 3');
+    expect(sentenceWords({ func: 'CANVAS', holder: [ 'h1', 'h2' ], count: 1 })).toBe('Clear what is in h1 and h2, for 1 canvas in each of them');
+    // a holder the option has only just added is a holder, even while it is
+    // still a blank: "Rotate 1 of in a holder" is no sentence
+    expect(sentenceWords({ func: 'ROTATE', holder: null, angle: 45 })).toBe('Rotate 1 widget in a holder or a group of them by 45 degrees');
   });
 
   test('FLIP marks face as ignored while the cycle picks a random one', () => {
@@ -464,7 +547,7 @@ describe('operation rendering', () => {
       return editor.getTemplate();
     };
     expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('Cycle the face of');
-    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} of][ {collection}] {holder,target} {face}');
+    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} of][ in {holder}][ the widgets called {collection}][ the widgets called {target}] {face}');
     expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
     // an old spelling is the option that swaps the current name for it, so the
     // template holds both: the words it adds and the ones it replaces
@@ -479,7 +562,7 @@ describe('operation rendering', () => {
     expect(template({ func: 'SELECT' })).toContain('Pick');
     expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('{seconds} seconds');
     expect(template({ func: 'TIMER' })).toContain('Toggle on/off');
-    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Shuffle[ {collection}] {holder,source}[ {mode}]');
+    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Shuffle[ what is in {holder}][ the widgets called {collection}][ the widgets called {source}][ {mode}]');
     expect(template({ func: 'SHUFFLE', mode: 'riffle' })).toContain('[ {mode}, {modeValue} time]');
     expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('a random seat');
     expect(template({ func: 'LABEL', label: 'l1' })).toContain('[ {label,collection}]');
@@ -584,19 +667,19 @@ describe('operation rendering', () => {
     [ { func: 'COUNT', holder: 'hand1', variable: 'cards' }, 'Count what is in hand1 and remember it as cards' ],
     [ { func: 'FLIP', holder: 'deck1', face: 0 }, 'Turn all widgets in deck1 face down' ],
     [ { func: 'FLIP', holder: 'deck1', face: 1, count: 3 }, 'Turn 3 widgets in deck1 face up' ],
-    [ { func: 'FLIP', collection: 'aces', face: 2 }, 'Turn aces to face 2' ],
+    [ { func: 'FLIP', collection: 'aces', face: 2 }, 'Turn the widgets called aces to face 2' ],
     [ { func: 'FLIP', faceCycle: 'backward' }, 'Cycle the face of the picked widgets backward' ],
     [ { func: 'FLIP', faceCycle: 'random', count: 2 }, 'Cycle the face of 2 of the picked widgets to a random face' ],
     [ { func: 'CLICK', collection: 'myPick', count: 2, mode: 'ignoreClickRoutine' }, 'Click the widgets called myPick, 2 times, but do not run their click routines' ],
     [ { func: 'RECALL', holder: 'deck1' }, 'Gather all the cards back into deck1' ],
     [ { func: 'RECALL', holder: 'deck1', owned: false }, 'Gather all the cards back into deck1, except the cards players hold' ],
-    [ { func: 'SHUFFLE', holder: 'deck1' }, 'Shuffle deck1' ],
+    [ { func: 'SHUFFLE', holder: 'deck1' }, 'Shuffle what is in deck1' ],
     // the technique is an option of the one sentence, and it brings what it needs
-    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'overhand', modeValue: 3 }, 'Shuffle deck1 overhand, 3 times' ],
-    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'reverse' }, 'Shuffle deck1 by reversing the order' ],
-    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'seeded', modeValue: 7 }, 'Shuffle deck1 the same way every time with the seed 7' ],
-    [ { func: 'SORT', holder: 'deck1' }, 'Sort deck1' ],
-    [ { func: 'SORT', holder: 'deck1', key: 'value', reverse: true }, 'Sort deck1 by value, biggest first' ],
+    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'overhand', modeValue: 3 }, 'Shuffle what is in deck1 overhand, 3 times' ],
+    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'reverse' }, 'Shuffle what is in deck1 by reversing the order' ],
+    [ { func: 'SHUFFLE', holder: 'deck1', mode: 'seeded', modeValue: 7 }, 'Shuffle what is in deck1 the same way every time with the seed 7' ],
+    [ { func: 'SORT', holder: 'deck1' }, 'Sort what is in deck1' ],
+    [ { func: 'SORT', holder: 'deck1', key: 'value', reverse: true }, 'Sort what is in deck1 by value, biggest first' ],
     [ { func: 'TURN' }, 'Pass the turn on' ],
     [ { func: 'TURN', turnCycle: 'random' }, 'Give the turn to a random seat' ],
     [ { func: 'DELETE' }, 'Delete the picked widgets' ],
@@ -627,9 +710,9 @@ describe('operation rendering', () => {
     [ { func: 'SET', target: [ 'card1' ], property: 'clickable', relation: '!' }, 'Toggle clickable of card1' ],
     [ { func: 'CLICK', target: 'myPick' }, 'Click the widgets called myPick' ],
     [ { func: 'COUNT', target: 'aces' }, 'Count the widgets called aces' ],
-    [ { func: 'FLIP', target: 'aces', face: 2 }, 'Turn aces to face 2' ],
-    [ { func: 'SHUFFLE', source: 'aces' }, 'Shuffle aces' ],
-    [ { func: 'SORT', source: 'aces', key: 'value' }, 'Sort aces by value' ],
+    [ { func: 'FLIP', target: 'aces', face: 2 }, 'Turn the widgets called aces to face 2' ],
+    [ { func: 'SHUFFLE', source: 'aces' }, 'Shuffle the widgets called aces' ],
+    [ { func: 'SORT', source: 'aces', key: 'value' }, 'Sort the widgets called aces by value' ],
     [ { func: 'CALL', routine: 'dealRoutine', holder: 'seat1' }, 'Run the routine dealRoutine of what is in seat1' ],
     [ { func: 'TIMER', target: [ 'clock1' ], mode: 'start' }, 'Start clock1' ],
     [ { func: 'RECALL', target: 'deck1' }, 'Gather the cards of deck1 back to where the deck is' ],
@@ -682,7 +765,7 @@ describe('picking how an operation works and which options it uses', () => {
     expect(renderOperation({ func: 'INPUT', fields: [] }).dom.textContent).toContain('Nothing to fill in yet');
     // a parameter naming widgets says what it takes: a holder, or a collection
     // naming several of them
-    expect(renderOperation({ func: 'MOVE', fromHolder: 'deck1' }).dom.textContent).toContain('from deck1 to holder(s)/collection');
+    expect(renderOperation({ func: 'MOVE', fromHolder: 'deck1' }).dom.textContent).toContain('from deck1 to a holder or a group of them');
     // and a value that has a wording of its own is not a blank
     expect(renderOperation({ func: 'SELECT', property: 'parent' }).dom.querySelector('.routine-editor-parameter-missing')).toBeNull();
   });
@@ -802,8 +885,10 @@ describe('picking how an operation works and which options it uses', () => {
     expect(editor.ignoredParameters()).toEqual({});
     expect(dom.textContent).toContain('ding.mp3');
     expect(editor.undeterminedBy()).toEqual([ 'silence' ]);
-    // with a value the editor can read, the parameters the engine skips stay out
-    expect(renderOperation({ func: 'AUDIO', source: 'ding.mp3', silence: true }).dom.textContent).not.toContain('ding.mp3');
+    // with a value the editor can read, the parameters the engine skips are
+    // struck through rather than dropped: the sound is still written down
+    const silenced = renderOperation({ func: 'AUDIO', source: 'ding.mp3', silence: true }).dom;
+    expect(silenced.querySelector('[data-parameter="source"]').closest('.routine-editor-clause-ignored')).not.toBeNull();
   });
 
   test('what a value is compared to decides whether it can be told apart', () => {
@@ -933,7 +1018,7 @@ describe('picking how an operation works and which options it uses', () => {
     const sentence = renderOperation(operation).dom.querySelector('.routine-editor-sentence').cloneNode(true);
     for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
       icon.remove();
-    expect(sentence.textContent.replace(/\s+/g, ' ').trim()).toBe('Move 1 widget from holder(s)/collection to discard');
+    expect(sentence.textContent.replace(/\s+/g, ' ').trim()).toBe('Move 1 widget from a holder or a group of them to discard');
   });
 
   test('the way a SHUFFLE goes about it is an option that brings what it needs', () => {
@@ -983,7 +1068,7 @@ describe('picking how an operation works and which options it uses', () => {
     // the engine uses there - the sentence says it from the start instead of
     // changing from "all" to "1" the moment a holder is picked
     expect(newOperation('MOVE')).toEqual({ func: 'MOVE', fromHolder: null, count: 1 });
-    expect(sentenceOf(newOperation('MOVE'))).toBe('Move 1 widget from holder(s)/collection to holder(s)/collection');
+    expect(sentenceOf(newOperation('MOVE'))).toBe('Move 1 widget from a holder or a group of them to a holder or a group of them');
     // everything else is nothing but its func
     expect(newOperation('SHUFFLE')).toEqual({ func: 'SHUFFLE' });
   });
@@ -999,7 +1084,8 @@ describe('picking how an operation works and which options it uses', () => {
     // and "all" is not a limit at all, so the option that limits it is off
     const flip = editorForOperation({ func: 'FLIP', face: 0 });
     flip.setOperationDetails({ state: {} }, { func: 'FLIP', face: 0 }, [], []);
-    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause) && clause.offer !== false).map(clause => clause.label)).toEqual([ 'at most a certain number of them' ]);
+    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause) && clause.offer !== false).map(clause => clause.label))
+      .toEqual([ 'at most a certain number of them', 'what is in a holder', 'a named group of widgets' ]);
   });
 
   // which face is one thing a FLIP says, not four ways of working: the two faces
@@ -1249,7 +1335,7 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'CALL' });
     editor.setOperationDetails({ state: {} }, { func: 'CALL' }, [], []);
     const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false);
-    expect(offered.map(clause => clause.label)).toEqual([ 'of what is in a holder', 'of another widget', 'pass values in', 'name the result', 'and do not finish this routine' ]);
+    expect(offered.map(clause => clause.label)).toEqual([ 'what is in a holder', 'of another widget', 'pass values in', 'name the result', 'and do not finish this routine' ]);
     expect(renderOperation({ func: 'CALL', routine: 'dealRoutine', 'return': false }).dom.textContent).toContain('and do not finish this routine');
     expect(renderOperation({ func: 'CALL', routine: 'dealRoutine' }).dom.textContent).not.toContain('waiting');
     // a game that did rename them still reads what it does
@@ -3284,9 +3370,9 @@ describe('the words and the units of an operation', () => {
     expect(sentenceWords({ func: 'CANVAS', count: 3 })).toBe('Clear the picked canvases, for 3 canvases');
     expect(sentenceWords({ func: 'CANVAS', count: 1 })).toBe('Clear the picked canvases, for 1 canvas');
     expect(sentenceWords({ func: 'CANVAS', count: -2 })).toBe('Clear the picked canvases, for all but 2 canvases');
-    // and 0 is the count that means all: it is left out of the sentence and the
-    // list view says why, so nobody reads it as "no canvases"
-    expect(sentenceWords({ func: 'CANVAS', count: 0 })).toBe('Clear the picked canvases');
+    // and 0 is the count that means all: the sentence keeps it, struck through,
+    // and the "!" behind it says why - so nobody reads it as "no canvases"
+    expect(sentenceWords({ func: 'CANVAS', count: 0 })).toBe('Clear the picked canvases, count all');
     expect(editorFor({ func: 'CANVAS', count: 0 }).ignoredParameters().count).toContain('0 means all widgets');
   });
 

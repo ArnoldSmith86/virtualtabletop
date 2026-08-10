@@ -166,8 +166,19 @@ const widgetSlots = '{{holder}}{{oldTarget}}{{target}}';
 
 // what a blank naming holders says: a holder is what belongs there, and a
 // collection naming several of them does just as well, so the word says both -
-// the shape the collection type's own hint already has
-const holderHint = 'holder(s)/collection';
+// in the plain words the rest of the sentence is written in rather than in a
+// slash-and-parenthesis shorthand nothing else around it uses
+const holderHint = 'a holder or a group of them';
+
+// the parameter every operation that works on the content of widgets has. It is
+// one function because eighteen operations declare it and all of them mean the
+// same thing by it - and because the question its popup asks has to say which of
+// the two widget parameters is being edited: both used to open under "which
+// widgets", which is the one thing the reader of a new holder/target pair needs
+// told apart.
+function holderSpec(options={}) {
+  return Object.assign({ type: 'collection', default: null, widgetType: 'holder', hint: holderHint, question: 'what to look inside' }, options);
+}
 
 // The option that switches an operation over to the content of a holder. It
 // starts as a blank to fill in, because no holder is the obvious one to name and
@@ -183,6 +194,59 @@ function holderClause(options={}) {
   };
 }
 
+// whether a holder parameter may name more than one holder: a list of two or a
+// group nobody can count from here. A single id and a value the routine works
+// out while it runs are one holder as far as the sentence can tell, and it says
+// the shorter thing rather than guessing at a plural.
+function namesSeveralHolders(value, editor) {
+  if(Array.isArray(value))
+    return value.length > 1;
+  // a group an earlier operation made may hold any number of holders; anything
+  // else the editor cannot count is one holder as far as the sentence goes
+  return Boolean(editor && editor.namesCollection(value));
+}
+
+// what a count reads as next to a holder: the engine spends it on every widget
+// the holder names rather than on the lot ("1 widget in holderA and holderB"
+// turns two), so wherever more than one holder may be named the sentence says
+// "in each of" instead of leaving the reader to find that out from a tutorial.
+function holderCountedClause(options={}) {
+  const parameter = options.parameter || 'holder';
+  return holderClause(Object.assign({
+    template: (v, editor)=>namesSeveralHolders(v(parameter), editor) && countIsLimited(v) ? ` in each of {${parameter}}` : ` in {${parameter}}`
+  }, options));
+}
+
+// the same for the operations that word the count in an option of their own
+// rather than in front of the holder ("for 1 canvas in each of them")
+function perHolderTail(v, editor, parameter='holder') {
+  return namesSeveralHolders(v(parameter), editor) ? ' in each of them' : '';
+}
+
+// the word that says a count is spent on every holder in front of a chip that
+// names them ("from each of holderA and holderB"). applies is what the count
+// makes of it: taking everything out of two holders is the same thing said
+// twice, so the word is only there while the number really is spent per holder.
+function eachOfHolders(v, editor, parameter, applies=true) {
+  return applies && namesSeveralHolders(v(parameter), editor) ? 'each of ' : '';
+}
+
+// what a MOVE with more than one destination does with its count: it deals to
+// them one after the other, so a limited count is spent on every one of them
+// ("1 widget to each of the seats"). Everything at once fills the first
+// destination and leaves the rest empty, which is not "each" - and while the
+// destinations are topped up, the option that tops them up says it instead.
+function eachDestination(v, editor) {
+  return eachOfHolders(v, editor, holderNameInUse(v, 'toHolder', 'to'), countIsLimited(v) && !v('fillTo'));
+}
+
+// where a sentence names the widgets in a list, the clause behind them starts
+// with a comma: "in holderA and holderB and remember it as n" is three ands in
+// a row and no way to see where the list ends
+function rememberedResult(...names) {
+  return v=>names.some(name=>Array.isArray(v(name)) && v(name).length > 1) ? ', and remember it as {variable}' : ' and remember it as {variable}';
+}
+
 // The widgets an operation works on are the ones the operations before it picked
 // unless a game says otherwise, so the sentence says so in plain words and the
 // option is what names a group instead (the SET wording, used by every operation
@@ -193,9 +257,17 @@ function namedGroupClause(parameter='target', whenOff=' the picked widgets', nou
   return {
     id: parameter, label: `a named group of ${noun}`,
     active: v=>v(parameter) != 'DEFAULT',
-    template: v=>Array.isArray(v(parameter)) ? ` {${parameter}}` : ` the ${noun} called {${parameter}}`,
+    template: (v, editor)=>namesGroup(v(parameter), editor) ? ` the ${noun} called {${parameter}}` : ` {${parameter}}`,
     whenOff, add: { [parameter]: '' }
   };
+}
+
+// whether what a widgets parameter holds is a group to be called by its name: a
+// list of ids is the widgets themselves, and so is a string naming a widget of
+// the room rather than a collection - which is how the engine reads it, so the
+// sentence may not call it a group nobody ever created
+function namesGroup(value, editor) {
+  return !Array.isArray(value) && !(editor && editor.namesOneWidget(value));
 }
 
 // the old spellings that named a single widget rather than a group of them: what
@@ -214,9 +286,9 @@ function oldNameSpeaks(oldNames, parameter, holderParameter) {
 // what the old spelling reads as: the widget it names, or the group it names
 function oldTargetTemplate(oldNames, noun) {
   const slot = oldNames.join(',');
-  return v=>{
+  return (v, editor)=>{
     const named = oldNames.find(name=>v(name) != null) || oldNames[0];
-    return widgetIDParameterNames.indexOf(named) != -1 || Array.isArray(v(named)) ? ` {${slot}}` : ` the ${noun} called {${slot}}`;
+    return widgetIDParameterNames.indexOf(named) != -1 || !namesGroup(v(named), editor) ? ` {${slot}}` : ` the ${noun} called {${slot}}`;
   };
 }
 
@@ -232,7 +304,10 @@ function targetClauses(oldNames, options={}) {
   const whenOff = options.whenOff || ` the picked ${noun}`;
   const speaks = oldNameSpeaks(oldNames, parameter, holderParameter);
   return [
-    { id: 'oldTarget', label: `the ${noun}, under their old name`, offer: false,
+    // parameter and oldNames are what ignoredParameters() reads to know that the
+    // old spelling of the widgets is skipped for the same reason the current one
+    // is - the engine reads neither of them while a holder is there
+    { id: 'oldTarget', label: `the ${noun}, under their old name`, offer: false, parameter, oldNames,
       active: speaks, template: oldTargetTemplate(oldNames, noun) },
     Object.assign(namedGroupClause(parameter, whenOff, noun), {
       // while the old name is the one the engine reads, the current one says
@@ -243,20 +318,10 @@ function targetClauses(oldNames, options={}) {
   ];
 }
 
-// The same for the operations whose sentence holds the widgets in a single chip
-// that switches between a holder and the widgets themselves ("2 widgets in h1",
-// "2 of the picked widgets"): there the old spelling replaces that chip rather
-// than a group of words, so it is worded as the chip it stands in for.
-function deprecatedTargetSlot(oldNames, slot, options={}) {
-  const parameter = options.parameter || 'target';
-  const noun = options.noun || 'widgets';
-  const holderParameter = options.holderParameter || 'holder';
-  return {
-    id: 'oldTarget', label: `the ${noun}, under their old name`, offer: false,
-    active: oldNameSpeaks(oldNames, parameter, holderParameter),
-    template: ` {${oldNames.join(',')}}`,
-    whenOff: slot
-  };
+// which of the two spellings of a holder parameter the engine reads, as a name
+// rather than as a chip - what the wordings around the chip have to ask about
+function holderNameInUse(v, current, old) {
+  return v(current) == null && v(old) != null ? old : current;
 }
 
 // which of the two names a sentence puts the chip on where the current one is
@@ -270,14 +335,15 @@ function currentOrOldName(v, current, old) {
 // what the orange ! behind an old spelling says: which name to write instead,
 // and why nothing about the game changes by writing it
 function deprecatedNameNote(oldName, newName) {
+  // one line per sentence: the info popup makes a paragraph of every line of a
+  // <pre>, so a sentence wrapped over two lines would be read as two paragraphs
+  // breaking mid-sentence
   return `
     <pre>
     ${oldName} is deprecated - please use ${newName} instead.
 
-    It still works so old games keep running: an operation that does not name ${newName} reads the
-    widgets it works on from ${oldName} instead. Both take the same two things - the name of a
-    collection or a list of widget ids - so everything ${oldName} can do can be said with ${newName},
-    under the name every operation now uses for it.
+    It still works so old games keep running: an operation that does not name ${newName} reads the widgets it works on from ${oldName} instead.
+    Both take the same two things - the name of a collection or a list of widget ids - so everything ${oldName} can do can be said with ${newName}, under the name every operation now uses for it.
     </pre>
   `;
 }
@@ -324,16 +390,18 @@ function isLiteralText(value) {
 // it away would hide the one thing the option is about.
 const pickedWidgets = { 'DEFAULT': 'the picked widgets' };
 
-// a holder is a place widgets are IN; a group of widgets is the widgets
-// themselves, so the sentence says "2 widgets in h1" for the one and "2 of the
-// picked widgets" for the other instead of calling a group a place ("in the
-// pick"). Both stay one slot, so the chip still switches between them.
-function holderPreposition(v) {
-  return v('holder') != null ? ' in' : '';
+// how many widgets an operation works on: a number of the widgets a holder
+// holds ("1 widget in h1"), or a cut off the group it was given ("1 of the
+// picked widgets") - the holder clause behind it says which holders.
+// Which of the two it is follows the option that is switched on rather than the
+// value it holds: a holder that is still a blank to fill in is one all the same,
+// and "1 of in a holder" is no sentence.
+function countedInHolderOrOfGroup(v, editor) {
+  return worksOnAHolder(v, editor) ? ` ${widgetsCounted(v, 'count')}` : ' {count} of';
 }
 
-function countedInHolderOrOfGroup(v) {
-  return v('holder') != null ? ` ${widgetsCounted(v, 'count')}` : ' {count} of';
+function worksOnAHolder(v, editor, parameter='holder') {
+  return editor ? editor.parameterIsSet(parameter) : v(parameter) != null;
 }
 
 // a list of ids reads as a list of ids, not as JSON
@@ -523,9 +591,8 @@ const skipParameter = { type: 'json', default: null, offer: false, hint: 'condit
   <pre>
   skip is deprecated - please use IF instead.
 
-  It still works so old games keep running: the operation is skipped whenever this value is
-  anything but an empty text, 0, false or null. An IF around the operation says the same thing
-  where everybody can see it, and it can guard more than one operation at a time.
+  It still works so old games keep running: the operation is skipped whenever this value is anything but an empty text, 0, false or null.
+  An IF around the operation says the same thing where everybody can see it, and it can guard more than one operation at a time.
   </pre>
 ` };
 const skipClause = { id: 'skip', label: 'skip it under a condition', offer: false, template: ', skipped when {skip}' };
@@ -580,7 +647,7 @@ const routineOperationMetadata = {
       { id: 'call', label: 'Run another routine', template: 'Run the routine {routine}{{holder}}{{oldTarget}}{{target}}' }
     ],
     clauses: [
-      holderClause({ label: 'of what is in a holder', template: ' of what is in {holder}' }),
+      holderClause({ template: ' of what is in {holder}' }),
       // the old spelling names one widget and nothing else, so it needs no
       // wording of its own beyond the widget it names
       { id: 'oldTarget', label: 'of another widget, under its old name', offer: false,
@@ -603,7 +670,7 @@ const routineOperationMetadata = {
       // the widgets whose routine is run - the operation's own widget while the
       // operation names none, which is what the engine fills in for it
       target: { type: 'collection', default: null, display: { 'null': 'this widget' }, describedBy: 'widget' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       widget: { type: 'collection', default: null, display: { 'null': 'this widget' }, deprecated: deprecatedNameNote('widget', 'target') },
       variable: { type: 'string', default: 'result' },
       collection: { type: 'collection', default: 'result' },
@@ -641,12 +708,13 @@ const routineOperationMetadata = {
     clauses: [
       holderClause(),
       ...targetClauses([ 'canvas', 'collection' ], { noun: 'canvases' }),
-      { id: 'count', label: 'at most a certain number of them', template: v=>`, for ${widgetsCounted(v, 'count', 'canvas', 'canvases')}`, add: { count: 1 } }
+      { id: 'count', label: 'at most a certain number of them', add: { count: 1 },
+        template: (v, editor)=>`, for ${widgetsCounted(v, 'count', 'canvas', 'canvases')}${perHolderTail(v, editor)}` }
     ],
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
       target: { type: 'collection', default: 'DEFAULT', widgetType: 'canvas', display: { 'DEFAULT': 'the picked canvases' }, describedBy: 'collection' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       canvas: { type: 'collection', default: null, widgetType: 'canvas', deprecated: deprecatedNameNote('canvas', 'target') },
       collection: { type: 'collection', default: null, widgetType: 'canvas', deprecated: deprecatedNameNote('collection', 'target') },
       // the engine cuts the list at the count (slice(0, a.count || 999999)), so
@@ -687,7 +755,7 @@ const routineOperationMetadata = {
     ],
     parameters: {
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       count: { type: 'number', default: 1, display: value=>value == 1 ? 'once' : `${value} times` },
       mode: { type: 'enum', values: [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ], default: 'respect', display: {
@@ -714,7 +782,7 @@ const routineOperationMetadata = {
     ],
     parameters: {
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'source' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       source: { type: 'collection', default: null, deprecated: deprecatedNameNote('source', 'target') },
       count: { type: 'number', default: 1 },
       xOffset: { type: 'number', default: 0 },
@@ -742,11 +810,11 @@ const routineOperationMetadata = {
     clauses: [
       ...targetClauses([ 'collection' ]).map(clause=>Object.assign(clause, { variants: [ 'target' ] })),
       { id: 'owner', label: 'owned by a player', template: ' owned by {owner}', add: { owner: '' } },
-      { id: 'variable', label: 'name the result', template: ' and remember it as {variable}' }
+      { id: 'variable', label: 'name the result', template: rememberedResult('holder', 'target') }
     ],
     parameters: {
       owner: { type: 'string', default: null, display: { 'null': 'anyone' } },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       variable: { type: 'string', default: 'COUNT' }
@@ -774,7 +842,7 @@ const routineOperationMetadata = {
     ],
     parameters: {
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') }
     },
     ignored: targetReplacedBy()
@@ -789,23 +857,24 @@ const routineOperationMetadata = {
       // apart is whether the operation names one at all, which a ${...} does
       { id: 'turn', label: 'Turn widgets to a face', fixed: [ 'faceCycle' ], match: v=>typeof v('face') == 'number' || isDynamicValue(v('face')),
         apply: operation=>{ delete operation.faceCycle; if(typeof operation.face != 'number' && !isDynamicValue(operation.face)) operation.face = 0; },
-        template: v=>`Turn{{count}}${holderPreposition(v)}{{oldTarget}} ${isNamedFace(v('face')) ? '{face}' : 'to face {face}'}` },
+        template: v=>`Turn{{count}}{{holder}}{{oldTarget}}{{target}} ${isNamedFace(v('face')) ? '{face}' : 'to face {face}'}` },
       { id: 'cycle', label: 'Cycle the face of widgets', fixed: [ 'face' ],
         apply: operation=>{ delete operation.face; },
-        template: v=>`Cycle the face of{{count}}${holderPreposition(v)}{{oldTarget}} {faceCycle}` }
+        template: 'Cycle the face of{{count}}{{holder}}{{oldTarget}}{{target}} {faceCycle}' }
     ],
     // how many widgets are turned is a limit rather than a quantity the operation
     // applies - it turns everything it was given unless a game says otherwise,
     // and it is worded as the cap it is, the same as everywhere else
     clauses: [
       { id: 'count', label: 'at most a certain number of them',
-        whenOff: v=>v('holder') != null ? ' all widgets' : '',
+        whenOff: (v, editor)=>worksOnAHolder(v, editor) ? ' all widgets' : '',
         active: countIsLimited, add: { count: 1 }, template: countedInHolderOrOfGroup },
-      deprecatedTargetSlot([ 'collection' ], ' {holder,target}')
+      holderCountedClause(),
+      ...targetClauses([ 'collection' ])
     ],
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ], display: countWords },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       face: { type: 'number', default: null, special: [ 0, 1 ], menu: true, otherLabel: 'a specific face…', display: flipFaceWords },
@@ -886,13 +955,13 @@ const routineOperationMetadata = {
     clauses: [
       holderClause(),
       ...targetClauses([ 'collection' ]).map(clause=>clause.id == 'target' ? Object.assign(clause, { label: 'from a named pick' }) : clause),
-      { id: 'variable', label: 'name the result', template: ' and remember it as {variable}' },
+      { id: 'variable', label: 'name the result', template: rememberedResult('holder', 'target') },
       { id: 'skipMissing', label: 'ignoring widgets without it', template: ', {skipMissing}', add: { skipMissing: true } }
     ],
     parameters: {
       property: { type: 'property', default: 'id' },
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       aggregation: { type: 'enum', values: [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ], default: 'first' },
       variable: { type: 'string', default: operation=>typeof operation.property == 'string' ? operation.property : 'id' },
@@ -1027,7 +1096,7 @@ const routineOperationMetadata = {
       // any widget with a text property can be labeled, not only a label, so the
       // picker opens on all of them the way every other widget parameter does
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       label: { type: 'collection', default: null, deprecated: deprecatedNameNote('label', 'target') },
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       value: { type: 'string', default: 0 },
@@ -1050,19 +1119,20 @@ const routineOperationMetadata = {
         // whether it is there), and the sentence may not say 1 where the engine
         // means all
         apply: operation=>{ delete operation.collection; delete operation.target; if(operation.fromHolder === undefined && operation.from === undefined) { operation.fromHolder = null; operation.count = 1; } },
-        template: v=>`Move ${v('fillTo') ? 'widgets' : widgetsCounted(v, 'count')} from ${currentOrOldName(v, 'fromHolder', 'from')} to ${currentOrOldName(v, 'toHolder', 'to')}{{fillTo}}{{face}}` },
+        template: (v, editor)=>`Move ${v('fillTo') ? 'widgets' : widgetsCounted(v, 'count')} from ${eachOfHolders(v, editor, holderNameInUse(v, 'fromHolder', 'from'))}${currentOrOldName(v, 'fromHolder', 'from')} to ${eachDestination(v, editor)}${currentOrOldName(v, 'toHolder', 'to')}{{fillTo}}{{face}}` },
       { id: 'target', label: 'Move the picked widgets', fixed: [ 'fromHolder' ],
         // a count of 1 is the default out of a holder and "all" for the picked
         // widgets, so switching drops it instead of carrying a number over into
         // a sentence where it now means something else
         apply: operation=>{ delete operation.fromHolder; delete operation.from; delete operation.count; },
-        template: v=>`Move{{count}}{{oldTarget}}{{target}} to ${currentOrOldName(v, 'toHolder', 'to')}{{fillTo}}{{face}}` }
+        template: (v, editor)=>`Move{{count}}{{oldTarget}}{{target}} to ${eachDestination(v, editor)}${currentOrOldName(v, 'toHolder', 'to')}{{fillTo}}{{face}}` }
     ],
     clauses: [
       { id: 'count', label: 'at most a certain number of them', variants: [ 'target' ],
         active: countIsLimited, add: { count: 1 }, template: ' {count} of' },
       ...targetClauses([ 'collection' ], { holderParameter: 'fromHolder' }).map(clause=>Object.assign(clause, { variants: [ 'target' ] })),
-      { id: 'fillTo', label: 'top up to n', template: ' until it holds {fillTo}', add: { fillTo: 1 } },
+      { id: 'fillTo', label: 'top up to n', add: { fillTo: 1 },
+        template: (v, editor)=>namesSeveralHolders(v(holderNameInUse(v, 'toHolder', 'to')), editor) ? ' until each of them holds {fillTo}' : ' until it holds {fillTo}' },
       // the first two faces are what a game turns cards to; the ones after them
       // are numbered, and a number needs the word that says what it is
       { id: 'face', label: 'to a face', add: { face: 0 },
@@ -1077,11 +1147,11 @@ const routineOperationMetadata = {
       // (widget.js dispatches on the value of fromHolder, not on whether it is
       // there - and it reads an old from into it before it looks)
       count: { type: 'number', default: operation=>operation.fromHolder || operation.from ? 1 : 'all', special: [ 'all' ], display: countWords },
-      fromHolder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint, describedBy: 'from' },
+      fromHolder: holderSpec({ describedBy: 'from', question: 'where to take them from' }),
       from: { type: 'collection', default: null, widgetType: 'holder', deprecated: deprecatedNameNote('from', 'fromHolder') },
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
-      toHolder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint, describedBy: 'to' },
+      toHolder: holderSpec({ describedBy: 'to', question: 'where to move them to' }),
       to: { type: 'collection', default: null, widgetType: 'holder', deprecated: deprecatedNameNote('to', 'toHolder') },
       face: { type: 'number', default: null, display: faceWords }
     },
@@ -1109,9 +1179,9 @@ const routineOperationMetadata = {
     clauses: [
       // where the widgets come from: the content of a holder, or the widgets
       // themselves - which is what the operation moves while it names no holder
-      Object.assign(holderClause({ parameter: 'fromHolder', label: 'out of a holder' }), {
+      Object.assign(holderClause({ parameter: 'fromHolder' }), {
         active: (v, isSet)=>isSet('fromHolder') || isSet('from'),
-        template: v=>` ${currentOrOldName(v, 'fromHolder', 'from')}`
+        template: (v, editor)=>` ${eachOfHolders(v, editor, holderNameInUse(v, 'fromHolder', 'from'), countIsLimited(v))}${currentOrOldName(v, 'fromHolder', 'from')}`
       }),
       namedGroupClause(),
       // z is a position, not the layer property a widget also has - so the option
@@ -1128,7 +1198,7 @@ const routineOperationMetadata = {
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
-      fromHolder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint, describedBy: 'from' },
+      fromHolder: holderSpec({ describedBy: 'from', question: 'where to take them from' }),
       from: { type: 'collection', default: null, widgetType: 'holder', deprecated: deprecatedNameNote('from', 'fromHolder') },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
@@ -1174,10 +1244,10 @@ const routineOperationMetadata = {
       { id: 'excludeCollection', label: 'leave some out', template: ', except {excludeCollection}' }
     ],
     parameters: {
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec({ question: 'where to gather them' }),
       // a deck, or a widget with a deck on it - the cards go back to where that
       // deck is rather than into the deck itself
-      target: { type: 'collection', default: null, widgetType: 'deck', hint: 'deck(s)/collection' },
+      target: { type: 'collection', default: null, widgetType: 'deck', hint: 'a deck or a group of them' },
       owned: { type: 'enum', values: [ true, false ], default: true, display: yesNo('including the cards players hold', 'except the cards players hold') },
       inHolder: { type: 'enum', values: [ true, false ], default: true, display: yesNo('including the cards inside other holders', 'only the cards on the table') },
       excludeCollection: { type: 'collection', default: null, display: pickedWidgets },
@@ -1202,17 +1272,18 @@ const routineOperationMetadata = {
     variants: [
       { id: 'add', label: 'Rotate widgets by an angle', fixed: [ 'mode' ],
         apply: operation=>{ delete operation.mode; },
-        template: v=>`Rotate${countedInHolderOrOfGroup(v)}${holderPreposition(v)}{{oldTarget}} by {angle} degrees` },
+        template: (v, editor)=>`Rotate${countedInHolderOrOfGroup(v, editor)}{{holder}}{{oldTarget}}{{target}} by {angle} degrees` },
       { id: 'set', label: 'Set the rotation of widgets', fixed: [ 'mode' ], match: v=>v('mode') == 'set',
         apply: operation=>{ operation.mode = 'set'; },
-        template: v=>`Set the rotation of${countedInHolderOrOfGroup(v)}${holderPreposition(v)}{{oldTarget}} to {angle} degrees` }
+        template: (v, editor)=>`Set the rotation of${countedInHolderOrOfGroup(v, editor)}{{holder}}{{oldTarget}}{{target}} to {angle} degrees` }
     ],
     clauses: [
-      deprecatedTargetSlot([ 'collection' ], ' {holder,target}')
+      holderCountedClause(),
+      ...targetClauses([ 'collection' ])
     ],
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       // an angle is picked from the ones games turn things by, all the way round:
@@ -1360,7 +1431,7 @@ const routineOperationMetadata = {
       // variant words this blank differently
       property: { type: 'property', default: 'parent' },
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       relation: { type: 'enum', values: [ '=', '+', '-', '*', '/', '!' ], default: '=' },
       // text in quotes is the difference between the number 1 and the digit 1;
@@ -1376,10 +1447,11 @@ const routineOperationMetadata = {
     // technique is an option of the one sentence rather than five ways of
     // working, and what it needs (how often, which seed) comes with it
     variants: [
-      { id: 'shuffle', label: 'Shuffle', template: 'Shuffle{{oldTarget}}{{mode}}' }
+      { id: 'shuffle', label: 'Shuffle', template: 'Shuffle{{holder}}{{oldTarget}}{{source}}{{mode}}' }
     ],
     clauses: [
-      deprecatedTargetSlot([ 'collection' ], ' {holder,source}', { parameter: 'source' }),
+      holderClause(),
+      ...targetClauses([ 'collection' ], { parameter: 'source' }),
       { id: 'mode', label: 'using a specific technique', active: v=>v('mode') != 'true random', add: { mode: 'overhand' },
         template: v=>{
           if(v('mode') == 'seeded')
@@ -1390,7 +1462,7 @@ const routineOperationMetadata = {
         } }
     ],
     parameters: {
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       // shuffling reorders the collection itself rather than changing any widget
       // property, so the widgets it works on are its source rather than its target
       source: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
@@ -1410,10 +1482,11 @@ const routineOperationMetadata = {
   SORT: {
     description: 'Sort widgets by a property',
     variants: [
-      { id: 'sort', label: 'Sort widgets', template: 'Sort{{oldTarget}}{{key}}' }
+      { id: 'sort', label: 'Sort widgets', template: 'Sort{{holder}}{{oldTarget}}{{source}}{{key}}' }
     ],
     clauses: [
-      deprecatedTargetSlot([ 'collection' ], ' {holder,source}', { parameter: 'source' }),
+      holderClause(),
+      ...targetClauses([ 'collection' ], { parameter: 'source' }),
       { id: 'key', label: 'by a property', template: ' by {key}' },
       { id: 'reverse', label: 'biggest first', template: ', {reverse}', add: { reverse: true } },
       { id: 'rearrange', label: 'without moving them', template: ', {rearrange}', add: { rearrange: false } },
@@ -1421,7 +1494,7 @@ const routineOperationMetadata = {
       { id: 'options', label: 'how text compares', template: ', with the comparison options {options}' }
     ],
     parameters: {
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       // sorting puts the collection itself into another order rather than
       // changing any widget property, so it reads its widgets from a source
       source: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
@@ -1489,7 +1562,7 @@ const routineOperationMetadata = {
     ],
     parameters: {
       target: { type: 'collection', default: 'DEFAULT', widgetType: 'timer', display: { 'DEFAULT': 'the picked timers' }, describedBy: 'collection' },
-      holder: { type: 'collection', default: null, widgetType: 'holder', hint: holderHint },
+      holder: holderSpec(),
       timer: { type: 'collection', default: null, widgetType: 'timer', deprecated: deprecatedNameNote('timer', 'target') },
       collection: { type: 'collection', default: null, widgetType: 'timer', deprecated: deprecatedNameNote('collection', 'target') },
       mode: { type: 'enum', values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ], default: 'toggle' },
@@ -2655,8 +2728,10 @@ class RoutineOperationEditor {
       return 'variable';
     if(parameterName == 'variable')
       return 'variable';
+    // a widgets parameter holding the id of one widget of the room is that
+    // widget, not a group - the same reading the sentence gives it
     if(spec && spec.type == 'collection')
-      return 'collection';
+      return this.namesOneWidget(value) ? 'widget' : 'collection';
     if(spec && spec.type == 'widgets')
       return 'widget';
     if(typeof value == 'number')
@@ -2704,7 +2779,11 @@ class RoutineOperationEditor {
     // a chip can stand for alternative parameters ({holder,collection}), so the
     // type preset of any of them applies to the picker the chip opens
     const typedSpec = parameterNames.map(name=>this.parameterSpec(name)).find(s=>s && s.widgetType);
-    const pickerOptions = { widgetType: typedSpec && typedSpec.widgetType };
+    // the two widget parameters of an operation ask different questions - "what
+    // to look inside" is not "which widgets", and a popup that says the same
+    // thing for both is the one place the difference had to be spelled out
+    const askingSpec = parameterNames.map(name=>this.parameterSpec(name)).find(s=>s && s.question);
+    const pickerOptions = { widgetType: typedSpec && typedSpec.widgetType, question: askingSpec && askingSpec.question };
     if(parameterNames[0] == 'func')
       return new RoutineOperationPopup();
     // a custom property has no declared type, so edit it as raw JSON - that also
@@ -2846,12 +2925,17 @@ class RoutineOperationEditor {
   // example is what the operation says once it is added, not everything it could.
   getExampleWithDefaults(variant) {
     const shown = variant || this.currentVariant();
+    const ignored = this.ignoredParameters();
     return this.resolveTemplate(shown.template)
       .replace(/\{\{([a-zA-Z0-9]+)\}\}/g, (_, id)=>{
         // an option that replaces words leaves its own wording behind - the one
         // this way of working has, where several of them share the same id
         const clause = (this.metadata.clauses || []).find(c=>c.id == id && (!c.variants || c.variants.indexOf(shown.id) != -1));
-        return clause && clause.whenOff ? this.resolveTemplate(clause.whenOff) : '';
+        // an option the operation is using is part of what its sentence would
+        // read as, and one the engine skips is part of nothing
+        if(!clause || this.templateParameters(clause.template).some(name=>Object.prototype.hasOwnProperty.call(ignored, name)))
+          return '';
+        return this.resolveTemplate(this.clauseIsActive(clause) ? clause.template : (clause.whenOff || ''));
       })
       .replace(templatePlaceholder, (_, p)=>this.getDisplayedValue(p))
       .trim();
@@ -2987,9 +3071,30 @@ class RoutineOperationEditor {
   }
 
   // templates may be functions of the effective parameter values, so that
-  // wording which does not warrant a variant of its own can still follow them
+  // wording which does not warrant a variant of its own can still follow them.
+  // They get the editor itself as well, because a couple of wordings depend on
+  // what the value is rather than only on what it says: whether a string names
+  // a widget of the room or a collection nobody created yet.
   resolveTemplate(template) {
-    return typeof template == 'function' ? template(name=>this.parameterValue(name)) : template;
+    return typeof template == 'function' ? template(name=>this.parameterValue(name), this) : template;
+  }
+
+  // whether what a widgets parameter holds is the id of one widget of the room
+  // rather than the name of a group: the engine reads a string that names no
+  // collection but does name a widget as that one widget (getCollection in
+  // widget.js), so the sentence says the widget instead of sending the reader
+  // looking for a collection they never made.
+  namesOneWidget(value) {
+    if(!isLiteralText(value) || this.namesCollection(value))
+      return false;
+    return typeof widgets != 'undefined' && widgets.has(value);
+  }
+
+  // whether a value is the name of a group the operations before this one make -
+  // the one case where the editor knows that a single string may stand for more
+  // than one widget
+  namesCollection(value) {
+    return isLiteralText(value) && (this.collections || []).indexOf(value) != -1;
   }
 
   // the parameters a template edits - the places it reserves for a clause
@@ -3030,6 +3135,18 @@ class RoutineOperationEditor {
       if((spec.offer === false || spec.deprecated) && !this.parameterIsSet(name))
         continue;
       clauses.push({ id: name, label: name, template: `, ${name} {${name}}`, generated: true, offer: spec.offer !== false && !spec.deprecated });
+    }
+    // a parameter the engine skips is not offered - that would suggest it works
+    // - but one a game has written down is said all the same, greyed out and
+    // with the "!" that says why nothing comes of it. Dropping it silently is
+    // what leaves somebody asking why their target does nothing while the
+    // sentence reads perfectly: the answer is a holder they can now see.
+    for(const name in ignored) {
+      if(!this.parameterIsSet(name) || this.templateParameters(variant.template).indexOf(name) != -1)
+        continue;
+      // under an id of its own, so that it lands at the end of the sentence
+      // instead of in the hole the working parameter left in the middle of it
+      clauses.push({ id: `ignored-${name}`, label: name, template: `, ${name} {${name}}`, generated: true, offer: false, ignored: ignored[name] });
     }
     // the one option no operation declares and every operation has
     if(this.parameterIsSet('skip'))
@@ -3134,7 +3251,17 @@ class RoutineOperationEditor {
     // skipped: rather than hide parameters that may well be in use, they all
     // stay in the sentence (an AUDIO whose silence is worked out keeps the sound
     // it plays while that comes out as no)
-    return decided.undecidable.length ? {} : decided.answer;
+    const ignored = decided.undecidable.length ? {} : decided.answer;
+    // the old spelling of the widgets is skipped for exactly the same reason the
+    // current one is - the engine reads neither of them while a holder names the
+    // widgets - so a game that still has one is told so rather than watching it
+    // disappear out of the sentence
+    for(const clause of this.metadata.clauses || [])
+      if(clause.oldNames && Object.prototype.hasOwnProperty.call(ignored, clause.parameter))
+        for(const name of clause.oldNames)
+          if(this.parameterIsSet(name))
+            ignored[name] = ignored[clause.parameter];
+    return ignored;
   }
 
   notifyChangeListeners(value) {
@@ -3335,7 +3462,10 @@ class RoutineOperationEditor {
     for(const [ index, part ] of this.sentenceParts().entries()) {
       if(part.clause) {
         if(this.clauseIsActive(part.clause))
-          html += `<span class="routine-editor-clause">${this.renderClauseWithRemoveMarker(part)}</span>`;
+          // a parameter the engine skips is still part of what the game says, so
+          // it is greyed out rather than left out: struck through, with the "!"
+          // behind it saying why nothing comes of it
+          html += `<span class="routine-editor-clause${part.clause.ignored ? ' routine-editor-clause-ignored' : ''}">${this.renderClauseWithRemoveMarker(part)}</span>`;
         else if(part.clause.whenOff)
           // an option that replaces words says what is there without it - which
           // may be another parameter (a CANVAS without the deprecated canvas
@@ -3401,11 +3531,16 @@ class RoutineOperationEditor {
     const lead = $('.routine-editor-variant-undetermined', dom);
     if(lead && undetermined.length)
       lead.after(this.parameterWarningButton('undetermined', 'warning', this.undeterminedInfoHTML(undetermined), 'this is only what the operation does for one of the values it may work out - click for details'));
+    const ignored = this.ignoredParameters();
     for(const span of $a('span[data-parameter]', dom)) {
       const name = span.dataset.parameter;
       const spec = this.parameterSpec(this.resolveParameter(name));
-      if(spec && spec.deprecated)
-        span.after(this.parameterWarningButton('deprecated', 'warning', spec.deprecated));
+      // what the engine skips comes first: a deprecated name that is skipped as
+      // well needs the reason it does nothing more than the name to write instead
+      if(Object.prototype.hasOwnProperty.call(ignored, name))
+        span.after(this.parameterWarningButton('ignored', 'error', this.ignoredInfoHTML(name, ignored[name]), 'this value does nothing here - click for details'));
+      else if(spec && spec.deprecated)
+        span.after(this.parameterWarningButton('deprecated', 'warning', spec.deprecated, 'old name - click to see what to write instead'));
       else if(!spec && this.unsupportedProperties().indexOf(name) != -1)
         span.after(this.parameterWarningButton('unsupported', 'error', `
           <pre>
@@ -3416,6 +3551,20 @@ class RoutineOperationEditor {
           </pre>
         `));
     }
+  }
+
+  // what the "!" behind a parameter the engine skips says: why nothing comes of
+  // it, and that taking it out changes nothing about what the operation does -
+  // the reason is one line, because a "why is my target ignored?" answered in a
+  // paragraph is one nobody reads
+  ignoredInfoHTML(name, reason) {
+    return `
+      <pre>
+      ${escapeHTML(this.func)} ignores ${escapeHTML(name)} ${escapeHTML(String(reason).replace(/^ignored /, ''))}.
+
+      The value is still written in the operation, and the ⊖ behind it takes it out again - what this operation does stays exactly the same either way.
+      </pre>
+    `;
   }
 
   parameterWarningButton(kind, icon, infoHTML, title) {

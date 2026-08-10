@@ -54,7 +54,7 @@
     "css": {
       "font-size": "25px"
     },
-    "html": "Two things about <b>holder</b> are easy to get wrong. A <b>count</b> is spent on every widget the holder names separately, the way FLIP and ROTATE always did it &ndash; naming the same widgets with <b>target</b> spends it once in total. And a <b>seat</b> contributes what lies in its hand and belongs to its player, so an empty seat contributes nothing. Put a button into edit mode and press ctrl-j to read the routine behind it."
+    "html": "Two things about <b>holder</b> are easy to get wrong. A <b>count</b> is spent on every widget the holder names separately, the way FLIP and ROTATE always did it &ndash; which is why the routine editor words it &quot;1 widget in each of&quot; &ndash; while naming the same widgets with <b>target</b> spends it once in total. And a <b>seat</b> contributes what lies in its hand and belongs to its player, so an empty seat contributes nothing. Put a button into edit mode and press ctrl-j to read the routine behind it."
   },
   "holderA": {
     "id": "holderA",

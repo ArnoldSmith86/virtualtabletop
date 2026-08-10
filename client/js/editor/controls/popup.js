@@ -1349,8 +1349,11 @@ class RoutineWidgetIDPopup extends RoutinePopup {
 }
 
 class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
+  // the parameter says what it is asking for where the two widget parameters of
+  // an operation would otherwise open under the same question: what to look
+  // inside is not which widgets to work on
   parameterQuestion() {
-    return 'which widgets';
+    return this.options.question || 'which widgets';
   }
 
   constructor(options={}) {
@@ -2184,7 +2187,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - specifies the widgets to count (defaults to DEFAULT collection).
+      target: collection or widget ids - specifies the widgets to count (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - counts what these widgets contain instead of the ones target names (optional). See [holder].
       owner: playerName - filters the widgets in the target or holder to only count widgets owned by the specified player. The default value, null, results in no filtering by owner.
       variable: variable name - specifies the variable to store the result in (defaults to variable "COUNT").
@@ -2199,7 +2202,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - specifies the widget(s) that are to be moved (defaults to the "DEFAULT" collection). Ignored when fromHolder is given.
+      target: collection or widget ids - specifies the widget(s) that are to be moved (defaults to the "DEFAULT" collection). Ignored when fromHolder is given. See [holder].
       [MOVE.from](fromHolder): collection or widget ids - specifies the widget(s) that contain the widgets to move. In the typical case, this would be a holder, but could be any widget with child widgets (optional). The count is spent per widget named here. See [holder].
       [MOVE.to](toHolder): collection or widget ids - specifies the widget(s) that widgets should be moved into. In the typical case, this would be a holder or seats, but could be any widget.
       count: number - limits the amount of moved widgets (defaults to 1). Can be 0 to move none, "all" to move every selected widget, a positive number to move that many of the selected widgets, or a negative number to leave that many of the selected widgets not moved.
@@ -2346,7 +2349,7 @@ function commonInfoTopic(topicName) {
       Parameters:
 
       routine: routine name - the routine to execute (must end in "Routine").
-      target: collection or widget ids - the widgets containing the routine (defaults to the current widget).
+      target: collection or widget ids - the widgets containing the routine (defaults to the current widget). See [holder].
       holder: collection or widget ids - runs the routine on what these widgets contain instead of on the ones target names (optional). See [holder].
       variable: variable name - stores the value returned from the called routine (defaults to "result").
       collection: collection name - stores the collection returned from the called routine (defaults to "result").
@@ -2363,7 +2366,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the canvases to change (defaults to DEFAULT collection).
+      target: collection or widget ids - the canvases to change (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - changes the canvases these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
       count: number - limits how many canvases are changed (defaults to 0, which changes all of them).
       mode: set/inc/dec/change/reset/setPixel - which automation to apply. set/inc/dec change the activeColor index into colorMap using value. change replaces the colorMap entry at index value with color. reset sets every pixel back to the first color of colorMap. setPixel sets the pixel at (x, y) to the colorMap index given by value.
@@ -2382,7 +2385,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the widgets to click (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to click (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - clicks what these widgets contain instead of the ones target names (optional). See [holder].
       count: number - how many times the click is triggered (defaults to 1).
       mode: respect/ignoreClickable/ignoreClickRoutine/ignoreAll - controls how the clickable property and any clickRoutine are honored (defaults to respect). respect performs the normal click behavior; ignoreClickable ignores the clickable property; ignoreClickRoutine ignores any clickRoutine and performs the default widget action instead; ignoreAll combines both.
@@ -2399,7 +2402,7 @@ function commonInfoTopic(topicName) {
 
       CLONE parameters:
 
-      target: collection or widget ids - the widgets to copy (defaults to DEFAULT).
+      target: collection or widget ids - the widgets to copy (defaults to DEFAULT). See [holder].
       holder: collection or widget ids - works on what these widgets contain instead of on the ones target names (optional). See [holder].
       count: number - how many copies of each original to create (defaults to 1).
       xOffset / yOffset: number - offset applied to each clone relative to the original (defaults to 0).
@@ -2410,7 +2413,7 @@ function commonInfoTopic(topicName) {
 
       DELETE parameters:
 
-      [DELETE.collection](target): collection or widget ids - the widgets to delete (defaults to DEFAULT).
+      [DELETE.collection](target): collection or widget ids - the widgets to delete (defaults to DEFAULT). See [holder].
       holder: collection or widget ids - deletes what these widgets contain instead of the ones target names (optional). See [holder].
       [DELETE.collection](collection): deprecated - use target instead. A DELETE that names no target still reads the widgets to delete from here.
       </pre>
@@ -2434,7 +2437,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the widgets to flip (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to flip (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - flips what these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
       count: number - limits how many widgets are flipped (defaults to "all"). 0 flips none, "all" flips every selected widget, a positive number flips that many, a negative number leaves that many unflipped.
       face: number - the face to flip to. When omitted, flips to the next/random face per faceCycle.
@@ -2450,7 +2453,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the widgets to read from (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to read from (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - reads from what these widgets contain instead of from the ones target names (optional). See [holder].
       property: property name (or an array, to read a nested sub-property) - the property to read.
       variable: variable name - stores the result (defaults to the name of property).
@@ -2485,7 +2488,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the widgets to change (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to change (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - changes what these widgets contain instead of the ones target names (optional). See [holder].
       mode: set/inc/dec/append - how the value is applied (defaults to set). inc/dec always treat the current value as a number.
       value: string or number - the value to apply (defaults to 0).
@@ -2501,7 +2504,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the widgets to move (defaults to DEFAULT collection). Ignored when fromHolder is given.
+      target: collection or widget ids - the widgets to move (defaults to DEFAULT collection). Ignored when fromHolder is given. See [holder].
       [MOVEXY.from](fromHolder): collection or widget ids - moves what these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
       count: number - limits how many widgets are moved (defaults to 1). 0 moves none, "all" moves every selected widget, a positive number moves that many, a negative number leaves that many unmoved.
       face: number - optionally sets the face of the moved widgets (see FLIP). If omitted, widgets keep their current face.
@@ -2549,7 +2552,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the widgets to rotate (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to rotate (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - rotates what these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
       angle: number - degrees to rotate by; positive is clockwise (defaults to 90).
       count: number - limits how many widgets are rotated (defaults to 1). 0 rotates none, "all" rotates every selected widget, a positive number rotates that many, a negative number leaves that many unrotated.
@@ -2582,7 +2585,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the widgets to change (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to change (defaults to DEFAULT collection). See [holder].
       holder: collection or widget ids - changes what these widgets contain instead of the ones target names (optional). See [holder].
       property: property name - the property to change (defaults to "parent").
       relation: = or an operation (+, -, *, /, ...) - whether value is set outright or computed against the current value.
@@ -2598,7 +2601,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      source: collection or widget ids - the widgets to shuffle (defaults to DEFAULT collection). A named collection is put into the new order itself.
+      source: collection or widget ids - the widgets to shuffle (defaults to DEFAULT collection). A named collection is put into the new order itself. See [holder].
       holder: collection or widget ids - shuffles what these widgets contain instead of the ones source names (optional). See [holder].
       mode: true random/overhand/reverse/riffle/seeded - the shuffling technique (defaults to "true random").
       modeValue: number - meaning depends on mode: number of overhand or riffle shuffles, or the seed for seeded (defaults to 1).
@@ -2613,7 +2616,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      source: collection or widget ids - the widgets to sort (defaults to DEFAULT collection). A named collection is put into the new order itself.
+      source: collection or widget ids - the widgets to sort (defaults to DEFAULT collection). A named collection is put into the new order itself. See [holder].
       holder: collection or widget ids - sorts what these widgets contain instead of the ones source names (optional). See [holder].
       key: property name, key object ({key, order, reverse}), or an array of either - what to sort by; an array is applied left to right until values differ.
       reverse: true/false - reverses the order after sorting by key (defaults to false).
@@ -2647,7 +2650,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      target: collection or widget ids - the timers to modify (defaults to DEFAULT collection). Widgets that are not timers are ignored.
+      target: collection or widget ids - the timers to modify (defaults to DEFAULT collection). Widgets that are not timers are ignored. See [holder].
       holder: collection or widget ids - modifies the timers these widgets contain instead of the ones target names (optional). See [holder].
       mode: set/inc/dec/pause/start/toggle/reset - which automation to apply (defaults to "toggle"). set/inc/dec change milliseconds; pause/start/toggle change paused; reset sets milliseconds back to the timer's start value and pauses it.
       value: number or string - the value (in milliseconds) used by set/inc/dec; a string is treated as the name of a property on the timer to read the value from (defaults to 0).
