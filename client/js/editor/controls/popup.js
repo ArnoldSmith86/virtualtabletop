@@ -2260,7 +2260,9 @@ function commonInfoTopic(topicName) {
 
       Most operations also have a holder parameter, and that one is not limited to holder widgets: it names the widgets whose content the operation works on, instead of the widgets target names directly. For a seat that content is what lies in its hand and belongs to its player, for a holder only the children matching its dropTarget property (a single pile in it is looked into), and for any other widget simply its children.
 
-      Like target, a holder is either the name of a collection or a list of widget ids - a string that names no collection but does name a widget is read as that one widget. While a holder is given, target is ignored, and a count is spent per widget named here: one card off every holder rather than one card in total.
+      Like target, a holder is either the name of a collection or a list of widget ids. A list of ids always names those widgets. A plain string is read as a widget id here and in from/to, because that is all these parameters ever took, while target and source read it as a collection first and only as a widget id when no collection carries the name. Where both exist under one name, the routine says which one it used, so writing [ "name" ] for the widget takes the doubt out. The old spellings (collection, and source in CLONE/SELECT/SWAPHANDS) still name a collection and nothing else.
+
+      While a holder is given, target is ignored, and a count is spent per widget named here: one card off every holder rather than one card in total.
       </pre>
     ` };
   }
@@ -2526,7 +2528,7 @@ function commonInfoTopic(topicName) {
       Parameters:
 
       holder: collection or widget ids - the holder(s) that cards should be recalled to. Each one needs a deck lying in it; the cards of that deck are gathered back into it.
-      target: collection or widget ids - decks, or the widgets a deck lies on. Their cards are recalled into whatever the deck sits in, or into the deck itself when it is in no holder. Ignored when holder is given.
+      target: collection or widget ids - decks, or the widgets a deck lies on. Their cards are recalled into whatever the deck sits in; a deck lying on no widget is reported as having nowhere to recall to. Ignored when holder is given.
       excludeCollection: collection - cards in this collection are not recalled (defaults to null).
       inHolder: true/false - whether cards already in some holder are recalled too (defaults to true).
       owned: true/false - whether cards owned by a player are recalled too (defaults to true).

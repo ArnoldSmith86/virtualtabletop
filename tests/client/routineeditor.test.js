@@ -408,6 +408,27 @@ describe('operation rendering', () => {
     }
   });
 
+  test('a holder reads a name a widget carries as that widget, even where a collection carries it too', () => {
+    const words = (operation, collections = []) => {
+      const sentence = renderOperation(operation, [], collections).dom.querySelector('.routine-editor-sentence').cloneNode(true);
+      for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
+        icon.remove();
+      return sentence.textContent.replace(/\s+/g, ' ').trim();
+    };
+    widgets.set('h1', {});
+    try {
+      // holder, from and to never named anything but widgets, so the engine keeps taking the
+      // widget where a group of an earlier operation carries the same name - which also makes
+      // it one holder rather than a group of unknown size the count would be spent on each of
+      expect(words({ func: 'ROTATE', holder: 'h1', count: 1, angle: 45 }, [ 'h1' ])).toBe('Rotate 1 widget in h1 by 45 degrees');
+      expect(renderOperation({ func: 'ROTATE', holder: 'h1' }, [], [ 'h1' ]).dom.querySelector('[data-parameter="holder"]').className).toContain('routine-editor-parameter-widget');
+      // target reads the same string the other way round: the group wins there
+      expect(words({ func: 'ROTATE', target: 'h1', count: 1, angle: 45 }, [ 'h1' ])).toBe('Rotate 1 of the widgets called h1 by 45 degrees');
+    } finally {
+      widgets.delete('h1');
+    }
+  });
+
   test('a count spent per holder says so, and a holder still being filled in reads as one', () => {
     const sentenceWords = operation => {
       const sentence = renderOperation(operation).dom.querySelector('.routine-editor-sentence').cloneNode(true);

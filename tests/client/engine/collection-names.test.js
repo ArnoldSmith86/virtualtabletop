@@ -38,6 +38,63 @@ describe('a widget id that is also a collection name', () => {
   });
 });
 
+// The parameters that named widgets and nothing else keep doing that when a collection carries
+// the same name, because a game written before they took collections at all must not change its
+// mind about which widget it meant.
+const holders = () => routineState({
+  h1: { type: 'widget' },
+  h2: { type: 'widget' },
+  c1: { type: 'widget', parent: 'h1' },
+  c2: { type: 'widget', parent: 'h1' },
+  e1: { type: 'widget', parent: 'h2' },
+  e2: { type: 'widget', parent: 'h2' }
+});
+
+// a collection named h1 that holds anything but h1: naming it instead of the widget shows up as
+// the wrong widgets being worked on
+const collectionCalledH1 = { func: 'SELECT', property: 'parent', value: 'h2', collection: 'h1' };
+const contentRotated = result => [ 'c1', 'c2', 'e1', 'e2' ].filter(id => result.state[id].rotation).join(',');
+
+describe('a widget id that is also a collection name in a parameter that only ever took widgets', () => {
+  test('holder names the widget', async () => {
+    const result = await runRoutine(holders(), [
+      collectionCalledH1,
+      { func: 'ROTATE', holder: 'h1', angle: 90, count: 'all' }
+    ]);
+    expect(contentRotated(result)).toBe('c1,c2');
+  });
+
+  test('the old from/to spellings of MOVE name the widgets', async () => {
+    const result = await runRoutine(holders(), [
+      collectionCalledH1,
+      { func: 'MOVE', from: 'h1', to: 'h2', count: 'all' }
+    ]);
+    expect([ 'c1', 'c2' ].map(id => result.state[id].parent).join(',')).toBe('h2,h2');
+  });
+
+  test('the reading does not change when the same operation runs a second time', async () => {
+    // renamedParameters writes the current name onto the operation, so the old spelling it came
+    // from is only visible on the first run - the second one has to read the same value the same way
+    const result = await runRoutine(holders(), [
+      collectionCalledH1,
+      { func: 'FOREACH', range: [ 1, 2, 1 ], loopRoutine: [ { func: 'MOVE', from: 'h1', to: 'h2', count: 1 } ] }
+    ]);
+    expect([ 'c1', 'c2' ].map(id => result.state[id].parent).join(',')).toBe('h2,h2');
+  });
+});
+
+describe('the old collection spellings', () => {
+  test('do not take a widget id, so a name nobody collected stays the error it was', async () => {
+    const result = await runRoutine(state(), [ { func: 'ROTATE', collection: 'card', angle: 90, count: 'all' } ]);
+    expect(rotated(result)).toBe('');
+  });
+
+  test('while the current name reads it as that widget', async () => {
+    const result = await runRoutine(state(), [ { func: 'ROTATE', target: 'card', angle: 90, count: 'all' } ]);
+    expect(rotated(result)).toBe('card');
+  });
+});
+
 describe('a collection named like a generated one', () => {
   test('survives an operation that passes a list of ids', async () => {
     // every guarded collection holds 'loose', so the rotation counts how many of them were still

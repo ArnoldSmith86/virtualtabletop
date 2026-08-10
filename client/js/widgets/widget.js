@@ -32,6 +32,13 @@ const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ])
 // names a game gave its own collections are skipped over.
 let temporaryCollectionCount = 0;
 
+// Which old spelling an operation took a widgets parameter from, per operation
+// object. renamedParameters fills the current name in on the operation itself, so
+// the old spelling is only visible the first time a routine runs - what a plain
+// string in it means (see widgetParameter) has to stay the same on every later
+// run, so the answer is remembered for as long as the routine object lives.
+const deprecatedSpelling = new WeakMap();
+
 const readOnlyProperties = new Set([
   '_absoluteRotation',
   '_absoluteScale',
@@ -1006,23 +1013,60 @@ export class Widget extends StateManaged {
     }
 
     // Every parameter that names widgets takes the same two things: the name of a
-    // collection or a list of widget ids. Before collections could be passed to
-    // them, the parameters that name widgets directly (holder, label, canvas,
-    // timer, from, to) took a single widget id as a plain string - a string that
-    // names no collection but does name a widget is still read that way, so those
-    // routines keep working. Returns the name of a collection holding the widgets
+    // collection or a list of widget ids. What a plain string means when both a
+    // collection and a widget carry that name is decided by what the parameter
+    // accepted before they were unified, so no existing routine changes meaning:
+    //   widgetFirst    - it named widgets and nothing else (holder, from, to,
+    //                    canvas, label, timer, widget), so the widget wins
+    //   collectionFirst - the current name of a parameter that named a collection
+    //                    (target, source): the collection wins and a widget id is
+    //                    the shorthand added here
+    //   collectionOnly - an old spelling of a collection parameter (collection,
+    //                    excludeCollection, CLONE/SWAPHANDS source), which never
+    //                    took a widget id and still does not, so a typo stays the
+    //                    reported error it was instead of quietly hitting a widget
+    const parameterReading = {
+      target: 'collectionFirst', source: 'collectionFirst',
+      holder: 'widgetFirst', fromHolder: 'widgetFirst', toHolder: 'widgetFirst'
+    };
+    const deprecatedParameterReading = {
+      widget: 'widgetFirst', canvas: 'widgetFirst', label: 'widgetFirst',
+      timer: 'widgetFirst', from: 'widgetFirst', to: 'widgetFirst',
+      collection: 'collectionOnly', source: 'collectionOnly'
+    };
+
+    const parameterReadingOf = (a, name)=>{
+      const oldName = (deprecatedSpelling.get(a) || {})[name];
+      return oldName ? deprecatedParameterReading[oldName] : (parameterReading[name] || 'collectionFirst');
+    };
+
+    // whether a collection is just the widget its name also belongs to, which is
+    // what SELECT property:'id' value:x collection:x makes - naming either of the
+    // two means the same widget, so there is nothing to warn about
+    const collectionIsThatWidget = name=>collections[name].length == 1 && collections[name][0].get('id') == name;
+
+    // Returns the name of a collection holding the widgets a parameter names
     // (getCollection puts a list of ids into a temporary one) or null.
-    const widgetParameter = value=>{
+    const widgetParameter = (a, name)=>{
+      let value = a[name];
+      const reading = parameterReadingOf(a, name);
       if(value === null || value === undefined) {
         problems.push(`No collection name or widget ID given.`);
         return null;
       }
-      if(typeof value == 'string' && !Array.isArray(collections[value])) {
-        if(!widgets.has(value)) {
+      if(typeof value == 'string' && reading != 'collectionOnly') {
+        const isCollection = Array.isArray(collections[value]);
+        const isWidget = widgets.has(value);
+        if(isCollection && isWidget && !collectionIsThatWidget(value))
+          problems.push(reading == 'widgetFirst'
+            ? `${value} is both a widget ID and the name of a collection - ${name} names the widget, as it always did. Rename the collection to use it here.`
+            : `${value} is both the name of a collection and a widget ID - ${name} names the collection. Write [ "${value}" ] for the widget.`);
+        if(isWidget && (reading == 'widgetFirst' || !isCollection))
+          value = [ value ];
+        else if(!isCollection) {
           problems.push(`${value} is neither the name of a collection nor a widget ID.`);
           return null;
         }
-        value = [ value ];
       }
       if(Array.isArray(value))
         this.isValidID(value, problems);
@@ -1037,10 +1081,10 @@ export class Widget extends StateManaged {
     // per holder the way it always was for FLIP and ROTATE.
     const operationWidgetGroups = (a, targetParameter='target', holderParameter='holder')=>{
       if(a[holderParameter] !== undefined) {
-        const holders = widgetParameter(a[holderParameter]);
+        const holders = widgetParameter(a, holderParameter);
         return holders === null ? null : collections[holders].map(h=>h.children());
       }
-      const target = widgetParameter(a[targetParameter]);
+      const target = widgetParameter(a, targetParameter);
       return target === null ? null : [ collections[target] ];
     };
 
@@ -1058,11 +1102,19 @@ export class Widget extends StateManaged {
     // The parameters that name widgets used to be spelled differently per
     // operation. The old spellings keep working, but an operation only ever reads
     // the current name: the first old name that is set fills it in. Passing both
-    // an old and the new name uses the new one.
+    // an old and the new name uses the new one. Which old spelling a value came
+    // from is remembered, because it is what a plain string in it means (see
+    // widgetParameter) - the operation object keeps the copy, so the answer has
+    // to survive the routine running a second time.
     function renamedParameters(a, ...renames) {
+      let spelled = deprecatedSpelling.get(a);
+      if(spelled === undefined)
+        deprecatedSpelling.set(a, spelled = {});
       for(const [ oldName, newName ] of renames)
-        if(a[oldName] !== undefined && a[newName] === undefined)
+        if(a[oldName] !== undefined && a[newName] === undefined) {
           a[newName] = a[oldName];
+          spelled[newName] = oldName;
+        }
     }
 
     if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
@@ -1823,17 +1875,17 @@ export class Widget extends StateManaged {
         if(a.toHolder === undefined)
           problems.push(`MOVE is missing the 'toHolder' parameter.`);
         else
-          destinations = widgetParameter(a.toHolder);
+          destinations = widgetParameter(a, 'toHolder');
         if(destinations !== null && (a.fromHolder !== undefined || a.target)) {
           if(a.fromHolder !== undefined) {
-            const sources = widgetParameter(a.fromHolder);
+            const sources = widgetParameter(a, 'fromHolder');
             if(sources !== null)
               for(const source of collections[sources])
                 for(const target of collections[destinations])
                   for(const c of source.children().slice(0, count).reverse())
                     await applyMove(source, target, c);
           } else {
-            const targetWidgets = widgetParameter(a.target);
+            const targetWidgets = widgetParameter(a, 'target');
             if(targetWidgets !== null) {
               // the offset carries across the destinations so that a count deals
               // the next widgets to the next destination instead of the same ones
@@ -1895,10 +1947,12 @@ export class Widget extends StateManaged {
         }
 
         // 'holder' recalls into the holders it names, 'target' into whatever the
-        // decks it names sit in - or into the deck itself when it is not in a holder
+        // decks it names sit in. A deck that sits in no widget is nowhere to
+        // gather cards into - stacking them on the deck itself would leave them
+        // on a widget that is not a holder, so that is reported instead.
         const recallInto = [];
         if(a.holder !== undefined) {
-          const holders = widgetParameter(a.holder);
+          const holders = widgetParameter(a, 'holder');
           for(const holder of holders === null ? [] : collections[holders]) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder.get('id'));
             if(decks.length)
@@ -1908,13 +1962,15 @@ export class Widget extends StateManaged {
               problems.push(`Holder ${holder.get('id')} does not have a deck.`);
           }
         } else if(a.target !== undefined) {
-          const targets = widgetParameter(a.target);
+          const targets = widgetParameter(a, 'target');
           for(const target of targets === null ? [] : collections[targets]) {
             const isDeck = target.get('type') == 'deck';
             const decks = isDeck ? [ target ] : widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==target.get('id'));
-            if(decks.length)
+            if(isDeck && !widgets.has(target.get('parent')))
+              problems.push(`Deck ${target.get('id')} is not in a holder, so there is nowhere to recall its cards to.`);
+            else if(decks.length)
               for(const deck of decks)
-                recallInto.push([ deck, isDeck && widgets.has(target.get('parent')) ? widgets.get(target.get('parent')) : target ]);
+                recallInto.push([ deck, isDeck ? widgets.get(target.get('parent')) : target ]);
             else
               problems.push(`${target.get('id')} is not a deck and does not contain one.`);
           }
@@ -2149,7 +2205,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { source: 'DEFAULT', mode: 'true random', modeValue: 1 });
         let collection;
         if(a.holder !== undefined) {
-          const holders = widgetParameter(a.holder);
+          const holders = widgetParameter(a, 'holder');
           if(holders !== null) {
             for(const holder of collections[holders]) {
               await shuffleWidgets(holder.children(), a.mode, a.modeValue, true);
@@ -2159,7 +2215,7 @@ export class Widget extends StateManaged {
             if(routineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
-        } else if(collection = widgetParameter(a.source)) {
+        } else if(collection = widgetParameter(a, 'source')) {
           if(collections[collection].length) {
             await shuffleWidgets(collections[collection], a.mode, a.modeValue);
           } else {
@@ -2181,7 +2237,7 @@ export class Widget extends StateManaged {
           return typeof k == 'string' ? `'${k}'` : k;
         }).join(', ');
         if(a.holder !== undefined) {
-          const holders = widgetParameter(a.holder);
+          const holders = widgetParameter(a, 'holder');
           if(holders !== null)
             for(const holder of collections[holders]) {
               await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
@@ -2190,7 +2246,7 @@ export class Widget extends StateManaged {
             }
           if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
-        } else if(collection = widgetParameter(a.source)) {
+        } else if(collection = widgetParameter(a, 'source')) {
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{

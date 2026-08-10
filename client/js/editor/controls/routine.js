@@ -177,7 +177,7 @@ const holderHint = 'a holder or a group of them';
 // widgets", which is the one thing the reader of a new holder/target pair needs
 // told apart.
 function holderSpec(options={}) {
-  return Object.assign({ type: 'collection', default: null, widgetType: 'holder', hint: holderHint, question: 'what to look inside' }, options);
+  return Object.assign({ type: 'collection', default: null, widgetType: 'holder', hint: holderHint, question: 'what to look inside', namesWidgetFirst: true }, options);
 }
 
 // The option that switches an operation over to the content of a holder. It
@@ -202,8 +202,10 @@ function namesSeveralHolders(value, editor) {
   if(Array.isArray(value))
     return value.length > 1;
   // a group an earlier operation made may hold any number of holders; anything
-  // else the editor cannot count is one holder as far as the sentence goes
-  return Boolean(editor && editor.namesCollection(value));
+  // else the editor cannot count is one holder as far as the sentence goes - and
+  // a name a widget of the room carries is that one holder, because that is the
+  // one the engine takes in a holder parameter
+  return Boolean(editor && editor.namesCollection(value) && !editor.namesOneWidget(value, true));
 }
 
 // what a count reads as next to a holder: the engine spends it on every widget
@@ -671,7 +673,7 @@ const routineOperationMetadata = {
       // operation names none, which is what the engine fills in for it
       target: { type: 'collection', default: null, display: { 'null': 'this widget' }, describedBy: 'widget' },
       holder: holderSpec(),
-      widget: { type: 'collection', default: null, display: { 'null': 'this widget' }, deprecated: deprecatedNameNote('widget', 'target') },
+      widget: { type: 'collection', default: null, display: { 'null': 'this widget' }, namesWidgetFirst: true, deprecated: deprecatedNameNote('widget', 'target') },
       variable: { type: 'string', default: 'result' },
       collection: { type: 'collection', default: 'result' },
       'return': { type: 'enum', values: [ true, false ], default: true, display: yesNo('and carry on with this routine', 'and do not finish this routine') },
@@ -715,7 +717,7 @@ const routineOperationMetadata = {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
       target: { type: 'collection', default: 'DEFAULT', widgetType: 'canvas', display: { 'DEFAULT': 'the picked canvases' }, describedBy: 'collection' },
       holder: holderSpec(),
-      canvas: { type: 'collection', default: null, widgetType: 'canvas', deprecated: deprecatedNameNote('canvas', 'target') },
+      canvas: { type: 'collection', default: null, widgetType: 'canvas', namesWidgetFirst: true, deprecated: deprecatedNameNote('canvas', 'target') },
       collection: { type: 'collection', default: null, widgetType: 'canvas', deprecated: deprecatedNameNote('collection', 'target') },
       // the engine cuts the list at the count (slice(0, a.count || 999999)), so
       // no count means every canvas and a negative one leaves that many alone -
@@ -1097,7 +1099,7 @@ const routineOperationMetadata = {
       // picker opens on all of them the way every other widget parameter does
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
       holder: holderSpec(),
-      label: { type: 'collection', default: null, deprecated: deprecatedNameNote('label', 'target') },
+      label: { type: 'collection', default: null, namesWidgetFirst: true, deprecated: deprecatedNameNote('label', 'target') },
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       value: { type: 'string', default: 0 },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'append' ], default: 'set' }
@@ -1148,11 +1150,11 @@ const routineOperationMetadata = {
       // there - and it reads an old from into it before it looks)
       count: { type: 'number', default: operation=>operation.fromHolder || operation.from ? 1 : 'all', special: [ 'all' ], display: countWords },
       fromHolder: holderSpec({ describedBy: 'from', question: 'where to take them from' }),
-      from: { type: 'collection', default: null, widgetType: 'holder', deprecated: deprecatedNameNote('from', 'fromHolder') },
+      from: { type: 'collection', default: null, widgetType: 'holder', namesWidgetFirst: true, deprecated: deprecatedNameNote('from', 'fromHolder') },
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets, describedBy: 'collection' },
       collection: { type: 'collection', default: null, deprecated: deprecatedNameNote('collection', 'target') },
       toHolder: holderSpec({ describedBy: 'to', question: 'where to move them to' }),
-      to: { type: 'collection', default: null, widgetType: 'holder', deprecated: deprecatedNameNote('to', 'toHolder') },
+      to: { type: 'collection', default: null, widgetType: 'holder', namesWidgetFirst: true, deprecated: deprecatedNameNote('to', 'toHolder') },
       face: { type: 'number', default: null, display: faceWords }
     },
     // where the widgets come from and where they go are part of every MOVE, and
@@ -1199,7 +1201,7 @@ const routineOperationMetadata = {
       count: { type: 'number', default: 1, special: [ 'all' ], display: countWords },
       target: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       fromHolder: holderSpec({ describedBy: 'from', question: 'where to take them from' }),
-      from: { type: 'collection', default: null, widgetType: 'holder', deprecated: deprecatedNameNote('from', 'fromHolder') },
+      from: { type: 'collection', default: null, widgetType: 'holder', namesWidgetFirst: true, deprecated: deprecatedNameNote('from', 'fromHolder') },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
       z: { type: 'number', default: null, display: { 'null': 'unchanged' } },
@@ -1563,7 +1565,7 @@ const routineOperationMetadata = {
     parameters: {
       target: { type: 'collection', default: 'DEFAULT', widgetType: 'timer', display: { 'DEFAULT': 'the picked timers' }, describedBy: 'collection' },
       holder: holderSpec(),
-      timer: { type: 'collection', default: null, widgetType: 'timer', deprecated: deprecatedNameNote('timer', 'target') },
+      timer: { type: 'collection', default: null, widgetType: 'timer', namesWidgetFirst: true, deprecated: deprecatedNameNote('timer', 'target') },
       collection: { type: 'collection', default: null, widgetType: 'timer', deprecated: deprecatedNameNote('collection', 'target') },
       mode: { type: 'enum', values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ], default: 'toggle' },
       value: { type: 'number', default: 0, special: [ 'start', 'end' ], scale: millisecondsPerSecond, display: secondsWords, textHint: 'name of a timer property to read the time from' },
@@ -2731,7 +2733,7 @@ class RoutineOperationEditor {
     // a widgets parameter holding the id of one widget of the room is that
     // widget, not a group - the same reading the sentence gives it
     if(spec && spec.type == 'collection')
-      return this.namesOneWidget(value) ? 'widget' : 'collection';
+      return this.namesOneWidget(value, spec.namesWidgetFirst) ? 'widget' : 'collection';
     if(spec && spec.type == 'widgets')
       return 'widget';
     if(typeof value == 'number')
@@ -3081,11 +3083,13 @@ class RoutineOperationEditor {
 
   // whether what a widgets parameter holds is the id of one widget of the room
   // rather than the name of a group: the engine reads a string that names no
-  // collection but does name a widget as that one widget (getCollection in
+  // collection but does name a widget as that one widget (widgetParameter in
   // widget.js), so the sentence says the widget instead of sending the reader
-  // looking for a collection they never made.
-  namesOneWidget(value) {
-    if(!isLiteralText(value) || this.namesCollection(value))
+  // looking for a collection they never made. The parameters that only ever
+  // named widgets (holder, from, to, canvas, label, timer) read the widget even
+  // when a collection carries the same name, and the sentence says the same.
+  namesOneWidget(value, widgetFirst=false) {
+    if(!isLiteralText(value) || (!widgetFirst && this.namesCollection(value)))
       return false;
     return typeof widgets != 'undefined' && widgets.has(value);
   }

@@ -142,6 +142,28 @@ describe('the operations that gained target and holder', () => {
   });
 });
 
+describe('RECALL', () => {
+  const decks = () => routineState({
+    h1: { type: 'widget' },
+    inHolder: { type: 'deck', parent: 'h1' },
+    card1: { type: 'widget', deck: 'inHolder' },
+    onTheBoard: { type: 'deck' },
+    card2: { type: 'widget', deck: 'onTheBoard' }
+  });
+
+  test('target gathers the cards into whatever the deck lies in', async () => {
+    const result = await runRoutine(decks(), [ { func: 'RECALL', target: 'inHolder' } ]);
+    expect(result.state.card1.parent).toBe('h1');
+  });
+
+  test('a deck lying on no widget is reported instead of the cards being stacked on the deck', async () => {
+    // the deck is not a holder, so gathering the cards onto it would leave them on a widget
+    // that neither lays them out nor takes them anywhere
+    const result = await runRoutine(decks(), [ { func: 'RECALL', target: 'onTheBoard' } ]);
+    expect(result.state.card2.parent || '-').toBe('-');
+  });
+});
+
 describe('MOVE', () => {
   test('moves the content of fromHolder into toHolder', async () => {
     expect(await parents([ { func: 'MOVE', fromHolder: [ 'h1' ], toHolder: [ 'h2' ], count: 'all' } ])).toBe('h2,h2,h2,h2,-');
