@@ -33,14 +33,14 @@
   "title": {
     "id": "title",
     "type": "label",
-    "x": 400,
+    "x": 100,
     "y": -2,
-    "width": 800,
-    "height": 60,
+    "width": 1400,
+    "height": 80,
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Functions: widget inputs"
+    "text": "Functions: widget inputs (MOVE)"
   },
   "overview": {
     "id": "overview",

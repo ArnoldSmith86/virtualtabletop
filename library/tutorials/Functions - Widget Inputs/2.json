@@ -1,0 +1,560 @@
+{
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - Widget Inputs",
+      "image": "/assets/-1354062221_3242",
+      "rules": "",
+      "bgg": "",
+      "year": "2026",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1786320000000,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "seats and counting",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    }
+  },
+  "title": {
+    "id": "title",
+    "type": "label",
+    "x": 100,
+    "y": -2,
+    "width": 1400,
+    "height": 80,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: widget inputs (seats and counting)"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 130,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px"
+    },
+    "html": "Two things about <b>holder</b> are easy to get wrong. A <b>count</b> is spent on every widget the holder names separately, the way FLIP and ROTATE always did it &ndash; naming the same widgets with <b>target</b> spends it once in total. And a <b>seat</b> contributes what lies in its hand and belongs to its player, so an empty seat contributes nothing. Put a button into edit mode and press ctrl-j to read the routine behind it."
+  },
+  "holderA": {
+    "id": "holderA",
+    "type": "holder",
+    "x": 140,
+    "y": 250,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "tokenA1": {
+    "id": "tokenA1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "1",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderA"
+  },
+  "tokenA2": {
+    "id": "tokenA2",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "2",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderA"
+  },
+  "tokenA3": {
+    "id": "tokenA3",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "3",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderA"
+  },
+  "holderB": {
+    "id": "holderB",
+    "type": "holder",
+    "x": 400,
+    "y": 250,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "tokenB1": {
+    "id": "tokenB1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "4",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderB"
+  },
+  "tokenB2": {
+    "id": "tokenB2",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "5",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderB"
+  },
+  "tokenB3": {
+    "id": "tokenB3",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "6",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderB"
+  },
+  "button1": {
+    "id": "button1",
+    "type": "button",
+    "x": 140,
+    "y": 390,
+    "width": 500,
+    "height": 50,
+    "text": "ROTATE holder count 1",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "holder": [
+          "holderA",
+          "holderB"
+        ],
+        "angle": 45,
+        "mode": "add",
+        "count": 1
+      }
+    ]
+  },
+  "text1": {
+    "id": "text1",
+    "x": 130,
+    "y": 455,
+    "width": 520,
+    "height": 160,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>holder</b> names two holders and <b>count</b> is 1, so <i>each</i> of them gives up one token: two tokens turn. That is what deals a card to every player at once."
+  },
+  "holderC": {
+    "id": "holderC",
+    "type": "holder",
+    "x": 900,
+    "y": 250,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "tokenC1": {
+    "id": "tokenC1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "7",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderC"
+  },
+  "tokenC2": {
+    "id": "tokenC2",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "8",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderC"
+  },
+  "tokenC3": {
+    "id": "tokenC3",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "9",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderC"
+  },
+  "holderD": {
+    "id": "holderD",
+    "type": "holder",
+    "x": 1160,
+    "y": 250,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "tokenD1": {
+    "id": "tokenD1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "10",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderD"
+  },
+  "tokenD2": {
+    "id": "tokenD2",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "11",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderD"
+  },
+  "tokenD3": {
+    "id": "tokenD3",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "12",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false,
+    "parent": "holderD"
+  },
+  "button2": {
+    "id": "button2",
+    "type": "button",
+    "x": 900,
+    "y": 390,
+    "width": 500,
+    "height": 50,
+    "text": "ROTATE target count 1",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "holderC",
+          "holderD"
+        ],
+        "collection": "picked"
+      },
+      {
+        "func": "ROTATE",
+        "target": "picked",
+        "angle": 45,
+        "mode": "add",
+        "count": 1
+      }
+    ]
+  },
+  "text2": {
+    "id": "text2",
+    "x": 890,
+    "y": 455,
+    "width": 520,
+    "height": 160,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The same twelve tokens, but named with <b>target</b> as one collection: the count is spent once and a single token turns, no matter how many holders they came from."
+  },
+  "seat1": {
+    "id": "seat1",
+    "type": "seat",
+    "x": 260,
+    "y": 800,
+    "hand": "hand1"
+  },
+  "hand1": {
+    "id": "hand1",
+    "type": "holder",
+    "parent": "seat1",
+    "x": -83.5,
+    "y": -180,
+    "width": 317,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1,
+    "childrenPerOwner": true
+  },
+  "tokenS1": {
+    "id": "tokenS1",
+    "x": 700,
+    "y": 640,
+    "width": 60,
+    "height": 60,
+    "text": "A",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false
+  },
+  "tokenS2": {
+    "id": "tokenS2",
+    "x": 770,
+    "y": 640,
+    "width": 60,
+    "height": 60,
+    "text": "B",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false
+  },
+  "button3": {
+    "id": "button3",
+    "type": "button",
+    "x": 640,
+    "y": 730,
+    "width": 300,
+    "height": 50,
+    "text": "MOVE into the seat",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "target": [
+          "tokenS1",
+          "tokenS2"
+        ],
+        "toHolder": [
+          "seat1"
+        ],
+        "count": "all"
+      }
+    ]
+  },
+  "button4": {
+    "id": "button4",
+    "type": "button",
+    "x": 640,
+    "y": 800,
+    "width": 300,
+    "height": 50,
+    "text": "ROTATE holder seat1",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "holder": [
+          "seat1"
+        ],
+        "angle": 45,
+        "mode": "add",
+        "count": "all"
+      }
+    ]
+  },
+  "button5": {
+    "id": "button5",
+    "type": "button",
+    "x": 640,
+    "y": 870,
+    "width": 300,
+    "height": 50,
+    "text": "put them back",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "target": [
+          "tokenS1",
+          "tokenS2"
+        ],
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "target": [
+          "tokenS1",
+          "tokenS2"
+        ],
+        "property": "rotation",
+        "value": 0
+      },
+      {
+        "func": "MOVEXY",
+        "target": [
+          "tokenS1"
+        ],
+        "x": 700,
+        "y": 640,
+        "count": "all",
+        "snapToGrid": false
+      },
+      {
+        "func": "MOVEXY",
+        "target": [
+          "tokenS2"
+        ],
+        "x": 770,
+        "y": 640,
+        "count": "all",
+        "snapToGrid": false
+      }
+    ]
+  },
+  "text3": {
+    "id": "text3",
+    "x": 980,
+    "y": 640,
+    "width": 480,
+    "height": 290,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "A <b>seat</b> passed to <b>holder</b> stands for what lies in its hand and belongs to its player &ndash; not for everything in the hand. Move the two tokens into the seat first: MOVE into a seat puts them into its hand and gives them to the player sitting there. Only then does the second button find them. While nobody is sitting in the seat, both buttons find nothing at all, which is what makes a seat safe to name even before the game starts."
+  }
+}
