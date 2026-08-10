@@ -142,7 +142,7 @@ const WIDGET_PROPERTIES = {
     },
     Pile: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
+        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', showLimit: 'boolean', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
     },
     Scoreboard: {
         ...COMMON_PROPERTIES,
@@ -439,7 +439,9 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         
         for (const prop of Object.keys(operation)) {
-            if (['func'].includes(prop) || prop.match(/^(note|comment)/i) || prop.startsWith('//')) continue;
+            // skip is deprecated but the engine still honours it on every operation,
+            // so it belongs to none of the tables below and to all of them
+            if (['func', 'skip'].includes(prop) || prop.match(/^(note|comment)/i) || prop.startsWith('//')) continue;
             
             const propPath = [...operationPath, prop];
             
@@ -623,12 +625,14 @@ const operationProps = {
         'routine':   'routineProperty', 
         'widget':    'idArray', 
         'variable':  'string',
+        'collection': 'string',
         'return':    'boolean',
         'arguments': 'object'
     },
     'CANVAS': { 
         'canvas':     'idArray', 
         'collection': 'inCollection', 
+        'count':      'positiveNumber',
         'color':      v=>typeof v === 'string' && /^#[0-9A-Fa-f]{3,8}$/.test(v) || 'color expected (format: #RGB, #RGBA, #RRGGBB or #RRGGBBAA)',
         'mode':       getEnumValidator(['set', 'inc', 'dec', 'change', 'reset', 'setPixel']),
         'value':      'positiveNumber',
@@ -711,6 +715,7 @@ const operationProps = {
         'css': v=>typeof v === 'string',
         'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
         'block':     'boolean',
+        'randomRotation': 'number',
     },
     'LABEL': {
         'label': 'idArray',
@@ -731,6 +736,7 @@ const operationProps = {
         'count': 'countOrAll',
         'x': 'number',
         'y': 'number',
+        'z': 'number',
         'resetOwner': 'boolean',
         'face': 'positiveNumber',
         'snapToGrid': 'boolean'
@@ -803,7 +809,7 @@ const operationProps = {
         'collection': 'inCollection',
         'mode': getEnumValidator(['set','inc','dec','pause','start','toggle','reset']),
         'value': v=>typeof v === 'number' || typeof v === 'string',
-        'seconds': 'number'
+        'seconds': v=>typeof v === 'number' || typeof v === 'string' && /^-?\d+:\d+(\.\d+)?$/.test(v)
     },
     'TURN': {
         'turn': v=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last',
@@ -1129,7 +1135,8 @@ function validateGameFile(data, checkMeta) {
                 'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
                 'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
                 'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
-                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery'
+                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery',
+                'importerTemp', 'importerWarnings', 'importerSchemaVersion'
             ];
             for (const prop of Object.keys(data._meta.info)) {
                 if (!infoProps.includes(prop)) {

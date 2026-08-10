@@ -1,3 +1,5 @@
+import { viewportConfig } from './calculateLayout.js';
+
 let usedTouch = false;
 let mouseTarget = null;
 let doubleClickTimeout = null;
@@ -14,23 +16,18 @@ function eventCoords(name, e) {
   let x = (coords.clientX - roomRectangle.left) / scale / zoomScale;
   let y = (coords.clientY - roomRectangle.top) / scale / zoomScale;
   if (!edit || zoom == 1) {
-    x = Math.max(0, Math.min(1600, x));
-    y = Math.max(0, Math.min(1000, y));
+    x = Math.max(0, Math.min(viewportConfig.targetWidth, x));
+    y = Math.max(0, Math.min(viewportConfig.targetHeight, y));
   }
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
-// Wait for the drag step that is currently in flight, if there is one. It never
-// rejects - a step that fails reports that itself, and a failed move must not
-// keep the release from ending the drag.
-function afterDragStep(ms) {
-  return Promise.resolve(ms.pending);
-}
-
-// Finish a drag that the regular mouseup handling below never gets to see. The
-// widget would otherwise stay detached from its holder and flagged as being
-// dragged for every player until somebody picks it up again. The release is not
-// treated as a click because we don't know what it was released over.
+// Finish a drag whose mouseup never reached the drag handling below, because one
+// of the checks in handleInput() returned before it. The widget would otherwise
+// stay detached from its holder and flagged as being dragged for every player
+// until somebody picks it up again, and would keep following the cursor with the
+// button up. It is dropped where the drag last moved to; the release is not
+// treated as a click, because we don't know what it was released over.
 async function endDrag(target) {
   const ms = target && mouseStatus[target.id];
   if(!ms)
@@ -38,18 +35,15 @@ async function endDrag(target) {
   delete mouseStatus[target.id];
 
   // while the state is being replaced the dragged widget may already be gone
-  if(isLoading)
+  if(isLoading || ms.status == 'initial' || !ms.moveTarget || widgets.get(ms.moveTarget.get('id')) !== ms.moveTarget)
     return;
 
-  // a drag step can still be waiting for moveStart()/move() - let it finish
-  // before the drag is ended, so the moves don't land after the release
-  await afterDragStep(ms);
-
-  if(ms.status == 'initial' || !ms.moveTarget || !widgets.has(unescapeID(target.id.slice(2))))
-    return;
   batchStart();
   try {
     setDeltaCause(`${playerName} dragged ${ms.moveTarget.get('id')}`);
+    // like the mouseup branch below: let a mousemove that is still being
+    // processed finish first, so no move lands after the drag has ended
+    await ms.dragChain;
     await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
   } finally {
     batchEnd();
@@ -57,29 +51,30 @@ async function endDrag(target) {
 }
 
 async function inputHandler(name, e) {
-  const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
-
-  // Releasing the mouse button always ends the drag, even when one of the checks
-  // below returns early or when the click handler awaits a routine that runs
-  // for a long time (DELAY, INPUT, ...). Forget the drag target right away so
-  // that mouse movements arriving afterwards don't get treated as a drag. On
-  // touch devices mouseTarget is never set and clearing mouseStatus below does
-  // the same job.
+  // Releasing the mouse button always ends the drag. Forget the drag target right
+  // away, before handleInput() can return early or await a click routine that runs
+  // for a long time (DELAY, INPUT, ...) - the mouse movements arriving until it
+  // returns must not be treated as a drag of the clicked widget. endDrag() then
+  // takes care of a mouseup that never reached the drag handling at all. On touch
+  // devices mouseTarget is never set and mouseStatus alone does the same job.
   const dragTarget = mouseTarget;
   if(name == 'mouseup')
     mouseTarget = null;
-
-  if(edit && !isMiddleMouseButton && editInputHandler(name, e)) {
+  try {
+    await handleInput(name, e, dragTarget);
+  } finally {
     if(name == 'mouseup')
       await endDrag(dragTarget);
-    return;
   }
+}
 
-  if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands') {
-    if(name == 'mouseup')
-      await endDrag(dragTarget);
+async function handleInput(name, e, dragTarget) {
+  const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
+  if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
-  }
+
+  if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
+    return;
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
@@ -94,11 +89,8 @@ async function inputHandler(name, e) {
   }
   let target = e.target;
   while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
-    if(target.id == 'editor') {
-      if(name == 'mouseup')
-        await endDrag(dragTarget);
+    if(target.id == 'editor')
       return;
-    }
     target = target.parentNode;
   }
 
@@ -121,15 +113,13 @@ async function inputHandler(name, e) {
     // A widget can be replaced while an input event is still in flight (for
     // example, immediately after its ID is renamed in the properties editor).
     // The saved mouse target then refers to a removed DOM node, not a widget.
-    // The drag still has to end - endDrag() only clears its state in that case.
-    if(!widget) {
-      if(name == 'mouseup')
-        await endDrag(dragTarget);
+    // The drag still has to end - endDrag() only discards its state in that case.
+    if(!widget)
       return;
-    }
-    // a routine below can throw - without the finally, the batch would stay open
-    // forever and this client would stop sending its deltas altogether
     batchStart();
+    // batchEnd() has to run even if a routine triggered by the drop or click below
+    // throws: batchStart() increments batchDepth and sendDelta() only sends anything
+    // while that is 0, so a leaked batch stops this client from syncing altogether.
     try {
       if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
         if(name == 'mousedown' || name == 'touchstart') {
@@ -144,8 +134,7 @@ async function inputHandler(name, e) {
           status: 'initial',
           start: new Date(),
           downCoords: coords,
-          moveTarget: widget,
-          steps: 0
+          moveTarget: widget
         };
         const ms = mouseStatus[target.id];
         let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
@@ -162,17 +151,19 @@ async function inputHandler(name, e) {
         if (movable) {
           ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
         }
-      } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
+      } else if((name == 'mouseup' || name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
         const ms = mouseStatus[target.id];
+        // End the drag synchronously, before the first await below: a mousemove that
+        // is delivered while the drop is still being processed would otherwise queue
+        // another move and drag the widget back out of where it was just dropped.
         delete mouseStatus[target.id];
         const timeSinceStart = +new Date() - ms.start;
         const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
-        // a drag step started by an earlier mousemove can still be waiting for
-        // moveStart()/move() - it has to finish before the drag ends, otherwise it
-        // would move the widget again after the release
-        await afterDragStep(ms);
         if(ms.status != 'initial' && ms.moveTarget) {
           setDeltaCause(`${playerName} dragged ${widget.id}`);
+          // let every mousemove that is still being processed finish first so that the
+          // drop happens after the last one instead of racing with it
+          await ms.dragChain;
           await ms.moveTarget.moveEnd(coords, ms.localAnchor);
         }
         if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
@@ -196,9 +187,12 @@ async function inputHandler(name, e) {
                 doubleClickTimeout = setTimeout(async () => {
                   doubleClickTimeout = null;
                   batchStart();
-                  setDeltaCause(`${playerName} clicked ${widget.id}`);
-                  await widget.click();
-                  batchEnd();
+                  try {
+                    setDeltaCause(`${playerName} clicked ${widget.id}`);
+                    await widget.click();
+                  } finally {
+                    batchEnd();
+                  }
                 }, 350);
               }
             } else {
@@ -207,48 +201,37 @@ async function inputHandler(name, e) {
           }
         }
       } else if((name == 'mousemove' || name == 'touchmove') && mouseStatus[target.id]) {
-        // moveStart() can wait for a long time - it detaches the widget from its
-        // holder, which runs that holder's leaveRoutine. Keep the drag steps in a
-        // promise chain so that a later move (and the release, which waits for the
-        // chain as well) can't overtake it. The step is not awaited here: the
-        // mouse keeps moving while it waits, and holding up every one of those
-        // handlers would only make them all catch up at once. It works on the
-        // status object captured here because the entry is removed from
-        // mouseStatus as soon as the button is released.
         const ms = mouseStatus[target.id];
-        const previousStep = afterDragStep(ms);
-        const startsMove = ms.status == 'initial';
-        const step = ++ms.steps;
-        ms.status = 'moving';
+        setDeltaCause(`${playerName} dragged ${widget.id}`);
+        const isFirstMove = ms.status == 'initial';
+        if(isFirstMove)
+          ms.status = 'moving';
         ms.coords = coords;
-        ms.pending = (async () => {
-          await previousStep;
-          if(!ms.moveTarget)
-            return;
-          batchStart();
-          try {
-            if(startsMove) {
-              setDeltaCause(`${playerName} dragged ${widget.id}`);
-              await ms.moveTarget.moveStart();
-            }
-            // the mouse can move on many times while the step above is waiting.
-            // Going to each of those outdated positions in turn would make the
-            // widget crawl along the whole path the mouse took, long after it got
-            // there (or was even released), so only the last two are carried out:
-            // the hit test in move() reads the CSS transforms, which only catch
-            // up when the delta of the step before was sent, so the step that
-            // arrives at the final position needs one before it.
-            if(step + 1 < ms.steps)
+        if(ms.moveTarget) {
+          setDeltaCause(`${playerName} dragged ${widget.id}`);
+          // Mouse events are handled asynchronously, so several of them can be in
+          // flight at once. Queue the moves instead of running them in parallel so
+          // the widget always ends up where the most recent event put it - and so
+          // that the drop in the mouseup branch above happens after all of them.
+          ms.dragChain = Promise.resolve(ms.dragChain).then(async _ => {
+            // a move that a newer mousemove already replaced does not need to run:
+            // that one will put the widget, its hover target and its parent where
+            // the cursor is now. Without this the queue can grow under load and the
+            // widget visibly lags behind the cursor.
+            if(!isFirstMove && ms.coords !== coords)
               return;
-            setDeltaCause(`${playerName} dragged ${widget.id}`);
-            await ms.moveTarget.move(ms.coords, ms.localAnchor);
-            // sending the delta is what applies those transforms. batchEnd() below
-            // only does it when no event's batch is still open, so send it here.
-            flushDelta();
-          } finally {
-            batchEnd();
-          }
-        })().catch(e=>console.error(`Dragging ${widget.id} failed.`, e));
+            if(isFirstMove)
+              await ms.moveTarget.moveStart();
+            await ms.moveTarget.move(coords, ms.localAnchor);
+          }).catch(error => {
+            // keep the chain resolvable - a rejected one would make every later move
+            // and the drop in the mouseup branch above fail as well - but still let
+            // the error reach the client error reporter in tracing.js, which is where
+            // it would have ended up as an unhandled rejection before the chain
+            setTimeout(_=>{ throw error; });
+          });
+          await ms.dragChain;
+        }
       }
     } finally {
       batchEnd();

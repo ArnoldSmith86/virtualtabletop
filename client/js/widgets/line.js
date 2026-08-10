@@ -295,9 +295,40 @@ export class Line extends Widget {
     }
   }
 
+  // A stop outside the line is placed through global coordinates, which read the
+  // CSS transforms of the frames it converts between. Inside a batch those show
+  // the state of the previous event, so after normalizeGeometry moved the box -
+  // which is what positionAttachedWidgets runs on - the stop would land off the
+  // path by exactly that move. Same reason applyConnections flushes. Asking the
+  // DOM whether it still matches the state - rather than remembering what was
+  // flushed before - also covers a frame that was flushed by something else in
+  // the batch and changed again since, and still costs no flush at all for a
+  // re-space, which rewrites nothing but the stops and their own x/y.
+  flushStaleTransforms(stop) {
+    if(this.stopFrames(stop).some(frame=>frame.domElement.style.transform != frame.cssTransform()))
+      flushDelta();
+  }
+
+  // stopCoordInParentFrame converts through two chains of DOM transforms: this
+  // line up to the room, and the same for the parent the stop is placed in.
+  // Either going stale inside a batch displaces the stop. A stop that is a child
+  // of the line is never converted, so it reads no transform at all.
+  stopFrames(stop) {
+    if(stop.get('parent') == this.id)
+      return [];
+    const frames = [];
+    for(const start of [ this, widgets.get(stop.get('parent')) ])
+      for(let w = start; w && !frames.includes(w); w = widgets.get(w.get('parent')))
+        frames.push(w);
+    return frames;
+  }
+
   async positionAttachedWidgets() {
     for(const entry of this.stopList()) {
       const stop = widgets.get(entry.widget);
+      // per stop, because the x/y this loop writes are themselves unflushed and
+      // one stop can be (inside) the frame another stop is placed in
+      this.flushStaleTransforms(stop);
       const p = this.stopCoordInParentFrame(stop, this.pointAtPosition(entry.position));
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
       await stop.set('y', Math.round(p.y - stop.get('height')/2));
@@ -482,6 +513,13 @@ export class Line extends Widget {
     const point = this.coordLocalFromCoordGlobal(coordGlobal);
     // cheap box reject so a room full of lines doesn't sample every path on every mouse move
     if(point.x < -range || point.y < -range || point.x > +this.get('width')+range || point.y > +this.get('height')+range)
+      return null;
+    // a line's dropLimit bounds the stops it carries rather than its children:
+    // a fixedParent widget rides a line as a stop without ever becoming one.
+    // Something the line already carries can always be dropped back onto the
+    // path - that keeps the number of stops as it is, even above the limit.
+    const stops = this.stopList();
+    if(!stops.some(entry=>entry.widget == widget.id) && exceedsDropLimit(this, 1, stops.length))
       return null;
     const position = this.positionAtPoint(point);
     const onPath = this.pointAtPosition(position);

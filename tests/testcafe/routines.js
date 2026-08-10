@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { expectEventually, getState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -46,15 +46,6 @@ function removeOnEnterRoom() {
   state.hand1.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'witness' }, { func: 'SET', property: 'marked', value: true } ];
   state.hand2.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'doomed' }, { func: 'DELETE' } ];
   return state;
-}
-
-async function expectEventually(t, get, expected, timeout=1000) {
-  let actual = await get();
-  for(let wait=50; wait<timeout && JSON.stringify(actual) != JSON.stringify(expected); wait*=2) {
-    await new Promise(resolve=>setTimeout(resolve, wait));
-    actual = await get();
-  }
-  await t.expect(actual).eql(expected);
 }
 
 // a hand is filled from the bottom up, so its order is the one of ascending z
@@ -202,7 +193,7 @@ test('moving the mouse while a DELAY is running does not drag the clicked widget
   // without this the test would pass without ever testing anything if the hover
   // took longer than the DELAY, because the routine would already be over
   await t.expect(await markedWidgets()).eql([]);
-  await expectEventually(t, markedWidgets, [ 'delay' ], 4*delayDuration);
+  await expectEventually(t, markedWidgets, [ 'delay' ], null, 4*delayDuration);
   await expectEventually(t, ()=>widgetPosition('delay'), [ 100, 100 ]);
 });
 
@@ -216,7 +207,7 @@ test('releasing the button while a leaveRoutine is running still drops the widge
   // where the button came up instead of walking through them
   await startDrag(200);
   await releaseDrag();
-  await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ], 4*leaveDuration);
+  await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ], null, 4*leaveDuration);
 });
 
 test('releasing a dragged widget while an overlay is open still ends the drag', async t => {

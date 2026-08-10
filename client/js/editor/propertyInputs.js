@@ -42,6 +42,14 @@ function propertyInputValueSet(value) {
   return value !== undefined && value !== null && value !== '';
 }
 
+// Unique ids for the DOM elements the editor generates. Deliberately not
+// rand(): that advances the seeded random the game state depends on, so
+// rendering an input would change the next dice roll.
+let editorDomIDCounter = 0;
+function editorDomID(prefix) {
+  return `${prefix}_${++editorDomIDCounter}`;
+}
+
 function numericInputValue(rawValue, min, max) {
   if(rawValue === '' || rawValue === null || rawValue === undefined)
     return null;
@@ -55,6 +63,70 @@ function numericInputValue(rawValue, min, max) {
   if(typeof max === 'number')
     return Math.min(max, value);
   return value;
+}
+
+// Sentinel returned by a MultiWidget's get()/state when the selected widgets
+// disagree on a property. Inputs show a muted "multiple values" state but can
+// still set every widget to one common value.
+const MULTI_DIFFERENT = { multiDiffers: true };
+
+function propertyInputIsMulti(value) {
+  return value === MULTI_DIFFERENT;
+}
+
+function replaceExclusiveProperties(source, properties, property, value) {
+  const result = typeof source == 'object' && source !== null ? JSON.parse(JSON.stringify(source)) : {};
+  for(const key of properties)
+    delete result[key];
+  result[property] = value;
+  return result;
+}
+
+// Facade over several widgets so the same PropertyInput classes can edit a
+// whole selection at once.
+class MultiWidget {
+  constructor(widgets) {
+    this.widgets = widgets;
+    this.isMulti = true;
+    this.id = widgets.map(w=>w.id).join(',');
+  }
+
+  get(property) {
+    const values = this.widgets.map(w=>w.get(property));
+    return values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+  }
+
+  set(property, value) {
+    for(const widget of this.widgets)
+      widget.set(property, value);
+  }
+
+  get state() {
+    // union of properties present on any selected widget - a property set on
+    // only some of the selection (e.g. one widget has an icon, the other
+    // doesn't) must still resolve to MULTI_DIFFERENT rather than silently
+    // disappearing, or pickers would show the plain "not set" state instead
+    // of the "multiple values" chip
+    const keys = [ ...new Set(this.widgets.flatMap(w=>Object.keys(w.state))) ];
+    const merged = {};
+    for(const key of keys) {
+      const values = this.widgets.map(w=>w.state[key]);
+      merged[key] = values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+    }
+    return merged;
+  }
+
+  // defaults/domElement are read by cssValueOptions/propertyOrCssOptions and
+  // typeSectionProperties() - the first selected widget stands in for the
+  // whole selection (their type-defined defaults/rendering are identical
+  // since renderForMulti only curates same-type sections)
+  get defaults() {
+    return this.widgets[0].defaults;
+  }
+
+  get domElement() {
+    return this.widgets[0].domElement;
+  }
 }
 
 // Walks the state of all widgets and calls callback(key, value, path, object)
@@ -148,6 +220,47 @@ function iconTypeEnabled(value, enabledTypes) {
   return !type || enabledTypes.has(type);
 }
 
+// The full symbol picker is an overlay of its own, so opening it from a picker that sits inside another overlay
+// (e.g. the deck editor's "Add New Deck" dialog) hides that one. Bring that overlay - the one the given element
+// lives in - back afterwards, instead of leaving the user without the dialog they were working in.
+async function pickSymbolKeepingOverlay(element, type='all') {
+  const hostOverlay = element.closest('.overlay');
+  if(!hostOverlay)
+    return await pickSymbol(type);
+
+  // The deck editor parks the symbol picker inside its card view (see DeckEditor.open), which is not where a
+  // dialog floating above the editor wants it: show it where the dialog is and put it back afterwards.
+  const picker = $('#symbolPickerOverlay');
+  const pickerParent = picker.parentNode;
+  hostOverlay.parentNode.appendChild(picker);
+  // Where it lands has no box or stacking rule of its own, so it would end up behind the deck editor: the
+  // class gives it the editor's box and floats it above (see deckeditor.css) while it is parked here.
+  picker.classList.add('symbolPickerAboveEditor');
+
+  // Whatever happens, the user must get their dialog back: the picker's symbol list is fetched, so it can also
+  // fail to open. Keep that failure here - unhandled it would reach the global error handler, which replaces
+  // the dialog with the client error overlay.
+  let symbol = null;
+  let error = null;
+  try {
+    symbol = await pickSymbol(type, true, false);
+  } catch(e) {
+    error = e;
+  }
+
+  picker.classList.remove('symbolPickerAboveEditor');
+  pickerParent.appendChild(picker);
+  // showOverlay toggles, so it would hide the dialog that is still up when the picker never opened at all:
+  // only bring the dialog back when the picker actually took its place.
+  if(hostOverlay.style.display == 'none')
+    showOverlay(hostOverlay.id);
+  if(error) {
+    console.error(error);
+    alert('The symbol picker could not be loaded. Please try again.');
+  }
+  return symbol;
+}
+
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
@@ -155,29 +268,47 @@ function renderIconChip(value, target) {
   // them (see generateSymbolsDiv); preview the first symbol's name, which uses
   // the same string formats below, instead of crashing on .match
   let icon = value;
+  let first = null;
   if(value && typeof value == 'object') {
     chip.title = JSON.stringify(value);
-    const first = Array.isArray(value) ? value[0] : value;
-    icon = first && typeof first == 'object' ? first.name : first;
+    first = Array.isArray(value) ? null : value; // combos have no single glyph to color/scale
+    icon = Array.isArray(value) ? value[0] : value;
+    icon = icon && typeof icon == 'object' ? icon.name : icon;
   } else {
     chip.title = value;
   }
   if(typeof icon != 'string')
     return chip; // nothing renderable (e.g. an empty or malformed icon object)
+  // the object form's color/scale (see iconWithOption) apply to a single
+  // chosen glyph - not previewing them made a red icon's preview look black,
+  // as if the color picker had no effect (auto-review 2/4, finding "Icon
+  // preview contradicts the chosen color"). Applied to font-based glyphs
+  // (the common case); game-icons.net image glyphs are recolored via an
+  // async SVG fetch elsewhere (see getSVG/symbols.js) and are left as-is
+  // here to keep this preview cheap and synchronous.
+  const iconColor = iconOption(first, 'color');
+  const iconScale = iconOption(first, 'scale');
+  let glyph = null;
   if(icon.match(/^\/assets\/|^https?:\/\//)) {
     chip.innerHTML = `<img src="${html(mapAssetURLs(icon))}">`;
   } else if(icon.match(/\//)) {
     chip.innerHTML = `<img src="${html(`i/game-icons.net/${icon}.svg`)}">`;
   } else if(icon.match(/^\[/)) {
-    div(chip, 'symbols', html(icon));
+    glyph = div(chip, 'symbols', html(icon));
   } else if(icon.match(/^[a-z0-9].*_NOFILL$/)) {
-    div(chip, 'material-symbols-nofill', html(icon.replace(/_NOFILL$/, '')));
+    glyph = div(chip, 'material-symbols-nofill', html(icon.replace(/_NOFILL$/, '')));
   } else if(icon.match(/^[a-z0-9]/)) {
-    div(chip, 'material-symbols', html(icon));
+    glyph = div(chip, 'material-symbols', html(icon));
   } else if(icon.match(/^\(.*\)$/)) {
-    div(chip, 'emoji-monochrome', html(toNotoMonochrome(icon.replace(/^\((.*)\)$/, '$1'))));
+    glyph = div(chip, 'emoji-monochrome', html(toNotoMonochrome(icon.replace(/^\((.*)\)$/, '$1'))));
   } else {
     div(chip, 'emojiColorChip', html(icon)); // raw emoji: native color rendering
+  }
+  if(glyph) {
+    if(iconColor)
+      glyph.style.color = iconColor;
+    if(iconScale)
+      glyph.style.transform = `scale(${numericInputValue(String(iconScale), 0.1, 5) || 1})`;
   }
   return chip;
 }
@@ -336,6 +467,65 @@ function propertyInfoButton(appendTo, infoHTML) {
   return dom;
 }
 
+// Free text field with a datalist of suggestions plus an add button - so the
+// field has a picker but still accepts a name the editor never heard of.
+// onAdd returning false keeps the typed text (the name was rejected).
+function suggestionAddRow(target, className, options) {
+  const row = div(target, className);
+
+  const input = document.createElement('input');
+  input.placeholder = options.placeholder;
+  row.appendChild(input);
+
+  if(options.suggestions.length) {
+    const listID = editorDomID('suggestions');
+    const datalist = document.createElement('datalist');
+    datalist.id = listID;
+    for(const suggestion of options.suggestions) {
+      const option = document.createElement('option');
+      option.value = suggestion;
+      datalist.appendChild(option);
+    }
+    row.appendChild(datalist);
+    input.setAttribute('list', listID);
+
+    // A datalist accepts custom property names as well as its suggestions.
+    // Most add rows get a separate, explicit button because the native
+    // affordance is easy to miss; the generic-property input keeps only the
+    // native arrow because it is already visible inside that compact field.
+    if(!options.nativeSuggestionButtonOnly) {
+      const suggestions = document.createElement('button');
+      suggestions.setAttribute('icon', 'arrow_drop_down');
+      suggestions.className = 'suggestionListButton';
+      suggestions.title = 'Show suggestions';
+      suggestions.onclick = _=>{
+        input.focus();
+        if(typeof input.showPicker == 'function')
+          input.showPicker();
+      };
+      row.appendChild(suggestions);
+    }
+  }
+
+  const submit = _=>{
+    const value = input.value.trim();
+    if(value && options.onAdd(value) !== false)
+      input.value = '';
+  };
+  input.onkeydown = event=>{
+    if(event.key == 'Enter')
+      submit();
+  };
+
+  const add = document.createElement('button');
+  add.setAttribute('icon', 'add');
+  add.title = options.title;
+  add.onclick = submit;
+  row.appendChild(add);
+
+  return row;
+}
+
 function propertyInputNumberOrText(rawValue, nullIfEmpty=false) {
   const value = String(rawValue).trim();
   if(value === '' && nullIfEmpty)
@@ -355,7 +545,10 @@ class PropertyInput {
   getValue() {
     if(this.options.getValue)
       return this.options.getValue();
-    const value = this.widget.get(this.options.property);
+    // widgetOwnValue, not get(): setValue writes the widget's own property, and
+    // a basic widget resolves get() through its shown face - so reading get()
+    // would show a face's value in an input that overwrites the widget's
+    const value = widgetOwnValue(this.widget, this.options.property);
     return value === undefined ? null : value;
   }
 
@@ -383,12 +576,17 @@ class PropertyInput {
         label.dataset.label = this.labelText;
         label.classList.add('iconOnly');
       } else {
+        // no title: the label column wraps instead of truncating, so a native
+        // tooltip would only repeat what is already on screen - and cover the
+        // popup of the (i) button sitting inside the same label
         label.textContent = this.labelText;
-        if(this.showLabelTitle())
-          label.title = this.labelText;
       }
-      if(this.options.hint)
+      if(this.options.hint) {
         propertyInfoButton(label, html(this.options.hint));
+        // colorFlexRow collapses non-icon labels to their text width - this
+        // marks the ones that still need the reserved hint-icon space
+        label.classList.add('hasHint');
+      }
       this.dom.appendChild(label);
     } else if(this.options.hint) {
       propertyInfoButton(this.dom, html(this.options.hint));
@@ -401,10 +599,6 @@ class PropertyInput {
 
   cssClass() {
     return '';
-  }
-
-  showLabelTitle() {
-    return true;
   }
 
   renderControl(target) {
@@ -431,8 +625,11 @@ class TextInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || '');
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : value;
+      this.input.value = (value === null || multi) ? '' : value;
   }
 }
 
@@ -486,14 +683,17 @@ class NumberInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder !== undefined ? this.options.placeholder : '');
     const numeric = typeof value == 'number' ? value : +value || 0;
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : numeric;
+      this.input.value = (value === null || multi) ? '' : numeric;
     if(this.slider && document.activeElement !== this.slider) {
       // when unset, rest the slider at the numeric placeholder (the shown
       // default) instead of dropping it to its minimum
       const placeholder = this.options.placeholder !== undefined && this.options.placeholder !== '' ? +this.options.placeholder : NaN;
-      this.slider.value = value === null && Number.isFinite(placeholder) ? placeholder : numeric;
+      this.slider.value = (value === null || multi) && Number.isFinite(placeholder) ? placeholder : numeric;
     }
   }
 }
@@ -513,9 +713,14 @@ class NumberOrTextInput extends PropertyInput {
   }
 
   update(value) {
-    this.input.placeholder = this.options.placeholder || 'e.g. 8, 8px, 50%';
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    // the compact width this input is normally used at (~70px) truncates the
+    // old "e.g. 8, 8px, 50%" placeholder down to "e.g. 8," - reading like a
+    // typo rather than a hint
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || '8px');
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : value;
+      this.input.value = (value === null || multi) ? '' : value;
   }
 }
 
@@ -529,7 +734,7 @@ class CheckboxInput extends PropertyInput {
     this.input = document.createElement('input');
     this.input.type = 'checkbox';
     this.input.className = 'switchbox';
-    this.input.id = `propertyCheckbox_${rand().toString(36).substring(3, 12)}`;
+    this.input.id = editorDomID('propertyCheckbox');
     this.input.onchange = _=>this.setValue(this.options.invert ? !this.input.checked : this.input.checked);
     target.appendChild(this.input);
 
@@ -540,7 +745,10 @@ class CheckboxInput extends PropertyInput {
   }
 
   update(value) {
-    const boolValue = value === null ? !!this.options.default : !!value;
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.indeterminate = multi;
+    const boolValue = (value === null || multi) ? !!this.options.default : !!value;
     this.input.checked = this.options.invert ? !boolValue : boolValue;
   }
 }
@@ -564,6 +772,19 @@ class SelectInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    if(multi) {
+      if(!this.customOption) {
+        this.customOption = document.createElement('option');
+        this.select.appendChild(this.customOption);
+      }
+      this.customOption.value = 'multi';
+      this.customOption.disabled = true;
+      this.customOption.textContent = '— multiple —';
+      this.select.value = 'multi';
+      return;
+    }
     const jsonValue = JSON.stringify(value);
     if(this.options.choices.some(choice=>JSON.stringify(choice.value) == jsonValue)) {
       if(this.customOption) {
@@ -577,6 +798,7 @@ class SelectInput extends PropertyInput {
         this.select.appendChild(this.customOption);
       }
       this.customOption.value = jsonValue;
+      this.customOption.disabled = false;
       this.customOption.textContent = `custom: ${jsonValue}`;
     }
     this.select.value = jsonValue;
@@ -667,17 +889,23 @@ class PickerInput extends PropertyInput {
   }
 
   getEffectiveValue() {
-    if(this.options.getEffective)
-      return this.options.getEffective();
-    if(this.options.getValue)
-      return this.options.getValue();
-    const value = this.widget.get(this.options.property);
+    const value = this.options.getEffective ? this.options.getEffective()
+      : this.options.getValue ? this.options.getValue()
+      : this.widget.get(this.options.property);
+    if(propertyInputIsMulti(value))
+      return null;
     return value === undefined ? null : value;
   }
 
   previewValue() {
     const raw = this.getValue();
+    if(propertyInputIsMulti(raw))
+      return null;
     return propertyInputValueSet(raw) ? raw : this.getEffectiveValue();
+  }
+
+  isMultiValue() {
+    return propertyInputIsMulti(this.getValue());
   }
 
   update(value) {
@@ -694,8 +922,17 @@ class PickerInput extends PropertyInput {
 
   updatePreview() {
     const rawValue = this.getValue();
-    const previewValue = this.previewValue();
+    const multi = propertyInputIsMulti(rawValue);
+    this.dom.classList.toggle('multiDiffers', multi);
     this.previewButton.innerHTML = '';
+    if(multi) {
+      div(this.previewButton, 'propertyValueChip propertyMultiChip');
+      this.previewButton.classList.remove('usingDefault', 'emptyValue');
+      this.previewButton.title = 'The selected widgets have different values - picking one applies it to all of them';
+      this.previewButton.setAttribute('aria-label', 'Edit value');
+      return;
+    }
+    const previewValue = this.previewValue();
     this.renderChip(this.previewButton, previewValue);
     const isEmpty = !propertyInputValueSet(previewValue);
     const emptyLabel = this.emptyLabel();
@@ -760,19 +997,30 @@ class PickerInput extends PropertyInput {
     }
     for(const chip of $a('.propertyValueChip', this.pickerDOM))
       if(chip.dataset.value !== undefined)
-        chip.classList.toggle('selected', chip.dataset.value == String(value));
+        chip.classList.toggle('selected', chip.dataset.value == this.chipMatchValue(value));
     if(this.footerDOM)
       this.renderFooter(value);
   }
 
   renderSummary(target, value) {
+    if(propertyInputIsMulti(value)) {
+      div(target, 'propertyValueChip propertyMultiChip');
+      this.renderSummaryControls(target, null);
+      div(target, 'propertyPickerValueText', '<i>multiple values — pick one to apply to all</i>');
+      const close = document.createElement('button');
+      close.setAttribute('icon', 'close');
+      close.title = 'Close';
+      close.onclick = _=>this.closePicker();
+      target.appendChild(close);
+      return;
+    }
     const isSet = propertyInputValueSet(value);
     this.renderChip(target, this.previewValue());
     this.renderSummaryControls(target, value);
     if(isSet)
-      div(target, 'propertyPickerValueText', html(String(value)));
+      div(target, 'propertyPickerValueText', html(this.summaryValueText(value)));
     else if(propertyInputValueSet(this.getEffectiveValue()))
-      div(target, `propertyPickerValueText${this.dimDefault() ? ' usingDefault' : ''}`, this.dimDefault() ? `default: ${html(String(this.getEffectiveValue()))}` : html(String(this.getEffectiveValue())));
+      div(target, `propertyPickerValueText${this.dimDefault() ? ' usingDefault' : ''}`, this.dimDefault() ? `default: ${html(this.summaryValueText(this.getEffectiveValue()))}` : html(this.summaryValueText(this.getEffectiveValue())));
     else
       div(target, 'propertyPickerValueText', '<i>not set</i>');
     const close = document.createElement('button');
@@ -783,6 +1031,27 @@ class PickerInput extends PropertyInput {
   }
 
   renderSummaryControls(target, value) {
+  }
+
+  // most pickers hold plain string/number values - override for values (like
+  // an icon's object form) that need a human-readable summary instead of
+  // stringifying the raw value
+  summaryValueText(value) {
+    return String(value);
+  }
+
+  // comparable string used to decide which chip shows as selected - override
+  // when the picker value isn't itself the chip key (e.g. an icon's
+  // {name, color, scale} object form, matched by name)
+  chipMatchValue(value) {
+    return String(value);
+  }
+
+  // value to store when a chip is clicked - override to merge the selection
+  // into the current value instead of replacing it outright (e.g. keep an
+  // icon's color/scale when swapping which glyph is shown)
+  valueForChip(chipValue) {
+    return chipValue;
   }
 
   renderChip(target, value) {
@@ -800,8 +1069,8 @@ class PickerInput extends PropertyInput {
     for(const value of values) {
       const chip = renderer(value, list);
       chip.dataset.value = value;
-      chip.classList.toggle('selected', value == currentValue);
-      chip.onclick = _=>this.setValue(value);
+      chip.classList.toggle('selected', String(value) == this.chipMatchValue(currentValue));
+      chip.onclick = _=>this.setValue(this.valueForChip(value));
     }
   }
 }
@@ -821,10 +1090,6 @@ class ColorInput extends PickerInput {
 
   previewTitle() {
     return null;
-  }
-
-  showLabelTitle() {
-    return false;
   }
 
   renderChip(target, value) {
@@ -874,6 +1139,13 @@ class ColorInput extends PickerInput {
   // would detach the native color input while its dialog is open, so later
   // picks in the still-open dialog would be lost.
   refreshPicker(value) {
+    if(propertyInputIsMulti(value)) {
+      if(this.summaryDOM) {
+        this.summaryDOM.innerHTML = '';
+        this.renderSummary(this.summaryDOM, value);
+      }
+      return;
+    }
     if(this.summaryDOM) {
       const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
       const chip = this.summaryDOM.querySelector('.propertyValueChip');
@@ -894,7 +1166,7 @@ class ColorInput extends PickerInput {
     }
     for(const chip of $a('.propertyValueChip', this.pickerDOM))
       if(chip.dataset.value !== undefined)
-        chip.classList.toggle('selected', chip.dataset.value == String(value));
+        chip.classList.toggle('selected', chip.dataset.value == this.chipMatchValue(value));
     if(this.footerDOM)
       this.renderFooter(value);
   }
@@ -903,6 +1175,50 @@ class ColorInput extends PickerInput {
     this.addChipList(target, 'Used in this game', usedGameColors(), value, renderColorChip);
     this.addChipList(target, 'Palette (checkerboard = transparent)', propertyInputPalette, value, renderColorChip);
   }
+}
+
+// An icon property value can be a plain string (icon name) or a symbol object
+// like { name, scale, color, ... } (see generateSymbolsDiv in symbols.js) -
+// these helpers read/write that object form without disturbing a plain string
+// value unless a basic option is actually used.
+function iconObjectValue(value) {
+  return value && typeof value == 'object' && !Array.isArray(value) ? value : null;
+}
+
+function iconName(value) {
+  const object = iconObjectValue(value);
+  return object ? object.name : value;
+}
+
+function iconOption(value, key) {
+  const object = iconObjectValue(value);
+  return object ? object[key] : undefined;
+}
+
+function iconWithOption(value, key, optionValue) {
+  const object = Object.assign({}, iconObjectValue(value), { name: iconName(value) });
+  if(optionValue === null || optionValue === undefined || optionValue === '')
+    delete object[key];
+  else
+    object[key] = optionValue;
+  // collapse back to a plain string once no basic option is set, so simple
+  // icons round-trip exactly like before this feature existed
+  const keys = Object.keys(object).filter(k => k != 'name');
+  return keys.length ? object : (object.name || null);
+}
+
+// color/scale attach to a single chosen glyph - a multi-icon combo (array) or
+// an unset icon has nothing to attach them to (and doing so anyway would
+// create a bogus { name: null, ... } icon value)
+function iconSupportsBasicOptions(value) {
+  return !Array.isArray(value) && !!iconName(value);
+}
+
+// clicking a chip merges the new name into the current value - but a
+// multi-selection sentinel (differing icons) must count as "unset", or the
+// internal { multiDiffers: true } marker would be saved into every widget
+function iconValueForChip(currentValue, chipValue) {
+  return iconWithOption(propertyInputIsMulti(currentValue) ? null : currentValue, 'name', chipValue);
 }
 
 class IconInput extends PickerInput {
@@ -920,8 +1236,89 @@ class IconInput extends PickerInput {
     return this.renderEmptyChip(target);
   }
 
+  // an icon value can be the object form ({name, color, scale, ...}) or an
+  // array of icons (combos) - show the name(s) instead of "[object Object]"
+  summaryValueText(value) {
+    if(Array.isArray(value))
+      return value.map(v => iconName(v) || '').join(', ');
+    return iconName(value) || '';
+  }
+
+  // match/select chips by icon name so the object form (with color/scale set)
+  // still highlights the right chip, and clicking a chip merges the new name
+  // into the current value instead of discarding its color/scale
+  chipMatchValue(value) {
+    return Array.isArray(value) ? '' : (iconName(value) || '');
+  }
+
+  valueForChip(chipValue) {
+    return iconValueForChip(this.getValue(), chipValue);
+  }
+
   emptyLabel() {
     return this.options.emptyLabel || 'Choose icon';
+  }
+
+  // Inline options (color, scale) for the icon actually selected - stored on
+  // the icon value itself (as its object form) rather than as separate widget
+  // properties, since the underlying icon rendering already supports that
+  // form (see generateSymbolsDiv). Rendered persistently in the Content
+  // section (properties.js) rather than inside the transient picker popout,
+  // so they stay visible after picking an icon instead of disappearing once
+  // the popout closes or the widget is reselected.
+  // pickerGroup is shared with the icon/image pickers above (rendered at the
+  // full width of the Content row) rather than a group of its own confined to
+  // this narrow inline-options column, so its popout is not squeezed into a
+  // narrow band - https://github.com/ArnoldSmith86/virtualtabletop/pull/3049
+  renderIconOptionControls(target, value, pickerGroup) {
+    const row = div(target, 'iconBasicOptionsRow colorFlexRow');
+
+    // same chip + hex-field control as the Colors subsection of Appearance -
+    // clearing the hex field already resets to the widget's default color, so
+    // no separate reset button is needed here either
+    const defaultColor = typeof this.widget.getDefaultIconColor == 'function' ? this.widget.getDefaultIconColor() : null;
+    new ColorInput(this.module, this.widget, 'Color', {
+      getValue: _=>iconOption(this.getValue(), 'color'),
+      setValue: v=>this.setValue(iconWithOption(this.getValue(), 'color', v)),
+      listenTo: [ this.options.property ],
+      default: defaultColor || '#000000',
+      pickerGroup: pickerGroup || { target: div(target, 'contentMediaPickers'), current: null }
+    }).render(row);
+
+    const scaleWrap = div(row, 'iconBasicOption');
+    const scaleLabel = document.createElement('label');
+    scaleLabel.textContent = 'Scale';
+    scaleWrap.appendChild(scaleLabel);
+    // this scale is the per-symbol scale from generateSymbolsDiv (symbols.js),
+    // which always defaults to 1 - it's independent of the widget-level
+    // getDefaultIconScale() (applied separately as the whole symbol wrapper's
+    // transform), so that isn't the right fallback to show here.
+    const scaleValue = iconOption(value, 'scale');
+    const scaleIsSet = scaleValue !== undefined && scaleValue !== null;
+    const scaleInput = document.createElement('input');
+    scaleInput.type = 'number';
+    scaleInput.step = '0.05';
+    scaleInput.min = '0.1';
+    scaleInput.max = '5';
+    // always show a real number (never leave it empty) so stepping with the
+    // up/down arrows starts from the displayed value (1 by default) instead
+    // of from the browser's own zero-based default, which used to clamp the
+    // very first step up to the min (0.1) rather than 1.05
+    scaleInput.title = scaleIsSet ? 'Icon scale' : 'Icon scale (using default 1)';
+    scaleInput.value = scaleIsSet ? scaleValue : 1;
+    scaleWrap.classList.toggle('usingDefault', !scaleIsSet);
+    scaleInput.oninput = _=>{
+      // the focus guard in the properties module skips the re-render while
+      // focus stays in this block, so keep the default-indicator in sync here
+      scaleWrap.classList.remove('usingDefault');
+      scaleInput.title = 'Icon scale';
+      this.setValue(iconWithOption(this.getValue(), 'scale', numericInputValue(scaleInput.value, 0.1, 5)));
+    };
+    scaleInput.onchange = _=>{
+      const clamped = numericInputValue(scaleInput.value, 0.1, 5);
+      scaleInput.value = clamped === null ? 1 : clamped;
+    };
+    scaleWrap.appendChild(scaleInput);
   }
 
   renderPickerContent(target, value) {
@@ -938,8 +1335,8 @@ class IconInput extends PickerInput {
       for(const iconValue of values) {
         const chip = renderIconChip(iconValue, results);
         chip.dataset.value = iconValue;
-        chip.classList.toggle('selected', iconValue == this.getValue());
-        chip.onclick = _=>this.setValue(iconValue);
+        chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
+        chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
       }
       if(!values.length)
         div(results, 'propertyPickerEmpty', 'No results.');
@@ -984,9 +1381,9 @@ class IconInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbol();
+      const symbol = await pickSymbolKeepingOverlay(showAll);
       if(symbol)
-        this.setValue(symbol.symbol);
+        this.setValue(this.valueForChip(symbol.symbol));
     };
     searchSection.appendChild(showAll);
 
@@ -1045,7 +1442,7 @@ class ImageInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbol('images');
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'images');
       if(symbol)
         this.setValue(symbol.url);
     };
@@ -1070,6 +1467,124 @@ class ImageInput extends PickerInput {
 
     const urlInput = document.createElement('input');
     urlInput.placeholder = 'or enter an image URL / path';
+    urlInput.value = propertyInputValueSet(value) ? value : '';
+    urlInput.onchange = _=>this.setValue(urlInput.value || null);
+    section.appendChild(urlInput);
+  }
+}
+
+// The file name of a sound path without its directories and extension: that is
+// what the sound picker lists and the only part of "/i/audio/casino/dice-throw-1.mp3"
+// that says anything, so it is what the chip and the summary show.
+function soundName(value) {
+  return String(value).replace(/^.*\//, '').replace(/\.[a-z0-9]+$/i, '');
+}
+
+// One sound looks exactly like the next, so the chip names the file instead of
+// only showing a speaker - that is what the collapsed row has to identify it by.
+function renderSoundChip(value, target) {
+  const chip = div(target, 'propertyValueChip propertySoundChip');
+  chip.title = value;
+  div(chip, 'material-symbols', 'volume_up');
+  div(chip, 'propertySoundName', html(soundName(value)));
+  return chip;
+}
+
+// One preview plays at a time, so starting another one (or clicking the button
+// of the running one again) stops it. Mirrors the sound picker's own preview.
+let soundPreview = null;
+function stopSoundPreview() {
+  if(!soundPreview)
+    return;
+  soundPreview.audio.pause();
+  soundPreview.button.setAttribute('icon', 'play_arrow');
+  soundPreview = null;
+}
+
+function toggleSoundPreview(value, button) {
+  const wasThisButton = soundPreview && soundPreview.button == button;
+  stopSoundPreview();
+  if(wasThisButton)
+    return;
+  const audio = new Audio(mapAssetURLs(value));
+  soundPreview = { audio, button };
+  button.setAttribute('icon', 'stop');
+  audio.onended = _=>{
+    if(soundPreview && soundPreview.button == button)
+      stopSoundPreview();
+  };
+  audio.play().catch(_=>{});
+}
+
+// A sound is a plain asset path, so unlike an image there is nothing to preview
+// visually: the chip is a speaker, the summary names the file and offers to play
+// it, and the picker is only about getting a path in - from the bundled sound
+// library (see audio.js), from an upload, or typed.
+class SoundInput extends PickerInput {
+  cssClass() {
+    return 'pickerInput soundInput';
+  }
+
+  expandArrow() {
+    return false;
+  }
+
+  renderChip(target, value) {
+    if(propertyInputValueSet(value))
+      return renderSoundChip(value, target);
+    return this.renderEmptyChip(target);
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || 'Choose sound';
+  }
+
+  // the play button lives in the picker, so closing it would leave a preview
+  // running with nothing left to stop it
+  closePicker() {
+    stopSoundPreview();
+    super.closePicker();
+  }
+
+  renderSummaryControls(target, value) {
+    const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
+    if(!propertyInputValueSet(shown))
+      return;
+    const play = document.createElement('button');
+    play.setAttribute('icon', 'play_arrow');
+    play.title = 'Play the sound';
+    play.onclick = _=>toggleSoundPreview(shown, play);
+    target.appendChild(play);
+  }
+
+  renderPickerContent(target, value) {
+    const section = div(target, 'propertyPickerSection');
+
+    const browse = document.createElement('button');
+    browse.setAttribute('icon', 'library_music');
+    browse.textContent = 'Sound library...';
+    browse.onclick = async _=>{
+      // the library is an overlay of its own and the running preview would keep
+      // playing underneath it
+      stopSoundPreview();
+      const sound = await pickAudio();
+      if(sound)
+        this.setValue(sound);
+    };
+    section.appendChild(browse);
+
+    const upload = document.createElement('button');
+    upload.setAttribute('icon', 'upload');
+    upload.textContent = 'Upload sound...';
+    upload.onclick = async _=>{
+      const asset = await uploadAsset();
+      if(asset)
+        this.setValue(asset);
+    };
+    section.appendChild(upload);
+
+    const urlInput = document.createElement('input');
+    urlInput.placeholder = 'or enter an audio URL / path';
     urlInput.value = propertyInputValueSet(value) ? value : '';
     urlInput.onchange = _=>this.setValue(urlInput.value || null);
     section.appendChild(urlInput);
@@ -1119,6 +1634,33 @@ function computedCssValue(element, key) {
 }
 
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
+  // a css string/object is per-widget, so a multi-selection reads/writes
+  // through each selected widget's own options instead of merging blobs
+  // (which would clobber unrelated declarations on the other widgets)
+  if(widget.isMulti) {
+    const perWidget = widget.widgets.map(w=>cssValueOptions(module, w, key, cssProperty, cssClass, extraOptions));
+    return Object.assign({
+      getValue: _=>{
+        const values = perWidget.map(o=>o.getValue());
+        return values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+      },
+      getEffective: _=>{
+        const values = perWidget.map(o=>o.getEffective());
+        return values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+      },
+      setValue: v=>{
+        batchStart();
+        try {
+          for(const o of perWidget)
+            o.setValue(v);
+        } finally {
+          batchEnd();
+        }
+      },
+      listenTo: [ cssProperty ]
+    }, extraOptions);
+  }
+
   let warned = false;
   // element the declaration actually renders on, used to preview the effective
   // default when nothing is explicitly set
