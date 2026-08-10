@@ -20,6 +20,9 @@ const moduleWidth = ClientFunction(() => document.querySelector('#editorModules'
 // the editor state of a test that wants the properties module open the way the user opens it, rather
 // than as the panel edit mode opens on its own the very first time (which sizes itself to its content)
 const propertiesModuleOpen = { modules: { 'Edit Widgets': 'editorModuleTopLeft' } };
+// edit mode imports itself on the first click of the edit button, so waiting for the module the state
+// above restores is what tells "the editor is there" from "the click has not arrived yet"
+const propertiesModule = Selector('#editorModuleTopLeft.tune');
 
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
   await t.resizeWindow(1280, 800);
@@ -2360,7 +2363,7 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
     await t.click(fromChip).expect(popup.exists).ok();
   };
 
-  await t.click('#editButton');
+  await t.click('#editButton').expect(propertiesModule.exists).ok();
   await openFromPopup();
 
   // The popup hangs off a chip of the routine of the widget being edited, so a
@@ -2450,6 +2453,7 @@ test('An armed picker does not keep a popup open when the sidebar moves the edit
 
   await t
     .click('#editButton')
+    .expect(propertiesModule.exists).ok()
     .click('#w_stop1');
   if(await routineHeader.getAttribute('aria-expanded') == 'false')
     await t.click(routineHeader);
@@ -2520,7 +2524,7 @@ test('An editor popup does not outlive the widget it belongs to without a click 
       .expect(picking).ok();
   };
 
-  await t.click('#editButton');
+  await t.click('#editButton').expect(propertiesModule.exists).ok();
   await openColorPopup();
 
   // The color, icon and sound pickers only write their parameter when the popup
@@ -2580,6 +2584,7 @@ test('A property info tip goes away with the widget it explains', async t => {
 
   await t
     .click('#editButton')
+    .expect(propertiesModule.exists).ok()
     .click('#w_button')
     .click(Selector('#editorModules .collapsibleHeader').withText('CSS').find('.info-button'))
     .expect(infoTip.exists).ok();
@@ -2610,6 +2615,7 @@ test('A long list of widget ids shrinks instead of pushing the apply button out 
 
   await t
     .click('#editButton')
+    .expect(propertiesModule.exists).ok()
     .click('#w_button');
   if(await routineHeader.getAttribute('aria-expanded') == 'false')
     await t.click(routineHeader);
