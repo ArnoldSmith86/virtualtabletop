@@ -1522,6 +1522,29 @@ describe('routine editor state handling', () => {
     expect(foreachEditor.domElement.textContent).toContain('Add operations to run for each iteration');
   });
 
+  test('a nested block is rendered once per level, not once per level per level above it', () => {
+    // a block that renders itself again after its editor built it costs 2^depth
+    // renders, which is what made a deeply nested routine take seconds to open
+    let routine = [ { func: 'FLIP' } ];
+    for(let level = 0; level < 12; level++)
+      routine = [ { func: 'IF', operand1: 1, thenRoutine: routine } ];
+    // counting on RoutineEditor rather than on the operation editors: it is the
+    // one class that renders a block, so no subclass can render without being
+    // counted here
+    const original = RoutineEditor.prototype.render;
+    let renders = 0;
+    RoutineEditor.prototype.render = function(...args) {
+      renders++;
+      return original.apply(this, args);
+    };
+    try {
+      new RoutineEditor({ state: {} }, routine);
+    } finally {
+      RoutineEditor.prototype.render = original;
+    }
+    expect(renders).toBe(13); // the routine itself plus one per nested block
+  });
+
   test('ignores echoes of its own edits but applies remote changes', () => {
     const routine = [ { func: 'FLIP' } ];
     const editor = new RoutineEditor({ state: {} }, routine);

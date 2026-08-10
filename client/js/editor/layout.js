@@ -123,12 +123,64 @@ function renderDragToolbar(buttons) {
     button.render($('#editorDragToolbar'));
 }
 
+// renderSidebar opens modules itself - restoring them and opening the first-run default. Neither is
+// the user picking a module, which is what gives the content width below back for good.
+let restoringSidebarModules = false;
+
+// The panel that opened itself keeps its content width across page loads: a restored default is still
+// a panel nobody asked for. Opening or closing any module by hand, and dragging the resizer, are the
+// two things that hand the width back to the stored --modulesWidth - permanently.
+function dropDefaultModuleWidth() {
+  if(restoringSidebarModules)
+    return;
+  $('body').classList.remove('defaultEditorModuleWidth');
+  const editorState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+  if(editorState.defaultModuleWidth) {
+    delete editorState.defaultModuleWidth;
+    localStorage.setItem('editorState', JSON.stringify(editorState));
+  }
+}
+
 function renderSidebar(modules) {
-  const state = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}').modules;
+  const editorState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+  const state = editorState.modules;
+  let opened = false;
+  restoringSidebarModules = true;
   for(const module of modules) {
     module.renderButton($('#editorSidebar'));
-    if(state[module.title] && state[module.title] != 'editorModuleInOverlay' && $(`#${state[module.title]}`))
+    if(state[module.title] && state[module.title] != 'editorModuleInOverlay' && $(`#${state[module.title]}`)) {
       module.openInTarget($(`#${state[module.title]}`));
+      opened = true;
+    }
+  }
+
+  // Without a remembered module the sidebar would just be a column of buttons, so entering edit
+  // mode for the first time starts on the properties panel. Only the first time ever: closing the
+  // last module deletes its entry, so "nothing remembered" is also how "I want the whole room" is
+  // stored, and defaultModuleOpened is what tells the two apart. And only where the panel and the
+  // room can coexist: the narrow-window layout makes the panel a fullscreen overlay, and a portrait
+  // window showing a landscape board is busy asking the user to rotate the device.
+  const roomWouldBeCovered = calculateEditModuleClasses(window.innerWidth, window.innerHeight, viewportConfig).includes('editModulesOverlay')
+                             || isOrientationMismatch(window.innerWidth, window.innerHeight, viewportConfig);
+  // A panel the user opened is a 50/50 split of the window by default (see editorModulesResizer),
+  // which is a poor first sight of edit mode: half the room gone for a mostly empty panel. The one
+  // that opened itself sizes to its content instead - also when it is restored on the next visit,
+  // which is why defaultModuleWidth is remembered next to defaultModuleOpened.
+  let contentWidth = opened && !!editorState.defaultModuleWidth;
+  if(!opened && !editorState.defaultModuleOpened && !roomWouldBeCovered) {
+    modules.find(module=>module instanceof PropertiesModule).openInTarget($('#editorModuleTopLeft'));
+    contentWidth = true;
+    // openInTarget has just written that module into editorState, so re-read before adding the flags
+    const savedState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
+    savedState.defaultModuleOpened = true;
+    savedState.defaultModuleWidth = true;
+    localStorage.setItem('editorState', JSON.stringify(savedState));
+  }
+  restoringSidebarModules = false;
+
+  if(contentWidth) {
+    $('body').classList.add('defaultEditorModuleWidth');
+    setScale();
   }
 
   editorModulesResizer();
@@ -144,6 +196,9 @@ function editorModulesResizer() {
   document.documentElement.style.setProperty('--modulesWidth', percentage + '%');
 
   function resize(e) {
+    // here rather than in onmousedown: a click on the divider that never moves is not the user
+    // asking for a different width, and it would jump the default panel to the 50/50 split
+    dropDefaultModuleWidth();
     percentage = (1 - e.x / window.innerWidth) * 100;
     document.documentElement.style.setProperty('--modulesWidth', percentage + '%');
     setScale();

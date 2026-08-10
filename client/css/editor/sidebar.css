@@ -85,6 +85,13 @@ body.edit.darkMode #editorSidebar button.active {
   grid-gap: 10px;
 }
 
+/* The module panel that opened itself (the first-run default, see renderSidebar) is sized to its content
+   instead of the stored 50/50 split, so the room stays the dominant thing on screen. Dropped again as soon
+   as a module is opened by hand or the resizer is dragged. min-width/max-width above still apply. */
+body.defaultEditorModuleWidth #editorModules {
+  width: min(420px, 35vw);
+}
+
 #editorModules ::-webkit-scrollbar-track {
   background: var(--backgroundColor);
 }

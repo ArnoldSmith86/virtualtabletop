@@ -22,7 +22,54 @@ function eventCoords(name, e) {
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
+// Finish a drag whose mouseup never reached the drag handling below, because one
+// of the checks in handleInput() returned before it. The widget would otherwise
+// stay detached from its holder and flagged as being dragged for every player
+// until somebody picks it up again, and would keep following the cursor with the
+// button up. It is dropped where the drag last moved to; the release is not
+// treated as a click, because we don't know what it was released over.
+async function endDrag(target) {
+  const ms = target && mouseStatus[target.id];
+  if(!ms)
+    return;
+  delete mouseStatus[target.id];
+
+  // while the state is being replaced the dragged widget may already be gone
+  if(isLoading || ms.status == 'initial' || !ms.moveTarget || widgets.get(ms.moveTarget.get('id')) !== ms.moveTarget)
+    return;
+
+  batchStart();
+  try {
+    setDeltaCause(`${playerName} dragged ${ms.moveTarget.get('id')}`);
+    // like the mouseup branch below: let a mousemove that is still being
+    // processed finish first, so no move lands after the drag has ended
+    await ms.dragChain;
+    await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
+  } finally {
+    batchEnd();
+  }
+}
+
 async function inputHandler(name, e) {
+  // Releasing the mouse button always ends the drag. Forget the drag target right
+  // away, before handleInput() can return early or await a click routine that runs
+  // for a long time (DELAY, INPUT, ...) - until then the released widget would stay
+  // the target of everything below, and of the pointer position sent to the server.
+  // endDrag() then takes care of a mouseup that never reached the drag handling at
+  // all. Touch has no equivalent of mouseTarget, so a touchend is left to
+  // handleInput(), which finds its widget through the element the touch started on.
+  const dragTarget = mouseTarget;
+  if(name == 'mouseup')
+    mouseTarget = null;
+  try {
+    await handleInput(name, e, dragTarget);
+  } finally {
+    if(name == 'mouseup')
+      await endDrag(dragTarget);
+  }
+}
+
+async function handleInput(name, e, dragTarget) {
   const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
@@ -32,7 +79,7 @@ async function inputHandler(name, e) {
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
-  if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
+  if(!dragTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
 
@@ -60,18 +107,16 @@ async function inputHandler(name, e) {
   if(name == 'mousedown')
     mouseTarget = target;
   else if(name == 'mousemove' || name == 'mouseup')
-    target = mouseTarget;
+    target = dragTarget;
 
   if(target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
     // A widget can be replaced while an input event is still in flight (for
     // example, immediately after its ID is renamed in the properties editor).
     // The saved mouse target then refers to a removed DOM node, not a widget.
-    if(!widget) {
-      if(name == 'mouseup')
-        mouseTarget = null;
+    // The drag still has to end - endDrag() only discards its state in that case.
+    if(!widget)
       return;
-    }
     batchStart();
     // batchEnd() has to run even if a routine triggered by the drop or click below
     // throws: batchStart() increments batchDepth and sendDelta() only sends anything
@@ -193,9 +238,6 @@ async function inputHandler(name, e) {
       batchEnd();
     }
   }
-
-  if(name == 'mouseup')
-    mouseTarget = null;
 
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;

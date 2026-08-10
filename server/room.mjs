@@ -1,7 +1,5 @@
 import fs from 'fs';
 
-import JSZip from 'jszip';
-import fetch from 'node-fetch';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
@@ -9,6 +7,7 @@ import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
 import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js/calculateLayout.js';
 import Statistics from './statistics.mjs';
+import Zip from './zip.mjs';
 
 export default class Room {
   players = [];
@@ -28,10 +27,19 @@ export default class Room {
     }, 5000);
   }
 
+  addLocalPlayer(addingPlayer, playerName) {
+    playerName = typeof playerName == 'string' ? playerName.trim() : '';
+    if(!playerName || this.state._meta.players[playerName])
+      return;
+    this.state._meta.players[playerName] = this.newPlayerColor();
+    this.sendMetaUpdate();
+  }
+
   addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
     clearTimeout(this.unloadTimeout);
     this.players.push(player);
+    player.send('sessionID', player.sessionID);
 
     if(!this.state._meta.players[player.name])
       this.state._meta.players[player.name] = this.newPlayerColor();
@@ -290,19 +298,18 @@ export default class Room {
 
   async download(stateID, variantID) {
     const includeAssets = true;
-    const zip = new JSZip();
+    const files = {};
 
     if(!stateID && !variantID) {
       for(const sID in this.state._meta.states) {
         const state = await this.download(sID);
-        zip.file(state.name, state.content);
+        files[state.name] = state.content;
       }
 
-      const zipBuffer = await zip.generateAsync({type:'nodebuffer'});
       return {
         name: this.id + '.vttc',
         type: 'application/zip',
-        content: zipBuffer
+        content: await Zip.create(files)
       };
     }
     if(!this.state._meta.states[stateID])
@@ -324,14 +331,14 @@ export default class Room {
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       this.unsetMetadataForWritingFile(state._meta.info);
 
-      zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
+      files[`${vID}.json`] = JSON.stringify(state, null, '  ');
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(Config.resolveAsset(asset.substr(8)))
-            zip.file(asset.substr(1), fs.readFileSync(Config.resolveAsset(asset.substr(8))));
+            files[asset.substr(1)] = fs.readFileSync(Config.resolveAsset(asset.substr(8)));
     }
 
-    const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
+    const zipBuffer = await Zip.create(files, true);
 
     let name = s.name + '.vtt';
     if(s.savePlayers)
@@ -850,6 +857,19 @@ export default class Room {
     }
   }
 
+  playerIsReferencedInWidgets(playerName) {
+    return Object.values(this.state).some(w=>[ w.owner, w.player, w.artist ].some(v=>Array.isArray(v) ? v.indexOf(playerName) != -1 : v == playerName));
+  }
+
+  // a player the game still points at can be removed too - the client warns about what stays
+  // behind, and those widgets pick the name up again as soon as a player uses it
+  removeLocalPlayer(removingPlayer, playerName) {
+    if(this.players.filter(p=>p.name == playerName).length)
+      return;
+    delete this.state._meta.players[playerName];
+    this.sendMetaUpdate();
+  }
+
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
@@ -893,19 +913,62 @@ export default class Room {
     }
   }
 
-  renamePlayer(renamingPlayer, oldName, newName) {
-    if(oldName == newName)
+  renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
+    newName = typeof newName == 'string' ? newName.trim() : '';
+    if(oldName == newName || !newName)
+      return;
+
+    const renamedSessions = this.players.filter(p=>p.name == oldName && (sessionID == null || p.sessionID == sessionID));
+    if(sessionID != null && !renamedSessions.length)
+      return;
+
+    // refuse taking the name of a connected player who is part of the game (seat, owner, artist) -
+    // it would secretly reveal that player's hand
+    if(this.players.some(p=>p.name == newName) && this.playerIsReferencedInWidgets(newName))
       return;
 
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
-    this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
-    delete this.state._meta.players[oldName];
+    if(this.state._meta.players[newName] === undefined)
+      this.state._meta.players[newName] = sessionID == null ? this.state._meta.players[oldName] : this.newPlayerColor();
 
-    for(const player of this.players)
-      if(player.name == oldName)
-        player.rename(newName);
+    for(const player of renamedSessions)
+      player.rename(newName);
+
+    // when only a single session is renamed (split/view), the old player stays available for the other sessions -
+    // except for abandoned guest entries which the disconnect cleanup would no longer catch under the new name
+    if(sessionID == null)
+      delete this.state._meta.players[oldName];
+    else if(oldName.match(/^Guest/) && !this.players.filter(p=>p.name == oldName).length && !this.playerIsReferencedInWidgets(oldName))
+      delete this.state._meta.players[oldName];
+
+    if(updateWidgets)
+      this.renamePlayerInWidgets(oldName, newName);
 
     this.sendMetaUpdate();
+  }
+
+  renamePlayerInWidgets(oldName, newName) {
+    const delta = { s: {} };
+    for(const widgetID in this.state) {
+      if(widgetID == '_meta')
+        continue;
+      const changes = {};
+      for(const property of [ 'owner', 'player', 'artist' ]) {
+        const value = this.state[widgetID][property];
+        if(value === oldName)
+          changes[property] = newName;
+        else if(Array.isArray(value) && value.includes(oldName))
+          changes[property] = [...new Set(value.map(p=>p === oldName ? newName : p))];
+      }
+      if(Object.keys(changes).length) {
+        Object.assign(this.state[widgetID], changes);
+        delta.s[widgetID] = changes;
+      }
+    }
+    if(Object.keys(delta.s).length) {
+      delta.id = ++this.deltaID;
+      this.broadcast('delta', delta);
+    }
   }
 
   // Input sessions are tracked by the Player *connection*, not by name, so a
@@ -1135,7 +1198,7 @@ export default class Room {
   }
 
   sendMetaUpdate() {
-    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
+    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name), sessions: this.players.map(p=>({ sessionID: p.sessionID, player: p.name })) });
   }
 
   // The board size decides how everyone in the room renders the game and it is written
@@ -1204,13 +1267,12 @@ export default class Room {
 
         let zipBuffer = '';
         if(!isReturn || this.state._meta.returnState) {
-          const zip = new JSZip();
-          zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
+          const files = { [`${this.id}.json`]: JSON.stringify(this.state, null, '  ') };
           for(const asset in assetStatus)
             if(!assetStatus[asset] && Config.resolveAsset(asset))
-              zip.file('assets/' + asset, fs.readFileSync(Config.resolveAsset(asset)));
+              files['assets/' + asset] = fs.readFileSync(Config.resolveAsset(asset));
 
-          zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+          zipBuffer = await Zip.create(files);
         }
 
         const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {

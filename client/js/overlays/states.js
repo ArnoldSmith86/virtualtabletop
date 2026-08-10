@@ -18,22 +18,97 @@ function setLibraryTypeTab(type) {
 
 const loadedLibraryImages = {};
 
-function loadJSZip() {
+function loadZipLibrary() {
   const node = document.createElement('script');
-  node.src = 'scripts/jszip';
+  node.src = 'scripts/fflate';
   $('head').appendChild(node);
 }
 
-async function waitForJSZip() {
-  while(typeof JSZip == 'undefined')
+async function waitForZipLibrary() {
+  while(typeof fflate == 'undefined')
     await sleep(50)
+}
+
+// fflate's callback API does the actual (de)compression in a web worker so that
+// uploading or building a big file doesn't freeze the UI. The worker is created from a
+// blob URL, which a content security policy can forbid, so both helpers fall back to
+// doing the work right here in that case - a frozen tab beats a broken upload. Whether
+// that is necessary is checked once instead of by trying, so that a broken zip file is
+// not unpacked a second time synchronously before its error is reported.
+let workersAvailable = null;
+function canUseWorkers() {
+  if(workersAvailable === null) {
+    try {
+      const url = URL.createObjectURL(new Blob([ '' ], { type: 'text/javascript' }));
+      new Worker(url).terminate();
+      URL.revokeObjectURL(url);
+      workersAvailable = true;
+    } catch(e) {
+      console.log('Zip files are (un)packed in the main thread because web workers are not available:', e.toString());
+      workersAvailable = false;
+    }
+  }
+  return workersAvailable;
+}
+
+async function unzipBuffer(buffer, keepEntry) {
+  const options = { filter: e=>keepEntry(e.name) };
+  if(!canUseWorkers())
+    return fflate.unzipSync(buffer, options);
+  return await new Promise((resolve, reject)=>fflate.unzip(buffer, options, (e, files)=>e ? reject(e) : resolve(files)));
+}
+
+async function zipBlob(files, compress) {
+  const options = { level: compress ? 6 : 0 };
+  if(!canUseWorkers())
+    return new Blob([ fflate.zipSync(files, options) ]);
+  return new Blob([ await new Promise((resolve, reject)=>fflate.zip(files, options, (e, data)=>e ? reject(e) : resolve(data))) ]);
+}
+
+// the index at the end of a zip file, which lists every entry along with the CRC-32 and
+// the size of its contents - that is what assets are named after, so knowing which assets
+// a file contains does not require decompressing (or even holding on to) any of them
+function zipIndex(buffer) {
+  const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+
+  let end = buffer.length - 22;
+  while(end < 0 || view.getUint32(end, true) != 0x06054b50)
+    if(--end < 0 || buffer.length - end > 65558)
+      throw new Error('Could not find the index of the zip file.');
+
+  const entries = {};
+  let offset = view.getUint32(end + 16, true);
+  if(offset == 0xffffffff)
+    throw new Error('ZIP64 files are not supported.');
+  for(let i=view.getUint16(end + 8, true); i>0; --i) {
+    // without this, anything the walk does not understand yields plausible looking garbage
+    if(view.getUint32(offset, true) != 0x02014b50)
+      throw new Error('Could not read the index of the zip file.');
+    const nameLength = view.getUint16(offset + 28, true);
+    // filenames are UTF-8 if bit 11 of the flags is set and latin1 otherwise, same as fflate
+    const name = fflate.strFromU8(buffer.subarray(offset + 46, offset + 46 + nameLength), !(view.getUint16(offset + 8, true) & 2048));
+    const size = view.getUint32(offset + 24, true);
+    if(size == 0xffffffff)
+      throw new Error('ZIP64 files are not supported.');
+    entries[name] = { crc: view.getInt32(offset + 16, true), size };
+    offset += 46 + nameLength + view.getUint16(offset + 30, true) + view.getUint16(offset + 32, true);
+  }
+  return entries;
+}
+
+function toBase64(data) {
+  let binary = '';
+  for(let i=0; i<data.length; i+=32768)
+    binary += String.fromCharCode.apply(null, data.subarray(i, i+32768));
+  return btoa(binary);
 }
 
 async function resolveStateCollections(file, callback) {
   if(file.name.match(/\.vttc$/)) {
-    await waitForJSZip();
-    for(const [ filename, f ] of Object.entries((await JSZip.loadAsync(file)).files))
-      callback(new File([await f.async('blob')], filename));
+    await waitForZipLibrary();
+    const buffer = new Uint8Array(await file.arrayBuffer());
+    for(const [ filename, content ] of Object.entries(await unzipBuffer(buffer, name=>!name.match(/\/$/))))
+      callback(new File([ content ], filename));
   } else {
     callback(file);
   }
@@ -86,11 +161,15 @@ function addStateFile(f) {
 }
 
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
-  await waitForJSZip();
+  await waitForZipLibrary();
 
-  let zip = null;
+  const buffer = new Uint8Array(await sourceFile.arrayBuffer());
+
+  let entries = null;
+  let jsonFiles = null;
   try {
-    zip = await JSZip.loadAsync(sourceFile);
+    entries = zipIndex(buffer);
+    jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
   } catch(e) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
@@ -98,9 +177,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let json = null;
   const assets = {};
-  for(const [ filename, file ] of Object.entries(zip.files)) {
-    if(filename.match(/json$/)) {
-      const content = JSON.parse(await file.async('string'));
+  for(const [ filename, entry ] of Object.entries(entries)) {
+    if(jsonFiles[filename]) {
+      const content = JSON.parse(fflate.strFromU8(jsonFiles[filename]));
       if(!json) {
         json = content;
         if(json._meta)
@@ -109,8 +188,8 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(json._meta)
         json._meta.info.variants.push(content._meta.info);
     }
-    if(filename.match(/^\/?(user)?assets/) && file._data && file._data.crc32)
-      assets[file._data.crc32 + '_' + file._data.uncompressedSize] = filename;
+    if(filename.match(/^\/?(user)?assets/) && entry.size)
+      assets[entry.crc + '_' + entry.size] = filename;
   }
 
   if(json === null) {
@@ -124,8 +203,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     if(json._meta.info.image) {
       if(json._meta.info.image.match(/^http/)) {
         imageURL = json._meta.info.image;
-      } else if(zip.files[json._meta.info.image.substr(1)]) {
-        const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
+      } else if(entries[json._meta.info.image.substr(1)]) {
+        const imageFile = json._meta.info.image.substr(1);
+        const image = toBase64((await unzipBuffer(buffer, name=>name == imageFile))[imageFile]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
             imageURL = `data:image/${type};base64,${image}`;
@@ -145,19 +225,24 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let total = 0;
   let removed = 0;
+  const removedFiles = {};
   for(const asset in exist) {
     ++total;
     if(exist[asset]) {
       ++removed;
-      zip.remove(assets[asset]);
+      removedFiles[assets[asset]] = true;
     }
   }
 
   let blob = sourceFile;
   if(removed > total/2) {
-    zip.file('asset-map.json', JSON.stringify(assets));
     console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
-    blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
+    // only a rebuild needs the contents of the file, so this is the first time it is
+    // unpacked - which means the source file, the kept entries and the new file are all in
+    // memory at once here, so this could be streamed entry by entry if that ever hurts
+    const files = await unzipBuffer(buffer, name=>!removedFiles[name] && !name.match(/\/$/));
+    files['asset-map.json'] = fflate.strToU8(JSON.stringify(assets));
+    blob = await zipBlob(files, total-removed < 5);
   }
 
   var req = new XMLHttpRequest();
@@ -671,7 +756,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   }
 
   $('#stateAddOverlay button[icon=upload]').onclick = function() {
-    loadJSZip();
+    loadZipLibrary();
     showStatesOverlay('statesOverlay');
     selectVTTfile(addStateFile);
   };
@@ -883,7 +968,7 @@ function fillStateDetails(states, state, dom) {
     enableEditing(vEntry, emptyVariant);
   };
   $('#variantAddOverlay button[icon=upload]').onclick = function(e) {
-    loadJSZip();
+    loadZipLibrary();
     selectVTTfile(function(f) {
       $('#stateDetailsOverlay').classList.add('uploading');
 
@@ -1251,7 +1336,7 @@ onLoad(function() {
   document.addEventListener('drop', function(e) {
     if(e.dataTransfer.files.length) {
       e.preventDefault();
-      loadJSZip();
+      loadZipLibrary();
       for(const file of e.dataTransfer.files)
         resolveStateCollections(file, addStateFile);
     }

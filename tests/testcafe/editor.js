@@ -4,6 +4,130 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 
 setupTestEnvironment();
 
+// Which modules edit mode comes up with depends on what the browser has stored and on whether the
+// window has room for a panel next to the board, and both survive a test. Every test that expects
+// the properties module to be open therefore states its own window size and editor state instead of
+// inheriting them from whichever test ran before it.
+const setEditorState = ClientFunction(state => {
+  if(state)
+    localStorage.setItem('editorState', JSON.stringify(state));
+  else
+    localStorage.removeItem('editorState');
+});
+
+const moduleWidth = ClientFunction(() => document.querySelector('#editorModules').getBoundingClientRect().width);
+
+test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .expect(Selector('#editorSidebar button[icon=tune].active').exists).ok()
+    // sized to its content, not to the 50/50 split a module the user opens gets
+    .expect(Selector('body.defaultEditorModuleWidth').exists).ok()
+    .expect(moduleWidth()).lte(420)
+    // opening a module by hand hands the width back to the resizer
+    .click('#editorSidebar button[icon=data_object]')
+    .expect(Selector('body.defaultEditorModuleWidth').exists).notOk()
+    .expect(moduleWidth()).gt(420);
+  await setEditorState(null);
+});
+
+test('Edit mode restores the remembered module instead of the default one', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk();
+  await setEditorState(null);
+});
+
+// closing every module deletes the last entry, so only the flag tells "I closed
+// them all" apart from "I have never been here"
+test('Edit mode leaves the modules closed once the default has been opened before', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: {}, defaultModuleOpened: true });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// there the panel is a fullscreen overlay, so opening it by default would hide
+// the room the user just went to edit
+test('Edit mode skips the default module in the narrow-window layout', async t => {
+  await t.resizeWindow(900, 600);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// a portrait window showing a landscape board asks the user to rotate the device,
+// which is more useful than a properties panel covering that message
+test('Edit mode skips the default module in a portrait window', async t => {
+  await t.resizeWindow(410, 845);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// the default module opens itself, so it has to be closable without knowing that
+// the sidebar button toggles
+test('A module is closed again through the button in its header', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#editorModuleTopLeft h1 .moduleCloseButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk()
+    .expect(Selector('#editorSidebar button[icon=tune].active').exists).notOk();
+  await setEditorState(null);
+});
+
 test('Pan in edit mode while holding Space', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -43,10 +167,12 @@ test('Pan in edit mode while holding Space', async t => {
 });
 
 test('Renaming a widget keeps its color controls clear and it movable', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     old: { id: 'old', type: 'basic', x: 200, y: 200, movable: true, movableInEdit: true }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await ClientFunction(() => {
     window.renamedWidgetErrors = [];
@@ -54,7 +180,7 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   })();
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_old')
     // the icon color only paints something once there is an icon (or a class
     // or css reading --color), so its chip is not offered on a plain widget
@@ -113,6 +239,7 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const diceState = ClientFunction(() => JSON.stringify(widgets.get('die').state));
@@ -146,7 +273,9 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
   const rows = Selector('#editorModules .diceFaceRow');
   await t
     .click('#editButton')
+    // portrait window, so this is one of the layouts where the module does not open by default
     .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_die')
     // Background, pips/icon and border no longer repeat generic color help.
     .expect(Selector('#editorModules .diceSharedColors .info-button').count).eql(0)
@@ -235,11 +364,13 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 });
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:   { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const dropTarget = ClientFunction(() => JSON.stringify(widgets.get('holder').get('dropTarget')));
@@ -247,7 +378,7 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
   // a holder takes cards until it is told otherwise - the match rows say so
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_holder')
     .expect(Selector('#editorModules .widgetHeaderType').innerText).contains('Holder')
     .expect(Selector('#editorModules .dropTargetType').value).eql('type:card');
@@ -273,12 +404,14 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
 });
 
 test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     // an SVG written for svgReplaces: it uses placeholders in fill, stroke and
     // stroke-width, plus an opacity of its own
     checker: { id: 'checker', type: 'basic', x: 100, y: 100, width: 91, height: 91, image: '/i/game-pieces/2D/Checkers-2D.svg' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const nestedSection = Selector('#editorModules .collapsibleBody > .collapsibleSection > .collapsibleHeader .collapsibleTitle');
@@ -290,7 +423,7 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
   // inside Position rather than beside it
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_checker')
     .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
     .expect(nestedSection.withExactText('Snap grid').exists).ok()
@@ -347,6 +480,7 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
 });
 
 test('A pile is edited through its handle, css through declaration rows', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -354,6 +488,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
@@ -361,7 +496,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
   // the handle is the only part of a pile the cards do not cover
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(Selector('#w_pile .handle'))
     .expect(Selector('.widgetHeaderType').innerText).contains('Pile')
     // a pile is temporary, so the panel says up front that it edits the
@@ -428,7 +563,44 @@ test('A pile is edited through its handle, css through declaration rows', async 
     .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
 });
 
+test("A pile's drop limit is set on the pile and lands in its template", async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
+  const dropLimit = Selector('#editorModules .propertyInput').withText('Drop limit');
+  const showLimit = Selector('#editorModules .checkboxInput').withText('Show the limit on the handle');
+  const handle = Selector('#w_pile .handle');
+
+  // a pile takes cards through its snap range instead of a dropTarget, so the
+  // limit is offered in Behavior - and the handle display only once there is a
+  // limit for it to show
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click(handle)
+    .expect(dropLimit.visible).ok()
+    .expect(showLimit.visible).notOk()
+    .typeText(dropLimit.find('input[type=number]'), '3', { replace: true })
+    .expect(handle.innerText).eql('2')
+    .expect(showLimit.visible).ok()
+    .click(showLimit.find('label.switchbox'))
+    .expect(handle.innerText).eql('2/3')
+    // a pile is temporary, so both land in the template new piles of these
+    // cards are built from
+    .expect(pileTemplate()).eql('{"dropLimit":3,"showLimit":true}');
+});
+
 test('A deck that overrides the pile template says so while the pile mirrors into it', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: { onPileCreation: { text: 'fixed' } } }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -436,6 +608,7 @@ test('A deck that overrides the pile template says so while the pile mirrors int
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   // cardDefaults is the last place a card looks for onPileCreation, so a card
@@ -444,18 +617,20 @@ test('A deck that overrides the pile template says so while the pile mirrors int
   // also the default one
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(Selector('#w_pile .handle'))
     .expect(Selector('.pileTemplateMode').innerText).contains('pile template')
     .expect(Selector('.pileTemplateMode .pileHelp.warning').innerText).contains('onPileCreation');
 });
 
 test('Loading another game with a widget still selected does not break the client', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 100, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await ClientFunction(() => {
     window.stateLoadErrors = [];
@@ -464,7 +639,7 @@ test('Loading another game with a widget still selected does not break the clien
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_card')
     .expect(Selector('.widgetHeaderType').innerText).contains('Card');
 
@@ -482,6 +657,7 @@ test('Loading another game with a widget still selected does not break the clien
 });
 
 test('Basic curates the stacking, scale and visibility switches, the scoreboard its seats', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     block: { id: 'block', type: 'basic', x: 100, y: 100 },
     seat1: { id: 'seat1', type: 'seat', x: 100, y: 400, index: 1 },
@@ -489,6 +665,7 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     board: { id: 'board', type: 'scoreboard', x: 600, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const value = ClientFunction((id, property) => JSON.stringify(widgets.get(id).get(property)));
@@ -497,7 +674,7 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
   // factor it is drawn at to Size
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_block')
     .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
     .click('#inheritChildZ_block')
@@ -605,6 +782,9 @@ test('Create game using edit mode', async t => {
   await setName(t);
   await t
     .click('#editButton')
+    // this one places widgets in the room, so it gets the whole room: close the
+    // Edit Widgets module edit mode opens on
+    .click('#editorSidebar [icon=tune]')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-spinner0')
     .typeText('#INPUT_\\;values', '8', { replace: true })
@@ -684,15 +864,17 @@ test('Create game using edit mode', async t => {
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -726,16 +908,63 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
   await compareState(t, '3e20074150f78219095df84abeeb74dc');
 });
 
+// Both the object form of the css property and the css of an html face object are put into a style element
+// and scoped to the widget's id. Every preview card the editor renders is created without one, so they used
+// to share that scope and the last preview rendered restyled all the others - a strip in which every card
+// type wore the last one's colors. The room card with a space in its id covers the other half: an id that is
+// not a valid class name made classList.add() throw, so that card rendered no html face objects at all.
+test('Deck editor: every card type preview keeps its own css', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 100, height: 150, css: { default: { 'border-color': '${PROPERTY tint}' } } },
+      cardTypes: { red: { tint: '#ff0000' }, green: { tint: '#008000' }, blue: { tint: '#0000ff' } },
+      faceTemplates: [ { objects: [] }, { objects: [ {
+        type: 'html', x: 0, y: 0, width: 100, height: 150,
+        value: '<div>tinted</div>', css: { body: { 'background-color': '${PROPERTY tint}' } }
+      } ] } ]
+    },
+    'my card': { id: 'my card', type: 'card', deck: 'deck', cardType: 'green', x: 300, y: 20, activeFace: 1 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+
+  const roomCardColor = ClientFunction(() => {
+    const object = document.querySelector('#w_my_x0020_card .cardFace.active .cardFaceObject');
+    return object && getComputedStyle(object).backgroundColor;
+  });
+  const stripColors = ClientFunction(() => {
+    const colors = [];
+    document.querySelectorAll('#deckEditorStrip .cardFace.active .cardFaceObject').forEach(o=>colors.push(getComputedStyle(o).backgroundColor));
+    return colors;
+  });
+  const stripBorderColors = ClientFunction(() => {
+    const colors = [];
+    document.querySelectorAll('#deckEditorStrip .card').forEach(c=>colors.push(getComputedStyle(c).borderTopColor));
+    return colors;
+  });
+  await t
+    .expect(roomCardColor()).eql('rgb(0, 128, 0)', 'a card whose id is not a valid class name renders its html face object')
+    .click('#editButton')
+    .click('#w_deck')
+    .click('#propertiesOpenDeckEditor')
+    .expect(stripColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own html face object tint')
+    .expect(stripBorderColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own css property tint')
+    .pressKey('esc');
+});
+
 test('Deck editor: symbol pickers and JSON fallback', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -759,10 +988,24 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#deckEditorTreeAdd')
     .click('#deckEditorAddImage')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // this picker shows images only, so a search that only a font icon answers has to say so instead of
+    // showing the empty list ("10k" is a material symbol and matches nothing among the images)
+    .typeText('#symbolPickerOverlay input', '10k')
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolList').visible).notOk()
+    .selectText('#symbolPickerOverlay input')
+    .pressKey('delete')
+    .expect(Selector('#symbolNoResults').visible).notOk()
     .click(Selector('#symbolList .gameicons').nth(0))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // the same search in the unrestricted picker does find its one match
+    .typeText('#symbolPickerOverlay input', '10k')
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList i:not(.hidden)').count).eql(1)
+    .selectText('#symbolPickerOverlay input')
+    .pressKey('delete')
     .click(Selector('#symbolList .material-symbols').nth(0))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 1 });
 
@@ -775,16 +1018,48 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
   await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
 });
 
+test('The symbol picker says an image-only search found nothing', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    // the "Pick a symbol" button only shows up while the text is in symbol mode, which the class decides
+    w: { id: 'w', type: 'basic', x: 200, y: 200, text: 'home', classes: 'material-symbols' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  // that picker offers the font icons only, so a search that only an image answers ("abbot" is a
+  // game-icon) leaves the list empty and has to explain that rather than show a blank card
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_w')
+    .click(Selector('#editorModuleTopLeft button[icon=emoji_symbols]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .typeText('#symbolPickerOverlay input', 'abbot')
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolNoResults').innerText).contains('abbot')
+    .expect(Selector('#symbolList').visible).notOk()
+    .typeText('#symbolPickerOverlay input', '10k', { replace: true })
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList .material-symbols').filterVisible().count).eql(1)
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk();
+  await setEditorState(null);
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -833,15 +1108,17 @@ test('Deck editor: breadcrumb undo and redo', async t => {
 });
 
 test('Deck editor: remote update preserves an unrelated pending edit', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -892,15 +1169,17 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
 // three separate undo steps: undoing the added face must not revert the typed edits, and undoing once more
 // must revert only the second field.
 test('Deck editor: rapid cross-field edits stay separate undo steps', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -963,15 +1242,17 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
 // selected deck/card no longer exists when the new state arrives). TestCafe fails the test on any uncaught
 // client error, so simply performing the switch guards against the crash coming back.
 test('Deck editor: switching games while editing does not crash', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -999,8 +1280,10 @@ test('Deck editor: switching games while editing does not crash', async t => {
 // Also guards against Escape leaking to the room editor behind the deck editor (it used to toggle the
 // sidebar tab and could exit edit mode entirely).
 test('Deck editor: create deck from scratch with color box, face and defaults', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   // All sidebar sections share the same row markup; find a row by its section header and label text. Scan every
@@ -1067,7 +1350,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#editor .noSelectionButton[icon=style]') // "Open deck editor": opens the empty editor (no auto-created deck)
     .click('#deckEditorAddDeck')                     // Add New Deck submenu (defaults to the Empty deck option)
     .click('#deckEditorNewDeckPanel button')         // "Create empty deck" -> creates a starter deck and opens it
@@ -1632,6 +1915,7 @@ test('Deck editor: the custom deck wizard survives an empty rank list', async t 
 // buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget
 // sidebar uses, which is what the group/summary expectations below check.
 test('Deck editor: multi-selected face objects share property edits and alignment', async t => {
+  await t.resizeWindow(1280, 900);
   await setRoomState({
     multiDeck: {
       id: 'multiDeck', type: 'deck', x: 20, y: 20,
@@ -1646,6 +1930,7 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     multiCard: { id: 'multiCard', type: 'card', deck: 'multiDeck', cardType: 'plain', x: 300, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
@@ -1694,7 +1979,7 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_multiDeck') // selects the deck, showing the abbreviated Basic/Other properties panel
     .click('#propertiesOpenDeckEditor') // opens the full deck editor on it
     .click(objectRow.nth(0));
@@ -1791,12 +2076,13 @@ test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-line')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     // "Add stop" opens the menu of the three ways to add one; the first is a new
     // widget inheriting from an existing stop, which the Add button then creates
     .click('#editorModules .lineAddStop')
@@ -1804,6 +2090,11 @@ test('Line widget in edit mode', async t => {
     .click('#editorModules .lineAddStopConfirm')
     .click(Selector('#editorModules .lineShapePreset').withAttribute('aria-label', 'Shallow curve'));
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
+
+  // the drop limit constrains exactly those drops, so it is rendered with the
+  // matches - and stays out of the way while the line accepts nothing
+  const dropLimitInput = Selector('#editorModules .propertyInput').withText('Drop limit');
+  await t.expect(dropLimitInput.visible).notOk();
 
   // "Target widgets" writes the line's dropTarget: each match is a widget type
   // plus any number of property/value conditions, several matches are an array
@@ -1823,6 +2114,19 @@ test('Line widget in edit mode', async t => {
     .pressKey('tab');
   const dropTargets = await ClientFunction(id => JSON.stringify(widgets.get(id).get('dropTarget')))(lineID);
   await t.expect(dropTargets).eql('[{"type":"card"},{"movable":true}]');
+
+  // an empty field is "no limit", which the widget stores as -1
+  const readDropLimit = ClientFunction(id => widgets.get(id).get('dropLimit'));
+  await t
+    .expect(dropLimitInput.visible).ok()
+    .typeText(dropLimitInput.find('input[type=number]'), '3', { replace: true });
+  const dropLimit = await readDropLimit(lineID);
+  await t
+    .expect(dropLimit).eql(3)
+    .selectText(dropLimitInput.find('input[type=number]'))
+    .pressKey('delete');
+  const clearedDropLimit = await readDropLimit(lineID);
+  await t.expect(clearedDropLimit).eql(-1);
 
   await t.click(Selector('#editorModules .dropTargetRemoveMatch').nth(1));
 

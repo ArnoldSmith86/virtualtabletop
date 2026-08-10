@@ -1,7 +1,7 @@
-import JSZip from 'jszip';
 import { BSON } from 'bson';
 
 import TTS from '../../server/ttsimport.mjs';
+import Zip from '../../server/zip.mjs';
 
 // The importer only downloads images to read their dimensions, so the fixtures use
 // data URLs holding nothing but a PNG header: the tests never touch the network.
@@ -190,11 +190,12 @@ describe('TTS import: stacks', () => {
 
 describe('TTS import: files', () => {
   it('converts a save from a workshop upload zip', async () => {
-    const zip = new JSZip();
-    zip.file('WorkshopUpload', '');
-    zip.file('save.json', JSON.stringify(objects(die('a', 0))));
+    const zip = await Zip.create({
+      'WorkshopUpload': '',
+      'save.json': JSON.stringify(objects(die('a', 0)))
+    });
 
-    const widgets = await TTS.fromZIP(await zip.generateAsync({ type: 'nodebuffer' }));
+    const widgets = await TTS.fromZIP(zip);
     expect(widgets.a.type).toBe('dice');
     expect(widgets._meta.info.importerTemp).toBe('TTS');
   });

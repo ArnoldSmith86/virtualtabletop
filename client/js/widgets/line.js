@@ -514,6 +514,13 @@ export class Line extends Widget {
     // cheap box reject so a room full of lines doesn't sample every path on every mouse move
     if(point.x < -range || point.y < -range || point.x > +this.get('width')+range || point.y > +this.get('height')+range)
       return null;
+    // a line's dropLimit bounds the stops it carries rather than its children:
+    // a fixedParent widget rides a line as a stop without ever becoming one.
+    // Something the line already carries can always be dropped back onto the
+    // path - that keeps the number of stops as it is, even above the limit.
+    const stops = this.stopList();
+    if(!stops.some(entry=>entry.widget == widget.id) && exceedsDropLimit(this, 1, stops.length))
+      return null;
     const position = this.positionAtPoint(point);
     const onPath = this.pointAtPosition(position);
     const distance = Math.hypot(onPath.x-point.x, onPath.y-point.y);

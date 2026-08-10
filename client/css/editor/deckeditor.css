@@ -462,24 +462,23 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 20;
 }
 
-/* Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
-   (pickSymbolKeepingOverlay), where the rule above no longer applies and it would render behind #deckEditor
-   (z-index 1). Float it over the whole editor instead: above the sidebar (2), the toolbar (3) and the
-   dialog it was opened from (20). */
+/* Both pickers are opened from the JSON editor and the properties panel, which stay reachable while the deck
+   editor covers the play area, so they are moved into #editor (see initializeDOM) and the symbol picker is
+   left there when the deck editor closes (see close()) - from then on that is where edit mode opens it.
+   Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
+   instead (pickSymbolKeepingOverlay, which marks it with .symbolPickerAboveEditor) - same situation.
+   Neither spot gives them a box or a stacking order of their own, so .overlay's own 100%/100% makes them
+   cover the whole window and #roomArea (position: fixed, z-index 1) paints the board on top of the open
+   picker. Give them the deck editor's box instead - below the toolbar, beside the sidebar - and float them
+   above the sidebar (2), the toolbar (3) and the deck editor's dialogs (20). */
+#editor > #symbolPickerOverlay,
+#editor > #audioPickerOverlay,
 #symbolPickerOverlay.symbolPickerAboveEditor {
   position: fixed;
-  inset: 0;
-  width: auto;
-  height: auto;
-  z-index: 30;
-}
-
-/* The sound picker is opened from the JSON editor, which is reachable while the deck editor covers the play
-   area, so it is moved into #editor as well (see initializeDOM). It has no smaller box to be constrained to
-   there, so float it over the whole editor like the rule above - otherwise #deckEditor (z-index 1) hides it. */
-#editor > #audioPickerOverlay {
-  position: fixed;
-  inset: 0;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
   width: auto;
   height: auto;
   z-index: 30;
@@ -1420,6 +1419,13 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: pointer;
 }
 
+/* The global button:hover fill (layout.css) is more specific than the rule above, so without this the header
+   turned VTTblueDark on hover while its label stayed --textColor - black on navy, unreadable in light mode.
+   Highlight it with the theme's own lighter shade, which keeps the label readable in both themes. */
+.deckEditorGroupHeader:hover {
+  background: var(--backgroundHighlightColor2);
+}
+
 /* Focus ring like the Edit Widget sidebar's collapsible headers (propertyInputs.css), which this mirrors. */
 .deckEditorGroupHeader:focus-visible {
   outline: 2px solid var(--VTTblue);
@@ -1847,7 +1853,7 @@ body.deckEditorPanning #deckEditorMain * {
   bottom: 0;
   text-align: center;
   font-size: 12px;
-  opacity: 0.7;
+  opacity: 0.9; /* it is the only hint that the big card is interactive, so it has to be readable */
   padding: 4px 10px;
   pointer-events: none;
 }
@@ -1867,6 +1873,34 @@ body.deckEditorPanning #deckEditorMain * {
   flex-shrink: 0;
 }
 
+/* A deck of 13 (let alone 52) card types is far wider than the strip, so it scrolls sideways - and since every
+   tile now carries its own card type's colors, the strip is the fastest way to find a type by sight, which it
+   can only be if it doesn't look like it ends where its box does. The platform draws an overlay scrollbar that
+   is invisible while the strip sits still, so fade out whichever edge still has tiles behind it (the classes
+   come from updateStripOverflow). Sticky flex items with a negative margin: pinned to the visible edge without
+   adding to the scrollable width, and above the preview cards' own z-index (1000000). */
+#deckEditorStrip.deckEditorStripMoreLeft::before,
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  content: '';
+  position: sticky;
+  flex: 0 0 48px;
+  align-self: stretch;
+  z-index: 1000002;
+  pointer-events: none;
+}
+
+#deckEditorStrip.deckEditorStripMoreLeft::before {
+  left: -10px; /* cancels the strip's own padding, so the fade reaches its edge */
+  margin-right: -53px; /* fade width plus the flex gap */
+  background: linear-gradient(to right, var(--backgroundColor), transparent);
+}
+
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  right: -10px;
+  margin-left: -53px;
+  background: linear-gradient(to left, var(--backgroundColor), transparent);
+}
+
 .deckEditorStripCard {
   display: flex;
   flex-direction: column;
@@ -1884,8 +1918,15 @@ body.deckEditorPanning #deckEditorMain * {
   border-color: var(--backgroundHighlightColor1);
 }
 
+/* The tiles are as saturated as the card types they show, so an outline alone is easy to lose among them: the
+   selected tile also gets the plate and the bold label. */
 .deckEditorStripCard.selected {
   border-color: var(--textHighlightColor2);
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorStripCard.selected > span {
+  font-weight: bold;
 }
 
 .deckEditorStripCard.selectedInactive {

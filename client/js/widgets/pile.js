@@ -18,6 +18,7 @@ export class Pile extends Widget {
       inheritChildZ: true,
 
       text: null,
+      showLimit: false,
       pileSnapRange: defaultPileSnapRange,
 
       handleCSS: '',
@@ -47,7 +48,7 @@ export class Pile extends Widget {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
-    if(this.handle && delta.text !== undefined)
+    if(this.handle && (delta.text !== undefined || delta.showLimit !== undefined || delta.dropLimit !== undefined))
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
       if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
@@ -91,7 +92,9 @@ export class Pile extends Widget {
     if(!await super.click(mode)) {
 
       const childCount = this.children().length;
-      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${childCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
+      const dropLimit = this.get('dropLimit');
+      const cardCount = this.get('showLimit') && dropLimit > -1 ? `${childCount} of ${dropLimit}` : childCount;
+      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${cardCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
 
 
       const buttonBar1 = document.createElement('div');
@@ -280,9 +283,15 @@ export class Pile extends Widget {
     return false;
   }
 
+  // The handle shows how many cards the pile holds. A pile with showLimit set
+  // says how many it takes as well - "2/3" - so the limit is readable before a
+  // drop is refused rather than only after.
   updateText() {
     const text = this.get('text');
-    this.handle.textContent = text === null ? this.childCount : text;
+    const limit = this.get('dropLimit');
+    const withLimit = text === null && this.get('showLimit') && limit > -1;
+    this.handle.classList.toggle('withLimit', withLimit);
+    this.handle.textContent = text !== null ? text : withLimit ? `${this.childCount}/${limit}` : this.childCount;
   }
 
   validDropTargets() {

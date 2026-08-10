@@ -36,17 +36,30 @@ export function compareDropTarget(widget, t, exclude){
   return false;
 }
 
+// How dropLimit is read wherever it is enforced: a target holding currentCount
+// widgets takes count more only while that stays within the limit. currentCount
+// has to leave out the widget being dropped - putting one back where it already
+// is does not add to the count. Lines pass their number of stops instead of the
+// default children count, because that is what a line's limit bounds. Counting
+// the children is left until the limit turns out to be real: children() sorts
+// the child array, and the default -1 is what nearly every widget has.
+export function exceedsDropLimit(target, count = 1, currentCount = null) {
+  const limit = target.get('dropLimit');
+  if(!(limit > -1))
+    return false;
+  return (currentCount === null ? target.children().length : currentCount) + count > limit;
+}
+
 function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
       continue;
 
-    // if the holder has a drop limit and it's reached, skip the holder
-    if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
-      // don't skip it if the dragged widget is already its child
-      if(t.children().indexOf(widget) == -1)
-        continue;
+    // if the holder has a drop limit and it's reached, skip the holder -
+    // unless the dragged widget is already its child and just goes back in
+    if(exceedsDropLimit(t) && t.children().indexOf(widget) == -1)
+      continue;
 
     let isValid = compareDropTarget(widget, t);
 
@@ -72,17 +85,17 @@ function getValidDropTargets(widget, dragged = widget) {
   return targets;
 }
 
-function getMaxZ(layer) {
+export function getMaxZ(layer) {
   return maxZ[layer] || 0;
 }
 
-async function resetMaxZ(layer) {
+export async function resetMaxZ(layer) {
   maxZ[layer] = 0;
   for(const w of widgetFilter(w=>w.get('layer')==layer&&w.state.z).sort((a,b)=>a.get('z')-b.get('z')))
     await w.set('z', ++maxZ[layer]);
 }
 
-function updateMaxZ(layer, z) {
+export function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
@@ -705,17 +718,17 @@ async function loadEditMode() {
       setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
-      loadJSZip, waitForJSZip,
+      loadZipLibrary, waitForZipLibrary, zipBlob,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
-      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE,
+      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, calculateEditModuleClasses, isOrientationMismatch,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
       asArray, compute_ops,
       eventCoords,
-      getCurrentGameSettings, legacyMode, getEnabledLegacyModes
+      getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
     });
     $('body').classList.add('loadingEditMode');
     const editmode = await import('./edit.js');
