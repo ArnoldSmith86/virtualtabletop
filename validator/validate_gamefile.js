@@ -1,3 +1,5 @@
+import { positionNames, expressionError } from '../client/js/expression.js';
+
 const validators = {
     asset: v=>!!String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
     routineProperty: v=>!!String(v).match(/.Routine$/) || 'routine name expected (format: myRoutine)',
@@ -66,14 +68,88 @@ const COMMON_PROPERTIES = {
     rotation: 'number',
     scale: v=>typeof v === 'number' || typeof v === 'string' && !!String(v).match(/^-[0-9.]+,[0-9.]+$|^[0-9.]+,-[0-9.]+$/) || 'number expected (or special string for flipping: -x,y or x,-y)',
     ignoreZoom: 'boolean',
-    dragLimit: 'any',
+    // a side is a number or an expression that evaluates to one, condition is
+    // one inequality in x and y or a list of them (see client/js/expression.js),
+    // alignX/alignY move the point of the widget all of that is about. The
+    // expressions are parsed here: a mistyped one is ignored at drag time, so
+    // without this its only symptom would be a limit that does nothing.
+    dragLimit: v=>{
+        if(typeof v !== 'object' || v === null || Array.isArray(v))
+            return 'object expected (minX/maxX/minY/maxY, condition and/or alignX/alignY)';
+        // every problem is collected: stopping at the first one would hide the
+        // second typo until the first is fixed, and they are usually typed
+        // in the same sitting
+        const problems = [];
+        for(const key of Object.keys(v)) {
+            // the engine reads a side or a condition written as null the same
+            // way as a missing one - no limit from it - so it is not an error
+            if(v[key] === null)
+                continue;
+            if([ 'minX', 'maxX', 'minY', 'maxY' ].includes(key)) {
+                if(typeof v[key] !== 'number' && typeof v[key] !== 'string') {
+                    problems.push(`${key} must be a number or an expression`);
+                    continue;
+                }
+                const problem = typeof v[key] === 'string' && expressionError(v[key], positionNames);
+                if(problem)
+                    problems.push(`${key} is not a valid expression: ${problem}`);
+            } else if(key === 'condition') {
+                const conditions = asArray(v[key]).filter(c=>c !== null);
+                if(!conditions.every(c=>typeof c === 'string')) {
+                    problems.push('condition must be an expression or a list of expressions');
+                    continue;
+                }
+                for(const condition of conditions) {
+                    // a condition has to be an inequality: one written as maths
+                    // holds wherever it is not 0, i.e. it limits nothing
+                    const problem = expressionError(condition, positionNames, true);
+                    if(problem)
+                        problems.push(`condition '${condition}' is not a valid expression: ${problem}`);
+                }
+            } else if(key === 'alignX' || key === 'alignY') {
+                // the engine reads it with +, so "0.5" is the 0.5 it looks like
+                if(typeof v[key] !== 'number' && !(typeof v[key] === 'string' && v[key].trim() !== '' && isFinite(+v[key])))
+                    problems.push(`${key} must be a number: the fraction of the widget's ${key === 'alignX' ? 'width' : 'height'} the limit applies to (0 is its ${key === 'alignX' ? 'left' : 'top'} edge, 0.5 its middle, 1 its ${key === 'alignX' ? 'right' : 'bottom'} edge)`);
+            } else {
+                problems.push(`unknown key '${key}' (valid: minX, maxX, minY, maxY, condition, alignX, alignY)`);
+            }
+        }
+        return problems.length ? problems.join('; ') : true;
+    },
     classes: 'string',
     css: 'any',
     movable: 'boolean',
     movableInEdit: 'boolean',
     clickable: 'boolean',
     clickSound: 'any',
-    grid: 'any',
+    // A grid entry is a lattice plus any number of widget properties to set
+    // when something snaps to it, so its keys are not a list this can check.
+    // Its condition is: one inequality in x and y (the position being snapped)
+    // or a list of them, limiting the grid to the area they describe. A
+    // mistyped one is read as "this grid applies" at snap time, so without
+    // this its only symptom would be a grid that applies where it should not.
+    grid: v=>{
+        if(!Array.isArray(v))
+            return true;
+        const problems = [];
+        v.forEach((entry, index)=>{
+            if(typeof entry !== 'object' || entry === null || Array.isArray(entry) || entry.condition === undefined || entry.condition === null)
+                return;
+            const conditions = asArray(entry.condition).filter(c=>c !== null);
+            if(!conditions.every(c=>typeof c === 'string')) {
+                problems.push(`grid ${index}: condition must be an expression or a list of expressions`);
+                return;
+            }
+            for(const condition of conditions) {
+                // a condition has to be an inequality: one written as maths
+                // holds wherever it is not 0, i.e. it limits nothing
+                const problem = expressionError(condition, positionNames, true);
+                if(problem)
+                    problems.push(`grid ${index}: condition '${condition}' is not a valid expression: ${problem}`);
+            }
+        });
+        return problems.length ? problems.join('; ') : true;
+    },
     enlarge: 'any',
     overlap: 'any',
     ignoreOnLeave: 'any',

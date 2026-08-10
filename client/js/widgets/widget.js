@@ -1,4 +1,5 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, timeToMS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, mod, timeToMS } from '../domhelpers.js';
+import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -820,6 +821,273 @@ export class Widget extends StateManaged {
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
+  }
+
+  // How a name in an expression about a position is answered - a dragLimit
+  // side or condition, a snap grid's condition: x and y are the position being
+  // tested rather than where the widget currently is, so they mean in an
+  // expression what minX/maxX/minY/maxY mean next to it. A property is written
+  // the way routines write one - ${PROPERTY name} for this widget's,
+  // ${PROPERTY name OF id} for another widget's - and nothing else is a name,
+  // so the two languages agree on what a bare word is.
+  positionResolver(coord) {
+    return (name, widgetID, explicit)=>{
+      if(!explicit)
+        return name == 'x' || name == 'y' ? coord[name] : undefined;
+      if(widgetID === null)
+        return this.get(name);
+      return widgets.has(widgetID) ? widgets.get(widgetID).get(name) : undefined;
+    };
+  }
+
+  // Which point of the widget the limit applies to, as an offset from its top
+  // left corner: the corner itself unless alignX/alignY move it, the same
+  // fractions of the widget box a snap grid aligns to (0.5/0.5 is its middle).
+  // Everything below works on that point, so x, y and the four sides all mean
+  // the same thing wherever it sits.
+  dragLimitOffset() {
+    const limit = this.get('dragLimit');
+    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+      return { x: 0, y: 0 };
+    return {
+      x: (+limit.alignX || 0) * (+this.get('width') || 0),
+      y: (+limit.alignY || 0) * (+this.get('height') || 0)
+    };
+  }
+
+  // What the dragLimit says, read for one position - the point of the widget
+  // the limit applies to (see dragLimitOffset), not necessarily its corner: the
+  // two clamps of the rectangle (each side a number or an expression that
+  // computes one) and the conditions to test there. null when there is no limit
+  // to obey at all.
+  // `varies` says whether these rules hold for one position only: a side that
+  // reads x or y ("maxX": "y") is a different number at every point, so both
+  // callers - the drag and the editor's drawing - have to read it again for
+  // every position they judge instead of once for all of them.
+  dragLimitRules(coord) {
+    const limit = this.get('dragLimit');
+    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+      return null;
+
+    const resolve = this.positionResolver(coord);
+    const bound = key=>limit[key] === undefined ? undefined : expressionNumber(limit[key], resolve);
+    const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
+
+    return {
+      varies: [ 'minX', 'maxX', 'minY', 'maxY' ].some(key=>expressionNames(limit[key])
+        .some(name=>!name.explicit && (name.name == 'x' || name.name == 'y'))),
+      clampX: value=>{
+        if(minX !== undefined && minX !== null) value = Math.max(minX, value);
+        if(maxX !== undefined && maxX !== null) value = Math.min(maxX, value);
+        return value;
+      },
+      clampY: value=>{
+        if(minY !== undefined && minY !== null) value = Math.max(minY, value);
+        if(maxY !== undefined && maxY !== null) value = Math.min(maxY, value);
+        return value;
+      },
+      conditions: asArray(limit.condition === undefined || limit.condition === null ? [] : limit.condition).filter(c=>c !== null && c !== undefined)
+    };
+  }
+
+  // Whether a position is inside the area at all, i.e. whether a drag that ends
+  // there is left alone. This is the question the editor's preview asks of
+  // every point it samples; dragLimitedCoord() below answers the other one -
+  // where a drag that is not allowed ends up instead. The rules can be passed
+  // in when the caller knows they are the same everywhere (thousands of points
+  // of one drawing), which saves reading the four sides at every one of them.
+  dragLimitAllows(coord, rules = this.dragLimitRules(coord)) {
+    if(!rules)
+      return true;
+    return rules.clampX(coord.x) === coord.x && rules.clampY(coord.y) === coord.y
+      && rules.conditions.every(c=>expressionCondition(c, this.positionResolver(coord)));
+  }
+
+  // Where a drag is allowed to put the widget's top left corner. minX/maxX/
+  // minY/maxY bound it to a rectangle, and each of them can be an expression
+  // instead of a fixed number ("${PROPERTY width OF board} - 100"). A condition
+  // - one inequality or a list of them, "2x^2 + y > 4", "2y + 10 > 5x" - bounds
+  // it to any area that can be written down, and both are checked on every
+  // mouse move, so an area that depends on the state follows it. A side can
+  // read x and y like a condition can ("maxX": "y"), and then the rectangle is
+  // judged where the position it bounds is rather than where the pointer is.
+  // All of that is about the point alignX/alignY picks out of the widget - its
+  // top left corner unless they say otherwise - so only the two conversions at
+  // the ends of this method deal in corners.
+  //
+  // A refused position does not stop the drag where the last accepted one was:
+  // the widget goes where its area comes closest to the pointer, so it comes to
+  // rest against the boundary itself rather than a whole mouse step before it,
+  // and it keeps sliding along that boundary while the pointer moves - along a
+  // straight edge at any angle and around a curve alike. It gets there the way
+  // the mouse went: every position it is moved to is one it can reach from
+  // where it is without leaving the area on the way, so a widget limited to a
+  // ring or a track walks around it instead of appearing on the far side of the
+  // hole when the pointer crosses it.
+  // A widget that starts outside its area (a condition that changed under it,
+  // a routine that put it there) is not held in place: it is free until it is
+  // inside, so it can never get stuck - only a widget that is on the boundary
+  // of its area rather than away from it is carried along that boundary.
+  dragLimitedCoord(coord) {
+    // the corner a drag reports, as the point the limit is written about
+    const offset = this.dragLimitOffset();
+    const point = { x: coord.x + offset.x, y: coord.y + offset.y };
+    const rules = this.dragLimitRules(point);
+    if(!rules)
+      return coord;
+
+    // A side that reads the position being judged describes a different
+    // rectangle at every point, so it is read again for each of them - the same
+    // way a condition is. Any other limit is read once for the whole drag.
+    const rulesAt = rules.varies ? position=>this.dragLimitRules(position) : _=>rules;
+    const clamped = position=>{
+      const { clampX, clampY } = rulesAt(position);
+      return { x: clampX(position.x), y: clampY(position.y) };
+    };
+    const target = clamped(point);
+    // and back to the corner, which is what a drag writes
+    const asCoord = position=>Object.assign({}, coord, { x: position.x - offset.x, y: position.y - offset.y });
+
+    // a fixed rectangle and nothing else is what clamping already answered
+    if(!rules.varies && !rules.conditions.length)
+      return asCoord(target);
+
+    // the rectangle is part of the question everywhere below, so a position
+    // reached by sliding or by rounding can never leave it either
+    const inside = position=>this.dragLimitAllows(position, rulesAt(position));
+
+    // where the widget is, put through the rectangle as well: it is a hard
+    // bound, so a widget sitting outside it (a routine moved it, a side moved
+    // under it) must not be able to stay there through the fallbacks below
+    // Read off x and y - except for the one move where they cannot be: taking a
+    // widget out of a holder does not convert them out of the holder's
+    // coordinates, so between moveStart() and the first position a drag writes
+    // they are the holder's numbers read as the room's. dragLimitStartCoord is
+    // where the widget was, in the room, taken while its parent still said what
+    // x and y meant (see moveStart), and it stands in for exactly that move.
+    const at = this.dragLimitStartCoord
+      ? this.coordParentFromCoordGlobal(this.dragLimitStartCoord)
+      : { x: +this.get('x') || 0, y: +this.get('y') || 0 };
+    const current = clamped({ x: at.x + offset.x, y: at.y + offset.y });
+    const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
+    // A widget that is not inside its area is let go - but a widget sitting
+    // exactly on the edge of a strict inequality ("x < 200" at x == 200, put
+    // there by a routine or by the initial state) is not inside it either, and
+    // that is a different thing: it is on the boundary rather than away from
+    // the area, and letting it go would make the limit stop applying at its own
+    // edge. The two are told apart by asking the whole positions around the
+    // widget, the ones a drag could have left it on: one of them being inside
+    // means the area is right there, and the drag along that edge its author
+    // meant to allow starts from the one nearest the pointer.
+    const edgeStart = _=>{
+      const around = [];
+      for(const x of [ current.x - 1, current.x, current.x + 1 ])
+        for(const y of [ current.y - 1, current.y, current.y + 1 ])
+          if(x != current.x || y != current.y)
+            around.push({ x, y });
+      return around.sort((a, b)=>away(a) - away(b)).find(inside);
+    };
+    const start = inside(current) ? current : edgeStart();
+    if(!start)
+      return asCoord(target);
+
+    // How far along the way from an allowed position to another one the widget
+    // gets without leaving the area - the far end itself when the whole way is
+    // inside it. Walked rather than halved: what is being answered is where the
+    // mouse took the widget, so an area the way crosses out of and back into
+    // (the hole of a ring, the middle of a track) has to stop it at the near
+    // side rather than let it carry on beyond the gap. The samples are a few
+    // pixels apart, and the last step between the one that was allowed and the
+    // one that was not is halved until the boundary is a twentieth of a pixel
+    // wide, so the widget rests against it rather than a sample short of it.
+    const reach = (from, to)=>{
+      const distance = Math.hypot(to.x - from.x, to.y - from.y);
+      const at = part=>({ x: from.x + (to.x - from.x) * part, y: from.y + (to.y - from.y) * part });
+      // bounded, so one long jump of a fast mouse costs no more than a slow one
+      const samples = Math.min(128, Math.max(1, Math.ceil(distance / 4)));
+      let reached = 0, refused = 1;
+      for(let sample = 1; sample <= samples; ++sample) {
+        if(!inside(at(sample / samples))) {
+          refused = sample / samples;
+          break;
+        }
+        reached = sample / samples;
+      }
+      if(reached == 1)
+        return to;
+      for(let steps = Math.min(20, Math.ceil(Math.log2(distance / samples * 20))); steps > 0; --steps) {
+        const middle = (reached + refused) / 2;
+        if(inside(at(middle)))
+          reached = middle;
+        else
+          refused = middle;
+      }
+      return at(reached);
+    };
+
+    // straight at the pointer, as far as the area lets the widget go: getting
+    // all the way there is the ordinary drag, and there is nothing to slide
+    // along then
+    const straight = reach(start, target);
+    if(straight === target)
+      return asCoord(target);
+
+    // The widget ends up where its area comes closest to the pointer. Straight
+    // at the pointer is one candidate; the others are that same movement turned
+    // to one side and to the other, which is what sliding along an edge is.
+    // Turning a movement also shortens it to the point of the turned line
+    // nearest the pointer, so the smallest turn that lands in the area is the
+    // one that ends up closest - it is looked for by halving the angle between
+    // straight at the pointer (refused, or there would be nothing to do) and a
+    // quarter turn (which is standing still, and therefore always allowed).
+    // Repeating the whole thing follows an edge that curves away, where no
+    // straight movement can stay against the boundary.
+    let position = start;
+    for(let round = 0; round < 3; ++round) {
+      const dx = target.x - position.x, dy = target.y - position.y;
+      const turnedBy = angle=>{
+        const cos = Math.cos(angle), sin = Math.sin(angle);
+        return { x: position.x + (dx*cos - dy*sin)*cos, y: position.y + (dx*sin + dy*cos)*cos };
+      };
+      let closest = round == 0 ? straight : reach(position, target);
+      // as many halvings of the quarter turn as it takes for the last one to
+      // move the widget by less than a twentieth of a pixel
+      const halvings = Math.min(16, Math.max(1, Math.ceil(Math.log2(Math.hypot(dx, dy) * 32))));
+      for(const side of [ -1, 1 ]) {
+        let turn = side*Math.PI/2, straighter = 0;
+        for(let step = 0; step < halvings; ++step) {
+          const middle = (turn + straighter) / 2;
+          if(inside(turnedBy(middle)))
+            turn = middle;
+          else
+            straighter = middle;
+        }
+        // the turned movement is walked as well, so a turn that ends up in the
+        // area but crosses out of it on the way is taken only as far as it goes
+        const slid = reach(position, turnedBy(turn));
+        if(away(slid) < away(closest))
+          closest = slid;
+      }
+      // anything below the precision the two searches above work to is noise,
+      // and taking it would let the widget wobble by a pixel for nothing
+      if(away(closest) > away(position) - .05)
+        break;
+      position = closest;
+    }
+
+    // A widget is placed on whole pixels like every other position a drag
+    // writes, and this one is on the edge of its area: rounded the usual way it
+    // would be just outside it half the time. So the four whole positions
+    // around it are tried, the one nearest the pointer first, and the widget
+    // stays where it was only if the area is too thin to hold any of them. It
+    // is the corner that is whole, so an alignX of 0.5 on an odd width does not
+    // put the widget on half a pixel.
+    const whole = [];
+    for(const x of new Set([ Math.floor(position.x - offset.x), Math.ceil(position.x - offset.x) ]))
+      for(const y of new Set([ Math.floor(position.y - offset.y), Math.ceil(position.y - offset.y) ]))
+        whole.push({ x: x + offset.x, y: y + offset.y });
+    whole.sort((a, b)=>away(a) - away(b));
+    return asCoord(whole.find(inside) || start);
   }
 
   async doubleClick(mode='respect') {
@@ -2569,6 +2837,14 @@ export class Widget extends StateManaged {
     await this.set('dragging', playerName);
     delete this.lastMoveCoord;
 
+    // Where the widget is, in the coordinates of the room, taken while its
+    // parent is still the one x and y are measured against. Dropping that
+    // parent below does not convert them, so from here until the first position
+    // move() writes they are a holder's numbers read as the room's - and a
+    // dragLimit walks the drag from where the widget is, so it would walk it
+    // from the wrong end of the board once. Cleared again by that first move.
+    this.dragLimitStartCoord = this.coordGlobalFromCoordParent({ x: +this.get('x') || 0, y: +this.get('y') || 0 });
+
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
     // dragged in play: a stop is usually placed in edit mode.
@@ -2590,23 +2866,7 @@ export class Widget extends StateManaged {
   }
 
   async move(coordGlobal, localAnchor) {
-    let newCoord = this.dragCorner(coordGlobal, localAnchor);
-
-    //Keeps widget's top left corner within coordinates set by dragLimit object
-    const limit = this.get('dragLimit');
-
-    if (limit.minX !== undefined) {
-      newCoord.x = Math.max(limit.minX, newCoord.x);
-    }
-    if (limit.maxX !== undefined) {
-      newCoord.x = Math.min(limit.maxX, newCoord.x);
-    }
-    if (limit.minY !== undefined) {
-      newCoord.y = Math.max(limit.minY, newCoord.y);
-    }
-    if (limit.maxY !== undefined) {
-      newCoord.y = Math.min(limit.maxY, newCoord.y);
-    }
+    let newCoord = this.dragLimitedCoord(this.dragCorner(coordGlobal, localAnchor));
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
@@ -2614,6 +2874,9 @@ export class Widget extends StateManaged {
     this.lastMoveCoord = coordGlobal;
 
     await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
+    // x and y are the drag's own numbers now, in whatever the widget is
+    // parented to, so they say where it is again
+    delete this.dragLimitStartCoord;
     await this.snapToGrid();
 
     if(!this.get('fixedParent') && this.get('movable')) {
@@ -2789,6 +3052,9 @@ export class Widget extends StateManaged {
     if(releasedElsewhere)
       await this.move(coordGlobal, localAnchor);
     delete this.lastMoveCoord;
+    // a click is a moveStart and a moveEnd with no move in between, so what it
+    // took for that first move has to go whether one happened or not
+    delete this.dragLimitStartCoord;
 
     await this.hideShadowWidget();
     await this.set('dragging', null);
@@ -3240,17 +3506,16 @@ export class Widget extends StateManaged {
         const alignX = (grid.alignX || 0) * this.get('width');
         const alignY = (grid.alignY || 0) * this.get('height');
 
-        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
-          continue;
-        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
+        if(!this.gridAppliesAt(grid, { x, y }))
           continue;
 
-        const snapX = x + alignX + grid.x/2 - mod(x + alignX + grid.x/2 - (grid.offsetX || 0), grid.x);
-        const snapY = y + alignY + grid.y/2 - mod(y + alignY + grid.y/2 - (grid.offsetY || 0), grid.y);
+        const snapped = this.gridSnapCoord(grid, { x, y }, { x: alignX, y: alignY });
+        if(!snapped)
+          continue;
 
-        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
+        const distance = (snapped.x - x) ** 2 + (snapped.y - y) ** 2;
         if(distance < closestDistance) {
-          closest = [ snapX - alignX, snapY - alignY, grid ];
+          closest = [ snapped.x - alignX, snapped.y - alignY, grid ];
           closestDistance = distance;
         }
       }
@@ -3258,10 +3523,109 @@ export class Widget extends StateManaged {
       if(closest) {
         await this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ].indexOf(p) == -1)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY', 'condition' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
     }
+  }
+
+  // Which point of one grid's lattice a widget dropped at coord is snapped to,
+  // as the point alignX/alignY aligns to it (the widget's corner is that minus
+  // the alignment): the lattice point nearest the position it was dropped at,
+  // moved on to the nearest one this grid applies at as well.
+  // A grid limited to a rectangle and nothing else keeps snapping to the
+  // nearest lattice point wherever that lies, which is what it has always done
+  // and what games are built on. A condition can bound the grid to an area of
+  // any shape, and there it is not enough that the position the widget was
+  // dropped at is inside it: the lattice point nearest to that position is up
+  // to half a cell away in each direction, and a boundary that runs wherever it
+  // likes can easily be in between, so snapping there would drop the widget
+  // just outside the very area the grid is limited to. The lattice is walked
+  // outwards in square rings around that point instead, ranked by how far the
+  // widget actually moves, until no ring further out can hold anything closer
+  // than the best point already found.
+  // null when no lattice point within reach is one this grid applies at - an
+  // area narrower than the grid step need not contain one at all - and then
+  // this grid does not apply here either, exactly as outside its rectangle.
+  gridSnapCoord(grid, coord, align) {
+    const nearest = (position, offset, step)=>position + step/2 - mod(position + step/2 - offset, step);
+    const snap = {
+      x: nearest(coord.x + align.x, grid.offsetX || 0, grid.x),
+      y: nearest(coord.y + align.y, grid.offsetY || 0, grid.y)
+    };
+    if(!this.gridConditions(grid).length)
+      return snap;
+
+    const appliesAt = point=>this.gridAppliesAt(grid, { x: point.x - align.x, y: point.y - align.y });
+    if(appliesAt(snap))
+      return snap;
+
+    const stepX = Math.abs(grid.x), stepY = Math.abs(grid.y);
+    if(!(stepX > 0) || !(stepY > 0))
+      return null;
+
+    // far enough to step over a boundary that cuts between the widget and the
+    // lattice point it would snap to, and short enough to stay a handful of
+    // expressions rather than a search of the whole board
+    const searchRings = 8;
+    let best = null;
+    let bestDistance = Infinity;
+    for(let ring = 1; ring <= searchRings; ++ring) {
+      // a lattice point `ring` cells away is at least `ring` minus the half
+      // cell the widget itself sits off the lattice from it, so once a point is
+      // found the rings that cannot come closer are not looked at at all
+      if(best && ((ring - 0.5) * Math.min(stepX, stepY)) ** 2 >= bestDistance)
+        break;
+      for(let column = -ring; column <= ring; ++column)
+        for(let row = -ring; row <= ring; ++row) {
+          if(Math.max(Math.abs(column), Math.abs(row)) != ring)
+            continue;
+          const candidate = { x: snap.x + column * grid.x, y: snap.y + row * grid.y };
+          const distance = (candidate.x - align.x - coord.x) ** 2 + (candidate.y - align.y - coord.y) ** 2;
+          if(distance < bestDistance && appliesAt(candidate)) {
+            best = candidate;
+            bestDistance = distance;
+          }
+        }
+    }
+    return best;
+  }
+
+  // Whether one grid applies at a position at all: inside the rectangle its
+  // four sides bound it to, and inside the area its conditions describe. This
+  // is asked of the position a widget was dropped at - is this grid one of the
+  // grids tried - and of every lattice point gridSnapCoord() weighs up snapping
+  // it to, so a grid that only applies in part of the parent cannot put a
+  // widget down outside that part either.
+  gridAppliesAt(grid, coord) {
+    return coord.x >= (grid.minX || -99999) && coord.x <= (grid.maxX || 99999)
+      && coord.y >= (grid.minY || -99999) && coord.y <= (grid.maxY || 99999)
+      && this.gridConditionsHold(grid, coord);
+  }
+
+  // The conditions one grid entry carries, as a list: none, one, or a list of
+  // them with the empty ones dropped.
+  gridConditions(grid) {
+    if(!grid || grid.condition === undefined || grid.condition === null)
+      return [];
+    return asArray(grid.condition).filter(condition=>condition !== null && condition !== undefined);
+  }
+
+  // Where one grid applies, beyond the rectangle minX/maxX/minY/maxY bound it
+  // to: a condition is an inequality in x and y - the position the widget would
+  // be dropped at, the same coordinates the four sides are measured in - or a
+  // list of them, all of which have to hold. It is written in the language a
+  // dragLimit condition is written in (client/js/expression.js), so
+  // "(x - 800)^2 + (y - 500)^2 < 300^2" is a round area and
+  // "${PROPERTY width OF board}" reads the state while the game is played.
+  // Outside the area this grid is simply not one of the grids tried, so the
+  // widget snaps to whichever other grid covers the position - and to nothing
+  // at all where none does - exactly as the rectangle already behaves. A
+  // condition that cannot be read (a typo, a widget that is gone) holds, so a
+  // mistyped grid keeps snapping rather than silently stopping.
+  gridConditionsHold(grid, coord) {
+    const resolve = this.positionResolver(coord);
+    return this.gridConditions(grid).every(condition=>expressionCondition(condition, resolve));
   }
 
   supportsPiles() {

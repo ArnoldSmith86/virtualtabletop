@@ -602,9 +602,22 @@ class PropertyInput {
       propertyInfoButton(this.dom, html(this.options.hint));
     }
     this.renderControl(this.dom);
+    // options.validate: a problem with what was typed belongs under the input
+    // it was typed into, not only in the validation table of another module
+    if(this.options.validate)
+      this.problemDOM = div(this.dom, 'propertyInputProblem');
     for(const property of this.listenProperties())
-      this.module.addPropertyListener(this.widget, property, _=>this.update(this.getValue()));
+      this.module.addPropertyListener(this.widget, property, _=>this.applyUpdate(this.getValue()));
     return this.dom;
+  }
+
+  applyUpdate(value) {
+    this.update(value);
+    if(this.problemDOM) {
+      const problem = value === null || propertyInputIsMulti(value) ? null : this.options.validate(value);
+      this.problemDOM.textContent = problem || '';
+      this.dom.classList.toggle('hasProblem', !!problem);
+    }
   }
 
   cssClass() {
@@ -627,6 +640,10 @@ class TextInput extends PropertyInput {
     this.input = document.createElement(this.options.multiline ? 'textarea' : 'input');
     if(this.options.placeholder)
       this.input.placeholder = this.options.placeholder;
+    // a field holding a list is unreadable at the two rows a textarea defaults
+    // to, so its height can be asked for in lines
+    if(this.options.multiline && this.options.rows)
+      this.input.rows = this.options.rows;
     this.input.oninput = _=>{
       const value = this.input.value;
       this.setValue(value === '' && this.options.nullIfEmpty ? null : value);
@@ -719,6 +736,19 @@ class NumberOrTextInput extends PropertyInput {
     this.input.type = 'text';
     if(this.options.placeholder !== undefined) this.input.placeholder = this.options.placeholder;
     this.input.oninput = _=>this.setValue(propertyInputNumberOrText(this.input.value, this.options.nullIfEmpty));
+    // a text input has no arrow key stepping, which is the part of a number
+    // input that still applies while the value happens to be a plain number
+    this.input.onkeydown = e=>{
+      if(e.key != 'ArrowUp' && e.key != 'ArrowDown')
+        return;
+      const value = propertyInputNumberOrText(this.input.value, false);
+      if(typeof value != 'number')
+        return;
+      e.preventDefault();
+      const stepped = +(value + (e.key == 'ArrowUp' ? 1 : -1) * (e.shiftKey ? 10 : 1)).toFixed(6);
+      this.input.value = stepped;
+      this.setValue(stepped);
+    };
     target.appendChild(this.input);
   }
 
@@ -729,6 +759,12 @@ class NumberOrTextInput extends PropertyInput {
     // old "e.g. 8, 8px, 50%" placeholder down to "e.g. 8," - reading like a
     // typo rather than a hint
     this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || '8px');
+    // a plain number fits the compact width these inputs are laid out at,
+    // anything else usually does not - so the layout can tell the two apart,
+    // and what does not fit is at least readable as a tooltip
+    const text = (value === null || multi) ? '' : String(value);
+    this.dom.classList.toggle('nonNumericValue', text !== '' && typeof value != 'number');
+    this.input.title = typeof value == 'number' ? '' : text;
     if(document.activeElement !== this.input)
       this.input.value = (value === null || multi) ? '' : value;
   }

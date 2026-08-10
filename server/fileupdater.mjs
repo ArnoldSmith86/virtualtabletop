@@ -1,6 +1,6 @@
 import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
 
-export const VERSION = 21;
+export const VERSION = 22;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -134,6 +134,7 @@ function updateProperties(properties, v, globalProperties) {
   v<15 && v15SkipTurnProperty(properties);
   v<17 && v17MaterialSymbols(properties);
   v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
+  v<22 && v22DragLimitNullSides(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -602,4 +603,17 @@ function v20WhiteSpacePreWrap(properties, globalProperties) {
 
   if(!properties.type && (hasMultipleWhitespaceOrNewline(String(properties.html)) || String(JSON.stringify(properties.inheritFrom)).match(/"html"/)) || (typeof properties.html == 'string' && globalProperties.v20WhiteSpacePreWrapForAllHtml) && !cssHasWhiteSpace(properties.css))
     properties.css = addWhiteSpacePreWrapToCss(properties.css);
+}
+
+// A side of dragLimit written as null used to be clamped with Math.max(null, x)
+// / Math.min(null, x), i.e. at 0. Now that a side can be an expression, one that
+// does not amount to a number is read as "no limit on that side" like a missing
+// one - so the 0 it always meant is written down instead.
+function v22DragLimitNullSides(properties) {
+  const limit = properties.dragLimit;
+  if(typeof limit != 'object' || limit === null || Array.isArray(limit))
+    return;
+  for(const key of [ 'minX', 'maxX', 'minY', 'maxY' ])
+    if(limit[key] === null)
+      limit[key] = 0;
 }
