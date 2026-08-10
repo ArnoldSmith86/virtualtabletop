@@ -36,10 +36,17 @@ class JsonModule extends SidebarModule {
     if(jeDeltaIsOurs)
       return;
 
-    if(newSelection.length == 1) {
+    // Just opened while the deck editor covers the play area: show the deck being edited rather than whatever
+    // the (invisible) room selection behind it happens to be - that deck is what is on screen.
+    if(this.showDeckEditorDeck) {
+      delete this.showDeckEditorDeck;
+      jeSelectWidget(deckEditor.deck());
+    } else if(newSelection.length == 1) {
       jeSelectWidget(newSelection[0]);
     } else if(newSelection.length) {
       jeSelectSetMulti(newSelection);
+    } else if(deckEditor.isOpen() && deckEditor.deck()) {
+      jeSelectWidget(deckEditor.deck());
     } else {
       jeEmpty();
     }
@@ -53,6 +60,8 @@ class JsonModule extends SidebarModule {
   }
 
   renderModule(target) {
+    // openInTarget() fires onSelectionChanged() right after this, which is where the deck is picked up.
+    this.showDeckEditorDeck = deckEditor.isOpen() && !!deckEditor.deck();
     jeToggle();
     target.append($('#jeWidgetSwitcher'));
     target.append($('#jeTextHighlight'));
@@ -66,6 +75,13 @@ class JsonModule extends SidebarModule {
   }
 }
 
+// Called by the deck editor when it closes: the deck that was being edited is what the user was looking at,
+// so leave the JSON editor on it instead of on a stale room selection made before the editor was opened.
+function jeSelectDeckEditorDeck(deck) {
+  if(jeEnabled && deck && widgets.has(deck.get('id')))
+    jeSelectWidget(deck);
+}
+
 class DebugModule extends SidebarModule {
   constructor() {
     super('pest_control', 'Debug', 'View debug information for the most recent routine execution.');
@@ -73,7 +89,7 @@ class DebugModule extends SidebarModule {
   }
 
   button_clearButton() {
-    jeLoggingHTML = '';
+    jeLoggingClear();
     $('#jeLog').innerHTML = '';
   }
 
@@ -82,7 +98,7 @@ class DebugModule extends SidebarModule {
 
     $('#clearLogButton').disabled = $('#autoClearLog').checked;
     if($('#clearLogButton').disabled)
-      jeLoggingHTML = '';
+      jeLoggingClear();
   }
 
   button_filter() {

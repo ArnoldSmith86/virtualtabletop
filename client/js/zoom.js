@@ -1,3 +1,5 @@
+import { viewportConfig } from './calculateLayout.js';
+
 let zoomScale = 1;
 let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
 
@@ -29,8 +31,8 @@ function resetZoomAndPan() {
 
 function setPan(x, y) {
   // Clamp pan to valid range
-  const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
-  const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
+  const maxPanX = viewportConfig.targetWidth * scale * zoomScale - viewportConfig.targetWidth * scale;
+  const maxPanY = viewportConfig.targetHeight * scale * zoomScale - viewportConfig.targetHeight * scale;
   const clampedPanX = Math.max(-maxPanX, Math.min(0, x));
   const clampedPanY = Math.max(-maxPanY, Math.min(0, y));
 

@@ -1,1 +1,5 @@
 /* Edit custom.css to include any extra css you might want. */
+
+/* Note: the client stylesheets are merged and reordered by the minifier, so this file coming last
+   is not enough to win against a rule it conflicts with. Make overrides win by specificity (or
+   !important) rather than by source order. */

@@ -184,7 +184,7 @@ class Card extends Widget {
                     if (typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
                         const faceIndex = faceTemplates.indexOf(face);
                         const objectIndex = face.objects.indexOf(original);
-                        const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
+                        const uniqueScope = `html-object-${this.cssScope}-${faceIndex}-${objectIndex}`;
                         objectDiv.classList.add(uniqueScope);
 
                         let styleString = '';
