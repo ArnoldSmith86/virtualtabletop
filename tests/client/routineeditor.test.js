@@ -254,31 +254,34 @@ describe('operation rendering', () => {
     expect(flip.textContent).toContain('face up');
     expect(flip.querySelector('[data-parameter="faceCycle"]')).toBeNull();
 
-    // the deprecated canvas parameter replaces collection
-    const canvas = renderOperation({ func: 'CANVAS', canvas: 'c1', collection: 'stuff' }).dom;
-    expect(canvas.querySelector('[data-parameter="canvas"]').textContent).toBe('c1');
-    expect(canvas.querySelector('[data-parameter="collection"]')).toBeNull();
+    // the engine works on what a holder holds and never looks at the widgets
+    // themselves then
+    const set = renderOperation({ func: 'SET', holder: 'h1', target: 'stuff', property: 'x', value: 1 }).dom;
+    expect(set.textContent).toContain('what is in h1');
+    expect(set.querySelector('[data-parameter="target"]')).toBeNull();
 
     // an explicitly set count is ignored while MOVE fills up to a number
-    const move = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2', fillTo: 3, count: 2 }).dom;
+    const move = renderOperation({ func: 'MOVE', fromHolder: 'h1', toHolder: 'h2', fillTo: 3, count: 2 }).dom;
     expect(move.querySelector('[data-parameter="count"]')).toBeNull();
   });
 
   test('a deprecated parameter is editable in the sentence and warns about itself', () => {
     const dom = renderOperation({ func: 'CANVAS', canvas: 'c1' }).dom;
-    expect(dom.querySelector('[data-parameter="canvas"]')).not.toBeNull();
+    // the chip stands for either of the two old spellings, showing the one the
+    // operation has
+    expect(dom.querySelector('[data-parameter="canvas,collection"]').textContent).toBe('c1');
     const warning = dom.querySelector('.routine-editor-parameter-warning.deprecated');
     expect(warning).not.toBeNull();
-    expect(warning.previousSibling.dataset.parameter).toBe('canvas');
+    expect(warning.previousSibling.dataset.parameter).toBe('canvas,collection');
     warning.dispatchEvent(new Event('click'));
     const popup = document.querySelector('.inline-popup');
     expect(popup.textContent).toMatch(/deprecated/);
-    expect(popup.textContent).toMatch(/collection/);
+    expect(popup.textContent).toMatch(/target/);
     popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
   });
 
   test('a skip reads as the condition it is and warns that IF replaces it', () => {
-    const dom = renderOperation({ func: 'MOVE', from: 'deck', to: 'discard', skip: '${gameOver}' }).dom;
+    const dom = renderOperation({ func: 'MOVE', fromHolder: 'deck', toHolder: 'discard', skip: '${gameOver}' }).dom;
     expect(dom.textContent).toMatch(/1 widget from deck to discard, skipped when gameOver/);
     const warning = dom.querySelector('.routine-editor-parameter-warning.deprecated');
     expect(warning).not.toBeNull();
@@ -299,18 +302,19 @@ describe('operation rendering', () => {
   });
 
   test('how many MOVE moves is what the engine reads it as', () => {
-    // the engine dispatches on the value of from, not on whether it is there:
-    // with from empty it moves all the picked widgets, whatever the sentence says
+    // the engine dispatches on the value of fromHolder, not on whether it is
+    // there: with it empty it moves all the picked widgets, whatever the
+    // sentence says
     const words = operation => {
       const editor = editorForOperation(operation);
       editor.setOperationDetails({ state: {} }, operation, [], []);
       return editor.render().querySelector('.routine-editor-sentence').textContent;
     };
-    expect(words({ func: 'MOVE', from: null, to: 'h1' })).toMatch(/all widgets from holder to h1/);
-    expect(words({ func: 'MOVE', from: 'deck', to: 'h1' })).toMatch(/1 widget from deck to h1/);
+    expect(words({ func: 'MOVE', fromHolder: null, toHolder: 'h1' })).toMatch(/all widgets from holder\(s\)\/collection to h1/);
+    expect(words({ func: 'MOVE', fromHolder: 'deck', toHolder: 'h1' })).toMatch(/1 widget from deck to h1/);
     // switching back to "from a holder" writes the 1 down instead of leaving the
     // sentence and the engine to disagree about it
-    const switched = routineOperationVariantChoices({ func: 'MOVE', collection: 'DEFAULT', to: 'h1' }).find(c => c.id == 'from');
+    const switched = routineOperationVariantChoices({ func: 'MOVE', target: 'DEFAULT', toHolder: 'h1' }).find(c => c.id == 'fromHolder');
     expect(switched.values.count).toBe(1);
     expect(switched.example).toMatch(/Move 1 widget/);
   });
@@ -323,23 +327,27 @@ describe('operation rendering', () => {
     expect(dom.querySelector('.routine-editor-parameter-warning.unsupported')).not.toBeNull();
   });
 
-  test('CANVAS marks collection as ignored while canvas is set', () => {
-    const canvas = editorForOperation({ func: 'CANVAS', canvas: 'c1' });
-    canvas.setOperationDetails({ state: {} }, { func: 'CANVAS', canvas: 'c1' }, [], []);
-    expect(canvas.ignoredParameters().collection).toMatch(/deprecated canvas/);
-    expect(editorForOperation({ func: 'CANVAS' }).ignoredParameters().collection).toBeUndefined();
-  });
-
-  test('a widget parameter marks the collection it replaces as ignored', () => {
-    // the engine checks holder/label/timer/from first and never looks at collection then
-    const replaced = { COUNT: 'holder', FLIP: 'holder', LABEL: 'label', MOVE: 'from', ROTATE: 'holder', SHUFFLE: 'holder', SORT: 'holder', TIMER: 'timer' };
+  test('a holder marks the widgets it replaces as ignored', () => {
+    // the engine reads what a holder holds and never looks at the widgets an
+    // operation names itself then - on every operation that works on widgets,
+    // under the one name they all use for them now
+    const replaced = {
+      CALL: 'target', CANVAS: 'target', CLICK: 'target', CLONE: 'target', COUNT: 'target', DELETE: 'target',
+      FLIP: 'target', GET: 'target', LABEL: 'target', RECALL: 'target', ROTATE: 'target', SET: 'target',
+      SHUFFLE: 'source', SORT: 'source', TIMER: 'target'
+    };
     for(const func in replaced) {
-      const operation = { func, [replaced[func]]: 'w1', collection: 'stuff' };
+      const operation = { func, holder: 'h1', [replaced[func]]: 'stuff' };
       const editor = editorForOperation(operation);
       editor.setOperationDetails({ state: {} }, operation, [], []);
-      expect(editor.ignoredParameters().collection).toMatch(new RegExp(replaced[func]));
-      expect(editorForOperation({ func }).ignoredParameters().collection).toBeUndefined();
+      expect(editor.ignoredParameters()[replaced[func]]).toMatch(/holder/);
+      expect(editorForOperation({ func }).ignoredParameters()[replaced[func]]).toBeUndefined();
     }
+    // MOVE keeps its two holders apart, so the one the widgets come out of is
+    // the one that replaces them
+    const move = editorForOperation({ func: 'MOVE', fromHolder: 'h1', target: 'stuff' });
+    move.setOperationDetails({ state: {} }, { func: 'MOVE', fromHolder: 'h1', target: 'stuff' }, [], []);
+    expect(move.ignoredParameters().target).toMatch(/fromHolder/);
   });
 
   test('FLIP marks face as ignored while the cycle picks a random one', () => {
@@ -445,7 +453,7 @@ describe('operation rendering', () => {
   });
 
   test('every operation offers a raw-JSON button', () => {
-    expect(renderOperation({ func: 'MOVE', from: 'h1' }).dom.querySelector('.routine-editor-operation-json')).not.toBeNull();
+    expect(renderOperation({ func: 'MOVE', fromHolder: 'h1' }).dom.querySelector('.routine-editor-operation-json')).not.toBeNull();
     expect(renderOperation('// a note').dom.querySelector('.routine-editor-operation-json')).toBeNull(); // a string has no JSON of its own
   });
 
@@ -456,12 +464,12 @@ describe('operation rendering', () => {
       return editor.getTemplate();
     };
     expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('Cycle the face of');
-    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} of] {holder,collection} {face}');
+    expect(template({ func: 'FLIP', face: 0 })).toContain('Turn[ {count} of][ {collection}] {holder,target} {face}');
     expect(template({ func: 'FLIP', face: 3 })).toContain('to face {face}');
-    // the deprecated canvas is the option that swaps the collection for it, so
-    // the template holds both: the words it adds and the ones it replaces
-    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear[ {canvas}] {collection}');
-    expect(template({ func: 'CANVAS' })).toContain('Clear[ {canvas}] {collection}');
+    // an old spelling is the option that swaps the current name for it, so the
+    // template holds both: the words it adds and the ones it replaces
+    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear[ what is in {holder}][ {canvas,collection}][ the canvases called {target}]');
+    expect(template({ func: 'CANVAS' })).toContain('Clear[ what is in {holder}][ {canvas,collection}][ the canvases called {target}]');
     expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
     expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
     expect(template({ func: 'AUDIO', silence: true })).toContain('Stop all sounds');
@@ -471,10 +479,10 @@ describe('operation rendering', () => {
     expect(template({ func: 'SELECT' })).toContain('Pick');
     expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('{seconds} seconds');
     expect(template({ func: 'TIMER' })).toContain('Toggle on/off');
-    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Shuffle {holder,collection}[ {mode}]');
+    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('Shuffle[ {collection}] {holder,source}[ {mode}]');
     expect(template({ func: 'SHUFFLE', mode: 'riffle' })).toContain('[ {mode}, {modeValue} time]');
     expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('a random seat');
-    expect(template({ func: 'LABEL', label: 'l1' })).toContain('{label,collection}');
+    expect(template({ func: 'LABEL', label: 'l1' })).toContain('[ {label,collection}]');
     expect(template({ func: 'LABEL', mode: 'append' })).toContain('Append {value}');
   });
 
@@ -483,11 +491,16 @@ describe('operation rendering', () => {
     expect(dom.querySelector('.routine-editor-parameter-variable')).not.toBeNull();
     expect(dom.querySelector('.routine-editor-parameter-collection')).not.toBeNull();
     expect(dom.querySelector('.routine-editor-parameter-property')).not.toBeNull();
-    const { dom: move } = renderOperation({ func: 'MOVE', from: 'h1', to: '${PROPERTY parent}', count: 2 });
-    expect(move.querySelector('.routine-editor-parameter-widget')).not.toBeNull();
+    // the parameters that name the widgets an operation works on take either a
+    // list of ids or the name of a collection, so they are colored as the group
+    // of widgets they stand for
+    const { dom: move } = renderOperation({ func: 'MOVE', fromHolder: 'h1', toHolder: '${PROPERTY parent}', count: 2 });
+    expect(move.querySelector('[data-parameter="fromHolder"]').classList.contains('routine-editor-parameter-collection')).toBe(true);
     expect(move.querySelector('.routine-editor-parameter-number')).not.toBeNull();
     // a value read from a widget is a property, not a variable that happens to look like one
-    expect(move.querySelector('[data-parameter="to"]').classList.contains('routine-editor-parameter-property')).toBe(true);
+    expect(move.querySelector('[data-parameter="toHolder"]').classList.contains('routine-editor-parameter-property')).toBe(true);
+    // a widget parameter that names one widget and nothing else stays a widget
+    expect(renderOperation({ func: 'SCORE', seats: 'seat1' }).dom.querySelector('.routine-editor-parameter-widget')).not.toBeNull();
   });
 
   test('shows verbose labels for predefined variables', () => {
@@ -590,7 +603,7 @@ describe('operation rendering', () => {
     [ { func: 'CLONE', count: 3, properties: { owner: 'red' }, collection: 'newCards' },
       'Make 3 copies of the picked widgets, and set owner: red on them — call the copies newCards' ],
     [ { func: 'RESET' }, 'Reset every widget to its saved starting state' ],
-    [ { func: 'TIMER', timer: 'clock1', mode: 'inc', seconds: 10 }, 'Add 10 seconds to the timer clock1' ],
+    [ { func: 'TIMER', timer: 'clock1', mode: 'inc', seconds: 10 }, 'Add 10 seconds to clock1' ],
     [ { func: 'SCORE', seats: 'seat1', mode: 'inc', round: 2, value: 1 }, 'Add 1 to score of seat1 in round 2' ],
     [ { func: 'AUDIO', source: 'click.mp3' }, 'Play the sound click.mp3' ],
     [ { func: 'AUDIO', source: 'click.mp3', maxVolume: 0.5 }, 'Play the sound click.mp3 at 50% volume' ],
@@ -603,7 +616,28 @@ describe('operation rendering', () => {
     [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number in the range 1 to 10, do the operations below' ],
     [ { func: 'FOREACH' }, 'For each of the picked widgets, do the operations below' ],
     [ { func: 'FOREACH', 'in': [ 'a', 'b' ] }, 'For each entry in a and b, do the operations below' ],
-    [ { func: 'LABEL', label: 'score1', mode: 'inc', value: 5 }, 'Increase the text of score1 by 5' ]
+    [ { func: 'LABEL', label: 'score1', mode: 'inc', value: 5 }, 'Increase the text of score1 by 5' ],
+    // every operation that works on widgets names them the same way now: the
+    // widgets themselves, or the holders whose content is meant
+    [ { func: 'MOVE', fromHolder: 'deck1', toHolder: 'hand1' }, 'Move 1 widget from deck1 to hand1' ],
+    [ { func: 'MOVE', target: 'aces', toHolder: 'discard' }, 'Move the widgets called aces to discard' ],
+    [ { func: 'MOVEXY', fromHolder: 'deck1', x: 10, y: 20 }, 'Move 1 widget from deck1 to the position 10, 20' ],
+    [ { func: 'MOVEXY', target: 'aces', x: 0, y: 0 }, 'Move 1 widget from the widgets called aces to the position 0, 0' ],
+    [ { func: 'SET', holder: 'hand1', property: 'owner', value: 'red' }, 'Set owner of what is in hand1 to "red"' ],
+    [ { func: 'SET', target: [ 'card1' ], property: 'clickable', relation: '!' }, 'Toggle clickable of card1' ],
+    [ { func: 'CLICK', target: 'myPick' }, 'Click the widgets called myPick' ],
+    [ { func: 'COUNT', target: 'aces' }, 'Count the widgets called aces' ],
+    [ { func: 'FLIP', target: 'aces', face: 2 }, 'Turn aces to face 2' ],
+    [ { func: 'SHUFFLE', source: 'aces' }, 'Shuffle aces' ],
+    [ { func: 'SORT', source: 'aces', key: 'value' }, 'Sort aces by value' ],
+    [ { func: 'CALL', routine: 'dealRoutine', holder: 'seat1' }, 'Run the routine dealRoutine of what is in seat1' ],
+    [ { func: 'TIMER', target: [ 'clock1' ], mode: 'start' }, 'Start clock1' ],
+    [ { func: 'RECALL', target: 'deck1' }, 'Gather the cards of deck1 back to where the deck is' ],
+    [ { func: 'TURN', target: 'activeSeats' }, 'Pass the turn on, among activeSeats' ],
+    [ { func: 'CANVAS', holder: 'board1', mode: 'reset' }, 'Clear what is in board1' ],
+    [ { func: 'CLONE', target: 'aces', count: 2 }, 'Make 2 copies of the widgets called aces' ],
+    [ { func: 'DELETE', holder: 'hand1' }, 'Delete what is in hand1' ],
+    [ { func: 'GET', holder: 'hand1', property: 'value', aggregation: 'sum' }, 'Add up value of what is in hand1' ]
   ])('%j reads as its sentence', (operation, sentence) => {
     const { dom } = renderOperation(operation);
     const rendered = dom.querySelector('.routine-editor-sentence').cloneNode(true);
@@ -646,8 +680,9 @@ describe('picking how an operation works and which options it uses', () => {
     // rather than as a blank in the sentence
     expect(renderOperation({ func: 'INPUT', fields: [] }).dom.querySelector('.routine-editor-parameter-missing')).toBeNull();
     expect(renderOperation({ func: 'INPUT', fields: [] }).dom.textContent).toContain('Nothing to fill in yet');
-    // a widget parameter says which kind of widget it wants
-    expect(renderOperation({ func: 'MOVE', from: 'deck1' }).dom.textContent).toContain('from deck1 to holder');
+    // a parameter naming widgets says what it takes: a holder, or a collection
+    // naming several of them
+    expect(renderOperation({ func: 'MOVE', fromHolder: 'deck1' }).dom.textContent).toContain('from deck1 to holder(s)/collection');
     // and a value that has a wording of its own is not a blank
     expect(renderOperation({ func: 'SELECT', property: 'parent' }).dom.querySelector('.routine-editor-parameter-missing')).toBeNull();
   });
@@ -888,8 +923,8 @@ describe('picking how an operation works and which options it uses', () => {
   });
 
   test('switching back to moving out of a holder starts at one widget again', () => {
-    const picked = { func: 'MOVE', to: 'discard' }; // Move the picked widgets to discard
-    const choice = routineOperationVariantChoices(picked).find(c => c.id == 'from');
+    const picked = { func: 'MOVE', toHolder: 'discard' }; // Move the picked widgets to discard
+    const choice = routineOperationVariantChoices(picked).find(c => c.id == 'fromHolder');
     expect(choice.example).toContain('Move 1 widget from');
     const operation = Object.assign({}, picked, choice.values);
     for (const key in operation)
@@ -898,13 +933,13 @@ describe('picking how an operation works and which options it uses', () => {
     const sentence = renderOperation(operation).dom.querySelector('.routine-editor-sentence').cloneNode(true);
     for (const icon of sentence.querySelectorAll('.material-symbols, .routine-editor-add-clause'))
       icon.remove();
-    expect(sentence.textContent.replace(/\s+/g, ' ').trim()).toBe('Move 1 widget from holder to discard');
+    expect(sentence.textContent.replace(/\s+/g, ' ').trim()).toBe('Move 1 widget from holder(s)/collection to discard');
   });
 
   test('the way a SHUFFLE goes about it is an option that brings what it needs', () => {
     const editor = editorForOperation({ func: 'SHUFFLE', holder: 'deck1' });
     editor.setOperationDetails({ state: {} }, { func: 'SHUFFLE', holder: 'deck1' }, [], []);
-    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
+    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false);
     expect(offered.map(clause => clause.label)).toEqual([ 'using a specific technique' ]);
     expect(editor.clauseAddValues(offered[0])).toEqual({ mode: 'overhand' });
     // and taking it out again takes the value that came with it
@@ -947,8 +982,8 @@ describe('picking how an operation works and which options it uses', () => {
     // a MOVE almost always empties a holder, and how many it moves is the number
     // the engine uses there - the sentence says it from the start instead of
     // changing from "all" to "1" the moment a holder is picked
-    expect(newOperation('MOVE')).toEqual({ func: 'MOVE', from: null, count: 1 });
-    expect(sentenceOf(newOperation('MOVE'))).toBe('Move 1 widget from holder to holder');
+    expect(newOperation('MOVE')).toEqual({ func: 'MOVE', fromHolder: null, count: 1 });
+    expect(sentenceOf(newOperation('MOVE'))).toBe('Move 1 widget from holder(s)/collection to holder(s)/collection');
     // everything else is nothing but its func
     expect(newOperation('SHUFFLE')).toEqual({ func: 'SHUFFLE' });
   });
@@ -964,7 +999,7 @@ describe('picking how an operation works and which options it uses', () => {
     // and "all" is not a limit at all, so the option that limits it is off
     const flip = editorForOperation({ func: 'FLIP', face: 0 });
     flip.setOperationDetails({ state: {} }, { func: 'FLIP', face: 0 }, [], []);
-    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause)).map(clause => clause.label)).toEqual([ 'at most a certain number of them' ]);
+    expect(flip.clauses().filter(clause => !flip.clauseIsActive(clause) && clause.offer !== false).map(clause => clause.label)).toEqual([ 'at most a certain number of them' ]);
   });
 
   // which face is one thing a FLIP says, not four ways of working: the two faces
@@ -1060,8 +1095,8 @@ describe('picking how an operation works and which options it uses', () => {
   test('an option names what it is about, without listing what it can say', () => {
     const editor = editorForOperation({ func: 'CLICK' });
     editor.setOperationDetails({ state: {} }, { func: 'CLICK' }, [], []);
-    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause));
-    expect(offered.map(clause => clause.label)).toEqual([ 'a named group of widgets', 'n times', 'ignore something' ]);
+    const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false);
+    expect(offered.map(clause => clause.label)).toEqual([ 'what is in a holder', 'a named group of widgets', 'n times', 'ignore something' ]);
     // and switching it on starts at something that actually ignores
     expect(editor.clauseAddValues(offered.find(clause => clause.id == 'mode'))).toEqual({ mode: 'ignoreClickRoutine' });
     for (const func in routineOperationMetadata) {
@@ -1202,7 +1237,7 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'GET' });
     editor.setOperationDetails({ state: {} }, { func: 'GET' }, [], []);
     expect(editor.variantLead(editor.currentVariant())).toBe('Read the first ');
-    expect(editor.clauses().map(clause => clause.label)).toEqual([ 'from a named pick', 'name the result', 'ignoring widgets without it' ]);
+    expect(editor.clauses().filter(clause => clause.offer !== false).map(clause => clause.label)).toEqual([ 'what is in a holder', 'from a named pick', 'name the result', 'ignoring widgets without it' ]);
     // and the name it is remembered under is the last thing the sentence says
     expect(sentenceWords(renderOperation({ func: 'GET', property: 'score', variable: 'total', skipMissing: true }).dom))
       .toBe('Read the first score of the picked widgets, ignoring the widgets that do not have it and remember it as total');
@@ -1214,7 +1249,7 @@ describe('picking how an operation works and which options it uses', () => {
     const editor = editorForOperation({ func: 'CALL' });
     editor.setOperationDetails({ state: {} }, { func: 'CALL' }, [], []);
     const offered = editor.clauses().filter(clause => !editor.clauseIsActive(clause) && clause.offer !== false);
-    expect(offered.map(clause => clause.label)).toEqual([ 'of another widget', 'pass values in', 'name the result', 'and do not finish this routine' ]);
+    expect(offered.map(clause => clause.label)).toEqual([ 'of what is in a holder', 'of another widget', 'pass values in', 'name the result', 'and do not finish this routine' ]);
     expect(renderOperation({ func: 'CALL', routine: 'dealRoutine', 'return': false }).dom.textContent).toContain('and do not finish this routine');
     expect(renderOperation({ func: 'CALL', routine: 'dealRoutine' }).dom.textContent).not.toContain('waiting');
     // a game that did rename them still reads what it does
@@ -1930,7 +1965,7 @@ describe('the values a parameter popup offers', () => {
   // a value and a group of widgets are two different answers, so they are two
   // sections - and only one of them is open, so only one color is on screen
   test('one section per kind of value, the origin a plain line inside it', () => {
-    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'target' ], [ 'cards' ], [ 'aces' ]);
     // a property of a widget follows the widgets themselves: both are about
     // something in the room, the routine's own values are another thought
     expect(sectionTitles(popup)).toEqual([
@@ -1946,7 +1981,7 @@ describe('the values a parameter popup offers', () => {
   });
 
   test('the sections are colored by what they produce and only one is open', () => {
-    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'target' ], [ 'cards' ], [ 'aces' ]);
     const sections = [...popup.domElement.querySelectorAll('.accordion-section')];
     expect(sections.map(s => s.dataset.kind)).toEqual([ 'widget', 'property', 'variable', 'collection' ]);
     expect(sections.filter(s => s.classList.contains('open'))).toHaveLength(1);
@@ -1966,16 +2001,16 @@ describe('the values a parameter popup offers', () => {
   });
 
   test('a value of the routine is used as a variable, a collection as a collection', () => {
-    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
+    const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'target' ], [ 'cards' ], [ 'aces' ]);
     let value = null;
     popup.registerChangeListener(v => value = v);
     const clickButton = label => [...popup.domElement.querySelectorAll('.popup-entry button')].find(b => b.textContent == label).dispatchEvent(new Event('click'));
     clickButton('cards');
-    expect(value).toEqual({ holder: '${cards}', collection: undefined });
+    expect(value).toEqual({ holder: '${cards}', target: undefined });
     clickButton('aces');
-    expect(value).toEqual({ holder: undefined, collection: 'aces' });
+    expect(value).toEqual({ holder: undefined, target: 'aces' });
     clickButton('playerSeats'); // a predefined collection is a collection like any other
-    expect(value).toEqual({ holder: undefined, collection: 'playerSeats' });
+    expect(value).toEqual({ holder: undefined, target: 'playerSeats' });
     popup.hide();
   });
 
@@ -2074,10 +2109,22 @@ describe('information about an operation and its parameters', () => {
   });
 
   test('every declared parameter of every operation is described somewhere', () => {
+    // The parameters that name the widgets an operation works on are spelled the
+    // same way on every operation now. The wiki texts still spell them the way
+    // each operation used to, which is what describedBy points at - but an
+    // operation that only ever worked on a collection has no line about a holder
+    // yet, and neither has the target MOVEXY and RECALL gained. Those chips open
+    // the text of the whole operation until the wiki catches up.
+    const notInTheWikiTextYet = [
+      'CALL.holder', 'CANVAS.holder', 'CLICK.holder', 'CLONE.holder', 'DELETE.holder', 'GET.holder',
+      'LABEL.holder', 'SET.holder', 'TIMER.holder', 'MOVEXY.target', 'RECALL.target'
+    ];
     for(const func in routineOperationMetadata) {
       const topic = commonInfoTopic(func);
       expect(topic).toBeDefined();
       for(const name in routineOperationMetadata[func].parameters) {
+        if(notInTheWikiTextYet.indexOf(`${func}.${name}`) != -1)
+          continue;
         // a chip standing for a part of another parameter is described by that one
         const described = routineOperationMetadata[func].parameters[name].describedBy || name;
         expect(commonInfoTopic(`${func}.${described}`) || parameterInfoLine(topic.info, described)).toBeTruthy();
@@ -2722,25 +2769,32 @@ describe('widget type presets', () => {
         if(routineOperationMetadata[func].parameters[parameter].widgetType)
           presets[`${func}.${parameter}`] = routineOperationMetadata[func].parameters[parameter].widgetType;
     expect(presets).toEqual({
-      'CANVAS.collection': 'canvas', 'CANVAS.canvas': 'canvas',
+      'CALL.holder': 'holder',
+      'CANVAS.target': 'canvas', 'CANVAS.holder': 'holder', 'CANVAS.collection': 'canvas', 'CANVAS.canvas': 'canvas',
+      'CLICK.holder': 'holder',
+      'CLONE.holder': 'holder',
       'COUNT.holder': 'holder',
+      'DELETE.holder': 'holder',
       'FLIP.holder': 'holder',
-      'MOVE.from': 'holder', 'MOVE.to': 'holder',
-      'MOVEXY.from': 'holder',
-      'RECALL.holder': 'holder',
+      'GET.holder': 'holder',
+      'LABEL.holder': 'holder',
+      'MOVE.fromHolder': 'holder', 'MOVE.toHolder': 'holder', 'MOVE.from': 'holder', 'MOVE.to': 'holder',
+      'MOVEXY.fromHolder': 'holder', 'MOVEXY.from': 'holder',
+      'RECALL.holder': 'holder', 'RECALL.target': 'deck',
       'ROTATE.holder': 'holder',
       'SCORE.seats': 'seat',
+      'SET.holder': 'holder',
       'SHUFFLE.holder': 'holder',
       'SORT.holder': 'holder',
       'SWAPHANDS.source': 'seat',
-      'TIMER.timer': 'timer', 'TIMER.collection': 'timer',
-      'TURN.turn': 'seat', 'TURN.source': 'seat'
+      'TIMER.target': 'timer', 'TIMER.holder': 'holder', 'TIMER.timer': 'timer', 'TIMER.collection': 'timer',
+      'TURN.turn': 'seat', 'TURN.target': 'seat', 'TURN.source': 'seat'
     });
   });
 
   test('the preset filters the picker list and can be changed to any type', () => {
     room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'l1', 'label' ]);
-    const popup = showPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]); // the {holder,collection} chip
+    const popup = showPopup({ func: 'SHUFFLE' }, [ 'holder', 'source' ]); // the {holder,source} chip
     expect(pickedTypes(popup)).toEqual([ 'holder' ]);
     const typeSelect = popup.domElement.querySelector('select');
     expect(typeSelect.value).toBe('holder');
@@ -2752,11 +2806,11 @@ describe('widget type presets', () => {
 
   test('collection-only and widget-only parameters get their preset as well', () => {
     room([ 'target', 'button' ], [ 'l1', 'label' ], [ 't1', 'timer' ]);
-    const timer = showPopup({ func: 'TIMER' }, [ 'collection' ]); // no timer set: the chip is the collection
+    const timer = showPopup({ func: 'TIMER' }, [ 'target' ]); // the widgets a TIMER works on are timers
     expect(pickedTypes(timer)).toEqual([ 'timer' ]);
     timer.hide();
     // a LABEL works on any widget with a text property, so its picker starts on all of them
-    const label = showPopup({ func: 'LABEL' }, [ 'label' ]);
+    const label = showPopup({ func: 'LABEL' }, [ 'target' ]);
     expect(pickedTypes(label).sort()).toEqual([ 'button', 'label', 'timer' ]);
     label.hide();
   });
@@ -2809,22 +2863,22 @@ describe('variables in widget parameters', () => {
   });
 
   test('a variable used for a holder goes to the holder parameter, not the collection', () => {
-    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]);
+    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'source' ]);
     let value = null;
     popup.registerChangeListener(v => value = v);
     useProperty(popup, 'parent');
     expect(value.holder).toBe('${PROPERTY parent}');
-    expect('collection' in value).toBe(true);
-    expect(value.collection).toBeUndefined();
+    expect('source' in value).toBe(true);
+    expect(value.source).toBeUndefined();
     popup.hide();
   });
 
   test('a collection name still goes to the collection parameter', () => {
-    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]);
+    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'source' ]);
     let value = null;
     popup.registerChangeListener(v => value = v);
     popup.setNewCollectionValue('DEFAULT');
-    expect(value).toEqual({ holder: undefined, collection: 'DEFAULT' });
+    expect(value).toEqual({ holder: undefined, source: 'DEFAULT' });
     popup.hide();
   });
 });
@@ -2995,45 +3049,45 @@ describe('JSON parameter popup', () => {
 describe('popup parameter routing', () => {
   test('collection values clear the holder-style alternative', () => {
     const popup = new RoutineHoldersOrCollectionSourcePopup();
-    popup.setOperationDetails({ func: 'MOVE' }, [ 'from', 'collection' ], { state: {} }, [], []);
+    popup.setOperationDetails({ func: 'FLIP' }, [ 'holder', 'target' ], { state: {} }, [], []);
     let value = null;
     popup.registerChangeListener(v => value = v);
     popup.setNewCollectionValue([ 'w1', 'w2' ]);
-    expect('from' in value).toBe(true);
-    expect(value.from).toBeUndefined();
-    expect(value.collection).toEqual([ 'w1', 'w2' ]);
+    expect('holder' in value).toBe(true);
+    expect(value.holder).toBeUndefined();
+    expect(value.target).toEqual([ 'w1', 'w2' ]);
   });
 
   test('widget picker arrays go to the holder-style parameter', () => {
     const popup = new RoutineHoldersOrCollectionSourcePopup();
-    popup.setOperationDetails({ func: 'MOVE' }, [ 'from', 'collection' ], { state: {} }, [], []);
+    popup.setOperationDetails({ func: 'FLIP' }, [ 'holder', 'target' ], { state: {} }, [], []);
     let value = null;
     popup.registerChangeListener(v => value = v);
     popup.setNewValue([ 'h1' ]);
-    expect(value.from).toEqual([ 'h1' ]);
-    // picking a holder also clears the sibling collection so it can't re-surface
-    expect('collection' in value).toBe(true);
-    expect(value.collection).toBeUndefined();
+    expect(value.holder).toEqual([ 'h1' ]);
+    // picking a holder also clears the widgets it replaces so they can't re-surface
+    expect('target' in value).toBe(true);
+    expect(value.target).toBeUndefined();
   });
 
   test('typing over the holder keeps it a holder', () => {
     // the string is the id of another holder, not the name of a collection: the
-    // engine prefers from over collection, so swapping the two silently made the
-    // operation act on nothing
+    // engine prefers the holder over the widgets themselves, so swapping the two
+    // silently made the operation act on nothing
     const popup = new RoutineHoldersOrCollectionSourcePopup();
-    popup.setOperationDetails({ func: 'FLIP', holder: 'deck1' }, [ 'holder', 'collection' ], { state: {} }, [], []);
+    popup.setOperationDetails({ func: 'FLIP', holder: 'deck1' }, [ 'holder', 'target' ], { state: {} }, [], []);
     let value = null;
     popup.registerChangeListener(v => value = v);
     popup.setNewValue('deck2');
     expect(value.holder).toBe('deck2');
-    expect(value.collection).toBeUndefined();
+    expect(value.target).toBeUndefined();
 
     // without one, a typed name is a collection as before
     const withoutHolder = new RoutineHoldersOrCollectionSourcePopup();
-    withoutHolder.setOperationDetails({ func: 'FLIP' }, [ 'holder', 'collection' ], { state: {} }, [], []);
+    withoutHolder.setOperationDetails({ func: 'FLIP' }, [ 'holder', 'target' ], { state: {} }, [], []);
     withoutHolder.registerChangeListener(v => value = v);
     withoutHolder.setNewValue('myGroup');
-    expect(value.collection).toBe('myGroup');
+    expect(value.target).toBe('myGroup');
     expect(value.holder).toBeUndefined();
   });
 
@@ -3199,7 +3253,7 @@ describe('the words and the units of an operation', () => {
   test('MOVEXY words a face like MOVE and offers the stacked position', () => {
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 0 })).toContain('and turn them face down');
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', face: 2 })).toContain('and turn them to face 2');
-    expect(offeredOptions({ func: 'MOVEXY', from: 'h1' })).toEqual([ 'at the specified stacked (z) position', 'to a face', 'ignoring the grid', 'keeping their current owner' ]);
+    expect(offeredOptions({ func: 'MOVEXY', fromHolder: 'h1' })).toEqual([ 'at the specified stacked (z) position', 'to a face', 'ignoring the grid', 'keeping their current owner' ]);
     expect(sentenceWords({ func: 'MOVEXY', from: 'h1', z: 3 })).toContain('at the z position 3');
   });
 
@@ -3207,7 +3261,7 @@ describe('the words and the units of an operation', () => {
   // while a game has it and nothing the editor invites anybody to add - but a
   // game that arrived with one is a minus away from what replaced it
   test('the deprecated CANVAS canvas is shown with a way out but never offered', () => {
-    expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'at most a certain number of them' ]);
+    expect(offeredOptions({ func: 'CANVAS' })).toEqual([ 'what is in a holder', 'a named group of canvases', 'at most a certain number of them' ]);
     expect(sentenceWords({ func: 'CANVAS', canvas: 'c1' })).toContain('Clear c1');
     expect(sentenceWords({ func: 'CANVAS' })).toContain('Clear the picked canvases');
 
@@ -3215,7 +3269,7 @@ describe('the words and the units of an operation', () => {
     const editor = editorFor(operation);
     let result = null;
     editor.registerChangeListener(v => result = v);
-    const remove = editor.render().querySelector('.routine-editor-clause-remove[data-clause="canvas"]');
+    const remove = editor.render().querySelector('.routine-editor-clause-remove[data-clause="oldTarget"]');
     expect(remove).not.toBeNull();
     remove.dispatchEvent(new Event('click'));
     expect(result).toEqual({ func: 'CANVAS' });
@@ -3404,13 +3458,14 @@ describe('the words and the units of an operation', () => {
   // a time is a number of seconds wherever a game talks about one; the
   // milliseconds the engine stores are what the editor converts
   test('TIMER and AUDIO say seconds and store milliseconds', () => {
-    expect(sentenceWords({ func: 'TIMER', timer: 't1' })).toBe('Toggle on/off the timer t1');
-    expect(sentenceWords({ func: 'TIMER', mode: 'set', timer: 't1', value: 5000 })).toBe('Set the timer t1 to 5 seconds');
-    expect(sentenceWords({ func: 'TIMER', mode: 'set', timer: 't1', value: 1000 })).toBe('Set the timer t1 to 1 second');
-    expect(sentenceWords({ func: 'TIMER', mode: 'dec', timer: 't1', value: 30000 })).toBe('Remove 30 seconds from the timer t1');
+    expect(sentenceWords({ func: 'TIMER', target: 't1' })).toBe('Toggle on/off the timers called t1');
+    expect(sentenceWords({ func: 'TIMER', mode: 'set', target: [ 't1' ], value: 5000 })).toBe('Set t1 to 5 seconds');
+    expect(sentenceWords({ func: 'TIMER', mode: 'set', timer: 't1', value: 1000 })).toBe('Set t1 to 1 second');
+    expect(sentenceWords({ func: 'TIMER', mode: 'dec', timer: 't1', value: 30000 })).toBe('Remove 30 seconds from t1');
     // a game that says it in the seconds parameter still reads as what it is
-    expect(sentenceWords({ func: 'TIMER', mode: 'inc', timer: 't1', seconds: 5 })).toBe('Add 5 seconds to the timer t1');
-    expect(offeredOptions({ func: 'TIMER', mode: 'set', timer: 't1' })).toEqual([]);
+    expect(sentenceWords({ func: 'TIMER', mode: 'inc', timer: 't1', seconds: 5 })).toBe('Add 5 seconds to t1');
+    // the two ways to name the timers are all a TIMER has left to offer
+    expect(offeredOptions({ func: 'TIMER', mode: 'set', timer: 't1' })).toEqual([ 'what is in a holder', 'a named group of timers' ]);
     expect(sentenceWords({ func: 'AUDIO', source: 'a.mp3', length: 2000 })).toBe('Play the sound a.mp3, stopping after 2 seconds');
 
     const popup = popupFor({ func: 'TIMER', mode: 'set', timer: 't1', value: 5000 }, 'value');
