@@ -757,7 +757,13 @@ export class Widget extends StateManaged {
     let y = this.get('y');
     let scaleValue = this.get('scale');
 
-    if(this.get('ignoreZoom')) {
+    // The inverse-zoom compensation below is computed in the room's coordinate
+    // frame, so it is only correct for a top-level widget sitting directly on the
+    // surface. A widget nested inside another widget lives in its parent's frame
+    // and simply inherits the parent's zoom behaviour, so its parent's ignoreZoom
+    // effectively controls it: it stays put inside a compensating ancestor and
+    // zooms along with a non-compensating one. Only compensate at the top level.
+    if(this.get('ignoreZoom') && !this.isNestedInWidget()) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
 
@@ -786,7 +792,19 @@ export class Widget extends StateManaged {
   }
 
   cssTransformProperties() {
-    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    // Only an ignoreZoom widget has a transform that depends on its parent: it
+    // compensates for zoom when top-level but not when nested, so reparenting it
+    // between those states must recompute the transform. Keeping 'parent' out of
+    // the list otherwise avoids a redundant transform write on every card move.
+    const properties = [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    if(this.get('ignoreZoom'))
+      properties.push('parent');
+    return properties;
+  }
+
+  isNestedInWidget() {
+    const parentID = this.get('parent');
+    return parentID != null && widgets.has(parentID);
   }
 
   dragCorner(coordGlobal, localAnchor, parent = null) {
