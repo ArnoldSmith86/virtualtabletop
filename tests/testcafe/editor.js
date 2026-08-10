@@ -17,6 +17,10 @@ const setEditorState = ClientFunction(state => {
 
 const moduleWidth = ClientFunction(() => document.querySelector('#editorModules').getBoundingClientRect().width);
 
+// the editor state of a test that wants the properties module open the way the user opens it, rather
+// than as the panel edit mode opens on its own the very first time (which sizes itself to its content)
+const propertiesModuleOpen = { modules: { 'Edit Widgets': 'editorModuleTopLeft' } };
+
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -2336,12 +2340,14 @@ const rubberBandOver = ClientFunction(selector => {
 });
 
 test('A routine parameter popup goes away with the widget it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] },
     holder1: { id: 'holder1', type: 'holder', x: 300, y: 100 },
     holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
   await setName(t);
 
   const popup = Selector('.inline-popup');
@@ -2354,9 +2360,7 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
     await t.click(fromChip).expect(popup.exists).ok();
   };
 
-  await t
-    .click('#editButton')
-    .click('#editorSidebar [icon=tune]');
+  await t.click('#editButton');
   await openFromPopup();
 
   // The popup hangs off a chip of the routine of the widget being edited, so a
@@ -2412,6 +2416,7 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
     .click('#jeShowTree')
     .click(Selector('#jeTree .jeTreeWidget').find('.key').withExactText('holder2'))
     .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
+  await setEditorState(null);
 });
 
 // An armed picker only explains the selection changes it makes itself - a click
@@ -2422,6 +2427,7 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
 // route of its own, so it does not even take another module: a widget attached
 // to a line offers a way back to the line it rides on.
 test('An armed picker does not keep a popup open when the sidebar moves the editor on', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     route: {
       id: 'route', type: 'line', lineStart: { x: 100, y: 300 }, lineEnd: { x: 600, y: 300 },
@@ -2435,6 +2441,7 @@ test('An armed picker does not keep a popup open when the sidebar moves the edit
     holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
   await setName(t);
 
   const popup = Selector('.inline-popup');
@@ -2443,7 +2450,6 @@ test('An armed picker does not keep a popup open when the sidebar moves the edit
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
     .click('#w_stop1');
   if(await routineHeader.getAttribute('aria-expanded') == 'false')
     await t.click(routineHeader);
@@ -2479,15 +2485,18 @@ test('An armed picker does not keep a popup open when the sidebar moves the edit
     .expect(Selector('body').hasClass('edit')).notOk()
     .expect(popup.exists).notOk()
     .expect(picking).notOk();
+  await setEditorState(null);
 });
 
 test('An editor popup does not outlive the widget it belongs to without a click either', async t => {
+  await t.resizeWindow(1280, 800);
   const roomState = {
     button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'CANVAS', mode: 'change', color: '#1f5ca6' } ] },
     holder: { id: 'holder', type: 'holder', x: 500, y: 100 }
   };
   await setRoomState(roomState);
   await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
   await setName(t);
 
   const popup = Selector('.inline-popup');
@@ -2511,9 +2520,7 @@ test('An editor popup does not outlive the widget it belongs to without a click 
       .expect(picking).ok();
   };
 
-  await t
-    .click('#editButton')
-    .click('#editorSidebar [icon=tune]');
+  await t.click('#editButton');
   await openColorPopup();
 
   // The color, icon and sound pickers only write their parameter when the popup
@@ -2557,20 +2564,22 @@ test('An editor popup does not outlive the widget it belongs to without a click 
     .expect(popup.exists).notOk()
     .expect(ClientFunction(_=>widgets.has('button'))()).ok()
     .expect(picking).notOk();
+  await setEditorState(null);
 });
 
 test('A property info tip goes away with the widget it explains', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     button: { id: 'button', type: 'button', x: 100, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
   await setName(t);
 
   const infoTip = Selector('#editor > .inline-popup');
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
     .click('#w_button')
     .click(Selector('#editorModules .collapsibleHeader').withText('CSS').find('.info-button'))
     .expect(infoTip.exists).ok();
@@ -2580,6 +2589,7 @@ test('A property info tip goes away with the widget it explains', async t => {
   // selection changing on its own - here the widget it explains is removed.
   await ClientFunction(_=>removeWidgetLocal('button'))();
   await t.expect(infoTip.exists).notOk();
+  await setEditorState(null);
 });
 
 test('A long list of widget ids shrinks instead of pushing the apply button out of the popup', async t => {
@@ -2592,6 +2602,7 @@ test('A long list of widget ids shrinks instead of pushing the apply button out 
     roomState[`holder${i}`] = { id: `holder${i}`, type: 'holder', x: 300+i%6*60, y: 100+Math.floor(i/6)*60 };
   await setRoomState(roomState);
   await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
   await setName(t);
 
   const popup = Selector('.inline-popup');
@@ -2599,7 +2610,6 @@ test('A long list of widget ids shrinks instead of pushing the apply button out 
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
     .click('#w_button');
   if(await routineHeader.getAttribute('aria-expanded') == 'false')
     await t.click(routineHeader);
@@ -2624,4 +2634,5 @@ test('A long list of widget ids shrinks instead of pushing the apply button out 
     };
   })();
   await t.expect(fit).eql({ popupScrollsBy: 0, applyInPopup: true, listScrolls: true });
+  await setEditorState(null);
 });
