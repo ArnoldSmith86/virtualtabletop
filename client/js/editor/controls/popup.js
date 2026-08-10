@@ -2341,6 +2341,8 @@ function commonInfoTopic(topicName) {
 
       Each CALL returns a variable and a collection. The variable named "result" inside the called routine becomes the variable named by "variable" (defaults to "result") in the caller; the collection named "result" inside the called routine becomes the collection named by "collection" (defaults to "result") in the caller.
 
+      When target or holder names more than one widget, the routine is run on each of them in turn, and what the caller gets back in "variable" and "collection" is the result of the last one. A CALL with "return": false runs the routine on the first widget only, because the calling routine ends there anyway.
+
       Parameters:
 
       routine: routine name - the routine to execute (must end in "Routine").
@@ -2348,7 +2350,7 @@ function commonInfoTopic(topicName) {
       holder: collection or widget ids - runs the routine on what these widgets contain instead of on the ones target names (optional). See [holder].
       variable: variable name - stores the value returned from the called routine (defaults to "result").
       collection: collection name - stores the collection returned from the called routine (defaults to "result").
-      return: true/false - if false, no further statements in the calling routine are executed after the CALL (defaults to true).
+      return: true/false - if false, no further statements in the calling routine are executed after the CALL, and the routine is run on the first widget only (defaults to true).
       arguments: JSON object - properties of this object are passed as variables to the called routine (optional).
       widget: deprecated - use target instead. A CALL that names no target still reads the widget containing the routine from here.
       </pre>
