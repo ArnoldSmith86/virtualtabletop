@@ -58,76 +58,80 @@ function skipForNotoMonochrome(emoji) {
   return emoji.match(/^[\u{1f3c3}-\u{1f3cc}]\u{fe0f}?\u{200d}[\u{2640}\u{2642}]\u{fe0f}(\u{200d}\u{27a1}\u{fe0f})?|\u{1f468}|\u{1f468}\u{200d}[\u{1f33e}\u{1f373}\u{1f37c}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}\u{1f9b1}\u{1f9b2}\u{1f9bc}\u{1f9bd}]|\u{1f468}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f468}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f468}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f468}|\u{1f48b}\u{200d}\u{1f468})|\u{1f469}\u{200d}[\u{1f33e}\u{1f373}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}-\u{1f9b3}\u{1f9bc}\u{1f9bd}]|\u{1f469}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f469}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f469}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f48b}\u{200d})?[\u{1f468}\u{1f469}]|\u{1f46b}|\u{1f46c}|\u{200d}[\u{2640}\u{2642}]|\u{1f478}|\u{1f57a}|\u{1f934}|\u{1f936}|\u{1f9d1}\u{200d}(\u{1f37c}|\u{1f384}|\u{1f91d}\u{200d}\u{1f9d1})|\u{1fac3}|\u{1fac4}$/u);
 }
 
-let symbolData = null;
-export async function loadSymbolPicker() {
-  if(symbolData === null) {
-    symbolData = 'loading';
-    try {
-      // the "Material Symbols - *" categories, names and keywords come from Google's icon metadata:
-      // https://fonts.google.com/metadata/icons?incomplete=true&key=material_symbols (strip the )]}' prefix).
-      // The two font files are the instances Google Fonts itself serves, which are much smaller than the
-      // variable fonts in the material-design-icons repository:
-      // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0 (NoFill)
-      // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0 (Fill)
-      // An icon is marked "(FILL+NOFILL)" only if those two files actually render it differently.
-      symbolData = await (await fetch('i/fonts/symbols.json')).json();
-    } catch(e) {
-      symbolData = null; // a failed fetch must not leave the picker stuck in 'loading' for the whole session
-      throw e;
-    }
-    // the search floats its best matches to the top of the list (see filterSymbolList), so this separates
-    // them from the rest of the matches, which stay in their symbols.json order below
-    let list = '<h2 id="symbolMoreMatches" class="hidden">More matches</h2>';
-    for(const [ category, symbols ] of Object.entries(symbolData)) {
-      if(category == 'Emoji - Flags')
-        continue;
-      list += `<h2 data-family="${category.match(/Material|VTT|Emoji/)?'font':'image'}">${category}</h2>`;
-      for(let [ symbol, keywords ] of Object.entries(symbols)) {
-        if(symbol.includes('/')) {
-          const gameIconsIndex = keywords.shift();
-          // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-name="${symbol.split('/')[1]}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
-        } else {
-          const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
-          symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
-          let className = 'emoji-monochrome';
-          if(symbol[0] == '[')
-            className = 'symbols';
-          else if(symbol.match(/^[a-z0-9_]+$/))
-            className = 'material-symbols';
-          if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
-            const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
-            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
-          }
-          // "material-symbols-nofill: save" told the reader nothing about why the same glyph is listed
-          // twice, and the value it inserts (save_NOFILL) is not what a tooltip should be teaching
-          if(className == 'material-symbols' && hasNoFillVariant)
-            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols: ${symbol} (outlined)" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
-        }
-      }
-    }
-    for(const [ category, symbols ] of Object.entries(symbolData)) {
-      if(category.match(/Emoji/)) {
-        list += `<h2 data-family="image">${category}</h2>`;
-        for(const [ symbol, keywords ] of Object.entries(symbols)) {
-          let className = 'emoji-color';
-          if(category == 'Emoji - Flags')
-            className += ' emojiFlag';
-          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
-        }
-      }
-    }
-    $('#symbolList').innerHTML = list;
-
-    // Filtering visits every one of the ~14000 entries, so read what it needs out of the DOM once here
-    // instead of parsing the (three times longer since the 2025 Material Symbols update) data-keywords
-    // attribute of every element again on every keystroke. The cached shown/order/big is what the entry
-    // currently looks like, so a keystroke only writes to the elements that actually change.
-    for(const el of $a('#symbolList i'))
-      symbolIndex.push({ el, name: (el.dataset.name || '').toLowerCase(), keywords: el.dataset.keywords.toLowerCase(), family: el.dataset.family, shown: true, order: 0, big: false });
-
-    $('#symbolPickerOverlay input').onkeyup = scheduleSymbolFilter;
+// pickSymbol() binds its click handlers to the entries right after awaiting this, so a second caller
+// must not resume while the first one is still fetching: the list would still be the "Loading..."
+// card and the icons that arrive afterwards would never become clickable. Everybody awaits the same
+// promise instead - including the unawaited preload of addRichtextControls().
+let symbolPickerPromise = null;
+export function loadSymbolPicker() {
+  if(!symbolPickerPromise) {
+    symbolPickerPromise = buildSymbolPicker();
+    symbolPickerPromise.catch(_=>symbolPickerPromise = null); // allow retrying after a failed fetch
   }
+  return symbolPickerPromise;
+}
+
+async function buildSymbolPicker() {
+  // the "Material Symbols - *" categories, names and keywords come from Google's icon metadata:
+  // https://fonts.google.com/metadata/icons?incomplete=true&key=material_symbols (strip the )]}' prefix).
+  // The two font files are the instances Google Fonts itself serves, which are much smaller than the
+  // variable fonts in the material-design-icons repository:
+  // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0 (NoFill)
+  // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0 (Fill)
+  // An icon is marked "(FILL+NOFILL)" only if those two files actually render it differently.
+  const symbolData = await (await fetch('i/fonts/symbols.json')).json();
+  // the search floats its best matches to the top of the list (see filterSymbolList), so this separates
+  // them from the rest of the matches, which stay in their symbols.json order below
+  let list = '<h2 id="symbolMoreMatches" class="hidden">More matches</h2>';
+  for(const [ category, symbols ] of Object.entries(symbolData)) {
+    if(category == 'Emoji - Flags')
+      continue;
+    list += `<h2 data-family="${category.match(/Material|VTT|Emoji/)?'font':'image'}">${category}</h2>`;
+    for(let [ symbol, keywords ] of Object.entries(symbols)) {
+      if(symbol.includes('/')) {
+        const gameIconsIndex = keywords.shift();
+        // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
+        list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-name="${symbol.split('/')[1]}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+      } else {
+        const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
+        symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
+        let className = 'emoji-monochrome';
+        if(symbol[0] == '[')
+          className = 'symbols';
+        else if(symbol.match(/^[a-z0-9_]+$/))
+          className = 'material-symbols';
+        if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
+          const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
+          list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+        }
+        // "material-symbols-nofill: save" told the reader nothing about why the same glyph is listed
+        // twice, and the value it inserts (save_NOFILL) is not what a tooltip should be teaching
+        if(className == 'material-symbols' && hasNoFillVariant)
+          list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols: ${symbol} (outlined)" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+      }
+    }
+  }
+  for(const [ category, symbols ] of Object.entries(symbolData)) {
+    if(category.match(/Emoji/)) {
+      list += `<h2 data-family="image">${category}</h2>`;
+      for(const [ symbol, keywords ] of Object.entries(symbols)) {
+        let className = 'emoji-color';
+        if(category == 'Emoji - Flags')
+          className += ' emojiFlag';
+        list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-name="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+      }
+    }
+  }
+  $('#symbolList').innerHTML = list;
+
+  // Filtering visits every one of the ~14000 entries, so read what it needs out of the DOM once here
+  // instead of parsing the (three times longer since the 2025 Material Symbols update) data-keywords
+  // attribute of every element again on every keystroke. The cached shown/order/big is what the entry
+  // currently looks like, so a keystroke only writes to the elements that actually change.
+  for(const el of $a('#symbolList i'))
+    symbolIndex.push({ el, name: (el.dataset.name || '').toLowerCase(), keywords: el.dataset.keywords.toLowerCase(), family: el.dataset.family, shown: true, order: 0, big: false });
+
+  $('#symbolPickerOverlay input').onkeyup = scheduleSymbolFilter;
 }
 
 // Even though a keystroke only writes to the entries that change, showing and hiding hundreds of them costs

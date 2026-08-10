@@ -10,7 +10,7 @@ const symbolsSource = fs.readFileSync(path.join(dir, '../../client/js/symbols.js
   .replace(/^import .*$/gm, '')
   .replace(/^export /gm, '');
 
-function loadPicker(symbolData) {
+function loadPicker(symbolData, fetchGate=Promise.resolve()) {
   document.body.innerHTML = `
     <button id="statesButton"></button>
     <div id="symbolPickerOverlay">
@@ -23,13 +23,13 @@ function loadPicker(symbolData) {
 
   const scope = new Function('$', '$a', 'showOverlay', 'toggleClass', 'fetch', 'detailsOverlay', `
     ${symbolsSource};
-    return { pickSymbol };
+    return { pickSymbol, loadSymbolPicker };
   `)(
     (selector, parent=document) => parent.querySelector(selector),
     (selector, parent=document) => [ ...parent.querySelectorAll(selector) ],
     () => {},
     (element, className, active) => element.classList.toggle(className, !!active),
-    async () => ({ json: async () => symbolData }),
+    async () => { await fetchGate; return { json: async () => symbolData }; },
     null
   );
 
@@ -78,6 +78,21 @@ describe('the icon picker overlay', () => {
     expect(picker.visibleOrder()).toEqual([ 'star', 'star_NOFILL', 'lorc/star', 'star_rate', 'grade', 'stadium' ]);
     expect(picker.icon('delapouite/sun').classList.contains('hidden')).toBe(true);
 
+    picker.icon('star').click();
+    expect((await picked).symbol).toBe('star');
+  });
+
+  test('opening the picker while the background preload is still running still binds the icons', async () => {
+    let symbolsJsonArrived;
+    const picker = loadPicker(smallSymbolData, new Promise(resolve => symbolsJsonArrived = resolve));
+
+    picker.loadSymbolPicker();          // the unawaited preload of addRichtextControls()
+    const picked = picker.pickSymbol(); // the author opens the picker before symbols.json is there
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(picker.icon('star')).toBe(null); // the list has not been built yet
+
+    symbolsJsonArrived();
+    await new Promise(resolve => setTimeout(resolve, 0));
     picker.icon('star').click();
     expect((await picked).symbol).toBe('star');
   });
