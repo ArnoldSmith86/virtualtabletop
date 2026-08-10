@@ -1,7 +1,5 @@
 import fs from 'fs';
 
-import JSZip from 'jszip';
-import fetch from 'node-fetch';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
@@ -9,6 +7,7 @@ import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
 import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js/calculateLayout.js';
 import Statistics from './statistics.mjs';
+import Zip from './zip.mjs';
 
 export default class Room {
   players = [];
@@ -299,19 +298,18 @@ export default class Room {
 
   async download(stateID, variantID) {
     const includeAssets = true;
-    const zip = new JSZip();
+    const files = {};
 
     if(!stateID && !variantID) {
       for(const sID in this.state._meta.states) {
         const state = await this.download(sID);
-        zip.file(state.name, state.content);
+        files[state.name] = state.content;
       }
 
-      const zipBuffer = await zip.generateAsync({type:'nodebuffer'});
       return {
         name: this.id + '.vttc',
         type: 'application/zip',
-        content: zipBuffer
+        content: await Zip.create(files)
       };
     }
     if(!this.state._meta.states[stateID])
@@ -333,14 +331,14 @@ export default class Room {
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       this.unsetMetadataForWritingFile(state._meta.info);
 
-      zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
+      files[`${vID}.json`] = JSON.stringify(state, null, '  ');
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(Config.resolveAsset(asset.substr(8)))
-            zip.file(asset.substr(1), fs.readFileSync(Config.resolveAsset(asset.substr(8))));
+            files[asset.substr(1)] = fs.readFileSync(Config.resolveAsset(asset.substr(8)));
     }
 
-    const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
+    const zipBuffer = await Zip.create(files, true);
 
     let name = s.name + '.vtt';
     if(s.savePlayers)
@@ -1269,13 +1267,12 @@ export default class Room {
 
         let zipBuffer = '';
         if(!isReturn || this.state._meta.returnState) {
-          const zip = new JSZip();
-          zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
+          const files = { [`${this.id}.json`]: JSON.stringify(this.state, null, '  ') };
           for(const asset in assetStatus)
             if(!assetStatus[asset] && Config.resolveAsset(asset))
-              zip.file('assets/' + asset, fs.readFileSync(Config.resolveAsset(asset)));
+              files['assets/' + asset] = fs.readFileSync(Config.resolveAsset(asset));
 
-          zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+          zipBuffer = await Zip.create(files);
         }
 
         const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {

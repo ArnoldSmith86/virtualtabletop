@@ -72,12 +72,12 @@ export async function loadSymbolPicker() {
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category == 'Emoji - Flags')
         continue;
-      list += `<h2 class="${category.match(/Material|VTT|Emoji/)?'fontCategory':'imageCategory'}">${category}</h2>`;
+      list += `<h2 data-family="${category.match(/Material|VTT|Emoji/)?'font':'image'}">${category}</h2>`;
       for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
           symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
@@ -88,21 +88,21 @@ export async function loadSymbolPicker() {
             className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
             const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
-            list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
           }
           if(className == 'material-symbols' && hasNoFillVariant)
-            list += `<i class="material-symbols-nofill" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
         }
       }
     }
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category.match(/Emoji/)) {
-        list += `<h2 class="imageCategory">${category}</h2>`;
+        list += `<h2 data-family="image">${category}</h2>`;
         for(const [ symbol, keywords ] of Object.entries(symbols)) {
           let className = 'emoji-color';
           if(category == 'Emoji - Flags')
             className += ' emojiFlag';
-          list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
@@ -114,7 +114,14 @@ export async function loadSymbolPicker() {
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);
-      toggleClass($('#symbolPickerOverlay'), 'fewResults', $a('#symbolList i:not(.hidden)').length < 100);
+      // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
+      // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
+      const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
+                         : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
+      const matches = $a(`#symbolList i:not(.hidden)${hiddenFamily ? `:not([data-family=${hiddenFamily}])` : ''}`).length;
+      toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
+      toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
+      $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}".`;
     };
   }
 }
@@ -129,7 +136,7 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
     $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
     $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
     $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
-    $('#symbolPickerOverlay').scrollTop = 0;
+    $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();
@@ -226,7 +233,7 @@ export function addRichtextControls(dom) {
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
-    $('#symbolPickerOverlay').scrollTop = 0;
+    $('#symbolList').scrollTop = 0;
     for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
       $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';

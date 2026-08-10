@@ -114,13 +114,13 @@ export async function getStateObject() {
 // Everything a test does arrives at the server asynchronously, so an assertion has to give the
 // delta time to show up. Polls until the value matches or the backoff runs out, then asserts
 // once - so a passing test is fast and a failing one still prints the last value it saw.
-export async function expectEventually(t, get, expected, message) {
-  let actual = null;
-  for(let wait=50; wait<1000; wait*=2) {
-    actual = await get();
-    if(JSON.stringify(actual) == JSON.stringify(expected))
-      break;
+// timeout raises the backoff limit for values that a routine only produces after a
+// deliberate wait, like a DELAY.
+export async function expectEventually(t, get, expected, message, timeout=1000) {
+  let actual = await get();
+  for(let wait=50; wait<timeout && JSON.stringify(actual) != JSON.stringify(expected); wait*=2) {
     await new Promise(resolve=>setTimeout(resolve, wait));
+    actual = await get();
   }
   await t.expect(actual).eql(expected, message);
 }

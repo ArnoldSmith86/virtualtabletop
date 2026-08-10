@@ -233,8 +233,8 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   const picker = $('#symbolPickerOverlay');
   const pickerParent = picker.parentNode;
   hostOverlay.parentNode.appendChild(picker);
-  // Where it lands has no stacking rule of its own, so it would end up behind the deck editor: the class
-  // floats it over the whole editor (see deckeditor.css) for as long as it is parked here.
+  // Where it lands has no box or stacking rule of its own, so it would end up behind the deck editor: the
+  // class gives it the editor's box and floats it above (see deckeditor.css) while it is parked here.
   picker.classList.add('symbolPickerAboveEditor');
 
   // Whatever happens, the user must get their dialog back: the picker's symbol list is fetched, so it can also
@@ -391,6 +391,16 @@ function searchImageIndex(query, limit=100) {
 }
 
 let activePropertyInfoPopup = null;
+
+// An info tip hangs off a sidebar control that is thrown away whenever the
+// editor re-renders for another widget, so closeEditorPopups() takes it along
+// with the popups of controls/popup.js. Its own outside-click handler only
+// helps when there is a click - a deleted widget, an undo or a new state
+// arriving change the selection without one.
+function closePropertyInfoPopup() {
+  if(activePropertyInfoPopup)
+    activePropertyInfoPopup();
+}
 
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup

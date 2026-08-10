@@ -535,11 +535,12 @@
       </div>
       <div>
         <div icon="add_reaction">
-          <input placeholder="Search" />
-          <p icon="blur_on">For performance reasons, <span>game-icons are displayed in low resolution and </span>emoji are displayed in your browser font. Filter to less than 100 images or hover over an icon to show the actual image that will be used.</p>
+          <input placeholder="Search icons (sword, heart, dice, …)" />
+          <p icon="blur_on">Click an icon to pick it. Emoji use your browser font<span> and game-icons are previewed in low resolution</span>: hover one, or narrow the search below 100 results, to see the real image.</p>
           <div id="symbolList">
             Loading...
           </div>
+          <div id="symbolNoResults"></div>
         </div>
       </div>
     </div>
@@ -652,15 +653,16 @@
     </div>
 
     <div id="clientErrorOverlay" class="overlay">
-      <h1>Internal Error</h1>
+      <h1>Something went wrong in your browser</h1>
       <p>Your client just crashed. Sorry, this shouldn't happen.</p>
-      <p>How can we trigger the error ourselves so we can fix it?</p>
-      <p><textarea style="height: 150px; width: 100%"></textarea></p>
+      <p id="clientErrorQuestion"><label for="clientErrorDescription">How can we trigger the error ourselves so we can fix it?</label></p>
+      <p id="clientErrorInput"><textarea id="clientErrorDescription" placeholder="e.g. I dragged a card onto a deck and the screen froze" style="height: 150px; width: 100%"></textarea></p>
+      <p id="clientErrorStatus" style="display:none">The report could not be sent. Please copy the technical details below and report them on <a href="https://discord.gg/CEZz7wny9T">Discord</a> or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues">GitHub</a>.</p>
+      <p><button>Submit and Reload</button></p>
       <details>
         <summary>Technical Details</summary>
         <pre id="clientErrorStack"></pre>
       </details>
-      <p><button>Submit and Reload</button></p>
     </div>
 
     <div id="connectionLostOverlay" class="overlay" style="display:none;">

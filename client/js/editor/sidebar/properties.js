@@ -1851,11 +1851,6 @@ class PropertiesModule extends SidebarModule {
       .filter(deck => deck && deck.get('type') == 'deck');
   }
 
-  onClose() {
-    // this module drives the widget picker, so a pick cannot outlive it
-    stopWidgetPicker();
-  }
-
   onDeltaReceivedWhileActive(delta) {
     for(const widgetID in delta.s)
       if(delta.s[widgetID] && this.inputUpdaters[widgetID])
@@ -1874,13 +1869,20 @@ class PropertiesModule extends SidebarModule {
     this.clearGridPreview();
     this.clearDragLimitPreview();
     this.clearFaceRowRefresh();
+    // This module is what the popups hang off, and closing it throws away the
+    // controls they are anchored to just like moving on to another widget does -
+    // so they go the same way, and the picks they run in the room with them.
+    stopWidgetPicker();
+    closeEditorPopups();
   }
 
   onEditorClose() {
     super.onEditorClose();
-    this.clearGridPreview();
-    this.clearDragLimitPreview();
-    this.clearFaceRowRefresh();
+    // Leaving edit mode is the most complete way of moving on, but it does not
+    // go through onClose(): the editor is only display:none'd, so a popup left
+    // open lives on inside it and an armed picker keeps the crosshair over the
+    // whole page while playing.
+    this.onClose();
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -1973,6 +1975,7 @@ class PropertiesModule extends SidebarModule {
     const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
 
     const header = div(this.moduleDOM, 'widgetHeader');
+    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
     // say which widgets, so a stray rubber-band/shift-click pickup is easy to
     // spot before editing - only the type header said "how many" before
@@ -2083,13 +2086,15 @@ class PropertiesModule extends SidebarModule {
 
     const intro = document.createElement('p');
     intro.className = 'noSelectionIntro';
-    intro.innerText = 'You do not have a widget selected. To get started, click on one to the left or:';
+    // "click on one to the left" would be wrong in the layouts that put the panel above the room
+    intro.innerText = 'You do not have a widget selected. To get started, click a widget in the room or:';
     this.moduleDOM.append(intro);
 
     const addWidgetButton = document.createElement('button');
     addWidgetButton.innerText = 'Add a new widget';
     addWidgetButton.setAttribute('icon', 'add');
     addWidgetButton.className = 'noSelectionButton';
+    addWidgetButton.title = 'Pick a card, dice, board or other piece to place in the room';
     addWidgetButton.onclick = _=>{ setSelection([]); showOverlay('addOverlay'); };
     this.moduleDOM.append(addWidgetButton);
 
@@ -2097,8 +2102,16 @@ class PropertiesModule extends SidebarModule {
     deckEditorButton.innerText = 'Open deck editor';
     deckEditorButton.setAttribute('icon', 'style');
     deckEditorButton.className = 'noSelectionButton';
+    deckEditorButton.title = 'Design the cards in a deck';
     deckEditorButton.onclick = _=>deckEditor.openBestDeck();
     this.moduleDOM.append(deckEditorButton);
+
+    // this panel can be the first thing a new user sees, and the icon column it sits next to is
+    // exactly what they wouldn't have found on their own
+    const sidebarHint = document.createElement('p');
+    sidebarHint.className = 'noSelectionIntro';
+    sidebarHint.innerText = 'The other editor tools are in the sidebar on the right.';
+    this.moduleDOM.append(sidebarHint);
   }
 
   async deckTraditional(target) {
@@ -4857,6 +4870,7 @@ class PropertiesModule extends SidebarModule {
     // type in the header's accent color, id in the plain text color so the two
     // are easy to tell apart
     const header = div(this.moduleDOM, 'widgetHeader');
+    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
     const idArea = div(header, 'widgetHeaderId');
     idArea.append('Widget id: ');
@@ -10858,7 +10872,7 @@ class PropertiesModule extends SidebarModule {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.className = 'switchbox';
-    input.id = `automationsFullSize_${rand().toString(36).substring(3, 12)}`;
+    input.id = editorDomID('automationsFullSize');
     input.checked = this.automationsFullSize();
     input.onchange = _=>{
       localStorage.setItem('editor.automationsFullSize', input.checked);

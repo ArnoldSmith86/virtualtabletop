@@ -70,12 +70,42 @@ function hasPlayerSpecificChooseField(overlay) {
 
 let lastExecutedOperation = null;
 
+// Counts the widgets that were created without an id so each of them still gets a css scope of its own - see
+// the cssScope below.
+let unnamedWidgetCount = 0;
+
+// A widget without an id is a read-only preview the editor renders: it is simply dropped from the dom instead
+// of going through applyRemove, so nobody removes the stylesheet its css property created. Every such
+// stylesheet is registered here, keyed by scope and valued by the preview it styles, and the ones whose
+// preview has left the document are collected after the render that replaced them - otherwise they would pile
+// up in head as the editor re-renders its previews.
+const unnamedWidgetStyles = new Map();
+let unnamedWidgetStyleCollection = null;
+
+function collectUnnamedWidgetStyles() {
+  unnamedWidgetStyleCollection = null;
+  for(const [ scope, element ] of unnamedWidgetStyles) {
+    if(element.isConnected)
+      continue;
+    if($(`#STYLES_${scope}`))
+      removeFromDOM($(`#STYLES_${scope}`));
+    unnamedWidgetStyles.delete(scope);
+  }
+}
+
 export class Widget extends StateManaged {
   constructor(id) {
+    // Everything that identifies this widget in css - its dom id, the id of its stylesheet element and the
+    // selectors in it - is built from this scope. A widget in a room has a unique id, but the read-only copies
+    // the editor renders (deck editor, card type list, widget picker) are created without one: they would all
+    // share the scope of an empty id, so the last copy rendered would restyle every other one with its own
+    // card type's properties. Widgets that do have an id keep using it, so nothing changes for a room.
+    const cssScope = id === undefined || id === null ? `unnamed_${++unnamedWidgetCount}` : escapeID(id);
     const div = document.createElement('div');
-    div.id = 'w_' + escapeID(id);
+    div.id = 'w_' + cssScope;
     super();
     this.id = id;
+    this.cssScope = cssScope;
     this.domElement = div;
     this.dropShadowWidget = null;
     this.targetTransform = '';
@@ -384,8 +414,8 @@ export class Widget extends StateManaged {
       widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
-    if($(`#STYLES_${escapeID(this.id)}`))
-      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
+    if($(`#STYLES_${this.cssScope}`))
+      removeFromDOM($(`#STYLES_${this.cssScope}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -624,8 +654,8 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    if($(`#STYLES_${escapeID(this.id)}`))
-      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
+    if($(`#STYLES_${this.cssScope}`))
+      removeFromDOM($(`#STYLES_${this.cssScope}`));
     const usedProperties = new Set();
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
     this.propertiesUsedInProperty['css'] = Array.from(usedProperties);
@@ -692,14 +722,14 @@ export class Widget extends StateManaged {
     let styleString = '';
     for(const key in css) {
       let usesVariables = false;
-      let selector = key.replace(/\$\{THIS\}/g, m => {usesVariables = true; return `#w_${escapeID(this.id)}`});
+      let selector = key.replace(/\$\{THIS\}/g, m => {usesVariables = true; return `#w_${this.cssScope}`});
       if(!nested) {
         if(key == 'inline')
           continue;
         if(key == 'default')
           selector = '';
         if(!usesVariables && selector.charAt(0) != '@')
-          selector = `#w_${escapeID(this.id)}${selector}`;
+          selector = `#w_${this.cssScope}${selector}`;
       }
       styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], usedProperties, true), usedProperties))} }\n`;
     }
@@ -708,9 +738,17 @@ export class Widget extends StateManaged {
       return styleString;
 
     const style = document.createElement('style');
-    style.id = `STYLES_${escapeID(this.id)}`;
+    style.id = `STYLES_${this.cssScope}`;
     style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
+
+    // see unnamedWidgetStyles - the collection is deferred so previews that are built into a container before
+    // that container is put into the document are not collected while they are still being rendered
+    if(this.id === undefined || this.id === null) {
+      unnamedWidgetStyles.set(this.cssScope, this.domElement);
+      if(!unnamedWidgetStyleCollection)
+        unnamedWidgetStyleCollection = setTimeout(collectUnnamedWidgetStyles);
+    }
 
     return this.cssAsText(css.inline || '', usedProperties);
   }
@@ -720,7 +758,13 @@ export class Widget extends StateManaged {
     let y = this.get('y');
     let scaleValue = this.get('scale');
 
-    if(this.get('ignoreZoom')) {
+    // The inverse-zoom compensation below is computed in the room's coordinate
+    // frame, so it is only correct for a top-level widget sitting directly on the
+    // surface. A widget nested inside another widget lives in its parent's frame
+    // and simply inherits the parent's zoom behaviour, so its parent's ignoreZoom
+    // effectively controls it: it stays put inside a compensating ancestor and
+    // zooms along with a non-compensating one. Only compensate at the top level.
+    if(this.get('ignoreZoom') && !this.isNestedInWidget()) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
 
@@ -749,7 +793,19 @@ export class Widget extends StateManaged {
   }
 
   cssTransformProperties() {
-    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    // Only an ignoreZoom widget has a transform that depends on its parent: it
+    // compensates for zoom when top-level but not when nested, so reparenting it
+    // between those states must recompute the transform. Keeping 'parent' out of
+    // the list otherwise avoids a redundant transform write on every card move.
+    const properties = [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    if(this.get('ignoreZoom'))
+      properties.push('parent');
+    return properties;
+  }
+
+  isNestedInWidget() {
+    const parentID = this.get('parent');
+    return parentID != null && widgets.has(parentID);
   }
 
   dragCorner(coordGlobal, localAnchor, parent = null) {
@@ -1356,11 +1412,26 @@ export class Widget extends StateManaged {
             const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
             const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
             if(mathExpression) {
+              // What the regex above matched is arithmetic already: its character class has no
+              // letters, quotes or brackets, so nothing in it can be named, called or
+              // constructed. Rebuilding the string from that alphabet instead of filtering the
+              // matched text makes that checkable rather than a claim - every character that
+              // reaches the eval below is a literal from this line, so there is no path from the
+              // routine into the evaluated code left for a reader (or a static analyzer) to rule
+              // out. charAt(-1) is '', so a character the regex ever lets through by mistake is
+              // dropped instead of evaluated.
+              const arithmetic = '0123456789.() &|!*/+-';
+              const expression = [ ...mathExpression[5] ].map(c => arithmetic.charAt(arithmetic.indexOf(c))).join('');
               let result = null;
               try {
-                result = +eval(mathExpression[5]);
+                // the indirect form evaluates in global scope instead of in this function - a
+                // direct eval() would additionally stop the minifier from renaming anything here,
+                // because it could read every name around it. Indirect eval is sloppy mode while
+                // this module is strict, so the directive keeps the strictness: without it "010"
+                // would quietly be octal 8 instead of being reported as a problem
+                result = +(0,eval)('"use strict";' + expression);
               } catch(e) {
-                problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
+                problems.push(`The expression "${expression}" threw an exception: ${e}.`);
                 result = null;
               }
               const variable = mathExpression[1] !== undefined ? variables[unescape(mathExpression[2])] : unescape(mathExpression[2]);
@@ -3296,13 +3367,13 @@ export class Widget extends StateManaged {
       if(cursor.top < window.innerHeight/2)
         e.classList.add('bottom');
 
-      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      const wStyle = $(`#STYLES_${this.cssScope}`);
       if(wStyle) {
         if($('#enlargeStyle'))
           removeFromDOM($('#enlargeStyle'));
         const eStyle = document.createElement('style');
         eStyle.id = "enlargeStyle";
-        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${this.cssScope}`,'#enlarged')));
         $('head').appendChild(eStyle);
       }
     }

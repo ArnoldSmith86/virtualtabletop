@@ -4,9 +4,10 @@
 // routine editor for widget, holder and collection parameters.
 let activeWidgetPicker = null;
 
-function startWidgetPicker(targetWidgetID, onPick, options = {}) {
+function startWidgetPicker(targetWidget, onPick, options = {}) {
   activeWidgetPicker = {
-    targetWidgetID,
+    targetWidget,
+    targetWidgetID: targetWidget.id,
     onPick,
     pickerKey: options.pickerKey || null,
     filter: typeof options.filter === 'function' ? options.filter : null,
@@ -39,6 +40,30 @@ function isWidgetPickerActive(targetWidgetID = null, pickerKey = null) {
   return !!getWidgetPicker(targetWidgetID, pickerKey);
 }
 
+// The widgets a picker's target stands for: itself, or - for the facade of a
+// multi-selection, whose id is the ids of all of them ("h1,h2") and which is not
+// in the room under it - the widgets behind it.
+function targetWidgets(targetWidget) {
+  if(!targetWidget)
+    return [];
+  return targetWidget.isMulti ? targetWidget.widgets : [ targetWidget ];
+}
+
+// The widget a running picker belongs to, as long as it still is the widget of
+// that id in the room: a new state from the server replaces every widget, so the
+// same id regularly comes back as a different object - one that has nothing to
+// do with the editor the picker was started from. The editor tells widgets apart
+// by identity everywhere else for the same reason (widgetStillExists).
+function widgetPickerTarget() {
+  if(!activeWidgetPicker)
+    return null;
+  const targetWidget = activeWidgetPicker.targetWidget;
+  const behind = targetWidgets(targetWidget);
+  // all of them: a multi-selection that loses one of its widgets is re-rendered
+  // as a new facade, so the one this picker was started for is stale either way
+  return behind.length && behind.every(w=>widgets.get(w.id) === w) ? targetWidget : null;
+}
+
 // A click in the room hits the top-most widget, which is often not the one the
 // picker is looking for - a holder is covered by the cards lying on it. The
 // picker resolves such a click to the widget underneath it that fits.
@@ -60,7 +85,7 @@ function handleWidgetPickerClick(clickedWidget) {
   if(!picker)
     return false;
 
-  const targetWidget = widgets.get(picker.targetWidgetID);
+  const targetWidget = widgetPickerTarget();
   if(!targetWidget) {
     stopWidgetPicker();
     return false;
@@ -82,27 +107,86 @@ function handleWidgetPickerClick(clickedWidget) {
 // not be mistaken for the player picking that widget
 let restoringWidgetPickerSelection = false;
 
+function isWidgetPickerRestoringSelection() {
+  return restoringWidgetPickerSelection;
+}
+
+// A rubber band drawn in the room is the one selection change a running picker
+// owns - it is how widgets are picked with a band instead of a click, and the
+// picker puts its own widget back afterwards. Every other route into
+// setSelection (the JSON editor's tree, an "Edit line ..." link, an undo, a new
+// state) is the editor moving on to another widget, armed picker or not: it is
+// the selection the picker itself makes that must not be mistaken for one, not
+// the mere existence of a picker.
+let selectingWidgetsInRoom = false;
+
+function selectWidgetsInRoom(applySelection) {
+  selectingWidgetsInRoom = true;
+  try {
+    return applySelection();
+  } finally {
+    selectingWidgetsInRoom = false;
+  }
+}
+
+// Whether a running picker explains a selection change: it selects what was
+// caught in the room and then restores the selection it started from, which is
+// not the editor moving on to another widget. That only holds for a selection
+// made in the room, and only while the widget the picker belongs to is still
+// there - once it is deleted or replaced by a new state, the change is real and
+// the popup the picker runs from goes along.
+function isWidgetPickerChangingSelection() {
+  return !!activeWidgetPicker && selectingWidgetsInRoom && !!widgetPickerTarget();
+}
+
+// Nothing can be picked for a widget that is gone, and the click in the room a
+// picker waits for would never come: the popup it runs from is being closed in
+// the same breath. So it ends where its widget does, whichever route the
+// selection change came from - and since the crosshair over the room is the only
+// sign that a click in there is being waited for, it must not just disappear:
+// say why it did.
+function endWidgetPickerWithoutTarget() {
+  if(!activeWidgetPicker || widgetPickerTarget())
+    return;
+  const gone = targetWidgets(activeWidgetPicker.targetWidget).filter(w=>widgets.get(w.id) !== w).map(w=>w.id);
+  const goneWords = gone.join(', ') || activeWidgetPicker.targetWidgetID;
+  stopWidgetPicker();
+  editorNote(`picking in the room ended: ${goneWords} is gone`);
+}
+
+// Turns a selection into a pick and puts the picker's own widget back
+// afterwards, which is why the sidebar stops there rather than re-rendering for
+// what was picked. Only a selection made in the room is one: taking any other
+// one would put the editor back on the widget the picker belongs to, so a
+// running picker would make the sidebar unable to move on at all.
 function handleWidgetPickerSelection(newSelection) {
   if(restoringWidgetPickerSelection)
     return true;
+  if(!selectingWidgetsInRoom)
+    return false;
 
   const picker = getWidgetPicker();
   if(!picker)
     return false;
 
-  const targetWidget = widgets.get(picker.targetWidgetID);
+  const targetWidget = widgetPickerTarget();
 
   if(!targetWidget) {
     stopWidgetPicker();
     return false;
   }
 
+  // the widgets the editor is on while the picker runs - one, or all of a
+  // multi-selection
+  const selectedByEditor = targetWidgets(targetWidget);
+  const isSelectedByEditor = widget=>selectedByEditor.some(w=>w.id == widget.id);
+
   const restoreSelection = _=>{
-    if(newSelection.length == 1 && newSelection[0].id == targetWidget.id)
+    if(newSelection.length == selectedByEditor.length && newSelection.every(isSelectedByEditor))
       return;
     restoringWidgetPickerSelection = true;
     try {
-      setSelection([ targetWidget ]);
+      setSelection(selectedByEditor);
     } finally {
       restoringWidgetPickerSelection = false;
     }
@@ -113,10 +197,10 @@ function handleWidgetPickerSelection(newSelection) {
     // the target widget is selected again after every pick, so a selection
     // change to it cannot be told apart from that - clicks on it arrive as a
     // click (handleWidgetPickerClick) instead
-    if(!clickedWidget || clickedWidget.id == targetWidget.id)
+    if(!clickedWidget || isSelectedByEditor(clickedWidget))
       continue;
     const pickedWidget = resolvePickedWidget(clickedWidget, picker);
-    if(!pickedWidget || pickedWidget.id == targetWidget.id)
+    if(!pickedWidget || isSelectedByEditor(pickedWidget))
       continue;
     if(resolved.indexOf(pickedWidget) == -1)
       resolved.push(pickedWidget);
@@ -168,7 +252,11 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
     popout.style.display = 'none';
 
   const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
-  const excludedIDs = _=>(options.allowSelf ? [] : [ widget.id ]).concat(options.excludeIDs ? options.excludeIDs() : []);
+  // the ids the popout belongs to: for a multi-selection that is every widget in
+  // it, not the "h1,h2" of the facade - which is no widget in the room, so
+  // excluding it would exclude nothing and offer them as their own parent
+  const ownIDs = targetWidgets(widget).map(w=>w.id);
+  const excludedIDs = _=>(options.allowSelf ? [] : ownIDs).concat(options.excludeIDs ? options.excludeIDs() : []);
   // the widget the popout belongs to is the one a routine acts on most often, so
   // the list pins and marks it instead of hiding it among the other ids
   const selfID = options.allowSelf ? widget.id : null;
@@ -195,12 +283,14 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
     const buttonBar = div(popout, 'propertyPickerSection widgetPickerRow');
     const pickButton = document.createElement('button');
     pickButton.setAttribute('icon', 'colorize');
-    pickButton.title = `Click this button and then the ${options.multiple ? 'widgets' : 'widget'} on the table. The type filter applies here as well, so with the type set to holder a click on a card selects the holder it lies on.`;
+    pickButton.title = `Click this button and then the ${options.multiple ? 'widgets' : 'widget'} in the room. The type filter applies here as well, so with the type set to holder a click on a card selects the holder it lies on.`;
     buttonBar.appendChild(pickButton);
 
     const updatePickButton = _=>{
       const isSelecting = isWidgetPickerActive(widget.id, options.pickerKey);
-      pickButton.textContent = isSelecting ? `click ${options.multiple ? 'widgets' : 'a widget'}...` : 'Pick in the room';
+      // armed, the button says what to do next rather than what it does, in the
+      // same words as unarmed: one control, one way of speaking
+      pickButton.textContent = isSelecting ? `Click ${options.multiple ? 'widgets' : 'a widget'} in the room…` : 'Pick in the room';
       pickButton.classList.toggle('selected', isSelecting);
     };
     updatePickButton();
@@ -209,7 +299,7 @@ function renderWidgetSelectPopout(wrap, widget, options = {}) {
       if(isWidgetPickerActive(widget.id, options.pickerKey)) {
         stopWidgetPicker();
       } else {
-        startWidgetPicker(widget.id, (targetWidget, pickedWidgets)=>{
+        startWidgetPicker(widget, (targetWidget, pickedWidgets)=>{
           if(options.multiple)
             options.apply([...new Set(selectedIDs().concat(pickedWidgets.map(w=>w.id)))]);
           else
