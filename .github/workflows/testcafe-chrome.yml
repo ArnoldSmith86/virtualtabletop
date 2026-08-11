@@ -20,6 +20,9 @@ jobs:
         testfile:
           - editor.js
           - holder-layout.js
+          - toolbar.js
+          - boardsize.js
+          - draglimit.js
           - compute-1.js
           - compute-2.js
           - compute-3.js
@@ -28,6 +31,27 @@ jobs:
           - publiclibrary-2.js
           - publiclibrary-3.js
           - publiclibrary-4.js
+          - routines.js
+          - legacymatrix.js
+          - interactions.js
+          # holderevents.js drives its drags with synthetic mouse events whose timing against
+          # the drop animation has only been measured in Chrome so far
+          - holderevents.js
+          - keyboardzoom.js
+          - canvas.js
+          - inheritfrom.js
+          # the DOM baselines record computed styles and rounded boxes, which are browser
+          # specific, so they are recorded and checked in Chrome only
+          - domsnapshot.js
+          # the pixel half compares two captures from the same run rather than a checked-in
+          # image, but a screenshot is still browser specific enough to keep in one browser
+          - pixelsnapshot.js
+          - multiclient.js
+        include:
+          # a second browser window is the whole point of this file, and native automation mode
+          # refuses to open one
+          - testfile: multiclient.js
+            flags: --disable-native-automation
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -48,4 +72,4 @@ jobs:
       uses: DevExpress/testcafe-action@latest
       with:
         version: "3.7.3"
-        args: "chrome:headless tests/testcafe/${{ matrix.testfile }}"
+        args: "chrome:headless ${{ matrix.flags }} tests/testcafe/${{ matrix.testfile }}"
