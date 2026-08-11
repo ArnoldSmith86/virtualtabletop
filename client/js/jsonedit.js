@@ -26,9 +26,8 @@ let jeTabSearchFilter = '';
 let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
-let jeTabSearchShiftTyped = false;
 let jeIgnoreBlurOnce = false;
-let jeCommandClickEvent = null;
+let jePrefillProperties = localStorage.getItem('jePrefillProperties') != 'false';
 let jeWidgetHistory = [];
 let jeWidgetHistoryIndex = -1;
 let jeWidgetHistoryNavigating = false;
@@ -540,7 +539,8 @@ const jeCommands = [
   },
   {
     id: 'je_anonymousCollection',
-    name: 'convert to anonymous collection',
+    name: '[] anonymous collection',
+    description: 'Replace the named collection with [] so you can list widget IDs directly',
     context: '^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|FOREACH|GET|LABEL|MOVE|ROTATE|SET|SHUFFLE|SORT|TIMER)\\) ↦ collection|^.*\\((CLONE|SELECT|SWAPHANDS|TURN)\\) ↦ source|^.*\\(RECALL\\) ↦ excludeCollection',
     show: function() {
       const value = jeGetValue();
@@ -1310,12 +1310,13 @@ function jeAddRoutineCommentCommand() {
   });
 }
 
-// Common params to prefill when inserting (from library game patterns). Omit to insert without params.
-// Param order follows a common grammar: input collection/widget/source, mode/relationship,
-// misc params specific to the operation, count/value, output collection/variable.
-const jeRoutineOperationCommonParams = {
+// Common properties to prefill when inserting (from library game patterns).
+// Property order follows a common grammar: input collection/widget/source, mode/relationship,
+// misc properties specific to the operation, count/value, output collection/variable.
+// Omit an operation here to always insert it empty.
+const jeRoutineOperationCommonProperties = {
   AUDIO: { source: '', maxVolume: 1.0 },
-  CALL: { routine: 'myRoutine' },
+  CALL: { routine: '' },
   CANVAS: { collection: 'DEFAULT', mode: 'reset' },
   CLICK: { collection: 'DEFAULT', count: 1 },
   CLONE: { source: 'DEFAULT', count: 1, collection: 'DEFAULT' },
@@ -1345,6 +1346,16 @@ const jeRoutineOperationCommonParams = {
   VAR: { variables: {} }
 };
 
+// True while the cursor is somewhere an operation can be inserted - all operation
+// commands share the same context and condition, so asking the first one is enough.
+function jeCanInsertOperation() {
+  const command = jeCommands.find(c => c.class == 'operation');
+  if(!command || !jeStateNow || jeJSONerror)
+    return false;
+  const contextMatch = jeContext.join(' ↦ ').match(new RegExp(command.context));
+  return !!contextMatch && contextMatch[0] != '' && command.show();
+}
+
 function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
@@ -1352,15 +1363,8 @@ function jeAddRoutineOperationCommands(command, defaults) {
     class: 'operation',
     context: `^.*Routine`,
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      const noParams = jeCommandClickEvent && jeCommandClickEvent.shiftKey;
-      let newOp;
-      if (noParams) {
-        newOp = { func: '###SELECT ME###' };
-      } else {
-        const common = jeRoutineOperationCommonParams[command];
-        const cloned = common ? JSON.parse(JSON.stringify(common)) : {};
-        newOp = { func: '###SELECT ME###', ...cloned };
-      }
+      const common = jePrefillProperties && jeRoutineOperationCommonProperties[command];
+      const newOp = { func: '###SELECT ME###', ...(common ? JSON.parse(JSON.stringify(common)) : {}) };
       if(operationIndex === null)
         routine.push(newOp);
       else
@@ -3543,25 +3547,27 @@ function jeShowCommands() {
     }
   }
   commandText += `</div>`;
+  const context = jeContext.join(' ↦ ');
   if (!jeTabSearchActive) {
-    commandText += `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">Press or hold <span class="key">Tab</span> to search</div>`;
+    commandText += `<div class="jeHint">Press or hold <span class="key">Tab</span> to search</div>`;
   } else {
-    let searchHint = `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">`;
+    let searchHint = `<div class="jeHint">`;
     if (jeTabSearchFilter.length > 0) {
-      searchHint += `Search: <span style="color: var(--textColor); font-weight: bold;">${html(jeTabSearchFilter)}</span><br>`;
+      searchHint += `Search: <span class="jeHintValue">${html(jeTabSearchFilter)}</span><br>`;
     } else {
       searchHint += `Type letters to filter<br>`;
     }
     const executeText = jeTabKeyHeld ? 'Release' : 'Press';
-    searchHint += `<span class="key">↑</span><span class="key">↓</span> to select<br>${executeText} <span class="key">Tab</span> to execute<br><span class="key">Shift</span>: insert without parameters`;
+    searchHint += `<span class="key">↑</span><span class="key">↓</span> to select<br>${executeText} <span class="key">Tab</span> to execute`;
     searchHint += `</div>`;
     commandText += searchHint;
   }
+  if(jeCanInsertOperation())
+    commandText += `<button id="jePrefillProperties" class="jeToggle${jePrefillProperties ? ' onState' : ''}" title="${jePrefillProperties ? 'Operations are inserted with their most common properties. Click to insert them empty instead.' : 'Operations are inserted empty. Click to insert them with their most common properties.'}">${jePrefillProperties ? '☑' : '☐'} prefill properties</button>`;
   commandText += `<div id='jeContextButtons'>`;
 
   // Next figure out which context commands are active here.
   const activeCommands = {};
-  const context = jeContext.join(' ↦ ');
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
@@ -3667,8 +3673,8 @@ function jeShowCommands() {
           jeTabSearchHighlightIndex >= 0 &&
           commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
         const highlightClass = shouldHighlight ? ' jeHighlight' : '';
-        const title = command.class === 'operation' ? `${name} (Shift+click: insert without parameters)` : '';
-        commandText += `<button id="${command.id}" class="${highlightClass}"${title ? ` title="${html(title)}"` : ''}>${name}</button>\n`;
+        const description = typeof command.description == 'function' ? command.description() : command.description;
+        commandText += `<button id="${command.id}" class="${highlightClass}"${description ? ` title="${html(description)}"` : ''}>${name}</button>\n`;
         commandIndex++;
       }
     }
@@ -3766,7 +3772,18 @@ function jeShowCommands() {
     scrollContainer.scrollTop = previousScrollTop;
   }
   
-  on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp):not(.jeEditorLine)', 'click', clickButton);
+  on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp):not(.jeEditorLine):not(.jeToggle)', 'click', clickButton);
+  // Toggling the prefill must not blur the editor - that would execute the Tab search
+  on('#jePrefillProperties', 'mousedown', e=>e.preventDefault());
+  on('#jePrefillProperties', 'click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    jePrefillProperties = !jePrefillProperties;
+    localStorage.setItem('jePrefillProperties', jePrefillProperties);
+    if($('#jeText'))
+      $('#jeText').focus();
+    jeShowCommands();
+  });
   // Make any keycap with text 'Tab' act as a press/release toggle
   const keycaps = $a('#jeCommands .key');
   if (keycaps && keycaps.length) {
@@ -3787,7 +3804,6 @@ function jeShowCommands() {
             jeTabSearchFilter = '';
             jeTabSearchHighlightIndex = -1;
             jeTabArrowKeysUsed = false;
-            jeTabSearchShiftTyped = false;
             jeShowCommands();
           } else {
             // Release Tab: execute and close
@@ -3797,10 +3813,8 @@ function jeShowCommands() {
               jeTextElement2.focus();
             }
             const highlighted = $('#jeContextButtons') && $('#jeContextButtons').querySelectorAll('button.jeHighlight');
-            if (highlighted && highlighted.length > 0) {
-              jeCommandClickEvent = { shiftKey: e.shiftKey && !jeTabSearchShiftTyped };
+            if (highlighted && highlighted.length > 0)
               highlighted[0].click();
-            }
             jeTabSearchActive = false;
             jeTabSearchFilter = '';
             jeTabSearchHighlightIndex = -1;
@@ -3979,13 +3993,7 @@ function jeEmpty() {
 }
 
 const clickButton = async function(event) {
-  if (event.isTrusted)
-    jeCommandClickEvent = event;
-  try {
-    await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
-  } finally {
-    jeCommandClickEvent = null;
-  }
+  await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
   jeGetContext();
   if(jeMode != 'macro' && jeMode != 'empty') {
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
@@ -4162,7 +4170,6 @@ function jeInitEventListeners() {
           jeTabSearchFilter = '';
           jeTabSearchHighlightIndex = -1;
           jeTabArrowKeysUsed = false;
-          jeTabSearchShiftTyped = false;
           jeShowCommands();
         } else {
           // Set jeTabKeyHeld when Tab is pressed while tabSearch is already active
@@ -4197,8 +4204,6 @@ function jeInitEventListeners() {
         jeShowCommands();
       } else if (e.key.length == 1 && !e.ctrlKey && !e.altKey && !e.metaKey && e.key != 'Enter') {
         jeTabSearchFilter += e.key;
-        if(e.shiftKey)
-          jeTabSearchShiftTyped = true;
         jeTabSearchHighlightIndex = 0;
         jeTabArrowKeysUsed = false;
         jeShowCommands();
@@ -4251,7 +4256,6 @@ function jeInitEventListeners() {
       if (jeTabSearchActive) {
         const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
         if (buttons.length > 0) {
-          jeCommandClickEvent = { shiftKey: e.shiftKey && !jeTabSearchShiftTyped };
           buttons[0].click();
           jeTabSearchActive = false;
           jeTabSearchFilter = '';

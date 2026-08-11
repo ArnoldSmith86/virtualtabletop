@@ -13,6 +13,8 @@ body {
   --textHighlightColor7: darkcyan;
 
   --textDimColor1: #ccc;
+  /* dimmed, but still comfortably readable - for text that explains something */
+  --textDimColor2: #6b6b6b;
 
   color-scheme: light;
   --gridSize: 25px;
@@ -35,6 +37,7 @@ body.edit.darkMode {
   --textHighlightColor7: #40e0d0;
 
   --textDimColor1: #606060;
+  --textDimColor2: #8a8a8a;
 
   color-scheme: dark;
 }
