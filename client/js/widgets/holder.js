@@ -1,4 +1,4 @@
-class Holder extends ImageWidget {
+export class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
     // if legacy mode disableHolderImageWidget is enabled, skip the intermediary ImageWidget prototype and use the Widget prototype instead so that image/icon/text properties "work" like they did before the change
@@ -72,12 +72,13 @@ class Holder extends ImageWidget {
   // a card dropped anywhere on a fanned pile belongs to that pile, and hitting
   // the corner of it - all a pile outside a holder takes - would be guesswork
   // where the holder decides how far apart the piles sit. What aims the drop is
-  // the card at the corner of what is being dragged, so that a long pile dropped
-  // onto a short one still lands where its first card does.
+  // the middle of what was dropped, the same point the surface hit tests to
+  // decide which holder a drag ended in - and a pile that is carried here has
+  // collected its cards on the way, so that middle is the card under the pointer
+  // rather than the middle of a fan.
   arrangedChildAt(child, x, y) {
-    const aiming = child.get('type') == 'pile' && child.children().length ? child.children()[0] : child;
-    const pointX = x + aiming.get('width' )/2;
-    const pointY = y + aiming.get('height')/2;
+    const pointX = x + child.get('width' )/2;
+    const pointY = y + child.get('height')/2;
     return this.arrangedChildrenOwned().filter(c=>c != child
       && pointX >= c.get('x') && pointX < c.get('x') + c.spreadExtent('X')
       && pointY >= c.get('y') && pointY < c.get('y') + c.spreadExtent('Y')

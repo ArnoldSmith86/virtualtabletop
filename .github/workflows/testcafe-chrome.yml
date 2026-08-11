@@ -33,9 +33,10 @@ jobs:
           - routines.js
           - legacymatrix.js
           - interactions.js
-          # holderevents.js drives its drags with synthetic mouse events whose timing against
-          # the drop animation has only been measured in Chrome so far
+          # holderevents.js and allowpiles.js drive their drags with synthetic mouse events whose
+          # timing against the drop animation has only been measured in Chrome so far
           - holderevents.js
+          - allowpiles.js
           - keyboardzoom.js
           - canvas.js
           - inheritfrom.js

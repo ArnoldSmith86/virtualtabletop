@@ -17,6 +17,7 @@ beforeAll(async () => {
   globalThis.batchEnd = batchEnd;
   globalThis.flushDelta = flushDelta;
   globalThis.setDeltaCause = () => {};
+  globalThis.rescaleDragAnchor = () => {};
   globalThis.getMaxZ = () => 0;
   globalThis.updateMaxZ = () => {};
   globalThis.mapAssetURLs = url => url;

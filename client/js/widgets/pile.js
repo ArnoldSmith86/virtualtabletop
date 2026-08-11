@@ -280,8 +280,14 @@ export class Pile extends Widget {
       for(let i=0; i<children.length; ++i)
         await children[i].setPosition(this.get('dropOffsetX') + offsets[i][0], this.get('dropOffsetY') + offsets[i][1], children[i].get('z'));
 
+      const oldWidth = this.get('width');
+      const oldHeight = this.get('height');
       await this.set('width', this.spreadExtent('X'));
       await this.set('height', this.spreadExtent('Y'));
+      // this can happen mid-drag - a pile picked out of the holder that spread it collects its
+      // cards on the way - so whoever is carrying it keeps hold of the same place in its box
+      if(this.get('width') != oldWidth || this.get('height') != oldHeight)
+        rescaleDragAnchor(this, oldWidth, oldHeight);
     }
 
     // how much room the pile takes up decides where the next pile in the holder

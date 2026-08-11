@@ -1,12 +1,14 @@
+import { Selector } from 'testcafe';
 import { getStateObject, setupTestEnvironment } from './test-util.js';
-import { dragPath, openRoom, stateWhen } from './interaction-util.js';
+import { dragPath, openRoom, stateWhen, surfaceGeometry } from './interaction-util.js';
 
 setupTestEnvironment();
 
 // A holder with allowPiles arranges piles instead of dissolving them, and the piles it arranges
-// spread their cards the way it says. Everything interesting about that lives in holder.js,
-// which jest cannot import - so what a drop lands on, what a pile does when it leaves the
-// holder and what a routine hands the holder are asserted here, through the pointer.
+// spread their cards the way it says. What that comes to is asserted through the pointer here:
+// where a widget is when it is dropped, what a pile does on its way out of the holder and what
+// a routine hands the holder are the parts of it a unit test cannot reach - the arithmetic
+// itself is in tests/client/holder-piles.test.js.
 //
 // The states below are what the engine itself lays out (a card is 103 x 160, the holder places
 // its first child at its drop offset of 4): nothing re-arranges a holder when a room is loaded,
@@ -22,9 +24,9 @@ function card(id, definition) {
 }
 
 // A pile of `count` cards spread downwards by the tableau's stack offset.
-function column(id, x, count, firstCard) {
+function column(id, x, count, properties) {
   const state = {
-    [id]: { id, type: 'pile', parent: 'tableau', x, y: 4, width: CARD_WIDTH, height: CARD_HEIGHT + (count-1)*STACK_OFFSET }
+    [id]: Object.assign({ id, type: 'pile', parent: 'tableau', x, y: 4, width: CARD_WIDTH, height: CARD_HEIGHT + (count-1)*STACK_OFFSET }, properties)
   };
   for(let i=0; i<count; ++i)
     state[`${id}c${i}`] = card(`${id}c${i}`, { parent: id, x: 0, y: i*STACK_OFFSET, z: i+1 });
@@ -75,14 +77,34 @@ test('A card dropped next to the piles becomes a column of its own', async t => 
 test('A column dropped onto another column merges into it', async t => {
   await openRoom(t, 'modern', tableau(Object.assign(column('col1', 4, 3), column('col2', 127, 2))));
 
-  // a pile is dragged by its handle, and what aims the drop is the card at its corner: moving
-  // the second column left by exactly its slot puts that card on the first column
+  // a pile is dragged by its handle: moving the second column left by exactly its slot puts
+  // its cards onto the first column
   await dragPath(t, 'col2 .handle', [ { dx: -123, dy: 40 } ]);
 
   const state = await stateWhen(s=>pileCount(s) == 1);
   await t.expect(pileCount(state)).eql(1, 'the two columns became one');
   await t.expect(childrenOf(state, 'col1').length).eql(5);
   await t.expect(state.col1.height).eql(CARD_HEIGHT + 4*STACK_OFFSET);
+});
+
+test('A column picked up by a handle at the far end of its fan stays under the pointer', async t => {
+  await openRoom(t, 'modern', tableau(column('col1', 4, 5, { handlePosition: 'bottom left' })));
+
+  // the pile collects its cards on the way out of the holder, so the box the pointer took
+  // hold of - 320 units of fan - is gone by the time it is carried anywhere
+  const geometry = await surfaceGeometry();
+  const handle = await Selector('#w_col1 .handle').boundingClientRect;
+  const pointer = {
+    x: (handle.left + handle.width /2 - geometry.left)/geometry.pixelsPerUnit + 1000,
+    y: (handle.top  + handle.height/2 - geometry.top )/geometry.pixelsPerUnit + 100
+  };
+  await dragPath(t, 'col1 .handle', [ { dx: 1000, dy: 100 } ]);
+
+  const state = await stateWhen(s=>s.col1.parent === undefined);
+  await t.expect(state.col1.x).lte(pointer.x, 'the pile is not dropped right of the pointer');
+  await t.expect(state.col1.x + CARD_WIDTH).gte(pointer.x, 'nor left of it');
+  await t.expect(state.col1.y).lte(pointer.y, 'nor below it');
+  await t.expect(state.col1.y + CARD_HEIGHT).gte(pointer.y, 'nor above it - it was carried by the pointer');
 });
 
 test('A column dragged out of the holder collects its cards again', async t => {
