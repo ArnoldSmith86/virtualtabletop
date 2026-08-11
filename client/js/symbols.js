@@ -418,8 +418,16 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
             hoverColorTarget = `${hoverColorTarget}\" stroke=\"${symbol.hoverStrokeColor[0]}\" stroke-width=\"${symbol.hoverStrokeWidth[0]}`;
           }
         }
-        image = getSVG(image, { [details.colorReplace]: colorTarget }, i=>icon.style.setProperty('--image', `url("${i}")`));
-        hoverImage = getSVG(hoverImage, { [details.colorReplace]: hoverColorTarget }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
+        const imageURL = image, hoverImageURL = hoverImage;
+        const imageReplaces = { [details.colorReplace]: colorTarget };
+        const hoverImageReplaces = { [details.colorReplace]: hoverColorTarget };
+        // both properties are recolored from the same URL, so they share one entry in its download queue (keyed by the icon)
+        const applyImages = _=>{
+          icon.style.setProperty('--image', `url("${getSVG(imageURL, imageReplaces, applyImages, icon)}")`);
+          icon.style.setProperty('--hoverImage', `url("${getSVG(hoverImageURL, hoverImageReplaces, applyImages, icon)}")`);
+        };
+        image = getSVG(imageURL, imageReplaces, applyImages, icon);
+        hoverImage = getSVG(hoverImageURL, hoverImageReplaces, applyImages, icon);
       }
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);

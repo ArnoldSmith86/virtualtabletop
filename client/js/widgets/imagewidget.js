@@ -88,7 +88,7 @@ class ImageWidget extends Widget {
       else
         replaces[key] = this.get(property);
     }
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css(), this.domElement);
   }
 
   updateIcon() {

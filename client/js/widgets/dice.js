@@ -189,7 +189,7 @@ class Dice extends Widget {
         const replaces = {};
         for(const key in svgReplaces)
           replaces[key] = this.getFaceProperty(faceDefinition, svgReplaces[key]);
-        imageResult = getSVG(image, replaces, _=>faceDOM.style.backgroundImage = `url("${getSVG(image, replaces)}")`);
+        imageResult = getSVG(image, replaces, _=>faceDOM.style.backgroundImage = `url("${getSVG(image, replaces)}")`, faceDOM);
       }
 
       faceDOM.style.backgroundImage = `url("${imageResult}")`;

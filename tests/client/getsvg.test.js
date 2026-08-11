@@ -96,6 +96,39 @@ describe("Scenarios: Downloading SVGs", () => {
     expect(duringOutage).toHaveBeenCalledWith('data:image/svg+xml,'+encodeURIComponent(svg));
   });
 
+  test("notifies every waiting caller, no matter how many are queued", async () => {
+    global.fetch = jest.fn()
+      .mockImplementationOnce(_=>Promise.reject(new TypeError('Failed to fetch')))
+      .mockImplementation(_=>respond(svg));
+
+    // a deck can easily have more card faces sharing one SVG than any queue limit would allow
+    const callbacks = [];
+    for(let i=0; i<1500; ++i) {
+      callbacks.push(jest.fn());
+      getSVG('/assets/many.svg', {}, callbacks[i], { subscriber: i });
+    }
+    await settle();
+
+    for(const callback of callbacks)
+      expect(callback).toHaveBeenCalledWith('data:image/svg+xml,'+encodeURIComponent(svg));
+  });
+
+  test("keeps only the latest callback of a widget that renders again while the URL is down", async () => {
+    global.fetch = jest.fn()
+      .mockImplementationOnce(_=>Promise.reject(new TypeError('Failed to fetch')))
+      .mockImplementation(_=>respond(svg));
+
+    const subscriber = {};
+    const firstRender = jest.fn(), secondRender = jest.fn();
+    getSVG('/assets/rerender.svg', {}, firstRender, subscriber);
+    getSVG('/assets/rerender.svg', {}, secondRender, subscriber);
+    await settle();
+
+    // the queue holds one entry per subscriber, so the outdated callback of the earlier render is not invoked
+    expect(firstRender).not.toHaveBeenCalled();
+    expect(secondRender).toHaveBeenCalledWith('data:image/svg+xml,'+encodeURIComponent(svg));
+  });
+
   test("waits for the cooldown before retrying a failed download", async () => {
     global.fetch = jest.fn(_=>Promise.reject(new TypeError('Failed to fetch')));
 

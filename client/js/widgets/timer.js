@@ -82,7 +82,7 @@ export class Timer extends Widget {
     const replaces = {};
     for(const key in this.get('svgReplaces'))
       replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css(), this.domElement);
   }
 
   async onPropertyChange(property, oldValue, newValue) {

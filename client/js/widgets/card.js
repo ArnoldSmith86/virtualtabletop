@@ -142,7 +142,7 @@ class Card extends Widget {
                     replaces[key] = this.get(replaces[key]);
                   const svgResult = getSVG(object.value, replaces, _=>{
                     objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
-                  });
+                  }, objectDiv);
                   objectDiv.style.backgroundImage = `url("${svgResult}")`;
                 } else {
                   objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);

@@ -464,7 +464,9 @@ const svgCache = {};
 const svgRetryTime = {};
 // the cooldown between two retry chains, doubled after every failed one so a long outage isn't polled at a fixed rate
 const svgRetryDelay = {};
-export function getSVG(url, replaces, callback) {
+// subscriber identifies the caller across renders (usually the DOM node the callback updates) so that a widget
+// asking for the same URL again replaces its own queued callback instead of adding another one
+export function getSVG(url, replaces, callback, subscriber) {
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
     if(svgCache[cacheKey])
@@ -486,9 +488,14 @@ export function getSVG(url, replaces, callback) {
   }
 
   const callbacks = svgCache[url] || (svgCache[url] = []);
-  // widgets ask for the same SVG on every render, so during a long outage the queue must not grow without bounds
-  if(callbacks.length < 1000)
-    callbacks.push([ callback, replaces ]);
+  // widgets ask for the same SVG on every render, so during a long outage the queue would collect one entry per
+  // render - keep only the latest one per subscriber instead. Nothing is ever dropped: every queued entry is a
+  // widget that shows no image until the download succeeds.
+  const queued = subscriber !== undefined ? callbacks.findIndex(c=>c[2] === subscriber) : -1;
+  if(queued != -1)
+    callbacks[queued] = [ callback, replaces, subscriber ];
+  else
+    callbacks.push([ callback, replaces, subscriber ]);
   if((svgRetryTime[url] || 0) <= Date.now())
     downloadSVG(url, callbacks);
   return '';
