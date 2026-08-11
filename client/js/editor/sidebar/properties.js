@@ -1315,6 +1315,8 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
+  layout: 'How the holder arranges what is dropped into it: a pile stacks everything in one spot, a single spread fans all of it out, a multiple spread keeps several fanned groups side by side, a grid fills rows and columns, and freeform leaves every widget where it was dropped. Choosing one decides the properties below it (and the stack offsets of a pile) for the holder.',
+  spreadOffset: 'The gap in pixels between two spread groups of a multiple spread holder. Leave empty for the default of 8.',
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
@@ -1416,11 +1418,28 @@ const editorTypeSections = {
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true },
-      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
+      // a multiple spread always shows the shadow: it is what says where the
+      // dragged card is about to be inserted
+      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox',
+        available: widget=>widget.get('layout') != 'multipleSpread', availableListenTo: [ 'layout' ] }
     ],
+    // a layout says how the holder arranges what is dropped into it, and the
+    // lower-level properties it decides for the holder step aside while it does:
+    // an input that changes nothing would read as broken (they stay reachable in
+    // "Other properties" while a value is set on them)
     behavior: [
-      { label: 'Align dropped widgets', property: 'alignChildren',    kind: 'checkbox' },
-      { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox' },
+      { label: 'Layout', property: 'layout', kind: 'select', choices: [
+        { value: null,             text: 'Custom (properties below)' },
+        { value: 'pile',           text: 'Pile' },
+        { value: 'singleSpread',   text: 'Single spread' },
+        { value: 'multipleSpread', text: 'Multiple spread' },
+        { value: 'grid',           text: 'Grid' },
+        { value: 'freeform',       text: 'Freeform' }
+      ] },
+      { label: 'Align dropped widgets', property: 'alignChildren',    kind: 'checkbox',
+        available: widget=>!widget.get('layout'), availableListenTo: [ 'layout' ] },
+      { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox',
+        available: widget=>[ 'pile', 'grid', 'multipleSpread' ].indexOf(widget.get('layout')) == -1, availableListenTo: [ 'layout' ] },
       { label: 'Children per owner',    property: 'childrenPerOwner', kind: 'checkbox' }
     ]
   },
@@ -9637,10 +9656,26 @@ class PropertiesModule extends SidebarModule {
       { label: 'X', property: 'dropOffsetX' },
       { label: 'Y', property: 'dropOffsetY' }
     ]);
-    this.renderNumberPairRow(widget, 'Stack offset', [
+    const stackOffsetRow = this.renderNumberPairRow(widget, 'Stack offset', [
       { label: 'X', property: 'stackOffsetX' },
       { label: 'Y', property: 'stackOffsetY' }
     ]);
+
+    // the gap between the spread groups is an offset like the two above, so it
+    // is edited with them rather than in Behavior next to the layout that brings
+    // it into play. A pile has nothing to space out, and neither has a layout
+    // that keeps one group - but a value already set stays editable either way.
+    const spreadOffsetInput = new NumberInput(this, widget, 'Spread offset', {
+      property: 'spreadOffset', step: 1, nullIfEmpty: true, placeholder: '8', hint: editorPropertyHints.spreadOffset
+    });
+    spreadOffsetInput.render(this.moduleDOM);
+    const updateOffsetRows = _=>{
+      stackOffsetRow.style.display = widget.get('layout') == 'pile' ? 'none' : '';
+      spreadOffsetInput.dom.style.display = widget.get('layout') == 'multipleSpread' || widget.get('spreadOffset') !== null ? '' : 'none';
+    };
+    this.addPropertyListener(widget, 'layout', updateOffsetRows);
+    this.addPropertyListener(widget, 'spreadOffset', updateOffsetRows);
+    updateOffsetRows();
 
     this.renderAdvancedSection(widget, body => {
       this.renderSeatReferenceInput(widget, 'showInactiveFaceToSeat', 'Show inactive face to seat:', body, {
@@ -9651,7 +9686,7 @@ class PropertiesModule extends SidebarModule {
     });
 
     // onEnter / onLeave are edited in the Automations section below
-    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat' ]);
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'spreadOffset', 'showInactiveFaceToSeat' ]);
   }
 
   // Text / background / border color plus a brightness filter written into a

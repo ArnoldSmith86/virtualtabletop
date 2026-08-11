@@ -143,3 +143,67 @@ test('layout multipleSpread inserts within a vertical fan', async t => {
   const order = [ result.c1, result.c2, result.c3, result.incoming ].sort((a, b)=>a.z - b.z).map(w=>w.id);
   await t.expect(order).eql([ 'c1', 'incoming', 'c2', 'c3' ]);
 });
+
+// SORT groupBy makes one spread group per distinct value even when the sort key
+// interleaves those values: sorting by rank puts a heart between the two clubs,
+// which must still come out as one heart group and one club group.
+test('SORT groupBy makes one group per value, not one per run', async t => {
+  const state = {
+    deck1: deck,
+    hand: { id: 'hand', type: 'holder', x: 500, y: 0, width: 600, height: 200,
+      layout: 'multipleSpread', stackOffsetX: 25 },
+    sorter: { id: 'sorter', type: 'button', x: 1200, y: 0, text: 'sort',
+      clickRoutine: [ { func: 'SORT', holder: 'hand', key: 'rank', groupBy: 'suit' } ] }
+  };
+  const cards = [ [ 'hearts', 1 ], [ 'clubs', 1 ], [ 'hearts', 2 ], [ 'clubs', 2 ] ];
+  cards.forEach(([ suit, rank ], i)=>{
+    state[`c${i+1}`] = Object.assign(card(`c${i+1}`, 'hand', i+1), { suit, rank, x: i*140 });
+  });
+  await setRoomState(state);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_sorter');
+
+  const result = await waitForState(s=>Object.values(s).filter(w=>w.type == 'pile').length >= 2);
+  const piles = Object.values(result).filter(w=>w.type == 'pile');
+  await t.expect(piles.length).eql(2, 'one group per suit');
+  const groups = piles.map(p=>Object.values(result).filter(w=>w.parent == p.id).sort((a, b)=>a.z - b.z));
+  const asText = groups.map(g=>g.map(c=>`${c.suit}${c.rank}`).join(',')).sort();
+  await t.expect(asText).eql([ 'clubs1,clubs2', 'hearts1,hearts2' ]);
+});
+
+// A game may still write the legacy alignChildren property while it runs, and
+// the file updater replaced an authored alignChildren:false with
+// layout:'freeform'. Setting alignChildren must hand the decision back to that
+// property instead of leaving the holder stuck with the migrated layout.
+test('a routine can switch alignChildren back on after the layout migration', async t => {
+  const state = {
+    deck1: deck,
+    src: { id: 'src', type: 'holder', x: 0, y: 0, alignChildren: false },
+    target: { id: 'target', type: 'holder', x: 500, y: 0, layout: 'freeform' },
+    dropper: { id: 'dropper', type: 'button', x: 1000, y: 0, text: 'drop',
+      clickRoutine: [ { func: 'MOVE', from: 'src', to: 'target', count: 1 } ] },
+    aligner: { id: 'aligner', type: 'button', x: 1000, y: 100, text: 'align',
+      clickRoutine: [
+        { func: 'SELECT', property: 'id', value: 'target' },
+        { func: 'SET', property: 'alignChildren', value: true }
+      ] },
+    c1: Object.assign(card('c1', 'src', 1), { x: 37, y: 53 }),
+    c2: Object.assign(card('c2', 'src', 2), { x: 37, y: 53 })
+  };
+  await setRoomState(state);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // as saved, the migrated holder still leaves the card where it came from: the
+  // card stays at x 37 of the room, which is 463 to the left of the holder
+  await t.click('#w_dropper');
+  let result = await waitForState(s=>s.c2.parent == 'target');
+  await t.expect(result.c2.x).eql(-463, 'the migrated freeform holder does not align');
+
+  await t.click('#w_aligner');
+  await t.click('#w_dropper');
+  result = await waitForState(s=>s.c1.parent == 'target');
+  await t.expect(result.c1.x).eql(4, 'alignChildren:true aligns the holder again');
+  await t.expect(result.c1.y).eql(4);
+});

@@ -68,6 +68,19 @@ class Holder extends ImageWidget {
     return super.get(property);
   }
 
+  // A game that toggles the legacy alignChildren property while it runs has to
+  // keep working after the file updater replaced an authored alignChildren:false
+  // with layout:'freeform': writing the property hands the decision back to it
+  // instead of leaving the holder stuck with the layout the migration added. The
+  // write reaching the widget is what says so - a holder authored with a layout
+  // and never written to keeps it. Only 'freeform' is affected because that is
+  // the only layout the migration produces.
+  async set(property, value) {
+    if(property == 'alignChildren' && super.get('layout') == 'freeform')
+      await super.set('layout', null);
+    return await super.set(property, value);
+  }
+
   applyDeltaToDOM(delta) {
     this.base.applyDeltaToDOM.call(this, delta, true);
     if(this.textWrapper && !this.get('text')) {
@@ -673,13 +686,21 @@ class Holder extends ImageWidget {
 
       await sortWidgets(cards, key || property, reverse, locales, options, true);
 
-      // consecutive cards with the same groupBy value form one group
+      // every card with the same groupBy value forms one group, no matter where
+      // the sort put it: sorting by rank interleaves the suits, so cutting the
+      // sorted cards into consecutive runs would create one group per run
+      // instead of one per suit. The groups follow the order in which the sorted
+      // cards first mention their value, the cards within a group the sort.
       const runs = [];
+      const runByValue = new Map();
       for(const c of cards) {
         const value = c.get(property);
-        if(!runs.length || runs[runs.length - 1].value !== value)
-          runs.push({ value, cards: [] });
-        runs[runs.length - 1].cards.push(c);
+        const valueKey = JSON.stringify(value === undefined ? null : value);
+        if(!runByValue.has(valueKey)) {
+          runByValue.set(valueKey, { value, cards: [] });
+          runs.push(runByValue.get(valueKey));
+        }
+        runByValue.get(valueKey).cards.push(c);
       }
 
       let z = 1;
