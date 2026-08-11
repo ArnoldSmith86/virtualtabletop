@@ -459,7 +459,7 @@ function splitSVG(svg) {
 }
 
 const svgCache = {};
-function getSVG(url, replaces, callback) {
+export function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
     if(svgCache[cacheKey])
@@ -482,24 +482,30 @@ function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    const load = attempt=>fetch(mapAssetURLs(url)).then(r=>{
+    const download = attempt=>fetch(mapAssetURLs(url)).then(r=>{
       if(!r.ok)
-        throw new Error(`HTTP status ${r.status}`);
+        throw Object.assign(new Error(`HTTP status ${r.status}`), { httpStatus: r.status });
       return r.text();
-    }).then(t=>{
+    }).catch(e=>{
+      // only network errors and server errors are worth retrying, a 4xx won't become valid by asking again
+      if(attempt < 3 && !(e.httpStatus >= 400 && e.httpStatus < 500))
+        return new Promise(resolve=>setTimeout(_=>resolve(download(attempt+1)), 1000 * 2**attempt));
+      throw e;
+    });
+    download(0).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
-      for(const [ c, r ] of callbacks)
-        c(getSVG(url, r, _=>{}));
-    }).catch(e=>{
-      if(attempt < 3) {
-        setTimeout(_=>load(attempt+1), 1000 * 2**attempt);
-      } else {
-        delete svgCache[url]; // allow a later call to retry the download
-        console.error(`getSVG: failed to load ${url}`, e);
-      }
+      if(Array.isArray(callbacks))
+        for(const [ c, r ] of callbacks)
+          c(getSVG(url, r, _=>{}));
+    }, e=>{
+      console.error(`getSVG: failed to load ${url}`, e);
+      if(e.httpStatus >= 400 && e.httpStatus < 500)
+        svgCache[url] = ''; // cache the permanent failure as an empty SVG so the broken URL isn't requested again and again
+      else
+        delete svgCache[url]; // transient failure: allow a later call to retry the download
+      // the pending callbacks are dropped on purpose: calling them would re-enter getSVG and restart the download
     });
-    load(0);
   }
 
   svgCache[url].push([ callback, replaces ]);
