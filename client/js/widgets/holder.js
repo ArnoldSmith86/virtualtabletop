@@ -230,6 +230,12 @@ class Holder extends ImageWidget {
 
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
+    // the piles took their layout from this holder, so they lose it here and
+    // have to collect their cards again - arrangedChildren() no longer sees them
+    if(property == 'allowPiles' && !newValue)
+      for(const child of this.childrenFilter(super.children(), true))
+        if(child.get('type') == 'pile')
+          await child.arrangeChildren(false, true);
     if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ].indexOf(property) != -1) {
       await this.updateAfterShuffle();
     }

@@ -264,21 +264,6 @@ export class Pile extends Widget {
     return super.getDefaultValue(property);
   }
 
-  // The holder this pile is arranged in, if it is one that arranges piles - the
-  // parent this pile takes its layout from.
-  holderArrangingPiles() {
-    return this.holderArrangingPilesOf(this.get('parent'));
-  }
-
-  holderArrangingPilesOf(parent) {
-    if(parent && widgets.has(parent)) {
-      const holder = widgets.get(parent);
-      if(holder.get('type') == 'holder' && holder.get('allowPiles'))
-        return holder;
-    }
-    return null;
-  }
-
   // Lays the cards out and sizes the pile to what that comes to, so that its box
   // is the room its cards take up rather than the size of a single one: the
   // handle sits at the end of the spread, the holder gives the pile that much
@@ -329,7 +314,7 @@ export class Pile extends Widget {
   }
 
   isPileSnapTarget(x, y, range) {
-    if(!this.spreadsCards() || !this.children().length)
+    if(!this.spreadsCards() || !this.children().length || this.holderArrangingPiles())
       return super.isPileSnapTarget(x, y, range);
 
     // the whole spread takes a card, not just the corner of it: the offsets

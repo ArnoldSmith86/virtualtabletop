@@ -2054,7 +2054,9 @@ export class Widget extends StateManaged {
               await w(a.from, async source=>await w(a.to, async target=>{
                 const moved = [];
                 for(const c of source.children().slice(0, count).reverse()) {
-                  if(await applyMove(source, target, c))
+                  // a move within one holder only flips and reorders what is
+                  // already there, so it brings nothing in to be grouped
+                  if(await applyMove(source, target, c) && source != target)
                     moved.push(c);
                 }
                 await groupMoved(target, moved);
@@ -2067,9 +2069,11 @@ export class Widget extends StateManaged {
             await w(a.to, async target=>{
               const moved = [];
               for(const c of collections[collection].slice(offset, offset+count)) {
-                if(await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c)) {
+                const source = c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null;
+                if(await applyMove(source, target, c)) {
                   ++offset;
-                  moved.push(c);
+                  if(source != target)
+                    moved.push(c);
                 }
               }
               await groupMoved(target, moved);
@@ -3656,7 +3660,28 @@ export class Widget extends StateManaged {
   // spreads its cards out counts along its whole spread, so dropping onto the
   // visible end of a fanned pile joins the pile as well.
   isPileSnapTarget(x, y, range) {
+    // In a holder that arranges piles, what a drop joins is the holder's
+    // decision - it puts the widget exactly onto what it is meant to join. So
+    // nothing else there counts, however close together the holder places the
+    // slots it lines its piles up in.
+    if(this.holderArrangingPiles())
+      return this.get('x') == x && this.get('y') == y;
     return Math.abs(this.get('x')-x) < range && Math.abs(this.get('y')-y) < range;
+  }
+
+  // The holder this widget is lined up in, if it is one that arranges piles -
+  // for a pile, the parent it takes its layout from as well.
+  holderArrangingPiles() {
+    return this.holderArrangingPilesOf(this.get('parent'));
+  }
+
+  holderArrangingPilesOf(parent) {
+    if(parent && widgets.has(parent)) {
+      const holder = widgets.get(parent);
+      if(holder.get('type') == 'holder' && holder.get('allowPiles'))
+        return holder;
+    }
+    return null;
   }
 
   supportsPiles() {

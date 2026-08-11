@@ -146,6 +146,17 @@ describe('a pile in a holder that arranges piles', () => {
     expect(positions('inherit', 4)).toEqual([ 0, 3, 6, 36 ]);
   });
 
+  test('collects its cards when it is taken out of the holder', async () => {
+    createHolder({ id: 'tableau', allowPiles: true, stackOffsetY: 40 });
+    const pile = withCards(createPile({ id: 'leaving', parent: 'tableau' }).get('id'), 3);
+    await pile.arrangeChildren();
+    expect(positions('leaving', 3)).toEqual([ 0, 40, 80 ]);
+
+    await pile.set('parent', null);
+    expect(positions('leaving', 3)).toEqual([ 0, 0, 0 ]);
+    expect(pile.get('height')).toBe(100);
+  });
+
   test('keeps its own offset when it has one', async () => {
     createHolder({ id: 'tableau', allowPiles: true, stackOffsetY: 30 });
     const pile = withCards(createPile({ id: 'own', parent: 'tableau', stackOffsetY: 10 }).get('id'), 3);
