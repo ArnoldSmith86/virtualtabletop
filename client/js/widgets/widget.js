@@ -3651,11 +3651,12 @@ export class Widget extends StateManaged {
     return this.get(axis == 'X' ? 'width' : 'height');
   }
 
-  // The positions a widget dropped nearby combines with this one at. Normally
-  // that is just where it is; a pile that spreads its cards out offers one per
-  // card, so dropping onto the visible end of it joins the pile as well.
-  pileSnapPositions() {
-    return [ [ this.get('x'), this.get('y') ] ];
+  // Whether a widget dropped at the given spot lands close enough to this one to
+  // combine with it. Normally that means landing on where it is; a pile that
+  // spreads its cards out counts along its whole spread, so dropping onto the
+  // visible end of a fanned pile joins the pile as well.
+  isPileSnapTarget(x, y, range) {
+    return Math.abs(this.get('x')-x) < range && Math.abs(this.get('y')-y) < range;
   }
 
   supportsPiles() {
@@ -3698,7 +3699,7 @@ export class Widget extends StateManaged {
       if(thisType == 'card')
         pileSnapRange = thisOnPileCreation && thisOnPileCreation.pileSnapRange !== undefined ? thisOnPileCreation.pileSnapRange : defaultPileSnapRange;
 
-      if(widget.get('parent') == thisParent && widget.pileSnapPositions().some(p=>Math.abs(p[0]-thisX) < pileSnapRange && Math.abs(p[1]-thisY) < pileSnapRange)) {
+      if(widget.get('parent') == thisParent && widget.isPileSnapTarget(thisX, thisY, pileSnapRange)) {
         if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreationJSON)
           continue;
 
@@ -3731,8 +3732,10 @@ export class Widget extends StateManaged {
           if(isFull(widget, this.children().length))
             continue;
           for(const w of this.children().reverse()) {
-            await w.set('parent', widget.get('id'));
+            // z before parent: a pile that spreads its cards lays them out by z,
+            // so the card has to have its final one when it arrives
             await w.bringToFront();
+            await w.set('parent', widget.get('id'));
           }
           break;
         }

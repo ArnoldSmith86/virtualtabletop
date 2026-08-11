@@ -90,15 +90,48 @@ describe('a pile spreading its cards', () => {
     expect(pile.spreadExtent('X')).toBe(100);
   });
 
-  test('takes a card dropped onto any of its spread cards, not just onto its corner', async () => {
-    const pile = withCards(createPile({ id: 'snap', x: 10, y: 20, stackOffsetY: 40 }).get('id'), 3);
+  test('leaves the cards of an ordinary pile where they were put', async () => {
+    const pile = withCards(createPile({ id: 'heap' }).get('id'), 3);
+    for(let i=0; i<3; ++i)
+      await widgets.get(`heap-card-${i}`).set('y', 30+i);
     await pile.arrangeChildren();
-    expect(pile.pileSnapPositions()).toEqual([ [ 10, 100 ], [ 10, 60 ], [ 10, 20 ] ]);
+    expect(positions('heap', 3)).toEqual([ 30, 31, 32 ]);
   });
 
-  test('offers only its own position while its cards lie on top of each other', () => {
+  test('grows to the size of its spread, so its box is the room its cards take', async () => {
+    const pile = withCards(createPile({ id: 'box', stackOffsetY: 40 }).get('id'), 3);
+    await pile.arrangeChildren();
+    expect([ pile.get('width'), pile.get('height') ]).toEqual([ 100, 180 ]);
+  });
+
+  test('collects its cards and shrinks back when it stops spreading', async () => {
+    const pile = withCards(createPile({ id: 'shrink', stackOffsetY: 40 }).get('id'), 3);
+    await pile.arrangeChildren();
+    await pile.set('stackOffsetY', 0);
+    expect(positions('shrink', 3)).toEqual([ 0, 0, 0 ]);
+    expect([ pile.get('width'), pile.get('height') ]).toEqual([ 100, 100 ]);
+  });
+
+  test('spreads towards its corner with a negative offset, keeping its cards in its box', async () => {
+    const pile = withCards(createPile({ id: 'up', stackOffsetY: -40 }).get('id'), 3);
+    await pile.arrangeChildren();
+    expect(positions('up', 3)).toEqual([ 80, 40, 0 ]);
+    expect(pile.get('height')).toBe(180);
+  });
+
+  test('takes a card dropped onto any part of its spread, not just onto its corner', async () => {
+    const pile = withCards(createPile({ id: 'snap', x: 10, y: 20, stackOffsetY: 40 }).get('id'), 3);
+    await pile.arrangeChildren();
+    expect(pile.isPileSnapTarget(10, 100, 10)).toBe(true);
+    expect(pile.isPileSnapTarget(10, 65, 10)).toBe(true);
+    expect(pile.isPileSnapTarget(10, 111, 10)).toBe(false);
+    expect(pile.isPileSnapTarget(30, 60, 10)).toBe(false);
+  });
+
+  test('takes a card dropped onto its corner only while its cards lie on top of each other', () => {
     const pile = withCards(createPile({ id: 'nosnap', x: 10, y: 20 }).get('id'), 3);
-    expect(pile.pileSnapPositions()).toEqual([ [ 10, 20 ] ]);
+    expect(pile.isPileSnapTarget(12, 22, 10)).toBe(true);
+    expect(pile.isPileSnapTarget(10, 60, 10)).toBe(false);
   });
 });
 

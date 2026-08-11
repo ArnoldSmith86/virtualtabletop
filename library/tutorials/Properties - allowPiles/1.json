@@ -74,7 +74,6 @@
     "id": "holder1P0",
     "type": "pile",
     "parent": "holder1",
-    "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
@@ -200,7 +199,6 @@
     "id": "holder2P0",
     "type": "pile",
     "parent": "holder2",
-    "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
@@ -313,7 +311,7 @@
     "type": "holder",
     "x": 1060,
     "y": 250,
-    "width": 420,
+    "width": 460,
     "height": 190,
     "dropTarget": {
       "type": "card"
@@ -326,9 +324,8 @@
     "id": "holder3P0",
     "type": "pile",
     "parent": "holder3",
-    "x": 4,
     "y": 4,
-    "width": 103,
+    "width": 143,
     "height": 160,
     "z": 1,
     "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
@@ -351,7 +348,7 @@
     "cardType": "S 05",
     "parent": "holder3P0",
     "activeFace": 1,
-    "x": 0,
+    "x": 40,
     "y": 0,
     "z": 2
   },
@@ -359,9 +356,9 @@
     "id": "holder3P1",
     "type": "pile",
     "parent": "holder3",
-    "x": 107,
+    "x": 147,
     "y": 4,
-    "width": 103,
+    "width": 183,
     "height": 160,
     "z": 2,
     "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
@@ -384,7 +381,7 @@
     "cardType": "S 08",
     "parent": "holder3P1",
     "activeFace": 1,
-    "x": 0,
+    "x": 40,
     "y": 0,
     "z": 2
   },
@@ -395,7 +392,7 @@
     "cardType": "S 09",
     "parent": "holder3P1",
     "activeFace": 1,
-    "x": 0,
+    "x": 80,
     "y": 0,
     "z": 3
   },
@@ -406,7 +403,7 @@
     "cardType": "S 2J",
     "parent": "holder3",
     "activeFace": 1,
-    "x": 210,
+    "x": 330,
     "y": 4,
     "z": 3
   },
@@ -417,7 +414,7 @@
     "width": 440,
     "height": 110,
     "css": "font-size: 22px",
-    "html": "Neither of them given: the piles are placed flush, one right after the other. A single card between them is still fanned by the holder's <b>stackOffsetX</b> - the piles are what the piles spacing applies to.",
+    "html": "Neither of them given: the piles are placed flush, one right after the other, and the holder's <b>stackOffsetX</b> fans the cards inside each of them - the piles are what the piles spacing applies to.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -441,7 +438,6 @@
     "id": "holder4P0",
     "type": "pile",
     "parent": "holder4",
-    "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
@@ -474,7 +470,6 @@
     "id": "holder4P1",
     "type": "pile",
     "parent": "holder4",
-    "x": 4,
     "y": 174,
     "width": 103,
     "height": 160,
@@ -573,8 +568,8 @@
       "S 04": {
         "image": "/i/cards-default/4S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "04",
         "rankA": "04",
         "rankFixed": "04 S"
@@ -582,8 +577,8 @@
       "S 05": {
         "image": "/i/cards-default/5S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "05",
         "rankA": "05",
         "rankFixed": "05 S"
@@ -591,8 +586,8 @@
       "S 06": {
         "image": "/i/cards-default/6S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "06",
         "rankA": "06",
         "rankFixed": "06 S"
@@ -600,8 +595,8 @@
       "S 07": {
         "image": "/i/cards-default/7S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "07",
         "rankA": "07",
         "rankFixed": "07 S"
@@ -609,8 +604,8 @@
       "S 08": {
         "image": "/i/cards-default/8S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "08",
         "rankA": "08",
         "rankFixed": "08 S"
@@ -618,8 +613,8 @@
       "S 09": {
         "image": "/i/cards-default/9S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "09",
         "rankA": "09",
         "rankFixed": "09 S"
@@ -627,8 +622,8 @@
       "S 10": {
         "image": "/i/cards-default/TS.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "10",
         "rankA": "10",
         "rankFixed": "10 S"
@@ -636,8 +631,8 @@
       "S 2J": {
         "image": "/i/cards-default/JS.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "2J",
         "rankA": "2J",
         "rankFixed": "2J S"

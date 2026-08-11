@@ -75,10 +75,9 @@
     "id": "holder1P",
     "type": "pile",
     "parent": "holder1",
-    "x": 4,
     "y": 4,
     "width": 103,
-    "height": 160,
+    "height": 400,
     "z": 1,
     "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
   },
@@ -177,7 +176,7 @@
     "type": "holder",
     "x": 560,
     "y": 250,
-    "width": 200,
+    "width": 250,
     "height": 430,
     "dropTarget": {
       "type": "card"
@@ -192,10 +191,9 @@
     "id": "holder2P",
     "type": "pile",
     "parent": "holder2",
-    "x": 4,
     "y": 4,
     "width": 103,
-    "height": 160,
+    "height": 256,
     "z": 1,
     "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
   },
@@ -217,8 +215,8 @@
     "cardType": "S 05",
     "parent": "holder2P",
     "activeFace": 1,
-    "x": 0.0,
-    "y": 4.0,
+    "x": 0,
+    "y": 4,
     "z": 2
   },
   "holder2Pc2": {
@@ -228,8 +226,8 @@
     "cardType": "S 06",
     "parent": "holder2P",
     "activeFace": 1,
-    "x": 0.0,
-    "y": 8.0,
+    "x": 0,
+    "y": 8,
     "z": 3
   },
   "holder2Pc3": {
@@ -239,8 +237,8 @@
     "cardType": "S 07",
     "parent": "holder2P",
     "activeFace": 1,
-    "x": 0.0,
-    "y": 12.0,
+    "x": 0,
+    "y": 12,
     "z": 4
   },
   "holder2Pc4": {
@@ -250,8 +248,8 @@
     "cardType": "S 08",
     "parent": "holder2P",
     "activeFace": 1,
-    "x": 0.0,
-    "y": 16.0,
+    "x": 0,
+    "y": 16,
     "z": 5
   },
   "holder2Pc5": {
@@ -261,8 +259,8 @@
     "cardType": "S 09",
     "parent": "holder2P",
     "activeFace": 1,
-    "x": 0.0,
-    "y": 56.0,
+    "x": 0,
+    "y": 56,
     "z": 6
   },
   "holder2Pc6": {
@@ -272,8 +270,8 @@
     "cardType": "S 10",
     "parent": "holder2P",
     "activeFace": 1,
-    "x": 0.0,
-    "y": 96.0,
+    "x": 0,
+    "y": 96,
     "z": 7
   },
   "text2": {
@@ -309,9 +307,8 @@
     "id": "holder3P",
     "type": "pile",
     "parent": "holder3",
-    "x": 4,
     "y": 4,
-    "width": 103,
+    "width": 169,
     "height": 160,
     "z": 1,
     "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
@@ -336,8 +333,8 @@
     "cardType": "S 05",
     "parent": "holder3P",
     "activeFace": 1,
-    "x": 3.0,
-    "y": 0.0,
+    "x": 3,
+    "y": 0,
     "z": 2
   },
   "holder3Pc2": {
@@ -347,8 +344,8 @@
     "cardType": "S 06",
     "parent": "holder3P",
     "activeFace": 1,
-    "x": 6.0,
-    "y": 0.0,
+    "x": 6,
+    "y": 0,
     "z": 3
   },
   "holder3Pc3": {
@@ -358,8 +355,8 @@
     "cardType": "S 07",
     "parent": "holder3P",
     "activeFace": 1,
-    "x": 36.0,
-    "y": 0.0,
+    "x": 36,
+    "y": 0,
     "z": 4
   },
   "holder3Pc4": {
@@ -369,8 +366,8 @@
     "cardType": "S 08",
     "parent": "holder3P",
     "activeFace": 1,
-    "x": 66.0,
-    "y": 0.0,
+    "x": 66,
+    "y": 0,
     "z": 5
   },
   "text3": {
@@ -440,8 +437,8 @@
       "S 04": {
         "image": "/i/cards-default/4S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "04",
         "rankA": "04",
         "rankFixed": "04 S"
@@ -449,8 +446,8 @@
       "S 05": {
         "image": "/i/cards-default/5S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "05",
         "rankA": "05",
         "rankFixed": "05 S"
@@ -458,8 +455,8 @@
       "S 06": {
         "image": "/i/cards-default/6S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "06",
         "rankA": "06",
         "rankFixed": "06 S"
@@ -467,8 +464,8 @@
       "S 07": {
         "image": "/i/cards-default/7S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "07",
         "rankA": "07",
         "rankFixed": "07 S"
@@ -476,8 +473,8 @@
       "S 08": {
         "image": "/i/cards-default/8S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "08",
         "rankA": "08",
         "rankFixed": "08 S"
@@ -485,8 +482,8 @@
       "S 09": {
         "image": "/i/cards-default/9S.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "09",
         "rankA": "09",
         "rankFixed": "09 S"
@@ -494,8 +491,8 @@
       "S 10": {
         "image": "/i/cards-default/TS.svg",
         "suit": "S",
-        "suitColor": "\u2660",
-        "suitAlt": "3\u2660",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
         "rank": "10",
         "rankA": "10",
         "rankFixed": "10 S"

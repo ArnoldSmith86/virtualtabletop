@@ -67,6 +67,23 @@ class Holder extends ImageWidget {
     return this.arrangedChildren().filter(c=>!c.get('owner') || c.get('owner') == playerName);
   }
 
+  // The pile or card of this holder that a widget dropped at the given spot lands
+  // on, which is the one it is meant to join. A pile counts across its whole box:
+  // a card dropped anywhere on a fanned pile belongs to that pile, and hitting
+  // the corner of it - all a pile outside a holder takes - would be guesswork
+  // where the holder decides how far apart the piles sit. What aims the drop is
+  // the card at the corner of what is being dragged, so that a long pile dropped
+  // onto a short one still lands where its first card does.
+  arrangedChildAt(child, x, y) {
+    const aiming = child.get('type') == 'pile' && child.children().length ? child.children()[0] : child;
+    const pointX = x + aiming.get('width' )/2;
+    const pointY = y + aiming.get('height')/2;
+    return this.arrangedChildrenOwned().filter(c=>c != child
+      && pointX >= c.get('x') && pointX < c.get('x') + c.spreadExtent('X')
+      && pointY >= c.get('y') && pointY < c.get('y') + c.spreadExtent('Y')
+    ).sort((a, b)=>b.get('z') - a.get('z'))[0] || null;
+  }
+
   childrenFilter(children, acceptPiles) {
     return children.filter(w=>{
       if(acceptPiles && w.get('type') == 'pile')
@@ -201,10 +218,10 @@ class Holder extends ImageWidget {
       // Where the widget lands decides whether it piles up with what is already
       // there, so that has to be settled before the holder pulls it into its
       // slot: from there on it sits a whole slot away from its neighbours and
-      // could never combine with any of them. A dropped pile is left alone -
-      // it was dropped as a pile and stays one.
-      if(this.get('allowPiles') && child.get('type') != 'pile') {
-        await child.setPosition(x, y, child.get('z'));
+      // could never combine with any of them.
+      const target = this.get('allowPiles') ? this.arrangedChildAt(child, x, y) : null;
+      if(target) {
+        await child.setPosition(target.get('x'), target.get('y'), child.get('z'));
         await child.updatePiles();
       }
       await this.receiveCard(child, [ x, y ]);
