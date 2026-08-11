@@ -127,15 +127,23 @@ class Holder extends ImageWidget {
     return p;
   }
 
-  async dispenseCard(card) {
+  // isLeaving is set by checkParent, which only calls this once the card really
+  // has left the holder (dropped elsewhere or dragged off it).
+  async dispenseCard(card, isLeaving=false) {
     // in a multipleSpread holder a card often just moves between groups (drag
     // between fans, regroupBy, merges) - its new parent is still this holder or a
     // pile inside it. It is not leaving the holder, so onLeave and leaveRoutine
     // must not fire (they would e.g. flip the card face down).
     let stillInside = false;
-    if(this.get('layout') == 'multipleSpread') {
+    if(this.get('layout') == 'multipleSpread' && !isLeaving) {
       const newParent = card.get('parent');
-      stillInside = newParent == this.get('id') || widgets.has(newParent) && widgets.get(newParent).get('parent') == this.get('id');
+      stillInside = newParent == this.get('id') || widgets.has(newParent) && widgets.get(newParent).get('parent') == this.get('id')
+        // picking a card up out of one of the groups detaches it from that pile
+        // before it is dropped, which is what makes the pile dispense it. The
+        // drag remembers the holder it came from in currentParent, so a card in
+        // that state is still inside: if it does end up somewhere else, that is
+        // what the isLeaving call from checkParent is for.
+        || card.currentParent === this;
     }
 
     let toProcess = [ card ];

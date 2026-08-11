@@ -206,30 +206,59 @@ describe('idempotence', () => {
 
 // Every save carries the version it was written with and is migrated on load,
 // so that a change to what a property means never changes what an existing game
-// does. This covers the dragLimit sides, which used to be clamped with
-// Math.max(null, x) - i.e. at 0 - where they are now read as "no limit".
-function migrated(widget, version = VERSION - 1) {
+// does. Each migration is exercised from the version right before the one that
+// introduced it.
+const BEFORE_DRAG_LIMIT_NULL_SIDES = 21;
+const BEFORE_HOLDER_LAYOUT = 22;
+
+function migrated(widget, version) {
   const state = { _meta: { version }, w: Object.assign({ id: 'w', type: 'basic' }, widget) };
   return FileUpdater(state).w;
 }
 
+// The dragLimit sides used to be clamped with Math.max(null, x) - i.e. at 0 -
+// where they are now read as "no limit".
 describe('the dragLimit sides written as null', () => {
   test('become the 0 they always clamped to', () => {
-    expect(migrated({ dragLimit: { minX: null, maxY: 10 } }).dragLimit).toEqual({ minX: 0, maxY: 10 });
-    expect(migrated({ dragLimit: { minX: null, maxX: null, minY: null, maxY: null } }).dragLimit)
+    expect(migrated({ dragLimit: { minX: null, maxY: 10 } }, BEFORE_DRAG_LIMIT_NULL_SIDES).dragLimit)
+      .toEqual({ minX: 0, maxY: 10 });
+    expect(migrated({ dragLimit: { minX: null, maxX: null, minY: null, maxY: null } }, BEFORE_DRAG_LIMIT_NULL_SIDES).dragLimit)
       .toEqual({ minX: 0, maxX: 0, minY: 0, maxY: 0 });
   });
 
   test('leave every other limit as it was written', () => {
-    expect(migrated({ dragLimit: { minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' } }).dragLimit)
+    expect(migrated({ dragLimit: { minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' } }, BEFORE_DRAG_LIMIT_NULL_SIDES).dragLimit)
       .toEqual({ minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' });
-    expect(migrated({ dragLimit: {} }).dragLimit).toEqual({});
-    expect(migrated({ dragLimit: 'nonsense' }).dragLimit).toBe('nonsense');
-    expect(migrated({}).dragLimit).toBe(undefined);
+    expect(migrated({ dragLimit: {} }, BEFORE_DRAG_LIMIT_NULL_SIDES).dragLimit).toEqual({});
+    expect(migrated({ dragLimit: 'nonsense' }, BEFORE_DRAG_LIMIT_NULL_SIDES).dragLimit).toBe('nonsense');
+    expect(migrated({}, BEFORE_DRAG_LIMIT_NULL_SIDES).dragLimit).toBe(undefined);
   });
 
   test('are left alone in a file that was written with the new meaning', () => {
     const state = { _meta: { version: VERSION }, w: { id: 'w', type: 'basic', dragLimit: { minX: null } } };
     expect(FileUpdater(state).w.dragLimit).toEqual({ minX: null });
+  });
+});
+
+// Holders describe their arrangement with the high-level layout property now, so
+// an explicit alignChildren on one is rewritten as the layout that means the same
+// thing. Piles keep the property.
+describe('alignChildren on a holder', () => {
+  test('becomes the equivalent layout', () => {
+    expect(migrated({ type: 'holder', alignChildren: false }, BEFORE_HOLDER_LAYOUT))
+      .toEqual({ id: 'w', type: 'holder', layout: 'freeform' });
+    expect(migrated({ type: 'holder', alignChildren: true }, BEFORE_HOLDER_LAYOUT))
+      .toEqual({ id: 'w', type: 'holder' });
+  });
+
+  test('does not overwrite a layout the holder already declares', () => {
+    expect(migrated({ type: 'holder', alignChildren: false, layout: 'grid' }, BEFORE_HOLDER_LAYOUT))
+      .toEqual({ id: 'w', type: 'holder', layout: 'grid' });
+  });
+
+  test('stays untouched on a pile and in a file written with layout', () => {
+    expect(migrated({ type: 'pile', alignChildren: false }, BEFORE_HOLDER_LAYOUT).alignChildren).toBe(false);
+    const state = { _meta: { version: VERSION }, w: { id: 'w', type: 'holder', alignChildren: false } };
+    expect(FileUpdater(state).w.alignChildren).toBe(false);
   });
 });

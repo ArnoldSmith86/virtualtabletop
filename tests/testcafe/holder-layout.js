@@ -91,6 +91,36 @@ test('MOVE position applies within the same holder', async t => {
   await t.expect(order).eql([ 'c1', 'c2', 'c3', 'c4', 'c5', 'c6' ]);
 });
 
+// Rearranging cards inside a multipleSpread holder must not run its onLeave: the
+// drag takes the card out of its group before it is dropped, and a hand that
+// flips cards face up on entry would hand it back face down. A card that really
+// is dragged off the holder still gets onLeave.
+test('rearranging within a multipleSpread holder does not apply onLeave', async t => {
+  const state = {
+    deck1: deck,
+    hand: { id: 'hand', type: 'holder', x: 500, y: 0, width: 600, height: 200,
+      layout: 'multipleSpread', stackOffsetX: 25,
+      onEnter: { activeFace: 1 }, onLeave: { activeFace: 0 } },
+    group: { id: 'group', type: 'pile', parent: 'hand', x: 4, y: 4, width: 153, height: 160 },
+    c1: { ...card('c1', 'group', 1), activeFace: 1 },
+    c2: { ...card('c2', 'group', 2), x: 25, activeFace: 1 },
+    c3: { ...card('c3', 'group', 3), x: 50, activeFace: 1 }
+  };
+  await setRoomState(state);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // out of the group, but dropped in an empty spot of the same holder
+  await t.drag('#w_c3', 300, 0);
+  let result = await waitForState(s=>s.c3.parent == 'hand');
+  await t.expect(result.c3.activeFace).eql(1, 'a card regrouped inside the hand stays face up');
+
+  // off the holder entirely - this one does leave
+  await t.drag('#w_c3', 0, 400);
+  result = await waitForState(s=>!s.c3.parent);
+  await t.expect(result.c3.activeFace || 0).eql(0, 'a card dragged out of the hand is flipped by onLeave');
+});
+
 // In a vertical multipleSpread fan, dropping over the second card inserts at
 // that y-derived fan position. This also exercises the vertical shadow slot.
 test('layout multipleSpread inserts within a vertical fan', async t => {

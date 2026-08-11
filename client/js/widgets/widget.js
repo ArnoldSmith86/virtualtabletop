@@ -465,7 +465,7 @@ export class Widget extends StateManaged {
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
-        await this.currentParent.dispenseCard(this);
+        await this.currentParent.dispenseCard(this, true);
       delete this.currentParent;
     }
   }
