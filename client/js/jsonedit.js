@@ -543,8 +543,10 @@ const jeCommands = [
     description: 'Replace the named collection with [] so you can list widget IDs directly',
     context: '^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|FOREACH|GET|LABEL|MOVE|ROTATE|SET|SHUFFLE|SORT|TIMER)\\) ↦ collection|^.*\\((CLONE|SELECT|SWAPHANDS|TURN)\\) ↦ source|^.*\\(RECALL\\) ↦ excludeCollection',
     show: function() {
+      // the key check keeps the command hidden on the elements of an already anonymous collection
+      const key = jeGetLastKey();
       const value = jeGetValue();
-      return value && typeof value[jeGetLastKey()] == 'string';
+      return typeof key == 'string' && value && typeof value[key] == 'string';
     },
     call: async function() {
       jeGetValue()[jeGetLastKey()] = '###SELECT ME###';
@@ -3673,8 +3675,7 @@ function jeShowCommands() {
           jeTabSearchHighlightIndex >= 0 &&
           commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
         const highlightClass = shouldHighlight ? ' jeHighlight' : '';
-        const description = typeof command.description == 'function' ? command.description() : command.description;
-        commandText += `<button id="${command.id}" class="${highlightClass}"${description ? ` title="${html(description)}"` : ''}>${name}</button>\n`;
+        commandText += `<button id="${command.id}" class="${highlightClass}"${command.description ? ` title="${html(command.description)}"` : ''}>${name}</button>\n`;
         commandIndex++;
       }
     }
