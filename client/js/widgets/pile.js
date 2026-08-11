@@ -2,6 +2,13 @@ import { viewportConfig } from '../calculateLayout.js';
 
 const defaultPileSnapRange = 10;
 
+// A pile that sits in a holder arranging piles is laid out like the holder lays
+// out its own cards, unless the pile says otherwise.
+const pileInheritedProperties = [ 'stackOffsetX', 'stackOffsetY', 'spreadMin' ];
+
+// What is left of the stack offset for the cards spreadMin does not cover.
+const compressedSpreadFactor = 0.1;
+
 export class Pile extends Widget {
   constructor(id) {
     super(id);
@@ -20,6 +27,9 @@ export class Pile extends Widget {
       text: null,
       showLimit: false,
       pileSnapRange: defaultPileSnapRange,
+      stackOffsetX: 0,
+      stackOffsetY: 0,
+      spreadMin: null,
 
       handleCSS: '',
       handleSize: 'auto',
@@ -246,11 +256,91 @@ export class Pile extends Widget {
   getDefaultValue(property) {
     if(property == 'onPileCreation' && this.children().length)
       return this.children()[0].get('onPileCreation');
+    if(pileInheritedProperties.indexOf(property) != -1) {
+      const holder = this.holderArrangingPiles();
+      if(holder)
+        return holder.get(property);
+    }
     return super.getDefaultValue(property);
+  }
+
+  // The holder this pile is arranged in, if it is one that arranges piles - the
+  // parent this pile takes its layout from.
+  holderArrangingPiles() {
+    const parent = this.get('parent');
+    if(parent && widgets.has(parent)) {
+      const holder = widgets.get(parent);
+      if(holder.get('type') == 'holder' && holder.get('allowPiles'))
+        return holder;
+    }
+    return null;
+  }
+
+  // Where the cards of the pile sit, bottom card first. Without a stack offset
+  // they all lie on the same spot, which is what a pile normally looks like.
+  // spreadMin keeps the full offset for the topmost cards only and squeezes
+  // everything below them together, so a long pile stays readable without
+  // growing across the whole table.
+  async arrangeChildren(notifyHolder=true) {
+    if(this.spreadsCards()) {
+      const children = this.children().reverse();
+      let x = this.get('dropOffsetX');
+      let y = this.get('dropOffsetY');
+
+      for(let i=0; i<children.length; ++i) {
+        await children[i].setPosition(x, y, children[i].get('z'));
+        x += this.get('stackOffsetX') * this.spreadFactor(i, children.length);
+        y += this.get('stackOffsetY') * this.spreadFactor(i, children.length);
+      }
+    }
+
+    // how much room the pile takes up decides where the next pile in the holder
+    // begins, so the holder lays its children out again
+    const holder = notifyHolder ? this.holderArrangingPiles() : null;
+    if(holder)
+      await holder.receiveCard(null);
+  }
+
+  spreadsCards() {
+    return !!(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')));
+  }
+
+  pileSnapPositions() {
+    const children = this.spreadsCards() ? this.children() : [];
+    if(!children.length)
+      return super.pileSnapPositions();
+    return children.map(c=>[ this.get('x') + c.get('x'), this.get('y') + c.get('y') ]);
+  }
+
+  // The share of the stack offset used for the step after card i, counting the
+  // bottom card as 0: the topmost spreadMin cards keep the offset, the rest of
+  // the pile is compressed.
+  spreadFactor(i, count) {
+    const spreadMin = this.get('spreadMin');
+    return spreadMin === null || count - i <= spreadMin ? 1 : compressedSpreadFactor;
+  }
+
+  spreadExtent(axis) {
+    const children = this.children();
+    if(!children.length || !this.get('alignChildren'))
+      return super.spreadExtent(axis);
+
+    let extent = 0;
+    for(let i=0; i<children.length-1; ++i)
+      extent += this.get('stackOffset' + axis) * this.spreadFactor(i, children.length);
+    return extent + children[0].get(axis == 'X' ? 'width' : 'height');
+  }
+
+  async onChildAddAlign(child, oldParentID) {
+    if(!this.spreadsCards())
+      return await super.onChildAddAlign(child, oldParentID);
+    await this.arrangeChildren();
   }
 
   async onChildRemove(child) {
     await super.onChildRemove(child);
+    if(this.children().length > 1)
+      await this.arrangeChildren();
     if(this.children().length == 1) {
       const c = this.children()[0];
       const p = this.get('parent');
@@ -277,6 +367,10 @@ export class Pile extends Widget {
         await c.set('owner', newValue);
     }
     await super.onPropertyChange(property, oldValue, newValue);
+    // 'parent' is in here because the layout of a pile can come from the holder
+    // it is arranged in, so leaving one or entering one changes it
+    if([ 'stackOffsetX', 'stackOffsetY', 'spreadMin', 'alignChildren', 'parent' ].indexOf(property) != -1 && this.children().length)
+      await this.arrangeChildren();
   }
 
   supportsPiles() {

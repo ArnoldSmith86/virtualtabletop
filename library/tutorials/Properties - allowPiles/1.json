@@ -1,0 +1,776 @@
+{
+  "_meta": {
+    "version": 22,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Properties - allowPiles",
+      "image": "/assets/705980845_4054",
+      "rules": "",
+      "bgg": "",
+      "year": "2026",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1786468704000,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Spacing",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "css": "font-size: 60px;text-align: center",
+    "text": "allowPiles: Spacing",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "css": "font-size: 25px",
+    "html": "Where the next pile begins is up to the holder. <b>pilesGapX</b> and <b>pilesGapY</b> start it behind the cards of the one before it, plus that many pixels - so a pile that grows pushes the rest along. <b>pilesOffsetX</b> and <b>pilesOffsetY</b> put it at a fixed distance from the previous one instead, no matter how many cards it holds. A gap wins over an offset on the same axis, and with neither of them the piles are placed flush, one right after the other.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3
+  },
+  "holder1": {
+    "id": "holder1",
+    "type": "holder",
+    "x": 60,
+    "y": 250,
+    "width": 420,
+    "height": 190,
+    "dropTarget": {
+      "type": "card"
+    },
+    "allowPiles": true,
+    "pilesGapX": 20,
+    "color": "#d8f0dc"
+  },
+  "holder1P0": {
+    "id": "holder1P0",
+    "type": "pile",
+    "parent": "holder1",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 1,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder1P0c0": {
+    "id": "holder1P0c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 04",
+    "parent": "holder1P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "holder1P0c1": {
+    "id": "holder1P0c1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 05",
+    "parent": "holder1P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 2
+  },
+  "holder1P1": {
+    "id": "holder1P1",
+    "type": "pile",
+    "parent": "holder1",
+    "x": 127,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 2,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder1P1c0": {
+    "id": "holder1P1c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 07",
+    "parent": "holder1P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "holder1P1c1": {
+    "id": "holder1P1c1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 08",
+    "parent": "holder1P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 2
+  },
+  "holder1P1c2": {
+    "id": "holder1P1c2",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 09",
+    "parent": "holder1P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 3
+  },
+  "holder1P2": {
+    "id": "holder1P2",
+    "type": "pile",
+    "parent": "holder1",
+    "x": 250,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 3,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder1P2c0": {
+    "id": "holder1P2c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 10",
+    "parent": "holder1P2",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "text1": {
+    "id": "text1",
+    "x": 40,
+    "y": 460,
+    "width": 440,
+    "height": 110,
+    "css": "font-size: 22px",
+    "html": "<b>pilesGapX</b> <i>20</i> - every pile starts 20 pixels behind the end of the one before it. Drag a card from one pile onto another and watch the row re-space itself.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3
+  },
+  "holder2": {
+    "id": "holder2",
+    "type": "holder",
+    "x": 560,
+    "y": 250,
+    "width": 420,
+    "height": 190,
+    "dropTarget": {
+      "type": "card"
+    },
+    "allowPiles": true,
+    "pilesOffsetX": 60,
+    "color": "#d8dcf0"
+  },
+  "holder2P0": {
+    "id": "holder2P0",
+    "type": "pile",
+    "parent": "holder2",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 1,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder2P0c0": {
+    "id": "holder2P0c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 04",
+    "parent": "holder2P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "holder2P0c1": {
+    "id": "holder2P0c1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 05",
+    "parent": "holder2P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 2
+  },
+  "holder2P1": {
+    "id": "holder2P1",
+    "type": "pile",
+    "parent": "holder2",
+    "x": 64,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 2,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder2P1c0": {
+    "id": "holder2P1c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 07",
+    "parent": "holder2P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "holder2P1c1": {
+    "id": "holder2P1c1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 08",
+    "parent": "holder2P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 2
+  },
+  "holder2P1c2": {
+    "id": "holder2P1c2",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 09",
+    "parent": "holder2P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 3
+  },
+  "holder2P2": {
+    "id": "holder2P2",
+    "type": "pile",
+    "parent": "holder2",
+    "x": 124,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 3,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder2P2c0": {
+    "id": "holder2P2c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 10",
+    "parent": "holder2P2",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "text2": {
+    "id": "text2",
+    "x": 540,
+    "y": 460,
+    "width": 440,
+    "height": 110,
+    "css": "font-size: 22px",
+    "html": "<b>pilesOffsetX</b> <i>60</i> - a fixed 60 pixels from one pile to the next, so the piles overlap like a fan and stay where they are however many cards they hold.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3
+  },
+  "holder3": {
+    "id": "holder3",
+    "type": "holder",
+    "x": 1060,
+    "y": 250,
+    "width": 420,
+    "height": 190,
+    "dropTarget": {
+      "type": "card"
+    },
+    "allowPiles": true,
+    "stackOffsetX": 40,
+    "color": "#f0e8d8"
+  },
+  "holder3P0": {
+    "id": "holder3P0",
+    "type": "pile",
+    "parent": "holder3",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 1,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder3P0c0": {
+    "id": "holder3P0c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 04",
+    "parent": "holder3P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "holder3P0c1": {
+    "id": "holder3P0c1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 05",
+    "parent": "holder3P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 2
+  },
+  "holder3P1": {
+    "id": "holder3P1",
+    "type": "pile",
+    "parent": "holder3",
+    "x": 107,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 2,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder3P1c0": {
+    "id": "holder3P1c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 07",
+    "parent": "holder3P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "holder3P1c1": {
+    "id": "holder3P1c1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 08",
+    "parent": "holder3P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 2
+  },
+  "holder3P1c2": {
+    "id": "holder3P1c2",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 09",
+    "parent": "holder3P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 3
+  },
+  "holder3c": {
+    "id": "holder3c",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 2J",
+    "parent": "holder3",
+    "activeFace": 1,
+    "x": 210,
+    "y": 4,
+    "z": 3
+  },
+  "text3": {
+    "id": "text3",
+    "x": 1040,
+    "y": 460,
+    "width": 440,
+    "height": 110,
+    "css": "font-size: 22px",
+    "html": "Neither of them given: the piles are placed flush, one right after the other. A single card between them is still fanned by the holder's <b>stackOffsetX</b> - the piles are what the piles spacing applies to.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3
+  },
+  "holder4": {
+    "id": "holder4",
+    "type": "holder",
+    "x": 110,
+    "y": 640,
+    "width": 200,
+    "height": 344,
+    "dropTarget": {
+      "type": "card"
+    },
+    "allowPiles": true,
+    "pilesGapY": 10,
+    "color": "#d8f0dc"
+  },
+  "holder4P0": {
+    "id": "holder4P0",
+    "type": "pile",
+    "parent": "holder4",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "z": 1,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder4P0c0": {
+    "id": "holder4P0c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 04",
+    "parent": "holder4P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "holder4P0c1": {
+    "id": "holder4P0c1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 05",
+    "parent": "holder4P0",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 2
+  },
+  "holder4P1": {
+    "id": "holder4P1",
+    "type": "pile",
+    "parent": "holder4",
+    "x": 4,
+    "y": 174,
+    "width": 103,
+    "height": 160,
+    "z": 2,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+  },
+  "holder4P1c0": {
+    "id": "holder4P1c0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 07",
+    "parent": "holder4P1",
+    "activeFace": 1,
+    "x": 0,
+    "y": 0,
+    "z": 1
+  },
+  "text4": {
+    "id": "text4",
+    "x": 340,
+    "y": 660,
+    "width": 460,
+    "height": 160,
+    "css": "font-size: 22px",
+    "html": "Every one of them has a <b>Y</b> twin: this holder uses <b>pilesGapY</b> <i>10</i> and stacks its piles downwards. The axis the piles are spaced out on is the axis the holder lines its children up along.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3
+  },
+  "holder5": {
+    "id": "holder5",
+    "type": "holder",
+    "x": 900,
+    "y": 640,
+    "width": 500,
+    "height": 190,
+    "dropTarget": {
+      "type": "card"
+    },
+    "allowPiles": true,
+    "pilesGapX": 40,
+    "color": "#d8f0dc"
+  },
+  "button1": {
+    "id": "button1",
+    "type": "button",
+    "x": 900,
+    "y": 860,
+    "width": 120,
+    "height": 50,
+    "text": "Deal 2 cards",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder5",
+        "count": 2
+      },
+      {
+        "func": "FLIP",
+        "holder": "holder5",
+        "face": 1
+      }
+    ]
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1050,
+    "y": 860,
+    "width": 400,
+    "height": 80,
+    "css": "font-size: 22px",
+    "html": "Deal a few piles in here to see the gap decide where each new one lands.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -3
+  },
+  "deckHolder": {
+    "id": "deckHolder",
+    "type": "holder",
+    "x": 1450,
+    "y": 769,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deckHolderD": {
+    "type": "deck",
+    "id": "deckHolderD",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "\u2660",
+        "suitAlt": "3\u2660",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+      }
+    }
+  },
+  "deckHolderB": {
+    "id": "deckHolderB",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      }
+    ]
+  },
+  "deckCard0": {
+    "id": "deckCard0",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 04",
+    "parent": "deckHolder",
+    "z": 10
+  },
+  "deckCard1": {
+    "id": "deckCard1",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 05",
+    "parent": "deckHolder",
+    "z": 11
+  },
+  "deckCard2": {
+    "id": "deckCard2",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 06",
+    "parent": "deckHolder",
+    "z": 12
+  },
+  "deckCard3": {
+    "id": "deckCard3",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 07",
+    "parent": "deckHolder",
+    "z": 13
+  },
+  "deckCard4": {
+    "id": "deckCard4",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 08",
+    "parent": "deckHolder",
+    "z": 14
+  },
+  "deckCard5": {
+    "id": "deckCard5",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 09",
+    "parent": "deckHolder",
+    "z": 15
+  },
+  "deckCard6": {
+    "id": "deckCard6",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 10",
+    "parent": "deckHolder",
+    "z": 16
+  },
+  "deckCard7": {
+    "id": "deckCard7",
+    "type": "card",
+    "deck": "deckHolderD",
+    "cardType": "S 2J",
+    "parent": "deckHolder",
+    "z": 17
+  }
+}

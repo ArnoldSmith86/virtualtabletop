@@ -2041,12 +2041,23 @@ export class Widget extends StateManaged {
 
         let collection;
         if((a.collection || a.from) && this.isValidID(a.to, problems)) {
+          // cards arrive one by one, but a holder that arranges piles puts what
+          // one MOVE brought in down as one pile rather than feeding them into
+          // the pile it already ends with
+          const groupMoved = async (target, moved)=>{
+            if(target.groupDroppedCards)
+              await target.groupDroppedCards(moved);
+          };
+
           if(a.from) {
             if(this.isValidID(a.from, problems)) {
               await w(a.from, async source=>await w(a.to, async target=>{
+                const moved = [];
                 for(const c of source.children().slice(0, count).reverse()) {
-                  await applyMove(source, target, c);
+                  if(await applyMove(source, target, c))
+                    moved.push(c);
                 }
+                await groupMoved(target, moved);
               }));
             } else {
               problems.push(`Source ${a.from} is invalid.`);
@@ -2054,8 +2065,14 @@ export class Widget extends StateManaged {
           } else if(collection = getCollection(a.collection)) {
             let offset = 0;
             await w(a.to, async target=>{
-              for(const c of collections[collection].slice(offset, offset+count))
-                offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
+              const moved = [];
+              for(const c of collections[collection].slice(offset, offset+count)) {
+                if(await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c)) {
+                  ++offset;
+                  moved.push(c);
+                }
+              }
+              await groupMoved(target, moved);
               if(target.get('type') == 'holder')
                 await target.updateAfterShuffle();
             });
@@ -3628,6 +3645,19 @@ export class Widget extends StateManaged {
     return this.gridConditions(grid).every(condition=>expressionCondition(condition, resolve));
   }
 
+  // How much room this widget takes up along one axis when a holder lines its
+  // children up. A pile spreading its cards needs more than its own box.
+  spreadExtent(axis) {
+    return this.get(axis == 'X' ? 'width' : 'height');
+  }
+
+  // The positions a widget dropped nearby combines with this one at. Normally
+  // that is just where it is; a pile that spreads its cards out offers one per
+  // card, so dropping onto the visible end of it joins the pile as well.
+  pileSnapPositions() {
+    return [ [ this.get('x'), this.get('y') ] ];
+  }
+
   supportsPiles() {
     return true;
   }
@@ -3668,7 +3698,7 @@ export class Widget extends StateManaged {
       if(thisType == 'card')
         pileSnapRange = thisOnPileCreation && thisOnPileCreation.pileSnapRange !== undefined ? thisOnPileCreation.pileSnapRange : defaultPileSnapRange;
 
-      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < pileSnapRange && Math.abs(widget.get('y')-thisY) < pileSnapRange) {
+      if(widget.get('parent') == thisParent && widget.pileSnapPositions().some(p=>Math.abs(p[0]-thisX) < pileSnapRange && Math.abs(p[1]-thisY) < pileSnapRange)) {
         if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreationJSON)
           continue;
 

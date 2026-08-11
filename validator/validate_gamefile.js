@@ -6,6 +6,7 @@ const validators = {
     idArray: (v,p)=>asArray(v).every(id=>p.widgets[id] || String(id).includes('$')) || `widgets ${asArray(v).filter(id=>!p.widgets[id] && !String(id).includes('$')).join(', ')} not found`,
     id: (v,p)=>p.widgets[v] || String(v).includes('$') || `widget '${v}' not found`,
     number: v=>typeof v === 'number' || 'number expected',
+    numberOrNull: v=>v === null || typeof v === 'number' || 'number or null expected',
     object: v=>typeof v === 'object' && v !== null || 'object expected',
     boolean: v=>typeof v === 'boolean' || 'boolean expected',
     string: v=>typeof v === 'string' || 'string expected',
@@ -206,7 +207,7 @@ const WIDGET_PROPERTIES = {
     },
     Holder: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset'
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', allowPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', pilesOffsetX: 'numberOrNull', pilesOffsetY: 'numberOrNull', pilesGapX: 'numberOrNull', pilesGapY: 'numberOrNull', spreadMin: 'numberOrNull', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset'
     },
     Label: {
         ...COMMON_PROPERTIES,
@@ -218,7 +219,7 @@ const WIDGET_PROPERTIES = {
     },
     Pile: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', showLimit: 'boolean', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
+        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', showLimit: 'boolean', pileSnapRange: 'any', stackOffsetX: 'number', stackOffsetY: 'number', spreadMin: 'numberOrNull', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
     },
     Scoreboard: {
         ...COMMON_PROPERTIES,
