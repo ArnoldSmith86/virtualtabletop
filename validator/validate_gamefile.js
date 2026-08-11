@@ -35,7 +35,7 @@ const validators = {
         return validateRoutine(v,context,propertyPath);
     },
     positiveNumber: v=>typeof v === 'number' && v >= 0 || 'positive number expected',
-    property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || p.customProperties.includes(v) || (p.customPropertyPatterns || []).some(pattern=>new RegExp(pattern).test(v)) || `property '${v}' is read but never set by any widget or routine`,
+    property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || p.customProperties.includes(v) || (p.customPropertyPatterns || []).some(pattern=>new RegExp(pattern).test(v)) || `'${v}' is read but nothing ever sets it - check for a typo`,
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
     any: v=>true

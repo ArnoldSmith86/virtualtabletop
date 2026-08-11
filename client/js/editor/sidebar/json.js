@@ -90,9 +90,13 @@ class DebugModule extends SidebarModule {
   }
 
   button_validationProblem(problem) {
-    if(!jeEnabled)
+    // selecting the widget is useful on its own - the JSON editor is not always open
+    const widget = widgets.get(problem.widget);
+    if(widget)
+      setSelection([widget]);
+
+    if(!jeEnabled || !widget || !problem.property.length)
       return;
-    setSelection([widgets.get(problem.widget)]);
     const property = [...problem.property];
     const lastProperty = property.pop();
     let currentParent = jeStateNow;
@@ -143,11 +147,12 @@ class DebugModule extends SidebarModule {
         <span class="validation-time"></span>
       </div>
       <div class="success">No validation problems found!</div>
+      <div class="validation-summary"></div>
       <table class="validation-table">
         <thead>
           <tr>
             <th>Widget</th>
-            <th>Property</th>
+            <th>Location</th>
             <th>Message</th>
           </tr>
         </thead>
@@ -199,23 +204,28 @@ class DebugModule extends SidebarModule {
       if (timeSpan) timeSpan.textContent = `Validation took ${Math.round(validationTime)}ms - click to run now`;
     }
     
+    const success = $('.staticErrors .success', this.moduleDOM);
+    const summary = $('.staticErrors .validation-summary', this.moduleDOM);
+    const table = $('.staticErrors .validation-table', this.moduleDOM);
+
     if (problems.length === 0) {
-      const success = $('.staticErrors .success', this.moduleDOM);
-      const table = $('.staticErrors .validation-table', this.moduleDOM);
       if (success) success.style.display = 'block';
+      if (summary) summary.style.display = 'none';
       if (table) table.style.display = 'none';
     } else {
-      const success = $('.staticErrors .success', this.moduleDOM);
-      const table = $('.staticErrors .validation-table', this.moduleDOM);
       const tbody = $('.staticErrors .validation-table tbody', this.moduleDOM);
       if (success) success.style.display = 'none';
-      if (table) table.style.display = 'block';
+      if (summary) {
+        summary.style.display = 'block';
+        summary.textContent = `${problems.length} validation problem${problems.length == 1 ? '' : 's'} found:`;
+      }
+      if (table) table.style.display = 'table';
       if (tbody) tbody.innerHTML = '';
       for (const problem of problems) {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${problem.widget || '-'}</td>
-          <td>${problem.property && problem.property.length > 0 ? problem.property.join('.') : '-'}</td>
+          <td>${problem.property && problem.property.length > 0 ? problem.property.join('.<wbr>') : '-'}</td>
           <td>${problem.message}</td>
         `;
         if (tbody) tbody.appendChild(row);

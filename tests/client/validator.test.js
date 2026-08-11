@@ -5,7 +5,7 @@ describe('Validator custom properties', () => {
     widget: { id: 'widget', clickRoutine }
   }, false);
 
-  const undefinedProperty = property => problem => problem.message === `property '${property}' is read but never set by any widget or routine`;
+  const undefinedProperty = property => problem => problem.message === `'${property}' is read but nothing ever sets it - check for a typo`;
 
   const missingPropertyProblems = problems => problems.filter(problem =>
     problem.property.join('.') === 'clickRoutine.0.property' && undefinedProperty('customProperty')(problem)
