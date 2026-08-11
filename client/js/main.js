@@ -459,6 +459,9 @@ function splitSVG(svg) {
 }
 
 const svgCache = {};
+// Infinity while a download is in flight, the time the next attempt is allowed after a transient failure.
+// This keeps a re-rendering widget from starting a new retry chain every time it asks for a URL that is down.
+const svgRetryTime = {};
 export function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
@@ -480,36 +483,43 @@ export function getSVG(url, replaces, callback) {
     return svgCache[cacheKey];
   }
 
-  if(!svgCache[url]) {
-    svgCache[url] = [];
-    const download = attempt=>fetch(mapAssetURLs(url)).then(r=>{
-      if(!r.ok)
-        throw Object.assign(new Error(`HTTP status ${r.status}`), { httpStatus: r.status });
-      return r.text();
-    }).catch(e=>{
-      // only network errors and server errors are worth retrying, a 4xx won't become valid by asking again
-      if(attempt < 3 && !(e.httpStatus >= 400 && e.httpStatus < 500))
-        return new Promise(resolve=>setTimeout(_=>resolve(download(attempt+1)), 1000 * 2**attempt));
-      throw e;
-    });
-    download(0).then(t=>{
-      const callbacks = svgCache[url];
-      svgCache[url] = t;
-      if(Array.isArray(callbacks))
-        for(const [ c, r ] of callbacks)
-          c(getSVG(url, r, _=>{}));
-    }, e=>{
-      console.error(`getSVG: failed to load ${url}`, e);
-      if(e.httpStatus >= 400 && e.httpStatus < 500)
-        svgCache[url] = ''; // cache the permanent failure as an empty SVG so the broken URL isn't requested again and again
-      else
-        delete svgCache[url]; // transient failure: allow a later call to retry the download
-      // the pending callbacks are dropped on purpose: calling them would re-enter getSVG and restart the download
-    });
-  }
-
-  svgCache[url].push([ callback, replaces ]);
+  const callbacks = svgCache[url] || (svgCache[url] = []);
+  // widgets ask for the same SVG on every render, so during a long outage the queue must not grow without bounds
+  if(callbacks.length < 1000)
+    callbacks.push([ callback, replaces ]);
+  if((svgRetryTime[url] || 0) <= Date.now())
+    downloadSVG(url, callbacks);
   return '';
+}
+
+function downloadSVG(url, callbacks) {
+  svgRetryTime[url] = Infinity;
+  const download = attempt=>fetch(mapAssetURLs(url)).then(r=>{
+    if(!r.ok)
+      throw Object.assign(new Error(`HTTP status ${r.status}`), { httpStatus: r.status });
+    return r.text();
+  }).catch(e=>{
+    // only network errors and server errors are worth retrying, a 4xx won't become valid by asking again
+    if(attempt < 3 && !(e.httpStatus >= 400 && e.httpStatus < 500))
+      return new Promise(resolve=>setTimeout(_=>resolve(download(attempt+1)), 1000 * 2**attempt * (0.5 + Math.random()/2)));
+    throw e;
+  });
+  // the callbacks are served in the success handler of this then() and not in a chained one so that an exception
+  // thrown by a widget callback isn't mistaken for a download failure but reaches the error reporter instead
+  download(0).then(t=>useSVG(url, callbacks, t), e=>{
+    console.error(`getSVG: failed to load ${url}`, e);
+    if(e.httpStatus >= 400 && e.httpStatus < 500)
+      useSVG(url, callbacks, ''); // cache the permanent failure as an empty SVG so the broken URL isn't requested again and again
+    else
+      svgRetryTime[url] = Date.now() + 5000; // transient failure: keep the queued callbacks and let a later call retry
+  });
+}
+
+function useSVG(url, callbacks, svg) {
+  delete svgRetryTime[url];
+  svgCache[url] = svg;
+  for(const [ c, r ] of callbacks)
+    c(getSVG(url, r, _=>{}));
 }
 
 async function loadEditMode() {
