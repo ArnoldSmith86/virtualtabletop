@@ -897,6 +897,8 @@ function getCustomPropertyUsage(data) {
     const definedCustomPropertyPatterns = new Set();
     // Names of properties holding a RESET map; the keys inside such a map are written by RESET.
     const resetPropertyNames = new Set();
+    // Regex sources for RESET map names built at runtime, like "resetProperties${boardNum}".
+    const resetPropertyPatterns = new Set();
     // Subset of definedCustomProperties that widgets declare directly - used to resolve interpolated reads.
     const declaredCustomProperties = new Set();
     const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
@@ -971,6 +973,16 @@ function getCustomPropertyUsage(data) {
             definedCustomPropertyPatterns.add(pattern);
         else if (!value.includes('${'))
             definedCustomProperties.add(value);
+    }
+
+    // RESET reads its map off the widget, so an interpolated name has to be matched against the
+    // names the widgets actually declare instead of being looked up literally.
+    function addResetPropertyName(value) {
+        const pattern = interpolatedPropertyPattern(value);
+        if (pattern)
+            resetPropertyPatterns.add(pattern);
+        else if (!value.includes('${'))
+            resetPropertyNames.add(value);
     }
 
     function addPropertyUsage(value, isDefinition = false) {
@@ -1083,7 +1095,7 @@ function getCustomPropertyUsage(data) {
                     addPropertyUsage(value);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
                     addPropertyUsage(value);
-                    resetPropertyNames.add(value);
+                    addResetPropertyName(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
                     addPropertyUsage(value);
                 } else if (func === 'SCORE' && key === 'property' && typeof value === 'string') {
@@ -1117,12 +1129,15 @@ function getCustomPropertyUsage(data) {
     }
 
     // RESET writes every key of the maps it resets, so those keys are definitions as well
+    const resetPropertyRegexes = [...resetPropertyPatterns].map(pattern=>new RegExp(pattern));
     for (const [, widget] of widgetEntries) {
-        for (const name of resetPropertyNames) {
-            const resetMap = widget[name];
-            if(typeof resetMap === 'object' && resetMap !== null && !Array.isArray(resetMap))
-                for (const prop of Object.keys(resetMap))
-                    definedCustomProperties.add(prop);
+        for (const [name, resetMap] of Object.entries(widget)) {
+            if(typeof resetMap !== 'object' || resetMap === null || Array.isArray(resetMap))
+                continue;
+            if(!resetPropertyNames.has(name) && !resetPropertyRegexes.some(regex=>regex.test(name)))
+                continue;
+            for (const prop of Object.keys(resetMap))
+                definedCustomProperties.add(prop);
         }
     }
 

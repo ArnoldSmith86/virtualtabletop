@@ -92,6 +92,36 @@ describe('Validator custom properties', () => {
     expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
   });
 
+  test('GET accepts a custom property that an interpolated RESET map writes', () => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        resetProperties1: { customProperty: 0 },
+        clickRoutine: [
+          { func: 'RESET', property: 'resetProperties${index}' },
+          { func: 'GET', property: 'customProperty' }
+        ]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
+  });
+
+  test('GET still reports a name that no RESET map writes', () => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        resetProperties1: { customProperty: 0 },
+        clickRoutine: [
+          { func: 'RESET', property: 'resetProperties${index}' },
+          { func: 'GET', property: 'otherProperty' }
+        ]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('otherProperty'))).toBe(true);
+  });
+
   test('GET accepts a name that an interpolated SET can produce', () => {
     const problems = validateRoutine([
       { func: 'SET', property: 'customProperty${index}', value: 1 },
