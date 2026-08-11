@@ -5,9 +5,10 @@ describe('Validator custom properties', () => {
     widget: { id: 'widget', clickRoutine }
   }, false);
 
+  const undefinedProperty = property => problem => problem.message === `property '${property}' is read but never set by any widget or routine`;
+
   const missingPropertyProblems = problems => problems.filter(problem =>
-    problem.property.join('.') === 'clickRoutine.0.property' &&
-    problem.message === "property 'customProperty' not found"
+    problem.property.join('.') === 'clickRoutine.0.property' && undefinedProperty('customProperty')(problem)
   );
 
   test('GET reports a custom property that is never defined', () => {
@@ -34,7 +35,79 @@ describe('Validator custom properties', () => {
       { func: 'GET', property: 'customProperty' }
     ]);
 
-    expect(problems.some(problem => problem.message === "property 'customProperty' not found")).toBe(false);
+    expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
+  });
+
+  test('GET accepts a custom property written by SCORE', () => {
+    const problems = validateGameFile({
+      seat: { id: 'seat', type: 'seat' },
+      widget: {
+        id: 'widget',
+        clickRoutine: [
+          { func: 'SCORE', mode: 'inc', property: 'customProperty', value: 1 },
+          { func: 'GET', property: 'customProperty' }
+        ]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
+  });
+
+  test('GET accepts the score property that SCORE writes by default', () => {
+    const problems = validateGameFile({
+      seat: { id: 'seat', type: 'seat' },
+      widget: {
+        id: 'widget',
+        clickRoutine: [
+          { func: 'SCORE', mode: 'inc', value: 1 },
+          { func: 'GET', property: 'score' }
+        ]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('score'))).toBe(false);
+  });
+
+  test('GET accepts a custom property applied by CLONE', () => {
+    const problems = validateRoutine([
+      { func: 'CLONE', properties: { customProperty: 1 } },
+      { func: 'GET', property: 'customProperty' }
+    ]);
+
+    expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
+  });
+
+  test('GET accepts a custom property that RESET writes', () => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        resetProperties: { customProperty: 0 },
+        clickRoutine: [
+          { func: 'RESET' },
+          { func: 'GET', property: 'customProperty' }
+        ]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
+  });
+
+  test('GET accepts a name that an interpolated SET can produce', () => {
+    const problems = validateRoutine([
+      { func: 'SET', property: 'customProperty${index}', value: 1 },
+      { func: 'GET', property: 'customProperty3' }
+    ]);
+
+    expect(problems.some(undefinedProperty('customProperty3'))).toBe(false);
+  });
+
+  test('GET still reports a name that no interpolated SET can produce', () => {
+    const problems = validateRoutine([
+      { func: 'SET', property: 'customProperty${index}', value: 1 },
+      { func: 'GET', property: 'otherProperty' }
+    ]);
+
+    expect(problems.some(undefinedProperty('otherProperty'))).toBe(true);
   });
 
   test.each([
@@ -59,6 +132,6 @@ describe('Validator custom properties', () => {
   test.each(['_absoluteX', '_totals'])('GET accepts computed read-only property %s', property => {
     const problems = validateRoutine([{ func: 'GET', property }]);
 
-    expect(problems.some(problem => problem.message === `property '${property}' not found`)).toBe(false);
+    expect(problems.some(undefinedProperty(property))).toBe(false);
   });
 });
