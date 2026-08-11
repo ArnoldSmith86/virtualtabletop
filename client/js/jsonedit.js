@@ -541,7 +541,7 @@ const jeCommands = [
   {
     id: 'je_anonymousCollection',
     name: 'convert to anonymous collection',
-    context: '^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|FOREACH|GET|LABEL|MOVE|ROTATE|SET|SHUFFLE|SORT|TIMER)\\) ↦ collection|^.*\\((CLONE|SELECT)\\) ↦ source',
+    context: '^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|FOREACH|GET|LABEL|MOVE|ROTATE|SET|SHUFFLE|SORT|TIMER)\\) ↦ collection|^.*\\((CLONE|SELECT|SWAPHANDS|TURN)\\) ↦ source|^.*\\(RECALL\\) ↦ excludeCollection',
     show: function() {
       const value = jeGetValue();
       return value && typeof value[jeGetLastKey()] == 'string';
@@ -1315,7 +1315,7 @@ function jeAddRoutineCommentCommand() {
 // misc params specific to the operation, count/value, output collection/variable.
 const jeRoutineOperationCommonParams = {
   AUDIO: { source: '', maxVolume: 1.0 },
-  CALL: { routine: 'clickRoutine' },
+  CALL: { routine: 'myRoutine' },
   CANVAS: { collection: 'DEFAULT', mode: 'reset' },
   CLICK: { collection: 'DEFAULT', count: 1 },
   CLONE: { source: 'DEFAULT', count: 1, collection: 'DEFAULT' },
