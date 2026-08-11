@@ -50,7 +50,7 @@
     "width": 1400,
     "height": 150,
     "css": "font-size: 25px",
-    "html": "Where the next pile begins is up to the holder. <b>pilesGapX</b> and <b>pilesGapY</b> start it behind the cards of the one before it, plus that many pixels - so a pile that grows pushes the rest along. <b>pilesOffsetX</b> and <b>pilesOffsetY</b> put it at a fixed distance from the previous one instead, no matter how many cards it holds. A gap wins over an offset on the same axis, and with neither of them the piles are placed flush, one right after the other.",
+    "html": "Where the next pile begins is up to the holder. <b>pilesGapX</b> and <b>pilesGapY</b> start it behind the cards of the one before it, plus that many pixels - so a pile that grows pushes the rest along. <b>pilesOffsetX</b> and <b>pilesOffsetY</b> put it at a fixed distance from the previous one instead, no matter how many cards it holds. Each holder below uses one of them; the green number on a pile is its handle and says how many cards it holds.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -170,7 +170,7 @@
   },
   "text1": {
     "id": "text1",
-    "x": 40,
+    "x": 60,
     "y": 460,
     "width": 440,
     "height": 110,
@@ -193,7 +193,7 @@
     },
     "allowPiles": true,
     "pilesOffsetX": 60,
-    "color": "#d8dcf0"
+    "color": "#d8f0dc"
   },
   "holder2P0": {
     "id": "holder2P0",
@@ -203,7 +203,8 @@
     "width": 103,
     "height": 160,
     "z": 1,
-    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
+    "handlePosition": "bottom left"
   },
   "holder2P0c0": {
     "id": "holder2P0c0",
@@ -236,7 +237,8 @@
     "width": 103,
     "height": 160,
     "z": 2,
-    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
+    "handlePosition": "bottom left"
   },
   "holder2P1c0": {
     "id": "holder2P1c0",
@@ -280,7 +282,8 @@
     "width": 103,
     "height": 160,
     "z": 3,
-    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
+    "handlePosition": "bottom left"
   },
   "holder2P2c0": {
     "id": "holder2P2c0",
@@ -295,12 +298,12 @@
   },
   "text2": {
     "id": "text2",
-    "x": 540,
+    "x": 560,
     "y": 460,
     "width": 440,
-    "height": 110,
+    "height": 180,
     "css": "font-size: 22px",
-    "html": "<b>pilesOffsetX</b> <i>60</i> - a fixed 60 pixels from one pile to the next, so the piles overlap like a fan and stay where they are however many cards they hold.",
+    "html": "<b>pilesOffsetX</b> <i>60</i> - a fixed 60 pixels from one pile to the next, so the piles overlap like a fan and stay where they are however many cards they hold. A pile that overlaps the next one would have its handle covered by it, so these three carry <b>handlePosition</b> <i>bottom left</i> to keep their count in the open.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -318,7 +321,7 @@
     },
     "allowPiles": true,
     "stackOffsetX": 40,
-    "color": "#f0e8d8"
+    "color": "#d8f0dc"
   },
   "holder3P0": {
     "id": "holder3P0",
@@ -328,7 +331,8 @@
     "width": 143,
     "height": 160,
     "z": 1,
-    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
+    "handlePosition": "bottom left"
   },
   "holder3P0c0": {
     "id": "holder3P0c0",
@@ -361,7 +365,8 @@
     "width": 183,
     "height": 160,
     "z": 2,
-    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
+    "handlePosition": "bottom left"
   },
   "holder3P1c0": {
     "id": "holder3P1c0",
@@ -409,12 +414,12 @@
   },
   "text3": {
     "id": "text3",
-    "x": 1040,
+    "x": 1060,
     "y": 460,
-    "width": 440,
-    "height": 110,
+    "width": 460,
+    "height": 180,
     "css": "font-size: 22px",
-    "html": "Neither of them given: the piles are placed flush, one right after the other, and the holder's <b>stackOffsetX</b> fans the cards inside each of them - the piles are what the piles spacing applies to.",
+    "html": "Neither of them given: the piles are placed flush - each one begins exactly where the one before it ends, and the holder's <b>stackOffsetX</b> fans the cards inside each of them. The piles are what the piles spacing applies to. A gap always wins over an offset on the same axis.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -514,6 +519,19 @@
     "pilesGapX": 40,
     "color": "#d8f0dc"
   },
+  "holder5hint": {
+    "id": "holder5hint",
+    "x": 900,
+    "y": 715,
+    "width": 500,
+    "height": 40,
+    "css": "font-size: 22px;text-align: center;color: #5a6a5a",
+    "html": "<i>empty - deal piles in here with the button below</i>",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -2
+  },
   "button1": {
     "id": "button1",
     "type": "button",
@@ -543,7 +561,7 @@
     "width": 400,
     "height": 80,
     "css": "font-size: 22px",
-    "html": "Deal a few piles in here to see the gap decide where each new one lands.",
+    "html": "Each click deals two cards in as one new pile, 40 pixels behind the last one.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -751,21 +769,5 @@
     "cardType": "S 09",
     "parent": "deckHolder",
     "z": 15
-  },
-  "deckCard6": {
-    "id": "deckCard6",
-    "type": "card",
-    "deck": "deckHolderD",
-    "cardType": "S 10",
-    "parent": "deckHolder",
-    "z": 16
-  },
-  "deckCard7": {
-    "id": "deckCard7",
-    "type": "card",
-    "deck": "deckHolderD",
-    "cardType": "S 2J",
-    "parent": "deckHolder",
-    "z": 17
   }
 }

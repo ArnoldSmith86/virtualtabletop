@@ -50,7 +50,7 @@
     "width": 1400,
     "height": 150,
     "css": "font-size: 25px",
-    "html": "A holder that spreads its cards out - one with a <b>stackOffsetX</b> or <b>stackOffsetY</b> - used to refuse piles: cards dropped onto each other stayed separate and a pile dropped in was emptied out card by card. Switch <b>allowPiles</b> on and the holder arranges piles instead. Try both holders below, and open the JSON editor with <b>ctrl-j</b> to see the difference between them - it is the one property.",
+    "html": "A holder that spreads its cards out - one with a <b>stackOffsetX</b> or <b>stackOffsetY</b> - used to refuse piles: cards dropped onto each other stayed separate and a pile dropped in was emptied out card by card. Switch <b>allowPiles</b> on and the holder arranges piles instead. Try both holders below. Pressing <b>ctrl-j</b> switches to edit mode with the JSON editor open, where the difference between them is the one property - <b>ctrl-j</b> again brings you back here.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -115,7 +115,7 @@
   },
   "text1": {
     "id": "text1",
-    "x": 90,
+    "x": 110,
     "y": 470,
     "width": 480,
     "height": 110,
@@ -186,12 +186,12 @@
   },
   "text2": {
     "id": "text2",
-    "x": 620,
+    "x": 640,
     "y": 470,
     "width": 480,
-    "height": 110,
+    "height": 140,
     "css": "font-size: 22px",
-    "html": "<b>allowPiles</b> <i>true</i>. Drop a card onto another one here and the two become a pile, which the holder then arranges as one entry. Drag the pile handle away and the row closes up again.",
+    "html": "<b>allowPiles</b> <i>true</i>. Drop a card onto another one here and the two become a pile: the green number that appears is the pile's <b>handle</b> and counts its cards. Drag the pile away by that handle and the row closes up again.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -242,12 +242,12 @@
   },
   "text3": {
     "id": "text3",
-    "x": 1160,
+    "x": 1180,
     "y": 470,
     "width": 380,
     "height": 110,
     "css": "font-size: 22px",
-    "html": "Drag this pile into either holder. The left one empties it out onto its own row, the right one takes it as the pile it is.",
+    "html": "Drag this pile by its handle into either holder. The left one empties it out onto its own row, the right one takes it as the pile it is.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -272,7 +272,7 @@
     "type": "button",
     "x": 850,
     "y": 630,
-    "width": 120,
+    "width": 150,
     "height": 50,
     "text": "Deal 3 cards",
     "clickRoutine": [
@@ -294,7 +294,7 @@
     "type": "button",
     "x": 850,
     "y": 690,
-    "width": 120,
+    "width": 150,
     "height": 50,
     "text": "Deal 1 card",
     "clickRoutine": [
@@ -316,9 +316,9 @@
     "type": "button",
     "x": 850,
     "y": 750,
-    "width": 120,
+    "width": 150,
     "height": 50,
-    "text": "Take 2 back",
+    "text": "Return 2 to deck",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -333,14 +333,27 @@
       }
     ]
   },
+  "holder3hint": {
+    "id": "holder3hint",
+    "x": 110,
+    "y": 700,
+    "width": 700,
+    "height": 40,
+    "css": "font-size: 22px;text-align: center;color: #5a6a5a",
+    "html": "<i>empty - deal cards in here with the buttons on the right</i>",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -2
+  },
   "text4": {
     "id": "text4",
-    "x": 1000,
+    "x": 1030,
     "y": 620,
     "width": 420,
-    "height": 200,
+    "height": 240,
     "css": "font-size: 22px",
-    "html": "<b>MOVE</b> puts everything one operation brings in down as a single new pile, instead of feeding the cards into the pile that is already there. Counting still goes by cards: \"Take 2 back\" takes two cards, not two piles.",
+    "html": "Each of these buttons runs a <b>MOVE</b>, the routine operation that moves cards from one holder to another. It puts everything one operation brings in down as a single new pile, instead of feeding the cards into the pile that is already there. Counting still goes by cards: \"Return 2 to deck\" returns two cards, not two piles.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -556,13 +569,5 @@
     "cardType": "S 10",
     "parent": "deckHolder",
     "z": 16
-  },
-  "deckCard7": {
-    "id": "deckCard7",
-    "type": "card",
-    "deck": "deckHolderD",
-    "cardType": "S 2J",
-    "parent": "deckHolder",
-    "z": 17
   }
 }

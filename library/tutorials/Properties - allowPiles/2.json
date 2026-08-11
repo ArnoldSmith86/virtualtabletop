@@ -160,7 +160,7 @@
   },
   "text1": {
     "id": "text1",
-    "x": 90,
+    "x": 110,
     "y": 700,
     "width": 380,
     "height": 160,
@@ -185,7 +185,7 @@
     "stackOffsetY": 40,
     "pilesGapX": 20,
     "spreadMin": 3,
-    "color": "#d8dcf0"
+    "color": "#d8f0dc"
   },
   "holder2P": {
     "id": "holder2P",
@@ -276,12 +276,12 @@
   },
   "text2": {
     "id": "text2",
-    "x": 540,
+    "x": 560,
     "y": 700,
-    "width": 380,
-    "height": 160,
+    "width": 400,
+    "height": 180,
     "css": "font-size: 22px",
-    "html": "The same seven cards with <b>spreadMin</b> <i>3</i>: the top three keep the full offset, the four below them are compressed. Deal more cards in and the column keeps its shape.",
+    "html": "The same seven cards with <b>spreadMin</b> <i>3</i>: the top three keep the full offset, the four below them are squeezed together - they are the four thin edges above the 8. The button deals a second pile in next to this one, and the column keeps its shape however many cards it holds.",
     "movable": false,
     "movableInEdit": false,
     "clickable": false,
@@ -301,7 +301,7 @@
     "stackOffsetY": 40,
     "pilesGapX": 20,
     "spreadMin": 3,
-    "color": "#f0e8d8"
+    "color": "#d8f0dc"
   },
   "holder3P": {
     "id": "holder3P",
@@ -386,9 +386,9 @@
   "button1": {
     "id": "button1",
     "type": "button",
-    "x": 1010,
-    "y": 660,
-    "width": 120,
+    "x": 560,
+    "y": 890,
+    "width": 150,
     "height": 50,
     "text": "Deal 5 cards",
     "clickRoutine": [
@@ -404,19 +404,6 @@
         "face": 1
       }
     ]
-  },
-  "text4": {
-    "id": "text4",
-    "x": 1150,
-    "y": 660,
-    "width": 340,
-    "height": 80,
-    "css": "font-size: 22px",
-    "html": "Deals a second pile into the middle holder, next to the first one.",
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "layer": -3
   },
   "deckHolder": {
     "id": "deckHolder",
@@ -603,13 +590,5 @@
     "cardType": "S 08",
     "parent": "deckHolder",
     "z": 14
-  },
-  "deckCard5": {
-    "id": "deckCard5",
-    "type": "card",
-    "deck": "deckHolderD",
-    "cardType": "S 09",
-    "parent": "deckHolder",
-    "z": 15
   }
 }
