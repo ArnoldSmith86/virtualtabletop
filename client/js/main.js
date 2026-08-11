@@ -462,6 +462,8 @@ const svgCache = {};
 // Infinity while a download is in flight, the time the next attempt is allowed after a transient failure.
 // This keeps a re-rendering widget from starting a new retry chain every time it asks for a URL that is down.
 const svgRetryTime = {};
+// the cooldown between two retry chains, doubled after every failed one so a long outage isn't polled at a fixed rate
+const svgRetryDelay = {};
 export function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
@@ -507,16 +509,28 @@ function downloadSVG(url, callbacks) {
   // the callbacks are served in the success handler of this then() and not in a chained one so that an exception
   // thrown by a widget callback isn't mistaken for a download failure but reaches the error reporter instead
   download(0).then(t=>useSVG(url, callbacks, t), e=>{
-    console.error(`getSVG: failed to load ${url}`, e);
-    if(e.httpStatus >= 400 && e.httpStatus < 500)
+    if(e.httpStatus >= 400 && e.httpStatus < 500) {
+      console.error(`Could not load image ${url} (HTTP status ${e.httpStatus}) - it will not be requested again`, e);
       useSVG(url, callbacks, ''); // cache the permanent failure as an empty SVG so the broken URL isn't requested again and again
-    else
-      svgRetryTime[url] = Date.now() + 5000; // transient failure: keep the queued callbacks and let a later call retry
+    } else {
+      const delay = svgRetryDelay[url] || 5000;
+      svgRetryDelay[url] = Math.min(2 * delay, 30000);
+      svgRetryTime[url] = Date.now() + delay;
+      console.error(`Could not load image ${url} - trying again in ${delay/1000} seconds`, e);
+      // the widgets that asked for this URL are showing nothing, so start the next chain on our own instead of
+      // waiting to be asked again: on a quiet table nothing re-renders, so they would stay blank until a reload
+      if(callbacks.length)
+        setTimeout(_=>{
+          if(svgCache[url] === callbacks && svgRetryTime[url] != Infinity)
+            downloadSVG(url, callbacks);
+        }, delay);
+    }
   });
 }
 
 function useSVG(url, callbacks, svg) {
   delete svgRetryTime[url];
+  delete svgRetryDelay[url];
   svgCache[url] = svg;
   for(const [ c, r ] of callbacks)
     c(getSVG(url, r, _=>{}));

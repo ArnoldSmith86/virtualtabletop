@@ -41,15 +41,18 @@ function trackPromises() {
 }
 
 describe("Scenarios: Downloading SVGs", () => {
-  let consoleError;
+  let consoleError, random;
 
   beforeEach(() => {
     jest.useFakeTimers();
     consoleError = jest.spyOn(console, 'error').mockImplementation(_=>{});
+    // remove the jitter from the backoff so the tests can advance the timers to an exact attempt
+    random = jest.spyOn(Math, 'random').mockReturnValue(1);
   });
 
   afterEach(() => {
     consoleError.mockRestore();
+    random.mockRestore();
     jest.useRealTimers();
   });
 
@@ -72,27 +75,24 @@ describe("Scenarios: Downloading SVGs", () => {
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
-  test("serves the callbacks queued during an outage once a later call succeeds", async () => {
+  test("serves the callbacks queued during an outage once the asset is reachable again", async () => {
     global.fetch = jest.fn(_=>Promise.reject(new TypeError('Failed to fetch')));
 
     const duringOutage = jest.fn();
     getSVG('/assets/offline.svg', {}, duringOutage);
-    await settle();
+    await jest.advanceTimersByTimeAsync(7500); // the four attempts take 1s + 2s + 4s
 
     expect(global.fetch).toHaveBeenCalledTimes(4);
     expect(console.error).toHaveBeenCalled();
     expect(duringOutage).not.toHaveBeenCalled();
 
-    // a later call starts a fresh download because the failure could have been transient
+    // nobody asks again - on a quiet table no widget re-renders, so the next chain has to start on its own
     global.fetch.mockClear();
     global.fetch.mockImplementation(_=>respond(svg));
-    const callback = jest.fn();
-    getSVG('/assets/offline.svg', {}, callback);
-    await settle();
+    await jest.advanceTimersByTimeAsync(5000); // the cooldown after a failed chain
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('data:image/svg+xml,'+encodeURIComponent(svg));
-    // the widget that asked while the network was down doesn't stay blank
+    // the widget that asked while the network was down doesn't stay blank until the page is reloaded
     expect(duringOutage).toHaveBeenCalledWith('data:image/svg+xml,'+encodeURIComponent(svg));
   });
 
@@ -100,20 +100,25 @@ describe("Scenarios: Downloading SVGs", () => {
     global.fetch = jest.fn(_=>Promise.reject(new TypeError('Failed to fetch')));
 
     getSVG('/assets/cooldown.svg', {}, jest.fn());
-    await jest.advanceTimersByTimeAsync(7500); // the four attempts take at most 1s + 2s + 4s
+    await jest.advanceTimersByTimeAsync(7500); // the four attempts take 1s + 2s + 4s
 
     expect(global.fetch).toHaveBeenCalledTimes(4);
 
     // re-rendering widgets ask again all the time, that must not start a new chain immediately
     global.fetch.mockClear();
-    getSVG('/assets/cooldown.svg', {}, jest.fn());
-    getSVG('/assets/cooldown.svg', {}, jest.fn());
+    for(let i=0; i<10; ++i)
+      getSVG('/assets/cooldown.svg', {}, jest.fn());
     expect(global.fetch).not.toHaveBeenCalled();
 
-    await jest.advanceTimersByTimeAsync(5000);
-    getSVG('/assets/cooldown.svg', {}, jest.fn());
+    // once the cooldown is over, a single new chain serves all of them
+    await jest.advanceTimersByTimeAsync(4500);
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    await settle();
+
+    // and the cooldown grows with every failed chain instead of polling a URL that is down at a fixed rate
+    await jest.advanceTimersByTimeAsync(7000); // the second chain gives up 7s after it started
+    const attempts = global.fetch.mock.calls.length;
+    await jest.advanceTimersByTimeAsync(5000);
+    expect(global.fetch).toHaveBeenCalledTimes(attempts);
   });
 
   test("serves a caller that arrives while a retry is pending", async () => {
