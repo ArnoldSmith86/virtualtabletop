@@ -113,6 +113,8 @@ class Card extends Widget {
           const useIframe = original.type == 'html' && legacyMode('useIframeForHtmlCards');
           const objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
           objectDiv.classList.add('cardFaceObject');
+          // identifies this object in the download queue of an SVG across renders (the icons below are re-created every time)
+          const objectSubscriber = `${this.id}:face${faceTemplates.indexOf(face)}:object${face.objects.indexOf(original)}`;
 
           const setValue = _=>{
             const usedProperties = new Set();
@@ -142,7 +144,7 @@ class Card extends Widget {
                     replaces[key] = this.get(replaces[key]);
                   const svgResult = getSVG(object.value, replaces, _=>{
                     objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
-                  }, objectDiv);
+                  }, objectSubscriber);
                   objectDiv.style.backgroundImage = `url("${svgResult}")`;
                 } else {
                   objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
@@ -153,7 +155,7 @@ class Card extends Widget {
               if(object.value) {
                 if($('.symbolOuterWrapper', objectDiv))
                   $('.symbolOuterWrapper', objectDiv).remove();
-                generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, typeof object.value == 'object' ? object.value : Object.assign({ name:object.value }, object, { rotation: 0 }), object.text || '', 1, object.color);
+                generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, typeof object.value == 'object' ? object.value : Object.assign({ name:object.value }, object, { rotation: 0 }), object.text || '', 1, object.color, undefined, 1, objectSubscriber);
               }
             } else if (object.type == 'html') {
               const content = String(object.value).replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {

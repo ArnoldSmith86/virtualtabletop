@@ -17,18 +17,32 @@ async function settle() {
   await jest.advanceTimersByTimeAsync(60000);
 }
 
+let restorePromiseTracking = null;
+
 // jest fails a test that produces an unhandled rejection, but an exception thrown by a widget callback is supposed to
 // stay unhandled so it reaches the error reporter - so record the promises getSVG creates and inspect them afterwards
 function trackPromises() {
   const promises = [];
   const originalThen = Promise.prototype.then;
+  const originalReject = Promise.reject;
   Promise.prototype.then = function(...args) {
     const promise = originalThen.apply(this, args);
     promises.push(promise);
     return promise;
   };
-  return async _=>{
+  Promise.reject = function(...args) {
+    const promise = originalReject.apply(Promise, args);
+    promises.push(promise);
+    return promise;
+  };
+  // afterEach restores this as well, so a failing expectation in between doesn't leak the patch into the other tests
+  restorePromiseTracking = _=>{
     Promise.prototype.then = originalThen;
+    Promise.reject = originalReject;
+    restorePromiseTracking = null;
+  };
+  return async _=>{
+    restorePromiseTracking();
     const rejections = [];
     jest.useRealTimers();
     await new Promise(resolve=>setTimeout(resolve, 10)); // let node notice the unhandled rejection
@@ -51,6 +65,8 @@ describe("Scenarios: Downloading SVGs", () => {
   });
 
   afterEach(() => {
+    if(restorePromiseTracking)
+      restorePromiseTracking();
     consoleError.mockRestore();
     random.mockRestore();
     jest.useRealTimers();
@@ -189,6 +205,65 @@ describe("Scenarios: Downloading SVGs", () => {
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(getSVG('/assets/throwing.svg', {})).toBe('data:image/svg+xml,'+encodeURIComponent(svg));
     expect(global.fetch).toHaveBeenCalledTimes(1);
+  });
+
+  test("gives up on a URL that stays unreachable instead of polling it for the whole session", async () => {
+    // a cross-origin image without CORS headers rejects like a network error and would never become valid
+    global.fetch = jest.fn(_=>Promise.reject(new TypeError('Failed to fetch')));
+
+    getSVG('https://example.com/nocors.svg', {}, jest.fn(), 'widget');
+    await jest.advanceTimersByTimeAsync(600000);
+
+    const attempts = global.fetch.mock.calls.length;
+    expect(attempts).toBeLessThan(40); // seven chains of four attempts, the cooldown doubling from 5s to 160s
+    await jest.advanceTimersByTimeAsync(600000);
+    expect(global.fetch).toHaveBeenCalledTimes(attempts);
+  });
+
+  test("stops retrying for a widget that isn't on the table any more", async () => {
+    global.fetch = jest.fn(_=>Promise.reject(new TypeError('Failed to fetch')));
+
+    const removed = document.createElement('div');
+    document.body.appendChild(removed);
+    getSVG('/assets/removed.svg', {}, jest.fn(), removed);
+    await jest.advanceTimersByTimeAsync(7500);
+
+    expect(global.fetch).toHaveBeenCalledTimes(4);
+    removed.remove();
+
+    // nobody is waiting for this image any more, so no further chain is started on its own
+    await jest.advanceTimersByTimeAsync(60000);
+    expect(global.fetch).toHaveBeenCalledTimes(8); // the chain scheduled before the widget was removed still runs
+  });
+
+  test("serves the other waiting widgets even if one of their callbacks throws", async () => {
+    global.fetch = jest.fn(_=>respond(svg));
+    const collectRejections = trackPromises();
+
+    const throwing = jest.fn(_=>{ throw new Error('widget render failed'); });
+    const other = jest.fn();
+    getSVG('/assets/throwingfirst.svg', {}, throwing, 'first');
+    getSVG('/assets/throwingfirst.svg', {}, other, 'second');
+    await settle();
+    const rejections = await collectRejections();
+
+    // the broken widget doesn't abort the dispatch, but its exception still reaches the error reporter
+    expect(other).toHaveBeenCalledWith('data:image/svg+xml,'+encodeURIComponent(svg));
+    expect(rejections.map(e=>e.message)).toContain('widget render failed');
+  });
+
+  test("retries a 403 instead of caching it as permanently missing", async () => {
+    // an auth or CDN hiccup isn't authoritative the way a 404 is, and an asset may still be uploading
+    global.fetch = jest.fn()
+      .mockImplementationOnce(_=>respond('forbidden', 403))
+      .mockImplementation(_=>respond(svg));
+
+    const callback = jest.fn();
+    getSVG('/assets/forbidden.svg', {}, callback);
+    await settle();
+
+    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledWith('data:image/svg+xml,'+encodeURIComponent(svg));
   });
 
   test("does not retry or re-download a 404", async () => {

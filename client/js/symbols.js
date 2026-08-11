@@ -337,7 +337,9 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight, initialFon
   element.style.setProperty('--maxHeight', `${maxHeight}px`);
 }
 
-function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1) {
+// subscriber names the widget (and the position within it) the icons belong to - the icon elements themselves are
+// re-created on every render, so they can't identify a caller of getSVG across renders
+function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1, subscriber) {
   const outerWrapper = div(target, 'symbolOuterWrapper', `
     <div class="symbolWrapper"></div>
     <div class="symbolText"></div>
@@ -375,7 +377,9 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
 
   outerWrapper.style.setProperty('--count', 1);
 
+  let symbolIndex = -1;
   for(let symbol of asArray(symbols)) {
+    ++symbolIndex;
     if(!symbol)
       continue;
 
@@ -421,13 +425,14 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
         const imageURL = image, hoverImageURL = hoverImage;
         const imageReplaces = { [details.colorReplace]: colorTarget };
         const hoverImageReplaces = { [details.colorReplace]: hoverColorTarget };
-        // both properties are recolored from the same URL, so they share one entry in its download queue (keyed by the icon)
+        // both properties are recolored from the same URL, so they share one entry in its download queue
+        const iconSubscriber = subscriber === undefined ? undefined : `${subscriber}:symbol${symbolIndex}`;
         const applyImages = _=>{
-          icon.style.setProperty('--image', `url("${getSVG(imageURL, imageReplaces, applyImages, icon)}")`);
-          icon.style.setProperty('--hoverImage', `url("${getSVG(hoverImageURL, hoverImageReplaces, applyImages, icon)}")`);
+          icon.style.setProperty('--image', `url("${getSVG(imageURL, imageReplaces, applyImages, iconSubscriber)}")`);
+          icon.style.setProperty('--hoverImage', `url("${getSVG(hoverImageURL, hoverImageReplaces, applyImages, iconSubscriber)}")`);
         };
-        image = getSVG(imageURL, imageReplaces, applyImages, icon);
-        hoverImage = getSVG(hoverImageURL, hoverImageReplaces, applyImages, icon);
+        image = getSVG(imageURL, imageReplaces, applyImages, iconSubscriber);
+        hoverImage = getSVG(hoverImageURL, hoverImageReplaces, applyImages, iconSubscriber);
       }
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);
