@@ -140,6 +140,36 @@ describe('Validator custom properties', () => {
     expect(problems.some(undefinedProperty('otherProperty'))).toBe(true);
   });
 
+  test('GET accepts any name once a fully dynamic SET writes some property', () => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        setterRoutine: [{ func: 'SET', property: '${propName}', value: '${propValue}' }],
+        clickRoutine: [
+          { func: 'CALL', routine: 'setterRoutine', arguments: { propName: 'customProperty', propValue: 3 } },
+          { func: 'GET', property: 'customProperty' }
+        ]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
+  });
+
+  test('GET accepts any name once a fully dynamic RESET picks a map at runtime', () => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        resetProperties1: { customProperty: 0 },
+        clickRoutine: [
+          { func: 'RESET', property: '${mapName}' },
+          { func: 'GET', property: 'customProperty' }
+        ]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('customProperty'))).toBe(false);
+  });
+
   test.each([
     ['cardDefaults', { cardDefaults: { customProperty: 1 } }],
     ['cardTypes', { cardTypes: { typeA: { customProperty: 1 } } }],

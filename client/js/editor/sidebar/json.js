@@ -219,15 +219,33 @@ class DebugModule extends SidebarModule {
         summary.style.display = 'block';
         summary.textContent = `${problems.length} validation problem${problems.length == 1 ? '' : 's'} found:`;
       }
-      if (table) table.style.display = 'table';
+      if (table) table.style.display = '';
       if (tbody) tbody.innerHTML = '';
+      const cell = text=>{
+        const td = document.createElement('td');
+        td.textContent = text;
+        return td;
+      };
       for (const problem of problems) {
         const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${problem.widget || '-'}</td>
-          <td>${problem.property && problem.property.length > 0 ? problem.property.join('.<wbr>') : '-'}</td>
-          <td>${problem.message}</td>
-        `;
+        // widget IDs, property names and messages come from the game file - build the cells as text
+        // nodes so that a widget called '<img src=x onerror=...>' cannot run script here
+        row.appendChild(cell(problem.widget || '-'));
+        const path = document.createElement('td');
+        if (problem.property && problem.property.length > 0) {
+          // allow the path to wrap at its dots instead of mid-segment
+          problem.property.forEach((segment, i)=>{
+            if (i) {
+              path.appendChild(document.createTextNode('.'));
+              path.appendChild(document.createElement('wbr'));
+            }
+            path.appendChild(document.createTextNode(String(segment)));
+          });
+        } else {
+          path.textContent = '-';
+        }
+        row.appendChild(path);
+        row.appendChild(cell(problem.message));
         if (tbody) tbody.appendChild(row);
         row.addEventListener('click', e=>this.button_validationProblem(problem));
       }

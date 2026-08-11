@@ -936,16 +936,18 @@ function getCustomPropertyUsage(data) {
     }
 
     // Turns an interpolated name like "score_${player}" into the source of /^score_.*$/, or returns
-    // null if the name is static or so dynamic (fewer than two static characters) that it would
-    // match anything. Patterns are kept as strings because validation contexts get cloned via JSON.
-    function interpolatedPropertyPattern(value) {
+    // null if the name is static. A name with fewer than two static characters ("${propName}") would
+    // match anything; for a written name that is the safe reading (some property does get written, we
+    // just cannot tell which), for a read name it is not (it would mark every property as used and
+    // hide real warnings). Patterns are kept as strings because validation contexts get cloned via JSON.
+    function interpolatedPropertyPattern(value, isDefinition = false) {
         if (typeof value !== 'string' || !value.includes('${'))
             return null;
 
         const staticParts = value.split(placeholderRegex);
         const staticCharCount = staticParts.reduce((sum, part) => sum + part.length, 0);
         if (staticCharCount < 2)
-            return null;
+            return isDefinition ? '^.*$' : null;
 
         return '^' + staticParts.map(escapeRegex).join('.*') + '$';
     }
@@ -968,20 +970,20 @@ function getCustomPropertyUsage(data) {
         if (typeof value !== 'string')
             return;
 
-        const pattern = interpolatedPropertyPattern(value);
+        const pattern = interpolatedPropertyPattern(value, true);
         if (pattern)
             definedCustomPropertyPatterns.add(pattern);
-        else if (!value.includes('${'))
+        else
             definedCustomProperties.add(value);
     }
 
     // RESET reads its map off the widget, so an interpolated name has to be matched against the
     // names the widgets actually declare instead of being looked up literally.
     function addResetPropertyName(value) {
-        const pattern = interpolatedPropertyPattern(value);
+        const pattern = interpolatedPropertyPattern(value, true);
         if (pattern)
             resetPropertyPatterns.add(pattern);
-        else if (!value.includes('${'))
+        else
             resetPropertyNames.add(value);
     }
 
