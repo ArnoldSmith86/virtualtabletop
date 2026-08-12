@@ -3741,7 +3741,11 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
+    const parentWidget = thisParent && widgets.has(thisParent) ? widgets.get(thisParent) : null;
+    // while a holder rearranges cards on purpose - a batch being pulled out of
+    // its groups, a re-partition - they get parked on top of each other, and
+    // proximity must not pile them back up halfway through
+    if(this.isBeingRemoved || this.get('dropShadowOwner') || parentWidget && (!parentWidget.supportsPiles() || parentWidget.preventRearrangeDuringPileDrop))
       return;
 
     const thisX = this.get('x');

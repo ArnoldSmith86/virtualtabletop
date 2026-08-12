@@ -303,6 +303,34 @@ describe('the auto layout arranging its children', () => {
     await holder.groupDroppedCards(cards);
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
   });
+
+  test('a pile fanning its own cards is centered by its whole spread', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 300 });
+    const pile = new Pile('fan');
+    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, width: 103, height: 160, stackOffsetY: 40 }, pile);
+    for(let i=0; i<3; ++i)
+      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1, width: 103, height: 160 });
+    await pile.arrangeChildren(false);
+    await holder.updateAfterShuffle();
+    expect(pile.spreadExtent('Y')).toBe(240);
+    expect(pile.get('y')).toBe(30);
+    expect(pile.get('y') + pile.spreadExtent('Y')).toBeLessThanOrEqual(300);
+  });
+
+  test('a wide fan at the end of a row squishes the row instead of spilling out', async () => {
+    const holder = createHolder({ id: 'h', width: 380, height: 140 });
+    createCard('c0', { parent: 'h', z: 1 });
+    createCard('c1', { parent: 'h', z: 2 });
+    const pile = new Pile('fan');
+    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, z: 5, width: 100, height: 100, stackOffsetX: 40 }, pile);
+    for(let i=0; i<3; ++i)
+      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1 });
+    await pile.arrangeChildren(false);
+    await holder.updateAfterShuffle();
+    expect(pile.spreadExtent('X')).toBe(180);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 20 ], [ 100, 20 ], [ 196, 20 ] ]);
+    expect(pile.get('x') + pile.spreadExtent('X')).toBeLessThanOrEqual(380);
+  });
 });
 
 describe('the grid layout', () => {
@@ -420,6 +448,51 @@ describe('MOVE with a position parameter', () => {
     const entries = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
     expect(entries.length).toBe(2);
     expect(entries[1].get('id')).toBe('m1');
+  });
+
+  test('pileTop takes cards already inside a group over into the last one', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const first = await createPile('first', holder, 4, 4, 4);
+    const second = await createPile('second', holder, 300, 4, 2);
+    await holder.updateAfterShuffle();
+    // the top two cards of the first group, still inside it - the way a MOVE
+    // with from and to naming the same holder hands them over
+    const moved = first.children().sort((a, b)=>b.get('z') - a.get('z')).slice(0, 2);
+    await holder.applyMovePosition(moved, 'pileTop');
+    expect(moved.map(c=>c.get('parent'))).toEqual([ 'second', 'second' ]);
+    expect(first.children().length).toBe(2);
+    const byZ = second.children().sort((a, b)=>a.get('z') - b.get('z'));
+    expect(byZ.length).toBe(4);
+    expect(byZ.slice(2).map(c=>c.get('id')).sort()).toEqual(moved.map(c=>c.get('id')).sort());
+  });
+
+  test('groupEnd deals cards already inside a group out as the final group', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    await createPile('first', holder, 4, 4, 2);
+    await createPile('second', holder, 300, 4, 2);
+    await holder.updateAfterShuffle();
+    const moved = [ ...widgets.get('second').children() ];
+    await holder.applyMovePosition(moved, 'groupEnd');
+    // the group the whole batch came out of dissolved, the batch is a new
+    // group after the others
+    expect(widgets.has('second')).toBe(false);
+    const entries = holder.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z'));
+    expect(entries.length).toBe(2);
+    expect(entries[0].get('id')).toBe('first');
+    expect(entries[1].get('type')).toBe('pile');
+    expect(entries[1].children().map(c=>c.get('id')).sort()).toEqual(moved.map(c=>c.get('id')).sort());
+  });
+
+  test('groupStart pulls a card out of a group and renumbers it in front', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const first = await createPile('first', holder, 4, 4, 3);
+    await holder.updateAfterShuffle();
+    const moved = [ first.children().sort((a, b)=>b.get('z') - a.get('z'))[0] ];
+    await holder.applyMovePosition(moved, 'groupStart');
+    expect(moved[0].get('parent')).toBe('h');
+    const entries = holder.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z'));
+    expect(entries.map(c=>c.get('id'))).toEqual([ moved[0].get('id'), 'first' ]);
+    expect(first.children().length).toBe(2);
   });
 });
 

@@ -209,6 +209,37 @@ test('MOVE with position groupEnd and pileTop work the groups of a multiple spre
   await t.expect(pileCount(state)).eql(2, 'no third group');
 });
 
+test('MOVE with from and to naming one holder repositions cards that already sit inside its groups', async t => {
+  // two real fans; their z is what the engine assigns the entries of the row
+  const state = Object.assign(fan('fan1', 4, 3), fan('fan2', 4 + (CARD_WIDTH + 2*40) + 8, 2));
+  state.fan1.z = 1;
+  state.fan2.z = 2;
+  await openRoom(t, 'modern', multiSpreadHand(Object.assign(state, {
+    moveStart: { id: 'moveStart', type: 'button', x: 1200, y: 400, text: 'start',
+      clickRoutine: [ { func: 'MOVE', from: 'hand', to: 'hand', count: 2, position: 'groupStart' } ] },
+    moveBottom: { id: 'moveBottom', type: 'button', x: 1200, y: 500, text: 'bottom',
+      clickRoutine: [ { func: 'MOVE', from: 'hand', to: 'hand', count: 1, position: 'pileBottom' } ] }
+  })));
+
+  // the top two cards are the second fan: they become a new first group and the fan they
+  // drained dissolves
+  await t.click('#w_moveStart');
+  let roomState = await stateWhen(s=>s.fan2c0.parent && s.fan2c0.parent != 'fan2' && s.fan2c0.parent == s.fan2c1.parent && s[s.fan2c0.parent] && s[s.fan2c0.parent].x == 4);
+  const group = roomState.fan2c0.parent;
+  await t.expect(roomState[group].type).eql('pile');
+  await t.expect(roomState.fan2).eql(undefined, 'the drained fan is gone');
+  await t.expect(pileCount(roomState)).eql(2);
+  await t.expect(byZ(roomState, group).map(c=>c.id)).eql([ 'fan2c0', 'fan2c1' ]);
+  await t.expect(roomState.fan1.x).eql(4 + (CARD_WIDTH + 40) + 8, 'the old fan moved behind it');
+
+  // the top card of the remaining old fan joins that first group at its bottom
+  await t.click('#w_moveBottom');
+  roomState = await stateWhen(s=>s.fan1c2.parent == group);
+  await t.expect(byZ(roomState, group).map(c=>c.id)).eql([ 'fan1c2', 'fan2c0', 'fan2c1' ]);
+  await t.expect(byZ(roomState, 'fan1').map(c=>c.id)).eql([ 'fan1c0', 'fan1c1' ]);
+  await t.expect(pileCount(roomState)).eql(2, 'no extra group formed');
+});
+
 test('SORT with groupBy builds one group per suit even when the sort interleaves them', async t => {
   await openRoom(t, 'modern', multiSpreadHand({
     s1: card('s1', { parent: 'hand', x: 4,   y: 4, z: 1, suit: 'S', rank: 2 }),

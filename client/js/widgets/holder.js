@@ -632,6 +632,32 @@ export class Holder extends ImageWidget {
     }
 
     const count = children.length;
+
+    // How far the natural extent-plus-pad spacing has to shrink so that every
+    // entry ends inside the given room: 1 keeps it, 0 stacks everything on the
+    // first entry. Measured against the extents, so a pile fanning its own
+    // cards gets the room of its whole spread - and overlaps its neighbors
+    // instead of spilling out of the holder once that room runs out.
+    const squishScale = (extents, room)=>{
+      let scale = 1;
+      let before = 0;
+      for(let i = 1; i < extents.length; ++i) {
+        before += extents[i - 1] + pad;
+        scale = Math.min(scale, Math.max(0, (room - 2*pad - extents[i]) / before));
+      }
+      return scale;
+    };
+    const rowGeometry = rows=>{
+      const perRow = Math.ceil(count / rows);
+      const rowsChildren = [];
+      for(let row = 0; row * perRow < count; ++row)
+        rowsChildren.push(children.slice(row * perRow, (row + 1) * perRow));
+      const rowHeights = rowsChildren.map(row=>Math.max(...row.map(c=>c.spreadExtent('Y'))));
+      const rowScalesX = rowsChildren.map(row=>squishScale(row.map(c=>c.spreadExtent('X')), holderWidth));
+      const scaleY = squishScale(rowHeights, holderHeight);
+      return { rowsChildren, rowHeights, rowScalesX, scaleY };
+    };
+
     let rows = 1;
     if(!wide && tall) {
       rows = count;
@@ -640,9 +666,9 @@ export class Holder extends ImageWidget {
       // area wins
       let bestArea = 0;
       for(let r = 1; r <= count; ++r) {
-        const perRow = Math.ceil(count / r);
-        const stepX = perRow > 1 ? Math.min(size.width  + pad, (holderWidth  - size.width  - 2*pad) / (perRow - 1)) : size.width;
-        const stepY = r      > 1 ? Math.min(size.height + pad, (holderHeight - size.height - 2*pad) / (r      - 1)) : size.height;
+        const { rowScalesX, scaleY } = rowGeometry(r);
+        const stepX = (size.width  + pad) * Math.min(...rowScalesX);
+        const stepY = (size.height + pad) * scaleY;
         const area = Math.max(0, Math.min(size.width, stepX)) * Math.max(0, Math.min(size.height, stepY));
         if(area > bestArea) {
           bestArea = area;
@@ -651,23 +677,22 @@ export class Holder extends ImageWidget {
       }
     }
 
-    const perRow = Math.ceil(count / rows);
-    const stepY = rows > 1 ? Math.min(size.height + pad, Math.max(0, (holderHeight - size.height - 2*pad) / (rows - 1))) : 0;
-    const contentHeight = size.height + (rows - 1) * stepY;
-    const y0 = Math.max(pad, (holderHeight - contentHeight) / 2);
+    const { rowsChildren, rowHeights, rowScalesX, scaleY } = rowGeometry(rows);
+    const stepsY = rowHeights.map((h, row)=>row == rowHeights.length - 1 ? 0 : (h + pad) * scaleY);
+    const contentHeight = stepsY.reduce((a, b)=>a + b, 0) + rowHeights[rowHeights.length - 1];
+    let y = Math.max(pad, (holderHeight - contentHeight) / 2);
 
-    for(let row = 0; row < rows; ++row) {
-      const rowChildren = children.slice(row * perRow, (row + 1) * perRow);
-      if(!rowChildren.length)
-        break;
+    for(let row = 0; row < rowsChildren.length; ++row) {
+      const rowChildren = rowsChildren[row];
       // per-child spacing so a fanned pile gets the room of its whole spread
-      const steps = rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : Math.min(c.spreadExtent('X') + pad, Math.max(0, (holderWidth - c.spreadExtent('X') - 2*pad) / (rowChildren.length - 1))));
+      const steps = rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : (c.spreadExtent('X') + pad) * rowScalesX[row]);
       const contentWidth = steps.reduce((a, b)=>a + b, 0) + rowChildren[rowChildren.length - 1].spreadExtent('X');
       let x = Math.max(pad, (holderWidth - contentWidth) / 2);
       for(let i = 0; i < rowChildren.length; ++i) {
-        await rowChildren[i].setPosition(x, y0 + row * stepY, z++);
+        await rowChildren[i].setPosition(x, y, z++);
         x += steps[i];
       }
+      y += stepsY[row];
     }
   }
 
@@ -1008,20 +1033,50 @@ export class Holder extends ImageWidget {
 
     if(this.arrangesPiles()) {
       const owner = cards[0].get('owner') || null;
+
+      // A move within one holder can select cards that already sit inside the
+      // holder's groups. They take part like freshly dropped ones: pulled out
+      // of their group first - which lets a drained one dissolve - so the
+      // batch is placed in one piece below. currentParent marks them as moving
+      // within the holder, which keeps onEnter out of it the same way
+      // stillInside keeps onLeave out, and the flags keep the holder from
+      // rearranging them or piling them back up halfway through.
+      this.preventRearrangeDuringPileDrop = true;
+      for(const c of cards) {
+        const group = c.get('type') == 'card' && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null;
+        if(group && group.get('type') == 'pile' && group.get('parent') == this.get('id')) {
+          c.currentParent = this;
+          c.movedByButton = true;
+          if(c.get('owner') !== null)
+            c.targetPlayer = c.get('owner');
+          await c.set('x', c.get('x') + group.get('x'));
+          await c.set('y', c.get('y') + group.get('y'));
+          await c.set('parent', this.get('id'));
+          delete c.targetPlayer;
+          delete c.movedByButton;
+          delete c.currentParent;
+        }
+      }
+      delete this.preventRearrangeDuringPileDrop;
+
       const groups = this.arrangedChildren().filter(w=>cards.indexOf(w) == -1 && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
       const dropped = cards.filter(c=>c.get('parent') == this.get('id') && c.get('type') == 'card');
-      if((position == 'pileBottom' || position == 'pileTop') && groups.length) {
+      if((position == 'pileBottom' || position == 'pileTop') && groups.length && dropped.length) {
         const target = position == 'pileBottom' ? groups[0] : groups[groups.length - 1];
         await this.mergeIntoGroup(dropped, target, position == 'pileBottom' ? 0 : null);
       } else if(dropped.length) {
         const group = dropped.length > 1 ? await this.makeGroup(dropped) : dropped[0];
-        if(position == 'pileBottom' || position == 'groupStart') {
-          // one renumbering pass puts the new group before the others
-          let z = 1;
+        // one renumbering pass puts the new group before or after the others -
+        // after needs it as much as before, since the pile makeGroup just made
+        // starts out at z 0 and would sort in front of everything
+        const before = position == 'pileBottom' || position == 'groupStart';
+        let z = 1;
+        if(before)
           await group.set('z', z++);
-          for(const w of groups)
-            await w.set('z', z++);
-        }
+        for(const w of groups)
+          await w.set('z', z++);
+        if(!before)
+          await group.set('z', z++);
       }
     } else if(position == 'pileBottom' || position == 'groupStart') {
       // put the batch below all siblings, renumbering the whole holder to a
