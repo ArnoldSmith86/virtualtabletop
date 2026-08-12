@@ -99,7 +99,7 @@ describe('the skin tone flyout', () => {
   const pointerOn = element => element.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
   const hover = async icon => {
     pointerOn(icon);
-    await jest.advanceTimersByTimeAsync(400);
+    await jest.advanceTimersByTimeAsync(450);
   };
   const unhover = async icon => pointerOn(icon.parentNode); // the gap between the icons
 
@@ -201,6 +201,38 @@ describe('the skin tone flyout', () => {
 
     flyout().dispatchEvent(new MouseEvent('mouseleave'));
     await jest.advanceTimersByTimeAsync(300);
+    expect(flyout()).toBe(null);
+  });
+
+  test('the cells are buttons that say which tone they stand for', async () => {
+    const [ icon ] = await decorate('👍');
+    await hover(icon);
+    expect(cells().every(cell => cell.tagName == 'BUTTON')).toBe(true);
+    expect(cells()[0].getAttribute('aria-label')).toBe('No skin tone');
+    expect(cells()[3].getAttribute('aria-label')).toBe('Medium skin tone');
+  });
+
+  test('a matrix cell names both of its tones', async () => {
+    const [ handshake ] = await decorate('🤝');
+    await hover(handshake);
+    expect(cells().length).toBe(26);
+    expect(cells()[1].getAttribute('aria-label')).toBe('Light + Light skin tone');
+    expect(cells()[5].getAttribute('aria-label')).toBe('Light + Dark skin tone');
+  });
+
+  test('a nudge of the grid keeps the flyout, scrolling away closes it', async () => {
+    const [ icon ] = await decorate('👍');
+    const scroller = icon.parentNode;
+    await hover(icon);
+
+    for(const position of [ 2, 5 ]) {   // the small drag that ends a long press on touch
+      scroller.scrollTop = position;
+      scroller.dispatchEvent(new Event('scroll'));
+    }
+    expect(flyout()).not.toBe(null);
+
+    scroller.scrollTop = 200;
+    scroller.dispatchEvent(new Event('scroll'));
     expect(flyout()).toBe(null);
   });
 

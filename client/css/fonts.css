@@ -602,36 +602,53 @@
   position: relative;
 }
 
+/* Drawn as a gradient rather than as a border triangle so the wedge can have a light edge: at full
+   opacity on top of a 30px emoji it otherwise merges into the artwork and reads as part of the
+   drawing (👇, ✊) instead of as something to point at. */
 .hasEmojiVariants::after {
   content: "";
   position: absolute;
   right: 0;
   bottom: 0;
-  border-left: 7px solid transparent;
-  border-bottom: 7px solid var(--VTTblue);
-  opacity: 0.55;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, transparent 46%, white 46%, white 58%, var(--VTTblue) 58%);
   pointer-events: none;
 }
 
 /* the flyout hangs off an icon of a grid that scrolls (and, in the sidebar, of a 340px column), so
    it is a fixed box at the document level instead of a child of that icon */
-/* The editor's colors (client/css/editor/layout.css) so the flyout follows dark mode along with
-   the sidebar it hangs off, with the light values as a fallback: that stylesheet only comes with
-   edit mode, while the fullscreen picker - always light - is part of the room. */
+/* Light by default and themed only inside #editor: the fullscreen picker is part of the room and
+   always light, but its flyout is a child of body, where editor/layout.css declares --backgroundColor
+   as soon as edit mode is entered - so a fallback would never apply and dark mode painted the
+   flyout black on top of the white overlay. */
 .emojiVariantFlyout {
   --emojiVariantHighlightColor: #eef4fb;
+  --emojiVariantBorderColor: #ddd;
+  --emojiVariantHelpColor: #55606d;
   position: fixed;
   z-index: 2000001;
-  background: var(--backgroundColor, white);
-  color: var(--textColor, black);
+  background: white;
+  color: black;
   border: 1px solid var(--VTTblue);
   border-radius: 8px;
   box-shadow: 0 8px 24px #0004;
   padding: 8px 10px 9px;
   max-width: calc(100vw - 8px);
+  /* the 5x5 matrix is taller than a phone in landscape has to spare, and rows hanging off the
+     bottom edge could not be picked at all */
+  max-height: calc(100vh - 8px);
+  overflow-y: auto;
 }
 
-body.edit.darkMode .emojiVariantFlyout {
+#editor .emojiVariantFlyout {
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  --emojiVariantBorderColor: var(--backgroundHighlightColor1);
+  --emojiVariantHelpColor: var(--textHelpColor);
+}
+
+body.edit.darkMode #editor .emojiVariantFlyout {
   --emojiVariantHighlightColor: #1c2c3d;
 }
 
@@ -639,7 +656,7 @@ body.edit.darkMode .emojiVariantFlyout {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--textHelpColor, #55606d);
+  color: var(--emojiVariantHelpColor);
   margin-bottom: 6px;
   white-space: nowrap;
 }
@@ -657,10 +674,12 @@ body.edit.darkMode .emojiVariantFlyout {
   gap: 4px;
 }
 
-/* one column for the row labels, then one per skin tone */
+/* one column for the row labels, then one per skin tone - fixed, so the artwork sits on an even
+   pitch instead of every column being as wide as its own header, and so the cells reach the size
+   a fingertip needs */
 .emojiVariantMatrix {
   display: grid;
-  grid-template-columns: auto repeat(5, auto);
+  grid-template-columns: auto repeat(5, 44px);
   gap: 2px;
   align-items: center;
 }
@@ -669,11 +688,16 @@ body.edit.darkMode .emojiVariantFlyout {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 3px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 3px 4px;
-  border: 1px solid var(--backgroundHighlightColor1, #ddd);
+  border: 1px solid var(--emojiVariantBorderColor);
   border-radius: 6px;
-  background: var(--backgroundColor, white);
+  background: transparent;
+  color: inherit;
+  font: inherit;
   cursor: pointer;
 }
 
@@ -688,31 +712,34 @@ body.edit.darkMode .emojiVariantFlyout {
 }
 
 .emojiVariantMatrix .emojiVariantCell img {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
 }
 
-/* the untoned form the grid itself shows, so that picking it from here is possible as well */
+/* the untoned form the grid itself shows, so that picking it from here is possible as well: an
+   outline rather than a fill, because a filled cell here reads as "this is the one in use" and
+   drowned out the cell that actually is */
 .emojiVariantBase {
-  background: var(--emojiVariantHighlightColor);
-  border-color: var(--VTTblueLight);
+  border-style: dashed;
 }
 
 /* the form that is in use: a toned icon opens the same flyout, so its own cell is marked */
 .emojiVariantSelected {
   border-color: var(--VTTblue);
+  border-style: solid;
+  background: var(--emojiVariantHighlightColor);
   box-shadow: inset 0 0 0 1px var(--VTTblue);
 }
 
 .emojiVariantLabel {
-  font-size: 9px;
-  color: var(--textHelpColor, #66707c);
+  font-size: 10px;
+  color: var(--emojiVariantHelpColor);
   white-space: nowrap;
 }
 
 .emojiVariantHeader {
-  font-size: 9px;
-  color: var(--textHelpColor, #66707c);
+  font-size: 10px;
+  color: var(--emojiVariantHelpColor);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   text-align: center;

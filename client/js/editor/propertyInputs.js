@@ -1331,7 +1331,7 @@ class IconInput extends PickerInput {
       selector: '[data-emoji-variant]',
       emoji: chip=>chip.dataset.emojiVariant,
       onPick: (chip, variant)=>this.setValue(this.valueForChip(variant)),
-      label: chip=>iconDisplayName(chip.dataset.emojiVariant)
+      label: (chip, base)=>iconDisplayName(base)
     });
   }
 

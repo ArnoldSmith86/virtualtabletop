@@ -7,12 +7,14 @@ import { emojiToFilename } from "./symbols";
 // them is marked with a corner triangle and hovering it (long-press on touch) opens a flyout with
 // its complete matrix: a row of five tones, or a 5x5 grid when two people can be toned separately.
 
+// The short form is what the columns of the 5x5 matrix are headed with: five spelled-out names
+// above five 44px cells run into one another, and the row headers name them anyway.
 const emojiSkinTones = [
-  { modifier: '\u{1f3fb}', label: 'Light' },
-  { modifier: '\u{1f3fc}', label: 'Med-light' },
-  { modifier: '\u{1f3fd}', label: 'Medium' },
-  { modifier: '\u{1f3fe}', label: 'Med-dark' },
-  { modifier: '\u{1f3ff}', label: 'Dark' }
+  { modifier: '\u{1f3fb}', label: 'Light',     short: 'L'  },
+  { modifier: '\u{1f3fc}', label: 'Med-light', short: 'ML' },
+  { modifier: '\u{1f3fd}', label: 'Medium',    short: 'M'  },
+  { modifier: '\u{1f3fe}', label: 'Med-dark',  short: 'MD' },
+  { modifier: '\u{1f3ff}', label: 'Dark',      short: 'D'  }
 ];
 
 // Unicode's Emoji_Modifier_Base: the characters a skin tone modifier may follow. A match only makes
@@ -51,7 +53,11 @@ function emojiWithSkinTones(characters, positions, tones) {
 }
 
 function emojiVariantGrid(base, selected, cells, twoDimensional) {
-  return { base, selected, cells, twoDimensional, toneLabels: emojiSkinTones.map(tone => tone.label) };
+  return {
+    base, selected, cells, twoDimensional,
+    toneLabels: emojiSkinTones.map(tone => tone.label),
+    toneShortLabels: emojiSkinTones.map(tone => tone.short)
+  };
 }
 
 // An emoji that already carries a tone - one a game is using, or one just picked - offers the same
@@ -170,11 +176,19 @@ window.addEventListener('keyup', function(e) {
 // built once and reused, while the caller that a pick belongs to changes with every picker.
 let emojiVariantPick = _=>null;
 
-function emojiVariantCell(target, className, emoji, label) {
-  const cell = div(target, className, `<img src="i/noto-emoji/emoji_u${emojiToFilename(emoji)}.svg">`);
+// A button rather than a div: the cells are clickable, so they may as well be reachable and be
+// announced as what they are. `description` says which tone a cell stands for - a matrix cell
+// combines two of them, and its emoji alone ("🤝🏻") tells a reader nothing.
+function emojiVariantCell(target, className, emoji, label, description) {
+  const cell = document.createElement('button');
+  cell.type = 'button';
+  cell.className = className;
+  cell.innerHTML = `<img src="i/noto-emoji/emoji_u${emojiToFilename(emoji)}.svg">`;
+  target.appendChild(cell);
   if(label)
     div(cell, 'emojiVariantLabel', html(label));
-  cell.title = label ? `${emoji} (${label})` : emoji;
+  cell.title = description;
+  cell.setAttribute('aria-label', description);
   cell.dataset.emoji = emoji;
   cell.onclick = function(e) {
     e.stopPropagation();
@@ -191,18 +205,19 @@ function buildEmojiVariantFlyout(variants) {
 
   if(variants.twoDimensional) {
     const matrix = div(dom, 'emojiVariantMatrix');
-    emojiVariantCell(matrix, 'emojiVariantCell emojiVariantBase', variants.base, 'Default');
-    for(const toneLabel of variants.toneLabels)
-      div(matrix, 'emojiVariantHeader', html(toneLabel));
+    emojiVariantCell(matrix, 'emojiVariantCell emojiVariantBase', variants.base, 'None', 'No skin tone');
+    for(const shortLabel of variants.toneShortLabels)
+      div(matrix, 'emojiVariantHeader', html(shortLabel));
     variants.cells.forEach((row, rowIndex) => {
       div(matrix, 'emojiVariantHeader emojiVariantRowHeader', html(variants.toneLabels[rowIndex]));
-      for(const variant of row)
-        emojiVariantCell(matrix, 'emojiVariantCell', variant, null);
+      row.forEach((variant, columnIndex) => emojiVariantCell(matrix, 'emojiVariantCell', variant, null,
+        `${variants.toneLabels[rowIndex]} + ${variants.toneLabels[columnIndex]} skin tone`));
     });
   } else {
     const row = div(dom, 'emojiVariantRow');
-    emojiVariantCell(row, 'emojiVariantCell emojiVariantBase', variants.base, 'Default');
-    variants.cells[0].forEach((variant, index) => emojiVariantCell(row, 'emojiVariantCell', variant, variants.toneLabels[index]));
+    emojiVariantCell(row, 'emojiVariantCell emojiVariantBase', variants.base, 'No tone', 'No skin tone');
+    variants.cells[0].forEach((variant, index) => emojiVariantCell(row, 'emojiVariantCell', variant,
+      variants.toneLabels[index], `${variants.toneLabels[index]} skin tone`));
   }
 
   return { dom, title, cells: [ ...dom.querySelectorAll('.emojiVariantCell') ] };
@@ -234,18 +249,36 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
   // selection rectangle, and letting go of it would clear the selection the picker is editing.
   (element.closest('#editor') || $('body')).appendChild(dom);
 
+  // Beside the icon whenever there is room, because a box dropped below it covers the very rows of
+  // the grid that are being scanned - and in the sidebar the search field just typed into. Both
+  // edges are clamped into the viewport: a 5x5 matrix is 250px tall and neither fits above nor
+  // below an anchor in the middle of a phone in landscape, and the rows hanging off the bottom
+  // edge could not be picked at all (the box scrolls once it is capped, see fonts.css).
   const anchor = element.getBoundingClientRect();
   const box = dom.getBoundingClientRect();
-  const above = anchor.bottom + box.height + 8 > window.innerHeight && anchor.top > box.height + 8;
-  dom.style.left = `${Math.max(4, Math.min(anchor.left, window.innerWidth - box.width - 4))}px`;
-  dom.style.top  = `${above ? anchor.top - box.height - 4 : anchor.bottom + 4}px`;
+  const gap = 4;
+  const clamp = (value, size, available) => Math.max(gap, Math.min(value, available - size - gap));
+
+  let left = anchor.left;
+  let top = anchor.bottom + gap;
+  if(anchor.right + gap + box.width + gap <= window.innerWidth) {
+    left = anchor.right + gap;
+    top = anchor.top + anchor.height/2 - box.height/2;
+  } else if(anchor.left - gap - box.width - gap >= 0) {
+    left = anchor.left - gap - box.width;
+    top = anchor.top + anchor.height/2 - box.height/2;
+  } else if(anchor.bottom + box.height + gap > window.innerHeight && anchor.top > box.height + gap) {
+    top = anchor.top - box.height - gap;
+  }
+  dom.style.left = `${clamp(left, box.width, window.innerWidth)}px`;
+  dom.style.top  = `${clamp(top, box.height, window.innerHeight)}px`;
 
   let closeTimer = null;
   const close = function() {
     clearTimeout(closeTimer);
     document.removeEventListener('mousedown', onOutsideClick);
     window.removeEventListener('keydown', onKeyDown, true);
-    window.removeEventListener('scroll', close, true);
+    window.removeEventListener('scroll', onScroll, true);
     dom.remove();
     if(activeEmojiVariantFlyout && activeEmojiVariantFlyout.close == close)
       activeEmojiVariantFlyout = null;
@@ -261,6 +294,18 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
       close();
     }
   };
+  // The picker grid and the sidebar scroll, which would leave the flyout hanging next to nothing -
+  // but the reflex after a long press on touch is a small drag, and losing the flyout to that would
+  // make it unusable there, so a few pixels do not count as scrolling away.
+  const scrolledFrom = new Map();
+  const onScroll = e=>{
+    const scroller = e.target == document ? document.scrollingElement : e.target;
+    const position = (scroller.scrollTop || 0) + (scroller.scrollLeft || 0);
+    if(!scrolledFrom.has(scroller))
+      scrolledFrom.set(scroller, position);
+    if(Math.abs(position - scrolledFrom.get(scroller)) > 8)
+      close();
+  };
   const cancelClose = _=>clearTimeout(closeTimer);
   const scheduleClose = _=>{
     clearTimeout(closeTimer);
@@ -271,18 +316,19 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
   document.addEventListener('mousedown', onOutsideClick);
   // on window, because a capture listener there runs before the ones the picker has on document
   window.addEventListener('keydown', onKeyDown, true);
-  // the picker grid and the sidebar scroll, which would leave the flyout hanging next to nothing
-  window.addEventListener('scroll', close, true);
+  window.addEventListener('scroll', onScroll, true);
   activeEmojiVariantFlyout = { anchor: element, close, scheduleClose, cancelClose };
 }
 
 // Long enough that running the pointer along a row of icons on the way somewhere else does not
 // open a flyout behind it - only resting on one does.
-const hoverDelay = 400;
+const hoverDelay = 450;
 const touchDelay = 500;
 // the pointer has to cross the gap between the icon and its flyout, so leaving either one gives
 // the other a moment to be reached
 const closeDelay = 300;
+// what a marked icon adds to its own tooltip - the same wording as the picker's help text
+const emojiVariantHint = 'Blue corner: hover or press and hold to choose a skin tone.';
 
 // Marks the icons of a container that have skin tone forms and opens their flyout on hover
 // (long-press on touch). One set of handlers on the container, not six per icon: the symbol
@@ -290,15 +336,20 @@ const closeDelay = 300;
 // The handlers are assigned as properties, so enabling the same container again replaces them
 // instead of stacking another flyout on it.
 //   selector - the elements that may carry an emoji, emoji(element) - the one it shows,
-//   onPick(element, variant) - what a picked form means, label(element) - the icon's name
+//   onPick(element, variant) - what a picked form means, label(element, base) - the icon's name
+//   (from the untoned form, which is the only one the icon list knows a name for)
 export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, label }) {
   container.onmousemove = container.onmouseleave = container.ontouchstart = null;
   container.ontouchend = container.ontouchmove = container.ontouchcancel = null;
 
   loadEmojiVariants().then(_=>{
     for(const element of container.querySelectorAll(selector))
-      if(!element.classList.contains('hasEmojiVariants') && emojiVariants(emoji(element)))
+      if(!element.classList.contains('hasEmojiVariants') && emojiVariants(emoji(element))) {
         element.classList.add('hasEmojiVariants');
+        // the corner triangle is the only sign that the icon has more to offer, and on touch there
+        // is no hover to stumble over it with - so the icon says what it means
+        element.title = `${element.title ? element.title + '\n' : ''}${emojiVariantHint}`;
+      }
 
     let hovered = null;
     let openTimer = null;
@@ -310,8 +361,9 @@ export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, 
     const markedIcon = target => target && target.closest ? target.closest('.hasEmojiVariants') : null;
 
     const open = element=>{
-      if(element.isConnected && !emojiVariantFlyoutOf(element)) // still open from before: the
-        openEmojiVariantFlyout(element, emojiVariants(emoji(element)), variant=>onPick(element, variant), label(element));
+      const variants = element.isConnected && emojiVariants(emoji(element));
+      if(variants && !emojiVariantFlyoutOf(element))            // still open from before: the
+        openEmojiVariantFlyout(element, variants, variant=>onPick(element, variant), label(element, variants.base));
     };                                                          // pointer only left it briefly
     const leave = _=>{
       clearTimeout(openTimer);
