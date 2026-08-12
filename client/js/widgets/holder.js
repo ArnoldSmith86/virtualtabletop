@@ -13,7 +13,7 @@ const layoutDerivedProperties = {
 
 // The properties a get() on a holder may derive from its layout instead of
 // answering from the state (see Holder.get below).
-const layoutDerivableProperties = [ 'alignChildren', 'preventPiles', 'allowPiles', 'dropShadow', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesGapX' ];
+const layoutDerivableProperties = new Set([ 'alignChildren', 'preventPiles', 'allowPiles', 'dropShadow', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesGapX' ]);
 
 // The raw arrangement properties that switch an auto layout off: while any of
 // them is written, the holder behaves exactly as if its layout were 'custom'.
@@ -105,7 +105,7 @@ export class Holder extends ImageWidget {
       const layout = super.get('layout');
       return layout === null ? 'custom' : layout;
     }
-    if(layoutDerivableProperties.indexOf(property) != -1) {
+    if(layoutDerivableProperties.has(property)) {
       const layout = this.effectiveLayout();
       const derived = layoutDerivedProperties[layout];
       if(derived && derived[property] !== undefined)
