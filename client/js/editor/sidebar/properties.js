@@ -8096,20 +8096,17 @@ class PropertiesModule extends SidebarModule {
     // how the pile places its own cards: fanned out by the stack offset, with
     // spreadMin keeping a long fan readable. A pile inside a holder that
     // arranges piles inherits both from that holder unless set here - so the
-    // inputs show only what the pile sets itself and name the inherited value
-    // as a placeholder, instead of showing it as if it were the pile's own.
+    // inputs show only what the pile sets itself and show the inherited value
+    // as a greyed placeholder, instead of posing as the pile's own.
     const inheritAwareOptions = property=>({
-      hint: editorPropertyHints[property],
+      hint: `${editorPropertyHints[property]} A greyed value comes from the holder arranging this pile (or the default) instead of being set here.`,
       nullIfEmpty: true,
       getValue: _=>holderStateHas(widget, property) ? widget.state[property] : null,
       placeholder: _=>{
         if(typeof widget.getDefaultValue != 'function')
           return '';
         const value = widget.getDefaultValue(property);
-        if(value === null || value === undefined)
-          return '';
-        const holder = typeof widget.holderArrangingPiles == 'function' && widget.holderArrangingPiles();
-        return holder ? `inherited: ${value}` : String(value);
+        return value === null || value === undefined ? '' : String(value);
       }
     });
     this.renderNumberPairRow(widget, 'Stack offset', [
