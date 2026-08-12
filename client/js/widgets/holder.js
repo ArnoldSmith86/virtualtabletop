@@ -378,19 +378,23 @@ export class Holder extends ImageWidget {
   spreadFanIndexOf(target, child, x, y) {
     if(target.get('type') != 'pile' || !target.spreadsCards() || target.children().length < 2)
       return null;
+    // everything measures along the axis the fan runs on: the point the player
+    // is holding the drop by, the visible band of each card of the fan, and
+    // half a card past its end for a drop meant to go on top
+    const vertical = Math.abs(target.get('stackOffsetY')) > Math.abs(target.get('stackOffsetX'));
+    const axisIndex = vertical ? 1 : 0;
     const anchor = child.dropAnchor;
-    const pointX = x + (anchor ? anchor.x : child.get('width' )/2) - target.get('x');
-    const pointY = y + (anchor ? anchor.y : child.get('height')/2) - target.get('y');
-    // the card slots of the fan, bottom first, plus one more past the last
-    // card so a drop beyond the end lands on top
-    const slots = target.spreadOffsets();
-    const last = slots[slots.length-1];
-    slots.push([ last[0] + target.get('stackOffsetX'), last[1] + target.get('stackOffsetY') ]);
-    const card = target.children()[0];
+    const point = (vertical ? y : x)
+      + (anchor ? (vertical ? anchor.y : anchor.x) : child.get(vertical ? 'height' : 'width')/2)
+      - target.get(vertical ? 'y' : 'x');
+    const slots = target.spreadOffsets().map(offset=>offset[axisIndex]);
+    slots.push(slots[slots.length-1] + target.get(vertical ? 'stackOffsetY' : 'stackOffsetX'));
+    const cardSize = target.children()[0].get(vertical ? 'height' : 'width');
     let index = 0;
     let bestDistance = Infinity;
     for(let i=0; i<slots.length; ++i) {
-      const distance = (pointX - slots[i][0] - card.get('width')/2)**2 + (pointY - slots[i][1] - card.get('height')/2)**2;
+      const center = i < slots.length - 1 ? (slots[i] + slots[i+1]) / 2 : slots[i] + cardSize/2;
+      const distance = Math.abs(point - center);
       if(distance < bestDistance) {
         bestDistance = distance;
         index = i;
@@ -879,8 +883,9 @@ export class Holder extends ImageWidget {
       await card.bringToFront();
       await card.set('parent', pile.get('id'));
     }
-    if(index !== null)
-      await pile.insertChildrenAt(cards, index);
+    // renumbering the fan explicitly keeps the order deterministic - null
+    // means on top, the way MOVE has always stacked what it brings
+    await pile.insertChildrenAt(cards, index === null ? pile.children().length : index);
     return pile;
   }
 

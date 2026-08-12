@@ -719,11 +719,15 @@ export default async function convertPCIO(content) {
       if(pileTransparent[w.id])
         w.classes = 'transparent';
       if(widget.id == 'hand') {
+        // a PCIO hand is a multi-group spread: cards fan out and can be
+        // grouped into stacks the player arranges, 20 pixels apart
+        w.layout = 'multipleSpread';
         w.dropOffsetX = 6;
         w.dropOffsetY = 6;
         w.stackOffsetX = 40;
+        w.pilesGapX = 20;
       } else {
-        w.alignChildren = false;
+        w.layout = 'freeform';
       }
       w.inheritChildZ = true;
       w.childrenPerOwner = true;
@@ -756,16 +760,32 @@ export default async function convertPCIO(content) {
       if(widget.hideStackTab)
         w.preventPiles = true;
       if(widget.layoutType == 'freeform')
-        w.alignChildren = false;
+        w.layout = 'freeform';
       if(widget.layoutType == 'grid') {
-        // VTT holders can only spread along one axis
-        w.alignChildren = false;
-        warnAbout('gridLayout', widget, (names, count)=>`PlayingCards.io's grid layout has no VirtualTabletop equivalent - the holder${count > 1 ? 's' : ''} ${names} ${count > 1 ? 'were' : 'was'} imported as freeform.`);
+        // the grid layout derives its rows and columns from the holder size the
+        // way PCIO does; PCIO insets the cards 6 pixels from the edge
+        w.layout = 'grid';
+        w.dropOffsetX = 6;
+        w.dropOffsetY = 6;
       }
-      if(widget.spreadMulti == 'multi' && widget.layoutType == 'spread')
-        warnAbout('spreadMulti', widget, (names, count)=>`Spreading cards into multiple groups is not something VirtualTabletop can do - the cards in the holder${count > 1 ? 's' : ''} ${names} are all in one row.`);
 
-      if(widget.layoutType == 'spread') {
+      if(widget.layoutType == 'spread' && widget.spreadMulti == 'multi') {
+        // a multi-group spread: each group fans out by the band PCIO leaves
+        // visible of a card (40 x 54 pixels), the groups sit the 20 pixels
+        // apart PCIO keeps between them
+        w.layout = 'multipleSpread';
+        w.pilesGapX = 20;
+        if(widget.spreadDirection == 'down') {
+          w.stackOffsetY = 54;
+        } else if(widget.spreadDirection == 'up') {
+          w.stackOffsetY = -54;
+        } else if(widget.spreadDirection == 'left') {
+          w.stackOffsetX = -40;
+        } else {
+          w.stackOffsetX = 40;
+        }
+      } else if(widget.layoutType == 'spread') {
+        w.layout = 'singleSpread';
         if(widget.spreadDirection == 'down') {
           w.stackOffsetY = 168;
         } else if(widget.spreadDirection == 'up') {
@@ -777,7 +797,9 @@ export default async function convertPCIO(content) {
         } else {
           w.stackOffsetX = 111;
         }
-      } else {
+      } else if(widget.layoutType != 'grid' && widget.layoutType != 'freeform') {
+        // no layoutType is PCIO's pile: everything stacks in one centered spot
+        w.layout = 'pile';
         if(dropOffsetX != 100)
           w.dropOffsetX = dropOffsetX;
         if(dropOffsetY != 100)
@@ -1717,6 +1739,7 @@ export default async function convertPCIO(content) {
             output.pcioMoveTempHolder = {
               id: 'pcioMoveTempHolder',
               type: 'holder',
+              layout: 'pile',
               x: -200,
               y: -500
             };
