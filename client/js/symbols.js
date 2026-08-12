@@ -1,6 +1,7 @@
 import { $, asArray } from "./domhelpers";
+import { addEmojiVariantFlyout, closeEmojiVariantFlyout } from "./emojivariants";
 
-function emojiToFilename(emoji) {
+export function emojiToFilename(emoji) {
   return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
 }
 
@@ -56,6 +57,12 @@ function toNotoMonochrome(emoji) {
 
 function skipForNotoMonochrome(emoji) {
   return emoji.match(/^[\u{1f3c3}-\u{1f3cc}]\u{fe0f}?\u{200d}[\u{2640}\u{2642}]\u{fe0f}(\u{200d}\u{27a1}\u{fe0f})?|\u{1f468}|\u{1f468}\u{200d}[\u{1f33e}\u{1f373}\u{1f37c}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}\u{1f9b1}\u{1f9b2}\u{1f9bc}\u{1f9bd}]|\u{1f468}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f468}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f468}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f468}|\u{1f48b}\u{200d}\u{1f468})|\u{1f469}\u{200d}[\u{1f33e}\u{1f373}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}-\u{1f9b3}\u{1f9bc}\u{1f9bd}]|\u{1f469}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f469}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f469}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f48b}\u{200d})?[\u{1f468}\u{1f469}]|\u{1f46b}|\u{1f46c}|\u{200d}[\u{2640}\u{2642}]|\u{1f478}|\u{1f57a}|\u{1f934}|\u{1f936}|\u{1f9d1}\u{200d}(\u{1f37c}|\u{1f384}|\u{1f91d}\u{200d}\u{1f9d1})|\u{1fac3}|\u{1fac4}$/u);
+}
+
+// data-keywords is the symbol itself followed by its keywords, the first of which is its name
+// ("thumbs_up") - the flyout says which icon it belongs to
+function symbolName(icon) {
+  return (icon.dataset.keywords.split(',')[1] || '').replace(/_/g, ' ');
 }
 
 let symbolData = null;
@@ -142,23 +149,31 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
     $('#symbolPickerOverlay input').onkeyup();
 
     $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+      closeEmojiVariantFlyout();
       if(closeOverlay)
         showOverlay(null);
       resolve(null);
     };
 
+    // the symbol a picked icon stands for is its own most of the time, but the skin tone flyout of an
+    // emoji resolves the same pick with one of its variants instead
+    function pick(icon, symbol) {
+      closeEmojiVariantFlyout();
+      if(closeOverlay)
+        showOverlay(null);
+      const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
+      let url = null;
+      if(icon.dataset.type == 'emoji-color')
+        url = `/i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg`;
+      if(icon.dataset.type == 'game-icons')
+        url = `/i/game-icons.net/${symbol}.svg`;
+      resolve(Object.assign({...icon.dataset}, { symbol, isImage, url }));
+    }
+
     for(const icon of $a('#symbolList i')) {
-      icon.onclick = function(e) {
-        if(closeOverlay)
-          showOverlay(null);
-        const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
-        let url = null;
-        if(icon.dataset.type == 'emoji-color')
-          url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
-        if(icon.dataset.type == 'game-icons')
-          url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
-        resolve(Object.assign({...icon.dataset}, { isImage, url }));
-      };
+      icon.onclick = _=>pick(icon, icon.dataset.symbol);
+      if(icon.dataset.type == 'emoji-color')
+        addEmojiVariantFlyout(icon, icon.dataset.symbol, variant=>pick(icon, variant), symbolName(icon));
     }
   });
 }
@@ -240,24 +255,32 @@ export function addRichtextControls(dom) {
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();
 
-    $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
+    $('#symbolPickerOverlay [icon=close]').onclick = function() {
+      closeEmojiVariantFlyout();
+      showStatesOverlay(detailsOverlay);
+    };
+
+    function insert(icon, symbol) {
+      closeEmojiVariantFlyout();
+      showStatesOverlay(detailsOverlay);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      if(icon.classList.contains('gameicons')) {
+        document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="i/game-icons.net/${symbol}.svg"></i>`);
+      } else {
+        if(icon.classList.contains('emoji-color'))
+          document.execCommand('inserthtml', false, symbol);
+        else
+          document.execCommand('inserthtml', false, `<i class="richtextSymbol ${icon.className}">${icon.innerText}</i>`);
+      }
+      for(const insertedSymbol of $a('.richtextSymbol'))
+        insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
+    }
 
     for(const icon of $a('#symbolList i')) {
-      icon.onclick = function() {
-        showStatesOverlay(detailsOverlay);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        if(icon.classList.contains('gameicons')) {
-          document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="i/game-icons.net/${icon.dataset.symbol}.svg"></i>`);
-        } else {
-          if(icon.classList.contains('emoji-color'))
-            document.execCommand('inserthtml', false, icon.innerText);
-          else
-            document.execCommand('inserthtml', false, `<i class="richtextSymbol ${icon.className}">${icon.innerText}</i>`);
-        }
-        for(const insertedSymbol of $a('.richtextSymbol'))
-          insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
-      };
+      icon.onclick = _=>insert(icon, icon.dataset.symbol);
+      if(icon.dataset.type == 'emoji-color')
+        addEmojiVariantFlyout(icon, icon.dataset.symbol, variant=>insert(icon, variant), symbolName(icon));
     }
   };
 }

@@ -594,6 +594,127 @@
   }
 }
 
+/* Skin tone variants (client/js/emojivariants.js): the pickers list one icon per emoji, and the
+   ones that also have toned artwork get a corner triangle plus a flyout with the whole set. The
+   marker and the flyout are styled here rather than in the editor's stylesheet because both
+   pickers - the overlay grid and the chips of the editor sidebar - use them. */
+.hasEmojiVariants {
+  position: relative;
+}
+
+.hasEmojiVariants::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-left: 7px solid transparent;
+  border-bottom: 7px solid var(--VTTblue);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* the flyout hangs off an icon of a grid that scrolls (and, in the sidebar, of a 340px column), so
+   it is a fixed box at the document level instead of a child of that icon */
+.emojiVariantFlyout {
+  position: fixed;
+  z-index: 2000001;
+  background: white;
+  color: black;
+  border: 1px solid var(--VTTblue);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px #0004;
+  padding: 8px 10px 9px;
+  max-width: calc(100vw - 8px);
+}
+
+.emojiVariantTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #55606d;
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+.emojiVariantTitle b {
+  color: var(--VTTblue);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
+}
+
+.emojiVariantRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+/* one column for the row labels, then one per skin tone */
+.emojiVariantMatrix {
+  display: grid;
+  grid-template-columns: auto repeat(5, auto);
+  gap: 2px;
+  align-items: center;
+}
+
+.emojiVariantCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 4px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+}
+
+.emojiVariantCell:hover {
+  border-color: var(--VTTblue);
+  background: #eef4fb;
+}
+
+.emojiVariantCell img {
+  width: 30px;
+  height: 30px;
+}
+
+.emojiVariantMatrix .emojiVariantCell img {
+  width: 26px;
+  height: 26px;
+}
+
+/* the untoned form the grid itself shows, so that picking it from here is possible as well */
+.emojiVariantBase {
+  background: #eef4fb;
+  border-color: var(--VTTblueLight);
+}
+
+/* the form that is in use: a toned icon opens the same flyout, so its own cell is marked */
+.emojiVariantSelected {
+  border-color: var(--VTTblue);
+  box-shadow: inset 0 0 0 1px var(--VTTblue);
+}
+
+.emojiVariantLabel {
+  font-size: 9px;
+  color: #66707c;
+  white-space: nowrap;
+}
+
+.emojiVariantHeader {
+  font-size: 9px;
+  color: #66707c;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.emojiVariantRowHeader {
+  text-align: right;
+  padding-right: 4px;
+}
+
 #audioPickerOverlay input {
   width: 100%;
   box-sizing: border-box;

@@ -375,6 +375,13 @@ function searchIconIndex(query, limit=100, enabledTypes=null) {
     .map(entry => entry.value);
 }
 
+// The name an icon is listed under ("thumbs up"): the first of its keywords, which is what the
+// symbol picker shows as well. Empty until the index is loaded - it is only used as a label.
+function iconDisplayName(value) {
+  const listed = (iconSearchIndex || []).find(entry => entry.value === value);
+  return listed ? (listed.keywords.split(',')[1] || '').replace(/_/g, ' ') : '';
+}
+
 function imageURLFromSymbol(symbol) {
   if(symbol.includes('/'))
     return `/i/game-icons.net/${symbol}.svg`;
@@ -1117,7 +1124,12 @@ class PickerInput extends PropertyInput {
       chip.dataset.value = value;
       chip.classList.toggle('selected', String(value) == this.chipMatchValue(currentValue));
       chip.onclick = _=>this.setValue(this.valueForChip(value));
+      this.decorateChip(chip, value);
     }
+  }
+
+  // a chip that can offer more than the one value it shows (see IconInput)
+  decorateChip(chip, value) {
   }
 }
 
@@ -1301,6 +1313,14 @@ class IconInput extends PickerInput {
     return iconValueForChip(this.getValue(), chipValue);
   }
 
+  // the icon list has one entry per emoji, but most of the people ones also have skin tone forms:
+  // mark those chips and let their flyout pick one (client/js/emojivariants.js)
+  decorateChip(chip, value) {
+    const icon = iconName(value);
+    if(iconValueType(icon) == 'emoji-color')
+      addEmojiVariantFlyout(chip, icon, variant=>this.setValue(this.valueForChip(variant)), iconDisplayName);
+  }
+
   emptyLabel() {
     return this.options.emptyLabel || 'Choose icon';
   }
@@ -1383,6 +1403,7 @@ class IconInput extends PickerInput {
         chip.dataset.value = iconValue;
         chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
         chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
+        this.decorateChip(chip, iconValue);
       }
       if(!values.length)
         div(results, 'propertyPickerEmpty', 'No results.');

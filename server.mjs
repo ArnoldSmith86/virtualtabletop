@@ -157,6 +157,19 @@ MinifyHTML().then(function(result) {
     res.send(result);
   });
 
+  // The icon list only names the base emoji, but the noto-emoji artwork also holds their skin tone
+  // forms - which ones is a property of that directory, so the picker's variant flyout (see
+  // client/js/emojivariants.js) asks for the file names here instead of carrying a second copy of
+  // the list that would go stale the next time the emoji are updated.
+  let emojiVariants = null;
+  router.get('/emojiVariants', function(req, res) {
+    if(!emojiVariants)
+      emojiVariants = fs.readdirSync(path.resolve() + '/assets/noto-emoji')
+        .filter(file => file.match(/^emoji_u[0-9a-f_]*1f3f[b-f][0-9a-f_]*\.svg$/))
+        .map(file => file.slice(7, -4));
+    res.send(emojiVariants);
+  });
+
   router.get('/assets/:name', function(req, res) {
     if(!req.params.name.match(/^[0-9_-]+$/) || !Config.resolveAsset(req.params.name)) {
       res.sendStatus(404);
