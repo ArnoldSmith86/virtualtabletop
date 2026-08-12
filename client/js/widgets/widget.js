@@ -465,7 +465,7 @@ export class Widget extends StateManaged {
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
-        await this.currentParent.dispenseCard(this);
+        await this.currentParent.dispenseCard(this, true);
       delete this.currentParent;
     }
   }
@@ -1985,10 +1985,38 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT', position: null });
         let count = a.fillTo || a.count;
         if(count === 'all')
           count = 999999;
+
+        // Everything one MOVE brings into one holder is treated as a batch:
+        // cards arrive one by one, but a holder that arranges piles puts the
+        // whole batch down as one pile rather than feeding it into the pile it
+        // already ends with, and the position parameter places the batch with
+        // one renumbering pass instead of one per card. Keyed by the holder
+        // that actually received the cards, which for a seat is its hand. A
+        // move within one holder only reorders what is already there, so it
+        // brings nothing in to be grouped - but position still applies to it.
+        const arrivals = new Map();
+        const noteArrival = (holder, c, broughtIn)=>{
+          if(!holder || holder.get('type') != 'holder')
+            return;
+          if(!arrivals.has(holder))
+            arrivals.set(holder, { cards: [], broughtIn: [] });
+          arrivals.get(holder).cards.push(c);
+          if(broughtIn)
+            arrivals.get(holder).broughtIn.push(c);
+        };
+        const finishArrivals = async ()=>{
+          for(const [ holder, batch ] of arrivals) {
+            if(a.position && holder.applyMovePosition)
+              await holder.applyMovePosition(batch.cards, a.position);
+            else if(holder.groupDroppedCards)
+              await holder.groupDroppedCards(batch.broughtIn);
+          }
+          arrivals.clear();
+        };
 
         async function applyMove(source, target, c) {
           let moved = 0;
@@ -1999,6 +2027,7 @@ export class Widget extends StateManaged {
           if(source == target) {
             await applyFlip();
             await c.bringToFront();
+            noteArrival(target, c, false);
             ++moved;
           } else if(c == target) {
             problems.push(`Skipping move of ${c.id} to itself.`);
@@ -2020,6 +2049,7 @@ export class Widget extends StateManaged {
                     delete c.targetPlayer;
                   }
                   await c.bringToFront();
+                  noteArrival(targetHand, c, targetHand != source);
                   if(targetHand.get('type') == 'holder')
                     await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                   ++moved;
@@ -2032,6 +2062,7 @@ export class Widget extends StateManaged {
             } else {
               await applyFlip();
               await c.moveToHolder(target);
+              noteArrival(target, c, true);
               ++moved;
             }
             delete c.movedByButton;
@@ -2041,25 +2072,12 @@ export class Widget extends StateManaged {
 
         let collection;
         if((a.collection || a.from) && this.isValidID(a.to, problems)) {
-          // cards arrive one by one, but a holder that arranges piles puts what
-          // one MOVE brought in down as one pile rather than feeding them into
-          // the pile it already ends with
-          const groupMoved = async (target, moved)=>{
-            if(target.groupDroppedCards)
-              await target.groupDroppedCards(moved);
-          };
-
           if(a.from) {
             if(this.isValidID(a.from, problems)) {
               await w(a.from, async source=>await w(a.to, async target=>{
-                const moved = [];
-                for(const c of source.children().slice(0, count).reverse()) {
-                  // a move within one holder only flips and reorders what is
-                  // already there, so it brings nothing in to be grouped
-                  if(await applyMove(source, target, c) && source != target)
-                    moved.push(c);
-                }
-                await groupMoved(target, moved);
+                for(const c of source.children().slice(0, count).reverse())
+                  await applyMove(source, target, c);
+                await finishArrivals();
               }));
             } else {
               problems.push(`Source ${a.from} is invalid.`);
@@ -2067,16 +2085,11 @@ export class Widget extends StateManaged {
           } else if(collection = getCollection(a.collection)) {
             let offset = 0;
             await w(a.to, async target=>{
-              const moved = [];
               for(const c of collections[collection].slice(offset, offset+count)) {
                 const source = c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null;
-                if(await applyMove(source, target, c)) {
-                  ++offset;
-                  if(source != target)
-                    moved.push(c);
-                }
+                offset += await applyMove(source, target, c);
               }
-              await groupMoved(target, moved);
+              await finishArrivals();
               if(target.get('type') == 'holder')
                 await target.updateAfterShuffle();
             });
@@ -2389,7 +2402,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true, groupBy: null });
         let collection;
         let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
@@ -2400,6 +2413,13 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
+              if(a.groupBy && typeof holder.arrangesPiles == 'function' && holder.arrangesPiles()) {
+                // one spread group per distinct value of the groupBy property
+                await holder.regroupBy(a.groupBy, a.key, a.reverse, a.locales, a.options);
+                return;
+              }
+              if(a.groupBy)
+                problems.push(`groupBy is ignored because ${holder.get('id')} does not arrange piles.`);
               await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();

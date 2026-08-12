@@ -114,6 +114,26 @@ export const LEGACY_MODES = {
       <br><br>
       This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
       `
+  },
+  classicHolderLayout: {
+    since: 23,
+    pr: 3117,
+    interactsWith: [],
+    detect: function(state) {
+      for(const id in state)
+        if(state[id] && state[id].type == 'holder')
+          return true;
+      return false;
+    },
+    label: 'Classic holder layout',
+    summary: "Holders without a layout property keep piling cards up at the drop offset instead of arranging them automatically.",
+    description: `
+      <b>Old behavior</b>: A holder without any arrangement properties stacks everything at its drop offset, in its top left corner.
+      <br><br>
+      <b>New behavior</b>: A holder defaults to <code>layout: 'auto'</code>: it centers its cards and, when it is large enough, spreads them out and wraps them into rows on its own. Setting any of the classic arrangement properties (or another <code>layout</code>) switches that off per holder.
+      <br><br>
+      This legacy mode keeps the classic default (<code>layout: 'custom'</code>) for every holder of this game that does not say otherwise.
+      `
   }
 };
 

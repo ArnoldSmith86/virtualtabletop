@@ -301,6 +301,21 @@ export class Pile extends Widget {
     return !!(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')));
   }
 
+  // Put the given cards - already children of this pile - at the given position
+  // of its fan, counted from the bottom, and lay the fan out again. This is how
+  // a drop pointed at a spot between two cards is inserted right there instead
+  // of on top.
+  async insertChildrenAt(cards, index) {
+    const existing = this.children().filter(c=>cards.indexOf(c) == -1).sort((a, b)=>a.get('z') - b.get('z'));
+    const incoming = cards.slice().sort((a, b)=>a.get('z') - b.get('z'));
+    const at = Math.max(0, Math.min(existing.length, index));
+    const ordered = existing.slice(0, at).concat(incoming, existing.slice(at));
+    let z = 1;
+    for(const c of ordered)
+      await c.set('z', z++);
+    await this.arrangeChildren();
+  }
+
   // Whether the pile places its cards itself. A pile that spreads them does, and
   // so does one in a holder that arranges piles - everywhere else the cards keep
   // whatever position they were given, which is what a scattered heap of them

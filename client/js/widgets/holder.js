@@ -1,3 +1,29 @@
+// What each layout decides for the holder. Only the properties named here are
+// overridden while the layout is in effect; every other property keeps its raw
+// value and acts as a knob of the layout (the fan step of a multipleSpread, the
+// margins of a grid, ...).
+const layoutDerivedProperties = {
+  pile:           { alignChildren: true,  allowPiles: false, stackOffsetX: 0, stackOffsetY: 0 },
+  singleSpread:   { alignChildren: true,  allowPiles: false, preventPiles: false },
+  multipleSpread: { alignChildren: true,  allowPiles: true,  preventPiles: false, dropShadow: true },
+  grid:           { alignChildren: true,  allowPiles: false, preventPiles: true },
+  freeform:       { alignChildren: false },
+  auto:           { alignChildren: true,  allowPiles: true,  preventPiles: false }
+};
+
+// The properties a get() on a holder may derive from its layout instead of
+// answering from the state (see Holder.get below).
+const layoutDerivableProperties = [ 'alignChildren', 'preventPiles', 'allowPiles', 'dropShadow', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesGapX' ];
+
+// The raw arrangement properties that switch an auto layout off: while any of
+// them is written, the holder behaves exactly as if its layout were 'custom'.
+// That way JSON written against the classic properties - copied from an older
+// game or from the wiki - keeps meaning exactly what it always did.
+const autoDeferProperties = [ 'alignChildren', 'preventPiles', 'allowPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
+
+// The padding the auto layout keeps between its children and to the border.
+const autoLayoutPadding = 4;
+
 export class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
@@ -26,6 +52,7 @@ export class Holder extends ImageWidget {
       onEnter: {},
       onLeave: {},
 
+      layout: 'auto',
       stackOffsetX: 0,
       stackOffsetY: 0,
       pilesOffsetX: null,
@@ -33,8 +60,67 @@ export class Holder extends ImageWidget {
       pilesGapX: null,
       pilesGapY: null,
       spreadMin: null,
+      gridColumns: null,
+      gridRows: null,
       borderRadius: 8
     });
+  }
+
+  // Games from before the layout property keep the classic default: every one
+  // of their holders behaves exactly as it always did, while holders in newer
+  // games start from 'auto'.
+  getDefaultValue(property) {
+    if(property == 'layout' && legacyMode('classicHolderLayout'))
+      return 'custom';
+    return super.getDefaultValue(property);
+  }
+
+  // The layout the holder actually follows. 'auto' only applies while the game
+  // leaves the raw arrangement properties alone - as soon as one of them is
+  // written, the holder answers to it like it always has. The optional
+  // parameter lets a property change ask what another layout value would mean.
+  effectiveLayout(layoutValue) {
+    let layout = layoutValue !== undefined ? layoutValue : super.get('layout');
+    if(layout === null || layout === undefined)
+      layout = 'custom';
+    if(layout == 'auto' && autoDeferProperties.some(p=>this.state[p] !== undefined))
+      return 'custom';
+    return layout;
+  }
+
+  usesAutoLayout() {
+    return this.effectiveLayout() == 'auto';
+  }
+
+  // The layout decides the lower-level properties it owns, so reading them
+  // through get() returns what the layout implies and this class and the base
+  // Widget stay consistent. Only the properties in layoutDerivableProperties
+  // are ever derived - everything else (the common case) skips the layout
+  // lookup entirely so get() stays cheap on this hot path.
+  get(property) {
+    if(property == 'layout') {
+      const layout = super.get('layout');
+      return layout === null ? 'custom' : layout;
+    }
+    if(layoutDerivableProperties.indexOf(property) != -1) {
+      const layout = this.effectiveLayout();
+      const derived = layoutDerivedProperties[layout];
+      if(derived && derived[property] !== undefined)
+        return derived[property];
+      // choosing a spread has to visibly spread, so a singleSpread without any
+      // stack offset gets the classic hand fan as its starting point
+      if(layout == 'singleSpread' && (property == 'stackOffsetX' || property == 'stackOffsetY') && !super.get('stackOffsetX') && !super.get('stackOffsetY'))
+        return property == 'stackOffsetX' ? 40 : 0;
+      // the groups of a multipleSpread sit a small default gap apart until the
+      // game spaces them out itself (an explicit pilesGapX of 0 packs them flush)
+      if(layout == 'multipleSpread' && property == 'pilesGapX' && [ 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY' ].every(p=>super.get(p) === null))
+        return 8;
+      // an auto holder too small to arrange its cards centers them: the classic
+      // paths put children at the drop offset, so that is where centering lives
+      if(layout == 'auto' && (property == 'dropOffsetX' || property == 'dropOffsetY') && !this.autoSpreads())
+        return this.autoCenteredDropOffset(property == 'dropOffsetX' ? 'X' : 'Y');
+    }
+    return super.get(property);
   }
 
   applyDeltaToDOM(delta) {
@@ -82,7 +168,7 @@ export class Holder extends ImageWidget {
     const anchor = child.dropAnchor;
     const pointX = x + (anchor ? anchor.x : child.get('width' )/2);
     const pointY = y + (anchor ? anchor.y : child.get('height')/2);
-    return this.arrangedChildrenOwned().filter(c=>c != child
+    return this.arrangedChildrenOwned().filter(c=>c != child && !c.get('dropShadowOwner')
       && pointX >= c.get('x') && pointX < c.get('x') + c.spreadExtent('X')
       && pointY >= c.get('y') && pointY < c.get('y') + c.spreadExtent('Y')
     ).sort((a, b)=>b.get('z') - a.get('z'))[0] || null;
@@ -132,22 +218,45 @@ export class Holder extends ImageWidget {
     return p;
   }
 
-  async dispenseCard(card) {
+  // isLeaving is set by checkParent, which only calls this once the card really
+  // has left the holder (dropped elsewhere or dragged off it).
+  async dispenseCard(card, isLeaving=false) {
+    // in a holder that arranges piles a card often just moves between groups
+    // (a drag between fans, a SORT with groupBy, a merge) - its new parent is
+    // still this holder or a pile inside it. It is not leaving the holder, so
+    // onLeave and leaveRoutine must not fire (they would e.g. flip the card
+    // face down in a typical hand).
+    let stillInside = false;
+    if(this.get('allowPiles') && !isLeaving) {
+      const newParent = card.get('parent');
+      stillInside = newParent == this.get('id') || widgets.has(newParent) && widgets.get(newParent).get('parent') == this.get('id')
+        // picking a card up out of one of the groups detaches it from that pile
+        // before it is dropped, which is what makes the pile dispense it. The
+        // drag remembers the holder it came from in currentParent, so a card in
+        // that state is still inside: if it does end up somewhere else, that is
+        // what the isLeaving call from checkParent is for.
+        || card.currentParent === this;
+    }
+
     let toProcess = [ card ];
     if(card.get('type') == 'pile')
       toProcess = card.children();
-    for(const w of toProcess) {
-      if(!w.get('ignoreOnLeave')) {
-        for(const property in this.get('onLeave')) {
-          if(tracingEnabled)
-            sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
-          await w.set(property, this.get('onLeave')[property]);
+    if(!stillInside) {
+      for(const w of toProcess) {
+        if(!w.get('ignoreOnLeave')) {
+          for(const property in this.get('onLeave')) {
+            if(tracingEnabled)
+              sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
+            await w.set(property, this.get('onLeave')[property]);
+          }
         }
       }
     }
-    if(this.get('alignChildren') && this.spreadsChildren())
+    if(this.get('layout') == 'grid')
+      await this.updateAfterShuffle();
+    else if(this.get('alignChildren') && this.spreadsChildren())
       await this.receiveCard(null);
-    if(Array.isArray(this.get('leaveRoutine')))
+    if(!stillInside && Array.isArray(this.get('leaveRoutine')))
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
   }
 
@@ -185,6 +294,25 @@ export class Holder extends ImageWidget {
     if(child.get('type') == 'deck')
       return await super.onChildAddAlign(child, oldParentID);
 
+    if(this.get('layout') == 'grid') {
+      if(child.get('type') == 'pile') {
+        // a pile dropped into a grid breaks up into individual cards (the grid
+        // derives preventPiles, so they won't re-merge). MOVE appends them; an
+        // interactive drop inserts them at the cell under the cursor.
+        if(child.movedByButton) {
+          await this.breakUpPile(child);
+          return await this.updateAfterShuffle();
+        }
+        return await this.snapPileToGrid(child, oldParentID);
+      }
+      if(child.movedByButton)
+        // MOVE fills the grid sequentially
+        return await this.updateAfterShuffle();
+      // an interactive drop is inserted at the grid cell under the cursor and
+      // the other cards reflow around it
+      return await this.snapToGridCell(child, oldParentID);
+    }
+
     const spreads = this.get('alignChildren') && this.spreadsChildren();
 
     // a holder that arranges piles takes a dropped pile as it is - everywhere
@@ -215,7 +343,9 @@ export class Holder extends ImageWidget {
       await super.onChildAddAlign(child, oldParentID);
     else if(child.movedByButton) {
       const [ axis, direction ] = this.spreadDirection();
-      await this.receiveCard(child, axis == 'X' ? [ direction*999999, 0 ] : [ 0, direction*999999 ]);
+      // the auto layout wraps into rows, so "the end" is the end on both axes
+      const auto = this.usesAutoLayout();
+      await this.receiveCard(child, [ axis == 'X' || auto ? direction*999999 : 0, axis == 'Y' || auto ? direction*999999 : 0 ]);
     } else {
       const x = child.get('x') - this.absoluteCoord('x');
       const y = child.get('y') - this.absoluteCoord('y');
@@ -225,11 +355,48 @@ export class Holder extends ImageWidget {
       // could never combine with any of them.
       const target = this.get('allowPiles') ? this.arrangedChildAt(child, x, y) : null;
       if(target) {
+        // where along the fan of the target the drop points decides where the
+        // dropped widget is inserted, not just that it joins
+        const fanIndex = this.spreadFanIndexOf(target, child, x, y);
+        const movedCards = child.get('type') == 'pile' ? [ ...child.children() ] : [ child ];
         await child.setPosition(target.get('x'), target.get('y'), child.get('z'));
         await child.updatePiles();
+        if(fanIndex !== null) {
+          const pileID = movedCards[0].get('parent');
+          const pile = widgets.has(pileID) ? widgets.get(pileID) : null;
+          if(pile && pile.get('type') == 'pile' && pile.get('parent') == this.get('id'))
+            await pile.insertChildrenAt(movedCards, fanIndex);
+        }
       }
       await this.receiveCard(child, [ x, y ]);
     }
+  }
+
+  // The slot of the target pile's fan a drop points at, so the dropped widget
+  // is inserted where the player aimed rather than always on top. null where
+  // there is no fan to point into - a compact pile takes it on top as before.
+  spreadFanIndexOf(target, child, x, y) {
+    if(target.get('type') != 'pile' || !target.spreadsCards() || target.children().length < 2)
+      return null;
+    const anchor = child.dropAnchor;
+    const pointX = x + (anchor ? anchor.x : child.get('width' )/2) - target.get('x');
+    const pointY = y + (anchor ? anchor.y : child.get('height')/2) - target.get('y');
+    // the card slots of the fan, bottom first, plus one more past the last
+    // card so a drop beyond the end lands on top
+    const slots = target.spreadOffsets();
+    const last = slots[slots.length-1];
+    slots.push([ last[0] + target.get('stackOffsetX'), last[1] + target.get('stackOffsetY') ]);
+    const card = target.children()[0];
+    let index = 0;
+    let bestDistance = Infinity;
+    for(let i=0; i<slots.length; ++i) {
+      const distance = (pointX - slots[i][0] - card.get('width')/2)**2 + (pointY - slots[i][1] - card.get('height')/2)**2;
+      if(distance < bestDistance) {
+        bestDistance = distance;
+        index = i;
+      }
+    }
+    return index;
   }
 
   // Empties a pile of this holder out onto the row, one card per slot, the way a
@@ -261,7 +428,13 @@ export class Holder extends ImageWidget {
     // out the same way rather than left behind in a state nothing else in here
     // expects, where children() would go on reporting them instead of the cards
     // they hold and COUNT, dropLimit and MOVE would silently count piles.
-    if(property == 'allowPiles' && !newValue) {
+    const stoppedArrangingPiles =
+      property == 'allowPiles' && oldValue && !this.get('allowPiles') ||
+      property == 'layout' && !this.get('allowPiles') && (()=>{
+        const derived = layoutDerivedProperties[this.effectiveLayout(oldValue === undefined ? this.getDefaultValue('layout') : oldValue)];
+        return derived && derived.allowPiles !== undefined ? derived.allowPiles : !!super.get('allowPiles');
+      })();
+    if(stoppedArrangingPiles) {
       const piles = this.childrenFilter(super.children(), true).filter(c=>c.get('type') == 'pile');
       for(const pile of piles)
         if(this.get('alignChildren') && this.spreadsChildren())
@@ -269,12 +442,17 @@ export class Holder extends ImageWidget {
         else
           await pile.arrangeChildren(false, true);
     }
-    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ].indexOf(property) != -1) {
+    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle();
-    }
+    // the layouts that decide the arrangement from the holder's size react to it changing
+    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || this.get('layout') == 'grid'))
+      await this.updateAfterShuffle();
   }
 
   async receiveCard(card, pos) {
+    if(this.usesAutoLayout())
+      return await this.receiveCardAuto(card, pos);
+
     // get children sorted by their position along the axis this holder spreads along
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
     const [ axis, direction ] = this.spreadDirection();
@@ -286,9 +464,36 @@ export class Holder extends ImageWidget {
     await this.rearrangeChildren(children, card);
   }
 
+  // In the auto layout the children wrap into rows, so where a dropped widget
+  // lands is not decided along a single axis: it goes to the nearest row first
+  // and to its place within that row then.
+  async receiveCardAuto(card, pos) {
+    const children = this.arrangedChildrenOwned();
+    const rowsY = [ ...new Set(children.filter(c=>c != card).map(c=>c.get('y'))) ];
+    const sortCoords = c=>{
+      if(c != card || !pos)
+        return [ c.get('y'), c.get('x') ];
+      let [ x, y ] = pos;
+      if(rowsY.length)
+        y = rowsY.reduce((nearest, rowY)=>Math.abs(rowY - y) < Math.abs(nearest - y) ? rowY : nearest);
+      return [ y, x ];
+    };
+    const sorted = children.sort((a, b)=>{
+      const [ aY, aX ] = sortCoords(a);
+      const [ bY, bX ] = sortCoords(b);
+      return (aY - bY) || (aX - bX);
+    });
+    await this.rearrangeChildren(sorted, card);
+  }
+
   async rearrangeChildren(children, card) {
     if(this.preventRearrangeDuringPileDrop)
       return;
+
+    if(this.usesAutoLayout())
+      return await this.rearrangeChildrenAuto(children);
+    if(this.get('layout') == 'grid')
+      return await this.rearrangeChildrenGrid(children);
 
     let xOffset = 0;
     let yOffset = 0;
@@ -304,6 +509,235 @@ export class Holder extends ImageWidget {
       xOffset += this.childSpacing(child, 'X');
       yOffset += this.childSpacing(child, 'Y');
     }
+  }
+
+  // The card size the auto layout measures against: the biggest card among the
+  // children - never the box of a pile, whose size follows from the layout and
+  // would feed back into the decision.
+  autoCardSize() {
+    const cards = this.children().filter(c=>c.get('type') != 'pile');
+    if(!cards.length)
+      return null;
+    return {
+      width:  Math.max(...cards.map(c=>c.get('width'))),
+      height: Math.max(...cards.map(c=>c.get('height')))
+    };
+  }
+
+  // Whether the auto layout has room to line its children up instead of letting
+  // them gather in the center: one and a half cards along either axis.
+  autoSpreads() {
+    const size = this.autoCardSize();
+    return size !== null && (size.width * 1.5 < this.get('width') || size.height * 1.5 < this.get('height'));
+  }
+
+  autoCenteredDropOffset(axis) {
+    const size = this.autoCardSize();
+    if(size === null)
+      return autoLayoutPadding;
+    return Math.max(0, (this.get(axis == 'X' ? 'width' : 'height') - (axis == 'X' ? size.width : size.height)) / 2);
+  }
+
+  // The auto layout: the children (loose cards and the piles the players made)
+  // are centered and lined up in as many rows as give each of them the most
+  // visible area, the objective from #2708. The spacing degrades continuously
+  // when the holder gets tight, so what does not fit side by side overlaps
+  // instead of spilling out of the holder. Piles are never formed or dissolved
+  // by this - a group a player or a routine made survives every resize.
+  async rearrangeChildrenAuto(children) {
+    if(this.preventRearrangeDuringPileDrop || !children.length)
+      return;
+
+    const pad = autoLayoutPadding;
+    const holderWidth = this.get('width');
+    const holderHeight = this.get('height');
+    const size = this.autoCardSize() || { width: children[0].get('width'), height: children[0].get('height') };
+    const wide = size.width * 1.5 < holderWidth;
+    const tall = size.height * 1.5 < holderHeight;
+    let z = 1;
+
+    // too small to arrange anything: everything gathers in the middle, where
+    // the derived drop offset puts new drops as well
+    if(!wide && !tall) {
+      for(const child of children)
+        await child.setPosition(Math.max(0, (holderWidth - child.spreadExtent('X')) / 2), Math.max(0, (holderHeight - child.spreadExtent('Y')) / 2), z++);
+      return;
+    }
+
+    const count = children.length;
+    let rows = 1;
+    if(!wide && tall) {
+      rows = count;
+    } else if(wide && tall) {
+      // try every row count: the one that leaves each card the most visible
+      // area wins
+      let bestArea = 0;
+      for(let r = 1; r <= count; ++r) {
+        const perRow = Math.ceil(count / r);
+        const stepX = perRow > 1 ? Math.min(size.width  + pad, (holderWidth  - size.width  - 2*pad) / (perRow - 1)) : size.width;
+        const stepY = r      > 1 ? Math.min(size.height + pad, (holderHeight - size.height - 2*pad) / (r      - 1)) : size.height;
+        const area = Math.max(0, Math.min(size.width, stepX)) * Math.max(0, Math.min(size.height, stepY));
+        if(area > bestArea) {
+          bestArea = area;
+          rows = r;
+        }
+      }
+    }
+
+    const perRow = Math.ceil(count / rows);
+    const stepY = rows > 1 ? Math.min(size.height + pad, Math.max(0, (holderHeight - size.height - 2*pad) / (rows - 1))) : 0;
+    const contentHeight = size.height + (rows - 1) * stepY;
+    const y0 = Math.max(pad, (holderHeight - contentHeight) / 2);
+
+    for(let row = 0; row < rows; ++row) {
+      const rowChildren = children.slice(row * perRow, (row + 1) * perRow);
+      if(!rowChildren.length)
+        break;
+      // per-child spacing so a fanned pile gets the room of its whole spread
+      const steps = rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : Math.min(c.spreadExtent('X') + pad, Math.max(0, (holderWidth - c.spreadExtent('X') - 2*pad) / (rowChildren.length - 1))));
+      const contentWidth = steps.reduce((a, b)=>a + b, 0) + rowChildren[rowChildren.length - 1].spreadExtent('X');
+      let x = Math.max(pad, (holderWidth - contentWidth) / 2);
+      for(let i = 0; i < rowChildren.length; ++i) {
+        await rowChildren[i].setPosition(x, y0 + row * stepY, z++);
+        x += steps[i];
+      }
+    }
+  }
+
+  // Compute the grid geometry for n cards: the column count and per-cell step
+  // that keep every card inside the holder with the least overlap. dropOffset
+  // is the margin from the edges and stackOffset the desired gap between cells;
+  // when the cards do not all fit at that spacing they overlap instead of
+  // spilling outside. gridColumns/gridRows pin the column count so a one-pixel
+  // resize cannot reflow the whole table. Note: the cell size is taken from the
+  // first child, so the grid assumes all children share one size (as a card
+  // deck does); mixed-size children may overlap or overflow.
+  gridMetrics(n) {
+    const marginX = this.get('dropOffsetX');
+    const marginY = this.get('dropOffsetY');
+    const gapX = Math.abs(this.get('stackOffsetX')) || 4;
+    const gapY = Math.abs(this.get('stackOffsetY')) || 4;
+    const first = this.children()[0];
+    const cardW = first ? first.get('width')  : this.get('width');
+    const cardH = first ? first.get('height') : this.get('height');
+
+    const availX = Math.max(0, this.get('width')  - 2 * marginX - cardW);
+    const availY = Math.max(0, this.get('height') - 2 * marginY - cardH);
+    const fullStepX = cardW + gapX;
+    const fullStepY = cardH + gapY;
+
+    const stepsFor = cols=>{
+      const rows = Math.ceil(Math.max(1, n) / cols);
+      return {
+        cols,
+        stepX: cols > 1 ? Math.min(fullStepX, availX / (cols - 1)) : fullStepX,
+        stepY: rows > 1 ? Math.min(fullStepY, availY / (rows - 1)) : fullStepY
+      };
+    };
+
+    let best = null;
+    if(this.get('gridColumns') > 0) {
+      best = stepsFor(Math.floor(this.get('gridColumns')));
+    } else if(this.get('gridRows') > 0) {
+      best = stepsFor(Math.ceil(Math.max(1, n) / Math.floor(this.get('gridRows'))));
+    } else {
+      for(let cols=1; cols<=Math.max(1, n); ++cols) {
+        const candidate = stepsFor(cols);
+        const overlapX = cols > 1 ? Math.max(0, (cardW - candidate.stepX) / cardW) : 0;
+        const overlapY = Math.ceil(n / cols) > 1 ? Math.max(0, (cardH - candidate.stepY) / cardH) : 0;
+        candidate.score = Math.max(overlapX, overlapY) + (overlapX + overlapY) / 10;
+        if(!best || candidate.score < best.score - 1e-9)
+          best = candidate;
+      }
+    }
+    return { cols: best.cols, stepX: best.stepX, stepY: best.stepY, marginX, marginY, cardW, cardH };
+  }
+
+  async rearrangeChildrenGrid(children) {
+    if(this.preventRearrangeDuringPileDrop || !children.length)
+      return;
+    await this.layoutGridCells(children);
+  }
+
+  // Insert an interactively-dropped card into the grid at the cell nearest where
+  // it was dropped and reflow the rest so the whole grid stays in order with the
+  // new card at that position (rather than the card always landing in the next
+  // sequential slot, which is what MOVE does). The other cards flow around it.
+  async snapToGridCell(child, oldParentID) {
+    let coord = { x: child.get('x'), y: child.get('y') };
+    if(!oldParentID)
+      coord = this.coordLocalFromCoordGlobal(coord);
+
+    const owner = this.childOwner(child);
+    const others = this.children().filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
+    const m = this.gridMetrics(others.length + 1);
+    const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
+    const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
+    const index = Math.max(0, Math.min(others.length, row * m.cols + column));
+
+    const ordered = others.slice();
+    ordered.splice(index, 0, child);
+    // position this lane's cards (including the drop shadow, if child is one)
+    // directly, since updateAfterShuffle deliberately skips shadows
+    await this.layoutGridCells(ordered);
+  }
+
+  // Break a pile dropped interactively into a grid and insert its cards at the
+  // cell under the cursor (reflowing the rest), instead of appending them.
+  async snapPileToGrid(pile, oldParentID) {
+    let coord = { x: pile.get('x'), y: pile.get('y') };
+    if(!oldParentID)
+      coord = this.coordLocalFromCoordGlobal(coord);
+
+    const incoming = pile.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
+    const owner = this.childOwner(pile);
+    await this.breakUpPile(pile);
+
+    const others = this.children().filter(w=>!incoming.includes(w) && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
+    const m = this.gridMetrics(others.length + incoming.length);
+    const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
+    const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
+    const index = Math.max(0, Math.min(others.length, row * m.cols + column));
+
+    const ordered = others.slice(0, index).concat(incoming, others.slice(index));
+    await this.layoutGridCells(ordered);
+  }
+
+  // Position an ordered list of cards into grid cells and assign matching z.
+  async layoutGridCells(cards) {
+    if(!cards.length)
+      return;
+    const m = this.gridMetrics(cards.length);
+    let z = 1;
+    for(let i=0; i<cards.length; ++i) {
+      const column = i % m.cols;
+      const row = Math.floor(i / m.cols);
+      await cards[i].setPosition(m.marginX + column * m.stepX, m.marginY + row * m.stepY, z++);
+    }
+  }
+
+  // Move all of a dropped pile's cards into this holder as loose cards so the
+  // pile dissolves (its handle disappears). The caller arranges them afterwards.
+  async breakUpPile(pile) {
+    this.preventRearrangeDuringPileDrop = true;
+    for(const w of pile.children().reverse()) {
+      await w.set('x', this.get('dropOffsetX'));
+      await w.set('y', this.get('dropOffsetY'));
+      await w.set('parent', this.get('id'));
+      await w.bringToFront();
+    }
+    delete this.preventRearrangeDuringPileDrop;
+  }
+
+  // The owner a dragged/dropped child ends up with in this holder, used to
+  // arrange each player's cards independently. childrenPerOwner assigns the
+  // dragging or target player; otherwise the child keeps its own owner.
+  childOwner(child) {
+    if(child.get('dropShadowOwner'))
+      return this.get('childrenPerOwner') ? child.get('dropShadowOwner') : (child.get('owner') || null);
+    if(this.get('childrenPerOwner'))
+      return child.targetPlayer || child.get('owner') || playerName;
+    return child.get('owner') || null;
   }
 
   // How far the next child is placed from this one along one axis. Cards follow
@@ -340,8 +774,11 @@ export class Holder extends ImageWidget {
 
   // Whether this holder lines its children up instead of dropping them all on
   // the same spot. stackOffset does that for every child; a holder that
-  // arranges piles can space them out through pilesOffset/pilesGap alone.
+  // arranges piles can space them out through pilesOffset/pilesGap alone, and
+  // the auto layout decides it from its size.
   spreadsChildren() {
+    if(this.usesAutoLayout())
+      return this.autoSpreads();
     return !!(this.get('stackOffsetX') || this.get('stackOffsetY') || this.get('allowPiles') && this.pilesSpacingSet());
   }
 
@@ -350,6 +787,10 @@ export class Holder extends ImageWidget {
   // that spacing names the axis - the stackOffset then belongs to the cards
   // inside the piles.
   spreadDirection() {
+    if(this.usesAutoLayout()) {
+      const size = this.autoCardSize();
+      return [ size !== null && !(size.width * 1.5 < this.get('width')) && size.height * 1.5 < this.get('height') ? 'Y' : 'X', 1 ];
+    }
     if(this.get('allowPiles')) {
       for(const axis of [ 'X', 'Y' ]) {
         if(this.get('pilesGap' + axis) !== null)
@@ -366,18 +807,33 @@ export class Holder extends ImageWidget {
     return [ 'X', 1 ];
   }
 
+  // Whether this holder keeps piles as the groups it lines up - what a dropped
+  // pile survives as, what MOVE's position parameter and SORT's groupBy work
+  // on. The auto layout keeps piles too, but arranges them as single stacks
+  // among the cards rather than as spread groups.
+  arrangesPiles() {
+    return !!(this.get('allowPiles') && !this.usesAutoLayout() && this.get('alignChildren') && this.spreadsChildren() && this.supportsPiles());
+  }
+
   // Cards a routine moves in arrive one by one. In a holder that arranges piles
   // they are meant to land as one pile of their own rather than being fed into
   // whichever pile the holder already ends with.
   async groupDroppedCards(cards) {
-    if(!this.get('allowPiles') || !this.supportsPiles() || !this.get('alignChildren') || !this.spreadsChildren())
+    if(!this.arrangesPiles())
       return;
 
     const dropped = cards.filter(c=>c.get('parent') == this.get('id') && c.get('type') == 'card');
     if(dropped.length < 2)
       return;
 
-    const bottom = dropped[0];
+    await this.makeGroup(dropped);
+    await this.receiveCard(null);
+  }
+
+  // Turn the given cards (children of this holder, in the order the bottom of
+  // the new pile comes first) into one pile.
+  async makeGroup(cards) {
+    const bottom = cards[0];
     const pile = Object.assign({
       type: 'pile',
       parent: this.get('id'),
@@ -390,13 +846,135 @@ export class Holder extends ImageWidget {
       pile.owner = bottom.get('owner');
 
     const pileID = await addWidgetLocal(pile);
-    for(const card of dropped) {
+    for(const card of cards) {
       // z before parent: the pile lays its cards out by z, so it has to be the
       // final one - the order the routine moved the cards in - by then
       await card.bringToFront();
       await card.set('parent', pileID);
     }
-    await this.receiveCard(null);
+    return widgets.get(pileID);
+  }
+
+  // Merge the given cards into an existing group of this holder. If the group
+  // is still a loose card, a pile is created around it first. index says where
+  // in the group's fan the cards go, counted from the bottom; null puts them on
+  // top.
+  async mergeIntoGroup(cards, group, index=null) {
+    let pile = group;
+    if(group.get('type') != 'pile') {
+      const pileDef = Object.assign({
+        type: 'pile',
+        parent: this.get('id'),
+        x: group.get('x'),
+        y: group.get('y'),
+        width: group.get('width'),
+        height: group.get('height')
+      }, group.get('onPileCreation'));
+      if(group.get('owner') !== null)
+        pileDef.owner = group.get('owner');
+      pile = widgets.get(await addWidgetLocal(pileDef));
+      await group.set('parent', pile.get('id'));
+    }
+    for(const card of cards) {
+      await card.bringToFront();
+      await card.set('parent', pile.get('id'));
+    }
+    if(index !== null)
+      await pile.insertChildrenAt(cards, index);
+    return pile;
+  }
+
+  // Where a MOVE with a position parameter puts the widgets it brought in. On a
+  // holder that arranges piles the four values name the groups: the batch joins
+  // the first or the last group (pileBottom/pileTop) or becomes a new group
+  // before or after the existing ones (groupStart/groupEnd). Everywhere else
+  // the same words order the stack - pileBottom/groupStart put the batch below
+  // what is already there (the start of a spread), pileTop/groupEnd on top - so
+  // a routine written for one holder does something sensible on every other.
+  async applyMovePosition(cards, position) {
+    if(!cards.length)
+      return;
+
+    if(this.arrangesPiles()) {
+      const owner = cards[0].get('owner') || null;
+      const groups = this.arrangedChildren().filter(w=>cards.indexOf(w) == -1 && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
+      const dropped = cards.filter(c=>c.get('parent') == this.get('id') && c.get('type') == 'card');
+      if((position == 'pileBottom' || position == 'pileTop') && groups.length) {
+        const target = position == 'pileBottom' ? groups[0] : groups[groups.length - 1];
+        await this.mergeIntoGroup(dropped, target, position == 'pileBottom' ? 0 : null);
+      } else if(dropped.length) {
+        const group = dropped.length > 1 ? await this.makeGroup(dropped) : dropped[0];
+        if(position == 'pileBottom' || position == 'groupStart') {
+          // one renumbering pass puts the new group before the others
+          let z = 1;
+          await group.set('z', z++);
+          for(const w of groups)
+            await w.set('z', z++);
+        }
+      }
+    } else if(position == 'pileBottom' || position == 'groupStart') {
+      // put the batch below all siblings, renumbering the whole holder to a
+      // compact 1..n range once so repeated moves don't drift z negative
+      const others = this.children().filter(w=>cards.indexOf(w) == -1).sort((a, b)=>a.get('z') - b.get('z'));
+      let z = 1;
+      for(const c of cards)
+        await c.set('z', z++);
+      for(const w of others)
+        await w.set('z', z++);
+    }
+    // pileTop/groupEnd on a plain holder is where MOVE puts things anyway
+
+    await this.updateAfterShuffle();
+  }
+
+  // SORT with groupBy: sort all of a lane's cards by `key` and re-partition
+  // them into one group per distinct value of the groupBy property - one group
+  // per suit, for example - per owner lane. Single cards stay loose.
+  async regroupBy(property, key, reverse, locales, options) {
+    const all = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
+    const owners = new Set(all.map(c=>c.get('owner') || null));
+    this.preventRearrangeDuringPileDrop = true;
+    for(const owner of owners) {
+      const lane = all.filter(c=>!c.get('owner') || c.get('owner') === owner);
+      const cards = [];
+      for(const g of lane)
+        cards.push(...(g.get('type') == 'pile' ? g.children() : [ g ]));
+      if(!cards.length)
+        continue;
+
+      await sortWidgets(cards, key || property, reverse, locales, options, true);
+
+      // every card with the same groupBy value forms one group, no matter where
+      // the sort put it: sorting by rank interleaves the suits, so cutting the
+      // sorted cards into consecutive runs would create one group per run
+      // instead of one per suit. The groups follow the order in which the
+      // sorted cards first mention their value, the cards within a group the
+      // sort.
+      const runs = [];
+      const runByValue = new Map();
+      for(const c of cards) {
+        const value = c.get(property);
+        const valueKey = JSON.stringify(value === undefined ? null : value);
+        if(!runByValue.has(valueKey)) {
+          runByValue.set(valueKey, []);
+          runs.push(runByValue.get(valueKey));
+        }
+        runByValue.get(valueKey).push(c);
+      }
+
+      let z = 1;
+      for(const run of runs) {
+        if(run.length == 1) {
+          await run[0].set('parent', this.get('id'));
+          await run[0].setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), z++);
+        } else {
+          const pile = await this.makeGroup(run);
+          await pile.set('z', z++);
+        }
+      }
+    }
+    delete this.preventRearrangeDuringPileDrop;
+    await this.updateAfterShuffle();
   }
 
   supportsPiles() {
@@ -404,8 +982,20 @@ export class Holder extends ImageWidget {
   }
 
   async updateAfterShuffle() {
-    if(!this.spreadsChildren())
+    if(this.get('layout') == 'grid') {
+      const entries = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
+      for(const owner of new Set(entries.map(c=>c.get('owner') || null)))
+        await this.rearrangeChildrenGrid(entries.filter(c=>!c.get('owner') || c.get('owner') === owner).sort((a, b)=>a.get('z') - b.get('z')));
       return;
+    }
+
+    if(!this.spreadsChildren()) {
+      // an auto holder without the room to spread gathers everything back in
+      // the middle - without ever forming a pile out of it
+      if(this.usesAutoLayout() && this.arrangedChildren().length)
+        await this.rearrangeChildrenAuto(this.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z')));
+      return;
+    }
 
     const children = this.arrangedChildren();
     // the piles take their own layout from this holder and lay their cards out

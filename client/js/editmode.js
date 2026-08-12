@@ -1731,13 +1731,13 @@ export function initializeEditMode(currentMetaData) {
   on('#addHand', 'click', async function() {
     const hand = {
       type: 'holder',
+      layout: 'multipleSpread',
       onEnter: { activeFace: 1 },
       onLeave: { activeFace: 0 },
       dropOffsetX: 10,
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
-      dropShadow: true,
       hidePlayerCursors: true,
       x: 50,
       y: 820,
