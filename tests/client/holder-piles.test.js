@@ -30,6 +30,7 @@ beforeAll(async () => {
   globalThis.sendTraceEvent = () => {};
   globalThis.setDeltaCause = () => {};
   globalThis.rescaleDragAnchor = () => {};
+  globalThis.removeWidgetLocal = id => removeWidget(id);
   globalThis.getMaxZ = () => 0;
   globalThis.updateMaxZ = () => {};
   globalThis.mapAssetURLs = url => url;
@@ -115,6 +116,25 @@ describe('a holder deciding what a drop lands on', () => {
     expect(overlapping.arrangedChildAt(dropped, 10, 4)).toBe(behind);
   });
 
+  test('aims a pile that keeps its fan while it is carried by the card the pointer holds', async () => {
+    const short = await createColumn('short', holder, 4, 4, 1);
+    // a pile that spreads its own cards goes on doing so while it is being dragged, so its box
+    // is the whole fan - five cards deep here, 260 units of it
+    const carried = new Pile('carried');
+    addWidget({ id: 'carried', type: 'pile', x: 400, y: 400, stackOffsetY: 40 }, carried);
+    for(let i=0; i<5; ++i)
+      createWidget({ id: `carried-card-${i}`, type: 'card', parent: 'carried', z: i+1, width: CARD_WIDTH, height: CARD_HEIGHT });
+    await carried.arrangeChildren(false);
+    expect(carried.get('height')).toBe(CARD_HEIGHT + 4*40);
+
+    // held by its bottom card and dropped so that this card lands on the single-card pile
+    carried.dropAnchor = { x: CARD_WIDTH/2, y: 4*40 + CARD_HEIGHT/2 };
+    expect(holder.arrangedChildAt(carried, 4, 4 - 4*40)).toBe(short);
+    // the middle of the fan alone points 130 units above the pointer and would have missed it
+    delete carried.dropAnchor;
+    expect(holder.arrangedChildAt(carried, 4, 4 - 4*40)).toBe(null);
+  });
+
   test('leaves a pile out of its own hit test', async () => {
     const column = await createColumn('col1', holder, 4, 4, 3);
     expect(holder.arrangedChildAt(column, 4, 4)).toBe(null);
@@ -149,6 +169,40 @@ describe('a holder spacing out the piles it arranges', () => {
     const holder = createHolder({ id: 'tableau', x: 0, y: 0, allowPiles: true, stackOffsetY: 40, pilesGapX: 20 });
     const card = createCard('loose', { parent: 'tableau' });
     expect([ holder.childSpacing(card, 'X'), holder.childSpacing(card, 'Y') ]).toEqual([ CARD_WIDTH + 20, 0 ]);
+  });
+
+  test('gives it the same flush slot as such a pile as well, so the row stays flush', async () => {
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, allowPiles: true, stackOffsetX: 40 });
+    const column = await createColumn('col1', holder, 4, 4, 1);
+    const card = createCard('loose', { parent: 'tableau' });
+    expect(holder.childSpacing(card, 'X')).toBe(holder.childSpacing(column, 'X'));
+    expect(holder.childSpacing(card, 'X')).toBe(CARD_WIDTH);
+  });
+});
+
+describe('a holder that stops arranging piles', () => {
+  test('empties them out onto the row, so it goes on holding the cards it held', async () => {
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 900, height: 700, allowPiles: true, stackOffsetY: 40, pilesGapX: 20 });
+    await createColumn('col1', holder, 4, 4, 3);
+    await createColumn('col2', holder, 124, 4, 2);
+    expect(holder.children().length).toBe(5);
+
+    await holder.set('allowPiles', false);
+
+    // a spreading holder can hold no pile - COUNT and dropLimit would count the piles instead
+    // of the cards from here on
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    expect(holder.children().length).toBe(5);
+    expect(holder.children().every(c=>c.get('parent') == 'tableau')).toBe(true);
+  });
+
+  test('keeps them where it does not spread its children out, as any holder may hold a pile', async () => {
+    const holder = createHolder({ id: 'stack', x: 0, y: 0, allowPiles: true, pilesOffsetX: 60 });
+    const column = await createColumn('col1', holder, 4, 4, 3);
+    await holder.set('allowPiles', false);
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);
+    // it places its own cards no longer, so it collects them onto one spot
+    expect(column.children().every(c=>c.get('x') == 0 && c.get('y') == 0)).toBe(true);
   });
 });
 

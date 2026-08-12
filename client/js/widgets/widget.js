@@ -3063,6 +3063,11 @@ export class Widget extends StateManaged {
     // the marker has to cover the whole drop rather than just that call.
     this.pileUpdateFromDrag = true;
 
+    // Where the player is holding this widget, kept for as long as the drop is
+    // being resolved: a holder arranging piles aims the drop by that spot rather
+    // than by the box of what was dropped, which can be a whole fan of cards.
+    this.dropAnchor = localAnchor;
+
     // The drop belongs where the button was released, not where the last mousemove
     // reported: a fast drag can end with a mouseup at coordinates no mousemove ever
     // delivered, and everything below - the drop target, the line stop, the position -
@@ -3110,6 +3115,7 @@ export class Widget extends StateManaged {
 
     await this.updatePiles();
     delete this.pileUpdateFromDrag;
+    delete this.dropAnchor;
   }
 
   async hideShadowWidget() {

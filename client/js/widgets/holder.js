@@ -72,13 +72,16 @@ export class Holder extends ImageWidget {
   // a card dropped anywhere on a fanned pile belongs to that pile, and hitting
   // the corner of it - all a pile outside a holder takes - would be guesswork
   // where the holder decides how far apart the piles sit. What aims the drop is
-  // the middle of what was dropped, the same point the surface hit tests to
-  // decide which holder a drag ended in - and a pile that is carried here has
-  // collected its cards on the way, so that middle is the card under the pointer
-  // rather than the middle of a fan.
+  // the spot the player is holding the dropped widget by: a pile that spreads
+  // its own cards keeps its fan while it is carried, and the middle of that fan
+  // can be several cards away from what the player is aiming with. Where nothing
+  // is holding it - a routine putting a widget down - the middle of its box aims
+  // it, the same point the surface hit tests to decide which holder a drag ended
+  // in.
   arrangedChildAt(child, x, y) {
-    const pointX = x + child.get('width' )/2;
-    const pointY = y + child.get('height')/2;
+    const anchor = child.dropAnchor;
+    const pointX = x + (anchor ? anchor.x : child.get('width' )/2);
+    const pointY = y + (anchor ? anchor.y : child.get('height')/2);
     return this.arrangedChildrenOwned().filter(c=>c != child
       && pointX >= c.get('x') && pointX < c.get('x') + c.spreadExtent('X')
       && pointY >= c.get('y') && pointY < c.get('y') + c.spreadExtent('Y')
@@ -229,14 +232,43 @@ export class Holder extends ImageWidget {
     }
   }
 
+  // Empties a pile of this holder out onto the row, one card per slot, the way a
+  // pile dropped into a spreading holder is emptied out above. The cards keep the
+  // order they had in the pile: they are put down where it stood, a hundredth of
+  // a unit apart, and the holder then lines them up along that.
+  async emptyPileIntoSlots(pile) {
+    const x = pile.get('x');
+    const y = pile.get('y');
+    let i = 1;
+    this.preventRearrangeDuringPileDrop = true;
+    for(const card of [ ...pile.children() ].reverse()) {
+      await card.set('x', x + i/100);
+      await card.set('y', y + i/100);
+      await card.set('parent', this.get('id'));
+      ++i;
+    }
+    delete this.preventRearrangeDuringPileDrop;
+    await this.receiveCard();
+  }
+
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
-    // the piles took their layout from this holder, so they lose it here and
-    // have to collect their cards again - arrangedChildren() no longer sees them
-    if(property == 'allowPiles' && !newValue)
-      for(const child of this.childrenFilter(super.children(), true))
-        if(child.get('type') == 'pile')
-          await child.arrangeChildren(false, true);
+    // The piles took their layout from this holder and lose it here, so they
+    // have to place their cards themselves again - arrangedChildren() no longer
+    // sees them. A holder that spreads its children holds no pile at all: every
+    // pile dropped into one is emptied out, one card per slot, which is exactly
+    // what allowPiles makes optional. So the piles it was arranging are emptied
+    // out the same way rather than left behind in a state nothing else in here
+    // expects, where children() would go on reporting them instead of the cards
+    // they hold and COUNT, dropLimit and MOVE would silently count piles.
+    if(property == 'allowPiles' && !newValue) {
+      const piles = this.childrenFilter(super.children(), true).filter(c=>c.get('type') == 'pile');
+      for(const pile of piles)
+        if(this.get('alignChildren') && this.spreadsChildren())
+          await this.emptyPileIntoSlots(pile);
+        else
+          await pile.arrangeChildren(false, true);
+    }
     if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ].indexOf(property) != -1) {
       await this.updateAfterShuffle();
     }
@@ -294,8 +326,9 @@ export class Holder extends ImageWidget {
       // the piles are spread, not where the next pile begins.
       if(this.pilesSpacingSet())
         return 0;
-      if(child.get('type') == 'pile')
-        return stackOffset ? child.spreadExtent(axis) : 0;
+      // a card put down on its own is a pile one card deep, so it gets exactly
+      // the room such a pile would get and the row stays flush either way
+      return stackOffset ? child.spreadExtent(axis) : 0;
     }
 
     return !child.get('overlap') && stackOffset ? child.get(axis == 'X' ? 'width' : 'height') + 4 : stackOffset;

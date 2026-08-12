@@ -107,6 +107,32 @@ test('A column picked up by a handle at the far end of its fan stays under the p
   await t.expect(state.col1.y + CARD_HEIGHT).gte(pointer.y, 'nor above it - it was carried by the pointer');
 });
 
+test('A fanned pile carried in joins what the pointer is over, not what its middle is over', async t => {
+  await openRoom(t, 'modern', tableau(Object.assign(column('col1', 4, 1), {
+    // a pile with a stack offset of its own keeps its fan wherever it is, so this one is 280
+    // units of column while it is carried - its middle is 130 units away from the handle the
+    // player is holding it by
+    hand: {
+      id: 'hand', type: 'pile', x: 1150, y: 300, width: CARD_WIDTH, height: CARD_HEIGHT + 3*STACK_OFFSET,
+      stackOffsetY: STACK_OFFSET, handlePosition: 'bottom left'
+    },
+    handc0: card('handc0', { parent: 'hand', x: 0, y: 0, z: 1 }),
+    handc1: card('handc1', { parent: 'hand', x: 0, y: STACK_OFFSET, z: 2 }),
+    handc2: card('handc2', { parent: 'hand', x: 0, y: 2*STACK_OFFSET, z: 3 }),
+    handc3: card('handc3', { parent: 'hand', x: 0, y: 3*STACK_OFFSET, z: 4 })
+  })));
+
+  // the handle is put down right on the card of the single-card column, while the middle of the
+  // fan ends up above the holder entirely
+  await dragPath(t, 'hand .handle', [ { onto: 'col1c0' } ]);
+
+  const state = await stateWhen(s=>pileCount(s) == 1);
+  await t.expect(pileCount(state)).eql(1, 'the fan joined the column the pointer was over');
+  const pile = Object.values(state).find(widget=>widget.type == 'pile');
+  await t.expect(pile.parent).eql('tableau');
+  await t.expect(childrenOf(state, pile.id).length).eql(5);
+});
+
 test('A column dragged out of the holder collects its cards again', async t => {
   await openRoom(t, 'modern', tableau(column('col1', 4, 3)));
 
@@ -119,6 +145,27 @@ test('A column dragged out of the holder collects its cards again', async t => {
   for(const child of childrenOf(state, 'col1'))
     await t.expect([ child.x || 0, child.y || 0 ]).eql([ 0, 0 ], `${child.id} is back on the same spot`);
   await t.expect(state.col1.height).eql(CARD_HEIGHT, 'and the pile is card-sized again');
+});
+
+test('Turning allowPiles off empties the piles the holder was arranging', async t => {
+  await openRoom(t, 'modern', tableau(Object.assign(column('col1', 4, 3), column('col2', 127, 2), {
+    off: {
+      id: 'off', type: 'button', x: 1100, y: 100, width: 120, height: 60, text: 'off',
+      clickRoutine: [
+        { func: 'SELECT', property: 'id', value: 'tableau' },
+        { func: 'SET', property: 'allowPiles', value: false }
+      ]
+    }
+  })));
+
+  // a spreading holder holds no pile - one dropped into it is emptied out - so the piles it was
+  // arranging are emptied out here as well, rather than being left for COUNT and dropLimit to
+  // count instead of the cards
+  await t.click('#w_off');
+
+  const state = await stateWhen(s=>pileCount(s) == 0);
+  await t.expect(pileCount(state)).eql(0, 'the columns became loose cards again');
+  await t.expect(childrenOf(state, 'tableau').length).eql(5, 'all five of them are in the holder');
 });
 
 test('MOVE from a holder to itself leaves its cards as they are', async t => {
