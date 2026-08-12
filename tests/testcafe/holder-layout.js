@@ -1,0 +1,217 @@
+import { Selector } from 'testcafe';
+import { setupTestEnvironment } from './test-util.js';
+import { dragPath, openRoom, stateWhen } from './interaction-util.js';
+
+setupTestEnvironment();
+
+// The layout property, driven through the pointer and through routines: where a drop lands in
+// an auto holder and what the classicHolderLayout legacy mode keeps it doing, how a multiple
+// spread takes a drop pointed into a fan, what MOVE's position parameter and SORT's groupBy
+// leave behind. The arithmetic itself is covered in tests/client/holder-layout.test.js - this
+// is about the parts only a real drag or a real routine reaches.
+//
+// The states below are what the engine itself lays out (a card is 103 x 160): nothing
+// re-arranges a holder when a room is loaded, so a fixture that disagreed with the engine
+// would move on the first interaction and make the assertions about something else.
+
+const CARD_WIDTH = 103;
+const CARD_HEIGHT = 160;
+
+function card(id, definition) {
+  return Object.assign({ id, type: 'card', deck: 'deck', cardType: 'plain' }, definition);
+}
+
+function baseState(extra) {
+  return Object.assign({
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 1450, y: 20 }
+  }, extra);
+}
+
+// An auto holder with room on both axes and a loose card outside of it.
+function autoRoom() {
+  return baseState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },
+    loose: card('loose', { x: 1200, y: 700, z: 9 })
+  });
+}
+
+// A multi-group hand; entries laid out the way the engine leaves them (drop offset 4/4,
+// a group is spaced its X extent plus the default gap of 8 from the previous one).
+function multiSpreadHand(extra, properties) {
+  return baseState(Object.assign({
+    hand: Object.assign({
+      id: 'hand', type: 'holder', x: 100, y: 100, width: 900, height: 300,
+      dropTarget: { type: 'card' }, layout: 'multipleSpread', stackOffsetX: 40
+    }, properties)
+  }, extra));
+}
+
+// A fanned group of `count` cards inside the hand, spread right by the hand's stack offset.
+function fan(id, x, count, cardProperties) {
+  const state = {
+    [id]: { id, type: 'pile', parent: 'hand', x, y: 4, width: CARD_WIDTH + (count-1)*40, height: CARD_HEIGHT }
+  };
+  for(let i=0; i<count; ++i)
+    state[`${id}c${i}`] = card(`${id}c${i}`, Object.assign({ parent: id, x: i*40, y: 0, z: i+1 }, cardProperties));
+  return state;
+}
+
+const pileCount = state=>Object.values(state).filter(widget=>widget.type == 'pile').length;
+const byZ = (state, parent)=>Object.values(state).filter(widget=>widget.parent == parent).sort((a, b)=>a.z - b.z);
+
+test('An auto holder centers a dropped card', async t => {
+  await openRoom(t, 'modern', autoRoom());
+
+  await dragPath(t, 'loose', [ { onto: 'holder' } ]);
+
+  const state = await stateWhen(s=>s.loose.parent == 'holder');
+  await t.expect(state.loose.parent).eql('holder');
+  await t.expect(state.loose.x).eql(248.5, 'centered horizontally');
+  await t.expect(state.loose.y).eql(70, 'centered vertically');
+});
+
+test('The classicHolderLayout legacy mode keeps drops at the drop offset', async t => {
+  await openRoom(t, 'only-classicHolderLayout', autoRoom());
+
+  await dragPath(t, 'loose', [ { onto: 'holder' } ]);
+
+  const state = await stateWhen(s=>s.loose.parent == 'holder');
+  await t.expect(state.loose.parent).eql('holder');
+  await t.expect(state.loose.x).eql(4, 'the classic drop offset, not the center');
+  await t.expect(state.loose.y).eql(4);
+});
+
+test('MOVE into an auto holder spreads the cards into a centered row', async t => {
+  await openRoom(t, 'modern', baseState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },
+    source: { id: 'source', type: 'holder', layout: 'pile', x: 1200, y: 100, dropTarget: { type: 'card' } },
+    c1: card('c1', { parent: 'source', x: 4, y: 4, z: 1 }),
+    c2: card('c2', { parent: 'source', x: 4, y: 4, z: 2 }),
+    c3: card('c3', { parent: 'source', x: 4, y: 4, z: 3 }),
+    deal: { id: 'deal', type: 'button', x: 1200, y: 400, clickRoutine: [ { func: 'MOVE', from: 'source', to: 'holder', count: 3 } ] }
+  }));
+
+  await t.click('#w_deal');
+
+  const state = await stateWhen(s=>s.c3.parent == 'holder' && s.c3.x == 355.5);
+  const row = byZ(state, 'holder');
+  await t.expect(row.map(c=>c.id)).eql([ 'c1', 'c2', 'c3' ], 'in the order they were moved');
+  await t.expect(row.map(c=>c.x)).eql([ 141.5, 248.5, 355.5 ], 'a centered row');
+  await t.expect(row.map(c=>c.y)).eql([ 70, 70, 70 ]);
+  await t.expect(pileCount(state)).eql(0, 'spread out, not grouped');
+});
+
+test('A drop pointed into a fan is inserted at that spot of the fan', async t => {
+  await openRoom(t, 'modern', multiSpreadHand(Object.assign(fan('fan', 4, 3), {
+    loose: card('loose', { x: 1200, y: 700, z: 9 })
+  })));
+
+  // the visible band of the second card of the fan runs from x 40 to 80 inside the pile, so
+  // its center sits at holder 100 + pile 4 + 60 (and anywhere along the fan's height)
+  await dragPath(t, 'loose', [ { dx: (100 + 4 + 60) - (1200 + CARD_WIDTH/2), dy: (100 + 4 + 80) - (700 + CARD_HEIGHT/2) } ]);
+
+  const state = await stateWhen(s=>s.loose.parent == 'fan');
+  await t.expect(state.loose.parent).eql('fan');
+  await t.expect(byZ(state, 'fan').map(c=>c.id)).eql([ 'fanc0', 'loose', 'fanc1', 'fanc2' ], 'inserted below the card whose band it pointed at');
+  await t.expect(byZ(state, 'fan').map(c=>c.x)).eql([ 0, 40, 80, 120 ], 'the fan re-spread around it');
+  await t.expect(state.fan.width).eql(CARD_WIDTH + 3*40, 'and grew by one slot');
+});
+
+test('A card dropped beyond the groups becomes an entry of its own at that end', async t => {
+  await openRoom(t, 'modern', multiSpreadHand({
+    a: card('a', { parent: 'hand', x: 4, y: 4, z: 1 }),
+    b: card('b', { parent: 'hand', x: 115, y: 4, z: 2 }),
+    loose: card('loose', { x: 1200, y: 700, z: 9 })
+  }));
+
+  await dragPath(t, 'loose', [ { dx: (100 + 400) - (1200 + CARD_WIDTH/2), dy: (100 + 84) - (700 + CARD_HEIGHT/2) } ]);
+
+  const state = await stateWhen(s=>s.loose.parent == 'hand' && s.loose.x == 226);
+  await t.expect(state.loose.x).eql(226, 'the third slot of the row');
+  await t.expect(pileCount(state)).eql(0, 'without joining either card');
+});
+
+test('A card regrouped within its holder does not run onLeave, one that leaves does', async t => {
+  await openRoom(t, 'modern', multiSpreadHand(fan('fan', 4, 2, { activeFace: 1 }), {
+    onEnter: { activeFace: 1 },
+    onLeave: { activeFace: 0 }
+  }));
+
+  // out of the fan, but onto an empty part of the same hand
+  await dragPath(t, 'fanc1', [ { dx: 400, dy: 0 } ]);
+
+  let state = await stateWhen(s=>s.fanc1.parent == 'hand');
+  await t.expect(state.fanc1.activeFace).eql(1, 'it only moved between groups, so it stays face up');
+
+  // and off the hand entirely
+  await dragPath(t, 'fanc1', [ { dx: 300, dy: 500 } ]);
+
+  state = await stateWhen(s=>!s.fanc1.parent);
+  await t.expect(state.fanc1.activeFace === 0 || state.fanc1.activeFace === undefined).ok('leaving the hand flipped it back');
+});
+
+test('MOVE with position pileBottom puts the batch at the start of a spread', async t => {
+  await openRoom(t, 'modern', baseState({
+    row: { id: 'row', type: 'holder', x: 100, y: 100, width: 600, height: 200, dropTarget: { type: 'card' }, layout: 'singleSpread', stackOffsetX: 40 },
+    c0: card('c0', { parent: 'row', x: 4, y: 4, z: 1 }),
+    c1: card('c1', { parent: 'row', x: 44, y: 4, z: 2 }),
+    source: { id: 'source', type: 'holder', layout: 'pile', x: 1200, y: 100, dropTarget: { type: 'card' } },
+    m1: card('m1', { parent: 'source', x: 4, y: 4, z: 1 }),
+    move: { id: 'move', type: 'button', x: 1200, y: 400, clickRoutine: [ { func: 'MOVE', from: 'source', to: 'row', count: 1, position: 'pileBottom' } ] }
+  }));
+
+  await t.click('#w_move');
+
+  const state = await stateWhen(s=>s.m1.parent == 'row' && s.m1.x == 4);
+  await t.expect(byZ(state, 'row').map(c=>c.id)).eql([ 'm1', 'c0', 'c1' ], 'below everything that was there');
+  await t.expect(byZ(state, 'row').map(c=>c.x)).eql([ 4, 44, 84 ], 'so it leads the spread');
+});
+
+test('MOVE with position groupEnd and pileTop work the groups of a multiple spread', async t => {
+  await openRoom(t, 'modern', multiSpreadHand(Object.assign(fan('fan', 4, 2), {
+    source: { id: 'source', type: 'holder', layout: 'pile', x: 1200, y: 100, dropTarget: { type: 'card' } },
+    m1: card('m1', { parent: 'source', x: 4, y: 4, z: 1 }),
+    m2: card('m2', { parent: 'source', x: 4, y: 4, z: 2 }),
+    m3: card('m3', { parent: 'source', x: 4, y: 4, z: 3 }),
+    moveEnd: { id: 'moveEnd', type: 'button', x: 1200, y: 400, text: 'group',
+      clickRoutine: [ { func: 'MOVE', from: 'source', to: 'hand', count: 2, position: 'groupEnd' } ] },
+    moveTop: { id: 'moveTop', type: 'button', x: 1200, y: 500, text: 'top',
+      clickRoutine: [ { func: 'MOVE', from: 'source', to: 'hand', count: 1, position: 'pileTop' } ] }
+  })));
+
+  // the top two cards of the source become a new group after the fan
+  await t.click('#w_moveEnd');
+  let state = await stateWhen(s=>s.m2.parent && s.m2.parent != 'source' && s.m3.parent == s.m2.parent);
+  await t.expect(pileCount(state)).eql(2, 'a second group formed');
+  const group = state.m2.parent;
+  await t.expect(group).notEql('fan');
+  await t.expect(state[group].x).eql(4 + (CARD_WIDTH + 40) + 8, 'after the fan');
+  await t.expect(byZ(state, group).map(c=>c.id)).eql([ 'm2', 'm3' ], 'in the order they were moved');
+
+  // and pileTop joins that last group on top of it
+  await t.click('#w_moveTop');
+  state = await stateWhen(s=>s.m1.parent == group);
+  await t.expect(byZ(state, group).map(c=>c.id)).eql([ 'm2', 'm3', 'm1' ]);
+  await t.expect(pileCount(state)).eql(2, 'no third group');
+});
+
+test('SORT with groupBy builds one group per suit even when the sort interleaves them', async t => {
+  await openRoom(t, 'modern', multiSpreadHand({
+    s1: card('s1', { parent: 'hand', x: 4,   y: 4, z: 1, suit: 'S', rank: 2 }),
+    h1: card('h1', { parent: 'hand', x: 115, y: 4, z: 2, suit: 'H', rank: 1 }),
+    s2: card('s2', { parent: 'hand', x: 226, y: 4, z: 3, suit: 'S', rank: 1 }),
+    h2: card('h2', { parent: 'hand', x: 337, y: 4, z: 4, suit: 'H', rank: 2 }),
+    sort: { id: 'sort', type: 'button', x: 1200, y: 400,
+      clickRoutine: [ { func: 'SORT', holder: 'hand', key: 'rank', groupBy: 'suit' } ] }
+  }));
+
+  await t.click('#w_sort');
+
+  const state = await stateWhen(s=>pileCount(s) == 2);
+  await t.expect(pileCount(state)).eql(2, 'one group per suit');
+  for(const pile of Object.values(state).filter(widget=>widget.type == 'pile')) {
+    const cards = byZ(state, pile.id);
+    await t.expect(new Set(cards.map(c=>c.suit)).size).eql(1, 'every card of a group shares the suit');
+    await t.expect(cards.map(c=>c.rank)).eql([ 1, 2 ], 'sorted by rank within the group');
+  }
+});

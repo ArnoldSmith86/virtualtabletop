@@ -410,6 +410,62 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
     .expect(dropTarget()).eql('{"type":"dice"}');
 });
 
+test('A holder layout is picked in the Layout section and takes over what it decides', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const stateOf = ClientFunction(property => JSON.stringify(widgets.get('holder').state[property] === undefined ? null : widgets.get('holder').state[property]));
+  const layout = Selector('#editorModules .selectInput').withText('Arrange as');
+  const align = Selector('#editorModules .checkboxInput').withText('Align dropped widgets');
+  const arrangePiles = Selector('#editorModules .checkboxInput').withText('Arrange dropped piles');
+  const pilesGap = Selector('#editorModules .numberPairRow').withText('Piles gap');
+  const gridColumns = Selector('#editorModules .numberInput').withText('Grid columns');
+
+  // a new holder is on auto: the low-level switches it decides for itself stay out of the way
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_holder')
+    .expect(layout.find('select').value).eql('"auto"')
+    .expect(align.visible).notOk()
+    .expect(pilesGap.visible).notOk();
+
+  // a multiple spread arranges piles: it brings the group spacing (and a starting fan) with
+  // it, and the switches it decides stay hidden
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"multipleSpread"'))
+    .expect(stateOf('layout')).eql('"multipleSpread"')
+    .expect(stateOf('stackOffsetX')).eql('40')
+    .expect(pilesGap.visible).ok()
+    .expect(align.visible).notOk()
+    .expect(arrangePiles.visible).notOk();
+
+  // a grid offers its own knobs, custom offers every switch
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"grid"'))
+    .expect(gridColumns.visible).ok()
+    .expect(pilesGap.visible).notOk()
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"custom"'))
+    .expect(align.visible).ok()
+    .expect(arrangePiles.visible).ok();
+
+  // back to auto: it clears the arrangement properties it steps aside for
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"auto"'))
+    .expect(stateOf('layout')).eql('null')
+    .expect(stateOf('stackOffsetX')).eql('null')
+    .expect(align.visible).notOk();
+});
+
 test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -946,7 +1002,7 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_bldn')
     .click('#w_bldn');
-  await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
+  await compareState(t, '9d62a62a614ba752d73b7426a130fc8b');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
