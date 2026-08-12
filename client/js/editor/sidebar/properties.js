@@ -1442,7 +1442,11 @@ const editorTypeSections = {
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true },
-      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
+      // a multiple spread always shows the shadow - it is what says where the
+      // dragged card is about to be inserted
+      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox',
+        available: widget=>holderEffectiveLayout(widget) != 'multipleSpread',
+        availableListenTo: holderArrangementListenTo }
     ],
     // the layout decides most of these low-level switches for the holder, so
     // while one is in effect the inputs it overrides step aside - an input
