@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { jest } from '@jest/globals'; // the ES module build has no globals of its own
 
-import { addEmojiVariantFlyout, closeEmojiVariantFlyout, emojiSkinToneVariants } from '../../client/js/emojivariants.js';
+import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout, emojiSkinToneVariants } from '../../client/js/emojivariants.js';
 import { emojiToFilename } from '../../client/js/symbols.js';
 import { readEmojiVariants } from '../../server/emojivariants.mjs';
 
@@ -80,18 +80,28 @@ describe('the skin tone flyout', () => {
   const flyout = _=>document.querySelector('.emojiVariantFlyout');
   const cells = _=>[ ...document.querySelectorAll('.emojiVariantCell') ];
 
-  async function decorate(emoji, onPick=_=>null) {
-    const icon = document.createElement('i');
-    document.body.appendChild(icon);
-    addEmojiVariantFlyout(icon, emoji, onPick, 'thumbs up');
-    await jest.advanceTimersByTimeAsync(0); // the file list is fetched before the icon is marked
-    return icon;
+  // the pickers hand a whole container over, not one icon at a time - one set of handlers has to
+  // serve every icon in it
+  async function decorate(emojis, onPick=_=>null) {
+    const grid = document.body.appendChild(document.createElement('div'));
+    for(const emoji of [].concat(emojis))
+      grid.appendChild(document.createElement('i')).dataset.emoji = emoji;
+    enableEmojiVariantFlyouts(grid, {
+      selector: '[data-emoji]',
+      emoji: element=>element.dataset.emoji,
+      onPick: (element, variant)=>onPick(variant),
+      label: _=>'thumbs up'
+    });
+    await jest.advanceTimersByTimeAsync(0); // the file list is fetched before the icons are marked
+    return [ ...grid.children ];
   }
 
+  const pointerOn = element => element.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
   const hover = async icon => {
-    icon.dispatchEvent(new MouseEvent('mouseenter'));
-    await jest.advanceTimersByTimeAsync(250);
+    pointerOn(icon);
+    await jest.advanceTimersByTimeAsync(400);
   };
+  const unhover = async icon => pointerOn(icon.parentNode); // the gap between the icons
 
   beforeAll(() => {
     // emojivariants.js is part of the room bundle, so it uses html() as a global (see audio.js)
@@ -110,7 +120,7 @@ describe('the skin tone flyout', () => {
   });
 
   test('an emoji with toned artwork is marked and opens its variants on hover', async () => {
-    const icon = await decorate('👍');
+    const [ icon ] = await decorate('👍');
     expect(icon.classList.contains('hasEmojiVariants')).toBe(true);
     expect(flyout()).toBe(null);
 
@@ -120,17 +130,60 @@ describe('the skin tone flyout', () => {
   });
 
   test('an emoji without toned artwork is not marked and never opens one', async () => {
-    const icon = await decorate('😀');
+    const [ icon ] = await decorate('😀');
     expect(icon.classList.contains('hasEmojiVariants')).toBe(false);
     await hover(icon);
     expect(flyout()).toBe(null);
   });
 
+  test('running the pointer across the icons on the way past opens nothing', async () => {
+    const icons = await decorate([ '👍', '👎', '👌' ]);
+    for(const icon of icons) {
+      pointerOn(icon);
+      await jest.advanceTimersByTimeAsync(200); // less than the hover delay on each of them
+    }
+    await unhover(icons[2]);
+    await jest.advanceTimersByTimeAsync(1000);
+    expect(flyout()).toBe(null);
+  });
+
+  // hovering an icon lifts it (fonts.css), which takes it out from under a pointer resting near
+  // its edge and puts it back a moment later, several times a second - without the pointer moving
+  test('an icon that jumps in and out from under a resting pointer opens one flyout', async () => {
+    const [ icon ] = await decorate('👍');
+    const built = [];
+    const observer = new MutationObserver(records => built.push(...[ ...records ].flatMap(r=>[ ...r.addedNodes ]).filter(n=>n.classList && n.classList.contains('emojiVariantFlyout'))));
+    observer.observe(document.body, { childList: true });
+
+    for(let i = 0; i < 20; ++i) {
+      icon.dispatchEvent(new MouseEvent('mouseout', { bubbles: true }));
+      await jest.advanceTimersByTimeAsync(150);
+      icon.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+      await jest.advanceTimersByTimeAsync(150);
+    }
+    observer.disconnect();
+    expect(built.length).toBe(0); // the pointer never moved, so nothing opened or closed
+    await hover(icon);            // and it still opens once it really is hovered
+    expect(flyout()).not.toBe(null);
+  });
+
+  test('the flyout of an icon is built once and reused', async () => {
+    const [ icon, other ] = await decorate([ '👍', '👎' ]);
+    await hover(icon);
+    const first = flyout();
+
+    await hover(other);
+    expect(flyout()).not.toBe(first);      // a different emoji, so a different flyout
+
+    await hover(icon);
+    expect(flyout()).toBe(first);          // back to the first one: the same box, not a new one
+  });
+
   test('leaving the icon closes the flyout after the grace period', async () => {
-    const icon = await decorate('👍');
+    const [ icon ] = await decorate('👍');
     await hover(icon);
 
-    icon.dispatchEvent(new MouseEvent('mouseleave'));
+    await unhover(icon);
     await jest.advanceTimersByTimeAsync(100);
     expect(flyout()).not.toBe(null); // still crossable towards the flyout
     await jest.advanceTimersByTimeAsync(300);
@@ -138,10 +191,10 @@ describe('the skin tone flyout', () => {
   });
 
   test('moving from the icon into the flyout keeps it open', async () => {
-    const icon = await decorate('👍');
+    const [ icon ] = await decorate('👍');
     await hover(icon);
 
-    icon.dispatchEvent(new MouseEvent('mouseleave'));
+    await unhover(icon);
     flyout().dispatchEvent(new MouseEvent('mouseenter'));
     await jest.advanceTimersByTimeAsync(1000);
     expect(flyout()).not.toBe(null);
@@ -153,7 +206,7 @@ describe('the skin tone flyout', () => {
 
   test('clicking a cell reports the toned emoji and closes the flyout', async () => {
     const picked = [];
-    const icon = await decorate('👍', emoji => picked.push(emoji));
+    const [ icon ] = await decorate('👍', emoji => picked.push(emoji));
     await hover(icon);
 
     cells()[3].click(); // the untoned form, then light, med-light, medium
@@ -166,7 +219,7 @@ describe('the skin tone flyout', () => {
     const pickerKeyUp = jest.fn();
     document.addEventListener('keydown', pickerKeyDown, true); // InlinePopup.onKeyDown
     window.addEventListener('keyup', pickerKeyUp);             // window.onkeyup in main.js
-    const icon = await decorate('👍');
+    const [ icon ] = await decorate('👍');
     await hover(icon);
 
     icon.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -185,11 +238,11 @@ describe('the skin tone flyout', () => {
   });
 
   test('a long press that ends without a click does not swallow a later one', async () => {
-    const icon = await decorate('👍');
+    const [ icon ] = await decorate('👍');
     const clicked = jest.fn();
     document.body.appendChild(document.createElement('button')).onclick = clicked;
 
-    icon.dispatchEvent(new TouchEvent('touchstart'));
+    icon.dispatchEvent(new TouchEvent('touchstart', { bubbles: true }));
     await jest.advanceTimersByTimeAsync(500);
     expect(flyout()).not.toBe(null);
 

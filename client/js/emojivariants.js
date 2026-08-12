@@ -130,7 +130,7 @@ export function loadEmojiVariants() {
 // Every icon of the picker asks for this, so the answers are kept: emoji without a modifier base
 // (the vast majority) are rejected by a single regex, the rest cost up to 75 lookups.
 const emojiVariantCache = new Map();
-export function emojiVariants(emoji) {
+function emojiVariants(emoji) {
   if(!emojiVariantFiles)
     return null;
   if(!emojiVariantCache.has(emoji))
@@ -166,48 +166,73 @@ window.addEventListener('keyup', function(e) {
   }
 }, true);
 
-function emojiVariantCell(target, className, emoji, label, onPick, selected) {
-  const cell = div(target, `${className}${emoji == selected ? ' emojiVariantSelected' : ''}`, `<img src="i/noto-emoji/emoji_u${emojiToFilename(emoji)}.svg">`);
+// What a cell reports goes through here rather than through a closure per cell: the flyouts are
+// built once and reused, while the caller that a pick belongs to changes with every picker.
+let emojiVariantPick = _=>null;
+
+function emojiVariantCell(target, className, emoji, label) {
+  const cell = div(target, className, `<img src="i/noto-emoji/emoji_u${emojiToFilename(emoji)}.svg">`);
   if(label)
     div(cell, 'emojiVariantLabel', html(label));
   cell.title = label ? `${emoji} (${label})` : emoji;
+  cell.dataset.emoji = emoji;
   cell.onclick = function(e) {
     e.stopPropagation();
+    const pick = emojiVariantPick;
     closeEmojiVariantFlyout();
-    onPick(emoji);
+    pick(emoji);
   };
   return cell;
 }
 
-function openEmojiVariantFlyout(element, variants, onPick, name) {
-  closeEmojiVariantFlyout();
+function buildEmojiVariantFlyout(variants) {
+  const dom = div(null, 'emojiVariantFlyout');
+  const title = div(dom, 'emojiVariantTitle');
 
-  // A fixed box outside the icon it belongs to, which is in a grid that scrolls and, in the editor,
-  // in a 340px column - both of them clip. It goes into #editor whenever the icon does, because
-  // that is how edit mode tells its own controls from the room: a mousedown anywhere else starts a
-  // selection rectangle, and letting go of it would clear the selection the picker is editing.
-  const dom = div(element.closest('#editor') || $('body'), 'emojiVariantFlyout');
-  // a callback because the icon list is loaded asynchronously, so the name of an icon can arrive
-  // after its chip - and because an already toned icon is only listed under its untoned form
-  const label = typeof name == 'function' ? name(variants.base) : name;
-  div(dom, 'emojiVariantTitle', `Skin tone${label ? ` — <b>${html(label)}</b>` : ''}`);
-
-  const selected = variants.selected;
   if(variants.twoDimensional) {
     const matrix = div(dom, 'emojiVariantMatrix');
-    emojiVariantCell(matrix, 'emojiVariantCell emojiVariantBase', variants.base, 'Default', onPick, selected);
+    emojiVariantCell(matrix, 'emojiVariantCell emojiVariantBase', variants.base, 'Default');
     for(const toneLabel of variants.toneLabels)
       div(matrix, 'emojiVariantHeader', html(toneLabel));
     variants.cells.forEach((row, rowIndex) => {
       div(matrix, 'emojiVariantHeader emojiVariantRowHeader', html(variants.toneLabels[rowIndex]));
       for(const variant of row)
-        emojiVariantCell(matrix, 'emojiVariantCell', variant, null, onPick, selected);
+        emojiVariantCell(matrix, 'emojiVariantCell', variant, null);
     });
   } else {
     const row = div(dom, 'emojiVariantRow');
-    emojiVariantCell(row, 'emojiVariantCell emojiVariantBase', variants.base, 'Default', onPick, selected);
-    variants.cells[0].forEach((variant, index) => emojiVariantCell(row, 'emojiVariantCell', variant, variants.toneLabels[index], onPick, selected));
+    emojiVariantCell(row, 'emojiVariantCell emojiVariantBase', variants.base, 'Default');
+    variants.cells[0].forEach((variant, index) => emojiVariantCell(row, 'emojiVariantCell', variant, variants.toneLabels[index]));
   }
+
+  return { dom, title, cells: [ ...dom.querySelectorAll('.emojiVariantCell') ] };
+}
+
+// Hovering along a row of people emoji opens one flyout after the other, and building six to
+// twenty-six <img> cells every time is what made the picker crawl on slower machines (#3118). An
+// emoji's flyout is therefore built once and kept: reopening it only moves it back into the
+// document, which costs nothing and reuses the images the browser already has.
+const emojiVariantFlyouts = new Map();
+
+function openEmojiVariantFlyout(element, variants, onPick, label) {
+  closeEmojiVariantFlyout();
+
+  if(!emojiVariantFlyouts.has(variants.base))
+    emojiVariantFlyouts.set(variants.base, buildEmojiVariantFlyout(variants));
+  const { dom, title, cells } = emojiVariantFlyouts.get(variants.base);
+
+  // the label arrives with the icon list, which loads asynchronously, so it is only known now - and
+  // the form in use differs between the icons that share a flyout (an already toned one marks its own)
+  title.innerHTML = `Skin tone${label ? ` — <b>${html(label)}</b>` : ''}`;
+  for(const cell of cells)
+    cell.classList.toggle('emojiVariantSelected', cell.dataset.emoji == variants.selected);
+  emojiVariantPick = onPick;
+
+  // A fixed box outside the icon it belongs to, which is in a grid that scrolls and, in the editor,
+  // in a 340px column - both of them clip. It goes into #editor whenever the icon does, because
+  // that is how edit mode tells its own controls from the room: a mousedown anywhere else starts a
+  // selection rectangle, and letting go of it would clear the selection the picker is editing.
+  (element.closest('#editor') || $('body')).appendChild(dom);
 
   const anchor = element.getBoundingClientRect();
   const box = dom.getBoundingClientRect();
@@ -239,7 +264,7 @@ function openEmojiVariantFlyout(element, variants, onPick, name) {
   const cancelClose = _=>clearTimeout(closeTimer);
   const scheduleClose = _=>{
     clearTimeout(closeTimer);
-    closeTimer = setTimeout(close, 300);
+    closeTimer = setTimeout(close, closeDelay);
   };
   dom.onmouseenter = cancelClose;
   dom.onmouseleave = scheduleClose;
@@ -251,24 +276,49 @@ function openEmojiVariantFlyout(element, variants, onPick, name) {
   activeEmojiVariantFlyout = { anchor: element, close, scheduleClose, cancelClose };
 }
 
-// Marks an icon that has skin tone forms and opens its flyout on hover (long-press on touch).
-// The handlers are assigned as properties, so decorating the same element again replaces them
-// instead of stacking another flyout on it - the symbol picker hands its grid to a new caller
-// every time it is opened.
-export function addEmojiVariantFlyout(element, emoji, onPick, name) {
-  element.onmouseenter = element.onmouseleave = element.ontouchstart = null;
-  element.ontouchend = element.ontouchmove = element.ontouchcancel = null;
-  loadEmojiVariants().then(_=>{
-    const variants = emojiVariants(emoji);
-    if(!variants)
-      return;
-    element.classList.add('hasEmojiVariants');
+// Long enough that running the pointer along a row of icons on the way somewhere else does not
+// open a flyout behind it - only resting on one does.
+const hoverDelay = 400;
+const touchDelay = 500;
+// the pointer has to cross the gap between the icon and its flyout, so leaving either one gives
+// the other a moment to be reached
+const closeDelay = 300;
 
+// Marks the icons of a container that have skin tone forms and opens their flyout on hover
+// (long-press on touch). One set of handlers on the container, not six per icon: the symbol
+// picker's grid holds ~1600 emoji and hands itself to a new caller every time it is opened.
+// The handlers are assigned as properties, so enabling the same container again replaces them
+// instead of stacking another flyout on it.
+//   selector - the elements that may carry an emoji, emoji(element) - the one it shows,
+//   onPick(element, variant) - what a picked form means, label(element) - the icon's name
+export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, label }) {
+  container.onmousemove = container.onmouseleave = container.ontouchstart = null;
+  container.ontouchend = container.ontouchmove = container.ontouchcancel = null;
+
+  loadEmojiVariants().then(_=>{
+    for(const element of container.querySelectorAll(selector))
+      if(!element.classList.contains('hasEmojiVariants') && emojiVariants(emoji(element)))
+        element.classList.add('hasEmojiVariants');
+
+    let hovered = null;
     let openTimer = null;
     let swallowTimer = null;
-    const open = _=>{
-      if(!emojiVariantFlyoutOf(element))                       // still open from before: the
-        openEmojiVariantFlyout(element, variants, onPick, name); // pointer only left it briefly
+    let swallowFor = null;
+
+    // a chip holds the glyph it shows, so the marked icon is what the pointer is over, not the
+    // element the event happens to have started on
+    const markedIcon = target => target && target.closest ? target.closest('.hasEmojiVariants') : null;
+
+    const open = element=>{
+      if(element.isConnected && !emojiVariantFlyoutOf(element)) // still open from before: the
+        openEmojiVariantFlyout(element, emojiVariants(emoji(element)), variant=>onPick(element, variant), label(element));
+    };                                                          // pointer only left it briefly
+    const leave = _=>{
+      clearTimeout(openTimer);
+      const flyout = hovered && emojiVariantFlyoutOf(hovered);
+      if(flyout)
+        flyout.scheduleClose();
+      hovered = null;
     };
 
     // The long press still ends in a click on the icon itself, which would pick the untoned form
@@ -281,32 +331,43 @@ export function addEmojiVariantFlyout(element, emoji, onPick, name) {
       document.removeEventListener('click', swallowClick, true);
     };
     const swallowClick = e=>{
-      if(element.contains(e.target)) {
+      if(swallowFor && swallowFor.contains(e.target)) {
         e.preventDefault();
         e.stopPropagation();
       }
       disarmClickSwallow();
     };
 
-    element.onmouseenter = _=>{
+    // What the pointer is on is taken from its own movement rather than from mouseover/mouseout,
+    // because the icons of the picker move: hovering one lifts it by 3px (fonts.css), so a pointer
+    // resting near its edge is left and entered again several times a second without moving at
+    // all. Reading that as hovering another icon every time is what turned the picker into a
+    // slideshow - a mousemove only arrives when the pointer really goes somewhere.
+    container.onmousemove = e=>{
+      const element = markedIcon(e.target);
+      if(element == hovered)                                   // still on the same icon
+        return;
+      leave();
+      hovered = element;
+      if(!element)
+        return;
       const flyout = emojiVariantFlyoutOf(element);
       if(flyout)
         flyout.cancelClose();
-      openTimer = setTimeout(open, 250);
+      openTimer = setTimeout(_=>open(element), hoverDelay);
     };
-    // leaving the icon closes its flyout, but not right away: the pointer has to cross the gap
-    // between the two to reach it, so it gets the same grace the flyout itself gives
-    element.onmouseleave = _=>{
+    container.onmouseleave = leave;
+    container.ontouchstart = e=>{
+      const element = markedIcon(e.target);
       clearTimeout(openTimer);
-      const flyout = emojiVariantFlyoutOf(element);
-      if(flyout)
-        flyout.scheduleClose();
+      if(element)
+        openTimer = setTimeout(_=>{
+          open(element);
+          swallowFor = element;
+          document.addEventListener('click', swallowClick, true);
+          swallowTimer = setTimeout(disarmClickSwallow, 1000); // no click came: the press ended elsewhere
+        }, touchDelay);
     };
-    element.ontouchstart = _=>openTimer = setTimeout(_=>{
-      open();
-      document.addEventListener('click', swallowClick, true);
-      swallowTimer = setTimeout(disarmClickSwallow, 1000); // no click came: the press ended elsewhere
-    }, 500);
-    element.ontouchend = element.ontouchmove = element.ontouchcancel = _=>clearTimeout(openTimer);
+    container.ontouchend = container.ontouchmove = container.ontouchcancel = _=>clearTimeout(openTimer);
   }).catch(_=>null);
 }

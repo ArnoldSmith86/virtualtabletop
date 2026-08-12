@@ -1126,10 +1126,15 @@ class PickerInput extends PropertyInput {
       chip.onclick = _=>this.setValue(this.valueForChip(value));
       this.decorateChip(chip, value);
     }
+    this.decorateChipList(list);
   }
 
   // a chip that can offer more than the one value it shows (see IconInput)
   decorateChip(chip, value) {
+  }
+
+  // and the list they sit in, once all of them are there
+  decorateChipList(list) {
   }
 }
 
@@ -1318,7 +1323,16 @@ class IconInput extends PickerInput {
   decorateChip(chip, value) {
     const icon = iconName(value);
     if(iconValueType(icon) == 'emoji-color')
-      addEmojiVariantFlyout(chip, icon, variant=>this.setValue(this.valueForChip(variant)), iconDisplayName);
+      chip.dataset.emojiVariant = icon;
+  }
+
+  decorateChipList(list) {
+    enableEmojiVariantFlyouts(list, {
+      selector: '[data-emoji-variant]',
+      emoji: chip=>chip.dataset.emojiVariant,
+      onPick: (chip, variant)=>this.setValue(this.valueForChip(variant)),
+      label: chip=>iconDisplayName(chip.dataset.emojiVariant)
+    });
   }
 
   emptyLabel() {
@@ -1405,6 +1419,7 @@ class IconInput extends PickerInput {
         chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
         this.decorateChip(chip, iconValue);
       }
+      this.decorateChipList(results);
       if(!values.length)
         div(results, 'propertyPickerEmpty', 'No results.');
     };

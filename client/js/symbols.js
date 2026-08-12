@@ -1,5 +1,5 @@
 import { $, asArray } from "./domhelpers";
-import { addEmojiVariantFlyout, closeEmojiVariantFlyout } from "./emojivariants";
+import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout } from "./emojivariants";
 
 export function emojiToFilename(emoji) {
   return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
@@ -170,11 +170,19 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
       resolve(Object.assign({...icon.dataset}, { symbol, isImage, url }));
     }
 
-    for(const icon of $a('#symbolList i')) {
-      icon.onclick = _=>pick(icon, icon.dataset.symbol);
-      if(icon.dataset.type == 'emoji-color')
-        addEmojiVariantFlyout(icon, icon.dataset.symbol, variant=>pick(icon, variant), symbolName(icon));
-    }
+    // one listener for the whole grid: it holds over 13000 icons, and giving each of them its own
+    // click handler every time the picker opens is a tenth of a second the picker does not have
+    $('#symbolList').onclick = e=>{
+      const icon = e.target.closest('i');
+      if(icon)
+        pick(icon, icon.dataset.symbol);
+    };
+    enableEmojiVariantFlyouts($('#symbolList'), {
+      selector: 'i[data-type=emoji-color]',
+      emoji: icon=>icon.dataset.symbol,
+      onPick: (icon, variant)=>pick(icon, variant),
+      label: symbolName
+    });
   });
 }
 
@@ -277,11 +285,17 @@ export function addRichtextControls(dom) {
         insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
     }
 
-    for(const icon of $a('#symbolList i')) {
-      icon.onclick = _=>insert(icon, icon.dataset.symbol);
-      if(icon.dataset.type == 'emoji-color')
-        addEmojiVariantFlyout(icon, icon.dataset.symbol, variant=>insert(icon, variant), symbolName(icon));
-    }
+    $('#symbolList').onclick = e=>{
+      const icon = e.target.closest('i');
+      if(icon)
+        insert(icon, icon.dataset.symbol);
+    };
+    enableEmojiVariantFlyouts($('#symbolList'), {
+      selector: 'i[data-type=emoji-color]',
+      emoji: icon=>icon.dataset.symbol,
+      onPick: (icon, variant)=>insert(icon, variant),
+      label: symbolName
+    });
   };
 }
 
