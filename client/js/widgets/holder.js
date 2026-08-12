@@ -80,13 +80,14 @@ export class Holder extends ImageWidget {
 
   // The layout the holder actually follows. 'auto' only applies while the game
   // leaves the raw arrangement properties alone - as soon as one of them is
-  // written, the holder answers to it like it always has. The optional
-  // parameter lets a property change ask what another layout value would mean.
+  // written, in the holder's own state or served through inheritFrom, the
+  // holder answers to it like it always has. The optional parameter lets a
+  // property change ask what another layout value would mean.
   effectiveLayout(layoutValue) {
     let layout = layoutValue !== undefined ? layoutValue : super.get('layout');
     if(layout === null || layout === undefined)
       layout = 'custom';
-    if(layout == 'auto' && autoDeferProperties.some(p=>this.state[p] !== undefined))
+    if(layout == 'auto' && autoDeferProperties.some(p=>this.state[p] !== undefined || this.inheritedProperties && this.inheritedProperties[p]))
       return 'custom';
     return layout;
   }
@@ -390,13 +391,18 @@ export class Holder extends ImageWidget {
     const point = (vertical ? y : x)
       + (anchor ? (vertical ? anchor.y : anchor.x) : child.get(vertical ? 'height' : 'width')/2)
       - target.get(vertical ? 'y' : 'x');
+    const step = target.get(vertical ? 'stackOffsetY' : 'stackOffsetX');
     const slots = target.spreadOffsets().map(offset=>offset[axisIndex]);
-    slots.push(slots[slots.length-1] + target.get(vertical ? 'stackOffsetY' : 'stackOffsetX'));
+    slots.push(slots[slots.length-1] + step);
     const cardSize = target.children()[0].get(vertical ? 'height' : 'width');
+    // in a fan running in the negative direction each card is covered from the
+    // corner side, so its visible band sits at the far end of its box - a card
+    // size past the slot itself
+    const bandShift = step < 0 ? cardSize : 0;
     let index = 0;
     let bestDistance = Infinity;
     for(let i=0; i<slots.length; ++i) {
-      const center = i < slots.length - 1 ? (slots[i] + slots[i+1]) / 2 : slots[i] + cardSize/2;
+      const center = i < slots.length - 1 ? (slots[i] + slots[i+1]) / 2 + bandShift : slots[i] + cardSize/2;
       const distance = Math.abs(point - center);
       if(distance < bestDistance) {
         bestDistance = distance;
@@ -644,9 +650,9 @@ export class Holder extends ImageWidget {
 
     let best = null;
     if(this.get('gridColumns') > 0) {
-      best = stepsFor(Math.floor(this.get('gridColumns')));
+      best = stepsFor(Math.max(1, Math.floor(this.get('gridColumns'))));
     } else if(this.get('gridRows') > 0) {
-      best = stepsFor(Math.ceil(Math.max(1, n) / Math.floor(this.get('gridRows'))));
+      best = stepsFor(Math.ceil(Math.max(1, n) / Math.max(1, Math.floor(this.get('gridRows')))));
     } else {
       for(let cols=1; cols<=Math.max(1, n); ++cols) {
         const candidate = stepsFor(cols);

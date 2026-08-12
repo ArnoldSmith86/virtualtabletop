@@ -9744,9 +9744,9 @@ class PropertiesModule extends SidebarModule {
       rows.push({ row, layouts, properties: [ propertyX, propertyY ] });
       return row;
     };
-    const addNumberRow = (title, property, layouts)=>{
+    const addNumberRow = (title, property, layouts, options)=>{
       const input = new NumberInput(this, widget, title, {
-        property, step: 1, nullIfEmpty: true, hint: editorPropertyHints[property]
+        property, step: 1, nullIfEmpty: true, hint: editorPropertyHints[property], ...options
       });
       input.render(this.moduleDOM);
       rows.push({ row: input.dom, layouts, properties: [ property ] });
@@ -9757,8 +9757,8 @@ class PropertiesModule extends SidebarModule {
     addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multipleSpread' ]);
     addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multipleSpread' ]);
     addNumberRow('Spread min',   'spreadMin',   [ 'multipleSpread' ]);
-    addNumberRow('Grid columns', 'gridColumns', [ 'grid' ]);
-    addNumberRow('Grid rows',    'gridRows',    [ 'grid' ]);
+    addNumberRow('Grid columns', 'gridColumns', [ 'grid' ], { min: 1 });
+    addNumberRow('Grid rows',    'gridRows',    [ 'grid' ], { min: 1 });
 
     const updateRows = _=>{
       const layout = widget.effectiveLayout();

@@ -81,6 +81,20 @@ test('The classicHolderLayout legacy mode keeps drops at the drop offset', async
   await t.expect(state.loose.y).eql(4);
 });
 
+test('A holder inheriting classic arrangement properties follows them like their template', async t => {
+  await openRoom(t, 'modern', baseState({
+    template: { id: 'template', type: 'holder', x: 100, y: 500, width: 600, height: 300, dropTarget: { type: 'card' }, stackOffsetX: 40 },
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' }, inheritFrom: 'template' },
+    loose: card('loose', { x: 1200, y: 700, z: 9 })
+  }));
+
+  await dragPath(t, 'loose', [ { onto: 'holder' } ]);
+
+  const state = await stateWhen(s=>s.loose.parent == 'holder');
+  await t.expect(state.loose.x).eql(4, 'the classic drop offset the inherited property implies, not the center');
+  await t.expect(state.loose.y).eql(4);
+});
+
 test('MOVE into an auto holder spreads the cards into a centered row', async t => {
   await openRoom(t, 'modern', baseState({
     holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },

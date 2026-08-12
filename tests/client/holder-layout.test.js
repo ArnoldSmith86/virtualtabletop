@@ -192,6 +192,14 @@ describe('when the auto layout applies', () => {
     await holder.set('stackOffsetX', null);
     expect(holder.usesAutoLayout()).toBe(true);
   });
+
+  test('it also steps aside when a classic property arrives through inheritFrom', () => {
+    createHolder({ id: 'template', stackOffsetX: 40 });
+    const holder = createHolder({ id: 'h', inheritFrom: 'template' });
+    expect(holder.get('stackOffsetX')).toBe(40);
+    expect(holder.effectiveLayout()).toBe('custom');
+    expect(holder.usesAutoLayout()).toBe(false);
+  });
 });
 
 describe('the auto layout arranging its children', () => {
@@ -328,6 +336,22 @@ describe('the grid layout', () => {
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([ [ 10, 20 ], [ 120, 20 ] ]);
   });
+
+  test('a fractional gridColumns below one still means a single column', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 0.5, width: 320, height: 320 });
+    for(let i=0; i<2; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 4, 108 ] ]);
+  });
+
+  test('and a fractional gridRows below one a single row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridRows: 0.5, width: 320, height: 320 });
+    for(let i=0; i<2; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 108, 4 ] ]);
+  });
 });
 
 describe('MOVE with a position parameter', () => {
@@ -454,6 +478,20 @@ describe('a drop pointed into a fan', () => {
     await fan.insertChildrenAt([ dropped ], 1);
     const order = fan.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('id'));
     expect(order).toEqual([ 'fan-card-0', 'dropped', 'fan-card-1', 'fan-card-2' ]);
+  });
+
+  test('names the slot of a fan running in the negative direction', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetY: -40, width: 300, height: 700 });
+    const fan = await createPile('fan', holder, 4, 4, 4);
+    await holder.updateAfterShuffle();
+    const dropped = createCard('dropped');
+    const x = fan.get('x');
+    const y = fan.get('y');
+    // the offsets run 120/80/40/0 from the bottom card: the second card is covered
+    // from the corner side, so its visible band runs from y 140 to 180 in the pile
+    expect(holder.spreadFanIndexOf(fan, dropped, x, y + 160 - CARD_HEIGHT/2)).toBe(1);
+    // aimed half a card past the end the fan grows towards: on top
+    expect(holder.spreadFanIndexOf(fan, dropped, x, y + 10 - CARD_HEIGHT/2)).toBe(4);
   });
 });
 

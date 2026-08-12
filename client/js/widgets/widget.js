@@ -2428,6 +2428,8 @@ export class Widget extends StateManaged {
           if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
+          if(a.groupBy)
+            problems.push(`groupBy is ignored because only the widgets in a holder can be sorted into groups.`);
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
