@@ -13,6 +13,7 @@ import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
+import { readEmojiVariants } from './server/emojivariants.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
@@ -29,6 +30,7 @@ const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 const customWidgets = fs.existsSync(path.resolve() + '/assets/widgets.json') ? JSON.parse(fs.readFileSync(path.resolve() + '/assets/widgets.json')) : { widgets: [], groups: [] };
+const emojiVariants = readEmojiVariants();
 
 
 const serverStart = +new Date();
@@ -155,22 +157,6 @@ MinifyHTML().then(function(result) {
         if(asset.match(/^[0-9_-]+$/))
           result[asset] = !!Config.resolveAsset(asset);
     res.send(result);
-  });
-
-  // The icon list only names the base emoji, but the noto-emoji artwork also holds their skin tone
-  // forms - which ones is a property of that directory, so the picker's variant flyout (see
-  // client/js/emojivariants.js) asks for them here instead of carrying a second copy of the list
-  // that would go stale the next time the emoji are updated. The directory does not change while
-  // the server runs, so it is read once at startup like the other checked-in data and the route
-  // hands out what is already in memory. What it hands out is the code point sequence of every
-  // toned file, rebuilt from the numbers its name parses to rather than passed on as it was read,
-  // so nothing but hex digits can reach the response whatever ends up in that directory.
-  const emojiVariants = fs.readdirSync(path.resolve() + '/assets/noto-emoji')
-    .map(file => (file.match(/^emoji_u([0-9a-f]{4,5}(?:_[0-9a-f]{4,5})*)\.svg$/) || [])[1])
-    .filter(sequence => sequence && sequence.split('_').some(codePoint => codePoint.match(/^1f3f[b-f]$/)))
-    .map(sequence => sequence.split('_').map(codePoint => parseInt(codePoint, 16).toString(16).padStart(4, '0')).join('_'));
-  router.get('/emojiVariants', function(req, res) {
-    res.json(emojiVariants);
   });
 
   router.get('/assets/:name', function(req, res) {
@@ -344,6 +330,13 @@ MinifyHTML().then(function(result) {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(deck));
     }).catch(next);
+  });
+
+  // the skin tone forms the noto-emoji directory holds, for the pickers' variant flyout: the
+  // directory is checked into the repository and does not change while the server runs, so the
+  // list is read at startup like the other checked-in data and this hands out what is in memory
+  router.get('/api/emojiVariants', function(req, res, next) {
+    res.json(emojiVariants);
   });
 
   router.get('/api/widgets', function(req, res, next) {

@@ -115,11 +115,11 @@ let emojiVariantFiles = null;
 let emojiVariantFilesPromise = null;
 
 // Which forms exist is a property of the asset directory, so the server reads it from there
-// (/emojiVariants) instead of the client carrying a second copy of the list that could go stale.
+// (/api/emojiVariants) instead of the client carrying a second copy of the list that could go stale.
 export function loadEmojiVariants() {
   if(!emojiVariantFilesPromise) {
     emojiVariantFilesPromise = (async _=>{
-      emojiVariantFiles = new Set(await (await fetch('emojiVariants')).json());
+      emojiVariantFiles = new Set(await (await fetch('api/emojiVariants')).json());
       return emojiVariantFiles;
     })();
     emojiVariantFilesPromise.catch(_=>emojiVariantFilesPromise = null); // a failed fetch may be retried
@@ -138,12 +138,33 @@ export function emojiVariants(emoji) {
   return emojiVariantCache.get(emoji);
 }
 
+// The one flyout that can be open, as { anchor, close, scheduleClose, cancelClose }: hovering
+// another marked icon replaces it, and everything that dismisses it goes through here.
 let activeEmojiVariantFlyout = null;
 
 export function closeEmojiVariantFlyout() {
   if(activeEmojiVariantFlyout)
-    activeEmojiVariantFlyout();
+    activeEmojiVariantFlyout.close();
 }
+
+// the open flyout if it belongs to this icon - what an icon may cancel, delay or leave alone
+function emojiVariantFlyoutOf(element) {
+  return activeEmojiVariantFlyout && activeEmojiVariantFlyout.anchor == element ? activeEmojiVariantFlyout : null;
+}
+
+// Escape closes the flyout and nothing else, but the picker behind it listens for the same key in
+// two places: the editor's popup on keydown (InlinePopup.onKeyDown, a capture listener on document,
+// registered before the flyout exists) and the fullscreen overlay on keyup (window.onkeyup in
+// main.js). An open flyout takes the key away from both - its own keydown listener sits on window,
+// whose capture phase runs ahead of every listener on document, and the keyup that follows is
+// swallowed here the way the popups swallow theirs (popupHandledEscape in editor/controls/popup.js).
+let emojiVariantHandledEscape = false;
+window.addEventListener('keyup', function(e) {
+  if(e.key == 'Escape' && emojiVariantHandledEscape) {
+    emojiVariantHandledEscape = false;
+    e.stopPropagation();
+  }
+}, true);
 
 function emojiVariantCell(target, className, emoji, label, onPick, selected) {
   const cell = div(target, `${className}${emoji == selected ? ' emojiVariantSelected' : ''}`, `<img src="i/noto-emoji/emoji_u${emojiToFilename(emoji)}.svg">`);
@@ -198,30 +219,36 @@ function openEmojiVariantFlyout(element, variants, onPick, name) {
   const close = function() {
     clearTimeout(closeTimer);
     document.removeEventListener('mousedown', onOutsideClick);
-    document.removeEventListener('keydown', onKeyDown, true);
+    window.removeEventListener('keydown', onKeyDown, true);
     window.removeEventListener('scroll', close, true);
     dom.remove();
-    if(activeEmojiVariantFlyout == close)
+    if(activeEmojiVariantFlyout && activeEmojiVariantFlyout.close == close)
       activeEmojiVariantFlyout = null;
   };
   const onOutsideClick = e=>{
     if(!dom.contains(e.target) && e.target != element)
       close();
   };
-  // capture phase so Escape closes the flyout instead of the picker behind it
   const onKeyDown = e=>{
     if(e.key == 'Escape') {
       e.stopPropagation();
+      emojiVariantHandledEscape = true;
       close();
     }
   };
-  dom.onmouseenter = _=>clearTimeout(closeTimer);
-  dom.onmouseleave = _=>closeTimer = setTimeout(close, 300);
+  const cancelClose = _=>clearTimeout(closeTimer);
+  const scheduleClose = _=>{
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(close, 300);
+  };
+  dom.onmouseenter = cancelClose;
+  dom.onmouseleave = scheduleClose;
   document.addEventListener('mousedown', onOutsideClick);
-  document.addEventListener('keydown', onKeyDown, true);
+  // on window, because a capture listener there runs before the ones the picker has on document
+  window.addEventListener('keydown', onKeyDown, true);
   // the picker grid and the sidebar scroll, which would leave the flyout hanging next to nothing
   window.addEventListener('scroll', close, true);
-  activeEmojiVariantFlyout = close;
+  activeEmojiVariantFlyout = { anchor: element, close, scheduleClose, cancelClose };
 }
 
 // Marks an icon that has skin tone forms and opens its flyout on hover (long-press on touch).
@@ -238,17 +265,47 @@ export function addEmojiVariantFlyout(element, emoji, onPick, name) {
     element.classList.add('hasEmojiVariants');
 
     let openTimer = null;
-    const open = _=>openEmojiVariantFlyout(element, variants, onPick, name);
-    element.onmouseenter = _=>openTimer = setTimeout(open, 250);
-    element.onmouseleave = _=>clearTimeout(openTimer);
-    element.ontouchstart = _=>openTimer = setTimeout(_=>{
-      open();
-      // the touch still ends in a click on the icon itself, which would pick the untoned form and
-      // close the picker right on top of the flyout that just opened
-      document.addEventListener('click', e=>{
+    let swallowTimer = null;
+    const open = _=>{
+      if(!emojiVariantFlyoutOf(element))                       // still open from before: the
+        openEmojiVariantFlyout(element, variants, onPick, name); // pointer only left it briefly
+    };
+
+    // The long press still ends in a click on the icon itself, which would pick the untoned form
+    // and close the picker right on top of the flyout that just opened - so that one click is
+    // swallowed. Only that one: a press that ends somewhere else (the finger slid off, the touch
+    // was cancelled, the grid scrolled away under it) must not eat an unrelated click later on,
+    // which is why the listener is a named one that is dropped again either way.
+    const disarmClickSwallow = _=>{
+      clearTimeout(swallowTimer);
+      document.removeEventListener('click', swallowClick, true);
+    };
+    const swallowClick = e=>{
+      if(element.contains(e.target)) {
         e.preventDefault();
         e.stopPropagation();
-      }, { capture: true, once: true });
+      }
+      disarmClickSwallow();
+    };
+
+    element.onmouseenter = _=>{
+      const flyout = emojiVariantFlyoutOf(element);
+      if(flyout)
+        flyout.cancelClose();
+      openTimer = setTimeout(open, 250);
+    };
+    // leaving the icon closes its flyout, but not right away: the pointer has to cross the gap
+    // between the two to reach it, so it gets the same grace the flyout itself gives
+    element.onmouseleave = _=>{
+      clearTimeout(openTimer);
+      const flyout = emojiVariantFlyoutOf(element);
+      if(flyout)
+        flyout.scheduleClose();
+    };
+    element.ontouchstart = _=>openTimer = setTimeout(_=>{
+      open();
+      document.addEventListener('click', swallowClick, true);
+      swallowTimer = setTimeout(disarmClickSwallow, 1000); // no click came: the press ended elsewhere
     }, 500);
     element.ontouchend = element.ontouchmove = element.ontouchcancel = _=>clearTimeout(openTimer);
   }).catch(_=>null);

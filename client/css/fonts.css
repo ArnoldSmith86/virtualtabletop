@@ -615,11 +615,15 @@
 
 /* the flyout hangs off an icon of a grid that scrolls (and, in the sidebar, of a 340px column), so
    it is a fixed box at the document level instead of a child of that icon */
+/* The editor's colors (client/css/editor/layout.css) so the flyout follows dark mode along with
+   the sidebar it hangs off, with the light values as a fallback: that stylesheet only comes with
+   edit mode, while the fullscreen picker - always light - is part of the room. */
 .emojiVariantFlyout {
+  --emojiVariantHighlightColor: #eef4fb;
   position: fixed;
   z-index: 2000001;
-  background: white;
-  color: black;
+  background: var(--backgroundColor, white);
+  color: var(--textColor, black);
   border: 1px solid var(--VTTblue);
   border-radius: 8px;
   box-shadow: 0 8px 24px #0004;
@@ -627,11 +631,15 @@
   max-width: calc(100vw - 8px);
 }
 
+body.edit.darkMode .emojiVariantFlyout {
+  --emojiVariantHighlightColor: #1c2c3d;
+}
+
 .emojiVariantTitle {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #55606d;
+  color: var(--textHelpColor, #55606d);
   margin-bottom: 6px;
   white-space: nowrap;
 }
@@ -663,15 +671,15 @@
   align-items: center;
   gap: 3px;
   padding: 3px 4px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--backgroundHighlightColor1, #ddd);
   border-radius: 6px;
-  background: white;
+  background: var(--backgroundColor, white);
   cursor: pointer;
 }
 
 .emojiVariantCell:hover {
   border-color: var(--VTTblue);
-  background: #eef4fb;
+  background: var(--emojiVariantHighlightColor);
 }
 
 .emojiVariantCell img {
@@ -686,7 +694,7 @@
 
 /* the untoned form the grid itself shows, so that picking it from here is possible as well */
 .emojiVariantBase {
-  background: #eef4fb;
+  background: var(--emojiVariantHighlightColor);
   border-color: var(--VTTblueLight);
 }
 
@@ -698,13 +706,13 @@
 
 .emojiVariantLabel {
   font-size: 9px;
-  color: #66707c;
+  color: var(--textHelpColor, #66707c);
   white-space: nowrap;
 }
 
 .emojiVariantHeader {
   font-size: 9px;
-  color: #66707c;
+  color: var(--textHelpColor, #66707c);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   text-align: center;
