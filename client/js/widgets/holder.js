@@ -647,6 +647,18 @@ export class Holder extends ImageWidget {
       }
       return scale;
     };
+    // The content box of a squished row or column: the widest entry is not
+    // necessarily the last one, so measure every entry's far edge - squishScale
+    // already keeps each of them inside the room, so centering this box is safe.
+    const boundingExtent = (extents, steps)=>{
+      let extent = 0;
+      let offset = 0;
+      for(let i = 0; i < extents.length; ++i) {
+        extent = Math.max(extent, offset + extents[i]);
+        offset += steps[i];
+      }
+      return extent;
+    };
     const rowGeometry = rows=>{
       const perRow = Math.ceil(count / rows);
       const rowsChildren = [];
@@ -679,14 +691,14 @@ export class Holder extends ImageWidget {
 
     const { rowsChildren, rowHeights, rowScalesX, scaleY } = rowGeometry(rows);
     const stepsY = rowHeights.map((h, row)=>row == rowHeights.length - 1 ? 0 : (h + pad) * scaleY);
-    const contentHeight = stepsY.reduce((a, b)=>a + b, 0) + rowHeights[rowHeights.length - 1];
+    const contentHeight = boundingExtent(rowHeights, stepsY);
     let y = Math.max(pad, (holderHeight - contentHeight) / 2);
 
     for(let row = 0; row < rowsChildren.length; ++row) {
       const rowChildren = rowsChildren[row];
       // per-child spacing so a fanned pile gets the room of its whole spread
       const steps = rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : (c.spreadExtent('X') + pad) * rowScalesX[row]);
-      const contentWidth = steps.reduce((a, b)=>a + b, 0) + rowChildren[rowChildren.length - 1].spreadExtent('X');
+      const contentWidth = boundingExtent(rowChildren.map(c=>c.spreadExtent('X')), steps);
       let x = Math.max(pad, (holderWidth - contentWidth) / 2);
       for(let i = 0; i < rowChildren.length; ++i) {
         await rowChildren[i].setPosition(x, y, z++);

@@ -331,6 +331,38 @@ describe('the auto layout arranging its children', () => {
     expect(positionsByZ(holder)).toEqual([ [ 4, 20 ], [ 100, 20 ], [ 196, 20 ] ]);
     expect(pile.get('x') + pile.spreadExtent('X')).toBeLessThanOrEqual(380);
   });
+
+  test('a wide fan in the middle of a row stays inside the holder as well', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 120 });
+    createCard('c0', { parent: 'h', z: 1 });
+    const pile = new Pile('fan');
+    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, z: 2, width: 100, height: 100, stackOffsetX: 40 }, pile);
+    for(let i=0; i<12; ++i)
+      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1 });
+    createCard('c1', { parent: 'h', z: 10 });
+    await pile.arrangeChildren(false);
+    await holder.updateAfterShuffle();
+    // the fan is the widest entry but not the last: the content box has to be
+    // measured to its far edge, not the last card's
+    expect(pile.spreadExtent('X')).toBe(540);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 10 ], [ 56, 10 ], [ 328, 10 ] ]);
+    expect(pile.get('x') + pile.spreadExtent('X')).toBeLessThanOrEqual(600);
+  });
+
+  test('a tall fan in the middle of a column stays inside the holder', async () => {
+    const holder = createHolder({ id: 'h', width: 140, height: 214 });
+    createCard('c0', { parent: 'h', z: 1 });
+    const pile = new Pile('fan');
+    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, z: 2, width: 100, height: 100, stackOffsetY: 40 }, pile);
+    for(let i=0; i<3; ++i)
+      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1 });
+    createCard('c1', { parent: 'h', z: 10 });
+    await pile.arrangeChildren(false);
+    await holder.updateAfterShuffle();
+    expect(pile.spreadExtent('Y')).toBe(180);
+    expect(positionsByZ(holder)).toEqual([ [ 20, 4 ], [ 20, 30 ], [ 20, 76 ] ]);
+    expect(pile.get('y') + pile.spreadExtent('Y')).toBeLessThanOrEqual(214);
+  });
 });
 
 describe('the grid layout', () => {
