@@ -358,6 +358,8 @@ export class Holder extends ImageWidget {
       // slot: from there on it sits a whole slot away from its neighbours and
       // could never combine with any of them.
       const target = this.get('allowPiles') ? this.arrangedChildAt(child, x, y) : null;
+      if(child.get('dropShadowOwner'))
+        return await this.previewShadowDrop(child, target, x, y);
       if(target) {
         // where along the fan of the target the drop points decides where the
         // dropped widget is inserted, not just that it joins
@@ -391,8 +393,17 @@ export class Holder extends ImageWidget {
     const point = (vertical ? y : x)
       + (anchor ? (vertical ? anchor.y : anchor.x) : child.get(vertical ? 'height' : 'width')/2)
       - target.get(vertical ? 'y' : 'x');
-    const step = target.get(vertical ? 'stackOffsetY' : 'stackOffsetX');
     const slots = target.spreadOffsets().map(offset=>offset[axisIndex]);
+    // while a drop shadow keeps a slot of this fan open, that slot goes back
+    // into the list so pointing into the gap keeps meaning the gap - the index
+    // is mapped back to the fan without it below
+    let gapIndex = null;
+    if(target.previewGapOffset) {
+      gapIndex = Math.max(0, Math.min(slots.length, target.previewGap));
+      slots.splice(gapIndex, 0, target.previewGapOffset[axisIndex]);
+    }
+    // measured between the last two slots so squish and spreadMin are in it
+    const step = slots[slots.length-1] - slots[slots.length-2];
     slots.push(slots[slots.length-1] + step);
     const cardSize = target.children()[0].get(vertical ? 'height' : 'width');
     // in a fan running in the negative direction each card is covered from the
@@ -409,7 +420,34 @@ export class Holder extends ImageWidget {
         index = i;
       }
     }
-    return index;
+    return gapIndex !== null && index > gapIndex ? index - 1 : index;
+  }
+
+  // What the drop shadow shows while it hovers over this holder. Pointed into
+  // a fan, the drop inserts at the slot under the pointer - so the preview
+  // opens a gap at exactly that slot (previewGap on the pile) and the shadow
+  // sits in it, instead of pretending the drop would append a new group.
+  // Everywhere else the shadow lines up as the new group the drop would form.
+  async previewShadowDrop(shadow, target, x, y) {
+    const fanIndex = target ? this.spreadFanIndexOf(target, shadow, x, y) : null;
+    const previous = shadow.fanPreviewPile;
+    if(previous && (previous != target || fanIndex === null)) {
+      delete shadow.fanPreviewPile;
+      delete previous.previewGap;
+      if(widgets.has(previous.get('id')))
+        await previous.arrangeChildren();
+    }
+    if(fanIndex === null)
+      return await this.receiveCard(shadow, [ x, y ]);
+
+    shadow.fanPreviewPile = target;
+    if(target.previewGap !== fanIndex) {
+      target.previewGap = fanIndex;
+      // laying the fan out around the gap also shifts the following groups
+      await target.arrangeChildren();
+    }
+    const slot = target.previewGapOffset || [ 0, 0 ];
+    await shadow.setPosition(target.get('x') + target.get('dropOffsetX') + slot[0], target.get('y') + target.get('dropOffsetY') + slot[1], target.get('z'));
   }
 
   // Empties a pile of this holder out onto the row, one card per slot, the way a
@@ -508,6 +546,22 @@ export class Holder extends ImageWidget {
     if(this.get('layout') == 'grid')
       return await this.rearrangeChildrenGrid(children);
 
+    // a drop shadow previewing an insertion into one of the fans sits inside
+    // that fan, so the row is laid out as if it were not there
+    children = children.filter(c=>!c.fanPreviewPile);
+
+    const owner = children.map(c=>c.get('owner')).find(o=>o) || null;
+    const squish = this.fanSquish(owner);
+    // the fans follow the squish factor, so when it changes the piles have to
+    // lay their cards out again before the row is measured against them
+    this.appliedFanSquish = this.appliedFanSquish || {};
+    if(this.appliedFanSquish[String(owner)] !== squish.fans) {
+      this.appliedFanSquish[String(owner)] = squish.fans;
+      for(const child of children)
+        if(child.get('type') == 'pile')
+          await child.arrangeChildren(false);
+    }
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
@@ -519,8 +573,8 @@ export class Holder extends ImageWidget {
 
       await child.setPosition(newX, newY, newZ);
 
-      xOffset += this.childSpacing(child, 'X');
-      yOffset += this.childSpacing(child, 'Y');
+      xOffset += this.childSpacing(child, 'X', squish);
+      yOffset += this.childSpacing(child, 'Y', squish);
     }
   }
 
@@ -628,8 +682,10 @@ export class Holder extends ImageWidget {
   gridMetrics(n) {
     const marginX = this.get('dropOffsetX');
     const marginY = this.get('dropOffsetY');
-    const gapX = Math.abs(this.get('stackOffsetX')) || 4;
-    const gapY = Math.abs(this.get('stackOffsetY')) || 4;
+    // the default cell gap matches the gap a multipleSpread leaves between its
+    // groups, so cards read as separate cells out of the box
+    const gapX = Math.abs(this.get('stackOffsetX')) || 8;
+    const gapY = Math.abs(this.get('stackOffsetY')) || 8;
     const first = this.children()[0];
     const cardW = first ? first.get('width')  : this.get('width');
     const cardH = first ? first.get('height') : this.get('height');
@@ -757,14 +813,17 @@ export class Holder extends ImageWidget {
   // stackOffset; where piles are arranged, a pile is a block of its own: pilesGap
   // starts the next one behind its cards, pilesOffset at a fixed distance
   // regardless of how many cards it holds, and with neither of them given the
-  // piles are placed flush, one right after the other.
-  childSpacing(child, axis) {
+  // piles are placed flush, one right after the other. An overflowing
+  // multipleSpread hands in its fanSquish, which shrinks the gaps and in the
+  // last resort overlaps the groups themselves.
+  childSpacing(child, axis, squish=null) {
     const stackOffset = this.get('stackOffset' + axis);
 
     if(this.get('allowPiles')) {
-      const gap = this.get('pilesGap' + axis);
+      const squished = squish && squish.axis == axis;
+      const gap = squished ? squish.gap : this.get('pilesGap' + axis);
       if(gap !== null)
-        return child.spreadExtent(axis) + gap;
+        return child.spreadExtent(axis) * (squished ? squish.groups : 1) + gap;
       const offset = this.get('pilesOffset' + axis);
       if(offset !== null)
         return offset;
@@ -783,6 +842,44 @@ export class Holder extends ImageWidget {
 
   pilesSpacingSet() {
     return [ 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY' ].some(p=>this.get(p) !== null);
+  }
+
+  // How the groups of a multipleSpread stay inside the holder when they take
+  // more room than it has: the gaps between them give way first, then the fans
+  // inside the groups compress evenly, and only when even the bare cards do
+  // not fit side by side do the groups start to overlap, the last one ending
+  // at the far edge. Everything here is read from shared state, so every
+  // client computes the same numbers no matter who triggered the layout.
+  // Returns the axis the groups line up along, the gap to leave between them
+  // (null where pilesOffset spaces them instead - that is the game taking
+  // manual control, so it is honored as written), the factor for the fans
+  // inside the groups and the factor for the extent-based steps between them.
+  fanSquish(owner) {
+    const axis = this.spreadDirection()[0];
+    const result = { axis, gap: this.get('pilesGap' + axis), fans: 1, groups: 1 };
+    if(this.effectiveLayout() != 'multipleSpread' || result.gap === null)
+      return result;
+
+    const size = axis == 'X' ? 'width' : 'height';
+    const children = this.arrangedChildren().filter(c=>!c.get('dropShadowOwner') && !c.fanPreviewPile && (!c.get('owner') || c.get('owner') === owner));
+    if(!children.length)
+      return result;
+    const bases = children.map(c=>c.get('type') == 'pile' && c.children().length ? c.children()[0].get(size) : c.get(size));
+    const fans = children.map(c=>c.get('type') == 'pile' ? c.fanLength(axis) : 0);
+    const baseSum = bases.reduce((a, b)=>a + b, 0);
+    const fanSum = fans.reduce((a, b)=>a + b, 0);
+    const gapCount = children.length - 1;
+    const available = this.get(size) - 2 * this.get('dropOffset' + axis);
+
+    if(baseSum + fanSum + gapCount * result.gap <= available)
+      return result;
+    if(baseSum + fanSum <= available)
+      return Object.assign(result, { gap: gapCount ? (available - baseSum - fanSum) / gapCount : result.gap });
+    if(baseSum <= available && fanSum)
+      return Object.assign(result, { gap: 0, fans: Math.max(0, available - baseSum) / fanSum });
+    const lastBase = bases[bases.length - 1];
+    const stepSum = baseSum - lastBase;
+    return Object.assign(result, { gap: 0, fans: 0, groups: stepSum > 0 ? Math.min(1, Math.max(0, (available - lastBase) / stepSum)) : 1 });
   }
 
   // Whether this holder lines its children up instead of dropping them all on

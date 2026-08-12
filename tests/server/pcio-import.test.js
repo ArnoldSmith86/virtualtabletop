@@ -58,6 +58,7 @@ describe('PCIO importer', () => {
     expect(state.free.layout).toBe('freeform');
     expect(state.table.layout).toBe('grid');
     expect(state.table.dropOffsetX).toBe(6);
+    expect(state.table.stackOffsetX).toBe(4);
     expect(state._meta.info.importerWarnings).toBeUndefined();
   });
 

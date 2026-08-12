@@ -34,6 +34,7 @@ beforeAll(async () => {
   globalThis.removeWidgetLocal = id => removeWidget(id);
   globalThis.getMaxZ = () => 0;
   globalThis.updateMaxZ = () => {};
+  globalThis.defaultPileSnapRange = 10;
   globalThis.mapAssetURLs = url => url;
   globalThis.setTextAndAdjustFontSize = () => {};
   globalThis.playerName = 'jestPlayer';
@@ -310,7 +311,7 @@ describe('the grid layout', () => {
     for(let i=0; i<4; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 108, 4 ], [ 4, 108 ], [ 108, 108 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 112 ], [ 112, 112 ] ]);
   });
 
   test('gridColumns pins the column count', async () => {
@@ -318,7 +319,7 @@ describe('the grid layout', () => {
     for(let i=0; i<4; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 108, 4 ], [ 212, 4 ], [ 316, 4 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ], [ 328, 4 ] ]);
   });
 
   test('gridRows pins the row count instead', async () => {
@@ -326,7 +327,7 @@ describe('the grid layout', () => {
     for(let i=0; i<4; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 108, 4 ], [ 212, 4 ], [ 316, 4 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ], [ 328, 4 ] ]);
   });
 
   test('dropOffset is the margin and stackOffset the cell gap', async () => {
@@ -342,7 +343,7 @@ describe('the grid layout', () => {
     for(let i=0; i<2; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 4, 108 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 4, 112 ] ]);
   });
 
   test('and a fractional gridRows below one a single row', async () => {
@@ -350,7 +351,7 @@ describe('the grid layout', () => {
     for(let i=0; i<2; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 108, 4 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ] ]);
   });
 });
 
@@ -492,6 +493,152 @@ describe('a drop pointed into a fan', () => {
     expect(holder.spreadFanIndexOf(fan, dropped, x, y + 160 - CARD_HEIGHT/2)).toBe(1);
     // aimed half a card past the end the fan grows towards: on top
     expect(holder.spreadFanIndexOf(fan, dropped, x, y + 10 - CARD_HEIGHT/2)).toBe(4);
+  });
+});
+
+describe('a multipleSpread with more groups than fit', () => {
+  // avail is the holder width minus the drop offset on both sides (default 4)
+  test('shrinks the gaps between the groups first', async () => {
+    // two fans of 3 at stack offset 40: bases 200, fans 160, one gap of 8 ->
+    // full row 368; at width 370 (avail 362) only a 2px gap still fits
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 370, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 3);
+    await holder.updateAfterShuffle();
+    expect(holder.fanSquish(null)).toEqual({ axis: 'X', gap: 2, fans: 1, groups: 1 });
+    const xs = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x')).map(p=>p.get('x'));
+    expect(xs).toEqual([ 4, 186 ]);
+    // the fans themselves keep their full spread
+    expect(widgets.get('one').spreadExtent('X')).toBe(180);
+  });
+
+  test('compresses the fans evenly once the gaps are gone', async () => {
+    // bases 200, fans 160: at width 288 (avail 280) the fans keep half their spread
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 288, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 3);
+    await holder.updateAfterShuffle();
+    expect(holder.fanSquish(null)).toEqual({ axis: 'X', gap: 0, fans: 0.5, groups: 1 });
+    expect(widgets.get('one').spreadExtent('X')).toBe(140);
+    const one = widgets.get('one');
+    expect(one.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('x'))).toEqual([ 0, 20, 40 ]);
+    const xs = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x')).map(p=>p.get('x'));
+    // flush groups: the second starts where the squished first one ends
+    expect(xs).toEqual([ 4, 144 ]);
+  });
+
+  test('overlaps the groups themselves when even the bare cards do not fit', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 180, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 3);
+    await holder.updateAfterShuffle();
+    const squish = holder.fanSquish(null);
+    expect(squish.fans).toBe(0);
+    const groups = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
+    // the last group ends at the far edge instead of running past it
+    expect(groups[1].get('x') + groups[1].spreadExtent('X')).toBe(176);
+  });
+
+  test('a row spaced by pilesOffset is the game taking manual control, so it is honored', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, pilesOffsetX: 60, width: 180, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 3);
+    await holder.updateAfterShuffle();
+    expect(holder.fanSquish(null).fans).toBe(1);
+    const xs = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x')).map(p=>p.get('x'));
+    expect(xs).toEqual([ 4, 64 ]);
+    expect(widgets.get('one').spreadExtent('X')).toBe(180);
+  });
+
+  test('removing groups hands the room back', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 288, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    const two = await createPile('two', holder, 300, 4, 3);
+    await holder.updateAfterShuffle();
+    expect(holder.fanSquish(null).fans).toBe(0.5);
+    for(const c of [ ...two.children() ])
+      await c.set('parent', null);
+    await holder.updateAfterShuffle();
+    expect(holder.fanSquish(null).fans).toBe(1);
+    expect(widgets.get('one').spreadExtent('X')).toBe(180);
+  });
+});
+
+describe('the drop shadow previewing an insertion into a fan', () => {
+  async function previewRoom() {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 600, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 2);
+    await holder.updateAfterShuffle();
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 40 });
+    return { holder, shadow };
+  }
+
+  test('opens a gap at the slot the drop would insert at and sits in it', async () => {
+    const { holder, shadow } = await previewRoom();
+    const one = widgets.get('one');
+    // aimed at slot 1 of the first fan: the point (x plus half a card) at 60
+    await holder.previewShadowDrop(shadow, one, 60 - CARD_WIDTH/2 + one.get('x'), 4);
+    expect(one.previewGap).toBe(1);
+    expect(one.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('x'))).toEqual([ 0, 80, 120 ]);
+    expect(shadow.get('x')).toBe(one.get('x') + 40);
+    // the fan grew by the open slot and the next group moved along
+    expect(one.spreadExtent('X')).toBe(220);
+    const two = widgets.get('two');
+    expect(two.get('x')).toBe(4 + 220 + 8);
+  });
+
+  test('pointing into the open gap keeps the same slot instead of flickering', async () => {
+    const { holder, shadow } = await previewRoom();
+    const one = widgets.get('one');
+    await holder.previewShadowDrop(shadow, one, 60 - CARD_WIDTH/2 + one.get('x'), 4);
+    // the gap slot sits at 40, its band reaches to the shifted card at 80
+    expect(holder.spreadFanIndexOf(one, shadow, 60 - CARD_WIDTH/2 + one.get('x'), 4)).toBe(1);
+    // the band of the card the gap pushed to 80 still means before that card
+    expect(holder.spreadFanIndexOf(one, shadow, 100 - CARD_WIDTH/2 + one.get('x'), 4)).toBe(1);
+    // one band further is between the former cards 1 and 2
+    expect(holder.spreadFanIndexOf(one, shadow, 140 - CARD_WIDTH/2 + one.get('x'), 4)).toBe(2);
+  });
+
+  test('moving off the fan closes the gap and the shadow lines up as its own group again', async () => {
+    const { holder, shadow } = await previewRoom();
+    const one = widgets.get('one');
+    await holder.previewShadowDrop(shadow, one, 60 - CARD_WIDTH/2 + one.get('x'), 4);
+    await holder.previewShadowDrop(shadow, null, 500, 4);
+    expect(one.previewGap).toBe(undefined);
+    expect(shadow.fanPreviewPile).toBe(undefined);
+    expect(one.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('x'))).toEqual([ 0, 40, 80 ]);
+    expect(one.spreadExtent('X')).toBe(180);
+  });
+
+  test('the drop right after lands in the previewed slot', async () => {
+    const { holder, shadow } = await previewRoom();
+    const one = widgets.get('one');
+    const aimX = 60 - CARD_WIDTH/2 + one.get('x');
+    await holder.previewShadowDrop(shadow, one, aimX, 4);
+    // what hideShadowWidget does at the drop: close the gap, remove the shadow
+    delete shadow.fanPreviewPile;
+    delete one.previewGap;
+    await one.arrangeChildren();
+    removeWidget('shadow');
+    // the real drop aims at the same point the preview did
+    const dropped = createCard('dropped', { parent: 'h', z: 41 });
+    const index = holder.spreadFanIndexOf(one, dropped, aimX, 4);
+    expect(index).toBe(1);
+    await dropped.set('parent', 'one');
+    await one.insertChildrenAt([ dropped ], index);
+    const order = one.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('id'));
+    expect(order).toEqual([ 'one-card-0', 'dropped', 'one-card-1', 'one-card-2' ]);
+  });
+
+  test('the row is laid out as if the previewing shadow were not there', async () => {
+    const { holder, shadow } = await previewRoom();
+    const one = widgets.get('one');
+    await holder.previewShadowDrop(shadow, one, 60 - CARD_WIDTH/2 + one.get('x'), 4);
+    const shadowX = shadow.get('x');
+    await holder.updateAfterShuffle();
+    // the shadow kept its slot position instead of being arranged into the row
+    expect(shadow.get('x')).toBe(shadowX);
   });
 });
 

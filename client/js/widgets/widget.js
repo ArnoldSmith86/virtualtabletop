@@ -2995,6 +2995,10 @@ export class Widget extends StateManaged {
       // If we currently have a shadow widget, position it and place it in the holder.
       if (this.hoverTarget && this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
         const shadowWidget = widgets.get(this.get('dropShadowWidget'));
+        // the shadow aims by the same spot the drop will aim by - where the
+        // player is holding the widget - so a preview into a fan and the drop
+        // right after pick the same slot
+        shadowWidget.dropAnchor = localAnchor;
 
         const globalPoint = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         const shadowParentId = shadowWidget.get('parent');
@@ -3150,6 +3154,17 @@ export class Widget extends StateManaged {
       shadowWidget.currentParent = holder;
       if (preventRearrange)
         holder.preventRearrangeDuringPileDrop = true;
+
+      // a slot the shadow kept open in one of the fans closes with it - the
+      // real drop right after aims at the closed fan again, so it still lands
+      // in the slot the preview showed
+      const previewPile = shadowWidget.fanPreviewPile;
+      if (previewPile) {
+        delete shadowWidget.fanPreviewPile;
+        delete previewPile.previewGap;
+        if (widgets.has(previewPile.get('id')))
+          await previewPile.arrangeChildren();
+      }
 
       await shadowWidget.set('parent', null);
       await shadowWidget.checkParent(true);

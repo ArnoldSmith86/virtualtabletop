@@ -350,24 +350,48 @@ export class Pile extends Widget {
   // Without a stack offset they all lie on the same spot, which is what a pile
   // normally looks like. spreadMin keeps the full offset for the topmost cards
   // only and squeezes everything below them together, so a long pile stays
-  // readable without growing across the whole table.
+  // readable without growing across the whole table. A holder whose groups do
+  // not fit side by side squishes the fans through fanSquish, and a drop
+  // shadow previewing an insertion keeps one slot (previewGap) open - its
+  // offset is remembered in previewGapOffset for whoever places the shadow.
   spreadOffsets() {
-    const count = this.children().length;
+    const holder = this.holderArrangingPiles();
+    const squish = holder && holder.fanSquish ? holder.fanSquish(this.get('owner') || null) : null;
+    const gap = this.previewGap === undefined ? null : Math.max(0, Math.min(this.children().length, this.previewGap));
+    const count = this.children().length + (gap === null ? 0 : 1);
     const offsets = [];
     let x = 0;
     let y = 0;
 
     for(let i=0; i<count; ++i) {
       offsets.push([ x, y ]);
-      x += this.get('stackOffsetX') * this.spreadFactor(i, count);
-      y += this.get('stackOffsetY') * this.spreadFactor(i, count);
+      x += this.get('stackOffsetX') * this.spreadFactor(i, count) * (squish && squish.axis == 'X' ? squish.fans : 1);
+      y += this.get('stackOffsetY') * this.spreadFactor(i, count) * (squish && squish.axis == 'Y' ? squish.fans : 1);
     }
 
     // a negative offset spreads towards the corner of the pile, so the cards are
     // moved back into it - the box of a pile always starts where the pile is
     const minX = Math.min(...offsets.map(o=>o[0]), 0);
     const minY = Math.min(...offsets.map(o=>o[1]), 0);
-    return offsets.map(o=>[ o[0]-minX, o[1]-minY ]);
+    const normalized = offsets.map(o=>[ o[0]-minX, o[1]-minY ]);
+    if(gap !== null)
+      this.previewGapOffset = normalized.splice(gap, 1)[0];
+    else
+      delete this.previewGapOffset;
+    return normalized;
+  }
+
+  // The length of the fan alone along one axis - how far the last slot sits
+  // from the first one - before any squish is applied. What fanSquish measures
+  // the groups by without asking for the squished layout it is about to decide.
+  fanLength(axis) {
+    const count = this.children().length;
+    if(count < 2 || !this.spreadsCards())
+      return 0;
+    let length = 0;
+    for(let i=0; i<count-1; ++i)
+      length += Math.abs(this.get('stackOffset' + axis)) * this.spreadFactor(i, count);
+    return length;
   }
 
   // The share of the stack offset used for the step after card i, counting the
@@ -384,7 +408,11 @@ export class Pile extends Widget {
       return super.spreadExtent(axis);
 
     const index = axis == 'X' ? 0 : 1;
-    return Math.max(...this.spreadOffsets().map(o=>o[index])) + children[0].get(axis == 'X' ? 'width' : 'height');
+    const offsets = this.spreadOffsets();
+    // an open preview gap is part of the box even when it is the last slot
+    if(this.previewGapOffset)
+      offsets.push(this.previewGapOffset);
+    return Math.max(...offsets.map(o=>o[index])) + children[0].get(axis == 'X' ? 'width' : 'height');
   }
 
   async onChildAddAlign(child, oldParentID) {

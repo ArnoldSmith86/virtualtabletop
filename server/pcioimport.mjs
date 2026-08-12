@@ -763,10 +763,13 @@ export default async function convertPCIO(content) {
         w.layout = 'freeform';
       if(widget.layoutType == 'grid') {
         // the grid layout derives its rows and columns from the holder size the
-        // way PCIO does; PCIO insets the cards 6 pixels from the edge
+        // way PCIO does; PCIO insets the cards 6 pixels from the edge and packs
+        // the cells tightly, so the wider native default gap is pinned down
         w.layout = 'grid';
         w.dropOffsetX = 6;
         w.dropOffsetY = 6;
+        w.stackOffsetX = 4;
+        w.stackOffsetY = 4;
       }
 
       if(widget.layoutType == 'spread' && widget.spreadMulti == 'multi') {

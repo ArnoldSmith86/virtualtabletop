@@ -1315,7 +1315,7 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  layout: 'How the holder arranges what is dropped into it. Auto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. Pile stacks everything in one spot, Single spread fans it out, Multiple spread lines up several groups (piles) side by side, Grid fills rows and columns, Freeform leaves everything where it was dropped, and Custom follows the properties below.',
+  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMultiple spread lines up several groups (piles) side by side.\nGrid fills rows and columns.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
   allowPiles: 'Keep piles that are dropped in as piles and line them up as groups, instead of emptying them out one card per slot.',
   pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds.',
   pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds.',
@@ -8095,13 +8095,29 @@ class PropertiesModule extends SidebarModule {
     this.renderBehaviorSection(widget);
     // how the pile places its own cards: fanned out by the stack offset, with
     // spreadMin keeping a long fan readable. A pile inside a holder that
-    // arranges piles inherits both from that holder unless set here.
+    // arranges piles inherits both from that holder unless set here - so the
+    // inputs show only what the pile sets itself and name the inherited value
+    // as a placeholder, instead of showing it as if it were the pile's own.
+    const inheritAwareOptions = property=>({
+      hint: editorPropertyHints[property],
+      nullIfEmpty: true,
+      getValue: _=>holderStateHas(widget, property) ? widget.state[property] : null,
+      placeholder: _=>{
+        if(typeof widget.getDefaultValue != 'function')
+          return '';
+        const value = widget.getDefaultValue(property);
+        if(value === null || value === undefined)
+          return '';
+        const holder = typeof widget.holderArrangingPiles == 'function' && widget.holderArrangingPiles();
+        return holder ? `inherited: ${value}` : String(value);
+      }
+    });
     this.renderNumberPairRow(widget, 'Stack offset', [
-      { label: 'X', property: 'stackOffsetX', options: { hint: editorPropertyHints.stackOffsetX } },
-      { label: 'Y', property: 'stackOffsetY', options: { hint: editorPropertyHints.stackOffsetY } }
+      { label: 'X', property: 'stackOffsetX', options: inheritAwareOptions('stackOffsetX') },
+      { label: 'Y', property: 'stackOffsetY', options: inheritAwareOptions('stackOffsetY') }
     ]);
     new NumberInput(this, widget, 'Spread min', {
-      property: 'spreadMin', step: 1, min: 1, nullIfEmpty: true, hint: editorPropertyHints.spreadMin
+      property: 'spreadMin', step: 1, min: 1, ...inheritAwareOptions('spreadMin')
     }).render(this.moduleDOM);
     this.renderPileTemplateSection(widget);
 
@@ -9704,6 +9720,10 @@ class PropertiesModule extends SidebarModule {
   renderHolderLayoutSection(widget) {
     this.addSubHeader('Layout');
 
+    // whether the last layout choice wrote the starter fan below, so leaving
+    // multipleSpread with it untouched takes it out again - a layout the user
+    // merely explored through the select leaves nothing behind
+    let wroteStarterFan = false;
     new SelectInput(this, widget, 'Arrange as', {
       // what the holder actually follows: an auto layout that stepped aside
       // because an arrangement property is set reads as Custom here
@@ -9716,10 +9736,16 @@ class PropertiesModule extends SidebarModule {
           // auto only applies while the arrangement properties are untouched
           for(const property of holderArrangementProperties)
             widget.set(property, null);
+        if(wroteStarterFan && value != 'multipleSpread' && widget.state.stackOffsetX === 40 && widget.state.stackOffsetY === undefined) {
+          widget.set('stackOffsetX', null);
+          wroteStarterFan = false;
+        }
         // a multiple spread without a stack offset is a row of flat stacks -
         // give it the classic hand fan as its starting point
-        if(value == 'multipleSpread' && !widget.state.stackOffsetX && !widget.state.stackOffsetY)
+        if(value == 'multipleSpread' && !widget.state.stackOffsetX && !widget.state.stackOffsetY) {
           widget.set('stackOffsetX', 40);
+          wroteStarterFan = true;
+        }
         widget.set('layout', value);
         batchEnd();
       },
@@ -9734,6 +9760,11 @@ class PropertiesModule extends SidebarModule {
         { value: 'freeform',       text: 'Freeform' }
       ]
     }).render(this.moduleDOM);
+
+    // a holder set to Auto silently reads as Custom above as soon as an
+    // arrangement property is written (see Holder.effectiveLayout) - say why,
+    // and how to get Auto back, right where the surprise happens
+    const autoNote = div(this.moduleDOM, 'layoutAutoNote', 'Auto is switched off because an arrangement property below is set. Choosing Auto clears them all.');
 
     const rows = [];
     const addPairRow = (title, propertyX, propertyY, layouts)=>{
@@ -9762,6 +9793,7 @@ class PropertiesModule extends SidebarModule {
 
     const updateRows = _=>{
       const layout = widget.effectiveLayout();
+      autoNote.style.display = layout == 'custom' && widget.get('layout') == 'auto' ? '' : 'none';
       // the piles rows also belong to a custom layout that arranges piles
       const arrangesPiles = layout == 'multipleSpread' || layout == 'custom' && widget.get('allowPiles');
       for(const entry of rows) {
