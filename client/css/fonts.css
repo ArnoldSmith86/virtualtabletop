@@ -446,6 +446,11 @@
 #symbolPickerOverlay div[icon] {
   min-height: 210px;
 }
+/* the status line lives inside that clipped box, so while it is up the floor has to cover it too - the
+   34px line plus its 20px of margins, minus the 20px the search field gives up below itself */
+#symbolPickerOverlay.filtered div[icon] {
+  min-height: 244px;
+}
 
 #symbolPickerOverlay > button {
   position: absolute;

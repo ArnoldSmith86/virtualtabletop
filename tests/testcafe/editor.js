@@ -1234,13 +1234,18 @@ test('The inline icon picker hands its chosen libraries to the symbol picker', a
     // switching a library off and then being handed icons from it anyway contradicts the filter the
     // user just set, so the "Libraries:" checkboxes travel with the search term
     .click(picker.find('.iconPickerFilterChip').withText('Game Icons').find('input'))
-    .typeText(picker.find('input[placeholder="Search icons..."]'), 'dragon')
+    .typeText(picker.find('input[placeholder="Search icons..."]'), 'flag')
     .click(picker.find('button[icon=apps]'))
     .expect(Selector('#symbolPickerOverlay').visible).ok()
     .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
     .expect(Selector('#symbolList i[data-type=game-icons]:not(.hidden)').count).eql(0)
+    // ...and every library left ticked has to arrive whole. The 269 flag emoji are the section that
+    // notices first if the filter reads data-type as anything but the library the icon belongs to
+    .expect(Selector('#symbolList i.emojiFlag:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i[data-type=emoji-color]:not(.emojiFlag):not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i[data-type=material-symbols]:not(.hidden)').count).gt(0)
     // the picker has no library checkboxes of its own, so it has to say which filter it is under
-    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons from 4 of 5 libraries match "dragon"$/)
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons from 4 of 5 libraries match "flag"$/)
     // ...and "Show all icons" is the way back from both filters at once
     .click('#symbolSearchStatus button')
     .expect(Selector('#symbolPickerOverlay input').value).eql('')
@@ -1266,6 +1271,7 @@ test('The inline image picker hands its search term to the symbol picker', async
   await setName(t);
 
   const picker = Selector('.propertyPicker').filterVisible();
+  const imageProperty = ClientFunction(() => widgets.get('w').get('image'));
 
   await t
     .click('#editButton')
@@ -1297,7 +1303,15 @@ test('The inline image picker hands its search term to the symbol picker', async
     .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
     .click(picker.find('button[icon=apps]'))
     .expect(Selector('#symbolPickerOverlay h1').textContent).eql('Pick icon')
-    .click('#symbolPickerOverlay [icon=close]');
+    .click('#symbolPickerOverlay [icon=close]')
+    // a flag emoji is a color emoji like any other, so picking one has to hand back its image URL -
+    // an unrecognized type resolves to url: null, which clears the image instead of setting it
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .typeText(picker.find('input[placeholder="Search images..."]'), 'flag', { replace: true })
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolList i.emojiFlag:not(.hidden)').count).gt(0)
+    .click(Selector('#symbolList i.emojiFlag:not(.hidden)').nth(0))
+    .expect(imageProperty()).match(/^\/i\/noto-emoji\/emoji_u[0-9a-f_]+\.svg$/);
   await setEditorState(null);
 });
 

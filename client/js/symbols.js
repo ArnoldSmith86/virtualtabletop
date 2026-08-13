@@ -99,10 +99,11 @@ export async function loadSymbolPicker() {
       if(category.match(/Emoji/)) {
         list += `<h2 data-family="image">${category}</h2>`;
         for(const [ symbol, keywords ] of Object.entries(symbols)) {
-          let className = 'emoji-color';
-          if(category == 'Emoji - Flags')
-            className += ' emojiFlag';
-          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol.toLowerCase()},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          // flags need a class of their own because no browser font draws them, but their type stays
+          // emoji-color: that is the library they belong to, and both the library filter and the click
+          // handler below match data-type exactly, so a class list in there loses every flag
+          const className = category == 'Emoji - Flags' ? 'emoji-color emojiFlag' : 'emoji-color';
+          list += `<i class="${className}" data-family="image" title="emoji-color: ${symbol}" data-type="emoji-color" data-symbol="${symbol}" data-keywords="${symbol.toLowerCase()},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
