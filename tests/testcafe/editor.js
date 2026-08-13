@@ -1134,6 +1134,39 @@ test('The symbol picker says an image-only search found nothing', async t => {
   await setEditorState(null);
 });
 
+test('The inline icon picker hands its search term to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, icon: 'casino' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    .typeText(picker.find('input[placeholder="Search icons..."]'), 'dragon')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // the search the user already typed carries over, so the picker opens filtered instead of
+    // making them type it again in a list of thousands of icons
+    .expect(Selector('#symbolPickerOverlay input').value).eql('dragon')
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i.hidden').count).gt(0)
+    // both searches match every term anywhere in the keywords, so a term transferred from the
+    // inline picker finds the same icons here
+    .typeText('#symbolPickerOverlay input', 'head dragon', { replace: true })
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk();
+  await setEditorState(null);
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

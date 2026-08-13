@@ -109,11 +109,13 @@ export async function loadSymbolPicker() {
     $('#symbolList').innerHTML = list;
 
     $('#symbolPickerOverlay input').onkeyup = function() {
-      const text = regexEscape($('#symbolPickerOverlay input').value.toLowerCase());
+      // all terms have to match (in any order), like the property editor's inline icon search - so a term
+      // transferred from there by "Show all" finds the same icons here instead of nothing
+      const terms = $('#symbolPickerOverlay input').value.toLowerCase().split(/\s+/).filter(term => term);
       for(const icon of $a('#symbolList i'))
-        toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
+        toggleClass(icon, 'hidden', !terms.every(term => icon.dataset.keywords.includes(term)));
       for(const title of $a('#symbolList h2'))
-        toggleClass(title, 'hidden', text);
+        toggleClass(title, 'hidden', terms.length > 0);
       // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
       // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
       const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
@@ -126,7 +128,9 @@ export async function loadSymbolPicker() {
   }
 }
 
-export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
+// search prefills the picker's search field, so a picker opened from a place that already has a search term
+// (e.g. the property editor's inline icon picker and its "Show all" button) starts out filtered the same way
+export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true, search='') {
   if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
     $('#statesButton').dataset.overlay = detailsOverlay;
 
@@ -137,8 +141,9 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
     $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
     $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
     $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
-    $('#symbolPickerOverlay input').value = '';
+    $('#symbolPickerOverlay input').value = search;
     $('#symbolPickerOverlay input').focus();
+    $('#symbolPickerOverlay input').select(); // a transferred search term is fully replaced by typing a new one
     $('#symbolPickerOverlay input').onkeyup();
 
     $('#symbolPickerOverlay [icon=close]').onclick = function(e) {

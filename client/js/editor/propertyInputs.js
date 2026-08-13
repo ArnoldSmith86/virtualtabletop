@@ -223,10 +223,10 @@ function iconTypeEnabled(value, enabledTypes) {
 // The full symbol picker is an overlay of its own, so opening it from a picker that sits inside another overlay
 // (e.g. the deck editor's "Add New Deck" dialog) hides that one. Bring that overlay - the one the given element
 // lives in - back afterwards, instead of leaving the user without the dialog they were working in.
-async function pickSymbolKeepingOverlay(element, type='all') {
+async function pickSymbolKeepingOverlay(element, type='all', search='') {
   const hostOverlay = element.closest('.overlay');
   if(!hostOverlay)
-    return await pickSymbol(type);
+    return await pickSymbol(type, true, true, search);
 
   // The deck editor parks the symbol picker inside its card view (see DeckEditor.open), which is not where a
   // dialog floating above the editor wants it: show it where the dialog is and put it back afterwards.
@@ -243,7 +243,7 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   let symbol = null;
   let error = null;
   try {
-    symbol = await pickSymbol(type, true, false);
+    symbol = await pickSymbol(type, true, false, search);
   } catch(e) {
     error = e;
   }
@@ -1427,7 +1427,8 @@ class IconInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbolKeepingOverlay(showAll);
+      // carry the search term over so the big picker starts out filtered to what the user was already looking for
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'all', search.value.trim());
       if(symbol)
         this.setValue(this.valueForChip(symbol.symbol));
     };
@@ -1488,7 +1489,7 @@ class ImageInput extends PickerInput {
     showAll.setAttribute('icon', 'apps');
     showAll.textContent = 'Show all';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbolKeepingOverlay(showAll, 'images');
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'images', search.value.trim());
       if(symbol)
         this.setValue(symbol.url);
     };
