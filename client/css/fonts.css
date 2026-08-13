@@ -470,6 +470,33 @@
   margin-bottom: 20px;
 }
 
+/* a search leaves a slice of ~13000 icons, which the list itself cannot show - a short list looks like a
+   complete one. The status line says how many are left and holds the way back to all of them, so it takes
+   the place of the margin below the search field while it is up. */
+#symbolSearchStatus {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  color: black;
+  margin: 8px 0 12px;
+}
+#symbolPickerOverlay.filtered #symbolSearchStatus {
+  display: flex;
+}
+#symbolPickerOverlay.filtered input,
+#symbolPickerOverlay.filtered.fewResults input {
+  margin-bottom: 0;
+}
+#symbolSearchStatus button {
+  margin: 0;
+  flex-shrink: 0;
+}
+#symbolSearchStatus span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #symbolList {
   --symbolSize: 24px;
   color: black;

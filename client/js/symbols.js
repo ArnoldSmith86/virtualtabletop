@@ -111,21 +111,68 @@ export async function loadSymbolPicker() {
     $('#symbolPickerOverlay input').onkeyup = function() {
       // all terms have to match (in any order), like the property editor's inline icon search - so a term
       // transferred from there by "Show all" finds the same icons here instead of nothing
-      const terms = $('#symbolPickerOverlay input').value.toLowerCase().split(/\s+/).filter(term => term);
-      for(const icon of $a('#symbolList i'))
-        toggleClass(icon, 'hidden', !terms.every(term => icon.dataset.keywords.includes(term)));
-      for(const title of $a('#symbolList h2'))
-        toggleClass(title, 'hidden', terms.length > 0);
+      const search = $('#symbolPickerOverlay input').value;
+      const terms = search.toLowerCase().split(/\s+/).filter(term => term);
       // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
       // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
       const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
                          : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
-      const matches = $a(`#symbolList i:not(.hidden)${hiddenFamily ? `:not([data-family=${hiddenFamily}])` : ''}`).length;
+      // one pass over the list: hide what the search does not match, count what is left, and remember per
+      // category whether anything of it survived
+      let matches = 0;
+      let total = 0;
+      let category = null;
+      let categoryMatches = false;
+      const applyCategory = _=>category && toggleClass(category, 'hidden', !categoryMatches);
+      for(const element of $('#symbolList').children) {
+        if(element.tagName == 'H2') {
+          applyCategory();
+          category = element;
+          categoryMatches = false;
+          continue;
+        }
+        const hidden = !terms.every(term => element.dataset.keywords.includes(term));
+        toggleClass(element, 'hidden', hidden);
+        if(element.dataset.family == hiddenFamily)
+          continue;
+        ++total;
+        if(!hidden) {
+          ++matches;
+          categoryMatches = true;
+        }
+      }
+      // a category heading only goes away once its own section is empty - hiding all of them whenever a
+      // search was active left the results unlabeled, and since "Show all" hands its term over that is now
+      // the state the picker usually opens in. Which library an icon comes from decides how it looks on a
+      // widget, so it is worth keeping visible.
+      applyCategory();
       toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
       toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
-      $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}".`;
+      // a search - typed here or carried over from the inline picker - leaves a slice of ~13000 icons with
+      // nothing on screen saying so, so state how much is left and offer the one click back to all of it.
+      // The count comes first because it is what the narrow layouts keep.
+      toggleClass($('#symbolPickerOverlay'), 'filtered', terms.length > 0);
+      $('#symbolSearchStatus span').textContent = matches
+        ? `${matches} of ${total} ${itemName}s match${matches == 1 ? 'es' : ''} "${search}"` : '';
+      $('#symbolNoResults').textContent = `No ${itemName}s match "${search}".`;
+    };
+
+    $('#symbolSearchStatus button').onclick = function() {
+      $('#symbolPickerOverlay input').value = '';
+      $('#symbolPickerOverlay input').focus();
+      $('#symbolPickerOverlay input').onkeyup();
     };
   }
+}
+
+// the picker is also the image picker (type=='images'), so a user who typed into a field labeled "Search
+// images..." and pressed "Show all" no longer lands in a dialog that calls everything in it an icon
+let itemName = 'icon';
+function setPickerWording(type) {
+  itemName = type == 'images' ? 'image' : 'icon';
+  $('#symbolPickerOverlay h1').textContent = `Pick ${itemName}`;
+  $('#symbolPickerOverlay input').placeholder = `Search ${itemName}s (sword, heart, dice, …)`;
+  $('#symbolSearchStatus button').textContent = `Show all ${itemName}s`;
 }
 
 // search prefills the picker's search field, so a picker opened from a place that already has a search term
@@ -140,10 +187,14 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
     $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
     $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
     $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
+    setPickerWording(type);
     $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
     $('#symbolPickerOverlay input').value = search;
     $('#symbolPickerOverlay input').focus();
-    $('#symbolPickerOverlay input').select(); // a transferred search term is fully replaced by typing a new one
+    // a transferred search term is fully replaced by typing a new one - but on a touch device selecting it
+    // also pops the selection handles and their context bar over the first row of a picker that is short anyway
+    if(!matchMedia('(pointer: coarse)').matches)
+      $('#symbolPickerOverlay input').select();
     $('#symbolPickerOverlay input').onkeyup();
 
     $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
@@ -238,6 +289,7 @@ export function addRichtextControls(dom) {
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
+    setPickerWording('all');
     $('#symbolList').scrollTop = 0;
     for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
       $('#symbolPickerOverlay').classList.remove(c);

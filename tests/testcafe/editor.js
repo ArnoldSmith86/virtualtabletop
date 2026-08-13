@@ -1164,10 +1164,23 @@ test('The inline icon picker hands its search term to the symbol picker', async 
     .expect(searchSelection()).eql({ start: 0, end: 6, focused: true })
     .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
     .expect(Selector('#symbolList i.hidden').count).gt(0)
+    // opening filtered is only helpful if the picker says so: how much of the list is left, and the
+    // way back to all of it - a short list otherwise reads as the whole catalogue
+    .expect(Selector('#symbolSearchStatus').visible).ok()
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons match "dragon"$/)
+    // the results stay grouped by library instead of losing every heading to the search
+    .expect(Selector('#symbolList h2:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList h2.hidden').count).gt(0)
     // both searches match every term anywhere in the keywords, so a term transferred from the
     // inline picker finds the same icons here
     .typeText('#symbolPickerOverlay input', 'head dragon', { replace: true })
     .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    // "Show all icons" empties the search field, which is the whole list back in one click
+    .click('#symbolSearchStatus button')
+    .expect(Selector('#symbolPickerOverlay input').value).eql('')
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .expect(Selector('#symbolList h2.hidden').count).eql(0)
     .click('#symbolPickerOverlay [icon=close]')
     .expect(Selector('#symbolPickerOverlay').visible).notOk()
     // both searches are lowercased, so an icon whose name has uppercase letters ([card_K]) is only
@@ -1207,12 +1220,23 @@ test('The inline image picker hands its search term to the symbol picker', async
     .expect(Selector('#symbolPickerOverlay').hasClass('hideFonts')).ok()
     .expect(Selector('#symbolNoResults').visible).notOk()
     .expect(Selector('#symbolList i:not(.hidden)').filterVisible().count).gt(0)
+    // the same dialog is the image picker here, so it calls what it offers images - the field the term
+    // came from was labeled "Search images..." - and its count leaves the hidden font family out
+    .expect(Selector('#symbolPickerOverlay h1').textContent).eql('Pick image')
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ images match "dragon"$/)
+    .expect(Selector('#symbolSearchStatus button').textContent).eql('Show all images')
     // ...so a term that only font icons answer ends up empty and has to say so
     .typeText('#symbolPickerOverlay input', 'card_k', { replace: true })
     .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolNoResults').textContent).eql('No images match "card_k".')
     .expect(Selector('#symbolList').visible).notOk()
     .click('#symbolPickerOverlay [icon=close]')
-    .expect(Selector('#symbolPickerOverlay').visible).notOk();
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    // ...and the next picker opened from an icon field is an icon picker again
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay h1').textContent).eql('Pick icon')
+    .click('#symbolPickerOverlay [icon=close]');
   await setEditorState(null);
 });
 
