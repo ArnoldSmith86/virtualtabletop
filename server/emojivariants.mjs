@@ -10,7 +10,13 @@ import path from 'path';
 // name parses to rather than passed on as it was read, so nothing but hex digits can end up in it
 // whatever ends up in that directory. That is the same naming the client computes for an emoji
 // (emojiToFilename in client/js/symbols.js), which is how the two sides are compared.
+//
+// This is read once, at startup, so a directory that is not there has to answer "no toned artwork"
+// rather than throw: the flyouts are worth less than the server, and the two files read next to it
+// (shares.json, widgets.json) guard themselves the same way.
 export function readEmojiVariants(directory=path.resolve() + '/assets/noto-emoji') {
+  if(!fs.existsSync(directory))
+    return [];
   return fs.readdirSync(directory)
     .map(file => (file.match(/^emoji_u([0-9a-f]{4,5}(?:_[0-9a-f]{4,5})*)\.svg$/) || [])[1])
     .filter(sequence => sequence && sequence.split('_').some(codePoint => codePoint.match(/^1f3f[b-f]$/)))

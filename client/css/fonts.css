@@ -644,14 +644,17 @@
   overflow-y: auto;
 }
 
-#editor .emojiVariantFlyout {
+/* .inSymbolPicker says the icon the flyout belongs to is one of the overlay's, which stays light
+   wherever the overlay itself is parented - the deck editor moves it into #editor so it shows above
+   the card view, and the flyout of an icon in it must not take the editor's colours for that. */
+#editor .emojiVariantFlyout:not(.inSymbolPicker) {
   background: var(--backgroundColor);
   color: var(--textColor);
   --emojiVariantBorderColor: var(--backgroundHighlightColor1);
   --emojiVariantHelpColor: var(--textHelpColor);
 }
 
-body.edit.darkMode #editor .emojiVariantFlyout {
+body.edit.darkMode #editor .emojiVariantFlyout:not(.inSymbolPicker) {
   --emojiVariantHighlightColor: #1c2c3d;
 }
 

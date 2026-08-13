@@ -64,6 +64,12 @@ describe('emoji skin tone variants', () => {
     expect(available.has(emojiToFilename('👍'))).toBe(false); // untoned forms are not in it
   });
 
+  // this is read once, when the server starts, so a missing artwork directory has to cost the
+  // flyouts rather than the server
+  test('a missing artwork directory means no variants, not an exception', () => {
+    expect(readEmojiVariants(path.join(dir, '../../assets/no-such-directory'))).toEqual([]);
+  });
+
   test('every offered form exists as a file', () => {
     for(const emoji of [ '👍', '☝️', '🤝', '💑', '👫', '🧑‍🤝‍🧑', '🤷', '👩‍❤️‍👨', '🧑‍🦰', '🏋️' ]) {
       const cells = variants(emoji).cells.flat();
@@ -82,8 +88,8 @@ describe('the skin tone flyout', () => {
 
   // the pickers hand a whole container over, not one icon at a time - one set of handlers has to
   // serve every icon in it
-  async function decorate(emojis, onPick=_=>null) {
-    const grid = document.body.appendChild(document.createElement('div'));
+  async function decorate(emojis, onPick=_=>null, parent=document.body) {
+    const grid = parent.appendChild(document.createElement('div'));
     for(const emoji of [].concat(emojis))
       grid.appendChild(document.createElement('i')).dataset.emoji = emoji;
     enableEmojiVariantFlyouts(grid, {
@@ -177,6 +183,27 @@ describe('the skin tone flyout', () => {
 
     await hover(icon);
     expect(flyout()).toBe(first);          // back to the first one: the same box, not a new one
+  });
+
+  // The flyout goes into #editor whenever its icon does, so that a mousedown on it counts as one on
+  // the editor. Its colours cannot follow from that: the deck editor moves the always-light "Pick
+  // icon" overlay into #editor as well (deckeditor.js), and a flyout of an icon in there has to stay
+  // light - which .inSymbolPicker is what tells the stylesheet (fonts.css).
+  test('a flyout of the picker overlay is marked as such wherever the overlay sits', async () => {
+    const editor = document.body.appendChild(document.createElement('div'));
+    editor.id = 'editor';
+    const overlay = editor.appendChild(document.createElement('div'));
+    overlay.id = 'symbolPickerOverlay';
+
+    const [ pickerIcon ] = await decorate('👍', _=>null, overlay);
+    await hover(pickerIcon);
+    expect(flyout().parentNode).toBe(editor);
+    expect(flyout().classList.contains('inSymbolPicker')).toBe(true);
+
+    const [ sidebarIcon ] = await decorate('👎', _=>null, editor); // a chip of the editor sidebar
+    await hover(sidebarIcon);
+    expect(flyout().parentNode).toBe(editor);
+    expect(flyout().classList.contains('inSymbolPicker')).toBe(false);
   });
 
   test('leaving the icon closes the flyout after the grace period', async () => {

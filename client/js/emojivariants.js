@@ -249,6 +249,12 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
   // selection rectangle, and letting go of it would clear the selection the picker is editing.
   (element.closest('#editor') || $('body')).appendChild(dom);
 
+  // Where the flyout lives and which colours it wears are two different questions. The fullscreen
+  // "Pick icon" overlay is always light, but the deck editor parks it inside #editor so it shows
+  // above the card view (deckeditor.js) - so "inside #editor" alone would paint the flyout of a
+  // picker icon in the editor's dark colours on top of that white overlay.
+  dom.classList.toggle('inSymbolPicker', !!element.closest('#symbolPickerOverlay'));
+
   // Beside the icon whenever there is room, because a box dropped below it covers the very rows of
   // the grid that are being scanned - and in the sidebar the search field just typed into. Both
   // edges are clamped into the viewport: a 5x5 matrix is 250px tall and neither fits above nor

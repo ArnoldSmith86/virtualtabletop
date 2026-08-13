@@ -1134,6 +1134,67 @@ test('The symbol picker says an image-only search found nothing', async t => {
   await setEditorState(null);
 });
 
+// Where the skin tone flyout (client/js/emojivariants.js) is put and which colours it takes are
+// decided against the real page, and that is where its bugs have been: a box that hung off the
+// viewport, and the editor's dark colours on top of the always-light "Pick icon" overlay. jsdom sees
+// neither, so the two live here. The flyout goes into #editor whenever its icon does - the deck
+// editor moves the overlay in there as well, which is what made the colours go wrong.
+const flyoutAppearance = ClientFunction(() => {
+  const flyout = document.querySelector('.emojiVariantFlyout');
+  const box = flyout.getBoundingClientRect();
+  return {
+    parent: flyout.parentNode.id,
+    background: getComputedStyle(flyout).backgroundColor,
+    onScreen: box.left >= 0 && box.top >= 0 && box.right <= window.innerWidth && box.bottom <= window.innerHeight
+  };
+});
+const overlayBackground = ClientFunction(() => getComputedStyle(document.querySelector('#symbolPickerOverlay')).backgroundColor);
+const setDarkMode = ClientFunction(() => document.querySelector('body').classList.add('darkMode'));
+
+test('The skin tone flyout takes the colours of the picker it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+  await setDarkMode();
+
+  // the sidebar's chips are part of the editor, so their flyout is dark along with it
+  await t
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+    .hover(Selector('.propertyValueChip.hasEmojiVariants').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(8, 9, 10)', onScreen: true })
+    .click(Selector('.iconInput .propertyPreviewButton'))   // closes the picker, and the flyout with it
+    .expect(Selector('.emojiVariantFlyout').exists).notOk();
+
+  // the fullscreen picker is white wherever it is parented, and the deck editor parents it inside
+  // #editor - so the flyout of one of its icons has to stay white too
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#topSurface', { offsetX: 10, offsetY: 10 })
+    .click('#editorToolbar [icon=style]')
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorAddIcon')
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(overlayBackground()).eql('rgb(255, 255, 255)')
+    .typeText('#symbolPickerOverlay input', 'thumbs')
+    .hover(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(255, 255, 255)', onScreen: true })
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();
