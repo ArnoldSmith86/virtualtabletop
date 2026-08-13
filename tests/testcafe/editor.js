@@ -1144,6 +1144,11 @@ test('The inline icon picker hands its search term to the symbol picker', async 
   await setName(t);
 
   const picker = Selector('.propertyPicker').filterVisible();
+  // the transferred term is selected, so typing a different search replaces it instead of appending to it
+  const searchSelection = ClientFunction(() => {
+    const input = document.querySelector('#symbolPickerOverlay input');
+    return { start: input.selectionStart, end: input.selectionEnd, focused: document.activeElement == input };
+  });
 
   await t
     .click('#editButton')
@@ -1156,12 +1161,56 @@ test('The inline icon picker hands its search term to the symbol picker', async 
     // the search the user already typed carries over, so the picker opens filtered instead of
     // making them type it again in a list of thousands of icons
     .expect(Selector('#symbolPickerOverlay input').value).eql('dragon')
+    .expect(searchSelection()).eql({ start: 0, end: 6, focused: true })
     .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
     .expect(Selector('#symbolList i.hidden').count).gt(0)
     // both searches match every term anywhere in the keywords, so a term transferred from the
     // inline picker finds the same icons here
     .typeText('#symbolPickerOverlay input', 'head dragon', { replace: true })
     .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    // both searches are lowercased, so an icon whose name has uppercase letters ([card_K]) is only
+    // found on both sides if the picker's keyword index is lowercased as well
+    .typeText(picker.find('input[placeholder="Search icons..."]'), 'card_k', { replace: true })
+    .expect(picker.find('.propertyValueChip[data-value="[card_K]"]').exists).ok()
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolList i:not(.hidden)').count).eql(1)
+    .expect(Selector('#symbolList i:not(.hidden)').getAttribute('data-symbol')).eql('[card_K]')
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+test('The inline image picker hands its search term to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .typeText(picker.find('input[placeholder="Search images..."]'), 'dragon')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolPickerOverlay input').value).eql('dragon')
+    // this picker offers images only, so the transferred term is narrowed by the search and by the
+    // font family hidden in CSS - the result counters have to agree with both
+    .expect(Selector('#symbolPickerOverlay').hasClass('hideFonts')).ok()
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList i:not(.hidden)').filterVisible().count).gt(0)
+    // ...so a term that only font icons answer ends up empty and has to say so
+    .typeText('#symbolPickerOverlay input', 'card_k', { replace: true })
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolList').visible).notOk()
     .click('#symbolPickerOverlay [icon=close]')
     .expect(Selector('#symbolPickerOverlay').visible).notOk();
   await setEditorState(null);
