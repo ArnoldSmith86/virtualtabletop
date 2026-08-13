@@ -1,5 +1,5 @@
 import { $, asArray } from "./domhelpers";
-import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout } from "./emojivariants";
+import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout, collapseEmojiVariants, expandEmojiVariants, loadEmojiVariants } from "./emojivariants";
 
 export function emojiToFilename(emoji) {
   return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
@@ -65,6 +65,25 @@ function symbolName(icon) {
   return (icon.dataset.keywords.split(',')[1] || '').replace(/_/g, ' ');
 }
 
+// How long the list may get for the skin tones to be put into it instead of behind a hover of their
+// own: a search this narrow is a handful of rows, and a flyout per icon is then more work to open
+// than the whole result is to read. It fits the largest set an icon has (a 5x5 matrix is 25 forms)
+// twice over, so the single icon a search is often meant to find always shows what it offers.
+const inlineVariantLimit = 50;
+
+// A toned form put into the grid is a copy of the icon it belongs to - same category, same family,
+// same keywords - so the picker's own click handling, its search and its previews treat it as one
+// of its icons. Only what it shows and what it stands for differ.
+function inlineVariantIcon(icon, variant, description) {
+  const inline = icon.cloneNode(false);
+  inline.classList.remove('hasEmojiVariants');
+  inline.dataset.symbol = variant;
+  inline.textContent = variant;
+  inline.title = `${icon.dataset.type}: ${variant} (${description})`;
+  inline.style.setProperty('--url', `url('i/noto-emoji/emoji_u${emojiToFilename(variant)}.svg')`);
+  return inline;
+}
+
 let symbolData = null;
 export async function loadSymbolPicker() {
   if(symbolData === null) {
@@ -117,6 +136,7 @@ export async function loadSymbolPicker() {
 
     $('#symbolPickerOverlay input').onkeyup = function() {
       const text = regexEscape($('#symbolPickerOverlay input').value.toLowerCase());
+      collapseEmojiVariants($('#symbolList')); // the forms of the last search are icons of the grid too
       for(const icon of $a('#symbolList i'))
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h2'))
@@ -129,7 +149,24 @@ export async function loadSymbolPicker() {
       toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
       toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
       $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}".`;
+      // A picker restricted to fonts hides the emoji in CSS rather than with .hidden, which the
+      // selector cannot see - and a result nowhere near short enough is not asked for its emoji at
+      // all, because that question is another pass over the whole grid on every keystroke.
+      const emojiIcons = hiddenFamily != 'image' && matches <= inlineVariantLimit
+                       ? $a('#symbolList i[data-type=emoji-color]:not(.hidden)') : [];
+      expandEmojiVariants($('#symbolList'), emojiIcons, {
+        emoji: icon=>icon.dataset.symbol,
+        create: inlineVariantIcon,
+        budget: inlineVariantLimit - matches
+      });
     };
+
+    // the forms come from a list of their own, fetched next to this one - a search that ran before
+    // it arrived puts them in as soon as it does instead of waiting for the next keystroke
+    loadEmojiVariants().then(_=>{
+      if($('#symbolPickerOverlay input').value)
+        $('#symbolPickerOverlay input').onkeyup();
+    }, _=>null);
   }
 }
 

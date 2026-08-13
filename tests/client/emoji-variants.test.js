@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { jest } from '@jest/globals'; // the ES module build has no globals of its own
 
-import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout, emojiSkinToneVariants } from '../../client/js/emojivariants.js';
+import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout, emojiSkinToneVariants, collapseEmojiVariants, expandEmojiVariants, loadEmojiVariants } from '../../client/js/emojivariants.js';
 import { emojiToFilename } from '../../client/js/symbols.js';
 import { readEmojiVariants } from '../../server/emojivariants.mjs';
 
@@ -340,5 +340,125 @@ describe('the skin tone flyout', () => {
     await jest.advanceTimersByTimeAsync(1000);
     document.querySelector('button').click();
     expect(clicked).toHaveBeenCalledTimes(1);
+  });
+});
+
+// The flyout is what a grid of 13000 icons needs; a search that has narrowed it down to a handful
+// puts the forms into the grid itself instead (see the search handler in client/js/symbols.js).
+describe('the toned forms in the grid itself', () => {
+  const inline = (root=document) => [ ...root.querySelectorAll('.emojiVariantInline') ];
+  const symbols = _=>[ ...document.querySelectorAll('i') ].map(icon => icon.dataset.symbol);
+
+  // the picker copies the icon a form belongs to, so that its own click handling and its search
+  // treat the form as one of its icons
+  const create = (icon, form, description) => {
+    const element = icon.cloneNode(false);
+    element.dataset.symbol = form;
+    element.title = description;
+    return element;
+  };
+  const expand = (grid, budget=50) => expandEmojiVariants(grid, grid.querySelectorAll('i'), {
+    emoji: icon=>icon.dataset.symbol,
+    create,
+    budget
+  });
+
+  function gridOf(emojis) {
+    const grid = document.body.appendChild(document.createElement('div'));
+    for(const emoji of [].concat(emojis))
+      grid.appendChild(document.createElement('i')).dataset.symbol = emoji;
+    return grid;
+  }
+
+  // an argument would be taken for jest's done() callback, so these have to be written out
+  beforeAll(async () => {
+    globalThis.fetch = async _=>({ json: async _=>variantList });
+    await loadEmojiVariants();
+  });
+
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  test('the five tones of an emoji follow the icon they belong to', () => {
+    const grid = gridOf([ '👍', '👎' ]);
+    expect(expand(grid)).toBe(true);
+    expect(symbols()).toEqual([ '👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿', '👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿' ]);
+    expect(inline().length).toBe(10);
+    expect(grid.classList.contains('emojiVariantsExpanded')).toBe(true);
+  });
+
+  test('a form says which tone it stands for', () => {
+    const row = gridOf('👍');
+    expand(row);
+    expect(inline(row)[2].title).toBe('Medium skin tone');
+
+    const matrix = gridOf('🤝');
+    expand(matrix);
+    expect(inline(matrix)[4].title).toBe('Light + Dark skin tone');
+  });
+
+  test('an emoji that can be toned twice goes in as its whole matrix', () => {
+    const grid = gridOf('🤝');
+    expect(expand(grid)).toBe(true);
+    expect(inline().length).toBe(25);
+    expect(symbols()[5]).toBe('🫱🏻‍🫲🏿');
+  });
+
+  test('an emoji without toned artwork is left as it is', () => {
+    const grid = gridOf([ '😀', '🏳️‍🌈' ]);
+    expect(expand(grid)).toBe(false);
+    expect(inline().length).toBe(0);
+    expect(grid.classList.contains('emojiVariantsExpanded')).toBe(false);
+  });
+
+  // all of them or none: a grid where some of the emoji show their tones and others only hint at
+  // them says nothing about which is which
+  test('a result too long for the budget keeps every one of its forms out', () => {
+    const grid = gridOf([ '👍', '👎', '🤝' ]);
+    expect(expand(grid, 25)).toBe(false);
+    expect(inline().length).toBe(0);
+    expect(expand(grid, 35)).toBe(true);
+    expect(inline().length).toBe(35);
+  });
+
+  test('expanding again replaces the forms instead of stacking another set on them', () => {
+    const grid = gridOf('👍');
+    expand(grid);
+    expand(grid);
+    expect(inline().length).toBe(5);
+  });
+
+  test('collapsing takes the forms back out of the grid', () => {
+    const grid = gridOf([ '👍', '😀' ]);
+    expand(grid);
+    collapseEmojiVariants(grid);
+    expect(symbols()).toEqual([ '👍', '😀' ]);
+    expect(grid.classList.contains('emojiVariantsExpanded')).toBe(false);
+  });
+
+  test('an icon whose forms are in the grid opens no flyout, and opens one again once they are gone', async () => {
+    jest.useFakeTimers();
+    const grid = gridOf('👍');
+    enableEmojiVariantFlyouts(grid, {
+      selector: 'i',
+      emoji: icon=>icon.dataset.symbol,
+      onPick: _=>null,
+      label: _=>'thumbs up'
+    });
+    await jest.advanceTimersByTimeAsync(0);
+    const icon = grid.firstChild;
+    expand(grid);
+
+    icon.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
+    await jest.advanceTimersByTimeAsync(450);
+    expect(document.querySelector('.emojiVariantFlyout')).toBe(null);
+
+    collapseEmojiVariants(grid);
+    icon.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
+    await jest.advanceTimersByTimeAsync(450);
+    expect(document.querySelector('.emojiVariantFlyout')).not.toBe(null);
+    closeEmojiVariantFlyout();
+    jest.useRealTimers();
   });
 });

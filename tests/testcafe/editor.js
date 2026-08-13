@@ -1187,11 +1187,62 @@ test('The skin tone flyout takes the colours of the picker it belongs to', async
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
     .expect(overlayBackground()).eql('rgb(255, 255, 255)')
-    .typeText('#symbolPickerOverlay input', 'thumbs')
+    // wide enough for the forms to stay in the flyout: a search this one could show in the list
+    // itself has no flyout to take the colours of (see the test below)
+    .typeText('#symbolPickerOverlay input', 'hand')
     .hover(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
     .expect(Selector('.emojiVariantFlyout').exists).ok()
     .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(255, 255, 255)', onScreen: true })
     .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+// Which searches are narrow enough for their skin tones to go into the list itself is decided
+// against the real icon list - 13288 icons, none of which jsdom has.
+const widgetIcon = ClientFunction(() => JSON.stringify(widgets.get('w').get('icon')));
+const inlineForms = ClientFunction(() => ({
+  forms: document.querySelectorAll('#symbolList .emojiVariantInline:not(.hidden)').length,
+  expanded: document.querySelector('#symbolList').classList.contains('emojiVariantsExpanded'),
+  marker: getComputedStyle(document.querySelector('#symbolList i.hasEmojiVariants:not(.hidden)'), '::after').display
+}));
+
+test('A search narrow enough shows the skin tones in the icon list itself', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+    .click(Selector('.propertyPicker button[icon=apps]'))                  // "Show all"
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+
+    // both thumbs and their five tones each, the corner marker gone because nothing is left for it
+    // to point at - and hovering one of them opens no flyout on top of what is already on screen
+    .typeText('#symbolPickerOverlay input', 'thumbs')
+    .expect(inlineForms()).eql({ forms: 10, expanded: true, marker: 'none' })
+    .hover(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .wait(900)
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
+
+    // a search that would fill the list with them keeps them out, and keeps the flyout
+    .typeText('#symbolPickerOverlay input', 'hand', { replace: true })
+    .expect(inlineForms()).eql({ forms: 0, expanded: false, marker: 'block' })
+    .hover(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+
+    // and a form in the list is picked like any other icon of it
+    .typeText('#symbolPickerOverlay input', 'victory', { replace: true })
+    .expect(inlineForms()).eql({ forms: 5, expanded: true, marker: 'none' })
+    .click(Selector('#symbolList .emojiVariantInline').nth(4))
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    .expect(widgetIcon()).contains('✌🏿');
   await setEditorState(null);
 });
 

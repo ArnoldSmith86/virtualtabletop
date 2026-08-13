@@ -60,6 +60,14 @@ function emojiVariantGrid(base, selected, cells, twoDimensional) {
   };
 }
 
+// what a single form stands for - a cell of the 5x5 matrix combines two tones, and its emoji alone
+// ("🤝🏻") tells a reader nothing
+function emojiVariantDescription(variants, rowIndex, columnIndex) {
+  return variants.twoDimensional
+    ? `${variants.toneLabels[rowIndex]} + ${variants.toneLabels[columnIndex]} skin tone`
+    : `${variants.toneLabels[columnIndex]} skin tone`;
+}
+
 // An emoji that already carries a tone - one a game is using, or one just picked - offers the same
 // set as the untoned form it was made from, so that a tone can be changed as well as chosen. The
 // mixed forms are not made by adding modifiers, so they are looked up in the table above instead.
@@ -144,6 +152,13 @@ function emojiVariants(emoji) {
   return emojiVariantCache.get(emoji);
 }
 
+// the toned forms of an emoji as { emoji, description }, in the order the flyout lists them
+function emojiSkinToneForms(emoji) {
+  const variants = emojiVariants(emoji);
+  return variants && variants.cells.flatMap((row, rowIndex) => row.map((form, columnIndex) =>
+    ({ emoji: form, description: emojiVariantDescription(variants, rowIndex, columnIndex) })));
+}
+
 // The one flyout that can be open, as { anchor, close, scheduleClose, cancelClose }: hovering
 // another marked icon replaces it, and everything that dismisses it goes through here.
 let activeEmojiVariantFlyout = null;
@@ -211,13 +226,13 @@ function buildEmojiVariantFlyout(variants) {
     variants.cells.forEach((row, rowIndex) => {
       div(matrix, 'emojiVariantHeader emojiVariantRowHeader', html(variants.toneLabels[rowIndex]));
       row.forEach((variant, columnIndex) => emojiVariantCell(matrix, 'emojiVariantCell', variant, null,
-        `${variants.toneLabels[rowIndex]} + ${variants.toneLabels[columnIndex]} skin tone`));
+        emojiVariantDescription(variants, rowIndex, columnIndex)));
     });
   } else {
     const row = div(dom, 'emojiVariantRow');
     emojiVariantCell(row, 'emojiVariantCell emojiVariantBase', variants.base, 'No tone', 'No skin tone');
     variants.cells[0].forEach((variant, index) => emojiVariantCell(row, 'emojiVariantCell', variant,
-      variants.toneLabels[index], `${variants.toneLabels[index]} skin tone`));
+      variants.toneLabels[index], emojiVariantDescription(variants, 0, index)));
   }
 
   return { dom, title, cells: [ ...dom.querySelectorAll('.emojiVariantCell') ] };
@@ -363,7 +378,9 @@ export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, 
 
   loadEmojiVariants().then(_=>{
     for(const element of container.querySelectorAll(selector))
-      if(!element.classList.contains('hasEmojiVariants') && emojiVariants(emoji(element))) {
+      // a form already sitting in the grid (expandEmojiVariants) is one of these icons itself, and
+      // has nothing left to offer beyond what is next to it
+      if(!element.matches('.hasEmojiVariants, .emojiVariantInline') && emojiVariants(emoji(element))) {
         element.classList.add('hasEmojiVariants');
         // the corner triangle is the only sign that the icon has more to offer, and on touch there
         // is no hover to stumble over it with - so the icon says what it means
@@ -375,9 +392,13 @@ export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, 
     let swallowTimer = null;
     let swallowFor = null;
 
-    // a chip holds the glyph it shows, so the marked icon is what the pointer is over, not the
-    // element the event happens to have started on
-    const markedIcon = target => target && target.closest ? target.closest('.hasEmojiVariants') : null;
+    // A chip holds the glyph it shows, so the marked icon is what the pointer is over, not the
+    // element the event happens to have started on. A container that has put the forms into itself
+    // (expandEmojiVariants) opens nothing: the flyout would only cover what is already on screen.
+    const markedIcon = target => {
+      const element = target && target.closest ? target.closest('.hasEmojiVariants') : null;
+      return element && !element.closest('.emojiVariantsExpanded') ? element : null;
+    };
 
     const open = element=>{
       const variants = element.isConnected && emojiVariants(emoji(element));
@@ -441,4 +462,45 @@ export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, 
     };
     container.ontouchend = container.ontouchmove = container.ontouchcancel = _=>clearTimeout(openTimer);
   }).catch(_=>null);
+}
+
+// The forms a container has put into itself. They are icons of that container like any other, so
+// whoever filters, counts or rebuilds it has to be able to take them back out first.
+export function collapseEmojiVariants(container) {
+  for(const element of container.querySelectorAll('.emojiVariantInline'))
+    element.remove();
+  container.classList.remove('emojiVariantsExpanded');
+}
+
+// A flyout is what a grid of 13000 icons needs, but once a search has narrowed it down to a handful
+// the toned forms are better off in the grid itself than behind a hover of their own - so the
+// fullscreen picker puts them there (symbols.js) as long as the result still takes in at a glance.
+//   icons  - the icons that may carry an emoji, in the order they are shown
+//   emoji(icon)                       - the one it shows
+//   create(icon, form, description)   - the element for one form, placed after the icon it belongs to
+//   budget - how many icons may be added before the result is too long to be worth reading
+// All of them or none: a grid where some of the emoji show their tones and others only hint at them
+// says nothing about which is which.
+export function expandEmojiVariants(container, icons, { emoji, create, budget }) {
+  collapseEmojiVariants(container);
+
+  const expanded = [];
+  for(const icon of icons) {
+    const forms = emojiSkinToneForms(emoji(icon));
+    if(!forms)
+      continue;
+    budget -= forms.length;
+    if(budget < 0)
+      return false;
+    expanded.push([ icon, forms ]);
+  }
+
+  for(const [ icon, forms ] of expanded)
+    icon.after(...forms.map(form => {
+      const element = create(icon, form.emoji, form.description);
+      element.classList.add('emojiVariantInline');
+      return element;
+    }));
+  container.classList.toggle('emojiVariantsExpanded', expanded.length > 0);
+  return expanded.length > 0;
 }
