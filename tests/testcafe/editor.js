@@ -1250,14 +1250,26 @@ test('A search narrow enough shows the skin tones in the icon list itself', asyn
 // (and, through the same control, the picker of a deck editor property row). Its limit is the
 // number of icons the search shows at all, so which searches fit is decided by the real index here
 // as well - "woman" has more matches than it can show, "thumbs" has eighteen.
+// The gap that separates a run of forms is one whole chip wide, because these chips are a wrapped
+// grid: a gap of any other width puts every row after the group out of the columns of the ones
+// above it, which is the list looking broken over one space (offColumn counts the chips that are
+// not on the pitch).
 const inlineChips = ClientFunction(() => {
   const lists = document.querySelectorAll('.propertyPickerChips');
   const results = lists[lists.length-1];
   const marked = results.querySelector('.hasEmojiVariants');
+  const chips = results.querySelectorAll('.propertyValueChip');
+  const left = results.getBoundingClientRect().left;
+  const pitch = chips.length ? Math.round(chips[0].getBoundingClientRect().width) + 4 : 1;
+  let offColumn = 0;
+  for(let i = 0; i < chips.length; ++i)
+    if(Math.round(chips[i].getBoundingClientRect().left - left) % pitch)
+      ++offColumn;
   return {
     forms: results.querySelectorAll('.emojiVariantInline').length,
     expanded: results.classList.contains('emojiVariantsExpanded'),
-    marker: marked ? getComputedStyle(marked, '::after').display : 'no marked chip'
+    marker: marked ? getComputedStyle(marked, '::after').display : 'no marked chip',
+    offColumn
   };
 });
 const markedResultChip = Selector('.propertyPickerChips').nth(-1).find('.propertyValueChip.hasEmojiVariants').nth(0);
@@ -1279,7 +1291,7 @@ test('A search narrow enough shows the skin tones in the sidebar icon picker its
 
     // both thumbs and their five tones each, and nothing left for the corner marker to point at
     .typeText(Selector('input[placeholder="Search icons..."]'), 'thumbs')
-    .expect(inlineChips()).eql({ forms: 10, expanded: true, marker: 'none' })
+    .expect(inlineChips()).eql({ forms: 10, expanded: true, marker: 'none', offColumn: 0 })
     .hover(markedResultChip)
     .wait(900)
     .expect(Selector('.emojiVariantFlyout').exists).notOk()
@@ -1287,13 +1299,13 @@ test('A search narrow enough shows the skin tones in the sidebar icon picker its
     // a search the picker already cuts off has more to show than its tones, so they stay behind
     // the flyout there
     .typeText(Selector('input[placeholder="Search icons..."]'), 'woman', { replace: true })
-    .expect(inlineChips()).eql({ forms: 0, expanded: false, marker: 'block' })
+    .expect(inlineChips()).eql({ forms: 0, expanded: false, marker: 'block', offColumn: 0 })
     .hover(markedResultChip)
     .expect(Selector('.emojiVariantFlyout').exists).ok()
 
     // and a form in the list is picked like any other chip of it
     .typeText(Selector('input[placeholder="Search icons..."]'), 'victory', { replace: true })
-    .expect(inlineChips()).eql({ forms: 5, expanded: true, marker: 'none' })
+    .expect(inlineChips()).eql({ forms: 5, expanded: true, marker: 'none', offColumn: 0 })
     .click(Selector('.propertyPickerChips').nth(-1).find('.emojiVariantInline').nth(4))
     .expect(widgetIcon()).contains('✌🏿');
   await setEditorState(null);

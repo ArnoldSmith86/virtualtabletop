@@ -623,8 +623,11 @@
 .emojiVariantsExpanded .hasEmojiVariants::after {
   display: none;
 }
-.emojiVariantsExpanded .hasEmojiVariants,
-.emojiVariantsExpanded .emojiVariantInline + :not(.emojiVariantInline) {
+/* The gap is per list: the icons of the overlay grid have no box around them, so 20px of air is
+   what separates a run there, while the chips of the sidebar are a grid of bordered squares whose
+   columns a gap of that width would break (editor/propertyInputs.css). */
+#symbolList.emojiVariantsExpanded .hasEmojiVariants,
+#symbolList .emojiVariantInline + i:not(.emojiVariantInline) {
   margin-left: 20px;
 }
 
