@@ -168,15 +168,45 @@ describe('what each layout derives for the holder', () => {
     expect(holder.get('preventPiles')).toBe(true);
     expect(holder.get('allowPiles')).toBe(false);
   });
+
+  test('auto only allows piles while the holder fits just one card', () => {
+    const big = createHolder({ id: 'big', width: 600, height: 300 });
+    createCard('bigc', { parent: 'big', z: 1 });
+    expect(big.get('allowPiles')).toBe(false);
+    const small = createHolder({ id: 'small', width: 120, height: 120 });
+    createCard('smallc', { parent: 'small', z: 1 });
+    expect(small.get('allowPiles')).toBe(true);
+    // an empty holder has no card to measure against, so it starts out the
+    // classic way - the first drop decides
+    expect(createHolder({ id: 'empty', width: 600, height: 300 }).get('allowPiles')).toBe(true);
+  });
+
+  test('allowPiles: false written on an auto holder turns piles off without switching auto off', () => {
+    const holder = createHolder({ id: 'h', width: 120, height: 120, allowPiles: false });
+    createCard('c1', { parent: 'h', z: 1 });
+    expect(holder.usesAutoLayout()).toBe(true);
+    expect(holder.get('allowPiles')).toBe(false);
+  });
 });
 
 describe('when the auto layout applies', () => {
-  test('it steps aside while any classic arrangement property is written', () => {
+  test('it steps aside while any classic arrangement property is written to a non-default value', () => {
     for(const deferring of [ { stackOffsetX: 40 }, { dropOffsetY: 10 }, { alignChildren: false }, { preventPiles: true }, { allowPiles: true }, { pilesGapX: 20 }, { spreadMin: 3 } ]) {
       const holder = createHolder({ id: 'h', ...deferring });
       expect(holder.get('layout')).toBe('auto');
       expect(holder.effectiveLayout()).toBe('custom');
       expect(holder.usesAutoLayout()).toBe(false);
+      removeWidget('h');
+    }
+  });
+
+  test('a written value that equals the classic default was a no-op classically, so it stays one', () => {
+    // writing allowPiles: false (or any other default) into a classic holder
+    // changed nothing - so it does not switch the auto layout off either
+    for(const harmless of [ { allowPiles: false }, { stackOffsetX: 0 }, { alignChildren: true }, { preventPiles: false }, { dropOffsetX: 4 } ]) {
+      const holder = createHolder({ id: 'h', ...harmless });
+      expect(holder.effectiveLayout()).toBe('auto');
+      expect(holder.usesAutoLayout()).toBe(true);
       removeWidget('h');
     }
   });
@@ -200,6 +230,12 @@ describe('when the auto layout applies', () => {
     expect(holder.get('stackOffsetX')).toBe(40);
     expect(holder.effectiveLayout()).toBe('custom');
     expect(holder.usesAutoLayout()).toBe(false);
+  });
+
+  test('but an inherited value that equals the classic default leaves auto in charge', () => {
+    createHolder({ id: 'template', allowPiles: false });
+    const holder = createHolder({ id: 'h', width: 600, height: 300, inheritFrom: 'template' });
+    expect(holder.usesAutoLayout()).toBe(true);
   });
 });
 
@@ -260,15 +296,39 @@ describe('the auto layout arranging its children', () => {
     expect(positionsByZ(holder)).toEqual([ [ 58, 58 ], [ 162, 58 ], [ 58, 162 ], [ 162, 162 ] ]);
   });
 
-  test('a pile dropped in survives as a group and gets the room of one entry', async () => {
+  test('a pile in a holder with the room to spread is emptied out, one card per slot', async () => {
     const holder = createHolder({ id: 'h', width: 600, height: 120 });
     await createPile('group', holder, 4, 4, 3);
     createCard('loose', { parent: 'h', z: 10 });
     await holder.updateAfterShuffle();
-    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);
-    // two entries, both in the row - and children() still counts the cards
-    expect(holder.arrangedChildren().length).toBe(2);
+    // a spreading auto layout allows no piles, so the group became loose cards
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
     expect(holder.children().length).toBe(4);
+    expect(holder.children().every(c=>c.get('parent') == 'h')).toBe(true);
+    // all four of them lined up in the centered row
+    const xs = holder.arrangedChildren().map(c=>c.get('x')).sort((a, b)=>a - b);
+    expect(xs).toEqual([ 94, 198, 302, 406 ]);
+  });
+
+  test('a holder without the room to spread keeps a pile and centers it', async () => {
+    const holder = createHolder({ id: 'h', width: 120, height: 120 });
+    await createPile('group', holder, 4, 4, 3);
+    await holder.updateAfterShuffle();
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);
+    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ] ]);
+    // children() still counts the cards inside it
+    expect(holder.children().length).toBe(3);
+  });
+
+  test('growing such a holder past one card empties the pile onto the row', async () => {
+    const holder = createHolder({ id: 'h', width: 120, height: 120 });
+    await createPile('group', holder, 10, 10, 3);
+    await holder.updateAfterShuffle();
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);
+    await holder.set('width', 600);
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    expect(holder.children().length).toBe(3);
+    expect(holder.children().every(c=>c.get('parent') == 'h')).toBe(true);
   });
 
   test('shrinking the holder gathers everything in the middle without forming a pile', async () => {
@@ -304,64 +364,44 @@ describe('the auto layout arranging its children', () => {
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
   });
 
-  test('a pile fanning its own cards is centered by its whole spread', async () => {
-    const holder = createHolder({ id: 'h', width: 600, height: 300 });
-    const pile = new Pile('fan');
-    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, width: 103, height: 160, stackOffsetY: 40 }, pile);
-    for(let i=0; i<3; ++i)
-      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1, width: 103, height: 160 });
-    await pile.arrangeChildren(false);
-    await holder.updateAfterShuffle();
-    expect(pile.spreadExtent('Y')).toBe(240);
-    expect(pile.get('y')).toBe(30);
-    expect(pile.get('y') + pile.spreadExtent('Y')).toBeLessThanOrEqual(300);
-  });
-
-  test('a wide fan at the end of a row squishes the row instead of spilling out', async () => {
+  test('a wide card at the end of a row squishes the row instead of spilling out', async () => {
     const holder = createHolder({ id: 'h', width: 380, height: 140 });
     createCard('c0', { parent: 'h', z: 1 });
     createCard('c1', { parent: 'h', z: 2 });
-    const pile = new Pile('fan');
-    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, z: 5, width: 100, height: 100, stackOffsetX: 40 }, pile);
-    for(let i=0; i<3; ++i)
-      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1 });
-    await pile.arrangeChildren(false);
+    createCard('wide', { parent: 'h', z: 3, width: 180 });
     await holder.updateAfterShuffle();
-    expect(pile.spreadExtent('X')).toBe(180);
+    // the row is measured against each entry's own extent, so the wide card
+    // gets the room it needs and everything before it packs closer
     expect(positionsByZ(holder)).toEqual([ [ 4, 20 ], [ 100, 20 ], [ 196, 20 ] ]);
-    expect(pile.get('x') + pile.spreadExtent('X')).toBeLessThanOrEqual(380);
+    expect(widgets.get('wide').get('x') + 180).toBeLessThanOrEqual(380);
   });
 
-  test('a wide fan in the middle of a row stays inside the holder as well', async () => {
-    const holder = createHolder({ id: 'h', width: 600, height: 120 });
-    createCard('c0', { parent: 'h', z: 1 });
-    const pile = new Pile('fan');
-    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, z: 2, width: 100, height: 100, stackOffsetX: 40 }, pile);
-    for(let i=0; i<12; ++i)
-      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1 });
-    createCard('c1', { parent: 'h', z: 10 });
-    await pile.arrangeChildren(false);
+  test('a wide card among many stays inside the holder even when it is not the last', async () => {
+    const holder = createHolder({ id: 'h', width: 500, height: 120 });
+    for(let i=0; i<8; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    createCard('wide', { parent: 'h', z: 9, width: 250 });
+    createCard('last', { parent: 'h', z: 10 });
     await holder.updateAfterShuffle();
-    // the fan is the widest entry but not the last: the content box has to be
-    // measured to its far edge, not the last card's
-    expect(pile.spreadExtent('X')).toBe(540);
-    expect(positionsByZ(holder)).toEqual([ [ 4, 10 ], [ 56, 10 ], [ 328, 10 ] ]);
-    expect(pile.get('x') + pile.spreadExtent('X')).toBeLessThanOrEqual(600);
+    // the wide entry ends further right than the last one, so the content box
+    // has to be measured to its far edge, not the last entry's
+    for(const c of holder.arrangedChildren())
+      expect(c.get('x') + c.get('width')).toBeLessThanOrEqual(500);
+    expect(Math.min(...holder.arrangedChildren().map(c=>c.get('x')))).toBe(4);
+    expect(widgets.get('wide').get('x') + 250).toBe(496);
   });
 
-  test('a tall fan in the middle of a column stays inside the holder', async () => {
-    const holder = createHolder({ id: 'h', width: 140, height: 214 });
-    createCard('c0', { parent: 'h', z: 1 });
-    const pile = new Pile('fan');
-    addWidget({ id: 'fan', type: 'pile', parent: 'h', x: 4, y: 4, z: 2, width: 100, height: 100, stackOffsetY: 40 }, pile);
-    for(let i=0; i<3; ++i)
-      createCard(`fan-card-${i}`, { parent: 'fan', z: i+1 });
-    createCard('c1', { parent: 'h', z: 10 });
-    await pile.arrangeChildren(false);
+  test('a tall card among many stays inside a column the same way', async () => {
+    const holder = createHolder({ id: 'h', width: 140, height: 500 });
+    for(let i=0; i<8; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    createCard('tall', { parent: 'h', z: 9, height: 250 });
+    createCard('last', { parent: 'h', z: 10 });
     await holder.updateAfterShuffle();
-    expect(pile.spreadExtent('Y')).toBe(180);
-    expect(positionsByZ(holder)).toEqual([ [ 20, 4 ], [ 20, 30 ], [ 20, 76 ] ]);
-    expect(pile.get('y') + pile.spreadExtent('Y')).toBeLessThanOrEqual(214);
+    for(const c of holder.arrangedChildren())
+      expect(c.get('y') + c.get('height')).toBeLessThanOrEqual(500);
+    expect(Math.min(...holder.arrangedChildren().map(c=>c.get('y')))).toBe(4);
+    expect(widgets.get('tall').get('y') + 250).toBe(496);
   });
 });
 
@@ -756,8 +796,17 @@ describe('switching layouts with piles inside', () => {
     expect(holder.children().length).toBe(3);
   });
 
-  test('leaving multipleSpread for auto keeps them, auto arranges piles too', async () => {
+  test('leaving multipleSpread for auto empties them too, since a spreading auto layout allows no piles', async () => {
     const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    await createPile('group', holder, 4, 4, 3);
+    await holder.set('layout', 'auto');
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    expect(holder.children().length).toBe(3);
+    expect(holder.children().every(c=>c.get('parent') == 'h')).toBe(true);
+  });
+
+  test('leaving multipleSpread for auto keeps a group where the holder only fits one card', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 120, height: 120 });
     await createPile('group', holder, 4, 4, 3);
     await holder.set('layout', 'auto');
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);

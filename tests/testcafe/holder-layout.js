@@ -81,6 +81,43 @@ test('The classicHolderLayout legacy mode keeps drops at the drop offset', async
   await t.expect(state.loose.y).eql(4);
 });
 
+test('A pile dropped into an auto holder with room to spread is emptied into the row', async t => {
+  await openRoom(t, 'modern', baseState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },
+    pile: { id: 'pile', type: 'pile', x: 1100, y: 500, width: CARD_WIDTH, height: CARD_HEIGHT },
+    p0: card('p0', { parent: 'pile', x: 0, y: 0, z: 1 }),
+    p1: card('p1', { parent: 'pile', x: 0, y: 0, z: 2 }),
+    p2: card('p2', { parent: 'pile', x: 0, y: 0, z: 3 })
+  }));
+
+  await dragPath(t, 'pile .handle', [ { onto: 'holder' } ]);
+
+  // a spreading auto layout allows no piles, so the drop empties it out, one
+  // card per slot of the centered row
+  const state = await stateWhen(s=>pileCount(s) == 0 && s.p0.parent == 'holder');
+  await t.expect(pileCount(state)).eql(0, 'the pile was emptied out');
+  const row = byZ(state, 'holder');
+  await t.expect(row.length).eql(3, 'all three cards are in the holder');
+  await t.expect(row.map(c=>c.x).sort((a, b)=>a - b)).eql([ 141.5, 248.5, 355.5 ], 'one card per slot of the centered row');
+  await t.expect(row.map(c=>c.y)).eql([ 70, 70, 70 ]);
+});
+
+test('A pile dropped into a holder that only fits one card is kept', async t => {
+  await openRoom(t, 'modern', baseState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, dropTarget: { type: 'card' } },
+    pile: { id: 'pile', type: 'pile', x: 1100, y: 500, width: CARD_WIDTH, height: CARD_HEIGHT },
+    p0: card('p0', { parent: 'pile', x: 0, y: 0, z: 1 }),
+    p1: card('p1', { parent: 'pile', x: 0, y: 0, z: 2 })
+  }));
+
+  await dragPath(t, 'pile .handle', [ { onto: 'holder' } ]);
+
+  const state = await stateWhen(s=>s.pile && s.pile.parent == 'holder');
+  await t.expect(pileCount(state)).eql(1, 'the pile survived');
+  // 4/4 is a pile's default position, so the state leaves x and y out
+  await t.expect(state.pile.x === undefined && state.pile.y === undefined).ok('centered at 4/4, the classic drop offset for a default-sized card');
+});
+
 test('A holder inheriting classic arrangement properties follows them like their template', async t => {
   await openRoom(t, 'modern', baseState({
     template: { id: 'template', type: 'holder', x: 100, y: 500, width: 600, height: 300, dropTarget: { type: 'card' }, stackOffsetX: 40 },
