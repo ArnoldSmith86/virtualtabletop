@@ -502,6 +502,31 @@ export class Holder extends ImageWidget {
     await this.receiveCard();
   }
 
+  // The mirror image of emptyPileIntoSlots: without the room to line cards up
+  // the auto layout allows piles again, so the entries gather back into one -
+  // per owner and onPileCreation, the same groups dropping them one by one
+  // would have formed. A resize that takes the room away then leaves one pile
+  // instead of a heap of loose cards that only looks like one.
+  async gatherIntoPiles() {
+    const entries = this.childrenFilter(super.children(), true)
+      .filter(w=>[ 'card', 'pile' ].indexOf(w.get('type')) != -1 && !w.get('dropShadowOwner') && !w.get('dragging') && !w.isBeingRemoved)
+      .sort((a, b)=>a.get('z') - b.get('z'));
+
+    const groups = new Map();
+    for(const entry of entries) {
+      const key = JSON.stringify([ entry.get('owner'), entry.get('onPileCreation') ]);
+      if(!groups.has(key))
+        groups.set(key, []);
+      groups.get(key).push(entry);
+    }
+
+    this.preventRearrangeDuringPileDrop = true;
+    for(const group of groups.values())
+      if(group.length > 1)
+        await this.makeGroup(group.flatMap(entry=>entry.get('type') == 'pile' ? [ ...entry.children() ].reverse() : [ entry ]));
+    delete this.preventRearrangeDuringPileDrop;
+  }
+
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
     // The piles took their layout from this holder and lose it here, so they
@@ -643,9 +668,9 @@ export class Holder extends ImageWidget {
   // give each of them the most visible area, the objective from #2708. The
   // spacing degrades continuously when the holder gets tight, so what does not
   // fit side by side overlaps instead of spilling out of the holder. Piles
-  // only exist here while the holder has no room to line cards up (see
-  // updateAfterShuffle); while it gathers everything in the middle it never
-  // forms or dissolves one itself.
+  // only exist while the holder has no room to line cards up: updateAfterShuffle
+  // empties them out when a resize creates that room and gathers the loose
+  // cards back into one when it goes away again.
   async rearrangeChildrenAuto(children) {
     if(this.preventRearrangeDuringPileDrop || !children.length)
       return;
@@ -1203,10 +1228,15 @@ export class Holder extends ImageWidget {
     }
 
     if(!this.spreadsChildren()) {
-      // an auto holder without the room to spread gathers everything back in
-      // the middle - without ever forming a pile out of it
-      if(this.usesAutoLayout() && this.arrangedChildren().length)
-        await this.rearrangeChildrenAuto(this.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z')));
+      // an auto holder without the room to spread allows piles again - so what
+      // spread out while there was room gathers back into one pile per lane,
+      // centered where the derived drop offset points
+      if(this.usesAutoLayout()) {
+        if(this.get('allowPiles') && !this.preventRearrangeDuringPileDrop)
+          await this.gatherIntoPiles();
+        if(this.arrangedChildren().length)
+          await this.rearrangeChildrenAuto(this.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z')));
+      }
       return;
     }
 

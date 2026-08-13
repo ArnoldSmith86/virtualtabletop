@@ -32,7 +32,9 @@ beforeAll(async () => {
   globalThis.setDeltaCause = () => {};
   globalThis.rescaleDragAnchor = () => {};
   globalThis.removeWidgetLocal = id => removeWidget(id);
-  globalThis.getMaxZ = () => 0;
+  // bringToFront() decides the stacking order makeGroup preserves, so it has
+  // to see the real maximum rather than a constant
+  globalThis.getMaxZ = () => Math.max(0, ...[ ...widgets.values() ].map(w=>w.get('z') || 0));
   globalThis.updateMaxZ = () => {};
   globalThis.defaultPileSnapRange = 10;
   globalThis.mapAssetURLs = url => url;
@@ -331,18 +333,70 @@ describe('the auto layout arranging its children', () => {
     expect(holder.children().every(c=>c.get('parent') == 'h')).toBe(true);
   });
 
-  test('shrinking the holder gathers everything in the middle without forming a pile', async () => {
+  test('shrinking the holder gathers the cards back into one pile', async () => {
     const holder = createHolder({ id: 'h', width: 600, height: 120 });
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
     await holder.set('width', 120);
     expect(holder.autoSpreads()).toBe(false);
-    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ], [ 10, 10 ], [ 10, 10 ] ]);
-    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
-    // and growing it again spreads them back out
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(1);
+    expect([ ...piles[0].children() ].reverse().map(c=>c.get('id'))).toEqual([ 'c0', 'c1', 'c2' ]);
+    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ] ]);
+    // and growing it again empties the pile back onto the row, in order
     await holder.set('width', 600);
-    expect(positionsByZ(holder)).toEqual([ [ 146, 10 ], [ 250, 10 ], [ 354, 10 ] ]);
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    const row = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
+    expect(row.map(c=>c.get('id'))).toEqual([ 'c0', 'c1', 'c2' ]);
+    expect(row.map(c=>[ c.get('x'), c.get('y') ])).toEqual([ [ 146, 10 ], [ 250, 10 ], [ 354, 10 ] ]);
+  });
+
+  test('a pile and a loose card in a small holder gather into one pile', async () => {
+    const holder = createHolder({ id: 'h', width: 120, height: 120 });
+    await createPile('group', holder, 10, 10, 2);
+    createCard('loose', { parent: 'h', z: 10 });
+    await holder.updateAfterShuffle();
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(1);
+    expect(holder.children().length).toBe(3);
+    expect([ ...piles[0].children() ].reverse().map(c=>c.get('id'))).toEqual([ 'group-card-0', 'group-card-1', 'loose' ]);
+  });
+
+  test('cards of different owners gather into one pile per owner', async () => {
+    const holder = createHolder({ id: 'h', width: 120, height: 120 });
+    createCard('a1', { parent: 'h', z: 1, owner: 'alice' });
+    createCard('a2', { parent: 'h', z: 2, owner: 'alice' });
+    createCard('b1', { parent: 'h', z: 3, owner: 'bob' });
+    createCard('b2', { parent: 'h', z: 4, owner: 'bob' });
+    await holder.updateAfterShuffle();
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(2);
+    expect(piles.map(p=>p.get('owner')).sort()).toEqual([ 'alice', 'bob' ]);
+    for(const pile of piles)
+      expect(new Set(pile.children().map(c=>c.get('owner'))).size).toBe(1);
+  });
+
+  test('a written allowPiles: false keeps the shrunken holder from forming one', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 120, allowPiles: false });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    await holder.set('width', 120);
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ], [ 10, 10 ], [ 10, 10 ] ]);
+  });
+
+  test('a card being dragged is left out of the gather', async () => {
+    const holder = createHolder({ id: 'h', width: 120, height: 120 });
+    createCard('c0', { parent: 'h', z: 1 });
+    createCard('c1', { parent: 'h', z: 2 });
+    createCard('held', { parent: 'h', z: 3, dragging: 'jestPlayer' });
+    await holder.updateAfterShuffle();
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(1);
+    expect([ ...piles[0].children() ].reverse().map(c=>c.get('id'))).toEqual([ 'c0', 'c1' ]);
+    expect(widgets.get('held').get('parent')).toBe('h');
   });
 
   test('a card received lands at the spot of the row it was dropped on', async () => {

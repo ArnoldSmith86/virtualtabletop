@@ -118,6 +118,85 @@ test('A pile dropped into a holder that only fits one card is kept', async t => 
   await t.expect(state.pile.x === undefined && state.pile.y === undefined).ok('centered at 4/4, the classic drop offset for a default-sized card');
 });
 
+// A small auto holder that keeps a pile; the cards sit at 0/0 inside it and the pile at its
+// default 4/4, which is where the engine centers it in a default-sized holder.
+function keptPileRoom(count, extra) {
+  const state = baseState(Object.assign({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, dropTarget: { type: 'card' } },
+    pile: { id: 'pile', type: 'pile', parent: 'holder', width: CARD_WIDTH, height: CARD_HEIGHT }
+  }, extra));
+  for(let i=0; i<count; ++i)
+    state[`p${i}`] = card(`p${i}`, { parent: 'pile', x: 0, y: 0, z: i+1 });
+  return state;
+}
+
+test('Resizing an auto holder empties the pile and gathers it back', async t => {
+  await openRoom(t, 'modern', baseState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },
+    c1: card('c1', { parent: 'holder', x: 141.5, y: 70, z: 1 }),
+    c2: card('c2', { parent: 'holder', x: 248.5, y: 70, z: 2 }),
+    c3: card('c3', { parent: 'holder', x: 355.5, y: 70, z: 3 }),
+    shrink: { id: 'shrink', type: 'button', x: 1200, y: 400, text: 'shrink', clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'holder' },
+      { func: 'SET', property: 'width', value: 121 },
+      { func: 'SET', property: 'height', value: 178 }
+    ] },
+    grow: { id: 'grow', type: 'button', x: 1200, y: 500, text: 'grow', clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'holder' },
+      { func: 'SET', property: 'width', value: 600 },
+      { func: 'SET', property: 'height', value: 300 }
+    ] }
+  }));
+
+  // without the room to line the cards up, the loose row gathers back into one pile
+  await t.click('#w_shrink');
+  let state = await stateWhen(s=>pileCount(s) == 1);
+  const pile = Object.values(state).find(widget=>widget.type == 'pile');
+  await t.expect(pile.parent).eql('holder');
+  await t.expect(byZ(state, pile.id).map(c=>c.id)).eql([ 'c1', 'c2', 'c3' ], 'stacked in the order of the row');
+  await t.expect(pile.x).eql(9, 'centered at the derived drop offset');
+  await t.expect(pile.y).eql(9);
+
+  // and the room coming back empties it onto the row again
+  await t.click('#w_grow');
+  state = await stateWhen(s=>pileCount(s) == 0 && s.c1 && s.c1.parent == 'holder');
+  await t.expect(byZ(state, 'holder').map(c=>c.x)).eql([ 141.5, 248.5, 355.5 ], 'one card per slot of the centered row');
+  await t.expect(byZ(state, 'holder').map(c=>c.id)).eql([ 'c1', 'c2', 'c3' ], 'in the order they were stacked');
+});
+
+test('A card dropped onto the pile a small auto holder keeps joins it', async t => {
+  await openRoom(t, 'modern', keptPileRoom(2, {
+    loose: card('loose', { x: 1200, y: 700, z: 9 })
+  }));
+
+  await dragPath(t, 'loose', [ { onto: 'holder' } ]);
+
+  const state = await stateWhen(s=>s.loose.parent == 'pile');
+  await t.expect(byZ(state, 'pile').map(c=>c.id)).eql([ 'p0', 'p1', 'loose' ], 'on top of the pile');
+  await t.expect(pileCount(state)).eql(1, 'no second pile');
+});
+
+test('Dragging the top card off a kept pile takes only that card', async t => {
+  await openRoom(t, 'modern', keptPileRoom(3));
+
+  await dragPath(t, 'p2', [ { dx: 500, dy: 300 } ]);
+
+  const state = await stateWhen(s=>s.p2 && !s.p2.parent);
+  await t.expect(state.p2.parent).eql(undefined, 'the card left alone');
+  await t.expect(pileCount(state)).eql(1, 'the pile stayed behind');
+  await t.expect(byZ(state, 'pile').map(c=>c.id)).eql([ 'p0', 'p1' ]);
+});
+
+test('Dragging a kept pile out of the holder keeps it together', async t => {
+  await openRoom(t, 'modern', keptPileRoom(3));
+
+  await dragPath(t, 'pile .handle', [ { dx: 500, dy: 300 } ]);
+
+  const state = await stateWhen(s=>s.pile && !s.pile.parent);
+  await t.expect(state.pile.parent).eql(undefined, 'the pile left the holder');
+  await t.expect(byZ(state, 'pile').map(c=>c.id)).eql([ 'p0', 'p1', 'p2' ], 'with all its cards');
+});
+
 test('A holder inheriting classic arrangement properties follows them like their template', async t => {
   await openRoom(t, 'modern', baseState({
     template: { id: 'template', type: 'holder', x: 100, y: 500, width: 600, height: 300, dropTarget: { type: 'card' }, stackOffsetX: 40 },
