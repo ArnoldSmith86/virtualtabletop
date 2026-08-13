@@ -366,6 +366,11 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
+// How many icons the icon picker shows at once - both for a search and for the suggestions it
+// opens with. The skin tone forms put behind a searched emoji count towards it as well, so a
+// result that has them stays as long as one that has not.
+const iconPickerResultLimit = 100;
+
 // Keep matches in symbols.json order so related icon families stay together.
 function searchIconIndex(query, limit=100, enabledTypes=null) {
   const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
@@ -1410,28 +1415,46 @@ class IconInput extends PickerInput {
     searchSection.appendChild(search);
     const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
 
+    // one chip of the result list: a searched icon, or - behind it - one of its skin tone forms,
+    // which is a result of the list like any other and is picked the same way
+    const resultChip = (iconValue, target, description)=>{
+      const chip = renderIconChip(iconValue, target);
+      chip.dataset.value = iconValue;
+      if(description)
+        chip.title = `${iconValue} (${description})`;
+      chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
+      chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
+      return chip;
+    };
+
     const showResults = values=>{
       results.innerHTML = '';
-      for(const iconValue of values) {
-        const chip = renderIconChip(iconValue, results);
-        chip.dataset.value = iconValue;
-        chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
-        chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
-        this.decorateChip(chip, iconValue);
-      }
+      for(const iconValue of values)
+        this.decorateChip(resultChip(iconValue, results), iconValue);
       this.decorateChipList(results);
+      // A search that has already narrowed the picker down to a handful of icons should not make
+      // each of them be hovered again to find out what it offers, so the toned forms go into the
+      // list itself, right behind the icon they belong to (the same as the "Pick icon" overlay
+      // does, see symbols.js). They count towards the number of icons the search shows, so the
+      // list never gets longer than it may be - and a search that is cut off at that number has
+      // more to show anyway, which is not a result worth expanding.
+      expandEmojiVariants(results, search.value.trim() ? $a('[data-emoji-variant]', results) : [], {
+        emoji: chip=>chip.dataset.emojiVariant,
+        create: (chip, variant, description)=>resultChip(variant, null, description),
+        budget: iconPickerResultLimit - values.length
+      });
       if(!values.length)
         div(results, 'propertyPickerEmpty', 'No results.');
     };
 
     const frequentlyUsed = _=>[...new Set(usedGameIcons().concat(topUsedLibraryIcons))]
       .filter(icon => iconTypeEnabled(icon, enabledTypes))
-      .slice(0, 100);
+      .slice(0, iconPickerResultLimit);
     const updateResults = async _=>{
       const query = search.value.trim();
       if(query)
         await loadIconSearchIndex().catch(_=>null);
-      showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
+      showResults(query ? searchIconIndex(query, iconPickerResultLimit, enabledTypes) : frequentlyUsed());
     };
 
     const typeToggles = div(searchSection, 'iconPickerFilterChips');
@@ -1471,6 +1494,12 @@ class IconInput extends PickerInput {
 
     search.oninput = updateResults;
     loadIconSearchIndex().catch(_=>null);
+    // which emoji have toned forms comes from a list of its own, fetched next to the icon index -
+    // a search that ran before it arrived puts them in as soon as it does
+    loadEmojiVariants().then(_=>{
+      if(search.value.trim())
+        updateResults();
+    }, _=>null);
   }
 }
 

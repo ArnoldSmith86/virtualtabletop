@@ -1246,6 +1246,59 @@ test('A search narrow enough shows the skin tones in the icon list itself', asyn
   await setEditorState(null);
 });
 
+// The same for the picker that sits in the sidebar itself, whose list is the chips of its search
+// (and, through the same control, the picker of a deck editor property row). Its limit is the
+// number of icons the search shows at all, so which searches fit is decided by the real index here
+// as well - "woman" has more matches than it can show, "thumbs" has eighteen.
+const inlineChips = ClientFunction(() => {
+  const lists = document.querySelectorAll('.propertyPickerChips');
+  const results = lists[lists.length-1];
+  const marked = results.querySelector('.hasEmojiVariants');
+  return {
+    forms: results.querySelectorAll('.emojiVariantInline').length,
+    expanded: results.classList.contains('emojiVariantsExpanded'),
+    marker: marked ? getComputedStyle(marked, '::after').display : 'no marked chip'
+  };
+});
+const markedResultChip = Selector('.propertyPickerChips').nth(-1).find('.propertyValueChip.hasEmojiVariants').nth(0);
+
+test('A search narrow enough shows the skin tones in the sidebar icon picker itself', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+
+    // both thumbs and their five tones each, and nothing left for the corner marker to point at
+    .typeText(Selector('input[placeholder="Search icons..."]'), 'thumbs')
+    .expect(inlineChips()).eql({ forms: 10, expanded: true, marker: 'none' })
+    .hover(markedResultChip)
+    .wait(900)
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
+
+    // a search the picker already cuts off has more to show than its tones, so they stay behind
+    // the flyout there
+    .typeText(Selector('input[placeholder="Search icons..."]'), 'woman', { replace: true })
+    .expect(inlineChips()).eql({ forms: 0, expanded: false, marker: 'block' })
+    .hover(markedResultChip)
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+
+    // and a form in the list is picked like any other chip of it
+    .typeText(Selector('input[placeholder="Search icons..."]'), 'victory', { replace: true })
+    .expect(inlineChips()).eql({ forms: 5, expanded: true, marker: 'none' })
+    .click(Selector('.propertyPickerChips').nth(-1).find('.emojiVariantInline').nth(4))
+    .expect(widgetIcon()).contains('✌🏿');
+  await setEditorState(null);
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

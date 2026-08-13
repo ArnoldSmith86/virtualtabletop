@@ -616,14 +616,15 @@
   pointer-events: none;
 }
 
-/* Once a search has narrowed the picker down far enough, the forms go into the grid itself instead
-   (symbols.js): the corner marker then has nothing left to point at, and the run of forms needs a
-   gap on either side to read as belonging to the icon in front of it rather than as more results. */
-#symbolList.emojiVariantsExpanded .hasEmojiVariants::after {
+/* Once a search has narrowed a picker down far enough, the forms go into its list itself instead
+   (symbols.js for the overlay grid, propertyInputs.js for the sidebar and the deck editor): the
+   corner marker then has nothing left to point at, and the run of forms needs a gap on either side
+   to read as belonging to the icon in front of it rather than as more results. */
+.emojiVariantsExpanded .hasEmojiVariants::after {
   display: none;
 }
-#symbolList.emojiVariantsExpanded .hasEmojiVariants,
-#symbolList .emojiVariantInline + i:not(.emojiVariantInline) {
+.emojiVariantsExpanded .hasEmojiVariants,
+.emojiVariantsExpanded .emojiVariantInline + :not(.emojiVariantInline) {
   margin-left: 20px;
 }
 
