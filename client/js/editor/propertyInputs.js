@@ -223,10 +223,10 @@ function iconTypeEnabled(value, enabledTypes) {
 // The full symbol picker is an overlay of its own, so opening it from a picker that sits inside another overlay
 // (e.g. the deck editor's "Add New Deck" dialog) hides that one. Bring that overlay - the one the given element
 // lives in - back afterwards, instead of leaving the user without the dialog they were working in.
-async function pickSymbolKeepingOverlay(element, type='all', search='') {
+async function pickSymbolKeepingOverlay(element, type='all', search='', libraries=null) {
   const hostOverlay = element.closest('.overlay');
   if(!hostOverlay)
-    return await pickSymbol(type, true, true, search);
+    return await pickSymbol(type, true, true, search, libraries);
 
   // The deck editor parks the symbol picker inside its card view (see DeckEditor.open), which is not where a
   // dialog floating above the editor wants it: show it where the dialog is and put it back afterwards.
@@ -243,7 +243,7 @@ async function pickSymbolKeepingOverlay(element, type='all', search='') {
   let symbol = null;
   let error = null;
   try {
-    symbol = await pickSymbol(type, true, false, search);
+    symbol = await pickSymbol(type, true, false, search, libraries);
   } catch(e) {
     error = e;
   }
@@ -1425,10 +1425,12 @@ class IconInput extends PickerInput {
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
-    showAll.textContent = 'Show all';
+    // not "Show all": the big picker opens with this picker's search and libraries, so it shows more of what
+    // the user is looking for rather than everything there is
+    showAll.textContent = 'Browse more...';
     showAll.onclick = async _=>{
-      // carry the search term over so the big picker starts out filtered to what the user was already looking for
-      const symbol = await pickSymbolKeepingOverlay(showAll, 'all', search.value.trim());
+      // carry the search term and the chosen libraries over so the big picker keeps looking for the same thing
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'all', search.value.trim(), [ ...enabledTypes ]);
       if(symbol)
         this.setValue(this.valueForChip(symbol.symbol));
     };
@@ -1487,7 +1489,7 @@ class ImageInput extends PickerInput {
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
-    showAll.textContent = 'Show all';
+    showAll.textContent = 'Browse more...';
     showAll.onclick = async _=>{
       const symbol = await pickSymbolKeepingOverlay(showAll, 'images', search.value.trim());
       if(symbol)

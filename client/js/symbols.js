@@ -113,11 +113,29 @@ export async function loadSymbolPicker() {
     $('#symbolPickerOverlay input').oninput = filterSymbolList;
 
     $('#symbolSearchStatus button').onclick = function() {
+      setLibraryFilter(null); // the one control the picker has for a library filter it was opened with
       $('#symbolPickerOverlay input').value = '';
       $('#symbolPickerOverlay input').focus();
       filterSymbolList();
     };
   }
+}
+
+// the inline icon picker's "Libraries:" checkboxes, translated into the data-type of the icons here. A
+// picker opened from there searches the libraries the user left checked, instead of answering a term they
+// narrowed down with icons from the libraries they just switched off.
+const symbolLibraries = {
+  'game-icons':       [ 'game-icons' ],
+  'material-symbols': [ 'material-symbols', 'material-symbols-nofill' ],
+  'emoji-color':      [ 'emoji-color' ],
+  'emoji-monochrome': [ 'emoji-monochrome' ],
+  'vtt-symbols':      [ 'symbols' ]
+};
+let libraryFilter = null; // { types, count } - null means every library, which is how the picker opens elsewhere
+function setLibraryFilter(libraries) {
+  const all = Object.keys(symbolLibraries);
+  libraryFilter = libraries && libraries.length < all.length
+    ? { types: new Set(libraries.flatMap(library => symbolLibraries[library] || [])), count: libraries.length } : null;
 }
 
 function filterSymbolList() {
@@ -143,7 +161,8 @@ function filterSymbolList() {
       categoryMatches = false;
       continue;
     }
-    const hidden = !terms.every(term => element.dataset.keywords.includes(term));
+    const hidden = !terms.every(term => element.dataset.keywords.includes(term))
+                || libraryFilter && !libraryFilter.types.has(element.dataset.type);
     toggleClass(element, 'hidden', hidden);
     if(element.dataset.family == hiddenFamily)
       continue;
@@ -163,10 +182,15 @@ function filterSymbolList() {
   // a search - typed here or carried over from the inline picker - leaves a slice of ~13000 icons with
   // nothing on screen saying so, so state how much is left and offer the one click back to all of it.
   // The count comes first because it is what the narrow layouts keep.
-  toggleClass($('#symbolPickerOverlay'), 'filtered', terms.length > 0);
-  $('#symbolSearchStatus span').textContent = terms.length && matches
-    ? `${matches} of ${total} ${itemName}s match${matches == 1 ? 'es' : ''} "${search}"` : '';
-  $('#symbolNoResults').textContent = `No ${itemName}s match "${search}".`;
+  // The libraries come from the same handover and are the less obvious half of it: the picker has no
+  // checkboxes of its own, so without a word about them a list missing every emoji looks like the whole one.
+  const filtered = terms.length > 0 || libraryFilter;
+  const libraries = libraryFilter ? ` from ${libraryFilter.count} of ${Object.keys(symbolLibraries).length} libraries` : '';
+  toggleClass($('#symbolPickerOverlay'), 'filtered', !!filtered);
+  $('#symbolSearchStatus span').textContent = filtered && matches
+    ? `${matches} of ${total} ${itemName}s${libraries}${terms.length ? ` match${matches == 1 ? 'es' : ''} "${search}"` : ''}` : '';
+  $('#symbolNoResults').textContent = terms.length
+    ? `No ${itemName}s${libraries} match "${search}".` : `No ${itemName}s in the chosen libraries.`;
 }
 
 // the picker is also the image picker (type=='images'), so a user who typed into a field labeled "Search
@@ -179,9 +203,10 @@ function setPickerWording(type) {
   $('#symbolSearchStatus button').textContent = `Show all ${itemName}s`;
 }
 
-// search prefills the picker's search field, so a picker opened from a place that already has a search term
-// (e.g. the property editor's inline icon picker and its "Show all" button) starts out filtered the same way
-export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true, search='') {
+// search and libraries prefill the picker's search field and library filter, so a picker opened from a place
+// that already has both (the property editor's inline icon picker and its "Browse more..." button) starts out
+// filtered the same way instead of contradicting what the user just narrowed down
+export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true, search='', libraries=null) {
   if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
     $('#statesButton').dataset.overlay = detailsOverlay;
 
@@ -192,6 +217,7 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
     $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
     $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
     setPickerWording(type);
+    setLibraryFilter(libraries);
     $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
     $('#symbolPickerOverlay input').value = search;
     $('#symbolPickerOverlay input').focus();
@@ -294,6 +320,7 @@ export function addRichtextControls(dom) {
 
     showStatesOverlay('symbolPickerOverlay');
     setPickerWording('all');
+    setLibraryFilter(null);
     $('#symbolList').scrollTop = 0;
     for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
       $('#symbolPickerOverlay').classList.remove(c);

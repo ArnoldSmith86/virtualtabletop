@@ -1163,6 +1163,9 @@ test('The inline icon picker hands its search term to the symbol picker', async 
     .click('#w_w')
     .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
     .typeText(picker.find('input[placeholder="Search icons..."]'), 'dragon')
+    // the button opens the picker with this search in it, so it offers more of what the user is
+    // looking for rather than everything there is
+    .expect(picker.find('button[icon=apps]').textContent).eql('Browse more...')
     .click(picker.find('button[icon=apps]'))
     .expect(Selector('#symbolPickerOverlay').visible).ok()
     // the search the user already typed carries over, so the picker opens filtered instead of
@@ -1208,6 +1211,47 @@ test('The inline icon picker hands its search term to the symbol picker', async 
     .expect(Selector('#symbolPickerOverlay').visible).ok()
     .expect(Selector('#symbolList i:not(.hidden)').count).eql(1)
     .expect(Selector('#symbolList i:not(.hidden)').getAttribute('data-symbol')).eql('[card_K]')
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+test('The inline icon picker hands its chosen libraries to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, icon: 'casino' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    // switching a library off and then being handed icons from it anyway contradicts the filter the
+    // user just set, so the "Libraries:" checkboxes travel with the search term
+    .click(picker.find('.iconPickerFilterChip').withText('Game Icons').find('input'))
+    .typeText(picker.find('input[placeholder="Search icons..."]'), 'dragon')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i[data-type=game-icons]:not(.hidden)').count).eql(0)
+    // the picker has no library checkboxes of its own, so it has to say which filter it is under
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons from 4 of 5 libraries match "dragon"$/)
+    // ...and "Show all icons" is the way back from both filters at once
+    .click('#symbolSearchStatus button')
+    .expect(Selector('#symbolPickerOverlay input').value).eql('')
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .click('#symbolPickerOverlay [icon=close]')
+    // a library filter is only what this one picker was opened with: the next one is unfiltered again
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
     .click('#symbolPickerOverlay [icon=close]');
   await setEditorState(null);
 });
