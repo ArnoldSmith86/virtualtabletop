@@ -1149,6 +1149,13 @@ test('The inline icon picker hands its search term to the symbol picker', async 
     const input = document.querySelector('#symbolPickerOverlay input');
     return { start: input.selectionStart, end: input.selectionEnd, focused: document.activeElement == input };
   });
+  // the search field is a type=search input, so the browser draws its own clear button in it - that button
+  // empties the field and fires input without ever firing a keystroke, exactly like paste, cut and drop do
+  const clearSearchNatively = ClientFunction(() => {
+    const input = document.querySelector('#symbolPickerOverlay input');
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
 
   await t
     .click('#editButton')
@@ -1174,7 +1181,17 @@ test('The inline icon picker hands its search term to the symbol picker', async 
     // both searches match every term anywhere in the keywords, so a term transferred from the
     // inline picker finds the same icons here
     .typeText('#symbolPickerOverlay input', 'head dragon', { replace: true })
-    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0);
+
+  // emptying the field the way the browser's own clear button does has to filter again as well
+  await clearSearchNatively();
+
+  await t
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .expect(Selector('#symbolList h2.hidden').count).eql(0)
+    .typeText('#symbolPickerOverlay input', 'dragon', { replace: true })
+    .expect(Selector('#symbolSearchStatus').visible).ok()
     // "Show all icons" empties the search field, which is the whole list back in one click
     .click('#symbolSearchStatus button')
     .expect(Selector('#symbolPickerOverlay input').value).eql('')
