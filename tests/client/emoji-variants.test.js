@@ -236,6 +236,37 @@ describe('the skin tone flyout', () => {
     expect(flyout()).toBe(null);
   });
 
+  // a flick of the wheel arrives as one scroll event that is already far along, so the position the
+  // flyout opened at is what the movement is measured against
+  test('a single scroll event that jumps the grid closes the flyout', async () => {
+    const [ icon ] = await decorate('👍');
+    const scroller = icon.parentNode;
+    await hover(icon);
+
+    scroller.scrollTop = 547;
+    scroller.dispatchEvent(new Event('scroll'));
+    expect(flyout()).toBe(null);
+  });
+
+  // a 5x5 matrix that does not fit the viewport is capped and scrolls itself (fonts.css), so
+  // scrolling it is how its lower rows are reached - not a sign that its anchor moved away
+  test('scrolling the flyout itself keeps it open and its lower rows pickable', async () => {
+    const picked = [];
+    const [ handshake ] = await decorate('🤝', emoji => picked.push(emoji));
+    await hover(handshake);
+    const dom = flyout();
+
+    for(const position of [ 4, 40, 120 ]) {
+      dom.scrollTop = position;
+      dom.dispatchEvent(new Event('scroll'));
+    }
+    expect(flyout()).toBe(dom);
+
+    const dark = cells().find(cell => cell.getAttribute('aria-label') == 'Dark + Dark skin tone');
+    dark.click();
+    expect(picked).toEqual([ '🤝🏿' ]);
+  });
+
   test('clicking a cell reports the toned emoji and closes the flyout', async () => {
     const picked = [];
     const [ icon ] = await decorate('👍', emoji => picked.push(emoji));

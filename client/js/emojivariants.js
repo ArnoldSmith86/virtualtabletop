@@ -297,10 +297,23 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
   // The picker grid and the sidebar scroll, which would leave the flyout hanging next to nothing -
   // but the reflex after a long press on touch is a small drag, and losing the flyout to that would
   // make it unusable there, so a few pixels do not count as scrolling away.
+  // Scrolling the flyout's own overflow is the one exception: a 5x5 matrix that does not fit gets
+  // capped and scrollable (see fonts.css), and closing it as soon as its lower rows are scrolled
+  // into view would put them out of reach on exactly the viewport that needs them.
+  // Where the anchor's scrollers stand is taken now, when the flyout opens: a flick of the wheel
+  // arrives as a single scroll event that is already 500px along, so a baseline first read inside
+  // the handler would be the position it scrolled to and nothing would ever count as movement.
+  const scrollPosition = node => (node.scrollTop || 0) + (node.scrollLeft || 0);
   const scrolledFrom = new Map();
+  for(let node = element.parentNode; node; node = node.parentNode)
+    if(node.scrollTop !== undefined)
+      scrolledFrom.set(node, scrollPosition(node));
+
   const onScroll = e=>{
     const scroller = e.target == document ? document.scrollingElement : e.target;
-    const position = (scroller.scrollTop || 0) + (scroller.scrollLeft || 0);
+    if(dom.contains(scroller))
+      return;
+    const position = scrollPosition(scroller);
     if(!scrolledFrom.has(scroller))
       scrolledFrom.set(scroller, position);
     if(Math.abs(position - scrolledFrom.get(scroller)) > 8)

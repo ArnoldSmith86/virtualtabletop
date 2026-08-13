@@ -634,6 +634,9 @@
   border-radius: 8px;
   box-shadow: 0 8px 24px #0004;
   padding: 8px 10px 9px;
+  /* border-box, or the padding and border are added on top of the cap and the last row of a matrix
+     hangs off the edge again */
+  box-sizing: border-box;
   max-width: calc(100vw - 8px);
   /* the 5x5 matrix is taller than a phone in landscape has to spare, and rows hanging off the
      bottom edge could not be picked at all */
