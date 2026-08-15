@@ -495,3 +495,180 @@ body.edit.darkMode .routine-editor-parameter-missing {
 .routine-editor-fields .routine-editor-func-name {
   color: var(--routineVariableColor);
 }
+
+/* The two ways to get an operation into a routine, side by side at the end of
+   it: naming the one wanted ("add operation") and doing the thing in the room
+   and picking from what it could mean ("record"). */
+.routine-editor-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.routine-editor-record-operation .material-symbols {
+  font-size: 15px;
+  vertical-align: -3px;
+  margin-right: 3px;
+  /* the recorder's red lightened until it carries on the blue of a button - the
+     dark one this red is elsewhere disappears into it */
+  color: #ff8a80;
+}
+
+/* armed, the whole button is the red of what it is doing rather than one more
+   blue button among the others: the room is being watched, and that has to be
+   visible from wherever in the sidebar the eye happens to be */
+.routine-editor-record-operation.recording {
+  background-color: var(--routineRecordColor);
+  font-weight: bold;
+}
+
+.routine-editor-record-operation.recording:hover {
+  background-color: #8e1e1e;
+}
+
+.routine-editor-record-operation.recording .material-symbols {
+  color: white;
+  animation: routineRecordBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes routineRecordBlink {
+  50% { opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .routine-editor-record-operation.recording .material-symbols {
+    animation: none;
+  }
+}
+
+/* What the room has been doing since the button was pressed, framed in the same
+   red so it reads as one thing with the button below it rather than as another
+   part of the routine. It sits between the operations and the buttons because
+   that is where the operations it offers would land. */
+.routine-editor-recording {
+  border: 1px solid var(--routineRecordColor);
+  border-radius: 6px;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor2);
+  font-size: 12px;
+}
+
+.routine-editor-recording-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--routineRecordColor);
+  font-weight: bold;
+}
+
+.routine-editor-recording-header .material-symbols {
+  font-size: 16px;
+  animation: routineRecordBlink 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .routine-editor-recording-header .material-symbols {
+    animation: none;
+  }
+}
+
+.routine-editor-recording-title {
+  flex: 1;
+}
+
+.routine-editor-recording-hint {
+  color: var(--textColor);
+  opacity: 0.8;
+  margin: 2px 0 4px 0;
+}
+
+/* one card per press-drag-release: what was done, and under it the readings of
+   it the routine could mean */
+.routine-editor-gesture {
+  border-left: 3px solid var(--routineRecordColor);
+  border-radius: 4px 4px 4px 0;
+  background: var(--backgroundHighlightColor1);
+  padding: 3px 6px;
+  margin-top: 4px;
+}
+
+.routine-editor-gesture-what {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: var(--routineRecordColor);
+}
+
+.routine-editor-suggestion {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 4px;
+  padding: 2px 3px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.routine-editor-suggestion:hover {
+  background: var(--routineActiveCardColor);
+}
+
+.routine-editor-suggestion .material-symbols {
+  font-size: 15px;
+  align-self: center;
+  color: var(--routineOperationColor);
+}
+
+.routine-editor-suggestion-sentence {
+  flex: 1;
+  min-width: 0;
+  color: var(--routineOperationColor);
+}
+
+/* why the room thinks this is one of the readings, in the tone of an aside:
+   the sentence is what would be added, this is only what it is for */
+.routine-editor-suggestion-why {
+  width: 100%;
+  padding-left: 19px;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--textColor);
+  opacity: 0.7;
+}
+
+/* a suggestion that was already added: it stays clickable (doing a thing twice
+   is a real thing to want), it just says it was used */
+.routine-editor-suggestion-added .routine-editor-suggestion-sentence {
+  opacity: 0.6;
+}
+
+.routine-editor-suggestion-added .material-symbols {
+  color: var(--routineCollectionColor);
+}
+
+/* While the room is being watched, the pointer says so - the same crosshair the
+   widget picker puts over the room - and the board carries a frame in the
+   recorder's red, so a drag in there is visibly being written down rather than
+   just moving a card around. */
+body.editorRoutineRecording, body.editorRoutineRecording .widget {
+  cursor: crosshair !important;
+}
+
+/* the board rather than #room: #room is only the untransformed box the widgets
+   are scaled out of, so a frame on it would sit somewhere inside the board */
+body.editorRoutineRecording #roomArea::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--routineRecordColor);
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* the drag toolbar of the selected widget is edit-mode's way of moving things,
+   and it needs the selection band's event handling that the recording takes
+   over - so it steps aside while the room is the player's */
+body.editorRoutineRecording #editorDragToolbar {
+  display: none;
+}
