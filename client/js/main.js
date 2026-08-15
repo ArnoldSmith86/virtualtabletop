@@ -679,7 +679,32 @@ const svgCache = {};
 // replaced, so they are used as they are instead of being wrapped into a broken data URL.
 const nonSVGCache = {};
 
+// Loads an image and returns its text if it is an SVG whose contents can be replaced, null if it
+// is anything else. What decides that are the bytes of the file and not its name: an uploaded
+// asset is served from /assets/<hash>_<size> without any extension at all, so only the built-in
+// game pieces have a URL that says what they are. Rejects when the file can't be read - that says
+// nothing about what it is, so every caller decides for itself what to assume then. The SVG
+// replacement editor asks the same question about the same file and goes through here too.
+export async function fetchSVG(url) {
+  const response = await fetch(mapAssetURLs(url));
+  if(!response.ok)
+    throw new Error(`Loading ${url} failed with status ${response.status}.`);
+  // both /assets/<hash> and /i/**.svg answer with a content type, and a bitmap saying so is the
+  // common case - no reason to pull a multi-megabyte PNG through the wire and decode it as text
+  // just to find no <svg> in it
+  const contentType = response.headers.get('content-type') || '';
+  if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
+    if(response.body && response.body.cancel)
+      response.body.cancel();
+    return null;
+  }
+  const text = await response.text();
+  return /<svg/i.test(text) ? text : null;
+}
+
 export function getSVG(url, replaces, callback) {
+  // like the cached SVG below this returns the finished value right away, so the callback - which
+  // exists to tell the widget that the file has arrived - isn't needed and isn't called
   if(nonSVGCache[url])
     return mapAssetURLs(url);
 
@@ -705,9 +730,12 @@ export function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
+    // an image that can't be loaded is treated like one that is not an SVG: the widget then uses
+    // the URL as it is, which is all a browser needs anyway - an external image is blocked from
+    // fetch() by CORS but still displays fine as a background-image
+    fetchSVG(url).catch(_=>null).then(t=>{
       const callbacks = svgCache[url];
-      if(/<svg[\s>]/i.test(t)) {
+      if(t !== null) {
         svgCache[url] = t;
       } else {
         nonSVGCache[url] = true;
@@ -732,7 +760,7 @@ async function loadEditMode() {
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadZipLibrary, waitForZipLibrary, zipBlob,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+      uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, calculateEditModuleClasses, isOrientationMismatch,
       html, formField,

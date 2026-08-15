@@ -252,11 +252,10 @@ function svgReplaceCandidates(svgText) {
 }
 
 const svgImageCandidatesCache = {};
-// isSvg is decided by sniffing the fetched content for an <svg> tag rather
-// than the image's file extension - an uploaded asset is served from
-// /assets/<hash>_<size> with no extension at all, so gating on ".svg" would
-// hide this editor for every uploaded SVG (only the built-in game-piece SVGs
-// have a real .svg URL).
+// isSvg is decided by fetchSVG() (main.js), which sniffs the file itself
+// instead of trusting its name - the same call the engine uses to decide
+// whether it can replace anything in that image, so this editor is shown for
+// exactly the images the replacements actually work on.
 async function fetchSvgReplaceCandidates(image) {
   if(typeof image != 'string' || !image)
     return { isSvg: false, candidates: [] };
@@ -266,20 +265,8 @@ async function fetchSvgReplaceCandidates(image) {
   // the file name rather than hiding the editor for an SVG that is offline
   const guess = { isSvg: /\.svg(\?|#|$)/i.test(image), candidates: [] };
   try {
-    const response = await fetch(mapAssetURLs(image));
-    if(!response.ok)
-      return guess;
-    // both /assets/<hash> and /i/**.svg answer with a content type, and a
-    // bitmap saying so is the common case - no reason to pull the whole file
-    // through the wire and stringify it just to find no <svg> in it
-    const contentType = response.headers.get('content-type') || '';
-    if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
-      if(response.body && response.body.cancel)
-        response.body.cancel();
-      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
-    }
-    const text = await response.text();
-    if(!/<svg/i.test(text))
+    const text = await fetchSVG(image);
+    if(text === null)
       return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
     return svgImageCandidatesCache[image] = { isSvg: true, candidates: svgReplaceCandidates(text) };
   } catch(e) {
