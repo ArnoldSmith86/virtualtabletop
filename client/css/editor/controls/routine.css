@@ -537,30 +537,28 @@ body.edit.darkMode .routine-editor-parameter-missing {
   color: var(--backgroundColor);
 }
 
+/* the dot does not blink here as well: the panel above the button has one that
+   does, a few pixels away, and two of them blinking at each other is noise */
 .routine-editor-record-operation.recording .material-symbols {
   color: var(--backgroundColor);
-  animation: routineRecordBlink 1.4s ease-in-out infinite;
 }
 
 @keyframes routineRecordBlink {
   50% { opacity: 0.15; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .routine-editor-record-operation.recording .material-symbols {
-    animation: none;
-  }
-}
-
 /* What the room has been doing since the button was pressed, framed in the same
    red so it reads as one thing with the button below it rather than as another
    part of the routine. It sits between the operations and the buttons because
-   that is where the operations it offers would land. */
+   that is where the operations it offers would land.
+   It is drawn on the page background rather than on a highlight so that the red
+   of the header and the blue of the readings keep the 4.5:1 the rest of the
+   editor is tuned for - the frame around it is what sets it apart. */
 .routine-editor-recording {
   border: 1px solid var(--routineRecordColor);
   border-radius: 6px;
   padding: 4px 6px;
-  background: var(--backgroundHighlightColor2);
+  background: var(--backgroundColor);
   font-size: 12px;
 }
 
@@ -587,6 +585,24 @@ body.edit.darkMode .routine-editor-parameter-missing {
   flex: 1;
 }
 
+/* stopping is not the thing to do here, so it does not look like it: a quiet
+   outline in the recorder's red rather than the sidebar's default filled blue,
+   which made the way out the loudest thing in the panel */
+.routine-editor-recording-done {
+  background: none;
+  border: 1px solid var(--routineRecordColor);
+  border-radius: 4px;
+  color: var(--routineRecordColor);
+  font-size: 11px;
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+.routine-editor-recording-done:hover {
+  background: var(--routineRecordColor);
+  color: var(--backgroundColor);
+}
+
 .routine-editor-recording-hint {
   color: var(--textColor);
   opacity: 0.8;
@@ -594,11 +610,12 @@ body.edit.darkMode .routine-editor-parameter-missing {
 }
 
 /* one card per press-drag-release: what was done, and under it the readings of
-   it the routine could mean */
+   it the routine could mean. The red edge is what makes it a card - a fill of
+   its own would take every line on it a step closer to its background. */
 .routine-editor-gesture {
+  position: relative;
   border-left: 3px solid var(--routineRecordColor);
-  border-radius: 4px 4px 4px 0;
-  background: var(--backgroundHighlightColor1);
+  border-top: 1px solid var(--backgroundHighlightColor1);
   padding: 3px 6px;
   margin-top: 4px;
 }
@@ -607,7 +624,29 @@ body.edit.darkMode .routine-editor-parameter-missing {
   font-size: 11px;
   font-weight: bold;
   letter-spacing: 0.5px;
+  padding-right: 16px; /* the × sits in this corner */
+  color: var(--textColor);
+}
+
+/* taking a gesture back off the card: quiet until the card is looked at, in the
+   red of the thing it belongs to */
+.routine-editor-gesture-forget {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  background: none;
+  border: none;
+  padding: 0 2px;
+  font-size: 14px;
+  line-height: 1;
   color: var(--routineRecordColor);
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.routine-editor-gesture:hover .routine-editor-gesture-forget,
+.routine-editor-gesture-forget:focus-visible {
+  opacity: 1;
 }
 
 .routine-editor-suggestion {
@@ -620,8 +659,12 @@ body.edit.darkMode .routine-editor-parameter-missing {
   cursor: pointer;
 }
 
+/* an outline rather than a fill: a row is two lines of coloured text, and every
+   fill light enough to read black on is dark enough to lose the blue on it in
+   one of the two themes */
 .routine-editor-suggestion:hover {
-  background: var(--routineActiveCardColor);
+  outline: 1px solid var(--routineOperationColor);
+  outline-offset: -1px;
 }
 
 .routine-editor-suggestion .material-symbols {
@@ -630,15 +673,17 @@ body.edit.darkMode .routine-editor-parameter-missing {
   color: var(--routineOperationColor);
 }
 
-.routine-editor-suggestion-sentence {
+/* what this reading is FOR leads the row: the readings of one gesture nearly
+   all begin with the same words, so this is the line the eye picks one by */
+.routine-editor-suggestion-why {
   flex: 1;
   min-width: 0;
   color: var(--routineOperationColor);
 }
 
-/* why the room thinks this is one of the readings, in the tone of an aside:
-   the sentence is what would be added, this is only what it is for */
-.routine-editor-suggestion-why {
+/* and the operation it would add follows it, in the tone of an aside: it is
+   what the reading is checked against, not what it is chosen by */
+.routine-editor-suggestion-sentence {
   width: 100%;
   padding-left: 19px;
   font-size: 11px;
@@ -647,12 +692,9 @@ body.edit.darkMode .routine-editor-parameter-missing {
   opacity: 0.7;
 }
 
-/* a suggestion that was already added: it stays clickable (doing a thing twice
-   is a real thing to want), it just says it was used */
-.routine-editor-suggestion-added .routine-editor-suggestion-sentence {
-  opacity: 0.6;
-}
-
+/* a suggestion that was already added stays clickable (doing a thing twice is a
+   real thing to want), so it does not go grey the way a disabled control does -
+   the tick is what says it was used */
 .routine-editor-suggestion-added .material-symbols {
   color: var(--routineCollectionColor);
 }
@@ -676,9 +718,32 @@ body.editorRoutineRecording #roomArea::after {
   z-index: 100;
 }
 
+/* which routine the room is being recorded into, in the room: the panel that
+   says so is in a sidebar that is scrolled somewhere else by the time a few
+   gestures have been made */
+body.editorRoutineRecording #routineRecordingLabel {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 101; /* above the frame, which is drawn at 100 */
+  max-width: calc(100% - 12px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: 0 0 4px 0;
+  background: var(--routineRecordColor);
+  color: var(--backgroundColor);
+  font-size: 12px;
+  font-weight: bold;
+  pointer-events: none;
+}
+
 /* the drag toolbar of the selected widget is edit-mode's way of moving things,
    and it needs the selection band's event handling that the recording takes
-   over - so it steps aside while the room is the player's */
-body.editorRoutineRecording #editorDragToolbar {
+   over - so it steps aside while the room is the player's. The .active is what
+   dragtoolbar.css shows it with, so hiding it takes at least as much. */
+body.editorRoutineRecording #editorDragToolbar,
+body.editorRoutineRecording #editorDragToolbar.active {
   display: none;
 }

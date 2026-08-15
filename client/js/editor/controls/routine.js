@@ -2223,13 +2223,14 @@ class RoutineEditor {
     this.routineChanged();
   }
 
-  // The record button, next to "add operation": armed, it says what it is doing
-  // rather than what it does, in the same words as unarmed - the way the widget
-  // picker's button does. Pressing it in another routine moves the recording
-  // there rather than refusing: one room can only be watched for one routine.
+  // The record button, next to "add operation". Armed, only its fill changes:
+  // the label stays the word it was, so the button keeps the width it had and
+  // does not shove "add operation" onto a line of its own in a narrow sidebar.
+  // Pressing it in another routine moves the recording there rather than
+  // refusing: one room can only be recorded into one routine.
   renderRecordButton(buttonsDOM) {
     const recordingHere = isRoutineRecordingIn(this);
-    const recordButton = button(buttonsDOM, recordingHere ? 'recording…' : 'record', _=>{
+    const recordButton = button(buttonsDOM, 'record', _=>{
       if(recordingHere)
         stopRoutineRecording();
       else
@@ -2238,7 +2239,7 @@ class RoutineEditor {
     recordButton.className = 'routine-editor-record-operation';
     recordButton.classList.toggle('recording', recordingHere);
     recordButton.title = recordingHere
-      ? 'Stop watching the room'
+      ? 'Stop recording'
       : 'Do something in the room and get the operations that would do the same thing';
     recordButton.insertAdjacentHTML('afterbegin', '<span class="material-symbols">fiber_manual_record</span>');
   }
@@ -2255,14 +2256,14 @@ class RoutineEditor {
     const panel = div(dom, 'routine-editor-recording');
     const header = div(panel, 'routine-editor-recording-header');
     header.insertAdjacentHTML('beforeend', '<span class="material-symbols">fiber_manual_record</span>');
-    div(header, 'routine-editor-recording-title').textContent = 'Watching the room';
+    div(header, 'routine-editor-recording-title').textContent = 'Recording';
     const doneButton = button(header, 'done', _=>stopRoutineRecording());
     doneButton.className = 'routine-editor-recording-done';
-    doneButton.title = 'Stop watching the room';
+    doneButton.title = 'Stop recording';
 
     div(panel, 'routine-editor-recording-hint').textContent = recording.gestures.length
-      ? 'Click a suggestion to add it to this routine. Carry on in the room for the next step.'
-      : 'Drag and click widgets in the room the way the routine should. Each move becomes a list of operations to pick from - the room does not know which reading you meant, so it offers the likely ones.';
+      ? 'Click a suggestion to add it to this routine. Carry on in the room for the next step, or press done when the routine says what you meant.'
+      : 'Drag and click widgets in the room the way the routine should - clicking one records the click instead of selecting it. Each move becomes a list of operations to pick from, because the room does not know which reading you meant. Press done when the routine says what you meant.';
 
     for(const gesture of recording.gestures)
       this.renderRecordedGesture(panel, recording, gesture);
@@ -2271,6 +2272,13 @@ class RoutineEditor {
   renderRecordedGesture(panel, recording, gesture) {
     const gestureDOM = div(panel, 'routine-editor-gesture');
     div(gestureDOM, 'routine-editor-gesture-what').textContent = gesture.label;
+    // a gesture nobody meant is taken off the card rather than lived with: a
+    // slip on the wrong holder otherwise stays in the list until the whole
+    // recording is thrown away, good readings and all
+    const forget = button(gestureDOM, '×', _=>forgetRoutineGesture(gesture));
+    forget.className = 'routine-editor-gesture-forget';
+    forget.title = 'Forget this gesture';
+
     for(const [ index, suggestion ] of gesture.suggestions.entries()) {
       const editor = editorForOperation(suggestion.operation);
       editor.setOperationDetails(this.widget, suggestion.operation, this.variables, this.collections);
@@ -2283,8 +2291,12 @@ class RoutineEditor {
       icon.className = 'material-symbols';
       icon.textContent = added ? 'check' : 'add';
       suggestionDOM.append(icon);
-      div(suggestionDOM, 'routine-editor-suggestion-sentence').textContent = editor.getSentenceText();
+      // what the reading is FOR leads, the operation it would add follows: the
+      // readings of one gesture nearly all start with the same words ("Move 1
+      // widget from deckHolder to ..."), so a card of them is only scannable
+      // by the thing that tells them apart
       div(suggestionDOM, 'routine-editor-suggestion-why').textContent = suggestion.why;
+      div(suggestionDOM, 'routine-editor-suggestion-sentence').textContent = editor.getSentenceText();
       suggestionDOM.title = `Add this operation to the routine (${suggestion.operation.func})`;
       focusable(suggestionDOM, _=>{
         // the same suggestion twice is a routine that does the thing twice,

@@ -88,6 +88,7 @@ function startRoutineRecording(editor) {
   stopRoutineRecording();
   activeRoutineRecording = { editor, widgetID: editor.widgetID, routineKey: editor.routineKey, gestures: [], added: [] };
   $('body').classList.add('editorRoutineRecording');
+  drawRoutineRecordingLabel(editor);
   editor.render();
 }
 
@@ -98,8 +99,45 @@ export function stopRoutineRecording() {
   activeRoutineRecording = null;
   openRoutineGesture = null;
   $('body').classList.remove('editorRoutineRecording');
+  removeRoutineRecordingLabel();
   if(editor.domElement.isConnected)
     editor.render();
+}
+
+// Which routine the room is being recorded into, said in the room. The frame on
+// its own only says "something here is being written down"; the routine it goes
+// into is named in the sidebar, which is scrollable and usually scrolled
+// somewhere else by the time three gestures have been done.
+function drawRoutineRecordingLabel(editor) {
+  removeRoutineRecordingLabel();
+  const area = $('#roomArea');
+  if(!area)
+    return;
+  const label = document.createElement('div');
+  label.id = 'routineRecordingLabel';
+  label.textContent = `recording → ${[ editor.widgetID, editor.routineKey ].filter(Boolean).join(' · ')}`;
+  area.appendChild(label);
+}
+
+function removeRoutineRecordingLabel() {
+  const label = $('#routineRecordingLabel');
+  if(label)
+    label.remove();
+}
+
+// A gesture nobody meant - a slip onto the wrong holder, a drag done only to put
+// the room back the way it was - can be taken off the card. Only the reading of
+// it goes: an operation already added from it stays in the routine, the way
+// anything else added to a routine stays until it is deleted there.
+export function forgetRoutineGesture(gesture) {
+  const recording = routineRecordingState();
+  if(!recording)
+    return;
+  const at = recording.gestures.indexOf(gesture);
+  if(at == -1)
+    return;
+  recording.gestures.splice(at, 1);
+  recording.editor.render();
 }
 
 // A click in the room while a recording runs belongs to the recording, never to
@@ -128,7 +166,7 @@ function routineRecorderWidget(id) {
 export function routineRecorderPointerDown(widget) {
   if(!routineRecordingState() || !widget)
     return;
-  openRoutineGesture = { before: routineRecorderChain(widget), changes: {} };
+  openRoutineGesture = { before: routineRecorderChain(widget), changes: {}, existed: [ ...widgets.keys() ] };
 }
 
 // A delta is part of the gesture unless somebody else made it. Every delta says
@@ -199,6 +237,16 @@ function describeRoutineGesture(raw, collections=[]) {
   if(!before.length)
     return null;
 
+  // A widget the gesture brought into existence has no properties worth
+  // offering: dropping a card on a card makes a pile, and every property that
+  // pile reports (its size, its type) is the room building it rather than
+  // something a routine would ever set. The author never made it and cannot
+  // find it in the room either, so naming it in a suggestion says nothing.
+  const changes = {};
+  for(const id in raw.changes)
+    if(!raw.existed || raw.existed.indexOf(id) != -1)
+      changes[id] = raw.changes[id];
+
   const placeChanged = entry=>entry.parent !== (entry.widget.get('parent') || null)
     || Math.round(entry.x) != Math.round(entry.widget.get('x')) || Math.round(entry.y) != Math.round(entry.widget.get('y'));
   const moved = before.find(placeChanged);
@@ -215,7 +263,7 @@ function describeRoutineGesture(raw, collections=[]) {
     x: Math.round(widget.get('x')),
     y: Math.round(widget.get('y')),
     dragged: Boolean(moved),
-    changes: raw.changes
+    changes
   };
   gesture.reparented = gesture.dragged && gesture.from !== gesture.to;
   gesture.label = routineGestureWords(gesture);
@@ -223,16 +271,28 @@ function describeRoutineGesture(raw, collections=[]) {
   return gesture;
 }
 
+// What to call a widget in the headline. The ids a game is built out of are
+// generated as often as they are chosen - a card is "pyn6" and the pile a
+// holder made around it is "o0ur", neither of which the author ever typed or
+// can find in the room - so the headline says what kind of thing it was as
+// well. A widget with no type of its own (a plain button, a label) is named by
+// its id alone, which is the one an author did choose.
+function routineRecorderName(id) {
+  const widget = routineRecorderWidget(id);
+  const type = widget && widget.get('type');
+  return type && type != 'basic' ? `the ${type} ${id}` : String(id);
+}
+
 function routineRecorderPlace(id) {
-  return id === null ? 'the table' : id;
+  return id === null ? 'the table' : routineRecorderName(id);
 }
 
 function routineGestureWords(gesture) {
   if(gesture.reparented)
-    return `dragged ${gesture.widgetID} from ${routineRecorderPlace(gesture.from)} to ${routineRecorderPlace(gesture.to)}`;
+    return `dragged ${routineRecorderName(gesture.widgetID)} from ${routineRecorderPlace(gesture.from)} to ${routineRecorderPlace(gesture.to)}`;
   if(gesture.dragged)
-    return `dragged ${gesture.widgetID} to ${gesture.x}, ${gesture.y}`;
-  return `clicked ${gesture.widgetID}`;
+    return `dragged ${routineRecorderName(gesture.widgetID)} to ${gesture.x}, ${gesture.y}`;
+  return `clicked ${routineRecorderName(gesture.widgetID)}`;
 }
 
 // the seats whose hand this holder is: dropping a card into a hand is dealing to
@@ -451,8 +511,6 @@ function clickSuggestions(gesture, add) {
     add('give the turn to it', { func: 'TURN', turnCycle: 'seat', turn: widgetID });
   if(type == 'timer')
     add('start it', { func: 'TIMER', timer: widgetID, mode: 'start' });
-
-  add('change a property of it', { func: 'SET', property: '', value: '', collection });
 }
 
 // What the room did by itself while the gesture ran - the properties a holder,

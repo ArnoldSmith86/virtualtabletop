@@ -3976,13 +3976,16 @@ describe('recording a routine from the room', () => {
     editor.domElement.remove();
   });
 
-  test('the button sits next to "add operation" and says what it is doing while it does it', () => {
+  test('the button sits next to "add operation" and shows what it is doing without changing width', () => {
     const record = () => editor.domElement.querySelector('.routine-editor-record-operation');
     expect(record().textContent).toBe('fiber_manual_recordrecord');
     expect(isRoutineRecording()).toBe(false);
     record().click();
     expect(isRoutineRecording()).toBe(true);
-    expect(record().textContent).toBe('fiber_manual_recordrecording…');
+    // the label is the same word armed - only the fill changes, so the button
+    // keeps its width and does not push "add operation" onto a line of its own
+    expect(record().textContent).toBe('fiber_manual_recordrecord');
+    expect(record().classList.contains('recording')).toBe(true);
     expect(document.body.classList.contains('editorRoutineRecording')).toBe(true);
     expect(editor.domElement.querySelector('.routine-editor-recording')).not.toBeNull();
     editor.domElement.querySelector('.routine-editor-recording-done').click();
@@ -4007,11 +4010,30 @@ describe('recording a routine from the room', () => {
     routineRecorderPointerUp();
 
     const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
-    expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged card1 from hand to discard');
+    // the ids of a real game are generated as often as they are chosen, so the
+    // headline says what kind of thing each of them is as well
+    expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged the card card1 from the holder hand to the holder discard');
     expect(sentences[0]).toBe('Move 1 widget from hand to discard');
     expect(sentences).toContain('Move all widgets from hand to discard');
     // nothing before it picked anything, so there is no collection to move
     expect(sentences).not.toContain('Move the picked widgets to discard');
+  });
+
+  test('a gesture nobody meant is taken off the card, and what it already added stays', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'discard', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    card.set('parent', 'discard');
+    routineRecorderPointerUp();
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(1);
+
+    editor.domElement.querySelector('.routine-editor-suggestion').click();
+    editor.domElement.querySelector('.routine-editor-gesture-forget').click();
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(0);
+    expect(isRoutineRecording()).toBe(true); // only that reading goes, not the recording
+    expect(editor.routine).toEqual([ { func: 'MOVE', from: 'hand', to: 'discard', count: 1 } ]);
   });
 
   test('moving "whatever an earlier operation picked" is only offered where something picked', () => {
@@ -4251,6 +4273,22 @@ describe('recording a routine from the room', () => {
     const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
     expect(sentences).toContain('Turn card1 face up');
     expect(sentences).not.toContain('Turn card2 face up');
+  });
+
+  test('a widget the gesture created is not offered as something to set properties on', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    // dropping a card onto a card makes a pile around them, and the pile reports
+    // everything it is as it appears - none of which a routine would ever set
+    roomWidget({ id: 'pile1', type: 'pile', parent: 'hand' });
+    routineRecorderReceiveDelta({ s: { pile1: { width: 103, height: 160 }, card1: { activeFace: 1 } } });
+    card.set('parent', 'pile1');
+    routineRecorderPointerUp();
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences).toContain('Turn card1 face up');
+    expect(sentences).not.toContain('Set width of pile1 to 103');
   });
 
   test('a recording does not outlive the editor it was started in', () => {
