@@ -756,9 +756,15 @@ window.addEventListener('keydown', async function(e) {
 
 async function toggleEditMode() {
   await loadEditMode();
-  if(edit)
+  if(edit) {
     $('body').classList.remove('edit');
-  else
+    // A routine recording watches the room on the editor's behalf and puts a
+    // crosshair over the whole page while it does. Leaving edit mode from the
+    // Active Game tab does not go through the editor's own close (which stops
+    // it along with the widget picker, see properties.js), so it is stopped
+    // here as well - a game being played must not be left under the crosshair.
+    stopRoutineRecording();
+  } else
     $('body').classList.add('edit');
   edit = !edit;
   resetZoomAndPan();

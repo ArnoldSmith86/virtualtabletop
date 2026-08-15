@@ -21,6 +21,7 @@ beforeAll(() => {
   window.widgetFilter = filter => [ ...window.widgets.values() ].filter(filter);
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
+  window.getPlayerDetails = () => ({ playerName: 'Alice' }); // the recorder tells its own deltas from other players'
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
   // the validator tables are part of the editor bundle; the property proposals read them
@@ -4009,7 +4010,27 @@ describe('recording a routine from the room', () => {
     expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged card1 from hand to discard');
     expect(sentences[0]).toBe('Move 1 widget from hand to discard');
     expect(sentences).toContain('Move all widgets from hand to discard');
+    // nothing before it picked anything, so there is no collection to move
+    expect(sentences).not.toContain('Move the picked widgets to discard');
+  });
+
+  test('moving "whatever an earlier operation picked" is only offered where something picked', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'discard', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    const widget = { state: { id: 'button3' }, get: p => ({ id: 'button3' })[p] || null };
+    const withSelect = new RoutineEditor(widget, [ { func: 'SELECT', type: 'card' } ]);
+    document.getElementById('editor').append(withSelect.domElement);
+    expect(withSelect.collectionsInScope()).toContain('DEFAULT');
+
+    startRoutineRecording(withSelect);
+    routineRecorderPointerDown(card);
+    card.set('parent', 'discard');
+    routineRecorderPointerUp();
+
+    const sentences = [ ...withSelect.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
     expect(sentences).toContain('Move the picked widgets to discard');
+    withSelect.domElement.remove();
   });
 
   test('dropping into a hand offers dealing to that seat and to every player', () => {
@@ -4065,6 +4086,41 @@ describe('recording a routine from the room', () => {
     // the drag itself is what the move says - it is not also a "Set parent of"
     expect(suggested.filter(o => o.func == 'SET').map(o => o.property)).not.toContain('parent');
     expect(suggested.filter(o => o.func == 'SET').map(o => o.property)).not.toContain('x');
+  });
+
+  test('what the room did survives a gesture that has more readings than fit', () => {
+    // the ordinary dealing gesture in a room with seats: it alone reads more ways
+    // than the list is long, and what the hand did to the card as it went in must
+    // not be what falls off the end
+    roomWidget({ id: 'deckHolder', type: 'holder' });
+    roomWidget({ id: 'deck1', type: 'deck', parent: 'deckHolder' });
+    for(const seat of [ 1, 2, 3 ]) {
+      roomWidget({ id: `hand-p${seat}`, type: 'holder' });
+      roomWidget({ id: `seat-p${seat}`, type: 'seat', hand: `hand-p${seat}` });
+    }
+    roomWidget({ id: 'card1', type: 'card' });
+    const suggestions = routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'deckHolder', to: 'hand-p1', reparented: true,
+      changes: { card1: { activeFace: 1, rotation: 90, parent: 'hand-p1' } }
+    }));
+    const suggested = operations(suggestions);
+    expect(suggestions.length).toBeLessThanOrEqual(8);
+    expect(suggested).toContainEqual({ func: 'MOVE', from: 'deckHolder', to: 'hand-p1', count: 1 });
+    expect(suggested).toContainEqual({ func: 'FLIP', collection: [ 'card1' ], face: 1 });
+    expect(suggested).toContainEqual({ func: 'ROTATE', collection: [ 'card1' ], mode: 'set', angle: 90 });
+  });
+
+  test('taking a widget out onto the table offers the position that keeps it there', () => {
+    roomWidget({ id: 'pile1', type: 'pile' });
+    roomWidget({ id: 'card1', type: 'card', parent: 'pile1' });
+    // x and y are counted from the parent, so dropping the parent alone would put
+    // the widget wherever those coordinates land in the room instead
+    const suggested = operations(routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'pile1', to: null, reparented: true, x: 300, y: 200
+    })));
+    expect(suggested).toContainEqual({ func: 'SET', property: 'parent', value: null, collection: [ 'card1' ] });
+    expect(suggested).toContainEqual({ func: 'SET', property: 'x', value: 300, collection: [ 'card1' ] });
+    expect(suggested).toContainEqual({ func: 'SET', property: 'y', value: 200, collection: [ 'card1' ] });
   });
 
   test('a click offers the ways a routine does what a click does', () => {
@@ -4144,6 +4200,34 @@ describe('recording a routine from the room', () => {
     routineRecorderPointerUp();
     const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
     expect(sentences).toContain('Turn card1 face down');
+  });
+
+  test('what another player does at the same time is not part of the gesture', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'table', type: 'holder' });
+    roomWidget({ id: 'card2', type: 'card' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    routineRecorderReceiveDelta({ s: { card2: { activeFace: 1 } }, c: 'Bob dragged card2' });
+    routineRecorderReceiveDelta({ s: { card1: { activeFace: 1 } }, c: 'Alice dragged card1' });
+    card.set('parent', 'table');
+    routineRecorderPointerUp();
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences).toContain('Turn card1 face up');
+    expect(sentences).not.toContain('Turn card2 face up');
+  });
+
+  test('a recording does not outlive the editor it was started in', () => {
+    startRoutineRecording(editor);
+    expect(document.body.classList.contains('editorRoutineRecording')).toBe(true);
+    // what the properties module does when it closes: the routine editor goes
+    // with the sidebar, and leaving edit mode only display:none's the editor, so
+    // nothing else would take the crosshair and the frame off the room again
+    editor.domElement.remove();
+    stopRoutineRecording();
+    expect(isRoutineRecording()).toBe(false);
+    expect(document.body.classList.contains('editorRoutineRecording')).toBe(false);
   });
 
   test('only one routine is recorded at a time - starting another one moves it there', () => {

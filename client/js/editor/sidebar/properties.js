@@ -1873,6 +1873,10 @@ class PropertiesModule extends SidebarModule {
     // controls they are anchored to just like moving on to another widget does -
     // so they go the same way, and the picks they run in the room with them.
     stopWidgetPicker();
+    // and so does a routine recording, for the same reason: it lives in a
+    // routine editor of this module, and an armed one keeps the crosshair and
+    // the frame around the room over a game that is being played again
+    stopRoutineRecording();
     closeEditorPopups();
   }
 

@@ -91,7 +91,7 @@ function startRoutineRecording(editor) {
   editor.render();
 }
 
-function stopRoutineRecording() {
+export function stopRoutineRecording() {
   if(!activeRoutineRecording)
     return;
   const editor = activeRoutineRecording.editor;
@@ -131,11 +131,24 @@ export function routineRecorderPointerDown(widget) {
   openRoutineGesture = { before: routineRecorderChain(widget), changes: {} };
 }
 
+// A delta is part of the gesture unless somebody else made it. Every delta says
+// who caused it (setDeltaCause in serverstate.js writes "<player> dragged x"),
+// and another player moving something across the table while the author drags a
+// card is not part of what the author just did. A delta with no cause at all
+// counts: the cause is dropped again after every flush, so the second half of a
+// drop that flushes twice arrives without one.
+function routineRecorderOwnDelta(delta) {
+  if(typeof delta.c != 'string')
+    return true;
+  const player = String((getPlayerDetails() || {}).playerName || '');
+  return Boolean(player) && delta.c.substr(0, player.length+1) == `${player} `;
+}
+
 // What changed while the gesture was running, taken from the deltas rather than
 // from a snapshot of the whole room: a holder that turns a card face up as it
 // enters is the one part of a drag the drag itself does not say.
 function routineRecorderReceiveDelta(delta) {
-  if(!openRoutineGesture || !delta || !delta.s)
+  if(!openRoutineGesture || !delta || !delta.s || !routineRecorderOwnDelta(delta))
     return;
   for(const id in delta.s) {
     const properties = delta.s[id];
@@ -151,7 +164,7 @@ export function routineRecorderPointerUp() {
   openRoutineGesture = null;
   if(!recording || !raw)
     return;
-  const gesture = describeRoutineGesture(raw);
+  const gesture = describeRoutineGesture(raw, collectionsAroundRecording(recording));
   if(!gesture || !gesture.suggestions.length)
     return;
   recording.gestures.push(gesture);
@@ -170,11 +183,18 @@ function scrollRoutineRecordingIntoView(editor) {
     last.scrollIntoView({ block: 'nearest' });
 }
 
+// the collections an operation added by this recording could read - see
+// RoutineEditor.collectionsInScope()
+function collectionsAroundRecording(recording) {
+  const editor = recording.editor;
+  return editor && editor.collectionsInScope ? editor.collectionsInScope() : [];
+}
+
 // What the gesture did, in the terms the suggestions are built from. The widget
 // that moved is the first one up the chain whose place changed - a press on a
 // card pinned to a board drags the board - and a gesture that moved nothing at
 // all is a click on the widget the press landed on.
-function describeRoutineGesture(raw) {
+function describeRoutineGesture(raw, collections=[]) {
   const before = raw.before.filter(entry=>routineRecorderWidget(entry.id) === entry.widget);
   if(!before.length)
     return null;
@@ -199,7 +219,7 @@ function describeRoutineGesture(raw) {
   };
   gesture.reparented = gesture.dragged && gesture.from !== gesture.to;
   gesture.label = routineGestureWords(gesture);
-  gesture.suggestions = routineGestureSuggestions(gesture);
+  gesture.suggestions = routineGestureSuggestions(gesture, collections);
   return gesture;
 }
 
@@ -250,33 +270,56 @@ function changedDuringGesture(gesture, id, property) {
   return changes && typeof changes == 'object' ? changes[property] : undefined;
 }
 
+// how many suggestions one gesture is worth reading through before the card
+// stops being a list and becomes a wall
+const routineSuggestionLimit = 8;
+
 // Every reading of a gesture worth offering, in the order they are worth looking
 // at: what was literally just done first, then the ways a routine generalizes it
 // (all of them instead of one, every player instead of the one dropped on), then
 // what those two widgets are usually asked to do next.
-function routineGestureSuggestions(gesture) {
-  const suggestions = [];
-  const seen = [];
-  const add = (why, operation)=>{
-    const key = JSON.stringify(operation);
-    if(seen.indexOf(key) != -1 || suggestions.length >= 8)
-      return;
-    seen.push(key);
-    suggestions.push({ why, operation });
-  };
+//
+// The two kinds are collected apart so that the limit can prefer what the room
+// did on its own over the readings of the gesture: a room with seats in it makes
+// the ordinary dealing gesture produce more readings than fit, and the reading
+// that would fall off the end is the one watching the pointer could never
+// produce - "the hand turned the card face up as it went in". Half the list is
+// kept for those, and whatever they leave unused goes back to the gesture.
+function routineGestureSuggestions(gesture, collections=[]) {
+  const fromGesture = [];
+  const fromRoom = [];
+  const into = list=>((why, operation)=>list.push({ why, operation }));
 
   if(gesture.reparented)
-    reparentSuggestions(gesture, add);
+    reparentSuggestions(gesture, into(fromGesture), collections);
   else if(gesture.dragged)
-    repositionSuggestions(gesture, add);
+    repositionSuggestions(gesture, into(fromGesture));
   else
-    clickSuggestions(gesture, add);
+    clickSuggestions(gesture, into(fromGesture));
+  propertySuggestions(gesture, into(fromRoom));
 
-  propertySuggestions(gesture, add);
+  const suggestions = [];
+  const seen = [];
+  const take = (list, limit)=>{
+    for(const suggestion of list) {
+      if(suggestions.length >= limit)
+        return;
+      const key = JSON.stringify(suggestion.operation);
+      if(seen.indexOf(key) != -1)
+        continue;
+      seen.push(key);
+      suggestions.push(suggestion);
+    }
+  };
+
+  const roomShare = Math.min(fromRoom.length, Math.floor(routineSuggestionLimit/2));
+  take(fromGesture, routineSuggestionLimit - roomShare);
+  take(fromRoom, routineSuggestionLimit);
+  take(fromGesture, routineSuggestionLimit);
   return suggestions;
 }
 
-function reparentSuggestions(gesture, add) {
+function reparentSuggestions(gesture, add, collections=[]) {
   const { from, to, widgetID } = gesture;
   const face = changedDuringGesture(gesture, widgetID, 'activeFace');
 
@@ -287,7 +330,13 @@ function reparentSuggestions(gesture, add) {
       add('take one out onto the table', { func: 'MOVEXY', from, count: 1, x: gesture.x, y: gesture.y });
       add('take all of them out', { func: 'MOVEXY', from, count: 'all', x: gesture.x, y: gesture.y });
     }
+    // x and y are counted from whatever the widget is in, so taking it out on
+    // its own drops it wherever its old coordinates land in the room. The two
+    // that follow are what makes it stay where it was let go of - which is why
+    // they say "and", the way the clauses of one gesture do.
     add('just take it out of whatever it is in', { func: 'SET', property: 'parent', value: null, collection: [ widgetID ] });
+    add('and put it exactly there', { func: 'SET', property: 'x', value: gesture.x, collection: [ widgetID ] });
+    add('and at that height', { func: 'SET', property: 'y', value: gesture.y, collection: [ widgetID ] });
     return;
   }
 
@@ -321,7 +370,12 @@ function reparentSuggestions(gesture, add) {
     add('gather every card back where it came from', { func: 'RECALL', holder: from });
   if(isHolderLike(to))
     add('shuffle what is in there afterwards', { func: 'SHUFFLE', holder: to });
-  add('move whatever an earlier operation picked', { func: 'MOVE', to });
+  // "whatever an earlier operation picked" is the DEFAULT collection, which only
+  // exists once something in the routine before this point has filled it -
+  // offering it anywhere else writes an operation that is an error as soon as it
+  // is added ("no input given and collection DEFAULT is undefined")
+  if(collections.indexOf('DEFAULT') != -1)
+    add('move whatever an earlier operation picked', { func: 'MOVE', to });
 }
 
 function repositionSuggestions(gesture, add) {

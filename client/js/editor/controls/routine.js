@@ -2200,8 +2200,24 @@ class RoutineEditor {
   // where an added operation goes: right after the card that was worked on last,
   // so a routine is built in the order it runs; at the end when that card is the
   // last one anyway
+  insertionIndex() {
+    return activeRoutineOperation && activeRoutineOperation.routine === this.routine ? Math.min(activeRoutineOperation.index+1, this.routine.length) : this.routine.length;
+  }
+
+  // The collections an operation added there could read: the ones the routine
+  // starts with plus the ones the operations before that point define. The
+  // recorder asks before offering an operation that works on "whatever an
+  // earlier operation picked" - one that reads a collection nothing filled is an
+  // error the moment it lands in the routine.
+  collectionsInScope() {
+    const collections = [ ...this.collections ];
+    for(const operation of this.operations.slice(0, this.insertionIndex()))
+      collections.push(...operation.getDefinedCollections());
+    return [ ...new Set(collections.filter(c=>typeof c == 'string')) ];
+  }
+
   addOperation(values) {
-    const at = activeRoutineOperation && activeRoutineOperation.routine === this.routine ? Math.min(activeRoutineOperation.index+1, this.routine.length) : this.routine.length;
+    const at = this.insertionIndex();
     this.routine.splice(at, 0, typeof values == 'string' ? values : JSON.parse(JSON.stringify(values)));
     this.setActiveOperation(at); // the new operation is where the next one follows
     this.routineChanged();
