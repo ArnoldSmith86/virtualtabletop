@@ -686,13 +686,15 @@ const nonSVGCache = {};
 // nothing about what it is, so every caller decides for itself what to assume then. The SVG
 // replacement editor asks the same question about the same file and goes through here too.
 export async function fetchSVG(url) {
-  const response = await fetch(mapAssetURLs(url));
+  const mappedURL = mapAssetURLs(url);
+  const response = await fetch(mappedURL);
   if(!response.ok)
     throw new Error(`Loading ${url} failed with status ${response.status}.`);
-  // both /assets/<hash> and /i/**.svg answer with a content type, and a bitmap saying so is the
-  // common case - no reason to pull a multi-megabyte PNG through the wire and decode it as text
-  // just to find no <svg> in it
-  const contentType = response.headers.get('content-type') || '';
+  // /assets/<hash> and /i/** are served by vtt itself, so their content type can be trusted, and a
+  // bitmap saying so is the common case - no reason to pull a multi-megabyte PNG through the wire
+  // and decode it as text just to find no <svg> in it. Everywhere else the header is whatever a
+  // foreign host claims, and an SVG mislabeled as a bitmap used to work, so there the bytes decide.
+  const contentType = /^(assets|i)\//.test(mappedURL) ? response.headers.get('content-type') || '' : '';
   if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
     if(response.body && response.body.cancel)
       response.body.cancel();

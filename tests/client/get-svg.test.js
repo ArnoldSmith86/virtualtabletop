@@ -61,6 +61,15 @@ test('a bitmap is recognized by its content type without being read as text', as
   expect(fetched).toEqual([ 'assets/4_4', 'cancelled' ]);
 });
 
+test('an SVG that a foreign host mislabels as a bitmap is still recognized by its bytes', async () => {
+  // only vtt's own /assets/ and /i/ routes are trusted to say what they serve - anywhere else a
+  // misconfigured host that answers image/png for an SVG has to keep working like it always did
+  const fetched = mockFetch('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#000000"/></svg>', 'image/png');
+  const image = await loadImage('https://example.com/board.svg', { '#000000': '#ff0000' });
+  expect(decodeURIComponent(image)).toContain('fill="#ff0000"');
+  expect(fetched).toEqual([ 'https://example.com/board.svg', 'read as text' ]);
+});
+
 test('an image that cannot be loaded at all is used as it is', async () => {
   // fetch() rejects for an external URL blocked by CORS - which the browser still displays fine
   // as a background-image, so the widget has to end up with the plain URL rather than with nothing
