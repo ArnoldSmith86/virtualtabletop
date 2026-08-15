@@ -38,13 +38,15 @@ let openRoutineGesture = null;
 
 let routineGestureCounter = 0;
 
-// properties that change on their own during any drag, or that the suggestions
-// already say in words of their own: a card that ends up in another holder is a
-// MOVE, not a "Set parent of card1 to discard"
+// properties that change on their own during any drag, that the suggestions
+// already say in words of their own - a card that ends up in another holder is a
+// MOVE, not a "Set parent of card1 to discard" - or that only exist to drive the
+// engine: rollCount is what makes a die that lands on the face it already showed
+// still roll on screen, and a routine that sets it says nothing about the game.
 const routineRecorderIgnoredProperties = [
   'id', 'type', 'deck', 'cardType', 'parent', 'x', 'y', 'z', 'owner',
   'dragging', 'hoverTarget', 'hoverParent', 'dropShadowWidget', 'dropShadowOwner',
-  'movedByButton', 'onlyVisibleForSeat', 'linkedToSeat'
+  'movedByButton', 'onlyVisibleForSeat', 'linkedToSeat', 'rollCount'
 ];
 
 export function isRoutineRecording() {
@@ -145,8 +147,20 @@ export function forgetRoutineGesture(gesture) {
 // the suggestions are in, and running its click routine would play the game
 // instead of describing it. The gesture itself is taken by the pointer hooks
 // below, which see the release whether this swallowed the click or not.
+//
+// This is also where the recording learns that the release was a click at all.
+// Whether a press-release is one is the engine's call, not the recorder's: a
+// release under 10px and 250ms is a click even though every mousemove on the way
+// really did move the widget (see mousehandling.js), so a hand that shakes by
+// two pixels must still record "clicked the die", not "dragged it to 402, 301".
+// This runs from exactly the branch that decided so, and before the release
+// reaches routineRecorderPointerUp().
 function handleRoutineRecorderClick() {
-  return Boolean(routineRecordingState());
+  if(!routineRecordingState())
+    return false;
+  if(openRoutineGesture)
+    openRoutineGesture.clicked = true;
+  return true;
 }
 
 // the widget the press landed on plus its ancestors: a press on a widget that is
@@ -249,9 +263,13 @@ function describeRoutineGesture(raw, collections=[]) {
 
   const placeChanged = entry=>entry.parent !== (entry.widget.get('parent') || null)
     || Math.round(entry.x) != Math.round(entry.widget.get('x')) || Math.round(entry.y) != Math.round(entry.widget.get('y'));
-  const moved = before.find(placeChanged);
+  // whether this was a click is the engine's answer (see handleRoutineRecorderClick);
+  // the coordinates are only asked when the release never reached it, because it
+  // happened over the sidebar or an overlay rather than over the room
+  const moved = raw.clicked ? null : before.find(placeChanged);
   const subject = moved || before[0];
   const widget = subject.widget;
+  const destination = routineRecorderDestination(widget);
 
   const gesture = {
     key: ++routineGestureCounter,
@@ -259,9 +277,9 @@ function describeRoutineGesture(raw, collections=[]) {
     widgetID: subject.id,
     type: widget.get('type') || 'basic',
     from: subject.parent,
-    to: widget.get('parent') || null,
-    x: Math.round(widget.get('x')),
-    y: Math.round(widget.get('y')),
+    to: destination.to,
+    x: destination.x,
+    y: destination.y,
     dragged: Boolean(moved),
     changes
   };
@@ -269,6 +287,29 @@ function describeRoutineGesture(raw, collections=[]) {
   gesture.label = routineGestureWords(gesture);
   gesture.suggestions = routineGestureSuggestions(gesture, collections);
   return gesture;
+}
+
+// Where the drag put the widget, in terms an operation can name. Dropping a card
+// onto a card puts it into a pile the drop invents (see updatePiles): that pile
+// is gone again as soon as it holds one card, and no operation takes one as a
+// destination anyway - MOVE moves widgets into holders and seats. So a
+// destination that is not one of those is read as the place it stands in, at the
+// coordinates it stands at: stacking two cards on the table means "put it there",
+// not "put it into o0ur", and stacking them inside a holder means the card never
+// left that holder.
+function routineRecorderDestination(widget) {
+  let place = widget.get('parent') || null;
+  let x = widget.get('x') || 0;
+  let y = widget.get('y') || 0;
+  // x and y are counted from whatever the widget is in, so a place further up
+  // the chain is only reached by adding what stands between them
+  for(let steps = 0; steps < 10 && place !== null && !isHolderLike(place); steps++) {
+    const container = routineRecorderWidget(place);
+    x += container ? container.get('x') || 0 : 0;
+    y += container ? container.get('y') || 0 : 0;
+    place = container ? container.get('parent') || null : null;
+  }
+  return { to: isHolderLike(place) ? place : null, x: Math.round(x), y: Math.round(y) };
 }
 
 // What to call a widget in the headline. The ids a game is built out of are
@@ -474,8 +515,11 @@ function diceFaceValue(widget, face) {
   return value === undefined || value === null || typeof value == 'object' ? null : String(value);
 }
 
+// a die that has no faces yet - one just added to the room, one whose faces are
+// still being typed - counts them modulo zero, which is not a face to put it on
 function diceActiveFace(widget) {
-  return typeof widget.activeFace == 'function' ? widget.activeFace() : Math.round(widget.get('activeFace')) || 0;
+  const face = typeof widget.activeFace == 'function' ? widget.activeFace() : Math.round(widget.get('activeFace'));
+  return Number.isFinite(face) ? face : 0;
 }
 
 function clickSuggestions(gesture, add) {
@@ -527,12 +571,13 @@ function propertySuggestions(gesture, add) {
         continue;
       const value = changes[property];
       const collection = [ id ];
-      // a die has no flip() of its own, so FLIP passes over it - what puts one
-      // on a face is setting the face
-      if(property == 'activeFace' && typeof value == 'number' && widget.get('type') == 'dice')
-        add(`${id} ended up on that face`, { func: 'SET', property, value, collection });
-      else if(property == 'activeFace' && typeof value == 'number')
-        add(`${id} ended up on that face`, { func: 'FLIP', collection, face: value });
+      // FLIP only turns over what has a flip() of its own (a card, a basic
+      // widget); it passes silently over a die or a spinner, whose faces are
+      // reached by setting the face instead
+      if(property == 'activeFace' && typeof value == 'number')
+        add(`${id} ended up on that face`, typeof widget.flip == 'function'
+          ? { func: 'FLIP', collection, face: value }
+          : { func: 'SET', property, value, collection });
       else if(property == 'rotation' && typeof value == 'number')
         add(`${id} ended up turned that way`, { func: 'ROTATE', collection, mode: 'set', angle: value });
       else if(value === null || [ 'string', 'number', 'boolean' ].indexOf(typeof value) != -1)
