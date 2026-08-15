@@ -393,9 +393,44 @@ function repositionSuggestions(gesture, add) {
   }
 }
 
+// Rolling a die is the one thing a routine does by clicking rather than by an
+// operation of its own: a die that is clicked and has nothing else to do rolls
+// (see Dice.click). So the roll IS the click, told to leave out whatever would
+// stop it - a click routine the author gave the die instead, or a die players
+// are not allowed to click at all.
+function diceRollOperation(widget, collection) {
+  const routine = Array.isArray(widget.get('clickRoutine'));
+  const clickable = Boolean(widget.get('clickable'));
+  const mode = routine && !clickable ? 'ignoreAll' : routine ? 'ignoreClickRoutine' : !clickable ? 'ignoreClickable' : null;
+  return mode ? { func: 'CLICK', collection, mode } : { func: 'CLICK', collection };
+}
+
+// what the die shows on that face, for the aside next to the operation:
+// activeFace counts the faces from 0, and a die nearly always has something
+// else printed on them
+function diceFaceValue(widget, face) {
+  const values = typeof widget.getValueMap == 'function' ? widget.getValueMap() : [];
+  const value = values[face];
+  return value === undefined || value === null || typeof value == 'object' ? null : String(value);
+}
+
+function diceActiveFace(widget) {
+  return typeof widget.activeFace == 'function' ? widget.activeFace() : Math.round(widget.get('activeFace')) || 0;
+}
+
 function clickSuggestions(gesture, add) {
   const { widgetID, type, widget } = gesture;
   const collection = [ widgetID ];
+
+  // Clicking a die rolls it and setting its face puts it on one on purpose, so
+  // both are offered in those words - and before the plain click below, which
+  // for a die is the same operation under a name that never says "roll".
+  if(type == 'dice') {
+    add('roll it the way clicking it does', diceRollOperation(widget, collection));
+    const face = diceActiveFace(widget);
+    const shows = diceFaceValue(widget, face);
+    add(`put it on a face instead of rolling it${shows === null ? '' : ` - it is showing ${shows}`}`, { func: 'SET', property: 'activeFace', value: face, collection });
+  }
 
   add('click it the way a player would', { func: 'CLICK', collection });
   if(Array.isArray(widget.get('clickRoutine')))
@@ -426,14 +461,19 @@ function clickSuggestions(gesture, add) {
 function propertySuggestions(gesture, add) {
   for(const id in gesture.changes) {
     const changes = gesture.changes[id];
-    if(!changes || typeof changes != 'object' || !routineRecorderWidget(id))
+    const widget = routineRecorderWidget(id);
+    if(!changes || typeof changes != 'object' || !widget)
       continue;
     for(const property in changes) {
       if(routineRecorderIgnoredProperties.indexOf(property) != -1 || property.charAt(0) == '_' || property.match(/Routine$/))
         continue;
       const value = changes[property];
       const collection = [ id ];
-      if(property == 'activeFace' && typeof value == 'number')
+      // a die has no flip() of its own, so FLIP passes over it - what puts one
+      // on a face is setting the face
+      if(property == 'activeFace' && typeof value == 'number' && widget.get('type') == 'dice')
+        add(`${id} ended up on that face`, { func: 'SET', property, value, collection });
+      else if(property == 'activeFace' && typeof value == 'number')
         add(`${id} ended up on that face`, { func: 'FLIP', collection, face: value });
       else if(property == 'rotation' && typeof value == 'number')
         add(`${id} ended up turned that way`, { func: 'ROTATE', collection, mode: 'set', angle: value });

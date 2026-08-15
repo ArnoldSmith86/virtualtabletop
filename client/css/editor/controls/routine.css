@@ -506,29 +506,39 @@ body.edit.darkMode .routine-editor-parameter-missing {
   gap: 4px;
 }
 
+/* the button is the shape of "add operation" next to it (see events.css), so
+   the dot is the only thing that makes it the record button - it carries the
+   recorder's red the panel and the room frame are drawn in */
 .routine-editor-record-operation .material-symbols {
   font-size: 15px;
   vertical-align: -3px;
   margin-right: 3px;
-  /* the recorder's red lightened until it carries on the blue of a button - the
-     dark one this red is elsewhere disappears into it */
-  color: #ff8a80;
+  color: var(--routineRecordColor);
 }
 
-/* armed, the whole button is the red of what it is doing rather than one more
-   blue button among the others: the room is being watched, and that has to be
-   visible from wherever in the sidebar the eye happens to be */
+/* armed, the whole button is filled with the red of what it is doing rather
+   than staying one more outline among the others: the room is being watched,
+   and that has to be visible from wherever in the sidebar the eye happens to
+   be. Only the fill changes - the box stays the size it was, so pressing it
+   does not shift the row it is in. */
 .routine-editor-record-operation.recording {
-  background-color: var(--routineRecordColor);
+  background: var(--routineRecordColor);
+  border-color: var(--routineRecordColor);
+  /* the record red is a dark one on the light theme and a light one on the
+     dark theme, so what reads on it is the page it is drawn on either way */
+  color: var(--backgroundColor);
+  opacity: 1;
   font-weight: bold;
 }
 
 .routine-editor-record-operation.recording:hover {
-  background-color: #8e1e1e;
+  filter: brightness(0.85);
+  border-color: var(--routineRecordColor);
+  color: var(--backgroundColor);
 }
 
 .routine-editor-record-operation.recording .material-symbols {
-  color: white;
+  color: var(--backgroundColor);
   animation: routineRecordBlink 1.4s ease-in-out infinite;
 }
 

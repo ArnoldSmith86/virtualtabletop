@@ -4133,6 +4133,39 @@ describe('recording a routine from the room', () => {
     expect(holder).toContainEqual({ func: 'SHUFFLE', holder: 'h1' });
   });
 
+  test('clicking a die offers rolling it and putting it on a face', () => {
+    roomWidget({ id: 'die1', type: 'dice', clickable: true, activeFace: 2 });
+    const suggested = routineGestureSuggestions(gesture({ widgetID: 'die1', type: 'dice', dragged: false }));
+    // rolling a die is what clicking one does - there is no operation for it
+    expect(operations(suggested)).toContainEqual({ func: 'CLICK', collection: [ 'die1' ] });
+    expect(operations(suggested)).toContainEqual({ func: 'SET', property: 'activeFace', value: 2, collection: [ 'die1' ] });
+    expect(suggested[0].why).toContain('roll');
+  });
+
+  test('a die that has something else to do when clicked still rolls by leaving that out', () => {
+    roomWidget({ id: 'die1', type: 'dice', clickable: true, clickRoutine: [ { func: 'FLIP' } ] });
+    const withRoutine = operations(routineGestureSuggestions(gesture({ widgetID: 'die1', type: 'dice', dragged: false })));
+    expect(withRoutine).toContainEqual({ func: 'CLICK', collection: [ 'die1' ], mode: 'ignoreClickRoutine' });
+    // and the same for a die players are not allowed to click at all
+    roomWidget({ id: 'die2', type: 'dice', clickable: false });
+    const unclickable = operations(routineGestureSuggestions(gesture({ widgetID: 'die2', type: 'dice', dragged: false })));
+    expect(unclickable).toContainEqual({ func: 'CLICK', collection: [ 'die2' ], mode: 'ignoreClickable' });
+  });
+
+  test('a die the room rolled during the gesture is set to that face, not flipped to it', () => {
+    roomWidget({ id: 'table', type: 'holder' });
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'die1', type: 'dice' });
+    roomWidget({ id: 'card1', type: 'card' });
+    const suggested = operations(routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'hand', to: 'table', reparented: true,
+      changes: { die1: { activeFace: 4 } }
+    })));
+    // FLIP has no effect on a die: Dice has no flip() for it to call
+    expect(suggested).toContainEqual({ func: 'SET', property: 'activeFace', value: 4, collection: [ 'die1' ] });
+    expect(suggested).not.toContainEqual({ func: 'FLIP', collection: [ 'die1' ], face: 4 });
+  });
+
   test('every suggestion reads as a finished sentence, with nothing of the template left in it', () => {
     roomWidget({ id: 'hand', type: 'holder' });
     roomWidget({ id: 'deckHolder', type: 'holder' });
@@ -4140,12 +4173,14 @@ describe('recording a routine from the room', () => {
     roomWidget({ id: 'seat-p1', type: 'seat', hand: 'hand' });
     roomWidget({ id: 'card1', type: 'card', parent: 'deckHolder' });
     roomWidget({ id: 'timer1', type: 'timer' });
+    roomWidget({ id: 'die1', type: 'dice', clickable: true });
     const gestures = [
       gesture({ widgetID: 'card1', from: 'deckHolder', to: 'hand', reparented: true }),
       gesture({ widgetID: 'card1', from: 'hand', to: null, reparented: true, x: 300, y: 200 }),
       gesture({ widgetID: 'card1', from: null, to: null, x: 300, y: 200 }),
       gesture({ widgetID: 'card1', dragged: false }),
-      gesture({ widgetID: 'timer1', type: 'timer', dragged: false })
+      gesture({ widgetID: 'timer1', type: 'timer', dragged: false }),
+      gesture({ widgetID: 'die1', type: 'dice', dragged: false })
     ];
     for(const g of gestures) {
       const suggestions = routineGestureSuggestions(g);

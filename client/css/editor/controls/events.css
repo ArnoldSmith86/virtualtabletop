@@ -241,9 +241,13 @@ body.edit.darkMode .events-editor-property-key {
   opacity: 1;
 }
 
-/* one shape for every "add something" in the panel: lowercase, dashed outline */
+/* one shape for every "add something" in the panel: lowercase, dashed outline.
+   "record" is one of them: it is the other way to get an operation into a
+   routine, so it is the same button as "add operation" next to it and says
+   what it does with its dot rather than with a shape of its own */
 .events-editor-add,
-.routine-editor-add-operation {
+.routine-editor-add-operation,
+.routine-editor-record-operation {
   align-self: flex-start;
   border: 1px dashed var(--backgroundHighlightColor1);
   border-radius: 4px;
@@ -256,7 +260,8 @@ body.edit.darkMode .events-editor-property-key {
 }
 
 .events-editor-add:hover,
-.routine-editor-add-operation:hover {
+.routine-editor-add-operation:hover,
+.routine-editor-record-operation:hover {
   border-color: var(--VTTblue);
   color: var(--VTTblue);
   opacity: 1;
