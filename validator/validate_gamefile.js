@@ -888,11 +888,21 @@ const operationProps = {
         'seconds': v=>typeof v === 'number' || typeof v === 'string' && /^-?\d+:\d+(\.\d+)?$/.test(v)
     },
     'TURN': {
-        // with turnCycle 'seat', turn names the seat to give the turn to by its
-        // widget id instead of counting seats (see TURN in client/js/widgets/widget.js)
-        'turn': (v, context)=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last'
-            || typeof v === 'string' && Boolean((context.widgets || {})[v])
-            || `'${v}' is neither a whole number, 'first', 'last' nor the id of a seat`,
+        // with turnCycle 'seat', turn names the seat to give the turn to by its widget
+        // id instead of counting seats, and nothing else works there - the engine looks
+        // the id up among the seats and falls back to the first one when it finds none
+        // (see TURN in client/js/widgets/widget.js)
+        'turn': (v, context)=>{
+            const turnCycle = context.operation.turnCycle;
+            if(typeof turnCycle === 'string' && turnCycle.includes('${'))
+                return true;
+            if(turnCycle === 'seat') {
+                const result = getWidgetTypeValidator([ 'seat' ])(v, context);
+                return result === true || `${result} - with turnCycle 'seat', turn gives the turn to the seat with that id`;
+            }
+            return typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last'
+                || `'${v}' is neither a whole number, 'first' nor 'last' - turn names a seat by its id only with turnCycle 'seat'`;
+        },
         'turnCycle': getEnumValidator(['forward','backward','random','position','seat']),
         'source': 'inCollection',
         'collection': 'string'
@@ -912,14 +922,6 @@ function customRoutineChecks(operation, problems, context, operationPath) {
             widget: context.widgetId,
             property: operationPath,
             message: 'IF uses both operand1 and condition - did you mean to use relation instead?'
-        });
-    }
-    if(operation.func === 'TURN' && typeof operation.turn === 'string' && !['first', 'last'].includes(operation.turn)
-            && !operation.turn.includes('${') && operation.turnCycle !== 'seat') {
-        problems.push({
-            widget: context.widgetId,
-            property: operationPath,
-            message: `TURN reads 'turn' as the id of a seat only with turnCycle 'seat' - otherwise it takes a whole number, 'first' or 'last'`
         });
     }
 }
