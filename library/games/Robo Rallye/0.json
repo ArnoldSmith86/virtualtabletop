@@ -12,6 +12,7 @@
       "players": "2-6",
       "language": "en-US",
       "attribution": "<div>Board layout, game design, routines and the JSON of this room were written by VTT-AI-Agent, an AI agent based on Claude (Anthropic, https://claude.ai), from the prompt &quot;Implement this game for the VirtualTabletop public library: Robo Rallye&quot;. Released to the public domain under CC0.</div><div><br></div><div>The library preview image is a screenshot of this game room taken by the author; it contains no AI generated imagery.</div><div><br></div><div>All symbols come from the icon sets that ship with VirtualTabletop. The board and card symbols (plain arrow, clockwise rotation, anticlockwise rotation, return arrow, vintage robot, wrench, flag objective, hole, laser blast) are from https://game-icons.net and are licensed CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) &ndash; see the About page of virtualtabletop.io for the list of artists. The button symbols are from the bundled Google Material Symbols set (Apache License 2.0).</div>",
+      "lastUpdate": 1786817400000,
       "similarName": "RoboRally",
       "similarDesigner": "Richard Garfield",
       "similarAwards": "",
@@ -19,7 +20,8 @@
       "showName": true,
       "skill": "",
       "ruleText": "<p>Two to six robots race across a factory floor to three checkpoints. Every round each player is dealt nine program cards, secretly programs five of them into five registers and then all registers are revealed and executed one after the other, in the priority order printed on the cards.</p><p>After every register the factory acts: conveyor belts carry robots along, gears rotate them, walls stop them and lasers damage them. Damage removes cards from your next hand and finally locks registers, so a battered robot becomes harder to steer. Robots push each other, and a robot that is pushed into a pit or over the edge is destroyed, loses a life and returns on its last checkpoint. The first robot to touch checkpoint 3 wins.</p>",
-      "helpText": "<h3>Goal</h3><p>Steer your robot across the factory floor and touch the three numbered checkpoints in order (1, then 2, then 3). The first robot to reach checkpoint 3 wins. Nobody actually steers directly: you program five moves in advance and then watch what happens.</p><h3>Getting started</h3><p>Everybody takes a seat first (the six seats are on the right, the robot with the matching number and color appears on its docking bay at the bottom of the board). Then any player presses the restart button &ndash; that places all robots, shuffles the deck and deals the first hands.</p><h3>A round</h3><ol><li>Every player is dealt nine program cards into the hand at the bottom of the table (one card less for each damage). Only you can see your own hand.</li><li>Drag five cards from your hand into your five register slots on the right. They are placed face down &ndash; only you can see what you programmed. Your seat glows until all five registers are filled.</li><li>Press the big <b>&#9654;</b> button once per register. The register is revealed for everybody and executed in priority order (the number printed on the card, highest first), then the board elements act: express belts move two spaces, normal belts one, gears turn robots, lasers fire and checkpoints are registered.</li><li>After the fifth register the round ends automatically: robots on a wrench or a checkpoint repair one damage, all cards are shuffled back, destroyed robots return and new hands are dealt.</li></ol><h3>Buttons</h3><ul><li><b>&#9654;</b> reveal and execute the next register (this is the only button you need during a round).</li><li><b>Cards</b> end the current round by hand: discard, repair, respawn and deal new hands.</li><li><b>Power</b> announces a power down for the next round: you get no cards, but all your damage is repaired. Press it again to cancel. A yellow power icon next to your status shows that it is armed.</li><li><b>Restart</b> starts a completely new game.</li></ul><h3>Status displays</h3><p>Next to every seat: <b>wrench</b> = damage, <b>robot</b> = lives left, <b>flag</b> = checkpoints touched. From five damage on, registers lock from the right; a locked register turns red and keeps its card for the next round. At ten damage the robot is destroyed, it loses a life and comes back on its archive marker with two damage (the archive marker is the last checkpoint or wrench the robot stood on, or its docking bay). A destroyed robot waits next to its registers until the next round; a player who has lost all three lives is out of the game.</p><h3>Doing it yourself</h3><p>Nothing is forced. Every robot can simply be dragged to another cell at any time and clicking your own robot turns it 90&deg; clockwise, so you can correct the automation or play completely by hand. The next time a register is executed the automation picks up the positions you set.</p><h3>Board</h3><p>Gray arrows are conveyor belts (one space), blue arrows with a 2 are express belts (two spaces), curved arrows on a belt turn the robot. Amber circles are gears that turn robots, black cells are pits, green wrenches repair one damage at the end of a round, yellow bars are walls that block movement and lasers, and red laser emitters shoot along their row or column. Falling into a pit or off the edge destroys a robot.</p>",
+      "helpText": "<h3>Goal</h3><p>Steer your robot across the factory floor and touch the three numbered checkpoints in order (1, then 2, then 3). The first robot to reach checkpoint 3 wins. Nobody actually steers directly: you program five moves in advance and then watch what happens.</p><h3>Getting started</h3><p>Everybody takes a seat first (the six seats are on the right, the robot with the matching number and color appears on its docking bay at the bottom of the board). Then any player presses the restart button &ndash; that places all robots, shuffles the deck and deals the first hands.</p><h3>A round</h3><ol><li>Every player is dealt nine program cards into the hand at the bottom of the table (one card less for each damage). Only you can see your own hand.</li><li>Program five cards into your five register slots on the right: click a card in your hand and it goes into your leftmost free register, or drag it into the slot you want. Click a card that is already programmed to take it back into your hand. The cards lie face down &ndash; only you can see what you programmed, and a card leaves your hand face down so nobody can read it while you sort your program. Your seat glows until all five registers are filled.</li><li>Press the big <b>&#9654;</b> button once per register. The register is revealed for everybody and executed in priority order (the number printed on the card, highest first), then the board elements act: express belts move two spaces, normal belts one, gears turn robots, lasers fire and checkpoints are registered.</li><li>After the fifth register the round ends automatically: robots on a wrench or a checkpoint repair one damage, all cards are shuffled back, destroyed robots return and new hands are dealt.</li></ol><h3>Buttons</h3><ul><li><b>&#9654;</b> reveal and execute the next register (this is the only button you need during a round).</li><li><b>Cards</b> end the current round by hand: discard, repair, respawn and deal new hands.</li><li><b>Power</b> announces a power down for the next round: you get no cards, but all your damage is repaired. Press it again to cancel. A yellow power icon next to your status shows that it is armed.</li><li><b>Restart</b> starts a completely new game.</li></ul><h3>Status displays</h3><p>Next to every seat: <b>wrench</b> = damage, <b>robot</b> = lives left, <b>flag</b> = checkpoints touched. From five damage on, registers lock from the right; a locked register turns red and keeps its card for the next round. At ten damage the robot is destroyed, it loses a life and comes back on its archive marker with two damage (the archive marker is the last checkpoint or wrench the robot stood on, or its docking bay). A destroyed robot waits next to its registers until the next round; a player who has lost all three lives is out of the game.</p><h3>Doing it yourself</h3><p>Nothing is forced. Cards can always be dragged between the hand and any register instead of clicking them, every robot can simply be dragged to another cell at any time and clicking your own robot turns it 90&deg; clockwise, so you can correct the automation or play completely by hand. The next time a register is executed the automation picks up the positions you set.</p><h3>Board</h3><p>Gray arrows are conveyor belts (one space), blue arrows with a 2 are express belts (two spaces), curved arrows on a belt turn the robot. Amber circles are gears that turn robots, black cells are pits, green wrenches repair one damage at the end of a round, yellow bars are walls that block movement and lasers, and red laser emitters shoot along their row or column. Falling into a pit or off the edge destroys a robot.</p>",
+      "usesAIImagery": false,
       "variant": "",
       "variantImage": "",
       "similarImage": ""
@@ -2299,7 +2301,112 @@
       "height": 88,
       "onPileCreation": {
         "handleSize": 20
-      }
+      },
+      "clickRoutine": [
+        "// click a card in your hand to program it into your leftmost free register,",
+        "// click one of your programmed cards to take it back into your hand",
+        "var k_seat = ${seatID}",
+        {
+          "func": "IF",
+          "condition": "${k_seat}",
+          "thenRoutine": [
+            "var k_par = ${PROPERTY parent}",
+            {
+              "func": "IF",
+              "condition": "${k_par}",
+              "thenRoutine": [
+                "var k_i = ${PROPERTY index OF $k_seat}",
+                "var k_rb = 'robot' + ${k_i}",
+                "var k_keep = ${PROPERTY dmg OF $k_rb} - 4",
+                "var k_keep = max ${k_keep} 0",
+                "var k_keep = 5 - ${k_keep}",
+                "var k_sn = ${PROPERTY seatNo OF $k_par}",
+                "var k_mine = ${k_sn} == ${k_i}",
+                {
+                  "func": "IF",
+                  "condition": "${k_mine}",
+                  "thenRoutine": [
+                    "// one of my registers: take the card back unless the register is locked",
+                    "var k_no = ${PROPERTY regNo OF $k_par}",
+                    {
+                      "func": "IF",
+                      "operand1": "${k_no}",
+                      "relation": "<=",
+                      "operand2": "${k_keep}",
+                      "thenRoutine": [
+                        {
+                          "func": "MOVE",
+                          "collection": "thisButton",
+                          "to": "hand",
+                          "count": 1,
+                          "face": 1
+                        }
+                      ]
+                    }
+                  ],
+                  "elseRoutine": [
+                    "var k_hand = ${k_par} == 'hand'",
+                    "var k_own = ${PROPERTY owner}",
+                    "var k_me = ${k_own} == ${playerName}",
+                    "var k_ok = ${k_hand} && ${k_me}",
+                    {
+                      "func": "IF",
+                      "condition": "${k_ok}",
+                      "thenRoutine": [
+                        "// my hand: program the card into my leftmost free unlocked register",
+                        "var k_tgt = ''",
+                        {
+                          "func": "FOREACH",
+                          "range": [
+                            1,
+                            5
+                          ],
+                          "loopRoutine": [
+                            "var k_h = 'reg' + ${k_i}",
+                            "var k_h = ${k_h} + '_'",
+                            "var k_h = ${k_h} + ${value}",
+                            {
+                              "func": "COUNT",
+                              "holder": "${k_h}",
+                              "variable": "k_n"
+                            },
+                            "var k_free = ${k_n} == 0",
+                            "var k_open = ${value} <= ${k_keep}",
+                            "var k_first = ${k_tgt} == ''",
+                            "var k_take = ${k_free} && ${k_open}",
+                            "var k_take = ${k_take} && ${k_first}",
+                            {
+                              "func": "IF",
+                              "condition": "${k_take}",
+                              "thenRoutine": [
+                                "var k_tgt = ${k_h}"
+                              ]
+                            }
+                          ]
+                        },
+                        "var k_go = ${k_tgt} != ''",
+                        {
+                          "func": "IF",
+                          "condition": "${k_go}",
+                          "thenRoutine": [
+                            {
+                              "func": "MOVE",
+                              "collection": "thisButton",
+                              "to": "${k_tgt}",
+                              "count": 1,
+                              "face": 0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     "cardTypes": {
       "UT-10": {
@@ -5810,6 +5917,9 @@
     },
     "onEnter": {
       "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
     },
     "dropOffsetX": 6,
     "dropOffsetY": 14,
