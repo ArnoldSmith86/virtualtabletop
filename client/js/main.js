@@ -675,7 +675,14 @@ function splitSVG(svg) {
 }
 
 const svgCache = {};
-function getSVG(url, replaces, callback) {
+// Images that turned out not to be SVGs once they were loaded. Their contents can't be
+// replaced, so they are used as they are instead of being wrapped into a broken data URL.
+const nonSVGCache = {};
+
+export function getSVG(url, replaces, callback) {
+  if(nonSVGCache[url])
+    return mapAssetURLs(url);
+
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
     if(svgCache[cacheKey])
@@ -700,7 +707,12 @@ function getSVG(url, replaces, callback) {
     svgCache[url] = [];
     fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
-      svgCache[url] = t;
+      if(/<svg[\s>]/i.test(t)) {
+        svgCache[url] = t;
+      } else {
+        nonSVGCache[url] = true;
+        delete svgCache[url];
+      }
       for(const [ c, r ] of callbacks)
         c(getSVG(url, r, _=>{}));
     });
