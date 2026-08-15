@@ -678,14 +678,39 @@ const svgCache = {};
 // Images that turned out not to be SVGs once they were loaded. Their contents can't be
 // replaced, so they are used as they are instead of being wrapped into a broken data URL.
 const nonSVGCache = {};
+// Images that could not be read at all, and when that last happened. Unlike the two caches above
+// this is not an answer about the file - a server restart, a hiccup in the network or a CORS
+// rejection say nothing about what the file contains - so it expires and the next widget asking
+// for the image tries again. Remembering it permanently would cost a perfectly good SVG its
+// replacements for the rest of the session over a single missed request.
+const unreadableCache = {};
+// long enough not to refetch a CORS-blocked image on every CSS recomputation, short enough that
+// an image comes back on its own once whatever kept it from loading is over
+const UNREADABLE_RETRY_MS = 30000;
+// the one request per file every caller of fetchSVG() below waits for
+const svgFetchCache = {};
 
 // Loads an image and returns its text if it is an SVG whose contents can be replaced, null if it
 // is anything else. What decides that are the bytes of the file and not its name: an uploaded
 // asset is served from /assets/<hash>_<size> without any extension at all, so only the built-in
 // game pieces have a URL that says what they are. Rejects when the file can't be read - that says
 // nothing about what it is, so every caller decides for itself what to assume then. The SVG
-// replacement editor asks the same question about the same file and goes through here too.
-export async function fetchSVG(url) {
+// replacement editor and the JSON editor ask the same question about the same file and go through
+// here too: one request answers all three, so they cannot end up disagreeing about a file.
+export function fetchSVG(url) {
+  // two spellings of the same path - '/i/x.svg' on a widget, 'i/x.svg' in the game piece picker -
+  // are one file, so what is asked for once is the mapped URL that is actually requested
+  const key = mapAssetURLs(url);
+  if(!svgFetchCache[key])
+    // a request that failed is not an answer worth keeping - drop it so the next caller retries
+    svgFetchCache[key] = loadSVG(url).catch(e=>{
+      delete svgFetchCache[key];
+      throw e;
+    });
+  return svgFetchCache[key];
+}
+
+async function loadSVG(url) {
   const mappedURL = mapAssetURLs(url);
   const response = await fetch(mappedURL);
   if(!response.ok)
@@ -730,26 +755,38 @@ export function getSVG(url, replaces, callback) {
     return svgCache[cacheKey];
   }
 
-  if(!svgCache[url]) {
+  // an image that can't be loaded is used as it is, which is all a browser needs anyway - an
+  // external image is blocked from fetch() by CORS but still displays fine as a background-image.
+  // That verdict is only kept until the retry delay is over, see unreadableCache above.
+  const unreadable = unreadableCache[url] > Date.now() - UNREADABLE_RETRY_MS;
+
+  if(!svgCache[url] && !unreadable) {
     svgCache[url] = [];
-    // an image that can't be loaded is treated like one that is not an SVG: the widget then uses
-    // the URL as it is, which is all a browser needs anyway - an external image is blocked from
-    // fetch() by CORS but still displays fine as a background-image
-    fetchSVG(url).catch(_=>null).then(t=>{
+    // fetchSVG resolves with the file's text or null, and rejects if it could not be read at all -
+    // three outcomes, so an unread file arrives here as undefined rather than as another null
+    fetchSVG(url).then(t=>t, _=>undefined).then(t=>{
       const callbacks = svgCache[url];
-      if(t !== null) {
-        svgCache[url] = t;
+      delete svgCache[url];
+      if(t === undefined) {
+        unreadableCache[url] = Date.now();
       } else {
-        nonSVGCache[url] = true;
-        delete svgCache[url];
+        delete unreadableCache[url];
+        if(t === null)
+          nonSVGCache[url] = true;
+        else
+          svgCache[url] = t;
       }
       for(const [ c, r ] of callbacks)
         c(getSVG(url, r, _=>{}));
     });
   }
 
-  svgCache[url].push([ callback, replaces ]);
-  return '';
+  // a file still within its retry delay has no request to wait for
+  if(svgCache[url])
+    svgCache[url].push([ callback, replaces ]);
+  // while a retry is in flight the widget keeps displaying the URL it already has rather than
+  // blinking to nothing, and is told through its callback once the file did arrive after all
+  return unreadableCache[url] ? mapAssetURLs(url) : '';
 }
 
 async function loadEditMode() {
