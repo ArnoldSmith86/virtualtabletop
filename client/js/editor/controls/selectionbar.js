@@ -19,6 +19,7 @@ let selectionBarCrumbWidget = null;
 
 let selectionBarTreeOwner = null;   // key of the bar the shared #jeTree is currently in
 let selectionBarStack = [];         // widgets under the pointer, topmost first
+let selectionBarStackFromTouch = false; // ... or under the finger that tapped, see selectionBarWhere
 let selectionBarCoords = null;      // pointer position in room coordinates
 let selectionBarPointer = null;
 let selectionBarScanTimer = null;
@@ -32,6 +33,14 @@ const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the s
 // on a tablet - the list works there and is the only way in.
 function selectionBarCanAltClick() {
   return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
+// How the stack the list holds was taken. Nothing is "under the pointer" on a
+// device that has none, and this says which it was rather than what the device
+// is: a laptop with a touchscreen is both, and the answer is whichever of the
+// two was used last.
+function selectionBarWhere() {
+  return selectionBarStackFromTouch ? 'where you tapped' : 'under the pointer';
 }
 
 /* State that outlives a single bar: which of the two dropdowns was open. */
@@ -139,6 +148,7 @@ function selectionBarSetStack(stack) {
 function selectionBarAdoptStack(stack, clientX, clientY) {
   clearTimeout(selectionBarScanTimer);
   selectionBarScanTimer = null;
+  selectionBarStackFromTouch = false; // the drill is an Alt+click, so a mouse took this one
   selectionBarPointer = { x: clientX, y: clientY };
   selectionBarSetStack(stack);
   updateSelectionBars();
@@ -189,9 +199,10 @@ function selectionBarIsActive() {
   return !!selectionBars.length && document.body.classList.contains('edit');
 }
 
-function selectionBarScan() {
+function selectionBarScan(fromTouch) {
   if(!selectionBarIsActive() || !selectionBarPointer)
     return;
+  selectionBarStackFromTouch = !!fromTouch;
   selectionBarSetStack(selectionBarSortStack(widgetStackAt(selectionBarPointer.x, selectionBarPointer.y)));
   for(const bar of selectionBars) {
     selectionBarRenderStack(bar);
@@ -241,6 +252,33 @@ function selectionBarInstallListeners() {
       selectionBarScan();
     }, SELECTION_BAR_SCAN_DELAY);
   });
+
+  // A finger never hovers, so there is no coming to rest to wait for: the tap is
+  // the spot, and the stack under it is taken there and then. Without this the
+  // list stays empty on a tablet - the room's own input handler calls
+  // preventDefault() on touchstart, so the browser never synthesizes the
+  // mousemove above - which left a touch device with no way at all to a covered
+  // widget: the Alt+click drill needs a mouse and a modifier key. Capture phase,
+  // so a handler that swallows the event on its way down cannot take the tap
+  // away from the bar. Two fingers are a pinch or a pan, not a spot.
+  window.addEventListener('touchstart', function(e) {
+    if(!selectionBarIsActive() || e.touches.length != 1)
+      return;
+    selectionBarSetPointerCoords(e.touches[0].clientX, e.touches[0].clientY);
+    clearTimeout(selectionBarScanTimer);
+    selectionBarScanTimer = null;
+    if(!selectionBarPointerIsInRoom(e.target))
+      return;
+    selectionBarPointer = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    selectionBarScan(true);
+  }, true);
+
+  // A finger dragging a widget keeps the coordinate readout with it, the way a
+  // held mouse button does - the stack stays the one the finger came down on.
+  window.addEventListener('touchmove', function(e) {
+    if(selectionBarIsActive() && e.touches.length == 1)
+      selectionBarSetPointerCoords(e.touches[0].clientX, e.touches[0].clientY);
+  }, true);
 
   // F1, F2, F3, F6 ... F12 pick the rows of the list without opening it - the
   // keys the panel this replaces was built around. Ctrl pastes the id into the
@@ -600,15 +638,18 @@ function selectionBarRenderStack(bar) {
   bar.stackList.innerHTML = '';
   const header = div(bar.stackList, 'selectionBarStackHeader');
   header.textContent = selectionBarStack.length
-    ? `${selectionBarStack.length} under the pointer, topmost first`
-    : 'Nothing under the pointer';
+    ? `${selectionBarStack.length} ${selectionBarWhere()}, topmost first`
+    : `Nothing ${selectionBarWhere()}`;
 
   // What the list is, for someone who just opened it: the panel it replaces
-  // carried that sentence permanently, and a tooltip is no place for it.
+  // carried that sentence permanently, and a tooltip is no place for it. A
+  // finger has neither the modifiers nor the keys, so a list it filled is only
+  // told the one thing it can do.
   if(selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackHelp',
-        'Click to select, shift-click to add to the selection, or press the key shown.'
-      + '<br>↑ ↓ step through the list, Enter selects, Esc closes it.');
+    div(bar.stackList, 'selectionBarStackHelp', selectionBarStackFromTouch
+      ? 'Tap a row to select that widget.'
+      : 'Click to select, shift-click to add to the selection, or press the key shown.'
+        + '<br>↑ ↓ step through the list, Enter selects, Esc closes it.');
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 10 ? `F${index+3}` : '';
@@ -637,7 +678,7 @@ function selectionBarRenderStack(bar) {
   }
 
   if(!selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room - everything stacked at that spot is listed here.');
+    div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.');
 
   selectionBarRenderStackCursor(bar);
 }
@@ -786,7 +827,7 @@ function renderSelectionBar(target, options = {}) {
   if(options.tree)
     bar.treeButton = selectionBarButton(bar.dom, 'account_tree', 'The widget tree of the room', _=>selectionBarToggleTree(bar, false, true));
   if(options.stack) {
-    const stackTitle = 'The widgets under the pointer'
+    const stackTitle = 'The widgets under the pointer, or where you last tapped'
                      + (selectionBarCanAltClick() ? ' - Alt+click in the room steps through them' : '');
     bar.stackButton = selectionBarButton(bar.dom, 'layers', stackTitle, _=>selectionBarToggleStack(bar));
     bar.stackCount = document.createElement('span');

@@ -3109,6 +3109,71 @@ test('Alt+click drills in the order the stack list shows', async t => {
   await setEditorState(null);
 });
 
+// A real tap, the way a tablet sends one. TestCafe's own actions are mouse
+// actions in a desktop browser, so the touch path has to be driven by hand.
+const tapWidget = ClientFunction(id => {
+  const target = document.querySelector(id);
+  const rect = target.getBoundingClientRect();
+  const touch = new Touch({ identifier: 1, target, clientX: rect.left + rect.width/2, clientY: rect.top + rect.height/2 });
+  target.dispatchEvent(new TouchEvent('touchstart', { touches: [ touch ], targetTouches: [ touch ], changedTouches: [ touch ], bubbles: true, cancelable: true }));
+  target.dispatchEvent(new TouchEvent('touchend', { touches: [], targetTouches: [], changedTouches: [ touch ], bubbles: true, cancelable: true }));
+});
+
+// A finger never hovers, and the room's own input handler calls preventDefault()
+// on touchstart, so no mouse event follows a tap: the list this bar is built
+// around stayed empty on iOS Safari, which left a tablet no way at all to the
+// widget under the one it tapped - the Alt+click drill needs a mouse and a
+// modifier key. The tap has to fill the list itself.
+test('A tap fills the stack list, which is the only way to a covered widget on a tablet', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board: { id: 'board', type: 'basic',  x: 0,    y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    lid:   { id: 'lid',   type: 'holder', x: 300,  y: 200, width: 300,  height: 300, classes: 'transparent' },
+    chip:  { id: 'chip',  type: 'basic',  x: 60,   y: 60,  width: 120,  height: 120, parent: 'lid' },
+    far:   { id: 'far',   type: 'basic',  x: 1100, y: 700, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    // a stack the mouse took, so a list that never changes again would still
+    // have rows in it - the tap below has to replace them
+    .hover('#w_far')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_far')
+    .expect(stackRows.count).eql(2)
+    // and off the room, so nothing the mouse does can touch the list from here on
+    .hover(bar.find('.selectionBarStackHeader'));
+
+  await tapWidget('#w_chip');
+
+  await t
+    .expect(stackRows.count).eql(3)
+    .expect(stackRows.nth(0).textContent).contains('chip')
+    .expect(stackRows.nth(1).textContent).contains('lid')
+    .expect(stackRows.nth(2).textContent).contains('board')
+    .expect(bar.find('.selectionBarStackCount').textContent).eql('3')
+    // nothing is "under the pointer" on a device that has none, and the keys and
+    // modifiers the help line offers a mouse are not there either
+    .expect(bar.find('.selectionBarStackHeader').textContent).eql('3 where you tapped, topmost first')
+    .expect(bar.find('.selectionBarStackHelp').textContent).eql('Tap a row to select that widget.')
+    // and the row of the widget underneath is reachable, which is the point
+    .click(stackRows.nth(1))
+    .expect(Selector('#w_lid').hasClass('selectedInEdit')).ok()
+    // a laptop with a touchscreen is both, so the mouse taking the next stack
+    // takes the wording back with it
+    .hover('#w_far')
+    .expect(bar.find('.selectionBarStackHeader').textContent).eql('2 under the pointer, topmost first')
+    .click(bar.find('button[icon=layers]'));
+  await setEditorState(null);
+});
+
 // Two modules that edit the selection are two bars, and the room tree is a single
 // DOM node they take turns holding - so it has to be handed over rather than
 // duplicated, and handed back when the module holding it is closed.
