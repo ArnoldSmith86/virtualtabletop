@@ -2752,6 +2752,11 @@ test('The selection bar reaches a widget that is covered by another one', async 
     .expect(stackRows.nth(0).textContent).contains('checker')
     .expect(stackRows.nth(1).textContent).contains('point')
     .expect(stackRows.nth(2).textContent).contains('board')
+    // the way to a row leads across the room, so the list has to stand still
+    // while the pointer travels to it - one that followed every pixel would be
+    // down to the board, or to nothing at all, by the time it is clicked
+    .hover(bar.find('.selectionBarStackHeader'))
+    .expect(stackRows.count).eql(3)
     .click(stackRows.nth(2))
     .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
     // the breadcrumbs of the covered holder name the chain it hangs in

@@ -21,8 +21,10 @@ let selectionBarTreeOwner = null;   // key of the bar the shared #jeTree is curr
 let selectionBarStack = [];         // widgets under the pointer, topmost first
 let selectionBarStackCoords = null; // pointer position in room coordinates
 let selectionBarPointer = null;
-let selectionBarScanQueued = false;
+let selectionBarScanTimer = null;
 let selectionBarListening = false;
+
+const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
 
 /* State that outlives a single bar: the tree pin used to be a key of its own,
    back when the bar was part of the JSON editor. */
@@ -110,7 +112,11 @@ function selectionBarWidgetForHotkey(functionKey) {
 
 // The list is what lies under the pointer in the room, so it stops following the
 // pointer once that leaves the room - otherwise its rows could never be reached
-// with the mouse, which is why the panel it replaces was keyboard-only.
+// with the mouse, which is why the panel it replaces was keyboard-only. That is
+// not enough on its own: the way to the list leads across the room, so a list
+// that followed every pixel would be down to the board (or to nothing at all) by
+// the time the pointer arrives. It therefore only takes the stack where the
+// pointer came to rest - see selectionBarInstallListeners.
 function selectionBarPointerIsInRoom(target) {
   if(document.body.classList.contains('overlayActive'))
     return false;
@@ -153,19 +159,24 @@ function selectionBarInstallListeners() {
     return;
   selectionBarListening = true;
 
-  // one scan per frame at most: it hit-tests the whole document and rooms go up
-  // to a couple of thousand widgets
+  // The stack is taken where the pointer comes to rest, not while it travels:
+  // that is what the user is looking at, it is what leaves the list standing
+  // while the pointer is on its way to a row, and it keeps a hit test of the
+  // whole document (rooms go up to a couple of thousand widgets) off the path of
+  // every mouse move. A pointer heading out of the room drops the pending scan
+  // rather than taking one more stack on the way out.
   window.addEventListener('mousemove', function(e) {
-    if(!selectionBarIsActive() || e.buttons || !selectionBarPointerIsInRoom(e.target))
+    if(!selectionBarIsActive() || e.buttons)
+      return;
+    clearTimeout(selectionBarScanTimer);
+    selectionBarScanTimer = null;
+    if(!selectionBarPointerIsInRoom(e.target))
       return;
     selectionBarPointer = { x: e.clientX, y: e.clientY };
-    if(selectionBarScanQueued)
-      return;
-    selectionBarScanQueued = true;
-    requestAnimationFrame(function() {
-      selectionBarScanQueued = false;
+    selectionBarScanTimer = setTimeout(function() {
+      selectionBarScanTimer = null;
       selectionBarScan();
-    });
+    }, SELECTION_BAR_SCAN_DELAY);
   });
 
   // F1, F2, F3, F5 ... F12 pick the rows of the list without opening it - the
@@ -369,7 +380,7 @@ function selectionBarRenderStack(bar) {
   }
 
   if(!selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackEmpty', 'Move the pointer over the room. The list keeps the last stack once the pointer is back here, so its rows can be clicked.');
+    div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room. The list then keeps that stack while the pointer travels here, so its rows can be clicked.');
 }
 
 function selectionBarToggleStack(bar, forceClose) {
@@ -568,6 +579,8 @@ function selectionBarDeltaReceived(delta) {
 // be left on a widget while the game is played, and the rows and F keys of a
 // stack from another session must not still point somewhere.
 function selectionBarResetStack() {
+  clearTimeout(selectionBarScanTimer);
+  selectionBarScanTimer = null;
   selectionBarStack = [];
   selectionBarStackCoords = null;
   selectionBarPointer = null;
