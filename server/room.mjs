@@ -18,6 +18,10 @@ export function pathSafeRoomID(roomID) {
 }
 
 export default class Room {
+  // every room that is currently in memory, so that a room can hand its game shelf to the rooms
+  // that auto-link from it without going through the (possibly outdated) file on disk
+  static loaded = new Map();
+
   players = [];
   state = {};
   deltaID = 0;
@@ -27,6 +31,7 @@ export default class Room {
     this.id = id;
     this.unloadCallback = unloadCallback;
     this.publicLibraryUpdatedCallback = publicLibraryUpdatedCallback;
+    Room.loaded.set(id, this);
     this.unloadTimeout = setTimeout(_=>{
       if(this.players.length == 0) {
         Logging.log(`unloading room ${this.id} after 5s without player connection`);
@@ -67,6 +72,12 @@ export default class Room {
       this.trace('addPlayer', { player: player.name });
       player.send('tracing', 'enable');
     }
+
+    // somebody opening the room is the moment where it matters that its source room gained a game
+    // while nobody was here - and unlike the load() path this also runs for a room that stayed in
+    // memory the whole time
+    if(this.state._meta.linkSourceRoom)
+      await this.syncLinkSourceRoom();
   }
 
   async addShare(shareID) {
@@ -210,6 +221,7 @@ export default class Room {
       }
     }
     this.sendMetaUpdate();
+    await this.pushToAutoLinkedRooms();
   }
 
   addStateToPublicLibrary(player, args) {
@@ -287,6 +299,12 @@ export default class Room {
     return this.state._meta.security && this.state._meta.security.adminCollection || null;
   }
 
+  // a protected room hands nothing out that could be turned back into the game: no copies, no
+  // linked rooms, no downloads, no share links and no raw state
+  contentIsProtected() {
+    return !!this.state._meta.contentProtected;
+  }
+
   async collectionAction(action, args) {
     const collection = typeof args.collection == 'string' ? args.collection : '';
     const requireAdmin = async _=>{
@@ -318,19 +336,22 @@ export default class Room {
       await requireAdmin();
       delete this.state._meta.security;
       delete this.state._meta.locked;
+      delete this.state._meta.contentProtected;
     } else if(action == 'setName') {
       await requireAdmin();
-      const name = String(args.name || '').trim().substring(0, 64);
-      if(name)
-        this.state._meta.roomName = name;
-      else
-        delete this.state._meta.roomName;
+      this.setRoomName(args.name);
     } else if(action == 'setLocked') {
       await requireAdmin();
       if(args.locked)
         this.state._meta.locked = true;
       else
         delete this.state._meta.locked;
+    } else if(action == 'setContentProtected') {
+      await requireAdmin();
+      if(args.contentProtected)
+        this.state._meta.contentProtected = true;
+      else
+        delete this.state._meta.contentProtected;
     } else if(action == 'setPassword') {
       await requireAdmin();
       if(args.password) {
@@ -351,13 +372,14 @@ export default class Room {
     await this.sendAdminStatus();
   }
 
-  async copyFromRoom(sourceRoom) {
+  async copyFromRoom(sourceRoom, name) {
     Logging.log(`copying room ${sourceRoom.id} to room ${this.id}`);
     const copy = JSON.parse(JSON.stringify(sourceRoom.state));
 
     copy._meta.players = {};
     delete copy._meta.security;
     delete copy._meta.locked;
+    delete copy._meta.contentProtected;
     delete copy._meta.linkSourceRoom;
     delete copy._meta.tracingEnabled;
     delete copy._meta.redirectTo;
@@ -377,6 +399,8 @@ export default class Room {
     copy._meta.states = Object.assign(copy._meta.states, this.getPublicLibraryGames());
     this.state = copy;
     this.state._meta.deltaID = this.deltaID;
+    if(name !== undefined)
+      this.setRoomName(name);
     this.writeToFilesystem();
     this.broadcast('state', this.state);
     this.sendMetaUpdate();
@@ -429,6 +453,7 @@ export default class Room {
       claimed: !!this.claimedBy(),
       isAdmin: await this.isAdmin(collection),
       locked: !!meta.locked,
+      contentProtected: !!meta.contentProtected,
       hasPassword: !!(meta.security && meta.security.joinPassword),
       autoLink: !!meta.linkSourceRoom,
       players: [...new Set(this.players.map(player=>player.name))].map(name=>({ name, color: meta.players[name] || null }))
@@ -463,30 +488,46 @@ export default class Room {
     return await this.hashSecret(collection) == this.claimedBy();
   }
 
-  async linkFromRoom(sourceRoom, autoLink) {
+  async linkFromRoom(sourceRoom, autoLink, name) {
     Logging.log(`linking room ${sourceRoom.id} to room ${this.id}`);
     this.state._meta.starred = JSON.parse(JSON.stringify(sourceRoom.state._meta.starred || {}));
     if(autoLink)
       this.state._meta.linkSourceRoom = sourceRoom.id;
+    if(name !== undefined)
+      this.setRoomName(name);
     await this.linkStatesFromRoomState(sourceRoom.state, sourceRoom.id);
     this.writeToFilesystem();
     this.broadcast('state', this.state);
     this.sendMetaUpdate();
   }
 
+  // returns whether anything was actually linked, so the callers that run on every join or shelf
+  // change stay silent while the source room has not gained a game
   async linkStatesFromRoomState(sourceState, sourceRoomID) {
     if(!this.state._meta.autoLinkedStates)
       this.state._meta.autoLinkedStates = {};
+    let added = false;
     for(const [ id, state ] of Object.entries(sourceState._meta && sourceState._meta.states || {})) {
       if(id.match(/^PL:/) || state.savePlayers || this.state._meta.states[id] || this.state._meta.autoLinkedStates[id])
         continue;
       try {
         await this.addState(id, 'link', `${Config.get('externalURL')}/dl/${sourceRoomID}/${encodeURIComponent(id)}`, '');
         this.state._meta.autoLinkedStates[id] = true;
+        added = true;
       } catch(e) {
         Logging.log(`ERROR: linking state ${id} from room ${sourceRoomID} to room ${this.id} failed: ${e}`);
       }
     }
+    return added;
+  }
+
+  // the other half of syncLinkSourceRoom: a room that is open while its source gains a game would
+  // otherwise only notice the next time it is loaded from disk, which for a room somebody is
+  // sitting in never happens
+  async pushToAutoLinkedRooms() {
+    for(const room of [ ...Room.loaded.values() ])
+      if(room !== this && room.state && room.state._meta && room.state._meta.linkSourceRoom == this.id)
+        await room.syncLinkSourceRoom();
   }
 
   async mayJoin(collection, password) {
@@ -515,19 +556,29 @@ export default class Room {
       player.send('adminStatus', await this.isAdmin(player.collection));
   }
 
+  // pull the games the source room has gained since the last time. The source is read from memory
+  // when it is loaded there - the file on disk is only written when the room is unloaded or by the
+  // autosave, so a game added minutes ago is not in it yet
   async syncLinkSourceRoom() {
     const sourceID = this.state._meta.linkSourceRoom;
     if(typeof sourceID != 'string' || !sourceID.match(/^[A-Za-z0-9_-]+$/))
       return;
     if(Room.roomsBeingSynced && Room.roomsBeingSynced[this.id])
       return;
-    const filename = Config.directory('save') + '/rooms/' + pathSafeRoomID(sourceID) + '.json';
-    if(!fs.existsSync(filename))
-      return;
+    let sourceState = Room.loaded.get(sourceID) && Room.loaded.get(sourceID).state;
+    if(!sourceState) {
+      const filename = Config.directory('save') + '/rooms/' + pathSafeRoomID(sourceID) + '.json';
+      if(!fs.existsSync(filename))
+        return;
+      sourceState = JSON.parse(fs.readFileSync(filename));
+    }
     try {
       Room.roomsBeingSynced = Room.roomsBeingSynced || {};
       Room.roomsBeingSynced[this.id] = true;
-      await this.linkStatesFromRoomState(JSON.parse(fs.readFileSync(filename)), sourceID);
+      if(await this.linkStatesFromRoomState(sourceState, sourceID)) {
+        this.writeToFilesystem();
+        this.sendMetaUpdate();
+      }
     } catch(e) {
       Logging.log(`ERROR: syncing linked room ${sourceID} into room ${this.id} failed: ${e}`);
     } finally {
@@ -1557,6 +1608,15 @@ export default class Room {
     }
   }
 
+  // used by the setName room action and when a copied or linked room is given a name right away
+  setRoomName(name) {
+    const trimmed = String(name || '').trim().substring(0, 64);
+    if(trimmed)
+      this.state._meta.roomName = trimmed;
+    else
+      delete this.state._meta.roomName;
+  }
+
   setState(state, player, delayForGameStartRoutine) {
     delete this.state._meta.activeState;
 
@@ -1640,7 +1700,7 @@ export default class Room {
   unload() {
     if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
-      const hasCollectionData = this.state._meta.security && Object.keys(this.state._meta.security).length || this.state._meta.roomName || this.state._meta.linkSourceRoom || this.state._meta.locked;
+      const hasCollectionData = this.state._meta.security && Object.keys(this.state._meta.security).length || this.state._meta.roomName || this.state._meta.linkSourceRoom || this.state._meta.locked || this.state._meta.contentProtected;
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer || hasCollectionData) {
         Logging.log(`unloading room ${this.id}`);
         this.writeToFilesystem();
@@ -1653,6 +1713,8 @@ export default class Room {
       Logging.log(`unloading broken room ${this.id}`);
     }
     this.trace('unload', {});
+    if(Room.loaded.get(this.id) === this)
+      Room.loaded.delete(this.id);
     this.unloadCallback();
   }
 

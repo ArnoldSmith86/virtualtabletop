@@ -144,6 +144,23 @@ describe('Room security', () => {
     expect(room.state._meta.locked).toBeUndefined();
   });
 
+  test('only the admin can protect the content of a room, and releasing the claim releases it', async () => {
+    expect(room.contentIsProtected()).toBe(false);
+    await expect(room.collectionAction('setContentProtected', { collection: 'admin-collection', contentProtected: true })).rejects.toThrow(/not the admin/);
+
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setContentProtected', { collection: 'admin-collection', contentProtected: true });
+    expect(room.contentIsProtected()).toBe(true);
+    expect((await room.getRoomDetails('admin-collection')).contentProtected).toBe(true);
+
+    room.players.push({ name: 'evil', collection: 'evil-collection', send() {} });
+    await expect(room.collectionAction('setContentProtected', { collection: 'evil-collection', contentProtected: false })).rejects.toThrow(/not the admin/);
+    expect(room.contentIsProtected()).toBe(true);
+
+    await room.collectionAction('unclaim', { collection: 'admin-collection' });
+    expect(room.contentIsProtected()).toBe(false);
+  });
+
   test('mayJoin enforces the join password', async () => {
     expect(await room.mayJoin(undefined, undefined)).toBe(true); // no password set
     await room.collectionAction('claim', { collection: 'admin-collection' });
@@ -154,6 +171,79 @@ describe('Room security', () => {
     expect(await room.mayJoin('admin-collection', undefined)).toBe(true); // admins bypass the password
     await room.collectionAction('setPassword', { collection: 'admin-collection', password: '' });
     expect(await room.mayJoin(undefined, undefined)).toBe(true);
+  });
+});
+
+describe('Copying and linking rooms', () => {
+  const roomIDs = [ 'jest-test-copy-source', 'jest-test-copy-target' ];
+
+  afterEach(() => {
+    for(const id of roomIDs)
+      if(fs.existsSync(savedir + '/rooms/' + id + '.json'))
+        fs.unlinkSync(savedir + '/rooms/' + id + '.json');
+  });
+
+  function sourceAndTarget() {
+    return roomIDs.map(testRoom);
+  }
+
+  test('a copy is named as requested and carries none of the source room ownership', async () => {
+    const [ source, target ] = sourceAndTarget();
+    source.state._meta.roomName = 'Original';
+    source.state._meta.contentProtected = true;
+    source.state._meta.locked = true;
+    source.state._meta.security = { salt: 'abc', adminCollection: 'hash' };
+
+    await target.copyFromRoom(source, 'The Copy');
+    expect(target.state._meta.roomName).toBe('The Copy');
+    expect(target.state._meta.contentProtected).toBeUndefined();
+    expect(target.state._meta.locked).toBeUndefined();
+    expect(target.state._meta.security).toBeUndefined();
+  });
+
+  test('an empty name leaves the new room showing its ID instead of "(copy)"', async () => {
+    const [ source, target ] = sourceAndTarget();
+    source.state._meta.roomName = 'Original';
+    await target.copyFromRoom(source, '   ');
+    expect(target.state._meta.roomName).toBeUndefined();
+    expect((await target.getRoomDetails()).name).toBe(target.id);
+  });
+
+  test('without a name a copy keeps falling back to "<source> (copy)"', async () => {
+    const [ source, target ] = sourceAndTarget();
+    source.state._meta.roomName = 'Original';
+    await target.copyFromRoom(source);
+    expect(target.state._meta.roomName).toBe('Original (copy)');
+  });
+
+  test('a game added to the source room reaches a linked room that is already open', async () => {
+    const [ source, target ] = sourceAndTarget();
+    await target.linkFromRoom(source, true, 'Linked');
+    expect(target.state._meta.roomName).toBe('Linked');
+    expect(target.state._meta.linkSourceRoom).toBe(source.id);
+
+    // the actual linking fetches the game over HTTP, so only the hand-over is checked here
+    const handedOver = [];
+    target.linkStatesFromRoomState = async (sourceState, sourceRoomID)=>{
+      handedOver.push({ states: Object.keys(sourceState._meta.states), sourceRoomID });
+      return false;
+    };
+
+    source.state._meta.states.newGame = { name: 'New Game', variants: [] };
+    await source.pushToAutoLinkedRooms();
+    // the live state of the source room, not the copy of it that is on disk
+    expect(handedOver).toEqual([ { states: [ 'newGame' ], sourceRoomID: source.id } ]);
+  });
+
+  test('a room that does not auto-link is left alone when its source gains a game', async () => {
+    const [ source, target ] = sourceAndTarget();
+    await target.linkFromRoom(source, false);
+    expect(target.state._meta.linkSourceRoom).toBeUndefined();
+
+    let calls = 0;
+    target.linkStatesFromRoomState = async ()=>(++calls, false);
+    await source.pushToAutoLinkedRooms();
+    expect(calls).toBe(0);
   });
 });
 

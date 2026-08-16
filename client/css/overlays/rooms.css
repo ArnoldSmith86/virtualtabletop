@@ -216,6 +216,12 @@ body.roomLocked #statesButton, body.roomLocked #editButton {
   display: none;
 }
 
+/* the server answers these with a 403 in a protected room, so they are not offered */
+body.roomContentProtected #stateDetailsOverlay .buttons [icon=download],
+body.roomContentProtected #stateDetailsOverlay .buttons [icon=link] {
+  display: none;
+}
+
 /* while the password prompt is up, the toolbar must not be usable to dismiss it */
 body.passwordPrompt #toolbar {
   pointer-events: none;

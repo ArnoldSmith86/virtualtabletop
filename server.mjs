@@ -96,8 +96,20 @@ function validateInput(res, next, values) {
   return true;
 }
 
+// the admin of a protected room wants nothing handed out that can be turned back into the game,
+// and none of these endpoints carries a collection ID, so they are closed for everybody - the
+// admin turns the protection off for as long as they need to export something
+function roomContentIsProtected(roomID) {
+  const room = activeRooms.get(roomID);
+  return !!(room && room.state && room.state._meta && room.state._meta.contentProtected);
+}
+
+const contentProtectedMessage = 'The admin of this room protected its content.';
+
 async function downloadState(res, roomID, stateID, variantID) {
   if(await ensureRoomIsLoaded(roomID)) {
+    if(roomContentIsProtected(roomID))
+      return res.status(403).send(contentProtectedMessage);
     const d = await activeRooms.get(roomID).download(stateID, variantID);
     res.setHeader('Content-Type', d.type);
     res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
@@ -245,6 +257,8 @@ MinifyHTML().then(function(result) {
   async function handleGetState(req, res, next, includeMeta) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(roomContentIsProtected(req.params.room))
+          return res.status(403).send(contentProtectedMessage);
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
         const roomState = activeRooms.get(req.params.room).state;
@@ -425,12 +439,17 @@ MinifyHTML().then(function(result) {
       const sourceRoom = activeRooms.get(source);
       if(!await sourceRoom.mayJoin(req.body.collection, req.body.password))
         return res.status(403).send('Room is password protected.');
+      // unlike the download endpoints this one does carry a collection ID, so the admin of a
+      // protected room can still copy their own room
+      if(sourceRoom.contentIsProtected() && !await sourceRoom.isAdmin(req.body.collection))
+        return res.status(403).send(contentProtectedMessage);
+      const name = typeof req.body.name == 'string' ? req.body.name : undefined;
       const targetID = getEmptyRoomID();
       await ensureRoomIsLoaded(targetID);
       if(mode == 'link')
-        await activeRooms.get(targetID).linkFromRoom(sourceRoom, !!req.body.autoLink);
+        await activeRooms.get(targetID).linkFromRoom(sourceRoom, !!req.body.autoLink, name);
       else
-        await activeRooms.get(targetID).copyFromRoom(sourceRoom);
+        await activeRooms.get(targetID).copyFromRoom(sourceRoom, name);
       res.send(targetID);
     })().catch(next);
   });
@@ -515,8 +534,11 @@ MinifyHTML().then(function(result) {
         return res.send(Config.get('urlPrefix') + link.replace(/^\/s\//, '/game/'));
 
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
-      if(isLoaded)
+      if(isLoaded) {
+        if(roomContentIsProtected(req.params.room))
+          return res.status(403).send(contentProtectedMessage);
         activeRooms.get(req.params.room).writeToFilesystem();
+      }
 
       const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
       sharedLinks[newLink] = target;

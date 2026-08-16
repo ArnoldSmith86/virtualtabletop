@@ -6,6 +6,7 @@ const roomPasswords = new Map();
 let roomsCollectionID = null;
 let isRoomAdmin = false;
 let currentRoomLocked = false;
+let currentRoomProtected = false;
 let roomVisitRegistered = false;
 let pendingSwitchFrom = null;
 let lastAutomaticRoomsRefresh = 0;
@@ -36,6 +37,9 @@ function registerRoomVisit() {
 function applyRoomLockState() {
   const locked = currentRoomLocked && !isRoomAdmin;
   toggleClass(document.body, 'roomLocked', locked);
+  // the download and share-link buttons of the game shelf are answered with a 403 in a protected
+  // room, so they are taken out of the UI as well - for the admin too, who unprotects to export
+  toggleClass(document.body, 'roomContentProtected', currentRoomProtected);
   if(locked && ($('#statesButton.active') || $('#editButton.active')))
     $('#activeGameButton').click();
 }
@@ -51,7 +55,10 @@ async function roomAction(id, action, args) {
   await refreshRoomsList();
 }
 
-async function copyRoom(sourceID, mode) {
+async function copyRoom(sourceID, mode, sourceName) {
+  const name = prompt('Enter a name for the new room (leave empty to show its ID instead):', `${sourceName} (${mode == 'link' ? 'linked' : 'copy'})`);
+  if(name === null)
+    return;
   let autoLink = false;
   if(mode == 'link') {
     autoLink = await confirmOverlay('Link future games', 'All games currently in the game shelf of the source room will be linked into the new room. Should games that get added to the source room later on be linked into the new room automatically as well?', 'Also future games', 'Only current games', 'all_inclusive', 'link');
@@ -62,7 +69,7 @@ async function copyRoom(sourceID, mode) {
   const result = await fetch('api/copyRoom', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ source: sourceID, mode, autoLink, collection: getCollectionID(), password: getRoomPassword(sourceID) })
+    body: JSON.stringify({ source: sourceID, mode, autoLink, name, collection: getCollectionID(), password: getRoomPassword(sourceID) })
   });
   if(!result.ok) {
     alert(await result.text());
@@ -101,6 +108,7 @@ function createRoomTile(room) {
   if(room.image)
     $('img', tile).src = mapAssetURLs(room.image);
   toggleClass($('.lockedIcon', tile), 'hidden', !room.locked);
+  toggleClass($('.protectedIcon', tile), 'hidden', !room.contentProtected);
   toggleClass($('.passwordIcon', tile), 'hidden', !room.hasPassword);
   toggleClass($('.adminIcon', tile), 'hidden', !room.isAdmin);
 
@@ -145,6 +153,13 @@ function createRoomTile(room) {
     addMenuButton(room.locked ? 'lock_open' : 'lock', room.locked ? 'Unlock room' : 'Lock room', null, function() {
       roomAction(room.id, 'setLocked', { locked: !room.locked });
     });
+    addMenuButton(room.contentProtected ? 'shield' : 'shield_lock', room.contentProtected ? 'Release content' : 'Protect content', null, async function() {
+      if(room.contentProtected)
+        return roomAction(room.id, 'setContentProtected', { contentProtected: false });
+      if(await confirmOverlay('Protect content', `Nobody, not even you, can copy the room "${room.name}", create a linked room from it, download one of its games or share a link to one while this is on. Turn it off again to export something yourself.\n\nPlayers in the room still play the game, so their browsers still receive it - this keeps the game out of everybody's game shelf, it cannot make it invisible.`, 'Protect', 'Cancel', 'shield_lock', 'undo'))
+        await roomAction(room.id, 'setContentProtected', { contentProtected: true });
+      showOverlay('roomsOverlay');
+    });
     addMenuButton('key', room.hasPassword ? 'Change password' : 'Set password', null, function() {
       const password = prompt('Enter a join password for this room (leave empty to remove it):', '');
       if(password !== null)
@@ -154,12 +169,14 @@ function createRoomTile(room) {
       roomAction(room.id, 'unclaim');
     });
   }
-  addMenuButton('content_copy', 'Copy room', null, function() {
-    copyRoom(room.id, 'copy');
-  });
-  addMenuButton('link', 'Create linked room', null, function() {
-    copyRoom(room.id, 'link');
-  });
+  if(!room.contentProtected || room.isAdmin) {
+    addMenuButton('content_copy', 'Copy room', null, function() {
+      copyRoom(room.id, 'copy', room.name);
+    });
+    addMenuButton('link', 'Create linked room', null, function() {
+      copyRoom(room.id, 'link', room.name);
+    });
+  }
   if(room.isAdmin)
     addMenuButton('delete', 'Delete room', 'red', async function() {
       if(await confirmOverlay('Delete room', `Are you sure you want to delete the room "${room.name}"? This permanently removes all its games, saved games and its current table.`, 'Delete', 'Keep', 'delete', 'undo', 'red')) {
@@ -223,6 +240,7 @@ onLoad(function() {
 
   onMessage('meta', function(args) {
     currentRoomLocked = !!args.meta.locked;
+    currentRoomProtected = !!args.meta.contentProtected;
     applyRoomLockState();
     if(!roomVisitRegistered)
       registerRoomVisit();
