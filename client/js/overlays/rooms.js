@@ -1,3 +1,8 @@
+// join passwords are kept in memory only, never in localStorage/sessionStorage: they survive an
+// in-place room switch and a websocket reconnect, which is what they are needed for, but not a
+// reload - which then simply asks for the password again
+const roomPasswords = new Map();
+
 let roomsCollectionID = null;
 let isRoomAdmin = false;
 let currentRoomLocked = false;
@@ -20,7 +25,7 @@ function getCollectionID() {
 }
 
 function getRoomPassword(id) {
-  return sessionStorage.getItem(`roomPassword-${id}`) || undefined;
+  return roomPasswords.get(id);
 }
 
 function registerRoomVisit() {
@@ -248,7 +253,7 @@ onLoad(function() {
 
   on('#passwordOverlay button.join', 'click', function() {
     const password = $('#roomPasswordInput').value;
-    sessionStorage.setItem(`roomPassword-${roomID}`, password);
+    roomPasswords.set(roomID, password);
     toServer('room', { playerName, roomID, collection: getCollectionID(), password });
   });
   on('#roomPasswordInput', 'keyup', function(e) {

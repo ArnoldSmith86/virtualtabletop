@@ -10,6 +10,13 @@ import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js
 import Statistics from './statistics.mjs';
 import Zip from './zip.mjs';
 
+// Room IDs are validated against this alphabet before a room is ever created or joined, but every
+// place that turns one into a filename strips the rest again - the same defense in depth the state
+// and variant IDs get in variantFilename, and the only form static analysis can follow.
+export function pathSafeRoomID(roomID) {
+  return String(roomID).replace(/[^A-Za-z0-9_-]/g, '_');
+}
+
 export default class Room {
   players = [];
   state = {};
@@ -514,7 +521,7 @@ export default class Room {
       return;
     if(Room.roomsBeingSynced && Room.roomsBeingSynced[this.id])
       return;
-    const filename = Config.directory('save') + '/rooms/' + sourceID + '.json';
+    const filename = Config.directory('save') + '/rooms/' + pathSafeRoomID(sourceID) + '.json';
     if(!fs.existsSync(filename))
       return;
     try {
@@ -1363,7 +1370,7 @@ export default class Room {
   }
 
   roomFilename() {
-    return Config.directory('save') + '/rooms/' + this.id + '.json';
+    return Config.directory('save') + '/rooms/' + pathSafeRoomID(this.id) + '.json';
   }
 
   saveCurrentState(mode, name) {
@@ -1763,6 +1770,6 @@ export default class Room {
     if(stateID.match(/^PL:/) && String(variantID).match(/^[0-9]+$/))
       return Config.directory('library') + `/${Room.publicLibrary[stateID].publicLibrary}/${variantID}.json`;
     else
-      return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
+      return Config.directory('save') + '/states/' + pathSafeRoomID(this.id) + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }

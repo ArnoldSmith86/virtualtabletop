@@ -11,7 +11,7 @@ import FileLoader from './server/fileloader.mjs';
 import FileUpdater from './server/fileupdater.mjs';
 import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
-import Room       from './server/room.mjs';
+import Room, { pathSafeRoomID } from './server/room.mjs';
 import Collections from './server/collections.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
 import MinifyHTML from './server/minify.mjs';
@@ -78,7 +78,7 @@ function getEmptyRoomID() {
 function roomExists(roomID) {
   if(!String(roomID).match(/^[A-Za-z0-9_-]+$/))
     return false;
-  return activeRooms.has(roomID) || fs.existsSync(savedir + '/rooms/' + roomID + '.json');
+  return activeRooms.has(roomID) || fs.existsSync(savedir + '/rooms/' + pathSafeRoomID(roomID) + '.json');
 }
 
 function roomIsLocked(roomID) {
