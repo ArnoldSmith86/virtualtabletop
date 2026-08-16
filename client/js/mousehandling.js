@@ -170,7 +170,7 @@ async function handleInput(name, e, dragTarget) {
         if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
           let editClickHandled = false;
           if(edit && !isMiddleMouseButton)
-            editClickHandled = await editClick(widget, e.button);
+            editClickHandled = await editClick(widget, e.button, e);
           else if(jeEnabled && !isMiddleMouseButton)
             editClickHandled = await jeClick(widget, e);
 

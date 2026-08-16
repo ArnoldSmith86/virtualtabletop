@@ -1917,7 +1917,11 @@ class PropertiesModule extends SidebarModule {
     this.renderedBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
 
 
+    // the bar is thrown away with the panel, so hand back what it borrowed
+    // (the room tree) before wiping and build a fresh one on top afterwards
+    removeSelectionBar(this.selectionBar, true);
     this.moduleDOM.innerHTML = '';
+    this.selectionBar = renderSelectionBar(this.moduleDOM, { key: this.title });
     // put back by renderEvents; a selection without an Automations section (a
     // pile, several widgets at once, or nothing at all) must not hide what it
     // does show
@@ -4878,6 +4882,12 @@ class PropertiesModule extends SidebarModule {
       onRenamed: renamedWidget => setSelection([ renamedWidget ])
     });
     idArea.appendChild(idInput);
+
+    // where an Alt+click drill currently is - nothing in the room says which of
+    // the widgets under the pointer this one is
+    const drill = drillPosition();
+    if(drill)
+      div(header, 'widgetHeaderDrill', `${drill.index} of ${drill.total} under the pointer · Alt+click again to go deeper, Alt+Shift+click to come back up`);
 
     // A line covered with stops is hard to click, so a widget attached to one
     // gets a direct way back to the line it belongs to.
@@ -11355,6 +11365,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderModule(target) {
-    target.innerText = 'Properties module not implemented yet.';
+    // everything visible is built by onSelectionChangedWhileActive(), which
+    // openInTarget() calls right after this
   }
 }

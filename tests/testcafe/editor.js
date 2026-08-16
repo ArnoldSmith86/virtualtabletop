@@ -2495,7 +2495,7 @@ test('A routine parameter popup goes away with the widget it belongs to', async 
     .click('#editorSidebar [icon=data_object]')
     .expect(popup.exists).notOk()
     .expect(picking).notOk()
-    .click('#jeShowTree')
+    .click('.editorModule.data_object .selectionBar button[icon=account_tree]')
     .click(Selector('#jeTree .jeTreeWidget').find('.key').withExactText('holder2'))
     .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
   await setEditorState(null);
@@ -2719,5 +2719,66 @@ test('A long list of widget ids shrinks instead of pushing the apply button out 
     };
   })();
   await t.expect(fit).eql({ popupScrollsBy: 0, applyInPopup: true, listScrolls: true });
+  await setEditorState(null);
+});
+
+// The stack of widgets under the pointer used to be eleven function-key rows that
+// only existed while the JSON module was open. It is part of the selection bar
+// now, which Edit Widgets mounts too - so a widget that lies underneath another
+// one is reachable from the panel that edits widgets.
+test('The selection bar reaches a widget that is covered by another one', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    // the list follows the pointer while it is over the room and freezes once it
+    // is not, which is what makes its rows clickable at all
+    .hover('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3)
+    .expect(stackRows.nth(0).textContent).contains('checker')
+    .expect(stackRows.nth(1).textContent).contains('point')
+    .expect(stackRows.nth(2).textContent).contains('board')
+    .click(stackRows.nth(2))
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    // the breadcrumbs of the covered holder name the chain it hangs in
+    .click(stackRows.nth(0))
+    .expect(bar.find('.selectionBarCrumbs').textContent).contains('point')
+    .click(bar.find('button[icon=layers]'));
+
+  // Alt+click drills down through the same stack without any panel at all, and
+  // Alt+Shift+click walks back up
+  await t
+    .click('#w_checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok()
+    .click('#w_checker', { modifiers: { alt: true } })
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .click('#w_checker', { modifiers: { alt: true } })
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .click('#w_checker', { modifiers: { alt: true, shift: true } })
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    // a plain click ends the drill and takes the topmost widget again
+    .click('#w_checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+
+  // back and forward walk the widgets that were selected, whichever way they were
+  await t
+    .click(bar.find('button[icon=arrow_back]'))
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .click(bar.find('button[icon=arrow_forward]'))
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
   await setEditorState(null);
 });
