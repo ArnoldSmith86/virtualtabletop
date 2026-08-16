@@ -42,7 +42,18 @@ export function startWebSocket() {
   };
 
   connection.onmessage = (e) => {
-    const { func, args } = JSON.parse(e.data);
+    let func, args;
+    try {
+      ({ func, args } = JSON.parse(e.data));
+    } catch(error) {
+      // A message that fails to parse was corrupted or truncated in transit
+      // (some browsers occasionally deliver incomplete WebSocket frames).
+      // Instead of crashing the whole client with an uncaught error, drop the
+      // connection so the existing reconnect logic re-syncs the full room state.
+      console.error('Could not parse message from server. Reconnecting.', error);
+      connection.close();
+      return;
+    }
 
     if(func == 'serverStart') {
       if(serverStart != null && serverStart != args) {
@@ -60,7 +71,7 @@ export function startWebSocket() {
   };
 }
 
-function onMessage(func, callback) {
+export function onMessage(func, callback) {
   if(!messageCallbacks[func])
     messageCallbacks[func] = [];
   messageCallbacks[func].push(callback);

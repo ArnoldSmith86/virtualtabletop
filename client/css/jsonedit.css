@@ -418,7 +418,12 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
   white-space: normal;
 }
 
-#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers {
+/* This panel covers the command buttons underneath it and only lists what the cursor is hovering in the room,
+   so it hides while the cursor is over the editor. An open overlay (the symbol picker, a dialog) takes the
+   cursor away from the room in the same way, but does not necessarily put it over the editor - without
+   body.overlayActive the panel stayed up over the commands for as long as the overlay was open. */
+#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers,
+body.overlayActive #jeWidgetLayers {
   display: none;
 }
 
@@ -534,10 +539,6 @@ body.jsonEdit #toolbar {
   white-space: normal;
 }
 
-#jeLog {
-  margin-left: -40px;
-}
-
 @media (max-width: 1000px) {
   #jeLog {
     right: var(--commandPaneWidth);
@@ -572,6 +573,22 @@ body.jsonEdit #toolbar {
 }
 #jeLog > .jeLog + .jeLog {
   margin-top: 20px;
+}
+
+/* a message about the log itself rather than a logged routine, so make it a readable callout */
+.jeLogNote {
+  color: var(--textColor);
+  background-color: var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--textHighlightColor2);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin: 10px 0 10px 20px;
+  font-family: Arial, sans-serif;
+}
+.jeLogNote .jeLogWidget,
+.jeLogNote .jeLogProperty {
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .jeLogSkipped { color: var(--textDimColor1); }

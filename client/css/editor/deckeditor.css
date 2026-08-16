@@ -1,0 +1,2108 @@
+/* The deck editor covers only the playing surface: the room editor's top toolbar and right sidebar stay
+   visible and functional (dark mode, saving, the sidebar modules and their resizer all keep working). */
+#deckEditor {
+  display: none;
+  position: fixed;
+  top: var(--editToolbarHeight);
+  left: 0;
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  z-index: 1; /* below the sidebar (2) and toolbar (3); the module panel (1) is later in the DOM, so it wins where they overlap */
+  flex-direction: column;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+/* Stop at the module panel when one is open; mirrors #editorModules' width including its clamp so the
+   resizable divider between the sidebar modules and the play area keeps working. */
+#editor.moduleActive #deckEditor {
+  right: calc(var(--editSidebarWidth) + clamp(250px, var(--modulesWidth) - var(--editSidebarWidth), 90vw));
+}
+
+/* On layouts where the module panel sits above the room or covers it entirely (see sidebar.css), it
+   simply overlays the deck editor, so don't reserve width for it. */
+body:is(.editModulesAbove, .editModulesOverlay) #editor.moduleActive #deckEditor {
+  right: var(--editSidebarWidth);
+}
+
+body.deckEditorActive #deckEditor {
+  display: flex;
+}
+
+/* The room's selection rectangle and drag toolbar belong to the hidden playing surface - unless the "Card
+   view" toggle is off, which puts that surface back on screen (see below). */
+body.deckEditorActive:not(.deckEditorRoomVisible) #editorSelection,
+body.deckEditorActive:not(.deckEditorRoomVisible) #editorDragToolbar {
+  display: none;
+}
+
+/* Cards with an "enlarge" face property would pop up the fixed hover-enlarge overlay when the mouse passes
+   over the edit card, floating a huge copy over the editor. Suppress it while the deck editor is open. */
+body.deckEditorActive:not(.deckEditorRoomVisible) #enlarged {
+  display: none !important;
+}
+
+/* "Card view" toggled off: the card stage becomes a window onto the room's play area behind the editor, so a
+   deck can be compared with the running game. Only the stage goes transparent and lets the mouse through -
+   the tree, history row, property sidebar and card-type strip keep their own background and stay usable. */
+body.deckEditorRoomVisible #deckEditor,
+body.deckEditorRoomVisible #deckEditorBody,
+body.deckEditorRoomVisible #deckEditorRight,
+body.deckEditorRoomVisible #deckEditorContent,
+body.deckEditorRoomVisible #deckEditorMainCol {
+  background: transparent;
+  pointer-events: none;
+}
+
+body.deckEditorRoomVisible #deckEditorLeftSidebar,
+body.deckEditorRoomVisible #deckEditorSidebar,
+body.deckEditorRoomVisible #deckEditorStripHeader,
+body.deckEditorRoomVisible #deckEditorStrip {
+  background: var(--backgroundColor);
+}
+
+body.deckEditorRoomVisible #deckEditorHistory,
+body.deckEditorRoomVisible #deckEditorLeftSidebar,
+body.deckEditorRoomVisible #deckEditorSidebar,
+body.deckEditorRoomVisible #deckEditorStripHeader,
+body.deckEditorRoomVisible #deckEditorStrip,
+body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
+  pointer-events: auto;
+}
+
+/* The card is hidden rather than removed, so it keeps its layout box and the fitted scale survives the toggle. */
+body.deckEditorRoomVisible #deckEditorMain,
+body.deckEditorRoomVisible #deckEditorObjectHint {
+  visibility: hidden;
+}
+
+body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
+  visibility: visible;
+}
+
+
+.deckEditorAddGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #ffffff1a;
+}
+
+/* The single add-object group takes the accent color of the currently selected mode (blue = same on every
+   card, amber = different per card type), so the color is one of the two mode indicators. */
+.deckEditorAddGroupStatic {
+  background: rgba(120, 190, 255, 0.22);
+}
+
+.deckEditorAddGroupDynamic {
+  background: rgba(255, 193, 7, 0.28);
+}
+
+/* "Add to:" label over the mode radios - two lines fitting the height of the button row beside it. The
+   selected radio (and the group color above) are the indicators of what the add buttons will create. */
+#deckEditorAddMode {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  margin-right: 6px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+.deckEditorAddModeTitle {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.deckEditorAddModeRadios {
+  display: flex;
+  gap: 8px;
+}
+
+.deckEditorAddModeRadios label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+
+.deckEditorAddModeRadios input {
+  margin: 0;
+  cursor: pointer;
+}
+
+.deckEditorAddGroupStatic .deckEditorAddModeRadios input {
+  accent-color: #4aa3ff;
+}
+
+.deckEditorAddGroupDynamic .deckEditorAddModeRadios input {
+  accent-color: #ffb300;
+}
+
+.deckEditorAddGroup button {
+  padding: 4px 6px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+#deckEditorHistory {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  min-height: 30px;
+  box-sizing: border-box;
+  background: var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
+#deckEditorHistory > button {
+  padding: 3px 8px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* "Add New Deck" then a divider before the undo/redo/history controls. */
+.deckEditorHistoryDivider {
+  width: 1px;
+  align-self: stretch;
+  margin: 2px 4px;
+  background: var(--textColor);
+  opacity: 0.25;
+  flex-shrink: 0;
+}
+
+#deckEditorHistoryLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+#deckEditorBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-grow: 1;
+  scrollbar-width: thin;
+}
+
+.deckEditorCrumb {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--textColor);
+  flex-shrink: 0;
+}
+
+.deckEditorCrumb:not(:last-child)::after {
+  content: '›';
+  font-size: 14px;
+  opacity: 0.5;
+  margin-left: 6px;
+}
+
+.deckEditorCrumb:hover {
+  background: var(--backgroundColor);
+}
+
+.deckEditorCrumb.current {
+  background: var(--VTTblue);
+  color: #fff;
+  font-weight: bold;
+}
+
+.deckEditorCrumb.future {
+  opacity: 0.5;
+}
+
+.deckEditorCrumbEllipsis {
+  opacity: 0.6;
+  padding: 0 2px;
+  flex-shrink: 0;
+}
+
+#deckEditorBody {
+  display: flex;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+/* Always-visible left "file directory" tree (Decks > Faces > Objects), full height with the unified toolbar
+   pinned at the bottom. */
+#deckEditorLeftSidebar {
+  width: 200px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--backgroundHighlightColor1);
+  box-sizing: border-box;
+}
+
+#deckEditorTree {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 6px 6px 8px 6px;
+  min-height: 0;
+}
+
+/* The right column: the history/undo row on top, then the card view + right sidebar. */
+#deckEditorRight {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+#deckEditorContent {
+  flex-grow: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Card column: the main card view fills it; the hint is overlaid at the bottom (out of flow) so showing/
+   hiding it never changes the card view's height (which would otherwise let the fitted card overflow). */
+#deckEditorMainCol {
+  flex-grow: 1;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+#deckEditorMainCol #deckEditorMain {
+  height: 100%;
+}
+
+/* Tree nodes: increasing indent per level (deck > face > object). */
+.deckEditorTreeNode {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.deckEditorTreeNode:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorTreeNode.selected {
+  border-color: var(--textHighlightColor2);
+}
+
+/* The selection in whichever side isn't currently active gets a dashed (rather than solid) orange outline, so
+   it's clear which of the tree selection / card type is actually being edited on the right. */
+.deckEditorTreeNode.selectedInactive {
+  border-color: var(--textHighlightColor2);
+  border-style: dashed;
+}
+
+/* Level indent + a left accent stripe per level so the deck > face > object hierarchy reads clearly. */
+.deckEditorTreeDeck {
+  font-weight: bold;
+  box-shadow: inset 3px 0 0 var(--VTTblue);
+}
+
+/* Indent via margin (not padding) so each level's accent stripe shifts right too, giving three clear levels. */
+.deckEditorTreeFace {
+  margin-left: 16px;
+  box-shadow: inset 3px 0 0 #4aa3ff;
+}
+
+.deckEditorTreeNode.deckEditorObjectRow,
+.deckEditorTreeEmpty {
+  margin-left: 32px;
+  box-shadow: inset 3px 0 0 var(--backgroundHighlightColor1);
+}
+
+.deckEditorTreeEmpty {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.deckEditorTreeEmpty:hover {
+  background: none;
+}
+
+/* Level icons (deck/face/object) rendered from the icon attribute, like the toolbar buttons. */
+.deckEditorTreeIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.deckEditorTreeIcon::before {
+  content: attr(icon);
+  font-family: "Material Symbols";
+  font-size: 18px;
+  line-height: 1;
+}
+
+.deckEditorTreeLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The current deck's id is an inline editable field that blends into the row until hovered/focused. */
+.deckEditorTreeDeckId {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-weight: bold;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0 3px;
+  margin: 0;
+}
+
+.deckEditorTreeDeckId:hover {
+  border-color: rgba(128, 128, 128, 0.4);
+}
+
+.deckEditorTreeDeckId:focus {
+  outline: none;
+  border-color: var(--VTTblue);
+}
+
+/* Unified add / copy / delete (+ show areas) toolbar, at the top of the left sidebar. */
+#deckEditorLeftToolbar {
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+}
+
+#deckEditorLeftToolbar button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 4px;
+}
+
+#deckEditorLeftToolbar button:hover:not(:disabled) {
+  background: var(--VTTblueDark);
+}
+
+#deckEditorLeftToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* The delete button is a red trash can (same treatment as the card-type delete above the strip). */
+#deckEditorTreeDelete:not(:disabled),
+#deckEditorStripDelete:not(:disabled),
+.deckEditorSidebarToolbar button[icon=delete_forever]:not(:disabled) {
+  background: var(--VTTred, #c0392b);
+}
+
+#deckEditorTreeDelete:hover:not(:disabled),
+#deckEditorStripDelete:hover:not(:disabled),
+.deckEditorSidebarToolbar button[icon=delete_forever]:hover:not(:disabled) {
+  background: #922b21;
+}
+
+/* Show areas sits in the same toolbar; it lights up when active. The "Card view" toggle in the history row
+   and the Object tab's "+" (while its add submenu is open) use the same pressed look. */
+#deckEditorShowAll.active:not(:disabled),
+#deckEditorCardView.active:not(:disabled),
+.deckEditorSidebarToolbar button.active:not(:disabled) {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff6;
+}
+
+/* Print / PDF options. */
+/* Float the dialog over the deck editor with just a dim backdrop instead of the .overlay class's solid white
+   that hides everything behind it. */
+#deckEditorExportOverlay,
+#deckEditorImportOverlay,
+#deckEditorNewDeckOverlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* The shared symbol picker normally lives in the room overlays. While the deck editor is open it's reparented
+   into #deckEditorMainCol (see open()/close()) so it stays constrained to the main card view instead of
+   covering the top bar, left tree, bottom strip or right sidebar. #deckEditorMainCol is already
+   position: relative, so this positions it to fill exactly that column. */
+#deckEditorMainCol #symbolPickerOverlay {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  z-index: 20;
+}
+
+/* Both pickers are opened from the JSON editor and the properties panel, which stay reachable while the deck
+   editor covers the play area, so they are moved into #editor (see initializeDOM) and the symbol picker is
+   left there when the deck editor closes (see close()) - from then on that is where edit mode opens it.
+   Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
+   instead (pickSymbolKeepingOverlay, which marks it with .symbolPickerAboveEditor) - same situation.
+   Neither spot gives them a box or a stacking order of their own, so .overlay's own 100%/100% makes them
+   cover the whole window and #roomArea (position: fixed, z-index 1) paints the board on top of the open
+   picker. Give them the deck editor's box instead - below the toolbar, beside the sidebar - and float them
+   above the sidebar (2), the toolbar (3) and the deck editor's dialogs (20). */
+#editor > #symbolPickerOverlay,
+#editor > #audioPickerOverlay,
+#symbolPickerOverlay.symbolPickerAboveEditor {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  z-index: 30;
+}
+
+#deckEditorExportOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+}
+
+#deckEditorExportDialog {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  border: 1px solid #0002;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px #0004;
+  background: white;
+}
+
+#deckEditorExportDialog h1 {
+  margin-top: 0;
+}
+
+#deckEditorExportClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.deckEditorExportOptions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 18px;
+  margin: 20px 0 14px;
+}
+
+.deckEditorExportOptions label {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) minmax(110px, 1fr);
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.deckEditorExportOptions input,
+.deckEditorExportOptions select {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.deckEditorExportCheckbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#deckEditorExportSummary {
+  min-height: 20px;
+  margin: 14px 0;
+  padding: 9px 12px;
+  border-radius: 5px;
+  background: #0000000c;
+  color: #333;
+}
+
+#deckEditorExportSummary.error {
+  color: var(--VTTred, #c0392b);
+  background: #c0392b12;
+}
+
+.deckEditorExportActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.deckEditorExportActions button {
+  padding: 8px 12px;
+}
+
+#deckEditorExportRenderHost {
+  position: fixed;
+  left: -100000px;
+  top: 0;
+  background: transparent;
+}
+
+/* The card-type CSV import dialog reuses the export dialog's visual language. */
+#deckEditorImportOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+}
+
+#deckEditorImportDialog {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  border: 1px solid #0002;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px #0004;
+  background: white;
+}
+
+#deckEditorImportDialog h1 {
+  margin-top: 0;
+}
+
+#deckEditorImportClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.deckEditorImportModes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.deckEditorImportModes label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.deckEditorImportActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deckEditorImportActions button {
+  padding: 8px 12px;
+}
+
+#deckEditorNewDeckOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+}
+
+#deckEditorNewDeckDialog {
+  position: relative;
+  width: min(680px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  border: 1px solid #0002;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px #0004;
+  background: white;
+}
+
+#deckEditorNewDeckDialog h1 {
+  margin-top: 0;
+}
+
+#deckEditorNewDeckClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* Match the standard VTT modal look (see .modal in layout.css): themed background, VTTblue top/bottom
+   accent, and a VTTblueDark title bar. Placed after the per-dialog rules so it overrides their white bg. */
+#deckEditorExportDialog,
+#deckEditorImportDialog,
+#deckEditorNewDeckDialog {
+  color: var(--modalTextColor);
+  background: var(--modalBackgroundColor);
+  border: none;
+  border-top: 3px solid var(--VTTblue);
+  border-bottom: 3px solid var(--VTTblue);
+  border-radius: 8px;
+  box-shadow: 0 5px 10px #000000aa;
+  padding: 0 24px 20px 24px;
+}
+
+#deckEditorExportDialog h1,
+#deckEditorImportDialog h1,
+#deckEditorNewDeckDialog h1 {
+  margin: 0 -24px 16px -24px;
+  padding: 12px 44px 12px 16px;
+  background: var(--VTTblueDark);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* Close button sits on the dark title bar. */
+#deckEditorExportClose,
+#deckEditorImportClose,
+#deckEditorNewDeckClose {
+  background: transparent;
+  color: #fff;
+}
+
+/* The ways to create a deck are grouped into three expanders, only one of which is open at a time - so the
+   dialog opens as three short rows instead of a list of eight radio buttons. */
+.deckEditorNewDeckGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.deckEditorNewDeckGroup {
+  border: 1px solid #0003;
+  border-radius: 6px;
+}
+
+.deckEditorNewDeckGroupHeader {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #0000000d;
+  color: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  text-transform: none;
+}
+
+.deckEditorNewDeckGroupHeader:hover {
+  background: #0000001a;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader,
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader:hover {
+  border-radius: 5px 5px 0 0;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorNewDeckGroupHeader span {
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+  opacity: 0.75;
+}
+
+.deckEditorNewDeckGroupHeader::after {
+  content: "expand_more";
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-family: "Material Symbols";
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupHeader::after {
+  content: "expand_less";
+}
+
+/* The panel of the selected option is moved into the open group (see openNewDeckGroup), so a closed group is
+   nothing but its header. */
+.deckEditorNewDeckGroupBody {
+  display: none;
+  padding: 12px;
+}
+
+.deckEditorNewDeckGroupOpen .deckEditorNewDeckGroupBody {
+  display: block;
+}
+
+.deckEditorNewDeckModes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.deckEditorNewDeckModes label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 8px;
+  cursor: pointer;
+}
+
+.deckEditorNewDeckModes label span {
+  grid-column: 2;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* A group with a single way to create a deck (the blank one) needs no radio button - opening it is already
+   the choice, and its header says what it does. */
+.deckEditorNewDeckModesSingle {
+  display: none;
+}
+
+/* Applies to every mode, so it is set apart from the groups above and the picked mode's panel, which is moved
+   into the open group. */
+.deckEditorNewDeckOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 16px 0;
+  padding: 10px 12px;
+  border: 1px solid #0002;
+  border-radius: 8px;
+  background: #0000000a;
+}
+
+.deckEditorNewDeckOptionsLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+.deckEditorNewDeckOptions label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* the reset button needs a holder to recall the cards into, so without one its option is off, not just
+   greyed out while still looking ticked */
+.deckEditorNewDeckOptions label:has(input:disabled) {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* what unticking the holder means, shown only once it is unticked */
+.deckEditorNewDeckOptionsHint {
+  display: none;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.deckEditorNewDeckOptions:has(#deckEditorNewDeckHolder:not(:checked)) .deckEditorNewDeckOptionsHint {
+  display: block;
+}
+
+/* Separates a group's options from the panel of the selected one - the blank group shows no options, so
+   there is nothing to separate there. */
+.deckEditorNewDeckModes:not(.deckEditorNewDeckModesSingle) + #deckEditorNewDeckPanel:not(:empty) {
+  border-top: 1px solid #0002;
+  padding-top: 16px;
+}
+
+/* The dialog itself is the scroll container, so pinning the action row to its bottom edge keeps the primary
+   action reachable no matter how tall the panel above it grows. The negative offset and the matching padding
+   make it cover the dialog's own bottom padding, so nothing scrolls through the gap below it. */
+#deckEditorNewDeckPanel .goButton,
+.deckEditorNewDeckButtonBar {
+  position: sticky;
+  bottom: -20px;
+  z-index: 1;
+  margin-top: 8px;
+  padding: 8px 0 20px;
+  background: var(--modalBackgroundColor);
+}
+
+/* Card sizes for a new empty deck: a wrapping row of radio chips, the first (the size decks have always been
+   created at) preselected. */
+.deckEditorNewDeckSizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-bottom: 12px;
+}
+
+.deckEditorNewDeckSizesLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  width: 100%;
+}
+
+.deckEditorNewDeckSizes label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.deckEditorNewDeckSizes label span {
+  opacity: 0.6;
+  font-size: 11px;
+}
+
+.deckEditorNewDeckId {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  margin: 4px 0 12px;
+}
+
+.deckEditorNewDeckButtonBar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deckEditorNewDeckButtonBar button {
+  padding: 8px 12px;
+}
+
+/* The reused deck-creation flows carry the sidebar's "editorModule" classes so their scoped CSS applies;
+   override the module's default display:none and themed background so they render inside the white dialog. */
+.deckEditorNewDeckModule.editorModule {
+  display: block;
+  background: transparent;
+  color: inherit;
+}
+
+/* The sidebar's "overflow-x: hidden" would make this module a scroll container of its own, which would stop
+   the sticky action row below from sticking to the dialog (the actual scroll container). */
+.deckEditorNewDeckModule.tune.editorModule {
+  overflow: visible;
+}
+
+/* stays a media query: initializeDOM() re-parents this dialog into #editor, where it is positioned
+   against the viewport - a container query on #roomArea has no container to resolve against there */
+@media (max-width: 700px) {
+  .deckEditorExportOptions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The add-object controls are revealed by the "+" button (a vertical expander) just above the toolbar. */
+#deckEditorAddSection {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin: 0 8px 6px 8px;
+  padding: 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+#deckEditorAddSection.deckEditorAddSectionOpen {
+  display: flex;
+}
+
+#deckEditorAddSection button {
+  padding: 5px 6px;
+  font-size: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.deckEditorObjectRow {
+  gap: 8px;
+}
+
+.deckEditorObjectRow.dragOver {
+  border-color: var(--VTTblue);
+}
+
+.deckEditorObjectRow.dragging {
+  opacity: 0.4;
+}
+
+.deckEditorObjectNum {
+  font-size: 12px;
+  font-weight: bold;
+  width: 16px;
+  flex-shrink: 0;
+  text-align: right;
+  opacity: 0.8;
+}
+
+/* Preview box holding a scaled clone of the object's rendered node (or a swatch/label fallback). */
+.deckEditorObjectPreview {
+  width: 46px;
+  height: 62px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: repeating-conic-gradient(#0000000d 0% 25%, transparent 0% 50%) 50% / 12px 12px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 3px;
+  font-size: 11px;
+  color: var(--textColor);
+}
+
+.deckEditorObjectPreviewInner {
+  position: relative;
+  pointer-events: none;
+}
+
+.deckEditorObjectPreviewInner .cardFaceObject {
+  position: absolute;
+}
+
+/* Image previews: the whole picture, contained and centered in the box. */
+.deckEditorPreviewFill {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Text previews: an inline editable field instead of a scaled thumbnail. */
+.deckEditorObjectPreview.deckEditorPreviewTextBox {
+  flex: 1;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  background: none;
+  border: none;
+  justify-content: stretch;
+}
+
+.deckEditorPreviewText {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 3px 4px;
+}
+
+#deckEditorMain {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  touch-action: none; /* our JS owns touch here (object drag, pan, pinch); stop the browser scrolling/zooming */
+}
+
+/* Space-to-pan cursor feedback on the card design area. */
+body.deckEditorSpacePan #deckEditorMain {
+  cursor: grab;
+}
+
+body.deckEditorPanning #deckEditorMain,
+body.deckEditorPanning #deckEditorMain * {
+  cursor: grabbing;
+}
+
+#deckEditorMain .deckEditorCard {
+  position: relative;
+  box-shadow: 0 0 10px #0006;
+}
+
+#deckEditorMain .deckEditorCard .widget {
+  cursor: default;
+}
+
+#deckEditorMain .deckEditorCard .cardFaceObject {
+  cursor: move;
+}
+
+/* The big edit card clips to its bounds like the real card does, so an object dragged past the card's edge
+   is hidden instead of floating out over the editor. The outlines below are drawn INSIDE the object (negative
+   outline-offset) so they survive that clip as long as the object stays within the card; for the selected
+   object that stops working at the card's edge, which is what .deckEditorSelectionOutline is for. */
+/* before :hover and .deckEditorSelectedObject so those still win on the hovered/selected object */
+#deckEditorMain.deckEditorShowAllAreas .deckEditorCard .cardFaceObject {
+  outline: calc(2px / var(--deckEditorCardScale, 1)) dotted var(--textHighlightColor2);
+  outline-offset: calc(-2px / var(--deckEditorCardScale, 1));
+}
+
+#deckEditorMain .deckEditorCard .cardFaceObject:hover {
+  outline: calc(2px / var(--deckEditorCardScale, 1)) dashed var(--textHighlightColor2);
+  outline-offset: calc(-2px / var(--deckEditorCardScale, 1));
+}
+
+#deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject {
+  outline: calc(3px / var(--deckEditorCardScale, 1)) solid var(--textHighlightColor2);
+  outline-offset: calc(-3px / var(--deckEditorCardScale, 1));
+}
+
+/* An object the face's clip would cut the rectangle off has it drawn as .deckEditorSelectionOutline below
+   instead, so drop every outline here - otherwise a second, clipped rectangle would be drawn over it. */
+#deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject.deckEditorClippedObject {
+  outline: none;
+}
+
+/* The stand-in rectangle for exactly those objects. It sits in the card wrapper rather than on the object,
+   i.e. outside the face's overflow: hidden, and updateSelectionOutline() clamps it to the card - so an object
+   that covers the whole card (or reaches beyond it) still shows its rectangle, just inside the card's edge. */
+#deckEditorMain .deckEditorCard .deckEditorSelectionOutline {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: calc(3px / var(--deckEditorCardScale, 1)) solid var(--textHighlightColor2);
+  z-index: 1000002; /* above the card (1000000) and the grid overlay (1000001) */
+}
+
+.deckEditorEmpty, .deckEditorHint {
+  padding: 10px;
+  opacity: 0.7;
+}
+
+/* The empty-state message (e.g. the card-defaults placeholder) is centered in the large card stage. */
+#deckEditorMain > .deckEditorEmpty {
+  max-width: 420px;
+  text-align: center;
+}
+
+#deckEditorSidebar {
+  width: 380px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--backgroundHighlightColor1);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Every section of the sidebar edits exactly one scope, and the scope picks the color, reusing the blue/amber
+   accent language of the left toolbar's add-mode group: blue = shared by every card of the deck, amber = only
+   this card type. The scope class carries that color as variables, so the tab button, the section header and
+   the dynamic-properties box below can all read the same pair. */
+#deckEditorSidebar, .deckEditorScopeEveryCard {
+  --deckEditorScopeColor: var(--VTTblue);
+  --deckEditorScopeColorDark: var(--VTTblueDark);
+  --deckEditorScopeTint: rgba(120, 190, 255, 0.18);
+}
+
+.deckEditorScopeThisType {
+  --deckEditorScopeColor: #b26a00;
+  --deckEditorScopeColorDark: #8a5200;
+  --deckEditorScopeTint: rgba(255, 193, 7, 0.22);
+}
+
+/* The tab bar at the top of the sidebar: one tab per scope, pinned while the panel below it scrolls. Only the
+   active tab is filled - an unavailable scope (no card type / face / object selected yet) is greyed out. */
+#deckEditorTabs {
+  position: sticky;
+  top: -10px; /* cancels the sidebar's own top padding so the bar sits flush against its top edge */
+  z-index: 2;
+  display: flex;
+  gap: 2px;
+  margin: -10px -10px 4px;
+  padding: 8px 8px 0;
+  background: var(--backgroundColor);
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+}
+
+.deckEditorTab {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  padding: 6px 3px;
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0;
+  white-space: nowrap; /* four tabs in 380px: the labels have to stay on one line to keep the bar even */
+  border-radius: 6px 6px 0 0;
+  background: transparent;
+  color: var(--textColor);
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.deckEditorTab[icon]::before {
+  font-size: 14px;
+  width: 14px;
+  margin-right: 3px;
+}
+
+.deckEditorTab:hover:not(:disabled) {
+  background: var(--deckEditorScopeTint);
+  border-bottom-color: var(--deckEditorScopeColor);
+}
+
+.deckEditorTab.active, .deckEditorTab.active:hover {
+  background: var(--deckEditorScopeColor);
+  border-bottom-color: var(--deckEditorScopeColor);
+  color: #fff;
+}
+
+/* An unavailable scope has to read as unavailable, but it also has to stay readable. The global button:disabled
+   rule paints the label light grey (which suits the grey fill it comes with, but not this transparent tab), and
+   0.3 opacity on top of that left it nearly invisible in both themes. Keep the theme's text color and dim it
+   just enough to stand apart from the selectable tabs, which are drawn at full strength. */
+.deckEditorTab:disabled {
+  background: transparent;
+  border-bottom-color: transparent;
+  color: var(--textColor);
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* Add / copy / delete for whatever the active tab edits, above its first header - the same three buttons the
+   left tree toolbar carries, so the structure can be changed without crossing the screen. */
+.deckEditorSidebarToolbar {
+  display: flex;
+  gap: 3px;
+  margin: 6px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deckEditorSidebarToolbar button {
+  padding: 3px 9px;
+  margin: 0;
+}
+
+.deckEditorSidebarToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Align / distribute for a multi-selection of face objects: the Object tab's second toolbar row, right where
+   the selection is made. Icon-only buttons, disabled (not hidden) while fewer objects than they need are
+   selected - each in a wrapper that carries the tooltip, since a disabled button gets no pointer events. */
+.deckEditorAlignToolbar {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.deckEditorAlignButton {
+  display: flex;
+}
+
+.deckEditorAlignLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  margin-right: 4px;
+}
+
+.deckEditorAlignToolbar button {
+  padding: 3px 6px;
+}
+
+/* Holds the shared "Add to: All Cards / Card Type" submenu while the Object tab's "+" has it open. */
+.deckEditorSidebarAddHost:not(:empty) {
+  display: block;
+  margin-top: 4px;
+}
+
+.deckEditorSidebarAddHost #deckEditorAddSection {
+  margin: 0;
+}
+
+/* Section headers are labels, not buttons: a tinted band with a solid bar in the scope color instead of the
+   solid fill the (clickable) buttons around them use, so "filled blue" keeps meaning "you can click this". */
+.deckEditorSidebarHeader {
+  margin: 12px 0 5px 0;
+  padding: 4px 8px;
+  border-radius: 0 6px 6px 0;
+  border-left: 4px solid var(--deckEditorScopeColor);
+  background: var(--deckEditorScopeTint);
+  cursor: default;
+}
+
+.deckEditorSidebarHeader h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.deckEditorSidebarHeader p {
+  margin: 1px 0 0 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-weight: bold;
+  opacity: 0.75;
+}
+
+#deckEditorSidebar .genericInput {
+  margin-bottom: 10px; /* clear separation so the small trash icons are visually distinct row-to-row */
+}
+
+#deckEditorSidebar .buttonBar {
+  display: flex;
+  gap: 5px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.deckEditorAddProperty, .deckEditorCardTypeName, .deckEditorCardCount {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 5px 0;
+}
+
+#deckEditorSidebar h3 {
+  margin: 10px 0 0 0;
+  font-size: 14px;
+}
+
+/* The whole dynamic-properties block is boxed in its scope color, so on the Object tab the per-card-type rows
+   read as a distinct region instead of just more rows below the object's own (identical-on-every-card) ones. */
+.deckEditorDynamicProperties {
+  margin-top: -5px; /* cancels the header's bottom margin so header and box read as one titled block */
+  border-left: 4px solid var(--deckEditorScopeColor);
+  border-radius: 0 0 6px 0;
+  background: var(--deckEditorScopeTint);
+  padding: 4px 8px 8px;
+}
+
+/* Active bindings: "<object property> ← <card type property>" rows, each with a red trash. */
+.deckEditorDynamicProperty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 3px 0;
+  padding: 3px 5px;
+  border-radius: 4px;
+  background: var(--backgroundColor);
+}
+
+.deckEditorBindingText {
+  font-size: 13px;
+}
+
+.deckEditorBindingArrow {
+  opacity: 0.7;
+  padding: 0 2px;
+}
+
+/* Same red and small glyph as the other property trash icons (not the default darkred .red button). */
+.deckEditorBindingDelete {
+  flex-shrink: 0;
+  padding: 3px;
+  background: var(--VTTred, #c0392b);
+  color: #fff;
+}
+
+.deckEditorBindingDelete[icon]::before {
+  font-size: 14px;
+  width: 14px;
+  margin: 0;
+}
+
+/* Shorter, smaller fields matching the "add new property" rows above; keep the placeholder readable. */
+.deckEditorBindingObjectProp,
+.deckEditorBindingTypeProp {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
+.deckEditorBindingLink {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  color: var(--deckEditorScopeColor);
+  font-size: 16px;
+}
+
+/* The dynamic block's button creates card-type data, so it carries that accent rather than the plain blue
+   used for everything that acts on the face object itself. */
+.deckEditorAddBindingButton {
+  background: var(--deckEditorScopeColor);
+}
+
+.deckEditorAddBindingButton:hover {
+  background: var(--deckEditorScopeColorDark);
+}
+
+/* Shown instead of the column headers while the object has no bindings at all. */
+.deckEditorNoDynamicProperties {
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.75;
+  margin: 6px 5px 10px;
+}
+
+/* Property groups (Content / Position / Size / Colors / Appearance / Custom), the deck editor's version of the
+   Edit Widget sidebar's collapsible blocks - same shape and behaviour, but inside the tab that owns them. */
+.deckEditorGroup {
+  margin: 6px 0;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 5px;
+}
+
+.deckEditorGroupHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin: 0;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--backgroundHighlightColor1);
+  color: var(--textColor);
+  text-align: left;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* The global button:hover fill (layout.css) is more specific than the rule above, so without this the header
+   turned VTTblueDark on hover while its label stayed --textColor - black on navy, unreadable in light mode.
+   Highlight it with the theme's own lighter shade, which keeps the label readable in both themes. */
+.deckEditorGroupHeader:hover {
+  background: var(--backgroundHighlightColor2);
+}
+
+/* Focus ring like the Edit Widget sidebar's collapsible headers (propertyInputs.css), which this mirrors. */
+.deckEditorGroupHeader:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.deckEditorGroupTitle {
+  flex-shrink: 0;
+}
+
+/* What the block holds, so a folded one still says what is inside it. */
+.deckEditorGroupSummary {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+  font-weight: normal;
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.deckEditorGroupArrow::before {
+  content: 'expand_more';
+  font-family: 'Material Symbols';
+  display: inline-block;
+}
+
+.deckEditorGroup.collapsed .deckEditorGroupArrow::before {
+  content: 'chevron_right';
+}
+
+.deckEditorGroupBody {
+  padding: 4px 6px;
+}
+
+.deckEditorGroup.collapsed .deckEditorGroupBody {
+  display: none;
+}
+
+/* Shared style for the small notes under section headers (Dynamic properties intro, HTML-object hint). */
+.deckEditorSectionNote {
+  font-size: 12px;
+  opacity: 0.85;
+  margin: 2px 5px 8px;
+}
+
+/* Column headers over the binding rows; share the row layout but without the row's highlight background. */
+.deckEditorDynamicPropertyHeaders {
+  background: transparent;
+  font-size: 11px;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+/* Stand-in for the trash button column so the two input columns line up in the header and add rows. */
+.deckEditorBindingDeleteSpacer {
+  flex-shrink: 0;
+  width: 34px;
+}
+
+.deckEditorAddProperty input {
+  min-width: 0;
+  flex-grow: 1;
+}
+
+/* "Add binding" control: a title, then a row on the same grid as the bindings above with the Link button at
+   the far right (where the trash sits on saved rows). No inset padding/background so the input columns align. */
+.deckEditorAddBinding {
+  margin-top: 8px;
+  border-top: 1px solid rgba(128, 128, 128, 0.45); /* visible in both light and dark themes */
+  padding-top: 8px;
+}
+
+.deckEditorAddBindingTitle {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0 5px 5px;
+}
+
+.deckEditorAddBindingRow {
+  background: transparent;
+  padding-right: 0; /* so the Link button reaches the same right edge as the "+ Add" button above */
+}
+
+.deckEditorAddBindingButton {
+  flex-shrink: 0;
+}
+
+#deckEditorSidebar .deckEditorProperties .genericInput {
+  position: relative;
+  padding-right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* sidebarModules.css gives every genericInput field a fixed/minimum 200px width, which no longer fits next
+   to a 100px label plus the picker/trash buttons' reserved padding - the field wrapped to its own line
+   (see the reported layout bug). Let it flex to fill the row instead, one line, like the number rows. */
+#deckEditorSidebar .deckEditorProperties .genericInput input:not([type=checkbox]),
+#deckEditorSidebar .deckEditorProperties .genericInput textarea,
+#deckEditorSidebar .deckEditorProperties .genericInput select {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+}
+
+#deckEditorSidebar .deckEditorProperties .genericInput label {
+  flex-shrink: 0;
+}
+
+/* The property name in front of the field. A fixed column so every field starts at the same x - but a
+   game-defined name can be longer than it, so it ends in an ellipsis (and its full text in the tooltip)
+   instead of being cut mid-word right against the field. */
+.deckEditorPropertyLabel {
+  display: inline-block;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* "(mixed)" stands in for a value the selected objects disagree about, so it must not read as a value someone
+   typed - which the color alone doesn't manage in dark mode, where placeholders are drawn in the same white
+   as real text (layout.css). */
+.deckEditorMixedValue::placeholder {
+  font-style: italic;
+  opacity: 0.6;
+}
+
+/* Property rows: a small red trash to delete the property. The glyph size lives on ::before (button[icon]
+   hardcodes 24px), so override it there or the icon stays large and rows crowd together. The #deckEditorSidebar
+   prefix is needed so the square 21px sizing wins over layout.css's `button[icon]:empty { padding: 5px }`
+   (otherwise the button is a couple pixels taller than the field it sits next to). 21px matches the field's
+   outer height so the trash and picker line up with the value field instead of sitting a little lower. */
+#deckEditorSidebar .deckEditorDeleteProperty {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTred, #c0392b);
+  color: #fff;
+}
+
+.deckEditorDeleteProperty[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
+}
+
+/* Room for the asset-picker button and the trash on the far right of a row - plus the upload button on image
+   rows, which carry all three. */
+#deckEditorSidebar .deckEditorProperties .genericInput.hasAssetPicker {
+  padding-right: 48px;
+}
+
+#deckEditorSidebar .deckEditorProperties .genericInput.hasAssetPicker.hasUploadButton {
+  padding-right: 72px;
+}
+
+/* Reuses the Edit Widgets tab's IconInput/ImageInput picker content (propertyInputs.css), which is scoped
+   under ".editorModule" — the deck editor's sidebar isn't one, so restore the visibility that bare
+   ".editorModule { display: none }" rule (meant for hidden/inactive sidebar modules) turns off here. */
+.deckEditorPickerRow.editorModule {
+  display: block;
+  margin: -4px 0 8px;
+}
+
+/* The row's picker toggle: just a symbol, sized and positioned like the trash it sits next to (no chip
+   preview of the current image/icon, so a row never spans more than one line). Its 21px square (see the trash
+   note above) leaves ~3px between it and both the value field and the trash. */
+#deckEditorSidebar .deckEditorAssetPickerButton {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+/* The upload twin of the picker button, one slot further left, so a picture can be uploaded into the row
+   wherever an existing one can be chosen. */
+#deckEditorSidebar .deckEditorUploadButton {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorUploadButton[icon]::before,
+.deckEditorAssetPickerButton[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
+}
+.deckEditorAssetPickerButton.open {
+  background: var(--VTTblueDark);
+}
+
+/* Room for both the color-swatch button and the trash on the far right of a row (same slot as the asset
+   picker's - a row never has both a color and an asset picker). */
+#deckEditorSidebar .deckEditorProperties .genericInput.hasColorPicker {
+  padding-right: 48px;
+}
+
+/* The color-swatch button: sized and positioned like the trash it sits next to (21px square, see the trash
+   note above), showing the property's current color (--swatchColor, painted as a flat layer so a translucent
+   or not-yet-set color lets the checkerboard below it through) behind a palette symbol marking it as the
+   color picker. The symbol's color is set inline by contrastAnyColor() so it stays readable on any swatch.
+   background-repeat has to be spelled out: buttons inherit "no-repeat" from the general button styling, which
+   left the two checkerboard tiles sitting alone in the top left corner instead of covering the button. */
+#deckEditorSidebar .deckEditorColorPickerButton {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background-color: transparent;
+  background-image: linear-gradient(var(--swatchColor, transparent), var(--swatchColor, transparent)),
+                    linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%),
+                    linear-gradient(45deg, #999 25%, #ccc 25%, #ccc 75%, #999 75%);
+  background-size: auto, 8px 8px, 8px 8px;
+  background-position: 0 0, 0 0, 4px 4px;
+  background-repeat: no-repeat, repeat, repeat;
+  border: 1px solid var(--backgroundHighlightColor2, #888);
+}
+.deckEditorColorPickerButton[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
+}
+#deckEditorSidebar .deckEditorColorPickerButton.open {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+}
+
+/* A css/…CSS property is a text row like every other property, with the very declaration rows the Edit
+   Widgets tab uses (CssEditor, styled in propertyInputs.css under ".editorModule") opening below it - the
+   same shape as the image and color pickers above. The button sits where those sit, left of the trash. */
+#deckEditorSidebar .deckEditorProperties .deckEditorCssRow.hasDelete {
+  padding-right: 48px;
+}
+
+#deckEditorSidebar .deckEditorCssPickerButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+#deckEditorSidebar .deckEditorCssRow.hasDelete .deckEditorCssPickerButton {
+  right: 24px;
+}
+
+.deckEditorCssPickerButton[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
+}
+
+#deckEditorSidebar .deckEditorCssPickerButton.open {
+  background: var(--VTTblueDark);
+}
+
+/* the row's own value field: css, so monospace like the declaration rows it opens */
+#deckEditorSidebar .deckEditorCssRow input.cssRowText {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* the nested form is a list of class/selector sections, which no single line can hold - the field names
+   those sections instead of pretending they could be typed here */
+#deckEditorSidebar .deckEditorCssRow input.cssRowText.cssRowSections {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* the sections are already indented by the picker itself, so drop the module's right margin */
+#deckEditorSidebar .deckEditorPickerRow .collapsibleSection {
+  margin-right: 0;
+}
+
+#deckEditorShowAll.active {
+  background: var(--VTTblueDark);
+  color: #fff;
+}
+
+.deckEditorCardCount input {
+  width: 60px;
+}
+
+/* The strip header keeps the card-type toolbar (add/copy/delete) inline, right after the "CARD TYPES" label,
+   then a divider and the "CARD COUNT" group with the ± All buttons. */
+#deckEditorStripHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 10px;
+  border-top: 1px solid var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
+#deckEditorStripToolbar {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+/* Blue/white icon-only buttons with the native title as tooltip. */
+#deckEditorStripToolbar button {
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 4px;
+}
+
+/* Center the icon glyphs (no text) in the compact icon-only toolbar buttons. */
+#deckEditorStripToolbar button::before,
+#deckEditorLeftToolbar button::before {
+  font-size: 18px;
+  width: auto;
+  margin: 0;
+}
+
+#deckEditorStripToolbar button:hover:not(:disabled) {
+  background: var(--VTTblueDark);
+}
+
+#deckEditorStripToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Separates the "CARD TYPES" group from the "CARD COUNT" one in the strip header. */
+.deckEditorStripHeaderDivider {
+  width: 1px;
+  align-self: stretch;
+  margin: 1px 0;
+  background: var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
+/* "± All" changes the number of cards of every card type at once. Same blue as the card-type toolbar next to
+   it, but auto-width since these two carry an "All" label besides their glyph. */
+#deckEditorCountAllToolbar {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+#deckEditorCountAllToolbar button {
+  height: 24px;
+  padding: 0 6px 0 2px;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+#deckEditorCountAllToolbar button::before {
+  font-size: 18px;
+  width: auto;
+  margin: 0;
+}
+
+#deckEditorCountAllToolbar button:hover:not(:disabled) {
+  background: var(--VTTblueDark);
+}
+
+#deckEditorCountAllToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Match the left sidebar's "FACE OBJECTS" header font/size/colour. */
+#deckEditorStripLabel,
+#deckEditorCountAllLabel {
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+/* The "Click a face object…" hint is overlaid at the bottom-center of the card view (out of flow), so it
+   never changes the card view's height. */
+#deckEditorObjectHint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.9; /* it is the only hint that the big card is interactive, so it has to be readable */
+  padding: 4px 10px;
+  pointer-events: none;
+}
+
+#deckEditorObjectHint:empty {
+  display: none;
+}
+
+#deckEditorStrip {
+  display: flex;
+  gap: 5px;
+  padding: 2px 10px 5px 10px;
+  overflow-x: auto;
+  align-items: flex-end;
+  min-height: 0; /* size to the card tiles, no wasted vertical space */
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* A deck of 13 (let alone 52) card types is far wider than the strip, so it scrolls sideways - and since every
+   tile now carries its own card type's colors, the strip is the fastest way to find a type by sight, which it
+   can only be if it doesn't look like it ends where its box does. The platform draws an overlay scrollbar that
+   is invisible while the strip sits still, so fade out whichever edge still has tiles behind it (the classes
+   come from updateStripOverflow). Sticky flex items with a negative margin: pinned to the visible edge without
+   adding to the scrollable width, and above the preview cards' own z-index (1000000). */
+#deckEditorStrip.deckEditorStripMoreLeft::before,
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  content: '';
+  position: sticky;
+  flex: 0 0 48px;
+  align-self: stretch;
+  z-index: 1000002;
+  pointer-events: none;
+}
+
+#deckEditorStrip.deckEditorStripMoreLeft::before {
+  left: -10px; /* cancels the strip's own padding, so the fade reaches its edge */
+  margin-right: -53px; /* fade width plus the flex gap */
+  background: linear-gradient(to right, var(--backgroundColor), transparent);
+}
+
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  right: -10px;
+  margin-left: -53px;
+  background: linear-gradient(to left, var(--backgroundColor), transparent);
+}
+
+.deckEditorStripCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  cursor: pointer;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.deckEditorStripCard:hover {
+  border-color: var(--backgroundHighlightColor1);
+}
+
+/* The tiles are as saturated as the card types they show, so an outline alone is easy to lose among them: the
+   selected tile also gets the plate and the bold label. */
+.deckEditorStripCard.selected {
+  border-color: var(--textHighlightColor2);
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorStripCard.selected > span {
+  font-weight: bold;
+}
+
+.deckEditorStripCard.selectedInactive {
+  border-color: var(--textHighlightColor2);
+  border-style: dashed;
+}
+
+/* Drag-and-drop reordering of card types in the strip. */
+.deckEditorStripCard.dragging {
+  opacity: 0.4;
+}
+
+.deckEditorStripCard.dragOver {
+  border-color: var(--VTTblue);
+  box-shadow: -3px 0 0 var(--VTTblue);
+}
+
+/* Per-card-type "cards in game" +/- count row under each strip tile (and "- All"/"+ All" under the deck tile). */
+.deckEditorStripCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-top: 3px;
+}
+
+.deckEditorStripCount button[icon] {
+  padding: 1px 3px;
+  min-width: 0;
+}
+
+.deckEditorStripCount button[icon]::before {
+  font-size: 15px;
+  width: 15px;
+  margin: 0;
+}
+
+.deckEditorStripCountVal {
+  min-width: 22px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.deckEditorStripCard .renderedCard {
+  position: relative;
+  pointer-events: none;
+}
+
+.deckEditorStripCard span {
+  font-size: 11px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deckEditorAddCardType button {
+  width: 60px;
+  height: 90px;
+}
+
+/* Whole-face number fields (border/radius/enlarge): a plain label + number input, no type dropdown. */
+.deckEditorNumberInput {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 4px 0;
+  position: relative;
+  padding-right: 24px; /* room for the property trash icon (Entire face properties) */
+}
+
+.deckEditorNumberInput label {
+  flex-grow: 1;
+}
+
+.deckEditorNumberInput input {
+  width: 70px;
+}
+
+/* While a deck is being edited, the room-editor toolbar only keeps the actions that still make sense:
+   new room, save, dark mode, fullscreen, close editor, the deck-editor toggle, tutorials and the wiki.
+   Everything else is greyed out and inert (hotkeys are already blocked in layout.js while the editor is open). */
+body.deckEditorActive #editorToolbar .editorToolbarButton button:not([icon=note_add]):not([icon=save]):not([icon=dark_mode]):not([icon=fullscreen]):not([icon=close]):not([icon=style]):not([icon=school]):not([icon=help]):not([icon=grid_4x4]) {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Grid overlay on the card design area (toggled by the room-editor grid button, which stays enabled while
+   the deck editor is open). It lives inside the scaled .deckEditorCard wrapper, so its --gridSize squares are
+   in the card's own design coordinates and scale with the card - helping line up face objects. */
+.deckEditorGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000001; /* above the card widget (z-index 1000000) so the grid overlays the face objects too */
+  display: none;
+}
+
+/* Forced thin 5px grid in the card's own design coordinates (unlike the room grid, which lets the user pick a
+   size/color for a much larger area, this is fixed to help line up small face objects). The line width is
+   1px on screen at any zoom (divided by the card scale, which already includes the user zoom). */
+body.gridLines .deckEditorGrid,
+body.gridLines20 .deckEditorGrid,
+body.gridLines25 .deckEditorGrid,
+body.gridLines33 .deckEditorGrid {
+  display: block;
+  --deckEditorGridLine: calc(1px / var(--deckEditorCardScale, 1));
+  background-image:
+    linear-gradient(to right,  rgba(128,128,128,0.5) 0, rgba(128,128,128,0.5) var(--deckEditorGridLine), transparent var(--deckEditorGridLine)),
+    linear-gradient(to bottom, rgba(128,128,128,0.5) 0, rgba(128,128,128,0.5) var(--deckEditorGridLine), transparent var(--deckEditorGridLine));
+  background-size: 5px 5px, 5px 5px;
+}
+
+/* see common rules in toolbar.css and dragtoolbar.css */
+
+#deckEditorDragToolbar {
+  display: none;
+  position: fixed;
+  background: var(--VTTblue);
+  border-radius: 5px;
+  z-index: 12;
+}
+
+body.deckEditorActive:not(.deckEditorRoomVisible) #deckEditorDragToolbar.active {
+  display: flex;
+}
+
+#deckEditorDragToolbar button {
+  padding: 5px;
+}
+
+#deckEditorDragToolbar button::before {
+  margin: 0;
+}
+
+#deckEditorDragToolbar button span {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  background: var(--VTTblueDark);
+  color: white;
+  margin: 0;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: none;
+  width: 200px;
+}
+
+#deckEditorDragToolbar button:hover span {
+  display: block;
+}
+
+body.dragToolbarDragging #deckEditorDragToolbar button:hover span {
+  display: none;
+}
+
+#deckEditorDragToolbarFeedback {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  width: 100%;
+  border-radius: inherit;
+  padding: 10px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+#deckEditorDragToolbarFeedback i {
+  color: var(--textHighlightColor5);
+}
+
+body.dragToolbarDragging #deckEditorDragToolbarFeedback.active {
+  display: block;
+}
