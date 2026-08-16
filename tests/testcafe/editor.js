@@ -2860,6 +2860,7 @@ test('Alt+click drills in the order the stack list shows', async t => {
   const bar = Selector('#editorModuleTopLeft .selectionBar');
   const stackRows = bar.find('.selectionBarStackRow');
   const drillBadge = Selector('#editorDrillBadge');
+  const drillReadout = bar.find('.selectionBarDrill');
 
   await t
     .click('#editButton')
@@ -2872,16 +2873,24 @@ test('Alt+click drills in the order the stack list shows', async t => {
     .expect(stackRows.nth(0).textContent).contains('cover')
     .expect(stackRows.nth(1).textContent).contains('board')
     .expect(stackRows.nth(2).textContent).contains('card')
-    .click(bar.find('button[icon=layers]'))
 
     .click('#w_cover')
     .expect(Selector('#w_cover').hasClass('selectedInEdit')).ok()
     .click('#w_cover', { modifiers: { alt: true } })
     .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
     .expect(drillBadge.textContent).contains('2/3')
+    // the badge fades, so the bar keeps saying where the drill is - on the one
+    // strip the dropdowns do not cover, and counting the same stack the open
+    // list does rather than one from another spot
+    .expect(drillReadout.textContent).eql('2/3')
+    .expect(bar.find('.selectionBarStackHeader').textContent).contains('3 under the pointer')
     .click('#w_cover', { modifiers: { alt: true } })
     .expect(Selector('#w_card').hasClass('selectedInEdit')).ok()
-    .expect(drillBadge.textContent).contains('3/3');
+    .expect(drillBadge.textContent).contains('3/3')
+    .expect(drillReadout.textContent).eql('3/3')
+    // a plain click is not a drill any more
+    .click('#w_cover')
+    .expect(drillReadout.textContent).eql('');
   await setEditorState(null);
 });
 
@@ -2921,6 +2930,14 @@ test('Two docked modules each get a selection bar and take turns holding the tre
     // and the bar of the module that stayed open still works
     .click(propertiesBar.find('button[icon=account_tree]'))
     .expect(treeInProperties.exists).ok()
+    // pinning reserves room for the tree in Edit Widgets too - it used to only
+    // turn the button yellow there and leave the tree hanging over the panel,
+    // which a sticky bar cannot be scrolled away from
+    .expect(propertiesBar.clientHeight).lt(60)
+    .click(propertiesBar.find('button.selectionBarPin'))
+    .expect(propertiesBar.clientHeight).gt(150)
+    .click(propertiesBar.find('button.selectionBarPin'))
+    .expect(propertiesBar.clientHeight).lt(60)
     .click(propertiesBar.find('button[icon=account_tree]'))
     .expect(treeInProperties.exists).notOk();
   await setEditorState(null);

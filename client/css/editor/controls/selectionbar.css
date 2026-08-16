@@ -14,13 +14,18 @@
   z-index: 2;
 }
 
-/* the JSON module fills its panel with absolutely placed panes and keeps its
-   command buttons to the right of the bar */
+/* The JSON module fills its panel with absolutely placed panes. The bar spans
+   the whole of it rather than stopping at the command pane: five buttons and a
+   breadcrumb do not fit in what is left of a docked module otherwise, and the
+   dropdowns below are only as wide as the bar. The command pane starts below it
+   (see jsonedit.css), and the module's close button sits in the bar's right end,
+   which the padding keeps free. */
 .editorModule.data_object .selectionBar {
   position: absolute;
   top: 0;
   left: 0;
-  right: calc(var(--commandPaneWidth) + 1px);
+  right: 0;
+  padding-right: 38px;
 }
 
 /* Edit Widgets scrolls, so the bar stays at the top of the panel instead */
@@ -46,9 +51,13 @@
   margin: 0;
 }
 
+/* dimming the whole button fades its glyph along with it, which reads as broken
+   rather than as "there is nothing to go back to yet" - the arrows are disabled
+   most of the time in Edit Widgets, where nothing is selected to begin with */
 .selectionBar > button:disabled {
-  background-color: gray;
-  opacity: 0.5;
+  background-color: var(--backgroundHighlightColor2);
+  color: var(--textHelpColor);
+  opacity: 1;
 }
 
 .selectionBar > button.active {
@@ -56,21 +65,22 @@
   color: yellow;
 }
 
-.selectionBarStackButton.empty {
-  opacity: 0.5;
-}
-
+/* the count sits in the corner of the button, so it needs an edge of its own:
+   the active button is the same blue and would otherwise swallow it whole */
 .selectionBarStackCount {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: -4px;
+  bottom: -4px;
+  min-width: 10px;
+  text-align: center;
   font-size: 11px;
-  line-height: 11px;
+  line-height: 12px;
   font-weight: bold;
-  padding: 0 2px;
-  border-radius: 4px;
-  background: var(--VTTblueDark);
-  color: yellow;
+  padding: 0 3px;
+  border-radius: 7px;
+  background: var(--VTTblue);
+  color: white;
+  border: 1px solid var(--backgroundColor);
 }
 
 .selectionBarStackCount:empty {
@@ -86,7 +96,6 @@
   align-items: center;
   overflow: hidden;
   white-space: nowrap;
-  font-family: monospace;
 }
 
 .selectionBarCrumb {
@@ -119,12 +128,37 @@
 }
 
 .selectionBarCrumbInfo {
-  color: var(--textDimColor1);
+  color: var(--textHelpColor);
 }
 
-/*** The tree dropdown ***/
+/*** Where an Alt+click drill currently is - nothing in the room says which of
+     the widgets under the pointer the selected one is. It lives in the bar
+     rather than in the panel below because that is the one strip the dropdowns
+     do not cover, and because it must not push the panel around every time a
+     drill starts or ends. ***/
 
-.selectionBarTree {
+.selectionBarDrill {
+  flex-shrink: 0;
+  align-self: center;
+  margin-left: 4px;
+  padding: 1px 5px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: bold;
+  background: var(--VTTblue);
+  color: white;
+}
+
+.selectionBarDrill:empty {
+  display: none;
+}
+
+/*** The dropdowns ***/
+
+/* Both hang below the bar, which is as wide as the module it is in - a list of
+   widget ids that is narrower than the ids is no use to anyone. The shadow makes
+   them read as a layer above the panel rather than as a piece of it. */
+.selectionBarTree, .selectionBarStackList {
   display: none;
   position: absolute;
   top: 100%;
@@ -135,8 +169,12 @@
   background: var(--backgroundColor);
   border: 1px solid var(--backgroundHighlightColor1);
   border-top: none;
-  padding: 5px;
   box-sizing: border-box;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+}
+
+.selectionBarTree {
+  padding: 5px;
 }
 
 .selectionBar.treeVisible .selectionBarTree {
@@ -149,41 +187,40 @@
   font-family: monospace;
 }
 
+/* the pin only means anything while the tree is open, but its slot stays: it sits
+   between the tree and the stack button, which would otherwise jump aside the
+   moment the tree opens */
 .selectionBar > button.selectionBarPin {
-  display: none;
+  visibility: hidden;
 }
 
 .selectionBar.treeVisible > button.selectionBarPin {
-  display: flex;
+  visibility: visible;
 }
 
-/* pinned: reserve space for the tree so it stays visible above the JSON;
-   percentages resolve against the module pane so short panes keep a usable area */
+/* pinned: reserve space for the tree so it stays visible above the editor.
+   The JSON module places its panes absolutely, so percentages resolve against
+   the module pane and short panes keep a usable area; Edit Widgets scrolls
+   below a sticky bar, so the tree takes a share of the viewport there. */
 .editorModule.data_object .selectionBar.treeVisible.treePinned {
   height: max(40%, 140px);
 }
 
-.editorModule.data_object .selectionBar.treeVisible.treePinned .selectionBarTree {
+.editorModule.tune .selectionBar.treeVisible.treePinned {
+  height: min(40vh, 320px);
+}
+
+.selectionBar.treeVisible.treePinned .selectionBarTree {
   top: 40px;
   bottom: 0;
   max-height: none;
+  box-shadow: none;
 }
 
 /*** The stack of widgets under the pointer ***/
 
 .selectionBarStackList {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  max-height: 50vh;
-  overflow-y: auto;
-  background: var(--backgroundColor);
-  border: 1px solid var(--backgroundHighlightColor1);
-  border-top: none;
   padding: 3px;
-  box-sizing: border-box;
   white-space: normal;
 }
 
@@ -191,10 +228,15 @@
   display: block;
 }
 
-.selectionBarStackHeader, .selectionBarStackEmpty {
-  color: var(--textDimColor1);
+.selectionBarStackHeader, .selectionBarStackEmpty, .selectionBarStackHelp {
+  color: var(--textHelpColor);
   font-size: 12px;
   padding: 3px 5px;
+}
+
+.selectionBarStackHelp {
+  border-top: 1px solid var(--backgroundHighlightColor1);
+  margin-top: 3px;
 }
 
 .selectionBarStackRow {
@@ -203,7 +245,6 @@
   gap: 6px;
   padding: 3px 5px;
   font-size: 13px;
-  font-family: monospace;
   cursor: pointer;
   border-radius: 3px;
 }
@@ -219,7 +260,7 @@
 .selectionBarStackKey {
   flex-shrink: 0;
   width: 3ch;
-  color: var(--textDimColor1);
+  color: var(--textHelpColor);
   font-size: 11px;
 }
 
@@ -229,12 +270,22 @@
   color: var(--textHighlightColor4);
 }
 
+/* the id is the one part of a row that can be arbitrarily long, so it is what
+   gives way first when the panel is narrow - the notes are why the list exists */
 .selectionBarStackId {
+  flex-shrink: 4;
+  min-width: 4ch;
   color: var(--textHighlightColor1);
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .selectionBarStackNotes {
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 6ch;
   text-align: right;
   color: var(--textHighlightColor3);
   font-size: 11px;
@@ -243,10 +294,17 @@
   white-space: nowrap;
 }
 
-/* hovering a row says which widget it is without selecting it */
+/* Hovering a row says which widget it is without selecting it - in the red the
+   rubber band already uses for "this is what you are about to select", rather
+   than in a color that means nothing anywhere else in the editor. Written like
+   the selection rules in editor/layout.css so it wins over the yellow of a
+   widget that is hovered while it already is selected. */
+body.edit:not(.dragToolbarDragging) .widget.selectionBarHover:not(.pile),
+body.edit:not(.dragToolbarDragging) .widget.selectionBarHover.pile .handle {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
 body.edit .widget.selectionBarHover {
-  outline: 3px solid cyan;
-  outline-offset: 2px;
   visibility: visible !important;
 }
 
@@ -271,10 +329,4 @@ body.edit .widget.selectionBarHover {
 @keyframes editorDrillBadgeFade {
   0%, 70% { opacity: 1; }
   100%    { opacity: 0; }
-}
-
-.widgetHeaderDrill {
-  color: var(--textDimColor1);
-  font-size: 12px;
-  font-style: italic;
 }

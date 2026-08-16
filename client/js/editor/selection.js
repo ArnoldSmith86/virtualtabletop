@@ -29,6 +29,10 @@ function drillTo(clientX, clientY, e) {
 
   const step = e.shiftKey ? -1 : 1;
   drill = { anchor: { x: clientX, y: clientY }, stack, index: near ? (drill.index + step + stack.length) % stack.length : Math.min(1, stack.length-1) };
+  // the bar lists what is under the pointer, and this is a fresher answer for
+  // that very point than the last scan - so the list and the drill readout above
+  // it always count the same widgets
+  selectionBarAdoptStack(stack, clientX, clientY);
   showDrillBadge(clientX, clientY);
   return stack[drill.index];
 }
@@ -40,9 +44,14 @@ function endDrill() {
 }
 
 // Where in the stack the drill currently is - the editor is the only thing that
-// can say so, the room looks exactly the same as after a plain click.
+// can say so, the room looks exactly the same as after a plain click. Only while
+// the pointer is still on the spot that was drilled: the bar shows this next to
+// the list of widgets under the pointer, and the two must not count different
+// spots at the same time.
 function drillPosition() {
-  return drill.stack.length > 1 && selectedWidgets.length == 1 && selectedWidgets[0] === drill.stack[drill.index]
+  const stack = selectionBarWidgetStack();
+  const onDrilledSpot = drill.stack.length == stack.length && drill.stack.every((w, i)=>stack[i] === w);
+  return onDrilledSpot && drill.stack.length > 1 && selectedWidgets.length == 1 && selectedWidgets[0] === drill.stack[drill.index]
     ? { index: drill.index + 1, total: drill.stack.length } : null;
 }
 

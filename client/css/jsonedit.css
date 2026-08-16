@@ -33,13 +33,20 @@
   box-sizing: border-box;
 }
 
-/* the selection bar sits above the JSON text inside the sidebar module */
-.editorModule #jeText, .editorModule #jeTextHighlight {
+/* the selection bar sits above the JSON text inside the sidebar module - and
+   above the command pane too, so that it (and the dropdowns hanging off it) can
+   use the full width of a docked module */
+.editorModule #jeText, .editorModule #jeTextHighlight, .editorModule #jeCommands {
   top: 40px;
 }
 
+.editorModule #jeCommands {
+  height: auto;
+}
+
 .selectionBar.treeVisible.treePinned ~ #jeText,
-.selectionBar.treeVisible.treePinned ~ #jeTextHighlight {
+.selectionBar.treeVisible.treePinned ~ #jeTextHighlight,
+.selectionBar.treeVisible.treePinned ~ #jeCommands {
   top: max(40%, 140px);
 }
 

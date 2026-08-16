@@ -23,10 +23,10 @@
   z-index: 3;
 }
 
-/* except in the JSON module, where that corner is the command pane - it goes to the right end of the
-   widget switcher bar above the text instead */
+/* except in the JSON module, where it goes into the right end of the selection bar above the text - the
+   bar spans the module and keeps that end free for it (selectionbar.css) */
 .data_object.editorModule > .moduleCloseButton {
-  right: calc(var(--commandPaneWidth) + 5px);
+  right: 5px;
   top: 6px;
 }
 

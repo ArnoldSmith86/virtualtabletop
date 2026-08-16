@@ -4895,12 +4895,6 @@ class PropertiesModule extends SidebarModule {
     });
     idArea.appendChild(idInput);
 
-    // where an Alt+click drill currently is - nothing in the room says which of
-    // the widgets under the pointer this one is
-    const drill = drillPosition();
-    if(drill)
-      div(header, 'widgetHeaderDrill', `${drill.index} of ${drill.total} under the pointer · Alt+click again to go deeper, Alt+Shift+click to come back up`);
-
     // A line covered with stops is hard to click, so a widget attached to one
     // gets a direct way back to the line it belongs to.
     const parentID = widget.get('parent');

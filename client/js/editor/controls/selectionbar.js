@@ -26,6 +26,12 @@ let selectionBarListening = false;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
 
+// Alt+click needs a mouse and a modifier key, so it is not something to advise
+// on a tablet - the list works there and is the only way in.
+function selectionBarCanAltClick() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
 /* State that outlives a single bar: the tree pin used to be a key of its own,
    back when the bar was part of the JSON editor. */
 
@@ -104,6 +110,18 @@ function selectionBarWidgetStack() {
   return selectionBarStack;
 }
 
+// An Alt+click drill takes its own stack at the point it was aimed at, and that
+// is the stack the bar should be showing - otherwise the list can say "nothing
+// under the pointer" right next to a drill readout counting five of them.
+function selectionBarAdoptStack(stack, clientX, clientY) {
+  clearTimeout(selectionBarScanTimer);
+  selectionBarScanTimer = null;
+  selectionBarPointer = { x: clientX, y: clientY };
+  selectionBarStack = stack;
+  selectionBarStackCoords = selectionBarRoomCoords(clientX, clientY);
+  updateSelectionBars();
+}
+
 // F1, F2, F3, F5 ... F12 - F4 is skipped because the browser owns it
 function selectionBarWidgetForHotkey(functionKey) {
   const index = functionKey >= 5 ? functionKey - 2 : functionKey - 1;
@@ -150,8 +168,10 @@ function selectionBarScan() {
     return;
   selectionBarStack = selectionBarSortStack(widgetStackAt(selectionBarPointer.x, selectionBarPointer.y));
   selectionBarStackCoords = selectionBarRoomCoords(selectionBarPointer.x, selectionBarPointer.y);
-  for(const bar of selectionBars)
+  for(const bar of selectionBars) {
     selectionBarRenderStack(bar);
+    selectionBarRenderDrill(bar); // the readout only stands while the pointer is still on the drilled spot
+  }
 }
 
 function selectionBarInstallListeners() {
@@ -308,24 +328,26 @@ function selectionBarButton(target, icon, title, onClick) {
   return button;
 }
 
-// what makes this widget hard or impossible to get at with a plain click - the
-// reason the stack list exists at all
+// What makes this widget hard or impossible to get at with a plain click - the
+// reason the stack list exists at all. In the words the editor uses for them,
+// not in the property and class names behind them: this list is read by the
+// people who are here so they do not have to open the JSON.
 function selectionBarWidgetNotes(widget) {
   const notes = [];
   if(widget.get('type') == 'card')
-    notes.push(`deck ${widget.get('deck')}`);
+    notes.push(`card from ${widget.get('deck')}`);
   // only when it is not the default for the type: every basic widget is on
   // layer 1 and saying so for each of them would drown out the rest
   if(widget.get('layer') !== widget.getDefaultValue('layer'))
-    notes.push(`layer ${widget.get('layer')}`);
+    notes.push(`on layer ${widget.get('layer')}`);
   if(String(widget.get('classes') || '').split(' ').indexOf('transparent') != -1)
-    notes.push('transparent');
+    notes.push('invisible');
   if(widget.domElement.classList.contains('foreign'))
     notes.push('another seat');
   if(widget.domElement.classList.contains('hidden'))
     notes.push('hidden');
   if(widget.get('movableInEdit') === false)
-    notes.push('movableInEdit:false');
+    notes.push('locked in edit mode');
   return notes.join(' · ');
 }
 
@@ -339,7 +361,6 @@ function selectionBarRenderStack(bar) {
     return;
 
   bar.stackCount.textContent = selectionBarStack.length || '';
-  bar.stackButton.classList.toggle('empty', !selectionBarStack.length);
 
   if(!bar.dom.classList.contains('stackVisible'))
     return;
@@ -351,15 +372,24 @@ function selectionBarRenderStack(bar) {
 
   bar.stackList.innerHTML = '';
   const header = div(bar.stackList, 'selectionBarStackHeader');
-  header.textContent = selectionBarStackCoords
-    ? `${selectionBarStack.length} under the pointer at ${selectionBarStackCoords.x}, ${selectionBarStackCoords.y}`
-    : `${selectionBarStack.length} under the pointer`;
+  header.textContent = !selectionBarStack.length
+    ? 'Nothing under the pointer'
+    : selectionBarStackCoords
+      ? `${selectionBarStack.length} under the pointer at ${selectionBarStackCoords.x}, ${selectionBarStackCoords.y}`
+      : `${selectionBarStack.length} under the pointer`;
+
+  // What the list is, for someone who just opened it: the panel it replaces
+  // carried that sentence permanently, and a tooltip is no place for it.
+  if(selectionBarStack.length)
+    div(bar.stackList, 'selectionBarStackHelp', 'The widgets at the spot the pointer last rested on, topmost first. Click one to select it, shift-click to add it to the selection, or press the key in front of it.');
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 11 ? `F${index+2}` : '';
+    // F4 is not in the column and the gap looks like a bug without a word on it
+    const keyTitle = hotkey ? `Press ${hotkey} to select this widget - F4 is missing from the list because the browser keeps that key for itself` : '';
     const row = div(bar.stackList, 'selectionBarStackRow');
     row.classList.toggle('selected', selectedWidgets.indexOf(widget) != -1);
-    row.innerHTML = `<span class=selectionBarStackKey>${hotkey}</span>`
+    row.innerHTML = `<span class=selectionBarStackKey title="${keyTitle}">${hotkey}</span>`
                   + `<span class=selectionBarStackType>${html(widget.get('type') || 'basic')}</span>`
                   + `<span class=selectionBarStackId>${html(widget.id)}</span>`
                   + `<span class=selectionBarStackNotes>${html(selectionBarWidgetNotes(widget))}</span>`;
@@ -380,7 +410,22 @@ function selectionBarRenderStack(bar) {
   }
 
   if(!selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room. The list then keeps that stack while the pointer travels here, so its rows can be clicked.');
+    div(bar.stackList, 'selectionBarStackEmpty', 'Move the pointer over a widget in the room - everything stacked at that spot is listed here.');
+}
+
+// Where an Alt+click drill currently is. It sits in the bar and not in the panel
+// below it for two reasons: the dropdowns cover that panel, so the readout and
+// the list it refers to could never be on screen together, and a line that comes
+// and goes in a panel header shoves everything below it around on every click.
+function selectionBarRenderDrill(bar) {
+  if(!bar.drill)
+    return;
+  const drill = drillPosition();
+  bar.drill.textContent = drill ? `${drill.index}/${drill.total}` : '';
+  bar.drill.title = drill
+    ? `The selected widget is number ${drill.index} of the ${drill.total} widgets under the pointer`
+      + (selectionBarCanAltClick() ? ' - Alt+click there again to go deeper, Alt+Shift+click to come back up' : '')
+    : '';
 }
 
 function selectionBarToggleStack(bar, forceClose) {
@@ -455,6 +500,7 @@ function selectionBarUpdate(bar) {
   }
   selectionBarRenderCrumbs(bar);
   selectionBarRenderStack(bar);
+  selectionBarRenderDrill(bar);
 }
 
 // A bar whose DOM is gone - a module that was closed or rebuilt its panel
@@ -504,17 +550,21 @@ function renderSelectionBar(target, options = {}) {
     bar.pinButton.classList.add('selectionBarPin');
   }
   if(options.stack) {
-    bar.stackButton = selectionBarButton(bar.dom, 'layers', 'Widgets under the pointer - how to reach one that lies underneath another. Alt+click in the room walks down the same list, on desktops that do not take Alt+click for themselves', function() {
+    const stackTitle = 'Widgets under the pointer - how to reach one that lies underneath another. The list takes the spot where the pointer came to rest, so it stands still while a row of it is being clicked.'
+                     + (selectionBarCanAltClick() ? ' Alt+click in the room walks down the same list, unless the desktop takes Alt+click for itself.' : '');
+    bar.stackButton = selectionBarButton(bar.dom, 'layers', stackTitle, function() {
       selectionBarToggleStack(bar);
       selectionBarStoreState({ stackOpen: bar.dom.classList.contains('stackVisible') });
     });
-    bar.stackButton.classList.add('selectionBarStackButton');
     bar.stackCount = document.createElement('span');
     bar.stackCount.className = 'selectionBarStackCount';
     bar.stackButton.append(bar.stackCount);
   }
 
   bar.crumbs = div(bar.dom, 'selectionBarCrumbs');
+  // at the end of the bar, where it can appear and disappear without moving
+  // anything: the crumbs before it are left-aligned and only get shorter
+  bar.drill = div(bar.dom, 'selectionBarDrill');
   if(options.tree) {
     bar.treeContainer = div(bar.dom, 'selectionBarTree');
     // unless pinned, close the dropdown when a widget is picked in the tree
