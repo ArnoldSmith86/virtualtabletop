@@ -44,7 +44,6 @@ function selectionBarStoreState(changes) {
     editorState = JSON.parse(localStorage.getItem('editorState') || '{}');
   } catch(e) {
   }
-  editorState.modules = editorState.modules || {};
   editorState.selectionBar = Object.assign(selectionBarStoredState(), changes);
   localStorage.setItem('editorState', JSON.stringify(editorState));
 }
@@ -86,6 +85,19 @@ function selectionBarSortStack(stack) {
   });
 }
 
+// The same stack in the order the list and the F keys number it, so the Alt+click
+// drill walks the widgets in the order the bar says it does.
+function widgetStackAtSorted(clientX, clientY) {
+  return selectionBarSortStack(widgetStackAt(clientX, clientY));
+}
+
+// Flipping the F-key order (je_reverseFkeys) renumbers a list that is already on
+// screen, so it must not wait for the next pointer scan.
+function selectionBarStackOrderChanged() {
+  selectionBarStack = selectionBarSortStack(selectionBarStack);
+  updateSelectionBars();
+}
+
 function selectionBarWidgetStack() {
   return selectionBarStack;
 }
@@ -118,8 +130,17 @@ function selectionBarRoomCoords(clientX, clientY) {
   };
 }
 
+// Both listeners below are on the window and never come off again, and a module
+// is not closed when the editor is: leaving edit mode only display:none's it, so
+// its bar stays connected and selectionBarPrune() keeps it. Without this the F
+// keys would go on swallowing F5 and a hit test of the whole document would run
+// every frame for someone who is just playing the game.
+function selectionBarIsActive() {
+  return !!selectionBars.length && document.body.classList.contains('edit');
+}
+
 function selectionBarScan() {
-  if(!selectionBars.length || !selectionBarPointer)
+  if(!selectionBarIsActive() || !selectionBarPointer)
     return;
   selectionBarStack = selectionBarSortStack(widgetStackAt(selectionBarPointer.x, selectionBarPointer.y));
   selectionBarStackCoords = selectionBarRoomCoords(selectionBarPointer.x, selectionBarPointer.y);
@@ -135,7 +156,7 @@ function selectionBarInstallListeners() {
   // one scan per frame at most: it hit-tests the whole document and rooms go up
   // to a couple of thousand widgets
   window.addEventListener('mousemove', function(e) {
-    if(!selectionBars.length || e.buttons || !selectionBarPointerIsInRoom(e.target))
+    if(!selectionBarIsActive() || e.buttons || !selectionBarPointerIsInRoom(e.target))
       return;
     selectionBarPointer = { x: e.clientX, y: e.clientY };
     if(selectionBarScanQueued)
@@ -151,7 +172,7 @@ function selectionBarInstallListeners() {
   // keys the panel this replaces was built around. Ctrl pastes the id into the
   // JSON editor, which only means anything while that one is open.
   window.addEventListener('keydown', function(e) {
-    if(!selectionBars.length)
+    if(!selectionBarIsActive())
       return;
     const functionKey = e.key && e.key.match(/^F([0-9]+)$/);
     const widget = functionKey && selectionBarWidgetForHotkey(+functionKey[1]);
@@ -297,6 +318,11 @@ function selectionBarWidgetNotes(widget) {
   return notes.join(' · ');
 }
 
+function selectionBarClearHover() {
+  for(const widgetDOM of $a('.widget.selectionBarHover'))
+    widgetDOM.classList.remove('selectionBarHover');
+}
+
 function selectionBarRenderStack(bar) {
   if(!bar.options.stack)
     return;
@@ -307,14 +333,18 @@ function selectionBarRenderStack(bar) {
   if(!bar.dom.classList.contains('stackVisible'))
     return;
 
+  // wiping the rows does not fire mouseleave on the one the pointer is over, so
+  // its widget would keep the hover outline (and the visibility:important that
+  // shows a hidden one) with nothing left on screen to take it off again
+  selectionBarClearHover();
+
   bar.stackList.innerHTML = '';
   const header = div(bar.stackList, 'selectionBarStackHeader');
   header.textContent = selectionBarStackCoords
     ? `${selectionBarStack.length} under the pointer at ${selectionBarStackCoords.x}, ${selectionBarStackCoords.y}`
     : `${selectionBarStack.length} under the pointer`;
 
-  const limit = bar.options.stackLimit || selectionBarStack.length;
-  for(const [ index, widget ] of selectionBarStack.slice(0, limit).entries()) {
+  for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 11 ? `F${index+2}` : '';
     const row = div(bar.stackList, 'selectionBarStackRow');
     row.classList.toggle('selected', selectedWidgets.indexOf(widget) != -1);
@@ -326,7 +356,7 @@ function selectionBarRenderStack(bar) {
     row.onmouseenter = _=>widget.domElement.classList.add('selectionBarHover');
     row.onmouseleave = _=>widget.domElement.classList.remove('selectionBarHover');
     row.onclick = function(e) {
-      widget.domElement.classList.remove('selectionBarHover');
+      selectionBarClearHover();
       if(e.ctrlKey && jeEnabled)
         jePasteText(jeContext[jeContext.length-1] == '"null"' ? `"${widget.id}"` : widget.id, true);
       else if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
@@ -444,7 +474,6 @@ function renderSelectionBar(target, options = {}) {
     tree: true,
     crumbs: true,
     stack: true,
-    stackLimit: 0,
     onPick: widget=>setSelection([ widget ])
   }, options);
 
@@ -464,7 +493,7 @@ function renderSelectionBar(target, options = {}) {
     bar.pinButton.classList.add('selectionBarPin');
   }
   if(options.stack) {
-    bar.stackButton = selectionBarButton(bar.dom, 'layers', 'Widgets under the pointer - how to reach one that lies underneath another', function() {
+    bar.stackButton = selectionBarButton(bar.dom, 'layers', 'Widgets under the pointer - how to reach one that lies underneath another. Alt+click in the room walks down the same list, on desktops that do not take Alt+click for themselves', function() {
       selectionBarToggleStack(bar);
       selectionBarStoreState({ stackOpen: bar.dom.classList.contains('stackVisible') });
     });
@@ -530,6 +559,19 @@ function selectionBarDeltaReceived(delta) {
   selectionBarStack = selectionBarStack.filter(w=>widgets.get(w.id) === w);
   if(selectionBarTreeIsVisible())
     jeUpdateTree(delta.s);
+  updateSelectionBars();
+}
+
+// What the bar collected belongs to the editor being on screen, and the modules
+// stay mounted when it is not (it is only display:none'd). So both leaving edit
+// mode and coming back to it drop the stack by hand - a hover outline must not
+// be left on a widget while the game is played, and the rows and F keys of a
+// stack from another session must not still point somewhere.
+function selectionBarResetStack() {
+  selectionBarStack = [];
+  selectionBarStackCoords = null;
+  selectionBarPointer = null;
+  selectionBarClearHover();
   updateSelectionBars();
 }
 

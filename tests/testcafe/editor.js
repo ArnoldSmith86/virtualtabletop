@@ -2782,3 +2782,141 @@ test('The selection bar reaches a widget that is covered by another one', async 
     .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
   await setEditorState(null);
 });
+
+// The bar's mousemove and F-key listeners are on the window and never come off,
+// and a module is not closed when the editor is - leaving edit mode only hides
+// the panel. So both have to go quiet by hand: otherwise F5 is swallowed by the
+// F-key handler (the page stops reloading) and a hit test of the whole document
+// runs every frame for someone who is only playing the game.
+test('The selection bar goes quiet while the game is played', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // testcafe cannot press a function key, so the very event the handler takes is
+  // dispatched by hand - what matters is whether it is taken at all
+  const pressFunctionKey = ClientFunction(key => {
+    const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+    window.dispatchEvent(event);
+    return event.defaultPrevented;
+  });
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackCount = bar.find('.selectionBarStackCount');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_checker')
+    .expect(stackCount.textContent).eql('3')
+    .expect(pressFunctionKey('F3')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+
+    // closing the editor: no scan, and F keys belong to the browser again
+    .click('#editorToolbar button[icon=close]')
+    .hover('#w_checker')
+    .expect(stackCount.textContent).eql('')
+    .expect(pressFunctionKey('F5')).notOk()
+    .expect(pressFunctionKey('F1')).notOk()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+
+    // and both come back with the editor
+    .click('#editButton')
+    .hover('#w_checker')
+    .expect(stackCount.textContent).eql('3')
+    .expect(pressFunctionKey('F1')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+  await setEditorState(null);
+});
+
+// Cards go to the end of the list however they are stacked in the room, so a
+// stack containing one is where paint order and the order the bar shows differ -
+// and the drill has to walk the list, not the paint order, or the badge counts
+// widgets in an order nothing on screen shows.
+test('Alt+click drills in the order the stack list shows', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck:  { id: 'deck',  type: 'deck',  cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    board: { id: 'board', type: 'basic', x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    card:  { id: 'card',  type: 'card',  deck: 'deck', cardType: 'a', x: 300, y: 200, z: 10 },
+    cover: { id: 'cover', type: 'basic', x: 300, y: 200, width: 100,  height: 100, z: 20, classes: 'transparent' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+  const drillBadge = Selector('#editorDrillBadge');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_cover')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_cover')
+    // the card is under the cover in the room but last in the list
+    .expect(stackRows.count).eql(3)
+    .expect(stackRows.nth(0).textContent).contains('cover')
+    .expect(stackRows.nth(1).textContent).contains('board')
+    .expect(stackRows.nth(2).textContent).contains('card')
+    .click(bar.find('button[icon=layers]'))
+
+    .click('#w_cover')
+    .expect(Selector('#w_cover').hasClass('selectedInEdit')).ok()
+    .click('#w_cover', { modifiers: { alt: true } })
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(drillBadge.textContent).contains('2/3')
+    .click('#w_cover', { modifiers: { alt: true } })
+    .expect(Selector('#w_card').hasClass('selectedInEdit')).ok()
+    .expect(drillBadge.textContent).contains('3/3');
+  await setEditorState(null);
+});
+
+// Two modules that edit the selection are two bars, and the room tree is a single
+// DOM node they take turns holding - so it has to be handed over rather than
+// duplicated, and handed back when the module holding it is closed.
+test('Two docked modules each get a selection bar and take turns holding the tree', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { 'Edit Widgets': 'editorModuleTopLeft', JSON: 'editorModuleBottomLeft' } });
+  await setName(t);
+
+  const propertiesBar = Selector('#editorModuleTopLeft .selectionBar');
+  const jsonBar = Selector('#editorModuleBottomLeft .selectionBar');
+  const treeInProperties = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+  const treeInJson = Selector('#editorModuleBottomLeft .selectionBarTree #jeTree');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesBar.exists).ok()
+    .expect(jsonBar.exists).ok()
+    // the tree is where it was last opened, and opening it in the other bar takes
+    // it along instead of leaving an empty dropdown behind
+    .click(propertiesBar.find('button[icon=account_tree]'))
+    .expect(treeInProperties.exists).ok()
+    .click(jsonBar.find('button[icon=account_tree]'))
+    .expect(treeInJson.exists).ok()
+    .expect(treeInProperties.exists).notOk()
+    .expect(propertiesBar.find('button[icon=account_tree].active').exists).notOk()
+    // closing the module that holds it gives it back to the JSON editor it belongs to
+    .click('#editorSidebar button[icon=data_object]')
+    .expect(jsonBar.exists).notOk()
+    .expect(Selector('#jeEditArea #jeTree').exists).ok()
+    // and the bar of the module that stayed open still works
+    .click(propertiesBar.find('button[icon=account_tree]'))
+    .expect(treeInProperties.exists).ok()
+    .click(propertiesBar.find('button[icon=account_tree]'))
+    .expect(treeInProperties.exists).notOk();
+  await setEditorState(null);
+});

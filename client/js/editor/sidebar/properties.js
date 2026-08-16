@@ -1865,7 +1865,10 @@ class PropertiesModule extends SidebarModule {
       updater(delta.s);
   }
 
-  onClose() {
+  // Everything this module put on top of the room rather than into its own panel.
+  // It goes both when the module is closed and when the editor is, so it is not
+  // part of onClose(): the panel survives the editor closing, its bar with it.
+  clearWidgetOverlays() {
     this.clearGridPreview();
     this.clearDragLimitPreview();
     this.clearFaceRowRefresh();
@@ -1876,13 +1879,22 @@ class PropertiesModule extends SidebarModule {
     closeEditorPopups();
   }
 
+  onClose() {
+    this.clearWidgetOverlays();
+    // hand back the room tree the bar borrowed before the panel goes away, the
+    // same way the JSON module does - a bar that is only dropped by the next
+    // selectionBarPrune() still holds it in its own (detached) container
+    removeSelectionBar(this.selectionBar);
+    delete this.selectionBar;
+  }
+
   onEditorClose() {
     super.onEditorClose();
     // Leaving edit mode is the most complete way of moving on, but it does not
     // go through onClose(): the editor is only display:none'd, so a popup left
     // open lives on inside it and an armed picker keeps the crosshair over the
     // whole page while playing.
-    this.onClose();
+    this.clearWidgetOverlays();
   }
 
   onMetaReceivedWhileActive(meta) {

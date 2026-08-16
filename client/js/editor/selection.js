@@ -12,24 +12,29 @@ let widgetRectangles = null;
 // Alt+click drills down: clicking the same spot again means "not that one, the
 // one under it". The stack is taken once and then walked, so a widget getting
 // its selection outline (which changes what elementsFromPoint returns) does not
-// reshuffle the list halfway through.
-let drill = { x: 0, y: 0, index: 0, stack: [] };
+// reshuffle the list halfway through. It is the stack in the order the selection
+// bar lists it, so "2/3" in the badge is row 2 (and F2) of the very same list.
+let drill = { anchor: null, index: 0, stack: [] };
 const DRILL_TOLERANCE = 4; // px; a click further away than this starts a new drill
 
 function drillTo(clientX, clientY, e) {
-  const near = Math.abs(clientX - drill.x) <= DRILL_TOLERANCE && Math.abs(clientY - drill.y) <= DRILL_TOLERANCE;
-  const stack = near && drill.stack.every(w=>widgets.get(w.id) === w) ? drill.stack : widgetStackAt(clientX, clientY);
-  if(!stack.length)
+  // no anchor means no drill is running - a coordinate cannot say that, (0, 0)
+  // is a corner of the window like any other
+  const near = !!drill.anchor && Math.abs(clientX - drill.anchor.x) <= DRILL_TOLERANCE && Math.abs(clientY - drill.anchor.y) <= DRILL_TOLERANCE;
+  const stack = near && drill.stack.every(w=>widgets.get(w.id) === w) ? drill.stack : widgetStackAtSorted(clientX, clientY);
+  if(!stack.length) {
+    endDrill(); // empty room space: nothing to drill, and the old anchor is stale
     return null;
+  }
 
   const step = e.shiftKey ? -1 : 1;
-  drill = { x: clientX, y: clientY, stack, index: near ? (drill.index + step + stack.length) % stack.length : Math.min(1, stack.length-1) };
+  drill = { anchor: { x: clientX, y: clientY }, stack, index: near ? (drill.index + step + stack.length) % stack.length : Math.min(1, stack.length-1) };
   showDrillBadge(clientX, clientY);
   return stack[drill.index];
 }
 
 function endDrill() {
-  drill = { x: 0, y: 0, index: 0, stack: [] };
+  drill = { anchor: null, index: 0, stack: [] };
   if($('#editorDrillBadge'))
     $('#editorDrillBadge').remove();
 }
