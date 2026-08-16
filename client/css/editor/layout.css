@@ -5,6 +5,11 @@ body {
   --backgroundHighlightColor1: #ccc;
   --backgroundHighlightColor2: #dedede;
 
+  /* A panel that hangs over another one - the selection bar's dropdowns cover
+     the module they belong to edge to edge, so shape alone cannot say where the
+     one ends and the other begins. A shade off the surface behind it does. */
+  --overlayBackgroundColor: #f0f1f3;
+
   --textHighlightColor1: #880;
   --textHighlightColor2: orange;
   --textHighlightColor3: red;
@@ -68,6 +73,8 @@ body.edit.darkMode {
 
   --backgroundHighlightColor1: #444;
   --backgroundHighlightColor2: #565656;
+
+  --overlayBackgroundColor: #1b1e23;
 
   --textHighlightColor1: yellow;
   --textHighlightColor2: orange;

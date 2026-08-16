@@ -23,6 +23,8 @@ let selectionBarCoords = null;      // pointer position in room coordinates
 let selectionBarPointer = null;
 let selectionBarScanTimer = null;
 let selectionBarListening = false;
+let selectionBarKeyboardBar = null; // the bar whose dropdown the arrow keys walk
+let selectionBarSwallowEscapeUp = false;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
 
@@ -129,6 +131,7 @@ function selectionBarAdoptStack(stack, clientX, clientY) {
   selectionBarScanTimer = null;
   selectionBarPointer = { x: clientX, y: clientY };
   selectionBarStack = stack;
+  selectionBarResetStackCursor();
   updateSelectionBars();
 }
 
@@ -181,6 +184,7 @@ function selectionBarScan() {
   if(!selectionBarIsActive() || !selectionBarPointer)
     return;
   selectionBarStack = selectionBarSortStack(widgetStackAt(selectionBarPointer.x, selectionBarPointer.y));
+  selectionBarResetStackCursor();
   for(const bar of selectionBars) {
     selectionBarRenderStack(bar);
     selectionBarRenderDrill(bar); // the readout only stands while the pointer is still on the drilled spot
@@ -236,6 +240,8 @@ function selectionBarInstallListeners() {
   window.addEventListener('keydown', function(e) {
     if(!selectionBarIsActive())
       return;
+    if(selectionBarHandleDropdownKey(e))
+      return;
     const functionKey = e.key && e.key.match(/^F([0-9]+)$/);
     const widget = functionKey && selectionBarWidgetForHotkey(+functionKey[1]);
     if(!widget)
@@ -250,6 +256,189 @@ function selectionBarInstallListeners() {
     else
       setSelection([ widget ]);
   });
+
+  // main.js closes the sidebar module - or leaves edit mode - on the keyup of an
+  // Escape, so an Escape that closed a dropdown has to have its keyup swallowed
+  // as well, or the module the dropdown was in goes with it. Capture phase, so
+  // this runs before main.js's window.onkeyup. Same trick as the deck editor.
+  window.addEventListener('keyup', function(e) {
+    if(e.key == 'Escape' && selectionBarSwallowEscapeUp) {
+      selectionBarSwallowEscapeUp = false;
+      e.stopImmediatePropagation();
+    }
+  }, true);
+}
+
+/* Walking an open dropdown from the keyboard */
+
+function selectionBarOpenDropdown(bar) {
+  if(!bar || !bar.dom.isConnected)
+    return null;
+  if(bar.options.stack && bar.dom.classList.contains('stackVisible'))
+    return { bar, kind: 'stack' };
+  if(bar.options.tree && bar.dom.classList.contains('treeVisible'))
+    return { bar, kind: 'tree' };
+  return null;
+}
+
+// Which dropdown the keys act on: the one whose button was pressed last, since
+// two modules can be docked and each carries a bar. A dropdown restored with its
+// module was opened by nobody, so fall back to whichever one is on screen.
+// A fullscreen overlay - the deck editor, a game's input - owns the keyboard
+// while it is up, and nothing behind it may answer.
+function selectionBarKeyboardDropdown() {
+  if(document.body.classList.contains('overlayActive') || document.body.classList.contains('deckEditorActive'))
+    return null;
+  selectionBarPrune();
+  return selectionBarOpenDropdown(selectionBarKeyboardBar) || selectionBars.map(selectionBarOpenDropdown).find(d=>d) || null;
+}
+
+// The arrow keys are only taken where nothing else needs them: they move the
+// caret in the JSON text area and step every number input in the editor. The
+// tree's own filter box is the exception - typing there and walking what it
+// finds is the point of it, and it is where the tree dropdown puts the keyboard.
+function selectionBarKeyboardIsFree() {
+  const focused = document.activeElement;
+  if(!focused || focused === document.body || focused.id == 'jeWidgetSearchBox')
+    return true;
+  return !focused.isContentEditable && !focused.matches('input:not([type=button]), textarea, select');
+}
+
+function selectionBarCloseDropdown(dropdown) {
+  const button = dropdown.kind == 'stack' ? dropdown.bar.stackButton : dropdown.bar.treeButton;
+  const focusWasInside = document.activeElement && dropdown.bar.dom.contains(document.activeElement);
+  if(dropdown.kind == 'stack')
+    selectionBarToggleStack(dropdown.bar, true);
+  else
+    selectionBarToggleTree(dropdown.bar, true);
+  // the tree takes its filter box with it when it goes back to the JSON editor,
+  // so the keyboard has to be handed to something that is still on screen
+  if(focusWasInside && button)
+    button.focus();
+}
+
+// Escape closes the open dropdown, the arrow keys step through it and Enter
+// picks what they landed on. Returns true when the key was used up.
+function selectionBarHandleDropdownKey(e) {
+  if(e.ctrlKey || e.metaKey || e.altKey)
+    return false;
+  if([ 'Escape', 'ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Enter' ].indexOf(e.key) == -1)
+    return false;
+  // the key repeat of an Escape that already closed a dropdown belongs to that
+  // dropdown too - holding the key down must not walk on to closing the module
+  if(e.key == 'Escape' && selectionBarSwallowEscapeUp) {
+    e.preventDefault();
+    return true;
+  }
+  const dropdown = selectionBarKeyboardDropdown();
+  if(!dropdown)
+    return false;
+
+  if(e.key == 'Escape') {
+    selectionBarCloseDropdown(dropdown);
+    selectionBarSwallowEscapeUp = true;
+    e.preventDefault();
+    return true;
+  }
+
+  if(!selectionBarKeyboardIsFree())
+    return false;
+
+  const step = e.key == 'ArrowDown' ? 1 : e.key == 'ArrowUp' ? -1 : 0;
+  if(step) {
+    if(dropdown.kind == 'stack')
+      selectionBarStepStack(dropdown.bar, step);
+    else
+      selectionBarStepTree(dropdown.bar, step);
+    e.preventDefault();
+    return true;
+  }
+
+  // a collapsed branch of the tree cannot be stepped into, so the keys that are
+  // left over open and close it
+  if(dropdown.kind == 'tree' && (e.key == 'ArrowRight' || e.key == 'ArrowLeft')) {
+    selectionBarExpandTreeRow(dropdown.bar, e.key == 'ArrowRight');
+    e.preventDefault();
+    return true;
+  }
+
+  if(e.key == 'Enter') {
+    const widget = dropdown.kind == 'stack' ? selectionBarStack[dropdown.bar.stackKeyIndex] : widgets.get(dropdown.bar.treeKeyID);
+    if(!widget)
+      return false;
+    if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
+      setSelection(selectedWidgets.filter(w=>w!=widget));
+    else if(e.shiftKey)
+      setSelection([ widget ].concat(selectedWidgets));
+    else
+      dropdown.bar.options.onPick(widget);
+    e.preventDefault();
+    return true;
+  }
+
+  return false;
+}
+
+function selectionBarResetStackCursor() {
+  for(const bar of selectionBars)
+    bar.stackKeyIndex = -1;
+}
+
+// Where the keyboard is in the list, shown in the list and in the room: the row
+// alone does not say which of a stack of look-alikes it means, and the outline
+// is the same one hovering a row with the mouse draws.
+function selectionBarRenderStackCursor(bar) {
+  if(!bar.options.stack || !bar.stackList)
+    return;
+  if(bar.stackKeyIndex >= selectionBarStack.length)
+    bar.stackKeyIndex = -1;
+  const rows = [ ...$a('.selectionBarStackRow', bar.stackList) ];
+  for(const [ index, row ] of rows.entries())
+    row.classList.toggle('selectionBarKeyRow', index === bar.stackKeyIndex);
+  const widget = selectionBarStack[bar.stackKeyIndex];
+  if(widget && rows[bar.stackKeyIndex]) {
+    selectionBarClearHover();
+    widget.domElement.classList.add('selectionBarHover');
+    rows[bar.stackKeyIndex].scrollIntoView({ block: 'nearest' });
+  }
+}
+
+function selectionBarStepStack(bar, direction) {
+  const count = selectionBarStack.length;
+  if(!count)
+    return;
+  // wraps, the way the Alt+click drill through the same stack does
+  bar.stackKeyIndex = bar.stackKeyIndex < 0
+    ? (direction > 0 ? 0 : count - 1)
+    : (bar.stackKeyIndex + direction + count) % count;
+  selectionBarRenderStackCursor(bar);
+}
+
+// The rows of the tree, in the order they are on screen. The element carrying a
+// widget is the <li> of a leaf and the expander <span> of a branch - the same
+// one jeHighlightRow marks - and a row inside a collapsed branch or filtered out
+// of the tree has no box at all.
+function selectionBarTreeRows() {
+  return [ ...$a('#jeTree .key') ].map(key=>({ dom: key.parentElement, id: key.textContent })).filter(row=>row.dom.offsetParent);
+}
+
+function selectionBarStepTree(bar, direction) {
+  const rows = selectionBarTreeRows();
+  if(!rows.length)
+    return;
+  const current = rows.findIndex(row=>row.id === bar.treeKeyID);
+  const index = current == -1 ? (direction > 0 ? 0 : rows.length - 1) : (current + direction + rows.length) % rows.length;
+  bar.treeKeyID = rows[index].id;
+  selectionBarUpdateTreeHighlight();
+  rows[index].dom.scrollIntoView({ block: 'nearest' });
+}
+
+function selectionBarExpandTreeRow(bar, open) {
+  const row = selectionBarTreeRows().find(row=>row.id === bar.treeKeyID);
+  if(!row || !row.dom.classList.contains('jeTreeExpander'))
+    return;
+  if(row.dom.classList.contains('jeTreeExpander-down') != open)
+    row.dom.click(); // the expander's own handler, so the collapsed state is remembered like a click
 }
 
 /* History: every widget the editor moved to, not just the ones the JSON editor saw */
@@ -306,12 +495,15 @@ function selectionBarToggleTree(bar, forceClose, focusSearch) {
   selectionBarTreeOwner = open ? bar.options.key : null;
   selectionBarStoreState({ treeOpen: open });
   if(open) {
+    selectionBarKeyboardBar = bar;
+    bar.treeKeyID = null;
     selectionBarToggleStack(bar, true); // one dropdown at a time, they share the space below the bar
     bar.treeContainer.append($('#jeTree'));
     jeDisplayTree();
     if(focusSearch)
       $('#jeWidgetSearchBox').focus();
   } else {
+    bar.treeKeyID = null;
     selectionBarReturnTree(bar);
   }
 }
@@ -321,7 +513,7 @@ function selectionBarToggleTree(bar, forceClose, focusSearch) {
 // $('#jeTree') finds nothing the next time a bar wants it. A bar that was wiped
 // without saying so still holds it in its own container, so look there first.
 function selectionBarReturnTree(bar) {
-  const tree = bar && bar.treeContainer && bar.treeContainer.firstElementChild || $('#jeTree');
+  const tree = bar && bar.treeContainer && $('#jeTree', bar.treeContainer) || $('#jeTree');
   if(tree && $('#jeEditArea'))
     $('#jeEditArea').append(tree);
 }
@@ -329,9 +521,12 @@ function selectionBarReturnTree(bar) {
 function selectionBarUpdateTreeHighlight() {
   if(!selectionBarTreeIsVisible())
     return;
+  const treeBar = selectionBars.find(bar=>bar.dom.classList.contains('treeVisible'));
   const selectedIDs = selectedWidgets.map(w=>w.id);
-  for(const widgetDOM of $a('#jeTree .key'))
+  for(const widgetDOM of $a('#jeTree .key')) {
     widgetDOM.parentElement.classList.toggle('jeHighlightRow', selectedIDs.indexOf(widgetDOM.textContent) != -1);
+    widgetDOM.parentElement.classList.toggle('selectionBarKeyRow', !!treeBar && widgetDOM.textContent === treeBar.treeKeyID);
+  }
 }
 
 /* Rendering */
@@ -403,7 +598,9 @@ function selectionBarRenderStack(bar) {
   // What the list is, for someone who just opened it: the panel it replaces
   // carried that sentence permanently, and a tooltip is no place for it.
   if(selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackHelp', 'Click to select, shift-click to add to the selection, or press the key shown.');
+    div(bar.stackList, 'selectionBarStackHelp',
+        'Click to select, shift-click to add to the selection, or press the key shown.'
+      + '<br>↑ ↓ step through the list, Enter selects, Esc closes it.');
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 10 ? `F${index+3}` : '';
@@ -433,6 +630,8 @@ function selectionBarRenderStack(bar) {
 
   if(!selectionBarStack.length)
     div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room - everything stacked at that spot is listed here.');
+
+  selectionBarRenderStackCursor(bar);
 }
 
 // Where an Alt+click drill currently is. It sits in the bar and not in the panel
@@ -456,6 +655,11 @@ function selectionBarToggleStack(bar, forceClose) {
   const open = !forceClose && !bar.dom.classList.contains('stackVisible');
   if(open && bar.dom.classList.contains('treeVisible'))
     selectionBarToggleTree(bar, true);
+  if(open)
+    selectionBarKeyboardBar = bar;
+  else
+    selectionBarClearHover(); // the keyboard cursor outlines its row's widget, and the list is about to be gone
+  bar.stackKeyIndex = -1;
   selectionBarStoreState({ stackOpen: open });
   bar.dom.classList.toggle('stackVisible', open);
   bar.stackButton.classList.toggle('active', open);
@@ -536,6 +740,8 @@ function selectionBarPrune() {
       selectionBarReturnTree(bar);
       selectionBarTreeOwner = null;
     }
+    if(selectionBarKeyboardBar === bar)
+      selectionBarKeyboardBar = null;
     selectionBars.splice(selectionBars.indexOf(bar), 1);
   }
 }
@@ -561,6 +767,8 @@ function renderSelectionBar(target, options = {}) {
   selectionBarPrune();
 
   const bar = { options };
+  bar.stackKeyIndex = -1; // where the arrow keys are in the stack list
+  bar.treeKeyID = null;   // and in the tree
   bar.dom = div(target, 'selectionBar');
 
   if(options.history) {
@@ -584,8 +792,12 @@ function renderSelectionBar(target, options = {}) {
   bar.drill = div(bar.dom, 'selectionBarDrill');
   bar.coords = div(bar.dom, 'selectionBarCoords');
   bar.coords.title = 'Where the pointer is in the room';
-  if(options.tree)
+  if(options.tree) {
     bar.treeContainer = div(bar.dom, 'selectionBarTree');
+    // the tree itself is borrowed from the JSON editor and handed back, so this
+    // line belongs to the container rather than to the tree, and is created here
+    div(bar.treeContainer, 'selectionBarDropdownHint', '↑ ↓ walk the tree, → ← open and close a branch, Enter selects, Esc closes it.');
+  }
   if(options.stack)
     bar.stackList = div(bar.dom, 'selectionBarStackList');
 
@@ -612,6 +824,8 @@ function removeSelectionBar(bar, keepTree) {
     if(!keepTree)
       selectionBarTreeOwner = null;
   }
+  if(selectionBarKeyboardBar === bar)
+    selectionBarKeyboardBar = null;
   if(selectionBars.indexOf(bar) != -1)
     selectionBars.splice(selectionBars.indexOf(bar), 1);
   bar.dom.remove();
@@ -642,6 +856,7 @@ function selectionBarResetStack() {
   clearTimeout(selectionBarScanTimer);
   selectionBarScanTimer = null;
   selectionBarStack = [];
+  selectionBarResetStackCursor();
   selectionBarPointer = null;
   selectionBarSetPointerCoords(null);
   selectionBarClearHover();
@@ -650,6 +865,7 @@ function selectionBarResetStack() {
 
 function selectionBarStateReceived() {
   selectionBarStack = [];
+  selectionBarResetStackCursor();
   if(selectionBarTreeIsVisible())
     jeDisplayTree();
   updateSelectionBars();

@@ -2910,6 +2910,82 @@ test('The selection bar goes quiet while the game is played', async t => {
   await setEditorState(null);
 });
 
+// A dropdown covers the module it hangs in, so it needs a way out that is not
+// the mouse, and a way to walk it that is not the ten function keys the panel
+// this replaces was built around. Escape is what closes every other popup in the
+// editor - and main.js takes the same key to close the module, so an Escape that
+// closed a dropdown has to stop there.
+test('The keyboard walks an open dropdown and Escape closes it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3)
+
+    // the arrow keys step through the list and wrap at its end, the way the
+    // Alt+click drill through the same stack does
+    .pressKey('down')
+    .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
+    // the row the keyboard is on is outlined in the room as well - the list
+    // alone does not say which of a stack of look-alikes it means
+    .expect(Selector('#w_checker').hasClass('selectionBarHover')).ok()
+    .pressKey('down')
+    .pressKey('down')
+    .expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok()
+    .pressKey('down')
+    .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
+    .pressKey('up')
+    .expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok()
+    // ... and Enter picks the row they are on
+    .pressKey('enter')
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+
+    // Escape closes the dropdown and nothing else, and takes the outline with it
+    .pressKey('esc')
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .expect(propertiesModule.exists).ok()
+    .expect(Selector('#w_checker').hasClass('selectionBarHover')).notOk()
+
+    // the same keys in the tree, which has branches to open and close as well
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(tree.exists).ok()
+    .pressKey('down')
+    .pressKey('down')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(tree.find('li[data-id=point] > .jeTreeExpander-down').exists).notOk()
+    .pressKey('right')
+    .expect(tree.find('li[data-id=point] > .jeTreeExpander-down').exists).ok()
+    .pressKey('enter')
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .pressKey('esc')
+    .expect(tree.exists).notOk()
+    .expect(propertiesModule.exists).ok()
+    // the tree goes back to the JSON editor it is borrowed from
+    .expect(Selector('#jeEditArea #jeTree').exists).ok()
+
+    // and with no dropdown left to close, Escape closes the module again
+    .pressKey('esc')
+    .expect(propertiesModule.exists).notOk();
+  await setEditorState(null);
+});
+
 // Cards go to the end of the list however they are stacked in the room, so a
 // stack containing one is where paint order and the order the bar shows differ -
 // and the drill has to walk the list, not the paint order, or the badge counts

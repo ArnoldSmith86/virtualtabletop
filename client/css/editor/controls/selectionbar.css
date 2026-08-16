@@ -174,8 +174,14 @@
 /*** The dropdowns ***/
 
 /* Both hang below the bar, which is as wide as the module it is in - a list of
-   widget ids that is narrower than the ids is no use to anyone. The shadow makes
-   them read as a layer above the panel rather than as a piece of it. */
+   widget ids that is narrower than the ids is no use to anyone.
+
+   They cover the module they belong to edge to edge, so nothing about their
+   shape says where the dropdown ends and the panel underneath starts. Three
+   things do: a surface a shade off the one behind it (--overlayBackgroundColor,
+   set per theme in editor/layout.css), an outline in the accent color the button
+   that opened it wears while it is open, and a rounded bottom edge over the
+   shadow. */
 .selectionBarTree, .selectionBarStackList {
   display: none;
   position: absolute;
@@ -184,15 +190,26 @@
   right: 0;
   max-height: 50vh;
   overflow-y: auto;
-  background: var(--backgroundColor);
-  border: 1px solid var(--backgroundHighlightColor1);
+  background: var(--overlayBackgroundColor);
+  border: 1px solid var(--VTTblue);
   border-top: none;
+  border-radius: 0 0 6px 6px;
   box-sizing: border-box;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
 }
 
 .selectionBarTree {
   padding: 5px;
+}
+
+/* What the keys do, for someone who just opened a dropdown - the same place and
+   the same voice as the stack list's help line. */
+.selectionBarDropdownHint {
+  color: var(--textHelpColor);
+  font-size: 12px;
+  padding: 0 2px 5px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+  margin-bottom: 5px;
 }
 
 .selectionBar.treeVisible .selectionBarTree {
@@ -243,6 +260,16 @@
 
 .selectionBarStackRow.selected {
   outline: 1px solid var(--VTTblue);
+}
+
+/* Where the arrow keys are, in either dropdown. A row can be the keyboard's and
+   the selected one and the hovered one at once, so the cursor is the strongest
+   of the three: it has to be readable on top of the other two. The tree rows are
+   inline spans, which is why this is an outline and not a border. */
+.selectionBarKeyRow {
+  background: var(--backgroundHighlightColor1);
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -1px;
 }
 
 .selectionBarStackKey {
