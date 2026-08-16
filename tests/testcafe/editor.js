@@ -3111,12 +3111,20 @@ test('Alt+click drills in the order the stack list shows', async t => {
 
 // A real tap, the way a tablet sends one. TestCafe's own actions are mouse
 // actions in a desktop browser, so the touch path has to be driven by hand.
+// Desktop Firefox has neither the Touch nor the TouchEvent constructor, so the
+// event is assembled from a plain one carrying the touch lists the handlers read
+// - none of them cares what the event was constructed as.
 const tapWidget = ClientFunction(id => {
   const target = document.querySelector(id);
   const rect = target.getBoundingClientRect();
-  const touch = new Touch({ identifier: 1, target, clientX: rect.left + rect.width/2, clientY: rect.top + rect.height/2 });
-  target.dispatchEvent(new TouchEvent('touchstart', { touches: [ touch ], targetTouches: [ touch ], changedTouches: [ touch ], bubbles: true, cancelable: true }));
-  target.dispatchEvent(new TouchEvent('touchend', { touches: [], targetTouches: [], changedTouches: [ touch ], bubbles: true, cancelable: true }));
+  const touch = { identifier: 1, target, clientX: rect.left + rect.width/2, clientY: rect.top + rect.height/2 };
+  const dispatch = (type, touches, changedTouches) => {
+    const event = new Event(type, { bubbles: true, cancelable: true });
+    Object.assign(event, { touches, targetTouches: touches, changedTouches });
+    target.dispatchEvent(event);
+  };
+  dispatch('touchstart', [ touch ], [ touch ]);
+  dispatch('touchend', [], [ touch ]);
 });
 
 // A finger never hovers, and the room's own input handler calls preventDefault()
