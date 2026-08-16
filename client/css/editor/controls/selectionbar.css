@@ -15,17 +15,15 @@
 }
 
 /* The JSON module fills its panel with absolutely placed panes. The bar spans
-   the whole of it rather than stopping at the command pane: five buttons and a
+   the whole of it rather than stopping at the command pane: four buttons and a
    breadcrumb do not fit in what is left of a docked module otherwise, and the
    dropdowns below are only as wide as the bar. The command pane starts below it
-   (see jsonedit.css), and the module's close button sits in the bar's right end,
-   which the padding keeps free. */
+   (see jsonedit.css). */
 .editorModule.data_object .selectionBar {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  padding-right: 38px;
 }
 
 /* Edit Widgets scrolls, so the bar stays at the top of the panel instead */
@@ -153,6 +151,26 @@
   display: none;
 }
 
+/*** Where the pointer is in the room. It follows the pointer itself rather than
+     the spot it came to rest on - it is read while placing a widget, and a
+     coordinate that is an eighth of a second old is worse than none. ***/
+
+.selectionBarCoords {
+  flex-shrink: 0;
+  align-self: center;
+  margin-left: 4px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 12px;
+  background: var(--backgroundHighlightColor1);
+  color: var(--textColor);
+}
+
+.selectionBarCoords:empty {
+  display: none;
+}
+
 /*** The dropdowns ***/
 
 /* Both hang below the bar, which is as wide as the module it is in - a list of
@@ -185,36 +203,6 @@
   height: auto;
   white-space: pre-wrap;
   font-family: monospace;
-}
-
-/* the pin only means anything while the tree is open, but its slot stays: it sits
-   between the tree and the stack button, which would otherwise jump aside the
-   moment the tree opens */
-.selectionBar > button.selectionBarPin {
-  visibility: hidden;
-}
-
-.selectionBar.treeVisible > button.selectionBarPin {
-  visibility: visible;
-}
-
-/* pinned: reserve space for the tree so it stays visible above the editor.
-   The JSON module places its panes absolutely, so percentages resolve against
-   the module pane and short panes keep a usable area; Edit Widgets scrolls
-   below a sticky bar, so the tree takes a share of the viewport there. */
-.editorModule.data_object .selectionBar.treeVisible.treePinned {
-  height: max(40%, 140px);
-}
-
-.editorModule.tune .selectionBar.treeVisible.treePinned {
-  height: min(40vh, 320px);
-}
-
-.selectionBar.treeVisible.treePinned .selectionBarTree {
-  top: 40px;
-  bottom: 0;
-  max-height: none;
-  box-shadow: none;
 }
 
 /*** The stack of widgets under the pointer ***/

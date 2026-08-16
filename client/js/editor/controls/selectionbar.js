@@ -19,7 +19,7 @@ let selectionBarCrumbWidget = null;
 
 let selectionBarTreeOwner = null;   // key of the bar the shared #jeTree is currently in
 let selectionBarStack = [];         // widgets under the pointer, topmost first
-let selectionBarStackCoords = null; // pointer position in room coordinates
+let selectionBarCoords = null;      // pointer position in room coordinates
 let selectionBarPointer = null;
 let selectionBarScanTimer = null;
 let selectionBarListening = false;
@@ -32,18 +32,14 @@ function selectionBarCanAltClick() {
   return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 }
 
-/* State that outlives a single bar: the tree pin used to be a key of its own,
-   back when the bar was part of the JSON editor. */
+/* State that outlives a single bar: which of the two dropdowns was open. */
 
 function selectionBarStoredState() {
-  let stored = {};
   try {
-    stored = JSON.parse(localStorage.getItem('editorState') || '{}').selectionBar || {};
+    return JSON.parse(localStorage.getItem('editorState') || '{}').selectionBar || {};
   } catch(e) {
+    return {};
   }
-  if(stored.treePinned === undefined)
-    stored.treePinned = localStorage.getItem('jeTreePinned') == 'true';
-  return stored;
 }
 
 function selectionBarStoreState(changes) {
@@ -58,12 +54,13 @@ function selectionBarStoreState(changes) {
 
 /* The stack of widgets under the pointer */
 
-// Every widget below the given point, topmost first. Foreign and hidden widgets
-// are pointer-events:none in edit mode, so body.hitTest makes them hittable for
-// the length of the hit test - they are exactly the ones that cannot be clicked
-// at all otherwise. Some widgets only expose an inner element (the hit path of a
-// line, the handle a pile draws on top of its own box), so climb to the nearest
-// ancestor carrying the widget id.
+// Every widget below the given point, topmost first. Widgets that take no
+// pointer events - foreign and hidden ones in edit mode, and any widget whose
+// game sets "pointer-events: none" in its css - are made hittable by body.hitTest
+// for the length of the hit test, since they are exactly the ones that cannot be
+// clicked at all otherwise (see layout.css). Some widgets only expose an inner
+// element (the hit path of a line, the handle a pile draws on top of its own
+// box), so climb to the nearest ancestor carrying the widget id.
 function widgetStackAt(clientX, clientY) {
   document.body.classList.add('hitTest');
   const stack = [ ...new Set(document.elementsFromPoint(clientX, clientY)
@@ -73,22 +70,41 @@ function widgetStackAt(clientX, clientY) {
   return stack;
 }
 
+// The nearest widget from this one up to the room that matches, the widget
+// itself included. A widget is just as invisible when it is an ancestor that is
+// hidden or belongs to another seat: the class sits on that ancestor and the CSS
+// takes everything inside it along, so the chain has to be walked.
+function selectionBarAncestor(widget, matches) {
+  const seen = new Set();
+  for(let w = widget; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+    seen.add(w);
+    if(matches(w))
+      return w;
+  }
+  return null;
+}
+
+function selectionBarIsForeign(widget) {
+  return widget.domElement.classList.contains('foreign');
+}
+
+function selectionBarIsHidden(widget) {
+  return widget.domElement.classList.contains('hidden');
+}
+
 // Display order of the stack: normal widgets first, then the ones nobody but
-// their owner sees, then cards - within each group by z, with the direction the
-// je_reverseFkeys command sets. Kept as it was for the F keys.
+// their owner sees, then cards - within each group topmost first. Kept as it was
+// for the F keys.
 function selectionBarSortStack(stack) {
-  const hiddenParent = function(widget) {
-    return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
-  };
   return [ ...stack ].sort(function(w1, w2) {
     const w1card = w1.get('type') == 'card';
     const w2card = w2.get('type') == 'card';
-    const w1foreign = !w1card && hiddenParent(w1);
-    const w2foreign = !w2card && hiddenParent(w2);
+    const w1foreign = !w1card && !!selectionBarAncestor(w1, selectionBarIsForeign);
+    const w2foreign = !w2card && !!selectionBarAncestor(w2, selectionBarIsForeign);
     const w1normal = !w1foreign && !w1card;
     const w2normal = !w2foreign && !w2card;
     return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
-      jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
+      w2.calculateZ() - w1.calculateZ() :
       ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
   });
 }
@@ -97,13 +113,6 @@ function selectionBarSortStack(stack) {
 // drill walks the widgets in the order the bar says it does.
 function widgetStackAtSorted(clientX, clientY) {
   return selectionBarSortStack(widgetStackAt(clientX, clientY));
-}
-
-// Flipping the F-key order (je_reverseFkeys) renumbers a list that is already on
-// screen, so it must not wait for the next pointer scan.
-function selectionBarStackOrderChanged() {
-  selectionBarStack = selectionBarSortStack(selectionBarStack);
-  updateSelectionBars();
 }
 
 function selectionBarWidgetStack() {
@@ -118,7 +127,6 @@ function selectionBarAdoptStack(stack, clientX, clientY) {
   selectionBarScanTimer = null;
   selectionBarPointer = { x: clientX, y: clientY };
   selectionBarStack = stack;
-  selectionBarStackCoords = selectionBarRoomCoords(clientX, clientY);
   updateSelectionBars();
 }
 
@@ -167,11 +175,25 @@ function selectionBarScan() {
   if(!selectionBarIsActive() || !selectionBarPointer)
     return;
   selectionBarStack = selectionBarSortStack(widgetStackAt(selectionBarPointer.x, selectionBarPointer.y));
-  selectionBarStackCoords = selectionBarRoomCoords(selectionBarPointer.x, selectionBarPointer.y);
   for(const bar of selectionBars) {
     selectionBarRenderStack(bar);
     selectionBarRenderDrill(bar); // the readout only stands while the pointer is still on the drilled spot
   }
+}
+
+// Where the pointer is in room coordinates. Unlike everything else in the bar
+// this follows the pointer itself rather than the spot it came to rest on: it is
+// read while placing a widget, and a coordinate that arrives an eighth of a
+// second late is worse than none at all.
+function selectionBarRenderPointerCoords() {
+  for(const bar of selectionBars)
+    if(bar.coords)
+      bar.coords.textContent = selectionBarCoords ? `${selectionBarCoords.x}, ${selectionBarCoords.y}` : '';
+}
+
+function selectionBarSetPointerCoords(clientX, clientY) {
+  selectionBarCoords = clientX === null ? null : selectionBarRoomCoords(clientX, clientY);
+  selectionBarRenderPointerCoords();
 }
 
 function selectionBarInstallListeners() {
@@ -186,7 +208,10 @@ function selectionBarInstallListeners() {
   // every mouse move. A pointer heading out of the room drops the pending scan
   // rather than taking one more stack on the way out.
   window.addEventListener('mousemove', function(e) {
-    if(!selectionBarIsActive() || e.buttons)
+    if(!selectionBarIsActive())
+      return;
+    selectionBarSetPointerCoords(e.clientX, e.clientY);
+    if(e.buttons)
       return;
     clearTimeout(selectionBarScanTimer);
     selectionBarScanTimer = null;
@@ -259,20 +284,6 @@ function selectionBarTreeIsVisible() {
   return selectionBars.some(bar=>bar.dom.classList.contains('treeVisible'));
 }
 
-function selectionBarTreeIsPinned() {
-  return !!selectionBarStoredState().treePinned;
-}
-
-function selectionBarSetTreePinned(pinned) {
-  selectionBarStoreState({ treePinned: pinned });
-  for(const bar of selectionBars) {
-    if(bar.options.tree) {
-      bar.dom.classList.toggle('treePinned', pinned);
-      bar.pinButton.classList.toggle('active', pinned);
-    }
-  }
-}
-
 function selectionBarToggleTree(bar, forceClose, focusSearch) {
   if(!bar.options.tree)
     return;
@@ -287,9 +298,9 @@ function selectionBarToggleTree(bar, forceClose, focusSearch) {
   }
 
   selectionBarTreeOwner = open ? bar.options.key : null;
+  selectionBarStoreState({ treeOpen: open });
   if(open) {
     selectionBarToggleStack(bar, true); // one dropdown at a time, they share the space below the bar
-    selectionBarSetTreePinned(selectionBarTreeIsPinned());
     bar.treeContainer.append($('#jeTree'));
     jeDisplayTree();
     if(focusSearch)
@@ -332,6 +343,11 @@ function selectionBarButton(target, icon, title, onClick) {
 // reason the stack list exists at all. In the words the editor uses for them,
 // not in the property and class names behind them: this list is read by the
 // people who are here so they do not have to open the JSON.
+//
+// Being inside a widget that is hidden or belongs to another seat hides a widget
+// just as thoroughly as carrying that class itself, and nothing in the room says
+// which of the two it is - so the ancestors are walked and the one responsible is
+// named.
 function selectionBarWidgetNotes(widget) {
   const notes = [];
   if(widget.get('type') == 'card')
@@ -342,10 +358,12 @@ function selectionBarWidgetNotes(widget) {
     notes.push(`on layer ${widget.get('layer')}`);
   if(String(widget.get('classes') || '').split(' ').indexOf('transparent') != -1)
     notes.push('invisible');
-  if(widget.domElement.classList.contains('foreign'))
-    notes.push('another seat');
-  if(widget.domElement.classList.contains('hidden'))
-    notes.push('hidden');
+  const foreign = selectionBarAncestor(widget, selectionBarIsForeign);
+  if(foreign)
+    notes.push(foreign === widget ? 'another seat' : `inside ${foreign.id}, another seat`);
+  const hidden = selectionBarAncestor(widget, selectionBarIsHidden);
+  if(hidden)
+    notes.push(hidden === widget ? 'hidden' : `inside ${hidden.id}, hidden`);
   if(widget.get('movableInEdit') === false)
     notes.push('locked in edit mode');
   return notes.join(' · ');
@@ -372,21 +390,19 @@ function selectionBarRenderStack(bar) {
 
   bar.stackList.innerHTML = '';
   const header = div(bar.stackList, 'selectionBarStackHeader');
-  header.textContent = !selectionBarStack.length
-    ? 'Nothing under the pointer'
-    : selectionBarStackCoords
-      ? `${selectionBarStack.length} under the pointer at ${selectionBarStackCoords.x}, ${selectionBarStackCoords.y}`
-      : `${selectionBarStack.length} under the pointer`;
+  header.textContent = selectionBarStack.length
+    ? `${selectionBarStack.length} under the pointer, topmost first`
+    : 'Nothing under the pointer';
 
   // What the list is, for someone who just opened it: the panel it replaces
   // carried that sentence permanently, and a tooltip is no place for it.
   if(selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackHelp', 'The widgets at the spot the pointer last rested on, topmost first. Click one to select it, shift-click to add it to the selection, or press the key in front of it.');
+    div(bar.stackList, 'selectionBarStackHelp', 'Click to select, shift-click to add to the selection, or press the key shown.');
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 11 ? `F${index+2}` : '';
     // F4 is not in the column and the gap looks like a bug without a word on it
-    const keyTitle = hotkey ? `Press ${hotkey} to select this widget - F4 is missing from the list because the browser keeps that key for itself` : '';
+    const keyTitle = hotkey ? `Press ${hotkey} to select this widget - F4 is missing because the browser keeps that key` : '';
     const row = div(bar.stackList, 'selectionBarStackRow');
     row.classList.toggle('selected', selectedWidgets.indexOf(widget) != -1);
     row.innerHTML = `<span class=selectionBarStackKey title="${keyTitle}">${hotkey}</span>`
@@ -410,7 +426,7 @@ function selectionBarRenderStack(bar) {
   }
 
   if(!selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackEmpty', 'Move the pointer over a widget in the room - everything stacked at that spot is listed here.');
+    div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room - everything stacked at that spot is listed here.');
 }
 
 // Where an Alt+click drill currently is. It sits in the bar and not in the panel
@@ -434,6 +450,7 @@ function selectionBarToggleStack(bar, forceClose) {
   const open = !forceClose && !bar.dom.classList.contains('stackVisible');
   if(open && bar.dom.classList.contains('treeVisible'))
     selectionBarToggleTree(bar, true);
+  selectionBarStoreState({ stackOpen: open });
   bar.dom.classList.toggle('stackVisible', open);
   bar.stackButton.classList.toggle('active', open);
   selectionBarRenderStack(bar);
@@ -544,49 +561,36 @@ function renderSelectionBar(target, options = {}) {
     bar.backButton    = selectionBarButton(bar.dom, 'arrow_back',    'Back to the previously selected widget (Tab+Left)', _=>selectionBarHistoryNavigate(-1));
     bar.forwardButton = selectionBarButton(bar.dom, 'arrow_forward', 'Forward to the next selected widget (Tab+Right)',   _=>selectionBarHistoryNavigate(1));
   }
-  if(options.tree) {
-    bar.treeButton = selectionBarButton(bar.dom, 'account_tree', 'Show the widget tree of the room', _=>selectionBarToggleTree(bar, false, true));
-    bar.pinButton  = selectionBarButton(bar.dom, 'push_pin',     'Pin the widget tree so it stays open above the editor', _=>selectionBarSetTreePinned(!selectionBarTreeIsPinned()));
-    bar.pinButton.classList.add('selectionBarPin');
-  }
+  if(options.tree)
+    bar.treeButton = selectionBarButton(bar.dom, 'account_tree', 'The widget tree of the room', _=>selectionBarToggleTree(bar, false, true));
   if(options.stack) {
-    const stackTitle = 'Widgets under the pointer - how to reach one that lies underneath another. The list takes the spot where the pointer came to rest, so it stands still while a row of it is being clicked.'
-                     + (selectionBarCanAltClick() ? ' Alt+click in the room walks down the same list, unless the desktop takes Alt+click for itself.' : '');
-    bar.stackButton = selectionBarButton(bar.dom, 'layers', stackTitle, function() {
-      selectionBarToggleStack(bar);
-      selectionBarStoreState({ stackOpen: bar.dom.classList.contains('stackVisible') });
-    });
+    const stackTitle = 'The widgets under the pointer'
+                     + (selectionBarCanAltClick() ? ' - Alt+click in the room steps through them' : '');
+    bar.stackButton = selectionBarButton(bar.dom, 'layers', stackTitle, _=>selectionBarToggleStack(bar));
     bar.stackCount = document.createElement('span');
     bar.stackCount.className = 'selectionBarStackCount';
     bar.stackButton.append(bar.stackCount);
   }
 
   bar.crumbs = div(bar.dom, 'selectionBarCrumbs');
-  // at the end of the bar, where it can appear and disappear without moving
-  // anything: the crumbs before it are left-aligned and only get shorter
+  // both at the end of the bar, where they can appear and disappear without
+  // moving anything: the crumbs before them are left-aligned and only shrink
   bar.drill = div(bar.dom, 'selectionBarDrill');
-  if(options.tree) {
+  bar.coords = div(bar.dom, 'selectionBarCoords');
+  bar.coords.title = 'Where the pointer is in the room';
+  if(options.tree)
     bar.treeContainer = div(bar.dom, 'selectionBarTree');
-    // unless pinned, close the dropdown when a widget is picked in the tree
-    // (capture, so it runs despite the tree's own stopPropagation)
-    bar.treeContainer.addEventListener('click', function(e) {
-      if(!selectionBarTreeIsPinned() && !e.shiftKey && !e.target.classList.contains('jeTreeExpander') && e.target.closest('.jeTreeWidget'))
-        selectionBarToggleTree(bar, true);
-    }, true);
-    bar.dom.classList.toggle('treePinned', selectionBarTreeIsPinned());
-    if(bar.pinButton)
-      bar.pinButton.classList.toggle('active', selectionBarTreeIsPinned());
-  }
   if(options.stack)
     bar.stackList = div(bar.dom, 'selectionBarStackList');
 
   selectionBars.push(bar);
+  // both dropdowns work the same way: they stay open until their button is
+  // pressed again, and they come back when the module they are in does
   if(options.stack && selectionBarStoredState().stackOpen)
     selectionBarToggleStack(bar);
-  // the tree comes back to the module it was open in (a panel that rebuilt
-  // itself), and a pinned tree opens in the first bar that asks for it
-  if(options.tree && (selectionBarTreeOwner === options.key || (selectionBarTreeOwner === null && selectionBarTreeIsPinned())))
+  if(options.tree && (selectionBarTreeOwner === options.key || (selectionBarTreeOwner === null && selectionBarStoredState().treeOpen)))
     selectionBarToggleTree(bar, false);
+  selectionBarRenderPointerCoords();
   selectionBarUpdate(bar);
   return bar;
 }
@@ -632,8 +636,8 @@ function selectionBarResetStack() {
   clearTimeout(selectionBarScanTimer);
   selectionBarScanTimer = null;
   selectionBarStack = [];
-  selectionBarStackCoords = null;
   selectionBarPointer = null;
+  selectionBarSetPointerCoords(null);
   selectionBarClearHover();
   updateSelectionBars();
 }

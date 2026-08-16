@@ -44,12 +44,6 @@
   height: auto;
 }
 
-.selectionBar.treeVisible.treePinned ~ #jeText,
-.selectionBar.treeVisible.treePinned ~ #jeTextHighlight,
-.selectionBar.treeVisible.treePinned ~ #jeCommands {
-  top: max(40%, 140px);
-}
-
 /*** Tree and widget display/edit area ***/
 /**** CSS to set up the grid ****/
 #jeEditArea {
@@ -536,8 +530,6 @@ body.jsonEdit #toolbar {
 #je_callMacro{
 }
 #je_showWidget{
-}
-#je_reverseFkeys{
 }
 #je_addNewWidget{
   color: rgb(95, 167, 95);

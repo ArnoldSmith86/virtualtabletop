@@ -9,7 +9,6 @@ let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
-let jeFKeyOrderDescending = 1;
 let jeIsSVG = {};
 let jeWidgetHighlighting = true;
 let jeDebugViewing = null;
@@ -166,19 +165,6 @@ const jeCommands = [
         jeSecondaryWidget = JSON.stringify(jeWidget.state, null, '  ');
       else
         jeSecondaryWidget = null;
-      jeShowCommands();
-    }
-  },
-  {
-    id: 'je_reverseFkeys',
-    name: 'Reverse order of F-key shortcuts',
-    icon:  _=>jeFKeyOrderDescending ==1 ? '[arrow_down]' : '[arrow_up]',
-    forceKey: 'K',
-    call: async function() {
-      jeFKeyOrderDescending = -jeFKeyOrderDescending;
-      // the F keys are the rows of the selection bar's stack list now, so an open
-      // one has to renumber itself instead of waiting for the next pointer scan
-      selectionBarStackOrderChanged();
       jeShowCommands();
     }
   },

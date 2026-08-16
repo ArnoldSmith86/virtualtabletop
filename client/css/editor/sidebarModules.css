@@ -4,37 +4,6 @@
   position: relative;
 }
 
-/* The button that closes the module (SidebarModule.addCloseButton). Out of the flow so it doesn't
-   push the centered header text off center, and the header keeps room for it on the right. */
-.editorModule .moduleCloseButton {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.editorModule h1 .moduleCloseButton {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* In the modules that render no header (JSON, Debug, Assets) it sits in the module's own top right
-   corner instead, where it has to stay above what they put there. */
-.editorModule > .moduleCloseButton {
-  z-index: 3;
-}
-
-/* except in the JSON module, where it goes into the right end of the selection bar above the text - the
-   bar spans the module and keeps that end free for it (selectionbar.css) */
-.data_object.editorModule > .moduleCloseButton {
-  right: 5px;
-  top: 6px;
-}
-
-/* the Debug module's filter row is right-aligned, so it has to leave that corner free */
-.pest_control.editorModule > .buttonBar:first-child {
-  padding-right: 40px;
-}
-
 .editorModule h2 {
   color: white;
   background: var(--VTTblue);

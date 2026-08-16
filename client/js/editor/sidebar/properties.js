@@ -1991,7 +1991,6 @@ class PropertiesModule extends SidebarModule {
     const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
 
     const header = div(this.moduleDOM, 'widgetHeader');
-    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
     // say which widgets, so a stray rubber-band/shift-click pickup is easy to
     // spot before editing - only the type header said "how many" before
@@ -4886,7 +4885,6 @@ class PropertiesModule extends SidebarModule {
     // type in the header's accent color, id in the plain text color so the two
     // are easy to tell apart
     const header = div(this.moduleDOM, 'widgetHeader');
-    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
     const idArea = div(header, 'widgetHeaderId');
     idArea.append('Widget id: ');

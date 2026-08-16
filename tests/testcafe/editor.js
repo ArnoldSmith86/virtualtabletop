@@ -115,9 +115,9 @@ test('Edit mode skips the default module in a portrait window', async t => {
   await setEditorState(null);
 });
 
-// the default module opens itself, so it has to be closable without knowing that
-// the sidebar button toggles
-test('A module is closed again through the button in its header', async t => {
+// the module that opens itself is closed the same way every other one is: with
+// the sidebar button that opened it. There is no close button in the panel.
+test('A module is closed again through its sidebar button', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
     widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
@@ -128,7 +128,8 @@ test('A module is closed again through the button in its header', async t => {
   await t
     .click('#editButton')
     .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
-    .click('#editorModuleTopLeft h1 .moduleCloseButton')
+    .expect(Selector('#editorModuleTopLeft .moduleCloseButton').exists).notOk()
+    .click('#editorSidebar button[icon=tune]')
     .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
     .expect(Selector('#editor.moduleActive').exists).notOk()
     .expect(Selector('#editorSidebar button[icon=tune].active').exists).notOk();
@@ -2722,6 +2723,51 @@ test('A long list of widget ids shrinks instead of pushing the apply button out 
   await setEditorState(null);
 });
 
+// Two widgets that cannot be clicked and look like any other from the outside:
+// one whose game switches pointer events off in its css, and one that is only
+// invisible because an ancestor is - the class that hides it sits on the parent,
+// so the widget itself carries no sign of why it cannot be seen.
+test('The stack list reaches widgets with no pointer events and names the ancestor that hides one', async t => {
+  await t.resizeWindow(1280, 800);
+  // the marker is the one widget of the five that can be hovered at all: the
+  // testcafe cursor cannot be put on any of the others, which is the point
+  await setRoomState({
+    board:  { id: 'board',  type: 'basic', x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    hider:  { id: 'hider',  type: 'basic', x: 300, y: 200, width: 300,  height: 300, display: false },
+    chip:   { id: 'chip',   type: 'basic', x: 40,  y: 40,  width: 120,  height: 120, parent: 'hider' },
+    ghost:  { id: 'ghost',  type: 'basic', x: 300, y: 200, width: 300,  height: 300, z: 30, css: 'pointer-events: none' },
+    marker: { id: 'marker', type: 'basic', x: 380, y: 280, width: 40,   height: 40,  z: 40 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+  const coords = bar.find('.selectionBarCoords');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_marker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_marker')
+    .expect(stackRows.count).eql(5)
+    // the coordinates the panel this list replaces used to show are back in the
+    // bar, following the pointer itself rather than where it came to rest
+    .expect(coords.textContent).match(/^\d+, \d+$/)
+    // the widget that is invisible because its parent is says which parent
+    .expect(stackRows.withText('chip').textContent).contains('inside hider, hidden')
+    // a widget that takes no pointer events is in the list rather than nowhere,
+    // and clicking its row is the only way to select it at all
+    .expect(stackRows.withText('ghost').exists).ok()
+    .click(stackRows.withText('ghost'))
+    .expect(Selector('#w_ghost').hasClass('selectedInEdit')).ok()
+    // ... and the readout is empty while the pointer is not in the room at all
+    .expect(coords.textContent).eql('');
+  await setEditorState(null);
+});
+
 // The stack of widgets under the pointer used to be eleven function-key rows that
 // only existed while the JSON module was open. It is part of the selection bar
 // now, which Edit Widgets mounts too - so a widget that lies underneath another
@@ -2930,14 +2976,13 @@ test('Two docked modules each get a selection bar and take turns holding the tre
     // and the bar of the module that stayed open still works
     .click(propertiesBar.find('button[icon=account_tree]'))
     .expect(treeInProperties.exists).ok()
-    // pinning reserves room for the tree in Edit Widgets too - it used to only
-    // turn the button yellow there and leave the tree hanging over the panel,
-    // which a sticky bar cannot be scrolled away from
-    .expect(propertiesBar.clientHeight).lt(60)
-    .click(propertiesBar.find('button.selectionBarPin'))
-    .expect(propertiesBar.clientHeight).gt(150)
-    .click(propertiesBar.find('button.selectionBarPin'))
-    .expect(propertiesBar.clientHeight).lt(60)
+    // the tree works exactly like the list of widgets under the pointer: picking
+    // a widget in it selects that widget and leaves the dropdown standing, and
+    // only its own button closes it again. There is no pin.
+    .expect(propertiesBar.find('button.selectionBarPin').exists).notOk()
+    .click(treeInProperties.find('.jeTreeWidget').withText('widget'))
+    .expect(Selector('#w_widget').hasClass('selectedInEdit')).ok()
+    .expect(treeInProperties.exists).ok()
     .click(propertiesBar.find('button[icon=account_tree]'))
     .expect(treeInProperties.exists).notOk();
   await setEditorState(null);
