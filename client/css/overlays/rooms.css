@@ -212,7 +212,7 @@
   display: none;
 }
 
-body.roomLocked #statesButton, body.roomLocked #editButton {
+body.roomLocked #statesButton, body.roomEditingDisabled #editButton {
   display: none;
 }
 

@@ -36,12 +36,18 @@ function registerRoomVisit() {
 
 function applyRoomLockState() {
   const locked = currentRoomLocked && !isRoomAdmin;
+  // edit mode is a full export route (it shows and copies the JSON of every widget), so protecting
+  // the content of a room takes it away from everybody but the room's admin
+  const editingDisabled = locked || currentRoomProtected && !isRoomAdmin;
   toggleClass(document.body, 'roomLocked', locked);
+  toggleClass(document.body, 'roomEditingDisabled', editingDisabled);
   // the download and share-link buttons of the game shelf are answered with a 403 in a protected
   // room, so they are taken out of the UI as well - for the admin too, who unprotects to export
   toggleClass(document.body, 'roomContentProtected', currentRoomProtected);
-  if(locked && ($('#statesButton.active') || $('#editButton.active')))
+  if(locked && $('#statesButton.active') || editingDisabled && $('#editButton.active'))
     $('#activeGameButton').click();
+  else if(editingDisabled && edit)
+    toggleEditMode();
 }
 
 async function roomAction(id, action, args) {
@@ -156,7 +162,7 @@ function createRoomTile(room) {
     addMenuButton(room.contentProtected ? 'shield' : 'shield_lock', room.contentProtected ? 'Release content' : 'Protect content', null, async function() {
       if(room.contentProtected)
         return roomAction(room.id, 'setContentProtected', { contentProtected: false });
-      if(await confirmOverlay('Protect content', `Nobody, not even you, can copy the room "${room.name}", create a linked room from it, download one of its games or share a link to one while this is on. Turn it off again to export something yourself.\n\nPlayers in the room still play the game, so their browsers still receive it - this keeps the game out of everybody's game shelf, it cannot make it invisible.`, 'Protect', 'Cancel', 'shield_lock', 'undo'))
+      if(await confirmOverlay('Protect content', `Nobody, not even you, can copy the room "${room.name}", create a linked room from it, download one of its games or share a link to one while this is on, and everybody except you loses Edit Mode in it. Turn it off again to export or edit something yourself.\n\nPlayers in the room still play the game, so their browsers still receive it - this keeps the game out of everybody's game shelf, it cannot make it invisible.`, 'Protect', 'Cancel', 'shield_lock', 'undo'))
         await roomAction(room.id, 'setContentProtected', { contentProtected: true });
       showOverlay('roomsOverlay');
     });
