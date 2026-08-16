@@ -656,12 +656,17 @@ function selectionBarRenderStack(bar) {
     // the gap where F4 and F5 would be looks like a bug without a word on it
     const keyTitle = hotkey ? `Press ${hotkey} to select this widget - F4 and F5 are missing because the browser keeps those keys` : '';
     const row = div(bar.stackList, 'selectionBarStackRow');
+    const notes = selectionBarWidgetNotes(widget);
     row.classList.toggle('selected', selectedWidgets.indexOf(widget) != -1);
     row.innerHTML = `<span class=selectionBarStackKey title="${keyTitle}">${hotkey}</span>`
                   + `<span class=selectionBarStackType>${html(widget.get('type') || 'basic')}</span>`
                   + `<span class=selectionBarStackId>${html(widget.id)}</span>`
-                  + `<span class=selectionBarStackNotes>${html(selectionBarWidgetNotes(widget))}</span>`;
-    row.title = `z ${widget.calculateZ()} - click to select, shift-click to add to the selection`;
+                  + `<span class=selectionBarStackNotes>${html(notes)}</span>`;
+    // the notes are the first thing a narrow panel takes off the row, so the
+    // tooltip carries them - together with the id, which can be cut off too once
+    // there is nothing left to give
+    row.title = `${widget.id}${notes ? ` - ${notes}` : ''} - z ${widget.calculateZ()}`
+              + ' - click to select, shift-click to add to the selection';
     row.onmouseenter = _=>widget.domElement.classList.add('selectionBarHover');
     row.onmouseleave = _=>widget.domElement.classList.remove('selectionBarHover');
     row.onclick = function(e) {

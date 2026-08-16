@@ -3182,6 +3182,72 @@ test('A tap fills the stack list, which is the only way to a covered widget on a
   await setEditorState(null);
 });
 
+// Which columns of the stack list fit into the panel they are in. scrollWidth is
+// no use for that: an ellipsized flex item reports it equal to clientWidth. What
+// the ellipsis really reacts to is the box being even a fraction of a pixel
+// narrower than the text - which is exactly what a proportional flex-shrink
+// leaves, and it costs three characters - so the text is measured on a clone that
+// may be as wide as it wants.
+const stackRowFit = ClientFunction(() => {
+  const isCut = el => {
+    const clone = el.cloneNode(true);
+    clone.style.cssText = 'position:absolute;visibility:hidden;left:-9999px;width:max-content;max-width:none;min-width:0;white-space:nowrap';
+    el.parentNode.appendChild(clone);
+    const need = clone.getBoundingClientRect().width;
+    clone.remove();
+    return need > el.getBoundingClientRect().width + 0.01;
+  };
+  const list = document.querySelector('#editorModuleTopLeft .selectionBarStackList');
+  const rowElements = list.querySelectorAll('.selectionBarStackRow');
+  const rows = [];
+  for(let i = 0; i < rowElements.length; i++)
+    rows.push({
+      id: rowElements[i].querySelector('.selectionBarStackId').textContent,
+      idCut: isCut(rowElements[i].querySelector('.selectionBarStackId')),
+      notesCut: isCut(rowElements[i].querySelector('.selectionBarStackNotes'))
+    });
+  return { rows, overflow: list.scrollWidth - list.clientWidth };
+});
+
+// A row is picked by its id, so a panel too narrow for the whole row has to take
+// the notes off it rather than the id: "ba..." names no widget at all, while a
+// cut note still reads as "there is something about this one" - and the row's
+// tooltip carries the whole note anyway. An id longer than the row itself is the
+// one that is cut, and even then it must not widen the list.
+test('A narrow panel cuts the notes of a stack row, never the widget id', async t => {
+  await t.resizeWindow(500, 900);
+  await setRoomState({
+    board:       { id: 'board', type: 'basic', x: 0, y: 0, width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    playerAid40: { id: 'playerAid40', type: 'holder', x: 300, y: 200, width: 300, height: 300, classes: 'transparent', layer: 6, movableInEdit: false },
+    scoreCardForPlayerFour: { id: 'scoreCardForPlayerFour', type: 'basic', parent: 'playerAid40', x: 40, y: 40, width: 200, height: 200, layer: 10, movableInEdit: false, classes: 'transparent' },
+    aVeryLongWidgetIdNoPanelWillEverShowInFull: { id: 'aVeryLongWidgetIdNoPanelWillEverShowInFull', type: 'basic', parent: 'playerAid40', x: 60, y: 60, width: 160, height: 160, layer: 11 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_aVeryLongWidgetIdNoPanelWillEverShowInFull')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_aVeryLongWidgetIdNoPanelWillEverShowInFull')
+    .expect(bar.find('.selectionBarStackRow').count).eql(4);
+
+  const fit = await stackRowFit();
+  // the panel has to be too narrow for these rows, or the test proves nothing
+  await t.expect(fit.rows.filter(row => row.notesCut).length).gt(0, 'the notes give way first');
+  await t.expect(fit.rows.filter(row => row.id.length < 30 && row.idCut).length).eql(0, 'no id that fits at all is cut');
+  await t.expect(fit.overflow).lte(1, 'the id that fits nowhere is cut instead of widening the list');
+  // and what a narrow row cannot show is still one hover away
+  await t
+    .expect(bar.find('.selectionBarStackRow').nth(3).getAttribute('title')).contains('board - on layer -4 · locked in edit mode')
+    .click(bar.find('button[icon=layers]'));
+  await setEditorState(null);
+});
+
 // Two modules that edit the selection are two bars, and the room tree is a single
 // DOM node they take turns holding - so it has to be handed over rather than
 // duplicated, and handed back when the module holding it is closed.

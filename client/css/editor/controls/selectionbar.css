@@ -285,11 +285,17 @@
   color: var(--textHighlightColor4);
 }
 
-/* the id is the one part of a row that can be arbitrarily long, so it is what
-   gives way first when the panel is narrow - the notes are why the list exists */
+/* A row is picked by its id, so the id is the one column that never gives way: a
+   cut-off id names no widget at all, while a cut-off note still reads as "there
+   is something about this one" - and the row carries the whole note in its
+   tooltip. So the id does not shrink (not even by the fraction of a pixel that
+   costs a proportional shrink three characters and an ellipsis) and the notes
+   are the only column that does, all the way down to nothing. The cap is for an
+   id longer than the row itself, which would otherwise widen the row rather than
+   be cut: it leaves the key and the type the space they need. */
 .selectionBarStackId {
-  flex-shrink: 4;
-  min-width: 4ch;
+  flex-shrink: 0;
+  max-width: calc(100% - 14ch);
   color: var(--textHighlightColor1);
   font-family: monospace;
   overflow: hidden;
@@ -300,7 +306,7 @@
 .selectionBarStackNotes {
   flex-grow: 1;
   flex-shrink: 1;
-  min-width: 6ch;
+  min-width: 0;
   text-align: right;
   color: var(--textHighlightColor3);
   font-size: 11px;
