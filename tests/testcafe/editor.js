@@ -2937,6 +2937,8 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
     .click(bar.find('button[icon=layers]'))
     .hover('#w_checker')
     .expect(stackRows.count).eql(3)
+    // off the room, so the list is frozen and no scan is pending
+    .hover(bar.find('.selectionBarStackHeader'))
 
     // the arrow keys step through the list and wrap at its end, the way the
     // Alt+click drill through the same stack does
@@ -2951,6 +2953,10 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
     .pressKey('down')
     .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
     .pressKey('up')
+    .expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok()
+    // the pointer settling on the same spot scans it again - and a scan that
+    // finds the same stack must leave the row somebody stepped to alone
+    .hover('#w_checker')
     .expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok()
     // ... and Enter picks the row they are on
     .pressKey('enter')

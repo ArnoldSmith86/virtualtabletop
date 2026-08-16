@@ -123,6 +123,16 @@ function selectionBarWidgetStack() {
   return selectionBarStack;
 }
 
+// Taking the stack the list shows. The keyboard cursor is an index into it, so
+// it only goes back to the start when the stack is really another one: the scan
+// runs again whenever the pointer settles, and a pointer that settled on the
+// same spot must not throw away the row somebody just stepped to.
+function selectionBarSetStack(stack) {
+  if(stack.length != selectionBarStack.length || stack.some((w, index)=>w !== selectionBarStack[index]))
+    selectionBarResetStackCursor();
+  selectionBarStack = stack;
+}
+
 // An Alt+click drill takes its own stack at the point it was aimed at, and that
 // is the stack the bar should be showing - otherwise the list can say "nothing
 // under the pointer" right next to a drill readout counting five of them.
@@ -130,8 +140,7 @@ function selectionBarAdoptStack(stack, clientX, clientY) {
   clearTimeout(selectionBarScanTimer);
   selectionBarScanTimer = null;
   selectionBarPointer = { x: clientX, y: clientY };
-  selectionBarStack = stack;
-  selectionBarResetStackCursor();
+  selectionBarSetStack(stack);
   updateSelectionBars();
 }
 
@@ -183,8 +192,7 @@ function selectionBarIsActive() {
 function selectionBarScan() {
   if(!selectionBarIsActive() || !selectionBarPointer)
     return;
-  selectionBarStack = selectionBarSortStack(widgetStackAt(selectionBarPointer.x, selectionBarPointer.y));
-  selectionBarResetStackCursor();
+  selectionBarSetStack(selectionBarSortStack(widgetStackAt(selectionBarPointer.x, selectionBarPointer.y)));
   for(const bar of selectionBars) {
     selectionBarRenderStack(bar);
     selectionBarRenderDrill(bar); // the readout only stands while the pointer is still on the drilled spot
