@@ -2992,6 +2992,70 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
   await setEditorState(null);
 });
 
+// What the panel paints under an open dropdown. A widget preview is a real
+// widget, so it carries the widget's own z-index ((layer + 10) * 100000 + z) -
+// which, off the table, beats everything the module draws around it. The seat
+// style presets came out on top of the dropdown that was covering them.
+const coversDropdown = ClientFunction(selector => {
+  const dropdown = document.querySelector(`#editorModuleTopLeft ${selector}`);
+  const r = dropdown.getBoundingClientRect();
+  const hits = [];
+  for(let fy = 0.1; fy <= 0.91; fy += 0.1)
+    for(let fx = 0.1; fx <= 0.91; fx += 0.1) {
+      const top = document.elementFromPoint(r.left + r.width*fx, r.top + r.height*fy);
+      const name = top && !dropdown.contains(top) ? String(top.className || top.tagName) : null;
+      if(name && hits.indexOf(name) == -1)
+        hits.push(name);
+    }
+  return hits.join(', ');
+});
+
+// Scrolls the presets up under the open dropdown - the bar sticks to the top of
+// the panel while its content moves - and answers how much of them ends up
+// behind it, so the check below cannot pass on a panel that never overlapped.
+const presetsBehindDropdown = ClientFunction(selector => {
+  const presets = document.querySelector('#editorModuleTopLeft .seatPresetRow');
+  presets.scrollIntoView({ block: 'start' });
+  const dropdown = document.querySelector(`#editorModuleTopLeft ${selector}`).getBoundingClientRect();
+  const row = presets.getBoundingClientRect();
+  return Math.min(dropdown.bottom, row.bottom) - Math.max(dropdown.top, row.top);
+});
+
+test('Widget previews stay in their box instead of covering the selection bar', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board: { id: 'board', type: 'basic', x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    seat:  { id: 'seat',  type: 'seat',  x: 300, y: 200, width: 150,  height: 40, index: 1 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    // the seat, whose editor draws the three style presets as live seat widgets
+    .click('#w_seat')
+    .expect(Selector('#editorModuleTopLeft .seatPresetRow .widgetSelectionButton').count).eql(3)
+    // a stack under the pointer, so the list has rows to fill the dropdown with
+    .hover('#w_seat')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_seat')
+    .expect(bar.find('.selectionBarStackRow').count).eql(2)
+    // off the room, so the list stands still while the panel is scrolled
+    .hover(bar.find('.selectionBarStackHeader'))
+    .expect(presetsBehindDropdown('.selectionBarStackList')).gt(20)
+    .expect(coversDropdown('.selectionBarStackList')).eql('')
+
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(presetsBehindDropdown('.selectionBarTree')).gt(20)
+    .expect(coversDropdown('.selectionBarTree')).eql('')
+    .click(bar.find('button[icon=account_tree]'));
+  await setEditorState(null);
+});
+
 // Cards go to the end of the list however they are stacked in the room, so a
 // stack containing one is where paint order and the order the bar shows differ -
 // and the drill has to walk the list, not the paint order, or the badge counts

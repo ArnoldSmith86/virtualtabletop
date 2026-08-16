@@ -55,6 +55,20 @@
 
 /* properties */
 
+/* Every box that holds a preview of a widget. A preview is a real widget, so it
+   carries the widget's own z-index ((layer + 10) * 100000 + z) - a number that
+   says where it is on the table, not where it is in the panel. Left alone it
+   beats everything the module draws around it: the seat style presets painted
+   over the selection bar's open dropdown. Each box is its own stacking context
+   instead, so a preview is only ever ordered against the previews beside it.
+   (.textCardsPreviewCard already is one through its scale transform.) */
+.editorModule .widgetSelectionButton,
+.editorModule .facePreview,
+.editorModule .diceFacePreview,
+.editorModule .renderedWidget {
+  isolation: isolate;
+}
+
 .editorModule .widgetSelectionButton {
   height: 150px;
   width: 150px;
