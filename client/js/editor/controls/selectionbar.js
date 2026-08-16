@@ -36,16 +36,18 @@ function selectionBarCanAltClick() {
 
 function selectionBarStoredState() {
   try {
-    return JSON.parse(localStorage.getItem('editorState') || '{}').selectionBar || {};
+    return JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}').selectionBar || {};
   } catch(e) {
     return {};
   }
 }
 
 function selectionBarStoreState(changes) {
-  let editorState = {};
+  // the same default the rest of the editor uses (layout.js, sidebarModule.js):
+  // whoever writes this key first must not leave the next writer without .modules
+  let editorState = { modules: {} };
   try {
-    editorState = JSON.parse(localStorage.getItem('editorState') || '{}');
+    editorState = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}');
   } catch(e) {
   }
   editorState.selectionBar = Object.assign(selectionBarStoredState(), changes);
@@ -130,10 +132,14 @@ function selectionBarAdoptStack(stack, clientX, clientY) {
   updateSelectionBars();
 }
 
-// F1, F2, F3, F5 ... F12 - F4 is skipped because the browser owns it
+// F1, F2, F3, F6 ... F12 - F4 and F5 are skipped because the browser owns them.
+// F5 is the reason this is not the eleven keys the panel this replaces had: that
+// panel only existed while the JSON editor was open, while a bar is in Edit
+// Widgets, which is what edit mode opens by default - so taking F5 there would
+// mean the page stops reloading for everyone whose pointer rests on a stack.
 function selectionBarWidgetForHotkey(functionKey) {
-  const index = functionKey >= 5 ? functionKey - 2 : functionKey - 1;
-  return functionKey != 4 && index >= 0 ? selectionBarStack[index] : undefined;
+  const index = functionKey >= 6 ? functionKey - 3 : functionKey - 1;
+  return functionKey != 4 && functionKey != 5 && index >= 0 ? selectionBarStack[index] : undefined;
 }
 
 // The list is what lies under the pointer in the room, so it stops following the
@@ -165,8 +171,8 @@ function selectionBarRoomCoords(clientX, clientY) {
 // Both listeners below are on the window and never come off again, and a module
 // is not closed when the editor is: leaving edit mode only display:none's it, so
 // its bar stays connected and selectionBarPrune() keeps it. Without this the F
-// keys would go on swallowing F5 and a hit test of the whole document would run
-// every frame for someone who is just playing the game.
+// keys would go on selecting widgets and a hit test of the whole document would
+// run every frame for someone who is just playing the game.
 function selectionBarIsActive() {
   return !!selectionBars.length && document.body.classList.contains('edit');
 }
@@ -224,7 +230,7 @@ function selectionBarInstallListeners() {
     }, SELECTION_BAR_SCAN_DELAY);
   });
 
-  // F1, F2, F3, F5 ... F12 pick the rows of the list without opening it - the
+  // F1, F2, F3, F6 ... F12 pick the rows of the list without opening it - the
   // keys the panel this replaces was built around. Ctrl pastes the id into the
   // JSON editor, which only means anything while that one is open.
   window.addEventListener('keydown', function(e) {
@@ -400,9 +406,9 @@ function selectionBarRenderStack(bar) {
     div(bar.stackList, 'selectionBarStackHelp', 'Click to select, shift-click to add to the selection, or press the key shown.');
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
-    const hotkey = index < 3 ? `F${index+1}` : index < 11 ? `F${index+2}` : '';
-    // F4 is not in the column and the gap looks like a bug without a word on it
-    const keyTitle = hotkey ? `Press ${hotkey} to select this widget - F4 is missing because the browser keeps that key` : '';
+    const hotkey = index < 3 ? `F${index+1}` : index < 10 ? `F${index+3}` : '';
+    // the gap where F4 and F5 would be looks like a bug without a word on it
+    const keyTitle = hotkey ? `Press ${hotkey} to select this widget - F4 and F5 are missing because the browser keeps those keys` : '';
     const row = div(bar.stackList, 'selectionBarStackRow');
     row.classList.toggle('selected', selectedWidgets.indexOf(widget) != -1);
     row.innerHTML = `<span class=selectionBarStackKey title="${keyTitle}">${hotkey}</span>`

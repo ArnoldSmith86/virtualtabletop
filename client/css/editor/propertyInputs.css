@@ -1195,9 +1195,6 @@
 .editorModule .widgetHeader {
   text-align: center;
   margin: 0.4em 0;
-  /* the close button sits in the top right corner of the header (SidebarModule.addCloseButton) */
-  position: relative;
-  padding-right: 40px;
 }
 
 .editorModule .widgetHeader .widgetHeaderType {

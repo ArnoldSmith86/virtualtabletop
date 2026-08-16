@@ -2727,6 +2727,14 @@ test('A long list of widget ids shrinks instead of pushing the apply button out 
 // one whose game switches pointer events off in its css, and one that is only
 // invisible because an ancestor is - the class that hides it sits on the parent,
 // so the widget itself carries no sign of why it cannot be seen.
+// testcafe cannot press a function key, so the very event the bar's handler takes
+// is dispatched by hand - what matters is whether it is taken at all
+const pressFunctionKey = ClientFunction(key => {
+  const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
+});
+
 test('The stack list reaches widgets with no pointer events and names the ancestor that hides one', async t => {
   await t.resizeWindow(1280, 800);
   // the marker is the one widget of the five that can be hovered at all: the
@@ -2761,6 +2769,13 @@ test('The stack list reaches widgets with no pointer events and names the ancest
     // a widget that takes no pointer events is in the list rather than nowhere,
     // and clicking its row is the only way to select it at all
     .expect(stackRows.withText('ghost').exists).ok()
+    // the keys jump from F3 to F6: F4 and F5 belong to the browser, and edit
+    // mode is where F5 has to go on reloading the page
+    .expect(stackRows.nth(2).find('.selectionBarStackKey').textContent).eql('F3')
+    .expect(stackRows.nth(3).find('.selectionBarStackKey').textContent).eql('F6')
+    .expect(pressFunctionKey('F5')).notOk()
+    .expect(pressFunctionKey('F6')).ok()
+    .expect(stackRows.nth(3).hasClass('selected')).ok()
     .click(stackRows.withText('ghost'))
     .expect(Selector('#w_ghost').hasClass('selectedInEdit')).ok()
     // ... and the readout is empty while the pointer is not in the room at all
@@ -2810,6 +2825,22 @@ test('The selection bar reaches a widget that is covered by another one', async 
     .expect(bar.find('.selectionBarCrumbs').textContent).contains('point')
     .click(bar.find('button[icon=layers]'));
 
+  // The bar is built with the panel and outlives the selections it is used to
+  // change: an open tree keeps the DOM it is in - and with it its scroll
+  // position - instead of being thrown away and rebuilt on every pick.
+  const markTree = ClientFunction(() => {
+    const treeContainer = document.querySelector('#editorModuleTopLeft .selectionBarTree');
+    treeContainer.dataset.kept = 'yes';
+    return !!treeContainer.querySelector('#jeTree');
+  });
+  await t
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(markTree()).ok()
+    .click('#w_checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#editorModuleTopLeft .selectionBarTree[data-kept="yes"] #jeTree').exists).ok()
+    .click(bar.find('button[icon=account_tree]'));
+
   // Alt+click drills down through the same stack without any panel at all, and
   // Alt+Shift+click walks back up
   await t
@@ -2836,9 +2867,9 @@ test('The selection bar reaches a widget that is covered by another one', async 
 
 // The bar's mousemove and F-key listeners are on the window and never come off,
 // and a module is not closed when the editor is - leaving edit mode only hides
-// the panel. So both have to go quiet by hand: otherwise F5 is swallowed by the
-// F-key handler (the page stops reloading) and a hit test of the whole document
-// runs every frame for someone who is only playing the game.
+// the panel. So both have to go quiet by hand: otherwise the F keys go on moving
+// a selection nobody can see and a hit test of the whole document runs every
+// frame for someone who is only playing the game.
 test('The selection bar goes quiet while the game is played', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -2849,14 +2880,6 @@ test('The selection bar goes quiet while the game is played', async t => {
   await ClientFunction(prepareClient)();
   await setEditorState(propertiesModuleOpen);
   await setName(t);
-
-  // testcafe cannot press a function key, so the very event the handler takes is
-  // dispatched by hand - what matters is whether it is taken at all
-  const pressFunctionKey = ClientFunction(key => {
-    const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
-    window.dispatchEvent(event);
-    return event.defaultPrevented;
-  });
 
   const bar = Selector('#editorModuleTopLeft .selectionBar');
   const stackCount = bar.find('.selectionBarStackCount');
@@ -2873,7 +2896,7 @@ test('The selection bar goes quiet while the game is played', async t => {
     .click('#editorToolbar button[icon=close]')
     .hover('#w_checker')
     .expect(stackCount.textContent).eql('')
-    .expect(pressFunctionKey('F5')).notOk()
+    .expect(pressFunctionKey('F3')).notOk()
     .expect(pressFunctionKey('F1')).notOk()
     .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk()
     .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()

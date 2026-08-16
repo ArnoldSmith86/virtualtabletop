@@ -1929,11 +1929,20 @@ class PropertiesModule extends SidebarModule {
     this.renderedBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
 
 
-    // the bar is thrown away with the panel, so hand back what it borrowed
-    // (the room tree) before wiping and build a fresh one on top afterwards
-    removeSelectionBar(this.selectionBar, true);
-    this.moduleDOM.innerHTML = '';
-    this.selectionBar = renderSelectionBar(this.moduleDOM, { key: this.title });
+    // Everything below the bar is rebuilt for the new selection - the bar itself
+    // is not: it is the control the selection is changed *with*, so throwing it
+    // away on every change would drop the scroll position of an open tree (and
+    // rebuild every row of it) each time a widget is picked from it. A bar that
+    // lost its panel behind our back is replaced, keeping the tree for the new one.
+    if(this.selectionBar && !this.selectionBar.dom.isConnected) {
+      removeSelectionBar(this.selectionBar, true);
+      delete this.selectionBar;
+    }
+    if(!this.selectionBar)
+      this.selectionBar = renderSelectionBar(this.moduleDOM, { key: this.title });
+    for(const node of [ ...this.moduleDOM.children ])
+      if(node !== this.selectionBar.dom)
+        node.remove();
     // put back by renderEvents; a selection without an Automations section (a
     // pile, several widgets at once, or nothing at all) must not hide what it
     // does show
@@ -11369,7 +11378,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderModule(target) {
-    // everything visible is built by onSelectionChangedWhileActive(), which
-    // openInTarget() calls right after this
+    // the bar is built once, with the panel, and outlives the selections it is
+    // used to change; everything below it is built by
+    // onSelectionChangedWhileActive(), which openInTarget() calls right after this
+    this.selectionBar = renderSelectionBar(target, { key: this.title });
   }
 }
