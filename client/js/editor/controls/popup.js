@@ -541,21 +541,30 @@ const predefinedCollectionDescriptions = {
 };
 
 // The presets of a routine (routinePresetsOf in events.js) as sections of the
-// popup: one group per source, each { name: description }. A name a later group
-// hands over again is only listed there - the innermost FOREACH decides what
-// ${value} is for the operations inside it, so listing the outer one as well
-// would offer the same name twice for two different things.
-function presetSections(presets, kind, toEntry) {
+// popup: one group per source, each { name: description }. Whoever hands a name
+// over last wins, so a name two groups have is only listed in the later one -
+// the innermost FOREACH decides what ${value} is for the operations inside it.
+//
+// Against what an operation stored it depends on when the group is handed over.
+// A FOREACH establishes its values when the block is entered, i.e. after every
+// operation outside it, so it wins. What starts a routine (shadowedByOperations)
+// is there before the first operation instead, so an operation of the routine
+// storing the same name wins over it - a changeRoutine whose first operation is
+// a GET into value has the GET result from there on, not what changed.
+function presetSections(presets, kind, existing, toEntry) {
   return (presets || []).map((group, index, groups)=>({
     title: group.title,
     list: Object.keys(group[kind] || {})
       .filter(name=>!groups.slice(index+1).some(later=>(later[kind] || {})[name]))
+      .filter(name=>!group.shadowedByOperations || existing.indexOf(name) == -1)
       .map(name=>toEntry(name, group[kind][name]))
   }));
 }
 
+// the preset names that win over an operation of the same name, i.e. the ones to
+// leave out of "From earlier operations"
 function presetNames(presets, kind) {
-  return (presets || []).flatMap(group=>Object.keys(group[kind] || {}));
+  return (presets || []).filter(group=>!group.shadowedByOperations).flatMap(group=>Object.keys(group[kind] || {}));
 }
 
 const routineWidgetPickerKey = 'routineWidgets';
@@ -890,7 +899,9 @@ class RoutinePopup extends Popup {
   renderRoutineValueSection(showVariables, showCollections) {
     // what a routine is handed the moment it starts is listed under its own name
     // ("In every enterRoutine"), between what its operations made and what every
-    // routine has - a name it brings is not one an earlier operation stored
+    // routine has; a FOREACH block additionally gets what the round it runs is
+    // for. Only the latter also takes the name out of "From earlier operations"
+    // (see presetSections)
     const presetVariables = presetNames(this.presets, 'variables');
     const presetCollections = presetNames(this.presets, 'collections');
 
@@ -901,14 +912,14 @@ class RoutinePopup extends Popup {
 
         Earlier operations remember values under a name: [COUNT] and [GET] store what they counted or read, [VAR] and [var] store what you calculate, and [CALL] stores what another routine returned. Picking one here uses whatever it holds when the routine runs.
 
-        The ones below the "In every ..." lines are there without any operation creating them: some in every routine, the others because of what started this one - a changeRoutine is told what changed.
+        The ones below the other lines are there without any operation creating them: some in every routine, the others because of what started this one - a changeRoutine is told what changed, and a routine another one runs gets the arguments it was called with.
         </pre>
       `, [
         { title: 'From earlier operations', list: [ ...this.variables ].filter(variable=>presetVariables.indexOf(variable) == -1).sort().map(variable=>({
           label: variable,
           onClick: _=>this.setNewValue(`\$\{${variable}\}`)
         })) },
-        ...presetSections(this.presets, 'variables', (variable, description)=>({
+        ...presetSections(this.presets, 'variables', [ ...this.variables ], (variable, description)=>({
           label: variable, description,
           onClick: _=>this.setNewValue(`\$\{${variable}\}`)
         })),
@@ -923,7 +934,7 @@ class RoutinePopup extends Popup {
         <pre>
         A collection is a group of widgets an earlier [SELECT] picked out, by the name it is stored under. Operations that act on widgets take one instead of a single widget.
 
-        The ones below the "In every ..." lines are there without any operation creating them: some in every routine, the others because of what started this one - an enterRoutine is handed the widget that entered.
+        The ones below the other lines are there without any operation creating them: some in every routine, the others because of what started this one - an enterRoutine is handed the widget that entered.
         </pre>
       `, [
         { title: 'From earlier operations', list: [ ...this.collections ].filter(collection=>typeof collection != 'string' || presetCollections.indexOf(collection) == -1).sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
@@ -931,7 +942,7 @@ class RoutinePopup extends Popup {
           description: typeof collection == 'string' ? null : 'these widgets, listed in the routine itself',
           onClick: _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ])
         })) },
-        ...presetSections(this.presets, 'collections', (collection, description)=>({
+        ...presetSections(this.presets, 'collections', [ ...this.collections ], (collection, description)=>({
           label: collection, description,
           onClick: _=>this.setNewCollectionValue(collection)
         })),

@@ -1325,7 +1325,10 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue) && !calledCustomRoutines.includes(propName) && !propName.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
-                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
+                // a custom routine is run by CALL, which hands it the caller
+                // collection - even this one, which no CALL in the file reaches
+                // (that is reported separately, right below)
+                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections, caller: 1}, customProperties, calledCustomRoutines };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
                 problems.push({
                     widget: key,

@@ -59,7 +59,7 @@ function describeEventProperty(property) {
   return {
     property,
     label: property.replace(/Routine$/, ''),
-    description: 'Runs only when another routine runs it by this name - the "Run the routine" operation. Nothing else triggers it. It is handed the widget whose routine ran it as the collection caller.'
+    description: 'Runs only when another routine runs it by this name - the "Run the routine" operation. Nothing else triggers it. It starts with everything the routine that ran it had at that point - all of its values and collections - plus the arguments that operation hands over and the widget it ran on as the collection caller.'
   };
 }
 
@@ -115,12 +115,41 @@ const routinePresets = {
   editorAddToRoomRoutine: {}
 };
 
-// The presets of one routine, as the group the routine editor lists them under.
+// The arguments every CALL in the room that runs this routine by name hands it,
+// as { name: which CALLs pass it }. CALL copies the calling routine's values and
+// collections into the routine it runs and merges its arguments on top
+// (widget.js), so those names are values the routine has before its first
+// operation - the same kind of thing an event hands its routine, except that
+// what they are is written in the game rather than in the engine.
+function callArgumentsFor(routineName) {
+  const callers = {};
+  const scan = (routine, source)=>{
+    for(const operation of Array.isArray(routine) ? routine : []) {
+      if(!operation || typeof operation != 'object')
+        continue;
+      // a CALL given a list of names runs the first of them (widget.js)
+      const called = Array.isArray(operation.routine) ? operation.routine[0] : operation.routine;
+      if(operation.func == 'CALL' && called === routineName && operation.arguments && typeof operation.arguments == 'object')
+        for(const name of Object.keys(operation.arguments))
+          (callers[name] = callers[name] || new Set()).add(source);
+      for(const block of [ 'thenRoutine', 'elseRoutine', 'loopRoutine' ])
+        scan(operation[block], source);
+    }
+  };
+  for(const widget of widgets.values())
+    for(const [ key, value ] of Object.entries(widget.state))
+      if(key.match(/Routine$/) && Array.isArray(value))
+        scan(value, `${key} of ${widget.state.id}`);
+  return callers;
+}
+
+// The presets of one routine, as the groups the routine editor lists them under.
 // The routines named after a property hear about that one property only, so
 // theirs are worded with its name and have no property variable. Everything else
 // is a custom routine, which only ever runs through CALL.
 function routinePresetsOf(property) {
   let match;
+  const groups = [];
   let preset = routinePresets[property];
   if(!preset && (match = property.match(/^(.+)ChangeRoutine$/)))
     preset = { variables: {
@@ -136,10 +165,26 @@ function routinePresetsOf(property) {
       },
       collections: { widget: `the widget whose ${match[1]} changed` }
     };
-  if(!preset && !predefinedEvents.some(event=>event.property == property))
+  if(!preset && !predefinedEvents.some(event=>event.property == property)) {
     preset = { collections: { caller: 'the widget whose routine used CALL to run this one' } };
-  const group = Object.assign({ title: `In every ${property}`, variables: {}, collections: {} }, preset);
-  return Object.keys(group.variables).length + Object.keys(group.collections).length ? [ group ] : [];
+    // an argument only some of the calls hand over is still worth offering, but
+    // it is one the routine only has when that call is what ran it - so they are
+    // a group of their own rather than part of "In every fooRoutine"
+    const args = callArgumentsFor(property);
+    const variables = {};
+    for(const name of Object.keys(args).sort())
+      variables[name] = args[name].size == 1
+        ? `handed over by the CALL in ${[ ...args[name] ][0]}`
+        : `handed over by ${args[name].size} of the operations that run this routine`;
+    if(Object.keys(variables).length)
+      groups.push({ title: 'From the operation that runs it', shadowedByOperations: true, variables, collections: {} });
+  }
+  // handed over before the first operation runs, so an operation of the routine
+  // that stores the same name wins over them (see presetSections in popup.js)
+  const group = Object.assign({ title: `In every ${property}`, shadowedByOperations: true, variables: {}, collections: {} }, preset);
+  if(Object.keys(group.variables).length + Object.keys(group.collections).length)
+    groups.unshift(group);
+  return groups;
 }
 
 // A deck is two things in one place: the widget on the table, which nobody

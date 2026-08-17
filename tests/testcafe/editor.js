@@ -2680,12 +2680,20 @@ test('A routine offers the values and widgets that what started it hands over', 
   await t.resizeWindow(1280, 800);
   const operation = { func: 'SET', collection: 'someWidgets', property: 'x', value: 0 };
   await setRoomState({
-    holder: { id: 'holder', type: 'holder', x: 100, y: 100, enterRoutine: [ { ...operation } ] },
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100,
+      enterRoutine: [ { ...operation } ],
+      clickRoutine: [ { func: 'CALL', widget: 'label', routine: 'dealCardsRoutine', arguments: { amount: 3 } } ]
+    },
     label: { id: 'label', type: 'label', x: 300, y: 100,
-      textChangeRoutine: [ { ...operation } ],
+      // the GET stores value, which the routine is handed as well - from the
+      // second operation on it is the GET result, not what changed
+      textChangeRoutine: [ { func: 'GET', variable: 'value', property: 'foo' }, { ...operation } ],
       globalUpdateRoutine: [ { ...operation } ],
       dealCardsRoutine: [ { ...operation } ],
-      clickRoutine: [ { func: 'FOREACH', collection: 'someWidgets', loopRoutine: [ { ...operation } ] } ]
+      clickRoutine: [ { func: 'FOREACH', collection: 'someWidgets', loopRoutine: [ { ...operation } ] } ],
+      doubleClickRoutine: [ { func: 'FOREACH', collection: 'someWidgets', loopRoutine: [
+        { func: 'FOREACH', in: [ 1, 2 ], loopRoutine: [ { ...operation } ] }
+      ] } ]
     }
   });
   await ClientFunction(prepareClient)();
@@ -2710,7 +2718,7 @@ test('A routine offers the values and widgets that what started it hands over', 
   // one card open at a time, so the chip below can only be the one meant
   const openRoutine = async (widget, name)=>{
     await t.click(`#w_${widget}`);
-    for(const header of [ 'enterRoutine', 'textChangeRoutine', 'globalUpdateRoutine', 'dealCardsRoutine', 'clickRoutine' ]) {
+    for(const header of [ 'enterRoutine', 'textChangeRoutine', 'globalUpdateRoutine', 'dealCardsRoutine', 'clickRoutine', 'doubleClickRoutine' ]) {
       const dom = Selector('.events-editor-event-header').withText(header);
       if(await dom.exists && await dom.getAttribute('aria-expanded') == (header == name ? 'false' : 'true'))
         await t.click(dom);
@@ -2731,11 +2739,21 @@ test('A routine offers the values and widgets that what started it hands over', 
   // a routine named after a property hears about that property only, so its
   // value/oldValue are worded with it and there is no property variable
   await openRoutine('label', 'textChangeRoutine');
-  await openChip('value');
+  await openChip('property');
   await t
     .expect(popupEntries('variable')).contains('In every textChangeRoutine: value')
     .expect(popupEntries('variable')).contains('In every textChangeRoutine: oldValue')
     .expect(popupEntries('variable')).notContains('In every textChangeRoutine: property');
+  await t.click(popup.find('.popup-close'));
+
+  // what the routine is handed is there before the first operation, so the GET
+  // above wins over it from the second operation on - the other way round than
+  // for a FOREACH, which starts its round after everything outside the block
+  await t.click(Selector('.routine-editor-operation').nth(1).find('[data-parameter=value]')).expect(popup.exists).ok();
+  await t
+    .expect(popupEntries('variable')).contains('From earlier operations: value')
+    .expect(popupEntries('variable')).notContains('In every textChangeRoutine: value')
+    .expect(popupEntries('variable')).contains('In every textChangeRoutine: oldValue');
   await t.click(popup.find('.popup-close'));
 
   await openRoutine('label', 'globalUpdateRoutine');
@@ -2745,10 +2763,13 @@ test('A routine offers the values and widgets that what started it hands over', 
     .expect(popupEntries('collection')).contains('In every globalUpdateRoutine: widget');
   await t.click(popup.find('.popup-close'));
 
-  // a custom routine only ever runs through CALL, which hands it its caller
+  // a custom routine only ever runs through CALL, which hands it its caller and
+  // the arguments the CALL that runs it lists
   await openRoutine('label', 'dealCardsRoutine');
   await openChip('collection');
-  await t.expect(popupEntries('collection')).contains('In every dealCardsRoutine: caller');
+  await t
+    .expect(popupEntries('collection')).contains('In every dealCardsRoutine: caller')
+    .expect(popupEntries('variable')).contains('From the operation that runs it: amount');
   await t.click(popup.find('.popup-close'));
 
   // the block of a FOREACH gets what the round it runs is for on top of that
@@ -2757,6 +2778,16 @@ test('A routine offers the values and widgets that what started it hands over', 
   await t
     .expect(popupEntries('variable')).contains('In every loopRoutine: widgetID')
     .expect(popupEntries('collection')).contains('In every loopRoutine: DEFAULT');
+  await t.click(popup.find('.popup-close'));
+
+  // a FOREACH inside a FOREACH: which loop hands a value over is in the name of
+  // the group, and the inner one wins where both use the same name
+  await openRoutine('label', 'doubleClickRoutine');
+  await t.click(Selector('.routine-editor .routine-editor .routine-editor .routine-editor-operation [data-parameter=collection]')).expect(popup.exists).ok();
+  await t
+    .expect(popupEntries('variable')).contains('In every loopRoutine: value')
+    .expect(popupEntries('variable')).contains('In the loopRoutine around it: widgetID')
+    .expect(popupEntries('collection')).contains('In the loopRoutine around it: DEFAULT');
   await t.click(popup.find('.popup-close'));
   await setEditorState(null);
 });
