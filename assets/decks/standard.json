@@ -1,6 +1,6 @@
 {
   "name": "Standard playing cards",
-  "description": "French-suited 52-card deck with 2 jokers.",
+  "description": "French-suited 52-card deck with 2 jokers. The card types carry sorting keys: suit, suitColor and suitAlt group the suits, rank (ace low), rankA (ace high) and rankFixed order the cards.",
   "attribution": "Card images by Adrian Kennard, released under CC0 at https://www.me.uk/cards/. Jokers based on Byron Knoll's public domain playing cards.",
   "deck": {
     "type": "deck",

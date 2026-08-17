@@ -3218,10 +3218,21 @@ class DeckEditor {
     return /^\s*[a-zA-Z]+\s*$/.test(value) && this.parseColor(value) !== null;
   }
 
-  // Whether a property row should get the little color swatch + color picker: a color-named property
-  // (color, strokeColor, textColor, …) or one whose current value already looks like a color.
+  // A value that is on its way to becoming a color while it is being typed: an empty field, a half-typed hex
+  // ("#1a"), the start of an rgb()/hsl() notation, or plain letters (a keyword before it is finished). Without
+  // this the picker button of a color-named property would vanish and reappear under the cursor mid-keystroke.
+  isPartialColorValue(value) {
+    const text = String(value === undefined || value === null ? '' : value).trim();
+    return text == '' || /^#[0-9a-fA-F]{0,8}$/.test(text) || /^[a-zA-Z]+$/.test(text) || /^(rgba?|hsla?)\(/.test(text);
+  }
+
+  // Whether a property row should get the little color swatch + color picker: one whose current value looks
+  // like a color, or a color-named property (color, strokeColor, textColor, …) whose value could still become
+  // one. The name alone is not enough: a card type property named after a color can hold something that is no
+  // color at all - the standard deck sorts by suitColor: "♠" - and picking a color there would silently
+  // overwrite that value with a hex code.
   shouldOfferColorPicker(property, value) {
-    return /color/i.test(String(property)) || this.isColorValue(value);
+    return this.isColorValue(value) || (/color/i.test(String(property)) && this.isPartialColorValue(value));
   }
 
   // Whether a card type property is used as the "value" of an image/icon face object bound to it — such a
