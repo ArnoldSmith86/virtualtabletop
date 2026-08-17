@@ -2676,6 +2676,91 @@ test('A property info tip goes away with the widget it explains', async t => {
   await setEditorState(null);
 });
 
+test('A routine offers the values and widgets that what started it hands over', async t => {
+  await t.resizeWindow(1280, 800);
+  const operation = { func: 'SET', collection: 'someWidgets', property: 'x', value: 0 };
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, enterRoutine: [ { ...operation } ] },
+    label: { id: 'label', type: 'label', x: 300, y: 100,
+      textChangeRoutine: [ { ...operation } ],
+      globalUpdateRoutine: [ { ...operation } ],
+      dealCardsRoutine: [ { ...operation } ],
+      clickRoutine: [ { func: 'FOREACH', collection: 'someWidgets', loopRoutine: [ { ...operation } ] } ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  // what the open popup offers, as "group: name" - which group an entry is in is
+  // the whole point here: a name that comes with the routine is not one an
+  // earlier operation stored
+  const popupEntries = ClientFunction(kind => {
+    const entries = [];
+    let group = null;
+    for(const child of document.querySelectorAll(`.inline-popup .accordion-section[data-kind=${kind}] .popup-value-group, .inline-popup .accordion-section[data-kind=${kind}] .popup-entry button`)) {
+      if(child.classList.contains('popup-value-group'))
+        group = child.textContent;
+      else
+        entries.push(`${group}: ${child.textContent}`);
+    }
+    return entries;
+  });
+  // one card open at a time, so the chip below can only be the one meant
+  const openRoutine = async (widget, name)=>{
+    await t.click(`#w_${widget}`);
+    for(const header of [ 'enterRoutine', 'textChangeRoutine', 'globalUpdateRoutine', 'dealCardsRoutine', 'clickRoutine' ]) {
+      const dom = Selector('.events-editor-event-header').withText(header);
+      if(await dom.exists && await dom.getAttribute('aria-expanded') == (header == name ? 'false' : 'true'))
+        await t.click(dom);
+    }
+  };
+  const openChip = async parameter=>await t.click(Selector(`.routine-editor-operation [data-parameter=${parameter}]`)).expect(popup.exists).ok();
+
+  await t.click('#editButton').expect(propertiesModule.exists).ok();
+
+  await openRoutine('holder', 'enterRoutine');
+  await openChip('value');
+  await t.expect(popupEntries('variable')).contains('In every enterRoutine: oldParentID');
+  await t.click(popup.find('.popup-close'));
+  await openChip('collection');
+  await t.expect(popupEntries('collection')).contains('In every enterRoutine: child');
+  await t.click(popup.find('.popup-close'));
+
+  // a routine named after a property hears about that property only, so its
+  // value/oldValue are worded with it and there is no property variable
+  await openRoutine('label', 'textChangeRoutine');
+  await openChip('value');
+  await t
+    .expect(popupEntries('variable')).contains('In every textChangeRoutine: value')
+    .expect(popupEntries('variable')).contains('In every textChangeRoutine: oldValue')
+    .expect(popupEntries('variable')).notContains('In every textChangeRoutine: property');
+  await t.click(popup.find('.popup-close'));
+
+  await openRoutine('label', 'globalUpdateRoutine');
+  await openChip('collection');
+  await t
+    .expect(popupEntries('variable')).contains('In every globalUpdateRoutine: property')
+    .expect(popupEntries('collection')).contains('In every globalUpdateRoutine: widget');
+  await t.click(popup.find('.popup-close'));
+
+  // a custom routine only ever runs through CALL, which hands it its caller
+  await openRoutine('label', 'dealCardsRoutine');
+  await openChip('collection');
+  await t.expect(popupEntries('collection')).contains('In every dealCardsRoutine: caller');
+  await t.click(popup.find('.popup-close'));
+
+  // the block of a FOREACH gets what the round it runs is for on top of that
+  await openRoutine('label', 'clickRoutine');
+  await t.click(Selector('.routine-editor .routine-editor .routine-editor-operation [data-parameter=collection]')).expect(popup.exists).ok();
+  await t
+    .expect(popupEntries('variable')).contains('In every loopRoutine: widgetID')
+    .expect(popupEntries('collection')).contains('In every loopRoutine: DEFAULT');
+  await t.click(popup.find('.popup-close'));
+  await setEditorState(null);
+});
+
 test('A long list of widget ids shrinks instead of pushing the apply button out of the popup', async t => {
   await t.resizeWindow(1280, 500);
   const roomState = {

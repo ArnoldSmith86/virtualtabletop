@@ -2002,6 +2002,11 @@ class RoutineEditor {
     // the path into a nested block), so the card worked on last can be found
     // again after the widget was selected anew
     this.routineKey = options.routineKey || '';
+    // the values and groups of widgets this routine has before its first
+    // operation because of what starts it, as groups of { name: description }
+    // (see routinePresetsOf in events.js) - the popups list them next to the
+    // ones every routine has
+    this.presets = options.presets || [];
     this.widgetID = widget ? (typeof widget.get == 'function' ? widget.get('id') : widget.state.id) : null;
     this.changeListeners = [];
     // indices (into this level's routine) of the operations selected for a
@@ -2057,7 +2062,7 @@ class RoutineEditor {
     let collections = [ ...this.collections ];
     for(const [ index, operation ] of this.routine.entries()) {
       const editor = editorForOperation(operation);
-      editor.setOperationDetails(this.widget, operation, variables, collections);
+      editor.setOperationDetails(this.widget, operation, variables, collections, this.presets);
       this.operations.push(editor);
       editor.registerChangeListener(v=>{
         this.routine[index] = v;
@@ -2178,7 +2183,7 @@ class RoutineEditor {
     const addButton = button(this.domElement, 'add operation', async _=>{
       const popup = new RoutineOperationPopup();
       popup.setSource(addButton);
-      popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections);
+      popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections, this.presets);
       const values = await newRoutineValues(popup);
       if(values !== undefined) {
         // right after the card that was worked on last, so a routine is built in
@@ -2991,7 +2996,7 @@ class RoutineOperationEditor {
       focusable(jsonButton, async _=>{
         const popup = new RoutineFullOperationJSONPopup();
         popup.setSource(jsonButton);
-        popup.setOperationDetails(this.operation, [ 'json' ], this.widget, this.variables, this.collections);
+        popup.setOperationDetails(this.operation, [ 'json' ], this.widget, this.variables, this.collections, this.presets);
         const values = await newRoutineValues(popup);
         if(values !== undefined)
           this.onNewValue(values);
@@ -3014,7 +3019,7 @@ class RoutineOperationEditor {
   // when the drop-down of a setting is asked for something it cannot offer
   async editParameter(span, parameterNames, popup) {
     popup.setSource(span);
-    popup.setOperationDetails(this.operation, parameterNames, this.widget, this.variables, this.collections);
+    popup.setOperationDetails(this.operation, parameterNames, this.widget, this.variables, this.collections, this.presets);
     const values = await newRoutineValues(popup);
     if(values === routineFullPopupRequest)
       return this.editParameter(span, parameterNames, this.createFullPopup(parameterNames));
@@ -3183,7 +3188,7 @@ class RoutineOperationEditor {
           values: this.clauseAddValues(clause)
         })), null, null, `Add an option to ${this.func || 'this operation'}`);
         popup.setSource(addClause);
-        popup.setOperationDetails(this.operation, [ 'func' ], this.widget, this.variables, this.collections);
+        popup.setOperationDetails(this.operation, [ 'func' ], this.widget, this.variables, this.collections, this.presets);
         const values = await newRoutineValues(popup);
         if(values !== undefined)
           this.onNewValue(values);
@@ -3256,6 +3261,13 @@ class RoutineOperationEditor {
     return Object.keys(this.operation).filter(name=>known.indexOf(name) == -1);
   }
 
+  // what a block below this operation starts with: whatever the routine around
+  // it has, plus what the operation itself hands its block (see FOREACH). An
+  // IF branch is the same routine going on, so it adds nothing.
+  subroutinePresets(property) {
+    return this.presets || [];
+  }
+
   renderSubroutine(dom, property, options={}) {
     // only assign the array to the operation when something actually changes
     const routine = Array.isArray(this.operation[property]) ? this.operation[property] : [];
@@ -3268,7 +3280,8 @@ class RoutineOperationEditor {
       // the place of this block in the widget: the routine it is in, the card it
       // belongs to and which of that card's blocks (see restoreActiveOperation)
       routineKey: this.routineEditor ? `${this.routineEditor.routineKey}/${this.routineEditor.routine.indexOf(this.operation)}/${property}` : '',
-      attachRoutine: _=>{ this.operation[property] = routine; }
+      attachRoutine: _=>{ this.operation[property] = routine; },
+      presets: this.subroutinePresets(property)
     };
     const routineEditor = new RoutineEditor(this.widget, routine, this.variables, this.collections, options);
     routineEditor.registerChangeListener(v=>{
@@ -3293,11 +3306,12 @@ class RoutineOperationEditor {
     return property;
   }
 
-  setOperationDetails(widget, operation, variables, collections) {
+  setOperationDetails(widget, operation, variables, collections, presets=[]) {
     this.widget = widget;
     this.operation = operation;
     this.variables = variables;
     this.collections = collections;
+    this.presets = presets;
   }
 }
 
@@ -3360,6 +3374,23 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
 
   subroutineProperties() {
     return [ 'loopRoutine' ];
+  }
+
+  // one round of the loop hands its block whatever that round is for, and what
+  // that is depends on what is repeated over (see FOREACH in widget.js): the key
+  // and value of a list entry, the number of a range, or the widget being looped
+  // over - which is the picked widget of the block, so operations inside it work
+  // on one widget at a time without naming it
+  subroutinePresets(property) {
+    const group = { title: 'In every loopRoutine', variables: {}, collections: {} };
+    const variant = this.currentVariant().id;
+    if(variant == 'list')
+      Object.assign(group.variables, { key: 'the name/index of the entry this round is for', value: 'the entry this round is for' });
+    else if(variant == 'range')
+      group.variables.value = 'the number this round is for';
+    else if(variant == 'collection')
+      Object.assign(group, { variables: { widgetID: 'id of the widget this round is for' }, collections: { DEFAULT: 'the widget this round is for' } });
+    return [ ...(this.presets || []), group ];
   }
 
   render() {
@@ -3462,13 +3493,14 @@ function routineInputFieldChoices() {
 // routine editor's list one level down rather than the routine editor itself -
 // a line is not an operation, so it neither drags between routines nor nests.
 class RoutineInputFieldsEditor {
-  constructor(widget, fields, variables=[], collections=[]) {
+  constructor(widget, fields, variables=[], collections=[], presets=[]) {
     this.domElement = document.createElement('div');
     this.domElement.className = 'routine-editor routine-editor-fields';
     this.widget = widget;
     this.fields = fields;
     this.variables = variables;
     this.collections = collections;
+    this.presets = presets;
     this.changeListeners = [];
     this.render();
   }
@@ -3491,7 +3523,7 @@ class RoutineInputFieldsEditor {
     this.domElement.innerHTML = '';
     for(const [ index, field ] of this.fields.entries()) {
       const editor = new RoutineInputFieldEditor(field && typeof field == 'object' ? field.type : null);
-      editor.setOperationDetails(this.widget, field, this.variables, this.collections);
+      editor.setOperationDetails(this.widget, field, this.variables, this.collections, this.presets);
       editor.registerChangeListener(v=>{
         this.fields[index] = v;
         this.fieldsChanged();
@@ -3537,7 +3569,7 @@ class RoutineInputFieldsEditor {
         The kinds of line a dialog can hold. Three of them only show something - a heading, a subheading, a paragraph - and every other one asks a question and remembers the answer under a name.
       `, 'the lines of a dialog', 'Add a line to this dialog');
       popup.setSource(addButton);
-      popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections);
+      popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections, this.presets);
       const values = await newRoutineValues(popup);
       if(values !== undefined) {
         this.fields.push(newInputField(values.func));
@@ -3568,7 +3600,7 @@ class InputRoutineOperationEditor extends RoutineOperationEditor {
     if(this.operation.fields !== undefined && !Array.isArray(this.operation.fields))
       return this.domElement;
     const fields = Array.isArray(this.operation.fields) ? this.operation.fields : [];
-    this.fieldsEditor = new RoutineInputFieldsEditor(this.widget, fields, this.variables, this.collections);
+    this.fieldsEditor = new RoutineInputFieldsEditor(this.widget, fields, this.variables, this.collections, this.presets);
     this.fieldsEditor.registerChangeListener(fields=>{
       this.operation.fields = fields;
       this.notifyChangeListeners(this.operation);
@@ -3745,7 +3777,7 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
     else if(!this.parameterIsBlank(name))
       current[name] = this.getDisplayedValue(name);
     popup.setSource(span);
-    popup.setOperationDetails(current, parameterNames, this.widget, this.variables, this.collections);
+    popup.setOperationDetails(current, parameterNames, this.widget, this.variables, this.collections, this.presets);
     const values = await newRoutineValues(popup);
     if(values === routineFullPopupRequest)
       return this.editParameter(span, parameterNames, this.createFullPopup(parameterNames));
@@ -3894,7 +3926,7 @@ class VarSetRoutineOperationEditor extends RoutineOperationEditor {
     const pair = this.pairs()[0];
     const current = pair ? { [name]: name == 'variableName' ? pair[0] : pair[1] } : {};
     popup.setSource(span);
-    popup.setOperationDetails(current, parameterNames, this.widget, this.variables, this.collections);
+    popup.setOperationDetails(current, parameterNames, this.widget, this.variables, this.collections, this.presets);
     const values = await newRoutineValues(popup);
     if(values === routineFullPopupRequest)
       return this.editParameter(span, parameterNames, this.createFullPopup(parameterNames));

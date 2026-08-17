@@ -17,22 +17,22 @@ const predefinedEvents = [
   {
     property: 'enterRoutine',
     label: 'widget enters',
-    description: 'Runs when another widget is dropped into this widget. The routine starts with the widget that entered picked, and can use oldParentID - the widget it came from.'
+    description: 'Runs when another widget is dropped into this widget. The routine is handed the widget that entered as the collection child, and oldParentID - the id of the widget it came from.'
   },
   {
     property: 'leaveRoutine',
     label: 'widget leaves',
-    description: 'Runs when a widget is taken out of this widget. The routine starts with the widget that left picked. It can run more than once for a single move.'
+    description: 'Runs when a widget is taken out of this widget. The routine is handed the widget that left as the collection child. It can run more than once for a single move.'
   },
   {
     property: 'gameStartRoutine',
     label: 'game starts',
-    description: 'Runs once when a player loads the game fresh from the game shelf or public library, but not when loading a saved game in progress.'
+    description: 'Runs once when a player loads the game fresh from the game shelf or public library, but not when loading a saved game in progress. The routine is handed the widget it is on as the collection widget and its id as widgetID.'
   },
   {
     property: 'globalUpdateRoutine',
     label: 'any widget changed',
-    description: 'Runs when any property of any widget in the room changes. The routine starts with the changed widget picked and can use value - what the property is now - as well as oldValue, property and widgetID. To react to one property only, name the routine after it, like fooGlobalUpdateRoutine for the property foo.'
+    description: 'Runs when any property of any widget in the room changes. The routine is handed the changed widget as the collection widget and can use value - what the property is now - as well as oldValue, property and widgetID. To react to one property only, name the routine after it, like fooGlobalUpdateRoutine for the property foo.'
   }
 ];
 
@@ -53,14 +53,93 @@ function describeEventProperty(property) {
     return {
       property,
       label: `${match[1]} changed anywhere`,
-      description: `Runs whenever the ${match[1]} property of any widget in the room changes. The routine starts with that widget picked and can use value - what ${match[1]} is now - as well as oldValue and widgetID.`
+      description: `Runs whenever the ${match[1]} property of any widget in the room changes. The routine is handed that widget as the collection widget and can use value - what ${match[1]} is now - as well as oldValue and widgetID.`
     };
   }
   return {
     property,
     label: property.replace(/Routine$/, ''),
-    description: 'Runs only when another routine runs it by this name - the "Run the routine" operation. Nothing else triggers it.'
+    description: 'Runs only when another routine runs it by this name - the "Run the routine" operation. Nothing else triggers it. It is handed the widget whose routine ran it as the collection caller.'
   };
+}
+
+// What a routine is handed the moment it starts, because of what triggered it:
+// an enterRoutine knows the widget that entered as the collection "child" and
+// where it came from as ${oldParentID}. No operation creates them, so nothing in
+// the routine editor would offer them - they are what the engine passes to
+// evaluateRoutine (widget.js, statemanaged.js, serverstate.js) before the first
+// operation runs. A routine that gets nothing of its own (a clickRoutine) has no
+// entry here and only has what every routine has.
+const routinePresets = {
+  changeRoutine: {
+    variables: {
+      property: 'the name of the property that changed',
+      value: 'what the property is now',
+      oldValue: 'what the property was before'
+    }
+  },
+  enterRoutine: {
+    variables: {
+      oldParentID: 'id of the widget the entering widget came from (null when a player dragged it - picking it up already took it out of its parent)'
+    },
+    collections: {
+      child: 'the widget that entered'
+    }
+  },
+  leaveRoutine: {
+    collections: {
+      child: 'the widget that left'
+    }
+  },
+  gameStartRoutine: {
+    variables: {
+      widgetID: 'id of the widget this routine is on (the same as thisID)'
+    },
+    collections: {
+      widget: 'the widget this routine is on (the same as thisButton)'
+    }
+  },
+  globalUpdateRoutine: {
+    variables: {
+      widgetID: 'id of the widget whose property changed',
+      property: 'the name of the property that changed',
+      value: 'what the property is now',
+      oldValue: 'what the property was before'
+    },
+    collections: {
+      widget: 'the widget whose property changed'
+    }
+  },
+  // the editor runs it on the widget it just added, the way a click runs a
+  // clickRoutine - there is nothing else to tell it about
+  editorAddToRoomRoutine: {}
+};
+
+// The presets of one routine, as the group the routine editor lists them under.
+// The routines named after a property hear about that one property only, so
+// theirs are worded with its name and have no property variable. Everything else
+// is a custom routine, which only ever runs through CALL.
+function routinePresetsOf(property) {
+  let match;
+  let preset = routinePresets[property];
+  if(!preset && (match = property.match(/^(.+)ChangeRoutine$/)))
+    preset = { variables: {
+      value: `what ${match[1]} is now`,
+      oldValue: `what ${match[1]} was before`
+    } };
+  if(!preset && (match = property.match(/^(.+)GlobalUpdateRoutine$/)))
+    preset = {
+      variables: {
+        widgetID: `id of the widget whose ${match[1]} changed`,
+        value: `what ${match[1]} is now`,
+        oldValue: `what ${match[1]} was before`
+      },
+      collections: { widget: `the widget whose ${match[1]} changed` }
+    };
+  if(!preset && !predefinedEvents.some(event=>event.property == property))
+    preset = { collections: { caller: 'the widget whose routine used CALL to run this one' } };
+  const group = Object.assign({ title: `In every ${property}`, variables: {}, collections: {} }, preset);
+  return Object.keys(group.variables).length + Object.keys(group.collections).length ? [ group ] : [];
 }
 
 // A deck is two things in one place: the widget on the table, which nobody
@@ -482,7 +561,7 @@ class EventsEditor {
           // clone in both directions: the editor mutates its own copy, and the widget must
           // never share references with it (deltas would alias widget state to the editor's
           // arrays and make later set() calls no-op because the state already "changed")
-          this.routineEditors[key] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.routineSource(target)[property])), [], [], { routineKey: key });
+          this.routineEditors[key] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.routineSource(target)[property])), [], [], { routineKey: key, presets: routinePresetsOf(property) });
           this.routineEditors[key].registerChangeListener(v=>this.setRoutine(entry, JSON.parse(JSON.stringify(v))));
         }
         contentDOM.append(this.routineEditors[key].domElement);

@@ -177,7 +177,9 @@ const COMMON_PROPERTIES = {
     enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
-    gameStartRoutine: 'routine',
+    // the engine starts it with the widget it is on (serverstate.js), so a game
+    // may use widgetID/widget instead of thisID/thisButton
+    gameStartRoutine: getRoutineValidator({'widgetID': 1}, {'widget': 1}),
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
     lineOriginalRotation: 'object',
