@@ -116,15 +116,17 @@ const routinePresets = {
 };
 
 // The arguments every CALL in the room that runs this routine by name hands it,
-// as { arguments: { name: which CALLs pass it }, sources: every CALL that runs
+// as { arguments: Map(name -> which CALLs pass it), calls: every CALL that runs
 // it }. CALL copies the calling routine's values and collections into the
 // routine it runs and merges its arguments on top (widget.js), so those names
 // are values the routine has before its first operation - the same kind of thing
 // an event hands its routine, except that what they are is written in the game
 // rather than in the engine.
 function callArgumentsFor(routineName) {
-  const args = {};
-  const sources = new Set();
+  // the names are written in the game, so they are kept in a Map: a plain object
+  // answers "constructor" with what it inherits from Object instead of nothing
+  const args = new Map();
+  const calls = [];
   const scan = (routine, source)=>{
     for(const operation of Array.isArray(routine) ? routine : []) {
       if(!operation || typeof operation != 'object')
@@ -132,30 +134,46 @@ function callArgumentsFor(routineName) {
       // a CALL given a list of names runs the first of them (widget.js)
       const called = Array.isArray(operation.routine) ? operation.routine[0] : operation.routine;
       if(operation.func == 'CALL' && called === routineName) {
-        sources.add(source);
+        // one entry per CALL rather than per routine one is in: two CALLs in the
+        // same routine can hand over different arguments, and an argument only
+        // one of them passes is one the routine only sometimes has
+        const call = { source };
+        calls.push(call);
         if(operation.arguments && typeof operation.arguments == 'object')
-          for(const name of Object.keys(operation.arguments))
-            (args[name] = args[name] || new Set()).add(source);
+          for(const name of Object.keys(operation.arguments)) {
+            if(!args.has(name))
+              args.set(name, new Set());
+            args.get(name).add(call);
+          }
       }
       for(const block of [ 'thenRoutine', 'elseRoutine', 'loopRoutine' ])
         scan(operation[block], source);
     }
   };
-  for(const widget of widgets.values())
-    for(const [ key, value ] of Object.entries(widget.state))
+  const scanRoutinesIn = (source, describe)=>{
+    for(const [ key, value ] of Object.entries(source))
       if(key.match(/Routine$/) && Array.isArray(value))
-        scan(value, `${key} of ${widget.state.id}`);
-  return { arguments: args, sources };
+        scan(value, describe(key));
+  };
+  for(const widget of widgets.values()) {
+    scanRoutinesIn(widget.state, key=>`${key} of ${widget.state.id}`);
+    // the cards of a deck run the routines in its cardDefaults, so a CALL in one
+    // of them runs this routine just like one written on a widget itself
+    if(widgetTypeOf(widget) == 'deck')
+      scanRoutinesIn(cardDefaultsOf(widget), key=>`${key} of the cards of ${widget.state.id}`);
+  }
+  return { arguments: args, calls };
 }
 
 // Which operations hand an argument over, named rather than counted: a count
 // ("3 of the operations that run this routine") is nothing the reader can go and
 // look at. More than two of them would fill the line, so the rest is a count.
-function describeCallers(sources, total) {
-  const names = [ ...sources ];
+// Two CALLs in the same routine are one name in the list but two operations.
+function describeCallers(calls, total) {
+  const names = [ ...new Set([ ...calls ].map(call=>call.source)) ];
   const listed = names.length > 2 ? `${names.slice(0, 2).join(', ')} and ${names.length-2} more` : names.join(' and ');
-  const missing = total - names.length;
-  return `handed over by the ${names.length == 1 ? 'CALL' : 'CALLs'} in ${listed}`
+  const missing = total - calls.size;
+  return `handed over by the ${calls.size == 1 ? 'CALL' : 'CALLs'} in ${listed}`
        + (missing ? ` - not by the ${missing == 1 ? 'other operation that runs' : `other ${missing} operations that run`} this routine` : '');
 }
 
@@ -188,23 +206,25 @@ function routinePresetsOf(property) {
     // it is one the routine only has when that call is what ran it - so they are
     // a group of their own rather than part of "In every fooRoutine", and the
     // ones not every call hands over are shown as the exception they are
-    const { arguments: args, sources } = callArgumentsFor(property);
-    const variables = {};
-    for(const name of Object.keys(args).sort())
+    const { arguments: args, calls } = callArgumentsFor(property);
+    // a name written in the game, so the map it goes into inherits nothing (see
+    // presetEntryOf in popup.js)
+    const variables = Object.create(null);
+    for(const name of [ ...args.keys() ].sort())
       variables[name] = {
-        description: describeCallers(args[name], sources.size),
-        partial: args[name].size < sources.size
+        description: describeCallers(args.get(name), calls.length),
+        partial: args.get(name).size < calls.length
       };
     if(Object.keys(variables).length)
       groups.push({
-        title: `From the ${sources.size == 1 ? 'operation that runs' : 'operations that run'} it`,
+        title: `From the ${calls.length == 1 ? 'operation that runs' : 'operations that run'} it`,
         source: 'the CALL that runs this routine',
-        shadowedByOperations: true, variables, collections: {}
+        variables, collections: {}
       });
   }
   // handed over before the first operation runs, so an operation of the routine
   // that stores the same name wins over them (see presetSections in popup.js)
-  const group = Object.assign({ title: `In every ${property}`, source: `the ${property}`, shadowedByOperations: true, variables: {}, collections: {} }, preset);
+  const group = Object.assign({ title: `In every ${property}`, source: `the ${property}`, variables: {}, collections: {} }, preset);
   if(Object.keys(group.variables).length + Object.keys(group.collections).length)
     groups.push(group);
   return groups;

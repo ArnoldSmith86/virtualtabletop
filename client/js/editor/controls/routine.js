@@ -3268,6 +3268,13 @@ class RoutineOperationEditor {
     return this.presets || [];
   }
 
+  // the values and collections an operation of a block below this one can pick
+  // from "From earlier operations": everything the operations before it stored,
+  // minus what the block itself is handed under the same name (see FOREACH)
+  subroutineScope(property) {
+    return { variables: this.variables, collections: this.collections };
+  }
+
   renderSubroutine(dom, property, options={}) {
     // only assign the array to the operation when something actually changes
     const routine = Array.isArray(this.operation[property]) ? this.operation[property] : [];
@@ -3283,7 +3290,8 @@ class RoutineOperationEditor {
       attachRoutine: _=>{ this.operation[property] = routine; },
       presets: this.subroutinePresets(property)
     };
-    const routineEditor = new RoutineEditor(this.widget, routine, this.variables, this.collections, options);
+    const scope = this.subroutineScope(property);
+    const routineEditor = new RoutineEditor(this.widget, routine, scope.variables, scope.collections, options);
     routineEditor.registerChangeListener(v=>{
       this.operation[property] = v;
       this.notifyChangeListeners(this.operation);
@@ -3367,6 +3375,13 @@ function loopPresetTitle(levelsOut) {
   return levelsOut == 1 ? 'In the loopRoutine around it' : `In the loopRoutine ${levelsOut} levels out`;
 }
 
+// the same loop named inside a sentence (see presetShadowNote in popup.js)
+function loopPresetSource(levelsOut) {
+  if(!levelsOut)
+    return 'this loopRoutine';
+  return levelsOut == 1 ? 'the loopRoutine around it' : `the loopRoutine ${levelsOut} levels out`;
+}
+
 class ForeachRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
     super('FOREACH');
@@ -3390,8 +3405,8 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
   // and value of a list entry, the number of a range, or the widget being looped
   // over - which is the picked widget of the block, so operations inside it work
   // on one widget at a time without naming it
-  subroutinePresets(property) {
-    const group = { title: loopPresetTitle(0), loop: true, variables: {}, collections: {} };
+  loopPresetGroup() {
+    const group = { title: loopPresetTitle(0), source: loopPresetSource(0), loop: true, variables: {}, collections: {} };
     const variant = this.currentVariant().id;
     if(variant == 'list')
       Object.assign(group.variables, { key: 'the name/index of the entry this round is for', value: 'the entry this round is for' });
@@ -3399,13 +3414,36 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
       group.variables.value = 'the number this round is for';
     else if(variant == 'collection')
       Object.assign(group, { variables: { widgetID: 'id of the widget this round is for' }, collections: { DEFAULT: 'the widget this round is for' } });
+    return group;
+  }
+
+  subroutinePresets(property) {
     // the loop the block is in comes first, the ones around it behind it: the
     // groups are listed nearest first (see presetSections in popup.js), and they
     // are re-titled rather than left as another "In this loopRoutine" - copied,
     // because they belong to the editor around this one
-    const groups = [ group, ...(this.presets || []) ];
+    const groups = [ this.loopPresetGroup(), ...(this.presets || []) ];
     let levelsOut = 0;
-    return groups.map(preset=>preset.loop ? Object.assign({}, preset, { title: loopPresetTitle(levelsOut++) }) : preset);
+    return groups.map(preset=>{
+      if(!preset.loop)
+        return preset;
+      const out = levelsOut++;
+      return Object.assign({}, preset, { title: loopPresetTitle(out), source: loopPresetSource(out) });
+    });
+  }
+
+  // the round hands its names over when the block is entered, i.e. after every
+  // operation outside it - so inside the block they are what the loop is for and
+  // no longer what an operation before it stored under that name. An operation
+  // inside the block is later still and wins again, which it does by putting the
+  // name back into this list (see setRoutine).
+  subroutineScope(property) {
+    const group = this.loopPresetGroup();
+    const handedOver = (kind, name)=>Object.prototype.hasOwnProperty.call(group[kind], name);
+    return {
+      variables: this.variables.filter(variable=>!handedOver('variables', variable)),
+      collections: this.collections.filter(collection=>typeof collection != 'string' || !handedOver('collections', collection))
+    };
   }
 
   render() {

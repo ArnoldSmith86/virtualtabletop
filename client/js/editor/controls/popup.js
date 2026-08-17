@@ -548,18 +548,20 @@ const predefinedCollectionDescriptions = {
 // nearer one, the innermost FOREACH being what decides what ${value} is for the
 // operations inside it.
 //
-// Against what an operation stored it depends on when the group is handed over.
-// A FOREACH establishes its values when the block is entered, i.e. after every
-// operation outside it, so it wins. What starts a routine (shadowedByOperations)
-// is there before the first operation instead, so an operation of the routine
-// storing the same name wins over it - a changeRoutine whose first operation is
-// a GET into value has the GET result from there on, not what changed.
+// Every group is handed over before the operations that can see it run: what
+// starts a routine is there before its first operation, and a FOREACH block
+// gets what its round is for before the first operation inside it (the ones
+// before the block are no longer in "From earlier operations" by then, see
+// subroutineScope in routine.js). So an operation that stored the same name is
+// always the later one and wins - a changeRoutine whose first operation is a GET
+// into value has the GET result from there on, not what changed, and so does a
+// loopRoutine whose first operation writes over what the round is for.
 function presetSections(presets, kind, existing, toEntry) {
   return (presets || []).map((group, index, groups)=>({
     title: group.title,
     list: Object.keys(group[kind] || {})
-      .filter(name=>!groups.slice(0, index).some(nearer=>(nearer[kind] || {})[name]))
-      .filter(name=>!group.shadowedByOperations || existing.indexOf(name) == -1)
+      .filter(name=>!groups.slice(0, index).some(nearer=>presetEntryOf(nearer, kind, name) !== undefined))
+      .filter(name=>existing.indexOf(name) == -1)
       .map(name=>{
         const preset = group[kind][name];
         const entry = toEntry(name, typeof preset == 'string' ? preset : preset.description);
@@ -570,19 +572,21 @@ function presetSections(presets, kind, existing, toEntry) {
   }));
 }
 
+// what a group hands over under a name - asked for with hasOwnProperty because
+// the names come out of the game: an argument named "constructor" is one a CALL
+// may well hand over, and every plain object claims to have that one
+function presetEntryOf(group, kind, name) {
+  const entries = group[kind];
+  return entries && Object.prototype.hasOwnProperty.call(entries, name) ? entries[name] : undefined;
+}
+
 // What an operation stored under a name the routine was also handed: which of
 // the two the name means changes halfway through the routine, which is exactly
 // what makes it confusing - so the entry says so rather than standing there as
 // the only one in the list without an explanation.
 function presetShadowNote(presets, kind, name) {
-  const group = (presets || []).find(group=>group.shadowedByOperations && (group[kind] || {})[name]);
+  const group = (presets || []).find(group=>presetEntryOf(group, kind, name) !== undefined);
   return group ? `stored by an earlier operation - it replaced the ${name} ${group.source} hands over` : null;
-}
-
-// the preset names that win over an operation of the same name, i.e. the ones to
-// leave out of "From earlier operations"
-function presetNames(presets, kind) {
-  return (presets || []).filter(group=>!group.shadowedByOperations).flatMap(group=>Object.keys(group[kind] || {}));
 }
 
 const routineWidgetPickerKey = 'routineWidgets';
@@ -918,11 +922,8 @@ class RoutinePopup extends Popup {
     // what a routine is handed the moment it starts is listed under its own name
     // ("In every enterRoutine"), between what its operations made and what every
     // routine has; a FOREACH block additionally gets what the round it runs is
-    // for. Only the latter also takes the name out of "From earlier operations"
-    // (see presetSections)
-    const presetVariables = presetNames(this.presets, 'variables');
-    const presetCollections = presetNames(this.presets, 'collections');
-
+    // for. A name an operation has stored since then is in "From earlier
+    // operations" and only there (see presetSections)
     if(showVariables)
       this.renderRoutineValueKindSection('Values the routine has', 'variable', `
         <pre>
@@ -933,7 +934,7 @@ class RoutinePopup extends Popup {
         Everything below "From earlier operations" is there without any operation creating it: some of it in every routine, the rest because of what started this one - a changeRoutine is told what changed, and a routine another one runs gets the arguments it was called with.
         </pre>
       `, [
-        { title: 'From earlier operations', list: [ ...this.variables ].filter(variable=>presetVariables.indexOf(variable) == -1).sort().map(variable=>({
+        { title: 'From earlier operations', list: [ ...this.variables ].sort().map(variable=>({
           label: variable,
           description: presetShadowNote(this.presets, 'variables', variable) || 'stored by an earlier operation of this routine',
           onClick: _=>this.setNewValue(`\$\{${variable}\}`)
@@ -956,7 +957,7 @@ class RoutinePopup extends Popup {
         Everything below "From earlier operations" is there without any operation creating it: some of it in every routine, the rest because of what started this one - an enterRoutine is handed the widget that entered.
         </pre>
       `, [
-        { title: 'From earlier operations', list: [ ...this.collections ].filter(collection=>typeof collection != 'string' || presetCollections.indexOf(collection) == -1).sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
+        { title: 'From earlier operations', list: [ ...this.collections ].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
           label: typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`,
           description: typeof collection != 'string' ? 'these widgets, listed in the routine itself'
             : presetShadowNote(this.presets, 'collections', collection) || 'picked out by an earlier operation of this routine',
