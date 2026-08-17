@@ -2728,6 +2728,21 @@ test('A routine offers the values and widgets that what started it hands over', 
     }
   };
   const openChip = async parameter=>await t.click(Selector(`.routine-editor-operation [data-parameter=${parameter}]`)).expect(popup.exists).ok();
+  // the heading of a section carries an info button which swallows a click that
+  // lands on it, so the heading is clicked at its left edge where its title is -
+  // and clicking an open section leaves it open, so trying again costs nothing
+  const openSection = async kind=>{
+    const section = Selector(`.inline-popup .accordion-section[data-kind=${kind}]`);
+    for(let attempt = 0; attempt < 3 && !await section.hasClass('open'); attempt++)
+      await t.click(section.find('h3'), { offsetX: 8, offsetY: 8 });
+    await t.expect(section.hasClass('open')).ok();
+  };
+  // what the entry the pointer is on holds, on the line at the foot of its section
+  const hoverEntry = async (kind, label)=>{
+    await openSection(kind);
+    await t.hover(Selector(`.inline-popup .accordion-section[data-kind=${kind}] .popup-entry button`).withExactText(label));
+    return Selector(`.inline-popup .accordion-section[data-kind=${kind}] .popup-entry-description`).innerText;
+  };
 
   await t.click('#editButton').expect(propertiesModule.exists).ok();
 
@@ -2756,13 +2771,11 @@ test('A routine offers the values and widgets that what started it hands over', 
   await t
     .expect(popupEntries('variable')).contains('From earlier operations: value')
     .expect(popupEntries('variable')).notContains('In every textChangeRoutine: value')
-    .expect(popupEntries('variable')).contains('In every textChangeRoutine: oldValue')
-    // and says so, instead of being the one entry in the list without an
-    // explanation of what it holds
-    .click(Selector('.inline-popup .accordion-section[data-kind=variable] h3'))
-    .hover(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry button').withExactText('value'))
-    .expect(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry-description').innerText)
-      .eql('stored by an earlier operation - it replaced the value the textChangeRoutine hands over');
+    .expect(popupEntries('variable')).contains('In every textChangeRoutine: oldValue');
+  // and says so, instead of being the one entry in the list without an
+  // explanation of what it holds
+  await t.expect(await hoverEntry('variable', 'value'))
+    .eql('stored by an earlier operation - it replaced the value the textChangeRoutine hands over');
   await t.click(popup.find('.popup-close'));
 
   await openRoutine('label', 'globalUpdateRoutine');
@@ -2780,11 +2793,9 @@ test('A routine offers the values and widgets that what started it hands over', 
   await t
     .expect(popupEntries('collection')).contains('In every dealCardsRoutine: caller')
     .expect(popupEntries('variable')).contains('From the operations that run it: amount')
-    .expect(popupEntries('variable')).contains('From the operations that run it: faceUp')
-    .click(Selector('.inline-popup .accordion-section[data-kind=variable] h3'))
-    .hover(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry button').withExactText('faceUp'))
-    .expect(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry-description').innerText)
-      .eql('handed over by the CALL in enterRoutine of holder - not by the other operation that runs this routine');
+    .expect(popupEntries('variable')).contains('From the operations that run it: faceUp');
+  await t.expect(await hoverEntry('variable', 'faceUp'))
+    .eql('handed over by the CALL in enterRoutine of holder - not by the other operation that runs this routine');
   await t.click(popup.find('.popup-close'));
 
   // the block of a FOREACH gets what the round it runs is for on top of that
