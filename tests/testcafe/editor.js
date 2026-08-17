@@ -2681,7 +2681,10 @@ test('A routine offers the values and widgets that what started it hands over', 
   const operation = { func: 'SET', collection: 'someWidgets', property: 'x', value: 0 };
   await setRoomState({
     holder: { id: 'holder', type: 'holder', x: 100, y: 100,
-      enterRoutine: [ { ...operation } ],
+      // two CALLs of the same routine, one of them handing over an argument the
+      // other does not - which of them hands a name over is what the routine
+      // needs to know about it
+      enterRoutine: [ { ...operation }, { func: 'CALL', widget: 'label', routine: 'dealCardsRoutine', arguments: { amount: 5, faceUp: true } } ],
       clickRoutine: [ { func: 'CALL', widget: 'label', routine: 'dealCardsRoutine', arguments: { amount: 3 } } ]
     },
     label: { id: 'label', type: 'label', x: 300, y: 100,
@@ -2753,7 +2756,13 @@ test('A routine offers the values and widgets that what started it hands over', 
   await t
     .expect(popupEntries('variable')).contains('From earlier operations: value')
     .expect(popupEntries('variable')).notContains('In every textChangeRoutine: value')
-    .expect(popupEntries('variable')).contains('In every textChangeRoutine: oldValue');
+    .expect(popupEntries('variable')).contains('In every textChangeRoutine: oldValue')
+    // and says so, instead of being the one entry in the list without an
+    // explanation of what it holds
+    .click(Selector('.inline-popup .accordion-section[data-kind=variable] h3'))
+    .hover(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry button').withExactText('value'))
+    .expect(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry-description').innerText)
+      .eql('stored by an earlier operation - it replaced the value the textChangeRoutine hands over');
   await t.click(popup.find('.popup-close'));
 
   await openRoutine('label', 'globalUpdateRoutine');
@@ -2764,30 +2773,39 @@ test('A routine offers the values and widgets that what started it hands over', 
   await t.click(popup.find('.popup-close'));
 
   // a custom routine only ever runs through CALL, which hands it its caller and
-  // the arguments the CALL that runs it lists
+  // the arguments the CALLs that run it list - an argument only one of them
+  // hands over says which one that is
   await openRoutine('label', 'dealCardsRoutine');
   await openChip('collection');
   await t
     .expect(popupEntries('collection')).contains('In every dealCardsRoutine: caller')
-    .expect(popupEntries('variable')).contains('From the operation that runs it: amount');
+    .expect(popupEntries('variable')).contains('From the operations that run it: amount')
+    .expect(popupEntries('variable')).contains('From the operations that run it: faceUp')
+    .click(Selector('.inline-popup .accordion-section[data-kind=variable] h3'))
+    .hover(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry button').withExactText('faceUp'))
+    .expect(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry-description').innerText)
+      .eql('handed over by the CALL in enterRoutine of holder - not by the other operation that runs this routine');
   await t.click(popup.find('.popup-close'));
 
   // the block of a FOREACH gets what the round it runs is for on top of that
   await openRoutine('label', 'clickRoutine');
   await t.click(Selector('.routine-editor .routine-editor .routine-editor-operation [data-parameter=collection]')).expect(popup.exists).ok();
   await t
-    .expect(popupEntries('variable')).contains('In every loopRoutine: widgetID')
-    .expect(popupEntries('collection')).contains('In every loopRoutine: DEFAULT');
+    .expect(popupEntries('variable')).contains('In this loopRoutine: widgetID')
+    .expect(popupEntries('collection')).contains('In this loopRoutine: DEFAULT');
   await t.click(popup.find('.popup-close'));
 
   // a FOREACH inside a FOREACH: which loop hands a value over is in the name of
-  // the group, and the inner one wins where both use the same name
+  // the group, the inner one wins where both use the same name, and the loop the
+  // block is in is listed before the one around it
   await openRoutine('label', 'doubleClickRoutine');
   await t.click(Selector('.routine-editor .routine-editor .routine-editor .routine-editor-operation [data-parameter=collection]')).expect(popup.exists).ok();
   await t
-    .expect(popupEntries('variable')).contains('In every loopRoutine: value')
+    .expect(popupEntries('variable')).contains('In this loopRoutine: value')
     .expect(popupEntries('variable')).contains('In the loopRoutine around it: widgetID')
-    .expect(popupEntries('collection')).contains('In the loopRoutine around it: DEFAULT');
+    .expect(popupEntries('collection')).contains('In the loopRoutine around it: DEFAULT')
+    .expect((await popupEntries('variable')).indexOf('In this loopRoutine: value'))
+      .lt((await popupEntries('variable')).indexOf('In the loopRoutine around it: widgetID'));
   await t.click(popup.find('.popup-close'));
   await setEditorState(null);
 });

@@ -3359,11 +3359,11 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
 }
 
 // A FOREACH inside a FOREACH hands its block the values of both loops, so the
-// groups they are listed in say which loop each one is: "In every loopRoutine"
-// is the one the block is directly in, the ones around it are counted outwards.
+// groups they are listed in say which loop each one is: "In this loopRoutine" is
+// the one the block is directly in, the ones around it are counted outwards.
 function loopPresetTitle(levelsOut) {
   if(!levelsOut)
-    return 'In every loopRoutine';
+    return 'In this loopRoutine';
   return levelsOut == 1 ? 'In the loopRoutine around it' : `In the loopRoutine ${levelsOut} levels out`;
 }
 
@@ -3391,7 +3391,7 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
   // over - which is the picked widget of the block, so operations inside it work
   // on one widget at a time without naming it
   subroutinePresets(property) {
-    const group = { title: 'In every loopRoutine', loop: true, variables: {}, collections: {} };
+    const group = { title: loopPresetTitle(0), loop: true, variables: {}, collections: {} };
     const variant = this.currentVariant().id;
     if(variant == 'list')
       Object.assign(group.variables, { key: 'the name/index of the entry this round is for', value: 'the entry this round is for' });
@@ -3399,11 +3399,13 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
       group.variables.value = 'the number this round is for';
     else if(variant == 'collection')
       Object.assign(group, { variables: { widgetID: 'id of the widget this round is for' }, collections: { DEFAULT: 'the widget this round is for' } });
-    // the loops of the routine around this one are re-titled rather than left as
-    // another "In every loopRoutine" - copied, because they belong to that editor
-    const groups = [ ...(this.presets || []), group ];
-    const loops = groups.filter(preset=>preset.loop);
-    return groups.map(preset=>preset.loop ? Object.assign({}, preset, { title: loopPresetTitle(loops.length - 1 - loops.indexOf(preset)) }) : preset);
+    // the loop the block is in comes first, the ones around it behind it: the
+    // groups are listed nearest first (see presetSections in popup.js), and they
+    // are re-titled rather than left as another "In this loopRoutine" - copied,
+    // because they belong to the editor around this one
+    const groups = [ group, ...(this.presets || []) ];
+    let levelsOut = 0;
+    return groups.map(preset=>preset.loop ? Object.assign({}, preset, { title: loopPresetTitle(levelsOut++) }) : preset);
   }
 
   render() {

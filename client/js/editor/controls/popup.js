@@ -541,9 +541,12 @@ const predefinedCollectionDescriptions = {
 };
 
 // The presets of a routine (routinePresetsOf in events.js) as sections of the
-// popup: one group per source, each { name: description }. Whoever hands a name
-// over last wins, so a name two groups have is only listed in the later one -
-// the innermost FOREACH decides what ${value} is for the operations inside it.
+// popup: one group per source, each { name: description } or { name: {
+// description, partial } }. The groups come the nearest one first and are listed
+// in that order, so the section reads from what is closest to the operation out
+// to what every routine has - and a name two groups have is only listed in the
+// nearer one, the innermost FOREACH being what decides what ${value} is for the
+// operations inside it.
 //
 // Against what an operation stored it depends on when the group is handed over.
 // A FOREACH establishes its values when the block is entered, i.e. after every
@@ -555,10 +558,25 @@ function presetSections(presets, kind, existing, toEntry) {
   return (presets || []).map((group, index, groups)=>({
     title: group.title,
     list: Object.keys(group[kind] || {})
-      .filter(name=>!groups.slice(index+1).some(later=>(later[kind] || {})[name]))
+      .filter(name=>!groups.slice(0, index).some(nearer=>(nearer[kind] || {})[name]))
       .filter(name=>!group.shadowedByOperations || existing.indexOf(name) == -1)
-      .map(name=>toEntry(name, group[kind][name]))
+      .map(name=>{
+        const preset = group[kind][name];
+        const entry = toEntry(name, typeof preset == 'string' ? preset : preset.description);
+        if(preset && preset.partial)
+          entry.partial = true;
+        return entry;
+      })
   }));
+}
+
+// What an operation stored under a name the routine was also handed: which of
+// the two the name means changes halfway through the routine, which is exactly
+// what makes it confusing - so the entry says so rather than standing there as
+// the only one in the list without an explanation.
+function presetShadowNote(presets, kind, name) {
+  const group = (presets || []).find(group=>group.shadowedByOperations && (group[kind] || {})[name]);
+  return group ? `stored by an earlier operation - it replaced the ${name} ${group.source} hands over` : null;
 }
 
 // the preset names that win over an operation of the same name, i.e. the ones to
@@ -912,11 +930,12 @@ class RoutinePopup extends Popup {
 
         Earlier operations remember values under a name: [COUNT] and [GET] store what they counted or read, [VAR] and [var] store what you calculate, and [CALL] stores what another routine returned. Picking one here uses whatever it holds when the routine runs.
 
-        The ones below the other lines are there without any operation creating them: some in every routine, the others because of what started this one - a changeRoutine is told what changed, and a routine another one runs gets the arguments it was called with.
+        Everything below "From earlier operations" is there without any operation creating it: some of it in every routine, the rest because of what started this one - a changeRoutine is told what changed, and a routine another one runs gets the arguments it was called with.
         </pre>
       `, [
         { title: 'From earlier operations', list: [ ...this.variables ].filter(variable=>presetVariables.indexOf(variable) == -1).sort().map(variable=>({
           label: variable,
+          description: presetShadowNote(this.presets, 'variables', variable) || 'stored by an earlier operation of this routine',
           onClick: _=>this.setNewValue(`\$\{${variable}\}`)
         })) },
         ...presetSections(this.presets, 'variables', [ ...this.variables ], (variable, description)=>({
@@ -934,12 +953,13 @@ class RoutinePopup extends Popup {
         <pre>
         A collection is a group of widgets an earlier [SELECT] picked out, by the name it is stored under. Operations that act on widgets take one instead of a single widget.
 
-        The ones below the other lines are there without any operation creating them: some in every routine, the others because of what started this one - an enterRoutine is handed the widget that entered.
+        Everything below "From earlier operations" is there without any operation creating it: some of it in every routine, the rest because of what started this one - an enterRoutine is handed the widget that entered.
         </pre>
       `, [
         { title: 'From earlier operations', list: [ ...this.collections ].filter(collection=>typeof collection != 'string' || presetCollections.indexOf(collection) == -1).sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1).map(collection=>({
           label: typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`,
-          description: typeof collection == 'string' ? null : 'these widgets, listed in the routine itself',
+          description: typeof collection != 'string' ? 'these widgets, listed in the routine itself'
+            : presetShadowNote(this.presets, 'collections', collection) || 'picked out by an earlier operation of this routine',
           onClick: _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ])
         })) },
         ...presetSections(this.presets, 'collections', [ ...this.collections ], (collection, description)=>({
@@ -953,11 +973,20 @@ class RoutinePopup extends Popup {
       ]);
   }
 
-  // what each entry is stays a hover tip: written out below every button the
-  // list turns into a wall of text nobody reads through
+  // What each entry is, on one line at the foot of the section, filled by the
+  // entry the pointer or the keyboard is on. It stays a hover tip on the button
+  // as well, but a hover tip is never shown on a touch screen, never to the
+  // keyboard and a second late on the desktop - and what the names hold is what
+  // this list is for. One line rather than a line under every button: written
+  // out below every one of them the list turns into a wall of text nobody reads
+  // through.
   renderRoutineValueKindSection(title, kind, infoHTML, groups) {
     const [ heading, content ] = this.addAccordionSection(title, '', kind);
     infoButton(heading, infoHTML);
+    const descriptionDOM = document.createElement('div');
+    descriptionDOM.className = 'popup-entry-description';
+    const describe = text=>descriptionDOM.textContent = text || 'Point at one of the names above to see what it holds.';
+    describe(null);
     for(const group of groups) {
       if(!group.list.length)
         continue;
@@ -966,9 +995,19 @@ class RoutinePopup extends Popup {
         const dom = div(content, 'popup-entry');
         const entryButton = button(dom, entry.label, entry.onClick);
         entryButton.dataset.kind = kind;
-        entryButton.title = entry.description || group.title;
+        if(entry.description)
+          entryButton.title = entry.description;
+        // one the routine only sometimes has, so it does not read as one of the
+        // names that are always there
+        if(entry.partial)
+          entryButton.classList.add('popup-entry-partial');
+        for(const event of [ 'mouseenter', 'focus' ])
+          entryButton.addEventListener(event, _=>describe(entry.description));
+        for(const event of [ 'mouseleave', 'blur' ])
+          entryButton.addEventListener(event, _=>describe(null));
       }
     }
+    content.append(descriptionDOM);
   }
 
   renderWidgetPropertySection() {

@@ -12,27 +12,27 @@ const predefinedEvents = [
   {
     property: 'changeRoutine',
     label: 'property changed',
-    description: 'Runs whenever any property of this widget changes. The routine can use value - what the property is now - as well as oldValue and property. To react to one property only, name the routine after it, like fooChangeRoutine for the property foo.'
+    description: 'Runs whenever any property of this widget changes. The routine can use "value" - what the property is now - as well as "oldValue" and "property". To react to one property only, name the routine after it, like fooChangeRoutine for the property foo.'
   },
   {
     property: 'enterRoutine',
     label: 'widget enters',
-    description: 'Runs when another widget is dropped into this widget. The routine is handed the widget that entered as the collection child, and oldParentID - the id of the widget it came from.'
+    description: 'Runs when another widget is dropped into this widget. The routine is handed the widget that entered as the collection "child", and "oldParentID" - the id of the widget it came from.'
   },
   {
     property: 'leaveRoutine',
     label: 'widget leaves',
-    description: 'Runs when a widget is taken out of this widget. The routine is handed the widget that left as the collection child. It can run more than once for a single move.'
+    description: 'Runs when a widget is taken out of this widget. The routine is handed the widget that left as the collection "child". It can run more than once for a single move.'
   },
   {
     property: 'gameStartRoutine',
     label: 'game starts',
-    description: 'Runs once when a player loads the game fresh from the game shelf or public library, but not when loading a saved game in progress. The routine is handed the widget it is on as the collection widget and its id as widgetID.'
+    description: 'Runs once when a player loads the game fresh from the game shelf or public library, but not when loading a saved game in progress. The routine is handed the widget it is on as the collection "widget" and its id as "widgetID".'
   },
   {
     property: 'globalUpdateRoutine',
     label: 'any widget changed',
-    description: 'Runs when any property of any widget in the room changes. The routine is handed the changed widget as the collection widget and can use value - what the property is now - as well as oldValue, property and widgetID. To react to one property only, name the routine after it, like fooGlobalUpdateRoutine for the property foo.'
+    description: 'Runs when any property of any widget in the room changes. The routine is handed the changed widget as the collection "widget" and can use "value" - what the property is now - as well as "oldValue", "property" and "widgetID". To react to one property only, name the routine after it, like fooGlobalUpdateRoutine for the property foo.'
   }
 ];
 
@@ -46,20 +46,20 @@ function describeEventProperty(property) {
     return {
       property,
       label: `${match[1]} changed`,
-      description: `Runs whenever the ${match[1]} property of this widget changes. The routine can use value - what ${match[1]} is now - and oldValue, what it was before.`
+      description: `Runs whenever the ${match[1]} property of this widget changes. The routine can use "value" - what ${match[1]} is now - and "oldValue", what it was before.`
     };
   }
   if(match = property.match(/^(.+)GlobalUpdateRoutine$/)) {
     return {
       property,
       label: `${match[1]} changed anywhere`,
-      description: `Runs whenever the ${match[1]} property of any widget in the room changes. The routine is handed that widget as the collection widget and can use value - what ${match[1]} is now - as well as oldValue and widgetID.`
+      description: `Runs whenever the ${match[1]} property of any widget in the room changes. The routine is handed that widget as the collection "widget" and can use "value" - what ${match[1]} is now - as well as "oldValue" and "widgetID".`
     };
   }
   return {
     property,
     label: property.replace(/Routine$/, ''),
-    description: 'Runs only when another routine runs it by this name - the "Run the routine" operation. Nothing else triggers it. It starts with everything the routine that ran it had at that point - all of its values and collections - plus the arguments that operation hands over and the widget it ran on as the collection caller.'
+    description: 'Runs only when another routine runs it by this name - the "Run the routine" operation. Nothing else triggers it. It starts with everything the routine that ran it had at that point - all of its values and collections - plus the arguments that operation hands over and the widget it ran on as the collection "caller".'
   };
 }
 
@@ -93,10 +93,10 @@ const routinePresets = {
   },
   gameStartRoutine: {
     variables: {
-      widgetID: 'id of the widget this routine is on (the same as thisID)'
+      widgetID: 'another name for thisID - the id of the widget this routine is on, either works'
     },
     collections: {
-      widget: 'the widget this routine is on (the same as thisButton)'
+      widget: 'another name for thisButton - the widget this routine is on, either works'
     }
   },
   globalUpdateRoutine: {
@@ -116,22 +116,27 @@ const routinePresets = {
 };
 
 // The arguments every CALL in the room that runs this routine by name hands it,
-// as { name: which CALLs pass it }. CALL copies the calling routine's values and
-// collections into the routine it runs and merges its arguments on top
-// (widget.js), so those names are values the routine has before its first
-// operation - the same kind of thing an event hands its routine, except that
-// what they are is written in the game rather than in the engine.
+// as { arguments: { name: which CALLs pass it }, sources: every CALL that runs
+// it }. CALL copies the calling routine's values and collections into the
+// routine it runs and merges its arguments on top (widget.js), so those names
+// are values the routine has before its first operation - the same kind of thing
+// an event hands its routine, except that what they are is written in the game
+// rather than in the engine.
 function callArgumentsFor(routineName) {
-  const callers = {};
+  const args = {};
+  const sources = new Set();
   const scan = (routine, source)=>{
     for(const operation of Array.isArray(routine) ? routine : []) {
       if(!operation || typeof operation != 'object')
         continue;
       // a CALL given a list of names runs the first of them (widget.js)
       const called = Array.isArray(operation.routine) ? operation.routine[0] : operation.routine;
-      if(operation.func == 'CALL' && called === routineName && operation.arguments && typeof operation.arguments == 'object')
-        for(const name of Object.keys(operation.arguments))
-          (callers[name] = callers[name] || new Set()).add(source);
+      if(operation.func == 'CALL' && called === routineName) {
+        sources.add(source);
+        if(operation.arguments && typeof operation.arguments == 'object')
+          for(const name of Object.keys(operation.arguments))
+            (args[name] = args[name] || new Set()).add(source);
+      }
       for(const block of [ 'thenRoutine', 'elseRoutine', 'loopRoutine' ])
         scan(operation[block], source);
     }
@@ -140,13 +145,25 @@ function callArgumentsFor(routineName) {
     for(const [ key, value ] of Object.entries(widget.state))
       if(key.match(/Routine$/) && Array.isArray(value))
         scan(value, `${key} of ${widget.state.id}`);
-  return callers;
+  return { arguments: args, sources };
 }
 
-// The presets of one routine, as the groups the routine editor lists them under.
-// The routines named after a property hear about that one property only, so
-// theirs are worded with its name and have no property variable. Everything else
-// is a custom routine, which only ever runs through CALL.
+// Which operations hand an argument over, named rather than counted: a count
+// ("3 of the operations that run this routine") is nothing the reader can go and
+// look at. More than two of them would fill the line, so the rest is a count.
+function describeCallers(sources, total) {
+  const names = [ ...sources ];
+  const listed = names.length > 2 ? `${names.slice(0, 2).join(', ')} and ${names.length-2} more` : names.join(' and ');
+  const missing = total - names.length;
+  return `handed over by the ${names.length == 1 ? 'CALL' : 'CALLs'} in ${listed}`
+       + (missing ? ` - not by the ${missing == 1 ? 'other operation that runs' : `other ${missing} operations that run`} this routine` : '');
+}
+
+// The presets of one routine, as the groups the routine editor lists them under,
+// the most specific group first (see presetSections in popup.js). The routines
+// named after a property hear about that one property only, so theirs are worded
+// with its name and have no property variable. Everything else is a custom
+// routine, which only ever runs through CALL.
 function routinePresetsOf(property) {
   let match;
   const groups = [];
@@ -169,21 +186,27 @@ function routinePresetsOf(property) {
     preset = { collections: { caller: 'the widget whose routine used CALL to run this one' } };
     // an argument only some of the calls hand over is still worth offering, but
     // it is one the routine only has when that call is what ran it - so they are
-    // a group of their own rather than part of "In every fooRoutine"
-    const args = callArgumentsFor(property);
+    // a group of their own rather than part of "In every fooRoutine", and the
+    // ones not every call hands over are shown as the exception they are
+    const { arguments: args, sources } = callArgumentsFor(property);
     const variables = {};
     for(const name of Object.keys(args).sort())
-      variables[name] = args[name].size == 1
-        ? `handed over by the CALL in ${[ ...args[name] ][0]}`
-        : `handed over by ${args[name].size} of the operations that run this routine`;
+      variables[name] = {
+        description: describeCallers(args[name], sources.size),
+        partial: args[name].size < sources.size
+      };
     if(Object.keys(variables).length)
-      groups.push({ title: 'From the operation that runs it', shadowedByOperations: true, variables, collections: {} });
+      groups.push({
+        title: `From the ${sources.size == 1 ? 'operation that runs' : 'operations that run'} it`,
+        source: 'the CALL that runs this routine',
+        shadowedByOperations: true, variables, collections: {}
+      });
   }
   // handed over before the first operation runs, so an operation of the routine
   // that stores the same name wins over them (see presetSections in popup.js)
-  const group = Object.assign({ title: `In every ${property}`, shadowedByOperations: true, variables: {}, collections: {} }, preset);
+  const group = Object.assign({ title: `In every ${property}`, source: `the ${property}`, shadowedByOperations: true, variables: {}, collections: {} }, preset);
   if(Object.keys(group.variables).length + Object.keys(group.collections).length)
-    groups.unshift(group);
+    groups.push(group);
   return groups;
 }
 
