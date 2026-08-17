@@ -39,4 +39,34 @@ describe('which deck editor property rows offer a color picker', () => {
     expect(editor.shouldOfferColorPicker('rankFixed', '02 S')).toBe(false);
     expect(editor.shouldOfferColorPicker('suitAlt', '3♠')).toBe(false);
   });
+
+  test('a row that has no picker does not get one from a half-typed value, only from a real color', () => {
+    // typing a word into the standard deck's suitColor: "♠" must not arm the picker on the way
+    for(const typed of [ 'S', 'Sp', 'Spades', '#', '#f' ])
+      expect(editor.shouldOfferColorPicker('suitColor', typed, false)).toBe(false);
+    expect(editor.shouldOfferColorPicker('suitColor', 'red', false)).toBe(true);
+    expect(editor.shouldOfferColorPicker('suitColor', '', false)).toBe(true); // an empty one is waiting for a color
+  });
+});
+
+describe('what the card type panel says about a sorting property', () => {
+  const standard = { suit: 'S', suitColor: '♠', suitAlt: '3♠', rank: '02', rankA: '02', rankFixed: '02 S' };
+
+  test('describes each sorting property of a standard deck card type', () => {
+    for(const property of Object.keys(standard))
+      expect(editor.cardTypePropertyHint(property, standard)).toMatch(/^Sorting property: /);
+    expect(editor.cardTypePropertyHint('suitColor', standard)).toMatch(/no CSS color/);
+    expect(editor.cardTypePropertyHint('image', standard)).toBe(null);
+  });
+
+  test('says nothing about a deck that uses the same names for its own readable values', () => {
+    const spanish = { rank: '1', suit: 1, order: 1 }; // assets/decks/spanish.json
+    for(const property of Object.keys(spanish))
+      expect(editor.cardTypePropertyHint(property, spanish)).toBe(null);
+  });
+
+  test('does not call a suitColor that really is a color a sorting property without saying so', () => {
+    const withColor = { ...standard, suitColor: 'red' };
+    expect(editor.cardTypePropertyHint('suitColor', withColor)).toMatch(/color of this card's suit/i);
+  });
 });
