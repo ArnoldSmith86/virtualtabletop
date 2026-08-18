@@ -77,7 +77,7 @@ export async function loadSymbolPicker() {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1].toLowerCase()},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
           symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
@@ -88,10 +88,10 @@ export async function loadSymbolPicker() {
             className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
             const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
-            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol.toLowerCase()},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
           }
           if(className == 'material-symbols' && hasNoFillVariant)
-            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol.toLowerCase()},${keywords.join().toLowerCase()}">${symbol}</i>`;
         }
       }
     }
@@ -99,34 +99,115 @@ export async function loadSymbolPicker() {
       if(category.match(/Emoji/)) {
         list += `<h2 data-family="image">${category}</h2>`;
         for(const [ symbol, keywords ] of Object.entries(symbols)) {
-          let className = 'emoji-color';
-          if(category == 'Emoji - Flags')
-            className += ' emojiFlag';
-          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          // flags need a class of their own because no browser font draws them, but their type stays
+          // emoji-color: that is the library they belong to, and both the library filter and the click
+          // handler below match data-type exactly, so a class list in there loses every flag
+          const className = category == 'Emoji - Flags' ? 'emoji-color emojiFlag' : 'emoji-color';
+          list += `<i class="${className}" data-family="image" title="emoji-color: ${symbol}" data-type="emoji-color" data-symbol="${symbol}" data-keywords="${symbol.toLowerCase()},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
     $('#symbolList').innerHTML = list;
 
-    $('#symbolPickerOverlay input').onkeyup = function() {
-      const text = regexEscape($('#symbolPickerOverlay input').value.toLowerCase());
-      for(const icon of $a('#symbolList i'))
-        toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
-      for(const title of $a('#symbolList h2'))
-        toggleClass(title, 'hidden', text);
-      // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
-      // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
-      const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
-                         : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
-      const matches = $a(`#symbolList i:not(.hidden)${hiddenFamily ? `:not([data-family=${hiddenFamily}])` : ''}`).length;
-      toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
-      toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
-      $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}".`;
+    // the search field is a type=search input with the browser's own clear button, and terms also arrive by
+    // paste, cut or drop - none of which is a keystroke, so listen for input like the inline pickers do
+    $('#symbolPickerOverlay input').oninput = filterSymbolList;
+
+    $('#symbolSearchStatus button').onclick = function() {
+      setLibraryFilter(null); // the one control the picker has for a library filter it was opened with
+      $('#symbolPickerOverlay input').value = '';
+      $('#symbolPickerOverlay input').focus();
+      filterSymbolList();
     };
   }
 }
 
-export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
+// the inline icon picker's "Libraries:" checkboxes, translated into the data-type of the icons here. A
+// picker opened from there searches the libraries the user left checked, instead of answering a term they
+// narrowed down with icons from the libraries they just switched off.
+const symbolLibraries = {
+  'game-icons':       [ 'game-icons' ],
+  'material-symbols': [ 'material-symbols', 'material-symbols-nofill' ],
+  'emoji-color':      [ 'emoji-color' ],
+  'emoji-monochrome': [ 'emoji-monochrome' ],
+  'vtt-symbols':      [ 'symbols' ]
+};
+let libraryFilter = null; // { types, count } - null means every library, which is how the picker opens elsewhere
+function setLibraryFilter(libraries) {
+  const all = Object.keys(symbolLibraries);
+  libraryFilter = libraries && libraries.length < all.length
+    ? { types: new Set(libraries.flatMap(library => symbolLibraries[library] || [])), count: libraries.length } : null;
+}
+
+function filterSymbolList() {
+  // all terms have to match (in any order), like the property editor's inline icon search - so a term
+  // transferred from there by "Show all" finds the same icons here instead of nothing
+  const search = $('#symbolPickerOverlay input').value;
+  const terms = search.toLowerCase().split(/\s+/).filter(term => term);
+  // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
+  // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
+  const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
+                     : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
+  // one pass over the list: hide what the search does not match, count what is left, and remember per
+  // category whether anything of it survived
+  let matches = 0;
+  let total = 0;
+  let category = null;
+  let categoryMatches = false;
+  const applyCategory = _=>category && toggleClass(category, 'hidden', !categoryMatches);
+  for(const element of $('#symbolList').children) {
+    if(element.tagName == 'H2') {
+      applyCategory();
+      category = element;
+      categoryMatches = false;
+      continue;
+    }
+    const hidden = !terms.every(term => element.dataset.keywords.includes(term))
+                || libraryFilter && !libraryFilter.types.has(element.dataset.type);
+    toggleClass(element, 'hidden', hidden);
+    if(element.dataset.family == hiddenFamily)
+      continue;
+    ++total;
+    if(!hidden) {
+      ++matches;
+      categoryMatches = true;
+    }
+  }
+  // a category heading only goes away once its own section is empty - hiding all of them whenever a
+  // search was active left the results unlabeled, and since "Show all" hands its term over that is now
+  // the state the picker usually opens in. Which library an icon comes from decides how it looks on a
+  // widget, so it is worth keeping visible.
+  applyCategory();
+  toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
+  toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
+  // a search - typed here or carried over from the inline picker - leaves a slice of ~13000 icons with
+  // nothing on screen saying so, so state how much is left and offer the one click back to all of it.
+  // The count comes first because it is what the narrow layouts keep.
+  // The libraries come from the same handover and are the less obvious half of it: the picker has no
+  // checkboxes of its own, so without a word about them a list missing every emoji looks like the whole one.
+  const filtered = terms.length > 0 || libraryFilter;
+  const libraries = libraryFilter ? ` from ${libraryFilter.count} of ${Object.keys(symbolLibraries).length} libraries` : '';
+  toggleClass($('#symbolPickerOverlay'), 'filtered', !!filtered);
+  $('#symbolSearchStatus span').textContent = filtered && matches
+    ? `${matches} of ${total} ${itemName}s${libraries}${terms.length ? ` match${matches == 1 ? 'es' : ''} "${search}"` : ''}` : '';
+  $('#symbolNoResults').textContent = terms.length
+    ? `No ${itemName}s${libraries} match "${search}".` : `No ${itemName}s in the chosen libraries.`;
+}
+
+// the picker is also the image picker (type=='images'), so a user who typed into a field labeled "Search
+// images..." and pressed "Show all" no longer lands in a dialog that calls everything in it an icon
+let itemName = 'icon';
+function setPickerWording(type) {
+  itemName = type == 'images' ? 'image' : 'icon';
+  $('#symbolPickerOverlay h1').textContent = `Pick ${itemName}`;
+  $('#symbolPickerOverlay input').placeholder = `Search ${itemName}s (sword, heart, dice, …)`;
+  $('#symbolSearchStatus button').textContent = `Show all ${itemName}s`;
+}
+
+// search and libraries prefill the picker's search field and library filter, so a picker opened from a place
+// that already has both (the property editor's inline icon picker and its "Browse more..." button) starts out
+// filtered the same way instead of contradicting what the user just narrowed down
+export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true, search='', libraries=null) {
   if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
     $('#statesButton').dataset.overlay = detailsOverlay;
 
@@ -136,10 +217,16 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
     $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
     $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
     $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
+    setPickerWording(type);
+    setLibraryFilter(libraries);
     $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
-    $('#symbolPickerOverlay input').value = '';
+    $('#symbolPickerOverlay input').value = search;
     $('#symbolPickerOverlay input').focus();
-    $('#symbolPickerOverlay input').onkeyup();
+    // a transferred search term is fully replaced by typing a new one - but on a touch device selecting it
+    // also pops the selection handles and their context bar over the first row of a picker that is short anyway
+    if(!matchMedia('(pointer: coarse)').matches)
+      $('#symbolPickerOverlay input').select();
+    filterSymbolList();
 
     $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
       if(closeOverlay)
@@ -233,12 +320,14 @@ export function addRichtextControls(dom) {
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
+    setPickerWording('all');
+    setLibraryFilter(null);
     $('#symbolList').scrollTop = 0;
     for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
       $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
-    $('#symbolPickerOverlay input').onkeyup();
+    filterSymbolList();
 
     $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
 
