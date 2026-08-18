@@ -480,8 +480,22 @@
   /* the list takes what is left over, but never less than about four rows: with min-height: 0 whatever sits
      above it could squeeze it to nothing, and since it is the only scroller that leaves no icon reachable */
   min-height: 120px;
+  /* a flex container so the search can float its best matches to the top by setting their rank as the CSS
+     order (see filterSymbolList in symbols.js) - reordering 14000 nodes per keystroke is not an option */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: flex-start;
 }
-#symbolPickerOverlay.bigPreviews.fewResults #symbolList {
+#symbolList h2 {
+  width: 100%; /* a category heading is a row of its own, not an icon-sized flex item */
+}
+/* the search shows its 100 best matches large - the rest of them stay in the compact grid below the "More
+   matches" heading, which sits between the two (rank 0-2 above it, everything else after it) */
+#symbolMoreMatches {
+  order: 3;
+}
+#symbolPickerOverlay.bigPreviews #symbolList i.bigPreview {
   --symbolSize: 64px;
 }
 
@@ -527,7 +541,7 @@
   vertical-align: top;
 }
 
-#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
+#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay .emoji-color.bigPreview {
   background: var(--url) center no-repeat;
   color: transparent;
   top: -3px;
@@ -549,7 +563,7 @@
   background-image: url(i/game-icons.net/overview48.png);
 }
 
-#symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {
+#symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay .gameicons.bigPreview {
   background: var(--url);
 }
 

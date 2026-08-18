@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import v8 from 'v8';
+import zlib from 'zlib';
 
 import express from 'express';
 import http from 'http';
@@ -127,6 +128,33 @@ MinifyHTML().then(function(result) {
   router.get('/fonts.css', cache5m);
   router.get('/i/fonts/', cache5m);
   router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
+
+  // symbols.json lists the name and the search keywords of every icon and is by
+  // far the biggest asset the editor fetches (3 MB, and it compresses to a tenth
+  // of that). express.static sends files as they are, so compress it once at
+  // startup and serve that copy from memory afterwards - the same deal as the
+  // minified client scripts below, which the server also inlines at boot. Until
+  // it is ready (and if it fails) express.static serves the file uncompressed.
+  let symbolsGzipped = null;
+  let symbolsLastModified = null;
+  (async function() {
+    const file = path.resolve() + '/assets/fonts/symbols.json';
+    const [ stat, content ] = await Promise.all([ fs.promises.stat(file), fs.promises.readFile(file) ]);
+    symbolsGzipped = await new Promise(function(resolve, reject) {
+      zlib.gzip(content, { level: zlib.constants.Z_BEST_COMPRESSION }, (e, data) => e ? reject(e) : resolve(data));
+    });
+    symbolsLastModified = stat.mtime.toUTCString();
+  })().catch(e=>Logging.handleGenericException('gzipSymbols', e));
+
+  router.get('/i/fonts/symbols.json', function(req, res, next) {
+    if(!symbolsGzipped || !(req.headers['accept-encoding'] || '').match(/\bgzip\b/))
+      return next();
+    res.setHeader('Vary', 'Accept-Encoding');
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Content-Encoding', 'gzip');
+    res.setHeader('Last-Modified', symbolsLastModified); // express.static sent this - keep revalidation working
+    res.send(symbolsGzipped);
+  });
 
   router.use('/i', express.static(path.resolve() + '/assets'));
 

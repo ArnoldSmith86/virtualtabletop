@@ -17,6 +17,8 @@ const inputHelpers = new Function(inputsSource + `;
     propertyInputValueSet,
     numericInputValue,
     searchIconIndex,
+    searchIconIndexWithTotal,
+    iconChipTitle,
     searchImageIndex,
     iconValueType,
     usedGameIconValue,
@@ -990,16 +992,43 @@ describe('property input helpers', () => {
     expect(arrayChip.children[0].style.color).toBeUndefined();
   });
 
-  test('searchIconIndex preserves symbols.json order', () => {
+  test('searchIconIndex ranks the icon named like the query first, then keeps symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
-      { value: 'star',           keywords: 'star,favorite', image: false },
-      { value: 'grade',          keywords: 'star,grade',    image: false },
-      { value: 'lorc/star',      keywords: 'star,shiny',    image: true },
-      { value: 'delapouite/sun', keywords: 'sun,light',     image: true }
+      { value: 'grade',          keywords: 'star,grade',      image: false },
+      { value: 'star_rate',      keywords: 'star,rate',       image: false },
+      { value: 'stadium',        keywords: 'stadium,star',    image: false },
+      { value: 'star',           keywords: 'star,favorite',   image: false },
+      { value: 'lorc/star',      keywords: 'star,shiny',      image: true },
+      { value: 'delapouite/sun', keywords: 'sun,light',       image: true }
     ]);
-    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'grade', 'lorc/star' ]);
+    // exact name matches (both families), then prefix matches, then keyword-only matches
+    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'lorc/star', 'star_rate', 'grade', 'stadium' ]);
     expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
     expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
+  });
+
+  test('an icon name typed with spaces ranks like the underscored/hyphenated name', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'keyboard_arrow_back', keywords: 'keyboard_arrow_back,arrow,back', image: false },
+      { value: 'arrow_back_ios',      keywords: 'arrow_back_ios,arrow,back',      image: false },
+      { value: 'arrow_back',          keywords: 'arrow_back,previous,left',       image: false },
+      { value: 'lorc/arrow-back',     keywords: 'arrow-back,return',              image: true  }
+    ]);
+    // "arrow back" is how Google's icon site spells arrow_back, so it has to rank the icons named that way
+    // first - underscores in the name and hyphens in the game-icons name alike
+    expect(inputHelpers.searchIconIndex('arrow back')).toEqual([ 'arrow_back', 'lorc/arrow-back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
+    // typing the underscored name still ranks the same (it just does not reach the hyphenated game-icon)
+    expect(inputHelpers.searchIconIndex('arrow_back')).toEqual([ 'arrow_back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
+  });
+
+  test('an icon can be found by its own name even when it matches later than the result limit', () => {
+    const index = Array.from({ length: 120 }, (_, i) => ({ value: `icon_${i}`, keywords: `icon_${i},save`, image: false }));
+    index.push({ value: 'save', keywords: 'save,disk', image: false });
+    inputHelpers.setIconSearchIndex(index);
+
+    const results = inputHelpers.searchIconIndex('save');
+    expect(results).toHaveLength(100);
+    expect(results[0]).toBe('save');
   });
 
   test('searchImageIndex returns image URLs for matching glyphs', () => {
@@ -1028,6 +1057,21 @@ describe('property input helpers', () => {
       { value: 'star', type: 'material-symbols', keywords: 'star', image: false }
     ]);
     expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ]))).toEqual([ 'star' ]);
+  });
+
+  test('a truncated icon search reports how many matches it left out', () => {
+    inputHelpers.setIconSearchIndex(Array.from({ length: 120 }, (_, i) => ({ value: `icon_${i}`, keywords: `icon_${i},save`, image: false })));
+
+    expect(inputHelpers.searchIconIndexWithTotal('save').values).toHaveLength(100);
+    expect(inputHelpers.searchIconIndexWithTotal('save').total).toBe(120);
+    // nothing was left out, so there is nothing to report
+    expect(inputHelpers.searchIconIndexWithTotal('icon_77').total).toBe(1);
+  });
+
+  test('the outlined variant of a Material Symbol says so instead of showing _NOFILL', () => {
+    expect(inputHelpers.iconChipTitle('save_NOFILL')).toBe('save (outlined)');
+    expect(inputHelpers.iconChipTitle('save')).toBe('save');
+    expect(inputHelpers.iconChipTitle('lorc/star')).toBe('lorc/star');
   });
 
   test('picker searches show up to 100 results', () => {

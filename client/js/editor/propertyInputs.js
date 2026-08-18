@@ -261,6 +261,12 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   return symbol;
 }
 
+// "save_NOFILL" is how the outlined variant of a Material Symbol is stored, but as the tooltip of a chip it
+// is developer vocabulary that does not explain why the same-looking glyph is offered twice.
+function iconChipTitle(value) {
+  return /^[a-z0-9].*_NOFILL$/.test(value) ? `${value.replace(/_NOFILL$/, '')} (outlined)` : value;
+}
+
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
@@ -275,7 +281,7 @@ function renderIconChip(value, target) {
     icon = Array.isArray(value) ? value[0] : value;
     icon = icon && typeof icon == 'object' ? icon.name : icon;
   } else {
-    chip.title = value;
+    chip.title = iconChipTitle(value);
   }
   if(typeof icon != 'string')
     return chip; // nothing renderable (e.g. an empty or malformed icon object)
@@ -366,13 +372,44 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
-// Keep matches in symbols.json order so related icon families stay together.
+// An icon matches when it has every search term somewhere in its keywords, so a
+// popular word like "save" matches hundreds of icons - more than the result
+// limit. Rank the icon actually named like the query first, then the ones whose
+// name starts with it, so typing an icon name always finds that icon. Within a
+// rank, matches keep symbols.json order so related icon families stay together.
+// Icon names are separated by underscores (arrow_back) or hyphens (game-icons:
+// acid-tube), but spaces are the natural way to type them - and the spelling
+// Google's own icon site uses - so compare that spelling as well, otherwise a
+// two-word query can never reach the first two ranks.
+function iconMatchRank(entry, query) {
+  const name = (entry.value.includes('/') ? entry.value.split('/')[1] : entry.value).toLowerCase();
+  const spacedName = name.replace(/[_-]+/g, ' ');
+  const spacedQuery = query.replace(/[_-]+/g, ' ');
+  if(name == query || spacedName == spacedQuery)
+    return 0;
+  if(name.startsWith(query) || spacedName.startsWith(spacedQuery))
+    return 1;
+  return 2;
+}
+
+function rankedIconMatches(query, isMatch) {
+  const terms = query.split(/\s+/).filter(t=>t);
+  const byRank = [ [], [], [] ];
+  for(const entry of iconSearchIndex || [])
+    if(terms.every(term=>entry.keywords.includes(term)) && isMatch(entry))
+      byRank[iconMatchRank(entry, query)].push(entry);
+  return [ ...byRank[0], ...byRank[1], ...byRank[2] ];
+}
+
+// The limit is what keeps the result list short enough to scan, but a one-word query now matches hundreds
+// of icons, so it hides most of them - report how many were left out instead of pretending that's all.
+function searchIconIndexWithTotal(query, limit=100, enabledTypes=null) {
+  const matches = rankedIconMatches(query.toLowerCase(), entry => !enabledTypes || enabledTypes.has(entry.type));
+  return { values: matches.slice(0, limit).map(entry => entry.value), total: matches.length };
+}
+
 function searchIconIndex(query, limit=100, enabledTypes=null) {
-  const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  return (iconSearchIndex || [])
-    .filter(entry => terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
-    .slice(0, limit)
-    .map(entry => entry.value);
+  return searchIconIndexWithTotal(query, limit, enabledTypes).values;
 }
 
 function imageURLFromSymbol(symbol) {
@@ -383,9 +420,7 @@ function imageURLFromSymbol(symbol) {
 }
 
 function searchImageIndex(query, limit=100) {
-  const terms = query.toLowerCase().split(/\s+/).filter(term => term);
-  return (iconSearchIndex || [])
-    .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
+  return rankedIconMatches(query.toLowerCase(), entry => entry.image)
     .slice(0, limit)
     .map(entry => imageURLFromSymbol(entry.value));
 }
@@ -1376,7 +1411,7 @@ class IconInput extends PickerInput {
     searchSection.appendChild(search);
     const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
 
-    const showResults = values=>{
+    const showResults = (values, total)=>{
       results.innerHTML = '';
       for(const iconValue of values) {
         const chip = renderIconChip(iconValue, results);
@@ -1386,6 +1421,7 @@ class IconInput extends PickerInput {
       }
       if(!values.length)
         div(results, 'propertyPickerEmpty', 'No results.');
+      searchNote.textContent = total > values.length ? `Showing the ${values.length} best matches of ${total} - keep typing to narrow it down.` : '';
     };
 
     const frequentlyUsed = _=>[...new Set(usedGameIcons().concat(topUsedLibraryIcons))]
@@ -1393,9 +1429,26 @@ class IconInput extends PickerInput {
       .slice(0, 100);
     const updateResults = async _=>{
       const query = search.value.trim();
-      if(query)
+      if(query && !iconSearchIndex) {
+        // the index is a half-megabyte fetch: say so instead of leaving the frequently-used icons up, which
+        // look like the (wrong) answer to what was just typed
+        results.innerHTML = '';
+        div(results, 'propertyPickerEmpty', 'Loading icons…');
+        searchNote.textContent = '';
         await loadIconSearchIndex().catch(_=>null);
-      showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
+        if(search.value.trim() != query)
+          return; // the user kept typing while it loaded - that keystroke's own update is in charge now
+        if(!iconSearchIndex) {
+          // the fetch failed - "No results." would blame the query for it
+          results.innerHTML = '';
+          div(results, 'propertyPickerEmpty', 'Could not load the icon list.');
+          return;
+        }
+      }
+      if(!query)
+        return showResults(frequentlyUsed(), 0);
+      const { values, total } = searchIconIndexWithTotal(query, 100, enabledTypes);
+      showResults(values, total);
     };
 
     const typeToggles = div(searchSection, 'iconPickerFilterChips');
@@ -1421,7 +1474,8 @@ class IconInput extends PickerInput {
     }
 
     const results = div(searchSection, 'propertyPickerChips');
-    showResults(frequentlyUsed());
+    const searchNote = div(searchSection, 'propertyPickerNote');
+    showResults(frequentlyUsed(), 0);
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
@@ -1495,8 +1549,20 @@ class ImageInput extends PickerInput {
     searchSection.appendChild(showAll);
 
     search.oninput = async _=>{
-      await loadIconSearchIndex().catch(_=>null);
-      showResults(search.value.trim() ? searchImageIndex(search.value.trim()) : frequentlyUsed);
+      const query = search.value.trim();
+      if(query && !iconSearchIndex) {
+        results.innerHTML = '';
+        div(results, 'propertyPickerEmpty', 'Loading icons…');
+        await loadIconSearchIndex().catch(_=>null);
+        if(search.value.trim() != query)
+          return; // the user kept typing while it loaded - that keystroke's own update is in charge now
+        if(!iconSearchIndex) {
+          results.innerHTML = '';
+          div(results, 'propertyPickerEmpty', 'Could not load the icon list.');
+          return;
+        }
+      }
+      showResults(query ? searchImageIndex(query) : frequentlyUsed);
     };
     loadIconSearchIndex().catch(_=>null);
 

@@ -464,6 +464,15 @@
   gap: 4px;
 }
 
+/* the icon search keeps its 100 best matches, which a one-word query now exceeds all the time - this says so
+   instead of letting a truncated grid look like the complete answer */
+.editorModule .propertyPickerNote:not(:empty) {
+  font-size: 11px;
+  color: var(--textColor, #333);
+  opacity: 0.7;
+  margin: 4px 0 2px;
+}
+
 .editorModule .propertyPickerChips .symbols,
 .editorModule .propertyPickerChips .material-symbols,
 .editorModule .propertyPickerChips .material-symbols-nofill,
