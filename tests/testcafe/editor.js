@@ -3349,6 +3349,53 @@ test('A branch of the tree still folds away after the filter box has been used',
   await setEditorState(null);
 });
 
+// The filter opens the branches that hold a match, but that has to stay a
+// suggestion: a branch the user folds away has to go away, filter or no filter.
+test('A branch folds away while the filter box still holds text', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400 },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' },
+    stack:   { id: 'stack',   type: 'pile',   x: 700, y: 200 },
+    checkerB:{ id: 'checkerB',type: 'basic',  x: 700, y: 200, width: 100,  height: 100, parent: 'stack' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+  const checkerRow = tree.find('li[data-id=checker]');
+
+  await t
+    .click('#editButton')
+    .click(bar.find('button[icon=account_tree]'))
+    .typeText(tree.find('#jeWidgetSearchBox'), 'checker')
+    .expect(tree.find('li[data-id=board]').visible).notOk()
+    .expect(checkerRow.visible).ok()
+
+    // a pile starts out collapsed - the filter opens it, and says so with its arrow
+    .expect(tree.find('li[data-id=checkerB]').visible).ok()
+    .expect(tree.find('li[data-id=stack] > .jeTreeExpander-down').exists).ok()
+
+    // the arrow folds the branch away although the filter still stands
+    .click(tree.find('li[data-id=point] > .jeTreeExpander'), { offsetX: 5 })
+    .expect(checkerRow.visible).notOk()
+    .click(tree.find('li[data-id=point] > .jeTreeExpander'), { offsetX: 5 })
+    .expect(checkerRow.visible).ok()
+
+    // and so does the arrow key. Nothing is selected here, so the keyboard
+    // starts above the first row - which the filter has cut down to the branch.
+    .pressKey('down')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(checkerRow.visible).notOk()
+    .pressKey('right')
+    .expect(checkerRow.visible).ok();
+  await setEditorState(null);
+});
+
 // A dropdown covers the panel it hangs in, so a click on that panel is a click on
 // something the dropdown is hiding. The room is the exception: the stack list is
 // filled from there, and picking a widget must not take the list of what lies

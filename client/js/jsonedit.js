@@ -2489,9 +2489,24 @@ function jeDisplayTree() {
 function jeToggleTreeNode(expander, open) {
   if(!expander || !expander.classList.contains('jeTreeExpander') || expander.classList.contains('jeTreeExpander-down') == open)
     return;
+  jeSetTreeNodeOpen(expander, open);
+  isNodeCollapsed[expander.parentNode.dataset.filter] = !open;
+}
+
+// Showing and hiding a branch without saying anything about what the user wants
+// to see: this is what the filter uses to bring the branches that hold a match
+// into view.
+function jeSetTreeNodeOpen(expander, open) {
+  if(!expander || !expander.classList.contains('jeTreeExpander') || expander.classList.contains('jeTreeExpander-down') == open)
+    return;
   $('.nested', expander.parentElement).classList.toggle('active', open);
   expander.classList.toggle('jeTreeExpander-down', open);
-  isNodeCollapsed[expander.parentNode.dataset.filter] = !open;
+}
+
+// A branch is collapsed if the user left it that way - and a pile, whose cards
+// nobody wants to scroll past, also if it was never touched at all.
+function jeTreeNodeIsCollapsed(filter, widget) {
+  return isNodeCollapsed[filter] !== undefined ? isNodeCollapsed[filter] : !!widget && widget.get('type') == 'pile';
 }
 
 // Bringing the selected widgets into view: what somebody opening the tree is
@@ -2525,7 +2540,7 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
     const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
     const filterText = `data-filter="${filter}"`;
     const idText = `data-id="${widget.get('id')}"`;
-    const isCollapsed = isNodeCollapsed[filter] || widget.get('type')=='pile';
+    const isCollapsed = jeTreeNodeIsCollapsed(filter, widget);
 
     if(children)
       result += `<li ${filterText} ${idText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
@@ -2584,14 +2599,13 @@ function jeDisplayFilteredWidgets(e) {
     previousParent.classList.remove('filterChildIncluded');
 
   // An empty filter matches every widget, so carrying on would mark every branch
-  // as one that holds a match - and .filterChildIncluded shows a nested list
-  // whatever its collapsed state is. That left the tree pinned open as soon as
-  // anything had been typed into the filter box and taken out again: collapsing
-  // a node still flipped its arrow, but nothing below it ever went away, with
-  // the mouse or with the keyboard.
+  // as one that holds a match and open the whole tree. Instead the tree goes
+  // back to the shape the user left it in.
   if(!subtext) {
-    for(const node of $a('#jeTree li.jeTreeWidget'))
+    for(const node of $a('#jeTree li.jeTreeWidget')) {
       node.classList.remove('filterIncluded', 'filterNotIncluded');
+      jeSetTreeNodeOpen(node.firstElementChild, !jeTreeNodeIsCollapsed(node.dataset.filter, widgets.get(node.dataset.id)));
+    }
     return;
   }
 
@@ -2604,9 +2618,15 @@ function jeDisplayFilteredWidgets(e) {
     }
     node.classList.toggle('filterIncluded', nodeMatchesFilter);
     node.classList.toggle('filterNotIncluded', !nodeMatchesFilter);
+    // The branches on the way to a match are opened for real instead of being
+    // forced open by CSS: that way their arrow tells the truth, and one click on
+    // it - or one ← - folds the branch away again while the filter still stands.
     if(nodeMatchesFilter)
       for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
-        parent.classList.add('filterChildIncluded');
+        if(parent.classList.contains('jeNestedTree'))
+          jeSetTreeNodeOpen(parent.previousElementSibling, true);
+        else
+          parent.classList.add('filterChildIncluded');
   }
 }
 

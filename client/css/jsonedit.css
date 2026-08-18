@@ -170,7 +170,7 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
+.jeNestedTree.active, .jeLogNested.active {
   display: block;
 }
 
