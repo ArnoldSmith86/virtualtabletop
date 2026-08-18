@@ -2025,6 +2025,82 @@ test('Deck editor: a sheet of fronts with a matching sheet of backs in the new d
   await t.expect(deck.backFace[0].css['background-position']).contains('--offsetX');
 });
 
+// A card is sized after the picture it shows, and one import can hold pictures of different shapes: the first
+// upload sets the deck's card defaults and every card type from a differently shaped upload carries its own
+// size, so a portrait sheet uploaded after a landscape one is not squashed into the landscape shape.
+test('Deck editor: sheets of different card shapes each keep their own card size', async t => {
+  const asset = (fileName, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const landscape = asset('landscape.png', 1500, 400); // 5 x 2 cards of 300 x 200 each
+  const portrait  = asset('portrait.png',   400, 1200); // 2 x 4 cards of 200 x 300 each
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setSheet = ClientFunction((index, columns, rows, copies) => {
+    const preview = document.querySelectorAll('.cardFrontPreview')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ], [ '.cards', copies ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
+  await stubUploadOf('landscape.png', landscape);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(0, 5, 2, 2);
+  await stubUploadOf('portrait.png', portrait);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(1, 2, 4, 1);
+
+  // each sheet says what its own cards will look like, and the status line counts the copies of both
+  await t
+    .expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table, 2 copies each - 20 cards in total')
+    .expect(Selector('.cardFrontPreviewSummary').nth(1).innerText).contains('8 cards of 200 × 300 pixels, 107 × 160 on the table')
+    .expect(Selector('.imagePairStatus').innerText).contains('28 cards')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(18); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    const sizeOfCardFrom = sheet => {
+      let card = null;
+      widgets.forEach(w => { if(w.get('type') == 'card' && !card && w.get('cardType').indexOf(sheet) == 0) card = w; });
+      return [ card.get('width'), card.get('height') ];
+    };
+    return {
+      cardDefaults: deck.get('cardDefaults'),
+      fromLandscape: cardTypes['landscape.png 0,0'],
+      fromPortrait: cardTypes['portrait.png 0,0'],
+      landscapeCard: sizeOfCardFrom('landscape.png'),
+      portraitCard: sizeOfCardFrom('portrait.png')
+    };
+  })();
+
+  // the first sheet sizes the deck, so its own card types say nothing about their size
+  await t.expect(deck.cardDefaults.width).eql(160);
+  await t.expect(deck.cardDefaults.height).eql(107);
+  await t.expect(deck.fromLandscape.width).eql(undefined);
+  await t.expect(deck.fromLandscape.height).eql(undefined);
+  // the second one is a different shape and carries it - all the way to the card on the table
+  await t.expect(deck.fromPortrait.width).eql(107);
+  await t.expect(deck.fromPortrait.height).eql(160);
+  await t.expect(deck.landscapeCard).eql([ 160, 107 ]);
+  await t.expect(deck.portraitCard).eql([ 107, 160 ]);
+});
+
 // The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
 // strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
 test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {

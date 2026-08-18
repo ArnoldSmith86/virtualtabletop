@@ -322,8 +322,13 @@
   text-align: left;
 }
 
+/* The preview is there to check the cut lines against the picture, so all of it has to stay in the dialog:
+   bounded by the width alone, a tall sheet - 2 x 10 is a normal print-and-play shape - ran off the bottom and
+   took the lower rows of the grid with it. The wrapper shrink-wraps the image, so the overlay still lines up. */
 .tune.editorModule .cardFrontPreview img {
   max-width: 100%;
+  max-height: 220px;
+  width: auto;
   height: auto;
 }
 

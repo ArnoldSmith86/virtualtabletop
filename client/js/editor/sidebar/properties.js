@@ -93,8 +93,13 @@ function parseRankRange(rankRange) {
 // stops the faces from being stretched, and the fixed longer side keeps the cards at a usable size on the
 // table. This is the same rule the Tabletop Simulator importer sizes its cards by (server/ttsimport.mjs).
 function cardSizeFromImage(imageWidth, imageHeight, columns=1, rows=1) {
-  const cellWidth  = (imageWidth  || 1)/(columns || 1);
-  const cellHeight = (imageHeight || 1)/(rows    || 1);
+  // A picture the browser has not decoded yet - or cannot decode at all - has no size to take a ratio from,
+  // and dividing a placeholder by the grid would invent one out of the row and column numbers. Fall back to
+  // the standard card the wizard used before instead.
+  if(!imageWidth || !imageHeight)
+    return { width: 103, height: 160 };
+  const cellWidth  = imageWidth /(columns || 1);
+  const cellHeight = imageHeight/(rows    || 1);
   const scale = 160/Math.max(cellWidth, cellHeight);
   return { width: Math.max(1, Math.round(cellWidth*scale)), height: Math.max(1, Math.round(cellHeight*scale)) };
 }
@@ -2635,6 +2640,11 @@ class PropertiesModule extends SidebarModule {
     // The uploaded sheets of fronts with the grid each of them is cut by, in the order they were uploaded.
     const frontSheets = _=>[ ...$a('.cardFrontPreview', preview) ].map(dom=>({ dom, ...this.imageSheetGrid(dom) }));
 
+    // How often each card of an upload is added: "Copies of every card" for a sheet, "Cards to add" for a
+    // single picture. Unlike the grid inputs this one may legitimately be 0 - a deck without cards yet - so
+    // it is not clamped to a minimum of one.
+    const cardCopies = dom=>Math.max(0, Math.round(+$('.cards [type=number]', dom).value) || 0);
+
     // Every sheet of backs shows the grid of the sheet of fronts it is paired with, so a back sheet that does
     // not line up with its fronts can be seen rather than only noticed on the finished cards.
     const renderBackSheets = _=>{
@@ -2676,7 +2686,8 @@ class PropertiesModule extends SidebarModule {
     const updateStatus = _=>{
       const fronts = frontSheets();
       const paired = backMode() == 'sheet';
-      const cards = fronts.reduce((sum, front)=>sum + front.columns*front.rows, 0);
+      // what actually lands on the table: every cell of every sheet, as often as its copies field says
+      const cards = fronts.reduce((sum, front)=>sum + front.columns*front.rows*cardCopies(front.dom), 0);
       if(!fronts.length)
         status.innerText = sheetMode ? 'Upload the image the cards are cut out of.' : 'Upload at least one card front.';
       else if(paired && backSheets.length != fronts.length)
@@ -2722,10 +2733,15 @@ class PropertiesModule extends SidebarModule {
         dom.style.setProperty('--sheetColumns', columns);
         dom.style.setProperty('--sheetRows', rows);
         dom.classList.toggle('cardFrontPreviewSheet', columns*rows > 1);
-        const cards = columns*rows;
+        const cells = columns*rows;
+        const copies = cardCopies(dom);
         const size = cardSizeFromImage(image.naturalWidth, image.naturalHeight, columns, rows);
+        // a sheet holds one card per cell and the copies field says how often each of them is added; a single
+        // picture is one card, added as often as that same field says
+        const cards = sheetMode ? cells : copies;
+        const total = sheetMode && copies != 1 ? `, ${copies} copies each - ${cells*copies} cards in total` : '';
         $('.cardFrontPreviewSummary', dom).textContent = image.naturalWidth
-          ? `${cards} card${cards == 1 ? '' : 's'} of ${Math.round(image.naturalWidth/columns)} × ${Math.round(image.naturalHeight/rows)} pixels, ${size.width} × ${size.height} on the table`
+          ? `${cards} card${cards == 1 ? '' : 's'} of ${Math.round(image.naturalWidth/columns)} × ${Math.round(image.naturalHeight/rows)} pixels, ${size.width} × ${size.height} on the table${total}`
           : '';
         renderBackSheets(); // the backs are cut by this grid, and it is in their caption
         updateStatus();
@@ -2764,8 +2780,19 @@ class PropertiesModule extends SidebarModule {
         return;
       const useBackSheets = backMode() == 'sheet' && backSheets.length == sheets.length;
       const hasTiledImage = sheets.some(sheet=>sheet.columns*sheet.rows > 1);
+      // The cards are sized after the picture they show - the whole image, or one cell of the grid it is cut
+      // into. The face stretches that picture across the card, so a card that does not have the shape of its
+      // picture is squashed. Uploads can have different shapes, so the first one sets the card defaults of the
+      // deck and every card type from a differently shaped upload carries its own size on top of them (a card
+      // type wins over the deck defaults, see card.js).
+      const sizes = sheets.map(({ dom, columns, rows })=>{
+        const image = $('img', dom);
+        return cardSizeFromImage(image.naturalWidth, image.naturalHeight, columns, rows);
+      });
+      const ownSize = index=>sizes[index].width != sizes[0].width || sizes[index].height != sizes[0].height ? sizes[index] : null;
       for(const [ index, { dom, columns, rows } ] of sheets.entries()) {
         const backSheet = useBackSheets ? backSheets[index] : null;
+        const size = ownSize(index);
         if(hasTiledImage) {
           for(let i=0; i<rows; ++i) {
             for(let j=0; j<columns; ++j) {
@@ -2780,7 +2807,9 @@ class PropertiesModule extends SidebarModule {
               // the back sits in the same cell of its own sheet, so it is read with the offsets of the front
               if(backSheet)
                 cardTypes[cardType].backImage = backSheet.imagePath;
-              counts[cardType] = $('.cards [type=number]', dom).value;
+              if(size)
+                Object.assign(cardTypes[cardType], size);
+              counts[cardType] = cardCopies(dom);
             }
           }
         } else {
@@ -2789,7 +2818,9 @@ class PropertiesModule extends SidebarModule {
           };
           if(backSheet)
             cardTypes[dom.dataset.fileName].backImage = backSheet.imagePath;
-          counts[dom.dataset.fileName] = $('.cards [type=number]', dom).value;
+          if(size)
+            Object.assign(cardTypes[dom.dataset.fileName], size);
+          counts[dom.dataset.fileName] = cardCopies(dom);
         }
       }
 
@@ -2817,6 +2848,7 @@ class PropertiesModule extends SidebarModule {
         id,
         type: 'deck',
         cardTypes,
+        cardDefaults: { ...sizes[0] },
         faceTemplates: [
           {
             "objects": [ backObject ]
@@ -2836,12 +2868,6 @@ class PropertiesModule extends SidebarModule {
           }
         ]
       };
-
-      // The cards are sized after the picture they show - the whole image, or one cell of the grid it is cut
-      // into. The face stretches that picture across the card, so a card that does not have the shape of its
-      // picture squashes every card of the deck.
-      const firstImage = $('img', sheets[0].dom);
-      deck.cardDefaults = cardSizeFromImage(firstImage.naturalWidth, firstImage.naturalHeight, sheets[0].columns, sheets[0].rows);
 
       if(hasTiledImage) {
         const tileCSS = {
