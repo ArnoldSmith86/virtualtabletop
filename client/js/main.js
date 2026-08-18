@@ -948,7 +948,11 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if($('body.edit #editorSidebar button.active'))
+    // the add widget overlay sits on top of the sidebar, so it goes first - without this the only
+    // way out of it was leaving edit mode altogether
+    if($('#addOverlay') && $('#addOverlay').style.display != 'none')
+      showOverlay();
+    else if($('body.edit #editorSidebar button.active'))
       $('#editorSidebar button.active').click();
     else if(edit)
       $('#editorToolbar button[icon=close]').click();

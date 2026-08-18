@@ -357,7 +357,7 @@ function generateTimerWidgets(id, x, y) {
   ];
 }
 
-function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
+function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick, title) {
   for(const wi of widgetsToAdd) {
     let w = null;
     if(wi.type == 'button') w = new Button(wi.id);
@@ -381,6 +381,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
         overlayDone(await onClick(...overlayPosition(wi.x, wi.y, w)));
         batchEnd();
       });
+      w.domElement.title = title;
       $('#addOverlayContent').appendChild(w.domElement);
     }
   }
@@ -398,7 +399,7 @@ function overlayPosition(x, y, w) {
   return addOverlayPosition(viewportConfig, x, y, w.get('width'), w.get('height'));
 }
 
-function addPieceToAddWidgetOverlay(w, wi) {
+function addPieceToAddWidgetOverlay(w, wi, title) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     try {
@@ -424,10 +425,11 @@ function addPieceToAddWidgetOverlay(w, wi) {
     }
   });
   w.domElement.id = w.id;
+  w.domElement.title = title;
   $('#addOverlayContent').appendChild(w.domElement);
 }
 
-function addWidgetToAddWidgetOverlay(w, wi) {
+function addWidgetToAddWidgetOverlay(w, wi, title) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
@@ -437,6 +439,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
     overlayDone(id);
   });
   w.domElement.id = w.id;
+  w.domElement.title = title;
   $('#addOverlayContent').appendChild(w.domElement);
 }
 
@@ -456,20 +459,20 @@ function populateAddWidgetOverlay() {
     type: 'holder',
     x: cardsX,
     y: 150
-  });
+  }, 'Add a card holder');
 
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', cardsX, 340, false), async function(x, y) {
     const id = generateUniqueWidgetID();
     for(const w of generateCardDeckWidgets(id, x, y, false))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add an empty deck and its holder');
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', cardsX, 570, true), async function(x, y) {
     const id = generateUniqueWidgetID();
     for(const w of generateCardDeckWidgets(id, x, y, true))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add a deck of 52 playing cards and its holder');
 
   //Add svg game pieces
   // First row
@@ -490,7 +493,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "black",
     borderWidth: 1
-  });
+  }, 'Add a pawn');
 
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
@@ -510,7 +513,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "black",
     borderWidth: "1"
-  });
+  }, 'Add a pin');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
     x: 390+2*75,
@@ -531,7 +534,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#ffffff",
     borderWidth: 1,
     secondaryColor: "#000000"
-  });
+  }, 'Add a marble');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
     x: 390+3*75,
@@ -552,7 +555,7 @@ function populateAddWidgetOverlay() {
     borderColor: "white",
     borderWidth: 1,
     secondaryColor: "black"
-  });
+  }, 'Add a cube');
 
   // Second row
 
@@ -586,7 +589,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 1,
     secondaryColor: "#ffffff"
-  });
+  }, 'Add a flat checker');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
     x: 445+100,
@@ -618,7 +621,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 1,
     secondaryColor: "#ffffff"
-  });
+  }, 'Add a checker');
 
   //Third row
 
@@ -639,7 +642,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 3
-  });
+  }, 'Add a flat meeple');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
     x: 450+100,
@@ -671,7 +674,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 1,
     state: "alive"
-  });
+  }, 'Add a meeple');
 
   //Fourth row
 
@@ -692,7 +695,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 2
-  });
+  }, 'Add a flat pig');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
     x: 450+100,
@@ -711,7 +714,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 1
-  });
+  }, 'Add a pig');
 
   //Fifth row
 
@@ -732,7 +735,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 1
-  });
+  }, 'Add a building');
 
   addPieceToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
     x: 490,
@@ -752,7 +755,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 2
-  });
+  }, 'Add a house');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Road3DSVG'), {
     x: 610,
@@ -791,7 +794,7 @@ function populateAddWidgetOverlay() {
     note: "Game designer: You can remove any face you may not need. That way you can limit rotation",
     borderColor: "#000000",
     borderWidth: 1
-  });
+  }, 'Add a road');
 
    //Sixth row (hexagons)
 
@@ -810,7 +813,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     hexType: "flat"
-  });
+  }, 'Add a flat top hex tile');
 
   addPieceToAddWidgetOverlay(new BasicWidget('HexPoint'), {
     x: 465,
@@ -827,7 +830,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     hexType: "point"
-  });
+  }, 'Add a pointy top hex tile');
 
   //This is added only to provide a visual background for the actual piece "HexFlatImage" since the css there does not show on the overlay
 
@@ -841,7 +844,7 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "currentColor": "color"
     }
-  });
+  }, 'Add a flat top hex tile with an image');
 
   addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImage'), {
     x: 540,
@@ -864,7 +867,7 @@ function populateAddWidgetOverlay() {
       }
     },
     hexType: "flat"
-  });
+  }, 'Add a flat top hex tile with an image');
 
   //This is added only to provide a visual background for the actual piece "HexPointImage" since the css there does not show on the overlay
 
@@ -878,7 +881,7 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "currentColor": "color"
     }
-  });
+  }, 'Add a pointy top hex tile with an image');
 
   addPieceToAddWidgetOverlay(new BasicWidget('HexPointImage'), {
     x: 615,
@@ -901,7 +904,7 @@ function populateAddWidgetOverlay() {
       }
     },
     hexType: "point"
-  });
+  }, 'Add a pointy top hex tile with an image');
 
   //Poker chips
 
@@ -926,7 +929,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'Add a flat poker chip');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
@@ -953,14 +956,14 @@ function populateAddWidgetOverlay() {
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
 
-  });
+  }, 'Add a flat dealer button');
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function(x, y) {
     const id = generateUniqueWidgetID();
     for(const w of generateChipPileWidgets(id, x, y, 2))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add a pile of flat poker chips and its holder');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
     x: 1010,
@@ -984,7 +987,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'Add a poker chip');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
@@ -1011,14 +1014,14 @@ function populateAddWidgetOverlay() {
     borderWidth: 2,
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
-  });
+  }, 'Add a dealer button');
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function(x, y) {
     const id = generateUniqueWidgetID();
     for(const w of generateChipPileWidgets(id, x, y, 3))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add a pile of poker chips and its holder');
 
   // Populate the dice. The real dice choosing happens in a popup.
   const dice2D = new Dice('add-dice2D0');
@@ -1055,6 +1058,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice2D.domElement.id = dice2D.id;
+  dice2D.domElement.title = 'Add a die - you pick how many sides it has';
   $('#addOverlayContent').appendChild(dice2D.domElement);
 
   const dice2DCube = new Dice('add-dice2DCube0');
@@ -1128,6 +1132,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice2DCube.domElement.id = dice2DCube.id;
+  dice2DCube.domElement.title = 'Add a cube die - you pick its color';
   $('#addOverlayContent').appendChild(dice2DCube.domElement);
 
   const dice3D = new Dice('add-dice3D0');
@@ -1166,6 +1171,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice3D.domElement.id = dice3D.id;
+  dice3D.domElement.title = 'Add a 3D die - you pick how many sides it has';
   $('#addOverlayContent').appendChild(dice3D.domElement);
 
   // Populate the Interactive panel in the add widget overlay.
@@ -1207,6 +1213,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   spinner.domElement.id = spinner.id;
+  spinner.domElement.title = 'Add a spinner - you pick how many values it has';
   $('#addOverlayContent').appendChild(spinner.domElement);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
@@ -1215,7 +1222,7 @@ function populateAddWidgetOverlay() {
     clickRoutine: [],
     x: 750,
     y: 860
-  });
+  }, 'Add a button that runs a routine when it is clicked');
 
   // Add the composite timer widget
   addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function(x, y) {
@@ -1223,7 +1230,7 @@ function populateAddWidgetOverlay() {
     for(const w of generateTimerWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add a timer');
 
   // Add the composite counter widget
   addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function(x, y) {
@@ -1231,7 +1238,7 @@ function populateAddWidgetOverlay() {
     for(const w of generateCounterWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add a counter');
 
   // Populate the Decorative panel in the add widget overlay
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
@@ -1239,7 +1246,7 @@ function populateAddWidgetOverlay() {
     text: 'Label',
     x: 1385,
     y: 100
-  });
+  }, 'Add a text label');
 
   addWidgetToAddWidgetOverlay(new Label('add-heading'), {
     type: 'label',
@@ -1249,14 +1256,14 @@ function populateAddWidgetOverlay() {
     width: 200,
     x: 1335,
     y: 150
-  });
+  }, 'Add a heading');
   // Add the composite line widget (a path with attached stops)
   addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function(x, y) {
     const id = generateUniqueWidgetID();
     for(const w of generateLineWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add a line with stops that pieces snap to');
 
   // The divider line is a plain line widget (without stops), so it can be
   // curved, restyled and connected like any other line
@@ -1269,7 +1276,7 @@ function populateAddWidgetOverlay() {
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 210, y: 10 },
     lineWidth: 4
-  });
+  }, 'Add a divider line');
 
   // a line without stops in its closed shape: a plain circle/oval outline
   addWidgetToAddWidgetOverlay(new Line('add-circle'), {
@@ -1282,7 +1289,7 @@ function populateAddWidgetOverlay() {
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 90, y: 90 },
     lineWidth: 4
-  });
+  }, 'Add a circle');
 
   // Add the composite ring widget (a closed line with stops all the way round)
   addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495), async function(x, y) {
@@ -1290,7 +1297,7 @@ function populateAddWidgetOverlay() {
     for(const w of generateRingWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
-  });
+  }, 'Add a ring of stops that pieces snap to');
 }
 // end of JSON generators
 
@@ -1775,6 +1782,11 @@ export function initializeEditMode(currentMetaData) {
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);
   on('#libraryDecksClose', 'click', _=>showOverlay());
+
+  // the overlay had no way out of it other than leaving edit mode: a close button, a click next to
+  // the layout and Escape (window.onkeyup in main.js) all just close it
+  on('#addOverlayClose', 'click', _=>showOverlay());
+  on('#addOverlay', 'click', e=>e.target.id=='addOverlay'&&showOverlay());
 
   on('#addCanvas', 'click', async function() {
     const size = Math.round(Math.min(800, viewportConfig.targetWidth/2, viewportConfig.targetHeight*0.8));

@@ -4,7 +4,13 @@
   transform: scale(var(--scale));
   transform-origin: left top;
   padding: 0;
+  /* deliberate: the contents are scaled to fit, so they always do - a scrollbar could only ever
+     show up for a preview placed outside the 1600x1000 layout, which is a bug and not something
+     to scroll to */
   overflow: hidden;
+  /* the band left/right or above/below the centered layout on a board that is not 16:10. The room
+     color makes the white layout read as centered instead of as failing to fill the board. */
+  background: var(--roomColor);
 }
 
 /* The contents are laid out for a fixed 1600x1000 board because the preview widgets inside the
@@ -28,6 +34,21 @@
   grid-template-rows: 1fr 1fr 1fr;
   padding: 20px;
   gap: 20px;
+  background: white;
+  box-shadow: 0 0 24px #00000033;
+}
+
+#addOverlayClose {
+  position: absolute;
+  top: 26px;
+  right: 26px;
+}
+
+/* The preview piles hold no cards, so their count/total handle would show the number the added
+   widget starts with (52 for the deck, 1641 for a full set of chips) floating next to an empty
+   preview - see generateCardDeckWidgets/generateChipPileWidgets in editmode.js. */
+#addOverlayContent .pile .handle {
+  display: none;
 }
 
 #addOverlayContent > .category {
