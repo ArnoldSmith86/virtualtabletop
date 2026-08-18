@@ -3227,12 +3227,14 @@ class DeckEditor {
     return /^\s*[a-zA-Z]+\s*$/.test(value) && this.parseColor(value) !== null;
   }
 
-  // A value that is on its way to becoming a color while it is being typed: an empty field, a half-typed hex
-  // ("#1a"), the start of an rgb()/hsl() notation, or plain letters (a keyword before it is finished). Without
-  // this the picker button of a color-named property would vanish and reappear under the cursor mid-keystroke.
+  // A value that can only be on its way to becoming a color while it is being typed: a half-typed hex ("#1a")
+  // or the start of an rgb()/hsl() notation. Without this the picker button of a color-named property would
+  // vanish and reappear under the cursor between two keystrokes of a hex value. Half-typed keywords are
+  // deliberately not accepted: "Spades" is indistinguishable from "blu" halfway through, so letters would
+  // leave the picker armed on a value that is no color and never becomes one.
   isPartialColorValue(value) {
     const text = String(value === undefined || value === null ? '' : value).trim();
-    return text == '' || /^#[0-9a-fA-F]{0,8}$/.test(text) || /^[a-zA-Z]+$/.test(text) || /^(rgba?|hsla?)\(/.test(text);
+    return /^#[0-9a-fA-F]{0,8}$/.test(text) || /^(rgba?|hsla?)\(/.test(text);
   }
 
   // Whether a property row should get the little color swatch + color picker. A value that is a color always
@@ -3240,24 +3242,26 @@ class DeckEditor {
   // how a color is put there. The name alone is not enough: a card type property named after a color can hold
   // something that is no color at all - the standard deck sorts by suitColor: "♠" - and picking a color there
   // would silently overwrite that value with a hex code.
-  // Anything half-typed in between only *keeps* a picker that is already showing (offeredBefore), so a color
-  // being retyped doesn't lose its button - and its open picker - between two keystrokes, while typing a word
-  // like "Spades" over a sort key never arms one.
-  shouldOfferColorPicker(property, value, offeredBefore = true) {
+  // The answer depends on the current value alone, never on whether a picker was showing a keystroke ago: a
+  // rule that fed its own result back in would keep the picker armed on whatever is typed over a color next
+  // ("red" -> "S" -> "Spades"), which is the trap this is here to close. A half-typed hex or rgb() keeps its
+  // button between keystrokes because those shapes can't be anything but a color on its way in.
+  shouldOfferColorPicker(property, value) {
     if(this.isColorValue(value))
       return true;
     if(!/color/i.test(String(property)))
       return false;
     const text = String(value === undefined || value === null ? '' : value).trim();
-    return text == '' || (offeredBefore && this.isPartialColorValue(text));
+    return text == '' || this.isPartialColorValue(text);
   }
 
   // What a card type property is there for, as a row tooltip. The standard decks give their cards a set of
   // properties that exist purely so a routine can SORT by them (see generateCardDeckWidgets in editmode.js and
   // assets/decks/standard.json), and their values are shaped for that order rather than for reading - without
   // a word of explanation the panel just shows "suitAlt: 3♠" and "rankFixed: 02 S". Only a card type carrying
-  // that whole set is described this way, so a deck that uses "rank"/"suit" for its own readable values (the
-  // German and Spanish decks do) isn't told what its properties supposedly mean.
+  // the complete set is described this way: card type properties are author-defined, so a deck that happens to
+  // use one or two of these names for its own values (the German and Spanish decks use "rank"/"suit" for their
+  // readable ones, a hand-built deck may sort by a "rank" of its own) isn't told what its properties mean.
   cardTypePropertyHint(property, typeProperties) {
     const hints = {
       suit: 'Sorting property: groups the cards of one suit together.',
@@ -3267,7 +3271,7 @@ class DeckEditor {
       rankA: 'Sorting property: like rank, but with the ace high.',
       rankFixed: 'Sorting property: one fixed order for the whole deck - by rank, then by suit.'
     };
-    const isSortingDeck = [ 'suitAlt', 'rankA', 'rankFixed' ].some(key=>typeProperties[key] !== undefined);
+    const isSortingDeck = Object.keys(hints).every(key=>typeProperties[key] !== undefined);
     if(!isSortingDeck || !hints[property])
       return null;
     if(property == 'suitColor' && this.isColorValue(typeProperties[property]))
@@ -3351,14 +3355,12 @@ class DeckEditor {
     // The picker reads the field instead of the model so it opens on what is currently typed, even while the
     // edit that writes it through is still queued.
     const picker = new ColorInput({}, {}, null, { getValue: _=>field.value, listenTo: [] });
-    // A row that starts out without a picker doesn't get one from a half-typed value, only from a real color:
-    // see shouldOfferColorPicker.
-    let offer = this.shouldOfferColorPicker(property, field.value, false);
+    let offer = this.shouldOfferColorPicker(property, field.value);
     // A color-named row keeps the space for the button reserved even while it isn't showing one, so the field
     // doesn't change width under the cursor when the value stops (or starts) looking like a color mid-edit.
     const keepsRoom = /color/i.test(String(property));
     const updateSwatch = _=>{
-      offer = this.shouldOfferColorPicker(property, field.value, offer);
+      offer = this.shouldOfferColorPicker(property, field.value);
       button.style.display = offer ? '' : 'none';
       row.dom.classList.toggle('hasColorPicker', offer || keepsRoom);
       if(offer) {

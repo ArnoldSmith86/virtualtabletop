@@ -24,7 +24,7 @@ describe('which deck editor property rows offer a color picker', () => {
   });
 
   test('keeps offering it while a color is being typed into a color-named property', () => {
-    for(const halfTyped of [ '', '#', '#f0', 'rgb(255, 0', 're' ])
+    for(const halfTyped of [ '', '#', '#f0', 'rgb(255, 0', 'hsl(120,' ])
       expect(editor.shouldOfferColorPicker('color', halfTyped)).toBe(true);
   });
 
@@ -40,12 +40,16 @@ describe('which deck editor property rows offer a color picker', () => {
     expect(editor.shouldOfferColorPicker('suitAlt', '3♠')).toBe(false);
   });
 
-  test('a row that has no picker does not get one from a half-typed value, only from a real color', () => {
-    // typing a word into the standard deck's suitColor: "♠" must not arm the picker on the way
-    for(const typed of [ 'S', 'Sp', 'Spades', '#', '#f' ])
-      expect(editor.shouldOfferColorPicker('suitColor', typed, false)).toBe(false);
-    expect(editor.shouldOfferColorPicker('suitColor', 'red', false)).toBe(true);
-    expect(editor.shouldOfferColorPicker('suitColor', '', false)).toBe(true); // an empty one is waiting for a color
+  test('a word typed over a value never arms the picker, whatever the row showed before', () => {
+    // The answer must not depend on what the row showed a keystroke ago, or the picker would survive the whole
+    // way from a color to a word and could still overwrite it. Both sequences are typed into the same row:
+    const typeInto = (property, keystrokes)=>keystrokes.map(value=>editor.shouldOfferColorPicker(property, value));
+    // over the standard deck's sort key, clearing the field first (empty offers one - see the test above)
+    expect(typeInto('suitColor', [ '♠', '', 'S', 'Sp', 'Spa', 'Spades' ])).toEqual([ false, true, false, false, false, false ]);
+    // over a real color, which is where a rule carrying its own result forward stayed armed to the end
+    expect(typeInto('suitColor', [ 'red', 'S', 'Sp', 'Spades' ])).toEqual([ true, false, false, false ]);
+    // while a hex is retyped the button stays put, so an open picker isn't closed between two keystrokes
+    expect(typeInto('color', [ 'red', '', '#', '#f', '#ff0', '#ff000', '#ff0000' ])).toEqual([ true, true, true, true, true, true, true ]);
   });
 });
 
@@ -63,6 +67,19 @@ describe('what the card type panel says about a sorting property', () => {
     const spanish = { rank: '1', suit: 1, order: 1 }; // assets/decks/spanish.json
     for(const property of Object.keys(spanish))
       expect(editor.cardTypePropertyHint(property, spanish)).toBe(null);
+  });
+
+  test('says nothing about a card type that carries only part of the set', () => {
+    // an author-defined "rank" is not the standard deck's ace-low sort key just because a "rankFixed" is around
+    const own = { rank: 'high', rankFixed: 'custom', suitAlt: 'a' };
+    for(const property of Object.keys(own))
+      expect(editor.cardTypePropertyHint(property, own)).toBe(null);
+    // the tarot deck's suitColor really is a color, and it carries none of the other sorting properties
+    const tarot = { rank: '1', roman: 'I', suit: 5, suitColor: 'red', order: 15 }; // assets/decks/tarot.json
+    expect(editor.cardTypePropertyHint('suitColor', tarot)).toBe(null);
+    // one missing property is enough to stay quiet
+    const { rankA, ...withoutRankA } = standard;
+    expect(editor.cardTypePropertyHint('rank', withoutRankA)).toBe(null);
   });
 
   test('does not call a suitColor that really is a color a sorting property without saying so', () => {
