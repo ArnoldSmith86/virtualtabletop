@@ -1908,6 +1908,42 @@ test('Deck editor: mismatched and shared card backs in the new deck wizard', asy
   })()).eql(Array(3).fill(asset('back1.png')));
 });
 
+// The public library's deck browser is opened from the "Add New Deck" dialog, which hides itself while the
+// browser is up. The browser is moved into #editor for that (see DeckEditor.initializeDOM), where it needs a
+// box and a stacking order of its own - without them the deck editor paints over it and not a single deck can
+// be seen or clicked.
+test('Deck editor: the public library deck browser opens above the deck editor', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupExisting .deckEditorNewDeckGroupHeader') // open the "Use an existing deck" section
+    .click('#deckEditorNewDeckOverlay input[value=library]')
+    .click('#deckEditorNewDeckPanel button[icon=style]') // "Browse the public library"
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  // a deck is only pickable when a click at its own position actually reaches it
+  const firstEntryIsOnTop = ClientFunction(() => {
+    const entry = document.querySelector('.libraryDeckEntry');
+    const rect = entry.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.x + rect.width/2, rect.y + rect.height/2);
+    return !!(hit && hit.closest('.libraryDeckEntry'));
+  });
+  await t.expect(firstEntryIsOnTop()).ok();
+
+  // and closing it without picking one comes back to the dialog it was opened from, still on that section
+  await t
+    .click('#libraryDecksClose')
+    .expect(Selector('#deckEditorNewDeckOverlay').visible).ok()
+    .expect(Selector('#libraryDecksOverlay').visible).notOk()
+    .expect(Selector('#deckEditorNewDeckGroupExisting').hasClass('deckEditorNewDeckGroupOpen')).ok();
+});
+
 // The tiled counterpart of the front/back pairs above: one picture holding a grid of fronts and a second one
 // holding the backs in the same grid, so every card gets the back sitting in its own cell.
 test('Deck editor: a sheet of fronts with a matching sheet of backs in the new deck wizard', async t => {

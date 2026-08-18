@@ -4055,7 +4055,9 @@ class DeckEditor {
       // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added. The
       // dialog is hidden while browsing, so the placement options are read now rather than at the click.
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
-      $('button', bar).onclick = _=>openLibraryDecksOverlay(newDeckPlacement());
+      // closing the browser without picking a deck comes back to this dialog rather than leaving the deck
+      // editor with no dialog and a new deck still pending
+      $('button', bar).onclick = _=>openLibraryDecksOverlay(newDeckPlacement(), _=>showOverlay('deckEditorNewDeckOverlay'));
     } else {
       // Render the existing PropertiesModule deck-creation flow inside a container carrying the same classes
       // the sidebar uses ("tune editorModule"), so its scoped CSS (preview tiles, suit editors, TTS input)

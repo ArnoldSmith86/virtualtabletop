@@ -506,6 +506,23 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 30;
 }
 
+/* The public library's deck browser is moved into #editor as well (see initializeDOM), but unlike the
+   dialogs above it is a room-sized overlay: .overlay places it absolutely and editmode.css sizes it to the
+   board and scales it to fit #roomArea. Left like that in #editor it has no stacking order of its own, so the
+   deck editor (z-index 1) paints over it - "Browse the public library" opened an overlay that could neither be
+   seen nor clicked. Give it the box the other moved overlays get. */
+#editor > #libraryDecksOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  transform: none;
+  z-index: 20;
+}
+
 #deckEditorExportOverlay {
   position: fixed;
   top: var(--editToolbarHeight);

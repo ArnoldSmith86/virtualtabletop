@@ -1285,6 +1285,7 @@ let libraryDecksIndex = null;
 let libraryDecksObserver = null;
 let libraryDeckPreviewCounter = 0;
 let libraryDecksPlacement = null; // set by openLibraryDecksOverlay for the deck a click adds
+let libraryDecksCancelled = null; // what the opener wants done when the browser is closed without picking a deck
 const libraryDeckDetailsCache = {};
 
 function getLibraryDeckDetails(entry) {
@@ -1305,8 +1306,11 @@ function getLibraryDeckDetails(entry) {
 
 // placement: what to add around a picked deck, when the browser was opened from the "Add New Deck" dialog (which
 // is hidden while browsing). Opened from anywhere else, a picked deck gets the holder and button it always got.
-async function openLibraryDecksOverlay(placement) {
+// onCancel: what to do when the browser is closed without picking one - the dialog that opened it is hidden, so
+// it has to bring itself back.
+async function openLibraryDecksOverlay(placement, onCancel) {
   libraryDecksPlacement = placement || deckPlacementDefault;
+  libraryDecksCancelled = onCancel || null;
   showOverlay('libraryDecksOverlay');
   if(libraryDecksIndex == 'loading')
     return;
@@ -1505,6 +1509,7 @@ async function addLibraryDeckToGame(entry) {
   for(const [ i, card ] of details.cards.entries())
     await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
 
+  libraryDecksCancelled = null; // a deck was picked, so whoever opened the browser is done with it
   overlayDone(placement.holder ? id : id+'P');
   batchEnd();
 }
@@ -1752,7 +1757,14 @@ export function initializeEditMode(currentMetaData) {
   on('#browseLibraryDecks', 'click', _=>openLibraryDecksOverlay());
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);
-  on('#libraryDecksClose', 'click', _=>showOverlay());
+  on('#libraryDecksClose', 'click', function() {
+    const onCancel = libraryDecksCancelled;
+    libraryDecksCancelled = null;
+    if(onCancel)
+      onCancel();
+    else
+      showOverlay();
+  });
 
   on('#addCanvas', 'click', async function() {
     const id = await addWidgetLocal({
