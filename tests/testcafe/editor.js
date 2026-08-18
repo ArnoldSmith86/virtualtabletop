@@ -1908,6 +1908,87 @@ test('Deck editor: mismatched and shared card backs in the new deck wizard', asy
   })()).eql(Array(3).fill(asset('back1.png')));
 });
 
+// The tiled counterpart of the front/back pairs above: one picture holding a grid of fronts and a second one
+// holding the backs in the same grid, so every card gets the back sitting in its own cell.
+test('Deck editor: a sheet of fronts with a matching sheet of backs in the new deck wizard', async t => {
+  const asset = (fileName, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = asset('fronts.png', 1500, 400); // 5 x 2 cards of 300 x 200 each
+  const backs  = asset('backs.png', 750, 200);   // the same grid at half the resolution
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  // as in the tests above: the file picker can't be driven from a test, so uploadAsset hands the wizard the
+  // asset path the server would have returned
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setGrid = ClientFunction((columns, rows) => {
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = document.querySelector(`.cardFrontPreview ${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+  const addButton = Selector('#deckEditorNewDeckPanel .goButton [icon=add]');
+  const status = Selector('.imagePairStatus');
+
+  await stubUploadOf('fronts.png', fronts);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setGrid(5, 2);
+  await t.expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table');
+
+  // asking for a sheet of backs blocks the import until that sheet is there
+  await t
+    .click('input[name=deckImagesBackMode][value=sheet]')
+    .expect(status.innerText).contains('1 sheet of fronts but 0 of backs')
+    .expect(addButton.hasAttribute('disabled')).ok();
+
+  await stubUploadOf('backs.png', backs);
+  await t
+    .click('#deckEditorNewDeckPanel #backSheetButton')
+    .expect(status.innerText).contains('each with its own back from the sheet in the same position')
+    .expect(addButton.hasAttribute('disabled')).notOk()
+    .click(addButton)
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(10); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return {
+      cardDefaults: deck.get('cardDefaults'),
+      backFace: deck.get('faceTemplates')[0].objects,
+      lastOfFirstRow: cardTypes[Object.keys(cardTypes)[4]]
+    };
+  })();
+
+  // the cards have the shape of one cell of the sheet, not the deck default
+  await t.expect(deck.cardDefaults.width).eql(160);
+  await t.expect(deck.cardDefaults.height).eql(107);
+  // both sheets are read with the same offsets, so a card's back is the cell its front came from
+  await t.expect(deck.lastOfFirstRow).eql({
+    image: fronts,
+    offsetX: 4,
+    offsetY: 0,
+    deckWidth: 5,
+    deckHeight: 2,
+    backImage: backs
+  });
+  // and the back face has exactly one object - the card's own back, cut out of the sheet of backs
+  await t.expect(deck.backFace.length).eql(1);
+  await t.expect(deck.backFace[0].dynamicProperties.value).eql('backImage');
+  await t.expect(deck.backFace[0].css['background-position']).contains('--offsetX');
+});
+
 // The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
 // strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
 test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {

@@ -2555,12 +2555,35 @@ class PropertiesModule extends SidebarModule {
 
   // Cards built from uploaded pictures, in two flavours: one image per card, or one image with a whole grid of
   // cards on it that gets cut into single cards (sheetMode). Everything but the grid is shared - the same
-  // back picker, the same upload list, the same faces - so the row/column controls and the grid preview are
-  // the only parts that come and go with the mode.
+  // back picker, the same upload list, the same faces - so the row/column controls, the grid preview and the
+  // sheet of backs are the only parts that come and go with the mode.
   deckImages(target, sheetMode=false) {
-    this.addSubHeader('Card backs', target);
+    // The sheet mode leads with the picture it is about to cut up and asks about the backs afterwards; one
+    // image per card keeps the shared back first, the way it always was.
+    const frontsSection = div(null);
+    const backsSection = div(null);
+    target.append(...(sheetMode ? [ frontsSection, backsSection ] : [ backsSection, frontsSection ]));
+
+    this.addSubHeader(sheetMode ? 'The image to cut up' : 'Card fronts', frontsSection);
+    const intro = document.createElement('p');
+    intro.innerText = sheetMode
+      ? 'Upload one image with all the cards on it, then say how many cards it holds across and down. Every cell of that grid becomes a card, and the cards take the shape of a single cell so none of them come out stretched.'
+      : 'Upload one image per card - several at once works. Every card gets the back picked above.';
+    frontsSection.append(intro);
+    const preview = div(frontsSection);
+
+    this.addSubHeader('Card backs', backsSection);
+    // A sheet of fronts usually comes with a sheet of backs in the same grid, so that is offered next to the
+    // one back the whole deck shares. Without a sheet there is nothing to cut a per-card back out of.
+    const backModes = sheetMode ? div(backsSection, 'deckImagesBackModes', `
+      <label><input type=radio name=deckImagesBackMode value=shared checked>The same back on every card</label>
+      <label><input type=radio name=deckImagesBackMode value=sheet>A second sheet with one back per card, cut with the same grid</label>
+    `) : null;
+    const backMode = _=>backModes && $('input[name=deckImagesBackMode]:checked', backModes).value == 'sheet' ? 'sheet' : 'shared';
+
+    const sharedBack = div(backsSection, 'deckImagesSharedBack');
     let backImageURL = '/i/cards-default/2B.svg';
-    const backButtons = div(target);
+    const backButtons = div(sharedBack);
 
     const addBackImageButton = image=>{
       this.renderWidgetButton(new BasicWidget(), { image }, backButtons).onclick = e=>{
@@ -2576,7 +2599,7 @@ class PropertiesModule extends SidebarModule {
     for(const image of [ '/i/cards-default/1B.svg', '/i/cards-default/2B.svg', '/i/cards-default/3B.svg', '/i/cards-plastic/1B.svg', '/i/cards-plastic/2B.svg' ])
       addBackImageButton(image);
 
-    div(target, 'buttonBar', `
+    div(sharedBack, 'buttonBar', `
       <button icon=upload id=backButton>Upload back...</button>
     `);
 
@@ -2585,18 +2608,93 @@ class PropertiesModule extends SidebarModule {
       $('.widgetSelectionButton:last-child', backButtons).click();
     });
 
-    this.addSubHeader(sheetMode ? 'The image to cut up' : 'Card fronts', target);
-    const intro = document.createElement('p');
-    intro.innerText = sheetMode
-      ? 'Upload one image with all the cards on it, then say how many cards it holds across and down. Every cell of that grid becomes a card, and the cards take the shape of a single cell so none of them come out stretched.'
-      : 'Upload one image per card - several at once works. Every card gets the back picked above.';
-    target.append(intro);
-    const preview = div(target);
+    // The sheets of backs, in the order they were uploaded in - which is the order they are paired with the
+    // sheets of fronts in, one back sheet per front sheet.
+    const backSheets = [];
+    const backSheetSection = sheetMode ? div(backsSection, 'deckImagesBackSheets') : null;
+    if(backSheetSection) {
+      div(backSheetSection, 'deckImagesBackSheetHint', 'The sheet of backs is cut with the grid of the sheet of fronts it belongs to, so both need the same number of cards across and down. With several sheets of fronts, upload one sheet of backs per sheet of fronts - they are paired in upload order.');
+      div(backSheetSection, 'deckImagesBackSheetList');
+      div(backSheetSection, 'buttonBar', '<button icon=upload id=backSheetButton>Upload sheet of backs...</button>');
+      $('#backSheetButton').onclick = _=>uploadAsset((imagePath, fileName)=>{
+        if(imagePath) {
+          backSheets.push({ imagePath, fileName });
+          renderBackSheets();
+        }
+      });
+    }
 
     div(target, 'goButton buttonBar', `
-      <button icon=upload id=frontsButton>${sheetMode ? 'Upload image...' : 'Upload fronts...'}</button>
+      <span class=imagePairStatus></span>
+      <button icon=upload id=frontsButton>${sheetMode ? 'Upload sheet of fronts...' : 'Upload fronts...'}</button>
       <button icon=add class=green disabled>Add to game</button>
     `);
+    const status = $('.imagePairStatus', target);
+    const addButton = $('.goButton [icon=add]', target);
+
+    // The uploaded sheets of fronts with the grid each of them is cut by, in the order they were uploaded.
+    const frontSheets = _=>[ ...$a('.cardFrontPreview', preview) ].map(dom=>({ dom, ...this.imageSheetGrid(dom) }));
+
+    // Every sheet of backs shows the grid of the sheet of fronts it is paired with, so a back sheet that does
+    // not line up with its fronts can be seen rather than only noticed on the finished cards.
+    const renderBackSheets = _=>{
+      if(!backSheetSection)
+        return;
+      const fronts = frontSheets();
+      const list = $('.deckImagesBackSheetList', backSheetSection);
+      list.innerHTML = '';
+      for(const [ index, backSheet ] of backSheets.entries()) {
+        const front = fronts[index];
+        const dom = div(list, 'cardFrontPreview cardBackSheetPreview', `
+          <div class=cardFrontPreviewImage>
+            <img src="${mapAssetURLs(backSheet.imagePath)}">
+            <div class=cardFrontPreviewGrid></div>
+          </div>
+          <div class=cardFrontPreviewSettings>
+            <b></b>
+            <div class=cardFrontPreviewSummary></div>
+            <button icon=delete>Delete</button>
+          </div>
+        `);
+        $('b', dom).innerText = backSheet.fileName;
+        dom.style.setProperty('--sheetColumns', front ? front.columns : 1);
+        dom.style.setProperty('--sheetRows', front ? front.rows : 1);
+        dom.classList.toggle('cardFrontPreviewSheet', !!front && front.columns*front.rows > 1);
+        $('.cardFrontPreviewSummary', dom).textContent = front
+          ? `Backs for "${front.dom.dataset.fileName}", cut ${front.columns} × ${front.rows}`
+          : 'No sheet of fronts to pair this with yet';
+        $('[icon=delete]', dom).onclick = _=>{
+          backSheets.splice(index, 1);
+          renderBackSheets();
+        };
+      }
+      updateStatus();
+    };
+
+    // Says what will be created, and why "Add to game" is off when it is - the counts of a paired import are
+    // the one thing the wizard cannot fix by itself.
+    const updateStatus = _=>{
+      const fronts = frontSheets();
+      const paired = backMode() == 'sheet';
+      const cards = fronts.reduce((sum, front)=>sum + front.columns*front.rows, 0);
+      if(!fronts.length)
+        status.innerText = sheetMode ? 'Upload the image the cards are cut out of.' : 'Upload at least one card front.';
+      else if(paired && backSheets.length != fronts.length)
+        status.innerText = `${fronts.length} sheet${fronts.length == 1 ? '' : 's'} of fronts but ${backSheets.length} of backs - upload one sheet of backs per sheet of fronts.`;
+      else if(paired)
+        status.innerText = `${cards} card${cards == 1 ? '' : 's'}, each with its own back from the sheet in the same position.`;
+      else
+        status.innerText = `${cards} card${cards == 1 ? '' : 's'}, all sharing the back picked above.`;
+      status.classList.toggle('imagePairMismatch', paired && !!fronts.length && backSheets.length != fronts.length);
+      addButton.disabled = !fronts.length || paired && backSheets.length != fronts.length;
+    };
+
+    if(backModes)
+      for(const radio of $a('input[name=deckImagesBackMode]', backModes))
+        radio.onchange = _=>{
+          backsSection.classList.toggle('deckImagesBackSheetMode', backMode() == 'sheet');
+          updateStatus();
+        };
 
     $('#frontsButton').onclick = _=>uploadAsset(async (imagePath, fileName)=>{
       const dom = div(preview, 'cardFrontPreview', `
@@ -2629,6 +2727,8 @@ class PropertiesModule extends SidebarModule {
         $('.cardFrontPreviewSummary', dom).textContent = image.naturalWidth
           ? `${cards} card${cards == 1 ? '' : 's'} of ${Math.round(image.naturalWidth/columns)} × ${Math.round(image.naturalHeight/rows)} pixels, ${size.width} × ${size.height} on the table`
           : '';
+        renderBackSheets(); // the backs are cut by this grid, and it is in their caption
+        updateStatus();
       };
       for(const name of [ 'rows', 'cols', 'cards' ]) {
         const range = $(`.${name} [type=range]`, dom);
@@ -2643,22 +2743,29 @@ class PropertiesModule extends SidebarModule {
           updateSummary();
         };
       }
-      $('[icon=delete]', dom).onclick = e=>dom.remove();
+      $('[icon=delete]', dom).onclick = e=>{
+        dom.remove();
+        renderBackSheets();
+        updateStatus();
+      };
       // naturalWidth is 0 until the browser has the image, so the summary is written again once it is there
       image.onload = updateSummary;
       updateSummary();
-      $('.goButton [icon=add]', target).disabled = false;
     });
 
-    $('.goButton [icon=add]', target).onclick = async _=>{
+    updateStatus();
+
+    addButton.onclick = async _=>{
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       const counts = {};
-      const sheets = [ ...$a('.cardFrontPreview', preview) ].map(dom=>({ dom, ...this.imageSheetGrid(dom) }));
+      const sheets = frontSheets();
       if(!sheets.length)
         return;
+      const useBackSheets = backMode() == 'sheet' && backSheets.length == sheets.length;
       const hasTiledImage = sheets.some(sheet=>sheet.columns*sheet.rows > 1);
-      for(const { dom, columns, rows } of sheets) {
+      for(const [ index, { dom, columns, rows } ] of sheets.entries()) {
+        const backSheet = useBackSheets ? backSheets[index] : null;
         if(hasTiledImage) {
           for(let i=0; i<rows; ++i) {
             for(let j=0; j<columns; ++j) {
@@ -2670,6 +2777,9 @@ class PropertiesModule extends SidebarModule {
                 deckWidth: columns,
                 deckHeight: rows
               };
+              // the back sits in the same cell of its own sheet, so it is read with the offsets of the front
+              if(backSheet)
+                cardTypes[cardType].backImage = backSheet.imagePath;
               counts[cardType] = $('.cards [type=number]', dom).value;
             }
           }
@@ -2677,9 +2787,31 @@ class PropertiesModule extends SidebarModule {
           cardTypes[dom.dataset.fileName] = {
             image: dom.dataset.imagePath
           };
+          if(backSheet)
+            cardTypes[dom.dataset.fileName].backImage = backSheet.imagePath;
           counts[dom.dataset.fileName] = $('.cards [type=number]', dom).value;
         }
       }
+
+      // The back face either shows the one image the whole deck shares, or the card's own back out of the
+      // sheet of backs - never both, so that no card ends up with an empty image object on its back.
+      const backObject = useBackSheets ? {
+        "type": "image",
+        "color": "transparent",
+        "dynamicProperties": {
+          "value": "backImage",
+          "height": "height",
+          "width": "width"
+        }
+      } : {
+        "type": "image",
+        "color": "transparent",
+        "value": backImageURL,
+        "dynamicProperties": {
+          "height": "height",
+          "width": "width"
+        }
+      };
 
       const deck = {
         id,
@@ -2687,17 +2819,7 @@ class PropertiesModule extends SidebarModule {
         cardTypes,
         faceTemplates: [
           {
-            "objects": [
-              {
-                "type": "image",
-                "color": "transparent",
-                "value": backImageURL,
-                "dynamicProperties": {
-                  "height": "height",
-                  "width": "width"
-                }
-              }
-            ]
+            "objects": [ backObject ]
           },
           {
             "objects": [
@@ -2722,10 +2844,13 @@ class PropertiesModule extends SidebarModule {
       deck.cardDefaults = cardSizeFromImage(firstImage.naturalWidth, firstImage.naturalHeight, sheets[0].columns, sheets[0].rows);
 
       if(hasTiledImage) {
-        deck.faceTemplates[1].objects[0].css = {
+        const tileCSS = {
           "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
           "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
         };
+        deck.faceTemplates[1].objects[0].css = tileCSS;
+        if(useBackSheets)
+          deck.faceTemplates[0].objects[0].css = { ...tileCSS };
         deck.cardDefaults.css = {
           '--offsetX':    '${PROPERTY offsetX}',
           '--offsetY':    '${PROPERTY offsetY}',

@@ -344,6 +344,44 @@
   display: block;
 }
 
+/* Where the backs come from: one image for the whole deck, or a second sheet cut by the same grid. Only the
+   picked one's controls are shown - the class is set on the section holding both. */
+.tune.editorModule .deckImagesBackModes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.tune.editorModule .deckImagesBackModes label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.tune.editorModule .deckImagesBackSheets,
+.tune.editorModule .deckImagesBackSheetMode .deckImagesSharedBack {
+  display: none;
+}
+
+.tune.editorModule .deckImagesBackSheetMode .deckImagesBackSheets {
+  display: block;
+}
+
+.tune.editorModule .deckImagesBackSheetHint {
+  margin-bottom: 8px;
+  text-align: left;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.tune.editorModule .cardBackSheetPreview b {
+  display: block;
+  margin-bottom: 2px;
+}
+
 .tune.editorModule .cardFrontPreviewSummary {
   margin-top: 4px;
   margin-bottom: 4px;
