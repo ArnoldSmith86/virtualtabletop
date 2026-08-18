@@ -321,10 +321,6 @@ class DeckEditor {
     $('#editor').append($('#deckEditorNewDeckOverlay'));
     $('#editor').append($('#symbolPickerOverlay'));
     $('#editor').append($('#audioPickerOverlay'));
-    // Move the shared public-library overlay into #editor too, so "Browse the public library" from the deck
-    // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
-    // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
-    $('#editor').append($('#libraryDecksOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -890,7 +886,12 @@ class DeckEditor {
 
     if(e.key == 'Escape') {
       e.preventDefault();
-      if(this.selectedObject !== null) {
+      // The public library browser is opened on top of the editor, so Escape closes that first - through its
+      // close button, so whoever opened it (the Add New Deck dialog) comes back instead of the editor being
+      // left without one.
+      if($('#libraryDecksOverlay').style.display != 'none') {
+        $('#libraryDecksClose').click();
+      } else if(this.selectedObject !== null) {
         this.selectObject(null);
       } else {
         this.closedByEscape = true; // so the keyup listener still swallows this Escape's keyup
@@ -934,6 +935,11 @@ class DeckEditor {
 
     $('body').classList.add('deckEditorActive');
     $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
+    // The shared public-library overlay is the room's, not the editor's: borrow it while the deck editor is up
+    // so "Browse the public library" from the Add New Deck dialog shows above the editor (deckeditor.css gives
+    // it the editor's box there) and hand it back on close, so plain edit mode keeps the room-scaled overlay
+    // it has always had next to the add widget overlay it is opened from.
+    $('#editor').append($('#libraryDecksOverlay'));
     // If a sidebar module (e.g. the deck's text Properties panel this editor is opened from) is open, close it
     // so the visual editor owns the full width instead of sharing the screen with the panel it replaces. Only
     // when the editor actually opens though: switching decks inside it must leave a panel the user opened
@@ -1000,6 +1006,7 @@ class DeckEditor {
     this.resetHistory();
     $('body').classList.add('deckEditorActive');
     $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
+    $('#editor').append($('#libraryDecksOverlay')); // borrowed from the room while the editor is open, see open()
     if(!wasOpen) {
       const activeModuleButton = $('#editorSidebar button.active');
       if(activeModuleButton)
@@ -1062,6 +1069,7 @@ class DeckEditor {
     this.cssEditorState.clear();
     $('body').classList.remove('deckEditorActive');
     $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
+    $('#roomArea').append($('#libraryDecksOverlay')); // back to the room-scaled overlay of plain edit mode
     $('#deckEditorDragToolbar').classList.remove('active');
     this.setRoomVisible(false); // hand the whole play area back to the room
     this.syncToolbarButton();
@@ -1113,6 +1121,7 @@ class DeckEditor {
     this.historyIndex = -1;
     $('body').classList.remove('deckEditorActive');
     $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
+    $('#roomArea').append($('#libraryDecksOverlay')); // back to the room-scaled overlay of plain edit mode
     $('#deckEditorDragToolbar').classList.remove('active');
     this.setRoomVisible(false);
     this.syncToolbarButton();

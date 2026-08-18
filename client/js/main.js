@@ -946,7 +946,11 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if($('body.edit #editorSidebar button.active'))
+    // the public library deck browser is opened on top of whatever opened it (the add widget overlay or the
+    // deck editor's Add New Deck dialog), so Escape closes the browser and not the thing behind it
+    if($('#libraryDecksOverlay') && $('#libraryDecksOverlay').style.display != 'none')
+      $('#libraryDecksClose').click();
+    else if($('body.edit #editorSidebar button.active'))
       $('#editorSidebar button.active').click();
     else if(edit)
       $('#editorToolbar button[icon=close]').click();
