@@ -4068,6 +4068,8 @@ class DeckEditor {
         this.deckCreator.deckGenerator(moduleDOM);
       else if(mode == 'images')
         this.deckCreator.deckImages(moduleDOM);
+      else if(mode == 'imageSheet')
+        this.deckCreator.deckImages(moduleDOM, true); // same flow, cutting one image into a grid of cards
       else if(mode == 'imagePairs')
         this.deckCreator.deckImagePairs(moduleDOM);
       else if(mode == 'text')

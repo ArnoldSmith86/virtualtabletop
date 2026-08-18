@@ -828,6 +828,49 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   opacity: 0.7;
 }
 
+/* The ways to build a custom deck differ mainly in what they expect to be uploaded, which a drawing of the
+   input says faster than the description below the label does - one card per picture against one picture
+   with the whole grid of cards on it. */
+.deckEditorNewDeckModesIllustrated label {
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+}
+
+.deckEditorNewDeckModesIllustrated label b,
+.deckEditorNewDeckModesIllustrated label span {
+  grid-column: 3;
+}
+
+.deckEditorNewDeckModeIcon {
+  grid-row: span 2;
+  width: 34px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  opacity: 0.7;
+}
+
+.deckEditorNewDeckModeIcon .deckEditorNewDeckModeIconFill {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* the cut lines of the sheet mode, and the back of a front/back pair */
+.deckEditorNewDeckModeIcon .deckEditorNewDeckModeIconCut {
+  stroke-dasharray: 2 2;
+}
+
+.deckEditorNewDeckModeIcon .deckEditorNewDeckModeIconBack {
+  opacity: 0.55;
+}
+
+.deckEditorNewDeckModesIllustrated label:has(input:checked) .deckEditorNewDeckModeIcon {
+  opacity: 1;
+  color: var(--VTTblue);
+}
+
 /* A group with a single way to create a deck (the blank one) needs no radio button - opening it is already
    the choice, and its header says what it does. */
 .deckEditorNewDeckModesSingle {

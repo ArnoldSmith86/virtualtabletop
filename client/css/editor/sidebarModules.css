@@ -300,18 +300,55 @@
 }
 
 
+/* An uploaded card front next to its settings. The image is a flex item, so it needs a wrapper it cannot be
+   stretched by: stretching it hid how the picture really looks - a sheet of two rows of cards showed up as a
+   single row - and made the card size derived from it come out squashed. */
 .tune.editorModule .cardFrontPreview {
   display: flex;
+  align-items: flex-start;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
-.tune.editorModule .cardFrontPreview > div {
+.tune.editorModule .cardFrontPreviewImage {
+  position: relative;
+  flex: 0 0 auto;
+  max-width: 50%;
+  line-height: 0;
+}
+
+.tune.editorModule .cardFrontPreviewSettings {
   flex-grow: 1;
   text-align: left;
 }
 
 .tune.editorModule .cardFrontPreview img {
-  max-width: 50%;
+  max-width: 100%;
+  height: auto;
+}
+
+/* The cuts the rows and columns above make, drawn onto the picture itself so a wrong grid is visible right
+   away instead of only on the cards afterwards. */
+.tune.editorModule .cardFrontPreviewGrid {
+  display: none;
+  position: absolute;
+  inset: 0;
+  /* inverting whatever is underneath keeps the cut lines visible on a dark and on a light picture alike */
+  mix-blend-mode: difference;
+  background-image:
+    repeating-linear-gradient(to right, #fff 0 1px, transparent 1px calc(100% / var(--sheetColumns, 1))),
+    repeating-linear-gradient(to bottom, #fff 0 1px, transparent 1px calc(100% / var(--sheetRows, 1)));
+}
+
+.tune.editorModule .cardFrontPreviewSheet .cardFrontPreviewGrid {
+  display: block;
+}
+
+.tune.editorModule .cardFrontPreviewSummary {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  opacity: 0.8;
 }
 
 .tune.editorModule .cardFrontPreview [type=number] {

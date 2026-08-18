@@ -88,6 +88,17 @@ function parseRankRange(rankRange) {
   return rankArray;
 }
 
+// The size a card gets from the picture it shows: the ratio of one image - or of one cell of the grid a sheet
+// is cut into - with its longer side scaled to 160, the height of a standard card. Keeping the ratio is what
+// stops the faces from being stretched, and the fixed longer side keeps the cards at a usable size on the
+// table. This is the same rule the Tabletop Simulator importer sizes its cards by (server/ttsimport.mjs).
+function cardSizeFromImage(imageWidth, imageHeight, columns=1, rows=1) {
+  const cellWidth  = (imageWidth  || 1)/(columns || 1);
+  const cellHeight = (imageHeight || 1)/(rows    || 1);
+  const scale = 160/Math.max(cellWidth, cellHeight);
+  return { width: Math.max(1, Math.round(cellWidth*scale)), height: Math.max(1, Math.round(cellHeight*scale)) };
+}
+
 // The line above the card design gallery. A suit list without suits or without any rank is a normal state while
 // the deck is being typed, but it has no cards to show designs of - and a design tile renders a real card, which
 // throws without a card type. Say what is missing instead, so the gallery can be skipped.
@@ -2542,7 +2553,11 @@ class PropertiesModule extends SidebarModule {
     updateDesignPreview();
   }
 
-  deckImages(target) {
+  // Cards built from uploaded pictures, in two flavours: one image per card, or one image with a whole grid of
+  // cards on it that gets cut into single cards (sheetMode). Everything but the grid is shared - the same
+  // back picker, the same upload list, the same faces - so the row/column controls and the grid preview are
+  // the only parts that come and go with the mode.
+  deckImages(target, sheetMode=false) {
     this.addSubHeader('Card backs', target);
     let backImageURL = '/i/cards-default/2B.svg';
     const backButtons = div(target);
@@ -2570,33 +2585,68 @@ class PropertiesModule extends SidebarModule {
       $('.widgetSelectionButton:last-child', backButtons).click();
     });
 
-    this.addSubHeader('Card fronts', target);
+    this.addSubHeader(sheetMode ? 'The image to cut up' : 'Card fronts', target);
+    const intro = document.createElement('p');
+    intro.innerText = sheetMode
+      ? 'Upload one image with all the cards on it, then say how many cards it holds across and down. Every cell of that grid becomes a card, and the cards take the shape of a single cell so none of them come out stretched.'
+      : 'Upload one image per card - several at once works. Every card gets the back picked above.';
+    target.append(intro);
     const preview = div(target);
 
     div(target, 'goButton buttonBar', `
-      <button icon=upload id=frontsButton>Upload fronts...</button>
+      <button icon=upload id=frontsButton>${sheetMode ? 'Upload image...' : 'Upload fronts...'}</button>
       <button icon=add class=green disabled>Add to game</button>
     `);
 
-    $('#frontsButton').onclick = _=>uploadAsset(async function(imagePath, fileName) {
+    $('#frontsButton').onclick = _=>uploadAsset(async (imagePath, fileName)=>{
       const dom = div(preview, 'cardFrontPreview', `
-        <img src="${mapAssetURLs(imagePath)}">
-        <div class=flexCenter>
-          <div>
-            <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <div class=cols>Cols (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <div class=cards>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <button icon=delete>Delete</button>
-          </div>
+        <div class=cardFrontPreviewImage>
+          <img src="${mapAssetURLs(imagePath)}">
+          <div class=cardFrontPreviewGrid></div>
+        </div>
+        <div class=cardFrontPreviewSettings>
+          ${sheetMode ? `
+            <div class=cols>Cards across (columns):<br><input type=range value=1 min=1 max=20> <input type=number value=1 min=1 max=100></div>
+            <div class=rows>Cards down (rows):<br><input type=range value=1 min=1 max=20> <input type=number value=1 min=1 max=100></div>
+          ` : ''}
+          <div class=cards>${sheetMode ? 'Copies of every card' : 'Cards to add'}:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+          <div class=cardFrontPreviewSummary></div>
+          <button icon=delete>Delete</button>
         </div>
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
+      const image = $('img', dom);
+      const updateSummary = _=>{
+        const { columns, rows } = this.imageSheetGrid(dom);
+        // the overlay draws one line per cut, so the grid the cards are read out of can be checked against
+        // the picture instead of against the numbers
+        dom.style.setProperty('--sheetColumns', columns);
+        dom.style.setProperty('--sheetRows', rows);
+        dom.classList.toggle('cardFrontPreviewSheet', columns*rows > 1);
+        const cards = columns*rows;
+        const size = cardSizeFromImage(image.naturalWidth, image.naturalHeight, columns, rows);
+        $('.cardFrontPreviewSummary', dom).textContent = image.naturalWidth
+          ? `${cards} card${cards == 1 ? '' : 's'} of ${Math.round(image.naturalWidth/columns)} × ${Math.round(image.naturalHeight/rows)} pixels, ${size.width} × ${size.height} on the table`
+          : '';
+      };
       for(const name of [ 'rows', 'cols', 'cards' ]) {
-        $(`.${name} [type=range]`, dom).oninput = e=>$(`.${name} [type=number]`, dom).value=e.target.value;
-        $(`.${name} [type=number]`, dom).oninput = e=>$(`.${name} [type=range]`, dom).value=e.target.value;
+        const range = $(`.${name} [type=range]`, dom);
+        if(!range) // no grid to set in "one image per card"
+          continue;
+        range.oninput = e=>{
+          $(`.${name} [type=number]`, dom).value = e.target.value;
+          updateSummary();
+        };
+        $(`.${name} [type=number]`, dom).oninput = e=>{
+          range.value = e.target.value;
+          updateSummary();
+        };
       }
       $('[icon=delete]', dom).onclick = e=>dom.remove();
+      // naturalWidth is 0 until the browser has the image, so the summary is written again once it is there
+      image.onload = updateSummary;
+      updateSummary();
       $('.goButton [icon=add]', target).disabled = false;
     });
 
@@ -2604,29 +2654,30 @@ class PropertiesModule extends SidebarModule {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       const counts = {};
-      const hasTiledImage = [...$a('.rows input, .cols input')].filter(d=>d.value>1).length > 0;
-      for(const previewDiv of $a('.cardFrontPreview', preview)) {
-        const rows = $('.rows input', previewDiv).value;
-        const cols = $('.cols input', previewDiv).value;
+      const sheets = [ ...$a('.cardFrontPreview', preview) ].map(dom=>({ dom, ...this.imageSheetGrid(dom) }));
+      if(!sheets.length)
+        return;
+      const hasTiledImage = sheets.some(sheet=>sheet.columns*sheet.rows > 1);
+      for(const { dom, columns, rows } of sheets) {
         if(hasTiledImage) {
           for(let i=0; i<rows; ++i) {
-            for(let j=0; j<cols; ++j) {
-              const cardType = `${previewDiv.dataset.fileName} ${i},${j}`;
+            for(let j=0; j<columns; ++j) {
+              const cardType = `${dom.dataset.fileName} ${i},${j}`;
               cardTypes[cardType] = {
-                image: previewDiv.dataset.imagePath,
+                image: dom.dataset.imagePath,
                 offsetX: j,
                 offsetY: i,
-                deckWidth: cols,
+                deckWidth: columns,
                 deckHeight: rows
               };
-              counts[cardType] = $('.cards input', previewDiv).value;
+              counts[cardType] = $('.cards [type=number]', dom).value;
             }
           }
         } else {
-          cardTypes[previewDiv.dataset.fileName] = {
-            image: previewDiv.dataset.imagePath
+          cardTypes[dom.dataset.fileName] = {
+            image: dom.dataset.imagePath
           };
-          counts[previewDiv.dataset.fileName] = $('.cards input', previewDiv).value;
+          counts[dom.dataset.fileName] = $('.cards [type=number]', dom).value;
         }
       }
 
@@ -2664,11 +2715,11 @@ class PropertiesModule extends SidebarModule {
         ]
       };
 
-      let cardWidth = Math.round($('.cardFrontPreview img', preview).width / $('.cardFrontPreview img', preview).height * 160);
-      if(hasTiledImage)
-        cardWidth *= $('.rows input', preview).value / $('.cols input', preview).value;
-      if(cardWidth != 103)
-        deck.cardDefaults = { width: cardWidth };
+      // The cards are sized after the picture they show - the whole image, or one cell of the grid it is cut
+      // into. The face stretches that picture across the card, so a card that does not have the shape of its
+      // picture squashes every card of the deck.
+      const firstImage = $('img', sheets[0].dom);
+      deck.cardDefaults = cardSizeFromImage(firstImage.naturalWidth, firstImage.naturalHeight, sheets[0].columns, sheets[0].rows);
 
       if(hasTiledImage) {
         deck.faceTemplates[1].objects[0].css = {
@@ -2687,6 +2738,17 @@ class PropertiesModule extends SidebarModule {
 
       await this.addDeckWithCards(deck, 'image', counts);
     };
+  }
+
+  // How many cards an uploaded picture holds across and down. The value is read off the number input rather
+  // than the slider next to it: the slider only covers the usual grid sizes, so a sheet with more rows than
+  // that is typed in and leaves the slider sitting at its maximum. "One image per card" has no grid at all.
+  imageSheetGrid(dom) {
+    const value = name=>{
+      const input = $(`.${name} [type=number]`, dom);
+      return input ? this.numberFromInput(input) : 1;
+    };
+    return { columns: value('cols'), rows: value('rows') };
   }
 
   // "min"/"max" on a number input only constrain its spinner - a typed or pasted value is passed through
