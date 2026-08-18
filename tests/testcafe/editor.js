@@ -3370,6 +3370,7 @@ test('A branch folds away while the filter box still holds text', async t => {
 
   await t
     .click('#editButton')
+    .expect(propertiesModule.exists).ok()
     .click(bar.find('button[icon=account_tree]'))
     .typeText(tree.find('#jeWidgetSearchBox'), 'checker')
     .expect(tree.find('li[data-id=board]').visible).notOk()
@@ -3453,6 +3454,7 @@ test('The selection bar switches the outline of the selected widgets off and on'
 
   await t
     .click('#editButton')
+    .expect(propertiesModule.exists).ok()
     .click('#w_one')
     .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
     .expect(highlight.hasClass('active')).ok()
