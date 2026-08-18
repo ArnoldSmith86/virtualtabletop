@@ -358,6 +358,7 @@ function generateTimerWidgets(id, x, y) {
 }
 
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
+  const [ addX, addY ] = addOverlayPosition(widgetsToAdd[0].x, widgetsToAdd[0].y, widgetsToAdd[0].width, widgetsToAdd[0].height);
   for(const wi of widgetsToAdd) {
     let w = null;
     if(wi.type == 'button') w = new Button(wi.id);
@@ -376,10 +377,10 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
       w.domElement.addEventListener('click', async _=>{
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
-        overlayDone(await onClick());
+        overlayDone(await onClick(addX, addY));
         batchEnd();
       });
-      $('#addOverlay').appendChild(w.domElement);
+      $('#addOverlayContent').appendChild(w.domElement);
     }
   }
   for(const wi of widgetsToAdd) {
@@ -388,6 +389,23 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 const VTTblue = '#1f5ca6';
+
+// The add widget overlay is laid out for the default board size and scaled into the room as a
+// whole (#addOverlayContent in editmode.css). A preview adds its widget where the preview is
+// shown, so its overlay coordinates have to go through that same transform to become the board
+// coordinates of the new widget. The widget itself keeps its size while the overlay shrinks, so
+// the result is kept on the board. On a 1600x1000 board this changes nothing.
+function addOverlayPosition(x, y, width, height) {
+  const scale = Math.min(viewportConfig.targetWidth/DEFAULT_VIEWPORT.targetWidth, viewportConfig.targetHeight/DEFAULT_VIEWPORT.targetHeight);
+  function onBoard(coordinate, overlaySize, widgetSize, boardSize) {
+    const scaled = Math.round((coordinate - overlaySize/2)*scale + boardSize/2);
+    return Math.max(0, Math.min(scaled, boardSize - (widgetSize || 100)));
+  }
+  return [
+    onBoard(x, DEFAULT_VIEWPORT.targetWidth,  width,  viewportConfig.targetWidth),
+    onBoard(y, DEFAULT_VIEWPORT.targetHeight, height, viewportConfig.targetHeight)
+  ];
+}
 
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
@@ -404,6 +422,7 @@ function addPieceToAddWidgetOverlay(w, wi) {
         ]
       });
       const toAdd = {...wi};
+      [ toAdd.x, toAdd.y ] = addOverlayPosition(wi.x, wi.y, wi.width, wi.height);
       toAdd.z = getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
 
@@ -414,19 +433,20 @@ function addPieceToAddWidgetOverlay(w, wi) {
     }
   });
   w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  $('#addOverlayContent').appendChild(w.domElement);
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
+    [ toAdd.x, toAdd.y ] = addOverlayPosition(wi.x, wi.y, wi.width, wi.height);
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
   w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  $('#addOverlayContent').appendChild(w.domElement);
 }
 
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
@@ -440,22 +460,22 @@ function overlayDone(id) {
 
 function populateAddWidgetOverlay() {
   // Populate the Cards panel in the add widget overlay
-  const x = 115;
+  const cardsX = 115;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
-    x,
+    x: cardsX,
     y: 150
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', cardsX, 340, false), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 340, false))
+    for(const w of generateCardDeckWidgets(id, x, y, false))
       await addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', cardsX, 570, true), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 570, true))
+    for(const w of generateCardDeckWidgets(id, x, y, true))
       await addWidgetLocal(w);
     return id
   });
@@ -944,9 +964,9 @@ function populateAddWidgetOverlay() {
 
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 916, 300, 2))
+    for(const w of generateChipPileWidgets(id, x, y, 2))
       await addWidgetLocal(w);
     return id
   });
@@ -1002,9 +1022,9 @@ function populateAddWidgetOverlay() {
     primaryColor: "#55bb66"
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 1010, 309, 3))
+    for(const w of generateChipPileWidgets(id, x, y, 3))
       await addWidgetLocal(w);
     return id
   });
@@ -1033,6 +1053,7 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice2DAttrs};
+      [ toAdd.x, toAdd.y ] = addOverlayPosition(dice2DAttrs.x, dice2DAttrs.y, dice2DAttrs.width, dice2DAttrs.height);
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
@@ -1043,7 +1064,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice2D.domElement.id = dice2D.id;
-  $('#addOverlay').appendChild(dice2D.domElement);
+  $('#addOverlayContent').appendChild(dice2D.domElement);
 
   const dice2DCube = new Dice('add-dice2DCube0');
   const dice2DCubeAttrs = {
@@ -1104,6 +1125,7 @@ function populateAddWidgetOverlay() {
         ]
       });
       const toAdd = {...dice2DCubeAttrs};
+      [ toAdd.x, toAdd.y ] = addOverlayPosition(dice2DCubeAttrs.x, dice2DCubeAttrs.y, dice2DCubeAttrs.width, dice2DCubeAttrs.height);
       toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
       toAdd.cT = result.variables.color;
       toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
@@ -1115,7 +1137,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice2DCube.domElement.id = dice2DCube.id;
-  $('#addOverlay').appendChild(dice2DCube.domElement);
+  $('#addOverlayContent').appendChild(dice2DCube.domElement);
 
   const dice3D = new Dice('add-dice3D0');
   const dice3DAttrs = {
@@ -1142,6 +1164,7 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice3DAttrs};
+      [ toAdd.x, toAdd.y ] = addOverlayPosition(dice3DAttrs.x, dice3DAttrs.y, dice3DAttrs.width, dice3DAttrs.height);
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
@@ -1152,7 +1175,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice3D.domElement.id = dice3D.id;
-  $('#addOverlay').appendChild(dice3D.domElement);
+  $('#addOverlayContent').appendChild(dice3D.domElement);
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
@@ -1183,6 +1206,7 @@ function populateAddWidgetOverlay() {
       });
       const values = result.variables.values;
       const toAdd = {...spinAttrs};
+      [ toAdd.x, toAdd.y ] = addOverlayPosition(spinAttrs.x, spinAttrs.y, spinAttrs.width, spinAttrs.height);
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
       toAdd.options = Array.from({length: values}, (_, i) => i + 1);
@@ -1192,7 +1216,7 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   spinner.domElement.id = spinner.id;
-  $('#addOverlay').appendChild(spinner.domElement);
+  $('#addOverlayContent').appendChild(spinner.domElement);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
@@ -1203,17 +1227,17 @@ function populateAddWidgetOverlay() {
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 1005, 825))
+    for(const w of generateTimerWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, 1058, 890))
+    for(const w of generateCounterWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
   });
@@ -1236,9 +1260,9 @@ function populateAddWidgetOverlay() {
     y: 150
   });
   // Add the composite line widget (a path with attached stops)
-  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateLineWidgets(id, 1310, 420))
+    for(const w of generateLineWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
   });
@@ -1270,9 +1294,9 @@ function populateAddWidgetOverlay() {
   });
 
   // Add the composite ring widget (a closed line with stops all the way round)
-  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495), async function(x, y) {
     const id = generateUniqueWidgetID();
-    for(const w of generateRingWidgets(id, 1420, 495))
+    for(const w of generateRingWidgets(id, x, y))
       await addWidgetLocal(w);
     return id
   });
@@ -1472,12 +1496,15 @@ async function addLibraryDeckToGame(entry) {
 
   const holderWidth  = entry.cardWidth  + 8;
   const holderHeight = entry.cardHeight + 11;
+  // the deck is added to the middle of the board, whatever size the board has
+  const centerX = viewportConfig.targetWidth/2;
+  const centerY = viewportConfig.targetHeight/2;
   if(placement.holder) {
     await addWidgetLocal({
       type: 'holder',
       id,
-      x: Math.round(800 - holderWidth/2),
-      y: Math.round(500 - holderHeight/2),
+      x: Math.round(centerX - holderWidth/2),
+      y: Math.round(centerY - holderHeight/2),
       width: holderWidth,
       height: holderHeight,
       dropTarget: { type: 'card' }
@@ -1495,12 +1522,12 @@ async function addLibraryDeckToGame(entry) {
     x: Math.round((holderWidth -deckWidth )/2),
     y: Math.round((holderHeight-deckHeight)/2)
   } : {
-    x: Math.round(800 - entry.cardWidth/2 - deckWidth - 10),
-    y: Math.round(500 - deckHeight/2)
+    x: Math.round(centerX - entry.cardWidth/2 - deckWidth - 10),
+    y: Math.round(centerY - deckHeight/2)
   }));
   await addWidgetLocal(placement.holder
     ? { type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight }
-    : { type: 'pile', id: id+'P', x: Math.round(800 - entry.cardWidth/2), y: Math.round(500 - entry.cardHeight/2), width: entry.cardWidth, height: entry.cardHeight });
+    : { type: 'pile', id: id+'P', x: Math.round(centerX - entry.cardWidth/2), y: Math.round(centerY - entry.cardHeight/2), width: entry.cardWidth, height: entry.cardHeight });
 
   for(const [ i, card ] of details.cards.entries())
     await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
@@ -1740,8 +1767,8 @@ export function initializeEditMode(currentMetaData) {
       dropShadow: true,
       hidePlayerCursors: true,
       x: 50,
-      y: 820,
-      width: 1500,
+      y: viewportConfig.targetHeight-180,
+      width: viewportConfig.targetWidth-100,
       height: 180
     }
     if(!widgets.has('hand'))
@@ -1755,13 +1782,14 @@ export function initializeEditMode(currentMetaData) {
   on('#libraryDecksClose', 'click', _=>showOverlay());
 
   on('#addCanvas', 'click', async function() {
+    const size = Math.round(Math.min(800, viewportConfig.targetWidth/2, viewportConfig.targetHeight*0.8));
     const id = await addWidgetLocal({
       type: "canvas",
 
-      x: 400,
-      y: 100,
-      width: 800,
-      height: 800,
+      x: (viewportConfig.targetWidth-size)/2,
+      y: (viewportConfig.targetHeight-size)/2,
+      width: size,
+      height: size,
 
       activeColorChangeRoutine: [
         {
@@ -1981,11 +2009,12 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    const [ x, y ] = addOverlayPosition(840, 90, 150, 40);
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
-      x: 840,
-      y: 90
+      x,
+      y
     })
     overlayDone(id);
   });
@@ -1993,11 +2022,12 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeatCounter', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    const [ x, y ] = addOverlayPosition(840, 90, 150, 40);
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
-      x: 840,
-      y: 90
+      x,
+      y
     })
     await addWidgetLocal({
       id: id+'C',
@@ -2044,10 +2074,11 @@ export function initializeEditMode(currentMetaData) {
   });
 
   on('#addScoreboard', 'click', async function() {
+    const [ x, y ] = addOverlayPosition(1000, 660, 300, 200);
     await addWidgetLocal({
       type: 'scoreboard',
-      x: 1000,
-      y:660
+      x,
+      y
     });
     showOverlay();
   });

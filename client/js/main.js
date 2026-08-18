@@ -109,8 +109,7 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
-    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    style.display = !forced && style.display !== 'none' ? 'none' : 'flex';
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
@@ -213,6 +212,10 @@ function setScale() {
 
   document.documentElement.style.setProperty('--roomWidth', `${targetW}px`);
   document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
+
+  // the add widget overlay is laid out for the default board size, so it is scaled to fit into
+  // the room instead of being stretched to it - see #addOverlayContent in editmode.css
+  document.documentElement.style.setProperty('--addOverlayScale', Math.min(targetW/DEFAULT_VIEWPORT.targetWidth, targetH/DEFAULT_VIEWPORT.targetHeight));
 
   const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
 
