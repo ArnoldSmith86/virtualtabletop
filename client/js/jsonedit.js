@@ -202,18 +202,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleHighlight',
-    name: 'Toggle widget highlighting',
-    icon: 'flashlight_on',
-    forceKey: 'H',
-    classes: _=> jeWidgetHighlighting ? ' onState' : '',
-    call: async function() {
-      jeWidgetHighlighting = ! jeWidgetHighlighting;
-      jeShowCommands();
-      jeHighlightWidgets();
-    }
-  },
-  {
     id: 'je_SVGColors',
     name: 'Show colors in SVG image',
     icon: 'colors',
@@ -2264,10 +2252,23 @@ function jeCenterSelection() {
   jeHighlightWidgets();
 }
 
+// The toggle for this sits in the selection bar, which every module that edits
+// the selection carries - so it has to answer for a plain room selection as well
+// as for whatever the JSON editor is showing.
 function jeHighlightWidgets() {
-  const selectedIDs = jeSelectedIDs();
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
   for(const [ id, w ] of widgets)
     w.setHighlighted(jeWidgetHighlighting && selectedIDs.indexOf(id) != -1);
+}
+
+function jeWidgetHighlightingEnabled() {
+  return jeWidgetHighlighting;
+}
+
+function jeToggleWidgetHighlighting() {
+  jeWidgetHighlighting = !jeWidgetHighlighting;
+  jeHighlightWidgets();
+  updateSelectionBars();
 }
 
 function jeSVGColors() {
@@ -2452,16 +2453,14 @@ function jeDisplayTree() {
   // Add handlers to tree elements to display widget contents
   on('.jeTreeExpander', 'click', function(e) {
     if(e.target.classList.contains('jeTreeExpander')) {
-      $('.nested', e.target.parentElement).classList.toggle('active');
-      e.target.classList.toggle('jeTreeExpander-down');
-      isNodeCollapsed[e.target.parentNode.dataset.filter] = !e.target.classList.contains('jeTreeExpander-down');
+      jeToggleTreeNode(e.target, !e.target.classList.contains('jeTreeExpander-down'));
       e.stopImmediatePropagation();
     }
   });
 
   // Add handler to search box to display widget list
   on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
-  on('#jeWidgetSearchBox + button', 'click', e=>$a('.jeTreeExpander-down').forEach(e=>e.click()));
+  on('#jeWidgetSearchBox + button', 'click', e=>$a('#jeTree .jeTreeExpander-down').forEach(expander=>jeToggleTreeNode(expander, false)));
 
   on('.jeTreeWidget', 'click', function(e) {
     const widget = widgets.get($('.key', e.currentTarget).innerText);
@@ -2481,6 +2480,37 @@ function jeDisplayTree() {
     $('#jeWidgetSearchBox').value = oldFilterValue;
     jeDisplayFilteredWidgets();
   }
+}
+
+// Opening and closing a branch, for the arrow of the tree and for the keys of
+// the selection bar alike. The collapsed state is remembered per widget, so a
+// tree that is rebuilt - or opened again in another module - comes back the way
+// it was left.
+function jeToggleTreeNode(expander, open) {
+  if(!expander || !expander.classList.contains('jeTreeExpander') || expander.classList.contains('jeTreeExpander-down') == open)
+    return;
+  $('.nested', expander.parentElement).classList.toggle('active', open);
+  expander.classList.toggle('jeTreeExpander-down', open);
+  isNodeCollapsed[expander.parentNode.dataset.filter] = !open;
+}
+
+// Bringing the selected widgets into view: what somebody opening the tree is
+// looking for is almost always the widget the editor is already on. A row inside
+// a collapsed branch has no box at all, so the branches on the way down to it are
+// opened before it is scrolled to.
+function jeScrollTreeToSelection() {
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
+  let firstRow = null;
+  for(const node of $a('#jeTree li.jeTreeWidget')) {
+    if(selectedIDs.indexOf(node.dataset.id) == -1)
+      continue;
+    for(let list = node.parentElement; list && list.id != 'jeTree'; list = list.parentElement)
+      if(list.classList.contains('jeNestedTree'))
+        jeToggleTreeNode(list.previousElementSibling, true);
+    firstRow = firstRow || $('.key', node);
+  }
+  if(firstRow)
+    firstRow.scrollIntoView({ block: 'nearest' });
 }
 
 function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
@@ -2552,8 +2582,21 @@ function jeDisplayFilteredWidgets(e) {
   const propertyFilter = $('#jeWidgetSearchBox').value.match(/^([a-zA-Z0-9_-]+):([a-zA-Z0-9_-]*)$/);
   for(const previousParent of $a('#jeTree .filterChildIncluded'))
     previousParent.classList.remove('filterChildIncluded');
+
+  // An empty filter matches every widget, so carrying on would mark every branch
+  // as one that holds a match - and .filterChildIncluded shows a nested list
+  // whatever its collapsed state is. That left the tree pinned open as soon as
+  // anything had been typed into the filter box and taken out again: collapsing
+  // a node still flipped its arrow, but nothing below it ever went away, with
+  // the mouse or with the keyboard.
+  if(!subtext) {
+    for(const node of $a('#jeTree li.jeTreeWidget'))
+      node.classList.remove('filterIncluded', 'filterNotIncluded');
+    return;
+  }
+
   for(const node of $a('#jeTree li.jeTreeWidget')) {
-    let nodeMatchesFilter = !subtext || node.dataset.filter && node.dataset.filter.includes(subtext);
+    let nodeMatchesFilter = !!node.dataset.filter && node.dataset.filter.includes(subtext);
     if(propertyFilter) {
       const value = String(widgets.get(node.dataset.id).get(propertyFilter[1])).toLowerCase();
       if(!propertyFilter[2] && value != 'null' && value != '' || propertyFilter[2] && value.includes(propertyFilter[2]))

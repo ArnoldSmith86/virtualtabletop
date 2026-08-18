@@ -2968,16 +2968,23 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
     .expect(propertiesModule.exists).ok()
     .expect(Selector('#w_checker').hasClass('selectionBarHover')).notOk()
 
-    // the same keys in the tree, which has branches to open and close as well
+    // the same keys in the tree, which has branches to open and close as well.
+    // It opens on the widget the editor is on - the keyboard cursor of a leaf
+    // sits on its <li>, that of a branch on the expander inside it.
     .click(bar.find('button[icon=account_tree]'))
     .expect(tree.exists).ok()
-    .pressKey('down')
+    .expect(tree.find('li[data-id=board].selectionBarKeyRow').exists).ok()
     .pressKey('down')
     .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
     .pressKey('left')
     .expect(tree.find('li[data-id=point] > .jeTreeExpander-down').exists).notOk()
     .pressKey('right')
     .expect(tree.find('li[data-id=point] > .jeTreeExpander-down').exists).ok()
+    // → steps into the branch it just opened, ← comes back out of it
+    .pressKey('right')
+    .expect(tree.find('li[data-id=checker].selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
     .pressKey('enter')
     .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
     .pressKey('esc')
@@ -3293,5 +3300,181 @@ test('Two docked modules each get a selection bar and take turns holding the tre
     .expect(treeInProperties.exists).ok()
     .click(propertiesBar.find('button[icon=account_tree]'))
     .expect(treeInProperties.exists).notOk();
+  await setEditorState(null);
+});
+
+// Everything the tree does is worth nothing if a branch cannot be folded away,
+// and it could not: the filter marks every branch that holds a match so it stays
+// open whatever its collapsed state is - and an empty filter matches everything.
+// So a filter that had been typed and taken out again pinned the whole tree open
+// for the rest of the session, with the arrow and the keys still flipping the
+// glyph and nothing below it ever going away.
+test('A branch of the tree still folds away after the filter box has been used', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400 },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+  const checkerRow = tree.find('li[data-id=checker]');
+
+  await t
+    .click('#editButton')
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(checkerRow.visible).ok()
+
+    // type a filter and take it out again
+    .typeText(tree.find('#jeWidgetSearchBox'), 'checker')
+    .expect(tree.find('li[data-id=board]').visible).notOk()
+    .selectText(tree.find('#jeWidgetSearchBox')).pressKey('delete')
+    .expect(tree.find('li[data-id=board]').visible).ok()
+
+    // the keys still fold the branch away, and the arrow still does too. Nothing
+    // is selected here, so the keyboard starts above the first row.
+    .pressKey('down')
+    .pressKey('down')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(checkerRow.visible).notOk()
+    .pressKey('right')
+    .expect(checkerRow.visible).ok()
+    .click(tree.find('li[data-id=point] > .jeTreeExpander'), { offsetX: 5 })
+    .expect(checkerRow.visible).notOk();
+  await setEditorState(null);
+});
+
+// A dropdown covers the panel it hangs in, so a click on that panel is a click on
+// something the dropdown is hiding. The room is the exception: the stack list is
+// filled from there, and picking a widget must not take the list of what lies
+// under it away.
+test('Clicking the sidebar next to a dropdown closes it, clicking the room does not', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    checker: { id: 'checker', type: 'basic',  x: 300, y: 200, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+
+  await t
+    .click('#editButton')
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(tree.exists).ok()
+    // a click inside the dropdown is not a click next to it
+    .click(tree.find('#jeWidgetSearchBox'))
+    .expect(tree.exists).ok()
+    .click(propertiesModule, { offsetX: 100, offsetY: 500 })
+    .expect(tree.exists).notOk()
+
+    // the stack list goes the same way, but survives working in the room
+    .hover('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .expect(bar.hasClass('stackVisible')).ok()
+    .click('#w_checker')
+    .expect(bar.hasClass('stackVisible')).ok()
+    .click(propertiesModule, { offsetX: 100, offsetY: 500 })
+    .expect(bar.hasClass('stackVisible')).notOk();
+  await setEditorState(null);
+});
+
+// The outline the selected widgets wear is about the selection, so its switch
+// belongs on the bar that is about the selection - it used to be a button of the
+// JSON editor's command pane, out of reach of everyone who never opens that. It
+// also has to stay switched off when the editor moves on to another widget.
+test('The selection bar switches the outline of the selected widgets off and on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const highlight = bar.find('button[icon=flashlight_on]');
+
+  await t
+    .click('#editButton')
+    .click('#w_one')
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
+    .expect(highlight.hasClass('active')).ok()
+    .click(highlight)
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).notOk()
+    .expect(highlight.hasClass('active')).notOk()
+    // moving on to another widget must not switch it back on behind the user's back
+    .click('#w_two')
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).notOk()
+    .click(highlight)
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    .expect(highlight.hasClass('active')).ok();
+  await setEditorState(null);
+});
+
+// The two arrows name Tab+Left and Tab+Right in their tooltip, and the gesture
+// only ever existed inside the JSON text area - so in Edit Widgets, the module
+// edit mode opens by default, they promised a shortcut that did nothing.
+test('Tab and an arrow key walk the widget history outside the JSON editor', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#w_one')
+    .click('#w_two')
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    .pressKey('tab+left')
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
+    .pressKey('tab+right')
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok();
+  await setEditorState(null);
+});
+
+// Going back to a widget restores the scroll position and the cursor it was left
+// with, which is no use if the keyboard has been left somewhere else by then: the
+// JSON module blurs its text area on every selection change, so the arrows have
+// to hand it back to what the user was working in.
+const activeElementID = ClientFunction(() => document.activeElement && document.activeElement.id);
+
+test('Back and forward give the keyboard back to the JSON editor', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+
+  await t
+    .click('#editButton')
+    .click('#w_one')
+    .click('#w_two')
+    .click('#jeText')
+    .expect(activeElementID()).eql('jeText')
+    .click(bar.find('button[icon=arrow_back]'))
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
+    .expect(activeElementID()).eql('jeText')
+    .click(bar.find('button[icon=arrow_forward]'))
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    .expect(activeElementID()).eql('jeText');
   await setEditorState(null);
 });

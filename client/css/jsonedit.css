@@ -436,22 +436,9 @@ body.jsonEdit #toolbar {
   opacity: 0.5;
 }
 
-/* For the zoom, edit, wide, highlight, and debug "on" states */
+/* For the zoom, edit, wide and debug "on" states */
 [id=jeTopButtons] button.onState {
   color: yellow
-}
-#je_toggleHighlight.onState {
-  position: relative;
-}
-#je_toggleHighlight.onState::before {
-  position: absolute;
-  height: 22px;
-  width: 17px;
-  content: '';
-  top: 1px;
-  left: 4px;
-  border: 2px solid yellow;
-  border-radius: 20%;
 }
 
 #jeCommands .context{
@@ -542,8 +529,6 @@ body.jsonEdit #toolbar {
 #je_editMode{
 }
 #je_openParent{
-}
-#je_toggleHighlight{
 }
 #je_toggleDebug{
 }

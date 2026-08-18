@@ -87,7 +87,11 @@
 
 /*** Breadcrumbs ***/
 
+/* The gap to the buttons is wider than the one between them, so the row reads as
+   "these are controls, and this is what they are about" rather than as one strip
+   of things. */
 .selectionBarCrumbs {
+  margin-left: 6px;
   flex-grow: 1;
   height: 28px;
   display: flex;
@@ -198,13 +202,23 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
 }
 
+/* The rows are what scrolls, not the dropdown as a whole: a tree of a few hundred
+   widgets would otherwise take the filter box - the one thing that makes such a
+   tree usable at all - off the top of the screen the moment it is scrolled,
+   together with the line that says what the keys do. So the dropdown is a column
+   of a header that stays (the hint, then #jeTree's own filter row) and a list
+   that takes what is left; #jeTree > ul already carries the overflow scrolling
+   (see jsonedit.css). */
 .selectionBarTree {
   padding: 5px;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* What the keys do, for someone who just opened a dropdown - the same place and
    the same voice as the stack list's help line. */
 .selectionBarDropdownHint {
+  flex-shrink: 0;
   color: var(--textHelpColor);
   font-size: 12px;
   padding: 0 2px 5px;
@@ -213,13 +227,24 @@
 }
 
 .selectionBar.treeVisible .selectionBarTree {
-  display: block;
+  display: flex;
 }
 
 .selectionBarTree #jeTree {
   height: auto;
+  flex: 1 1 auto;
+  min-height: 0;
   white-space: pre-wrap;
   font-family: monospace;
+}
+
+.selectionBarTree #jeTree > div {
+  flex-shrink: 0;
+}
+
+.selectionBarTree #jeTree > ul {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 /*** The stack of widgets under the pointer ***/

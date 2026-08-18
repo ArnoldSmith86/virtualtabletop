@@ -26,6 +26,7 @@ let selectionBarScanTimer = null;
 let selectionBarListening = false;
 let selectionBarKeyboardBar = null; // the bar whose dropdown the arrow keys walk
 let selectionBarSwallowEscapeUp = false;
+let selectionBarTabHeld = false;    // Tab+Left / Tab+Right walk the history
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
 
@@ -284,7 +285,11 @@ function selectionBarInstallListeners() {
   // keys the panel this replaces was built around. Ctrl pastes the id into the
   // JSON editor, which only means anything while that one is open.
   window.addEventListener('keydown', function(e) {
+    if(e.key == 'Tab')
+      selectionBarTabHeld = true;
     if(!selectionBarIsActive())
+      return;
+    if(selectionBarHandleHistoryKey(e))
       return;
     if(selectionBarHandleDropdownKey(e))
       return;
@@ -308,11 +313,67 @@ function selectionBarInstallListeners() {
   // as well, or the module the dropdown was in goes with it. Capture phase, so
   // this runs before main.js's window.onkeyup. Same trick as the deck editor.
   window.addEventListener('keyup', function(e) {
+    // the JSON editor stops the keyup of a Tab dead (it ends its command search
+    // there), so the release has to be seen before it does
+    if(e.key == 'Tab')
+      selectionBarTabHeld = false;
     if(e.key == 'Escape' && selectionBarSwallowEscapeUp) {
       selectionBarSwallowEscapeUp = false;
       e.stopImmediatePropagation();
     }
   }, true);
+
+  // switching windows while Tab is down never delivers its keyup
+  window.addEventListener('blur', _=>selectionBarTabHeld = false);
+
+  // A click in the editor's own panels that is not in a bar means the user has
+  // moved on to something else in the sidebar - and a dropdown covers the very
+  // panel that was clicked, so leaving it standing hides what the click was for.
+  // The room is deliberately not included: the stack list is filled from there,
+  // and picking a widget must not take the list of what lies under it away.
+  window.addEventListener('mousedown', function(e) {
+    if(!selectionBarIsActive() || !e.target.closest || e.target.closest('.selectionBar'))
+      return;
+    if(e.target.closest('#editorSidebar, #editorModules, #editorModuleInOverlay'))
+      selectionBarCloseDropdowns();
+  }, true);
+}
+
+/* Walking the history */
+
+// Tab+Left and Tab+Right are what the two arrows of the bar name in their
+// tooltip, and until now they only existed inside the JSON text area - which
+// left the buttons of Edit Widgets promising a shortcut that did nothing there.
+// The JSON editor keeps its own handler for the gesture (it has the command
+// search that Tab opened to close first) and stops the event there, so this one
+// only ever sees what got past it.
+function selectionBarHandleHistoryKey(e) {
+  if(!selectionBarTabHeld || e.ctrlKey || e.metaKey || e.altKey)
+    return false;
+  const direction = e.key == 'ArrowLeft' ? -1 : e.key == 'ArrowRight' ? 1 : 0;
+  if(!direction || !selectionBarHistoryCanNavigate(direction))
+    return false;
+  e.preventDefault();
+  selectionBarHistoryNavigate(direction);
+  return true;
+}
+
+// Whether the JSON editor is what is being worked in. Going back to a widget
+// restores the scroll position and the cursor it was left with, so the keyboard
+// belongs there afterwards as well - without this the text area is left blurred
+// and the caret it just restored belongs to nothing.
+function selectionBarJsonHasFocus() {
+  return jeEnabled && !!$('#jeText') && document.activeElement === $('#jeText');
+}
+
+function selectionBarCloseDropdowns() {
+  selectionBarPrune();
+  for(const bar of [ ...selectionBars ]) {
+    if(bar.options.stack && bar.dom.classList.contains('stackVisible'))
+      selectionBarToggleStack(bar, true);
+    if(bar.options.tree && bar.dom.classList.contains('treeVisible'))
+      selectionBarToggleTree(bar, true);
+  }
 }
 
 /* Walking an open dropdown from the keyboard */
@@ -401,9 +462,9 @@ function selectionBarHandleDropdownKey(e) {
   }
 
   // a collapsed branch of the tree cannot be stepped into, so the keys that are
-  // left over open and close it
+  // left over walk it sideways
   if(dropdown.kind == 'tree' && (e.key == 'ArrowRight' || e.key == 'ArrowLeft')) {
-    selectionBarExpandTreeRow(dropdown.bar, e.key == 'ArrowRight');
+    selectionBarWalkTreeSideways(dropdown.bar, e.key == 'ArrowRight');
     e.preventDefault();
     return true;
   }
@@ -468,23 +529,51 @@ function selectionBarTreeRows() {
   return [ ...$a('#jeTree .key') ].map(key=>({ dom: key.parentElement, id: key.textContent })).filter(row=>row.dom.offsetParent);
 }
 
+function selectionBarMoveTreeCursor(bar, id) {
+  bar.treeKeyID = id;
+  selectionBarUpdateTreeHighlight();
+  const row = selectionBarTreeRows().find(row=>row.id === id);
+  if(row)
+    row.dom.scrollIntoView({ block: 'nearest' });
+}
+
 function selectionBarStepTree(bar, direction) {
   const rows = selectionBarTreeRows();
   if(!rows.length)
     return;
   const current = rows.findIndex(row=>row.id === bar.treeKeyID);
   const index = current == -1 ? (direction > 0 ? 0 : rows.length - 1) : (current + direction + rows.length) % rows.length;
-  bar.treeKeyID = rows[index].id;
-  selectionBarUpdateTreeHighlight();
-  rows[index].dom.scrollIntoView({ block: 'nearest' });
+  selectionBarMoveTreeCursor(bar, rows[index].id);
 }
 
-function selectionBarExpandTreeRow(bar, open) {
+// The <li> of the row the keyboard is on - the element the tree hangs the widget
+// id and the nesting on. A branch marks its row with the expander <span> inside
+// that <li>, a leaf with the <li> itself.
+function selectionBarTreeCursorNode(bar) {
   const row = selectionBarTreeRows().find(row=>row.id === bar.treeKeyID);
-  if(!row || !row.dom.classList.contains('jeTreeExpander'))
+  return row ? row.dom.closest('li.jeTreeWidget') : null;
+}
+
+// → opens a closed branch and steps into an open one. ← closes an open branch
+// and otherwise climbs to the parent, so pressing it twice from somewhere inside
+// a branch folds that branch away - which is what "go back up" means in a tree,
+// and the only thing the two keys can usefully do beyond ↑ ↓.
+function selectionBarWalkTreeSideways(bar, forward) {
+  const node = selectionBarTreeCursorNode(bar);
+  if(!node)
     return;
-  if(row.dom.classList.contains('jeTreeExpander-down') != open)
-    row.dom.click(); // the expander's own handler, so the collapsed state is remembered like a click
+  const expander = $(':scope > .jeTreeExpander', node);
+  const open = !!expander && expander.classList.contains('jeTreeExpander-down');
+  if(expander && open != forward) {
+    jeToggleTreeNode(expander, forward);
+  } else if(forward) {
+    if(open)
+      selectionBarStepTree(bar, 1); // an open branch is followed by its first child
+  } else {
+    const parent = node.parentElement.closest('li.jeTreeWidget');
+    if(parent)
+      selectionBarMoveTreeCursor(bar, parent.dataset.id);
+  }
 }
 
 /* History: every widget the editor moved to, not just the ones the JSON editor saw */
@@ -506,17 +595,25 @@ function selectionBarHistoryCanNavigate(direction) {
   return false;
 }
 
-function selectionBarHistoryNavigate(direction) {
+// restoreJsonFocus says whether the JSON text area was what the user was working
+// in - the buttons have to read that before they are pressed, since pressing one
+// takes the focus off it. The JSON module blurs the text area on every selection
+// change, so handing it back here is what makes the scroll position and the
+// cursor that jeSelectWidget() just restored usable again.
+function selectionBarHistoryNavigate(direction, restoreJsonFocus) {
   let index = selectionBarHistoryIndex + direction;
   while(index >= 0 && index < selectionBarHistory.length && !widgets.has(selectionBarHistory[index]))
     index += direction;
   if(index < 0 || index >= selectionBarHistory.length)
     return;
 
+  const restoreFocus = restoreJsonFocus === undefined ? selectionBarJsonHasFocus() : restoreJsonFocus;
   selectionBarHistoryIndex = index;
   selectionBarHistoryNavigating = true;
   setSelection([ widgets.get(selectionBarHistory[index]) ]);
   selectionBarHistoryNavigating = false;
+  if(restoreFocus && jeEnabled && $('#jeText'))
+    $('#jeText').focus();
 }
 
 /* The tree dropdown */
@@ -542,10 +639,16 @@ function selectionBarToggleTree(bar, forceClose, focusSearch) {
   selectionBarStoreState({ treeOpen: open });
   if(open) {
     selectionBarKeyboardBar = bar;
-    bar.treeKeyID = null;
     selectionBarToggleStack(bar, true); // one dropdown at a time, they share the space below the bar
     bar.treeContainer.append($('#jeTree'));
     jeDisplayTree();
+    // A tree of a few hundred widgets opens on whatever happens to be at the top
+    // of it otherwise, and the widget the editor is on is what somebody opening
+    // it is looking for. It is also where the keys start: without a cursor the
+    // arrows would do nothing at all until one of them had been pressed twice.
+    bar.treeKeyID = selectedWidgets.length == 1 ? selectedWidgets[0].id : null;
+    jeScrollTreeToSelection();
+    selectionBarUpdateTreeHighlight();
     if(focusSearch)
       $('#jeWidgetSearchBox').focus();
   } else {
@@ -576,6 +679,18 @@ function selectionBarUpdateTreeHighlight() {
 }
 
 /* Rendering */
+
+// Pressing a button moves the keyboard to it, so whether the JSON text area was
+// what had it has to be taken on the way down rather than in the click.
+function selectionBarHistoryButton(bar, direction, icon, title) {
+  let hadJsonFocus = false;
+  const button = selectionBarButton(bar.dom, icon, title, function() {
+    selectionBarHistoryNavigate(direction, hadJsonFocus);
+    hadJsonFocus = false;
+  });
+  button.onmousedown = _=>hadJsonFocus = selectionBarJsonHasFocus();
+  return button;
+}
 
 function selectionBarButton(target, icon, title, onClick) {
   const button = document.createElement('button');
@@ -779,6 +894,8 @@ function selectionBarUpdate(bar) {
     bar.backButton.disabled = !selectionBarHistoryCanNavigate(-1);
     bar.forwardButton.disabled = !selectionBarHistoryCanNavigate(1);
   }
+  if(bar.highlightButton)
+    bar.highlightButton.classList.toggle('active', jeWidgetHighlightingEnabled());
   selectionBarRenderCrumbs(bar);
   selectionBarRenderStack(bar);
   selectionBarRenderDrill(bar);
@@ -814,6 +931,7 @@ function renderSelectionBar(target, options = {}) {
     tree: true,
     crumbs: true,
     stack: true,
+    highlight: true,
     onPick: widget=>setSelection([ widget ])
   }, options);
 
@@ -826,8 +944,8 @@ function renderSelectionBar(target, options = {}) {
   bar.dom = div(target, 'selectionBar');
 
   if(options.history) {
-    bar.backButton    = selectionBarButton(bar.dom, 'arrow_back',    'Back to the previously selected widget (Tab+Left)', _=>selectionBarHistoryNavigate(-1));
-    bar.forwardButton = selectionBarButton(bar.dom, 'arrow_forward', 'Forward to the next selected widget (Tab+Right)',   _=>selectionBarHistoryNavigate(1));
+    bar.backButton    = selectionBarHistoryButton(bar, -1, 'arrow_back',    'Back to the previously selected widget (Tab+Left)');
+    bar.forwardButton = selectionBarHistoryButton(bar,  1, 'arrow_forward', 'Forward to the next selected widget (Tab+Right)');
   }
   if(options.tree)
     bar.treeButton = selectionBarButton(bar.dom, 'account_tree', 'The widget tree of the room', _=>selectionBarToggleTree(bar, false, true));
@@ -839,6 +957,11 @@ function renderSelectionBar(target, options = {}) {
     bar.stackCount.className = 'selectionBarStackCount';
     bar.stackButton.append(bar.stackCount);
   }
+  // What it marks is the selection, which is what this bar is about - it used to
+  // be a button of the JSON editor's command pane, where it was out of reach of
+  // everyone who never opens that.
+  if(options.highlight)
+    bar.highlightButton = selectionBarButton(bar.dom, 'flashlight_on', 'Outline the selected widgets in the room', _=>jeToggleWidgetHighlighting());
 
   bar.crumbs = div(bar.dom, 'selectionBarCrumbs');
   // both at the end of the bar, where they can appear and disappear without
@@ -850,7 +973,7 @@ function renderSelectionBar(target, options = {}) {
     bar.treeContainer = div(bar.dom, 'selectionBarTree');
     // the tree itself is borrowed from the JSON editor and handed back, so this
     // line belongs to the container rather than to the tree, and is created here
-    div(bar.treeContainer, 'selectionBarDropdownHint', '↑ ↓ walk the tree, → ← open and close a branch, Enter selects, Esc closes it.');
+    div(bar.treeContainer, 'selectionBarDropdownHint', '↑ ↓ walk the tree, → opens a branch, ← closes it or goes to the parent, Enter selects, Esc closes it.');
   }
   if(options.stack)
     bar.stackList = div(bar.dom, 'selectionBarStackList');

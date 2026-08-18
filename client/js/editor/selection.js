@@ -275,7 +275,7 @@ function setSelection(newSelectedWidgets) {
     widget.setHighlighted(false);
 
   for(const widget of selectedWidgets)
-    widget.setHighlighted(true);
+    widget.setHighlighted(jeWidgetHighlightingEnabled());
 
   for(const button of toolbarButtons)
     button.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
