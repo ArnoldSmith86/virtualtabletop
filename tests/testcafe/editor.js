@@ -2686,7 +2686,11 @@ test('A routine offers the values and widgets that what started it hands over', 
       // routine needs to know about it, so they count as two operations
       enterRoutine: [ { ...operation },
         { func: 'CALL', widget: 'label', routine: 'dealCardsRoutine', arguments: { amount: 5, faceUp: true } },
-        { func: 'CALL', widget: 'label', routine: 'dealCardsRoutine', arguments: { amount: 3 } } ],
+        { func: 'CALL', widget: 'label', routine: 'dealCardsRoutine', arguments: { amount: 3 } },
+        // CALL runs a clickRoutine as readily as a custom routine, and hands it
+        // the same arguments and caller - which that routine only has when a CALL
+        // is what ran it, not when a player clicked the widget
+        { func: 'CALL', widget: 'button', routine: 'clickRoutine', arguments: { from: 'the menu' } } ],
       clickRoutine: [
         { func: 'CALL', widget: 'label', routine: 'shuffleRoutine', arguments: { times: 2, reverse: true } },
         { func: 'CALL', widget: 'label', routine: 'shuffleRoutine', arguments: { times: 1 } } ]
@@ -2702,7 +2706,11 @@ test('A routine offers the values and widgets that what started it hands over', 
       // second operation on it is the GET result, not what changed
       textChangeRoutine: [ { func: 'GET', variable: 'value', property: 'foo' }, { ...operation } ],
       globalUpdateRoutine: [ { ...operation } ],
-      dealCardsRoutine: [ { ...operation } ],
+      // its second operation is two nested FOREACHes, so an operation inside them
+      // has four groups of names to pick from - more than a short window can show
+      dealCardsRoutine: [ { ...operation }, { func: 'FOREACH', in: [ 1, 2 ], loopRoutine: [
+        { func: 'FOREACH', collection: 'someWidgets', loopRoutine: [ { ...operation } ] }
+      ] } ],
       shuffleRoutine: [ { ...operation } ],
       // the loop hands its block what the round is for, over what the GET before
       // it stored - but a GET inside the block wins over the loop again
@@ -2714,8 +2722,21 @@ test('A routine offers the values and widgets that what started it hands over', 
       clickRoutine: [ { func: 'FOREACH', collection: 'someWidgets', loopRoutine: [ { ...operation } ] } ],
       doubleClickRoutine: [ { func: 'FOREACH', collection: 'someWidgets', loopRoutine: [
         { func: 'FOREACH', in: [ 1, 2 ], loopRoutine: [ { ...operation } ] }
-      ] } ]
-    }
+      ] } ],
+      // a VAR inside the block writes over what the round is for, so the loop's
+      // own names are among the ones it proposes
+      leaveRoutine: [ { func: 'FOREACH', in: [ 1, 2 ], loopRoutine: [ { func: 'VAR', variables: { foo: 1, bar: 2 } } ] } ]
+    },
+    // the same routine name on another widget is another routine: the CALLs that
+    // run this one hand their arguments to this one only
+    label2: { id: 'label2', type: 'label', x: 700, y: 100,
+      dealCardsRoutine: [ { ...operation } ],
+      // a CALL without a widget of its own runs the routine on the widget it is
+      // written on, so the first of these reaches label2 and the second label
+      gameStartRoutine: [ { func: 'CALL', routine: 'dealCardsRoutine', arguments: { theme: 'dark' } },
+        { func: 'CALL', widget: 'label', routine: 'dealCardsRoutine', arguments: { amount: 1 } } ]
+    },
+    button: { id: 'button', type: 'button', x: 900, y: 100, clickRoutine: [ { ...operation } ] }
   });
   await ClientFunction(prepareClient)();
   await setEditorState(propertiesModuleOpen);
@@ -2739,7 +2760,7 @@ test('A routine offers the values and widgets that what started it hands over', 
   // one card open at a time, so the chip below can only be the one meant
   const openRoutine = async (widget, name)=>{
     await t.click(`#w_${widget}`);
-    for(const header of [ 'enterRoutine', 'textChangeRoutine', 'globalUpdateRoutine', 'dealCardsRoutine', 'shuffleRoutine', 'clickRoutine', 'doubleClickRoutine' ]) {
+    for(const header of [ 'enterRoutine', 'leaveRoutine', 'textChangeRoutine', 'globalUpdateRoutine', 'gameStartRoutine', 'dealCardsRoutine', 'shuffleRoutine', 'clickRoutine', 'doubleClickRoutine' ]) {
       const dom = Selector('.events-editor-event-header').withText(header);
       if(await dom.exists && await dom.getAttribute('aria-expanded') == (header == name ? 'false' : 'true'))
         await t.click(dom);
@@ -2760,6 +2781,11 @@ test('A routine offers the values and widgets that what started it hands over', 
     await openSection(kind);
     await t.hover(Selector(`.inline-popup .accordion-section[data-kind=${kind}] .popup-entry button`).withExactText(label));
     return Selector(`.inline-popup .accordion-section[data-kind=${kind}] .popup-entry-description`).innerText;
+  };
+  // a name the routine only sometimes has is dimmed rather than only explained
+  const entryIsPartial = async (kind, label)=>{
+    await openSection(kind);
+    return Selector(`.inline-popup .accordion-section[data-kind=${kind}] .popup-entry button`).withExactText(label).hasClass('popup-entry-partial');
   };
 
   await t.click('#editButton').expect(propertiesModule.exists).ok();
@@ -2814,13 +2840,46 @@ test('A routine offers the values and widgets that what started it hands over', 
     .expect(popupEntries('collection')).contains('In every dealCardsRoutine: caller')
     .expect(popupEntries('variable')).contains('From the operations that run it: amount')
     .expect(popupEntries('variable')).contains('From the operations that run it: faceUp')
-    .expect(popupEntries('variable')).contains('From the operations that run it: constructor');
+    .expect(popupEntries('variable')).contains('From the operations that run it: constructor')
+    // the argument of the same-named routine on the other widget is not one of
+    // this routine's, and the CALL handing it over is not one of its callers
+    .expect(popupEntries('variable')).notContains('From the operations that run it: theme');
   await t.expect(await hoverEntry('variable', 'faceUp'))
-    .eql('handed over by the CALL in enterRoutine of holder - not by the other 2 operations that run this routine');
+    .eql('handed over by the CALL in enterRoutine of holder - not by the other 3 operations that run this routine');
   await t.expect(await hoverEntry('variable', 'constructor'))
-    .eql('handed over by the CALL in clickRoutine of the cards of deck - not by the other 2 operations that run this routine');
+    .eql('handed over by the CALL in clickRoutine of the cards of deck - not by the other 3 operations that run this routine');
+  // more callers than a line can name are named as far as it goes and counted
+  // from there on
   await t.expect(await hoverEntry('variable', 'amount'))
-    .eql('handed over by the CALLs in enterRoutine of holder and clickRoutine of the cards of deck');
+    .eql('handed over by the CALLs in enterRoutine of holder, clickRoutine of the cards of deck and 1 more');
+  await t
+    .expect(await entryIsPartial('variable', 'faceUp')).ok()
+    .expect(await entryIsPartial('variable', 'amount')).notOk();
+  await t.click(popup.find('.popup-close'));
+
+  // the same routine name on another widget hears about its own CALLs only - and
+  // a CALL with no widget of its own runs the routine on the widget it is on
+  await openRoutine('label2', 'dealCardsRoutine');
+  await openChip('collection');
+  await t
+    .expect(popupEntries('variable')).contains('From the operation that runs it: theme')
+    .expect(popupEntries('variable')).notContains('From the operation that runs it: amount')
+    .expect(popupEntries('variable')).notContains('From the operation that runs it: faceUp');
+  await t.expect(await hoverEntry('variable', 'theme'))
+    .eql('handed over by the CALL in gameStartRoutine of label2');
+  await t.click(popup.find('.popup-close'));
+
+  // a routine a player triggers can be run by CALL as well, and then it has the
+  // arguments and the caller that CALL hands over - only then, which is what the
+  // group says and why the names are dimmed
+  await openRoutine('button', 'clickRoutine');
+  await openChip('collection');
+  await t
+    .expect(popupEntries('variable')).contains('Only when a CALL runs it: from')
+    .expect(popupEntries('collection')).contains('Only when a CALL runs it: caller')
+    .expect(await entryIsPartial('variable', 'from')).ok();
+  await t.expect(await hoverEntry('collection', 'caller'))
+    .eql('the widget whose routine used CALL to run this one');
   await t.click(popup.find('.popup-close'));
 
   // two CALLs in one routine are two operations that run it: an argument only
@@ -2841,7 +2900,10 @@ test('A routine offers the values and widgets that what started it hands over', 
   await t.click(Selector('.routine-editor .routine-editor .routine-editor-operation [data-parameter=collection]')).expect(popup.exists).ok();
   await t
     .expect(popupEntries('variable')).contains('In this loopRoutine: widgetID')
-    .expect(popupEntries('collection')).contains('In this loopRoutine: DEFAULT');
+    .expect(popupEntries('collection')).contains('In this loopRoutine: DEFAULT')
+    // the CALL of a clickRoutine in the room runs the one on the button, so this
+    // clickRoutine hears nothing of its argument
+    .expect(popupEntries('variable')).notContains('Only when a CALL runs it: from');
   await t.click(popup.find('.popup-close'));
 
   // a round of the loop starts after everything outside the block, so what it is
@@ -2875,6 +2937,46 @@ test('A routine offers the values and widgets that what started it hands over', 
     .expect(popupEntries('collection')).contains('In the loopRoutine around it: DEFAULT')
     .expect((await popupEntries('variable')).indexOf('In this loopRoutine: value'))
       .lt((await popupEntries('variable')).indexOf('In the loopRoutine around it: widgetID'));
+  await t.click(popup.find('.popup-close'));
+
+  // writing over what the round is for is what an operation inside the block may
+  // well want to do, so the names it can be given include the loop's own - they
+  // are not in "From earlier operations" inside the block, which is where the
+  // list of names to write to used to come from in full
+  await openRoutine('label', 'leaveRoutine');
+  await t.click(Selector('.routine-editor .routine-editor .routine-editor-operation [data-parameter=variables]')).expect(popup.exists).ok();
+  // spread over a NodeList does not survive into the browser here, so the list
+  // is copied the way the rest of this file does it
+  const suggestedNames = ClientFunction(_=>[].slice.call(document.querySelectorAll('.inline-popup .popup-key-value-add option')).map(option=>option.value));
+  await t
+    .expect(suggestedNames()).contains('value')
+    .expect(suggestedNames()).contains('key');
+  await t.click(popup.find('.popup-close'));
+
+  // a section with several groups in it is taller than a short window, and the
+  // line that says what a name holds is at its foot - so it sticks to the bottom
+  // of the popup instead of being scrolled out of sight exactly while the
+  // pointer is on a name near the top of the list
+  await t.resizeWindow(1280, 320);
+  await openRoutine('label', 'dealCardsRoutine');
+  await t.click(Selector('.routine-editor .routine-editor .routine-editor .routine-editor-operation [data-parameter=collection]')).expect(popup.exists).ok();
+  await openSection('variable');
+  await t.hover(Selector('.inline-popup .accordion-section[data-kind=variable] .popup-entry button').withExactText('amount'));
+  const descriptionInView = await ClientFunction(_=>{
+    const popup = document.querySelector('.inline-popup');
+    const section = popup.querySelector('.accordion-section[data-kind=variable]');
+    const description = section.querySelector('.popup-entry-description');
+    // the section scrolled to its top, which is where the name the pointer is on
+    // puts it - the foot of the section is a screenful further down from there
+    popup.scrollTop = section.offsetTop;
+    const popupRect = popup.getBoundingClientRect(), descriptionRect = description.getBoundingClientRect();
+    return {
+      sectionTallerThanPopup: section.getBoundingClientRect().height > popupRect.height,
+      descriptionInPopup: descriptionRect.top >= popupRect.top && descriptionRect.bottom <= popupRect.bottom + 1,
+      describes: description.textContent.substr(0, 24)
+    };
+  })();
+  await t.expect(descriptionInView).eql({ sectionTallerThanPopup: true, descriptionInPopup: true, describes: 'handed over by the CALLs' });
   await t.click(popup.find('.popup-close'));
   await setEditorState(null);
 });

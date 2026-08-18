@@ -528,11 +528,22 @@ body.edit.darkMode .inline-popup button.primary:hover {
 
 /* what the name the pointer or the keyboard is on holds - see
    renderRoutineValueKindSection. Two lines are kept free whether one is shown or
-   not, so the list above it does not move while the pointer travels along it */
+   not, so the list above it does not move while the pointer travels along it.
+   It sticks to the foot of the popup while its section is on screen: a section
+   with four or five groups in it is taller than a short window, so the line
+   would sit below the fold exactly while the pointer is on a name near the top -
+   and the keyboard scrolls the focused button into view, pushing it further out
+   still. The background is the popup's own so the chips do not show through. */
 .inline-popup .popup-entry-description {
+  position: sticky;
+  bottom: 0;
+  background: var(--backgroundColor);
   margin: 8px 2px 0 2px;
+  padding-bottom: 2px;
   font-size: 12px;
-  opacity: 0.8;
+  /* quiet through the text color rather than the opacity of the whole line: a
+     line at 0.8 lets the chips scrolling under it show through its background */
+  color: color-mix(in srgb, var(--textColor) 80%, transparent);
   min-height: 2.8em;
   overflow-wrap: anywhere;
 }

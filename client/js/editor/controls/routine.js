@@ -2538,11 +2538,15 @@ class RoutineOperationEditor {
 
   // the names a list of pairs proposes: the variables the operations before this
   // one define, so a VAR that overwrites one of them picks the name instead of
-  // spelling it out again
+  // spelling it out again - plus the ones the routine was handed without any
+  // operation storing them, which are just as overwritable. Inside a FOREACH
+  // block that is the only place ${value} is left: the block no longer counts it
+  // as stored by an earlier operation (see subroutineScope).
   parameterKeySuggestions(name) {
     const value = this.parameterValue(name);
     const taken = value && typeof value == 'object' ? Object.keys(value) : [];
-    return (this.variables || []).filter(variable=>typeof variable == 'string' && taken.indexOf(variable) == -1);
+    const handedOver = (this.presets || []).flatMap(group=>Object.keys(group.variables || {}));
+    return [ ...new Set([ ...(this.variables || []), ...handedOver ]) ].filter(variable=>typeof variable == 'string' && taken.indexOf(variable) == -1);
   }
 
   getDefaults() {

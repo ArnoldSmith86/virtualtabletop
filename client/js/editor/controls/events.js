@@ -115,29 +115,62 @@ const routinePresets = {
   editorAddToRoomRoutine: {}
 };
 
-// The arguments every CALL in the room that runs this routine by name hands it,
-// as { arguments: Map(name -> which CALLs pass it), calls: every CALL that runs
-// it }. CALL copies the calling routine's values and collections into the
-// routine it runs and merges its arguments on top (widget.js), so those names
+// Where a widget runs a routine of this name from, as the place the editor
+// shows routines in - the widget's own properties, or the cardDefaults of the
+// deck a card takes what it does not have itself from (Card.getDefaultValue).
+// null for an id that is in no widget of the room, which rules nothing out.
+function routineHomeOf(widgetID, routineName) {
+  const widget = widgets.get(widgetID);
+  if(!widget)
+    return null;
+  if(Array.isArray(widget.state[routineName]))
+    return { widgetID, cardDefaults: false };
+  if(widgetTypeOf(widget) == 'card') {
+    const deck = widgets.get(widget.state.deck);
+    if(deck && Array.isArray(cardDefaultsOf(deck)[routineName]))
+      return { widgetID: deck.state.id, cardDefaults: true };
+  }
+  return { widgetID, cardDefaults: false };
+}
+
+// Whether a CALL can reach the routine that is open in the editor. It names the
+// widget it runs the routine on, and with no widget of its own it runs it on the
+// widget it is written on (widget.js) - which, in the cardDefaults of a deck, is
+// the card running it rather than the deck. An id the game computes (${...}) or
+// hands over as anything but a string can be any widget, so it stays in.
+function callReaches(operation, where, routineName, target) {
+  if(!target)
+    return true;
+  const named = Array.isArray(operation.widget) ? operation.widget[0] : operation.widget;
+  const home = named === undefined ? where : (typeof named == 'string' && named.indexOf('${') == -1 ? routineHomeOf(named, routineName) : null);
+  return !home || (home.widgetID == target.widgetID && !home.cardDefaults == !target.cardDefaults);
+}
+
+// The arguments every CALL in the room that runs the routine open in the editor
+// hands it, as { arguments: Map(name -> which CALLs pass it), calls: every CALL
+// that runs it }. CALL copies the calling routine's values and collections into
+// the routine it runs and merges its arguments on top (widget.js), so those names
 // are values the routine has before its first operation - the same kind of thing
 // an event hands its routine, except that what they are is written in the game
-// rather than in the engine.
-function callArgumentsFor(routineName) {
+// rather than in the engine. target is the routine being edited as { widgetID,
+// cardDefaults }: another widget's routine of the same name is a different
+// routine, and its arguments are none of this one's business.
+function callArgumentsFor(routineName, target) {
   // the names are written in the game, so they are kept in a Map: a plain object
   // answers "constructor" with what it inherits from Object instead of nothing
   const args = new Map();
   const calls = [];
-  const scan = (routine, source)=>{
+  const scan = (routine, where)=>{
     for(const operation of Array.isArray(routine) ? routine : []) {
       if(!operation || typeof operation != 'object')
         continue;
       // a CALL given a list of names runs the first of them (widget.js)
       const called = Array.isArray(operation.routine) ? operation.routine[0] : operation.routine;
-      if(operation.func == 'CALL' && called === routineName) {
+      if(operation.func == 'CALL' && called === routineName && callReaches(operation, where, routineName, target)) {
         // one entry per CALL rather than per routine one is in: two CALLs in the
         // same routine can hand over different arguments, and an argument only
         // one of them passes is one the routine only sometimes has
-        const call = { source };
+        const call = { source: where.source };
         calls.push(call);
         if(operation.arguments && typeof operation.arguments == 'object')
           for(const name of Object.keys(operation.arguments)) {
@@ -147,20 +180,20 @@ function callArgumentsFor(routineName) {
           }
       }
       for(const block of [ 'thenRoutine', 'elseRoutine', 'loopRoutine' ])
-        scan(operation[block], source);
+        scan(operation[block], where);
     }
   };
-  const scanRoutinesIn = (source, describe)=>{
+  const scanRoutinesIn = (source, where)=>{
     for(const [ key, value ] of Object.entries(source))
       if(key.match(/Routine$/) && Array.isArray(value))
-        scan(value, describe(key));
+        scan(value, where(key));
   };
   for(const widget of widgets.values()) {
-    scanRoutinesIn(widget.state, key=>`${key} of ${widget.state.id}`);
+    scanRoutinesIn(widget.state, key=>({ source: `${key} of ${widget.state.id}`, widgetID: widget.state.id, cardDefaults: false }));
     // the cards of a deck run the routines in its cardDefaults, so a CALL in one
     // of them runs this routine just like one written on a widget itself
     if(widgetTypeOf(widget) == 'deck')
-      scanRoutinesIn(cardDefaultsOf(widget), key=>`${key} of the cards of ${widget.state.id}`);
+      scanRoutinesIn(cardDefaultsOf(widget), key=>({ source: `${key} of the cards of ${widget.state.id}`, widgetID: widget.state.id, cardDefaults: true }));
   }
   return { arguments: args, calls };
 }
@@ -181,8 +214,10 @@ function describeCallers(calls, total) {
 // the most specific group first (see presetSections in popup.js). The routines
 // named after a property hear about that one property only, so theirs are worded
 // with its name and have no property variable. Everything else is a custom
-// routine, which only ever runs through CALL.
-function routinePresetsOf(property) {
+// routine, which only ever runs through CALL. target says which routine of which
+// widget is open ({ widgetID, cardDefaults }), so the CALLs that run a routine of
+// the same name somewhere else are left out of it.
+function routinePresetsOf(property, target) {
   let match;
   const groups = [];
   let preset = routinePresets[property];
@@ -200,28 +235,35 @@ function routinePresetsOf(property) {
       },
       collections: { widget: `the widget whose ${match[1]} changed` }
     };
-  if(!preset && !predefinedEvents.some(event=>event.property == property)) {
+  // a routine nothing in the engine triggers is a custom one: it only ever runs
+  // through CALL, so what a CALL hands over is what it always has
+  const custom = !preset && !predefinedEvents.some(event=>event.property == property);
+  if(custom)
     preset = { collections: { caller: 'the widget whose routine used CALL to run this one' } };
-    // an argument only some of the calls hand over is still worth offering, but
-    // it is one the routine only has when that call is what ran it - so they are
-    // a group of their own rather than part of "In every fooRoutine", and the
-    // ones not every call hands over are shown as the exception they are
-    const { arguments: args, calls } = callArgumentsFor(property);
-    // a name written in the game, so the map it goes into inherits nothing (see
-    // presetEntryOf in popup.js)
-    const variables = Object.create(null);
-    for(const name of [ ...args.keys() ].sort())
-      variables[name] = {
-        description: describeCallers(args.get(name), calls.length),
-        partial: args.get(name).size < calls.length
-      };
-    if(Object.keys(variables).length)
-      groups.push({
-        title: `From the ${calls.length == 1 ? 'operation that runs' : 'operations that run'} it`,
-        source: 'the CALL that runs this routine',
-        variables, collections: {}
-      });
-  }
+  // CALL runs any routine by name, a clickRoutine as readily as a custom one, and
+  // hands it its arguments and its caller either way - so they are offered
+  // wherever a CALL in the room runs this routine. They are a group of their own
+  // rather than part of "In every fooRoutine" because the routine only has them
+  // when that CALL is what ran it: an argument not every call hands over is shown
+  // as the exception it is, and in a routine a player can trigger as well, all of
+  // them are.
+  const { arguments: args, calls } = callArgumentsFor(property, target);
+  // a name written in the game, so the map it goes into inherits nothing (see
+  // presetEntryOf in popup.js)
+  const variables = Object.create(null);
+  for(const name of [ ...args.keys() ].sort())
+    variables[name] = {
+      description: describeCallers(args.get(name), calls.length),
+      partial: !custom || args.get(name).size < calls.length
+    };
+  const collections = !custom && calls.length
+    ? { caller: { description: 'the widget whose routine used CALL to run this one', partial: true } } : {};
+  if(Object.keys(variables).length + Object.keys(collections).length)
+    groups.push({
+      title: custom ? `From the ${calls.length == 1 ? 'operation that runs' : 'operations that run'} it` : 'Only when a CALL runs it',
+      source: 'the CALL that runs this routine',
+      variables, collections
+    });
   // handed over before the first operation runs, so an operation of the routine
   // that stores the same name wins over them (see presetSections in popup.js)
   const group = Object.assign({ title: `In every ${property}`, source: `the ${property}`, variables: {}, collections: {} }, preset);
@@ -249,6 +291,10 @@ const routineTargets = {
     describe: property=>property
   }
 };
+
+function widgetIDOf(widget) {
+  return typeof widget.get == 'function' ? widget.get('id') : widget.state.id;
+}
 
 function widgetTypeOf(widget) {
   return typeof widget.get == 'function' ? widget.get('type') : widget.state.type;
@@ -649,7 +695,7 @@ class EventsEditor {
           // clone in both directions: the editor mutates its own copy, and the widget must
           // never share references with it (deltas would alias widget state to the editor's
           // arrays and make later set() calls no-op because the state already "changed")
-          this.routineEditors[key] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.routineSource(target)[property])), [], [], { routineKey: key, presets: routinePresetsOf(property) });
+          this.routineEditors[key] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.routineSource(target)[property])), [], [], { routineKey: key, presets: routinePresetsOf(property, { widgetID: widgetIDOf(this.widget), cardDefaults: target == 'cardDefaults' }) });
           this.routineEditors[key].registerChangeListener(v=>this.setRoutine(entry, JSON.parse(JSON.stringify(v))));
         }
         contentDOM.append(this.routineEditors[key].domElement);
