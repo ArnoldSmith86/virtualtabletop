@@ -106,6 +106,40 @@ test('The Apply confirmation goes away when somebody else changes the board size
   await loadGameWithBoardSize(null);
 });
 
+// Where the widget a preview in the add widget overlay just added ended up. The previews are
+// real widgets at coordinates picked for a 1600x1000 board, so on any other board they are drawn
+// scaled and centered - and the widget they add has to follow them there.
+const addedWidgetBox = ClientFunction(type => {
+  const added = widgetFilter(w => w.get('type') == type && !w.get('parent'))[0];
+  return added && {
+    x: added.get('x'),
+    y: added.get('y'),
+    right: added.get('x')+added.get('width'),
+    bottom: added.get('y')+added.get('height')
+  };
+});
+
+// The overlay is populated once, when edit mode is opened, but the board size can change after
+// that - the game settings apply to everybody in the room right away. The composite previews
+// (deck, chips, timer, counter, line, ring) used to work out where to add at that populate time,
+// so after such a change they kept adding at the coordinates of the board that is gone: on a
+// 1000px wide board the ring landed at x=1420, entirely off the table.
+test('A preview in the add widget overlay adds its widget where the preview is shown', async t => {
+  await loadGameWithBoardSize(null);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton').expect(Selector('#editorToolbar > div > [icon=add]').exists).ok();
+
+  await loadGameWithBoardSize({ width: 1000, height: 1600 });
+  await t
+    .expect(boardLayout()).eql(portraitBoard)
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-2D-chips')
+    .expect(addedWidgetBox('holder')).eql({ x: 573, y: 675, right: 654, bottom: 756 });
+
+  await loadGameWithBoardSize(null);
+});
+
 // What the editor sidebar is currently wide - 128px with its button labels, 36px without them.
 const editSidebarWidth = ClientFunction(() => getComputedStyle(document.body).getPropertyValue('--editSidebarWidth').trim());
 

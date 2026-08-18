@@ -1,4 +1,4 @@
-import { calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, DEFAULT_VIEWPORT, normalizeBoardSize, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
+import { addOverlayPosition, addOverlayScale, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, DEFAULT_VIEWPORT, normalizeBoardSize, setViewportSize, viewportConfig } from '../client/js/calculateLayout.js';
 
 describe('calculateLayout', () => {
   const viewport16x10 = { targetWidth: 1600, targetHeight: 1000 };
@@ -221,5 +221,57 @@ describe('normalizeBoardSize', () => {
     expect(normalizeBoardSize(null)).toBe(null);
     expect(normalizeBoardSize(undefined)).toBe(null);
     expect(normalizeBoardSize('1600x1000')).toBe(null);
+  });
+});
+
+// The add widget overlay is laid out for the default board and scaled into whatever board the
+// game uses, so a preview adds its widget where the preview is drawn - see editmode.js.
+describe('the add widget overlay mapping', () => {
+  const portrait = { targetWidth: 1000, targetHeight: 1600 };
+  const tiny = { targetWidth: 100, targetHeight: 100 };
+
+  test('renders the overlay at its own size on the default board', () => {
+    expect(addOverlayScale(DEFAULT_VIEWPORT)).toBe(1);
+  });
+
+  test('fits the overlay into the board without ever distorting it', () => {
+    expect(addOverlayScale(portrait)).toBe(0.625);
+    expect(addOverlayScale({ targetWidth: 3200, targetHeight: 4000 })).toBe(2);
+  });
+
+  // the guarantee the whole change rests on: a game on the default board gets exactly the
+  // widget coordinates it used to get before the overlay was scaled at all
+  test('leaves every preview where it is on the default board', () => {
+    for(const [ x, y, width, height ] of [
+      [ 115, 150, 111, 168 ],   // add-holder
+      [ 1005, 825, 74, 30 ],    // add-timer
+      [ 1058, 890, 65, 40 ],    // add-counter
+      [ 1310, 420, 220, 40 ],   // add-line
+      [ 1420, 495, 130, 130 ]   // add-ring
+    ])
+      expect(addOverlayPosition(DEFAULT_VIEWPORT, x, y, width, height)).toEqual([ x, y ]);
+  });
+
+  test('follows the scaled and centered overlay on another board', () => {
+    expect(addOverlayPosition(portrait, 800, 500, 130, 130)).toEqual([ 500, 800 ]);
+    expect(addOverlayPosition(portrait, 300, 200, 111, 168)).toEqual([ 188, 613 ]);
+  });
+
+  // 1420,495 is the ring, the preview furthest to the right. Unmapped it is 420px past the right
+  // edge of a 1000px board; mapped it is 888, which still hangs its 130px over that edge.
+  test('keeps a preview at the edge of the overlay on the board', () => {
+    expect(addOverlayPosition(portrait, 1420, 495, 130, 130)).toEqual([ 1000-130, 797 ]);
+  });
+
+  test('keeps the widget on the board whatever its size', () => {
+    const [ x, y ] = addOverlayPosition(tiny, 1420, 495, 130, 130);
+    expect([ x, y ]).toEqual([ 0, 0 ]);
+    for(const viewport of [ DEFAULT_VIEWPORT, portrait, tiny ]) {
+      const [ px, py ] = addOverlayPosition(viewport, 1420, 495, 111, 168);
+      expect(px).toBeGreaterThanOrEqual(0);
+      expect(py).toBeGreaterThanOrEqual(0);
+      expect(px).toBeLessThanOrEqual(Math.max(0, viewport.targetWidth-111));
+      expect(py).toBeLessThanOrEqual(Math.max(0, viewport.targetHeight-168));
+    }
   });
 });

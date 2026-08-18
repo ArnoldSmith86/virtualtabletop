@@ -358,7 +358,6 @@ function generateTimerWidgets(id, x, y) {
 }
 
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
-  const [ addX, addY ] = addOverlayPosition(widgetsToAdd[0].x, widgetsToAdd[0].y, widgetsToAdd[0].width, widgetsToAdd[0].height);
   for(const wi of widgetsToAdd) {
     let w = null;
     if(wi.type == 'button') w = new Button(wi.id);
@@ -377,7 +376,9 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
       w.domElement.addEventListener('click', async _=>{
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
-        overlayDone(await onClick(addX, addY));
+        // the board size can change while edit mode is open, so where the widget goes has to be
+        // worked out on click and not when the overlay is populated
+        overlayDone(await onClick(...overlayPosition(wi.x, wi.y, w)));
         batchEnd();
       });
       $('#addOverlayContent').appendChild(w.domElement);
@@ -390,21 +391,11 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 
 const VTTblue = '#1f5ca6';
 
-// The add widget overlay is laid out for the default board size and scaled into the room as a
-// whole (#addOverlayContent in editmode.css). A preview adds its widget where the preview is
-// shown, so its overlay coordinates have to go through that same transform to become the board
-// coordinates of the new widget. The widget itself keeps its size while the overlay shrinks, so
-// the result is kept on the board. On a 1600x1000 board this changes nothing.
-function addOverlayPosition(x, y, width, height) {
-  const scale = Math.min(viewportConfig.targetWidth/DEFAULT_VIEWPORT.targetWidth, viewportConfig.targetHeight/DEFAULT_VIEWPORT.targetHeight);
-  function onBoard(coordinate, overlaySize, widgetSize, boardSize) {
-    const scaled = Math.round((coordinate - overlaySize/2)*scale + boardSize/2);
-    return Math.max(0, Math.min(scaled, boardSize - (widgetSize || 100)));
-  }
-  return [
-    onBoard(x, DEFAULT_VIEWPORT.targetWidth,  width,  viewportConfig.targetWidth),
-    onBoard(y, DEFAULT_VIEWPORT.targetHeight, height, viewportConfig.targetHeight)
-  ];
+// addOverlayPosition (calculateLayout.js) for the board in use, taking the size to keep on the
+// board off the instantiated preview widget: most previews leave their size to the widget
+// defaults, which are bigger than the delta lets on - a holder is 111x168 with an empty delta.
+function overlayPosition(x, y, w) {
+  return addOverlayPosition(viewportConfig, x, y, w.get('width'), w.get('height'));
 }
 
 function addPieceToAddWidgetOverlay(w, wi) {
@@ -422,7 +413,7 @@ function addPieceToAddWidgetOverlay(w, wi) {
         ]
       });
       const toAdd = {...wi};
-      [ toAdd.x, toAdd.y ] = addOverlayPosition(wi.x, wi.y, wi.width, wi.height);
+      [ toAdd.x, toAdd.y ] = overlayPosition(wi.x, wi.y, w);
       toAdd.z = getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
 
@@ -440,7 +431,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
-    [ toAdd.x, toAdd.y ] = addOverlayPosition(wi.x, wi.y, wi.width, wi.height);
+    [ toAdd.x, toAdd.y ] = overlayPosition(wi.x, wi.y, w);
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
@@ -1053,7 +1044,7 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice2DAttrs};
-      [ toAdd.x, toAdd.y ] = addOverlayPosition(dice2DAttrs.x, dice2DAttrs.y, dice2DAttrs.width, dice2DAttrs.height);
+      [ toAdd.x, toAdd.y ] = overlayPosition(dice2DAttrs.x, dice2DAttrs.y, dice2D);
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
@@ -1125,7 +1116,7 @@ function populateAddWidgetOverlay() {
         ]
       });
       const toAdd = {...dice2DCubeAttrs};
-      [ toAdd.x, toAdd.y ] = addOverlayPosition(dice2DCubeAttrs.x, dice2DCubeAttrs.y, dice2DCubeAttrs.width, dice2DCubeAttrs.height);
+      [ toAdd.x, toAdd.y ] = overlayPosition(dice2DCubeAttrs.x, dice2DCubeAttrs.y, dice2DCube);
       toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
       toAdd.cT = result.variables.color;
       toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
@@ -1164,7 +1155,7 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice3DAttrs};
-      [ toAdd.x, toAdd.y ] = addOverlayPosition(dice3DAttrs.x, dice3DAttrs.y, dice3DAttrs.width, dice3DAttrs.height);
+      [ toAdd.x, toAdd.y ] = overlayPosition(dice3DAttrs.x, dice3DAttrs.y, dice3D);
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
@@ -1206,7 +1197,7 @@ function populateAddWidgetOverlay() {
       });
       const values = result.variables.values;
       const toAdd = {...spinAttrs};
-      [ toAdd.x, toAdd.y ] = addOverlayPosition(spinAttrs.x, spinAttrs.y, spinAttrs.width, spinAttrs.height);
+      [ toAdd.x, toAdd.y ] = overlayPosition(spinAttrs.x, spinAttrs.y, spinner);
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
       toAdd.options = Array.from({length: values}, (_, i) => i + 1);
@@ -1756,6 +1747,10 @@ export function initializeEditMode(currentMetaData) {
   });
 
   on('#addHand', 'click', async function() {
+    // the hand spans the width of the board along its bottom edge - on a board smaller than the
+    // 1600x1000 the 50/180 margins were picked for, they are scaled down so it still fits
+    const handHeight = Math.round(Math.min(180, viewportConfig.targetHeight/2));
+    const handMargin = Math.round(Math.min(50, viewportConfig.targetWidth/4));
     const hand = {
       type: 'holder',
       onEnter: { activeFace: 1 },
@@ -1766,10 +1761,10 @@ export function initializeEditMode(currentMetaData) {
       childrenPerOwner: true,
       dropShadow: true,
       hidePlayerCursors: true,
-      x: 50,
-      y: viewportConfig.targetHeight-180,
-      width: viewportConfig.targetWidth-100,
-      height: 180
+      x: handMargin,
+      y: viewportConfig.targetHeight-handHeight,
+      width: viewportConfig.targetWidth-2*handMargin,
+      height: handHeight
     }
     if(!widgets.has('hand'))
       hand.id = 'hand';
@@ -1786,8 +1781,8 @@ export function initializeEditMode(currentMetaData) {
     const id = await addWidgetLocal({
       type: "canvas",
 
-      x: (viewportConfig.targetWidth-size)/2,
-      y: (viewportConfig.targetHeight-size)/2,
+      x: Math.round((viewportConfig.targetWidth-size)/2),
+      y: Math.round((viewportConfig.targetHeight-size)/2),
       width: size,
       height: size,
 
@@ -2009,7 +2004,7 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    const [ x, y ] = addOverlayPosition(840, 90, 150, 40);
+    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, 150, 40);
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
@@ -2022,7 +2017,7 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeatCounter', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    const [ x, y ] = addOverlayPosition(840, 90, 150, 40);
+    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, 150, 40);
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
@@ -2074,7 +2069,7 @@ export function initializeEditMode(currentMetaData) {
   });
 
   on('#addScoreboard', 'click', async function() {
-    const [ x, y ] = addOverlayPosition(1000, 660, 300, 200);
+    const [ x, y ] = addOverlayPosition(viewportConfig, 1000, 660, 300, 200);
     await addWidgetLocal({
       type: 'scoreboard',
       x,

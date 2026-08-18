@@ -162,3 +162,42 @@ export function isEditSidebarNarrow(windowWidth, windowHeight, viewport) {
     return true;
   return (windowWidth - EDIT_SIDEBAR_WIDTH)/viewport.targetWidth < (windowHeight - EDIT_TOOLBAR_HEIGHT)/viewport.targetHeight;
 }
+
+/**
+ * The scale the add widget overlay is rendered at. Its contents are laid out for the default
+ * board because the widget previews in it are real widgets at coordinates hardcoded for that
+ * board, so the whole layout is scaled into the room and centered instead of being stretched
+ * to it - see #addOverlayContent in editmode.css.
+ *
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @returns {number}
+ */
+export function addOverlayScale(viewport) {
+  return Math.min(viewport.targetWidth/DEFAULT_VIEWPORT.targetWidth, viewport.targetHeight/DEFAULT_VIEWPORT.targetHeight);
+}
+
+/**
+ * Where a widget ends up when it is added by clicking its preview in the add widget overlay:
+ * the preview is shown at the overlay's own coordinates, so those go through the same scale
+ * and centering the overlay itself gets. The widget keeps its full size while the overlay
+ * shrinks, so the result is then kept on the board - without that, a preview near the edge of
+ * a small board would add a widget hanging over it.
+ *
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @param {number} x - the preview's x in the overlay's 1600x1000 layout
+ * @param {number} y - the preview's y in the overlay's 1600x1000 layout
+ * @param {number} width - the width the added widget will have, not the preview's delta
+ * @param {number} height - the height the added widget will have
+ * @returns {number[]} [ x, y ] on the board
+ */
+export function addOverlayPosition(viewport, x, y, width, height) {
+  const scale = addOverlayScale(viewport);
+  function onBoard(coordinate, overlaySize, widgetSize, boardSize) {
+    const scaled = Math.round((coordinate - overlaySize/2)*scale + boardSize/2);
+    return Math.max(0, Math.min(scaled, boardSize - widgetSize));
+  }
+  return [
+    onBoard(x, DEFAULT_VIEWPORT.targetWidth,  width,  viewport.targetWidth),
+    onBoard(y, DEFAULT_VIEWPORT.targetHeight, height, viewport.targetHeight)
+  ];
+}
