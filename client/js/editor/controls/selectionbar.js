@@ -681,14 +681,20 @@ function selectionBarUpdateTreeHighlight() {
 /* Rendering */
 
 // Pressing a button moves the keyboard to it, so whether the JSON text area was
-// what had it has to be taken on the way down rather than in the click.
+// what had it has to be taken on the way down rather than in the click. The
+// handler must not hand back what it stored: an inline handler that returns
+// false cancels the default of the event it is on, and a mousedown whose default
+// is cancelled is a button that is never focused - and, in a browser driven by
+// synthetic events, one whose click may not follow at all.
 function selectionBarHistoryButton(bar, direction, icon, title) {
   let hadJsonFocus = false;
   const button = selectionBarButton(bar.dom, icon, title, function() {
     selectionBarHistoryNavigate(direction, hadJsonFocus);
     hadJsonFocus = false;
   });
-  button.onmousedown = _=>hadJsonFocus = selectionBarJsonHasFocus();
+  button.onmousedown = function() {
+    hadJsonFocus = selectionBarJsonHasFocus();
+  };
   return button;
 }
 

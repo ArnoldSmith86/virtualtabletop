@@ -3421,6 +3421,18 @@ test('The selection bar switches the outline of the selected widgets off and on'
   await setEditorState(null);
 });
 
+// Holding a key that is not a modifier is not something pressKey() can do in
+// every browser: Chrome is driven through the browser's own automation and holds
+// the Tab down, Firefox is driven by events TestCafe builds itself and lets go of
+// it again before the next key. So the chord is built here, out of plain
+// KeyboardEvents - the window listener behind it sees no difference.
+const pressTabChord = ClientFunction(key => {
+  const send = (type, k) => document.body.dispatchEvent(new KeyboardEvent(type, { key: k, bubbles: true, cancelable: true }));
+  send('keydown', 'Tab');
+  send('keydown', key);
+  send('keyup', 'Tab');
+});
+
 // The two arrows name Tab+Left and Tab+Right in their tooltip, and the gesture
 // only ever existed inside the JSON text area - so in Edit Widgets, the module
 // edit mode opens by default, they promised a shortcut that did nothing.
@@ -3434,15 +3446,21 @@ test('Tab and an arrow key walk the widget history outside the JSON editor', asy
   await setEditorState(propertiesModuleOpen);
   await setName(t);
 
+  const back = Selector('#editorModuleTopLeft .selectionBar button[icon=arrow_back]');
+
   await t
     .click('#editButton')
+    .expect(propertiesModule.exists).ok()
     .click('#w_one')
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
     .click('#w_two')
     .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
-    .pressKey('tab+left')
-    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
-    .pressKey('tab+right')
-    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok();
+    // two widgets in the history, so there is something to go back to
+    .expect(back.hasAttribute('disabled')).notOk();
+  await pressTabChord('ArrowLeft');
+  await t.expect(Selector('#w_one').hasClass('selectedInEdit')).ok();
+  await pressTabChord('ArrowRight');
+  await t.expect(Selector('#w_two').hasClass('selectedInEdit')).ok();
   await setEditorState(null);
 });
 
@@ -3466,8 +3484,12 @@ test('Back and forward give the keyboard back to the JSON editor', async t => {
 
   await t
     .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
     .click('#w_one')
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
     .click('#w_two')
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    .expect(bar.find('button[icon=arrow_back]').hasAttribute('disabled')).notOk()
     .click('#jeText')
     .expect(activeElementID()).eql('jeText')
     .click(bar.find('button[icon=arrow_back]'))
