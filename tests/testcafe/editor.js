@@ -2212,6 +2212,81 @@ test('Deck editor: two uploads with the same file name keep their own cards', as
   await t.expect(deck.images.filter(image => image == second).length).eql(4);
 });
 
+// A deck opens in the card-defaults view, which shows an explanation instead of a card - but the tree's object
+// previews are clones of the rendered card, so they came out empty there and only filled in once a face was
+// selected. They are cloned from an off-screen card now, and a card cut out of a sheet shows its own cell
+// rather than the whole sheet (the object's tiling CSS instead of a plain "contain" refit).
+test('Deck editor: the tree previews show the card art before a face is selected', async t => {
+  const sheet = `data:image/svg+xml;base64,${Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="107"><title>sheet</title></svg>').toString('base64')}`;
+  const tiling = {
+    'background-size': 'calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)',
+    'background-position': 'calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)'
+  };
+
+  await setRoomState({
+    deck: {
+      id: 'deck', type: 'deck',
+      cardDefaults: { width: 160, height: 107, css: {
+        '--offsetX': '${PROPERTY offsetX}', '--offsetY': '${PROPERTY offsetY}',
+        '--deckWidth': '${PROPERTY deckWidth}', '--deckHeight': '${PROPERTY deckHeight}',
+        '--width': '${PROPERTY width}', '--height': '${PROPERTY height}'
+      } },
+      cardTypes: {
+        'sheet.png 1,1': { image: sheet, offsetX: 0, offsetY: 0, deckWidth: 2, deckHeight: 1 },
+        'sheet.png 2,1': { image: sheet, offsetX: 1, offsetY: 0, deckWidth: 2, deckHeight: 1 }
+      },
+      faceTemplates: [
+        { objects: [ { type: 'image', color: 'transparent', value: '/i/cards-default/2B.svg', dynamicProperties: { height: 'height', width: 'width' } } ] },
+        { objects: [ { type: 'image', color: 'transparent', dynamicProperties: { value: 'image', height: 'height', width: 'width' }, css: tiling } ] }
+      ]
+    },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'sheet.png 2,1', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const treePreview = ClientFunction(() => {
+    const box = document.querySelector('#deckEditorTree .deckEditorObjectRow .deckEditorObjectPreview');
+    const node = box && box.querySelector('.cardFaceObject');
+    const style = node && getComputedStyle(node);
+    return {
+      cardRendered: !!document.querySelector('#deckEditorMain .cardFace'),
+      hasImage: !!style && style.backgroundImage.indexOf('data:image/svg') != -1,
+      backgroundSize: style ? style.backgroundSize : '',
+      backgroundPosition: style ? style.backgroundPosition : ''
+    };
+  });
+
+  await t.click('#editButton').click('#editorToolbar [icon=style]');
+
+  // No card on screen, but the front face's object still shows the picture, cut to the cell of the card type
+  // the deck opens on: the sheet is drawn at twice the card's width, with its first cell in view.
+  await t.expect(treePreview()).eql({
+    cardRendered: false,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '0px 0px'
+  });
+
+  // and selecting the face - which does render the card - shows exactly the same thing
+  await t.click(Selector('#deckEditorTree .deckEditorTreeFace').nth(1));
+  await t.expect(treePreview()).eql({
+    cardRendered: true,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '0px 0px'
+  });
+
+  // the second card type is the other half of the same sheet, so its preview is shifted by one card
+  await t.click(Selector('#deckEditorStrip .deckEditorStripCard').nth(1));
+  await t.expect(treePreview()).eql({
+    cardRendered: true,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '-160px 0px'
+  });
+});
+
 // The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
 // strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
 test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {

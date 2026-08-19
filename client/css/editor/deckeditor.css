@@ -1083,6 +1083,17 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   position: absolute;
 }
 
+/* The card the tree previews are cloned from while the main area shows the card defaults instead of a card
+   (previewSourceCard). It is in the document rather than in a detached node so the tiling CSS of a card cut out
+   of a sheet resolves to pixels, but it must never be visible or take part in the layout. */
+.deckEditorPreviewSource {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 /* Image previews: the whole picture, contained and centered in the box. */
 .deckEditorPreviewFill {
   width: 100%;
