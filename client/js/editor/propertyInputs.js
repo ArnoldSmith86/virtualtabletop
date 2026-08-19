@@ -326,6 +326,56 @@ function renderColorChip(value, target) {
   return chip;
 }
 
+// Icon search matching. The symbol picker of the JSON editor implements the same rule in
+// client/js/symbols.js (loadSymbolPicker) and both have to stay in sync.
+//
+// A search term matches the beginning of a word of the icon name, but only a whole word of its
+// tags. The tags describe what an icon shows, so matching them anywhere in their text answers
+// "bear" with a compass tagged "bearing", a razor tagged "beard" and an I-beam tagged "load
+// bearing" - 19 of the 32 results had nothing to do with bears. Names keep matching from the
+// start of a word so that typing "swor" still finds the swords while nothing is complete yet.
+function iconSearchWords(text) {
+  return text.toLowerCase().split(/[^a-z0-9]+/).filter(word => word);
+}
+
+function iconSearchEntry(name, keywords) {
+  return {
+    name: iconSearchWords(name),
+    tags: new Set(iconSearchWords(keywords.join(' '))),
+    // the fallback in iconSearchMatches matches anywhere in here, including the de-hyphenated name
+    text: `${name},${name.replace(/[-_]/g, ' ')},${keywords.join()}`.toLowerCase()
+  };
+}
+
+// 2 for a name match, 1 for a tag match, 0 for no match at all: a search for "hand" has 181
+// matches and the picker shows 100 of them, so the icons that are called that come first.
+function iconSearchScore(entry, terms) {
+  let score = 2;
+  for(const term of terms) {
+    // "card" finds the icon tagged "cards" and the other way round
+    const termScore = entry.name.some(word => word.startsWith(term)) ? 2
+                    : entry.tags.has(term) || entry.tags.has(`${term}s`) || entry.tags.has(`${term}es`) || entry.tags.has(term.replace(/e?s$/, '')) ? 1 : 0;
+    if(!termScore)
+      return 0;
+    score = Math.min(score, termScore);
+  }
+  return score;
+}
+
+// Sorting is stable, so entries of the same score stay in symbols.json order and related icon
+// families stay together.
+function iconSearchMatches(query, limit, entryFilter) {
+  const entries = (iconSearchIndex || []).filter(entryFilter);
+  const terms = iconSearchWords(query);
+  const matches = entries.map(entry => ({ entry, score: iconSearchScore(entry, terms) })).filter(match => match.score);
+  if(matches.length || !query.trim())
+    return matches.sort((a, b) => b.score - a.score).slice(0, limit).map(match => match.entry);
+  // a half typed tag ("cthulh"), a pasted emoji or a "+" has no word to match, so rather than
+  // showing nothing at all, fall back to the old "appears anywhere in the name or the tags"
+  const looseTerms = query.toLowerCase().split(/\s+/).filter(term => term);
+  return entries.filter(entry => looseTerms.every(term => entry.text.includes(term))).slice(0, limit);
+}
+
 // Flat searchable index over i/fonts/symbols.json, loaded on first use.
 let iconSearchIndex = null;
 let iconSearchIndexPromise = null;
@@ -340,22 +390,22 @@ function loadIconSearchIndex() {
         for(let [ symbol, keywords ] of Object.entries(symbols)) {
           if(symbol.includes('/')) {
             keywords = keywords.slice(1); // first entry is the spritesheet index
-            // as in the symbol picker: search the file name both hyphenated and with spaces
+            // as in the symbol picker: the file name is searched word by word
             const name = symbol.split('/')[1];
-            index.push({ value: symbol, keywords: `${name},${name.replace(/-/g, ' ')},${keywords.join()}`.toLowerCase(), image: true, type: 'game-icons' });
+            index.push({ value: symbol, ...iconSearchEntry(name, keywords), image: true, type: 'game-icons' });
           } else {
             const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
             symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
-            const allKeywords = `${symbol},${keywords.join()}`.toLowerCase();
+            const searchEntry = iconSearchEntry(symbol, keywords);
             if(symbol.match(/^\[/) || symbol.match(/^[a-z0-9_]+$/)) {
-              index.push({ value: symbol, keywords: allKeywords, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
+              index.push({ value: symbol, ...searchEntry, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
               if(hasNoFillVariant)
-                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false, type: 'material-symbols' });
+                index.push({ value: `${symbol}_NOFILL`, ...searchEntry, image: false, type: 'material-symbols' });
             } else {
               // emoji: offer both the color image and the monochrome font variant
-              index.push({ value: symbol, keywords: allKeywords, image: true, type: 'emoji-color' });
+              index.push({ value: symbol, ...searchEntry, image: true, type: 'emoji-color' });
               if(!skipForNotoMonochrome(symbol))
-                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false, type: 'emoji-monochrome' });
+                index.push({ value: `(${symbol})`, ...searchEntry, image: false, type: 'emoji-monochrome' });
             }
           }
         }
@@ -368,12 +418,8 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
-// Keep matches in symbols.json order so related icon families stay together.
 function searchIconIndex(query, limit=100, enabledTypes=null) {
-  const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  return (iconSearchIndex || [])
-    .filter(entry => terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
-    .slice(0, limit)
+  return iconSearchMatches(query, limit, entry => !enabledTypes || enabledTypes.has(entry.type))
     .map(entry => entry.value);
 }
 
@@ -385,10 +431,7 @@ function imageURLFromSymbol(symbol) {
 }
 
 function searchImageIndex(query, limit=100) {
-  const terms = query.toLowerCase().split(/\s+/).filter(term => term);
-  return (iconSearchIndex || [])
-    .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
-    .slice(0, limit)
+  return iconSearchMatches(query, limit, entry => entry.image)
     .map(entry => imageURLFromSymbol(entry.value));
 }
 

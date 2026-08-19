@@ -18,6 +18,7 @@ const inputHelpers = new Function(inputsSource + `;
     numericInputValue,
     searchIconIndex,
     searchImageIndex,
+    iconSearchEntry,
     iconValueType,
     usedGameIconValue,
     setIconSearchIndex: index => { iconSearchIndex = index; },
@@ -990,23 +991,49 @@ describe('property input helpers', () => {
     expect(arrayChip.children[0].style.color).toBeUndefined();
   });
 
-  test('searchIconIndex preserves symbols.json order', () => {
+  test('searchIconIndex lists name matches first and keeps symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
-      { value: 'star',           keywords: 'star,favorite', image: false },
-      { value: 'grade',          keywords: 'star,grade',    image: false },
-      { value: 'lorc/star',      keywords: 'star,shiny',    image: true },
-      { value: 'delapouite/sun', keywords: 'sun,light',     image: true }
+      { value: 'grade',          ...inputHelpers.iconSearchEntry('grade', [ 'star' ]),  image: false },
+      { value: 'star',           ...inputHelpers.iconSearchEntry('star', [ 'favorite' ]), image: false },
+      { value: 'lorc/star',      ...inputHelpers.iconSearchEntry('star', [ 'shiny' ]),  image: true },
+      { value: 'delapouite/sun', ...inputHelpers.iconSearchEntry('sun', [ 'light' ]),   image: true }
     ]);
-    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'grade', 'lorc/star' ]);
+    // the two icons called "star" come before the one that is only tagged with it, both groups
+    // in the order of the index
+    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'lorc/star', 'grade' ]);
     expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
     expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
   });
 
+  test('searchIconIndex matches names by word but tags only as whole words', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'delapouite/bear-head',  ...inputHelpers.iconSearchEntry('bear-head', [ 'grizzly', 'brown bear' ]),  image: true },
+      { value: 'lorc/mantrap',          ...inputHelpers.iconSearchEntry('mantrap', [ 'bear trap', 'snare' ]),       image: true },
+      { value: 'delapouite/razor',      ...inputHelpers.iconSearchEntry('razor', [ 'beard', 'shaving' ]),           image: true },
+      { value: 'lorc/compass',          ...inputHelpers.iconSearchEntry('compass', [ 'bearing', 'navigation' ]),    image: true },
+      { value: 'delapouite/carabiner',  ...inputHelpers.iconSearchEntry('carabiner', [ 'load bearing', 'climbing' ]), image: true },
+      { value: 'lorc/tentacles-skull',  ...inputHelpers.iconSearchEntry('tentacles-skull', [ 'cthulhu', 'horror' ]), image: true }
+    ]);
+
+    // "beard", "bearing" and "load bearing" describe something else entirely
+    expect(inputHelpers.searchIconIndex('bear')).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
+    // a word of the name still matches from its first letter, so the picker fills in while typing
+    expect(inputHelpers.searchIconIndex('bea')).toEqual([ 'delapouite/bear-head' ]);
+    // every term has to match, hyphens in the query separate them like spaces do
+    expect(inputHelpers.searchIconIndex('bear trap')).toEqual([ 'lorc/mantrap' ]);
+    expect(inputHelpers.searchIconIndex('bear-trap')).toEqual([ 'lorc/mantrap' ]);
+    // a plural is not a different tag
+    expect(inputHelpers.searchIconIndex('bears')).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
+    // nothing matches by word: fall back to matching anywhere so a half typed tag finds icons
+    expect(inputHelpers.searchIconIndex('cthulh')).toEqual([ 'lorc/tentacles-skull' ]);
+    expect(inputHelpers.searchIconIndex('nonsense')).toEqual([]);
+  });
+
   test('searchImageIndex returns image URLs for matching glyphs', () => {
     inputHelpers.setIconSearchIndex([
-      { value: 'lorc/dice-six-faces-six', keywords: 'dice six', image: true },
-      { value: '🎲', keywords: 'dice game', image: true },
-      { value: 'casino', keywords: 'dice casino', image: false }
+      { value: 'lorc/dice-six-faces-six', ...inputHelpers.iconSearchEntry('dice-six-faces-six', [ 'six' ]), image: true },
+      { value: '🎲', ...inputHelpers.iconSearchEntry('🎲', [ 'dice', 'game' ]), image: true },
+      { value: 'casino', ...inputHelpers.iconSearchEntry('casino', [ 'dice' ]), image: false }
     ]);
 
     expect(inputHelpers.searchImageIndex('dice')).toEqual([
@@ -1024,8 +1051,8 @@ describe('property input helpers', () => {
     expect(inputHelpers.iconValueType('https://example.com/icon.svg')).toBe(null);
 
     inputHelpers.setIconSearchIndex([
-      { value: 'lorc/star', type: 'game-icons', keywords: 'star', image: true },
-      { value: 'star', type: 'material-symbols', keywords: 'star', image: false }
+      { value: 'lorc/star', type: 'game-icons', ...inputHelpers.iconSearchEntry('star', []), image: true },
+      { value: 'star', type: 'material-symbols', ...inputHelpers.iconSearchEntry('star', []), image: false }
     ]);
     expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ]))).toEqual([ 'star' ]);
   });
@@ -1033,7 +1060,7 @@ describe('property input helpers', () => {
   test('picker searches show up to 100 results', () => {
     inputHelpers.setIconSearchIndex(Array.from({ length: 101 }, (_, index) => ({
       value: `icons/icon-${index}`,
-      keywords: 'icon',
+      ...inputHelpers.iconSearchEntry(`icon-${index}`, []),
       image: true
     })));
 

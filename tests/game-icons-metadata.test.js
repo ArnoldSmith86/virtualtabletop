@@ -76,11 +76,14 @@ test('every icon has a description and five categories of the vocabulary', () =>
 });
 
 test('the tags of an icon are searchable, distinct and add something to its name', () => {
+  const searchWords = text => text.toLowerCase().split(/[^a-z0-9]+/).filter(word => word);
+
   expect(collect((name, fail) => {
     const tags = metadata.icons[name].tags;
-    const fileName = name.split('/')[1];
-    // the pickers search "<file name>,<file name with spaces>,<tags>" as plain text
-    const searched = [ fileName, fileName.replace(/-/g, ' '), ...tags ];
+    // the pickers match a search term against the beginning of a word of the file name and
+    // against whole words of the tags (client/js/symbols.js, client/js/editor/propertyInputs.js)
+    const nameWords = searchWords(name.split('/')[1]);
+    const covered = new Set();
 
     if(!tags.length || tags.length > 20)
       fail(`has ${tags.length} tags`);
@@ -89,13 +92,14 @@ test('the tags of an icon are searchable, distinct and add something to its name
     for(const tag of tags) {
       if(tag != tag.toLowerCase().trim())
         fail(`the tag "${tag}" is not lowercase and trimmed`);
-      // an accent or an & cannot be typed into the search box (and & lands unescaped in data-keywords)
+      // an accent or an & cannot be typed into the search box
       if(!tag.match(/^[a-z0-9 '.-]+$/))
         fail(`the tag "${tag}" is not plain ASCII`);
-      // a tag contained in the file name or in another tag can never be the only reason for a match
-      for(const other of searched)
-        if(other != tag && other.includes(tag))
-          fail(`the tag "${tag}" is already covered by "${other}"`);
+      // a tag whose words the file name or an earlier tag already covers can never be the reason for a match
+      if(!searchWords(tag).some(word => !covered.has(word) && !nameWords.some(nameWord => nameWord.startsWith(word))))
+        fail(`the tag "${tag}" adds no searchable word to the ones before it`);
+      for(const word of searchWords(tag))
+        covered.add(word);
     }
   })).toEqual([]);
 });

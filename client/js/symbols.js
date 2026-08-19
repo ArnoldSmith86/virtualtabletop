@@ -58,6 +58,36 @@ function skipForNotoMonochrome(emoji) {
   return emoji.match(/^[\u{1f3c3}-\u{1f3cc}]\u{fe0f}?\u{200d}[\u{2640}\u{2642}]\u{fe0f}(\u{200d}\u{27a1}\u{fe0f})?|\u{1f468}|\u{1f468}\u{200d}[\u{1f33e}\u{1f373}\u{1f37c}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}\u{1f9b1}\u{1f9b2}\u{1f9bc}\u{1f9bd}]|\u{1f468}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f468}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f468}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f468}|\u{1f48b}\u{200d}\u{1f468})|\u{1f469}\u{200d}[\u{1f33e}\u{1f373}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}-\u{1f9b3}\u{1f9bc}\u{1f9bd}]|\u{1f469}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f469}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f469}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f48b}\u{200d})?[\u{1f468}\u{1f469}]|\u{1f46b}|\u{1f46c}|\u{200d}[\u{2640}\u{2642}]|\u{1f478}|\u{1f57a}|\u{1f934}|\u{1f936}|\u{1f9d1}\u{200d}(\u{1f37c}|\u{1f384}|\u{1f91d}\u{200d}\u{1f9d1})|\u{1fac3}|\u{1fac4}$/u);
 }
 
+// Icon search matching. The icon picker of the properties sidebar implements the same rule in
+// client/js/editor/propertyInputs.js (searchIconIndex) and both have to stay in sync.
+//
+// A search term matches the beginning of a word of the icon name, but only a whole word of its
+// tags. The tags describe what an icon shows, so matching them anywhere in their text answers
+// "bear" with a compass tagged "bearing", a razor tagged "beard" and an I-beam tagged "load
+// bearing" - 19 of the 32 results had nothing to do with bears. Names keep matching from the
+// start of a word so that typing "swor" still finds the swords while nothing is complete yet.
+function iconSearchWords(text) {
+  return text.toLowerCase().split(/[^a-z0-9]+/).filter(word => word);
+}
+
+function iconSearchEntry(name, keywords) {
+  return {
+    name: iconSearchWords(name),
+    tags: new Set(iconSearchWords(keywords.join(' '))),
+    // the fallback below matches anywhere in here, including the de-hyphenated name
+    text: `${name},${name.replace(/[-_]/g, ' ')},${keywords.join()}`.toLowerCase()
+  };
+}
+
+function iconSearchTagMatch(entry, term) {
+  // "card" finds the icon tagged "cards" and the other way round
+  return entry.tags.has(term) || entry.tags.has(`${term}s`) || entry.tags.has(`${term}es`) || entry.tags.has(term.replace(/e?s$/, ''));
+}
+
+function iconSearchMatches(entry, terms) {
+  return terms.every(term => entry.name.some(word => word.startsWith(term)) || iconSearchTagMatch(entry, term));
+}
+
 let symbolData = null;
 export async function loadSymbolPicker() {
   if(symbolData === null) {
@@ -69,6 +99,7 @@ export async function loadSymbolPicker() {
       throw e;
     }
     let list = '';
+    const symbolSearch = []; // one entry per <i> below, in the order they are added to #symbolList
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category == 'Emoji - Flags')
         continue;
@@ -76,11 +107,12 @@ export async function loadSymbolPicker() {
       for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
-          // the file name is searched with its hyphens and with spaces instead, so that both
-          // "polar-bear" and "polar bear" find the icon without spending one of its tags on it
+          // the file name is searched word by word, so that both "polar-bear" and "polar bear"
+          // find the icon without spending one of its tags on it
           const name = symbol.split('/')[1];
+          symbolSearch.push(iconSearchEntry(name, keywords));
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${name},${name.replace(/-/g, ' ')},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
           symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
@@ -91,10 +123,13 @@ export async function loadSymbolPicker() {
             className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
             const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
-            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+            symbolSearch.push(iconSearchEntry(symbol, keywords));
+            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
           }
-          if(className == 'material-symbols' && hasNoFillVariant)
-            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+          if(className == 'material-symbols' && hasNoFillVariant) {
+            symbolSearch.push(iconSearchEntry(symbol, keywords));
+            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL">${symbol}</i>`;
+          }
         }
       }
     }
@@ -105,16 +140,26 @@ export async function loadSymbolPicker() {
           let className = 'emoji-color';
           if(category == 'Emoji - Flags')
             className += ' emojiFlag';
-          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          symbolSearch.push(iconSearchEntry(symbol, keywords));
+          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
     $('#symbolList').innerHTML = list;
 
     $('#symbolPickerOverlay input').onkeyup = function() {
-      const text = regexEscape($('#symbolPickerOverlay input').value.toLowerCase());
-      for(const icon of $a('#symbolList i'))
-        toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
+      const text = $('#symbolPickerOverlay input').value.toLowerCase();
+      const terms = iconSearchWords(text);
+      const icons = $a('#symbolList i');
+      let visible = Array.from(icons, (icon, i) => iconSearchMatches(symbolSearch[i], terms));
+      // a half typed tag ("cthulh"), a pasted emoji or a "+" has no word to match, so rather than
+      // showing an empty picker, fall back to the old "appears anywhere in the name or the tags"
+      if(text && !visible.includes(true)) {
+        const looseTerms = text.split(/\s+/).filter(term => term);
+        visible = Array.from(icons, (icon, i) => looseTerms.every(term => symbolSearch[i].text.includes(term)));
+      }
+      for(const [ i, icon ] of icons.entries())
+        toggleClass(icon, 'hidden', !visible[i]);
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);
       // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
