@@ -1,6 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -109,8 +109,7 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
-    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    style.display = !forced && style.display !== 'none' ? 'none' : 'flex';
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
@@ -213,6 +212,13 @@ function setScale() {
 
   document.documentElement.style.setProperty('--roomWidth', `${targetW}px`);
   document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
+
+  // the add widget overlay is laid out for the default board size, so it is scaled to fit into
+  // the room instead of being stretched to it - see #addOverlayContent in editmode.css. The header
+  // row is published from the same constant the widget positions are derived from; the value in
+  // layout.css is only what applies until this runs, like --roomWidth/--roomHeight next to it.
+  document.documentElement.style.setProperty('--addOverlayScale', addOverlayScale(viewportConfig));
+  document.documentElement.style.setProperty('--addOverlayHeaderHeight', `${ADD_OVERLAY_HEADER_HEIGHT}px`);
 
   const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
 
@@ -728,7 +734,7 @@ async function loadEditMode() {
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
-      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, calculateEditModuleClasses, isOrientationMismatch,
+      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
@@ -958,6 +964,10 @@ window.onkeyup = function(event) {
     // deck editor's Add New Deck dialog), so Escape closes the browser and not the thing behind it
     else if($('#libraryDecksOverlay') && $('#libraryDecksOverlay').style.display != 'none')
       $('#libraryDecksClose').click();
+    // the add widget overlay sits on top of the sidebar, so it goes next - without this the only
+    // way out of it was leaving edit mode altogether
+    else if($('#addOverlay') && $('#addOverlay').style.display != 'none')
+      showOverlay();
     else if($('body.edit #editorSidebar button.active'))
       $('#editorSidebar button.active').click();
     else if(edit)

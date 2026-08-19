@@ -3,7 +3,56 @@
   height: var(--roomHeight);
   transform: scale(var(--scale));
   transform-origin: left top;
-  display: none;
+  padding: 0;
+  /* deliberate: the contents are scaled to fit, so they always do - a scrollbar could only ever
+     show up for a preview placed outside the 1600x1000 layout, which is a bug and not something
+     to scroll to */
+  overflow: hidden;
+  /* the band left/right or above/below the centered layout on a board that is not 16:10. The room
+     color makes the white layout read as centered instead of as failing to fill the board. */
+  background: var(--roomColor);
+}
+
+/* The contents are laid out for a fixed 1600x1000 board because the preview widgets inside the
+   categories are real widgets at hardcoded coordinates (populateAddWidgetOverlay in editmode.js).
+   So the layout is scaled and centered into the room instead of being stretched by it - otherwise
+   the categories grow with the board while the previews stay where they are. --addOverlayScale is
+   how much of that 1600x(1000+header) the room has room for and is set in setScale (main.js). */
+#addOverlayContent {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  box-sizing: border-box;
+  width: 1600px;
+  height: calc(1000px + var(--addOverlayHeaderHeight));
+  transform: translate(-50%, -50%) scale(var(--addOverlayScale));
+  background: white;
+  box-shadow: 0 0 24px #00000033;
+}
+
+/* says what the screen is and what clicking a preview does. It is part of the scaled layout, so
+   it costs the previews below it 1000/(1000+its height) of their size on every board - the
+   height itself is ADD_OVERLAY_HEADER_HEIGHT in calculateLayout.js, which the widget positions
+   are derived from. */
+#addOverlayHeader {
+  box-sizing: border-box;
+  height: var(--addOverlayHeaderHeight);
+  padding: 14px 80px 0;
+  text-align: center;
+}
+
+#addOverlayHeader h1, #addOverlayHeader p {
+  margin: 0;
+}
+
+/* the 1600x1000 box the previews are positioned in - their coordinates are relative to it and are
+   also, mapped through addOverlayPosition, where their widget lands on the board */
+#addOverlayLayout {
+  position: relative;
+  box-sizing: border-box;
+  width: 1600px;
+  height: 1000px;
+  display: grid;
   grid-template-areas:         "cards pieces decorative"
                                "cards pieces decorative"
                                "cards interactive custom";
@@ -13,39 +62,60 @@
   gap: 20px;
 }
 
-#addOverlay > .category {
+#addOverlayClose {
+  position: absolute;
+  top: 20px;
+  right: 26px;
+}
+
+/* The two hex previews that show an image are drawn on top of a plain hexagon that only exists to
+   paint behind them (their clip-path css does not apply in the overlay). The background is 70x70
+   under a 50x50 preview, so a ring of it sticks out - clicking that must not do anything, least of
+   all add the background image widget instead of the hex tile the preview offers. */
+#addOverlayLayout > #HexFlatImageBack, #addOverlayLayout > #HexPointImageBack {
+  pointer-events: none;
+}
+
+/* The preview piles hold no cards, so their count/total handle would show the number the added
+   widget starts with (52 for the deck, 1641 for a full set of chips) floating next to an empty
+   preview - see generateCardDeckWidgets/generateChipPileWidgets in editmode.js. */
+#addOverlayContent .pile .handle {
+  display: none;
+}
+
+#addOverlayLayout > .category {
   background: var(--roomColor);
   border-radius: 32px;
   text-align: center;
 }
 
-#addOverlay > .category > h2 {
+#addOverlayLayout > .category > h2 {
   color: black;
 }
 
-#addOverlay > .category > button {
+#addOverlayLayout > .category > button {
   display: flex;
   margin-left: auto;
   margin-right: auto;
 }
 
-#addOverlay >.category.cards {
+#addOverlayLayout >.category.cards {
   grid-area: cards;
 }
 
-#addOverlay >.category.pieces {
+#addOverlayLayout >.category.pieces {
   grid-area: pieces;
 }
 
-#addOverlay >.category.interactive {
+#addOverlayLayout >.category.interactive {
   grid-area: interactive;
 }
 
-#addOverlay >.category.decorative {
+#addOverlayLayout >.category.decorative {
   grid-area: decorative;
 }
 
-#addOverlay >.category.custom {
+#addOverlayLayout >.category.custom {
   grid-area: custom;
 }
 
@@ -70,7 +140,7 @@
 #addHand::before{
   content:'[holder_hand]';
 }
-#addOverlay .widget, #addOverlay textarea {
+#addOverlayContent .widget, #addOverlayContent textarea {
   cursor: pointer;
 }
 

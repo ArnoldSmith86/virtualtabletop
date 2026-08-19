@@ -2,6 +2,8 @@
   --scale: 1;
   --roomWidth: 1600px;
   --roomHeight: 1000px;
+  --addOverlayScale: 1;
+  --addOverlayHeaderHeight: 90px;
   --roomTop: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
   --roomLeft: 0px;
   --toolbarSize: 44px;
