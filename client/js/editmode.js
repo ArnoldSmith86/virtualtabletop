@@ -1285,6 +1285,7 @@ let libraryDecksIndex = null;
 let libraryDecksObserver = null;
 let libraryDeckPreviewCounter = 0;
 let libraryDecksPlacement = null; // set by openLibraryDecksOverlay for the deck a click adds
+let libraryDecksCancelled = null; // what the opener wants done when the browser is closed without picking a deck
 const libraryDeckDetailsCache = {};
 
 function getLibraryDeckDetails(entry) {
@@ -1305,8 +1306,11 @@ function getLibraryDeckDetails(entry) {
 
 // placement: what to add around a picked deck, when the browser was opened from the "Add New Deck" dialog (which
 // is hidden while browsing). Opened from anywhere else, a picked deck gets the holder and button it always got.
-async function openLibraryDecksOverlay(placement) {
+// onCancel: what to do when the browser is closed without picking one - the dialog that opened it is hidden, so
+// it has to bring itself back.
+async function openLibraryDecksOverlay(placement, onCancel) {
   libraryDecksPlacement = placement || deckPlacementDefault;
+  libraryDecksCancelled = onCancel || null;
   showOverlay('libraryDecksOverlay');
   if(libraryDecksIndex == 'loading')
     return;
@@ -1365,6 +1369,16 @@ function renderLibraryDecksList() {
   });
 
   const sortMode = $('#libraryDecksSort').value;
+
+  // Stars and play time are counted per server, so a server nobody has played on yet (a test server, a fresh
+  // installation) has none of either - and sorting by them silently shows the order by name. Say so rather
+  // than leaving a control that looks broken.
+  const sortedBy = { stars: entry=>entry.stars, popularity: entry=>entry.timePlayed }[sortMode];
+  $('#libraryDecksSortHint').textContent = sortedBy && !libraryDecksIndex.some(entry=>sortedBy(entry))
+    ? (sortMode == 'stars' ? 'No game on this server has been starred yet, so this is the order by name.'
+                           : 'No game on this server has been played yet, so this is the order by name.')
+    : '';
+
   groups.sort(function(a, b) {
     if(sortMode == 'stars' && b.stars != a.stars)
       return b.stars - a.stars;
@@ -1505,6 +1519,7 @@ async function addLibraryDeckToGame(entry) {
   for(const [ i, card ] of details.cards.entries())
     await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
 
+  libraryDecksCancelled = null; // a deck was picked, so whoever opened the browser is done with it
   overlayDone(placement.holder ? id : id+'P');
   batchEnd();
 }
@@ -1749,10 +1764,22 @@ export function initializeEditMode(currentMetaData) {
     overlayDone(await addWidgetLocal(hand));
   });
 
+  // The deck browser is a screenful of its own rather than something drawn on the board, so editmode.css gives
+  // it the editor's box instead of the room's scale - which only works outside #roomArea, a size container and
+  // therefore the containing block its fixed positioning would otherwise be clipped by.
+  $('#editor').append($('#libraryDecksOverlay'));
+
   on('#browseLibraryDecks', 'click', _=>openLibraryDecksOverlay());
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);
-  on('#libraryDecksClose', 'click', _=>showOverlay());
+  on('#libraryDecksClose', 'click', function() {
+    const onCancel = libraryDecksCancelled;
+    libraryDecksCancelled = null;
+    if(onCancel)
+      onCancel();
+    else
+      showOverlay();
+  });
 
   on('#addCanvas', 'click', async function() {
     const id = await addWidgetLocal({

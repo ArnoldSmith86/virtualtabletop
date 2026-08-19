@@ -1908,6 +1908,499 @@ test('Deck editor: mismatched and shared card backs in the new deck wizard', asy
   })()).eql(Array(3).fill(asset('back1.png')));
 });
 
+// The public library's deck browser is opened from the "Add New Deck" dialog, which hides itself while the
+// browser is up. The browser is moved into #editor for that (see DeckEditor.initializeDOM), where it needs a
+// box and a stacking order of its own - without them the deck editor paints over it and not a single deck can
+// be seen or clicked.
+test('Deck editor: the public library deck browser opens above the deck editor', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupExisting .deckEditorNewDeckGroupHeader') // open the "Use an existing deck" section
+    .click('#deckEditorNewDeckOverlay input[value=library]')
+    .click('#deckEditorNewDeckPanel button[icon=style]') // "Browse the public library"
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  // a deck is only pickable when a click at its own position actually reaches it
+  const firstEntryIsOnTop = ClientFunction(() => {
+    const entry = document.querySelector('.libraryDeckEntry');
+    const rect = entry.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.x + rect.width/2, rect.y + rect.height/2);
+    return !!(hit && hit.closest('.libraryDeckEntry'));
+  });
+  await t.expect(firstEntryIsOnTop()).ok();
+
+  // and closing it without picking one comes back to the dialog it was opened from, still on that section
+  await t
+    .click('#libraryDecksClose')
+    .expect(Selector('#deckEditorNewDeckOverlay').visible).ok()
+    .expect(Selector('#libraryDecksOverlay').visible).notOk()
+    .expect(Selector('#deckEditorNewDeckGroupExisting').hasClass('deckEditorNewDeckGroupOpen')).ok();
+});
+
+// The same browser is opened from plain edit mode's add widget overlay, where it used to be scaled with the
+// board: on anything but a full size board that made the filter field, the sort control and every deck name
+// render at a fraction of their size. It gets the editor's box in both places now.
+test('Edit mode: the public library deck browser is not scaled with the board', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#browseLibraryDecks')
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  const overlay = await ClientFunction(() => {
+    const o = document.querySelector('#libraryDecksOverlay');
+    const box = o.getBoundingClientRect();
+    const entry = document.querySelector('.libraryDeckEntry').getBoundingClientRect();
+    const hit = document.elementFromPoint(entry.x + entry.width/2, entry.y + entry.height/2);
+    return {
+      transform: getComputedStyle(o).transform,
+      width: Math.round(box.width),
+      windowWidth: window.innerWidth,
+      clickable: !!(hit && hit.closest('.libraryDeckEntry'))
+    };
+  })();
+
+  await t.expect(overlay.transform).eql('none');
+  // the box is the window minus the edit sidebar, not the board scaled into it
+  await t.expect(overlay.width).gte(overlay.windowWidth - 140);
+  await t.expect(overlay.clickable).ok();
+});
+
+// Sorting the deck browser by stars or by play time can only do something on a server that has counted any:
+// both are per-server statistics, and a fresh server (a test server, a private installation - or this test)
+// has none at all, so every game ties at zero and the list stays in the order by name. Without a word about
+// that the sort control looks broken, which is exactly how it was reported.
+test('Edit mode: the deck browser says when a sort has nothing to sort by', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#browseLibraryDecks')
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  const sort = Selector('#libraryDecksSort');
+  const hint = Selector('#libraryDecksSortHint');
+  const pick = async value => t.click(sort).click(sort.find('option').withAttribute('value', value));
+
+  // sorting by name is the order the list is in anyway, so there is nothing to say
+  await t.expect(hint.innerText).eql('');
+  await pick('stars');
+  await t.expect(hint.innerText).contains('No game on this server has been starred yet');
+  await pick('popularity');
+  await t.expect(hint.innerText).contains('No game on this server has been played yet');
+  await pick('name');
+  await t.expect(hint.innerText).eql('');
+});
+
+// The tiled counterpart of the front/back pairs above: one picture holding a grid of fronts and a second one
+// holding the backs in the same grid, so every card gets the back sitting in its own cell.
+test('Deck editor: a sheet of fronts with a matching sheet of backs in the new deck wizard', async t => {
+  const asset = (fileName, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = asset('fronts.png', 1500, 400); // 5 x 2 cards of 300 x 200 each
+  const backs  = asset('backs.png', 750, 200);   // the same grid at half the resolution
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  // as in the tests above: the file picker can't be driven from a test, so uploadAsset hands the wizard the
+  // asset path the server would have returned
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setGrid = ClientFunction((columns, rows) => {
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = document.querySelector(`.cardFrontPreview ${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+  const addButton = Selector('#deckEditorNewDeckPanel .goButton [icon=add]');
+  const status = Selector('.imagePairStatus');
+
+  await stubUploadOf('fronts.png', fronts);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  // a sheet still set to its 1 x 1 default is not cut at all, which is the other mode - so the wizard asks
+  // for the grid instead of offering to make one stretched card out of the whole sheet
+  await t
+    .expect(status.innerText).contains('Say how many cards this sheet holds across and down')
+    .expect(addButton.hasAttribute('disabled')).ok();
+  await setGrid(5, 2);
+  await t.expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table');
+
+  // and a sheet every card of which is asked for zero times would add an empty deck
+  const setCopies = ClientFunction(copies => {
+    const input = document.querySelector('.cardFrontPreview .cards [type=number]');
+    input.value = copies;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await setCopies(0);
+  await t
+    .expect(status.innerText).contains('nothing would be added')
+    .expect(addButton.hasAttribute('disabled')).ok();
+  await setCopies(1);
+  await t.expect(addButton.hasAttribute('disabled')).notOk();
+
+  // asking for a sheet of backs blocks the import until that sheet is there
+  await t
+    .click('input[name=deckImagesBackMode][value=sheet]')
+    .expect(status.innerText).contains('1 sheet of fronts but 0 of backs')
+    .expect(addButton.hasAttribute('disabled')).ok();
+
+  await stubUploadOf('backs.png', backs);
+  await t
+    .click('#deckEditorNewDeckPanel #backSheetButton')
+    .expect(status.innerText).contains('each with its own back from the sheet in the same position')
+    .expect(addButton.hasAttribute('disabled')).notOk()
+    .click(addButton)
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(10); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return {
+      cardDefaults: deck.get('cardDefaults'),
+      backFace: deck.get('faceTemplates')[0].objects,
+      lastOfFirstRow: cardTypes[Object.keys(cardTypes)[4]]
+    };
+  })();
+
+  // the cards have the shape of one cell of the sheet, not the deck default
+  await t.expect(deck.cardDefaults.width).eql(160);
+  await t.expect(deck.cardDefaults.height).eql(107);
+  // both sheets are read with the same offsets, so a card's back is the cell its front came from
+  await t.expect(deck.lastOfFirstRow).eql({
+    image: fronts,
+    offsetX: 4,
+    offsetY: 0,
+    deckWidth: 5,
+    deckHeight: 2,
+    backImage: backs
+  });
+  // and the back face has exactly one object - the card's own back, cut out of the sheet of backs
+  await t.expect(deck.backFace.length).eql(1);
+  await t.expect(deck.backFace[0].dynamicProperties.value).eql('backImage');
+  await t.expect(deck.backFace[0].css['background-position']).contains('--offsetX');
+});
+
+// A sheet of fronts and a sheet of backs belong together by position, so deleting a sheet of fronts has to
+// take its sheet of backs with it. Without that, every later sheet of backs moves onto the wrong fronts and
+// the wizard happily builds a deck whose cards all show the back of a sheet the user deleted.
+test('Deck editor: deleting a sheet of fronts deletes the sheet of backs paired with it', async t => {
+  const asset = (title, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${title}</title></svg>`).toString('base64')}`;
+  const fronts1 = asset('fronts1', 400, 400); // two 2 x 2 sheets of fronts...
+  const fronts2 = asset('fronts2', 400, 400);
+  const backs1  = asset('backs1',  400, 400); // ...and a sheet of backs for each of them
+  const backs2  = asset('backs2',  400, 400);
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setSheet = ClientFunction((index, columns, rows) => {
+    const preview = document.querySelectorAll('.cardFrontPreview:not(.cardBackSheetPreview)')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+  const frontSheets = Selector('.cardFrontPreview:not(.cardBackSheetPreview)');
+  const backSheets = Selector('.cardBackSheetPreview');
+  const status = Selector('.imagePairStatus');
+
+  await stubUploadOf('fronts1.png', fronts1);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(0, 2, 2);
+  await stubUploadOf('fronts2.png', fronts2);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(1, 2, 2);
+
+  await t.click('input[name=deckImagesBackMode][value=sheet]');
+  await stubUploadOf('backs1.png', backs1);
+  await t.click('#deckEditorNewDeckPanel #backSheetButton');
+  await stubUploadOf('backs2.png', backs2);
+  await t.click('#deckEditorNewDeckPanel #backSheetButton');
+
+  await t
+    .expect(backSheets.count).eql(2)
+    .expect(backSheets.nth(0).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts1.png"')
+    .expect(backSheets.nth(1).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts2.png"')
+    .expect(status.innerText).contains('8 cards, each with its own back from the sheet in the same position');
+
+  // deleting the first sheet of fronts leaves the second one - with its own sheet of backs, not with the one
+  // that belonged to the deleted sheet
+  await t
+    .click(frontSheets.nth(0).find('[icon=delete]'))
+    .expect(frontSheets.count).eql(1)
+    .expect(backSheets.count).eql(1)
+    .expect(backSheets.nth(0).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts2.png"')
+    .expect(status.innerText).contains('4 cards, each with its own back from the sheet in the same position')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(4); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return {
+      names: Object.keys(cardTypes),
+      images: Object.values(cardTypes).map(c=>c.image),
+      backImages: Object.values(cardTypes).map(c=>c.backImage)
+    };
+  })();
+
+  // the deck is made of the sheet that is left, and every card shows the back sitting in its own cell of the
+  // sheet of backs that came with it - not of the one the deleted sheet of fronts owned
+  await t.expect(deck.names).eql([ 'fronts2.png 1,1', 'fronts2.png 1,2', 'fronts2.png 2,1', 'fronts2.png 2,2' ]);
+  await t.expect(deck.images).eql(Array(4).fill(fronts2));
+  await t.expect(deck.backImages).eql(Array(4).fill(backs2));
+});
+
+// A card is sized after the picture it shows, and one import can hold pictures of different shapes: the first
+// upload sets the deck's card defaults and every card type from a differently shaped upload carries its own
+// size, so a portrait sheet uploaded after a landscape one is not squashed into the landscape shape.
+test('Deck editor: sheets of different card shapes each keep their own card size', async t => {
+  const asset = (fileName, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const landscape = asset('landscape.png', 1500, 400); // 5 x 2 cards of 300 x 200 each
+  const portrait  = asset('portrait.png',   400, 1200); // 2 x 4 cards of 200 x 300 each
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setSheet = ClientFunction((index, columns, rows, copies) => {
+    const preview = document.querySelectorAll('.cardFrontPreview')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ], [ '.cards', copies ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
+  await stubUploadOf('landscape.png', landscape);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(0, 5, 2, 2);
+  await stubUploadOf('portrait.png', portrait);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(1, 2, 4, 1);
+
+  // each sheet says what its own cards will look like, and the status line counts the copies of both
+  await t
+    .expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table, 2 copies each — 20 cards in total')
+    .expect(Selector('.cardFrontPreviewSummary').nth(1).innerText).contains('8 cards of 200 × 300 pixels, 107 × 160 on the table')
+    .expect(Selector('.imagePairStatus').innerText).contains('28 cards')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(18); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    const sizeOfCardFrom = sheet => {
+      let card = null;
+      widgets.forEach(w => { if(w.get('type') == 'card' && !card && w.get('cardType').indexOf(sheet) == 0) card = w; });
+      return [ card.get('width'), card.get('height') ];
+    };
+    return {
+      cardDefaults: deck.get('cardDefaults'),
+      fromLandscape: cardTypes['landscape.png 1,1'],
+      fromPortrait: cardTypes['portrait.png 1,1'],
+      landscapeCard: sizeOfCardFrom('landscape.png'),
+      portraitCard: sizeOfCardFrom('portrait.png')
+    };
+  })();
+
+  // the first sheet sizes the deck, so its own card types say nothing about their size
+  await t.expect(deck.cardDefaults.width).eql(160);
+  await t.expect(deck.cardDefaults.height).eql(107);
+  await t.expect(deck.fromLandscape.width).eql(undefined);
+  await t.expect(deck.fromLandscape.height).eql(undefined);
+  // the second one is a different shape and carries it - all the way to the card on the table
+  await t.expect(deck.fromPortrait.width).eql(107);
+  await t.expect(deck.fromPortrait.height).eql(160);
+  await t.expect(deck.landscapeCard).eql([ 160, 107 ]);
+  await t.expect(deck.portraitCard).eql([ 107, 160 ]);
+});
+
+// Card type names start from the file name of the upload they come from, and one import can hold two files
+// of the same name (the same file twice, or two files of that name from different folders) - the second
+// upload must not overwrite the card types of the first one.
+test('Deck editor: two uploads with the same file name keep their own cards', async t => {
+  const asset = (title, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${title}</title></svg>`).toString('base64')}`;
+  const first  = asset('first',  400, 400); // both are 2 x 2 sheets of 200 x 200 cards...
+  const second = asset('second', 400, 400); // ...uploaded under the same file name
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setGrid = ClientFunction((index, columns, rows) => {
+    const preview = document.querySelectorAll('.cardFrontPreview')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
+  await stubUploadOf('sheet.png', first);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setGrid(0, 2, 2);
+  await stubUploadOf('sheet.png', second);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setGrid(1, 2, 2);
+
+  await t
+    .expect(Selector('.imagePairStatus').innerText).contains('8 cards')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    // the status line promised eight cards, so eight of them have to be there
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(8);
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return { names: Object.keys(cardTypes), images: Object.values(cardTypes).map(c => c.image) };
+  })();
+
+  // the second upload is named apart instead of writing over the card types of the first one
+  await t.expect(deck.names.length).eql(8);
+  await t.expect(deck.names).contains('sheet.png 1,1');
+  await t.expect(deck.names).contains('sheet.png (2) 1,1');
+  await t.expect(deck.images.filter(image => image == first).length).eql(4);
+  await t.expect(deck.images.filter(image => image == second).length).eql(4);
+});
+
+// A deck opens in the card-defaults view, which shows an explanation instead of a card - but the tree's object
+// previews are clones of the rendered card, so they came out empty there and only filled in once a face was
+// selected. They are cloned from an off-screen card now, and a card cut out of a sheet shows its own cell
+// rather than the whole sheet (the object's tiling CSS instead of a plain "contain" refit).
+test('Deck editor: the tree previews show the card art before a face is selected', async t => {
+  const sheet = `data:image/svg+xml;base64,${Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="107"><title>sheet</title></svg>').toString('base64')}`;
+  const tiling = {
+    'background-size': 'calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)',
+    'background-position': 'calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)'
+  };
+
+  await setRoomState({
+    deck: {
+      id: 'deck', type: 'deck',
+      cardDefaults: { width: 160, height: 107, css: {
+        '--offsetX': '${PROPERTY offsetX}', '--offsetY': '${PROPERTY offsetY}',
+        '--deckWidth': '${PROPERTY deckWidth}', '--deckHeight': '${PROPERTY deckHeight}',
+        '--width': '${PROPERTY width}', '--height': '${PROPERTY height}'
+      } },
+      cardTypes: {
+        'sheet.png 1,1': { image: sheet, offsetX: 0, offsetY: 0, deckWidth: 2, deckHeight: 1 },
+        'sheet.png 2,1': { image: sheet, offsetX: 1, offsetY: 0, deckWidth: 2, deckHeight: 1 }
+      },
+      faceTemplates: [
+        { objects: [ { type: 'image', color: 'transparent', value: '/i/cards-default/2B.svg', dynamicProperties: { height: 'height', width: 'width' } } ] },
+        { objects: [ { type: 'image', color: 'transparent', dynamicProperties: { value: 'image', height: 'height', width: 'width' }, css: tiling } ] }
+      ]
+    },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'sheet.png 2,1', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const treePreview = ClientFunction(() => {
+    const box = document.querySelector('#deckEditorTree .deckEditorObjectRow .deckEditorObjectPreview');
+    const node = box && box.querySelector('.cardFaceObject');
+    const style = node && getComputedStyle(node);
+    return {
+      cardRendered: !!document.querySelector('#deckEditorMain .cardFace'),
+      hasImage: !!style && style.backgroundImage.indexOf('data:image/svg') != -1,
+      backgroundSize: style ? style.backgroundSize : '',
+      backgroundPosition: style ? style.backgroundPosition : ''
+    };
+  });
+
+  await t.click('#editButton').click('#editorToolbar [icon=style]');
+
+  // No card on screen, but the front face's object still shows the picture, cut to the cell of the card type
+  // the deck opens on: the sheet is drawn at twice the card's width, with its first cell in view.
+  await t.expect(treePreview()).eql({
+    cardRendered: false,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '0px 0px'
+  });
+
+  // and selecting the face - which does render the card - shows exactly the same thing
+  await t.click(Selector('#deckEditorTree .deckEditorTreeFace').nth(1));
+  await t.expect(treePreview()).eql({
+    cardRendered: true,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '0px 0px'
+  });
+
+  // the second card type is the other half of the same sheet, so its preview is shifted by one card
+  await t.click(Selector('#deckEditorStrip .deckEditorStripCard').nth(1));
+  await t.expect(treePreview()).eql({
+    cardRendered: true,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '-160px 0px'
+  });
+});
+
 // The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
 // strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
 test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {

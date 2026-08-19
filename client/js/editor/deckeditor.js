@@ -220,6 +220,7 @@ class DeckEditor {
     this.addSectionHost = 'tree'; // which "+" it is currently attached to: 'tree' (left) or 'sidebar' (Object tab)
     this.roomVisible = false; // "Card view" toggled off: the card stage is a window onto the room's play area
     this.treeObjectPreviews = []; // the tree rows' preview boxes, so they can follow the card (refreshTreePreviews)
+    this.previewCard = undefined; // off-screen card the tree previews clone while no main card is rendered
     this.treeLevel = 'face'; // which tree level the unified add/copy/delete toolbar acts on: deck | face | object
 
     // Remember where the user left off per deck (tree node + card type) so leaving and returning restores it,
@@ -321,10 +322,6 @@ class DeckEditor {
     $('#editor').append($('#deckEditorNewDeckOverlay'));
     $('#editor').append($('#symbolPickerOverlay'));
     $('#editor').append($('#audioPickerOverlay'));
-    // Move the shared public-library overlay into #editor too, so "Browse the public library" from the deck
-    // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
-    // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
-    $('#editor').append($('#libraryDecksOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -885,6 +882,21 @@ class DeckEditor {
       }
     }
 
+    // A picture opened at full size and the public library browser both sit on top of whatever has focus, so
+    // Escape takes them away even from a text field - the browser's filter is one, and it is where a user is
+    // most likely to press Escape. Both are handled here rather than in main.js because the keyup swallow
+    // above keeps main.js from seeing this Escape at all.
+    if(e.key == 'Escape' && $('#editor > .cardPictureZoom')) {
+      e.preventDefault();
+      return $('#editor > .cardPictureZoom').remove();
+    }
+    if(e.key == 'Escape' && $('#libraryDecksOverlay').style.display != 'none') {
+      e.preventDefault();
+      // through its close button, so whoever opened it (the Add New Deck dialog) comes back instead of the
+      // editor being left without one
+      return $('#libraryDecksClose').click();
+    }
+
     if([ 'TEXTAREA', 'INPUT', 'SELECT' ].indexOf(e.target.tagName) != -1 || e.target.isContentEditable)
       return;
 
@@ -1060,6 +1072,7 @@ class DeckEditor {
     // switched off and half typed css declarations are not in the game state, so nothing may outlive the
     // editing session they were made in
     this.cssEditorState.clear();
+    this.dropPreviewCard(); // nothing is previewing any more, so the hidden card can go
     $('body').classList.remove('deckEditorActive');
     $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
     $('#deckEditorDragToolbar').classList.remove('active');
@@ -1516,6 +1529,7 @@ class DeckEditor {
   // typing in the right sidebar updates them right away, like the card type strip at the bottom. Only the
   // preview boxes are rebuilt (not the whole tree), and a box the user is typing in is left alone.
   refreshTreePreviews() {
+    this.dropPreviewCard(); // the card templates may have changed since the last off-screen render
     for(const preview of this.treeObjectPreviews) {
       if(!preview.box.isConnected || preview.box.contains(document.activeElement))
         continue;
@@ -2618,6 +2632,7 @@ class DeckEditor {
       const previewCaret = keepPreviewFocus ? [ focused.selectionStart, focused.selectionEnd ] : null;
       tree.innerHTML = '';
       this.treeObjectPreviews = []; // filled by renderTreeObjectRow, refreshed on every card refresh
+      this.dropPreviewCard(); // rebuilt on demand by previewSourceCard, from the templates as they are now
       for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
         const isCurrent = deck.id == this.deckID;
         // A branch is expanded when it's the current deck/face or the user opened it; single click expands +
@@ -2851,7 +2866,38 @@ class DeckEditor {
     return this.deleteFace();
   }
 
-  // Renders a small live preview of a face object by cloning its rendered node from the main card (so text,
+  // The card the tree previews are cloned from. Usually the main card, but the card-defaults view a deck opens
+  // in shows an explanation instead of a card - previews would all come out empty there (the state reported as
+  // "the cards look blank until you open the faces"). Render one card off-screen for those views, from the same
+  // working templates refreshMainCardFaces uses, and keep it for the rest of this tree rebuild. It is parked in
+  // the document rather than in a detached node so its tiling CSS resolves to pixels (renderObjectPreview).
+  previewSourceCard() {
+    if(this.mainCard)
+      return this.mainCard;
+    if(this.previewCard !== undefined)
+      return this.previewCard;
+    this.previewCard = null;
+    if(!this.deck() || this.cardType === null || !this.faceTemplates.length)
+      return null;
+    try {
+      const card = this.renderCard(this.cardType, this.face, div($('#deckEditor'), 'deckEditorPreviewSource'));
+      Object.assign(card.state, this.cardTypes[this.cardType] || {});
+      card.domElement.innerHTML = '';
+      card.createFaces(this.faceTemplates);
+      this.previewCard = card;
+    } catch(e) {}
+    return this.previewCard;
+  }
+
+  // Throws away the off-screen preview card (and its holder), so the next previewSourceCard renders the
+  // templates as they are then. Called wherever the tree previews are (re-)built.
+  dropPreviewCard() {
+    for(const holder of $a('#deckEditor > .deckEditorPreviewSource'))
+      holder.remove();
+    this.previewCard = undefined;
+  }
+
+  // Renders a small live preview of a face object by cloning its rendered node from the card (so text,
   // icons, images and color boxes all look right); falls back to a swatch/label when the card can't render.
   renderObjectPreview(box, index, faceIndex = this.face) {
     const face = this.faceTemplates[faceIndex];
@@ -2871,15 +2917,26 @@ class DeckEditor {
     // sidebar (its upload button for images, its asset picker on the value row for images/icons).
 
     const bw = 44, bh = 60;
-    let node = null;
-    if(this.mainCard) {
-      const faceDiv = $a('.cardFace', this.mainCard.domElement)[faceIndex];
-      if(faceDiv && faceDiv.children[index])
-        node = faceDiv.children[index].cloneNode(true);
-    }
+    const sourceCard = this.previewSourceCard();
+    const faceDiv = sourceCard ? $a('.cardFace', sourceCard.domElement)[faceIndex] : null;
+    const rendered = faceDiv && faceDiv.children[index] || null;
+    const node = rendered ? rendered.cloneNode(true) : null;
 
-    // Images fill the preview with the whole picture (contain), so the entire image shows, not a corner.
     if(type == 'image') {
+      // A card cut out of a sheet picks its own cell out of the picture with background-size/position (the
+      // tiling CSS the deck wizard and the Tabletop Simulator import write). Those are calc()s over the card's
+      // CSS variables, which the clone no longer inherits, so take the resolved values off the rendered object
+      // and scale it down as a whole - "contain" would refit the background to the entire sheet.
+      const tiling = rendered ? getComputedStyle(rendered) : null;
+      if(tiling && tiling.backgroundSize.indexOf('px') != -1) { // resolved to pixels, so the object is tiled
+        node.style.backgroundSize = tiling.backgroundSize;
+        node.style.backgroundPosition = tiling.backgroundPosition;
+        // The object's own inline size, not its computed one: an expanded face that is not the active one is
+        // display:none, which leaves the computed width/height at "auto" while background-size still resolves.
+        this.scalePreviewNode(box, node, parseFloat(node.style.width) || bw, parseFloat(node.style.height) || bh, bw, bh);
+        return;
+      }
+      // Everything else fills the preview with the whole picture (contain), so no corner of it is cut off.
       const bg = node ? node.style.backgroundImage : '';
       const fill = div(box, 'deckEditorPreviewFill');
       if(bg && bg != 'none')
@@ -2893,19 +2950,24 @@ class DeckEditor {
     if(node) {
       const w = type == 'icon' ? (object.size || object.width || 40) : (object.width || object.size || 40);
       const h = type == 'icon' ? (object.size || object.height || 40) : (object.height || object.size || 40);
-      const scale = Math.min(bw / w, bh / h);
-      node.style.left = '0';
-      node.style.top = '0';
-      node.style.transform = `scale(${scale})`;
-      node.style.transformOrigin = 'top left';
-      node.style.pointerEvents = 'none';
-      const wrap = div(box, 'deckEditorObjectPreviewInner');
-      wrap.style.width = (w * scale) + 'px';
-      wrap.style.height = (h * scale) + 'px';
-      wrap.append(node);
+      this.scalePreviewNode(box, node, w, h, bw, bh);
       return;
     }
     box.textContent = type == 'icon' ? '★' : String(object.value || '').slice(0, 6);
+  }
+
+  // Puts a cloned face object into a preview box, scaled down from its own size to fit.
+  scalePreviewNode(box, node, w, h, bw, bh) {
+    const scale = Math.min(bw / w, bh / h);
+    node.style.left = '0';
+    node.style.top = '0';
+    node.style.transform = `scale(${scale})`;
+    node.style.transformOrigin = 'top left';
+    node.style.pointerEvents = 'none';
+    const wrap = div(box, 'deckEditorObjectPreviewInner');
+    wrap.style.width = (w * scale) + 'px';
+    wrap.style.height = (h * scale) + 'px';
+    wrap.append(node);
   }
 
   // The editable text field shown in a text object's list row. Edits the static value, or — when the value is
@@ -4055,7 +4117,9 @@ class DeckEditor {
       // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added. The
       // dialog is hidden while browsing, so the placement options are read now rather than at the click.
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
-      $('button', bar).onclick = _=>openLibraryDecksOverlay(newDeckPlacement());
+      // closing the browser without picking a deck comes back to this dialog rather than leaving the deck
+      // editor with no dialog and a new deck still pending
+      $('button', bar).onclick = _=>openLibraryDecksOverlay(newDeckPlacement(), _=>showOverlay('deckEditorNewDeckOverlay'));
     } else {
       // Render the existing PropertiesModule deck-creation flow inside a container carrying the same classes
       // the sidebar uses ("tune editorModule"), so its scoped CSS (preview tiles, suit editors, TTS input)
@@ -4068,6 +4132,8 @@ class DeckEditor {
         this.deckCreator.deckGenerator(moduleDOM);
       else if(mode == 'images')
         this.deckCreator.deckImages(moduleDOM);
+      else if(mode == 'imageSheet')
+        this.deckCreator.deckImages(moduleDOM, true); // same flow, cutting one image into a grid of cards
       else if(mode == 'imagePairs')
         this.deckCreator.deckImagePairs(moduleDOM);
       else if(mode == 'text')
