@@ -623,7 +623,9 @@ async function uploadAsset(multipleCallback, fileTypes) {
         alert(`Uploading failed: ${e.toString()}`);
         return null;
       });
-      multipleCallback(uploadPath, f.name)
+      // a file that failed to upload has no path to hand out - the callback would add an empty entry for it
+      if(uploadPath)
+        multipleCallback(uploadPath, f.name)
     }).catch(e=>{
       if(e.message !== 'File selection cancelled.')
         alert(`Error: ${e.toString()}`);
@@ -650,8 +652,11 @@ async function _uploadAsset(file) {
       body: file.content || file
     });
 
-    if(response.status == 413)
-      throw 'File is too big.';
+    if(response.status == 413) {
+      // the server answers with the actual size and the limit, but a proxy in between might not
+      const details = (await response.text().catch(_=>'')).trim();
+      throw `${/^[^<>]{1,200}$/.test(details) ? details : 'The file is too big.'} Scaling a picture down or saving it as a JPEG usually gets it under the limit.`;
+    }
     else if(!response.ok)
       throw `${response.status} - ${response.statusText}`;
 
