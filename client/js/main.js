@@ -215,7 +215,8 @@ function setScale() {
 
   // the add widget overlay is laid out for the default board size, so it is scaled to fit into
   // the room instead of being stretched to it - see #addOverlayContent in editmode.css. The header
-  // row comes from the same constant the widget positions are derived from, so the two cannot drift.
+  // row is published from the same constant the widget positions are derived from; the value in
+  // layout.css is only what applies until this runs, like --roomWidth/--roomHeight next to it.
   document.documentElement.style.setProperty('--addOverlayScale', addOverlayScale(viewportConfig));
   document.documentElement.style.setProperty('--addOverlayHeaderHeight', `${ADD_OVERLAY_HEADER_HEIGHT}px`);
 
