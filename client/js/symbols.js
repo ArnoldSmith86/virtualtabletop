@@ -76,8 +76,11 @@ export async function loadSymbolPicker() {
       for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
+          // the file name is searched with its hyphens and with spaces instead, so that both
+          // "polar-bear" and "polar bear" find the icon without spending one of its tags on it
+          const name = symbol.split('/')[1];
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${name},${name.replace(/-/g, ' ')},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
           symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');

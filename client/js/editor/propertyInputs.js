@@ -340,7 +340,9 @@ function loadIconSearchIndex() {
         for(let [ symbol, keywords ] of Object.entries(symbols)) {
           if(symbol.includes('/')) {
             keywords = keywords.slice(1); // first entry is the spritesheet index
-            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true, type: 'game-icons' });
+            // as in the symbol picker: search the file name both hyphenated and with spaces
+            const name = symbol.split('/')[1];
+            index.push({ value: symbol, keywords: `${name},${name.replace(/-/g, ' ')},${keywords.join()}`.toLowerCase(), image: true, type: 'game-icons' });
           } else {
             const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
             symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');

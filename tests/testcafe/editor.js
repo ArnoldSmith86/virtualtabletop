@@ -1082,7 +1082,9 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .selectText('#symbolPickerOverlay input')
     .pressKey('delete')
     .expect(Selector('#symbolNoResults').visible).notOk()
-    .click(Selector('#symbolList .gameicons').nth(0))
+    // pin the icon instead of taking whichever comes first: that depends on the order of the
+    // game-icons sections in symbols.json, so recategorising them would change the state hash
+    .click(Selector('#symbolList .gameicons[data-symbol="viscious-speed/abstract-001"]'))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
@@ -1101,7 +1103,7 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
     .pressKey('esc');
-  await compareState(t, '8fa2da8044933891febb5b6066c5350b');
+  await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
 });
 
 test('The symbol picker says an image-only search found nothing', async t => {
