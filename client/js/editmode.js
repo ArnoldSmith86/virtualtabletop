@@ -1985,7 +1985,9 @@ export function initializeEditMode(currentMetaData) {
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
-      y: 90
+      y: 90,
+      width: 172,
+      height: 48
     })
     overlayDone(id);
   });
@@ -1997,7 +1999,9 @@ export function initializeEditMode(currentMetaData) {
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
-      y: 90
+      y: 90,
+      width: 172,
+      height: 48
     })
     await addWidgetLocal({
       id: id+'C',
@@ -2011,7 +2015,7 @@ export function initializeEditMode(currentMetaData) {
       movable: false,
       movableInEdit: false,
       clickable: false,
-      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center','color':'#6d6d6d','background':'#e4e4e4','border':'2px solid #999999'},
+      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center','color':'#6d6d6d','background':'#e4e4e4','border':'2px solid #999999','text-shadow':'none'},
       text: '0',
       ownerGlobalUpdateRoutine: [
         'var parent = ${PROPERTY parent}',
