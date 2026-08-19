@@ -399,6 +399,17 @@ function overlayPosition(x, y, w) {
   return addOverlayPosition(viewportConfig, x, y, w.get('width'), w.get('height'));
 }
 
+// The hex previews that show an image need a colored hexagon painted behind them because their
+// clip-path css does not apply inside the overlay. That background is paint and nothing else: it
+// gets no click handler and no tooltip, and editmode.css keeps the ring of it that sticks out
+// around the preview from taking the click - it would add a plain 70x70 image widget that is not
+// a hex tile at all, which is not what the preview it sits behind promises.
+function addBackgroundToAddWidgetOverlay(w, wi) {
+  w.applyInitialDelta(wi);
+  w.domElement.id = w.id;
+  $('#addOverlayLayout').appendChild(w.domElement);
+}
+
 function addPieceToAddWidgetOverlay(w, wi, title) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
@@ -834,7 +845,7 @@ function populateAddWidgetOverlay() {
 
   //This is added only to provide a visual background for the actual piece "HexFlatImage" since the css there does not show on the overlay
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+  addBackgroundToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
     x: 530,
     y: 590,
     width: 70,
@@ -844,7 +855,7 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "currentColor": "color"
     }
-  }, 'Add a flat top hex tile with an image');
+  });
 
   addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImage'), {
     x: 540,
@@ -871,7 +882,7 @@ function populateAddWidgetOverlay() {
 
   //This is added only to provide a visual background for the actual piece "HexPointImage" since the css there does not show on the overlay
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+  addBackgroundToAddWidgetOverlay(new BasicWidget('HexPointImageBack'), {
     x: 605,
     y: 590,
     width: 70,
@@ -881,7 +892,7 @@ function populateAddWidgetOverlay() {
     svgReplaces: {
       "currentColor": "color"
     }
-  }, 'Add a pointy top hex tile with an image');
+  });
 
   addPieceToAddWidgetOverlay(new BasicWidget('HexPointImage'), {
     x: 615,

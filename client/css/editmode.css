@@ -68,6 +68,14 @@
   right: 26px;
 }
 
+/* The two hex previews that show an image are drawn on top of a plain hexagon that only exists to
+   paint behind them (their clip-path css does not apply in the overlay). The background is 70x70
+   under a 50x50 preview, so a ring of it sticks out - clicking that must not do anything, least of
+   all add the background image widget instead of the hex tile the preview offers. */
+#addOverlayLayout > #HexFlatImageBack, #addOverlayLayout > #HexPointImageBack {
+  pointer-events: none;
+}
+
 /* The preview piles hold no cards, so their count/total handle would show the number the added
    widget starts with (52 for the deck, 1641 for a full set of chips) floating next to an empty
    preview - see generateCardDeckWidgets/generateChipPileWidgets in editmode.js. */
