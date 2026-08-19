@@ -2077,6 +2077,90 @@ test('Deck editor: a sheet of fronts with a matching sheet of backs in the new d
   await t.expect(deck.backFace[0].css['background-position']).contains('--offsetX');
 });
 
+// A sheet of fronts and a sheet of backs belong together by position, so deleting a sheet of fronts has to
+// take its sheet of backs with it. Without that, every later sheet of backs moves onto the wrong fronts and
+// the wizard happily builds a deck whose cards all show the back of a sheet the user deleted.
+test('Deck editor: deleting a sheet of fronts deletes the sheet of backs paired with it', async t => {
+  const asset = (title, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${title}</title></svg>`).toString('base64')}`;
+  const fronts1 = asset('fronts1', 400, 400); // two 2 x 2 sheets of fronts...
+  const fronts2 = asset('fronts2', 400, 400);
+  const backs1  = asset('backs1',  400, 400); // ...and a sheet of backs for each of them
+  const backs2  = asset('backs2',  400, 400);
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setSheet = ClientFunction((index, columns, rows) => {
+    const preview = document.querySelectorAll('.cardFrontPreview:not(.cardBackSheetPreview)')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+  const frontSheets = Selector('.cardFrontPreview:not(.cardBackSheetPreview)');
+  const backSheets = Selector('.cardBackSheetPreview');
+  const status = Selector('.imagePairStatus');
+
+  await stubUploadOf('fronts1.png', fronts1);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(0, 2, 2);
+  await stubUploadOf('fronts2.png', fronts2);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(1, 2, 2);
+
+  await t.click('input[name=deckImagesBackMode][value=sheet]');
+  await stubUploadOf('backs1.png', backs1);
+  await t.click('#deckEditorNewDeckPanel #backSheetButton');
+  await stubUploadOf('backs2.png', backs2);
+  await t.click('#deckEditorNewDeckPanel #backSheetButton');
+
+  await t
+    .expect(backSheets.count).eql(2)
+    .expect(backSheets.nth(0).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts1.png"')
+    .expect(backSheets.nth(1).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts2.png"')
+    .expect(status.innerText).contains('8 cards, each with its own back from the sheet in the same position');
+
+  // deleting the first sheet of fronts leaves the second one - with its own sheet of backs, not with the one
+  // that belonged to the deleted sheet
+  await t
+    .click(frontSheets.nth(0).find('[icon=delete]'))
+    .expect(frontSheets.count).eql(1)
+    .expect(backSheets.count).eql(1)
+    .expect(backSheets.nth(0).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts2.png"')
+    .expect(status.innerText).contains('4 cards, each with its own back from the sheet in the same position')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(4); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return {
+      names: Object.keys(cardTypes),
+      images: Object.values(cardTypes).map(c=>c.image),
+      backImages: Object.values(cardTypes).map(c=>c.backImage)
+    };
+  })();
+
+  // the deck is made of the sheet that is left, and every card shows the back sitting in its own cell of the
+  // sheet of backs that came with it - not of the one the deleted sheet of fronts owned
+  await t.expect(deck.names).eql([ 'fronts2.png 1,1', 'fronts2.png 1,2', 'fronts2.png 2,1', 'fronts2.png 2,2' ]);
+  await t.expect(deck.images).eql(Array(4).fill(fronts2));
+  await t.expect(deck.backImages).eql(Array(4).fill(backs2));
+});
+
 // A card is sized after the picture it shows, and one import can hold pictures of different shapes: the first
 // upload sets the deck's card defaults and every card type from a differently shaped upload carries its own
 // size, so a portrait sheet uploaded after a landscape one is not squashed into the landscape shape.

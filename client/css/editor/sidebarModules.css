@@ -422,10 +422,15 @@
   cursor: zoom-out;
 }
 
+/* the frame keeps its zoom-in cursor in the wizard, but inside the full-size view clicking zooms out */
+#editor > .cardPictureZoom .cardFrontPreviewFrame {
+  cursor: zoom-out;
+}
+
 #editor > .cardPictureZoom img {
   display: block;
   max-width: 100%;
-  max-height: calc(100 * var(--vh) - 40px);
+  max-height: calc(100 * var(--vh, 1vh) - 40px);
 }
 
 /* Where the backs come from: one image for the whole deck, or a second sheet cut by the same grid. Only the

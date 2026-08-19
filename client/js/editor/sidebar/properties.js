@@ -2792,7 +2792,12 @@ class PropertiesModule extends SidebarModule {
         };
       }
       $('[icon=delete]', dom).onclick = e=>{
+        // fronts and backs are paired by position, so the sheet of backs belonging to this one goes with it -
+        // otherwise every later sheet of backs would silently move onto the wrong sheet of fronts
+        const index = frontSheets().findIndex(front=>front.dom == dom);
         dom.remove();
+        if(index != -1 && index < backSheets.length)
+          backSheets.splice(index, 1);
         renderBackSheets();
         updateStatus();
       };

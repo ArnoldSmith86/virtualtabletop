@@ -882,20 +882,27 @@ class DeckEditor {
       }
     }
 
+    // A picture opened at full size and the public library browser both sit on top of whatever has focus, so
+    // Escape takes them away even from a text field - the browser's filter is one, and it is where a user is
+    // most likely to press Escape. Both are handled here rather than in main.js because the keyup swallow
+    // above keeps main.js from seeing this Escape at all.
+    if(e.key == 'Escape' && $('#editor > .cardPictureZoom')) {
+      e.preventDefault();
+      return $('#editor > .cardPictureZoom').remove();
+    }
+    if(e.key == 'Escape' && $('#libraryDecksOverlay').style.display != 'none') {
+      e.preventDefault();
+      // through its close button, so whoever opened it (the Add New Deck dialog) comes back instead of the
+      // editor being left without one
+      return $('#libraryDecksClose').click();
+    }
+
     if([ 'TEXTAREA', 'INPUT', 'SELECT' ].indexOf(e.target.tagName) != -1 || e.target.isContentEditable)
       return;
 
     if(e.key == 'Escape') {
       e.preventDefault();
-      // A picture opened at full size covers everything, so Escape takes that away first.
-      if($('#editor > .cardPictureZoom')) {
-        $('#editor > .cardPictureZoom').remove();
-      // The public library browser is opened on top of the editor, so Escape closes that next - through its
-      // close button, so whoever opened it (the Add New Deck dialog) comes back instead of the editor being
-      // left without one.
-      } else if($('#libraryDecksOverlay').style.display != 'none') {
-        $('#libraryDecksClose').click();
-      } else if(this.selectedObject !== null) {
+      if(this.selectedObject !== null) {
         this.selectObject(null);
       } else {
         this.closedByEscape = true; // so the keyup listener still swallows this Escape's keyup
