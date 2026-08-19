@@ -5,7 +5,7 @@ function positionElementsInArc(elements, radius, arcAngle, container) {
   const middleIndex = Math.floor(n / 2);
 
   for (let i = 0; i < n; i++) {
-    const angle = (arcAngle / (n - 1)) * (i - middleIndex);
+    const angle = n > 1 ? (arcAngle / (n - 1)) * (i - middleIndex) : 0;
     const radians = (Math.PI / 180) * angle;
     const x = container.clientWidth / 2 + radius * Math.sin(radians) - elements[i].offsetWidth / 2;
     const y = container.clientHeight / 2 + (radius - elements[i].offsetHeight / 2) * (1 - Math.cos(radians));
@@ -58,14 +58,27 @@ function centerElementInClientRect(element, boundingClientRect) {
   element.style.transform = `translate(${translateX}px, ${translateY}px) ${element.style.transform}`;
 }
 
+// A range is expanded rank by rank and every rank becomes a card type, on every keystroke of the ranks field -
+// so a mistyped "2-100000" would build 100000 ranks per suit and freeze the tab. Stop at a deck size that is
+// still a deck; the hint above the design gallery says when a list was cut off here.
+const DECK_GENERATOR_MAX_RANKS = 200;
+
 function parseRankRange(rankRange) {
   const rankArray = [];
-  const rankElements = rankRange.split(',');
+  // Ranks are typed as a comma separated list, so spaces around them are the user separating the list, not part
+  // of a rank ("2-10, J, Q" must not produce a rank called " J"). Empty entries are a comma the user has not
+  // typed a rank behind yet ("2-10,J,") and would otherwise become a card type called " of hearts".
+  const rankElements = rankRange.split(',').map(rankElement=>rankElement.trim()).filter(rankElement=>rankElement !== '');
 
   rankElements.forEach(rankElement => {
-    if(rankElement.match(/-?[0-9]+--?[0-9]+/)) {
-      const [start, end] = rankElement.split('-').map(Number);
-      for(let i = start; i <= end; i++)
+    if(rankArray.length >= DECK_GENERATOR_MAX_RANKS)
+      return;
+    // A range is the whole entry, and splitting it on '-' would cut a negative bound in half ("-3--1"), so read
+    // both bounds from the match instead. Anything else - "J", "Sun", "2b" - is a rank of its own.
+    const range = rankElement.match(/^(-?[0-9]+)-(-?[0-9]+)$/);
+    if(range) {
+      const [ start, end ] = range.slice(1).map(Number);
+      for(let i = start; i <= end && rankArray.length < DECK_GENERATOR_MAX_RANKS; i++)
         rankArray.push(i);
     } else {
       rankArray.push(rankElement);
@@ -73,6 +86,18 @@ function parseRankRange(rankRange) {
   });
 
   return rankArray;
+}
+
+// The line above the card design gallery. A suit list without suits or without any rank is a normal state while
+// the deck is being typed, but it has no cards to show designs of - and a design tile renders a real card, which
+// throws without a card type. Say what is missing instead, so the gallery can be skipped.
+function deckGeneratorDesignHint(suitCount, cardCount, ranksCapped) {
+  if(!suitCount)
+    return 'Add at least one suit above to see the card designs.';
+  if(!cardCount)
+    return 'Add at least one rank above to see the card designs.';
+  const capped = ranksCapped ? ` Only the first ${DECK_GENERATOR_MAX_RANKS} ranks of a suit are used.` : '';
+  return `${cardCount} card${cardCount == 1 ? '' : 's'} from ${suitCount} suit${suitCount == 1 ? '' : 's'}.${capped} Pick how they look:`;
 }
 
 async function setCardCount(deck, cardType, count) {
@@ -116,20 +141,459 @@ function inheritModeFromSelection(mode, properties = []) {
   return selected;
 }
 
-// SVG replacements map an SVG token to a widget property. Expose only the
-// conventional color properties, so arbitrary replacement properties remain
-// in the generic editor.
-function svgReplaceColorProperties(svgReplaces) {
-  if(!isObjectLike(svgReplaces))
-    return [];
-  return [...new Set(Object.values(svgReplaces).flat())]
-    .filter(property => typeof property == 'string' && /^(?:[A-Za-z]*Color\d*|color[A-Za-z]*\d*)$/.test(property));
+// The SVG attributes an svgReplaces entry usually swaps out, each with the
+// widget property proposed for it (the names games conventionally use) and the
+// input its values want. "stroke-width" is what SVG calls a border width.
+const svgReplaceAttributes = {
+  'stroke-width':   { property: 'borderWidth',   kind: 'number' },
+  'stroke-opacity': { property: 'borderOpacity', kind: 'opacity' },
+  'stroke':         { property: 'borderColor',   kind: 'color' },
+  'fill-opacity':   { property: 'fillOpacity',   kind: 'opacity' },
+  'fill':           { property: 'color',         kind: 'color' },
+  'stop-opacity':   { property: 'stopOpacity',   kind: 'opacity' },
+  'stop-color':     { property: 'color',         kind: 'color' },
+  'opacity':        { property: 'opacity',       kind: 'opacity' }
+};
+
+// matches both the attribute form (fill="#f00") and the declaration form
+// (style="fill:#f00", or a rule in a <style> block) of the attributes above
+const svgReplaceAttributePattern = new RegExp(`(?:^|[\\s;{"'])(${Object.keys(svgReplaceAttributes).join('|')})\\s*[:=]\\s*["']?\\s*([^"';}>\\s]+)`, 'g');
+
+// values that are not a literal to swap out: keywords and paint references
+const svgReplaceIgnoredValues = [ 'none', 'transparent', 'inherit', 'initial', 'unset', 'revert', 'context-fill', 'context-stroke' ];
+
+// The editor input a replacement wants: taken from the SVG attribute the value
+// was found in when the file is known, otherwise guessed from the property name
+// so a map typed by hand (or pointing at a file that is not loaded) still gets
+// more than a plain text field.
+function svgReplaceInputKind(property, attributes) {
+  for(const attribute of attributes || [])
+    if(svgReplaceAttributes[attribute])
+      return svgReplaceAttributes[attribute].kind;
+  if(/opacity|alpha/i.test(property))
+    return 'opacity';
+  if(/color/i.test(property))
+    return 'color';
+  if(/width|height|size|radius|scale|thickness/i.test(property))
+    return 'number';
+  return 'text';
 }
 
-function svgReplaceColorLabel(property) {
+const svgReplaceInputOptions = {
+  color: { kind: 'color' },
+  opacity: { kind: 'number', min: 0, max: 1, step: 0.05, placeholder: '1' },
+  number: { kind: 'number', min: 0, step: 1, placeholder: '0' },
+  text: { kind: 'text' }
+};
+
+function svgReplacePropertyForAttributes(attributes) {
+  for(const attribute of attributes || [])
+    if(svgReplaceAttributes[attribute])
+      return svgReplaceAttributes[attribute].property;
+  return 'color';
+}
+
+function svgReplacePropertyLabel(property) {
   if(property == 'color')
     return 'Color';
   return property.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/^./, char => char.toUpperCase());
+}
+
+// One input definition per property an svgReplaces map points at, in map order.
+// attributesBySelector (from the scan of the actual SVG below) decides which
+// input each of them gets.
+function svgReplaceInputDefs(svgReplaces, attributesBySelector = {}) {
+  const defs = [];
+  const seen = new Set();
+  if(!isObjectLike(svgReplaces))
+    return defs;
+  for(const [ selector, property ] of Object.entries(svgReplaces))
+    for(const single of [].concat(property)) {
+      if(typeof single != 'string' || !single || seen.has(single))
+        continue;
+      seen.add(single);
+      const kind = svgReplaceInputKind(single, attributesBySelector[selector]);
+      defs.push(Object.assign({ label: svgReplacePropertyLabel(single), property: single }, svgReplaceInputOptions[kind]));
+    }
+  return defs;
+}
+
+function svgReplaceProperties(svgReplaces) {
+  return svgReplaceInputDefs(svgReplaces).map(def => def.property);
+}
+
+// The values an SVG actually uses in those attributes, so a replacement can be
+// proposed from the file instead of a made-up #000 - one entry per distinct
+// value, remembering every attribute it appeared in.
+function svgReplaceCandidates(svgText) {
+  const text = String(svgText || '');
+  const byValue = new Map();
+  for(const match of text.matchAll(svgReplaceAttributePattern)) {
+    const value = match[2].trim();
+    if(!value || svgReplaceIgnoredValues.indexOf(value.toLowerCase()) != -1 || /^url\(/i.test(value))
+      continue;
+    if(!byValue.has(value))
+      byValue.set(value, { value, attributes: [], count: 0 });
+    const candidate = byValue.get(value);
+    if(candidate.attributes.indexOf(match[1]) == -1)
+      candidate.attributes.push(match[1]);
+    ++candidate.count;
+  }
+
+  const candidates = [ ...byValue.values() ];
+  for(const candidate of candidates)
+    // getSVG() replaces the key as a plain substring, so a value that also
+    // occurs outside these attributes (a "2" in path data is the usual one)
+    // would be replaced there too - worth warning about, not worth hiding
+    candidate.ambiguous = text.split(candidate.value).length - 1 > candidate.count;
+  // colors are what a replacement is usually about, so they come first
+  return candidates.filter(candidate => svgReplaceInputKind('', candidate.attributes) == 'color')
+    .concat(candidates.filter(candidate => svgReplaceInputKind('', candidate.attributes) != 'color'));
+}
+
+const svgImageCandidatesCache = {};
+// isSvg is decided by sniffing the fetched content for an <svg> tag rather
+// than the image's file extension - an uploaded asset is served from
+// /assets/<hash>_<size> with no extension at all, so gating on ".svg" would
+// hide this editor for every uploaded SVG (only the built-in game-piece SVGs
+// have a real .svg URL).
+async function fetchSvgReplaceCandidates(image) {
+  if(typeof image != 'string' || !image)
+    return { isSvg: false, candidates: [] };
+  if(svgImageCandidatesCache[image])
+    return svgImageCandidatesCache[image];
+  // a file that can't be read says nothing about what it is, so fall back to
+  // the file name rather than hiding the editor for an SVG that is offline
+  const guess = { isSvg: /\.svg(\?|#|$)/i.test(image), candidates: [] };
+  try {
+    const response = await fetch(mapAssetURLs(image));
+    if(!response.ok)
+      return guess;
+    // both /assets/<hash> and /i/**.svg answer with a content type, and a
+    // bitmap saying so is the common case - no reason to pull the whole file
+    // through the wire and stringify it just to find no <svg> in it
+    const contentType = response.headers.get('content-type') || '';
+    if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
+      if(response.body && response.body.cancel)
+        response.body.cancel();
+      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
+    }
+    const text = await response.text();
+    if(!/<svg/i.test(text))
+      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
+    return svgImageCandidatesCache[image] = { isSvg: true, candidates: svgReplaceCandidates(text) };
+  } catch(e) {
+    return guess;
+  }
+}
+
+// --- conditions ---
+
+// An area that is not a rectangle is written down as conditions - inequalities
+// in x and y that all have to hold (client/js/expression.js). Both the drag
+// limit and a snap grid are limited that way and both edit them in the same
+// multiline field, one condition per line.
+
+// the conditions of a dragLimit or of one grid entry, whichever holds them
+function conditionsOf(holder) {
+  const condition = isObjectLike(holder) ? holder.condition : undefined;
+  return condition === undefined || condition === null ? [] : asArray(condition);
+}
+
+// the conditions of the multiline input, one per line and blank lines dropped
+function conditionList(text) {
+  return String(text === null || text === undefined ? '' : text).split('\n').map(c=>c.trim()).filter(c=>c !== '');
+}
+
+// the first line that is not a condition the engine can read, if any: one line
+// it cannot read makes the whole condition do nothing, so it is worth saying
+// which - and a line that is maths rather than an inequality ("x - 100") does
+// nothing just as quietly, so it is judged here too
+function conditionProblem(text) {
+  for(const condition of conditionList(text)) {
+    const problem = expressionError(condition, positionNames, true);
+    if(problem)
+      return `"${condition}": ${problem}`;
+  }
+  return null;
+}
+
+// what a multiline field's text is stored as: one condition as a string,
+// several as a list, none dropping the key - the shapes the engine and the
+// JSON editor already read
+function conditionValue(text) {
+  const conditions = conditionList(text);
+  return conditions.length ? (conditions.length == 1 ? conditions[0] : conditions) : null;
+}
+
+// --- snap grid helpers ---
+
+// The grid property is an array of snap definitions; anything that isn't an
+// object (or the whole property not being an array) is not a usable entry.
+function gridEntryList(value) {
+  return Array.isArray(value) ? value.filter(isObjectLike) : [];
+}
+
+// The keys snapToGrid() consumes itself - everything else in an entry is
+// copied onto the widget when it snaps to that grid.
+const gridGeometryKeys = [ 'x', 'y', 'offsetX', 'offsetY', 'alignX', 'alignY', 'minX', 'maxX', 'minY', 'maxY', 'condition' ];
+
+function gridExtraProperties(entry) {
+  return Object.keys(entry || {}).filter(key => gridGeometryKeys.indexOf(key) == -1);
+}
+
+// The boundary of the area a condition describes, as SVG path data in the
+// coordinates `inside` is asked in - so the editor can draw the same dashed
+// line around it that outlines the min/max rectangle.
+// A condition can describe any shape at all, so the boundary is not computed
+// but traced: the area is sampled on a lattice of `step` px, every lattice edge
+// whose two ends disagree is bisected for the point the answer changes at (a
+// few bisections turn what would be a staircase of the sampling step into the
+// circle it describes), and the segments those points make are joined end to
+// end - a dash pattern has to run along the boundary rather than start over at
+// every sample.
+function conditionOutlinePath(box, step, inside) {
+  const columns = Math.max(1, Math.ceil(box.width / step));
+  const rows = Math.max(1, Math.ceil(box.height / step));
+  // the last row/column lands exactly on the far edge rather than past it, so
+  // the outline is traced in the box it is drawn into and no further
+  const pointAt = (column, row)=>({
+    x: box.left + Math.min(column * step, box.width),
+    y: box.top + Math.min(row * step, box.height)
+  });
+
+  const samples = [];
+  for(let column = 0; column <= columns; ++column) {
+    samples[column] = [];
+    for(let row = 0; row <= rows; ++row)
+      samples[column][row] = !!inside(pointAt(column, row));
+  }
+
+  const crossing = (inPoint, outPoint)=>{
+    let a = inPoint, b = outPoint;
+    for(let i = 0; i < 6; ++i) {
+      const middle = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      if(inside(middle))
+        a = middle;
+      else
+        b = middle;
+    }
+    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  };
+
+  // One point object per lattice edge, shared by the two cells that meet there
+  // - that is what lets the segments below be joined by identity.
+  const points = new Map();
+  const edgePoint = (column1, row1, column2, row2)=>{
+    if(samples[column1][row1] == samples[column2][row2])
+      return null;
+    const key = `${column1},${row1},${column2},${row2}`;
+    if(!points.has(key))
+      points.set(key, samples[column1][row1]
+        ? crossing(pointAt(column1, row1), pointAt(column2, row2))
+        : crossing(pointAt(column2, row2), pointAt(column1, row1)));
+    return points.get(key);
+  };
+
+  const segments = [];
+  for(let column = 0; column < columns; ++column)
+    for(let row = 0; row < rows; ++row) {
+      const top = edgePoint(column, row, column + 1, row);
+      const right = edgePoint(column + 1, row, column + 1, row + 1);
+      const bottom = edgePoint(column, row + 1, column + 1, row + 1);
+      const left = edgePoint(column, row, column, row + 1);
+      const ends = [ top, right, bottom, left ].filter(Boolean);
+      if(ends.length == 2)
+        segments.push(ends);
+      else if(ends.length == 4) {
+        // Two opposite corners are inside and two are outside: the four
+        // crossings can be paired two ways, and which of them the middle of
+        // the cell agrees with says which two corners are cut off by an arc.
+        const corner = pointAt(column, row), opposite = pointAt(column + 1, row + 1);
+        const withTopLeft = inside({ x: (corner.x + opposite.x) / 2, y: (corner.y + opposite.y) / 2 }) == samples[column][row];
+        segments.push(...(withTopLeft ? [ [ top, right ], [ bottom, left ] ] : [ [ top, left ], [ right, bottom ] ]));
+      }
+    }
+
+  const used = new Set();
+  const ends = new Map();
+  for(const segment of segments)
+    for(const point of segment) {
+      if(!ends.has(point))
+        ends.set(point, []);
+      ends.get(point).push(segment);
+    }
+
+  const paths = [];
+  for(const segment of segments) {
+    if(used.has(segment))
+      continue;
+    used.add(segment);
+    const line = [ segment[0], segment[1] ];
+    // extend at both ends for as long as another segment continues the line
+    for(const forward of [ true, false ])
+      for(;;) {
+        const end = forward ? line[line.length - 1] : line[0];
+        const next = (ends.get(end) || []).find(candidate=>!used.has(candidate));
+        if(!next)
+          break;
+        used.add(next);
+        const other = next[0] === end ? next[1] : next[0];
+        if(forward)
+          line.push(other);
+        else
+          line.unshift(other);
+      }
+    paths.push(`M ${line.map(point=>`${Math.round(point.x * 100) / 100} ${Math.round(point.y * 100) / 100}`).join(' L ')}`);
+  }
+  return paths.join(' ');
+}
+
+// How many lattice points the dots of a grid are drawn one by one for. A
+// condition is read at every one of them on every keystroke that changes it,
+// and a lattice this fine draws its points closer together than a dot is wide
+// anyway, so past this the plain repeating background stays.
+const gridConditionDotLimit = 4000;
+
+// The lattice points inside the box that `applies` holds at, i.e. the positions
+// a grid limited by a condition can actually put a widget on. The lattice is
+// offsetX/offsetY plus whole steps; what lands on it is the point alignX/alignY
+// picks out of the widget, so `applies` is asked about the corner an align
+// away from each point - the coordinates a condition is written in.
+// null rather than a list when the lattice has more points than `limit`, so the
+// caller can leave the drawing to the background layer.
+function gridDotPositions(entry, box, align, limit, applies) {
+  const stepX = +entry.x, stepY = +entry.y;
+  if(!(stepX > 0) || !(stepY > 0) || !(box.width > 0) || !(box.height > 0))
+    return null;
+  const columns = Math.floor(box.width / stepX), rows = Math.floor(box.height / stepY);
+  if((columns + 1) * (rows + 1) > limit)
+    return null;
+
+  // the first lattice point at or after the box begins
+  const firstOf = (offset, start, step)=>start + (((offset - start) % step) + step) % step;
+  const firstX = firstOf(+entry.offsetX || 0, box.left, stepX);
+  const firstY = firstOf(+entry.offsetY || 0, box.top, stepY);
+
+  const dots = [];
+  for(let column = 0; column <= columns; ++column)
+    for(let row = 0; row <= rows; ++row) {
+      const x = firstX + column * stepX, y = firstY + row * stepY;
+      if(x <= box.left + box.width && y <= box.top + box.height
+          && applies({ x: x - align.x, y: y - align.y }))
+        dots.push({ x: Math.round(x * 100) / 100, y: Math.round(y * 100) / 100 });
+    }
+  return dots;
+}
+
+// A grid of the widget's own DOM box, i.e. widgets end up edge to edge.
+function squareGridForSize(width, height) {
+  return [ { x: width, y: height } ];
+}
+
+// Two staggered grids so every other row/column sits half a hex further along,
+// each offset by half its own spacing. A widget image is drawn with
+// background-size: contain, so the hexagon's long diagonal is the shorter side
+// of the widget box - for the square box the example hexes use this is the
+// same calculation the JSON editor's "calculated hex grid" button does.
+function hexGridForSize(width, height, hexType) {
+  const isFlat = hexType === 'flat';
+  const long = Math.min(width, height);
+  const short = parseFloat((long * Math.sqrt(3) / 2).toFixed(2));
+  const xHex = isFlat ? long * 1.5 : short;
+  const yHex = isFlat ? short : long * 1.5;
+  return [
+    { x: xHex, y: yHex, offsetX: xHex / 2, offsetY: yHex / 2 },
+    { x: xHex, y: yHex, offsetX: 0, offsetY: 0 }
+  ];
+}
+
+// Parse a value typed for an extra snap-point property: JSON when it looks
+// like JSON (numbers, true, objects), a plain string otherwise - so both
+// "rotation: 90" and "image: foo.svg" do the obvious thing.
+function gridExtraValue(raw) {
+  const text = String(raw).trim();
+  if(text === '')
+    return '';
+  try {
+    return JSON.parse(text);
+  } catch(e) {
+    return raw;
+  }
+}
+
+function gridExtraText(value) {
+  return typeof value == 'string' ? value : JSON.stringify(value);
+}
+
+// --- drag limits ---
+
+// dragLimit is the rectangle move() keeps a point of the widget in - its top
+// left corner unless alignX/alignY move it. The four sides are only meaningful
+// together, so the editor adds and drops them as a set; the engine reads a
+// missing side as "no limit on that side".
+// positionNames (client/js/expression.js) is the other half of the shape: the
+// bare words an expression in a limit answers itself, everything else being a
+// property written the way routines write one.
+const dragLimitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
+
+function dragLimitValue(dragLimit, key) {
+  const value = isObjectLike(dragLimit) ? dragLimit[key] : undefined;
+  return value === undefined ? null : value;
+}
+
+function dragLimitIsSet(dragLimit) {
+  return dragLimitKeys.some(key => dragLimitValue(dragLimit, key) !== null) || conditionsOf(dragLimit).length > 0;
+}
+
+// all the text of a limit that the engine reads as an expression
+function dragLimitExpressions(dragLimit) {
+  return [ ...dragLimitKeys.map(key=>dragLimitValue(dragLimit, key)), ...conditionsOf(dragLimit) ];
+}
+
+// Which widget properties a set of expressions reads, so a drawing made from
+// them can follow the state: ${PROPERTY name} is a property of the widget the
+// expressions belong to, ${PROPERTY name OF id} that widget's, and a bare word
+// is the position being tested rather than a property at all - and the drawing
+// lives in the parent's box, so its size counts too.
+function expressionDependencies(widget, texts) {
+  const dependencies = {};
+  const add = (id, property)=>{
+    if(dependencies[id] !== true)
+      (dependencies[id] = dependencies[id] || new Set()).add(property);
+  };
+  for(const text of texts)
+    for(const name of expressionNames(text))
+      if(name.explicit)
+        add(name.widget === null ? widget.id : name.widget, name.name);
+  // The drawing is drawn into the parent's DOM element, and a parent that
+  // renders its own content (a basicwidget with text, a card, a spinner) does
+  // it by emptying that element - which takes the drawing with it. So every
+  // property of the parent is worth redrawing for, not just the width and
+  // height the drawing is scaled to.
+  if(widget.get('parent'))
+    dependencies[widget.get('parent')] = true;
+  return dependencies;
+}
+
+function dragLimitDependencies(widget) {
+  return expressionDependencies(widget, dragLimitExpressions(widget.get('dragLimit')));
+}
+
+// the same, for the conditions of every grid of a widget
+function gridDependencies(widget) {
+  return expressionDependencies(widget, gridEntryList(widget.get('grid')).flatMap(conditionsOf));
+}
+
+// A widget that is gone (or back) changes what the expressions reading it
+// amount to just as much as a new value does, so a delta that only removes one
+// counts as well.
+function dependencyDeltaMatters(dependencies, deltaState) {
+  for(const id in deltaState || {})
+    if(dependencies[id] && (!deltaState[id] || dependencies[id] === true
+        || Object.keys(deltaState[id]).some(property=>dependencies[id].has(property))))
+      return true;
+  return false;
 }
 
 function dicePreviewRotation(faceCount) {
@@ -151,7 +615,291 @@ function dicePreviewActiveFace(faces) {
   return Number.isFinite(values[highestIndex]) ? highestIndex : faces.length - 1;
 }
 
+// --- basic widget face helpers ---
+
+// A face of a basic widget is a set of property overrides applied while that
+// face is shown, so it can hold *any* widget property. These are just the ones
+// the "change another property" dropdown offers on top of what the widget and
+// its other faces already use.
+const faceSuggestedProperties = [
+  'image', 'icon', 'text', 'color', 'css', 'classes', 'html',
+  'borderRadius', 'rotation', 'scale', 'width', 'height', 'movable', 'clickRoutine'
+];
+
+// properties that identify the widget or that the engine strips from a face
+// (see BasicWidget.applyDeltaToDOM), so putting them into one does nothing
+const faceForbiddenProperties = [ 'id', 'type', 'parent', 'faces', 'activeFace' ];
+
+// a face preview renders one fixed face at the origin (renderReadonlyCopyRaw
+// zeroes position and transform), so these cannot change how it looks
+const facePreviewIndependentProperties = [ 'faces', 'activeFace', 'x', 'y', 'z', 'rotation', 'scale' ];
+
+// Legal in a face, but a trap to pick from a list: while such a face is shown
+// the widget's own value is overridden, so e.g. dragging it snaps back to the
+// face's x/y. They stay typeable for the games that do use them.
+const faceUnsuggestedProperties = [ 'x', 'y', 'z', 'owner', 'dragging', 'inheritFrom', 'deck', 'cardType', 'linkedToSeat', 'onlyVisibleForSeat' ];
+
+// Starting value for a property added to a face, for the few properties whose
+// widget default is null or absent - everything else starts from the widget's
+// own value (see faceNewPropertyValue).
+const faceNewPropertyValues = {
+  icon: null, html: '', borderRadius: 0, clickRoutine: []
+};
+
+function faceObject(face) {
+  return isObjectLike(face) ? face : {};
+}
+
+function faceList(value) {
+  return Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : [];
+}
+
+// Which curated input a face property gets. Colors, icons and images keep
+// their pickers; for everything else the editor has no opinion about the
+// property name, so the shape of the current value decides.
+function facePropertyKind(property, value) {
+  if(/Routine$/.test(property))
+    return 'json';
+  if(isObjectLike(value))
+    return /css$/i.test(property) && !hasNestedCSSClasses(value) ? 'css' : 'json';
+  if(Array.isArray(value))
+    return 'json';
+  if(typeof value == 'boolean')
+    return 'checkbox';
+  if(property == 'icon')
+    return 'icon';
+  if(property == 'image')
+    return 'image';
+  if(/color$/i.test(property))
+    return 'color';
+  if(/css$/i.test(property))
+    return 'css';
+  if(typeof value == 'number')
+    return 'number';
+  return 'text';
+}
+
+// value shown next to a property name in the one line summary of a collapsed
+// face row - only for values that are short enough to say something
+function faceValueSummary(value) {
+  if(value === null || typeof value == 'object')
+    return null;
+  const text = String(value);
+  if(text === '' || text.length > 18 || /^\/(?:assets|i)\//.test(text))
+    return null;
+  return text;
+}
+
+function faceSummary(face) {
+  const entries = Object.entries(faceObject(face));
+  if(!entries.length)
+    return 'no overrides yet - click to add one';
+  return entries.map(([ property, value ]) => {
+    const summary = faceValueSummary(value);
+    return summary === null ? property : `${property}: ${summary}`;
+  }).join(' · ');
+}
+
+// StateManaged.get() does not numify activeFace and a routine can put a string
+// in it, so normalize before comparing it with a face index
+function activeFaceIndex(widget) {
+  const value = Number(widget.get('activeFace'));
+  return Number.isInteger(value) && value >= 0 ? value : 0;
+}
+
+// Whether a widget is still part of the room. A widget can remove itself while
+// it is being edited (a pile does as soon as it holds one card) - writing to it
+// afterwards would make the server re-create it as a typeless widget.
+function widgetStillExists(widget) {
+  return !!widget && !widget.isBeingRemoved && widgets.get(widget.id) === widget;
+}
+
+// The widget's own value for a property. BasicWidget.get() resolves everything
+// except faces/activeFace through the shown face's overrides, so an input that
+// writes the widget's property has to read it this way - otherwise it shows a
+// value it does not write to as soon as the shown face overrides it.
+function widgetOwnValue(widget, property) {
+  if(widget.isMulti || !isObjectLike(widget.state))
+    return widget.get(property);
+  if(widget.state[property] !== undefined)
+    return widget.state[property];
+  const defaultValue = typeof widget.getDefaultValue == 'function' ? widget.getDefaultValue(property) : undefined;
+  return defaultValue !== undefined ? defaultValue : null;
+}
+
+// What a pile template must never carry. updatePiles builds a new pile from
+// the card it is made of and then applies the template over it, so a template
+// holding these would drop every pile of that deck in the same place, at the
+// same size, in the same parent - id and type would break it outright.
+const pileTemplateExcludedProperties = [ 'id', 'type', 'parent', 'fixedParent', 'x', 'y', 'z', 'width', 'height', 'owner', 'dropShadowOwner', 'onPileCreation', 'grid', 'dragLimit' ];
+
+// One property written into a copy of a pile template. A pile that has no
+// value of its own still looks like the default one, so a value equal to the
+// default drops the key instead of pinning the current default into the game.
+function pileTemplateWith(pile, template, property, value) {
+  const result = Object.assign({}, template);
+  const defaultValue = typeof pile.getDefaultValue == 'function' ? pile.getDefaultValue(property) : undefined;
+  if(JSON.stringify(value === undefined ? null : value) === JSON.stringify(defaultValue === undefined ? null : defaultValue))
+    delete result[property];
+  else
+    result[property] = JSON.parse(JSON.stringify(value));
+  return result;
+}
+
+// Whether any css rule that applies to the widget reads a custom property.
+// Which rules read one is nothing the widget knows: the built-in piece classes
+// (classes.css), the room's own css and the widget's own css property all can.
+// Asking the stylesheets which of their rules both mention the variable and
+// match the widget covers all three without listing any of them.
+function domUsesCssVariable(element, name) {
+  if(!element)
+    return false;
+  const usesVariable = new RegExp(`var\\(\\s*--${name}\\s*[,)]`);
+  // a flat css property lands in the element's own style attribute
+  if(usesVariable.test(element.getAttribute('style') || ''))
+    return true;
+
+  // a rule for ::before/::after still paints this element, so match without
+  // it - and one for :hover/:focus/etc still counts as "this rule can paint
+  // the widget", even while the pointer isn't over it right now, so those are
+  // dropped too instead of asking the DOM to evaluate its live state
+  const matchesElement = selector=>{
+    try {
+      return element.matches(selector
+        .replace(/::[\w-]+(\([^)]*\))?/g, '')
+        .replace(/:(hover|focus(-within|-visible)?|active|visited|target)\b/g, ''));
+    } catch(e) {
+      return false;
+    }
+  };
+  // a style rule carries its own declarations in .style and, since css
+  // nesting, a .cssRules of its own - so both have to be looked at, and a
+  // media/supports block only has the latter
+  const search = rules=>{
+    for(const rule of rules) {
+      if(rule.selectorText && usesVariable.test(rule.style ? rule.style.cssText : rule.cssText) && matchesElement(rule.selectorText))
+        return true;
+      if(rule.cssRules && search(rule.cssRules))
+        return true;
+    }
+    return false;
+  };
+  for(const sheet of document.styleSheets) {
+    try {
+      // cheap prefilter: skip the per-rule cssText/matches() walk entirely for
+      // a sheet whose source text does not even mention the variable - the
+      // full walk otherwise serializes every rule of every sheet on each of
+      // the several properties (color, icon, classes, css, svgReplaces) that
+      // call this on every re-render
+      if(sheet.ownerNode && typeof sheet.ownerNode.textContent == 'string' &&
+          sheet.ownerNode.textContent && !usesVariable.test(sheet.ownerNode.textContent))
+        continue;
+      if(search(sheet.cssRules))
+        return true;
+    } catch(e) {
+      // a stylesheet from another origin does not expose its rules
+    }
+  }
+  return false;
+}
+
+// "color" on a basic widget is the color its icon is drawn in
+// (getDefaultIconColor) and the value it publishes as the --color css variable
+// (BasicWidget.css()). Where neither is read - no icon, no svgReplaces
+// pointing at it, no rule using var(--color) - setting it paints nothing, so
+// the Appearance chip offering it is hidden.
+function basicColorIsUsed(widget) {
+  if(widget.isMulti)
+    return widget.widgets.some(basicColorIsUsed);
+  if(widget.get('icon'))
+    return true;
+  if(svgReplaceProperties(widget.get('svgReplaces')).indexOf('color') != -1)
+    return true;
+  // css: { background: "${PROPERTY color}" } substitutes the value directly
+  // instead of reading a --color custom property, so the engine tracks it in
+  // propertiesUsedInProperty rather than anything domUsesCssVariable can see
+  if((widget.propertiesUsedInProperty && widget.propertiesUsedInProperty['css'] || []).indexOf('color') != -1)
+    return true;
+  return domUsesCssVariable(widget.domElement, 'color');
+}
+
+// where an index ends up after the entry at "from" was moved to "to"
+function indexAfterReorder(index, from, to) {
+  if(index == from)
+    return to;
+  if(from < index && index <= to)
+    return index - 1;
+  if(to <= index && index < from)
+    return index + 1;
+  return index;
+}
+
+// What a rendered widget copy actually covers: its own box unioned with its
+// (possibly absolutely positioned) children. Either one alone can be the
+// smaller: a 3D dice sticks out of its box, while a widget whose face only
+// sets a short html snippet has a child much smaller than its box.
+function previewContentRect(element) {
+  const own = element.getBoundingClientRect();
+  const children = getBoundingClientRectWithAbsoluteChildren(element);
+  const left = Math.min(own.left, children.left);
+  const top = Math.min(own.top, children.top);
+  const right = Math.max(own.right, children.right);
+  const bottom = Math.max(own.bottom, children.bottom);
+  return { left, top, right, bottom, width: right - left, height: bottom - top };
+}
+
+// Scale a rendered widget copy down so it fits its preview box and center it
+// there - previews have a fixed size but widgets can be any size.
+function scalePreviewToFit(preview, rendered) {
+  if(!rendered)
+    return;
+  const fit = _=>{
+    rendered.style.transformOrigin = 'top left';
+    rendered.style.transform = '';
+    const box = preview.getBoundingClientRect();
+    const rect = previewContentRect(rendered);
+    const size = Math.max(rect.width, rect.height);
+    if(!size || !box.width)
+      return;
+    rendered.style.transform = `scale(${Math.min(1, Math.min(box.width, box.height) / size)})`;
+
+    // measure again, the rects above are the unscaled ones
+    const scaled = previewContentRect(rendered);
+    const x = box.left + box.width / 2 - (scaled.left + scaled.width / 2);
+    const y = box.top + box.height / 2 - (scaled.top + scaled.height / 2);
+    rendered.style.transform = `translate(${x}px, ${y}px) ${rendered.style.transform}`;
+  };
+  fit();
+  // the widget only has its final size after the browser laid it out
+  requestAnimationFrame(fit);
+}
+
+// which face of a basic widget the editor currently has open, kept across
+// re-renders so reselecting the widget returns to the face you were editing
+const expandedFaceByWidgetId = new Map();
+
+// id shared by all throwaway face preview copies, so the per-id bookkeeping
+// the Widget constructor does (stylesheets, inheritance) is reused instead of
+// accumulating one dead entry per redraw. It must not look like a real widget.
+const facePreviewWidgetID = 'editorFacePreview';
+
 const textSymbolClasses = [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ];
+
+// swap the text-symbol class in a widget's classes string, keeping every
+// unrelated class; null symbolClass switches back to plain text mode
+function classesWithSymbolClass(classesValue, symbolClass) {
+  const classes = String(classesValue || '').split(/\s+/)
+    .filter(className => className && !textSymbolClasses.includes(className));
+  if(symbolClass)
+    classes.push(symbolClass);
+  return classes.length ? classes.join(' ') : null;
+}
+
+// session-only memory of the last typed HTML per widget, so toggling "Use
+// custom HTML" off and back on restores it instead of always starting blank
+// (the underlying html property is still set to null on toggle-off, so a
+// first-time user exploring the checkbox doesn't lose their typing)
+const lastHtmlByWidgetId = new Map();
 
 function textSymbolClass(symbol) {
   return symbol && textSymbolClasses.includes(symbol.type) ? symbol.type : 'symbols';
@@ -303,6 +1051,190 @@ function parseFontSize(fontSize) {
   return { value: value ? +value : null, unit: unit || null };
 }
 
+// --- css declaration list (the devtools style rows of the CSS editor) ---
+
+// One row per declaration, in the order the value has them
+function cssDeclarationList(value) {
+  if(value === null || value === undefined || value === '')
+    return [];
+  if(typeof value === 'string')
+    return Object.entries(cssStringToObject(value)).map(([ name, declarationValue ])=>({ name, value: declarationValue }));
+  if(isObjectLike(value))
+    return Object.entries(value).map(([ name, declarationValue ])=>({ name, value: declarationValue === null || declarationValue === undefined ? '' : String(declarationValue) }));
+  return [];
+}
+
+// Rows that are not part of the widget's value: the ones switched off with
+// their checkbox, and the ones that have a name but no value yet - an empty
+// declaration is invalid css, so it stays a row here instead of being written
+// into the game. Both are remembered while the widget stays selected, at the
+// position they were left in. One that is set again in the meantime (by a color
+// picker, another player or an undo) is dropped rather than shown twice.
+function cssDeclarationsWithDisabled(declarations, disabled, pending) {
+  const merged = declarations.map(declaration=>({ name: declaration.name, value: declaration.value, disabled: false }));
+  const present = new Set(merged.map(declaration=>String(declaration.name).trim()));
+  const extra = (disabled || []).map(entry=>Object.assign({ disabled: true }, entry))
+    .concat((pending || []).map(entry=>Object.assign({ disabled: false }, entry)));
+  for(const entry of extra.sort((a, b)=>a.index-b.index)) {
+    if(present.has(String(entry.name).trim()))
+      continue;
+    present.add(String(entry.name).trim());
+    merged.splice(Math.max(0, Math.min(entry.index, merged.length)), 0, { name: entry.name, value: entry.value, disabled: entry.disabled });
+  }
+  return merged;
+}
+
+// Value written back for a list of rows. Strings stay strings so a css written
+// by hand does not turn into an object just from looking at it, but anything
+// the declaration parser would lose becomes the object form.
+function cssValueFromDeclarations(declarations, previousValue) {
+  const entries = declarations.filter(declaration=>String(declaration.name).trim() !== '');
+  if(!entries.length)
+    return null;
+  // cssStringToObject splits a declaration at its first ":", so a value may
+  // well contain one (a url) - only a ";" in it really breaks the string form
+  const splittable = !entries.some(declaration=>/;/.test(String(declaration.value)) || /[;:{}]/.test(String(declaration.name)));
+  // an empty string is the default of the css properties, not a css written as
+  // a string - the first declaration of a widget gets the object form the rest
+  // of the editor writes
+  if(typeof previousValue === 'string' && previousValue.trim() && splittable)
+    return entries.map(declaration=>`${String(declaration.name).trim()}: ${String(declaration.value).trim()};`).join(' ');
+  const out = {};
+  for(const declaration of entries)
+    out[String(declaration.name).trim()] = String(declaration.value).trim();
+  return out;
+}
+
+const cssNamedColors = [
+  'transparent', 'currentcolor', 'black', 'silver', 'gray', 'grey', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'magenta',
+  'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'cyan', 'orange', 'pink', 'brown', 'gold', 'beige',
+  'ivory', 'khaki', 'indigo', 'violet', 'salmon', 'tan', 'turquoise', 'wheat', 'crimson', 'coral', 'lavender'
+];
+
+// whether a declaration value is a plain color, so the row gets a swatch
+function cssValueIsColor(value) {
+  const text = String(value === null || value === undefined ? '' : value).trim().toLowerCase();
+  if(!text)
+    return false;
+  if(text.match(/^#[0-9a-f]{3,8}$/))
+    return true;
+  if(text.match(/^(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\([^()]*\)$/))
+    return true;
+  return cssNamedColors.indexOf(text) != -1;
+}
+
+// colors an <input type="color"> cannot represent, so the row shows them
+// instead of offering to edit (and silently flatten) them
+function cssColorHasAlpha(value) {
+  const text = String(value === null || value === undefined ? '' : value).trim().toLowerCase();
+  if(text.match(/^#([0-9a-f]{4}|[0-9a-f]{8})$/))
+    return true;
+  if(text.match(/^(rgba|hsla)\(/))
+    return true;
+  // the modern syntax puts the alpha behind a slash, in every color function
+  if(text.match(/^[a-z]+\([^()]*\/[^()]*\)$/))
+    return true;
+  return text == 'transparent' || text == 'currentcolor';
+}
+
+// The hex an <input type="color"> would have to show this color as, or null
+// when the browser cannot reduce it to one - toHex answers black both for a
+// black color and for everything it fails to parse (a modern color space like
+// oklch, for instance), and editing such a row would silently turn it black.
+function cssColorHexValue(value) {
+  if(typeof toHex != 'function' || typeof document == 'undefined')
+    return null;
+  const hex = toHex(value);
+  if(hex != '#000000')
+    return hex;
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  context.fillStyle = '#ffffff';
+  context.fillStyle = value;
+  const isBlack = context.fillStyle == '#000000';
+  canvas.remove();
+  return isBlack ? hex : null;
+}
+
+// Declarations the browser does not understand are marked, like devtools does.
+// Custom properties and asset URLs are not judged; ${PROPERTY ...} only counts
+// as valid in the css property, the only one the engine interpolates
+// (cssReplaceProperties in widget.js) - handleCSS and friends reach the DOM
+// as they are.
+function cssDeclarationIsValid(name, value, interpolates) {
+  const property = String(name || '').trim();
+  // !important is part of a declaration, not of the value CSS.supports() takes
+  const declarationValue = String(value === null || value === undefined ? '' : value).trim().replace(/\s*!\s*important$/i, '');
+  if(!property || !declarationValue || property.startsWith('--') || declarationValue.includes('/assets/'))
+    return true;
+  if(declarationValue.includes('${'))
+    return !!interpolates;
+  if(typeof CSS === 'undefined' || typeof CSS.supports != 'function')
+    return true;
+  return CSS.supports(property, declarationValue);
+}
+
+// property names offered in the declaration rows
+const commonCssProperties = [
+  'align-items', 'background', 'background-color', 'background-image', 'background-position', 'background-repeat', 'background-size',
+  'border', 'border-color', 'border-radius', 'border-style', 'border-width', 'box-shadow', 'box-sizing', 'color', 'cursor',
+  'display', 'filter', 'flex-direction', 'font-family', 'font-size', 'font-style', 'font-weight', 'gap', 'height',
+  'justify-content', 'letter-spacing', 'line-height', 'margin', 'opacity', 'outline', 'overflow', 'padding', 'pointer-events',
+  'position', 'text-align', 'text-decoration', 'text-shadow', 'text-transform', 'transform', 'transition', 'vertical-align',
+  'visibility', 'white-space', 'width', 'word-break', 'writing-mode', 'z-index'
+];
+
+// values offered for the properties where a handful of keywords covers most uses
+const commonCssValues = {
+  'align-items': [ 'center', 'flex-start', 'flex-end', 'stretch', 'baseline' ],
+  'background-repeat': [ 'no-repeat', 'repeat', 'repeat-x', 'repeat-y' ],
+  'background-size': [ 'contain', 'cover', '100% 100%', 'auto' ],
+  'border-style': [ 'none', 'solid', 'dashed', 'dotted', 'double' ],
+  'box-sizing': [ 'border-box', 'content-box' ],
+  'cursor': [ 'pointer', 'default', 'grab', 'not-allowed' ],
+  'display': [ 'block', 'flex', 'grid', 'inline-block', 'none' ],
+  'flex-direction': [ 'row', 'column', 'row-reverse', 'column-reverse' ],
+  'font-style': [ 'normal', 'italic' ],
+  'font-weight': [ 'normal', 'bold', '300', '600', '900' ],
+  'justify-content': [ 'center', 'flex-start', 'flex-end', 'space-between', 'space-around' ],
+  'overflow': [ 'hidden', 'visible', 'auto', 'scroll' ],
+  'pointer-events': [ 'none', 'auto' ],
+  'position': [ 'absolute', 'relative', 'static' ],
+  'text-align': [ 'left', 'center', 'right', 'justify' ],
+  'text-decoration': [ 'none', 'underline', 'line-through' ],
+  'text-transform': [ 'none', 'uppercase', 'lowercase', 'capitalize' ],
+  'visibility': [ 'visible', 'hidden' ],
+  'white-space': [ 'normal', 'nowrap', 'pre-wrap' ],
+  'writing-mode': [ 'horizontal-tb', 'vertical-rl' ]
+};
+
+// what the css-like properties of a widget style, used as the header of their
+// declaration list instead of "Base widget"
+const cssPropertyTargets = {
+  backgroundCSS: 'Spinner background',
+  faceCSS: 'Dice faces',
+  handleCSS: 'Pile handle',
+  spinnerCSS: 'Spinning part',
+  valueCSS: 'Spinner value'
+};
+
+// what the (i) button of a css-like property row explains: the property's own
+// hint where there is one, otherwise what that property styles
+function cssPropertyHint(property) {
+  if(editorPropertyHints[property])
+    return editorPropertyHints[property];
+  if(cssPropertyTargets[property])
+    return `Custom CSS declarations applied to the ${cssPropertyTargets[property].toLowerCase()}.`;
+  return editorPropertyHints.css;
+}
+
+// only the values that are actually useful for a property: the css-wide
+// keywords (inherit/initial/unset) apply everywhere but are hardly ever what
+// a game wants, so a property without its own list offers nothing
+function cssValueSuggestions(name) {
+  return commonCssValues[String(name || '').trim()] || [];
+}
+
 /* end helper functions */
 
 // Selectors offered in the CSS editor's "add class/selector" dropdown. The
@@ -360,8 +1292,11 @@ const editorPropertyHints = {
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
   html: 'HTML content shown instead of the widget text, icon and image.',
+  svgReplaces: 'Maps a value found inside an uploaded SVG image (a color like #000, a stroke width, or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be restyled per widget.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
+  grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
+  dragLimit: 'An area the widget is kept in while it is dragged, given as minX/maxX/minY/maxY in the coordinates of its parent. Each side can be an expression instead of a number, and a condition like "2x^2 + y > 4" cuts any other shape. The limited point of the widget is its top left corner unless alignX/alignY move it. It only limits dragging - a routine can still move the widget anywhere.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
   lineWidth: 'The brush width used for new canvas strokes.',
   activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
@@ -370,7 +1305,11 @@ const editorPropertyHints = {
   pipColor: 'The color used for the pips or the face symbol of the dice.',
   dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
+  dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries, on a pile the cards it takes. Leave empty for no limit.',
+  showLimit: 'Make the handle read "2/3" instead of "2", so the drop limit of the pile is readable before a drop is refused.',
   preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
+  pileSnapRange: 'How close in pixels this pile has to be dropped to another pile or card to combine with it. A card dropped onto this pile uses its own snap range instead, which comes from the pile template of its deck.',
+  handleCSS: 'Custom CSS declarations for the handle badge of the pile.',
   childrenPerOwner: 'Keep a separate set of held widgets for each player.',
   dropOffsetX: 'Horizontal starting position for widgets aligned inside the holder.',
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
@@ -384,6 +1323,7 @@ const editorPropertyHints = {
   showTotals: 'Add a total across all recorded rounds.',
   showAllRounds: 'Keep completed rounds visible rather than showing only the current round.',
   showAllSeats: 'Include seats that currently have no player.',
+  seats: 'Whose scores the table shows: every seat of the room, a chosen list of them, or teams whose seats are added up into one column each.',
   currentRound: 'The zero-based round currently being entered.',
   sortField: 'The scoreboard field used to order players.',
   sortAscending: 'Sort the chosen field from low to high instead of high to low.',
@@ -420,7 +1360,10 @@ const editorTypeSections = {
       { label: 'Text',          kind: 'color', labelIcon: 'format_color_text', cssKey: 'color' },
       { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background' },
       { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' },
-      { label: 'Icon/Symbol',   property: 'color', kind: 'color', labelIcon: 'category', hint: null }
+      // only shown where it paints something - see basicColorIsUsed
+      { label: 'Icon/Symbol',   property: 'color', kind: 'color', labelIcon: 'category',
+        hint: 'Color of the icon on this widget. It is also the widget\'s --color css variable, which the built-in piece classes and your own css paint with.',
+        available: basicColorIsUsed, availableListenTo: [ 'icon', 'classes', 'css', 'svgReplaces' ] }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
@@ -451,10 +1394,8 @@ const editorTypeSections = {
   deck: {},
   dice: {
     stateClasses: { '.shape3D': 'shape3d' },
-    colors: [
-      { label: 'Color',         property: 'color',        kind: 'color', labelIcon: 'casino' },
-      { label: 'Pips',          property: 'pipColor',     kind: 'color', labelIcon: 'casino', labelIconNoFill: true }
-    ],
+    // color/pipColor/borderColor are edited per-face (or locked to the widget)
+    // by the "Face colors" controls in the dice face editor instead
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, placeholder: 'e.g. 16%', nullIfEmpty: true }
     ],
@@ -484,6 +1425,17 @@ const editorTypeSections = {
     ]
   },
   label: {},
+  pile: {
+    behavior: [
+      { label: 'Snap range', property: 'pileSnapRange', kind: 'number', min: 0, step: 1, unit: 'px' },
+      { label: 'Stack cards on top of each other', property: 'alignChildren', kind: 'checkbox',
+        hint: 'Put every card of the pile in the same spot. Without it, cards keep the offset they were dropped with.' }
+      // inheritChildZ - on by default for a pile - is curated for every widget
+      // in the Position section
+    ],
+    // the handle is styled through handleCSS, the pile box through css
+    cssProperties: [ 'css', 'handleCSS' ]
+  },
   scoreboard: {
     // most scoreboard properties are curated in renderForScoreboard; only the
     // border radius stays in the generic appearance/style block
@@ -569,143 +1521,88 @@ const SEAT_PRESET_FIXED = {
   }
 };
 
+// Suit icons offered as one-click chips in the custom deck dialog. Any other icon can be chosen per suit with
+// the icon picker, so this is just a shortcut for the ones decks use most often.
+const DECK_GENERATOR_SUIT_ICONS = [
+  'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades',
+  'delapouite/round-star', 'delapouite/flower-emblem', 'delapouite/plain-circle', 'lorc/biohazard', 'lorc/fluffy-trefoil'
+];
+
+// The four suits a custom deck starts with, and the letter of the court card pictures (/i/cards-default) that
+// belong to them. Suits with any other icon fall back to these pictures in the order they are listed here.
+const DECK_GENERATOR_COURT_SUITS = {
+  'skoll/diamonds': 'D',
+  'skoll/hearts':   'H',
+  'skoll/clubs':    'C',
+  'skoll/spades':   'S'
+};
+
+// A plain lookup would also find inherited members ("constructor" as an icon value), so only own entries count.
+function courtSuitLetter(icon, suitIndex) {
+  if(Object.prototype.hasOwnProperty.call(DECK_GENERATOR_COURT_SUITS, icon))
+    return DECK_GENERATOR_COURT_SUITS[icon];
+  return 'DHCS'[suitIndex % 4];
+}
+
+// Colors offered to a suit whose icon+color combination is already taken, so adding the same icon twice (red
+// hearts and purple hearts) results in two visibly different suits without having to pick a color first.
+const DECK_GENERATOR_SUIT_COLORS = [ '#e50932', '#000000', '#0062ff', '#00a651', '#8b00ff', '#ff8c00', '#00a8a8', '#a8006c' ];
+
+// Shows an icon chip in a suit color: the previews the icon picker renders are generic, but the color is what
+// tells two suits with the same icon apart. Game icons are single-color silhouettes, so their image is turned
+// into a mask over the color; font icons and emoji just take it as their text color.
+function tintIconChip(chip, icon, color) {
+  if(!chip)
+    return;
+  chip.style.color = color;
+  const image = $('img', chip);
+  if(image && iconValueType(icon) == 'game-icons') {
+    div(chip, 'deckGeneratorSuitTint').style.setProperty('--mask', `url("${image.src}")`);
+    image.remove();
+  }
+}
+
+// Name a suit gets as long as the user does not type one: the readable part of its icon value ("skoll/hearts"
+// becomes "hearts"). Uploaded images and links have no readable name, so those suits get a generic one.
+function defaultSuitName(icon) {
+  if(typeof icon != 'string' || icon.match(/^\/assets\/|^https?:\/\//))
+    return '';
+  return icon.replace(/^.*\//, '').replace(/\.svg$/, '').replace(/^[[(]|[\])]$/g, '');
+}
+
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
-    this.widgetPicker = null;
     this.renderedSelectionIDs = null;
+    // the widgets whose Automations section is on screen, so the full size
+    // switch knows whether there is anything to give the whole panel to
+    this.automationsWidgets = [];
+    // whether the selected widgets already had automations when they were
+    // selected: only then does the remembered preference give the section the
+    // whole panel (see applyAutomationsFullSize)
+    this.automationsWereAvailable = undefined;
+    this.renderedBoardSize = null;
     this.collapsibleStates = {};
+    // CSS editor: sections switched to text editing, declarations switched off
+    // with their checkbox and ones that have a name but no value yet - kept for
+    // the editing session only, so nothing unusable is left behind in the game
+    this.cssEditorState = new CssEditorState();
+    // per pile: the corner its handle had before it was pinned to the top left
+    this.lastPileHandlePosition = new Map();
+    // per pile: the handle text it had before it went back to the card count
+    this.lastPileHandleText = new Map();
+    // Editing a pile writes to the pile template of its cards' deck as well -
+    // a pile itself is gone as soon as it holds a single card, so an edit that
+    // only reaches it does not survive. Off means "this pile only".
+    this.pileEditsTemplate = true;
     this.sizeRatioLocks = new WeakMap();
     // per line: the widget new stops inherit from. Kept outside the panel because
     // picking a widget in the room re-selects the line and re-renders the panel.
     this.lineStopInheritIDs = {};
   }
 
-  startWidgetPicker(targetWidgetID, onPick, options = {}) {
-    const pendingWidgetIDs = Array.isArray(options.pendingWidgetIDs) ?
-      [...new Set(options.pendingWidgetIDs.filter(v => typeof v === 'string' && v.trim() !== ''))] : [];
-
-    this.widgetPicker = {
-      targetWidgetID,
-      onPick,
-      pickerKey: options.pickerKey || null,
-      filter: typeof options.filter === 'function' ? options.filter : null,
-      allowMultiple: !!options.allowMultiple,
-      toggleSelection: options.toggleSelection !== false,
-      pendingWidgetIDs,
-      onPendingChanged: typeof options.onPendingChanged === 'function' ? options.onPendingChanged : null
-    };
-
-    if(this.widgetPicker.onPendingChanged)
-      this.widgetPicker.onPendingChanged([ ...this.widgetPicker.pendingWidgetIDs ]);
-
-    $('body').classList.add('editorWidgetPicking');
-  }
-
-  stopWidgetPicker() {
-    this.widgetPicker = null;
-    $('body').classList.remove('editorWidgetPicking');
-  }
-
-  getWidgetPicker(targetWidgetID = null, pickerKey = null) {
-    if(!this.widgetPicker)
-      return null;
-
-    if(targetWidgetID !== null && this.widgetPicker.targetWidgetID != targetWidgetID)
-      return null;
-
-    if(pickerKey !== null && this.widgetPicker.pickerKey !== pickerKey)
-      return null;
-
-    return this.widgetPicker;
-  }
-
-  isWidgetPickerActive(targetWidgetID = null, pickerKey = null) {
-    return !!this.getWidgetPicker(targetWidgetID, pickerKey);
-  }
-
-  confirmWidgetPicker() {
-    const picker = this.getWidgetPicker();
-    if(!picker || !picker.allowMultiple)
-      return false;
-
-    const targetWidget = widgets.get(picker.targetWidgetID);
-    if(!targetWidget) {
-      this.stopWidgetPicker();
-      return false;
-    }
-
-    const pickedWidgets = picker.pendingWidgetIDs
-      .map(widgetID => widgets.get(widgetID))
-      .filter(pickedWidget => pickedWidget && pickedWidget.id != targetWidget.id);
-
-    this.stopWidgetPicker();
-    picker.onPick(targetWidget, pickedWidgets);
-    setSelection([ targetWidget ]);
-    return true;
-  }
-
-  handleWidgetPickerSelection(newSelection) {
-    const picker = this.getWidgetPicker();
-    if(!picker)
-      return false;
-
-    const targetWidget = widgets.get(picker.targetWidgetID);
-
-    if(!targetWidget) {
-      this.stopWidgetPicker();
-      return false;
-    }
-
-    const keepTargetSelection = () => {
-      if(newSelection.length != 1 || newSelection[0].id != targetWidget.id)
-        setSelection([ targetWidget ]);
-    };
-
-    const pickedWidgets = newSelection.filter(pickedWidget => {
-      if(!pickedWidget || pickedWidget.id == targetWidget.id)
-        return false;
-      return !picker.filter || picker.filter(pickedWidget);
-    });
-
-    if(picker.allowMultiple) {
-      if(pickedWidgets.length) {
-        if(pickedWidgets.length == 1) {
-          const pickedWidgetID = pickedWidgets[0].id;
-          const existingIndex = picker.pendingWidgetIDs.indexOf(pickedWidgetID);
-          if(existingIndex == -1)
-            picker.pendingWidgetIDs.push(pickedWidgetID);
-          else if(picker.toggleSelection)
-            picker.pendingWidgetIDs.splice(existingIndex, 1);
-        } else {
-          for(const pickedWidget of pickedWidgets)
-            if(picker.pendingWidgetIDs.indexOf(pickedWidget.id) == -1)
-              picker.pendingWidgetIDs.push(pickedWidget.id);
-        }
-
-        if(picker.onPendingChanged)
-          picker.onPendingChanged([ ...picker.pendingWidgetIDs ]);
-      }
-
-      keepTargetSelection();
-      return true;
-    }
-
-    const pickedWidget = pickedWidgets.length == 1 ? pickedWidgets[0] : null;
-
-    if(pickedWidget && pickedWidget.id != targetWidget.id) {
-      this.stopWidgetPicker();
-      picker.onPick(targetWidget, pickedWidget);
-      setSelection([ targetWidget ]);
-      return true;
-    }
-
-    keepTargetSelection();
-    return true;
-  }
-
   addInput(labelText, value, onValueChanged, target, type='auto') {
-    const id = 'genericInput' + rand().toString(36).substring(3, 12);
+    const id = editorDomID('genericInput');
     let currentValue = null;
     let inputDOM = null;
 
@@ -827,16 +1724,131 @@ class PropertiesModule extends SidebarModule {
   addPropertyListener(widget, property, updater) {
     updater(widget);
 
-    if(!this.inputUpdaters[widget.id])
-      this.inputUpdaters[widget.id] = {};
-    if(!this.inputUpdaters[widget.id][property])
-      this.inputUpdaters[widget.id][property] = [];
+    // for a multi-selection, re-run the updater when any of the selected
+    // widgets changes this property
+    const ids = widget.isMulti ? widget.widgets.map(w=>w.id) : [ widget.id ];
+    for(const id of ids) {
+      if(!this.inputUpdaters[id])
+        this.inputUpdaters[id] = {};
+      if(!this.inputUpdaters[id][property])
+        this.inputUpdaters[id][property] = [];
+      const listener = v=>updater(widget);
+      this.inputUpdaters[id][property].push(listener);
+      if(this.collectedListeners)
+        this.collectedListeners.push([ this.inputUpdaters[id][property], listener ]);
+    }
+  }
 
-    this.inputUpdaters[widget.id][property].push(v=>updater(widget));
+  // Render a block that replaces its own DOM whenever something changes, e.g.
+  // the face list. Property listeners are only dropped when the selection
+  // changes, so without this the listeners of every discarded generation keep
+  // firing on every delta for as long as the widget stays selected.
+  renderRebuildable(renderBody) {
+    let listeners = [];
+    const rebuild = _=>{
+      for(const [ list, listener ] of listeners) {
+        const index = list.indexOf(listener);
+        if(index != -1)
+          list.splice(index, 1);
+      }
+      listeners = [];
+
+      const outerListeners = this.collectedListeners;
+      this.collectedListeners = listeners;
+      try {
+        renderBody(rebuild);
+      } finally {
+        this.collectedListeners = outerListeners;
+      }
+    };
+    rebuild();
   }
 
   inputValueUpdated(widget, property, value) {
-    widget.set(property, typeof value === 'undefined' ? null : value);
+    const newValue = typeof value === 'undefined' ? null : value;
+    if(widget.isMulti) {
+      const targets = widget.widgets.filter(widgetStillExists);
+      if(!targets.length)
+        return;
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${targets.length} widgets in editor`);
+      for(const w of targets)
+        w.set(property, newValue);
+      batchEnd();
+      return;
+    }
+    if(widgetStillExists(widget))
+      this.setAndMirrorToPileTemplate(widget, property, newValue);
+  }
+
+  // like inputValueUpdated, but computes the new value from each widget's own
+  // current value - needed when the edit is a transformation (e.g. adding a
+  // class) rather than one common value, so a multi-selection never sees the
+  // MULTI_DIFFERENT sentinel and each widget keeps its unrelated parts
+  inputValueTransformed(widget, property, transform) {
+    // widgetOwnValue, not get(): a basic widget resolves get() through its
+    // shown face, so transforming that value into the widget's own property
+    // would copy the face's value over the widget's
+    if(widget.isMulti) {
+      const targets = widget.widgets.filter(widgetStillExists);
+      if(!targets.length)
+        return;
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${targets.length} widgets in editor`);
+      for(const w of targets)
+        w.set(property, transform(widgetOwnValue(w, property)));
+      batchEnd();
+      return;
+    }
+    if(widgetStillExists(widget))
+      this.setAndMirrorToPileTemplate(widget, property, transform(widgetOwnValue(widget, property)));
+  }
+
+  // Write one property of one widget, and - for a pile - the same property
+  // into the pile template it came from. A pile is temporary: it disappears as
+  // soon as it holds a single card, and the next one is built from the
+  // "onPileCreation" of the cards' deck (see updatePiles in widget.js). So an
+  // edit that only reaches the pile in front of you is gone with it, which is
+  // why the editor writes both unless the "this pile only" switch says not to.
+  setAndMirrorToPileTemplate(widget, property, value) {
+    const decks = this.pileTemplateDecksFor(widget, property);
+    if(!decks.length) {
+      widget.set(property, value);
+      return;
+    }
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} set ${property} on pile ${widget.id} and its pile template in editor`);
+    widget.set(property, value);
+    for(const deck of decks) {
+      const cardDefaults = deck.get('cardDefaults') || {};
+      deck.set('cardDefaults', Object.assign({}, cardDefaults, {
+        onPileCreation: pileTemplateWith(widget, isObjectLike(cardDefaults.onPileCreation) ? cardDefaults.onPileCreation : {}, property, value)
+      }));
+    }
+    batchEnd();
+  }
+
+  // The decks an edit of this property has to be mirrored into: none unless a
+  // pile is being edited with the template switch on, and none for the
+  // properties that only describe this one pile.
+  pileTemplateDecksFor(widget, property) {
+    if(!this.pileEditsTemplate || widget.isMulti || widget.get('type') != 'pile')
+      return [];
+    if(pileTemplateExcludedProperties.indexOf(property) != -1)
+      return [];
+    return this.pileDecks(widget);
+  }
+
+  // The decks whose cards are in this pile. A pile can hold cards of more than
+  // one deck, and updatePiles only lets cards form a pile when their templates
+  // are identical - so every deck involved gets the same template, or the
+  // cards of these decks would stop piling together at all.
+  pileDecks(widget) {
+    if(!widgetStillExists(widget) || widget.get('type') != 'pile')
+      return [];
+    return [ ...new Set(widget.children().filter(child => child.get('type') == 'card').map(card => card.get('deck'))) ]
+      .map(deckID => widgets.get(deckID))
+      .filter(deck => deck && deck.get('type') == 'deck');
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -844,15 +1856,69 @@ class PropertiesModule extends SidebarModule {
       if(delta.s[widgetID] && this.inputUpdaters[widgetID])
         for(const property in delta.s[widgetID])
           if(this.inputUpdaters[widgetID][property])
-            for(const updater of this.inputUpdaters[widgetID][property])
+            // a copy: a renderRebuildable listener drops its own generation
+            // from this very list while it runs, which would make the loop
+            // skip the listener right after it
+            for(const updater of this.inputUpdaters[widgetID][property].slice())
               updater(delta.s[widgetID][property]);
     for(const updater of this.globalInputUpdaters)
       updater(delta.s);
   }
 
-  onSelectionChangedWhileActive(newSelection) {
-    if(this.handleWidgetPickerSelection(newSelection))
+  // Everything this module put on top of the room rather than into its own panel.
+  // It goes both when the module is closed and when the editor is, so it is not
+  // part of onClose(): the panel survives the editor closing, its bar with it.
+  clearWidgetOverlays() {
+    this.clearGridPreview();
+    this.clearDragLimitPreview();
+    this.clearFaceRowRefresh();
+    // This module is what the popups hang off, and closing it throws away the
+    // controls they are anchored to just like moving on to another widget does -
+    // so they go the same way, and the picks they run in the room with them.
+    stopWidgetPicker();
+    closeEditorPopups();
+  }
+
+  onClose() {
+    this.clearWidgetOverlays();
+    // hand back the room tree the bar borrowed before the panel goes away, the
+    // same way the JSON module does - a bar that is only dropped by the next
+    // selectionBarPrune() still holds it in its own (detached) container
+    removeSelectionBar(this.selectionBar);
+    delete this.selectionBar;
+  }
+
+  onEditorClose() {
+    super.onEditorClose();
+    // Leaving edit mode is the most complete way of moving on, but it does not
+    // go through onClose(): the editor is only display:none'd, so a popup left
+    // open lives on inside it and an armed picker keeps the crosshair over the
+    // whole page while playing.
+    this.clearWidgetOverlays();
+  }
+
+  onMetaReceivedWhileActive(meta) {
+    // the X/Y/W/H sliders are bounded by the board size, so they go stale when
+    // another tab (or another player) changes it while the panel is open
+    const boardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
+    if(boardSize == this.renderedBoardSize)
       return;
+    this.renderedBoardSize = boardSize;
+    this.onSelectionChangedWhileActive([ ...selectedWidgets ]);
+  }
+
+  onSelectionChangedWhileActive(newSelection) {
+    if(handleWidgetPickerSelection(newSelection))
+      return;
+
+    // the board preview belongs to the widget that was being edited
+    this.clearGridPreview();
+    this.clearDragLimitPreview();
+    this.clearFaceRowRefresh();
+    // switched off and half typed css declarations only live as long as their
+    // widget is selected - they are not in the game state, so nothing may
+    // outlive it
+    this.cssEditorState.clear();
 
     // Re-rendering the very same widgets must not scroll the panel back to the
     // top: picking a widget in the room re-selects the target, which lands here
@@ -860,14 +1926,40 @@ class PropertiesModule extends SidebarModule {
     const selectionIDs = newSelection.map(widget=>widget.id).join(' ');
     const keepScrollTop = selectionIDs === this.renderedSelectionIDs ? this.moduleDOM.scrollTop : null;
     this.renderedSelectionIDs = selectionIDs;
+    this.renderedBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
 
-    this.moduleDOM.innerHTML = '';
+
+    // Everything below the bar is rebuilt for the new selection - the bar itself
+    // is not: it is the control the selection is changed *with*, so throwing it
+    // away on every change would drop the scroll position of an open tree (and
+    // rebuild every row of it) each time a widget is picked from it. A bar that
+    // lost its panel behind our back is replaced, keeping the tree for the new one.
+    if(this.selectionBar && !this.selectionBar.dom.isConnected) {
+      removeSelectionBar(this.selectionBar, true);
+      delete this.selectionBar;
+    }
+    if(!this.selectionBar)
+      this.selectionBar = renderSelectionBar(this.moduleDOM, { key: this.title });
+    for(const node of [ ...this.moduleDOM.children ])
+      if(node !== this.selectionBar.dom)
+        node.remove();
+    // put back by renderEvents; a selection without an Automations section (a
+    // pile, several widgets at once, or nothing at all) must not hide what it
+    // does show
+    this.moduleDOM.classList.remove('automationsFullSize');
+    this.automationsWidgets = [];
+    this.automationsWereAvailable = undefined;
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
 
-    for(const widget of newSelection) {
+    for(const widget of newSelection)
       this.inputUpdaters[widget.id] = {};
+    this.otherPropertiesHeader = null;
 
+    if(newSelection.length > 1) {
+      this.renderForMulti(newSelection);
+    } else if(newSelection.length == 1) {
+      const widget = newSelection[0];
       switch(widget.get('type')) {
         case 'button':     this.renderForButton(widget);     break;
         case 'canvas':     this.renderForCanvas(widget);     break;
@@ -887,30 +1979,146 @@ class PropertiesModule extends SidebarModule {
           this.renderForBasic(widget);
           break;
       }
-    }
 
-    if(!newSelection.length)
+      // every widget can have routines, so the section is always there - piles
+      // are the exception because they are temporary and not editable, and a
+      // deck hands the module over to the deck editor, leaving no DOM to render
+      // into (its routines are edited there)
+      if(widget.get('type') != 'pile' && this.moduleDOM)
+        this.renderEvents(widget);
+    } else {
       this.addDeck();
+    }
 
     if(keepScrollTop !== null)
       this.moduleDOM.scrollTop = keepScrollTop;
   }
 
+  // Merged editor for a multi-widget selection.
+  renderForMulti(selection) {
+    const facade = new MultiWidget(selection);
+    const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
+
+    const header = div(this.moduleDOM, 'widgetHeader');
+    div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
+    // say which widgets, so a stray rubber-band/shift-click pickup is easy to
+    // spot before editing - only the type header said "how many" before
+    const ids = selection.map(w=>w.id);
+    const shownIds = ids.slice(0, 8);
+    div(header, 'widgetHeaderMultiIds', html(shownIds.join(', ') + (ids.length > shownIds.length ? ` +${ids.length - shownIds.length} more` : '')));
+    // the "— multiple —" placeholder and the striped chip are the only two
+    // things in the editor that mean "these widgets disagree" - say so once
+    // here instead of leaving it to be inferred from the striping
+    div(header, 'multiSelectionHint', '<i>— multiple —</i> and striped <i>mixed</i> chips mark what these widgets disagree on. Anything you set applies to all of them.');
+
+    // acts on the selection itself, not on a property - kept with the header
+    // that already explains the selection instead of inside "Basic", which
+    // otherwise contains only property rows for every other kind of selection
+    this.renderArrangeButtons();
+
+    this.renderBasicSection(facade);
+
+    if(types.length == 1) {
+      const type = types[0];
+      if(type == 'basic')
+        this.renderBasicContentSection(facade, false);
+      else
+        this.renderContentSection(facade);
+      this.renderMultiAppearanceSection(facade, type);
+      this.renderBehaviorSection(facade);
+    } else {
+      div(this.moduleDOM, '', `
+        <p>The selected widgets have different types. Only the common properties above can be edited together; select a single widget to edit its type-specific properties.</p>
+      `);
+    }
+  }
+
+  // Appearance for a multi-selection: same colors/hover/style inputs, but no
+  // SVG replacements or raw CSS editor (those act on a single source widget
+  // and merging raw css strings across differing widgets risks losing data).
+  renderMultiAppearanceSection(facade, type) {
+    const sections = editorTypeSections[type] || {};
+    const colors = sections.colors || [];
+    const hover = sections.hover || [];
+    const misc = sections.appearance || [];
+    if(!colors.length && !hover.length && !misc.length)
+      return;
+    this.addSubHeader('Appearance');
+    if(colors.length) {
+      this.addAppearanceSubTitle('Colors');
+      this.renderColorRow(facade, colors);
+    }
+    if(hover.length) {
+      this.addAppearanceSubTitle('Hover');
+      this.renderColorRow(facade, hover);
+    }
+    if((colors.length || hover.length) && misc.length)
+      this.addAppearanceSubTitle('Style');
+    if(misc.length) {
+      this.renderInputs(facade, misc);
+      if(misc.some(def => def.property == 'borderRadius')) {
+        this.renderBorderWidthInput(facade);
+        this.renderBorderStyleInput(facade);
+      }
+    }
+  }
+
+  // Align / distribute / layer-order buttons, forwarding to the existing
+  // toolbar button instances so the arranging logic is not duplicated.
+  renderArrangeButtons() {
+    // aligning, distributing and re-stacking are three different operations -
+    // kept in separate groups (each with its own caption, styled like the
+    // "Colors"/"Style" sub-titles) so a newcomer sees three named tools
+    // instead of nine near-identical blue glyphs
+    const groups = [
+      [ 'Align', [ 'align_horizontal_left', 'align_horizontal_center', 'align_horizontal_right',
+        'align_vertical_top', 'align_vertical_center', 'align_vertical_bottom' ] ],
+      [ 'Distribute', [ 'horizontal_distribute', 'vertical_distribute' ] ],
+      [ 'Order', [ 'auto_awesome_motion' ] ]
+    ];
+    const available = (typeof toolbarButtons !== 'undefined' && Array.isArray(toolbarButtons)) ? toolbarButtons : [];
+    const bar = div(this.moduleDOM, 'arrangeButtons');
+    for(const [ name, icons ] of groups) {
+      const groupDOM = div(null, 'arrangeGroup');
+      for(const icon of icons) {
+        const toolbarButton = available.find(b=>b.icon == icon);
+        if(!toolbarButton)
+          continue;
+        const button = document.createElement('button');
+        button.setAttribute('icon', icon);
+        button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
+        // explain a disabled distribute button (needs 3+ widgets) rather than
+        // just leaving it gray with no hint why
+        button.title = (toolbarButton.tooltip || '') + (button.disabled && toolbarButton.minimumSelection > 1 ?
+          ` (needs ${toolbarButton.minimumSelection}+ widgets)` : '');
+        button.onclick = _=>toolbarButton.onClick();
+        groupDOM.appendChild(button);
+      }
+      if(groupDOM.children.length) {
+        const groupWrap = div(bar, 'arrangeGroupWrap');
+        div(groupWrap, 'arrangeGroupLabel', name);
+        groupWrap.appendChild(groupDOM);
+      }
+    }
+  }
+
   // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
-  // (deckTraditional/deckGenerator/deckImages/deckImportTTS) now live in the deck editor's "Add New Deck"
-  // submenu, so this just points the user at the two starting actions.
+  // (deckTraditional/deckGenerator/deckImages/deckImagePairs/deckTextCards/deckImportTTS) now live in the
+  // deck editor's "Add New Deck" submenu, so this just points the user at the two starting actions.
   addDeck() {
     this.addHeader('Edit widgets');
 
     const intro = document.createElement('p');
     intro.className = 'noSelectionIntro';
-    intro.innerText = 'You do not have a widget selected. To get started, click on one to the left or:';
+    // "click on one to the left" would be wrong in the layouts that put the panel above the room
+    intro.innerText = 'You do not have a widget selected. To get started, click a widget in the room or:';
     this.moduleDOM.append(intro);
 
     const addWidgetButton = document.createElement('button');
     addWidgetButton.innerText = 'Add a new widget';
     addWidgetButton.setAttribute('icon', 'add');
     addWidgetButton.className = 'noSelectionButton';
+    addWidgetButton.title = 'Pick a card, dice, board or other piece to place in the room';
     addWidgetButton.onclick = _=>{ setSelection([]); showOverlay('addOverlay'); };
     this.moduleDOM.append(addWidgetButton);
 
@@ -918,8 +2126,16 @@ class PropertiesModule extends SidebarModule {
     deckEditorButton.innerText = 'Open deck editor';
     deckEditorButton.setAttribute('icon', 'style');
     deckEditorButton.className = 'noSelectionButton';
+    deckEditorButton.title = 'Design the cards in a deck';
     deckEditorButton.onclick = _=>deckEditor.openBestDeck();
     this.moduleDOM.append(deckEditorButton);
+
+    // this panel can be the first thing a new user sees, and the icon column it sits next to is
+    // exactly what they wouldn't have found on their own
+    const sidebarHint = document.createElement('p');
+    sidebarHint.className = 'noSelectionIntro';
+    sidebarHint.innerText = 'The other editor tools are in the sidebar on the right.';
+    this.moduleDOM.append(sidebarHint);
   }
 
   async deckTraditional(target) {
@@ -963,188 +2179,338 @@ class PropertiesModule extends SidebarModule {
     target.append(createButton);
   }
 
+  // Custom deck: the user defines the suits (any icon, any color, any name, any set of ranks) and picks a card
+  // design. A design declares which card type properties it actually reads, so a deck only carries those: only
+  // the playing-card design needs the pip layout (suit-P.../suit-S...) and the court card pictures.
   deckGenerator(target) {
-    const deckTemplates = [ this.deckTemplate_standard, this.deckTemplate_colors, this.deckTemplate_simple, this.deckTemplate_skinny, this.deckTemplate_transparent ];
+    const designs = [
+      { label: 'Playing cards', description: 'The classic look: pips in the middle, a picture for J, Q and K.',      build: deck=>this.deckTemplate_standard(deck), pips: true, rankPictures: true },
+      { label: 'Rainbow',       description: 'Card in the suit color, suit icon in a white circle, rank in two corners.', build: deck=>this.deckTemplate_colors(deck)      },
+      { label: 'Bold color',    description: 'Card in the suit color with a big white rank and a faint suit icon.',  build: deck=>this.deckTemplate_simple(deck)      },
+      { label: 'Skinny',        description: 'Narrow 80 wide card: rank on top, suit icon below.',                   build: deck=>this.deckTemplate_skinny(deck)      },
+      { label: 'Icon shape',    description: 'No card frame - the suit icon itself is the card, rank on top.',       build: deck=>this.deckTemplate_transparent(deck) },
+      { label: 'Minimal',       description: 'Plain white card with the rank on top and the suit icon below.',       build: deck=>this.deckTemplate_minimal(deck)     },
+      { label: 'Corner index',  description: 'Rank and suit in two corners, works with any rank names.',             build: deck=>this.deckTemplate_corners(deck)     },
+      { label: 'Round token',   description: 'Round chip in the suit color with the rank on it, for counters.',      build: deck=>this.deckTemplate_token(deck)       },
+      { label: 'Square tile',   description: 'Square tile framed in the suit color, rank top left, suit bottom right.', build: deck=>this.deckTemplate_tile(deck)        }
+    ];
 
-    const defaultRanks = [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades' ];
+    // One entry per suit: { icon, color, name, ranks }. A list rather than a map from icon to properties, so the
+    // same icon can be used for more than one suit (e.g. red hearts and purple hearts).
+    const suits = [];
+    // Dummy widget for the reused icon and color property inputs: both read and write the suit through their
+    // getValue/setValue options, so the widget itself is never touched.
+    const suitInputWidget = new BasicWidget();
 
-    const suitDivs = {};
-    const colors = {};
-    const ranks = {};
+    this.addSubHeader('Suits', target);
+    div(target, 'deckGeneratorHint', 'Every suit has its own icon, name, color and ranks. Ranks are separated by commas, and "2-10" is short for the whole range. The deck gets one card per suit and rank, named after both ("7 of hearts").');
 
-    this.addSubHeader('Suit symbols', target);
+    const suitList = div(target, 'deckGeneratorSuits');
+    // Each row's icon and color picker expands right below that row (see rowPickers), so it is always obvious
+    // which suit is being edited; sharing one group keeps only one of them open at a time.
+    const pickerGroup = { current: null };
 
-    const suitCustomizeDiv = document.createElement('div');
-    this.addSubHeader('Suit properties', suitCustomizeDiv);
-
-    const linkedRanksToggleDiv = document.createElement('div');
     const linkedRanksLabel = document.createElement('label');
-    linkedRanksLabel.textContent = 'Same ranks for each suit:';
+    linkedRanksLabel.className = 'deckGeneratorLinkedRanks';
     const linkedRanksToggle = document.createElement('input');
     linkedRanksToggle.type = 'checkbox';
     linkedRanksToggle.checked = true;
-    linkedRanksLabel.htmlFor = linkedRanksToggle.id = 'sameRanksToggle';
-
-    linkedRanksToggleDiv.appendChild(linkedRanksLabel);
-    linkedRanksToggleDiv.appendChild(linkedRanksToggle);
-    suitCustomizeDiv.append(linkedRanksToggleDiv);
-
-    const updateLinkedRanks = (symbol, newRanks) => {
-      for(const otherSymbol in ranks)
-        if(linkedRanksToggle.checked && otherSymbol !== symbol)
-          $('.ranks input', suitDivs[otherSymbol]).value = ranks[otherSymbol] = newRanks;
+    // Ticking the box again unifies what is there now, so it never claims ranks are shared while they differ.
+    linkedRanksToggle.onchange = _=>{
+      if(!linkedRanksToggle.checked || !suits.length)
+        return;
+      for(const suit of suits)
+        suit.ranks = suits[0].ranks;
+      renderSuits();
+      updateDesignPreview();
     };
-    const designSelectionDiv = document.createElement('div');
+    linkedRanksLabel.append(linkedRanksToggle, 'Same ranks for each suit');
+    target.append(linkedRanksLabel);
+
+    const addBar = div(target, 'deckGeneratorSuitAdd');
+    div(addBar, 'deckGeneratorSuitAddLabel', 'Add a suit:');
+
+    // A new suit gets the traditional color of its icon; if that icon already exists in that color, the first
+    // unused color of the palette is used instead so the two suits can be told apart right away.
+    const colorForNewSuit = icon=>{
+      const traditional = [ 'skoll/diamonds', 'skoll/hearts' ].includes(icon) ? '#e50932' : '#000000';
+      if(!suits.some(suit=>suit.icon == icon && suit.color == traditional))
+        return traditional;
+      return DECK_GENERATOR_SUIT_COLORS.find(color=>!suits.some(suit=>suit.icon == icon && suit.color == color)) || traditional;
+    };
+
+    const addSuit = (icon, render=true)=>{
+      suits.push({
+        icon,
+        color: colorForNewSuit(icon),
+        name: defaultSuitName(icon),
+        ranks: suits.length && linkedRanksToggle.checked ? suits[0].ranks : '2-10,J,Q,K,A'
+      });
+      if(render) {
+        renderSuits();
+        updateDesignPreview();
+      }
+    };
+
+    // Each suit's ranks input, so the "same ranks" option can write into the others without assuming that the
+    // rows are in the same order as the suits.
+    const rankInputs = new Map();
+
+    // Suits left at the same name are numbered apart in the card type names ("7 of hearts 2"). Show that on the
+    // rows it affects, so the numbering is not a surprise once the cards are on the table.
+    const nameInputs = new Map();
+    const showResolvedSuitNames = _=>{
+      const names = uniqueSuitNames();
+      for(const [ index, suit ] of suits.entries()) {
+        const input = nameInputs.get(suit);
+        const typed = suit.name.trim();
+        input.placeholder = names[index];
+        input.classList.toggle('deckGeneratorSuitRenamed', !!typed && typed != names[index]);
+        input.title = typed && typed != names[index]
+          ? `Another suit is already called "${typed}", so this one's cards are named "7 of ${names[index]}".`
+          : `Name of this suit: its cards are named "7 of ${names[index]}".`;
+      }
+    };
+
+    const renderSuits = _=>{
+      suitList.innerHTML = '';
+      pickerGroup.current = null;
+      rankInputs.clear();
+      nameInputs.clear();
+
+      if(suits.length)
+        div(suitList, 'deckGeneratorSuitHeader', '<span>Icon</span><span>Name</span><span>Color</span><span>Ranks</span><span></span>');
+
+      for(const suit of suits) {
+        const row = div(suitList, 'deckGeneratorSuit');
+        // The pickers of this row render here rather than inside the row, so opening one does not push the
+        // row's own inputs around - but still right below the suit they belong to.
+        const rowPickers = div(suitList, 'deckGeneratorSuitPickers');
+
+        const showIconInSuitColor = _=>tintIconChip($('.propertyValueChip', iconInput.dom), suit.icon, suit.color);
+
+        const iconInput = new IconInput(this, suitInputWidget, null, {
+          listenTo: [], clearable: false, pickerGroup, pickerTarget: rowPickers,
+          getValue: _=>suit.icon,
+          setValue: value=>{
+            if(!propertyInputValueSet(value))
+              return;
+            // A name the user did not type stays in sync with the icon.
+            if(suit.name == defaultSuitName(suit.icon))
+              $('.deckGeneratorSuitName', row).value = suit.name = defaultSuitName(value);
+            suit.icon = value;
+            iconInput.update();
+            showIconInSuitColor();
+            updateDesignPreview();
+          }
+        });
+        iconInput.render(row);
+        iconInput.update();
+        showIconInSuitColor();
+
+        const nameInput = document.createElement('input');
+        nameInput.className = 'deckGeneratorSuitName';
+        nameInput.value = suit.name;
+        nameInputs.set(suit, nameInput);
+        nameInput.oninput = _=>{
+          suit.name = nameInput.value;
+          showResolvedSuitNames();
+        };
+        row.append(nameInput);
+
+        const colorInput = new ColorInput(this, suitInputWidget, null, {
+          listenTo: [], clearable: false, pickerGroup, pickerTarget: rowPickers,
+          getValue: _=>suit.color,
+          setValue: value=>{
+            if(!propertyInputValueSet(value))
+              return;
+            suit.color = value;
+            colorInput.update();
+            showIconInSuitColor();
+            updateDesignPreviewSoon(); // the native color picker fires this per pointer move
+          }
+        });
+        colorInput.render(row);
+        colorInput.update();
+
+        const ranksInput = document.createElement('input');
+        ranksInput.className = 'deckGeneratorSuitRanks';
+        ranksInput.placeholder = '2-10,J,Q,K,A';
+        ranksInput.title = 'Ranks of this suit, separated by commas. "2-10" is short for the range 2,3,4,5,6,7,8,9,10.';
+        ranksInput.value = suit.ranks;
+        rankInputs.set(suit, ranksInput);
+        ranksInput.oninput = _=>{
+          for(const other of linkedRanksToggle.checked ? suits : [ suit ]) {
+            other.ranks = ranksInput.value;
+            const input = rankInputs.get(other);
+            if(input && input != ranksInput)
+              input.value = ranksInput.value;
+          }
+          updateDesignPreviewSoon();
+        };
+        row.append(ranksInput);
+
+        const removeButton = document.createElement('button');
+        removeButton.className = 'deckGeneratorSuitRemove';
+        removeButton.setAttribute('icon', 'delete');
+        removeButton.title = 'Remove this suit';
+        removeButton.onclick = _=>{
+          suits.splice(suits.indexOf(suit), 1);
+          renderSuits();
+          updateDesignPreview();
+        };
+        row.append(removeButton);
+      }
+      showResolvedSuitNames();
+      renderAddBarChips();
+    };
+
+    // The chips are shown in the color the suit they add would get, so the shortcut does not look like it adds
+    // a black hearts suit. That color depends on which suits exist, hence a refresh per render.
+    const renderAddBarChips = _=>{
+      for(const chip of $a('.propertyValueChip', addBar))
+        chip.remove();
+      for(const icon of DECK_GENERATOR_SUIT_ICONS) {
+        const chip = renderIconChip(icon, addBar);
+        chip.title = `Add a ${defaultSuitName(icon)} suit in this color`;
+        tintIconChip(chip, icon, colorForNewSuit(icon));
+        chip.onclick = _=>addSuit(icon);
+      }
+    };
+
+    const designHint = document.createElement('div');
+    designHint.className = 'deckGeneratorHint deckGeneratorDesignHint';
+    const designSelectionDiv = div(null, 'deckGeneratorDesigns');
+    // The picked design is remembered here instead of being read back off the tiles: the gallery is emptied
+    // whenever the suits have no card to preview (a ranks field being retyped), and a selection that lives only
+    // in the DOM would be forgotten with it. The design list itself never changes, so the index stays valid.
+    let selectedDesign = -1;
+    // Nothing can be added without a design, and there is no design to add while the gallery is empty.
+    const updateCreateButton = _=>createButton.disabled = selectedDesign < 0 || !designSelectionDiv.children.length;
     const updateDesignPreview = _=>{
       const oldScrollTop = this.moduleDOM.scrollTop;
-      const oldSelectedButton = $('.selected.deckTemplateButton', target);
-      const oldSelectedButtonIndex = oldSelectedButton ? oldSelectedButton.dataset.index : -1;
-      for(const button of $a('.deckTemplateButton', target))
-        button.remove();
+      designSelectionDiv.innerHTML = '';
 
-      if(Object.keys(colors).length == 0) {
-        createButton.disabled = true;
+      // Designs that need the same card type properties share one set of card types (the design only adds faces
+      // and card defaults around them), so a preview refresh builds them once instead of nine times.
+      const cardTypesByProperties = {};
+      const cardTypesFor = design=>{
+        const key = `${design.pips ? 'pips' : ''} ${design.rankPictures ? 'pictures' : ''}`;
+        return cardTypesByProperties[key] = cardTypesByProperties[key] || getCardTypes(design);
+      };
+
+      // The card count is the same for every design; only the properties differ.
+      const cardCount = suits.length ? Object.keys(cardTypesFor(designs[0])).length : 0;
+      const ranksCapped = suits.some(suit=>parseRankRange(suit.ranks).length >= DECK_GENERATOR_MAX_RANKS);
+      designHint.textContent = deckGeneratorDesignHint(suits.length, cardCount, ranksCapped);
+      if(!cardCount) {
+        updateCreateButton();
         return;
       }
 
-      const deck = getDeckDefinition(true);
-      for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
-        const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
-        templateButton.classList.add('deckTemplateButton');
-        templateButton.dataset.index = index;
-        templateButton.classList.toggle('selected', oldSelectedButtonIndex == index);
-        templateButton.onclick = e=>{
-          for(const button of $a('.deckTemplateButton', target))
-            if(button != templateButton)
-              button.classList.remove('selected');
-          templateButton.classList.toggle('selected');
-          createButton.disabled = !$a('.selected.deckTemplateButton', target).length;
+      for(const [ index, design ] of designs.entries()) {
+        const cardTypes = cardTypesFor(design);
+        const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes });
+        const tile = div(designSelectionDiv, 'deckDesignTile');
+        // One card per tile - the same one in every design, so they can actually be compared - instead of a
+        // fan of five, which at this size is a pile of overlapping slivers.
+        const designButton = this.renderWidgetButton(new Deck(deck.id), deck, tile, { sampleCardTypes: [ previewCardType(cardTypes) ] });
+        designButton.classList.add('deckDesignButton');
+        designButton.title = `${design.label} - ${design.description}`;
+        div(tile, 'deckDesignLabel', html(design.label));
+        designButton.classList.toggle('selected', selectedDesign == index);
+        // Single choice like the mode radios above, so clicking the selected design does not silently
+        // deselect it and re-disable the Add button.
+        designButton.onclick = e=>{
+          selectedDesign = index;
+          for(const button of $a('.deckDesignButton', designSelectionDiv))
+            button.classList.toggle('selected', button == designButton);
+          updateCreateButton();
         };
-        deck.id = generateUniqueWidgetID();
       }
+      updateCreateButton();
       this.moduleDOM.scrollTop = oldScrollTop;
     };
 
-    for(const symbol of [ 'skoll/diamonds', 'skoll/hearts', 'skoll/clubs', 'skoll/spades', 'delapouite/round-star', 'delapouite/flower-emblem', 'delapouite/plain-circle', 'lorc/biohazard', 'lorc/fluffy-trefoil' ]) {
-      const symbolButton = this.renderWidgetButton(new BasicWidget(), {
-        image: `/i/game-icons.net/${symbol}.svg`,
-        color: '#000',
-        svgReplaces: { '#000': 'color' }
-      }, target);
-      symbolButton.dataset.symbol = symbol;
-      symbolButton.classList.add('deckGeneratorSymbol');
-      symbolButton.onclick = async e=>{
-        symbolButton.classList.toggle('selected');
-        if(symbolButton.classList.contains('selected')) {
-          colors[symbol] = [ 'skoll/diamonds', 'skoll/hearts' ].includes(symbol) ? '#e50932' : '#000000';
-          ranks[symbol] = '2-10,J,Q,K,A';
+    // Rebuilding the previews renders real cards, so coalesce the events that fire while typing a rank list or
+    // dragging a color picker into one refresh.
+    let previewTimer = null;
+    const updateDesignPreviewSoon = _=>{
+      clearTimeout(previewTimer);
+      // ... and skip it entirely when the panel was replaced in the meantime (another dialog mode was picked).
+      previewTimer = setTimeout(_=>designSelectionDiv.isConnected && updateDesignPreview(), 250);
+    };
 
-          suitDivs[symbol] = document.createElement('div');
-          suitDivs[symbol].classList.add('suitProperties');
-          const suitWidget = new BasicWidget();
-          this.renderWidgetButton(suitWidget, {
-            image: `/i/game-icons.net/${symbol}.svg`,
-            color: colors[symbol],
-            svgReplaces: { '#000': 'color' }
-          }, suitDivs[symbol]);
+    // Suits left at the same name get a number appended, so every card type of the deck stays unique.
+    const uniqueSuitNames = _=>{
+      const used = new Set();
+      return suits.map((suit, index)=>{
+        const base = suit.name.trim() || defaultSuitName(suit.icon) || `suit ${index+1}`;
+        let name = base;
+        for(let i = 2; used.has(name); ++i)
+          name = `${base} ${i}`;
+        used.add(name);
+        return name;
+      });
+    };
 
-          const colorPickerDiv = document.createElement('div');
-          const colorPickerLabel = document.createElement('label');
-          colorPickerLabel.textContent = 'Color:';
-          const colorPicker = document.createElement('input');
-          colorPicker.type = 'color';
-          colorPicker.value = colors[symbol];
-          colorPicker.onchange = e=>{
-            colors[symbol] = colorPicker.value;
-            suitWidget.applyDelta({ color: colorPicker.value });
-            updateDesignPreview();
-          };
-          colorPickerDiv.appendChild(colorPickerLabel);
-          colorPickerDiv.appendChild(colorPicker);
-          suitDivs[symbol].append(colorPickerDiv);
-
-          const rankInputDiv = document.createElement('div');
-          const rankInputLabel = document.createElement('label');
-          rankInputDiv.classList.add('ranks');
-          rankInputLabel.textContent = 'Ranks:';
-          const rankInput = document.createElement('input');
-          rankInput.value = ranks[symbol];
-
-          rankInput.onkeyup = e => {
-            updateLinkedRanks(symbol, ranks[symbol] = rankInput.value);
-            updateDesignPreview();
-          };
-
-          rankInputDiv.appendChild(rankInputLabel);
-          rankInputDiv.appendChild(rankInput);
-          suitDivs[symbol].append(rankInputDiv);
-
-          suitCustomizeDiv.append(suitDivs[symbol]);
-        } else {
-          suitDivs[symbol].remove();
-          delete suitDivs[symbol];
-          delete colors[symbol];
-          delete ranks[symbol];
-        }
-        updateDesignPreview();
-      };
-
-      if(defaultRanks.includes(symbol))
-        symbolButton.click();
-    }
-    target.append(suitCustomizeDiv);
-
-    function getDeckDefinition(standardDeck) {
-      const id = generateUniqueWidgetID();
+    // The card types of all suits, with the properties the given design reads: suit, suitColor and rank always,
+    // plus the pip layout and the middle pictures for the playing-card design.
+    const getCardTypes = design=>{
       const cardTypes = {};
-      let suitIndex = 0;
+      const suitNames = uniqueSuitNames();
 
-      for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        const suitURL = suitSymbol;
-        for(const rank of parseRankRange(ranks[suitSymbol])) {
-          const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
+      for(const [ suitIndex, suit ] of suits.entries()) {
+        for(const rank of parseRankRange(suit.ranks)) {
+          // A rank listed twice in the same suit ("2-10,10") would overwrite its own card type: number the
+          // repeats, the same way suits left at the same name are numbered above.
+          let cT = `${rank} of ${suitNames[suitIndex]}`;
+          for(let i = 2; cardTypes[cT]; ++i)
+            cT = `${rank} of ${suitNames[suitIndex]} ${i}`;
           cardTypes[cT] = {
-            suit: suitURL,
-            suitColor,
+            suit: suit.icon,
+            suitColor: suit.color,
             rank
           };
-          const setCardTypes = (conditions, cardTypesKeys) => {
+
+          const hasPipLayout = String(rank).match(/^[0-9]+$/) && rank <= 21;
+          const setPips = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                if(standardDeck)
-                  cardTypes[cT][`suit-${key}`] = suitURL;
+                cardTypes[cT][`suit-${key}`] = suit.icon;
           };
-          if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
-            setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
-            setCardTypes(rank     >= 12 || rank == 2 || rank == 3, ['P12', 'P52']);
-            setCardTypes(rank     ==  7 || rank == 8,              ['P22']);
-            setCardTypes(rank     >= 16 || rank >= 6 && rank <= 8, ['P31', 'P33']);
-            setCardTypes(rank % 2 ==  1 && rank != 7,              ['P32']);
-            setCardTypes(rank     ==  8,                           ['P42']);
+          if(design.pips && hasPipLayout) {
+            setPips(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
+            setPips(rank     >= 12 || rank == 2 || rank == 3, ['P12', 'P52']);
+            setPips(rank     ==  7 || rank == 8,              ['P22']);
+            setPips(rank     >= 16 || rank >= 6 && rank <= 8, ['P31', 'P33']);
+            setPips(rank % 2 ==  1 && rank != 7,              ['P32']);
+            setPips(rank     ==  8,                           ['P42']);
 
-            setCardTypes(rank >= 9,                                                          ['S21', 'S23', 'S31', 'S33']);
-            setCardTypes(rank >= 20 || rank == 10 || rank == 11 || rank >= 14 && rank <= 17, ['S12', 'S42']);
-            setCardTypes(rank >= 12,                                                         ['S22', 'S32']);
-            setCardTypes(rank >= 18,                                                         ['S11', 'S13', 'S41', 'S43']);
+            setPips(rank >= 9,                                                          ['S21', 'S23', 'S31', 'S33']);
+            setPips(rank >= 20 || rank == 10 || rank == 11 || rank >= 14 && rank <= 17, ['S12', 'S42']);
+            setPips(rank >= 12,                                                         ['S22', 'S32']);
+            setPips(rank >= 18,                                                         ['S11', 'S13', 'S41', 'S43']);
           }
-          if('JQK'.includes(rank)) {
-            let defaultRanksuit = defaultRanks[suitIndex % 4].substr(6, 1).toUpperCase();
-            if(defaultRanks.includes(suitSymbol))
-              defaultRanksuit = suitSymbol.substr(6, 1).toUpperCase();
-            cardTypes[cT].rankImage = `/i/cards-default/${rank}${defaultRanksuit}-face.svg`;
-          } else if(!String(rank).match(/^[0-9]+$/) || rank > 21) {
-            cardTypes[cT].rankImage = `/i/game-icons.net/${suitSymbol}.svg`;
-          }
+          // Middle picture of the playing-card design: the court cards use the matching face image, ranks
+          // without a pip layout (jokers, tarot trumps, words, ...) use the suit icon. Only the single letters
+          // J, Q and K have a face image - a multi-letter rank like "JQ" would ask for one that does not exist.
+          if(design.rankPictures && String(rank).length == 1 && 'JQK'.includes(rank))
+            cardTypes[cT].rankImage = `/i/cards-default/${rank}${courtSuitLetter(suit.icon, suitIndex)}-face.svg`;
+          else if(design.rankPictures && !hasPipLayout)
+            cardTypes[cT].rankIcon = suit.icon;
         }
-        suitIndex += 1;
       }
 
-      return {
-        type: 'deck',
-        id,
-        cardTypes
-      };
-    }
+      return cardTypes;
+    };
+
+    // The one card every design tile previews. A numeric rank shows the playing-card design's pip layout, so
+    // prefer one over a court card or a word rank - but any deck has at least a first card type.
+    const previewCardType = cardTypes=>{
+      const keys = Object.keys(cardTypes);
+      return keys.find(key=>String(cardTypes[key].rank).match(/^([5-9]|10)$/)) || keys[0];
+    };
 
     const createButton = document.createElement('button');
     createButton.innerText = 'Add to game';
@@ -1152,67 +2518,28 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
-      let standardDeck = false;
-      const deckTemplateButton = document.querySelectorAll('.deckTemplateButton')[0];
-      if (deckTemplateButton && deckTemplateButton.classList.contains('selected'))
-        standardDeck = true
-      batchStart();
-      const deck = getDeckDefinition(standardDeck);
-      setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
-      const finalDeck = deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck);
-
-      // Same holder/button/pile structure as addDeckWithCards, so custom decks aren't spread out either.
-      const cardWidth  = finalDeck.cardDefaults && finalDeck.cardDefaults.width  || finalDeck.width  || 103;
-      const cardHeight = finalDeck.cardDefaults && finalDeck.cardDefaults.height || finalDeck.height || 160;
-      const deckWidth  = finalDeck.width  || cardWidth;
-      const deckHeight = finalDeck.height || cardHeight;
-      const holderWidth  = cardWidth  + 8;
-      const holderHeight = cardHeight + 11;
-      const holderID = generateUniqueWidgetID();
-      await addWidgetLocal({
-        type: 'holder', id: holderID,
-        x: Math.round(800 - holderWidth/2), y: Math.round(500 - holderHeight/2),
-        width: holderWidth, height: holderHeight, dropTarget: { type: 'card' }
-      });
-      await addWidgetLocal({
-        id: holderID+'B', parent: holderID, fixedParent: true, y: holderHeight,
-        width: holderWidth, height: 40, type: 'button', text: 'Recall & Shuffle', movableInEdit: false,
-        clickRoutine: [
-          { func: 'RECALL',  holder: '${PROPERTY parent}' },
-          { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-          { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-        ]
-      });
-      await addWidgetLocal(Object.assign({}, finalDeck, {
-        parent: holderID,
-        x: Math.round((holderWidth -deckWidth )/2),
-        y: Math.round((holderHeight-deckHeight)/2)
-      }));
-      await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
-
-      for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        for(const rank of parseRankRange(ranks[suitSymbol])) {
-          const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
-          await addWidgetLocal({
-            type: 'card',
-            id: `${deck.id} ${cT}`,
-            deck: deck.id,
-            cardType: cT,
-            parent: holderID+'P',
-            activeFace: 1
-          });
-        }
+      const design = designs[selectedDesign];
+      const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes: getCardTypes(design) });
+      // Adding a card at a time takes a moment: say so, and make a second click impossible while it runs.
+      createButton.disabled = true;
+      createButton.innerText = 'Adding…';
+      try {
+        await this.addDeckWithCards(deck, 'custom');
+      } finally {
+        createButton.innerText = 'Add to game';
+        // The ranks can have been cleared while the cards were added, which empties the gallery: re-enabling
+        // the button unconditionally would offer to add a deck that no longer has a design or a card.
+        updateCreateButton();
       }
-
-      batchEnd();
     };
 
-    target.append(suitCustomizeDiv);
-
     this.addSubHeader('Card design', target);
-    target.append(designSelectionDiv);
+    target.append(designHint, designSelectionDiv, createButton);
+
+    for(const icon of DECK_GENERATOR_SUIT_ICONS.slice(0, 4))
+      addSuit(icon, false); // one render pass for the four suits a custom deck starts with
+    renderSuits();
     updateDesignPreview();
-    target.append(createButton);
   }
 
   deckImages(target) {
@@ -1362,6 +2689,344 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
+  // "min"/"max" on a number input only constrain its spinner - a typed or pasted value is passed through
+  // unchanged, so everything read back from one goes through here and is clamped to the range the input
+  // itself declares. An emptied or unparsable field falls back to the minimum, which also keeps the defaults
+  // in the HTML templates from having to be repeated in the code that reads them.
+  numberFromInput(input) {
+    const min = +input.min || 1;
+    return Math.min(+input.max || Infinity, Math.max(min, Math.round(+input.value) || min));
+  }
+
+  // Card type names end up in the card widget ids, so strip anything awkward there and keep them short; the
+  // caller's fallback is used when a name has nothing usable left (e.g. a "______ + ______" card text).
+  cardTypeName(name, fallback) {
+    return name.replace(/[^A-Za-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().substr(0, 30).trim() || fallback;
+  }
+
+  // Two bulk uploads - all the card fronts and all the card backs - matched into pairs by sorting both lists
+  // by file name, so front1.jpg gets back1.jpg as its back. Numbers are compared numerically so front2 sorts
+  // before front10. Unlike deckImages (one shared back for the whole deck) every card type carries its own
+  // back image, which the back face reads through a dynamic property.
+  deckImagePairs(target) {
+    const fronts = [];
+    const backs = [];
+
+    const intro = document.createElement('p');
+    intro.innerText = 'Upload all card fronts and all card backs. Both lists are sorted by file name and then matched up in that order, so front1.jpg is paired with back1.jpg. Upload a single back image to use it for every card.';
+    target.append(intro);
+
+    // Fronts and backs go into a two-column grid, filled row by row (both headers, both hints, both lists,
+    // both upload buttons) so that row n of the fronts and row n of the backs - the pair - are on one line.
+    const columns = div(target, 'imagePairColumns');
+    this.addSubHeader('Card fronts', columns);
+    this.addSubHeader('Card backs', columns);
+    div(columns, 'imagePairHint', 'One image per card.');
+    // The single-back shortcut is only worth knowing before you upload, not after it has turned into a mismatch.
+    div(columns, 'imagePairHint', 'One per card, or a single one for every card.');
+
+    const addList = (emptyHint)=>{
+      const listDOM = div(columns, 'imagePairList');
+      listDOM.dataset.emptyHint = emptyHint;
+      return listDOM;
+    };
+    const frontList = addList('No front images yet');
+    const backList  = addList('No back images yet');
+
+    for(const [ list, label ] of [ [ fronts, 'Upload fronts...' ], [ backs, 'Upload backs...' ] ]) {
+      const bar = div(columns, 'buttonBar', `<button icon=upload>${label}</button>`);
+      $('button', bar).onclick = _=>uploadAsset((imagePath, fileName)=>{
+        if(imagePath) {
+          const entry = { imagePath, fileName };
+          list.push(entry);
+          // The card size is derived from the first front image's aspect ratio, and naturalWidth/naturalHeight
+          // stay 0 until the browser has decoded it - so measure the image as soon as it is available instead
+          // of whenever "Add to game" happens to be clicked.
+          const probe = new Image();
+          probe.onload = _=>entry.aspectRatio = probe.naturalWidth / probe.naturalHeight;
+          probe.src = mapAssetURLs(imagePath);
+          render();
+        }
+      });
+    }
+
+    const options = div(target, 'imagePairOptions', '<label>Copies of each card<input type=number min=1 max=99 value=1></label>');
+
+    // The status explains why "Add to game" is disabled, so it belongs right next to it.
+    div(target, 'goButton buttonBar', '<span class=imagePairStatus></span><button icon=add class=green disabled>Add to game</button>');
+    const status = $('.imagePairStatus', target);
+    const addButton = $('.goButton [icon=add]', target);
+
+    const renderList = (list, listDOM, pairedWith)=>{
+      listDOM.innerHTML = '';
+      for(const [ index, entry ] of list.entries()) {
+        const row = div(listDOM, 'imagePairEntry', `<b></b><img src="${mapAssetURLs(entry.imagePath)}"><span></span><button icon=delete title="Remove this image"></button>`);
+        $('b', row).innerText = `${index+1}.`;
+        $('span', row).innerText = entry.fileName;
+        if(pairedWith && pairedWith[index])
+          row.title = `Paired with ${pairedWith[index].fileName}`;
+        $('button', row).onclick = _=>{
+          list.splice(list.indexOf(entry), 1);
+          render();
+        };
+      }
+    };
+
+    // Both lists always render in the order they will be paired in, so the numbers in front of the file names
+    // are the pairing itself - no separate pair list needed.
+    const render = _=>{
+      for(const list of [ fronts, backs ])
+        list.sort((a, b)=>a.fileName.localeCompare(b.fileName, undefined, { numeric: true }));
+      const sharedBack = backs.length == 1;
+      const paired = fronts.length && backs.length && (sharedBack || fronts.length == backs.length);
+      // Only claim a pairing in the tooltips while the counts actually match - otherwise the rows would
+      // promise pairs that "Add to game" is refusing to create.
+      const showPairs = paired && !sharedBack;
+      renderList(fronts, frontList, showPairs ? backs : null);
+      renderList(backs, backList, showPairs ? fronts : null);
+      if(!fronts.length || !backs.length)
+        status.innerText = 'Upload at least one front image and one back image.';
+      else if(paired)
+        status.innerText = `${fronts.length} card${fronts.length == 1 ? '' : ' types'}${sharedBack ? ', all sharing the single back image' : ', each front paired with the back in the same position'}.`;
+      else
+        status.innerText = `${fronts.length} fronts but ${backs.length} backs - upload the same number of each, or a single back for all cards.`;
+      status.classList.toggle('imagePairMismatch', !!(fronts.length && backs.length && !paired));
+      addButton.disabled = !paired;
+    };
+    render();
+
+    addButton.onclick = async _=>{
+      const copies = this.numberFromInput($('input', options));
+      const cardTypes = {};
+      const counts = {};
+      for(const [ index, front ] of fronts.entries()) {
+        const back = backs.length == 1 ? backs[0] : backs[index];
+        // Two files can share a name (they come from separate uploads); a "(2)" suffix rather than a plain
+        // number keeps the generated card ids apart from the "<card type> <copy number>" ids below.
+        const base = this.cardTypeName(front.fileName.replace(/\.[^.]+$/, ''), `card ${index+1}`);
+        let cardType = base;
+        for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
+          cardType = `${base} (${i})`;
+        cardTypes[cardType] = { image: front.imagePath, backImage: back.imagePath };
+        counts[cardType] = copies;
+      }
+
+      const deck = {
+        id: generateUniqueWidgetID(),
+        type: 'deck',
+        cardTypes,
+        faceTemplates: [
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "dynamicProperties": {
+                  "value": "backImage",
+                  "height": "height",
+                  "width": "width"
+                }
+              }
+            ]
+          },
+          {
+            "objects": [
+              {
+                "type": "image",
+                "color": "transparent",
+                "dynamicProperties": {
+                  "value": "image",
+                  "height": "height",
+                  "width": "width"
+                }
+              }
+            ]
+          }
+        ]
+      };
+
+      // Keep the default card height and take the width from the first front image's aspect ratio, so the
+      // cards aren't distorted (same approach as the single-image flow above). Falls back to the default card
+      // size while the image hasn't been decoded yet.
+      const aspectRatio = fronts[0].aspectRatio;
+      const cardWidth = aspectRatio ? Math.round(aspectRatio*160) : 103;
+      if(cardWidth != 103)
+        deck.cardDefaults = { width: cardWidth };
+
+      await this.addDeckWithCards(deck, 'front/back image', counts);
+    };
+  }
+
+  // A deck of plain text cards in the shape of the "Cards Against Humanity" decks in the library: every typed
+  // text - one per line, or one per blank-line-separated block when the card text needs line breaks of its own
+  // - becomes a card type with a "text" property, the front face renders it through a dynamic property and
+  // the back face shows an optional deck label. Colors, font size and card size are the only design choices -
+  // everything beyond that is done afterwards in the deck editor.
+  deckTextCards(target) {
+    const intro = document.createElement('p');
+    intro.innerText = 'Type or paste the card texts. Each card becomes a card type - one distinct card design, of which the copies below are duplicates - whose "text" property holds its text, so you can edit the wording later in the deck editor.';
+    target.append(intro);
+
+    this.addSubHeader('Card texts', target);
+    const textarea = document.createElement('textarea');
+    textarea.className = 'textCardsInput';
+    textarea.rows = 8;
+    target.append(textarea);
+
+    // Where one card ends and the next begins. One card per line is what you want for a pasted list, but it
+    // leaves no way to put a line break inside a card - blank line mode spends an empty line on the separator
+    // and gives the line breaks back to the card text.
+    const split = div(target, 'textCardsSplit', `
+      <label><input type=radio name=textCardsSplit value=line checked>One card per line</label>
+      <label><input type=radio name=textCardsSplit value=block>Blank line between cards<span>lets a card's text span several lines</span></label>
+    `);
+    const splitOnBlankLines = _=>$('input[value=block]', split).checked;
+
+    // Design inputs and preview side by side: the preview is exactly what you want to look at while changing
+    // the font size and the colors, so it must not be pushed below the fold by the inputs that drive it.
+    const columns = div(target, 'textCardsColumns');
+    const designColumn = div(columns, 'textCardsColumn');
+    this.addSubHeader('Card design', designColumn);
+    const design = div(designColumn, 'textCardsDesign', `
+      <label>Card color<input class=textCardsBackground type=color value="#000000"></label>
+      <label>Text color<input class=textCardsColor type=color value="#ffffff"></label>
+      <label>Font size<input class=textCardsFontSize type=number min=6 max=72 value=16>px</label>
+      <label>Card width<input class=textCardsWidth type=number min=20 max=600 value=150>px</label>
+      <label>Card height<input class=textCardsHeight type=number min=20 max=600 value=233>px</label>
+      <label>Copies of each card<input class=textCardsCopies type=number min=1 max=99 value=1></label>
+      <label class=textCardsLabelWrap>Deck label<textarea class=textCardsLabel rows=2 placeholder="optional, e.g. the deck name"></textarea></label>
+      <span class=textCardsHint>The deck label is shown large on the card backs - line breaks included - and small along the bottom edge of the fronts.</span>
+    `);
+
+    const previewColumn = div(columns, 'textCardsColumn textCardsPreviewColumn');
+    this.addSubHeader('Preview (first card)', previewColumn);
+    const preview = div(previewColumn, 'textCardsPreview');
+
+    div(target, 'goButton buttonBar', '<span class=textCardsStatus></span><button icon=add class=green disabled>Add to game</button>');
+    const status = $('.textCardsStatus', target);
+    const addButton = $('.goButton [icon=add]', target);
+
+    // Line breaks that survive into a card's text render as line breaks on the card itself, so the only work
+    // here is trimming: every line loses its surrounding spaces and a card loses its leading/trailing blanks.
+    const cardTexts = _=>textarea.value
+      .split(splitOnBlankLines() ? /\n[ \t]*\n/ : '\n')
+      .map(card=>card.split('\n').map(line=>line.trim()).join('\n').replace(/^\n+|\n+$/g, ''))
+      .filter(card=>card.length);
+
+    const deckDefinition = (texts, id)=>{
+      const number = selector=>this.numberFromInput($(selector, design));
+      const width    = number('.textCardsWidth');
+      const height   = number('.textCardsHeight');
+      const fontSize = number('.textCardsFontSize');
+      const color    = $('.textCardsColor', design).value;
+      const label    = $('.textCardsLabel', design).value.split('\n').map(line=>line.trim()).join('\n').replace(/^\n+|\n+$/g, '');
+      const padding  = Math.max(4, Math.round(width/12));
+      // With a deck label the front gets a small footer along its bottom edge, so the card text has to stop
+      // above it - text objects don't clip, a long text would just run over the label.
+      const footerSize   = Math.max(6, Math.round(fontSize/2));
+      const footerHeight = label ? Math.round(footerSize*1.4) : 0;
+
+      const colorBox = _=>({ type: 'image', x: 0, y: 0, width, height, color: $('.textCardsBackground', design).value, value: '' });
+      const textObject = properties=>Object.assign({
+        type: 'text',
+        x: padding,
+        y: padding,
+        width: width - 2*padding,
+        height: height - 2*padding,
+        textAlign: 'left',
+        color,
+        // Clip instead of spilling over the rounded card edge (or over the deck label) when a text is longer
+        // than the box it was given at the chosen font size.
+        css: { 'font-weight': 'bold', 'line-height': '1.25em', 'overflow': 'hidden' }
+      }, properties);
+
+      const cardTypes = {};
+      for(const [ index, text ] of texts.entries()) {
+        // Repeated texts get a "(2)" suffix, which can't collide with the "<card type> <copy number>" card ids.
+        const base = this.cardTypeName(text, `card ${index+1}`);
+        let cardType = base;
+        for(let i=2; Object.prototype.hasOwnProperty.call(cardTypes, cardType); ++i)
+          cardType = `${base} (${i})`;
+        cardTypes[cardType] = { text };
+      }
+
+      const back = { radius: 8, objects: [ colorBox() ] };
+      const front = { radius: 8, objects: [ colorBox(), textObject({ height: height - 2*padding - footerHeight, dynamicProperties: { value: 'text', fontSize: 'fontSize' } }) ] };
+      if(label) {
+        // The back is just the label at 1.5x, the front repeats it small along the bottom edge - where a
+        // multi-line label has no room, so there it becomes a single line.
+        back.objects.push(textObject({ value: label, fontSize: Math.round(fontSize*1.5) }));
+        front.objects.push(textObject({ value: label.replace(/\n/g, ' '), fontSize: footerSize, y: height - padding - footerHeight, height: footerHeight }));
+      }
+
+      return {
+        id,
+        type: 'deck',
+        cardDefaults: { width, height, fontSize },
+        cardTypes,
+        faceTemplates: [ back, front ]
+      };
+    };
+
+    // One id for every preview render: the preview deck is briefly registered in "widgets" so the preview card
+    // can read its faces from it, which needs an id that is not in use - but generating a fresh one on every
+    // keystroke would be wasteful.
+    const previewID = generateUniqueWidgetID();
+    const updatePreview = _=>{
+      const texts = cardTexts();
+      const deck = deckDefinition([ texts.length ? texts[0] : 'Your card text goes here.' ], previewID);
+      const { width, height } = deck.cardDefaults;
+      // A single upright card at (up to) its real size - the fanned five-card thumbnail renderWidgetButton
+      // draws is far too small to judge the font size, the colors or where the text wraps, which is the only
+      // reason to look at a preview here. Scaling happens on a wrapper so the card keeps its own transform.
+      const scale = Math.min(1, 200/Math.max(width, height));
+      preview.innerHTML = '';
+      preview.style.width = `${Math.round(width*scale)}px`;
+      preview.style.height = `${Math.round(height*scale)}px`;
+      const box = div(preview, 'textCardsPreviewCard');
+      box.style.width = `${width}px`;
+      box.style.height = `${height}px`;
+      box.style.transform = `scale(${scale})`;
+
+      const previewDeck = new Deck(previewID);
+      previewDeck.renderReadonlyCopyRaw(JSON.parse(JSON.stringify(deck)), box).domElement.remove();
+      widgets.set(previewID, previewDeck);
+      new Card().renderReadonlyCopyRaw({ deck: previewID, cardType: Object.keys(deck.cardTypes)[0], activeFace: 1 }, box);
+      widgets.delete(previewID);
+
+      // Spell out what "Add to game" will create: the copies multiplier is easy to miss, and it decides
+      // whether addDeckWithCards asks for confirmation.
+      const copies = this.numberFromInput($('.textCardsCopies', design));
+      const cards = texts.length * copies;
+      status.innerText = texts.length
+        ? `${texts.length} card type${texts.length == 1 ? '' : 's'} × ${copies} = ${cards} card${cards == 1 ? '' : 's'}.`
+        : 'Type or paste at least one line of text above.';
+      addButton.disabled = !texts.length;
+      // The placeholder is where the split mode is easiest to show rather than explain.
+      textarea.placeholder = splitOnBlankLines()
+        ? 'The first card,\nwhich runs over two lines\n\nThe second card\n...'
+        : 'The first card\nThe second card\n...';
+    };
+    textarea.oninput = updatePreview;
+    for(const input of $a('input, textarea', design))
+      input.oninput = updatePreview;
+    for(const radio of $a('input', split))
+      radio.onchange = updatePreview;
+    updatePreview();
+
+    addButton.onclick = async _=>{
+      const texts = cardTexts();
+      if(!texts.length)
+        return;
+      const deck = deckDefinition(texts, generateUniqueWidgetID());
+      const copies = this.numberFromInput($('.textCardsCopies', design));
+      const counts = {};
+      for(const cardType in deck.cardTypes)
+        counts[cardType] = copies;
+      await this.addDeckWithCards(deck, 'text', counts);
+    };
+  }
+
   deckImportTTS(target) {
     this.addSubHeader('Workshop link', target);
     const linkDiv = div(target, 'ttsImportLink', `
@@ -1423,6 +3088,7 @@ class PropertiesModule extends SidebarModule {
 
     addButton.onclick = async _=>{
       addButton.disabled = true;
+      const placement = this.deckPlacement(); // one import adds every selected deck the same way
       try {
         for(const { button, deck, cardCounts } of foundDecks) {
           if(!button.classList.contains('selected'))
@@ -1433,7 +3099,7 @@ class PropertiesModule extends SidebarModule {
           delete newDeck.y;
           delete newDeck.z;
           newDeck.id = generateUniqueWidgetID();
-          await this.addDeckWithCards(newDeck, 'TTS', cardCounts);
+          await this.addDeckWithCards(newDeck, 'TTS', cardCounts, placement);
           button.classList.remove('selected');
         }
       } catch(e) {
@@ -1444,7 +3110,24 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
-  async addDeckWithCards(deck, type, counts) {
+  // What to add around a new deck. The "Add New Deck" dialog sets newDeckPlacement on the module instance it
+  // renders these flows into (see openNewDeckOverlay), so they follow its checkboxes; the properties sidebar's
+  // own instance has none, so its decks come with a holder and a reset button as they always did.
+  deckPlacement() {
+    return this.newDeckPlacement ? this.newDeckPlacement() : deckPlacementDefault;
+  }
+
+  async addDeckWithCards(deck, type, counts, placement=this.deckPlacement()) {
+    // Some callers fill counts straight from a number input, where .value is a string - coerce so that the
+    // counts are summed rather than concatenated.
+    const copiesOf = cardType => counts ? Number(counts[cardType]) || 0 : 1;
+
+    // Every card becomes a widget of its own inside a single batch, so a long list of card types multiplied
+    // by a high copy count can keep the client busy for a long time - ask before creating a whole lot of them.
+    const totalCards = Object.keys(deck.cardTypes || {}).reduce((sum, cardType)=>sum + copiesOf(cardType), 0);
+    if(totalCards > 500 && !confirm(`This creates ${totalCards} cards. Adding that many at once takes a while and makes the game harder to work with.\n\nCreate them anyway?`))
+      return;
+
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
 
@@ -1456,49 +3139,50 @@ class PropertiesModule extends SidebarModule {
     const deckHeight = deck.height || cardHeight;
     const holderWidth  = cardWidth  + 8;
     const holderHeight = cardHeight + 11;
-    const holderID = generateUniqueWidgetID();
+    // generateUniqueWidgetID only guarantees the holder id itself is free, while the reset button and the pile
+    // are derived from it: check for those too, like the public-library flow does for all of its suffixes.
+    let holderID = null;
+    do {
+      holderID = generateUniqueWidgetID();
+    } while([ 'B', 'P' ].some(suffix=>widgets.has(holderID+suffix)));
+    const pileID = holderID+'P';
 
-    await addWidgetLocal({
-      type: 'holder',
-      id: holderID,
-      x: Math.round(800 - holderWidth/2),
-      y: Math.round(500 - holderHeight/2),
-      width: holderWidth,
-      height: holderHeight,
-      dropTarget: { type: 'card' }
-    });
-    await addWidgetLocal({
-      id: holderID+'B',
-      parent: holderID,
-      fixedParent: true,
-      y: holderHeight,
-      width: holderWidth,
-      height: 40,
-      type: 'button',
-      text: 'Recall & Shuffle',
-      movableInEdit: false,
-      clickRoutine: [
-        { func: 'RECALL',  holder: '${PROPERTY parent}' },
-        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
-        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
-      ]
-    });
-    await addWidgetLocal(Object.assign({}, deck, {
+    if(placement.holder) {
+      await addWidgetLocal({
+        type: 'holder',
+        id: holderID,
+        x: Math.round(800 - holderWidth/2),
+        y: Math.round(500 - holderHeight/2),
+        width: holderWidth,
+        height: holderHeight,
+        dropTarget: { type: 'card' }
+      });
+      if(placement.resetButton)
+        await addWidgetLocal(deckResetButton(holderID, holderWidth, holderHeight));
+    }
+    // Without a holder the cards still go into a pile in the middle of the table, and the deck widget (which is
+    // invisible outside edit mode) is placed next to it instead of below it.
+    await addWidgetLocal(Object.assign({}, deck, placement.holder ? {
       parent: holderID,
       x: Math.round((holderWidth -deckWidth )/2),
       y: Math.round((holderHeight-deckHeight)/2)
+    } : {
+      x: Math.round(800 - cardWidth/2 - deckWidth - 10),
+      y: Math.round(500 - deckHeight/2)
     }));
-    await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
+    await addWidgetLocal(placement.holder
+      ? { type: 'pile', id: pileID, parent: holderID, width: cardWidth, height: cardHeight }
+      : { type: 'pile', id: pileID, x: Math.round(800 - cardWidth/2), y: Math.round(500 - cardHeight/2), width: cardWidth, height: cardHeight });
 
     for(const cardType in deck.cardTypes) {
-      const count = counts ? counts[cardType] || 0 : 1;
+      const count = copiesOf(cardType);
       for(let i=1; i<=count; ++i)
         await addWidgetLocal({
           type: 'card',
           id: `${deck.id} ${cardType}${count > 1 ? ' '+i : ''}`,
           deck: deck.id,
           cardType: cardType,
-          parent: holderID+'P',
+          parent: pileID,
           activeFace: 1
         });
     }
@@ -1506,9 +3190,304 @@ class PropertiesModule extends SidebarModule {
     batchEnd();
   }
 
-  deckTemplate_colors(deck) {
+  // Adapted from the simple suit/rank decks of the public library (Feta, Escrime): a white card with the rank on
+  // top in the suit color and the suit icon below it.
+  deckTemplate_minimal(deck) {
+    deck.faceTemplates = [
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg"
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "text",
+            "y": 12,
+            "fontSize": 44,
+            "textAlign": "center",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 21.5,
+            "y": 75,
+            "size": 60,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          }
+        ],
+        "border": 1
+      }
+    ];
+    return deck;
+  }
+
+  // Playing card look without the pip layout: rank and suit in two opposite corners and one big suit icon in the
+  // middle, so it works for any set of ranks (words, high numbers, ...) and any icon.
+  deckTemplate_corners(deck) {
+    deck.faceTemplates = [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "icon",
+            "x": 21.5,
+            "y": 50,
+            "size": 60,
+            "opacity": 0.85,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 1,
+            "y": 28,
+            "size": 23,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "rotation": 180,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 79,
+            "y": 110,
+            "size": 23,
+            "rotation": 180,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          }
+        ]
+      }
+    ];
+    return deck;
+  }
+
+  // Adapted from the round decks of the public library (CONTEST, District Development): a colored disc with the
+  // suit as a watermark and the rank on top.
+  deckTemplate_token(deck) {
     deck.cardDefaults = {
+      width: 100,
+      height: 100
     };
+    deck.faceTemplates = [
+      {
+        "radius": 50,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "#333333"
+          },
+          {
+            "type": "image",
+            "x": 18,
+            "y": 18,
+            "width": 64,
+            "height": 64,
+            "color": "#ffffff22",
+            "css": {
+              "border-radius": "50%"
+            }
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 50,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 20,
+            "y": 35,
+            "size": 60,
+            "color": "#ffffff55",
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 22,
+            "fontSize": 46,
+            "textAlign": "center",
+            "color": "white",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ],
+        "border": 1
+      }
+    ];
+    return deck;
+  }
+
+  // Adapted from the square tile decks of the public library (Scotland Hills): a tile framed in the suit color,
+  // with the rank in the top left and a small suit icon in the bottom right.
+  deckTemplate_tile(deck) {
+    deck.cardDefaults = {
+      width: 80,
+      height: 80
+    };
+    deck.faceTemplates = [
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 8,
+            "width": 64,
+            "height": 64,
+            "color": "transparent",
+            "value": "/i/game-icons.net/viscious-speed/abstract-111.svg"
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 70,
+            "height": 70,
+            "color": "#ffffff",
+            "css": {
+              "border-radius": "12px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 2,
+            "fontSize": 34,
+            "textAlign": "left",
+            "width": 48,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 46,
+            "y": 42,
+            "size": 28,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "suitColor"
+            }
+          }
+        ]
+      }
+    ];
+    return deck;
+  }
+
+  deckTemplate_colors(deck) {
     deck.faceTemplates = [
       {
         "radius": 10,
@@ -1609,8 +3588,6 @@ class PropertiesModule extends SidebarModule {
   }
 
   deckTemplate_simple(deck) {
-    deck.cardDefaults = {
-    };
     deck.faceTemplates = [
       {
         "objects": [
@@ -1801,6 +3778,16 @@ class PropertiesModule extends SidebarModule {
             }
           },
           {
+            "type": "icon",
+            "x": 25,
+            "y": 53,
+            "size": 53,
+            "dynamicProperties": {
+              "value": "rankIcon",
+              "color": "suitColor"
+            }
+          },
+          {
             "type": "text",
             "x": -3,
             "y": -2,
@@ -1939,7 +3926,13 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
+  }
+
+  // whether the edited widget - or, for a multi-selection, any of the widgets
+  // it stands for - is of the given type
+  selectionIncludesType(widget, type) {
+    return (widget.isMulti ? widget.widgets : [ widget ]).some(w => (w.get('type') || 'basic') == type);
   }
 
   isSizeRatioLockEnabled(widget) {
@@ -2199,6 +4192,9 @@ class PropertiesModule extends SidebarModule {
       wrap.appendChild(rangeInput);
     }
 
+    if(options.infoText)
+      wrap.appendChild(this.renderInfoIcon(options.infoText, { size: '18px' }));
+
     const clampForRange = value => Math.max(min, Math.min(max, value));
     const normalizeValue = value => {
       if(value === '' || value === null || value === undefined)
@@ -2208,6 +4204,12 @@ class PropertiesModule extends SidebarModule {
     };
 
     const updateInputs = value => {
+      if(propertyInputIsMulti(value)) {
+        numberInput.placeholder = '— multiple —';
+        if(document.activeElement !== numberInput)
+          numberInput.value = '';
+        return;
+      }
       const normalized = normalizeValue(value);
       if(normalized === null)
         return;
@@ -2379,12 +4381,8 @@ class PropertiesModule extends SidebarModule {
     row.style.flexWrap = 'wrap';
     row.style.marginTop = '6px';
 
-    const positionToggle = this.renderLockToggle(row, 'Move in play', () => !widget.get('movable'), locked => {
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated lock state of widget ${widget.id} in editor`);
-      widget.set('movable', !locked);
-      batchEnd();
-    });
+    const positionToggle = this.renderLockToggle(row, 'Move in play', () => !widget.get('movable'),
+      locked => this.inputValueUpdated(widget, 'movable', !locked));
 
     const separator = document.createElement('span');
     separator.textContent = '|';
@@ -2466,12 +4464,15 @@ class PropertiesModule extends SidebarModule {
 
     select.onchange = () => this.inputValueUpdated(widget, 'layer', +select.value);
     this.addPropertyListener(widget, 'layer', w=>{
-      const layerValue = Number(w.get('layer'));
+      const raw = w.get('layer');
+      if(propertyInputIsMulti(raw))
+        return;
+      const layerValue = Number(raw);
       if(layerValue < baseMin)
         addLayerOption(layerValue, true);
       else if(layerValue > baseMax)
         addLayerOption(layerValue);
-      select.value = String(w.get('layer'));
+      select.value = String(raw);
     });
     wrap.appendChild(select);
   const lockParentInfo = this.renderInfoIcon('Widgets on higher layers will always be displayed on top of widgets on lower layers.');
@@ -2494,7 +4495,8 @@ class PropertiesModule extends SidebarModule {
     input.step = 1;
     input.style = 'width: 60px; border: 1px solid #ccc; border-radius: 4px; text-align: right;';
     
-    input.value = widget.get('rotation') || 0;
+    input.value = propertyInputIsMulti(widget.get('rotation')) ? '' : (widget.get('rotation') || 0);
+    input.placeholder = propertyInputIsMulti(widget.get('rotation')) ? '— multiple —' : '';
     wrap.appendChild(input);
 
     const unit = document.createElement('span');
@@ -2503,154 +4505,14 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(unit);
 
     input.oninput = () => this.inputValueUpdated(widget, 'rotation', +input.value);
-    
+
     this.addPropertyListener(widget, 'rotation', w => {
+      const raw = w.get('rotation');
+      const multi = propertyInputIsMulti(raw);
+      input.placeholder = multi ? '— multiple —' : '';
       if (document.activeElement !== input)
-        input.value = w.get('rotation') || 0;
+        input.value = multi ? '' : (raw || 0);
     });
-  }
-
-  // Inline popout (styled like the icon/image pickers) to select widgets by
-  // searching their ID, filtered by type, or by clicking them in the room.
-  // options:
-  //   pickerKey      - key for the in-room widget picker
-  //   typeFilter     - presets the type filter (e.g. 'seat' for seat inputs)
-  //   multiple       - toggle entries in a list of IDs instead of picking one
-  //   getSelectedIDs - returns the currently selected widget IDs
-  //   apply          - called with the picked ID (single) or array of IDs (multiple)
-  //   onClear        - when given, adds a button that removes the value
-  //   clearLabel     - label of that button
-  //   excludeIDs     - returns additional widget IDs to hide from the list
-  renderWidgetSelectPopout(wrap, widget, options = {}) {
-    const expandButton = document.createElement('button');
-    expandButton.className = 'propertyExpandButton';
-    expandButton.setAttribute('icon', 'expand_more');
-    expandButton.title = 'Select a widget';
-    wrap.appendChild(expandButton);
-
-    const popout = div(wrap, 'propertyPicker widgetSelectPopout');
-    popout.style.display = 'none';
-
-    const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
-    const excludedIDs = _=>[ widget.id ].concat(options.excludeIDs ? options.excludeIDs() : []);
-
-    let typeFilter = options.typeFilter || '';
-    let searchTerm = '';
-
-    const renderPopout = _=>{
-      popout.innerHTML = '';
-
-      if(options.title)
-        div(popout, 'propertyPickerSectionTitle', html(options.title));
-
-      const buttonBar = div(popout, 'propertyPickerSection');
-      const pickButton = document.createElement('button');
-      pickButton.setAttribute('icon', 'colorize');
-      pickButton.title = 'Click this button and then the widget on the table';
-      buttonBar.appendChild(pickButton);
-
-      const updatePickButton = _=>{
-        const isSelecting = this.isWidgetPickerActive(widget.id, options.pickerKey);
-        pickButton.textContent = isSelecting ? 'click a widget...' : 'Pick in the room';
-        pickButton.classList.toggle('selected', isSelecting);
-      };
-      updatePickButton();
-
-      pickButton.onclick = _=>{
-        if(this.isWidgetPickerActive(widget.id, options.pickerKey)) {
-          this.stopWidgetPicker();
-        } else {
-          this.startWidgetPicker(widget.id, (targetWidget, pickedWidget)=>{
-            if(options.multiple)
-              options.apply(pickedWidget.map(picked=>picked.id));
-            else
-              options.apply(pickedWidget.id);
-          }, {
-            pickerKey: options.pickerKey,
-            filter: pickedWidget=>excludedIDs().indexOf(pickedWidget.id) == -1 && (!typeFilter || (pickedWidget.get('type') || 'basic') == typeFilter),
-            allowMultiple: !!options.multiple,
-            pendingWidgetIDs: options.multiple ? selectedIDs() : [],
-            onPendingChanged: options.multiple ? widgetIDs=>options.apply(widgetIDs) : null
-          });
-        }
-        updatePickButton();
-      };
-
-      if(options.onClear) {
-        const clearButton = document.createElement('button');
-        clearButton.setAttribute('icon', 'link_off');
-        clearButton.textContent = options.clearLabel || 'Clear';
-        clearButton.onclick = _=>options.onClear();
-        buttonBar.appendChild(clearButton);
-      }
-
-      const searchSection = div(popout, 'propertyPickerSection');
-      div(searchSection, 'propertyPickerSectionTitle', 'Search widgets');
-
-      const typeSelect = document.createElement('select');
-      typeSelect.innerHTML = '<option value="">any type</option>' + Object.keys(editorTypeNames).map(type=>`<option value="${type}">${editorTypeNames[type]}</option>`).join('');
-      typeSelect.value = typeFilter;
-      searchSection.appendChild(typeSelect);
-
-      const search = document.createElement('input');
-      search.placeholder = 'Search by ID...';
-      search.value = searchTerm;
-      searchSection.appendChild(search);
-
-      const list = div(searchSection, 'widgetPickerList');
-
-      const showEntries = _=>{
-        list.innerHTML = '';
-        const term = searchTerm.trim().toLowerCase();
-        const current = selectedIDs();
-        const matches = [...widgets.values()]
-          .filter(w=>excludedIDs().indexOf(w.id) == -1)
-          .filter(w=>!typeFilter || (w.get('type') || 'basic') == typeFilter)
-          .filter(w=>!term || w.id.toLowerCase().includes(term))
-          .sort((a, b)=>a.id.localeCompare(b.id));
-        for(const match of matches.slice(0, 50)) {
-          const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span><span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
-          entry.classList.toggle('selected', current.indexOf(match.id) != -1);
-          entry.onclick = _=>{
-            if(options.multiple) {
-              const now = selectedIDs();
-              options.apply(now.indexOf(match.id) == -1 ? now.concat(match.id) : now.filter(id=>id != match.id));
-              entry.classList.toggle('selected');
-            } else {
-              options.apply(match.id);
-              toggle(false);
-            }
-          };
-        }
-        if(!matches.length)
-          div(list, 'propertyPickerEmpty', 'No matching widgets.');
-        else if(matches.length > 50)
-          div(list, 'propertyPickerEmpty', `${matches.length - 50} more - refine the search.`);
-      };
-
-      typeSelect.onchange = _=>{ typeFilter = typeSelect.value; showEntries(); };
-      search.oninput = _=>{ searchTerm = search.value; showEntries(); };
-      showEntries();
-    };
-
-    const toggle = open=>{
-      popout.style.display = open ? '' : 'none';
-      expandButton.classList.toggle('open', open);
-      if(open)
-        renderPopout();
-      else if(this.isWidgetPickerActive(widget.id, options.pickerKey))
-        this.stopWidgetPicker();
-    };
-    expandButton.onclick = _=>toggle(popout.style.display == 'none');
-
-    return {
-      expandButton,
-      popout,
-      refresh: _=>{
-        if(popout.style.display != 'none' && !popout.contains(document.activeElement))
-          renderPopout();
-      }
-    };
   }
 
   // Sets the parent while preserving the widget's position on the table.
@@ -2659,19 +4521,26 @@ class PropertiesModule extends SidebarModule {
     const newParent = parentID && widgets.has(parentID) ? widgets.get(parentID) : null;
     if(parentID && !newParent)
       return `There is no widget with ID "${parentID}".`;
-    if(newParent == widget)
-      return 'A widget cannot be its own parent.';
-    if(newParent && newParent.isDescendantOf(widget))
-      return `Widget ${newParent.id} is inside ${widget.id}, so using it as the parent would create a loop.`;
 
-    const global = { x: widget.get('_absoluteX'), y: widget.get('_absoluteY') };
-    const local = newParent ? newParent.coordLocalFromCoordGlobal(global) : global;
+    const targets = widget.isMulti ? widget.widgets : [ widget ];
+    for(const target of targets) {
+      if(newParent == target)
+        return 'A widget cannot be its own parent.';
+      if(newParent && newParent.isDescendantOf(target))
+        return `Widget ${newParent.id} is inside ${target.id}, so using it as the parent would create a loop.`;
+    }
 
     batchStart();
     try {
-      setDeltaCause(`${getPlayerDetails().playerName} changed parent of widget ${widget.id} in editor`);
-      await widget.set('parent', newParent ? newParent.id : null);
-      await widget.setPosition(Math.round(local.x * 1024) / 1024, Math.round(local.y * 1024) / 1024, widget.get('z'));
+      setDeltaCause(widget.isMulti
+        ? `${getPlayerDetails().playerName} changed parent of ${targets.length} widgets in editor`
+        : `${getPlayerDetails().playerName} changed parent of widget ${widget.id} in editor`);
+      for(const target of targets) {
+        const global = { x: target.get('_absoluteX'), y: target.get('_absoluteY') };
+        const local = newParent ? newParent.coordLocalFromCoordGlobal(global) : global;
+        await target.set('parent', newParent ? newParent.id : null);
+        await target.setPosition(Math.round(local.x * 1024) / 1024, Math.round(local.y * 1024) / 1024, target.get('z'));
+      }
     } finally {
       batchEnd();
     }
@@ -2692,7 +4561,8 @@ class PropertiesModule extends SidebarModule {
     const input = document.createElement('input');
     input.type = 'text';
     input.style.width = '140px';
-    input.value = widget.get('parent') || '';
+    input.value = propertyInputIsMulti(widget.get('parent')) ? '' : (widget.get('parent') || '');
+    input.placeholder = propertyInputIsMulti(widget.get('parent')) ? '— multiple —' : '';
     wrap.appendChild(input);
 
     const error = document.createElement('div');
@@ -2719,10 +4589,13 @@ class PropertiesModule extends SidebarModule {
       lockParentButton.classList.toggle('selected', isParentLocked);
     };
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose a parent widget',
       pickerKey: 'parent',
-      getSelectedIDs: () => widget.get('parent') ? [ widget.get('parent') ] : [],
+      getSelectedIDs: () => {
+        const parent = widget.get('parent');
+        return propertyInputValueSet(parent) && !propertyInputIsMulti(parent) ? [ parent ] : [];
+      },
       apply: parentID => apply(parentID),
       onClear: () => apply(null),
       clearLabel: 'No parent',
@@ -2745,8 +4618,11 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addPropertyListener(widget, 'parent', w => {
+      const raw = w.get('parent');
+      const multi = propertyInputIsMulti(raw);
+      input.placeholder = multi ? '— multiple —' : '';
       if(document.activeElement !== input)
-        input.value = w.get('parent') || '';
+        input.value = multi ? '' : (raw || '');
       popoutControls.refresh();
     });
 
@@ -2769,22 +4645,33 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.type = 'text';
+    input.className = 'seatReferenceInput';
     input.style.width = '180px';
     input.value = this.formatSeatReference(widget.get(property));
     wrap.appendChild(input);
 
     let popoutControls = null;
     const pickerKey = options.pickerKey || property;
+    // seatReferenceFromArray([]) is null, which for most seat-reference
+    // properties correctly means "no restriction" - but for a property whose
+    // own dropdown has a separate "all seats" state (scoreboard's "seats" in
+    // pick mode), null is read back as that other state instead of "chosen,
+    // nothing picked". Those callers pass emptyValue: [] to keep the two apart.
+    const emptyValue = options.emptyValue !== undefined ? options.emptyValue : null;
 
     if(options.enablePicker) {
       // widget selection popout with the type filter preset to seats
-      popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
-        title: 'Choose seats',
+      popoutControls = renderWidgetSelectPopout(wrap, widget, {
+        title: options.pickerTitle || 'Choose seats',
         pickerKey,
         typeFilter: 'seat',
         multiple: true,
+        clearLabel: options.clearLabel,
         getSelectedIDs: () => this.seatReferenceToArray(widget.get(property)),
-        apply: seatIDs => this.inputValueUpdated(widget, property, this.seatReferenceFromArray(seatIDs)),
+        apply: seatIDs => {
+          const reference = this.seatReferenceFromArray(seatIDs);
+          this.inputValueUpdated(widget, property, reference === null ? emptyValue : reference);
+        },
         onClear: () => this.inputValueUpdated(widget, property, null)
       });
     }
@@ -2796,7 +4683,10 @@ class PropertiesModule extends SidebarModule {
 
     input.onchange = () => {
       const value = this.parseSeatReferenceInput(input.value);
-      this.inputValueUpdated(widget, property, value);
+      // emptying the field is the same "nothing picked" as an empty pick in the
+      // popout above, so it has to write the same value - a plain null would
+      // send the scoreboard back to its "all seats" mode
+      this.inputValueUpdated(widget, property, value === null ? emptyValue : value);
     };
 
     this.addPropertyListener(widget, property, w => {
@@ -2856,7 +4746,7 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(input);
 
     const pickerKey = 'onlyVisibleForSeat';
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose which seats can see this widget',
       pickerKey,
       typeFilter: 'seat',
@@ -3027,37 +4917,10 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  // A block whose body can be folded away by clicking the header.
+  // A block whose body can be folded away by clicking the header
+  // (collapsibleSection in sidebarModule.js, shared with the deck editor).
   renderCollapsibleSection(title, collapsed, renderBody, target = null, stateKey = null, options = {}) {
-    if(stateKey !== null && this.collapsibleStates[stateKey] !== undefined)
-      collapsed = this.collapsibleStates[stateKey];
-    const wrap = div(target || this.moduleDOM, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
-    const header = document.createElement('button');
-    header.type = 'button';
-    header.className = 'collapsibleHeader';
-    header.setAttribute('aria-expanded', String(!collapsed));
-    const arrow = document.createElement('span');
-    arrow.className = 'collapseArrow';
-    header.appendChild(arrow);
-    const heading = document.createElement('span');
-    heading.textContent = title;
-    header.appendChild(heading);
-    if(options.renderSummary) {
-      const summary = document.createElement('span');
-      summary.className = 'collapsibleSummary';
-      header.appendChild(summary);
-      options.renderSummary(summary);
-    }
-    wrap.appendChild(header);
-    const body = div(wrap, 'collapsibleBody');
-    header.onclick = _=>{
-      wrap.classList.toggle('collapsed');
-      header.setAttribute('aria-expanded', String(!wrap.classList.contains('collapsed')));
-      if(stateKey !== null)
-        this.collapsibleStates[stateKey] = wrap.classList.contains('collapsed');
-    };
-    renderBody(body);
-    return wrap;
+    return collapsibleSection(target || this.moduleDOM, title, collapsed, renderBody, this.collapsibleStates, stateKey, options);
   }
 
   renderBasicSection(widget) {
@@ -3067,43 +4930,950 @@ class PropertiesModule extends SidebarModule {
     // start collapsed and only get expanded for active tweaking
     this.renderCollapsibleSection('Position', true, body=>{
       this.renderDualNumberWithSlider(widget, null, { title: 'X', property: 'x' }, { title: 'Y', property: 'y' }, {
-        left: { min: 0, max: 1600, step: 1 },
-        right: { min: 0, max: 1000, step: 1 },
+        left: { min: 0, max: viewportConfig.targetWidth, step: 1 },
+        right: { min: 0, max: viewportConfig.targetHeight, step: 1 },
         target: body
       });
       this.renderPositionLocks(widget, body);
       this.renderLayerSelect(widget, body);
+      // inheritChildZ is where the widget ends up in the stacking order, so it
+      // belongs next to layer rather than in the type's Behavior list
+      this.renderCheckbox(widget, 'Rise to the topmost child', 'inheritChildZ', body, {
+        infoText: 'Give the widget the highest layer and z of the widgets inside it, so it and its content sit at one height in the stacking order. A button lying on top of a holder ends up behind the cards that are dropped into it.'
+      });
       this.renderRotationInput(widget, body);
+      // where the widget may end up is part of where it is, so both of these
+      // live inside Position rather than as sections of their own
+      this.renderGridSection(widget, body);
+      this.renderDragLimitSection(widget, body);
     }, null, `${widget.id}:position`, {
       renderSummary: summary => {
-        const update = w => summary.textContent = `${w.get('x')}, ${w.get('y')}`;
-        this.addPropertyListener(widget, 'x', update);
-        this.addPropertyListener(widget, 'y', update);
+        const update = w => summary.textContent = this.positionSummary(w);
+        for(const property of [ 'x', 'y', 'grid', 'dragLimit' ])
+          this.addPropertyListener(widget, property, update);
       }
     });
 
     this.renderCollapsibleSection('Size', true, body=>{
       this.renderDualNumberWithSlider(widget, null, { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
-        left: { min: 1, max: 1600, step: 1 },
-        right: { min: 1, max: 1000, step: 1 },
+        left: { min: 1, max: viewportConfig.targetWidth, step: 1 },
+        right: { min: 1, max: viewportConfig.targetHeight, step: 1 },
         target: body
       });
       this.renderSizeRatioLock(widget, body);
+      // scale draws the same width/height bigger or smaller, so it sits with
+      // them rather than in Appearance
+      new NumberOrTextInput(this, widget, 'Scale', {
+        property: 'scale',
+        compact: true,
+        nullIfEmpty: true,
+        placeholder: '1',
+        hint: 'Draw the widget at this factor of its width and height, around its center. Everything inside it follows, so a hand scaled by 2 shows its cards at twice their size. "-1,1" flips it horizontally, "1,-1" vertically.'
+      }).render(body);
     }, null, `${widget.id}:size`, {
       renderSummary: summary => {
-        const update = w => summary.textContent = `${w.get('width')} × ${w.get('height')}`;
-        this.addPropertyListener(widget, 'width', update);
-        this.addPropertyListener(widget, 'height', update);
+        const update = w => {
+          const width = w.get('width'), height = w.get('height');
+          const scale = w.get('scale');
+          const box = `${propertyInputIsMulti(width) ? '—' : width} × ${propertyInputIsMulti(height) ? '—' : height}`;
+          summary.textContent = propertyInputIsMulti(scale) ? `${box} · scale —`
+            : scale !== null && scale !== 1 ? `${box} · ×${scale}` : box;
+        };
+        for(const property of [ 'width', 'height', 'scale' ])
+          this.addPropertyListener(widget, property, update);
       }
     });
 
-    this.renderCollapsibleSection('Generic', true, body=>{
-      this.renderCheckbox(widget, 'Clickable', 'clickable', body);
-      this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, { min: 0, step: 1, slider: false });
-      this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body);
-    }, null, `${widget.id}:generic`);
+    this.renderCollapsibleSection('Interaction & display', true, body=>{
+      this.renderCheckbox(widget, 'Clickable', 'clickable', body, {
+        infoText: 'Whether the widget reacts to being clicked at all: with this off its click routine does not run and clicking it does not flip to the next face. Dragging it still works.'
+      });
+      // what a click does is the rest of this widget's setup - what it sounds
+      // like belongs right next to the switch that decides it happens at all
+      new SoundInput(this, widget, 'Click sound', {
+        property: 'clickSound',
+        hint: 'Play this sound whenever the widget is clicked. Pick one of the bundled sounds, upload your own audio file or enter a URL. Clicking is what triggers it, so it only plays while the widget is clickable.'
+      }).render(body);
+      this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, {
+        min: 0,
+        step: 1,
+        slider: false,
+        infoText: 'Show a bigger copy of the widget while the mouse is over it (or on right click), scaled by this factor. 0 turns it off.'
+      });
+      this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body, {
+        infoText: 'Keep the widget at its own size while the rest of the room is zoomed in or out.'
+      });
+      this.renderCheckbox(widget, 'Hide other players\' cursors', 'hidePlayerCursors', body, {
+        infoText: 'Stop showing where the other players point while their cursor is over this widget or over anything inside it.'
+      });
+      // a seat's "display" is the text it shows while it is taken, so the one
+      // widget type that has it never gets this switch
+      if(!this.selectionIncludesType(widget, 'seat'))
+        this.renderCheckbox(widget, 'Only visible in edit mode', 'display', body, {
+          invert: true,
+          default: true,
+          infoText: 'Take the widget out of the room for the players: it is still there and routines keep working on it, but nobody can see or use it. In edit mode the eye button of the toolbar shows and hides those widgets.'
+        });
+      this.renderCheckbox(widget, 'In holder, overlap siblings', 'overlap', body, {
+        default: true,
+        infoText: 'Allow this widget to sit on top of its siblings when a holder or pile arranges them. Turn it off to make the holder space them out by this widget\'s full width/height instead of its normal stack offset.'
+      });
+      this.renderCheckbox(widget, 'In holder, ignore "on leave" properties', 'ignoreOnLeave', body, {
+        infoText: 'Skip the holder\'s "on leave" properties when this widget is taken out of it, so leaving does not change it (e.g. flipping a card face down).'
+      });
+    }, null, `${widget.id}:generic`, {
+      renderSummary: summary => {
+        const update = w => summary.textContent = this.interactionSummary(w);
+        for(const property of [ 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
+          this.addPropertyListener(widget, property, update);
+      }
+    });
 
     this.renderAssociatedWidgetsSection(widget);
+  }
+
+  // the coordinates plus, when they are set, the two things that constrain
+  // them - a plain widget still reads as just "100, 200"
+  positionSummary(widget) {
+    const x = widget.get('x'), y = widget.get('y');
+    const parts = [ `${propertyInputIsMulti(x) ? '—' : x}, ${propertyInputIsMulti(y) ? '—' : y}` ];
+    const entries = gridEntryList(widget.get('grid'));
+    if(entries.length)
+      parts.push(entries.length == 1 ? `grid ${entries[0].x} × ${entries[0].y}` : `${entries.length} grids`);
+    if(dragLimitIsSet(widget.get('dragLimit')))
+      parts.push('drag limited');
+    return parts.join(' · ');
+  }
+
+  // one line for the collapsed header, naming only what deviates from the
+  // plain default (an untouched widget gets no summary at all)
+  interactionSummary(widget) {
+    const parts = [];
+    const add = (property, label, describe) => {
+      const value = widget.get(property);
+      if(propertyInputIsMulti(value))
+        parts.push(`${label} —`);
+      else if(describe(value))
+        parts.push(describe(value));
+    };
+
+    add('clickable', 'clickable', value=>value ? null : 'not clickable');
+    add('clickSound', 'click sound', value=>propertyInputValueSet(value) ? `sound ${soundName(value)}` : null);
+    add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
+    add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
+    add('overlap', 'overlap', value=>value === false ? 'no overlap' : null);
+    add('ignoreOnLeave', 'ignore on leave', value=>value ? 'ignores on leave' : null);
+    add('hidePlayerCursors', 'cursors', value=>value ? 'cursors hidden' : null);
+    // a seat's display is the text it shows, which the section does not offer -
+    // so it does not summarize it either
+    if(!this.selectionIncludesType(widget, 'seat'))
+      add('display', 'display', value=>value === false ? 'edit mode only' : null);
+
+    return parts.join(' · ');
+  }
+
+  // --- snap grid ---
+
+  // Curated editor for the "grid" property: the list of snap definitions the
+  // widget uses after it was dragged (snapToGrid() in widget.js). All of it is
+  // measured in the widget's DOM box, which frequently looks nothing like the
+  // shape drawn on the board - so the section spells that box out, offers
+  // ready-made square/hex grids computed from it, and can draw the resulting
+  // lattice onto the board while you edit.
+  renderGridSection(widget, target) {
+    // a grid is a per-widget array; merging arrays across a selection has no
+    // safe common value, so this stays single-widget (like css/svgReplaces)
+    if(widget.isMulti)
+      return;
+
+    let updatePreview = _=>{};
+    const section = this.renderCollapsibleSection('Snap grid', true, body=>{
+      div(body, 'gridHelp', 'Dropping this widget moves it to the nearest point of the grids below. Distances are measured on the widget\'s box, which is often bigger than the shape you see.');
+
+      const sizeNote = div(body, 'gridSizeNote');
+      const updateSizeNote = w=>sizeNote.textContent = `Widget box: ${w.get('width')} × ${w.get('height')} px`;
+      this.addPropertyListener(widget, 'width', updateSizeNote);
+      this.addPropertyListener(widget, 'height', updateSizeNote);
+
+      const previewToggle = new CheckboxInput(this, widget, 'Show on board', {
+        // not a widget property - listening to grid just gives the checkbox
+        // its initial render (addPropertyListener runs its updater at once)
+        listenTo: [ 'grid' ],
+        getValue: _=>this.gridPreviewEnabled !== false,
+        setValue: value=>{
+          this.gridPreviewEnabled = value;
+          updatePreview();
+        },
+        hint: 'Marks every position this widget can land on with a dot, drawn into the widget\'s parent.'
+      }).render(body);
+
+      const list = div(body, 'gridEntries');
+      const actions = div(body, 'gridActions');
+
+      // renderRebuildable: every generation of the entry list registers its own
+      // grid listeners, which have to go when the next one replaces the DOM
+      let rebuildEntries = _=>{};
+      this.renderRebuildable(rebuild=>{
+        rebuildEntries = rebuild;
+        list.innerHTML = '';
+        actions.innerHTML = '';
+        const entries = gridEntryList(widget.get('grid'));
+        previewToggle.style.display = entries.length ? '' : 'none';
+        if(!entries.length)
+          div(list, 'propertyPickerEmpty', 'This widget does not snap to a grid yet.');
+        entries.forEach((entry, index)=>this.renderGridEntry(widget, index, entries.length, list, rebuild));
+        this.renderGridAddButtons(widget, actions, entries, rebuild);
+        updatePreview();
+      });
+
+      // resync on undo / remote updates while the section stays open - but the
+      // preview follows every edit, even mid-keystroke, so the lattice on the
+      // board never lags behind the field the user is typing in
+      this.addPropertyListener(widget, 'grid', _=>{
+        if(!body.contains(document.activeElement))
+          rebuildEntries();
+        updatePreview();
+      });
+      for(const property of [ 'width', 'height', 'parent' ])
+        this.addPropertyListener(widget, property, _=>updatePreview());
+      // a condition can read any property of any widget ("${PROPERTY width OF
+      // board}"), which no list written down here could know - so every delta
+      // is held against the names the conditions actually read, and the drawn
+      // area follows a button that moves it just as the snapping does
+      this.addDeltaListener(deltaState=>{
+        if(dependencyDeltaMatters(gridDependencies(widget), deltaState))
+          updatePreview();
+      });
+    }, target, `${widget.id}:grid`, {
+      renderSummary: summary=>{
+        this.addPropertyListener(widget, 'grid', w=>{
+          const entries = gridEntryList(w.get('grid'));
+          summary.textContent = !entries.length ? 'off' :
+            entries.length == 1 ? `${entries[0].x} × ${entries[0].y}` : `${entries.length} grids`;
+        });
+      }
+    });
+    propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.grid));
+
+    // the body is rendered even while the section is collapsed, so the board
+    // preview follows the headers rather than appearing on every selection -
+    // the Position section around it folds this one away just as well
+    updatePreview = _=>this.updateGridPreview(widget, this.gridPreviewEnabled !== false && !section.closest('.collapsibleSection.collapsed'));
+    for(let block = section; block; block = block.parentElement && block.parentElement.closest('.collapsibleSection'))
+      $('.collapsibleHeader', block).addEventListener('click', _=>updatePreview());
+    updatePreview();
+  }
+
+  setGridEntries(widget, entries) {
+    this.inputValueUpdated(widget, 'grid', entries);
+  }
+
+  // Change keys of one entry, leaving the other entries untouched. A null
+  // value removes the key so it falls back to the engine default.
+  updateGridEntry(widget, index, change) {
+    const entries = gridEntryList(widget.get('grid')).map(entry=>Object.assign({}, entry));
+    if(!entries[index])
+      return;
+    for(const key in change) {
+      if(change[key] === null)
+        delete entries[index][key];
+      else
+        entries[index][key] = change[key];
+    }
+    this.setGridEntries(widget, entries);
+  }
+
+  gridEntryValue(widget, index, key) {
+    const entry = gridEntryList(widget.get('grid'))[index];
+    const value = entry ? entry[key] : undefined;
+    return value === undefined ? null : value;
+  }
+
+  // A number input bound to one key of one grid entry.
+  renderGridNumber(widget, index, key, label, target, options = {}) {
+    return new NumberInput(this, widget, label, Object.assign({
+      listenTo: [ 'grid' ],
+      nullIfEmpty: true,
+      getValue: _=>this.gridEntryValue(widget, index, key),
+      setValue: value=>this.updateGridEntry(widget, index, { [key]: value })
+    }, options)).render(target);
+  }
+
+  renderGridAddButtons(widget, target, entries, rebuild) {
+    const width = +widget.get('width') || 100;
+    const height = +widget.get('height') || 100;
+    const add = (label, title, newEntries)=>{
+      const button = document.createElement('button');
+      button.setAttribute('icon', 'add');
+      button.textContent = label;
+      button.title = title;
+      button.onclick = _=>{
+        this.setGridEntries(widget, entries.concat(newEntries()));
+        rebuild();
+      };
+      target.appendChild(button);
+    };
+
+    if(entries.length) {
+      add('Add another grid', 'All grids are tried together - the widget snaps to whichever point is closest.', _=>squareGridForSize(width, height));
+      return;
+    }
+    // the same starting points the JSON editor offers, but computed and named
+    // from the widget's current box instead of typed by hand
+    add(`Square grid (${width} × ${height})`, 'One snap point per widget box, so widgets end up edge to edge.', _=>squareGridForSize(width, height));
+    // both hexagon orientations are offered rather than picked from the
+    // unofficial hexType only the add widget overlay writes: nothing tells the
+    // editor that an image is a hexagon at all, so the widget knowing its own
+    // orientation is the exception, and guessing is one click either way
+    for(const hex of [ { type: 'flat', name: 'flat top', shape: 'flat topped' }, { type: 'point', name: 'pointy top', shape: 'pointy topped' } ])
+      add(`Hex grid (${hex.name})`, `Two staggered grids that place ${hex.shape} hexagons side by side, calculated from the widget box.`, _=>hexGridForSize(width, height, hex.type));
+  }
+
+  renderGridEntry(widget, index, count, target, rebuild) {
+    const wrap = div(target, 'gridEntry');
+
+    const head = div(wrap, 'gridEntryHead');
+    div(head, 'gridEntryTitle', count > 1 ? `Grid ${index + 1}` : 'Grid');
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.title = 'Remove this grid';
+    remove.onclick = _=>{
+      this.setGridEntries(widget, gridEntryList(widget.get('grid')).filter((entry, i)=>i != index));
+      rebuild();
+    };
+    head.appendChild(remove);
+
+    const spacing = div(wrap, 'propertyInlineRow numberPairRow');
+    div(spacing, 'numberPairLabel', 'Spacing');
+    // x/y are the only required keys of an entry, so they never clear to null.
+    // step stays "any" because a calculated grid (hex) has fractional spacing.
+    this.renderGridNumber(widget, index, 'x', 'X', spacing, { min: 1, nullIfEmpty: false, unit: 'px' });
+    this.renderGridNumber(widget, index, 'y', 'Y', spacing, { min: 1, nullIfEmpty: false, unit: 'px' });
+    const useBox = document.createElement('button');
+    useBox.setAttribute('icon', 'fit_screen');
+    useBox.title = 'Use the widget box as the spacing';
+    useBox.onclick = _=>this.updateGridEntry(widget, index, { x: +widget.get('width') || 100, y: +widget.get('height') || 100 });
+    spacing.appendChild(useBox);
+
+    this.renderGridAnchor(widget, index, wrap);
+
+    this.renderCollapsibleSection('More options', true, body=>{
+      const offset = div(body, 'propertyInlineRow numberPairRow');
+      const offsetLabel = div(offset, 'numberPairLabel', 'Offset');
+      propertyInfoButton(offsetLabel, 'Shifts the whole lattice by this many pixels, so the first snap point does not have to sit in the top left corner of the parent.');
+      this.renderGridNumber(widget, index, 'offsetX', 'X', offset, { placeholder: '0', unit: 'px' });
+      this.renderGridNumber(widget, index, 'offsetY', 'Y', offset, { placeholder: '0', unit: 'px' });
+
+      // the same alignX/alignY the 3x3 picker above sets, for the rare grid
+      // that wants a snap point between the nine positions it offers
+      const align = div(body, 'propertyInlineRow numberPairRow');
+      const alignLabel = div(align, 'numberPairLabel', 'Exact snap point');
+      propertyInfoButton(alignLabel, 'The same setting as the snap point picker, as a fraction of the widget box: 0 is the left/top edge, 0.5 the middle, 1 the right/bottom edge.');
+      this.renderGridNumber(widget, index, 'alignX', 'X', align, { min: 0, max: 1, placeholder: '0' });
+      this.renderGridNumber(widget, index, 'alignY', 'Y', align, { min: 0, max: 1, placeholder: '0' });
+
+      this.renderGridLimits(widget, index, body);
+      this.renderGridExtraProperties(widget, index, body);
+    }, wrap, `${widget.id}:grid:${index}`);
+  }
+
+  // 3x3 picker for alignX/alignY: which point of the widget lands on the grid.
+  renderGridAnchor(widget, index, target) {
+    const positions = [ 0, 0.5, 1 ];
+    return this.renderAnchorPicker(target, {
+      label: 'Snap point',
+      hint: 'The point of the widget box that lands on a grid line. Top left is what the engine uses unless you change it; "More options" can set a value between these nine.',
+      onPick: (row, column)=>this.updateGridEntry(widget, index, { alignX: positions[column] || null, alignY: positions[row] || null }),
+      listen: update=>this.addPropertyListener(widget, 'grid', _=>update({
+        row: positions.indexOf(+this.gridEntryValue(widget, index, 'alignY') || 0),
+        column: positions.indexOf(+this.gridEntryValue(widget, index, 'alignX') || 0)
+      }))
+    });
+  }
+
+  // Nine buttons in a 3x3 grid, one of them active. options.listen gets an
+  // update function taking { row, column } (or null for "none of them") and is
+  // expected to call it whenever the underlying property changes.
+  renderAnchorPicker(target, options) {
+    const rowNames = [ 'top', 'middle', 'bottom' ];
+    const columnNames = [ 'left', 'center', 'right' ];
+
+    const row = div(target, 'propertyInput gridAnchorRow');
+    const label = document.createElement('label');
+    label.textContent = options.label;
+    if(options.hint)
+      propertyInfoButton(label, options.hint);
+    row.appendChild(label);
+
+    const anchors = div(row, 'gridAnchors');
+    const buttons = [];
+    for(let anchorRow = 0; anchorRow < 3; ++anchorRow)
+      for(let anchorColumn = 0; anchorColumn < 3; ++anchorColumn) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'gridAnchor';
+        button.title = `${rowNames[anchorRow]} ${columnNames[anchorColumn]}`.replace(/^./, character=>character.toUpperCase());
+        button.onclick = _=>options.onPick(anchorRow, anchorColumn);
+        anchors.appendChild(button);
+        buttons.push({ button, row: anchorRow, column: anchorColumn });
+      }
+
+    options.listen(active=>{
+      for(const anchor of buttons) {
+        anchor.button.classList.toggle('active', !!active && anchor.row == active.row && anchor.column == active.column);
+        anchor.button.disabled = !!options.disabledWithoutActive && !active;
+      }
+      anchors.classList.toggle('disabled', !!options.disabledWithoutActive && !active);
+    });
+    return row;
+  }
+
+  // min/max limit the area in which a grid applies, and a condition limits it
+  // to an area that is not a rectangle at all; the four sides are only
+  // meaningful as a set, so one checkbox adds or drops the whole area at once.
+  renderGridLimits(widget, index, target) {
+    const limitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
+    const host = div(target, 'gridLimits');
+
+    // renderGridEntry (the caller) already runs fresh inside the outer entry
+    // list's renderRebuildable on every grid change, so these four inputs are
+    // recreated - and their listeners cleaned up - along with it. A nested
+    // renderRebuildable here would only be disposed by calling its own rebuild
+    // again, which nothing does once the outer regeneration replaces this
+    // whole call, so it used to leak a generation of listeners on every grid
+    // edit. Rendering the inputs unconditionally and just hiding the host
+    // avoids the need for that inner rebuild entirely.
+    const x = div(host, 'propertyInlineRow numberPairRow');
+    div(x, 'numberPairLabel', 'X from/to');
+    this.renderGridNumber(widget, index, 'minX', 'min', x, { unit: 'px' });
+    this.renderGridNumber(widget, index, 'maxX', 'max', x, { unit: 'px' });
+    const y = div(host, 'propertyInlineRow numberPairRow');
+    div(y, 'numberPairLabel', 'Y from/to');
+    this.renderGridNumber(widget, index, 'minY', 'min', y, { unit: 'px' });
+    this.renderGridNumber(widget, index, 'maxY', 'max', y, { unit: 'px' });
+    this.renderGridCondition(widget, index, host);
+
+    const hasLimits = _=>limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null)
+      || conditionsOf(gridEntryList(widget.get('grid'))[index]).length > 0;
+    const updateVisibility = _=>host.style.display = hasLimits() ? '' : 'none';
+    this.addPropertyListener(widget, 'grid', updateVisibility);
+    updateVisibility();
+
+    new CheckboxInput(this, widget, 'Only in part of the parent', {
+      listenTo: [ 'grid' ],
+      getValue: hasLimits,
+      setValue: value=>{
+        const parent = widgets.get(widget.get('parent'));
+        this.updateGridEntry(widget, index, value ? {
+          minX: 0, minY: 0,
+          maxX: parent ? +parent.get('width') || 1600 : 1600,
+          maxY: parent ? +parent.get('height') || 1000 : 1000
+        } : { minX: null, maxX: null, minY: null, maxY: null, condition: null });
+      },
+      hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids. A 0 counts as "no limit" on that side. Outside the area the widget snaps to whichever other grid covers the position, or to nothing at all where none does.'
+      // its own host so the label can take the size of the numberPairLabels of
+      // the X/Y rows around it instead of reading as a heading between them
+    }).render(div(target, 'gridLimitToggle'));
+    target.appendChild(host);
+  }
+
+  // The area a grid applies to does not have to be a rectangle either: a
+  // condition is an inequality in x and y - the position being snapped, in the
+  // same coordinates as the four sides above - that has to hold for this grid
+  // to be one of the grids tried, and where the widget ends up as well. One per
+  // line, all of which have to hold.
+  renderGridCondition(widget, index, target) {
+    return new TextInput(this, widget, 'Conditions (one per line)', {
+      listenTo: [ 'grid' ],
+      multiline: true,
+      rows: 2,
+      placeholder: 'none',
+      getValue: _=>conditionsOf(gridEntryList(widget.get('grid'))[index]).join('\n'),
+      setValue: value=>this.updateGridEntry(widget, index, { condition: conditionValue(value) }),
+      hint: 'An inequality this grid needs to be true where the widget is dropped, so "y > x" applies it below the diagonal only. Ordinary maths: x and y are the position being snapped, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "(x - 800)^2 + (y - 500)^2 < 300^2" is a round area. Every line has to be true; && and || combine within one line. Each line has to be a comparison rather than a sum: "x - 100" is a number, and a number is true wherever it is not 0. The widget lands on the nearest lattice point inside the area rather than on the one just past its edge, and where the area holds no lattice point at all this grid does not apply.',
+      validate: conditionProblem
+    }).render(target);
+  }
+
+  // Anything in a grid entry that snapToGrid() does not use as geometry is
+  // copied onto the widget when it snaps there - e.g. a rotation per space.
+  renderGridExtraProperties(widget, index, target) {
+    const title = div(target, 'propSetTitle', 'Also set when snapped here');
+    propertyInfoButton(title, 'Widget properties applied to the widget when it snaps to this grid, for example a rotation or an image per space.');
+    const host = div(target, 'gridExtras');
+
+    const rebuildExtras = _=>{
+      host.innerHTML = '';
+      const entry = gridEntryList(widget.get('grid'))[index] || {};
+      for(const key of gridExtraProperties(entry)) {
+        const row = div(host, 'gridExtraRow');
+
+        const name = document.createElement('input');
+        name.type = 'text';
+        name.value = key;
+        name.placeholder = 'property';
+        const value = document.createElement('input');
+        value.type = 'text';
+        value.value = gridExtraText(entry[key]);
+        value.placeholder = 'value';
+
+        const commit = _=>{
+          const newKey = name.value.trim();
+          // renaming onto one of snapToGrid()'s own geometry keys (x, alignY,
+          // ...) would silently overwrite it with this row's plain-text value
+          // and break snapping for the whole entry
+          if(!newKey || gridGeometryKeys.indexOf(newKey) != -1 ||
+              (newKey != key && gridExtraProperties(gridEntryList(widget.get('grid'))[index] || {}).indexOf(newKey) != -1)) {
+            rebuildExtras();
+            return;
+          }
+          const change = { [newKey]: gridExtraValue(value.value) };
+          if(newKey != key)
+            change[key] = null;
+          this.updateGridEntry(widget, index, change);
+          rebuildExtras();
+        };
+        name.onchange = commit;
+        value.onchange = commit;
+
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.title = `Remove ${key}`;
+        remove.onclick = _=>{
+          this.updateGridEntry(widget, index, { [key]: null });
+          rebuildExtras();
+        };
+
+        row.appendChild(name);
+        row.appendChild(value);
+        row.appendChild(remove);
+      }
+    };
+    rebuildExtras();
+
+    const add = document.createElement('button');
+    add.setAttribute('icon', 'add');
+    add.textContent = 'Add property';
+    add.onclick = _=>{
+      const used = gridExtraProperties(gridEntryList(widget.get('grid'))[index] || {});
+      let key = [ 'rotation', 'image', 'color' ].find(candidate=>used.indexOf(candidate) == -1);
+      for(let i = 2; !key; ++i)
+        if(used.indexOf(`property${i}`) == -1)
+          key = `property${i}`;
+      this.updateGridEntry(widget, index, { [key]: key == 'rotation' ? 0 : '' });
+      rebuildExtras();
+    };
+    target.appendChild(add);
+  }
+
+  clearGridPreview() {
+    for(const overlay of $a('.gridPreviewOverlay'))
+      overlay.remove();
+  }
+
+  // Draws every grid entry into the widget's parent, i.e. the coordinate space
+  // snapToGrid() works in, so the dots land exactly where the widget will.
+  updateGridPreview(widget, show) {
+    this.clearGridPreview();
+    const container = widget.domElement && widget.domElement.parentNode;
+    if(!show || !container)
+      return;
+
+    const entries = gridEntryList(widget.get('grid'));
+    entries.forEach((entry, index)=>{
+      const stepX = +entry.x, stepY = +entry.y;
+      if(!(stepX > 0) || !(stepY > 0))
+        return;
+      // snapToGrid reads the limits as "grid.minX || -99999", so a 0 (or a
+      // missing value) is no limit at all - the overlay has to agree with that
+      // or the dots and the actual snapping disagree
+      const limitOf = value=>Number.isFinite(+value) && +value != 0 ? +value : null;
+      const minX = limitOf(entry.minX), maxX = limitOf(entry.maxX);
+      const minY = limitOf(entry.minY), maxY = limitOf(entry.maxY);
+      const left = minX !== null ? minX : 0;
+      const top = minY !== null ? minY : 0;
+      // the cell lines only describe real cells for a single lattice - two of
+      // them (a hex grid) would just draw a rectangular mesh over each other
+      const overlay = div(container, `gridPreviewOverlay${entries.length > 1 ? ' dotsOnly' : ''}`);
+      overlay.style.left = `${left}px`;
+      overlay.style.top = `${top}px`;
+      if(maxX !== null)
+        overlay.style.width = `${Math.max(0, maxX - left)}px`;
+      if(maxY !== null)
+        overlay.style.height = `${Math.max(0, maxY - top)}px`;
+      overlay.style.setProperty('--gridPreviewX', `${stepX}px`);
+      overlay.style.setProperty('--gridPreviewY', `${stepY}px`);
+      // a second grid (the staggered half of a hex grid) gets its own color so
+      // the two lattices stay tellable apart
+      overlay.style.setProperty('--gridPreviewColor', index % 2 ? '#e08a00' : '#1f5ca6');
+      overlay.style.setProperty('--gridPreviewLine', index % 2 ? '#e08a0059' : '#1f5ca659');
+      // the dot layer is a tile per grid step with the dot in its middle, so it
+      // has to start half a step before the lattice point the lines start at
+      const lineX = (+entry.offsetX || 0) - left, lineY = (+entry.offsetY || 0) - top;
+      overlay.style.backgroundPosition =
+        `${lineX - stepX / 2}px ${lineY - stepY / 2}px, ${lineX}px ${lineY}px, ${lineX}px ${lineY}px`;
+      const box = {
+        left,
+        top,
+        width: Math.max(0, (maxX !== null ? maxX : container.offsetWidth) - left),
+        height: Math.max(0, (maxY !== null ? maxY : container.offsetHeight) - top)
+      };
+      this.drawGridConditionOutline(widget, entry, overlay, box);
+      // the dots the background draws are the whole lattice, the ones drawn
+      // here are only the positions that are left of it
+      if(this.drawGridConditionDots(widget, entry, overlay, box))
+        overlay.classList.add('ownDots');
+    });
+  }
+
+  // An SVG the size of the box and in the coordinates the box is measured in,
+  // so a path in it is written down as the positions it describes.
+  conditionOverlaySVG(overlay, box, className) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', className);
+    svg.setAttribute('viewBox', `${box.left} ${box.top} ${box.width} ${box.height}`);
+    svg.style.width = `${box.width}px`;
+    svg.style.height = `${box.height}px`;
+    overlay.appendChild(svg);
+    return svg;
+  }
+
+  // The rectangle a grid is limited to is outlined by the overlay's own dashed
+  // border; an area a condition describes has no border to give it, so it is
+  // traced and drawn in the same line. The outline lives inside the overlay, so
+  // it is cleared and redrawn with it, and it is asked of the widget itself -
+  // the same question snapToGrid asks, at the position rather than for it.
+  drawGridConditionOutline(widget, entry, overlay, box) {
+    if(!conditionsOf(entry).length || !(box.width > 0) || !(box.height > 0))
+      return;
+    // a step small enough to show the shape and coarse enough to stay quick
+    // while a condition is being typed (~10k samples either way)
+    const step = Math.max(4, Math.round(Math.sqrt(box.width * box.height / 10000)));
+    const path = conditionOutlinePath(box, step, coord=>widget.gridConditionsHold(entry, coord));
+    if(!path)
+      return;
+
+    const outline = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    outline.setAttribute('d', path);
+    this.conditionOverlaySVG(overlay, box, 'gridConditionOutline').appendChild(outline);
+  }
+
+  // The dots of a grid limited by a condition. The background layer repeats one
+  // across the whole rectangle, which is every point the widget could land on
+  // before a condition - with one, the points on the far side of its boundary
+  // are no positions at all, and marking them says the widget snaps where it
+  // does not. So they are drawn one by one instead, asking the widget the same
+  // question snapToGrid asks of a lattice point it weighs up.
+  // Each dot is a zero-length subpath with a round cap rather than a circle,
+  // which keeps every dot of one grid in a single path.
+  // Returns whether it drew them: a lattice fine enough to have more points
+  // than a condition can be read at while it is being typed keeps the
+  // background layer, where the dots are barely apart anyway.
+  drawGridConditionDots(widget, entry, overlay, box) {
+    if(!conditionsOf(entry).length)
+      return false;
+    const align = {
+      x: (+entry.alignX || 0) * (+widget.get('width') || 0),
+      y: (+entry.alignY || 0) * (+widget.get('height') || 0)
+    };
+    const dots = gridDotPositions(entry, box, align, gridConditionDotLimit,
+      coord=>widget.gridAppliesAt(entry, coord));
+    if(!dots)
+      return false;
+    if(!dots.length)
+      return true;
+
+    const svg = this.conditionOverlaySVG(overlay, box, 'gridConditionDots');
+    // the halo first, so every dot's white ring sits behind every core rather
+    // than behind its own only - two dots less than a ring apart would cut
+    // pieces out of each other
+    for(const className of [ 'dotHalo', 'dotCore' ]) {
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('class', className);
+      path.setAttribute('d', dots.map(dot=>`M ${dot.x} ${dot.y} l 0 0`).join(' '));
+      svg.appendChild(path);
+    }
+    return true;
+  }
+
+  // --- drag limits ---
+
+  // Curated editor for "dragLimit": the area move() keeps the widget's top left
+  // corner in while it is dragged - four sides plus any number of conditions.
+  // Like the grid limits the four sides only make sense together, so one
+  // checkbox adds or drops all of them.
+  renderDragLimitSection(widget, target) {
+    // a rectangle per widget - merging four numbers across a selection whose
+    // widgets sit in different places has no safe common value
+    if(widget.isMulti)
+      return;
+
+    let updatePreview = _=>{};
+    // said by the sampling below rather than by the limit itself: whether an
+    // area exists at all cannot be read off two contradicting conditions
+    let reportEmptyArea = _=>{};
+    const section = this.renderCollapsibleSection('Drag limits', true, body=>{
+      const host = div(body, 'gridLimits');
+      const previewHost = div(body, 'dragLimitPreviewToggle');
+      const emptyHost = div(body, 'dragLimitEmptyArea');
+      reportEmptyArea = empty=>{
+        emptyHost.textContent = empty ? 'None of the positions tested in this widget\'s parent satisfies these conditions. An area nothing satisfies limits nothing: a widget that is not inside its area is always let go, so that it can never be stuck.' : '';
+      };
+      // renderRebuildable: the four inputs listen to dragLimit, so the ones of
+      // a discarded generation have to stop listening with it
+      let rebuildLimits = _=>{};
+      this.renderRebuildable(rebuild=>{
+        rebuildLimits = rebuild;
+        host.innerHTML = '';
+        // nothing to show while the widget can be dragged anywhere
+        previewHost.style.display = dragLimitIsSet(widget.get('dragLimit')) ? '' : 'none';
+        updatePreview();
+        if(!dragLimitIsSet(widget.get('dragLimit')))
+          return;
+        // each side carries its own axis in its label: a side holding an
+        // expression takes the whole line it needs, so the two of a row are
+        // not always side by side under a shared "X from/to"
+        const x = div(host, 'propertyInlineRow dragLimitRow');
+        this.renderDragLimitNumber(widget, 'minX', 'X min', x);
+        this.renderDragLimitNumber(widget, 'maxX', 'X max', x);
+        const y = div(host, 'propertyInlineRow dragLimitRow');
+        this.renderDragLimitNumber(widget, 'minY', 'Y min', y);
+        this.renderDragLimitNumber(widget, 'maxY', 'Y max', y);
+        this.renderDragLimitAnchor(widget, host);
+        this.renderDragLimitCondition(widget, host);
+      });
+
+      // an area a condition describes cannot be read off the numbers that
+      // describe it - this switch paints it onto the board instead
+      new CheckboxInput(this, widget, 'Show on board', {
+        // not a widget property - listening to dragLimit just gives the
+        // checkbox its initial render (addPropertyListener runs its updater
+        // at once) and follows every edit of the area with the drawing
+        listenTo: [ 'dragLimit' ],
+        getValue: _=>this.dragLimitPreviewEnabled !== false,
+        setValue: value=>{
+          this.dragLimitPreviewEnabled = value;
+          updatePreview();
+        },
+        hint: 'Shades every position the limited point of this widget can be dragged to, drawn into the widget\'s parent. Only ever visible in edit mode.'
+      }).render(previewHost);
+
+      new CheckboxInput(this, widget, 'Limit where it can be dragged', {
+        listenTo: [ 'dragLimit' ],
+        getValue: _=>dragLimitIsSet(widget.get('dragLimit')),
+        setValue: value=>{
+          // the whole parent minus the widget's own box, i.e. the rectangle in
+          // which the widget stays fully visible - the same starting point the
+          // JSON editor's maxX/maxY commands offer
+          const parent = widgets.get(widget.get('parent'));
+          const areaWidth = parent ? +parent.get('width') || 1600 : 1600;
+          const areaHeight = parent ? +parent.get('height') || 1000 : 1000;
+          // a reference point on its own limits nothing, so a limit written as
+          // alignX/alignY alone reads as off here - but it is what the widget
+          // says about itself, so switching the limit on keeps it
+          const align = {};
+          for(const key of [ 'alignX', 'alignY' ])
+            if(dragLimitValue(widget.get('dragLimit'), key) !== null)
+              align[key] = dragLimitValue(widget.get('dragLimit'), key);
+          this.inputValueUpdated(widget, 'dragLimit', value ? Object.assign(align, {
+            minX: 0, minY: 0,
+            maxX: Math.max(0, areaWidth - (+widget.get('width') || 0)),
+            maxY: Math.max(0, areaHeight - (+widget.get('height') || 0))
+          // an empty object is the engine default, so unchecking drops the
+          // property rather than storing a rectangle that limits nothing
+          }) : {});
+          rebuildLimits();
+        },
+        hint: 'Keeps the widget inside an area while it is dragged, so it cannot be dropped somewhere it is hard to get back from. Only the point below is limited, so a widget whose top left corner is limited can still stick out of the area by its own width and height. Clearing one of the four fields removes the limit on that side; switching this off drops the whole limit, conditions included.'
+        // its own host so the label can take the size of the side labels of the
+        // X/Y rows below it instead of reading as a heading above them
+      }).render(div(body, 'gridLimitToggle'));
+      body.appendChild(host);
+      body.appendChild(previewHost);
+      body.appendChild(emptyHost);
+
+      // resync on undo / remote updates while the section stays open - and
+      // redraw the area on every edit, whether the fields were rebuilt for it
+      // or the value was typed into them
+      this.addPropertyListener(widget, 'dragLimit', _=>{
+        if(!body.contains(document.activeElement))
+          rebuildLimits();
+        updatePreview();
+      });
+      // an expression side can read the widget's own box, and where the area
+      // is drawn is the parent's coordinate space
+      for(const property of [ 'width', 'height', 'parent', 'x', 'y' ])
+        this.addPropertyListener(widget, property, _=>updatePreview());
+      // and it can read any other property of the widget and any property of
+      // any other widget ("${PROPERTY edge OF board}"), which no list written
+      // down here could know - so every delta is held against the names the
+      // limit actually reads, and the drawing follows a button that moves the
+      // area just as a real drag does
+      this.addDeltaListener(deltaState=>{
+        if(dependencyDeltaMatters(dragLimitDependencies(widget), deltaState))
+          updatePreview();
+      });
+    }, target, `${widget.id}:dragLimit`, {
+      renderSummary: summary=>{
+        // a condition-only limit leaves the four sides empty, so the summary
+        // says how many conditions do the limiting instead of just "on"
+        this.addPropertyListener(widget, 'dragLimit', w=>{
+          const conditions = conditionsOf(w.get('dragLimit')).length;
+          summary.textContent = !dragLimitIsSet(w.get('dragLimit')) ? 'off'
+            : conditions ? `on · ${conditions} condition${conditions == 1 ? '' : 's'}` : 'on';
+        });
+      }
+    });
+    propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.dragLimit));
+
+    // the body is rendered even while the section is collapsed, so the area on
+    // the board follows the headers rather than appearing on every selection -
+    // the Position section around it folds this one away just as well
+    updatePreview = _=>this.updateDragLimitPreview(widget, !section.closest('.collapsibleSection.collapsed'), this.dragLimitPreviewEnabled !== false, empty=>reportEmptyArea(empty));
+    for(let block = section; block; block = block.parentElement && block.parentElement.closest('.collapsibleSection'))
+      $('.collapsibleHeader', block).addEventListener('click', _=>updatePreview());
+    updatePreview();
+  }
+
+  clearDragLimitPreview() {
+    clearTimeout(this.dragLimitPreviewTimer);
+    this.dragLimitPreviewRequest = null;
+    for(const overlay of $a('.dragLimitPreviewOverlay'))
+      overlay.remove();
+  }
+
+  // A drawing samples thousands of positions, so it waits for a short pause
+  // instead of being redrawn between two keystrokes of the very condition it
+  // is drawing.
+  updateDragLimitPreview(widget, sample, draw, report) {
+    clearTimeout(this.dragLimitPreviewTimer);
+    this.dragLimitPreviewRequest = { widget, sample, draw, report };
+    this.dragLimitPreviewTimer = setTimeout(_=>{
+      const request = this.dragLimitPreviewRequest;
+      if(request)
+        this.drawDragLimitPreview(request.widget, request.sample, request.draw, request.report);
+    }, 100);
+  }
+
+  // Draws the area a drag can put the limited point of the widget in (its top
+  // left corner unless alignX/alignY move it), into the widget's parent - the
+  // coordinate space the limit is written in, so the shading covers exactly the
+  // positions a drag will accept and a condition is drawn as written. A
+  // condition can describe any shape at all, so the area is not computed but
+  // sampled: one
+  // canvas pixel per sampled point, asking the widget itself whether its limit
+  // allows that point, blown up to the parent's box by the browser.
+  // The samples also answer a question the limit cannot be asked directly -
+  // whether there is any area at all. Two conditions that contradict each other
+  // hold nowhere, and a limit that holds nowhere lets the widget go anywhere
+  // (nothing may ever be stuck), so it is worth saying out loud; that is why
+  // the sampling happens while the section is open whether the area is drawn on
+  // the board or not. `empty` is reported as null when nothing was sampled.
+  drawDragLimitPreview(widget, sample, draw, report = _=>{}) {
+    this.clearDragLimitPreview();
+    const container = widget.domElement && widget.domElement.parentNode;
+    if(!sample || !container || !dragLimitIsSet(widget.get('dragLimit')))
+      return report(null);
+
+    const width = container.offsetWidth, height = container.offsetHeight;
+    if(!(width > 0) || !(height > 0))
+      return report(null);
+    // a step small enough to show the shape and coarse enough to stay quick
+    // while a condition is being typed (~10k points either way)
+    const step = Math.max(4, Math.round(Math.sqrt(width * height / 10000)));
+    const columns = Math.ceil(width / step), rows = Math.ceil(height / step);
+
+    // a side can be an expression, and an expression can read x and y - then
+    // the rectangle differs at every point and has to be read at each of them.
+    // The widget itself says whether one of them does (the same `varies` a drag
+    // asks), so the ordinary case reads the four sides once instead of 10000
+    // times and the drawing can never be read by other rules than the drag.
+    const rules = widget.dragLimitRules({ x: 0, y: 0 });
+    const fixedRules = rules && rules.varies ? undefined : rules;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'dragLimitPreviewOverlay';
+    canvas.width = columns;
+    canvas.height = rows;
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#2f9e44';
+    let allowed = 0;
+    for(let row = 0; row < rows; ++row)
+      for(let column = 0; column < columns; ++column)
+        // the middle of the cell the pixel stands for, so a boundary running
+        // along the sampling lattice does not depend on rounding
+        if(widget.dragLimitAllows({ x: (column + 0.5) * step, y: (row + 0.5) * step }, fixedRules)) {
+          ++allowed;
+          context.fillRect(column, row, 1, 1);
+        }
+    // Only conditions can hold nowhere: the four sides clamp rather than
+    // refuse, so even an inverted rectangle ("minX": 500, "maxX": 100) leaves
+    // the one line it clamps everything onto - which the lattice would miss and
+    // report as empty.
+    report(allowed == 0 && conditionsOf(widget.get('dragLimit')).length > 0);
+    if(draw)
+      container.appendChild(canvas);
+  }
+
+  updateDragLimit(widget, change) {
+    const current = widget.get('dragLimit');
+    const limit = Object.assign({}, isObjectLike(current) ? current : {});
+    for(const key in change) {
+      if(change[key] === null)
+        delete limit[key];
+      else
+        limit[key] = change[key];
+    }
+    this.inputValueUpdated(widget, 'dragLimit', limit);
+  }
+
+  // One side of the rectangle: a number, or an expression that computes one, so
+  // the side can follow the state ("${PROPERTY width OF board} - 100"). The
+  // same input Scale uses, for the same "a number or something the engine
+  // reads" reason.
+  renderDragLimitNumber(widget, key, label, target) {
+    return new NumberOrTextInput(this, widget, label, {
+      listenTo: [ 'dragLimit' ],
+      nullIfEmpty: true,
+      placeholder: 'none',
+      getValue: _=>dragLimitValue(widget.get('dragLimit'), key),
+      setValue: value=>this.updateDragLimit(widget, { [key]: value }),
+      // a mistyped expression limits nothing at all, so it is reported right
+      // here rather than only in the Debug module's validation table
+      validate: value=>typeof value == 'string' ? expressionError(value, positionNames) : null
+    }).render(target);
+  }
+
+  // 3x3 picker for alignX/alignY - the same one a snap grid uses to say which
+  // point of the widget lands on a grid line, here saying which point of it the
+  // area holds.
+  renderDragLimitAnchor(widget, target) {
+    const positions = [ 0, 0.5, 1 ];
+    return this.renderAnchorPicker(target, {
+      label: 'Limited point',
+      hint: 'The point of the widget box the area holds, and what x and y mean in the fields above and in a condition. Top left is what the engine uses unless you change it, and then the widget can stick out of the area by its own width and height; the middle keeps the widget itself on the area.',
+      onPick: (row, column)=>this.updateDragLimit(widget, { alignX: positions[column] || null, alignY: positions[row] || null }),
+      listen: update=>this.addPropertyListener(widget, 'dragLimit', _=>update({
+        row: positions.indexOf(+dragLimitValue(widget.get('dragLimit'), 'alignY') || 0),
+        column: positions.indexOf(+dragLimitValue(widget.get('dragLimit'), 'alignX') || 0)
+      }))
+    });
+  }
+
+  // The area does not have to be a rectangle: a condition is an inequality in
+  // x and y - the point being tested, in the same coordinates as the four
+  // sides - that a drag keeps true. One per line, all of which have to hold.
+  renderDragLimitCondition(widget, target) {
+    return new TextInput(this, widget, 'Conditions (one per line)', {
+      listenTo: [ 'dragLimit' ],
+      multiline: true,
+      rows: 3,
+      placeholder: 'none',
+      getValue: _=>conditionsOf(widget.get('dragLimit')).join('\n'),
+      setValue: value=>this.updateDragLimit(widget, { condition: conditionValue(value) }),
+      hint: 'An inequality the drag keeps true, so "y > x" keeps the widget below the diagonal. Ordinary maths: x and y are the limited point, ${PROPERTY name} reads a property of this widget and ${PROPERTY name OF id} another widget\'s, exactly as a routine does. "2x" means "2 * x" and "3(x+1)" means "3 * (x+1)", so "2x^2 + y > 4" is written as it looks. Every line has to be true; && and || combine within one line. Each line has to be a comparison rather than a sum: "x - 100" is a number, and a number is true wherever it is not 0. Conditions nothing can satisfy limit nothing at all, because a widget outside its area is always let go.',
+      validate: conditionProblem
+    }).render(target);
   }
 
   renderInheritFromButton(widget, target = null, options = {}) {
@@ -3447,7 +6217,7 @@ class PropertiesModule extends SidebarModule {
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.id = `inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}_${rand().toString(36).substring(3, 7)}`;
+      checkbox.id = editorDomID(`inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}`);
       checkbox.dataset.property = prop;
 
       const isReadOnlyAllMode = modeValue === 'all';
@@ -3551,7 +6321,7 @@ class PropertiesModule extends SidebarModule {
     label.textContent = 'Add source widget:';
     wrap.appendChild(label);
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose a widget to inherit properties from',
       pickerKey: 'inheritFrom',
       apply: pickedWidgetID => {
@@ -3573,11 +6343,64 @@ class PropertiesModule extends SidebarModule {
 
   renderAssociatedWidgetsSection(widget) {
     const hasLinks = [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ]
-      .some(property => this.isOnDemandPropertyValueSet(widget.get(property))) || widget.get('fixedParent') === true;
+      .some(property => this.isOnDemandPropertyValueSet(widget.get(property)))
+      || widget.get('fixedParent') === true || widget.get('hoverInheritVisibleForSeat') === false;
 
     this.renderCollapsibleSection("Widget's links", !hasLinks, body => {
       this.renderAssociatedWidgetsSectionBody(widget, body);
-    }, null, `${widget.id}:links`);
+    }, null, `${widget.id}:links`, {
+      renderSummary: summary => {
+        const update = w => {
+          summary.textContent = this.associatedWidgetsSummary(w);
+        };
+        for(const property of [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom' ])
+          this.addPropertyListener(widget, property, update);
+      }
+    });
+  }
+
+  // one line naming the links that are set, for the collapsed section header
+  associatedWidgetsSummary(widget) {
+    const parts = [];
+
+    // widget ids are in parentheses so they stay tellable apart from the words
+    // around them: parent (w1) · seat (seat1)
+    const parent = widget.get('parent');
+    if(propertyInputIsMulti(parent))
+      parts.push('parent —');
+    else if(this.isOnDemandPropertyValueSet(parent))
+      parts.push(`parent (${parent})`);
+
+    const seatSummary = (property, label) => {
+      const value = widget.get(property);
+      if(propertyInputIsMulti(value))
+        return `${label} —`;
+      const seats = this.seatReferenceToArray(value);
+      if(!seats.length)
+        return null;
+      return `${label} ${seats.length > 2 ? `${seats.length} seats` : `(${seats.join(', ')})`}`;
+    };
+    for(const [ property, label ] of [ [ 'linkedToSeat', 'seat' ], [ 'onlyVisibleForSeat', 'visible for' ] ]) {
+      const seats = seatSummary(property, label);
+      if(seats)
+        parts.push(seats);
+    }
+
+    if(widget.get('hoverInheritVisibleForSeat') === false)
+      parts.push('dragged widgets stay visible');
+
+    const inheritFrom = widget.get('inheritFrom');
+    if(propertyInputIsMulti(inheritFrom)) {
+      parts.push('inherits —');
+    } else {
+      const sources = Object.keys(this.normalizeInheritFromObject(inheritFrom));
+      if(sources.length == 1)
+        parts.push(`inherits from (${sources[0]})`);
+      else if(sources.length)
+        parts.push(`inherits from ${sources.length} widgets`);
+    }
+
+    return parts.length ? parts.join(' · ') : 'none';
   }
 
   renderAssociatedWidgetsSectionBody(widget, target) {
@@ -3590,7 +6413,7 @@ class PropertiesModule extends SidebarModule {
       removeTitle: 'Remove parent',
       onRemove: async () => {
         await this.setWidgetParent(widget, null);
-        await widget.set('fixedParent', null);
+        this.inputValueUpdated(widget, 'fixedParent', null);
       },
       isPropertySet: (property, value) => {
         if(property == 'fixedParent')
@@ -3599,7 +6422,7 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
-    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
+    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat' ], container => {
       const seatSection = this.createOnDemandSectionStructure(container);
 
       this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {
@@ -3613,14 +6436,25 @@ class PropertiesModule extends SidebarModule {
       }, seatSection.contentWrapper, {
         buttonHost: seatSection.newPropertiesWrapper
       });
+
+      this.renderCheckbox(widget, 'Hide widgets dragged over this one', 'hoverInheritVisibleForSeat', seatSection.contentWrapper, {
+        default: true,
+        infoText: 'While a widget is being dragged onto this one it is only shown to the seats this widget is visible to, so a card on its way into a private area is not revealed to everyone until it is dropped. Turn it off to keep the dragged widget visible to all.'
+      });
     }, linksSection.contentWrapper, {
       buttonHost: linksSection.newPropertiesWrapper,
       removeTitle: 'Remove seat links',
+      // hoverInheritVisibleForSeat is on by default, so only an explicit "off"
+      // counts as a reason to open the section
+      isPropertySet: (property, value) => property == 'hoverInheritVisibleForSeat'
+        ? value === false
+        : this.isOnDemandPropertyValueSet(value),
       onRemove: () => {
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} removed seat links of widget ${widget.id} in editor`);
-        widget.set('linkedToSeat', null);
-        widget.set('onlyVisibleForSeat', null);
+        this.inputValueUpdated(widget, 'linkedToSeat', null);
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', null);
+        this.inputValueUpdated(widget, 'hoverInheritVisibleForSeat', null);
         batchEnd();
       }
     });
@@ -3656,7 +6490,16 @@ class PropertiesModule extends SidebarModule {
         Object.assign(options, cssValueOptions(this, widget, def.cssKey, def.cssProperty || 'css', 'default', { effectiveSelector: def.effectiveSelector }));
       if(def.propertyOrCss)
         Object.assign(options, propertyOrCssOptions(this, widget, def.property, def.propertyOrCss));
-      new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
+      const dom = new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
+      // a def can say when it is worth offering at all, so an input that
+      // cannot change anything about this particular widget stays out of the
+      // way instead of reading as broken
+      if(def.available) {
+        const update = _=>dom.style.display = def.available(widget) ? '' : 'none';
+        for(const property of def.availableListenTo || [])
+          this.addPropertyListener(widget, property, update);
+        update();
+      }
     }
   }
 
@@ -3669,11 +6512,19 @@ class PropertiesModule extends SidebarModule {
   typeSectionProperties(widget) {
     const sections = this.typeSections(widget);
     const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
+    if(this.showsDropLimit(widget))
+      properties.push('dropLimit');
+    if(widget.get('type') == 'pile')
+      properties.push('showLimit');
     for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
       for(const def of sections[group] || [])
-        if(def.property)
+        // an input that is not being offered leaves its property to the
+        // generic "Other properties" list, so a value it has stays reachable
+        if(def.property && (!def.available || def.available(widget)))
           properties.push(def.property);
-    properties.push(...svgReplaceColorProperties(widget.get('svgReplaces')));
+    properties.push(...svgReplaceProperties(widget.get('svgReplaces')));
+    if(widget.defaults.svgReplaces !== undefined)
+      properties.push('svgReplaces');
     return properties;
   }
 
@@ -3715,7 +6566,7 @@ class PropertiesModule extends SidebarModule {
       this.renderColorRow(widget, hover);
     }
 
-    this.renderSvgReplaceColors(widget);
+    this.renderSvgReplacesEditor(widget);
 
     // extra color-like subsections (e.g. holder droptarget/droppable) sit
     // after the colors and before the Style inputs
@@ -3759,6 +6610,8 @@ class PropertiesModule extends SidebarModule {
     new NumberInput(this, widget, 'Border width', Object.assign({}, cssOptions, {
       getValue: () => {
         const value = cssOptions.getValue();
+        if(propertyInputIsMulti(value))
+          return value;
         const width = Number.parseFloat(value);
         return Number.isFinite(width) ? width : null;
       },
@@ -3817,151 +6670,51 @@ class PropertiesModule extends SidebarModule {
   }
 
   // Chrome-devtools-like editor for a css-like property: one collapsible
-  // section per class/selector with a plain declaration text input.
+  // section per class/selector with a plain declaration text input. The editor
+  // itself is CssEditor (cssEditor.js), shared with the deck editor - this only
+  // points it at the widget's own value.
   renderCssPropertyEditor(widget, property, target, options = {}) {
-    const classSuggestions = options.classSuggestions || [];
-    const wrap = div(target, 'cssEditor');
-    if(options.showTitle !== false) {
-      const title = div(wrap, 'propertyPickerSectionTitle');
-      title.textContent = property;
-      if(editorPropertyHints[property] || property == 'css')
-        propertyInfoButton(title, html(editorPropertyHints[property] || editorPropertyHints.css));
-    }
-    const container = div(wrap);
-
-    const renderClassSection = (className, classValue, wholeProperty) => {
-      const section = div(container, 'cssClassSection');
-      const stateKey = `${widget.id}:${property}:${className}`;
-      // the "default" class is the widget itself - show a friendlier label
-      const displayName = className == 'default' ? 'Base widget' : className;
-      this.renderCollapsibleSection(displayName, false, body => {
-        const textarea = document.createElement('textarea');
-        textarea.value = cssTextFromValue(classValue);
-        textarea.placeholder = 'property: value;';
-        textarea.oninput = () => {
-          const text = textarea.value;
-          if(wholeProperty) {
-            this.inputValueUpdated(widget, property, text.trim() === '' ? null : text);
-          } else {
-            // class values have to be objects so the engine (and this editor)
-            // recognizes the nested form; refuse text the declaration parser
-            // would destroy (e.g. data URIs)
-            if(text.trim() && !cssStringRoundTrips(text)) {
-              textarea.classList.add('inputError');
-              return;
-            }
-            textarea.classList.remove('inputError');
-            const css = widget.get(property);
-            const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-            newCss[className] = cssStringToObject(text);
-            this.inputValueUpdated(widget, property, newCss);
-          }
-          if(widget.applyDeltaToDOM)
-            widget.applyDeltaToDOM({ [property]: widget.get(property) });
-        };
-        body.appendChild(textarea);
-      }, section, stateKey);
-
-      if(className == 'default')
-        propertyInfoButton($('.collapsibleHeader', section), 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".');
-
-      if(!wholeProperty) {
-        const header = $('.collapsibleHeader', section);
-        const deleteButton = document.createElement('button');
-        deleteButton.setAttribute('icon', 'delete');
-        deleteButton.title = `Remove ${className}`;
-        deleteButton.style.marginLeft = 'auto';
-        deleteButton.style.minWidth = '26px';
-        deleteButton.style.padding = '0';
-        deleteButton.onclick = e => {
-          e.stopPropagation();
-          const css = widget.get(property);
-          const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-          delete newCss[className];
-          const keys = Object.keys(newCss);
-          // unwrap the nested form when only the default class remains
-          const newValue = keys.length == 0 ? null : (keys.length == 1 && keys[0] == 'default' ? newCss.default : newCss);
-          this.inputValueUpdated(widget, property, typeof newValue === 'string' && newValue.trim() === '' ? null : newValue);
-          if(widget.applyDeltaToDOM)
-            widget.applyDeltaToDOM({ [property]: widget.get(property) });
-          rebuild();
-        };
-        header.appendChild(deleteButton);
-      }
-    };
-
-    const addClass = className => {
-      const value = widget.get(property);
-      let newCss;
-      if(hasNestedCSSClasses(value)) {
-        if(value[className] !== undefined)
-          return;
-        newCss = Object.assign({}, value, { [className]: {} });
-      } else {
-        newCss = { [className]: {} };
-        if(this.isOnDemandPropertyValueSet(value) && className != 'default') {
-          // convert the previous value into the default class of the nested form
-          if(isObjectLike(value))
-            newCss.default = value;
-          else
-            newCss.default = cssStringRoundTrips(String(value)) ? cssStringToObject(String(value)) : value;
-        }
-      }
-      this.inputValueUpdated(widget, property, newCss);
-      rebuild();
-    };
-
-    const rebuild = () => {
-      container.innerHTML = '';
-      const value = widget.get(property);
-      if(hasNestedCSSClasses(value)) {
-        for(const [ className, classValue ] of Object.entries(value))
-          renderClassSection(className, classValue, false);
-      } else {
-        renderClassSection('default', value, true);
-      }
-
-      if(options.allowClasses === false)
-        return;
-
-      // dropdown (datalist) of common + per-type selectors, minus the ones
-      // already present, so the field has a picker but still allows free text
-      const type = widget.get('type') || 'basic';
-      const isPresent = selector => hasNestedCSSClasses(value) && value[selector] !== undefined;
-      const dropdownSuggestions = [ ...new Set([ ...commonCssSelectors, ...(cssSelectorSuggestions[type] || []), ...classSuggestions ]) ]
-        .filter(selector => !isPresent(selector));
-
-      const addRow = div(container, 'cssAddClassRow');
-      const nameInput = document.createElement('input');
-      nameInput.placeholder = 'new class/selector, e.g. ":hover"';
-      addRow.appendChild(nameInput);
-      if(dropdownSuggestions.length) {
-        const listID = `cssSelectors_${widget.id}_${property}_${rand().toString(36).substring(3, 9)}`;
-        const datalist = document.createElement('datalist');
-        datalist.id = listID;
-        for(const selector of dropdownSuggestions) {
-          const option = document.createElement('option');
-          option.value = selector;
-          datalist.appendChild(option);
-        }
-        addRow.appendChild(datalist);
-        nameInput.setAttribute('list', listID);
-      }
-      const addButton = document.createElement('button');
-      addButton.setAttribute('icon', 'add');
-      addButton.title = 'Add a class/selector section';
-      addButton.onclick = () => {
-        if(nameInput.value.trim())
-          addClass(nameInput.value.trim());
-      };
-      addRow.appendChild(addButton);
-    };
-
-    rebuild();
-    this.addPropertyListener(widget, property, () => {
-      if(!container.contains(document.activeElement))
-        rebuild();
+    const editor = new CssEditor({
+      property,
+      stateKey: `${widget.id}:${property}`,
+      state: this.cssEditorState,
+      // widgetOwnValue, not get(): a basic widget resolves get() through its
+      // shown face, so a face overriding css would be rendered - and written
+      // back - as the widget's own declarations
+      getValue: _=>widgetOwnValue(widget, property),
+      setValue: value=>this.inputValueUpdated(widget, property, value),
+      onChanged: _=>{
+        if(widget.applyDeltaToDOM)
+          widget.applyDeltaToDOM({ [property]: widget.get(property) });
+      },
+      allowClasses: options.allowClasses,
+      showTitle: options.showTitle !== false,
+      titleInfo: html(cssPropertyHint(property)),
+      defaultInfo: 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".',
+      classSuggestions: options.classSuggestions,
+      selectorSuggestions: cssSelectorSuggestions[widget.get('type') || 'basic'],
+      propertySuggestions: this.cssPropertySuggestions(widget),
+      listen: refresh=>this.addPropertyListener(widget, property, refresh)
     });
+    editor.render(target);
+  }
+
+  // css property names offered in the declaration rows: the common ones plus
+  // the custom properties this widget type is styled with
+  cssPropertySuggestions(widget) {
+    const sections = this.typeSections(widget);
+    const custom = [];
+    for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
+      for(const def of sections[group] || [])
+        if(def.propertyOrCss)
+          custom.push(def.propertyOrCss);
+    return [ ...new Set(custom.concat(commonCssProperties)) ];
+  }
+
+  // Free text field with a datalist of suggestions plus an add button
+  // (suggestionAddRow in propertyInputs.js, shared with the deck editor).
+  renderSuggestionAddRow(target, className, options) {
+    return suggestionAddRow(target, className, options);
   }
 
   // color inputs of one subsection side by side; their pickers open below
@@ -3973,60 +6726,443 @@ class PropertiesModule extends SidebarModule {
     this.renderInputs(widget, defs, row, { pickerGroup: { target: pickerArea, current: null } });
   }
 
-  renderSvgReplaceColors(widget) {
-    const properties = svgReplaceColorProperties(widget.get('svgReplaces'));
-    if(!properties.length)
+  // Curated editor for the raw svgReplaces map (only widget types built on
+  // ImageWidget/Dice/Timer support it - see their addDefaults). Each entry
+  // maps a literal found in an uploaded SVG (e.g. "#000" or "#borderColor") to
+  // the widget property whose value replaces it - see getSvgReplaces()/getImage()
+  // in imagewidget.js and the equivalent logic in dice.js/timer.js. The file is
+  // scanned for the values it uses in fill/stroke/stroke-width/opacity, so both
+  // the replacements offered and the inputs below the map come from the SVG
+  // itself instead of being guessed.
+  renderSvgReplacesEditor(widget) {
+    if(widget.defaults.svgReplaces === undefined)
       return;
-    this.renderCollapsibleSection('SVG colors', true, body => {
-      this.renderColorRow(widget, properties.map(property => ({
-        label: svgReplaceColorLabel(property),
-        property,
-        kind: 'color'
-      })), body);
-    }, null, `${widget.id}:svgColors`);
+
+    let refreshInputs = () => {};
+    let renderSwatches = () => {};
+    let updateVisibility = () => {};
+    let imageIsSvg = false;
+
+    // collapsed by default for widgets that don't use it yet, so first-time
+    // users editing a plain widget aren't confronted with advanced SVG jargon
+    const existingMap = widget.get('svgReplaces');
+    const hasReplaces = isObjectLike(existingMap) && Object.keys(existingMap).length > 0;
+    const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
+      div(body, 'svgReplacesHelp', 'Map a value in your SVG file - a color, a stroke width, an opacity - to a widget property that supplies it.');
+
+      const list = div(body, 'svgReplacesList');
+
+      const rebuild = () => {
+        list.innerHTML = '';
+        const map = widget.get('svgReplaces');
+        const rows = isObjectLike(map) ? Object.entries(map) : [];
+        if(!rows.length)
+          div(list, 'propertyPickerEmpty', 'No SVG replacements yet.');
+        for(const [ selector, property ] of rows) {
+          const row = div(list, 'svgReplaceRow');
+
+          const selectorInput = document.createElement('input');
+          selectorInput.type = 'text';
+          selectorInput.value = selector;
+          selectorInput.placeholder = 'value in the SVG';
+          selectorInput.title = 'The text inside the SVG file that gets replaced, e.g. a color like #000, a stroke width like 2, or a custom name like #borderColor.';
+
+          const arrow = document.createElement('span');
+          arrow.className = 'svgReplaceArrow';
+          arrow.textContent = '→';
+
+          const propertyInput = document.createElement('input');
+          propertyInput.type = 'text';
+          propertyInput.value = Array.isArray(property) ? property.join(', ') : (property || '');
+          propertyInput.placeholder = 'widget property, e.g. color';
+          propertyInput.title = 'The widget property whose value is substituted for it. A comma separated list applies a gradient (see the wiki).';
+
+          const commit = () => {
+            const newSelector = selectorInput.value.trim();
+            const rawProperty = propertyInput.value.trim();
+            if(!newSelector || !rawProperty) {
+              rebuild();
+              return;
+            }
+            const newProperty = rawProperty.indexOf(',') != -1 ?
+              rawProperty.split(',').map(part => part.trim()).filter(part => part) : rawProperty;
+            const current = widget.get('svgReplaces');
+            const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+            if(newSelector != selector) {
+              if(Object.prototype.hasOwnProperty.call(newMap, newSelector)) {
+                // renaming onto an existing color would silently overwrite it - refuse and revert
+                rebuild();
+                return;
+              }
+              delete newMap[selector];
+            }
+            newMap[newSelector] = newProperty;
+            this.inputValueUpdated(widget, 'svgReplaces', newMap);
+            if(widget.applyDeltaToDOM)
+              widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
+            rebuild();
+            refreshInputs();
+            renderSwatches();
+          };
+          selectorInput.onchange = commit;
+          propertyInput.onchange = commit;
+
+          const removeButton = document.createElement('button');
+          removeButton.setAttribute('icon', 'delete');
+          removeButton.title = 'Remove this replacement';
+          removeButton.onclick = () => {
+            const current = widget.get('svgReplaces');
+            const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+            delete newMap[selector];
+            this.inputValueUpdated(widget, 'svgReplaces', Object.keys(newMap).length ? newMap : null);
+            if(widget.applyDeltaToDOM)
+              widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
+            rebuild();
+            refreshInputs();
+            renderSwatches();
+          };
+
+          row.appendChild(selectorInput);
+          row.appendChild(arrow);
+          row.appendChild(propertyInput);
+          row.appendChild(removeButton);
+        }
+      };
+      rebuild();
+
+      // adding a replacement starts from the file rather than from a guessed
+      // #000: the value comes from the SVG and the property from the attribute
+      // it was used in (fill becomes color, stroke borderColor and so on)
+      const addReplacementFor = (selector, proposedProperty) => {
+        const current = widget.get('svgReplaces');
+        const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+        const existingProperties = new Set(Object.values(newMap).flat());
+        let property = proposedProperty;
+        let j = 1;
+        while(existingProperties.has(property))
+          property = `${proposedProperty}${++j}`;
+        newMap[selector] = property;
+        this.inputValueUpdated(widget, 'svgReplaces', newMap);
+        if(widget.applyDeltaToDOM)
+          widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
+        rebuild();
+        refreshInputs();
+        renderSwatches();
+      };
+
+      // the values the SVG uses in fill/stroke/stroke-width/opacity/..., one
+      // clickable suggestion each; also what tells the inputs below the map
+      // which kind of value each replacement stands for
+      let svgCandidates = [];
+      const attributesBySelector = () => {
+        const attributes = {};
+        for(const candidate of svgCandidates)
+          attributes[candidate.value] = candidate.attributes;
+        return attributes;
+      };
+      const svgColorsHost = div(body, 'svgColorsList');
+      renderSwatches = () => {
+        svgColorsHost.innerHTML = '';
+        const map = widget.get('svgReplaces');
+        const used = new Set(isObjectLike(map) ? Object.keys(map) : []);
+        const suggestions = svgCandidates.filter(candidate => !used.has(candidate.value));
+        if(!suggestions.length)
+          return;
+        div(svgColorsHost, 'svgColorsLabel', 'Values found in the SVG - click to add a replacement:');
+        for(const candidate of suggestions) {
+          const property = svgReplacePropertyForAttributes(candidate.attributes);
+          // an SVG written for replacement uses a placeholder where a color
+          // goes (#borderColor), which paints nothing - those say which
+          // attribute they came from like the non-color ones do
+          const paints = svgReplaceInputKind('', candidate.attributes) == 'color' &&
+            (candidate.value == 'currentColor' || cssValueIsColor(candidate.value));
+          const swatch = document.createElement('button');
+          swatch.className = 'svgColorSwatch';
+          swatch.type = 'button';
+          swatch.textContent = `${candidate.ambiguous ? '⚠ ' : ''}${paints ? '' : `${candidate.attributes[0]}: `}${candidate.value}`;
+          if(paints) {
+            swatch.style.backgroundColor = candidate.value == 'currentColor' ? 'black' : candidate.value;
+            swatch.style.color = candidate.value == 'currentColor' ? 'white' : contrastAnyColor(candidate.value, 1);
+          }
+          swatch.title = `Used as ${candidate.attributes.join(', ')} in the SVG - replace it with the widget property "${property}".`;
+          if(candidate.ambiguous) {
+            // getSVG() replaces the value as a plain substring, so this one
+            // would also hit the places it appears in outside those attributes
+            swatch.classList.add('ambiguous');
+            swatch.title += `\n"${candidate.value}" also appears elsewhere in the file and would be replaced there too.`;
+          }
+          swatch.onclick = () => addReplacementFor(candidate.value, property);
+          svgColorsHost.appendChild(swatch);
+        }
+      };
+      const loadSvgCandidates = () => {
+        const requested = widget.get('image');
+        fetchSvgReplaceCandidates(requested).then(({ isSvg, candidates }) => {
+          // switching image A -> B fires two fetches and the slower one would
+          // otherwise win, leaving the section showing (or hiding) what the
+          // previous image said - a result for an image that is no longer set
+          // is not an answer to the question being asked
+          if(!svgColorsHost.isConnected || requested !== widget.get('image'))
+            return;
+          imageIsSvg = isSvg;
+          svgCandidates = candidates;
+          renderSwatches();
+          refreshInputs();
+          updateVisibility();
+        });
+      };
+      loadSvgCandidates();
+      if(widget.defaults.image !== undefined)
+        this.addPropertyListener(widget, 'image', loadSvgCandidates);
+
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.textContent = 'Add replacement';
+      addButton.onclick = () => {
+        const current = widget.get('svgReplaces');
+        const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+        const unused = svgCandidates.find(candidate => newMap[candidate.value] === undefined);
+        if(unused)
+          return addReplacementFor(unused.value, svgReplacePropertyForAttributes(unused.attributes));
+        // without a file to read, fall back to a name that does not look like a
+        // color that isn't really there (#color2 rather than #0002)
+        let selector = '#000';
+        let i = 1;
+        while(newMap[selector] !== undefined)
+          selector = `#color${++i}`;
+        addReplacementFor(selector, 'color');
+      };
+      body.appendChild(addButton);
+
+      // one input per property the map points at, using the input its value
+      // wants - a color picker for a fill, a 0..1 number for an opacity, a
+      // plain number for a stroke width. Its own rebuildable host so adding,
+      // renaming or removing a mapping refreshes just these inputs (and drops
+      // the property listeners of the generation it replaces).
+      const inputsHost = div(body, 'svgReplaceColorsHost');
+      this.renderRebuildable(rebuildInputs => {
+        refreshInputs = rebuildInputs;
+        inputsHost.innerHTML = '';
+        const defs = svgReplaceInputDefs(widget.get('svgReplaces'), attributesBySelector());
+        const colors = defs.filter(def => def.kind == 'color');
+        if(colors.length)
+          this.renderColorRow(widget, colors, inputsHost);
+        const others = defs.filter(def => def.kind != 'color');
+        if(others.length)
+          this.renderInputs(widget, others, inputsHost);
+      });
+
+      // resync on undo / remote updates - without this the rows can go stale
+      // while the panel is open and re-editing a stale row against a newer map
+      this.addPropertyListener(widget, 'svgReplaces', () => {
+        if(!body.contains(document.activeElement)) {
+          rebuild();
+          refreshInputs();
+          renderSwatches();
+        }
+      });
+    }, null, `${widget.id}:svgReplacesEditor`);
+    propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.svgReplaces));
+
+    // only worth showing once there's an SVG to map values from - a plain
+    // bitmap or unset image has nothing for this editor to act on. Keep it
+    // visible if replacements already exist so an existing setup doesn't
+    // vanish out from under the user (e.g. while the image is briefly cleared).
+    if(widget.defaults.image !== undefined) {
+      updateVisibility = () => {
+        const stillHasReplaces = isObjectLike(widget.get('svgReplaces')) && Object.keys(widget.get('svgReplaces')).length > 0;
+        section.style.display = (imageIsSvg || stillHasReplaces) ? '' : 'none';
+      };
+      this.addPropertyListener(widget, 'image', updateVisibility);
+      this.addPropertyListener(widget, 'svgReplaces', updateVisibility);
+      updateVisibility();
+    }
   }
 
   renderBehaviorSection(widget, title = 'Behavior') {
     const defs = this.typeSections(widget).behavior || [];
-    if(!defs.length)
+    const dropLimitHere = this.showsDropLimit(widget) && !this.hasDropTargetEditor(widget);
+    if(!defs.length && !dropLimitHere)
       return;
     this.addSubHeader(title);
     this.renderInputs(widget, defs);
+    if(dropLimitHere)
+      this.renderDropLimitInput(widget);
+    if(widget.get('type') == 'pile')
+      this.renderPileShowLimit(widget);
+  }
+
+  // A panel with a "Target widgets" section says what the widget takes in
+  // there, and the drop limit is rendered with it - anything else (a pile, a
+  // widget given a dropTarget in the JSON editor, or a multi-selection, which
+  // has no drop target editor) gets it in Behavior instead.
+  hasDropTargetEditor(widget) {
+    return !widget.isMulti && [ 'holder', 'line' ].indexOf(widget.get('type')) != -1;
+  }
+
+  // Appears right below the limit that gives it something to show: without a
+  // limit, or with a handle that shows a fixed text instead of the card count,
+  // the checkbox changes nothing and stays out of the way.
+  renderPileShowLimit(widget) {
+    const dom = new CheckboxInput(this, widget, 'Show the limit on the handle', {
+      property: 'showLimit',
+      hint: editorPropertyHints.showLimit
+    }).render(this.moduleDOM);
+    const update = _=>dom.style.display = widget.get('dropLimit') > -1 && widget.get('text') === null ? '' : 'none';
+    this.addPropertyListener(widget, 'dropLimit', update);
+    this.addPropertyListener(widget, 'text', update);
+  }
+
+  // dropLimit says nothing on a widget nothing can be dropped into, so its
+  // input only shows up once the widget takes drops at all. A pile has no
+  // dropTarget and still takes cards - it snaps them in through pileSnapRange -
+  // so it is named here rather than derived. A pile is temporary, so the input
+  // outlives the pile only because an edit on a pile is mirrored into the pile
+  // template of its deck (see setAndMirrorToPileTemplate).
+  takesDrops(widget) {
+    return widget.get('type') == 'pile' || asArray(widget.get('dropTarget') || []).length > 0;
+  }
+
+  // A limit that is already set is always offered, even on a widget that takes
+  // no drops right now: it would be stuck otherwise, since being offered here
+  // is what keeps it out of the generic "Other properties" list.
+  showsDropLimit(widget) {
+    return this.takesDrops(widget) || widget.get('dropLimit') > -1;
+  }
+
+  // -1 is how "no limit" is stored, but an empty field says it better
+  renderDropLimitInput(widget, options = {}) {
+    return new NumberInput(this, widget, options.label || 'Drop limit', {
+      listenTo: [ 'dropLimit' ],
+      min: 0,
+      step: 1,
+      nullIfEmpty: true,
+      placeholder: 'no limit',
+      hint: options.hint || editorPropertyHints.dropLimit,
+      getValue: _=>widget.get('dropLimit') > -1 ? widget.get('dropLimit') : null,
+      setValue: options.setValue || (value=>this.inputValueUpdated(widget, 'dropLimit', value === null ? -1 : value))
+    }).render(options.target || this.moduleDOM);
   }
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
-    const automationProperties = this.renderAutomationsSection(widget);
-    const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
-    const remaining = Object.keys(widget.state).filter(property => [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1);
-    if(!remaining.length)
-      return;
-    this.addSubHeader('Other properties');
-    this.renderGenericProperties(widget, exclude);
+    const container = div(this.moduleDOM);
+    // where the Automations section renderEvents() builds goes: in front of the
+    // raw property list
+    this.otherPropertiesHeader = container;
+
+    let rebuild = () => {};
+    this.renderRebuildable(rebuildBody => {
+      rebuild = rebuildBody;
+      container.innerHTML = '';
+      // Every widget edits its routines in the Automations section
+      // renderEvents() builds (see #3034). A pile is the exception: it is
+      // temporary and renderEvents skips it, so it keeps the buttons that open
+      // the routines of its pile template in the JSON editor.
+      const automationProperties = widget.get('type') == 'pile' ? this.renderAutomationsSection(widget, container) : [];
+      const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
+      this.addSubHeader('Other properties', container);
+      this.renderGenericProperties(widget, exclude, container);
+    });
+
+    // typeSectionProperties only excludes a conditionally-curated property
+    // (e.g. Icon/Symbol color, hidden via .available/basicColorIsUsed while it
+    // paints nothing) while that curation is currently shown for this widget.
+    // Its curated input hides itself live when availability flips, but without
+    // also rebuilding this section a value it leaves behind would stay excluded
+    // from here too and become editable nowhere. The listeners sit outside the
+    // rebuildable: addPropertyListener runs its updater right away, so
+    // registering them inside would rebuild while rebuilding, forever.
+    const conditional = [];
+    for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
+      for(const def of this.typeSections(widget)[group] || [])
+        if(def.available)
+          conditional.push(def);
+    const availability = _=>JSON.stringify(conditional.map(def=>!!def.available(widget)));
+    let lastAvailability = availability();
+    for(const property of new Set(conditional.flatMap(def=>def.availableListenTo || [])))
+      this.addPropertyListener(widget, property, _=>{
+        const signature = availability();
+        if(signature === lastAvailability)
+          return;
+        lastAvailability = signature;
+        rebuild();
+      });
   }
 
-  renderAutomationsSection(widget) {
+  renderAutomationsSection(widget, target = this.moduleDOM) {
+    // A pile is temporary, so a routine that only lives on it goes with it -
+    // the one that lasts is the one in the pile template. With the template
+    // switch on, that is where these buttons point.
+    const templateDecks = this.pileTemplateDecksFor(widget, 'clickRoutine');
+    const templates = templateDecks.map(deck => (deck.get('cardDefaults') || {}).onPileCreation).filter(isObjectLike);
+
     const playerRoutines = [ 'clickRoutine', 'doubleClickRoutine', 'changeRoutine', 'enterRoutine', 'leaveRoutine' ]
-      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined);
+      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined || templates.some(template => template[property] !== undefined));
     if(!playerRoutines.length)
       return [];
 
-    this.addSubHeader('Automations');
+    this.addSubHeader('Automations', target);
+    if(templateDecks.length)
+      div(target, 'pileHelp', `A routine on this pile disappears with it, so these open the pile template in <b>${html(templateDecks.map(deck => deck.id).join(', '))}</b> instead - the "onPileCreation" every new pile of these cards is built from.`);
+
     for(const property of playerRoutines) {
-      const row = div(this.moduleDOM, 'propertyInput automationInput');
+      const row = div(target, 'propertyInput automationInput');
+      const plainName = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
       const label = document.createElement('label');
-      label.textContent = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
+      label.textContent = plainName;
       row.appendChild(label);
-      const button = document.createElement('button');
-      button.setAttribute('icon', 'data_object');
-      button.textContent = `Edit ${property} in JSON editor`;
-      button.onclick = () => {
-        const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
-        if(jsonModuleButton)
-          jsonModuleButton.click();
-      };
-      row.appendChild(button);
+      if(!templateDecks.length) {
+        const button = document.createElement('button');
+        button.setAttribute('icon', 'data_object');
+        button.textContent = 'Edit in the JSON editor';
+        button.title = property;
+        button.onclick = () => this.openInJsonEditor(null, []);
+        row.appendChild(button);
+        continue;
+      }
+      // a pile spanning several decks has one "onPileCreation" per deck - a
+      // single button pointing at only the first would let the routine
+      // added through it diverge from the others, so cards of those decks
+      // would stop piling together (Deck.cardPropertyGet / widget.js)
+      for(const deck of templateDecks) {
+        const button = document.createElement('button');
+        button.setAttribute('icon', 'data_object');
+        button.textContent = templateDecks.length > 1 ? `Edit in ${deck.id}` : 'Edit in the pile template';
+        button.title = `${property} (in the pile template of ${deck.id})`;
+        button.onclick = () => this.openInJsonEditor(deck, [ 'cardDefaults', 'onPileCreation', property ]);
+        row.appendChild(button);
+      }
     }
     return playerRoutines;
+  }
+
+  // Bring up the JSON editor, optionally on another widget and with the caret
+  // on one of its properties - a button pointing at a routine deep inside a
+  // deck lands on it instead of at the top of a long widget.
+  openInJsonEditor(widget, path) {
+    const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
+    if(jsonModuleButton)
+      jsonModuleButton.click();
+    if(widget)
+      setSelection([ widget ]);
+    if(!path || !path.length)
+      return;
+
+    // walk the keys in order through the formatted JSON and select the last
+    // one that is there - a template without the routine yet lands on the
+    // object it has to be added to
+    const text = $('#jeText') ? $('#jeText').textContent : '';
+    let index = -1;
+    let key = null;
+    for(const step of path) {
+      const found = text.indexOf(`"${step}"`, index == -1 ? 0 : index);
+      if(found == -1)
+        break;
+      index = found;
+      key = step;
+    }
+    if(index != -1)
+      jeSelect(index, index + key.length + 2, true);
   }
 
   // --- shared curated inputs ---
@@ -4083,12 +7219,14 @@ class PropertiesModule extends SidebarModule {
 
         const controls = div(rowDOM, 'faceOrderControls');
         const up = document.createElement('button');
-        up.setAttribute('icon', 'arrow_upward');
+        up.innerText = '▲';
+        up.title = 'Move this value up';
         up.disabled = index == 0;
         up.onclick = () => { const next = getArray(); next.splice(index - 1, 0, next.splice(index, 1)[0]); save(next); rebuild(); };
         controls.appendChild(up);
         const down = document.createElement('button');
-        down.setAttribute('icon', 'arrow_downward');
+        down.innerText = '▼';
+        down.title = 'Move this value down';
         down.disabled = index == arr.length - 1;
         down.onclick = () => { const next = getArray(); next.splice(index + 1, 0, next.splice(index, 1)[0]); save(next); rebuild(); };
         controls.appendChild(down);
@@ -4119,39 +7257,110 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.renderBasicContentSection(widget, true);
+    this.renderFacesEditor(widget);
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'html' ]);
+    // the face editor only curates these when it can actually edit them, so a
+    // widget with a broken faces value keeps its generic inputs
+    const curatedByFaceEditor = Array.isArray(widget.get('faces')) ? [ 'faces', 'activeFace', 'faceCycle' ] : [];
+    this.renderOtherPropertiesSection(widget, [ 'html' ].concat(curatedByFaceEditor));
   }
 
   // Content section of basic widgets: text with a text/symbol mode dropdown,
-  // then icon and image as side by side blocks.
+  // then icon and image as side by side blocks - or, for basic widgets, a
+  // large HTML field instead once "Use custom HTML" is switched on.
   renderBasicContentSection(widget, supportsHTML = false) {
     this.addSubHeader('Content');
 
-    if(supportsHTML && widget.get('html') !== null) {
-      const htmlInput = new TextInput(this, widget, 'HTML', {
-        property: 'html',
-        multiline: true,
-        nullIfEmpty: true,
-        hint: editorPropertyHints.html
-      });
-      htmlInput.render(this.moduleDOM);
-      htmlInput.input.rows = 10;
+    if(!supportsHTML) {
+      this.renderBasicContentInputs(widget, this.moduleDOM);
       return;
     }
 
-    const currentSymbolClass = () => String(widget.get('classes') || '').split(/\s+/)
-      .find(className => textSymbolClasses.includes(className)) || null;
-    const setSymbolClass = symbolClass => {
-      const classes = String(widget.get('classes') || '').split(/\s+/)
-        .filter(className => className && !textSymbolClasses.includes(className));
-      if(symbolClass)
-        classes.push(symbolClass);
-      this.inputValueUpdated(widget, 'classes', classes.length ? classes.join(' ') : null);
-    };
+    const container = div(this.moduleDOM, 'basicContentBody');
 
-    const textRow = div(this.moduleDOM, 'propertyInput');
+    // widgetOwnValue, not get(): a basic widget resolves get() through its
+    // shown face, so a face setting html would switch this section into HTML
+    // mode and write the face's html onto the widget on the first keystroke
+    const ownHTML = _=>widgetOwnValue(widget, 'html');
+
+    // the HTML textarea and renderBasicContentInputs() both register property
+    // listeners, so - like the face list - a mode switch has to drop the
+    // previous generation's listeners instead of just wiping the DOM
+    let rebuild = () => {};
+    this.renderRebuildable(rebuildBody => {
+      rebuild = rebuildBody;
+      container.innerHTML = '';
+
+      const toggleRow = div(container, 'contentHtmlToggleRow');
+      const toggleCheckbox = document.createElement('input');
+      toggleCheckbox.type = 'checkbox';
+      toggleCheckbox.id = `htmlToggle_${widget.id}`;
+      toggleCheckbox.checked = ownHTML() !== null;
+      const toggleLabel = document.createElement('label');
+      toggleLabel.htmlFor = toggleCheckbox.id;
+      toggleLabel.textContent = 'Use custom HTML instead of text/icon/image';
+      toggleCheckbox.onchange = () => {
+        // switching off drops back to the regular text/icon/image content,
+        // leaving those properties as they were; switching back on this
+        // session restores what was last typed (stashed below) instead of
+        // always starting blank, so exploring the checkbox is non-destructive
+        if(!toggleCheckbox.checked) {
+          const current = ownHTML();
+          if(typeof current == 'string' && current !== '')
+            lastHtmlByWidgetId.set(widget.id, current);
+        }
+        this.inputValueUpdated(widget, 'html', toggleCheckbox.checked ? (lastHtmlByWidgetId.get(widget.id) || '') : null);
+        rebuild();
+      };
+      toggleRow.appendChild(toggleCheckbox);
+      toggleRow.appendChild(toggleLabel);
+      propertyInfoButton(toggleRow, html(editorPropertyHints.html));
+
+      if(ownHTML() !== null) {
+        // no nullIfEmpty here: the toggle above, not an emptied field, decides
+        // between HTML mode and text/icon/image - otherwise clearing the
+        // textarea would set html to null and kick the user out of HTML mode
+        // mid-edit
+        const htmlInput = new TextInput(this, widget, 'HTML', {
+          property: 'html',
+          multiline: true,
+          hint: editorPropertyHints.html
+        });
+        htmlInput.render(container);
+        htmlInput.input.rows = 10;
+      } else {
+        this.renderBasicContentInputs(widget, container);
+      }
+    });
+
+    this.addPropertyListener(widget, 'html', () => {
+      // only rebuild on a mode switch (null <-> non-null); typing in the
+      // textarea itself is handled by TextInput's own listener
+      const usingHTML = ownHTML() !== null;
+      if(usingHTML != (container.querySelector('.textInput.multiline') !== null))
+        rebuild();
+    });
+  }
+
+  // Text (with a text/symbol mode dropdown) plus icon and image as side by
+  // side blocks - the "classic" basic-widget content editor, also reused
+  // in the custom-HTML toggle above and by widget types without HTML support.
+  renderBasicContentInputs(widget, target) {
+    // these inputs write the widget's own properties, so they have to read
+    // them too - a basic widget resolves get() through its shown face, and
+    // transforming the face's classes into the widget would lose both
+    const ownValue = property => widgetOwnValue(widget, property);
+
+    const currentSymbolClass = () => {
+      const value = ownValue('classes');
+      return String(propertyInputIsMulti(value) ? '' : (value || '')).split(/\s+/)
+        .find(className => textSymbolClasses.includes(className)) || null;
+    };
+    const setSymbolClass = symbolClass =>
+      this.inputValueTransformed(widget, 'classes', current => classesWithSymbolClass(current, symbolClass));
+
+    const textRow = div(target, 'propertyInput');
     const textLabel = document.createElement('label');
     textLabel.textContent = 'Text';
     propertyInfoButton(textLabel, html(editorPropertyHints.text));
@@ -4186,10 +7395,12 @@ class PropertiesModule extends SidebarModule {
     textRow.appendChild(symbolButton);
 
     const update = () => {
-      if(document.activeElement !== textInput) {
-        const value = widget.get('text');
-        textInput.value = value === null || value === undefined ? '' : value;
-      }
+      const value = ownValue('text');
+      const multi = propertyInputIsMulti(value);
+      textRow.classList.toggle('multiDiffers', multi);
+      textInput.placeholder = multi ? '— multiple —' : '';
+      if(document.activeElement !== textInput)
+        textInput.value = (multi || value === null || value === undefined) ? '' : value;
       modeSelect.value = currentSymbolClass() ? 'symbol' : 'text';
       symbolButton.style.display = currentSymbolClass() ? '' : 'none';
     };
@@ -4197,22 +7408,466 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'text', update);
     this.addPropertyListener(widget, 'classes', update);
 
-    const mediaRow = div(this.moduleDOM, 'contentMediaRow');
+    const mediaRow = div(target, 'contentMediaRow');
     // pickers open below the row so the two blocks never move around, and
     // only one of them is open at a time
-    const pickerGroup = { target: div(this.moduleDOM, 'contentMediaPickers'), current: null };
+    const pickerGroup = { target: div(target, 'contentMediaPickers'), current: null };
 
     const iconBlock = div(mediaRow, 'contentMediaBlock');
     const iconTitle = div(iconBlock, 'contentMediaTitle');
     iconTitle.textContent = 'Icon';
     propertyInfoButton(iconTitle, html(editorPropertyHints.icon));
-    new IconInput(this, widget, null, { property: 'icon', pickerGroup }).render(iconBlock);
+    const iconInput = new IconInput(this, widget, null, { property: 'icon', pickerGroup, getValue: _=>ownValue('icon') });
+    iconInput.render(iconBlock);
+
+    // color/scale controls stay visible here (rather than only inside the
+    // picker popout) so they don't disappear once you click away or reselect
+    // the widget - https://discord.com/channels/770758631146782780/1530345502212882535/1530388340141064363
+    const iconOptionsBlock = div(iconBlock, 'iconInlineOptions');
+    const renderIconOptions = () => {
+      if(iconOptionsBlock.contains(document.activeElement))
+        return;
+      iconOptionsBlock.innerHTML = '';
+      const value = iconInput.getValue();
+      if(!iconSupportsBasicOptions(value))
+        return;
+      div(iconOptionsBlock, 'appearanceSubTitle', 'Icon color & scale');
+      iconInput.renderIconOptionControls(iconOptionsBlock, value, pickerGroup);
+    };
+    this.addPropertyListener(widget, 'icon', renderIconOptions);
+    renderIconOptions();
 
     const imageBlock = div(mediaRow, 'contentMediaBlock');
     const imageTitle = div(imageBlock, 'contentMediaTitle');
     imageTitle.textContent = 'Image';
     propertyInfoButton(imageTitle, html(editorPropertyHints.image));
-    new ImageInput(this, widget, null, { property: 'image', pickerGroup }).render(imageBlock);
+    new ImageInput(this, widget, null, { property: 'image', pickerGroup, getValue: _=>ownValue('image') }).render(imageBlock);
+  }
+
+  // --- basic widget face editor ---
+  //
+  // Unlike a dice face (one value) a face here is a free set of property
+  // overrides, so the list shows one preview row per face and only the face
+  // you open gets its properties - and with them the color/icon/image
+  // pickers - rendered, keeping the list readable and the pickers unambiguous.
+
+  // read-only view of the face list
+  basicFaces(widget) {
+    const faces = widget.get('faces');
+    return Array.isArray(faces) ? faces : [];
+  }
+
+  // copy to mutate before writing it back: widget.set() compares by JSON, so
+  // editing the live state array in place would make the write a no-op
+  editableFaces(widget) {
+    return faceList(this.basicFaces(widget));
+  }
+
+  // shared by the dice and the basic widget face editors: write the face list
+  // and keep activeFace pointing at a face that still exists
+  setFacesProperty(widget, faces, activeFace = null) {
+    const removedFaces = this.basicFaces(widget).length > faces.length;
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} edited faces of ${widget.get('type') || 'basic'} ${widget.id} in editor`);
+    widget.set('faces', faces);
+    if(activeFace !== null)
+      widget.set('activeFace', activeFace);
+    // only clean up after ourselves: an activeFace that was already past the
+    // end before this edit is the game's business, not the editor's
+    else if(removedFaces && activeFaceIndex(widget) >= faces.length)
+      widget.set('activeFace', Math.max(0, faces.length - 1));
+    batchEnd();
+  }
+
+  setFaceProperty(widget, index, property, value) {
+    const faces = this.editableFaces(widget);
+    // the row may be from before someone else removed faces from the widget
+    if(index < 0 || index >= faces.length)
+      return;
+    if(!isObjectLike(faces[index]))
+      faces[index] = {};
+    faces[index][property] = value;
+    this.setFacesProperty(widget, faces);
+  }
+
+  removeFaceProperty(widget, index, property) {
+    const faces = this.editableFaces(widget);
+    if(index < 0 || index >= faces.length)
+      return;
+    if(isObjectLike(faces[index]))
+      delete faces[index][property];
+    this.setFacesProperty(widget, faces);
+  }
+
+  // start a new face property from what the widget itself shows, so it is a
+  // copy you tweak rather than an empty field that blanks the widget
+  faceNewPropertyValue(widget, property) {
+    const base = widgetOwnValue(widget, property);
+    const value = base !== undefined && base !== null ? base : faceNewPropertyValues[property];
+    return value === undefined ? '' : JSON.parse(JSON.stringify(value));
+  }
+
+  renderFacesEditor(widget) {
+    this.addSubHeader('Faces');
+
+    // the engine only reads a list of faces; refuse to edit (and so overwrite)
+    // anything else that ended up in the property
+    if(!Array.isArray(widget.get('faces'))) {
+      div(this.moduleDOM, 'facesHint', 'The faces property of this widget is not a list, so this widget has no faces. Fix it in the JSON editor to edit them here.');
+      return;
+    }
+
+    // the sections above show and write the widget's own properties, but the
+    // shown face wins over them on the table - say so instead of leaving the
+    // discrepancy to be discovered
+    const note = div(this.moduleDOM, 'facesActiveNote');
+
+    const cycleHost = div(this.moduleDOM, 'facesCycle');
+    new SelectInput(this, widget, 'On click', {
+      // the widget's own faceCycle, not the one a shown face may override it
+      // with - that one is edited as a property of that face
+      listenTo: [ 'faceCycle' ],
+      getValue: _=>widgetOwnValue(widget, 'faceCycle'),
+      setValue: value=>this.inputValueUpdated(widget, 'faceCycle', value),
+      hint: 'Which face clicking the widget flips to.',
+      choices: [
+        { value: 'forward',  text: 'show the next face' },
+        { value: 'backward', text: 'show the previous face' },
+        { value: 'random',   text: 'show a random face' }
+      ]
+    }).render(cycleHost);
+
+    const list = div(this.moduleDOM, 'facesEditor');
+
+    const addFace = document.createElement('button');
+    addFace.setAttribute('icon', 'add');
+    addFace.className = 'green facesAddFace';
+    addFace.textContent = 'Add face';
+    addFace.onclick = _=>{
+      const faces = this.editableFaces(widget);
+      faces.push({});
+      expandedFaceByWidgetId.set(widget.id, faces.length - 1);
+      this.setFacesProperty(widget, faces);
+    };
+    this.moduleDOM.appendChild(addFace);
+
+    // rebuilding drops focus, so only do it when the shape of the faces
+    // changed (a face or a property added, removed or reordered) - editing a
+    // value keeps the rows and lets the inputs update themselves
+    const signature = _=>JSON.stringify(this.basicFaces(widget).map(face=>Object.keys(faceObject(face))).concat([ expandedFaceByWidgetId.get(widget.id) ]));
+    let lastSignature = null;
+    let rebuild = _=>{};
+
+    // the rows register the property listeners of their inputs, so they are
+    // built through renderRebuildable - it drops the ones of the generation it
+    // replaces instead of leaving them to fire on every later delta
+    this.renderRebuildable(rebuildRows=>{
+      rebuild = rebuildRows;
+      const scrollTop = this.moduleDOM.scrollTop;
+      lastSignature = signature();
+      this.clearFaceRowRefresh();
+      list.innerHTML = '';
+      const faces = this.basicFaces(widget);
+      // pointless with one face, but never hide a value the widget actually has
+      cycleHost.style.display = faces.length > 1 || widget.state.faceCycle !== undefined ? '' : 'none';
+      // a single face is the widget itself - nothing to pick between, so the
+      // row (which can only ever be "Face 1") is noise; keep just the add button
+      if(faces.length > 1)
+        faces.forEach((face, index)=>this.renderFaceRow(widget, index, list, rebuildRows));
+      this.updateActiveFaceMarkers(widget, list, note);
+      this.moduleDOM.scrollTop = scrollTop;
+    });
+
+    this.addPropertyListener(widget, 'faces', _=>{
+      if(signature() !== lastSignature)
+        rebuild();
+      else
+        this.scheduleFaceRowRefresh(widget, list);
+    });
+    this.addPropertyListener(widget, 'activeFace', _=>this.updateActiveFaceMarkers(widget, list, note));
+    // a face preview is the whole widget, so most other properties change it
+    // too - except the ones each preview overrides for itself
+    this.addDeltaListener(state=>{
+      if(state && state[widget.id] && Object.keys(state[widget.id]).some(property=>facePreviewIndependentProperties.indexOf(property) == -1))
+        this.scheduleFaceRowRefresh(widget, list);
+    });
+  }
+
+  renderFaceRow(widget, index, container, rebuild) {
+    const faces = this.basicFaces(widget);
+    const face = faceObject(faces[index]);
+    const expanded = expandedFaceByWidgetId.get(widget.id) === index;
+
+    const row = div(container, `faceRow${expanded ? ' expanded' : ''}`);
+    row.dataset.face = index;
+
+    const head = div(row, 'faceRowHead');
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'faceRowToggle';
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.title = expanded ? 'Close this face' : 'Edit the properties of this face';
+    toggle.onclick = _=>{
+      expandedFaceByWidgetId.set(widget.id, expanded ? -1 : index);
+      rebuild();
+    };
+    head.appendChild(toggle);
+
+    // at the row's left edge rather than after the title/summary, where it
+    // used to land right next to the eye/up/down/delete button cluster and
+    // read as one of them instead of as the row's own expand toggle
+    renderCollapseArrow(toggle, !expanded);
+    this.renderFacePreview(widget, index, toggle);
+    const info = div(toggle, 'faceRowInfo');
+    div(info, 'faceRowTitle', `${html(`Face ${index + 1}`)}<span class=faceActiveTag>shown</span>`);
+    div(info, 'faceRowSummary', html(faceSummary(face)));
+
+    const actions = div(head, 'faceRowActions');
+
+    const show = document.createElement('button');
+    show.className = 'faceShowButton';
+    show.setAttribute('icon', 'visibility');
+    show.onclick = _=>widget.set('activeFace', index);
+    actions.appendChild(show);
+
+    this.renderFaceOrderControls(actions, index, faces.length, (from, to)=>{
+      // inside the callback: reorderFaces refuses moves it cannot make, and
+      // then the open face has not moved either
+      this.reorderFaces(widget, this.editableFaces(widget), from, to, (newFaces, activeFace)=>{
+        if(expandedFaceByWidgetId.has(widget.id))
+          expandedFaceByWidgetId.set(widget.id, indexAfterReorder(expandedFaceByWidgetId.get(widget.id), from, to));
+        this.setFacesProperty(widget, newFaces, activeFace);
+      });
+    });
+
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.className = 'red';
+    // the engine flips through faces modulo their count, so keep at least one
+    remove.disabled = faces.length < 2;
+    remove.title = remove.disabled ? 'A widget needs at least one face' : 'Remove this face';
+    remove.onclick = _=>{
+      expandedFaceByWidgetId.set(widget.id, -1);
+      this.removeFace(widget, this.editableFaces(widget), index, (newFaces, activeFace)=>this.setFacesProperty(widget, newFaces, activeFace));
+    };
+    actions.appendChild(remove);
+
+    if(expanded)
+      this.renderFaceBody(widget, index, row);
+  }
+
+  renderFaceBody(widget, index, row) {
+    const body = div(row, 'faceRowBody');
+    const face = faceObject(this.basicFaces(widget)[index]);
+
+    const duplicate = document.createElement('button');
+    duplicate.setAttribute('icon', 'content_copy');
+    duplicate.className = 'faceDuplicate';
+    duplicate.textContent = 'Duplicate face';
+    duplicate.onclick = _=>{
+      const faces = this.editableFaces(widget);
+      faces.splice(index + 1, 0, JSON.parse(JSON.stringify(faceObject(faces[index]))));
+      expandedFaceByWidgetId.set(widget.id, index + 1);
+      this.setFacesProperty(widget, faces);
+    };
+    body.appendChild(duplicate);
+
+    if(!Object.keys(face).length)
+      div(body, 'facesHint', 'This face changes nothing yet. Add the properties it should override below.');
+
+    const rows = div(body, 'facePropertyRows');
+    // pickers open below the properties so opening one never moves the rows
+    const pickerGroup = { target: div(body, 'contentMediaPickers'), current: null };
+    for(const property of Object.keys(face))
+      this.renderFaceProperty(widget, index, property, rows, pickerGroup);
+
+    this.renderFaceAddProperty(widget, index, body);
+  }
+
+  renderFaceProperty(widget, index, property, target, pickerGroup) {
+    const value = faceObject(this.basicFaces(widget)[index])[property];
+    const kind = facePropertyKind(property, value);
+    const row = div(target, `facePropertyRow${kind == 'json' || kind == 'css' ? ' structured' : ''}`);
+
+    const options = {
+      listenTo: [ 'faces' ],
+      pickerGroup,
+      hint: editorPropertyHints[property],
+      getValue: _=>{
+        const current = faceObject(this.basicFaces(widget)[index])[property];
+        return current === undefined ? null : current;
+      },
+      setValue: newValue=>this.setFaceProperty(widget, index, property, newValue)
+    };
+
+    if(kind == 'json' || kind == 'css')
+      this.renderFaceStructuredProperty(widget, kind, property, row, options);
+    else if(kind == 'color')
+      new ColorInput(this, widget, property, options).render(row);
+    else if(kind == 'icon')
+      new IconInput(this, widget, property, options).render(row);
+    else if(kind == 'image')
+      new ImageInput(this, widget, property, options).render(row);
+    else if(kind == 'checkbox')
+      new CheckboxInput(this, widget, property, options).render(row);
+    else if(kind == 'number')
+      new NumberInput(this, widget, property, options).render(row);
+    else
+      new TextInput(this, widget, property, Object.assign({ multiline: property == 'html' || (typeof value == 'string' && value.indexOf('\n') != -1) }, options)).render(row);
+
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'close');
+    remove.className = 'facePropertyRemove';
+    remove.title = `Stop changing ${property} on this face (the widget's own value applies again)`;
+    remove.onclick = _=>this.removeFaceProperty(widget, index, property);
+    row.appendChild(remove);
+  }
+
+  // Routines, other structured values and the css of a face get a textarea:
+  // they are the face properties that can be long, and a single line input
+  // would make a per-face clickRoutine unusable.
+  renderFaceStructuredProperty(widget, kind, property, target, options) {
+    const wrap = div(target, 'facePropertyStructured');
+    const label = document.createElement('label');
+    label.textContent = property;
+    if(options.hint)
+      propertyInfoButton(label, html(options.hint));
+    wrap.appendChild(label);
+
+    const textarea = document.createElement('textarea');
+    textarea.placeholder = kind == 'css' ? 'property: value;' : 'JSON';
+    textarea.oninput = _=>{
+      if(kind == 'css') {
+        // keep the stored shape: a face css object stays an object, a plain
+        // declaration string stays a string
+        const text = textarea.value;
+        if(isObjectLike(options.getValue())) {
+          if(text.trim() && !cssStringRoundTrips(text)) {
+            textarea.classList.add('inputError');
+            return;
+          }
+          textarea.classList.remove('inputError');
+          options.setValue(cssStringToObject(text));
+        } else {
+          options.setValue(text);
+        }
+        return;
+      }
+      try {
+        const parsed = JSON.parse(textarea.value);
+        textarea.classList.remove('inputError');
+        options.setValue(parsed);
+      } catch(e) {
+        textarea.classList.add('inputError');
+      }
+    };
+    wrap.appendChild(textarea);
+
+    this.addPropertyListener(widget, 'faces', _=>{
+      if(document.activeElement === textarea)
+        return;
+      const value = options.getValue();
+      textarea.value = kind == 'css' ? cssTextFromValue(value) : JSON.stringify(value, null, 2);
+      textarea.rows = Math.max(2, Math.min(14, textarea.value.split('\n').length));
+      textarea.classList.remove('inputError');
+    });
+  }
+
+  renderFaceAddProperty(widget, index, target) {
+    const faces = this.basicFaces(widget);
+    const face = faceObject(faces[index]);
+    // what the widget and the other faces already use first: overriding one of
+    // those is what a face is normally for
+    const suggestions = [ ...new Set([
+      ...faces.flatMap((other, otherIndex)=>otherIndex == index ? [] : Object.keys(faceObject(other))),
+      ...Object.keys(widget.state),
+      ...faceSuggestedProperties
+    ]) ].filter(property=>face[property] === undefined && faceForbiddenProperties.indexOf(property) == -1);
+
+    this.renderSuggestionAddRow(target, 'faceAddPropertyRow', {
+      placeholder: 'property to change, e.g. image',
+      title: 'Change another property on this face',
+      suggestions,
+      onAdd: property=>{
+        if(faceForbiddenProperties.indexOf(property) != -1 || face[property] !== undefined)
+          return false;
+        this.setFaceProperty(widget, index, property, this.faceNewPropertyValue(widget, property));
+      }
+    });
+  }
+
+  renderFacePreview(widget, index, target) {
+    const preview = div(target, 'facePreview');
+    preview.dataset.face = index;
+    this.drawFacePreview(widget, preview);
+    return preview;
+  }
+
+  // The whole widget as that face would show it. Like the dice face previews
+  // this builds the copy by hand rather than through renderReadonlyCopy: a
+  // unique id per copy would burn one seeded random per redraw (breaking
+  // reproducible rooms) and leave every redraw's copy behind in the global
+  // registries keyed by widget id. One id per face index (not per redraw)
+  // keeps that bookkeeping bounded while still giving every simultaneously
+  // open row its own Widget.css() style element - sharing a single id across
+  // rows meant nested per-face css collided and only the last-drawn face's
+  // rules survived, applied to every row.
+  drawFacePreview(widget, preview) {
+    preview.innerHTML = '';
+    const copy = new widget.constructor(`${facePreviewWidgetID}_${preview.dataset.face}`);
+    copy.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
+      activeFace: +preview.dataset.face,
+      // the copy is not on the table, and a truthy dropTarget would register
+      // it as one for real drags (StateManaged.applyDeltaToDOM)
+      dropTarget: null
+    }), preview);
+    copy.inheritFromUnregister();
+    copy.globalUpdateListenersUnregister();
+    scalePreviewToFit(preview, copy.domElement);
+  }
+
+  // A widget can have a lot of faces, so coalesce the redraws that typing in
+  // one of their inputs would otherwise trigger per keystroke. Both the
+  // preview and the summary of a row are derived from the face list.
+  scheduleFaceRowRefresh(widget, list) {
+    this.clearFaceRowRefresh();
+    this.faceRowRefreshTimer = setTimeout(_=>{
+      this.faceRowRefreshTimer = null;
+      if(!list.isConnected)
+        return;
+      const faces = this.basicFaces(widget);
+      for(const row of $a('.faceRow', list)) {
+        $('.faceRowSummary', row).textContent = faceSummary(faces[+row.dataset.face]);
+        this.drawFacePreview(widget, $('.facePreview', row));
+      }
+    }, 150);
+  }
+
+  clearFaceRowRefresh() {
+    if(this.faceRowRefreshTimer)
+      clearTimeout(this.faceRowRefreshTimer);
+    this.faceRowRefreshTimer = null;
+  }
+
+  updateActiveFaceMarkers(widget, list, note) {
+    // activeFaceIndex, not get(): a routine can leave a string in activeFace,
+    // which would match no row and count up like "Face 11"
+    const activeFace = activeFaceIndex(widget);
+    for(const row of $a('.faceRow', list)) {
+      const isActive = +row.dataset.face === activeFace;
+      row.classList.toggle('activeFace', isActive);
+      const show = $('.faceShowButton', row);
+      show.classList.toggle('active', isActive);
+      show.disabled = isActive;
+      show.title = isActive ? 'This face is currently shown' : 'Show this face on the table';
+    }
+
+    const overridden = Object.keys(faceObject(this.basicFaces(widget)[activeFace]));
+    note.style.display = overridden.length ? '' : 'none';
+    note.innerHTML = overridden.length
+      ? html(`Face ${activeFace + 1} is shown, so its ${overridden.join(', ')} ${overridden.length == 1 ? 'overrides' : 'override'} what the sections above set.`)
+      : '';
   }
 
   renderForButton(widget) {
@@ -4392,18 +8047,266 @@ class PropertiesModule extends SidebarModule {
 
   renderForPile(widget) {
     this.renderTypeHeader(widget);
-    div(this.moduleDOM, '', `
-      <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
-    `);
-    const card = widget.children().find(child => child.get('type') == 'card');
-    const deck = card && widgets.get(card.get('deck'));
-    if(deck) {
-      const open = document.createElement('button');
-      open.setAttribute('icon', 'style');
-      open.textContent = 'Open deck properties';
-      open.onclick = _=>setSelection([ deck ]);
-      this.moduleDOM.appendChild(open);
+    this.renderPileTemplateMode(widget);
+    this.renderBasicSection(widget);
+
+    this.addSubHeader('Handle');
+    div(this.moduleDOM, 'pileHelp', 'The badge on the pile: it counts the cards and drags the whole stack. The pile itself is invisible - what you see on the table are its cards.');
+
+    this.renderPileHandleText(widget);
+    this.renderPileHandlePosition(widget);
+    this.renderPileHandleSize(widget);
+
+    this.addAppearanceSubTitle('Colors');
+    const handleColors = div(this.moduleDOM, 'colorFlexRow');
+    const handlePickers = div(this.moduleDOM, 'contentMediaPickers');
+    const handleGroup = { target: handlePickers, current: null };
+    // no border color: the handle has no border to color, so it would need a
+    // width and a style as well - those are one CSS section below
+    for(const color of [
+      { label: 'Text', key: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background', key: 'background', labelIcon: 'format_color_fill' }
+    ])
+      new ColorInput(this, widget, color.label, cssValueOptions(this, widget, color.key, 'handleCSS', 'default', {
+        pickerGroup: handleGroup,
+        labelIcon: color.labelIcon,
+        effectiveSelector: '.handle'
+      })).render(handleColors);
+
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget);
+    this.renderPileTemplateSection(widget);
+
+    this.renderOtherPropertiesSection(widget, [ 'text', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition' ]);
+  }
+
+  // Sits above everything else, because it says what every input below it
+  // writes to: this pile plus the template new piles of these cards are built
+  // from, or - with the switch on - this one pile only.
+  renderPileTemplateMode(widget) {
+    const block = div(this.moduleDOM, 'pileTemplateMode');
+    const decks = this.pileDecks(widget);
+    const deckNames = html(decks.map(deck => deck.id).join(', '));
+
+    // the "pile is temporary" mechanic behind all of this is background, not
+    // the rule a newcomer needs first - it moves into the (i) hint so the
+    // bold line above it can say what matters right now: where an edit goes
+    const temporaryHint = 'A pile is temporary: it disappears as soon as it holds a single card, and new piles are built from the pile template of the cards in them.';
+
+    if(!decks.length) {
+      const rule = div(block, 'pileHelp warning', 'This pile holds no cards of a deck, so there is no template to write to - everything below applies to <b>this pile only</b> and is gone with it.');
+      propertyInfoButton(rule, temporaryHint);
+      return;
     }
+
+    const rule = this.pileEditsTemplate
+      ? div(block, 'pileHelp', `Changes below apply to <b>this pile and to the pile template</b> of ${deckNames}.`)
+      : div(block, 'pileHelp warning', `Changes below apply to <b>this pile only</b>.`);
+    propertyInfoButton(rule, this.pileEditsTemplate
+      ? `${temporaryHint} That template is what this pile - and every pile of ${deckNames} that comes after it - is built from.`
+      : `${temporaryHint} They are gone with it unless you also store them in the pile template of ${deckNames} at the bottom of this panel.`);
+
+    const modeSwitch = new CheckboxInput(this, widget, 'Edit this pile only', {
+      listenTo: [],
+      getValue: _=>!this.pileEditsTemplate,
+      setValue: value=>{
+        this.pileEditsTemplate = !value;
+        // the switch changes what this block and the Automations section say
+        // and where their buttons point, so the panel is drawn again - the
+        // selection is unchanged, so it keeps its scroll position and folds
+        this.onSelectionChangedWhileActive([ widget ]);
+      },
+      hint: 'Leave the pile template alone and change nothing but the pile in front of you - for a pile that is meant to look different from the other piles of its deck. While a game is being built, the template is what you want.'
+    });
+    modeSwitch.render(block);
+    // listenTo is empty (this is not a widget property), so nothing fires the
+    // initial update the switch would otherwise get from a property listener
+    modeSwitch.update(modeSwitch.getValue());
+
+    // With the switch on, every edit below is mirrored into cardDefaults -
+    // which a deck that sets onPileCreation in a card type or face template
+    // never reads, so the line above would promise the edit reached a template
+    // that no new pile of those cards is built from. The "Pile template"
+    // section carries the same warning, but it only exists with the switch off.
+    if(this.pileEditsTemplate) {
+      const overriddenDecks = this.pileTemplateOverriddenDecks(decks);
+      if(overriddenDecks.length)
+        div(block, 'pileHelp warning', `${html(overriddenDecks.map(deck => deck.id).join(', '))} sets "onPileCreation" in a card type or face template. That wins over the deck-wide template, so those cards keep building their piles the way they do now, whatever you change here.`);
+    }
+  }
+
+  // The handle shows the number of cards unless "text" gives it something
+  // else, which is what almost every pile wants. As an empty field with a grey
+  // "number of cards" in it that read like a placeholder for a text the pile
+  // shows literally - so it is a choice of two now, and the field only appears
+  // for the one that needs it.
+  renderPileHandleText(widget) {
+    new SelectInput(this, widget, 'Handle shows', {
+      listenTo: [ 'text' ],
+      choices: [
+        { value: 'count', text: 'The number of cards in the pile' },
+        { value: 'text',  text: 'A fixed text' }
+      ],
+      getValue: _=>widgetOwnValue(widget, 'text') === null ? 'count' : 'text',
+      setValue: value=>this.inputValueUpdated(widget, 'text', value == 'count' ? null : (this.lastPileHandleText.get(widget.id) || 'Pile')),
+      hint: 'The handle counts the cards of the pile and keeps counting as cards come and go. A fixed text replaces that count and stays the same however many cards are in the pile.'
+    }).render(this.moduleDOM);
+
+    // no nullIfEmpty: clearing the field would switch back to the card count
+    // and hide the input the user is typing in
+    const textInput = new TextInput(this, widget, 'Text', { property: 'text' });
+    textInput.render(this.moduleDOM);
+    this.addPropertyListener(widget, 'text', w=>{
+      const fixed = widgetOwnValue(w, 'text') !== null;
+      textInput.dom.style.display = fixed ? '' : 'none';
+      if(fixed)
+        this.lastPileHandleText.set(widget.id, String(widgetOwnValue(w, 'text')));
+    });
+  }
+
+  // handlePosition is a free string the pile matches "bottom"/"middle" (y) and
+  // "right"/"center" (x) in, plus "static", which pins the handle to the top
+  // left corner and never moves it
+  renderPileHandlePosition(widget) {
+    const rows = [ 'top', 'middle', 'bottom' ];
+    const columns = [ 'left', 'center', 'right' ];
+    const positionOf = value => {
+      const text = String(value);
+      if(text == 'static')
+        return null;
+      return {
+        row: text.match(/middle/) ? 1 : (text.match(/bottom/) ? 2 : 0),
+        column: text.match(/center/) ? 1 : (text.match(/right/) ? 2 : 0)
+      };
+    };
+
+    this.renderAnchorPicker(this.moduleDOM, {
+      label: 'Position',
+      hint: 'Corner of the pile the handle sits in. Close to the edge of the board the pile flips the handle to the opposite side so it stays reachable.',
+      disabledWithoutActive: true,
+      onPick: (row, column)=>this.inputValueUpdated(widget, 'handlePosition', `${rows[row]} ${columns[column]}`),
+      listen: update=>this.addPropertyListener(widget, 'handlePosition', w=>update(positionOf(w.get('handlePosition'))))
+    });
+
+    new CheckboxInput(this, widget, 'Fixed in the top left corner', {
+      listenTo: [ 'handlePosition' ],
+      getValue: _=>String(widget.get('handlePosition')) == 'static',
+      // "static" drops the position along with the flipping, so going back
+      // needs a corner again - remember this widget's last one
+      setValue: value=>{
+        if(value)
+          this.lastPileHandlePosition.set(widget.id, String(widget.get('handlePosition')));
+        this.inputValueUpdated(widget, 'handlePosition', value ? 'static' : (this.lastPileHandlePosition.get(widget.id) || 'top right'));
+      },
+      hint: 'Pin the handle to the top left corner of the pile: it stays there even at the edge of the board, where the handle would otherwise move inward to stay reachable.'
+    }).render(this.moduleDOM);
+  }
+
+  // handleSize is either "auto" (40px, halved on small piles) or a pixel number
+  renderPileHandleSize(widget) {
+    const sizeRow = div(this.moduleDOM, 'propertyInlineRow');
+    new CheckboxInput(this, widget, 'Automatic size', {
+      listenTo: [ 'handleSize' ],
+      getValue: _=>widget.get('handleSize') == 'auto',
+      setValue: value=>this.inputValueUpdated(widget, 'handleSize', value ? 'auto' : 40),
+      hint: 'Use a 40 pixel handle, halved on piles smaller than 50 pixels.'
+    }).render(sizeRow);
+
+    // no nullIfEmpty: clearing the field would switch back to the automatic
+    // size and hide the input the user is typing in
+    const sizeInput = new NumberInput(this, widget, 'Size (px)', {
+      listenTo: [ 'handleSize' ],
+      min: 1,
+      step: 1,
+      getValue: _=>{
+        const size = widget.get('handleSize');
+        return size == 'auto' ? null : size;
+      },
+      setValue: value=>this.inputValueUpdated(widget, 'handleSize', value)
+    });
+    sizeInput.render(sizeRow);
+    this.addPropertyListener(widget, 'handleSize', w=>sizeInput.dom.style.display = w.get('handleSize') == 'auto' ? 'none' : '');
+
+    new NumberInput(this, widget, 'Corner offset', {
+      property: 'handleOffset',
+      step: 1,
+      // the pile builds "--phPosition:-<offset>px", so a negative offset is
+      // not a css value at all and the handle loses its position
+      min: 0,
+      unit: 'px',
+      hint: 'How far the handle sticks out over the corner of the pile, in pixels.'
+    }).render(this.moduleDOM);
+  }
+
+  // cardDefaults is the last place a card looks for a property: a deck that
+  // sets onPileCreation in a card type or face template ignores what is written
+  // to the deck-wide template (Deck.cardPropertyGet).
+  pileTemplateOverriddenDecks(decks) {
+    return decks.filter(deck => {
+      const cardTypes = deck.get('cardTypes') || {};
+      const faceTemplates = deck.get('faceTemplates') || [];
+      return Object.values(cardTypes).some(cardType => isObjectLike(cardType) && cardType.onPileCreation !== undefined)
+        || faceTemplates.some(face => isObjectLike(face) && isObjectLike(face.properties) && face.properties.onPileCreation !== undefined);
+    });
+  }
+
+  // Automatically created piles are built from the cards' onPileCreation, which
+  // for a deck lives in its cardDefaults - so the pile in front of you is a
+  // preview of a template that is edited somewhere else entirely.
+  renderPileTemplateSection(widget) {
+    // With the mode switch off, every change already writes straight into the
+    // template (renderPileTemplateMode / inputValueUpdated), so this section -
+    // whose whole point is to push this pile's settings into the template by
+    // hand - has nothing to add and would just be a redundant, disabled-feeling
+    // copy of what already happened automatically.
+    if(this.pileEditsTemplate)
+      return;
+
+    const decks = this.pileDecks(widget);
+
+    this.addSubHeader('Pile template');
+    div(this.moduleDOM, 'pileHelp', decks.length
+      ? 'The "onPileCreation" of the cards\' deck, which every new pile of those cards is built from. The switch at the top of this panel decides whether the settings above are written into it as you make them.'
+      : 'Piles come and go with the cards in them: a pile that holds a single card disappears. New piles are built from the "onPileCreation" template of the cards that form them.');
+    if(!decks.length)
+      return;
+
+    const deckNames = decks.map(deck => deck.id).join(', ');
+    if(decks.length > 1)
+      div(this.moduleDOM, 'pileHelp', `This pile holds cards of ${decks.length} decks (${deckNames}). Cards only pile up when their templates are identical, so saving writes the same template to all of them.`);
+
+    const overriddenDecks = this.pileTemplateOverriddenDecks(decks);
+    if(overriddenDecks.length)
+      div(this.moduleDOM, 'pileHelp warning', `${html(overriddenDecks.map(deck => deck.id).join(', '))} sets "onPileCreation" in a card type or face template. That wins over the deck-wide template below, so those cards keep building their piles the way they do now.`);
+
+    // the whole set at once, for a pile that was set up with the switch off or
+    // before the template existed - an edit made with it on is already there
+    const templateProperties = [ 'text', 'css', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition', 'pileSnapRange', 'alignChildren', 'inheritChildZ', 'borderRadius', 'classes' ];
+    const buttonText = `Copy every setting of this pile into ${deckNames}`;
+    const save = document.createElement('button');
+    save.setAttribute('icon', 'content_copy');
+    save.textContent = buttonText;
+    save.title = `Copy the pile settings above into ${decks.length > 1 ? 'these decks' : 'the deck'}, so every pile made from ${decks.length > 1 ? 'their' : 'its'} cards looks like this one.`;
+    save.onclick = _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} saved pile ${widget.id} as the pile template of ${deckNames} in editor`);
+      for(const deck of decks) {
+        const cardDefaultsNow = deck.get('cardDefaults') || {};
+        // only the settings this editor curates are replaced - whatever else
+        // the template sets on a new pile (a clickRoutine, movable, ...) stays
+        let template = isObjectLike(cardDefaultsNow.onPileCreation) ? cardDefaultsNow.onPileCreation : {};
+        // what the pile shows, not what is in its state: a pile that has no
+        // handlePosition of its own still looks like the default one, so the
+        // template has to drop the property instead of keeping an old value
+        for(const property of templateProperties)
+          template = pileTemplateWith(widget, template, property, widget.get(property));
+        deck.set('cardDefaults', Object.assign({}, cardDefaultsNow, { onPileCreation: template }));
+      }
+      batchEnd();
+      save.textContent = `Saved to ${deckNames}`;
+      setTimeout(_=>save.textContent = buttonText, 2000);
+    };
+    this.moduleDOM.appendChild(save);
   }
 
   renderForScoreboard(widget) {
@@ -4411,6 +8314,11 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
 
     this.addSubHeader('Scoreboard');
+
+    // --- Seats: whose scores the table shows ---
+    this.addAppearanceSubTitle('Seats');
+    this.renderScoreboardSeats(widget);
+    new CheckboxInput(this, widget, 'Include empty seats', { property: 'showAllSeats', hint: editorPropertyHints.showAllSeats }).render(this.moduleDOM);
 
     // --- Score: where scores come from and how they total up ---
     this.addAppearanceSubTitle('Score');
@@ -4458,7 +8366,6 @@ class PropertiesModule extends SidebarModule {
 
     // --- Advanced: less common tweaks, collapsed, last inside Scoreboard ---
     this.renderAdvancedSection(widget, body => {
-      new CheckboxInput(this, widget, 'Include empty seats', { property: 'showAllSeats', hint: editorPropertyHints.showAllSeats }).render(body);
       new CheckboxInput(this, widget, 'Autosize columns', { property: 'autosizeColumns', hint: editorPropertyHints.autosizeColumns }).render(body);
       const firstColInput = new NumberInput(this, widget, 'First column width', { property: 'firstColWidth', min: 10, max: 500, step: 1, hint: editorPropertyHints.firstColWidth });
       firstColInput.render(body);
@@ -4470,14 +8377,191 @@ class PropertiesModule extends SidebarModule {
     // border radius + CSS editor
     this.renderAppearanceSection(widget);
 
-    // 'seats' stays in the generic list: it can be a seat list or a team map,
-    // which the generic JSON input handles safely
+    // 'seats' is curated by the Seats section in all three of its shapes
     this.renderOtherPropertiesSection(widget, [
-      'scoreProperty', 'showTotals', 'totalsLabel', 'currentRound',
+      'seats', 'scoreProperty', 'showTotals', 'totalsLabel', 'currentRound',
       'roundLabel', 'rounds', 'showAllRounds',
       'playersInColumns', 'sortField', 'sortAscending', 'showPlayerColors', 'verticalHeader',
       'showAllSeats', 'autosizeColumns', 'firstColWidth', 'editPaneTitle'
     ]);
+  }
+
+  // "seats" is null for every seat in the room, a seat id or an array of them
+  // for a fixed list, and a { team: [ seatID, ... ] } map for teams.
+  scoreboardSeatsMode(widget) {
+    const seats = widget.get('seats');
+    if(seats === null || seats === undefined)
+      return 'all';
+    if(typeof seats == 'string' || Array.isArray(seats))
+      return 'pick';
+    return 'teams';
+  }
+
+  // Every seat in the room (the default), a picked list of them, or teams -
+  // the three shapes the one property has, as one dropdown plus the editor the
+  // chosen shape needs.
+  renderScoreboardSeats(widget) {
+    const modeRow = div(this.moduleDOM, 'propertyInput selectInput');
+    const label = document.createElement('label');
+    label.textContent = 'Seats';
+    propertyInfoButton(label, html(editorPropertyHints.seats));
+    modeRow.appendChild(label);
+
+    const modeSelect = document.createElement('select');
+    modeSelect.className = 'scoreboardSeatsMode';
+    modeSelect.innerHTML = `
+      <option value="all">All seats</option>
+      <option value="pick">Chosen seats</option>
+      <option value="teams">Teams</option>
+    `;
+    modeRow.appendChild(modeSelect);
+
+    const pickerWrap = div(this.moduleDOM);
+    this.renderSeatReferenceInput(widget, 'seats', 'Shown seats:', pickerWrap, {
+      enablePicker: true,
+      pickerKey: 'seats',
+      pickerTitle: 'Choose the seats of this scoreboard',
+      clearLabel: 'All seats',
+      // in "Chosen seats" mode, an empty pick means "show none", not the
+      // "all seats" mode switching back to - that already has its own
+      // dropdown option and its own null, kept apart from this one
+      emptyValue: []
+    });
+
+    const teamsWrap = div(this.moduleDOM, 'scoreboardTeams');
+    this.renderScoreboardTeams(widget, teamsWrap);
+
+    // the seats the scoreboard shows now, whichever shape they are in - so
+    // switching the mode keeps them instead of starting from an empty table
+    const currentSeats = _=>{
+      const seats = widget.get('seats');
+      if(isObjectLike(seats) && !Array.isArray(seats))
+        return [ ...new Set(Object.values(seats).flatMap(team=>asArray(team || [])).filter(id=>id)) ];
+      const picked = this.seatReferenceToArray(seats);
+      return picked.length ? picked : this.getSeatWidgetIDs();
+    };
+
+    modeSelect.onchange = () => {
+      if(modeSelect.value == 'all')
+        this.inputValueUpdated(widget, 'seats', null);
+      else if(modeSelect.value == 'pick')
+        this.inputValueUpdated(widget, 'seats', this.seatReferenceFromArray(currentSeats()) || []);
+      else
+        this.inputValueUpdated(widget, 'seats', { 'Team 1': currentSeats() });
+    };
+
+    this.addPropertyListener(widget, 'seats', w => {
+      const mode = this.scoreboardSeatsMode(w);
+      modeSelect.value = mode;
+      pickerWrap.style.display = mode == 'pick' ? '' : 'none';
+      teamsWrap.style.display = mode == 'teams' ? '' : 'none';
+    });
+  }
+
+  // One row per team: its name and the seats whose scores are added up for it.
+  // Only rendered while "seats" is a team map.
+  renderScoreboardTeams(widget, target) {
+    div(target, 'scoreboardTeamsHelp', 'Every team is one column (or row) of the table, adding up the scores of its seats. Sorting and player colors are not used for teams.');
+    const list = div(target, 'listEditorList');
+
+    const getTeams = _=>{
+      const seats = widget.get('seats');
+      return isObjectLike(seats) && !Array.isArray(seats) ? JSON.parse(JSON.stringify(seats)) : {};
+    };
+    const save = teams => this.inputValueUpdated(widget, 'seats', teams);
+    // rebuilding the object keeps the team order, which is the order the
+    // scoreboard shows them in - a plain assignment would move a renamed team
+    // to the end
+    const renameTeam = (teams, oldName, newName) => Object.fromEntries(
+      Object.entries(teams).map(([ name, members ]) => [ name == oldName ? newName : name, members ])
+    );
+
+    const rebuild = _=>{
+      list.innerHTML = '';
+      const teams = getTeams();
+      for(const [ name, members ] of Object.entries(teams)) {
+        const row = div(list, 'listEditorRow scoreboardTeamRow');
+
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.className = 'scoreboardTeamName';
+        nameInput.value = name;
+        nameInput.title = 'Team name';
+        // on change rather than on input: renaming rewrites the key, so every
+        // keystroke would rebuild the row under the caret
+        nameInput.onchange = _=>{
+          const newName = nameInput.value.trim();
+          const next = getTeams();
+          if(!newName || (newName != name && next[newName] !== undefined)) {
+            nameInput.value = name;
+            return;
+          }
+          save(renameTeam(next, name, newName));
+          rebuild();
+        };
+        row.appendChild(nameInput);
+
+        const seatsInput = document.createElement('input');
+        seatsInput.type = 'text';
+        seatsInput.className = 'scoreboardTeamSeats';
+        seatsInput.value = asArray(members || []).join(', ');
+        seatsInput.title = 'The seats of this team';
+        seatsInput.onchange = _=>{
+          const next = getTeams();
+          next[name] = seatsInput.value.split(',').map(id=>id.trim()).filter(id=>id.length);
+          save(next);
+        };
+        row.appendChild(seatsInput);
+
+        // the popout is the last child of the row, which wraps - so it opens on
+        // its own line below the inputs instead of squeezing them
+        const popoutControls = renderWidgetSelectPopout(row, widget, {
+          title: `Choose the seats of ${name}`,
+          pickerKey: `seats:${name}`,
+          typeFilter: 'seat',
+          multiple: true,
+          getSelectedIDs: _=>asArray(getTeams()[name] || []),
+          apply: seatIDs => {
+            const next = getTeams();
+            next[name] = seatIDs;
+            save(next);
+            seatsInput.value = seatIDs.join(', ');
+          }
+        });
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.title = 'Remove this team';
+        remove.onclick = _=>{
+          const next = getTeams();
+          delete next[name];
+          save(next);
+          rebuild();
+        };
+        row.insertBefore(remove, popoutControls.popout);
+      }
+
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.textContent = 'Add team';
+      addButton.onclick = _=>{
+        const next = getTeams();
+        let index = Object.keys(next).length + 1;
+        while(next[`Team ${index}`] !== undefined)
+          index++;
+        next[`Team ${index}`] = [];
+        save(next);
+        rebuild();
+      };
+      list.appendChild(addButton);
+    };
+
+    rebuild();
+    this.addPropertyListener(widget, 'seats', _=>{
+      // replacing the rows while one of them is being typed in or has its seat
+      // picker open would throw the caret out and close the picker
+      if(!list.contains(document.activeElement) && !$('.propertyExpandButton.open', list))
+        rebuild();
+    });
   }
 
   renderForSeat(widget) {
@@ -4693,7 +8777,7 @@ class PropertiesModule extends SidebarModule {
     input.onchange = () => this.inputValueUpdated(widget, 'hand', input.value.trim() || null);
     wrap.appendChild(input);
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose the holder used as this seat\'s hand',
       pickerKey: 'hand',
       typeFilter: 'holder',
@@ -4816,20 +8900,522 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader(`Card type`);
-    this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
-    const deckButtons = div(this.moduleDOM, 'cardDeckButton', `
-      <button icon=style>Edit Cards and Deck</button>
-    `);
-    $('button', deckButtons).onclick = _=>deckEditor.openAtCardType(widget.get('deck'), widget.get('cardType'));
+    // a card can outlive its deck - a game can name one that does not exist,
+    // and the deck can be deleted while the card is selected. Everything below
+    // reads the deck, so say so instead of rendering half a section.
+    const deck = widgets.get(widget.get('deck'));
+    if(!deck || deck.get('type') != 'deck') {
+      div(this.moduleDOM, 'pileHelp warning', `This card points at the deck <code>${html(widget.get('deck'))}</code>, which does not exist in this game. Without it the card has no card types and no faces to draw.`);
+    } else {
+      this.renderCardTypes(deck, widget.get('cardType'));
+      const deckButtons = div(this.moduleDOM, 'cardDeckButton', `
+        <button icon=style>Edit Cards and Deck</button>
+      `);
+      $('button', deckButtons).onclick = _=>deckEditor.openAtCardType(deck.id, widget.get('cardType'));
+    }
     this.renderAppearanceSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'deck', 'cardType', 'z' ]);
   }
 
   renderForDeck(widget) {
-    // Selecting a deck in the Properties module now opens the full deck editor directly instead of the old
-    // minimalist deck view that used to live here. The guard avoids re-opening while it is already up.
-    if(!deckEditor.isOpen())
-      deckEditor.open(widget.id);
+    this.renderTypeHeader(widget);
+    const deckEditorButton = div(this.moduleDOM, 'cardDeckButton', `
+      <button id="propertiesOpenDeckEditor" icon=style>Open deck editor</button>
+    `);
+    $('button', deckEditorButton).onclick = _=>deckEditor.open(widget.id);
+    this.renderBasicSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'cardDefaults', 'cardTypes', 'faceTemplates' ]);
+  }
+
+  // --- dice face editor ---
+
+  diceFaces(widget) {
+    const faces = widget.get('faces');
+    if(typeof faces == 'string')
+      return faces.split('');
+    return Array.isArray(faces) ? JSON.parse(JSON.stringify(faces)) : [];
+  }
+
+  diceUsesPips(widget) {
+    // mirror the engine (Dice.pipSymbols()): an unset pipSymbols means pip
+    // symbols only for flat dice and 3D d6 shapes, so e.g. a 3D d4 with
+    // numeric faces is "Number/text" in the editor, not "Pips"
+    if(typeof widget.pipSymbols == 'function')
+      return !!widget.pipSymbols();
+    return widget.get('pipSymbols') !== false;
+  }
+
+  // color properties that can either be shared by all faces (stored on the
+  // dice) or set per face; rendered as the same compact icon swatches as the
+  // Appearance color row of a basic widget
+  diceFaceColorDefs() {
+    return [
+      // These roles are immediately clear from their labels and swatches, so
+      // do not add the generic color-property help icon to every dice face.
+      { key: 'color',       label: 'Background', labelIcon: 'format_color_fill', hint: null },
+      { key: 'pipColor',    label: 'Pips/icon',  labelIcon: 'format_color_text', hint: null },
+      { key: 'borderColor', label: 'Border',     labelIcon: 'border_color', hint: null }
+    ];
+  }
+
+  // Normalize a face entry to a { type, ... } shape for editing.
+  diceFaceType(widget, face) {
+    if(typeof face == 'object' && face !== null) {
+      if(face.image !== undefined) return 'image';
+      if(face.icon !== undefined)  return 'icon';
+      if(face.pips !== undefined)  return 'pips';
+      if(face.text !== undefined)  return 'text';
+      if(face.value !== undefined) return this.diceUsesPips(widget) && String(+face.value) === String(face.value) ? 'pips' : 'text';
+      return 'text';
+    }
+    if(typeof face == 'string' && face.match(/^\/(assets|i)\//)) return 'image';
+    return this.diceUsesPips(widget) && String(+face) === String(face) ? 'pips' : 'text';
+  }
+
+  diceFaceValue(widget, face, type) {
+    const o = (typeof face == 'object' && face !== null) ? face : {};
+    if(type == 'image') return o.image !== undefined ? o.image : (typeof face == 'string' ? face : null);
+    if(type == 'icon')  return o.icon  !== undefined ? o.icon  : null;
+    if(type == 'pips')  return o.pips  !== undefined ? o.pips  : (o.value !== undefined ? o.value : (typeof face == 'object' ? 1 : face));
+    return o.text !== undefined ? o.text : (o.value !== undefined ? o.value : (typeof face == 'object' ? '' : face));
+  }
+
+  buildDiceFace(type, value, existingFace) {
+    const property = type == 'pips' ? 'pips' : type;
+    if(type == 'pips') value = (value === '' || value == null) ? 0 : +value;
+    if(type == 'text') value = String(value == null ? '' : value);
+    if((type == 'icon' || type == 'image') && !value) value = null;
+    return replaceExclusiveProperties(existingFace, [ 'value', 'pips', 'text', 'icon', 'image' ], property, value);
+  }
+
+  renderDiceFaceEditor(widget) {
+    this.addSubHeader('Faces');
+
+    const addFace = document.createElement('button');
+    addFace.setAttribute('icon', 'add');
+    addFace.className = 'green diceAddFace';
+    addFace.textContent = 'Add face';
+    addFace.onclick = _=>{
+      const faces = this.diceFaces(widget);
+      faces.push({ pips: Math.min(faces.length + 1, 6) });
+      this.setFacesProperty(widget, faces);
+    };
+    this.moduleDOM.appendChild(addFace);
+
+    // A locked color lives on the dice; an unlocked color lives on each face.
+    // Keep the shared swatches beside their switches, and show a face swatch
+    // only when that particular color has been unlocked.
+    this.addAppearanceSubTitle('Face colors');
+    const colorDefs = this.diceFaceColorDefs();
+    const locks = {};
+    for(const def of colorDefs)
+      // default locked unless a face already defines a per-face value. Icon
+      // color was briefly stored on the icon object; count it as pipColor so
+      // existing faces continue in the same per-face mode when edited here.
+      locks[def.key] = !this.diceFaces(widget).some(f=>isObjectLike(f) &&
+        (f[def.key] !== undefined || (def.key == 'pipColor' && iconOption(f.icon, 'color') !== undefined))
+      );
+
+    const sharedColors = div(this.moduleDOM, 'diceSharedColors');
+    const renderSharedColors = _=>{
+      sharedColors.innerHTML = '';
+      const shared = colorDefs.filter(def=>locks[def.key]);
+      if(shared.length)
+        this.renderColorRow(widget, shared.map(def=>({
+          kind: 'color', label: def.label, labelIcon: def.labelIcon, property: def.key, hint: def.hint
+        })), sharedColors);
+      else
+        div(sharedColors, 'diceFaceHint', 'Every face has its own colors below.');
+    };
+    renderSharedColors();
+
+    const lockRow = div(this.moduleDOM, 'diceColorLocks');
+    const lockTitle = div(lockRow, 'propSetTitle', 'Same for all faces');
+    propertyInfoButton(lockTitle, 'A color that is on is stored once on the dice. Turn it off to give every face its own value below.');
+    const lockChecks = div(lockRow, 'diceColorLockChecks');
+    for(const def of colorDefs) {
+      new CheckboxInput(this, widget, def.label, {
+        getValue: _=>locks[def.key],
+        setValue: v=>{
+          const scrollTop = this.moduleDOM.scrollTop;
+          locks[def.key] = v;
+          if(v) {
+            // move any per-face value onto the widget and clear from faces
+            const faces = this.diceFaces(widget);
+            let moved = null;
+            for(const f of faces) {
+              if(!isObjectLike(f))
+                continue;
+              const oldIconColor = def.key == 'pipColor' ? iconOption(f.icon, 'color') : undefined;
+              if(f[def.key] !== undefined || oldIconColor !== undefined) {
+                moved = moved === null ? (f[def.key] !== undefined ? f[def.key] : oldIconColor) : moved;
+                delete f[def.key];
+                if(oldIconColor !== undefined)
+                  f.icon = iconWithOption(f.icon, 'color', null);
+              }
+            }
+            batchStart();
+            setDeltaCause(`${getPlayerDetails().playerName} locked ${def.label.toLowerCase()} of dice ${widget.id} in editor`);
+            if(moved !== null) widget.set(def.key, moved);
+            widget.set('faces', faces);
+            batchEnd();
+          }
+          renderSharedColors();
+          rebuild();
+          this.moduleDOM.scrollTop = scrollTop;
+        },
+        listenTo: [ def.key ]
+      }).render(lockChecks);
+    }
+
+    const facesContainer = div(this.moduleDOM, 'diceFacesEditor');
+
+    // the rows register the property listeners of their inputs, so - like the
+    // basic-widget face list - they are built through renderRebuildable: a
+    // plain innerHTML wipe left every discarded generation's listeners firing
+    // on later deltas
+    let rebuild = ()=>{};
+    this.renderRebuildable(rebuildRows=>{
+      rebuild = rebuildRows;
+      const scrollTop = this.moduleDOM.scrollTop;
+      facesContainer.innerHTML = '';
+      const faces = this.diceFaces(widget);
+      faces.forEach((face, index)=>this.renderDiceFaceRow(widget, index, locks, facesContainer));
+      this.moduleDOM.scrollTop = scrollTop;
+    });
+
+    // rebuild the rows when the number of faces or the pip mode changes, but
+    // not on every value edit (those inputs update themselves)
+    let lastSignature = JSON.stringify(this.diceFaces(widget).map(f=>this.diceFaceType(widget, f)));
+    this.addPropertyListener(widget, 'faces', _=>{
+      const signature = JSON.stringify(this.diceFaces(widget).map(f=>this.diceFaceType(widget, f)));
+      if(signature !== lastSignature) {
+        lastSignature = signature;
+        rebuild();
+      } else {
+        this.refreshDiceFacePreviews(widget, facesContainer);
+      }
+    });
+    for(const p of [ 'shape3d', 'color', 'pipColor', 'borderColor', 'pipSymbols' ])
+      this.addPropertyListener(widget, p, _=>this.refreshDiceFacePreviews(widget, facesContainer));
+
+    // imageScale is the default that every image face inherits. It is kept
+    // next to the list so a designer can make all image faces the same size
+    // without opening each one; setting it clears face-specific overrides.
+    const imageScale = div(this.moduleDOM, 'diceImageScale');
+    const imageScaleInput = new NumberInput(this, widget, 'Image scale', {
+      min: 0.1,
+      max: 5,
+      step: 0.05,
+      getValue: _=>widgetOwnValue(widget, 'imageScale'),
+      setValue: value=>{
+        const faces = this.diceFaces(widget);
+        let hadOverrides = false;
+        for(const face of faces)
+          if(isObjectLike(face) && face.imageScale !== undefined) {
+            delete face.imageScale;
+            hadOverrides = true;
+          }
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} set image scale of every face of dice ${widget.id} in editor`);
+        widget.set('imageScale', value);
+        if(hadOverrides)
+          widget.set('faces', faces);
+        batchEnd();
+      },
+      hint: 'Scale used by every image face. A face can override it with its own Scale below.'
+    });
+    imageScaleInput.render(imageScale);
+    const updateImageScaleVisibility = _=>imageScale.style.display = this.diceFaces(widget).some(face=>this.diceFaceType(widget, face) == 'image') ? '' : 'none';
+    this.addPropertyListener(widget, 'faces', updateImageScaleVisibility);
+    updateImageScaleVisibility();
+  }
+
+  renderDiceFacePreview(widget, index, target) {
+    const preview = div(target, 'diceFacePreview');
+    preview.dataset.face = index;
+    this.drawDiceFacePreview(widget, preview);
+    return preview;
+  }
+
+  // A face row previews the flat face rather than the 3D body so it stays
+  // readable at thumbnail size, scaled down to fit the box because dice can be
+  // any size. pipSymbols is passed explicitly so the flat preview keeps the
+  // pip/number rendering the 3D shape would use. Like drawFacePreview, the copy
+  // is built by hand and unregistered again so a redraw per keystroke does not
+  // leave a phantom widget behind in the global registries.
+  drawDiceFacePreview(widget, preview) {
+    preview.innerHTML = '';
+    // one id per face index, not one shared by every row - see drawFacePreview
+    const dice = new Dice(`${facePreviewWidgetID}_${preview.dataset.face}`);
+    dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
+      activeFace: +preview.dataset.face,
+      shape3d: false,
+      pipSymbols: this.diceUsesPips(widget),
+      // the copy is not on the table, and a truthy dropTarget would register
+      // it as one for real drags (StateManaged.applyDeltaToDOM)
+      dropTarget: null
+    }), preview);
+    dice.inheritFromUnregister();
+    dice.globalUpdateListenersUnregister();
+
+    scalePreviewToFit(preview, preview.children[0]);
+  }
+
+  refreshDiceFacePreviews(widget, facesContainer) {
+    for(const preview of $a('.diceFacePreview', facesContainer))
+      this.drawDiceFacePreview(widget, preview);
+  }
+
+  renderDiceFaceRow(widget, index, locks, container) {
+    const row = div(container, 'diceFaceRow');
+    row.dataset.face = index;
+    const main = div(row, 'diceFaceMain');
+    this.renderDiceFacePreview(widget, index, main);
+
+    const controls = div(main, 'diceFaceControls');
+
+    // reorder and delete live in a column on the right side of the row
+    const actions = div(main, 'faceRowActions');
+    this.renderFaceOrderControls(actions, index, this.diceFaces(widget).length, (from, to)=>{
+      this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setFacesProperty(widget, faces, activeFace));
+    });
+    const type = this.diceFaceType(widget, this.diceFaces(widget)[index]);
+
+    new SelectInput(this, widget, 'Type', {
+      listenTo: [ 'faces' ],
+      hint: 'Choose how this face is rendered. Changing the type keeps a compatible value and its per-face colors.',
+      getValue: _=>this.diceFaceType(widget, this.diceFaces(widget)[index]),
+      setValue: newType=>{
+        const faces = this.diceFaces(widget);
+        const oldType = this.diceFaceType(widget, faces[index]);
+        const oldValue = this.diceFaceValue(widget, faces[index], oldType);
+        let value = null;
+        if(newType == 'pips') value = String(+oldValue).match(/^\d+$/) ? +oldValue : index + 1;
+        else if(newType == 'text') value = oldValue == null ? '' : String(oldValue);
+        faces[index] = this.buildDiceFace(newType, value, faces[index]);
+        this.setFacesProperty(widget, faces);
+      },
+      choices: [
+        { value: 'pips',  text: 'Pips' },
+        { value: 'text',  text: 'Number/text' },
+        { value: 'icon',  text: 'Icon' },
+        { value: 'image', text: 'Image' }
+      ]
+    }).render(controls);
+
+    const setFaceValue = value=>{
+      const faces = this.diceFaces(widget);
+      const t = this.diceFaceType(widget, faces[index]);
+      faces[index] = this.buildDiceFace(t, value, faces[index]);
+      this.setFacesProperty(widget, faces);
+    };
+    const getFaceValue = _=>{
+      const faces = this.diceFaces(widget);
+      const currentType = this.diceFaceType(widget, faces[index]);
+      return currentType == type ? this.diceFaceValue(widget, faces[index], currentType) : null;
+    };
+
+    if(type == 'pips')
+      new NumberInput(this, widget, 'Pips', { min: 0, max: 9, step: 1, listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+    else if(type == 'text')
+      new TextInput(this, widget, 'Text', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+    else if(type == 'icon') {
+      const iconInput = new IconInput(this, widget, 'Icon', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue });
+      iconInput.render(controls);
+
+      // The icon object has its own scale, but its color is pipColor. That
+      // lets every face type share the Background/Pips-icon swatches below.
+      new NumberInput(this, widget, 'Scale', {
+        min: 0.1,
+        max: 5,
+        step: 0.05,
+        nullIfEmpty: true,
+        placeholder: '1',
+        listenTo: [ 'faces' ],
+        getValue: _=>iconOption(getFaceValue(), 'scale'),
+        setValue: value=>setFaceValue(iconWithOption(getFaceValue(), 'scale', value))
+      }).render(controls);
+    } else if(type == 'image') {
+      new ImageInput(this, widget, 'Image', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+
+      new NumberInput(this, widget, 'Scale', {
+        min: 0.1,
+        max: 5,
+        step: 0.05,
+        nullIfEmpty: true,
+        placeholder: String(widgetOwnValue(widget, 'imageScale') || 0.8),
+        listenTo: [ 'faces', 'imageScale' ],
+        getValue: _=>{
+          const face = this.diceFaces(widget)[index];
+          return isObjectLike(face) && face.imageScale !== undefined ? face.imageScale : null;
+        },
+        setValue: value=>this.setDiceFaceProperty(widget, index, 'imageScale', value)
+      }).render(controls);
+    }
+
+    // An unlocked swatch belongs to this face. Its corresponding shared
+    // swatch stays above the list while locked, so it is not repeated on
+    // every face row.
+    const perFaceColors = this.diceFaceColorDefs().filter(def=>!locks[def.key]);
+    const colorRow = perFaceColors.length ? div(controls, 'colorFlexRow') : null;
+    const pickerGroup = perFaceColors.length ? { target: div(row, 'diceFacePickers'), current: null } : null;
+    for(const def of perFaceColors) {
+      new ColorInput(this, widget, def.label, {
+        labelIcon: def.labelIcon,
+        pickerGroup,
+        listenTo: [ 'faces' ],
+        getValue: _=>{
+          const face = this.diceFaces(widget)[index];
+          if(typeof face != 'object' || face === null)
+            return null;
+          if(face[def.key] !== undefined)
+            return face[def.key];
+          return def.key == 'pipColor' ? iconOption(face.icon, 'color') : null;
+        },
+        setValue: v=>this.setDiceFaceProperty(widget, index, def.key, v)
+      }).render(colorRow);
+    }
+
+    const cssToggle = document.createElement('button');
+    cssToggle.className = 'collapsibleHeader diceFaceCssToggle';
+    const cssArrow = renderCollapseArrow(cssToggle, true);
+    cssToggle.append('CSS');
+    cssToggle.title = 'Add or edit CSS declarations for this face';
+    controls.appendChild(cssToggle);
+
+    const cssHost = div(row, 'diceFaceCSS');
+    // the "faces" listener is registered once for the row's lifetime instead
+    // of inside renderFaceCSS - that function reruns on every click of the
+    // toggle below, and a fresh addPropertyListener each time left one more
+    // stale listener behind per open, on top of the row itself
+    let textarea = null;
+    const getValue = _=>{
+      const face = this.diceFaces(widget)[index];
+      return isObjectLike(face) ? face.faceCSS : null;
+    };
+    const update = _=>{
+      if(!textarea || document.activeElement === textarea)
+        return;
+      textarea.value = cssTextFromValue(getValue());
+      textarea.rows = Math.max(2, Math.min(8, textarea.value.split('\n').length));
+      textarea.classList.remove('inputError');
+    };
+    this.addPropertyListener(widget, 'faces', update);
+    const renderFaceCSS = visible=>{
+      cssHost.innerHTML = '';
+      textarea = null;
+      if(!visible)
+        return;
+      const wrap = div(cssHost, 'facePropertyStructured');
+      const label = document.createElement('label');
+      label.textContent = 'Face CSS';
+      wrap.appendChild(label);
+      textarea = document.createElement('textarea');
+      textarea.placeholder = 'property: value;';
+      textarea.oninput = _=>{
+        const current = getValue();
+        if(isObjectLike(current)) {
+          if(textarea.value.trim() && !cssStringRoundTrips(textarea.value)) {
+            textarea.classList.add('inputError');
+            return;
+          }
+          textarea.classList.remove('inputError');
+          this.setDiceFaceProperty(widget, index, 'faceCSS', cssStringToObject(textarea.value));
+        } else {
+          this.setDiceFaceProperty(widget, index, 'faceCSS', textarea.value);
+        }
+      };
+      wrap.appendChild(textarea);
+      update();
+    };
+    // CSS is advanced and can be tall. Keep it folded even when this face has
+    // CSS already; the button remains selected only while this editor is open.
+    let cssOpen = false;
+    cssToggle.onclick = _=>{
+      cssOpen = !cssOpen;
+      cssToggle.classList.toggle('selected', cssOpen);
+      setCollapseArrow(cssArrow, !cssOpen);
+      cssToggle.setAttribute('aria-expanded', String(cssOpen));
+      renderFaceCSS(cssOpen);
+    };
+    cssToggle.classList.toggle('selected', cssOpen);
+    cssToggle.setAttribute('aria-expanded', String(cssOpen));
+    renderFaceCSS(cssOpen);
+
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.className = 'red diceRemoveFace';
+    // the engine flips through faces modulo their count (Dice.activeFace()),
+    // so an empty faces array turns that into a "% 0" and the die renders NaN
+    remove.disabled = this.diceFaces(widget).length < 2;
+    remove.title = remove.disabled ? 'A die needs at least one face' : 'Remove this face';
+    remove.onclick = _=>this.removeFace(widget, this.diceFaces(widget), index, (faces, activeFace)=>this.setFacesProperty(widget, faces, activeFace));
+    actions.appendChild(remove);
+  }
+
+  // Add or clear one non-content property of a dice face while retaining the
+  // original pips/text/icon/image value if that face was previously compact.
+  setDiceFaceProperty(widget, index, property, value) {
+    const faces = this.diceFaces(widget);
+    if(index < 0 || index >= faces.length)
+      return;
+    if(!isObjectLike(faces[index])) {
+      const type = this.diceFaceType(widget, faces[index]);
+      faces[index] = this.buildDiceFace(type, this.diceFaceValue(widget, faces[index], type), faces[index]);
+    }
+    // Per-icon color used to be written inside { icon: { color } }. Dice
+    // already render pipColor for icons, and keeping two sources meant its
+    // Background/Pips-icon picker could appear to do nothing. Normalize it
+    // as soon as this face's pip/icon color is edited.
+    if(property == 'pipColor' && iconOption(faces[index].icon, 'color') !== undefined)
+      faces[index].icon = iconWithOption(faces[index].icon, 'color', null);
+    if(value === null || value === undefined)
+      delete faces[index][property];
+    else
+      faces[index][property] = value;
+    this.setFacesProperty(widget, faces);
+  }
+
+  // Remove one face and keep the widget showing the same one: every face
+  // after the removed one moves down an index.
+  removeFace(widget, faces, index, setFaces) {
+    if(!Number.isInteger(index) || index < 0 || index >= faces.length)
+      return;
+    faces.splice(index, 1);
+    const activeFace = activeFaceIndex(widget);
+    setFaces(faces, Math.min(activeFace > index ? activeFace - 1 : activeFace, Math.max(0, faces.length - 1)));
+  }
+
+  reorderFaces(widget, faces, from, to, setFaces) {
+    if(!Number.isInteger(from) || !Number.isInteger(to) || from == to || from < 0 || to < 0 || from >= faces.length || to >= faces.length)
+      return;
+    const [ movedFace ] = faces.splice(from, 1);
+    faces.splice(to, 0, movedFace);
+    setFaces(faces, indexAfterReorder(activeFaceIndex(widget), from, to));
+  }
+
+  // up/down buttons stacked in the actions column of a face row - no drag
+  // handle, so the row keeps as much width as possible for its values. The
+  // triangles are the ones the line stop rows use (.lineStopOrder), which read
+  // as one control of two halves rather than as two more icon buttons beside
+  // the delete one.
+  renderFaceOrderControls(target, index, count, moveFace) {
+    const controls = div(target, 'faceOrderControls');
+
+    const up = document.createElement('button');
+    up.innerText = '▲';
+    up.title = 'Move this face up';
+    up.disabled = index == 0;
+    up.onclick = _=>moveFace(index, index - 1);
+    controls.appendChild(up);
+
+    const down = document.createElement('button');
+    down.innerText = '▼';
+    down.title = 'Move this face down';
+    down.disabled = index == count - 1;
+    down.onclick = _=>moveFace(index, index + 1);
+    controls.appendChild(down);
   }
 
   renderForDice(widget) {
@@ -4975,9 +9561,10 @@ class PropertiesModule extends SidebarModule {
     for(const property of [ 'faces', 'shape3d', 'pipSymbols' ])
       this.addPropertyListener(widget, property, _=>dicePreviews.forEach(update => update()));
 
+    this.renderDiceFaceEditor(widget);
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'faces', 'pipSymbols', 'shape3d' ]);
+    this.renderOtherPropertiesSection(widget, [ 'faces', 'pipSymbols', 'shape3d', 'activeFace', 'color', 'pipColor', 'borderColor' ]);
   }
 
   renderForHolder(widget) {
@@ -4985,34 +9572,17 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
     // holders extend ImageWidget, so they render text / icon / image like a basic widget
     this.renderBasicContentSection(widget);
-    this.addSubHeader('Target widgets');
-    for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
-      if(!Object.keys(deck.get('cardTypes')).length)
-        continue;
-      const deckCloneState = Object.assign({}, deck.state, { id: generateUniqueWidgetID() });
-      const deckButton = this.renderWidgetButton(new Deck(deckCloneState.id), deckCloneState, this.moduleDOM);
-      this.addPropertyListener(widget, 'dropTarget', widget=>{
-        if(asArray(widget.get('dropTarget')).filter(t=>t.deck == deck.id).length)
-          deckButton.classList.add('selected');
-        else
-          deckButton.classList.remove('selected');
-      });
-      deckButton.onclick = async e=>{
-        let newDropTarget = asArray(widget.get('dropTarget'));
-        if(deckButton.classList.contains('selected'))
-          newDropTarget = newDropTarget.filter(t=>t.deck != deck.id);
-        else
-          newDropTarget = newDropTarget.filter(t=>t.type!='card').concat({ deck: deck.id });
-
-        if(newDropTarget.length == 1)
-          newDropTarget = newDropTarget[0];
-        else if(!newDropTarget.length)
-          newDropTarget = null;
-
-        widget.set('dropTarget', newDropTarget);
-      };
-    }
-
+    // What the holder takes in. The deck previews used to be the whole section,
+    // so a holder for anything else than the cards of one deck had to be set up
+    // in the JSON editor - the shared dropTarget editor (the one the line widget
+    // uses) says the same thing for every widget type, with the decks kept as
+    // the shortcut for the case they cover.
+    propertyInfoButton(this.addSubHeader('Target widgets'), html('Which widgets can be dropped into this holder'));
+    this.renderDropTargetEditor(widget, {
+      label: '',
+      emptyText: 'Nothing can be dropped into this holder - add a match to let widgets in.',
+      deckShortcuts: true
+    });
 
     this.addSubHeader('Appearance');
     const normal = this.renderWidgetButton(new Holder(), {
@@ -5103,7 +9673,7 @@ class PropertiesModule extends SidebarModule {
       });
     });
 
-    // onEnter / onLeave stay in the generic property list (handled in PR #3034)
+    // onEnter / onLeave are edited in the Automations section below
     this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat' ]);
   }
 
@@ -5259,9 +9829,10 @@ class PropertiesModule extends SidebarModule {
   //   { type: 'card' }                only cards
   //   { type: 'card', deck: 'd1' }    only cards of deck d1
   //   [ { deck: 'd1' }, { deck: 'd2' } ]  cards of either deck
-  // Nothing here is line specific - holders can render the same editor once
-  // their "Target widgets" section moves over from the deck buttons.
-  // options: edit (wraps the change for the history), label, hint, emptyText
+  // Nothing here is line specific - holders render the same editor for their
+  // "Target widgets" section.
+  // options: edit (wraps the change for the history), label, hint, emptyText,
+  // deckShortcuts (a row of deck previews above the matches)
   renderDropTargetEditor(widget, options={}) {
     const types = [
       { value: null,         label: 'Basic widgets' },
@@ -5269,6 +9840,7 @@ class PropertiesModule extends SidebarModule {
       { value: 'deck',       label: 'Decks' },
       { value: 'dice',       label: 'Dice' },
       { value: 'holder',     label: 'Holders' },
+      { value: 'line',       label: 'Lines' },
       { value: 'pile',       label: 'Piles' },
       { value: 'spinner',    label: 'Spinners' },
       { value: 'label',      label: 'Labels' },
@@ -5346,6 +9918,48 @@ class PropertiesModule extends SidebarModule {
     const list = div(container, 'dropTargetMatches');
 
     const save = _=>edit(`changed which widgets ${widget.id} accepts`, _=>widget.set('dropTarget', toDropTarget(matches)));
+
+    // The decks of the room as clickable previews, for the case the match rows
+    // are tedious about: a widget that takes the cards of one specific deck.
+    // They sit below the matches, small and dimmed until their match is in the
+    // list above, because a deck's picture is a card picture: shown big and
+    // above the list it read as "this holder takes cards" even when the list
+    // right under it said nothing is accepted.
+    let refreshDeckButtons = _=>{};
+    if(options.deckShortcuts) {
+      const decks = widgetFilter(w=>w.get('type') == 'deck' && Object.keys(w.get('cardTypes')).length);
+      if(decks.length) {
+        const deckSection = div(container, 'dropTargetDeckShortcuts');
+        div(deckSection, 'lineHint', 'Shortcut: click a deck to add or remove a match for its cards.');
+        const deckRow = div(deckSection, 'dropTargetDecks');
+        const updaters = [];
+        for(const deck of decks) {
+          const deckCloneState = Object.assign({}, deck.state, { id: generateUniqueWidgetID() });
+          const button = this.renderWidgetButton(new Deck(deckCloneState.id), deckCloneState, deckRow, { className: 'dropTargetDeck', maxSize: 60 });
+          // lenient on purpose: a hand written { type: 'card', deck: 'd1' } is
+          // this deck as much as the { deck: 'd1' } the button writes
+          const isDeckMatch = match=>!('unsupported' in match) && match.conditions.some(c=>c.property == 'deck' && c.value == deck.id);
+          updaters.push(_=>{
+            const accepted = matches.some(isDeckMatch);
+            button.classList.toggle('selected', accepted);
+            button.title = accepted ? `Stop accepting the cards of deck ${deck.id}` : `Accept the cards of deck ${deck.id}`;
+          });
+          button.onclick = _=>{
+            if(matches.some(isDeckMatch)) {
+              matches = matches.filter(match=>!isDeckMatch(match));
+            } else {
+              // a match that takes every card would swallow this one, so the
+              // deck replaces it - same as the deck buttons did before
+              matches = matches.filter(match=>'unsupported' in match || match.conditions.length || !match.hasType || match.type != 'card');
+              matches.push({ hasType: false, type: null, conditions: [ { property: 'deck', value: deck.id } ] });
+            }
+            render();
+            save();
+          };
+        }
+        refreshDeckButtons = _=>updaters.forEach(update=>update());
+      }
+    }
 
     const iconButton = (parent, icon, title, onclick, className)=>{
       const button = document.createElement('button');
@@ -5454,6 +10068,7 @@ class PropertiesModule extends SidebarModule {
         save();
       };
       list.appendChild(add);
+      refreshDeckButtons();
     };
     render();
 
@@ -5467,6 +10082,18 @@ class PropertiesModule extends SidebarModule {
       matches = readMatches();
       render();
     });
+
+    // How many of them: the limit constrains exactly the drops the matches
+    // above let in, so it belongs right below them - and it appears as soon as
+    // the first match does, since a widget that accepts nothing cannot fill up.
+    // Without an edit wrapper the standard write is the better one: it names
+    // the cause and covers a multi-selection.
+    const limitRow = this.renderDropLimitInput(widget, options.edit ? {
+      setValue: value=>options.edit(`changed the drop limit of ${widget.id}`, _=>widget.set('dropLimit', value === null ? -1 : value))
+    } : {});
+    const updateLimitRow = _=>limitRow.style.display = this.showsDropLimit(widget) ? '' : 'none';
+    this.addPropertyListener(widget, 'dropTarget', updateLimitRow);
+    this.addPropertyListener(widget, 'dropLimit', updateLimitRow);
   }
 
   renderForLine(widget) {
@@ -5867,7 +10494,7 @@ class PropertiesModule extends SidebarModule {
     inheritID.value = inheritStore[widget.id];
     inheritID.oninput = _=>inheritStore[widget.id] = inheritTarget();
     inheritRow.appendChild(inheritID);
-    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritRow, widget, {
+    const inheritPopoutControls = renderWidgetSelectPopout(inheritRow, widget, {
       title: 'Choose a widget for the new stop to inherit from',
       pickerKey: 'lineInheritStop',
       getSelectedIDs: ()=>inheritTarget() ? [ inheritTarget() ] : [],
@@ -5911,7 +10538,7 @@ class PropertiesModule extends SidebarModule {
     // 2) any widget already in the room can be made a stop by listing it - it
     // does not have to be (or become) a child of the line.
     const existingRow = addStopOption('existing', 'lineExistingStopRow', 'In the room:');
-    const existingControls = this.renderWidgetSelectPopout(existingRow, widget, {
+    const existingControls = renderWidgetSelectPopout(existingRow, widget, {
       title: 'Choose a widget in the room to ride on this line',
       pickerKey: 'lineExistingStop',
       getSelectedIDs: ()=>[],
@@ -6039,7 +10666,7 @@ class PropertiesModule extends SidebarModule {
       target.onchange = setDefaultPositionForTarget;
       position.onchange = offset.onchange = saveConnection;
 
-      const connectPopoutControls = this.renderWidgetSelectPopout(wrapper, widget, {
+      const connectPopoutControls = renderWidgetSelectPopout(wrapper, widget, {
         title: `Connect ${end.toLowerCase()} point to`,
         pickerKey: 'connect'+end,
         getSelectedIDs: ()=>{
@@ -6224,17 +10851,161 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  renderGenericProperties(widget, exclude) {
+  renderEvents(widget) {
+    const section = document.createElement('div');
+    section.className = 'automationsSection';
+    this.automationsWidgets.push(widget);
+    const eventsEditor = new EventsEditor(widget, (property, value)=>{
+      this.inputValueUpdated(widget, property, value);
+      // the first routine of a widget is what makes the switch usable at all
+      this.applyAutomationsFullSize();
+    });
+    // a delta listener instead of per-property listeners so routines added
+    // by other players (properties that did not exist on selection) show up too
+    this.addDeltaListener(deltaS=>{
+      // cardDefaults because a deck keeps the routines of its cards in there
+      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties', 'cardDefaults' ].indexOf(p) != -1)) {
+        eventsEditor.onPropertyChange();
+        this.applyAutomationsFullSize();
+      }
+    });
+    section.append(eventsEditor.domElement);
+    // the curated sections come first, then the routines, then the raw list of
+    // whatever properties are left (which the type editor may not render at all).
+    // The header goes straight into the module: wrapped in a div it would lose
+    // the inset .tune.editorModule > h2 gives every other section bar.
+    const header = document.createElement('h2');
+    header.className = 'automationsHeader';
+    header.innerText = 'Automations';
+    this.renderAutomationsFullSizeToggle(header);
+    this.moduleDOM.insertBefore(header, this.otherPropertiesHeader);
+    this.moduleDOM.insertBefore(section, this.otherPropertiesHeader);
+    this.applyAutomationsFullSize();
+  }
+
+  // While routines are being written they are what the panel is for, so this
+  // folds every other section away and leaves the widget's title area and the
+  // Automations section - which then has the height of the whole panel. A switch
+  // like the ones under Behavior rather than a checkmark, two short lines high
+  // so the section bar stays as high as all the others.
+  renderAutomationsFullSizeToggle(header) {
+    const toggle = div(header, 'automationsFullSizeToggle');
+    div(toggle, 'automationsFullSizeLabel').innerText = 'Full size';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.className = 'switchbox';
+    input.id = editorDomID('automationsFullSize');
+    input.checked = this.automationsFullSize();
+    input.onchange = _=>{
+      localStorage.setItem('editor.automationsFullSize', input.checked);
+      // switching it on by hand is the opt-in the first routine of a widget
+      // deliberately is not
+      this.automationsWereAvailable = true;
+      this.applyAutomationsFullSize();
+    };
+    toggle.appendChild(input);
+
+    const box = document.createElement('label');
+    box.className = 'switchbox';
+    box.htmlFor = input.id;
+    toggle.appendChild(box);
+  }
+
+  // how the panel is laid out is a preference of whoever edits rather than
+  // anything about the game, so it lives in localStorage like the rest of the
+  // editor's own state
+  automationsFullSize() {
+    return localStorage.getItem('editor.automationsFullSize') == 'true';
+  }
+
+  // whether there is anything to give the whole panel to: a widget with no
+  // routine and no property set shows one line saying so, and folding every
+  // other section away for it leaves a panel with nothing in it
+  hasAutomations() {
+    // a deck also counts the routines it hands to its cards - they are cards of
+    // the section like any other routine
+    return this.automationsWidgets.some(widget=>Object.keys(widget.state).some(property=>this.isAutomationProperty(widget, property)) || cardDefaultRoutines(widget).length);
+  }
+
+  applyAutomationsFullSize() {
+    if(!this.moduleDOM)
+      return;
+    const available = this.hasAutomations();
+    if(this.automationsWereAvailable === undefined)
+      this.automationsWereAvailable = available;
+    // Adding the first routine to a widget that had none must not take the panel
+    // over: everything else would fold away under the pointer in the middle of
+    // an edit. So the remembered preference only applies to a widget that was
+    // already automated when it was selected, and giving the section the whole
+    // panel right after adding a routine is a click of its own. The preference
+    // itself is kept either way - the next automated widget opens full size.
+    const fullSize = available && this.automationsWereAvailable && this.automationsFullSize();
+    this.moduleDOM.classList.toggle('automationsFullSize', fullSize);
+    // with several widgets selected every one of them has a section bar
+    for(const input of $a('.automationsFullSizeToggle input.switchbox', this.moduleDOM)) {
+      input.checked = fullSize;
+      input.disabled = !available;
+      input.parentElement.classList.toggle('disabled', !available);
+      // on the label as well as on the switch: the words are the natural thing
+      // to point at, and a greyed-out control that explains itself nowhere is
+      // the one that needs the explanation most
+      const title = available ? 'Give the Automations section the height of the whole panel' : 'Nothing to give the whole panel to yet - add a routine first';
+      for(const target of [ input.nextElementSibling, $('.automationsFullSizeLabel', input.parentElement) ])
+        if(target)
+          target.title = title;
+    }
+  }
+
+  // the properties the Automations section edits, so that neither the raw
+  // property list below it repeats them nor its header shows up for a widget
+  // that has nothing else left
+  isAutomationProperty(widget, property) {
+    if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
+      return true;
+    // holders and lines take widgets in, so both apply onEnter / onLeave
+    return property == 'resetProperties' || ([ 'holder', 'line' ].indexOf(widget.get('type')) != -1 && [ 'onEnter', 'onLeave' ].indexOf(property) != -1);
+  }
+
+  renderGenericProperties(widget, exclude, target = this.moduleDOM) {
     for(const property in widget.state) {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
         continue;
+      if(this.isAutomationProperty(widget, property))
+        continue;
 
-      const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
+      const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v), target)
       if(!this.inputUpdaters[widget.id][property])
         this.inputUpdaters[widget.id][property] = [];
 
-      this.inputUpdaters[widget.id][property].push(input.setValue);
+      const updaters = this.inputUpdaters[widget.id][property];
+      updaters.push(input.setValue);
+      // this list is rebuilt whenever a curated property becomes (un)available,
+      // so hand the updater to renderRebuildable like addPropertyListener does -
+      // otherwise every rebuild leaves one behind, bound to detached DOM
+      if(this.collectedListeners)
+        this.collectedListeners.push([ updaters, input.setValue ]);
     }
+
+    // The generic editor used to appear only after a game already had an
+    // uncategorized property, which made it a dead end for adding one. Start
+    // a text value; its own type selector immediately offers the same values
+    // (number, boolean, null, object/array) as every existing generic row.
+    this.renderSuggestionAddRow(target, 'genericAddPropertyRow', {
+      placeholder: 'new property',
+      title: 'Add property',
+      suggestions: Object.keys(widget.defaults || {}).filter(property=>
+        [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 &&
+        !/Routine$/.test(property) && !Object.hasOwn(widget.state, property)
+      ).sort(),
+      nativeSuggestionButtonOnly: true,
+      onAdd: property=>{
+        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
+          return false;
+        this.inputValueUpdated(widget, property, '');
+        this.onSelectionChangedWhileActive([ widget ]);
+      }
+    });
   }
 
     renderObscureProperties(widget, specs) {
@@ -6308,9 +11079,14 @@ class PropertiesModule extends SidebarModule {
     }
   }
 
-  renderWidgetButton(widget, state, target) {
+  // options: className (added to the button before it is measured, for a caller that sizes it differently),
+  // maxSize (the box the preview is scaled into, matching that size) and sampleCardTypes (which card types a
+  // deck preview fans out - five random ones by default; pass a single one to get a preview of just that card,
+  // big enough to actually read, the way the card design gallery does).
+  renderWidgetButton(widget, state, target, options={}) {
+    const sampleCardTypes = options.sampleCardTypes;
     const button = document.createElement('button');
-    button.className = 'widgetSelectionButton';
+    button.className = 'widgetSelectionButton' + (options.className ? ' ' + options.className : '');
     target.appendChild(button);
 
     let deckDOM = null;
@@ -6320,15 +11096,20 @@ class PropertiesModule extends SidebarModule {
     if(widget.get('type') == 'deck') {
       const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
       const faceTemplates = widget.get('faceTemplates');
+      // The preview deck has to be in the widget map for its sample cards to find it. It is a throwaway, so it
+      // must come back out even when rendering a card throws (the faces can come straight from user input).
       widgets.set(widget.id, widget);
-      for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
-        new Card().renderReadonlyCopyRaw(Object.assign({
-          deck: widget.id,
-          cardType,
-          activeFace: Array.isArray(faceTemplates) && faceTemplates.length > 1 ? 1 : 0
-        }, state), parent);
+      try {
+        for(const cardType of sampleCardTypes || shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
+          new Card().renderReadonlyCopyRaw(Object.assign({
+            deck: widget.id,
+            cardType,
+            activeFace: Array.isArray(faceTemplates) && faceTemplates.length > 1 ? 1 : 0
+          }, state), parent);
+        }
+      } finally {
+        widgets.delete(widget.id);
       }
-      widgets.delete(widget.id, widget);
       if (parent.children[0]) 
         positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
@@ -6338,9 +11119,10 @@ class PropertiesModule extends SidebarModule {
     if(deckDOM)
       deckDOM.remove();
 
+    const maxSize = options.maxSize || 140;
     const rect = getBoundingClientRectWithAbsoluteChildren(button.children[0]);
-    if(Math.max(rect.width, rect.height) > 140)
-      button.children[0].style.transform = `scale(${140/Math.max(rect.width, rect.height)})`;
+    if(Math.max(rect.width, rect.height) > maxSize)
+      button.children[0].style.transform = `scale(${maxSize/Math.max(rect.width, rect.height)})`;
     centerElementInClientRect(button.children[0], button.getBoundingClientRect());
 
     return button;
@@ -6463,26 +11245,33 @@ class PropertiesModule extends SidebarModule {
     return wrapper;
   }
 
-  renderCheckbox(widget, title, property, target = null) {
-    const wrap = div(target || this.moduleDOM);
+  // options.invert ticks the box for a falsy value ("only visible in edit
+  // mode" for display:false), options.default is what an unset property means
+  renderCheckbox(widget, title, property, target = null, options = {}) {
+    const wrap = div(target || this.moduleDOM, 'checkboxRow');
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.id = `${property}_${widget.id}`;
-    input.checked = !!widget.get(property);
+    const updateChecked = w => {
+      const value = w.get(property);
+      input.indeterminate = propertyInputIsMulti(value);
+      const boolValue = value === null || value === undefined ? !!options.default : !!value;
+      input.checked = propertyInputIsMulti(value) ? false : (options.invert ? !boolValue : boolValue);
+    };
+    updateChecked(widget);
     const label = document.createElement('label');
     label.htmlFor = input.id;
     label.textContent = title || property;
     wrap.appendChild(input);
     wrap.appendChild(label);
+    if(options.infoText) {
+      const infoIcon = this.renderInfoIcon(options.infoText, { size: '18px' });
+      wrap.appendChild(infoIcon);
+    }
 
-    input.onchange = () => this.inputValueUpdated(widget, property, input.checked);
-    this.addPropertyListener(widget, property, w => { input.checked = !!w.get(property); });
-
-    if (!this.inputUpdaters[widget.id])
-      this.inputUpdaters[widget.id] = {};
-    if (!this.inputUpdaters[widget.id][property])
-      this.inputUpdaters[widget.id][property] = [];
-    this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
+    input.onchange = () => this.inputValueUpdated(widget, property, options.invert ? !input.checked : input.checked);
+    this.addPropertyListener(widget, property, updateChecked);
+    return wrap;
   }
 
   renderSelectionButton(widget, title, property, value, css='css', cssClass='default', icon=null, tooltip='') {
@@ -6589,6 +11378,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderModule(target) {
-    target.innerText = 'Properties module not implemented yet.';
+    // the bar is built once, with the panel, and outlives the selections it is
+    // used to change; everything below it is built by
+    // onSelectionChangedWhileActive(), which openInTarget() calls right after this
+    this.selectionBar = renderSelectionBar(target, { key: this.title });
   }
 }

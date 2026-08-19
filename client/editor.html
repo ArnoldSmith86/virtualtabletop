@@ -230,14 +230,43 @@
     <div id="deckEditorNewDeckDialog" class="deckEditorModal">
       <button id="deckEditorNewDeckClose" icon="close" title="Close"></button>
       <h1>Add a new deck</h1>
-      <p>Add blank deck or choose an existing one to add to the game</p>
-      <div class="deckEditorNewDeckModes">
-        <label><input type="radio" name="deckEditorNewDeckMode" value="empty" checked>Empty deck &mdash; design its faces and card types here in the deck editor</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="library">Browse the public library of ready-made decks</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="traditional">Traditional deck (standard, Spanish, German, Swiss, tarot, hanafuda, mahjong, dominoes)</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="custom">Custom deck of cards (define suits and ranks)</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="images">Upload one image per card or tiled images</label>
-        <label><input type="radio" name="deckEditorNewDeckMode" value="tts">Import from Tabletop Simulator</label>
+      <p>Where should the cards come from? Open one of the three sections.</p>
+      <div class="deckEditorNewDeckGroups">
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupBlank">
+          <button class="deckEditorNewDeckGroupHeader">New blank deck<span>Start from nothing and design the faces and card types here in the deck editor</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes deckEditorNewDeckModesSingle">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="empty" checked>Empty deck</label>
+            </div>
+          </div>
+        </div>
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupExisting">
+          <button class="deckEditorNewDeckGroupHeader">Use an existing deck<span>Take a deck that is already finished, from the library or another game</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="library"><b>Public library</b><span>Browse the ready-made decks shared in the public library</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="traditional"><b>Traditional deck</b><span>Standard, Spanish, German, Swiss, tarot, hanafuda, mahjong or dominoes</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="tts"><b>Tabletop Simulator</b><span>Import a deck from a Tabletop Simulator save file</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupCustom">
+          <button class="deckEditorNewDeckGroupHeader">Create a custom deck<span>Let the editor build the cards from your own suits, images or texts</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="custom"><b>Suits and ranks</b><span>One card for every combination of a suit and a rank</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="images"><b>One image per card</b><span>Upload one image per card or tiled images &mdash; one shared back for the whole deck</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="imagePairs"><b>A front and a back image per card</b><span>Upload all fronts and all backs &mdash; they are paired up by file name</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="text"><b>Text cards</b><span>One card per line, or per paragraph when a card needs line breaks</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deckEditorNewDeckOptions">
+        <span class="deckEditorNewDeckOptionsLabel">Added to the table with every new deck</span>
+        <label title="A holder in the middle of the table that the deck and all its cards are put into. Without it, the cards go into a pile in the middle of the table instead."><input type="checkbox" id="deckEditorNewDeckHolder" checked>Card holder on the table, holding all the cards</label>
+        <label title="A button below the holder that gathers all cards back into it, turns them face-down and shuffles them."><input type="checkbox" id="deckEditorNewDeckResetButton" checked>Reset button that gathers all cards back, turns them face-down and shuffles</label>
+        <span class="deckEditorNewDeckOptionsHint">Without a holder, the cards go into a pile in the middle of the table.</span>
       </div>
       <div id="deckEditorNewDeckPanel"></div>
     </div>
@@ -294,6 +323,7 @@
           <div id="deckEditorBreadcrumb" title="Your edits this session — click a step to jump back or forward to it."></div>
           <span class="deckEditorHistoryDivider"></span>
           <button icon="crop_portrait" id="deckEditorCardView" class="active">Card view</button>
+          <button icon="close" id="deckEditorClose" title="Close the deck editor.">Close</button>
         </div>
         <div id="deckEditorContent">
           <div id="deckEditorMainCol">
@@ -333,14 +363,6 @@
 </div>
 
 <div id="jsonEditor">
-  <div id="jeWidgetSwitcher">
-    <button icon="arrow_back" id="jeNavBack" title="Back to previously selected widget (Tab+Left)" disabled></button>
-    <button icon="arrow_forward" id="jeNavForward" title="Forward to next selected widget (Tab+Right)" disabled></button>
-    <button icon="account_tree" id="jeShowTree" title="Show widget tree"></button>
-    <button icon="push_pin" id="jePinTree" title="Pin widget tree so it stays visible next to the JSON"></button>
-    <div id="jeBreadcrumbs"></div>
-    <div id="jeTreeContainer"></div>
-  </div>
   <div id="jeEditArea">
     <div id="jeEditHeader">CTRL-click a widget on<br>the left to edit it.</div>
     <div id="jeTree"></div>
@@ -348,21 +370,6 @@
     <div id="jeText" contenteditable="true" spellcheck="false"></div>
   </div>
   <div id="jeCommands"></div>
-  <div id="jeWidgetLayers">
-    <p>This will show you the widgets under your cursor. In order to interact with an obscured widget, you can press the corresponding function key to select it.</p>
-    <div id="jeMouseCoords"></div>
-    <div id="jeWidgetLayer1" class="hidden"><span class="key">F1</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer2" class="hidden"><span class="key">F2</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer3" class="hidden"><span class="key">F3</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer5" class="hidden"><span class="key">F5</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer6" class="hidden"><span class="key">F6</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer7" class="hidden"><span class="key">F7</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer8" class="hidden"><span class="key">F8</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer9" class="hidden"><span class="key">F9</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer10" class="hidden"><span class="key">F10</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer11" class="hidden"><span class="key">F11</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer12" class="hidden"><span class="key">F12</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-  </div>
   <div id="jeLogWrapper">
     <div id="jeLog">
     </div>

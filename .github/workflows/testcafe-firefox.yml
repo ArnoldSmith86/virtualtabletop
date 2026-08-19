@@ -20,6 +20,9 @@ jobs:
         testfile:
           - card.js
           - editor.js
+          - toolbar.js
+          - boardsize.js
+          - draglimit.js
           - compute-1.js
           - compute-2.js
           - compute-3.js
@@ -29,6 +32,14 @@ jobs:
           - publiclibrary-3.js
           - publiclibrary-4.js
           - routines.js
+          - legacymatrix.js
+          - interactions.js
+          - inheritfrom.js
+          # domsnapshot.js needs a checked-in baseline per browser and only Chrome's is
+          # recorded so far, so it runs in Chrome only - see testcafe-chrome.yml.
+          # pixelsnapshot.js compares two captures from the same run and needs no baseline,
+          # so it is the half of Layer F that can run anywhere.
+          - pixelsnapshot.js
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

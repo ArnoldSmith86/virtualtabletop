@@ -1,0 +1,668 @@
+/* A line of feedback about something that happened where the user is not
+   looking - a value written to the widget the editor has just left, a mode that
+   ended on its own. In the corner of the module panel, above the popups (whose
+   closing is what it is usually about), fading on its own so it never becomes
+   part of the layout. */
+#editorNotes {
+  position: absolute;
+  right: calc(var(--editSidebarWidth) + 10px);
+  bottom: 10px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: none; /* the gaps between the notes stay clickable */
+}
+
+.editorNote {
+  pointer-events: auto;
+  cursor: pointer;
+  max-width: min(360px, 80vw);
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--VTTblue);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  font-size: 13px;
+  transition: opacity 1s;
+}
+
+/* a note nobody can see any more must not take the click that was aimed at what
+   is behind it - the strip hangs over the play area on a narrow window */
+.editorNote.editorNoteFading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* the control a popup is open for, in its own color (a chip of the routine is
+   colored by what it holds): the popup is that control opened up, so it says
+   which one - and where the popup went when it goes away with it */
+.popupSource {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+
+.inline-popup {
+  position: fixed;
+  /* the popup is placed by its outer size, so the max-width/max-height it is
+     placed with have to be the outer size as well - with the padding and the
+     border on top of them it overshoots the space it was fitted into by 22px */
+  box-sizing: border-box;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  z-index: 9;
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 220px;
+  max-width: 50vw;
+  max-height: calc(100vh - 20px);
+  overflow: auto;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--backgroundHighlightColor1);
+  font-size: 13px;
+}
+
+.inline-popup h1 {
+  font-size: 15px;
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--VTTblue);
+}
+
+/* the raw name of what the popup edits, next to the plain-language title - the
+   same pairing the routine cards and the automation headers use */
+.inline-popup h1 .popup-title-raw {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: normal;
+  color: var(--textColor);
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+/* the current value as text, next to the button that drops it again */
+.inline-popup .popup-value-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.inline-popup .popup-value-row input {
+  flex: 1 1 120px;
+  min-width: 60px;
+  width: auto;
+  margin-top: 0;
+}
+
+.inline-popup .popup-use-default {
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* "Property <name> of <widget>" with the widget picker button next to it */
+.inline-popup .popup-property-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.inline-popup .popup-property-row input {
+  flex: 1 1 70px;
+  min-width: 50px;
+  width: auto;
+  margin-top: 0;
+}
+
+/* the name next to a value is quieter than the value, but a fixed gray is only
+   readable in one of the two themes - this is the text color turned down, the
+   way the popup title does it */
+.inline-popup .popup-property-label {
+  flex: 0 0 auto;
+  color: var(--textColor);
+  opacity: 0.7;
+}
+
+.inline-popup .popup-property-row .propertyExpandButton {
+  flex: 0 0 auto;
+}
+
+.inline-popup input::placeholder {
+  color: gray;
+}
+
+.inline-popup .popup-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  z-index: 1;
+  cursor: pointer;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  font-size: 18px;
+  background: var(--backgroundColor);
+  border-radius: 4px;
+}
+
+.inline-popup .popup-close:hover {
+  color: var(--textHighlightColor3);
+  opacity: 1;
+}
+
+/* with a title the close button belongs to it, not to whatever the popup starts
+   with: it would otherwise land on the border of the first section */
+.inline-popup h1 .popup-close {
+  position: static;
+  margin-left: 8px;
+}
+
+/* The sections of a popup are the independent ways to fill in a parameter, so
+   they read as separate cards: each one carries the color of what it produces
+   (see --routine*Color in editor/layout.css), a triangle saying whether it is
+   the open one, and the open one is the only one that is not dimmed. */
+.inline-popup .accordion-section {
+  --sectionColor: var(--routineOperationColor);
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-left: 4px solid var(--sectionColor);
+  border-radius: 4px;
+  margin: 6px 0;
+  opacity: 0.75;
+}
+
+.inline-popup .accordion-section.open {
+  opacity: 1;
+  border-color: var(--sectionColor);
+}
+
+.inline-popup .accordion-section[data-kind=widget] {
+  --sectionColor: var(--routineWidgetColor);
+}
+
+.inline-popup .accordion-section[data-kind=collection] {
+  --sectionColor: var(--routineCollectionColor);
+}
+
+.inline-popup .accordion-section[data-kind=variable] {
+  --sectionColor: var(--routineVariableColor);
+}
+
+.inline-popup .accordion-section[data-kind=property] {
+  --sectionColor: var(--routinePropertyColor);
+}
+
+.inline-popup .accordion-section h3 {
+  cursor: pointer;
+  font-size: 13px;
+  margin: 0;
+  padding: 4px 6px;
+  color: var(--sectionColor);
+  background: var(--backgroundHighlightColor1);
+  border-radius: 0 2px 2px 0;
+}
+
+.inline-popup .accordion-section h3::before {
+  content: '▸';
+  display: inline-block;
+  width: 12px;
+}
+
+.inline-popup .accordion-section.open h3::before {
+  content: '▾';
+}
+
+.inline-popup .accordion-section h3:hover {
+  outline: 1px solid var(--sectionColor);
+}
+
+.inline-popup .accordion-content {
+  display: none;
+  padding: 4px 6px;
+}
+
+.inline-popup .accordion-content.open {
+  display: block;
+}
+
+/* a plain drop-down menu (the ways an operation can work, the options it can
+   add) instead of a popup with a title and sections: one entry per line, each
+   with the sentence it would read as, and the current one marked */
+.inline-popup.popup-menu {
+  min-width: 0;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inline-popup.popup-menu > .popup-close,
+.inline-popup .popup-menu-header {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+/* a list of phrases has the same title bar as every other popup: what it is for
+   on the left, the info button and the x of the popup at the end of it */
+.inline-popup.popup-menu h1 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.inline-popup.popup-menu h1 .popup-title-text {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.inline-popup .popup-menu-entry {
+  margin: 0;
+  padding: 3px 8px;
+  text-align: left;
+  border: none;
+  border-radius: 3px;
+  color: var(--routineOperationColor);
+  font-weight: bold;
+}
+
+.inline-popup .popup-menu-entry-label {
+  white-space: nowrap;
+}
+
+/* what the entry would make the operation say: the reason to pick it, so it is
+   on screen instead of in a hover tip */
+.inline-popup .popup-menu-entry-preview {
+  color: var(--textColor);
+  opacity: 0.75;
+  font-weight: normal;
+  font-size: 12px;
+  max-width: 300px;
+}
+
+/* what picking the entry writes over: a value the game works out while the
+   routine runs is written nowhere else, so the entry that would replace it says
+   so next to its phrase instead of swallowing it. It keeps its own color while
+   the entry is hovered - it is a warning, not part of the phrase. */
+.inline-popup .popup-menu-entry-replaces {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  margin-left: 6px;
+  color: var(--routineVariableColor);
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.inline-popup .popup-menu-entry.selected {
+  background: var(--backgroundHighlightColor1);
+}
+
+/* the way out of a list of phrases, for a value none of them can say: it is not
+   one of the answers, so it does not read like one */
+.inline-popup .popup-menu-entry-other .popup-menu-entry-label {
+  color: var(--textColor);
+  opacity: 0.7;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+/* the entry the pointer is on turns from the operation color into the text
+   color - black on the white popup, white on the dark one. Another shade of the
+   same blue is not a color change in light mode, and a third color (the teal the
+   popup buttons use) reads as a third kind of thing rather than as "this one". */
+.inline-popup .popup-menu-entry:hover,
+body.edit.darkMode .inline-popup .popup-menu-entry:hover {
+  color: var(--textColor);
+}
+
+.inline-popup button {
+  margin: 2px;
+  padding: 2px 8px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  cursor: pointer;
+}
+
+.inline-popup button:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
+body.edit.darkMode .inline-popup button:hover {
+  color: var(--textHighlightColor7);
+}
+
+/* the button that puts what was picked into the operation: it is what the
+   section is for, so it is filled in the editor blue instead of being one more
+   outlined button among the ones that only change the selection */
+.inline-popup button.primary,
+.inline-popup button.primary:hover,
+body.edit.darkMode .inline-popup button.primary:hover {
+  border-color: var(--VTTblue);
+  background: var(--VTTblue);
+  color: white;
+  font-weight: bold;
+}
+
+.inline-popup button.primary:hover {
+  filter: brightness(1.15);
+}
+
+.inline-popup input,
+.inline-popup textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 4px;
+  padding: 4px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+.inline-popup textarea {
+  min-height: 90px;
+  font-family: monospace;
+}
+
+.inline-popup pre {
+  white-space: pre-wrap;
+  margin: 4px 0;
+}
+
+/* the wiki text of an operation: prose in the popup's own font (a wall of
+   monospace is what it used to be) and its parameters as a list, with the names
+   in the color the sentence colors a parameter with */
+.inline-popup .popup-info-text p {
+  margin: 6px 0;
+  max-width: 620px;
+}
+
+.inline-popup .popup-info-heading {
+  font-weight: bold;
+  margin: 10px 0 2px 0;
+}
+
+.inline-popup .popup-info-parameters {
+  margin: 2px 0;
+  max-width: 620px;
+}
+
+.inline-popup .popup-info-parameters dt {
+  color: var(--routinePropertyColor);
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.inline-popup .popup-info-parameters dd {
+  margin: 0;
+}
+
+/* the editor's buttons are uppercased; inside a popup they are sentences, and
+   "PICK IN THE ROOM" next to "use default" reads as two different products */
+.inline-popup button[icon] {
+  text-transform: none;
+}
+
+/* the reused properties-module pickers are scoped to .editorModule, which is
+   hidden by default; re-show the wrapper so their chip/picker sizing applies */
+.inline-popup .editorModule {
+  display: block;
+  overflow: visible;
+  background: none;
+}
+
+.inline-popup .editorModule .propertyPicker {
+  border: none;
+  padding: 0;
+}
+
+/* the widget picker keeps its controls on two lines (pick/clear, type/search),
+   so the popup around it is wide enough to hold them instead of breaking every
+   one of them onto a line of its own */
+.inline-popup .editorModule .widgetSelectPopout {
+  min-width: min(320px, 100%);
+}
+
+.inline-popup .info-button {
+  cursor: pointer;
+  color: gray;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.inline-popup .info-button:hover {
+  color: var(--VTTblue);
+}
+
+.inline-popup .highlight {
+  color: var(--VTTblue);
+  cursor: pointer;
+}
+
+/* The proposed property names of a parameter that takes one. The list is taller
+   than it may be, so it ends on a half-visible row - which reads as a broken
+   list rather than as a scrollable one without a mark saying there is more: a
+   rule under it, and the last rows fading into it. */
+.inline-popup .popup-property-list {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-top: 4px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 18px), transparent);
+  mask-image: linear-gradient(to bottom, black calc(100% - 18px), transparent);
+}
+
+/* a list that fits needs neither: nothing is cut off there */
+.inline-popup .popup-property-list.popup-property-list-complete {
+  border-bottom: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.inline-popup .popup-property-group {
+  font-weight: bold;
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 6px 2px 2px 2px;
+}
+
+.inline-popup .popup-property-empty {
+  color: var(--textColor);
+  opacity: 0.7;
+  font-style: italic;
+  margin: 4px 2px;
+}
+
+.inline-popup button.selected {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
+.inline-popup .popup-entry {
+  display: inline-block;
+}
+
+/* where the values of a section come from: a quiet line rather than a heading
+   in a color of its own - the section around it already says what kind of value
+   its entries are, and they carry that color the way the sentence does */
+.inline-popup .popup-value-group {
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 8px 2px 2px 2px;
+}
+
+.inline-popup button[data-kind=variable] {
+  color: var(--routineVariableColor);
+}
+
+.inline-popup button[data-kind=collection] {
+  color: var(--routineCollectionColor);
+}
+
+/* how a list is shown rather than what it holds: below the search box, so the
+   way into the list comes first, in the quiet type the rest of the popup uses
+   for what is not a value */
+.inline-popup .popup-list-settings {
+  display: flex;
+  flex-direction: column; /* one per line: side by side they are cut off in a narrow popup */
+  gap: 2px;
+  margin: 4px 0 2px 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.inline-popup .popup-setting {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.inline-popup .popup-setting input {
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  cursor: pointer;
+}
+
+/* the kind of thing the operations below it do */
+.inline-popup .popup-operation-group {
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 8px 2px 2px 2px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+}
+
+/* the operations a routine can use, name first so they stay findable */
+.inline-popup .popup-operation-list {
+  max-height: 320px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.inline-popup .popup-operation {
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.inline-popup .popup-operation:hover {
+  border-color: var(--routineOperationColor);
+}
+
+/* the one in use, marked the way the menus mark theirs */
+.inline-popup .popup-operation.selected {
+  background: var(--backgroundHighlightColor1);
+}
+
+.inline-popup .popup-operation-func {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: var(--routineOperationColor);
+}
+
+/* what the operation means is the line that is read, so it is as big as the
+   rest of the popup rather than a footnote under the name */
+.inline-popup .popup-operation-example {
+  font-size: 13px;
+}
+
+.inline-popup table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.inline-popup th,
+.inline-popup td {
+  text-align: left;
+  padding: 2px 6px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+}
+
+/* the name/value rows of a list of pairs (a VAR), the same shape as the property
+   sets of the Automations section: the name on the left, its value in a field
+   next to it and the row that adds another one at the bottom */
+.inline-popup .popup-key-value-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inline-popup .popup-key-value-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.inline-popup .popup-key-value-key {
+  color: var(--VTTblue);
+  font-family: monospace;
+  font-size: 12px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.edit.darkMode .inline-popup .popup-key-value-key {
+  color: var(--textHighlightColor7);
+}
+
+.inline-popup .popup-key-value-value,
+.inline-popup .popup-key-value-name {
+  box-sizing: border-box;
+  flex: 1;
+  width: 50%;
+  min-width: 50px;
+  margin-top: 0;
+  padding: 2px 4px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.inline-popup .popup-key-value-remove {
+  font-size: 16px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+}
+
+.inline-popup .popup-key-value-remove:hover {
+  color: var(--textHighlightColor3);
+  opacity: 1;
+}
+
+/* the row that adds a pair holds both halves of it, so its two fields share the
+   width the value field has on its own in the rows above */
+.inline-popup .popup-key-value-add .popup-key-value-name,
+.inline-popup .popup-key-value-add .popup-key-value-value {
+  width: 40%;
+}
+
+.inline-popup .popup-key-value-add-button {
+  flex: 0 0 auto;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+/* nothing to add without a name: saying so beats a button that does nothing */
+.inline-popup button.popup-key-value-add-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+  filter: none;
+}
