@@ -2,6 +2,13 @@ import { viewportConfig } from '../calculateLayout.js';
 
 const defaultPileSnapRange = 10;
 
+// A pile that sits in a holder arranging piles is laid out like the holder lays
+// out its own cards, unless the pile says otherwise.
+const pileInheritedProperties = [ 'stackOffsetX', 'stackOffsetY', 'spreadMin' ];
+
+// What is left of the stack offset for the cards spreadMin does not cover.
+const compressedSpreadFactor = 0.1;
+
 export class Pile extends Widget {
   constructor(id) {
     super(id);
@@ -20,6 +27,9 @@ export class Pile extends Widget {
       text: null,
       showLimit: false,
       pileSnapRange: defaultPileSnapRange,
+      stackOffsetX: 0,
+      stackOffsetY: 0,
+      spreadMin: null,
 
       handleCSS: '',
       handleSize: 'auto',
@@ -246,11 +256,175 @@ export class Pile extends Widget {
   getDefaultValue(property) {
     if(property == 'onPileCreation' && this.children().length)
       return this.children()[0].get('onPileCreation');
+    if(pileInheritedProperties.indexOf(property) != -1) {
+      const holder = this.holderArrangingPiles();
+      if(holder)
+        return holder.get(property);
+    }
     return super.getDefaultValue(property);
+  }
+
+  // Lays the cards out and sizes the pile to what that comes to, so that its box
+  // is the room its cards take up rather than the size of a single one: the
+  // handle sits at the end of the spread, the holder gives the pile that much
+  // room and a card dropped anywhere on it lands on the pile. layOut says to do
+  // it once more for a pile that just stopped placing its cards itself, which
+  // collects them back onto the same spot.
+  async arrangeChildren(notifyHolder=true, layOut=false) {
+    if(layOut || this.laysOutCards()) {
+      // a copy: children() hands out the array it sorts, and everything below
+      // reads it again
+      const children = [ ...this.children() ].reverse();
+      const offsets = this.spreadOffsets();
+
+      for(let i=0; i<children.length; ++i)
+        await children[i].setPosition(this.get('dropOffsetX') + offsets[i][0], this.get('dropOffsetY') + offsets[i][1], children[i].get('z'));
+
+      const oldWidth = this.get('width');
+      const oldHeight = this.get('height');
+      await this.set('width', this.spreadExtent('X'));
+      await this.set('height', this.spreadExtent('Y'));
+      // this can happen mid-drag - a pile picked out of the holder that spread it collects its
+      // cards on the way - so whoever is carrying it keeps hold of the same place in its box
+      if(this.get('width') != oldWidth || this.get('height') != oldHeight)
+        rescaleDragAnchor(this, oldWidth, oldHeight);
+    }
+
+    // how much room the pile takes up decides where the next pile in the holder
+    // begins, so the holder lays its children out again
+    const holder = notifyHolder ? this.holderArrangingPiles() : null;
+    if(holder)
+      await holder.receiveCard(null);
+  }
+
+  spreadsCards() {
+    return !!(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')));
+  }
+
+  // Put the given cards - already children of this pile - at the given position
+  // of its fan, counted from the bottom, and lay the fan out again. This is how
+  // a drop pointed at a spot between two cards is inserted right there instead
+  // of on top.
+  async insertChildrenAt(cards, index) {
+    const existing = this.children().filter(c=>cards.indexOf(c) == -1).sort((a, b)=>a.get('z') - b.get('z'));
+    const incoming = cards.slice().sort((a, b)=>a.get('z') - b.get('z'));
+    const at = Math.max(0, Math.min(existing.length, index));
+    const ordered = existing.slice(0, at).concat(incoming, existing.slice(at));
+    let z = 1;
+    for(const c of ordered)
+      await c.set('z', z++);
+    await this.arrangeChildren();
+  }
+
+  // Whether the pile places its cards itself. A pile that spreads them does, and
+  // so does one in a holder that arranges piles - everywhere else the cards keep
+  // whatever position they were given, which is what a scattered heap of them
+  // relies on.
+  laysOutCards() {
+    return !!(this.get('alignChildren') && (this.spreadsCards() || this.holderArrangingPiles()));
+  }
+
+  // Whether it did so before the given property changed to what it is now: a
+  // pile that stops has to collect its cards one last time.
+  laidOutCardsBefore(property, oldValue) {
+    if(!this.get('alignChildren'))
+      return false;
+    if(property == 'parent')
+      return !!this.holderArrangingPilesOf(oldValue);
+    return !!oldValue && (property == 'stackOffsetX' || property == 'stackOffsetY');
+  }
+
+  isPileSnapTarget(x, y, range) {
+    if(!this.spreadsCards() || !this.children().length || this.holderArrangingPiles())
+      return super.isPileSnapTarget(x, y, range);
+
+    // the whole spread takes a card, not just the corner of it: the offsets
+    // between the cards are usually wider than the snap range, so aiming at one
+    // of them would mean hitting gaps more often than cards
+    const card = this.children()[0];
+    return x - this.get('x') > -range && x - this.get('x') < this.spreadExtent('X') - card.get('width' ) + range
+        && y - this.get('y') > -range && y - this.get('y') < this.spreadExtent('Y') - card.get('height') + range;
+  }
+
+  // Where the cards of the pile sit relative to its corner, bottom card first.
+  // Without a stack offset they all lie on the same spot, which is what a pile
+  // normally looks like. spreadMin keeps the full offset for the topmost cards
+  // only and squeezes everything below them together, so a long pile stays
+  // readable without growing across the whole table. A holder whose groups do
+  // not fit side by side squishes the fans through fanSquish, and a drop
+  // shadow previewing an insertion keeps one slot (previewGap) open - its
+  // offset is remembered in previewGapOffset for whoever places the shadow.
+  spreadOffsets() {
+    const holder = this.holderArrangingPiles();
+    const squish = holder && holder.fanSquish ? holder.fanSquish(this.get('owner') || null) : null;
+    const gap = this.previewGap === undefined ? null : Math.max(0, Math.min(this.children().length, this.previewGap));
+    const count = this.children().length + (gap === null ? 0 : 1);
+    const offsets = [];
+    let x = 0;
+    let y = 0;
+
+    for(let i=0; i<count; ++i) {
+      offsets.push([ x, y ]);
+      x += this.get('stackOffsetX') * this.spreadFactor(i, count) * (squish && squish.axis == 'X' ? squish.fans : 1);
+      y += this.get('stackOffsetY') * this.spreadFactor(i, count) * (squish && squish.axis == 'Y' ? squish.fans : 1);
+    }
+
+    // a negative offset spreads towards the corner of the pile, so the cards are
+    // moved back into it - the box of a pile always starts where the pile is
+    const minX = Math.min(...offsets.map(o=>o[0]), 0);
+    const minY = Math.min(...offsets.map(o=>o[1]), 0);
+    const normalized = offsets.map(o=>[ o[0]-minX, o[1]-minY ]);
+    if(gap !== null)
+      this.previewGapOffset = normalized.splice(gap, 1)[0];
+    else
+      delete this.previewGapOffset;
+    return normalized;
+  }
+
+  // The length of the fan alone along one axis - how far the last slot sits
+  // from the first one - before any squish is applied. What fanSquish measures
+  // the groups by without asking for the squished layout it is about to decide.
+  fanLength(axis) {
+    const count = this.children().length;
+    if(count < 2 || !this.spreadsCards())
+      return 0;
+    let length = 0;
+    for(let i=0; i<count-1; ++i)
+      length += Math.abs(this.get('stackOffset' + axis)) * this.spreadFactor(i, count);
+    return length;
+  }
+
+  // The share of the stack offset used for the step after card i, counting the
+  // bottom card as 0: the topmost spreadMin cards keep the offset, the rest of
+  // the pile is compressed.
+  spreadFactor(i, count) {
+    const spreadMin = this.get('spreadMin');
+    return spreadMin === null || count - i <= spreadMin ? 1 : compressedSpreadFactor;
+  }
+
+  spreadExtent(axis) {
+    const children = this.children();
+    if(!children.length || !this.get('alignChildren'))
+      return super.spreadExtent(axis);
+
+    const index = axis == 'X' ? 0 : 1;
+    const offsets = this.spreadOffsets();
+    // an open preview gap is part of the box even when it is the last slot
+    if(this.previewGapOffset)
+      offsets.push(this.previewGapOffset);
+    return Math.max(...offsets.map(o=>o[index])) + children[0].get(axis == 'X' ? 'width' : 'height');
+  }
+
+  async onChildAddAlign(child, oldParentID) {
+    if(!this.laysOutCards())
+      return await super.onChildAddAlign(child, oldParentID);
+    await this.arrangeChildren();
   }
 
   async onChildRemove(child) {
     await super.onChildRemove(child);
+    if(this.children().length > 1)
+      await this.arrangeChildren();
     if(this.children().length == 1) {
       const c = this.children()[0];
       const p = this.get('parent');
@@ -277,6 +451,10 @@ export class Pile extends Widget {
         await c.set('owner', newValue);
     }
     await super.onPropertyChange(property, oldValue, newValue);
+    // 'parent' is in here because the layout of a pile can come from the holder
+    // it is arranged in, so leaving one or entering one changes it
+    if([ 'stackOffsetX', 'stackOffsetY', 'spreadMin', 'alignChildren', 'parent' ].indexOf(property) != -1 && this.children().length)
+      await this.arrangeChildren(true, this.laidOutCardsBefore(property, oldValue));
   }
 
   supportsPiles() {

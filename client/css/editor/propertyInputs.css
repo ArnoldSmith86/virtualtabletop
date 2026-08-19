@@ -182,6 +182,11 @@
   font-size: 13px;
 }
 
+/* a hint written as one line per choice stays that list */
+.property-info-popup .content {
+  white-space: pre-line;
+}
+
 /* picker inputs (color, icon, image) */
 
 .editorModule .propertyPreviewButton {
@@ -1311,10 +1316,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   cursor: crosshair !important;
 }
 
-/* labelled X/Y number pairs (holder drop/stack offsets) */
+/* labelled X/Y number pairs (holder drop/stack offsets): a fixed label column
+   so the X/Y inputs of stacked rows line up as one table */
 .editorModule .numberPairRow .numberPairLabel {
-  flex: 0 0 auto;
-  min-width: 80px;
+  flex: 0 0 92px;
+  min-width: 92px;
 }
 
 /* list editor (spinner wheel options) */
@@ -1844,6 +1850,7 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 /* snap grid editor */
 .editorModule .gridHelp,
 .editorModule .pileHelp,
+.editorModule .layoutAutoNote,
 .editorModule .gridSizeNote {
   font-size: 0.9em;
   opacity: 0.8;

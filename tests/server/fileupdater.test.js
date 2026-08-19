@@ -64,18 +64,26 @@ describe('legacy mode detection', () => {
   });
 
   test('a mode is not applied to a save that is already at or past its version', () => {
-    // a v20 save predates v21, so the holder mode applies, but the var modes (v18) do not
+    // a v20 save predates v21, so the holder modes apply, but the var modes (v18) do not
     const state = at(20, {
       h: { id: 'h', type: 'holder', color: 'red' },
       b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }
     });
-    expect(flagsFor(state)).toEqual({ disableHolderImageWidget: true });
+    expect(flagsFor(state)).toEqual({ disableHolderImageWidget: true, classicHolderLayout: true });
   });
 
   test('a post-v18 save without gameSettings is classified instead of crashing', () => {
     // hand-written saves and importers can produce one; the detectors used to assume the v18
     // step had already created the object
-    expect(flagsFor(at(19, { h: { id: 'h', type: 'holder', color: 'red' } }))).toEqual({ disableHolderImageWidget: true });
+    expect(flagsFor(at(19, { h: { id: 'h', type: 'holder', color: 'red' } }))).toEqual({ disableHolderImageWidget: true, classicHolderLayout: true });
+  });
+
+  test('a pre-v23 save with a holder gets classicHolderLayout', () => {
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder' } })).classicHolderLayout).toBe(true);
+  });
+
+  test('a pre-v23 save without a holder does not get classicHolderLayout', () => {
+    expect(flagsFor(at(22, { l: { id: 'l', type: 'label', text: 'hi' } })).classicHolderLayout).toBe(undefined);
   });
 
   test('a current-version save is left exactly as it is', () => {
@@ -143,11 +151,13 @@ const CLASSIFICATION_FIXTURES = {
   'v17 deck with an html face': [ at(17, { d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'html', value: 'x' } ] } ] } }), [ 'useIframeForHtmlCards' ] ],
   'v17 deck with an image face': [ at(17, { d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'image', value: 'x.png' } ] } ] } }), [] ],
   'v18 game with a var routine': [ at(18, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] } }), [] ],
-  'v19 holder with an icon': [ at(19, { h: { id: 'h', type: 'holder', icon: 'star' } }), [ 'disableHolderImageWidget' ] ],
-  'v19 holder with text': [ at(19, { h: { id: 'h', type: 'holder', text: 'draw' } }), [ 'disableHolderImageWidget' ] ],
-  'v19 holder with nothing on it': [ at(19, { h: { id: 'h', type: 'holder' } }), [] ],
-  'v20 holder with svgReplaces': [ at(20, { h: { id: 'h', type: 'holder', svgReplaces: { a: 'b' } } }), [ 'disableHolderImageWidget' ] ],
-  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [] ]
+  'v19 holder with an icon': [ at(19, { h: { id: 'h', type: 'holder', icon: 'star' } }), [ 'disableHolderImageWidget', 'classicHolderLayout' ] ],
+  'v19 holder with text': [ at(19, { h: { id: 'h', type: 'holder', text: 'draw' } }), [ 'disableHolderImageWidget', 'classicHolderLayout' ] ],
+  'v19 holder with nothing on it': [ at(19, { h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
+  'v20 holder with svgReplaces': [ at(20, { h: { id: 'h', type: 'holder', svgReplaces: { a: 'b' } } }), [ 'disableHolderImageWidget', 'classicHolderLayout' ] ],
+  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
+  'v22 game with a holder': [ at(22, { h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
+  'v22 game without a holder': [ at(22, { l: { id: 'l', type: 'label', text: 'hi' } }), [] ]
 };
 
 describe('classification stability', () => {
@@ -178,7 +188,8 @@ describe('_meta shape', () => {
     state._meta.gameSettings = { legacyModes: { useIframeForHtmlCards: true } };
     expect(FileUpdater(state)._meta.gameSettings.legacyModes).toEqual({
       useIframeForHtmlCards: true,
-      disableHolderImageWidget: true
+      disableHolderImageWidget: true,
+      classicHolderLayout: true
     });
   });
 });
@@ -208,7 +219,7 @@ describe('idempotence', () => {
 // so that a change to what a property means never changes what an existing game
 // does. This covers the dragLimit sides, which used to be clamped with
 // Math.max(null, x) - i.e. at 0 - where they are now read as "no limit".
-function migrated(widget, version = VERSION - 1) {
+function migrated(widget, version = 21) {
   const state = { _meta: { version }, w: Object.assign({ id: 'w', type: 'basic' }, widget) };
   return FileUpdater(state).w;
 }

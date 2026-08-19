@@ -465,7 +465,7 @@ export class Widget extends StateManaged {
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
-        await this.currentParent.dispenseCard(this);
+        await this.currentParent.dispenseCard(this, true);
       delete this.currentParent;
     }
   }
@@ -1985,10 +1985,38 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT', position: null });
         let count = a.fillTo || a.count;
         if(count === 'all')
           count = 999999;
+
+        // Everything one MOVE brings into one holder is treated as a batch:
+        // cards arrive one by one, but a holder that arranges piles puts the
+        // whole batch down as one pile rather than feeding it into the pile it
+        // already ends with, and the position parameter places the batch with
+        // one renumbering pass instead of one per card. Keyed by the holder
+        // that actually received the cards, which for a seat is its hand. A
+        // move within one holder only reorders what is already there, so it
+        // brings nothing in to be grouped - but position still applies to it.
+        const arrivals = new Map();
+        const noteArrival = (holder, c, broughtIn)=>{
+          if(!holder || holder.get('type') != 'holder')
+            return;
+          if(!arrivals.has(holder))
+            arrivals.set(holder, { cards: [], broughtIn: [] });
+          arrivals.get(holder).cards.push(c);
+          if(broughtIn)
+            arrivals.get(holder).broughtIn.push(c);
+        };
+        const finishArrivals = async ()=>{
+          for(const [ holder, batch ] of arrivals) {
+            if(a.position && holder.applyMovePosition)
+              await holder.applyMovePosition(batch.cards, a.position);
+            else if(holder.groupDroppedCards)
+              await holder.groupDroppedCards(batch.broughtIn);
+          }
+          arrivals.clear();
+        };
 
         async function applyMove(source, target, c) {
           let moved = 0;
@@ -1999,6 +2027,7 @@ export class Widget extends StateManaged {
           if(source == target) {
             await applyFlip();
             await c.bringToFront();
+            noteArrival(target, c, false);
             ++moved;
           } else if(c == target) {
             problems.push(`Skipping move of ${c.id} to itself.`);
@@ -2020,6 +2049,7 @@ export class Widget extends StateManaged {
                     delete c.targetPlayer;
                   }
                   await c.bringToFront();
+                  noteArrival(targetHand, c, targetHand != source);
                   if(targetHand.get('type') == 'holder')
                     await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                   ++moved;
@@ -2032,6 +2062,7 @@ export class Widget extends StateManaged {
             } else {
               await applyFlip();
               await c.moveToHolder(target);
+              noteArrival(target, c, true);
               ++moved;
             }
             delete c.movedByButton;
@@ -2044,9 +2075,9 @@ export class Widget extends StateManaged {
           if(a.from) {
             if(this.isValidID(a.from, problems)) {
               await w(a.from, async source=>await w(a.to, async target=>{
-                for(const c of source.children().slice(0, count).reverse()) {
+                for(const c of source.children().slice(0, count).reverse())
                   await applyMove(source, target, c);
-                }
+                await finishArrivals();
               }));
             } else {
               problems.push(`Source ${a.from} is invalid.`);
@@ -2054,8 +2085,11 @@ export class Widget extends StateManaged {
           } else if(collection = getCollection(a.collection)) {
             let offset = 0;
             await w(a.to, async target=>{
-              for(const c of collections[collection].slice(offset, offset+count))
-                offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
+              for(const c of collections[collection].slice(offset, offset+count)) {
+                const source = c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null;
+                offset += await applyMove(source, target, c);
+              }
+              await finishArrivals();
               if(target.get('type') == 'holder')
                 await target.updateAfterShuffle();
             });
@@ -2368,7 +2402,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true, groupBy: null });
         let collection;
         let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
@@ -2379,6 +2413,13 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
+              if(a.groupBy && typeof holder.arrangesPiles == 'function' && holder.arrangesPiles()) {
+                // one spread group per distinct value of the groupBy property
+                await holder.regroupBy(a.groupBy, a.key, a.reverse, a.locales, a.options);
+                return;
+              }
+              if(a.groupBy)
+                problems.push(`groupBy is ignored because ${holder.get('id')} does not arrange piles.`);
               await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
@@ -2387,6 +2428,8 @@ export class Widget extends StateManaged {
           if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
+          if(a.groupBy)
+            problems.push(`groupBy is ignored because only the widgets in a holder can be sorted into groups.`);
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
@@ -2952,6 +2995,10 @@ export class Widget extends StateManaged {
       // If we currently have a shadow widget, position it and place it in the holder.
       if (this.hoverTarget && this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
         const shadowWidget = widgets.get(this.get('dropShadowWidget'));
+        // the shadow aims by the same spot the drop will aim by - where the
+        // player is holding the widget - so a preview into a fan and the drop
+        // right after pick the same slot
+        shadowWidget.dropAnchor = localAnchor;
 
         const globalPoint = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         const shadowParentId = shadowWidget.get('parent');
@@ -3042,6 +3089,11 @@ export class Widget extends StateManaged {
     // the marker has to cover the whole drop rather than just that call.
     this.pileUpdateFromDrag = true;
 
+    // Where the player is holding this widget, kept for as long as the drop is
+    // being resolved: a holder arranging piles aims the drop by that spot rather
+    // than by the box of what was dropped, which can be a whole fan of cards.
+    this.dropAnchor = localAnchor;
+
     // The drop belongs where the button was released, not where the last mousemove
     // reported: a fast drag can end with a mouseup at coordinates no mousemove ever
     // delivered, and everything below - the drop target, the line stop, the position -
@@ -3089,6 +3141,7 @@ export class Widget extends StateManaged {
 
     await this.updatePiles();
     delete this.pileUpdateFromDrag;
+    delete this.dropAnchor;
   }
 
   async hideShadowWidget() {
@@ -3101,6 +3154,17 @@ export class Widget extends StateManaged {
       shadowWidget.currentParent = holder;
       if (preventRearrange)
         holder.preventRearrangeDuringPileDrop = true;
+
+      // a slot the shadow kept open in one of the fans closes with it - the
+      // real drop right after aims at the closed fan again, so it still lands
+      // in the slot the preview showed
+      const previewPile = shadowWidget.fanPreviewPile;
+      if (previewPile) {
+        delete shadowWidget.fanPreviewPile;
+        delete previewPile.previewGap;
+        if (widgets.has(previewPile.get('id')))
+          await previewPile.arrangeChildren();
+      }
 
       await shadowWidget.set('parent', null);
       await shadowWidget.checkParent(true);
@@ -3628,6 +3692,41 @@ export class Widget extends StateManaged {
     return this.gridConditions(grid).every(condition=>expressionCondition(condition, resolve));
   }
 
+  // How much room this widget takes up along one axis when a holder lines its
+  // children up. A pile spreading its cards needs more than its own box.
+  spreadExtent(axis) {
+    return this.get(axis == 'X' ? 'width' : 'height');
+  }
+
+  // Whether a widget dropped at the given spot lands close enough to this one to
+  // combine with it. Normally that means landing on where it is; a pile that
+  // spreads its cards out counts along its whole spread, so dropping onto the
+  // visible end of a fanned pile joins the pile as well.
+  isPileSnapTarget(x, y, range) {
+    // In a holder that arranges piles, what a drop joins is the holder's
+    // decision - it puts the widget exactly onto what it is meant to join. So
+    // nothing else there counts, however close together the holder places the
+    // slots it lines its piles up in.
+    if(this.holderArrangingPiles())
+      return this.get('x') == x && this.get('y') == y;
+    return Math.abs(this.get('x')-x) < range && Math.abs(this.get('y')-y) < range;
+  }
+
+  // The holder this widget is lined up in, if it is one that arranges piles -
+  // for a pile, the parent it takes its layout from as well.
+  holderArrangingPiles() {
+    return this.holderArrangingPilesOf(this.get('parent'));
+  }
+
+  holderArrangingPilesOf(parent) {
+    if(parent && widgets.has(parent)) {
+      const holder = widgets.get(parent);
+      if(holder.get('type') == 'holder' && holder.get('allowPiles'))
+        return holder;
+    }
+    return null;
+  }
+
   supportsPiles() {
     return true;
   }
@@ -3642,7 +3741,11 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
+    const parentWidget = thisParent && widgets.has(thisParent) ? widgets.get(thisParent) : null;
+    // while a holder rearranges cards on purpose - a batch being pulled out of
+    // its groups, a re-partition - they get parked on top of each other, and
+    // proximity must not pile them back up halfway through
+    if(this.isBeingRemoved || this.get('dropShadowOwner') || parentWidget && (!parentWidget.supportsPiles() || parentWidget.preventRearrangeDuringPileDrop))
       return;
 
     const thisX = this.get('x');
@@ -3668,7 +3771,7 @@ export class Widget extends StateManaged {
       if(thisType == 'card')
         pileSnapRange = thisOnPileCreation && thisOnPileCreation.pileSnapRange !== undefined ? thisOnPileCreation.pileSnapRange : defaultPileSnapRange;
 
-      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < pileSnapRange && Math.abs(widget.get('y')-thisY) < pileSnapRange) {
+      if(widget.get('parent') == thisParent && widget.isPileSnapTarget(thisX, thisY, pileSnapRange)) {
         if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreationJSON)
           continue;
 
@@ -3701,8 +3804,10 @@ export class Widget extends StateManaged {
           if(isFull(widget, this.children().length))
             continue;
           for(const w of this.children().reverse()) {
-            await w.set('parent', widget.get('id'));
+            // z before parent: a pile that spreads its cards lays them out by z,
+            // so the card has to have its final one when it arrives
             await w.bringToFront();
+            await w.set('parent', widget.get('id'));
           }
           break;
         }
