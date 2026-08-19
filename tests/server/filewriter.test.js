@@ -41,4 +41,26 @@ describe('server/filewriter.mjs', function() {
     expect(()=>FileWriter.writeFileSync(filename, 'new')).toThrow();
     expect(fs.readFileSync(filename, 'utf8')).toEqual('old');
   });
+
+  test('removes the temporary file when the rename fails', function() {
+    // a directory in the place of the target makes renaming the temporary file onto it fail
+    fs.mkdirSync(filename);
+    expect(()=>FileWriter.writeFileSync(filename, 'new')).toThrow();
+    expect(fs.readdirSync(directory)).toEqual([ 'test.json' ]);
+  });
+
+  test('copies a file and leaves no temporary file behind', function() {
+    const source = directory + '/source.json';
+    fs.writeFileSync(source, '{"a":1}');
+    FileWriter.copyFileSync(source, filename);
+    expect(fs.readFileSync(filename, 'utf8')).toEqual('{"a":1}');
+    expect(fs.readdirSync(directory).sort()).toEqual([ 'source.json', 'test.json' ]);
+  });
+
+  test('keeps the old file when copying fails', function() {
+    fs.writeFileSync(filename, 'old');
+    expect(()=>FileWriter.copyFileSync(directory + '/does-not-exist.json', filename)).toThrow();
+    expect(fs.readFileSync(filename, 'utf8')).toEqual('old');
+    expect(fs.readdirSync(directory)).toEqual([ 'test.json' ]);
+  });
 });

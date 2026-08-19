@@ -755,7 +755,7 @@ export default class Room {
   }
 
   moveFile(source, target) {
-    fs.copyFileSync(source, target, fs.constants.COPYFILE_FICLONE);
+    FileWriter.copyFileSync(source, target);
     fs.unlinkSync(source);
   }
 
@@ -1443,7 +1443,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
+        FileWriter.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
