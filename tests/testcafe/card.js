@@ -271,8 +271,8 @@ test('The css of a write object lays its text out the same way on the table and 
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
     .click('#w_deck')
+    .click('#propertiesOpenDeckEditor')
     .click('.deckEditorStripCard')
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0));
   await t.expect(await layout('#deckEditorMain .cardFace.active .cardFaceObject')).eql([ 'flex', true, true ]);
@@ -285,8 +285,8 @@ test('The deck editor shows a write object as its placeholder and its list row e
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
-    .click('#w_deck')                                            // selecting the deck opens the deck editor
+    .click('#w_deck')                                            // its properties are where the deck editor is opened from
+    .click('#propertiesOpenDeckEditor')
     .click('.deckEditorStripCard')                               // select the card type so the card is rendered
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)); // the face carrying the writable object
 
@@ -370,8 +370,8 @@ test('The Write box button adds its box below the text already on the face', asy
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
     .click('#w_deck')
+    .click('#propertiesOpenDeckEditor')
     .click('.deckEditorStripCard')
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
     .click('#deckEditorTreeAdd')
@@ -397,8 +397,8 @@ test('The deck editor warns when the write boxes of a face leave no card to grab
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
     .click('#w_deck')
+    .click('#propertiesOpenDeckEditor')
     .click('.deckEditorStripCard')
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
     // neither box covers most of the card on its own - it is the two of them together that do
