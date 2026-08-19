@@ -2153,6 +2153,65 @@ test('Deck editor: sheets of different card shapes each keep their own card size
   await t.expect(deck.portraitCard).eql([ 107, 160 ]);
 });
 
+// Card type names start from the file name of the upload they come from, and one import can hold two files
+// of the same name (the same file twice, or two files of that name from different folders) - the second
+// upload must not overwrite the card types of the first one.
+test('Deck editor: two uploads with the same file name keep their own cards', async t => {
+  const asset = (title, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${title}</title></svg>`).toString('base64')}`;
+  const first  = asset('first',  400, 400); // both are 2 x 2 sheets of 200 x 200 cards...
+  const second = asset('second', 400, 400); // ...uploaded under the same file name
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setGrid = ClientFunction((index, columns, rows) => {
+    const preview = document.querySelectorAll('.cardFrontPreview')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
+  await stubUploadOf('sheet.png', first);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setGrid(0, 2, 2);
+  await stubUploadOf('sheet.png', second);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setGrid(1, 2, 2);
+
+  await t
+    .expect(Selector('.imagePairStatus').innerText).contains('8 cards')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    // the status line promised eight cards, so eight of them have to be there
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(8);
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return { names: Object.keys(cardTypes), images: Object.values(cardTypes).map(c => c.image) };
+  })();
+
+  // the second upload is named apart instead of writing over the card types of the first one
+  await t.expect(deck.names.length).eql(8);
+  await t.expect(deck.names).contains('sheet.png 1,1');
+  await t.expect(deck.names).contains('sheet.png (2) 1,1');
+  await t.expect(deck.images.filter(image => image == first).length).eql(4);
+  await t.expect(deck.images.filter(image => image == second).length).eql(4);
+});
+
 // The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
 // strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
 test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {

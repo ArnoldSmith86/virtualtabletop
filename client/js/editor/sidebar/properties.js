@@ -2822,14 +2822,27 @@ class PropertiesModule extends SidebarModule {
         return cardSizeFromImage(image.naturalWidth, image.naturalHeight, columns, rows);
       });
       const ownSize = index=>sizes[index].width != sizes[0].width || sizes[index].height != sizes[0].height ? sizes[index] : null;
+      // Card type names start from the file name, and two uploads can carry the same one (the same file
+      // twice, or two files of that name from different folders) - so every upload gets a name of its own
+      // first, the same way deckImagePairs does, before the grid position is appended to it. Without that
+      // the second upload silently overwrites the card types of the first one.
+      const usedNames = new Set();
+      const uniqueName = name=>{
+        let unique = name;
+        for(let i=2; usedNames.has(unique); ++i)
+          unique = `${name} (${i})`;
+        usedNames.add(unique);
+        return unique;
+      };
       for(const [ index, { dom, columns, rows } ] of sheets.entries()) {
         const backSheet = useBackSheets ? backSheets[index] : null;
         const size = ownSize(index);
+        const fileName = uniqueName(dom.dataset.fileName);
         if(hasTiledImage) {
           for(let i=0; i<rows; ++i) {
             for(let j=0; j<columns; ++j) {
               // named the way the dialog asked for the grid: row and column, counted from one
-              const cardType = `${dom.dataset.fileName} ${i+1},${j+1}`;
+              const cardType = `${fileName} ${i+1},${j+1}`;
               cardTypes[cardType] = {
                 image: dom.dataset.imagePath,
                 offsetX: j,
@@ -2846,14 +2859,14 @@ class PropertiesModule extends SidebarModule {
             }
           }
         } else {
-          cardTypes[dom.dataset.fileName] = {
+          cardTypes[fileName] = {
             image: dom.dataset.imagePath
           };
           if(backSheet)
-            cardTypes[dom.dataset.fileName].backImage = backSheet.imagePath;
+            cardTypes[fileName].backImage = backSheet.imagePath;
           if(size)
-            Object.assign(cardTypes[dom.dataset.fileName], size);
-          counts[dom.dataset.fileName] = cardCopies(dom);
+            Object.assign(cardTypes[fileName], size);
+          counts[fileName] = cardCopies(dom);
         }
       }
 
