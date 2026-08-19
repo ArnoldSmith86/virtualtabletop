@@ -103,3 +103,56 @@ test('the tags of an icon are searchable, distinct and add something to its name
     }
   })).toEqual([]);
 });
+
+// The rest of the file checks the data; this checks what the pickers make of it. Both of them
+// score a query with client/js/symbols.js, which is a plain script the bundler concatenates, so
+// evaluate it the way tests/client/property-inputs.test.js does and search the real 13288 icons.
+const searchSource = fs.readFileSync(path.join(dir, '../client/js/symbols.js'), 'utf8')
+  .replace(/^import\s+[^;]+;\r?\n/gm, '')
+  .replace(/^export\s+/gm, '');
+const { iconSearchEntry, iconSearchScores } = new Function(`${searchSource}
+  ; return { iconSearchEntry, iconSearchScores };`)();
+
+const searchIndex = Object.entries(symbols).filter(([ category ]) => category != 'Emoji - Flags')
+  .flatMap(([ , entries ]) => Object.entries(entries).map(([ symbol, keywords ]) => symbol.includes('/')
+    ? { symbol, ...iconSearchEntry(symbol.split('/')[1], keywords.slice(1)) } // the sprite index in front of the tags
+    : { symbol, ...iconSearchEntry(symbol, keywords) }));
+
+function searchSymbols(query) {
+  const scores = iconSearchScores(searchIndex, query);
+  return searchIndex.filter((entry, i) => scores[i]).map(entry => entry.symbol);
+}
+
+test('a plural finds what its singular finds', () => {
+  // Neither the file names nor the tags settle on a number - the icon is "delapouite/horse-head"
+  // but "lorc/kitchen-knives", and a tag may not repeat a word of the name, so an icon named
+  // "horse" carries the word nowhere else. Matching one number only lost almost everything:
+  // "horses" answered with 3 of the 22 icons "horse" finds, "roses" and "axes" with none of the
+  // roses and two of the axes.
+  const missed = [];
+  for(const [ singular, plural ] of Object.entries({
+    horse:'horses', house:'houses', rose:'roses', axe:'axes', box:'boxes', torch:'torches',
+    glass:'glasses', church:'churches', knife:'knives', wolf:'wolves', leaf:'leaves', tooth:'teeth'
+  })) {
+    const found = new Set(searchSymbols(plural));
+    for(const symbol of searchSymbols(singular))
+      // a word that only begins with the singular ("horseback", "boxing") is a match of the
+      // singular alone - the plural is matched as a whole word, in either number
+      if(!found.has(symbol) && !symbol.split('/').pop().split(/[^a-z0-9]+/).some(word => word != singular && word.startsWith(singular)))
+        missed.push(`"${plural}" misses ${symbol}`);
+  }
+  expect(missed).toEqual([]);
+});
+
+test('a word that only ends in s is not searched as a plural', () => {
+  // "news" used to be searched as "new" and answered with 148 icons - a newborn, a new shoot,
+  // "accessibility_new" - instead of the 16 that have to do with news
+  const news = searchSymbols('news');
+  expect(news).toContain('delapouite/newspaper');
+  expect(news).not.toContain('delapouite/new-born');
+  expect(news).not.toContain('lorc/new-shoot');
+  expect(news.length).toBeLessThan(searchSymbols('new').length / 4);
+  // "cross" is not the plural of "cros" either, and "crosses" still finds the crosses
+  expect(searchSymbols('crosses')).toContain('delapouite/jerusalem-cross');
+  expect(searchSymbols('lens')).toContain('lorc/microscope-lens');
+});

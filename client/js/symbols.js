@@ -67,6 +67,8 @@ function skipForNotoMonochrome(emoji) {
 // "bear" with a compass tagged "bearing", a razor tagged "beard" and an I-beam tagged "load
 // bearing" - 19 of the 32 results had nothing to do with bears. Names keep matching from the
 // start of a word so that typing "swor" still finds the swords while nothing is complete yet.
+// Whole words are matched in either number: the file name of an icon says "horse" or "knives",
+// its tags say whichever reads naturally, and a search for the other one has to find it anyway.
 
 // The tags are US English (the same list normalized the generated ones), so "defence" was a dead
 // end while 178 icons are tagged "defense". Both directions, because a few file names are British
@@ -107,9 +109,55 @@ function iconSearchEntry(name, keywords) {
   };
 }
 
-function iconSearchTagMatch(entry, term) {
-  // "card" finds the icon tagged "cards" and the other way round
-  return entry.tags.has(term) || entry.tags.has(`${term}s`) || entry.tags.has(`${term}es`) || entry.tags.has(term.replace(/e?s$/, ''));
+// Words that end in an "s" that is not a plural one: dropping it made "news" a search for "new"
+// and answered with newborns, sprouts and champagne. The double-s words ("cross", "compass") need
+// no list, the rule below never strips an "s" that follows another one.
+const iconSearchNotPlural = new Set([
+  'news', 'lens', 'bus', 'gas', 'plus', 'minus', 'focus', 'status', 'virus', 'circus', 'canvas',
+  'atlas', 'chaos', 'cosmos', 'iris', 'axis', 'oasis', 'basis', 'crisis', 'tennis', 'physics',
+  'mathematics', 'politics', 'economics', 'statistics', 'mechanics', 'electronics', 'ethics',
+  'species', 'series', 'goods', 'pants', 'jeans', 'shorts', 'scissors', 'pliers', 'tongs'
+]);
+
+// The plurals an "s" cannot make. Registered in both directions like the spellings above: a file
+// name carries one number only ("lorc/kitchen-knives", "delapouite/wolf-head"), and so does a tag.
+const iconSearchIrregularPlurals = {};
+for(const [ singular, plural ] of Object.entries({
+  knife:'knives', life:'lives', wife:'wives', leaf:'leaves', loaf:'loaves', half:'halves',
+  calf:'calves', shelf:'shelves', wolf:'wolves', elf:'elves', dwarf:'dwarves', thief:'thieves',
+  hoof:'hooves', staff:'staves', die:'dice', foot:'feet', tooth:'teeth', goose:'geese',
+  mouse:'mice', louse:'lice', man:'men', woman:'women', child:'children', person:'people',
+  ox:'oxen', cactus:'cacti', fungus:'fungi'
+})) {
+  iconSearchIrregularPlurals[singular] = plural;
+  iconSearchIrregularPlurals[plural] = singular;
+}
+
+// What one term of a query stands for: the forms of it that mean the same thing to the search,
+// and the words it may match the beginning of. Tags and file names are each written in whichever
+// number reads naturally - "lorc/kitchen-knives", "delapouite/horse-head", a tag "cards" - so
+// both directions have to be covered, and the name has to be covered too: an icon named "horse"
+// is not tagged "horse" (a tag may not repeat a word of the name), so matching plurals in the
+// tags alone lost it. An "es" plural can be either the word without its "s" or the word without
+// its "es" - "horses" is a horse, "crosses" is a cross - so both are offered; every form is
+// matched whole, so the one that is not a word ("hors") finds nothing rather than horseshoes,
+// which is what replacing the term by it used to do.
+function iconSearchTerm(term) {
+  const prefixes = [ term ];
+  if(iconSearchSpellings[term])
+    prefixes.push(iconSearchSpellings[term]);
+  const forms = new Set();
+  for(const word of prefixes) {
+    forms.add(word).add(`${word}s`).add(`${word}es`);
+    if(iconSearchIrregularPlurals[word])
+      forms.add(iconSearchIrregularPlurals[word]);
+    if(/[^s]s$/.test(word) && !iconSearchNotPlural.has(word)) {
+      forms.add(word.slice(0, -1)); // horses -> horse, cards -> card
+      if(/es$/.test(word))
+        forms.add(word.slice(0, -2)); // crosses -> cross, boxes -> box, torches -> torch
+    }
+  }
+  return { prefixes, forms: [ ...forms ] };
 }
 
 // What the tags of an icon say it shows, for its tooltip: nothing else tells a user that the
@@ -123,15 +171,16 @@ function iconSearchTagText(entry) {
 // an icon that is called what was typed comes before one that is only described that way, so
 // "dragon" leads with the dragons instead of with the dragonfly and the fish scales.
 function iconSearchTermScore(entry, term) {
-  return entry.name.includes(term) ? 3 : entry.name.some(word => word.startsWith(term)) ? 2 : iconSearchTagMatch(entry, term) ? 1 : 0;
+  return term.forms.some(form => entry.name.includes(form)) ? 3
+    : term.prefixes.some(prefix => entry.name.some(word => word.startsWith(prefix))) ? 2
+    : term.forms.some(form => entry.tags.has(form)) ? 1 : 0;
 }
 
 // An entry has to match every term and is worth as much as its weakest one.
 function iconSearchScore(entry, terms) {
   let score = 3;
   for(const term of terms) {
-    const spelling = iconSearchSpellings[term];
-    const termScore = Math.max(iconSearchTermScore(entry, term), spelling ? iconSearchTermScore(entry, spelling) : 0);
+    const termScore = iconSearchTermScore(entry, term);
     if(!termScore)
       return 0;
     score = Math.min(score, termScore);
@@ -146,7 +195,7 @@ function iconSearchScore(entry, terms) {
 function iconSearchScores(entries, query) {
   if(!query.trim())
     return entries.map(_=>1);
-  const terms = iconSearchWords(query);
+  const terms = iconSearchWords(query).map(iconSearchTerm);
   const scores = terms.length ? entries.map(entry => iconSearchScore(entry, terms)) : [];
   if(scores.some(score => score))
     return scores;

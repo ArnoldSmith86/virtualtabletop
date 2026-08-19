@@ -1029,11 +1029,36 @@ describe('property input helpers', () => {
     // every term has to match, hyphens in the query separate them like spaces do
     expect(inputHelpers.searchIconIndex('bear trap').values).toEqual([ 'lorc/mantrap' ]);
     expect(inputHelpers.searchIconIndex('bear-trap').values).toEqual([ 'lorc/mantrap' ]);
-    // a plural is not a different tag
+    // a plural is not a different tag, and not a different name either
     expect(inputHelpers.searchIconIndex('bears').values).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
     // nothing matches by word: fall back to matching anywhere so a half typed tag finds icons
     expect(inputHelpers.searchIconIndex('cthulh').values).toEqual([ 'lorc/tentacles-skull' ]);
     expect(inputHelpers.searchIconIndex('nonsense').values).toEqual([]);
+  });
+
+  test('searchIconIndex matches a name and a tag in either number', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'delapouite/horse-head',   ...inputHelpers.iconSearchEntry('horse-head', [ 'stallion' ]),   image: true },
+      { value: 'delapouite/horseshoe',    ...inputHelpers.iconSearchEntry('horseshoe', [ 'luck' ]),        image: true },
+      { value: 'lorc/kitchen-knives',     ...inputHelpers.iconSearchEntry('kitchen-knives', [ 'blade' ]),  image: true },
+      { value: 'delapouite/hell-crosses', ...inputHelpers.iconSearchEntry('hell-crosses', [ 'grave' ]),    image: true },
+      { value: 'lorc/new-shoot',          ...inputHelpers.iconSearchEntry('new-shoot', [ 'sprout' ]),      image: true },
+      { value: 'delapouite/newspaper',    ...inputHelpers.iconSearchEntry('newspaper', [ 'news', 'press' ]), image: true }
+    ]);
+
+    // the file name is written in one number only, and a tag may not repeat a word of it, so the
+    // singular of "horses" has to be matched against the name - stripping the whole "es" made it
+    // "hors", which matched nothing, and left only the horseshoe that begins with "horses"
+    expect(inputHelpers.searchIconIndex('horses').values).toEqual([ 'delapouite/horse-head', 'delapouite/horseshoe' ]);
+    expect(inputHelpers.searchIconIndex('horse').values).toEqual([ 'delapouite/horse-head', 'delapouite/horseshoe' ]);
+    // "es" is stripped both ways, because "crosses" is a cross and "horses" a horse
+    expect(inputHelpers.searchIconIndex('crosses').values).toEqual([ 'delapouite/hell-crosses' ]);
+    expect(inputHelpers.searchIconIndex('cross').values).toEqual([ 'delapouite/hell-crosses' ]);
+    // an "s" cannot make every plural
+    expect(inputHelpers.searchIconIndex('knife').values).toEqual([ 'lorc/kitchen-knives' ]);
+    // "news" is not the plural of "new", so it does not answer with sprouts
+    expect(inputHelpers.searchIconIndex('news').values).toEqual([ 'delapouite/newspaper' ]);
+    expect(inputHelpers.searchIconIndex('new').values).toEqual([ 'lorc/new-shoot', 'delapouite/newspaper' ]);
   });
 
   test('searchImageIndex returns image URLs for matching glyphs', () => {
