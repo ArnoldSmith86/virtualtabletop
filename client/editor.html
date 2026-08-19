@@ -302,9 +302,13 @@
               </div>
             </div>
             <button icon="format_size" id="deckEditorAddText">Text</button>
+            <button icon="edit_note" id="deckEditorAddWritable" title="Adds a box players can write in while playing - what they write is kept on the card.">Write box</button>
             <button icon="image" id="deckEditorAddImage">Image</button>
             <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
             <button icon="palette" id="deckEditorAddColor" title="Adds a solid color box, e.g. as a background.">Color</button>
+            <!-- The one thing a creator has to know about a write box, in the panel rather than only in the
+                 button's tooltip. It is only shown in the Card Type mode, the only one offering the button. -->
+            <div class="deckEditorAddModeNote">A <b>Write box</b> stores what players type on the card itself. A card can not be dragged or flipped by its box, so leave some card around it to grab.</div>
           </div>
         </div>
         <div id="deckEditorTree"></div>

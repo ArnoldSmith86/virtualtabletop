@@ -152,6 +152,21 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   white-space: nowrap;
 }
 
+/* A write object always stores its text on the card, so it only exists as a per-card-type object: the
+   "Write box" button is part of the amber Card Type group and is not offered in the blue All Cards one -
+   and neither is the note explaining it. */
+.deckEditorAddGroupStatic #deckEditorAddWritable,
+.deckEditorAddGroupStatic .deckEditorAddModeNote {
+  display: none;
+}
+
+.deckEditorAddModeNote {
+  font-size: 11px;
+  line-height: 1.25;
+  opacity: 0.85;
+  white-space: normal;
+}
+
 #deckEditorHistory {
   display: flex;
   align-items: center;
@@ -460,6 +475,13 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   width: auto;
   height: auto;
   z-index: 20;
+}
+
+/* The public library's deck browser is moved into #editor as well (see initializeDOM), and #editor is not a
+   stacking context of its own - so without a z-index it ends up behind the very editor it is opened from
+   (#deckEditor is z-index: 1, the sidebar 2, the toolbar 3). */
+#editor > #libraryDecksOverlay {
+  z-index: 4;
 }
 
 /* Both pickers are opened from the JSON editor and the properties panel, which stay reachable while the deck
@@ -1474,6 +1496,21 @@ body.deckEditorPanning #deckEditorMain * {
   margin: 2px 5px 8px;
 }
 
+/* A section note that points out a problem with the current object (e.g. write boxes covering the whole card).
+   Amber on a tinted amber block, like the rest of the editor's emphasis: dark enough to read on the white
+   sidebar, and back to the brighter amber where the sidebar is dark. */
+.deckEditorSectionWarning {
+  opacity: 1;
+  color: #a35c00;
+  background: rgba(255, 193, 7, 0.18);
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+
+body.darkMode .deckEditorSectionWarning {
+  color: #ffb300;
+}
+
 /* Column headers over the binding rows; share the row layout but without the row's highlight background. */
 .deckEditorDynamicPropertyHeaders {
   background: transparent;
@@ -1525,7 +1562,7 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 /* sidebarModules.css gives every genericInput field a fixed/minimum 200px width, which no longer fits next
-   to a 100px label plus the picker/trash buttons' reserved padding - the field wrapped to its own line
+   to the label column plus the picker/trash buttons' reserved padding - the field wrapped to its own line
    (see the reported layout bug). Let it flex to fill the row instead, one line, like the number rows. */
 #deckEditorSidebar .deckEditorProperties .genericInput input:not([type=checkbox]),
 #deckEditorSidebar .deckEditorProperties .genericInput textarea,
