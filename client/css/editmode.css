@@ -147,6 +147,14 @@
   padding: 5px;
 }
 
+/* only filled when the picked sort has nothing to sort by, see renderLibraryDecksList */
+#libraryDecksSortHint {
+  flex-basis: 100%;
+  font-size: 14px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
 .libraryDeckGameStat {
   font-size: 16px;
   font-weight: normal;

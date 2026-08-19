@@ -1978,6 +1978,36 @@ test('Edit mode: the public library deck browser is not scaled with the board', 
   await t.expect(overlay.clickable).ok();
 });
 
+// Sorting the deck browser by stars or by play time can only do something on a server that has counted any:
+// both are per-server statistics, and a fresh server (a test server, a private installation - or this test)
+// has none at all, so every game ties at zero and the list stays in the order by name. Without a word about
+// that the sort control looks broken, which is exactly how it was reported.
+test('Edit mode: the deck browser says when a sort has nothing to sort by', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#browseLibraryDecks')
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  const sort = Selector('#libraryDecksSort');
+  const hint = Selector('#libraryDecksSortHint');
+  const pick = async value => t.click(sort).click(sort.find('option').withAttribute('value', value));
+
+  // sorting by name is the order the list is in anyway, so there is nothing to say
+  await t.expect(hint.innerText).eql('');
+  await pick('stars');
+  await t.expect(hint.innerText).contains('No game on this server has been starred yet');
+  await pick('popularity');
+  await t.expect(hint.innerText).contains('No game on this server has been played yet');
+  await pick('name');
+  await t.expect(hint.innerText).eql('');
+});
+
 // The tiled counterpart of the front/back pairs above: one picture holding a grid of fronts and a second one
 // holding the backs in the same grid, so every card gets the back sitting in its own cell.
 test('Deck editor: a sheet of fronts with a matching sheet of backs in the new deck wizard', async t => {

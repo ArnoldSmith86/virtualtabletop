@@ -1369,6 +1369,16 @@ function renderLibraryDecksList() {
   });
 
   const sortMode = $('#libraryDecksSort').value;
+
+  // Stars and play time are counted per server, so a server nobody has played on yet (a test server, a fresh
+  // installation) has none of either - and sorting by them silently shows the order by name. Say so rather
+  // than leaving a control that looks broken.
+  const sortedBy = { stars: entry=>entry.stars, popularity: entry=>entry.timePlayed }[sortMode];
+  $('#libraryDecksSortHint').textContent = sortedBy && !libraryDecksIndex.some(entry=>sortedBy(entry))
+    ? (sortMode == 'stars' ? 'No game on this server has been starred yet, so this is the order by name.'
+                           : 'No game on this server has been played yet, so this is the order by name.')
+    : '';
+
   groups.sort(function(a, b) {
     if(sortMode == 'stars' && b.stars != a.stars)
       return b.stars - a.stars;
