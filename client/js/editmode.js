@@ -382,7 +382,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick, title) {
         batchEnd();
       });
       w.domElement.title = title;
-      $('#addOverlayContent').appendChild(w.domElement);
+      $('#addOverlayLayout').appendChild(w.domElement);
     }
   }
   for(const wi of widgetsToAdd) {
@@ -426,7 +426,7 @@ function addPieceToAddWidgetOverlay(w, wi, title) {
   });
   w.domElement.id = w.id;
   w.domElement.title = title;
-  $('#addOverlayContent').appendChild(w.domElement);
+  $('#addOverlayLayout').appendChild(w.domElement);
 }
 
 function addWidgetToAddWidgetOverlay(w, wi, title) {
@@ -440,7 +440,7 @@ function addWidgetToAddWidgetOverlay(w, wi, title) {
   });
   w.domElement.id = w.id;
   w.domElement.title = title;
-  $('#addOverlayContent').appendChild(w.domElement);
+  $('#addOverlayLayout').appendChild(w.domElement);
 }
 
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
@@ -1059,7 +1059,7 @@ function populateAddWidgetOverlay() {
   });
   dice2D.domElement.id = dice2D.id;
   dice2D.domElement.title = 'Add a die - you pick how many sides it has';
-  $('#addOverlayContent').appendChild(dice2D.domElement);
+  $('#addOverlayLayout').appendChild(dice2D.domElement);
 
   const dice2DCube = new Dice('add-dice2DCube0');
   const dice2DCubeAttrs = {
@@ -1133,7 +1133,7 @@ function populateAddWidgetOverlay() {
   });
   dice2DCube.domElement.id = dice2DCube.id;
   dice2DCube.domElement.title = 'Add a cube die - you pick its color';
-  $('#addOverlayContent').appendChild(dice2DCube.domElement);
+  $('#addOverlayLayout').appendChild(dice2DCube.domElement);
 
   const dice3D = new Dice('add-dice3D0');
   const dice3DAttrs = {
@@ -1172,7 +1172,7 @@ function populateAddWidgetOverlay() {
   });
   dice3D.domElement.id = dice3D.id;
   dice3D.domElement.title = 'Add a 3D die - you pick how many sides it has';
-  $('#addOverlayContent').appendChild(dice3D.domElement);
+  $('#addOverlayLayout').appendChild(dice3D.domElement);
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
@@ -1214,7 +1214,7 @@ function populateAddWidgetOverlay() {
   });
   spinner.domElement.id = spinner.id;
   spinner.domElement.title = 'Add a spinner - you pick how many values it has';
-  $('#addOverlayContent').appendChild(spinner.domElement);
+  $('#addOverlayLayout').appendChild(spinner.domElement);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',

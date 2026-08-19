@@ -135,7 +135,7 @@ test('A preview in the add widget overlay adds its widget where the preview is s
     .expect(boardLayout()).eql(portraitBoard)
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-2D-chips')
-    .expect(addedWidgetBox('holder')).eql({ x: 573, y: 675, right: 654, bottom: 756 });
+    .expect(addedWidgetBox('holder')).eql({ x: 573, y: 703, right: 654, bottom: 784 });
 
   await loadGameWithBoardSize(null);
 });

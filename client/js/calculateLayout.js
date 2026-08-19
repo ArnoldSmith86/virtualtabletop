@@ -164,16 +164,24 @@ export function isEditSidebarNarrow(windowWidth, windowHeight, viewport) {
 }
 
 /**
+ * The height of the add widget overlay's header row, in the overlay's own coordinates. The
+ * header sits above the 1600x1000 layout the previews live in, so the overlay as a whole is
+ * 1600x(1000+this) - see #addOverlayHeader in editmode.css.
+ */
+export const ADD_OVERLAY_HEADER_HEIGHT = 90;
+
+/**
  * The scale the add widget overlay is rendered at. Its contents are laid out for the default
  * board because the widget previews in it are real widgets at coordinates hardcoded for that
  * board, so the whole layout is scaled into the room and centered instead of being stretched
- * to it - see #addOverlayContent in editmode.css.
+ * to it - see #addOverlayContent in editmode.css. The header row makes the overlay taller than
+ * the default board, so it is scaled down a little even there.
  *
  * @param {Object} viewport - { targetWidth, targetHeight }
  * @returns {number}
  */
 export function addOverlayScale(viewport) {
-  return Math.min(viewport.targetWidth/DEFAULT_VIEWPORT.targetWidth, viewport.targetHeight/DEFAULT_VIEWPORT.targetHeight);
+  return Math.min(viewport.targetWidth/DEFAULT_VIEWPORT.targetWidth, viewport.targetHeight/(DEFAULT_VIEWPORT.targetHeight + ADD_OVERLAY_HEADER_HEIGHT));
 }
 
 /**
@@ -192,12 +200,15 @@ export function addOverlayScale(viewport) {
  */
 export function addOverlayPosition(viewport, x, y, width, height) {
   const scale = addOverlayScale(viewport);
-  function onBoard(coordinate, overlaySize, widgetSize, boardSize) {
-    const scaled = Math.round((coordinate - overlaySize/2)*scale + boardSize/2);
-    return Math.max(0, Math.min(scaled, boardSize - widgetSize));
+  // the top left corner of the 1600x1000 layout on the board: the overlay is centered as a whole,
+  // and the header row above the layout pushes the layout itself half a header row further down
+  const layoutLeft = viewport.targetWidth/2  - DEFAULT_VIEWPORT.targetWidth*scale/2;
+  const layoutTop  = viewport.targetHeight/2 - (DEFAULT_VIEWPORT.targetHeight - ADD_OVERLAY_HEADER_HEIGHT)*scale/2;
+  function onBoard(coordinate, layoutStart, widgetSize, boardSize) {
+    return Math.max(0, Math.min(Math.round(layoutStart + coordinate*scale), boardSize - widgetSize));
   }
   return [
-    onBoard(x, DEFAULT_VIEWPORT.targetWidth,  width,  viewport.targetWidth),
-    onBoard(y, DEFAULT_VIEWPORT.targetHeight, height, viewport.targetHeight)
+    onBoard(x, layoutLeft, width,  viewport.targetWidth),
+    onBoard(y, layoutTop,  height, viewport.targetHeight)
   ];
 }

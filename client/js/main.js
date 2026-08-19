@@ -1,6 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { addOverlayPosition, addOverlayScale, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -214,8 +214,10 @@ function setScale() {
   document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
 
   // the add widget overlay is laid out for the default board size, so it is scaled to fit into
-  // the room instead of being stretched to it - see #addOverlayContent in editmode.css
+  // the room instead of being stretched to it - see #addOverlayContent in editmode.css. The header
+  // row comes from the same constant the widget positions are derived from, so the two cannot drift.
   document.documentElement.style.setProperty('--addOverlayScale', addOverlayScale(viewportConfig));
+  document.documentElement.style.setProperty('--addOverlayHeaderHeight', `${ADD_OVERLAY_HEADER_HEIGHT}px`);
 
   const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
 
