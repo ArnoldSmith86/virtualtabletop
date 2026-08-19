@@ -240,13 +240,18 @@ export default async function minifyHTML() {
   // already arrives minified, but it was sent uncompressed.
   const fflate = fs.readFileSync(path.resolve() + '/node_modules/fflate/umd/index.js');
 
+  // symbols.json is by far the biggest file the client fetches (the icon pickers read it in one go) and
+  // express.static sends it as it is, so keep it gzipped here as well - it compresses to about a fifth
+  const symbols = fs.readFileSync(path.resolve() + '/assets/fonts/symbols.json');
+
   return {
     min: room.min,
     gzipped: room.gzipped,
     editorJSmin: editorJS,
     editorJSgzipped: await gzip(editorJS),
     fflateMin: fflate,
-    fflateGzipped: await gzip(fflate)
+    fflateGzipped: await gzip(fflate),
+    symbolsGzipped: await gzip(symbols)
   };
 }
 
