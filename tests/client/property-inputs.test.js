@@ -9,9 +9,15 @@ import { asArray } from '../../client/js/domhelpers.js';
 // so evaluate the sources and grab the pure helpers from their scope.
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const inputsSource = fs.readFileSync(path.join(dir, '../../client/js/editor/propertyInputs.js'), 'utf8');
+// the icon search itself lives in the room bundle (client/js/symbols.js, exported to edit mode by
+// main.js), so both pickers rank a query the same way - evaluate it in front of the editor source
+// the way the browser has it in scope, with the import/export lines the bundler drops
+const symbolsSource = fs.readFileSync(path.join(dir, '../../client/js/symbols.js'), 'utf8')
+  .replace(/^import\s+[^;]+;\r?\n/gm, '')
+  .replace(/^export\s+/gm, '');
 const propertiesSource = fs.readFileSync(path.join(dir, '../../client/js/editor/sidebar/properties.js'), 'utf8');
 
-const inputHelpers = new Function(inputsSource + `;
+const inputHelpers = new Function(symbolsSource + inputsSource + `;
   return {
     propertyInputNumberOrText,
     propertyInputValueSet,
@@ -19,6 +25,7 @@ const inputHelpers = new Function(inputsSource + `;
     searchIconIndex,
     searchImageIndex,
     iconSearchEntry,
+    iconSearchScores,
     iconValueType,
     usedGameIconValue,
     setIconSearchIndex: index => { iconSearchIndex = index; },
@@ -1000,9 +1007,9 @@ describe('property input helpers', () => {
     ]);
     // the two icons called "star" come before the one that is only tagged with it, both groups
     // in the order of the index
-    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'lorc/star', 'grade' ]);
-    expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
-    expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
+    expect(inputHelpers.searchIconIndex('star').values).toEqual([ 'star', 'lorc/star', 'grade' ]);
+    expect(inputHelpers.searchIconIndex('sun').values).toEqual([ 'delapouite/sun' ]);
+    expect(inputHelpers.searchIconIndex('nothing').values).toEqual([]);
   });
 
   test('searchIconIndex matches names by word but tags only as whole words', () => {
@@ -1016,17 +1023,17 @@ describe('property input helpers', () => {
     ]);
 
     // "beard", "bearing" and "load bearing" describe something else entirely
-    expect(inputHelpers.searchIconIndex('bear')).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
+    expect(inputHelpers.searchIconIndex('bear').values).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
     // a word of the name still matches from its first letter, so the picker fills in while typing
-    expect(inputHelpers.searchIconIndex('bea')).toEqual([ 'delapouite/bear-head' ]);
+    expect(inputHelpers.searchIconIndex('bea').values).toEqual([ 'delapouite/bear-head' ]);
     // every term has to match, hyphens in the query separate them like spaces do
-    expect(inputHelpers.searchIconIndex('bear trap')).toEqual([ 'lorc/mantrap' ]);
-    expect(inputHelpers.searchIconIndex('bear-trap')).toEqual([ 'lorc/mantrap' ]);
+    expect(inputHelpers.searchIconIndex('bear trap').values).toEqual([ 'lorc/mantrap' ]);
+    expect(inputHelpers.searchIconIndex('bear-trap').values).toEqual([ 'lorc/mantrap' ]);
     // a plural is not a different tag
-    expect(inputHelpers.searchIconIndex('bears')).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
+    expect(inputHelpers.searchIconIndex('bears').values).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
     // nothing matches by word: fall back to matching anywhere so a half typed tag finds icons
-    expect(inputHelpers.searchIconIndex('cthulh')).toEqual([ 'lorc/tentacles-skull' ]);
-    expect(inputHelpers.searchIconIndex('nonsense')).toEqual([]);
+    expect(inputHelpers.searchIconIndex('cthulh').values).toEqual([ 'lorc/tentacles-skull' ]);
+    expect(inputHelpers.searchIconIndex('nonsense').values).toEqual([]);
   });
 
   test('searchImageIndex returns image URLs for matching glyphs', () => {
@@ -1036,7 +1043,7 @@ describe('property input helpers', () => {
       { value: 'casino', ...inputHelpers.iconSearchEntry('casino', [ 'dice' ]), image: false }
     ]);
 
-    expect(inputHelpers.searchImageIndex('dice')).toEqual([
+    expect(inputHelpers.searchImageIndex('dice').values).toEqual([
       '/i/game-icons.net/lorc/dice-six-faces-six.svg',
       '/i/noto-emoji/emoji_u1f3b2.svg'
     ]);
@@ -1054,7 +1061,7 @@ describe('property input helpers', () => {
       { value: 'lorc/star', type: 'game-icons', ...inputHelpers.iconSearchEntry('star', []), image: true },
       { value: 'star', type: 'material-symbols', ...inputHelpers.iconSearchEntry('star', []), image: false }
     ]);
-    expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ]))).toEqual([ 'star' ]);
+    expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ])).values).toEqual([ 'star' ]);
   });
 
   test('picker searches show up to 100 results', () => {
@@ -1064,8 +1071,45 @@ describe('property input helpers', () => {
       image: true
     })));
 
-    expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
-    expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
+    expect(inputHelpers.searchIconIndex('icon').values).toHaveLength(100);
+    expect(inputHelpers.searchImageIndex('icon').values).toHaveLength(100);
+    // ... and say how many were left out instead of truncating the list silently
+    expect(inputHelpers.searchIconIndex('icon').total).toBe(101);
+    expect(inputHelpers.searchImageIndex('icon').total).toBe(101);
+  });
+
+  test('icon search ranks whole words of the name above the words it only starts', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/dragonfly',    ...inputHelpers.iconSearchEntry('dragonfly', [ 'insect' ]), image: true },
+      { value: 'delapouite/scales', ...inputHelpers.iconSearchEntry('fish-scales', [ 'dragon' ]), image: true },
+      { value: 'lorc/dragon-head',  ...inputHelpers.iconSearchEntry('dragon-head', [ 'beast' ]),  image: true }
+    ]);
+    expect(inputHelpers.searchIconIndex('dragon').values).toEqual([ 'lorc/dragon-head', 'lorc/dragonfly', 'delapouite/scales' ]);
+  });
+
+  test('icon search understands accents and both English spellings', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'delapouite/fencer',    ...inputHelpers.iconSearchEntry('fencer', [ 'epee', 'fencing' ]), image: true },
+      { value: 'lorc/crossed-sabres',  ...inputHelpers.iconSearchEntry('crossed-sabres', [ 'cavalry' ]), image: true },
+      { value: 'lorc/shield',          ...inputHelpers.iconSearchEntry('shield', [ 'defense' ]),         image: true }
+    ]);
+    // an accented query used to split into the two prefixes "p" and "e" and match at random
+    expect(inputHelpers.searchIconIndex('épée').values).toEqual([ 'delapouite/fencer' ]);
+    // the tags are US English, a few of the file names are not - both spellings find both
+    expect(inputHelpers.searchIconIndex('defence').values).toEqual([ 'lorc/shield' ]);
+    expect(inputHelpers.searchIconIndex('saber').values).toEqual([ 'lorc/crossed-sabres' ]);
+  });
+
+  test('a query without a single searchable word matches nothing instead of everything', () => {
+    const entries = [
+      inputHelpers.iconSearchEntry('dragon-head', [ 'beast' ]),
+      inputHelpers.iconSearchEntry('shield', [ 'defense' ])
+    ];
+    // every entry matching every one of zero terms used to unhide the whole picker
+    expect(inputHelpers.iconSearchScores(entries, 'меч')).toEqual([ 0, 0 ]);
+    expect(inputHelpers.iconSearchScores(entries, '???')).toEqual([ 0, 0 ]);
+    // an empty search box is not a search: it shows everything, as it did before
+    expect(inputHelpers.iconSearchScores(entries, '   ')).toEqual([ 1, 1 ]);
   });
 
   test('icon basic-options scale field clamps to its advertised 0.1-5 range', () => {
