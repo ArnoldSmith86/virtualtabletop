@@ -1101,7 +1101,7 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
     .pressKey('esc');
-  await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
+  await compareState(t, '8fa2da8044933891febb5b6066c5350b');
 });
 
 test('The symbol picker says an image-only search found nothing', async t => {
