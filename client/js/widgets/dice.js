@@ -182,14 +182,14 @@ class Dice extends Widget {
   }
 
   createChildNodes() {
-    const applySVGreplaces = (faceDOM, faceDefinition, image, svgReplaces) => {
+    const applySVGreplaces = (faceDOM, faceDefinition, image, svgReplaces, subscriber) => {
       let imageResult = mapAssetURLs(image);
 
       if(typeof svgReplaces == 'object' && svgReplaces !== null) {
         const replaces = {};
         for(const key in svgReplaces)
           replaces[key] = this.getFaceProperty(faceDefinition, svgReplaces[key]);
-        imageResult = getSVG(image, replaces, _=>faceDOM.style.backgroundImage = `url("${getSVG(image, replaces)}")`);
+        imageResult = getSVG(image, replaces, _=>faceDOM.style.backgroundImage = `url("${getSVG(image, replaces)}")`, subscriber);
       }
 
       faceDOM.style.backgroundImage = `url("${imageResult}")`;
@@ -228,7 +228,7 @@ class Dice extends Widget {
         face.className = 'dicePip';
       } else if(icon != undefined) {
         this.facesElement.appendChild(face);
-        generateSymbolsDiv(face, this.get('width'), this.get('height'), icon, text, 0.9, this.getFaceProperty(content, 'pipColor'), this.getFaceProperty(content, 'pipColor'));
+        generateSymbolsDiv(face, this.get('width'), this.get('height'), icon, text, 0.9, this.getFaceProperty(content, 'pipColor'), this.getFaceProperty(content, 'pipColor'), 1, `${this.id}:face${i}`);
       } else if(text != undefined) {
         face.textContent = text;
       } else if(content.value != undefined && content.image == undefined) {
@@ -238,7 +238,7 @@ class Dice extends Widget {
       }
       const image = this.getFaceProperty(content, 'image');
       if(image)
-        applySVGreplaces(face, content, image, this.getFaceProperty(content, 'svgReplaces'));
+        applySVGreplaces(face, content, image, this.getFaceProperty(content, 'svgReplaces'), `${this.id}:face${i}`);
 
       face.appendChild(polygonBorder.cloneNode(true));
       face.appendChild(polygonBorder.cloneNode(true));

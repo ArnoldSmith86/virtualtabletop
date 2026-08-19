@@ -88,13 +88,13 @@ class ImageWidget extends Widget {
       else
         replaces[key] = this.get(property);
     }
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css(), this.domElement);
   }
 
   updateIcon() {
     if(this.symbolWrapper)
       this.symbolWrapper.remove();
     if(this.get('icon'))
-      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor(), this.getDefaultIconOpacity());
+      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor(), this.getDefaultIconOpacity(), `${this.id}:icon`);
   }
 }

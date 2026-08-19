@@ -675,7 +675,17 @@ function splitSVG(svg) {
 }
 
 const svgCache = {};
-function getSVG(url, replaces, callback) {
+// Infinity while a download is in flight, the time the next attempt is allowed after a transient failure.
+// This keeps a re-rendering widget from starting a new retry chain every time it asks for a URL that is down.
+const svgRetryTime = {};
+// the cooldown between two retry chains, doubled after every failed one so a long outage isn't polled at a fixed rate
+const svgRetryDelay = {};
+// once the cooldown grew beyond this, a URL is considered permanently unreachable (a cross-origin image without CORS
+// headers looks exactly like a network error) and isn't polled on its own any more
+const svgRetryGiveUp = 300000;
+// subscriber identifies the caller across renders (the DOM node the callback updates or a key naming the widget and
+// the position within it) so that a widget asking for the same URL again replaces its own queued callback
+export function getSVG(url, replaces, callback, subscriber) {
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
     if(svgCache[cacheKey])
@@ -696,18 +706,82 @@ function getSVG(url, replaces, callback) {
     return svgCache[cacheKey];
   }
 
-  if(!svgCache[url]) {
-    svgCache[url] = [];
-    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
-      const callbacks = svgCache[url];
-      svgCache[url] = t;
-      for(const [ c, r ] of callbacks)
-        c(getSVG(url, r, _=>{}));
-    });
-  }
-
-  svgCache[url].push([ callback, replaces ]);
+  const callbacks = svgCache[url] || (svgCache[url] = []);
+  // widgets ask for the same SVG on every render, so during a long outage the queue would collect one entry per
+  // render - keep only the latest one per subscriber instead. Nothing is ever dropped: every queued entry is a
+  // widget that shows no image until the download succeeds.
+  const queued = subscriber !== undefined ? callbacks.findIndex(c=>c[2] === subscriber) : -1;
+  if(queued != -1)
+    callbacks[queued] = [ callback, replaces, subscriber ];
+  else
+    callbacks.push([ callback, replaces, subscriber ]);
+  if((svgRetryTime[url] || 0) <= Date.now())
+    downloadSVG(url, callbacks);
   return '';
+}
+
+function downloadSVG(url, callbacks) {
+  svgRetryTime[url] = Infinity;
+  const download = attempt=>fetch(mapAssetURLs(url)).then(r=>{
+    if(!r.ok)
+      throw Object.assign(new Error(`HTTP status ${r.status}`), { httpStatus: r.status });
+    return r.text();
+  }).catch(e=>{
+    // a 404/410 says the asset is gone and won't become valid by asking again - everything else (a network error, a
+    // server error, but also a 403 from a CDN or an asset that is being uploaded right now) can still resolve itself
+    if(attempt < 3 && !isMissing(e))
+      return new Promise(resolve=>setTimeout(_=>resolve(download(attempt+1)), 1000 * 2**attempt * (0.5 + Math.random()/2)));
+    throw e;
+  });
+  // the callbacks are served in the success handler of this then() and not in a chained one so that an exception
+  // thrown by a widget callback isn't mistaken for a download failure but reaches the error reporter instead
+  download(0).then(t=>useSVG(url, callbacks, t), e=>{
+    if(isMissing(e)) {
+      console.error(`Could not load image ${url} (HTTP status ${e.httpStatus}) - it will not be requested again`, e);
+      useSVG(url, callbacks, ''); // cache the permanent failure as an empty SVG so the broken URL isn't requested again and again
+    } else {
+      const delay = svgRetryDelay[url] || 5000;
+      svgRetryDelay[url] = 2 * delay;
+      svgRetryTime[url] = Date.now() + delay;
+      // a widget that isn't on the table any more doesn't need the image, and its queue entry would keep the removed
+      // DOM node alive - drop those before deciding whether anybody is still waiting
+      for(let i=callbacks.length-1; i>=0; --i)
+        if(callbacks[i][2] && callbacks[i][2].nodeType && !callbacks[i][2].isConnected)
+          callbacks.splice(i, 1);
+      // the widgets that asked for this URL are showing nothing, so start the next chain on our own instead of
+      // waiting to be asked again: on a quiet table nothing re-renders, so they would stay blank until a reload
+      if(callbacks.length && delay <= svgRetryGiveUp) {
+        console.error(`Could not load image ${url} - trying again in ${delay/1000} seconds`, e);
+        setTimeout(_=>{
+          if(svgCache[url] === callbacks && svgRetryTime[url] != Infinity)
+            downloadSVG(url, callbacks);
+        }, delay);
+      } else {
+        // stop polling a URL that has been unreachable for minutes or that nobody is waiting for any more - the queued
+        // callbacks are kept, so a widget rendering again later can still start a new (and by then rare) attempt
+        console.error(`Could not load image ${url} - giving up, it is only requested again if a widget renders`, e);
+      }
+    }
+  });
+}
+
+function isMissing(e) {
+  return e.httpStatus == 404 || e.httpStatus == 410;
+}
+
+function useSVG(url, callbacks, svg) {
+  delete svgRetryTime[url];
+  delete svgRetryDelay[url];
+  svgCache[url] = svg;
+  for(const [ c, r ] of callbacks) {
+    try {
+      c(getSVG(url, r, _=>{}));
+    } catch(e) {
+      // a single broken widget must not leave all the other queued ones blank, but its exception still has to reach
+      // the error reporter - so hand it to the unhandledrejection handler instead of swallowing it
+      Promise.reject(e);
+    }
+  }
 }
 
 async function loadEditMode() {
