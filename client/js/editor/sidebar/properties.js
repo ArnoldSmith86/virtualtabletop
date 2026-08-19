@@ -1865,7 +1865,10 @@ class PropertiesModule extends SidebarModule {
       updater(delta.s);
   }
 
-  onClose() {
+  // Everything this module put on top of the room rather than into its own panel.
+  // It goes both when the module is closed and when the editor is, so it is not
+  // part of onClose(): the panel survives the editor closing, its bar with it.
+  clearWidgetOverlays() {
     this.clearGridPreview();
     this.clearDragLimitPreview();
     this.clearFaceRowRefresh();
@@ -1876,13 +1879,22 @@ class PropertiesModule extends SidebarModule {
     closeEditorPopups();
   }
 
+  onClose() {
+    this.clearWidgetOverlays();
+    // hand back the room tree the bar borrowed before the panel goes away, the
+    // same way the JSON module does - a bar that is only dropped by the next
+    // selectionBarPrune() still holds it in its own (detached) container
+    removeSelectionBar(this.selectionBar);
+    delete this.selectionBar;
+  }
+
   onEditorClose() {
     super.onEditorClose();
     // Leaving edit mode is the most complete way of moving on, but it does not
     // go through onClose(): the editor is only display:none'd, so a popup left
     // open lives on inside it and an armed picker keeps the crosshair over the
     // whole page while playing.
-    this.onClose();
+    this.clearWidgetOverlays();
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -1917,7 +1929,20 @@ class PropertiesModule extends SidebarModule {
     this.renderedBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
 
 
-    this.moduleDOM.innerHTML = '';
+    // Everything below the bar is rebuilt for the new selection - the bar itself
+    // is not: it is the control the selection is changed *with*, so throwing it
+    // away on every change would drop the scroll position of an open tree (and
+    // rebuild every row of it) each time a widget is picked from it. A bar that
+    // lost its panel behind our back is replaced, keeping the tree for the new one.
+    if(this.selectionBar && !this.selectionBar.dom.isConnected) {
+      removeSelectionBar(this.selectionBar, true);
+      delete this.selectionBar;
+    }
+    if(!this.selectionBar)
+      this.selectionBar = renderSelectionBar(this.moduleDOM, { key: this.title });
+    for(const node of [ ...this.moduleDOM.children ])
+      if(node !== this.selectionBar.dom)
+        node.remove();
     // put back by renderEvents; a selection without an Automations section (a
     // pile, several widgets at once, or nothing at all) must not hide what it
     // does show
@@ -1975,7 +2000,6 @@ class PropertiesModule extends SidebarModule {
     const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
 
     const header = div(this.moduleDOM, 'widgetHeader');
-    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
     // say which widgets, so a stray rubber-band/shift-click pickup is easy to
     // spot before editing - only the type header said "how many" before
@@ -4870,7 +4894,6 @@ class PropertiesModule extends SidebarModule {
     // type in the header's accent color, id in the plain text color so the two
     // are easy to tell apart
     const header = div(this.moduleDOM, 'widgetHeader');
-    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
     const idArea = div(header, 'widgetHeaderId');
     idArea.append('Widget id: ');
@@ -11355,6 +11378,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderModule(target) {
-    target.innerText = 'Properties module not implemented yet.';
+    // the bar is built once, with the panel, and outlives the selections it is
+    // used to change; everything below it is built by
+    // onSelectionChangedWhileActive(), which openInTarget() calls right after this
+    this.selectionBar = renderSelectionBar(target, { key: this.title });
   }
 }

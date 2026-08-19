@@ -167,6 +167,7 @@ export default async function minifyHTML() {
     'client/css/editor/propertyInputs.css',
     'client/css/editor/deckeditor.css',
     'client/css/editor/controls/routine.css',
+    'client/css/editor/controls/selectionbar.css',
     'client/css/editor/controls/popup.css',
     'client/css/editor/controls/events.css',
 
@@ -206,6 +207,7 @@ export default async function minifyHTML() {
     'client/js/editor/dragbuttons/resize.js',
     'client/js/editor/sidebarModule.js',
     'client/js/editor/propertyInputs.js',
+    'client/js/editor/controls/selectionbar.js',
     'client/js/editor/controls/widgetselection.js',
     'client/js/editor/cssEditor.js',
     'client/js/editor/sidebar/properties.js',

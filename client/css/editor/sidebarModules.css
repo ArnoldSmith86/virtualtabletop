@@ -4,37 +4,6 @@
   position: relative;
 }
 
-/* The button that closes the module (SidebarModule.addCloseButton). Out of the flow so it doesn't
-   push the centered header text off center, and the header keeps room for it on the right. */
-.editorModule .moduleCloseButton {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.editorModule h1 .moduleCloseButton {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* In the modules that render no header (JSON, Debug, Assets) it sits in the module's own top right
-   corner instead, where it has to stay above what they put there. */
-.editorModule > .moduleCloseButton {
-  z-index: 3;
-}
-
-/* except in the JSON module, where that corner is the command pane - it goes to the right end of the
-   widget switcher bar above the text instead */
-.data_object.editorModule > .moduleCloseButton {
-  right: calc(var(--commandPaneWidth) + 5px);
-  top: 6px;
-}
-
-/* the Debug module's filter row is right-aligned, so it has to leave that corner free */
-.pest_control.editorModule > .buttonBar:first-child {
-  padding-right: 40px;
-}
-
 .editorModule h2 {
   color: white;
   background: var(--VTTblue);
@@ -85,6 +54,20 @@
 }
 
 /* properties */
+
+/* Every box that holds a preview of a widget. A preview is a real widget, so it
+   carries the widget's own z-index ((layer + 10) * 100000 + z) - a number that
+   says where it is on the table, not where it is in the panel. Left alone it
+   beats everything the module draws around it: the seat style presets painted
+   over the selection bar's open dropdown. Each box is its own stacking context
+   instead, so a preview is only ever ordered against the previews beside it.
+   (.textCardsPreviewCard already is one through its scale transform.) */
+.editorModule .widgetSelectionButton,
+.editorModule .facePreview,
+.editorModule .diceFacePreview,
+.editorModule .renderedWidget {
+  isolation: isolate;
+}
 
 .editorModule .widgetSelectionButton {
   height: 150px;
