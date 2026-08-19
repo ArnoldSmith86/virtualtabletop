@@ -118,6 +118,7 @@ export default async function minifyHTML() {
 
     'client/js/domhelpers.js',
     'client/js/calculateLayout.js',
+    'client/js/containerQueryFallback.js',
     'client/js/connection.js',
     'client/js/serverstate.js',
     'client/js/legacymoderegistry.js',
