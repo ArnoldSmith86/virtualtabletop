@@ -81,12 +81,14 @@ if (w.type=="seat" && w.player==null) {
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
+// whether a file is an SVG is decided by fetchSVG() (main.js) - the same call
+// the engine and the SVG replacements editor make, so the three cannot disagree
+// about the same file. It also spares decoding a whole bitmap as text just to
+// find no <svg> in it, and does not call a PNG that happens to contain the
+// three bytes "svg" somewhere an SVG.
 async function checkIfSVG(url) {
   try {
-    const response = await fetch(url);
-    if (!response.ok) return false;
-    const text = await response.text();
-    return /svg/i.test(text);
+    return (await fetchSVG(url)) !== null;
   } catch (e) {
     return false;
   }
@@ -216,7 +218,7 @@ const jeCommands = [
       if (typeof jeIsSVG[url] === 'boolean') return jeIsSVG[url];
       if (url.match(/\.svg$/i))
         return true;
-      checkIfSVG(mapAssetURLs(url)).then(result => {
+      checkIfSVG(url).then(result => {
         jeIsSVG[url] = result;
         jeShowCommands();
       });

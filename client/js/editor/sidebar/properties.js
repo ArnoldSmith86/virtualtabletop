@@ -268,36 +268,27 @@ function svgReplaceCandidates(svgText) {
 }
 
 const svgImageCandidatesCache = {};
-// isSvg is decided by sniffing the fetched content for an <svg> tag rather
-// than the image's file extension - an uploaded asset is served from
-// /assets/<hash>_<size> with no extension at all, so gating on ".svg" would
-// hide this editor for every uploaded SVG (only the built-in game-piece SVGs
-// have a real .svg URL).
+// isSvg is decided by fetchSVG() (main.js), which sniffs the file itself
+// instead of trusting its name - the same call the engine uses to decide
+// whether it can replace anything in that image, so this editor is shown for
+// exactly the images the replacements actually work on. status keeps the three
+// ways of having no candidates apart ('none' - no image at all, 'notSvg' - a
+// bitmap, in which no replacement can ever do anything, 'unreadable' - the file
+// didn't load, so nothing is known about it), which is what the section says
+// out loud instead of rendering the same blank space for all of them.
 async function fetchSvgReplaceCandidates(image) {
   if(typeof image != 'string' || !image)
-    return { isSvg: false, candidates: [] };
+    return { isSvg: false, candidates: [], status: 'none' };
   if(svgImageCandidatesCache[image])
     return svgImageCandidatesCache[image];
   // a file that can't be read says nothing about what it is, so fall back to
   // the file name rather than hiding the editor for an SVG that is offline
-  const guess = { isSvg: /\.svg(\?|#|$)/i.test(image), candidates: [] };
+  const guess = { isSvg: /\.svg(\?|#|$)/i.test(image), candidates: [], status: 'unreadable' };
   try {
-    const response = await fetch(mapAssetURLs(image));
-    if(!response.ok)
-      return guess;
-    // both /assets/<hash> and /i/**.svg answer with a content type, and a
-    // bitmap saying so is the common case - no reason to pull the whole file
-    // through the wire and stringify it just to find no <svg> in it
-    const contentType = response.headers.get('content-type') || '';
-    if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
-      if(response.body && response.body.cancel)
-        response.body.cancel();
-      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
-    }
-    const text = await response.text();
-    if(!/<svg/i.test(text))
-      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
-    return svgImageCandidatesCache[image] = { isSvg: true, candidates: svgReplaceCandidates(text) };
+    const text = await fetchSVG(image);
+    if(text === null)
+      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [], status: 'notSvg' };
+    return svgImageCandidatesCache[image] = { isSvg: true, candidates: svgReplaceCandidates(text), status: 'svg' };
   } catch(e) {
     return guess;
   }
@@ -1308,7 +1299,7 @@ const editorPropertyHints = {
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
   html: 'HTML content shown instead of the widget text, icon and image.',
-  svgReplaces: 'Maps a value found inside an uploaded SVG image (a color like #000, a stroke width, or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be restyled per widget.',
+  svgReplaces: 'Maps a value found inside an uploaded SVG image (a color like #000, a stroke width, or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be restyled per widget. An image that is not an SVG has nothing to replace and is simply displayed as it is.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
@@ -7030,14 +7021,30 @@ class PropertiesModule extends SidebarModule {
     let refreshInputs = () => {};
     let renderSwatches = () => {};
     let updateVisibility = () => {};
+    let renderNotice = () => {};
+    let updateAddButton = () => {};
     let imageIsSvg = false;
+    // what the image turned out to be, see fetchSvgReplaceCandidates()
+    let imageStatus = '';
 
     // collapsed by default for widgets that don't use it yet, so first-time
     // users editing a plain widget aren't confronted with advanced SVG jargon
     const existingMap = widget.get('svgReplaces');
     const hasReplaces = isObjectLike(existingMap) && Object.keys(existingMap).length > 0;
     const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
-      div(body, 'svgReplacesHelp', 'Map a value in your SVG file - a color, a stroke width, an opacity - to a widget property that supplies it.');
+      div(body, 'svgReplacesHelp', 'Recolor this image: pick a value out of the SVG file - a color, a stroke width, an opacity - and choose the widget property that supplies it. That property\'s value is then set below.');
+
+      // a bitmap can't have anything replaced in it, and since the widget stays
+      // visible now (getSVG() uses such an image as it is) nothing else in the
+      // panel would say so: the rows, the swatch pickers and the inputs all
+      // look and behave exactly like they do on a working SVG
+      const notice = div(body, 'svgReplacesNotice');
+      renderNotice = () => {
+        notice.textContent = imageStatus == 'notSvg' ?
+          'This image is not an SVG, so these replacements have no effect. They apply again as soon as this widget points at an SVG file.' : '';
+        notice.style.display = notice.textContent ? '' : 'none';
+      };
+      renderNotice();
 
       const list = div(body, 'svgReplacesList');
 
@@ -7045,8 +7052,17 @@ class PropertiesModule extends SidebarModule {
         list.innerHTML = '';
         const map = widget.get('svgReplaces');
         const rows = isObjectLike(map) ? Object.entries(map) : [];
-        if(!rows.length)
+        if(!rows.length) {
           div(list, 'propertyPickerEmpty', 'No SVG replacements yet.');
+        } else {
+          // the two inputs of a row only tell themselves apart by their
+          // placeholders, which are gone as soon as they hold anything
+          const header = div(list, 'svgReplaceRow svgReplaceHeader');
+          div(header, 'svgReplaceHeaderLabel', 'in the SVG');
+          div(header, 'svgReplaceArrow').setAttribute('aria-hidden', 'true');
+          div(header, 'svgReplaceHeaderLabel', 'widget property');
+          div(header, 'svgReplaceHeaderSpacer');
+        }
         for(const [ selector, property ] of rows) {
           const row = div(list, 'svgReplaceRow');
 
@@ -7059,6 +7075,8 @@ class PropertiesModule extends SidebarModule {
           const arrow = document.createElement('span');
           arrow.className = 'svgReplaceArrow';
           arrow.textContent = '→';
+          // decoration between two inputs that are each labelled by their title
+          arrow.setAttribute('aria-hidden', 'true');
 
           const propertyInput = document.createElement('input');
           propertyInput.type = 'text';
@@ -7155,8 +7173,16 @@ class PropertiesModule extends SidebarModule {
         const map = widget.get('svgReplaces');
         const used = new Set(isObjectLike(map) ? Object.keys(map) : []);
         const suggestions = svgCandidates.filter(candidate => !used.has(candidate.value));
-        if(!suggestions.length)
+        if(!suggestions.length) {
+          // an empty list has several quite different reasons and used to
+          // render as the same blank space for all of them - a broken .svg URL
+          // most confusingly of all, since the section is shown for it
+          if(imageStatus == 'unreadable')
+            div(svgColorsHost, 'propertyPickerEmpty', 'This image could not be loaded, so the values it uses could not be listed.');
+          else if(imageStatus == 'svg')
+            div(svgColorsHost, 'propertyPickerEmpty', svgCandidates.length ? 'All values in this SVG are already mapped.' : 'No replaceable values found in this SVG.');
           return;
+        }
         div(svgColorsHost, 'svgColorsLabel', 'Values found in the SVG - click to add a replacement:');
         for(const candidate of suggestions) {
           const property = svgReplacePropertyForAttributes(candidate.attributes);
@@ -7186,7 +7212,7 @@ class PropertiesModule extends SidebarModule {
       };
       const loadSvgCandidates = () => {
         const requested = widget.get('image');
-        fetchSvgReplaceCandidates(requested).then(({ isSvg, candidates }) => {
+        fetchSvgReplaceCandidates(requested).then(({ isSvg, candidates, status }) => {
           // switching image A -> B fires two fetches and the slower one would
           // otherwise win, leaving the section showing (or hiding) what the
           // previous image said - a result for an image that is no longer set
@@ -7194,10 +7220,13 @@ class PropertiesModule extends SidebarModule {
           if(!svgColorsHost.isConnected || requested !== widget.get('image'))
             return;
           imageIsSvg = isSvg;
+          imageStatus = status;
           svgCandidates = candidates;
+          renderNotice();
           renderSwatches();
           refreshInputs();
           updateVisibility();
+          updateAddButton();
         });
       };
       loadSvgCandidates();
@@ -7221,6 +7250,14 @@ class PropertiesModule extends SidebarModule {
           selector = `#color${++i}`;
         addReplacementFor(selector, 'color');
       };
+      // on a bitmap this button used to invent one dead #000 -> color mapping
+      // per click, each with its own color picker that changes nothing
+      updateAddButton = () => {
+        addButton.disabled = imageStatus == 'notSvg';
+        addButton.title = addButton.disabled ?
+          'This image is not an SVG, so a replacement could not do anything.' : '';
+      };
+      updateAddButton();
       body.appendChild(addButton);
 
       // one input per property the map points at, using the input its value

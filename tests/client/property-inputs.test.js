@@ -141,6 +141,12 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'ex
   };
 `)(class {}, testWidgets, positionNames, expressionError, expressionNames, asArray);
 
+// what fetchSVG() (main.js) answered about the image, in its own scope so the
+// candidate cache starts empty
+const svgReplaceLookup = fetchSVG => new Function('SidebarModule', 'widgets', 'positionNames', 'expressionError', 'expressionNames', 'asArray', 'fetchSVG', inputsSource + propertiesSource + `;
+  return fetchSvgReplaceCandidates;
+`)(class {}, testWidgets, positionNames, expressionError, expressionNames, asArray, fetchSVG);
+
 describe('css declaration rows', () => {
   test('declarations are listed in order from both the string and the object form', () => {
     expect(cssHelpers.cssDeclarationList('color: red; font-size: 20px')).toEqual([
@@ -349,6 +355,24 @@ describe('css helpers', () => {
     // "4" is also in the path data, so replacing it would hit that too
     expect(cssHelpers.svgReplaceCandidates(svg).find(candidate => candidate.value == '4').ambiguous).toBe(true);
     expect(cssHelpers.svgReplaceCandidates(svg).find(candidate => candidate.value == '#ff0000').ambiguous).toBe(false);
+  });
+
+  test('the three ways of having no values to offer are told apart', async () => {
+    const svg = svgReplaceLookup(async _ => '<svg><rect fill="#ff0000"/></svg>');
+    expect(await svg('/i/thing.svg')).toMatchObject({ isSvg: true, status: 'svg' });
+    expect((await svg('/i/thing.svg')).candidates.map(c => c.value)).toEqual([ '#ff0000' ]);
+
+    // a bitmap: nothing can ever be listed and no replacement can ever apply
+    const bitmap = svgReplaceLookup(async _ => null);
+    expect(await bitmap('/assets/1_2')).toMatchObject({ isSvg: false, candidates: [], status: 'notSvg' });
+
+    // unreadable says nothing about what the file is, so the name still decides
+    // whether the editor is shown - but not silently, hence its own status
+    const broken = svgReplaceLookup(async _ => { throw new Error('404'); });
+    expect(await broken('/i/gone.svg')).toEqual({ isSvg: true, candidates: [], status: 'unreadable' });
+    expect(await broken('/i/gone.png')).toEqual({ isSvg: false, candidates: [], status: 'unreadable' });
+
+    expect(await svg('')).toEqual({ isSvg: false, candidates: [], status: 'none' });
   });
 
   test('svg candidates propose the property their attribute is conventionally read from', () => {
