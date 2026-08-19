@@ -1754,6 +1754,11 @@ export function initializeEditMode(currentMetaData) {
     overlayDone(await addWidgetLocal(hand));
   });
 
+  // The deck browser is a screenful of its own rather than something drawn on the board, so editmode.css gives
+  // it the editor's box instead of the room's scale - which only works outside #roomArea, a size container and
+  // therefore the containing block its fixed positioning would otherwise be clipped by.
+  $('#editor').append($('#libraryDecksOverlay'));
+
   on('#browseLibraryDecks', 'click', _=>openLibraryDecksOverlay());
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);

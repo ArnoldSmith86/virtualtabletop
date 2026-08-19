@@ -2569,11 +2569,11 @@ class PropertiesModule extends SidebarModule {
     const backsSection = div(null);
     target.append(...(sheetMode ? [ frontsSection, backsSection ] : [ backsSection, frontsSection ]));
 
-    this.addSubHeader(sheetMode ? 'The image to cut up' : 'Card fronts', frontsSection);
+    this.addSubHeader(sheetMode ? 'The picture to cut up' : 'Card fronts', frontsSection);
     const intro = document.createElement('p');
     intro.innerText = sheetMode
-      ? 'Upload one image with all the cards on it, then say how many cards it holds across and down. Every cell of that grid becomes a card, and the cards take the shape of a single cell so none of them come out stretched.'
-      : 'Upload one image per card - several at once works. Every card gets the back picked above.';
+      ? 'Upload one picture with all the cards on it, then say how many cards it holds across and down. Every cell of that grid becomes a card, and the cards take the shape of a single cell so none of them come out stretched.'
+      : 'Upload one picture per card — several at once works. Every card gets the back picked above.';
     frontsSection.append(intro);
     const preview = div(frontsSection);
 
@@ -2618,24 +2618,29 @@ class PropertiesModule extends SidebarModule {
     const backSheets = [];
     const backSheetSection = sheetMode ? div(backsSection, 'deckImagesBackSheets') : null;
     if(backSheetSection) {
-      div(backSheetSection, 'deckImagesBackSheetHint', 'The sheet of backs is cut with the grid of the sheet of fronts it belongs to, so both need the same number of cards across and down. With several sheets of fronts, upload one sheet of backs per sheet of fronts - they are paired in upload order.');
+      div(backSheetSection, 'deckImagesBackSheetHint');
       div(backSheetSection, 'deckImagesBackSheetList');
-      div(backSheetSection, 'buttonBar', '<button icon=upload id=backSheetButton>Upload sheet of backs...</button>');
+    }
+
+    // Both uploads sit in the action bar, next to each other: as a lone button above it the sheet of backs
+    // was a few pixels away from the sheet of fronts with the same icon and colour, so the status line
+    // asking for a sheet of backs pointed straight at the wrong button.
+    const goBar = div(target, 'goButton buttonBar', `
+      <span class=imagePairStatus></span>
+      <button icon=upload id=frontsButton>${sheetMode ? 'Upload sheet of fronts...' : 'Upload fronts...'}</button>
+      ${backSheetSection ? '<button icon=upload id=backSheetButton class=deckImagesBackSheetButton>Upload sheet of backs...</button>' : ''}
+      <button icon=add class=green disabled>Add to game</button>
+    `);
+    const status = $('.imagePairStatus', target);
+    const addButton = $('.goButton [icon=add]', target);
+
+    if(backSheetSection)
       $('#backSheetButton').onclick = _=>uploadAsset((imagePath, fileName)=>{
         if(imagePath) {
           backSheets.push({ imagePath, fileName });
           renderBackSheets();
         }
       });
-    }
-
-    div(target, 'goButton buttonBar', `
-      <span class=imagePairStatus></span>
-      <button icon=upload id=frontsButton>${sheetMode ? 'Upload sheet of fronts...' : 'Upload fronts...'}</button>
-      <button icon=add class=green disabled>Add to game</button>
-    `);
-    const status = $('.imagePairStatus', target);
-    const addButton = $('.goButton [icon=add]', target);
 
     // The uploaded sheets of fronts with the grid each of them is cut by, in the order they were uploaded.
     const frontSheets = _=>[ ...$a('.cardFrontPreview', preview) ].map(dom=>({ dom, ...this.imageSheetGrid(dom) }));
@@ -2657,8 +2662,10 @@ class PropertiesModule extends SidebarModule {
         const front = fronts[index];
         const dom = div(list, 'cardFrontPreview cardBackSheetPreview', `
           <div class=cardFrontPreviewImage>
-            <img src="${mapAssetURLs(backSheet.imagePath)}">
-            <div class=cardFrontPreviewGrid></div>
+            <div class=cardFrontPreviewFrame>
+              <img src="${mapAssetURLs(backSheet.imagePath)}">
+              <div class=cardFrontPreviewGrid></div>
+            </div>
           </div>
           <div class=cardFrontPreviewSettings>
             <b></b>
@@ -2666,10 +2673,14 @@ class PropertiesModule extends SidebarModule {
             <button icon=delete>Delete</button>
           </div>
         `);
+        this.openPictureOnClick(dom);
         $('b', dom).innerText = backSheet.fileName;
         dom.style.setProperty('--sheetColumns', front ? front.columns : 1);
         dom.style.setProperty('--sheetRows', front ? front.rows : 1);
-        dom.classList.toggle('cardFrontPreviewSheet', !!front && front.columns*front.rows > 1);
+        dom.classList.add('cardFrontPreviewSheet'); // a sheet is framed from the start, cut up or not
+        const backImage = $('img', dom);
+        backImage.onload = _=>this.markTallPicture(dom, backImage);
+        this.markTallPicture(dom, backImage);
         $('.cardFrontPreviewSummary', dom).textContent = front
           ? `Backs for "${front.dom.dataset.fileName}", cut ${front.columns} × ${front.rows}`
           : 'No sheet of fronts to pair this with yet';
@@ -2681,23 +2692,38 @@ class PropertiesModule extends SidebarModule {
       updateStatus();
     };
 
-    // Says what will be created, and why "Add to game" is off when it is - the counts of a paired import are
-    // the one thing the wizard cannot fix by itself.
+    // Says what will be created, and why "Add to game" is off when it is - everything the wizard cannot
+    // decide by itself (how a sheet is cut, how many copies, where the backs come from) is named here
+    // instead of quietly becoming a deck nobody asked for.
     const updateStatus = _=>{
       const fronts = frontSheets();
       const paired = backMode() == 'sheet';
       // what actually lands on the table: every cell of every sheet, as often as its copies field says
       const cards = fronts.reduce((sum, front)=>sum + front.columns*front.rows*cardCopies(front.dom), 0);
+      // a sheet nobody has cut yet is a single stretched card, i.e. the other mode - so it is asked about
+      const uncut = sheetMode ? fronts.filter(front=>front.columns*front.rows < 2) : [];
+      goBar.classList.toggle('deckImagesBackSheetMode', paired);
+      if(backSheetSection)
+        // the pairing sentence only says something once there is more than one sheet to pair
+        $('.deckImagesBackSheetHint', backSheetSection).innerText = 'The sheet of backs is cut with the grid of the sheet of fronts it belongs to, so both need the same number of cards across and down.'
+          + (fronts.length > 1 ? ' With several sheets of fronts, upload one sheet of backs per sheet of fronts — they are paired in upload order.' : '');
       if(!fronts.length)
-        status.innerText = sheetMode ? 'Upload the image the cards are cut out of.' : 'Upload at least one card front.';
+        status.innerText = sheetMode ? 'Upload the picture the cards are cut out of.' : 'Upload at least one card front.';
+      else if(uncut.length)
+        status.innerText = fronts.length == 1
+          ? 'Say how many cards this sheet holds across and down.'
+          : `Say how many cards "${uncut[0].dom.dataset.fileName}" holds across and down.`;
       else if(paired && backSheets.length != fronts.length)
-        status.innerText = `${fronts.length} sheet${fronts.length == 1 ? '' : 's'} of fronts but ${backSheets.length} of backs - upload one sheet of backs per sheet of fronts.`;
+        status.innerText = `${fronts.length} sheet${fronts.length == 1 ? '' : 's'} of fronts but ${backSheets.length} of backs — upload one sheet of backs per sheet of fronts.`;
+      else if(!cards)
+        status.innerText = sheetMode ? 'Every sheet is set to 0 copies — nothing would be added.' : 'Every upload is set to 0 cards — nothing would be added.';
       else if(paired)
         status.innerText = `${cards} card${cards == 1 ? '' : 's'}, each with its own back from the sheet in the same position.`;
       else
         status.innerText = `${cards} card${cards == 1 ? '' : 's'}, all sharing the back picked above.`;
-      status.classList.toggle('imagePairMismatch', paired && !!fronts.length && backSheets.length != fronts.length);
-      addButton.disabled = !fronts.length || paired && backSheets.length != fronts.length;
+      const blocked = !!uncut.length || !cards || paired && backSheets.length != fronts.length;
+      status.classList.toggle('imagePairMismatch', !!fronts.length && blocked);
+      addButton.disabled = !fronts.length || blocked;
     };
 
     if(backModes)
@@ -2710,8 +2736,10 @@ class PropertiesModule extends SidebarModule {
     $('#frontsButton').onclick = _=>uploadAsset(async (imagePath, fileName)=>{
       const dom = div(preview, 'cardFrontPreview', `
         <div class=cardFrontPreviewImage>
-          <img src="${mapAssetURLs(imagePath)}">
-          <div class=cardFrontPreviewGrid></div>
+          <div class=cardFrontPreviewFrame>
+            <img src="${mapAssetURLs(imagePath)}">
+            <div class=cardFrontPreviewGrid></div>
+          </div>
         </div>
         <div class=cardFrontPreviewSettings>
           ${sheetMode ? `
@@ -2725,6 +2753,7 @@ class PropertiesModule extends SidebarModule {
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
+      this.openPictureOnClick(dom);
       const image = $('img', dom);
       const updateSummary = _=>{
         const { columns, rows } = this.imageSheetGrid(dom);
@@ -2732,14 +2761,17 @@ class PropertiesModule extends SidebarModule {
         // the picture instead of against the numbers
         dom.style.setProperty('--sheetColumns', columns);
         dom.style.setProperty('--sheetRows', rows);
-        dom.classList.toggle('cardFrontPreviewSheet', columns*rows > 1);
+        // in the sheet mode the frame is drawn from the start, so an uncut sheet still looks like a sheet
+        dom.classList.toggle('cardFrontPreviewSheet', sheetMode || columns*rows > 1);
+        if(sheetMode)
+          this.markTallPicture(dom, image);
         const cells = columns*rows;
         const copies = cardCopies(dom);
         const size = cardSizeFromImage(image.naturalWidth, image.naturalHeight, columns, rows);
         // a sheet holds one card per cell and the copies field says how often each of them is added; a single
         // picture is one card, added as often as that same field says
         const cards = sheetMode ? cells : copies;
-        const total = sheetMode && copies != 1 ? `, ${copies} copies each - ${cells*copies} cards in total` : '';
+        const total = sheetMode && copies != 1 ? `, ${copies} copies each — ${cells*copies} cards in total` : '';
         $('.cardFrontPreviewSummary', dom).textContent = image.naturalWidth
           ? `${cards} card${cards == 1 ? '' : 's'} of ${Math.round(image.naturalWidth/columns)} × ${Math.round(image.naturalHeight/rows)} pixels, ${size.width} × ${size.height} on the table${total}`
           : '';
@@ -2796,7 +2828,8 @@ class PropertiesModule extends SidebarModule {
         if(hasTiledImage) {
           for(let i=0; i<rows; ++i) {
             for(let j=0; j<columns; ++j) {
-              const cardType = `${dom.dataset.fileName} ${i},${j}`;
+              // named the way the dialog asked for the grid: row and column, counted from one
+              const cardType = `${dom.dataset.fileName} ${i+1},${j+1}`;
               cardTypes[cardType] = {
                 image: dom.dataset.imagePath,
                 offsetX: j,
@@ -2889,6 +2922,31 @@ class PropertiesModule extends SidebarModule {
 
       await this.addDeckWithCards(deck, 'image', counts);
     };
+  }
+
+  // A sheet taller than it is wide gets the whole panel with its settings underneath instead of a column
+  // beside them: side by side an ordinary 2 x 10 print-and-play sheet came out as a sliver a few pixels
+  // wide, and checking the cut lines against the picture is the whole point of showing it. Only for sheets -
+  // in "one picture per card" every card front is portrait, and a list of full-width pictures is no help.
+  markTallPicture(dom, image) {
+    dom.classList.toggle('cardFrontPreviewTall', image.naturalHeight > image.naturalWidth);
+  }
+
+  openPictureOnClick(dom) {
+    const frame = $('.cardFrontPreviewFrame', dom);
+    frame.title = 'Click to see the picture at full size';
+    frame.onclick = _=>this.showPictureFullSize(dom);
+  }
+
+  // The picture at window size with the cut lines it has in the panel, so a grid can be checked against a
+  // sheet the panel is far too narrow to show one on. A click anywhere closes it again; Escape does too,
+  // through the handlers that already decide what Escape closes first (deckeditor.js, main.js).
+  showPictureFullSize(dom) {
+    const zoom = div($('#editor'), 'cardPictureZoom', `<div class=cardFrontPreviewFrame><img src="${$('img', dom).src}"><div class=cardFrontPreviewGrid></div></div>`);
+    for(const property of [ '--sheetColumns', '--sheetRows' ])
+      zoom.style.setProperty(property, dom.style.getPropertyValue(property) || 1);
+    zoom.classList.toggle('cardFrontPreviewSheet', dom.classList.contains('cardFrontPreviewSheet'));
+    zoom.onclick = _=>zoom.remove();
   }
 
   // How many cards an uploaded picture holds across and down. The value is read off the number input rather

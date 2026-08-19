@@ -1944,6 +1944,40 @@ test('Deck editor: the public library deck browser opens above the deck editor',
     .expect(Selector('#deckEditorNewDeckGroupExisting').hasClass('deckEditorNewDeckGroupOpen')).ok();
 });
 
+// The same browser is opened from plain edit mode's add widget overlay, where it used to be scaled with the
+// board: on anything but a full size board that made the filter field, the sort control and every deck name
+// render at a fraction of their size. It gets the editor's box in both places now.
+test('Edit mode: the public library deck browser is not scaled with the board', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#browseLibraryDecks')
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  const overlay = await ClientFunction(() => {
+    const o = document.querySelector('#libraryDecksOverlay');
+    const box = o.getBoundingClientRect();
+    const entry = document.querySelector('.libraryDeckEntry').getBoundingClientRect();
+    const hit = document.elementFromPoint(entry.x + entry.width/2, entry.y + entry.height/2);
+    return {
+      transform: getComputedStyle(o).transform,
+      width: Math.round(box.width),
+      windowWidth: window.innerWidth,
+      clickable: !!(hit && hit.closest('.libraryDeckEntry'))
+    };
+  })();
+
+  await t.expect(overlay.transform).eql('none');
+  // the box is the window minus the edit sidebar, not the board scaled into it
+  await t.expect(overlay.width).gte(overlay.windowWidth - 140);
+  await t.expect(overlay.clickable).ok();
+});
+
 // The tiled counterpart of the front/back pairs above: one picture holding a grid of fronts and a second one
 // holding the backs in the same grid, so every card gets the back sitting in its own cell.
 test('Deck editor: a sheet of fronts with a matching sheet of backs in the new deck wizard', async t => {
@@ -1979,8 +2013,26 @@ test('Deck editor: a sheet of fronts with a matching sheet of backs in the new d
 
   await stubUploadOf('fronts.png', fronts);
   await t.click('#deckEditorNewDeckPanel #frontsButton');
+  // a sheet still set to its 1 x 1 default is not cut at all, which is the other mode - so the wizard asks
+  // for the grid instead of offering to make one stretched card out of the whole sheet
+  await t
+    .expect(status.innerText).contains('Say how many cards this sheet holds across and down')
+    .expect(addButton.hasAttribute('disabled')).ok();
   await setGrid(5, 2);
   await t.expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table');
+
+  // and a sheet every card of which is asked for zero times would add an empty deck
+  const setCopies = ClientFunction(copies => {
+    const input = document.querySelector('.cardFrontPreview .cards [type=number]');
+    input.value = copies;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await setCopies(0);
+  await t
+    .expect(status.innerText).contains('nothing would be added')
+    .expect(addButton.hasAttribute('disabled')).ok();
+  await setCopies(1);
+  await t.expect(addButton.hasAttribute('disabled')).notOk();
 
   // asking for a sheet of backs blocks the import until that sheet is there
   await t
@@ -2065,7 +2117,7 @@ test('Deck editor: sheets of different card shapes each keep their own card size
 
   // each sheet says what its own cards will look like, and the status line counts the copies of both
   await t
-    .expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table, 2 copies each - 20 cards in total')
+    .expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table, 2 copies each — 20 cards in total')
     .expect(Selector('.cardFrontPreviewSummary').nth(1).innerText).contains('8 cards of 200 × 300 pixels, 107 × 160 on the table')
     .expect(Selector('.imagePairStatus').innerText).contains('28 cards')
     .click('#deckEditorNewDeckPanel .goButton [icon=add]')
@@ -2082,8 +2134,8 @@ test('Deck editor: sheets of different card shapes each keep their own card size
     };
     return {
       cardDefaults: deck.get('cardDefaults'),
-      fromLandscape: cardTypes['landscape.png 0,0'],
-      fromPortrait: cardTypes['portrait.png 0,0'],
+      fromLandscape: cardTypes['landscape.png 1,1'],
+      fromPortrait: cardTypes['portrait.png 1,1'],
       landscapeCard: sizeOfCardFrom('landscape.png'),
       portraitCard: sizeOfCardFrom('portrait.png')
     };

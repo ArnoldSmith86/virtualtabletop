@@ -946,9 +946,12 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
+    // a picture opened at full size out of the deck wizard covers everything, so Escape takes it away first
+    if($('#editor > .cardPictureZoom'))
+      $('#editor > .cardPictureZoom').remove();
     // the public library deck browser is opened on top of whatever opened it (the add widget overlay or the
     // deck editor's Add New Deck dialog), so Escape closes the browser and not the thing behind it
-    if($('#libraryDecksOverlay') && $('#libraryDecksOverlay').style.display != 'none')
+    else if($('#libraryDecksOverlay') && $('#libraryDecksOverlay').style.display != 'none')
       $('#libraryDecksClose').click();
     else if($('body.edit #editorSidebar button.active'))
       $('#editorSidebar button.active').click();
