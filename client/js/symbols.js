@@ -72,7 +72,7 @@ export async function loadSymbolPicker() {
     for(const [ category, symbols ] of Object.entries(symbolData)) {
       if(category == 'Emoji - Flags')
         continue;
-      list += `<h2 data-family="${category.match(/Material|VTT|Emoji/)?'font':'image'}">${category}</h2>`;
+      list += `<h2 data-family="${category.match(/^(Material|VTT|Emoji)/)?'font':'image'}">${category}</h2>`;
       for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
