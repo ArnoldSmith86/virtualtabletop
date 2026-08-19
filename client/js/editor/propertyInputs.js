@@ -196,7 +196,7 @@ const iconPickerTypes = [
   { type: 'material-symbols', label: 'Material',    title: 'Include Google\'s Material Symbols' },
   { type: 'emoji-color',      label: 'Color Emoji', title: 'Include color emoji' },
   { type: 'emoji-monochrome', label: 'Mono Emoji',  title: 'Include monochrome emoji' },
-  { type: 'vtt-symbols',      label: 'VTT',         title: 'Include VTT symbols' }
+  { type: 'vtt-symbols',      label: 'VTT built-in', title: 'Include VTT symbols' }
 ];
 
 function iconValueType(value) {
@@ -326,8 +326,23 @@ function renderColorChip(value, target) {
   return chip;
 }
 
+// Icon search matching. Both icon pickers search and rank the same way: client/js/symbols.js
+// defines the rule and its helpers (iconSearchEntry, iconSearchScores) and main.js exports them
+// into this bundle, so the symbol picker of the JSON editor and the picker below cannot drift
+// apart - they used to answer "dragon" with two different top rows.
+
+// Sorting is stable, so entries of the same score stay in symbols.json order and related icon
+// families stay together.
+function iconSearchMatches(query, entryFilter) {
+  const entries = (iconSearchIndex || []).filter(entryFilter);
+  const scores = iconSearchScores(entries, query);
+  return entries.map((entry, i) => ({ entry, score: scores[i] })).filter(match => match.score)
+    .sort((a, b) => b.score - a.score).map(match => match.entry);
+}
+
 // Flat searchable index over i/fonts/symbols.json, loaded on first use.
 let iconSearchIndex = null;
+let iconSearchIndexByValue = new Map(); // for the tooltip of a result chip
 let iconSearchIndexPromise = null;
 function loadIconSearchIndex() {
   if(!iconSearchIndexPromise) {
@@ -340,25 +355,28 @@ function loadIconSearchIndex() {
         for(let [ symbol, keywords ] of Object.entries(symbols)) {
           if(symbol.includes('/')) {
             keywords = keywords.slice(1); // first entry is the spritesheet index
-            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true, type: 'game-icons' });
+            // as in the symbol picker: the file name is searched word by word
+            const name = symbol.split('/')[1];
+            index.push({ value: symbol, ...iconSearchEntry(name, keywords), image: true, type: 'game-icons' });
           } else {
             const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
             symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
-            const allKeywords = `${symbol},${keywords.join()}`.toLowerCase();
+            const searchEntry = iconSearchEntry(symbol, keywords);
             if(symbol.match(/^\[/) || symbol.match(/^[a-z0-9_]+$/)) {
-              index.push({ value: symbol, keywords: allKeywords, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
+              index.push({ value: symbol, ...searchEntry, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
               if(hasNoFillVariant)
-                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false, type: 'material-symbols' });
+                index.push({ value: `${symbol}_NOFILL`, ...searchEntry, image: false, type: 'material-symbols' });
             } else {
               // emoji: offer both the color image and the monochrome font variant
-              index.push({ value: symbol, keywords: allKeywords, image: true, type: 'emoji-color' });
+              index.push({ value: symbol, ...searchEntry, image: true, type: 'emoji-color' });
               if(!skipForNotoMonochrome(symbol))
-                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false, type: 'emoji-monochrome' });
+                index.push({ value: `(${symbol})`, ...searchEntry, image: false, type: 'emoji-monochrome' });
             }
           }
         }
       }
       iconSearchIndex = index;
+      iconSearchIndexByValue = new Map(index.map(entry => [ entry.value, entry ]));
       return index;
     })();
     iconSearchIndexPromise.catch(_=>iconSearchIndexPromise = null); // allow retrying after a failed fetch
@@ -366,13 +384,11 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
-// Keep matches in symbols.json order so related icon families stay together.
+// Both pickers only show the first `limit` results - "hand" matches almost twice as many - so
+// they also get the total to say so instead of truncating the list silently.
 function searchIconIndex(query, limit=100, enabledTypes=null) {
-  const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  return (iconSearchIndex || [])
-    .filter(entry => terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
-    .slice(0, limit)
-    .map(entry => entry.value);
+  const matches = iconSearchMatches(query, entry => !enabledTypes || enabledTypes.has(entry.type));
+  return { total: matches.length, values: matches.slice(0, limit).map(entry => entry.value) };
 }
 
 function imageURLFromSymbol(symbol) {
@@ -383,11 +399,8 @@ function imageURLFromSymbol(symbol) {
 }
 
 function searchImageIndex(query, limit=100) {
-  const terms = query.toLowerCase().split(/\s+/).filter(term => term);
-  return (iconSearchIndex || [])
-    .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
-    .slice(0, limit)
-    .map(entry => imageURLFromSymbol(entry.value));
+  const matches = iconSearchMatches(query, entry => entry.image);
+  return { total: matches.length, values: matches.slice(0, limit).map(entry => imageURLFromSymbol(entry.value)) };
 }
 
 let activePropertyInfoPopup = null;
@@ -1372,20 +1385,29 @@ class IconInput extends PickerInput {
 
     const searchSection = div(target, 'propertyPickerSection');
     const search = document.createElement('input');
-    search.placeholder = 'Search icons...';
+    // the same placeholder as the symbol picker of the JSON editor: both search the tags that say
+    // what an icon shows, which nothing told the user about while they named three file names
+    search.placeholder = iconSearchPlaceholder;
     searchSection.appendChild(search);
     const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
 
-    const showResults = values=>{
+    const showResults = (values, total=values.length)=>{
       results.innerHTML = '';
+      resultCount.textContent = total > values.length ? `${total} icons match, showing the first ${values.length}` : '';
       for(const iconValue of values) {
         const chip = renderIconChip(iconValue, results);
         chip.dataset.value = iconValue;
+        // the tooltip was the bare "delapouite/first-aid-kit": add what the icon is tagged with,
+        // which is the only place the words the search understands are visible (same in the
+        // symbol picker of the JSON editor, see client/js/symbols.js)
+        const searchEntry = iconSearchIndexByValue.get(String(iconValue));
+        if(searchEntry)
+          chip.title = `${chip.title}\n${iconSearchTagText(searchEntry)}`;
         chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
         chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
       }
       if(!values.length)
-        div(results, 'propertyPickerEmpty', 'No results.');
+        div(results, 'propertyPickerEmpty', `No results. ${iconSearchNoResultsHint}`);
     };
 
     const frequentlyUsed = _=>[...new Set(usedGameIcons().concat(topUsedLibraryIcons))]
@@ -1395,7 +1417,10 @@ class IconInput extends PickerInput {
       const query = search.value.trim();
       if(query)
         await loadIconSearchIndex().catch(_=>null);
-      showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
+      if(!query)
+        return showResults(frequentlyUsed());
+      const { total, values } = searchIconIndex(query, 100, enabledTypes);
+      showResults(values, total);
     };
 
     const typeToggles = div(searchSection, 'iconPickerFilterChips');
@@ -1420,6 +1445,7 @@ class IconInput extends PickerInput {
       typeToggles.appendChild(toggle);
     }
 
+    const resultCount = div(searchSection, 'propertyPickerCount');
     const results = div(searchSection, 'propertyPickerChips');
     showResults(frequentlyUsed());
 
@@ -1463,12 +1489,14 @@ class ImageInput extends PickerInput {
 
     const searchSection = div(target, 'propertyPickerSection');
     const search = document.createElement('input');
-    search.placeholder = 'Search images...';
+    search.placeholder = 'Search images by name or by what they show...';
     searchSection.appendChild(search);
+    const resultCount = div(searchSection, 'propertyPickerCount');
     const results = div(searchSection, 'propertyPickerChips');
 
-    const showResults = values=>{
+    const showResults = (values, total=values.length)=>{
       results.innerHTML = '';
+      resultCount.textContent = total > values.length ? `${total} images match, showing the first ${values.length}` : '';
       for(const imageValue of values) {
         const chip = renderImageChip(imageValue, results);
         chip.dataset.value = imageValue;
@@ -1476,7 +1504,7 @@ class ImageInput extends PickerInput {
         chip.onclick = _=>this.setValue(imageValue);
       }
       if(!values.length)
-        div(results, 'propertyPickerEmpty', 'No results.');
+        div(results, 'propertyPickerEmpty', `No results. ${iconSearchNoResultsHint}`);
     };
 
     // default (empty-search) results: a sample of commonly used library images instead of repeating the
@@ -1496,7 +1524,11 @@ class ImageInput extends PickerInput {
 
     search.oninput = async _=>{
       await loadIconSearchIndex().catch(_=>null);
-      showResults(search.value.trim() ? searchImageIndex(search.value.trim()) : frequentlyUsed);
+      const query = search.value.trim();
+      if(!query)
+        return showResults(frequentlyUsed);
+      const { total, values } = searchImageIndex(query);
+      showResults(values, total);
     };
     loadIconSearchIndex().catch(_=>null);
 

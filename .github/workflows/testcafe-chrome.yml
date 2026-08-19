@@ -18,6 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         testfile:
+          - card.js
           - editor.js
           - toolbar.js
           - boardsize.js

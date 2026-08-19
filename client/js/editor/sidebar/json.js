@@ -5,19 +5,15 @@ class JsonModule extends SidebarModule {
 
   onClose() {
     jeToggle();
-    jeToggleTreeDropdown(true);
-    $('#jsonEditor').append($('#jeWidgetSwitcher'));
+    removeSelectionBar(this.selectionBar);
+    delete this.selectionBar;
     $('#jsonEditor').append($('#jeTextHighlight'));
     $('#jsonEditor').append($('#jeText'));
     $('#jsonEditor').append($('#jeCommands'));
-    $('#jsonEditor').append($('#jeWidgetLayers'));
   }
 
   onDeltaReceivedWhileActive(delta) {
     jeApplyDelta(delta);
-    if(jeTreeIsVisible())
-      jeUpdateTree(delta.s);
-    jeUpdateWidgetSwitcher();
   }
 
   onEditorClose() {
@@ -53,25 +49,15 @@ class JsonModule extends SidebarModule {
     $('#jeText').blur();
   }
 
-  onStateReceivedWhileActive() {
-    if(jeTreeIsVisible())
-      jeDisplayTree();
-    jeUpdateWidgetSwitcher();
-  }
-
   renderModule(target) {
     // openInTarget() fires onSelectionChanged() right after this, which is where the deck is picked up.
     this.showDeckEditorDeck = deckEditor.isOpen() && !!deckEditor.deck();
     jeToggle();
-    target.append($('#jeWidgetSwitcher'));
+    this.selectionBar = renderSelectionBar(target, { key: this.title });
     target.append($('#jeTextHighlight'));
     target.append($('#jeText'));
     target.append($('#jeCommands'));
-    target.append($('#jeWidgetLayers'));
     $('#jsonEditor').style.display = 'none';
-    jeUpdateWidgetSwitcher();
-    if(jeTreeIsPinned())
-      jeToggleTreeDropdown();
   }
 }
 

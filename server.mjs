@@ -128,6 +128,17 @@ MinifyHTML().then(function(result) {
   router.get('/i/fonts/', cache5m);
   router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
 
+  // the icon pickers fetch symbols.json whole, so it is served from the buffer that was gzipped at
+  // startup; a client that does not accept gzip falls through to express.static below
+  router.get('/i/fonts/symbols.json', function(req, res, next) {
+    res.setHeader('Vary', 'Accept-Encoding');
+    if(!req.headers['accept-encoding'] || !req.headers['accept-encoding'].match(/\bgzip\b/))
+      return next();
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Encoding', 'gzip');
+    res.send(result.symbolsGzipped);
+  });
+
   router.use('/i', express.static(path.resolve() + '/assets'));
 
   function sendMinified(req, res, minified, gzipped) {
