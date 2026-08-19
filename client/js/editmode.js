@@ -358,6 +358,12 @@ function generateTimerWidgets(id, x, y) {
 }
 
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick, title) {
+  // how far the group reaches around its root widget, filled in below because most of these
+  // widgets leave their size to the widget defaults. The children hang off the root - the deck's
+  // reset button below the holder, the counter's -/+ beside the label, the ring's stops all round
+  // the line - so keeping only the root on the board would leave them off it on a small board.
+  const extents = { left: 0, top: 0, right: 0, bottom: 0 };
+  const rootID = widgetsToAdd.find(wi=>!wi.parent).id;
   for(const wi of widgetsToAdd) {
     let w = null;
     if(wi.type == 'button') w = new Button(wi.id);
@@ -372,13 +378,22 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick, title) {
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
     w.domElement.id = w.id;
+    // the root and what is attached to it - a card inside the deck's pile is inside the group anyway
+    if(!wi.parent || wi.parent == rootID) {
+      const x = wi.parent ? wi.x || 0 : 0;
+      const y = wi.parent ? wi.y || 0 : 0;
+      extents.left   = Math.min(extents.left,   x);
+      extents.top    = Math.min(extents.top,    y);
+      extents.right  = Math.max(extents.right,  x + w.get('width'));
+      extents.bottom = Math.max(extents.bottom, y + w.get('height'));
+    }
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
         // the board size can change while edit mode is open, so where the widget goes has to be
         // worked out on click and not when the overlay is populated
-        overlayDone(await onClick(...overlayPosition(wi.x, wi.y, w)));
+        overlayDone(await onClick(...overlayPosition(wi.x, wi.y, w, extents)));
         batchEnd();
       });
       w.domElement.title = title;
@@ -395,8 +410,11 @@ const VTTblue = '#1f5ca6';
 // addOverlayPosition (calculateLayout.js) for the board in use, taking the size to keep on the
 // board off the instantiated preview widget: most previews leave their size to the widget
 // defaults, which are bigger than the delta lets on - a holder is 111x168 with an empty delta.
-function overlayPosition(x, y, w) {
-  return addOverlayPosition(viewportConfig, x, y, w.get('width'), w.get('height'));
+// A composite passes the extents of the whole group instead of its root widget's size.
+function overlayPosition(x, y, w, extents) {
+  if(extents)
+    return addOverlayPosition(viewportConfig, x, y, { left: extents.left, top: extents.top, width: extents.right-extents.left, height: extents.bottom-extents.top });
+  return addOverlayPosition(viewportConfig, x, y, { width: w.get('width'), height: w.get('height') });
 }
 
 // The hex previews that show an image need a colored hexagon painted behind them because their
@@ -2027,7 +2045,7 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, 150, 40);
+    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, { width: 150, height: 40 });
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
@@ -2040,7 +2058,9 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeatCounter', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, 150, 40);
+    // the counter badge hangs 20px off the top left corner of the seat, so the seat is put far
+    // enough onto the board for the badge to be on it too
+    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, { left: -20, top: -20, width: 170, height: 60 });
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
@@ -2092,7 +2112,7 @@ export function initializeEditMode(currentMetaData) {
   });
 
   on('#addScoreboard', 'click', async function() {
-    const [ x, y ] = addOverlayPosition(viewportConfig, 1000, 660, 300, 200);
+    const [ x, y ] = addOverlayPosition(viewportConfig, 1000, 660, { width: 300, height: 200 });
     await addWidgetLocal({
       type: 'scoreboard',
       x,

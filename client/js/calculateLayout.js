@@ -177,6 +177,12 @@ export const ADD_OVERLAY_HEADER_HEIGHT = 90;
  * to it - see #addOverlayContent in editmode.css. The header row makes the overlay taller than
  * the default board, so it is scaled down a little even there.
  *
+ * Deliberately not capped at 1: the board is itself scaled into the window, so an overlay kept
+ * at 1:1 on a board twice the default size would be drawn at half the on-screen size the same
+ * overlay has on the default board, its labels included. Filling the board keeps the palette the
+ * same size on screen whatever the board is, at the price of a preview on a large board being
+ * drawn bigger than the widget it adds - where it adds is faithful, how big it looks is not.
+ *
  * @param {Object} viewport - { targetWidth, targetHeight }
  * @returns {number}
  */
@@ -194,21 +200,26 @@ export function addOverlayScale(viewport) {
  * @param {Object} viewport - { targetWidth, targetHeight }
  * @param {number} x - the preview's x in the overlay's 1600x1000 layout
  * @param {number} y - the preview's y in the overlay's 1600x1000 layout
- * @param {number} width - the width the added widget will have, not the preview's delta
- * @param {number} height - the height the added widget will have
+ * @param {Object} extents - how far the added widget reaches from the x/y it is added at:
+ *   { width, height }, plus { left, top } where it reaches back past that point - both 0 by
+ *   default. A composite reaches further than its root widget: the counter's minus button sits
+ *   38px left of the label, the deck's reset button below the holder, the ring's stops all
+ *   around the line. It is the whole thing that has to stay on the board, not just the root.
  * @returns {number[]} [ x, y ] on the board
  */
-export function addOverlayPosition(viewport, x, y, width, height) {
+export function addOverlayPosition(viewport, x, y, extents) {
   const scale = addOverlayScale(viewport);
   // the top left corner of the 1600x1000 layout on the board: the overlay is centered as a whole,
   // and the header row above the layout pushes the layout itself half a header row further down
   const layoutLeft = viewport.targetWidth/2  - DEFAULT_VIEWPORT.targetWidth*scale/2;
   const layoutTop  = viewport.targetHeight/2 - (DEFAULT_VIEWPORT.targetHeight - ADD_OVERLAY_HEADER_HEIGHT)*scale/2;
-  function onBoard(coordinate, layoutStart, widgetSize, boardSize) {
-    return Math.max(0, Math.min(Math.round(layoutStart + coordinate*scale), boardSize - widgetSize));
+  function onBoard(coordinate, layoutStart, extentStart, extentSize, boardSize) {
+    const onOverlay = Math.round(layoutStart + coordinate*scale);
+    // + 0 so that clamping a widget that reaches nowhere past its own x/y to the edge gives 0, not -0
+    return Math.max(-extentStart, Math.min(onOverlay, boardSize - extentStart - extentSize)) + 0;
   }
   return [
-    onBoard(x, layoutLeft, width,  viewport.targetWidth),
-    onBoard(y, layoutTop,  height, viewport.targetHeight)
+    onBoard(x, layoutLeft, extents.left || 0, extents.width,  viewport.targetWidth),
+    onBoard(y, layoutTop,  extents.top  || 0, extents.height, viewport.targetHeight)
   ];
 }

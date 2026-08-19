@@ -242,7 +242,7 @@ describe('the add widget overlay mapping', () => {
   // the header row is above the layout the previews live in, so the layout is not centered on the
   // board: it sits half a header row lower, and everything in it is 1000/1090 of its former size
   test('centers the overlay as a whole, header row included', () => {
-    expect(addOverlayPosition(DEFAULT_VIEWPORT, 800, 500, 130, 130)).toEqual([ 800, 541 ]);
+    expect(addOverlayPosition(DEFAULT_VIEWPORT, 800, 500, { width: 130, height: 130 })).toEqual([ 800, 541 ]);
     for(const [ x, y, width, height, expected ] of [
       [ 115, 150, 111, 168, [ 172, 220 ] ],   // add-holder
       [ 1005, 825, 74, 30, [ 988, 839 ] ],    // add-timer
@@ -250,29 +250,48 @@ describe('the add widget overlay mapping', () => {
       [ 1310, 420, 220, 40, [ 1268, 468 ] ],  // add-line
       [ 1420, 495, 130, 130, [ 1369, 537 ] ]  // add-ring
     ])
-      expect(addOverlayPosition(DEFAULT_VIEWPORT, x, y, width, height)).toEqual(expected);
+      expect(addOverlayPosition(DEFAULT_VIEWPORT, x, y, { width, height })).toEqual(expected);
   });
 
   test('follows the scaled and centered overlay on another board', () => {
-    expect(addOverlayPosition(portrait, 800, 500, 130, 130)).toEqual([ 500, 828 ]);
-    expect(addOverlayPosition(portrait, 300, 200, 111, 168)).toEqual([ 188, 641 ]);
+    expect(addOverlayPosition(portrait, 800, 500, { width: 130, height: 130 })).toEqual([ 500, 828 ]);
+    expect(addOverlayPosition(portrait, 300, 200, { width: 111, height: 168 })).toEqual([ 188, 641 ]);
   });
 
   // 1420,495 is the ring, the preview furthest to the right. Unmapped it is 420px past the right
   // edge of a 1000px board; mapped it is 888, which still hangs its 130px over that edge.
   test('keeps a preview at the edge of the overlay on the board', () => {
-    expect(addOverlayPosition(portrait, 1420, 495, 130, 130)).toEqual([ 1000-130, 825 ]);
+    expect(addOverlayPosition(portrait, 1420, 495, { width: 130, height: 130 })).toEqual([ 1000-130, 825 ]);
   });
 
   test('keeps the widget on the board whatever its size', () => {
-    const [ x, y ] = addOverlayPosition(tiny, 1420, 495, 130, 130);
+    const [ x, y ] = addOverlayPosition(tiny, 1420, 495, { width: 130, height: 130 });
     expect([ x, y ]).toEqual([ 0, 0 ]);
     for(const viewport of [ DEFAULT_VIEWPORT, portrait, tiny ]) {
-      const [ px, py ] = addOverlayPosition(viewport, 1420, 495, 111, 168);
+      const [ px, py ] = addOverlayPosition(viewport, 1420, 495, { width: 111, height: 168 });
       expect(px).toBeGreaterThanOrEqual(0);
       expect(py).toBeGreaterThanOrEqual(0);
       expect(px).toBeLessThanOrEqual(Math.max(0, viewport.targetWidth-111));
       expect(py).toBeLessThanOrEqual(Math.max(0, viewport.targetHeight-168));
     }
+  });
+
+  // a composite is added at its root widget's position but reaches further than the root: the
+  // counter's minus button sits 38px left of the label and its plus button 36px past its right
+  // edge, so it is 142 wide and starts 38 left of where it is added
+  test('keeps what hangs off a composite on the board too', () => {
+    const counter = { left: -38, top: 0, width: 142, height: 40 };
+    const small = { targetWidth: 200, targetHeight: 200 };
+    const [ x, y ] = addOverlayPosition(small, 1058, 890, counter);
+    expect(x).toBeGreaterThanOrEqual(38);
+    expect(x + 68 + 36).toBeLessThanOrEqual(200);
+    expect(y + 40).toBeLessThanOrEqual(200);
+  });
+
+  // ... unless there is no such position: a composite wider than the board is parked so that its
+  // leftmost child is on the board, the same way an oversized widget is parked at 0
+  test('parks a composite that cannot fit at the top left corner', () => {
+    const ring = { left: -5, top: -5, width: 140, height: 140 };
+    expect(addOverlayPosition({ targetWidth: 100, targetHeight: 100 }, 1420, 495, ring)).toEqual([ 5, 5 ]);
   });
 });
