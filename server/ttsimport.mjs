@@ -365,28 +365,9 @@ async function addDeck(o, imp, parent=null) {
       }
     },
     faceTemplates: [
-      {
-        objects: [{
-          type: 'image',
-          css: {
-            "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-            "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-          },
-          dynamicProperties: {
-            value: 'back',
-            width: 'width',
-            height: 'height'
-          }
-        },{
-          type: 'image',
-          color: 'transparent',
-          dynamicProperties: {
-            value: 'simpleBack',
-            width: 'width',
-            height: 'height'
-          }
-        }]
-      },
+      // The back face is filled in below: which of the two kinds of back image the deck uses is only known
+      // once its card types have been read.
+      { objects: [] },
       {
         objects: [{
           type: 'image',
@@ -435,6 +416,37 @@ async function addDeck(o, imp, parent=null) {
     if(!isFaceDown(o))
       widgets[`${id}-${cardID}-${i}`].activeFace = 1;
   }
+  // TTS stores a back image per CustomDeck entry, as a sheet of individual backs when UniqueBack is set and
+  // as a single image for the whole deck when it is not - so a card type carries either "back" or
+  // "simpleBack", never both. Adding an object for each of them regardless left every imported deck with a
+  // second, empty image object on its back face that no card type ever fills.
+  const usedByACardType = property=>Object.values(deck.cardTypes).some(cardType=>cardType[property]);
+  if(usedByACardType('back'))
+    deck.faceTemplates[0].objects.push({
+      type: 'image',
+      css: {
+        "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+        "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+      },
+      dynamicProperties: {
+        value: 'back',
+        width: 'width',
+        height: 'height'
+      }
+    });
+  // the fallback also covers a deck whose cards have no back image at all, which would otherwise end up with
+  // a back face without any object on it
+  if(usedByACardType('simpleBack') || !deck.faceTemplates[0].objects.length)
+    deck.faceTemplates[0].objects.push({
+      type: 'image',
+      color: 'transparent',
+      dynamicProperties: {
+        value: 'simpleBack',
+        width: 'width',
+        height: 'height'
+      }
+    });
+
   // widgets only holds the cards at this point - two of them still need a pile
   if(Object.keys(widgets).length > 1) {
     widgets[`${id}-pile`] = place(o, {

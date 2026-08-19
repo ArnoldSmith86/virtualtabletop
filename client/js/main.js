@@ -629,7 +629,9 @@ async function uploadAsset(multipleCallback, fileTypes) {
         alert(`Uploading failed: ${e.toString()}`);
         return null;
       });
-      multipleCallback(uploadPath, f.name)
+      // a file that failed to upload has no path to hand out - the callback would add an empty entry for it
+      if(uploadPath)
+        multipleCallback(uploadPath, f.name)
     }).catch(e=>{
       if(e.message !== 'File selection cancelled.')
         alert(`Error: ${e.toString()}`);
@@ -656,8 +658,11 @@ async function _uploadAsset(file) {
       body: file.content || file
     });
 
-    if(response.status == 413)
-      throw 'File is too big.';
+    if(response.status == 413) {
+      // the server answers with the actual size and the limit, but a proxy in between might not
+      const details = (await response.text().catch(_=>'')).trim();
+      throw `${/^[^<>]{1,200}$/.test(details) ? details : 'The file is too big.'} Scaling a picture down or saving it as a JPEG usually gets it under the limit.`;
+    }
     else if(!response.ok)
       throw `${response.status} - ${response.statusText}`;
 
@@ -727,6 +732,7 @@ async function loadEditMode() {
       loadZipLibrary, waitForZipLibrary, zipBlob,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+      iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
       html, formField,
@@ -951,9 +957,16 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    // the add widget overlay sits on top of the sidebar, so it goes first - without this the only
+    // a picture opened at full size out of the deck wizard covers everything, so Escape takes it away first
+    if($('#editor > .cardPictureZoom'))
+      $('#editor > .cardPictureZoom').remove();
+    // the public library deck browser is opened on top of whatever opened it (the add widget overlay or the
+    // deck editor's Add New Deck dialog), so Escape closes the browser and not the thing behind it
+    else if($('#libraryDecksOverlay') && $('#libraryDecksOverlay').style.display != 'none')
+      $('#libraryDecksClose').click();
+    // the add widget overlay sits on top of the sidebar, so it goes next - without this the only
     // way out of it was leaving edit mode altogether
-    if($('#addOverlay') && $('#addOverlay').style.display != 'none')
+    else if($('#addOverlay') && $('#addOverlay').style.display != 'none')
       showOverlay();
     else if($('body.edit #editorSidebar button.active'))
       $('#editorSidebar button.active').click();

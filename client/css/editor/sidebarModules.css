@@ -4,37 +4,6 @@
   position: relative;
 }
 
-/* The button that closes the module (SidebarModule.addCloseButton). Out of the flow so it doesn't
-   push the centered header text off center, and the header keeps room for it on the right. */
-.editorModule .moduleCloseButton {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.editorModule h1 .moduleCloseButton {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* In the modules that render no header (JSON, Debug, Assets) it sits in the module's own top right
-   corner instead, where it has to stay above what they put there. */
-.editorModule > .moduleCloseButton {
-  z-index: 3;
-}
-
-/* except in the JSON module, where that corner is the command pane - it goes to the right end of the
-   widget switcher bar above the text instead */
-.data_object.editorModule > .moduleCloseButton {
-  right: calc(var(--commandPaneWidth) + 5px);
-  top: 6px;
-}
-
-/* the Debug module's filter row is right-aligned, so it has to leave that corner free */
-.pest_control.editorModule > .buttonBar:first-child {
-  padding-right: 40px;
-}
-
 .editorModule h2 {
   color: white;
   background: var(--VTTblue);
@@ -58,12 +27,19 @@
 }
 
 /* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
-   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. */
+   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. It wraps
+   because that explanation is a sentence: in a narrow panel it was squeezed into a 40px wide column of
+   single words beside the buttons instead of taking a line of its own. */
 .editorModule .goButton.buttonBar {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 12px;
+}
+
+.editorModule .goButton.buttonBar > span {
+  flex: 1 1 200px;
 }
 
 /* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
@@ -85,6 +61,20 @@
 }
 
 /* properties */
+
+/* Every box that holds a preview of a widget. A preview is a real widget, so it
+   carries the widget's own z-index ((layer + 10) * 100000 + z) - a number that
+   says where it is on the table, not where it is in the panel. Left alone it
+   beats everything the module draws around it: the seat style presets painted
+   over the selection bar's open dropdown. Each box is its own stacking context
+   instead, so a preview is only ever ordered against the previews beside it.
+   (.textCardsPreviewCard already is one through its scale transform.) */
+.editorModule .widgetSelectionButton,
+.editorModule .facePreview,
+.editorModule .diceFacePreview,
+.editorModule .renderedWidget {
+  isolation: isolate;
+}
 
 .editorModule .widgetSelectionButton {
   height: 150px;
@@ -317,23 +307,206 @@
 }
 
 
+/* An uploaded card front next to its settings. The image is a flex item, so it needs a wrapper it cannot be
+   stretched by: stretching it hid how the picture really looks - a sheet of two rows of cards showed up as a
+   single row - and made the card size derived from it come out squashed. */
 .tune.editorModule .cardFrontPreview {
   display: flex;
+  align-items: flex-start;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
-.tune.editorModule .cardFrontPreview > div {
+/* A column of a fixed width rather than one that shrink-wraps its picture: two uploads of different shapes
+   started their settings at different x positions, and the two "Cards across / Cards down" stacks then read
+   as two unrelated forms. The frame inside it is what the picture is measured by, so the grid overlay still
+   sits exactly on the picture. */
+.tune.editorModule .cardFrontPreviewImage {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 clamp(140px, 45%, 280px);
+  min-width: 0;
+  line-height: 0;
+}
+
+.cardFrontPreviewFrame {
+  position: relative;
+  max-width: 100%;
+  cursor: zoom-in;
+}
+
+.tune.editorModule .cardFrontPreviewSettings {
   flex-grow: 1;
+  min-width: 0;
   text-align: left;
 }
 
+/* The preview is there to check the cut lines against the picture, so all of it has to stay in the dialog:
+   bounded by the width alone, a tall sheet - 2 x 10 is a normal print-and-play shape - ran off the bottom and
+   took the lower rows of the grid with it. The wrapper shrink-wraps the image, so the overlay still lines up. */
 .tune.editorModule .cardFrontPreview img {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 220px;
+  width: auto;
+  height: auto;
+}
+
+/* A portrait picture in a column that narrow is a sliver - the taller it is, the less of it is left. Give
+   it the full panel and put the settings underneath, which is also the layout every upload gets on a phone. */
+.tune.editorModule .cardFrontPreviewTall {
+  flex-direction: column;
+  align-items: stretch; /* the settings get the whole panel now, not the width they shrink-wrap to */
+}
+
+.tune.editorModule .cardFrontPreviewTall .cardFrontPreviewImage {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.tune.editorModule .cardFrontPreviewTall img {
+  max-height: min(60vh, 460px);
+}
+
+/* The cuts the rows and columns above make, drawn onto the picture itself so a wrong grid is visible right
+   away instead of only on the cards afterwards. The frame around it comes from the element's own outline, so
+   a sheet is recognisable as one before it has been cut at all. Dashed, the way a cut line is drawn on the
+   mode's icon - and the way scissors marks are drawn on a print-and-play sheet. */
+.cardFrontPreviewGrid {
+  display: none;
+  position: absolute;
+  inset: 0;
+  /* inverting whatever is underneath keeps the cut lines visible on a dark and on a light picture alike */
+  mix-blend-mode: difference;
+  outline: 2px dashed #fff;
+  outline-offset: -2px;
+}
+
+/* One pseudo element per direction: the line is a gradient across the picture and the dashes are a mask
+   along it, which a single background layer cannot do in both directions at once. */
+.cardFrontPreviewGrid::before,
+.cardFrontPreviewGrid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.cardFrontPreviewGrid::before {
+  background-image: repeating-linear-gradient(to right, #fff 0 2px, transparent 2px calc(100% / var(--sheetColumns, 1)));
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 12px);
+  mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 12px);
+}
+
+.cardFrontPreviewGrid::after {
+  background-image: repeating-linear-gradient(to bottom, #fff 0 2px, transparent 2px calc(100% / var(--sheetRows, 1)));
+  -webkit-mask-image: repeating-linear-gradient(to right, #000 0 6px, transparent 6px 12px);
+  mask-image: repeating-linear-gradient(to right, #000 0 6px, transparent 6px 12px);
+}
+
+.cardFrontPreviewSheet .cardFrontPreviewGrid {
+  display: block;
+}
+
+/* The panel has room for a thumbnail of a print-and-play sheet and no more - a 2 x 10 one is a few pixels
+   per column there, which is not enough to check a cut line against a card. Clicking the picture opens the
+   same picture and the same grid at window size. It hangs in #editor because that is where a fixed box
+   resolves against the window rather than against the dialog it was opened from. */
+#editor > .cardPictureZoom {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #000000cc;
+  cursor: zoom-out;
+}
+
+/* the frame keeps its zoom-in cursor in the wizard, but inside the full-size view clicking zooms out */
+#editor > .cardPictureZoom .cardFrontPreviewFrame {
+  cursor: zoom-out;
+}
+
+#editor > .cardPictureZoom img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100 * var(--vh, 1vh) - 40px);
+}
+
+/* Where the backs come from: one image for the whole deck, or a second sheet cut by the same grid. Only the
+   picked one's controls are shown - the class is set on the section holding both. */
+.tune.editorModule .deckImagesBackModes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.tune.editorModule .deckImagesBackModes label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.tune.editorModule .deckImagesBackSheets,
+.tune.editorModule .deckImagesBackSheetMode .deckImagesSharedBack {
+  display: none;
+}
+
+.tune.editorModule .deckImagesBackSheetMode .deckImagesBackSheets {
+  display: block;
+}
+
+.tune.editorModule .deckImagesBackSheetHint {
+  margin-bottom: 8px;
+  text-align: left;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.tune.editorModule .cardBackSheetPreview b {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* "10 cards of 300 x 200 pixels, 160 x 107 on the table" is the most informative line in the panel, so it is
+   not shrunk into a footnote the way the hints above it are. */
+.tune.editorModule .cardFrontPreviewSummary {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+/* Only offered while the backs are cut out of a sheet, and next to the sheet of fronts it is paired with. */
+.tune.editorModule .deckImagesBackSheetButton {
+  display: none;
+}
+
+.tune.editorModule .goButton.deckImagesBackSheetMode .deckImagesBackSheetButton {
+  display: inline-flex;
 }
 
 .tune.editorModule .cardFrontPreview [type=number] {
   vertical-align: super;
   width: 50px;
+}
+
+/* Narrower than this the panel is barely wider than the picture, and side by side neither half is usable:
+   the picture shrinks to a thumbnail and every label of the settings beside it wraps over two lines. Give
+   every upload the layout a tall picture gets - picture on top, settings underneath. */
+@media (max-width: 500px) {
+  .tune.editorModule .cardFrontPreview {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tune.editorModule .cardFrontPreviewImage {
+    flex: 0 0 auto;
+    align-self: center;
+    max-width: 100%;
+  }
 }
 
 
@@ -395,6 +568,12 @@
   text-align: left;
   font-size: 12px;
   opacity: 0.7;
+}
+
+/* A whole sentence explaining why "Add to game" is off, so it takes the row above the buttons rather than a
+   column of single words beside them - and the button it asks for is then the nearest one below it. */
+.tune.editorModule .goButton .imagePairStatus {
+  flex-basis: 100%;
 }
 
 .tune.editorModule .imagePairStatus.imagePairMismatch {

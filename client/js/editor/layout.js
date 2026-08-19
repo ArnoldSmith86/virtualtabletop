@@ -93,6 +93,11 @@ function metaReceived(data) {
 }
 
 export function openEditor() {
+  // edit mode can also be left by opening another toolbar tab, which does not go
+  // through closeEditor() - so the widgets under the pointer are dropped on the
+  // way in as well as on the way out
+  selectionBarResetStack();
+  endDrill();
   for(const module of sidebarModules)
     module.onEditorOpen();
   for(const button of toolbarButtons)
@@ -108,6 +113,8 @@ function closeEditor() {
     module.onEditorClose();
   for(const button of toolbarButtons)
     button.onEditorClose();
+  selectionBarResetStack();
+  endDrill();
 
   $('#activeGameButton').click();
   setScale();

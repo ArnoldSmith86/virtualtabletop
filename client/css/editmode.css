@@ -148,13 +148,40 @@
   content:'[style]';
 }
 
+/* Unlike the other overlays this one is a screenful of text and preview tiles rather than something drawn on
+   the board, and scaling it with the board made it unreadable: at a board scale of 0.5 - an ordinary laptop -
+   the filter field, the sort control and every deck name came out at half size, and at 0.22 on a phone they
+   were unusable. It gets the editor's own box instead (below the toolbar, beside the sidebar), which is why
+   initializeEditMode keeps it in #editor: #roomArea is a size container and therefore the containing block
+   of a fixed child, so in there the box would be clipped back to the board again. */
 #libraryDecksOverlay {
-  width: var(--roomWidth);
-  height: var(--roomHeight);
-  transform: scale(var(--scale));
-  transform-origin: left top;
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
   padding: 20px 40px;
   gap: 10px;
+  z-index: 20; /* above the sidebar (2), the toolbar (3) and the deck editor (1) it can be opened from */
+}
+
+/* At phone width the heading wraps underneath the close button, and the filter field takes so much of the
+   row that "Sort by" and its select end up on two lines of their own. */
+@media (max-width: 500px) {
+  #libraryDecksOverlay {
+    padding: 15px;
+  }
+
+  #libraryDecksHeader h1 {
+    font-size: 20px;
+    margin-right: 30px;
+  }
+
+  #libraryDecksFilter {
+    width: 100%;
+  }
 }
 
 #libraryDecksClose {
@@ -188,6 +215,14 @@
 
 #libraryDecksSort {
   padding: 5px;
+}
+
+/* only filled when the picked sort has nothing to sort by, see renderLibraryDecksList */
+#libraryDecksSortHint {
+  flex-basis: 100%;
+  font-size: 14px;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 .libraryDeckGameStat {

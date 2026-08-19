@@ -903,6 +903,17 @@ body.edit:not(.hitTest) .widget.foreign, body.edit:not(.hitTest):not(.showHidden
   pointer-events: none;
 }
 
+/* A widget whose game switches pointer events off in its css cannot be clicked at
+   all, which is exactly what the editor's list of widgets under the pointer is
+   there for - so the hit test gives every widget its events back for the length
+   of the scan. !important because that css is an inline style. A line keeps its
+   own box out of it: the box is only the bounding box of the drawn path, and
+   listing every line the pointer happens to be inside the box of would bury the
+   widgets that really are under it. */
+body.hitTest .widget:not(.line) {
+  pointer-events: auto !important;
+}
+
 .widget.limbo {
   opacity: 0.5;
   border: 5px dashed darkred;

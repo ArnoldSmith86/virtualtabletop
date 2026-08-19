@@ -172,6 +172,46 @@ describe('TTS import: decks', () => {
     const down = await convert(objects(Object.assign(deck('down', [ 100, 101 ]), { Transform: { posX: 0, posZ: 0, rotZ: 180 } })));
     expect(typed(down, 'card').map(c=>c.activeFace)).toEqual([ undefined, undefined ]);
   });
+
+  // A CustomDeck entry has either a sheet of individual backs (UniqueBack) or one back image for the whole
+  // deck, so a card type carries either "back" or "simpleBack" - never both. The back face may only hold the
+  // object reading the one its cards really have: an object for the other kind is never filled and renders
+  // as an empty transparent layer on every card of the deck.
+  const sheet = extra=>Object.assign({ FaceURL: png(300, 400), BackURL: png(300, 400), NumWidth: 1, NumHeight: 1 }, extra);
+  const customDeck = (GUID, CustomDeck, DeckIDs)=>({ Name: 'DeckCustom', GUID, Transform: { posX: 0, posZ: 0 }, DeckIDs, CustomDeck });
+  const backObjects = widgets=>typed(widgets, 'deck')[0].faceTemplates[0].objects;
+
+  it('puts one back image object on a deck sharing a single back image', async () => {
+    const widgets = await convert(objects(customDeck('shared', { 1: sheet() }, [ 100, 101 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value)).toEqual([ 'simpleBack' ]);
+    expect(widgets.shared.cardTypes[100].simpleBack).toBeTruthy();
+    expect(widgets.shared.cardTypes[100].back).toBe(undefined);
+  });
+
+  it('puts one tiled back image object on a deck with a back per card', async () => {
+    const widgets = await convert(objects(customDeck('unique', { 1: sheet({ UniqueBack: true }) }, [ 100, 101 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value)).toEqual([ 'back' ]);
+    // the backs come out of a sheet, so the back face reads its cell the way the front face does
+    expect(backObjects(widgets)[0].css['background-position']).toBe(typed(widgets, 'deck')[0].faceTemplates[1].objects[0].css['background-position']);
+    expect(widgets.unique.cardTypes[100].back).toBeTruthy();
+    expect(widgets.unique.cardTypes[100].simpleBack).toBe(undefined);
+  });
+
+  it('keeps both back image objects when one deck uses both kinds of back', async () => {
+    const widgets = await convert(objects(customDeck('mixed', { 1: sheet(), 2: sheet({ UniqueBack: true }) }, [ 100, 200 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value).sort()).toEqual([ 'back', 'simpleBack' ]);
+    expect(widgets.mixed.cardTypes[100].simpleBack).toBeTruthy();
+    expect(widgets.mixed.cardTypes[200].back).toBeTruthy();
+  });
+
+  it('leaves a deck without any back image with a back face to flip to', async () => {
+    const widgets = await convert(objects(customDeck('backless', { 1: sheet({ BackURL: '' }) }, [ 100, 101 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value)).toEqual([ 'simpleBack' ]);
+  });
 });
 
 describe('TTS import: stacks', () => {
