@@ -267,7 +267,9 @@ export class Pile extends Widget {
       await removeWidgetLocal(this.get('id'));
     }
 
-    if(this.parent && this.parent.get('type') == 'holder')
+    // a card handed back by a pile inside a holder counts as leaving that holder, which the
+    // consolidated pipeline derives from the parent change itself (see enterLeaveContainer)
+    if(legacyMode('legacyHolderEnterLeaveEvents') && this.parent && this.parent.get('type') == 'holder')
       await this.parent.dispenseCard(child);
   }
 

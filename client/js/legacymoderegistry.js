@@ -95,7 +95,7 @@ export const LEGACY_MODES = {
   disableHolderImageWidget: {
     since: 21,
     pr: 2634,
-    interactsWith: [],
+    interactsWith: [ 'legacyHolderEnterLeaveEvents' ],
     detect: function(state) {
       for(const id in state) {
         const properties = state[id];
@@ -113,6 +113,26 @@ export const LEGACY_MODES = {
       <b>New behavior</b>: Holders display image, icon and text properties directly. Games that built those manual workarounds can look broken because both are drawn at once.
       <br><br>
       This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
+      `
+  },
+  legacyHolderEnterLeaveEvents: {
+    since: 23,
+    pr: 3134,
+    interactsWith: [ 'disableHolderImageWidget' ],
+    detect: state => /"(enterRoutine|leaveRoutine|onEnter|onLeave)"\s*:/.test(JSON.stringify(state)),
+    label: 'Legacy holder enter/leave events',
+    summary: 'leaveRoutine fires twice per move, onLeave only for drags and MOVE.',
+    description: `
+      <b>Old behavior</b>: Two different places raised the leave event, so every drag and every <code>MOVE</code> called <code>leaveRoutine</code> twice - once when the widget was detached and once when it was really out of the holder. The <code>onLeave</code> properties were only applied on the second of those, which meant <code>SET parent</code> and <code>MOVEXY</code> never applied them at all. A card that joined a pile inside the holder it was already in raised a leave event with no matching enter, and a card dropped back into the holder it was picked up from ran <code>enterRoutine</code> without applying <code>onEnter</code>.
+      <br><br>
+      <b>New behavior</b>: A parent change raises at most one leave and one enter, whichever way the widget was moved. Each event applies its properties first and calls its routine afterwards, so the routine always sees the values the event wrote. Piles are transparent: joining, leaving or dissolving a pile inside a holder is not a move between containers and raises no event.
+      <br><br>
+      <b>Example:</b> a holder whose <code>leaveRoutine</code> counts the cards that left it.
+      <br><br>
+      Old result: dragging one card out counts <code>2</code><br>
+      New result: dragging one card out counts <code>1</code>
+      <br><br>
+      Enable this mode for a game that was built around the double call - or around <code>MOVEXY</code> not applying <code>onLeave</code>.
       `
   }
 };

@@ -12,6 +12,7 @@ import { legacyMode } from '../../../client/js/legacymodes.js';
 import { fullLegacyCombination } from '../../../client/js/legacymoderegistry.js';
 import { Widget } from '../../../client/js/widgets/widget.js';
 import { Label } from '../../../client/js/widgets/label.js';
+import { bundleWidgetClasses, resetGeneratedIDs } from './bundle-widgets.js';
 
 // widget.js and color.js reach legacyMode() as a global because the room bundle concatenates
 // every client module into one scope. jsdom has no bundle, so wire it up once.
@@ -52,7 +53,13 @@ globalThis.DOMMatrix = globalThis.DOMMatrix || HarnessDOMMatrix;
 // Only the widget modules that carry their own imports can be loaded outside the bundle;
 // everything else falls back to the base class, which is what the routine operations act on
 // anyway. Behaviour that lives in a subclass belongs in a TestCafe fixture.
-const widgetClasses = { widget: Widget, label: Label };
+let widgetClasses = { widget: Widget, label: Label };
+
+// ... unless the fixture is about that subclass. A file that calls this gets the real Holder
+// and Pile, evaluated the way the bundle does it - see bundle-widgets.js for what that costs.
+export async function useBundleWidgets() {
+  widgetClasses = await bundleWidgetClasses();
+}
 
 export function setLegacyModes(modes) {
   for(const [ name, value ] of Object.entries(fullLegacyCombination(modes)))
@@ -82,6 +89,7 @@ export function setupRoom(state, { legacy = {} } = {}) {
 }
 
 export function removeAllWidgets() {
+  resetGeneratedIDs();
   for(const id of [ ...widgets.keys() ]) {
     widgets.get(id).applyRemove();
     widgets.delete(id);

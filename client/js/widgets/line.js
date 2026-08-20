@@ -685,8 +685,19 @@ export class Line extends Widget {
       await this.addStop(child.id, this.positionAtPoint(this.childCenter(child)));
     if(this.stopList().some(entry=>entry.widget == child.id))
       await this.layoutStops();
-    if(entering)
+    if(legacyMode('legacyHolderEnterLeaveEvents') && entering)
       await this.applyEnterLeave(child, 'onEnter');
+  }
+
+  // The property half of the consolidated enter/leave pipeline - a line applies the same
+  // onEnter/onLeave a holder does, and drops the widget from its stop list on the way out.
+  async applyEnterProperties(child) {
+    await this.applyEnterLeave(child, 'onEnter');
+  }
+
+  async applyLeaveProperties(child) {
+    await this.removeStop(child.id);
+    await this.applyEnterLeave(child, 'onLeave');
   }
 
   // the middle of a child in the line's own coordinate frame

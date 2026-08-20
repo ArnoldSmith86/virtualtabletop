@@ -1,93 +1,19 @@
 import { getStateObject, setName, setupTestEnvironment } from './test-util.js';
 import { dragPath, openRoom, stateWhen } from './interaction-util.js';
+import { CARD, card, clickGo, expectTrace, fixtureState, readTrace } from './holderevent-util.js';
 
 setupTestEnvironment();
 
 // Holder events: what fires, in which order, and what the widget looks like while it fires.
 //
-// #1212 wrote down what holder events *should* do - parent cleared, beforeLeaveRoutine,
-// onLeave, leaveRoutine, then on the other side parent set, onEnter, alignment, piles resolved,
-// afterLeaveRoutine, enterRoutine - and nobody has ever asserted what they actually do. The
-// order is the interesting part: a routine that reads the widget it was handed sees a different
-// answer depending on whether it runs before or after the properties are written, and games
-// encode whichever answer they observed.
+// #1212 wrote down what holder events should do - the properties of the departure, then the
+// leaving holder's routine, then the arrival and the receiving holder's routine - and this file
+// pins what a real pointer and a real routine actually produce. Every move raises at most one
+// leave and one enter, and each of them applies its properties before it calls its routine.
 //
-// So this file pins the status quo. Several of the traces below are *not* what #1212 asks for,
-// and they are recorded as they are, with the difference named at the case. That makes the
-// eventual move towards the described order a visible, reviewable diff (and tells whoever
-// writes the legacy mode for it exactly which games' assumptions are at stake), while any
-// unintended change to the current order fails a test the day it is made.
-//
-// How the trace works: every routine appends one entry to a log widget, and each entry carries
-// the properties of the widget the event is about, read at that moment. Two holders write
-// distinguishable marks through onEnter/onLeave, so an entry saying `mark=null` means "this
-// routine ran before the property half of the event", and `parent=handB` means "the parent was
-// already written when this routine ran".
-
-const CARD = 'card1';
-
-// The fields an entry records. Coordinates are only meaningful where the case makes them
-// deterministic - a routine that fires in the middle of a drag sees wherever the pointer was -
-// so they are opt-in per holder.
-const DEFAULT_FIELDS = [ 'parent', 'mark', 'owner' ];
-
-function observation(fields, id) {
-  return fields.map(property=>`${property}=\${PROPERTY ${property} OF ${id}}`).join(' ');
-}
-
-// One trace entry, appended to the log widget's `trace` property. Reading the log through
-// ${PROPERTY trace OF log} rather than a variable is what makes it accumulate across the
-// separate routine invocations the engine makes.
-function traceRoutine(tag, fields, id = CARD) {
-  return [
-    { func: 'SELECT', property: 'id', value: 'log', collection: 'log' },
-    { func: 'SET', collection: 'log', property: 'trace', value: `\${PROPERTY trace OF log}${tag}[${observation(fields, id)}];` }
-  ];
-}
-
-function holder(id, properties = {}, { enterFields = DEFAULT_FIELDS, leaveFields = DEFAULT_FIELDS } = {}) {
-  return Object.assign({
-    id, type: 'holder', width: 350, height: 250,
-    onEnter: { mark: `enter-${id}` },
-    onLeave: { mark: `leave-${id}` },
-    enterRoutine: traceRoutine(`enter ${id}`, enterFields),
-    leaveRoutine: traceRoutine(`leave ${id}`, leaveFields)
-  }, properties);
-}
-
-// Two holders far enough apart that a drag between them leaves the first one's box, a card on
-// the table, a log widget and a button for the routine-driven cases.
-function fixtureState(overrides = {}, holderOptions = {}) {
-  const state = {
-    deck:  { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 1450, y: 20 },
-    card1: { id: CARD, type: 'card', deck: 'deck', cardType: 'plain', x: 700, y: 60 },
-    log:   { id: 'log', type: 'basic', x: 700, y: 900, width: 80, height: 80, trace: '' },
-    go:    { id: 'go', type: 'button', x: 700, y: 420, width: 100, height: 60, text: 'go' },
-    handA: holder('handA', { x: 80,   y: 650 }, holderOptions),
-    handB: holder('handB', { x: 1150, y: 650 }, holderOptions)
-  };
-  for(const [ id, properties ] of Object.entries(overrides))
-    state[id] = state[id] ? Object.assign(state[id], properties) : Object.assign({ id }, properties);
-  return state;
-}
-
-// Read the log until it holds as many entries as the case expects, then give the engine a
-// moment to add one more: a case that fires three routines where the test expects two has to go
-// red rather than pass on a snapshot taken between them.
-async function readTrace(t, expectedLength) {
-  const entries = state=>String((state.log||{}).trace||'').split(';').filter(entry=>entry);
-  const state = await stateWhen(s=>entries(s).length >= expectedLength);
-  await t.wait(400);
-  return entries(await getStateObject());
-}
-
-async function expectTrace(t, expected) {
-  await t.expect(await readTrace(t, expected.length)).eql(expected);
-}
-
-async function clickGo(t) {
-  await t.click('#w_go');
-}
+// tests/testcafe/enterleave.js is the other half: the same traces with the
+// legacyHolderEnterLeaveEvents mode on, which restores the pipeline this replaced, plus the
+// combinations that need more than the two holders holderevent-util.js sets up.
 
 // ---------------------------------------------------------------------------------------------
 // Dragging
@@ -102,23 +28,13 @@ test('Dragging a card into a holder: parent, onEnter and alignment are all done 
   await expectTrace(t, [ 'enter handB[parent=handB mark=enter-handB owner=null x=4 y=4]' ]);
 });
 
-test('Dragging a card out of a holder fires leaveRoutine twice', async t => {
+test('Dragging a card out of a holder fires leaveRoutine once', async t => {
   await openRoom(t, 'modern', fixtureState({ card1: { parent: 'handA', x: 4, y: 4 } }));
   await dragPath(t, CARD, [ { dx: 500, dy: -400 } ]);
 
-  // The #1212 headline. Two different code paths call the same routine for one drag:
-  //
-  //   1. moveStart() sets parent to null to detach the widget, and onPropertyChange('parent')
-  //      calls the old parent's leaveRoutine directly (widget.js:2766) - before anything else
-  //      about the departure has happened, so onLeave has not been applied yet (mark=null).
-  //   2. move() calls checkParent(), which detaches for real once the widget no longer overlaps
-  //      the holder: dispenseCard() applies onLeave and calls leaveRoutine again.
-  //
-  // The issue proposes splitting these into beforeLeaveRoutine and leaveRoutine, which would
-  // make the two calls deliberate and distinguishable. Until then, a game that counts cards in
-  // its leaveRoutine counts one drag twice.
+  // Picking the card up detaches it, and that parent change is the departure: onLeave is applied
+  // and leaveRoutine runs once, reading a card the event has already finished writing.
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=leave-handA owner=null]'
   ]);
 });
@@ -127,34 +43,27 @@ test('Dragging a card from one holder to another', async t => {
   await openRoom(t, 'modern', fixtureState({ card1: { parent: 'handA', x: 4, y: 4 } }));
   await dragPath(t, CARD, [ { onto: 'handB' } ]);
 
-  // #1212 asks for beforeLeave / onLeave+leave / enter, with an afterLeaveRoutine after the
-  // arrival. What happens is the doubled leave above, and then the arrival - so the leaving
-  // holder is completely finished before the receiving one starts, and nothing runs after the
-  // card has landed on behalf of the holder it came from.
+  // The leaving holder is completely finished before the receiving one starts. #1212 also asks
+  // for an afterLeaveRoutine once the card has landed, which does not exist yet - nothing runs
+  // on behalf of handA after the arrival.
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=leave-handA owner=null]',
     'enter handB[parent=handB mark=enter-handB owner=null]'
   ]);
 });
 
-test('Dragging a card within its holder still fires the whole leave-and-enter cycle', async t => {
+test('Dragging a card within its holder fires the whole leave-and-enter cycle', async t => {
   await openRoom(t, 'modern', fixtureState({ card1: { parent: 'handA', x: 4, y: 4 } }));
   // 150 board units to the right, which keeps the card inside handA the whole time
   await dragPath(t, CARD, [ { dx: 150, dy: 0 } ]);
 
   // #1212 wants this to be beforeLeaveRoutine + leaveCancelledRoutine, i.e. for the game to be
-  // able to tell "the card never actually left" from a real departure. Today the card leaves
-  // and arrives: the detaching leaveRoutine fires (the holder never stops overlapping, so the
-  // second, onLeave-carrying call does not), and the drop runs enterRoutine.
-  //
-  // onEnter is *not* applied though - onChildAdd() skips it when the widget lands back on the
-  // holder it was dragged off (`this != child.currentParent`, holder.js:128). So this is the one
-  // case today where the properties and the routine disagree about whether an entry happened,
-  // and mark=null is how a game can tell the two apart at all.
+  // able to tell "the card never actually left" from a real departure. What it is instead is a
+  // departure and an arrival, both complete: the card left the holder when it was picked up and
+  // entered it again when it was dropped, so the properties and the routines agree.
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
-    'enter handA[parent=handA mark=null owner=null]'
+    'leave handA[parent=null mark=leave-handA owner=null]',
+    'enter handA[parent=handA mark=enter-handA owner=null]'
   ]);
 });
 
@@ -163,10 +72,9 @@ test('Dragging a card out of a holder and back before dropping it', async t => {
   await dragPath(t, CARD, [ { dx: 0, dy: -400 }, { onto: 'handA' } ]);
 
   // The case #1212 calls "leaveCancelledRoutine with a flag indicating that leaveRoutine was
-  // called". Today it is indistinguishable from a card that came from somewhere else: two
-  // leaves and an enter, exactly like the holder-to-holder drag.
+  // called". It is indistinguishable from a card that came from somewhere else: one leave and
+  // one enter, exactly like the holder-to-holder drag.
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=leave-handA owner=null]',
     'enter handA[parent=handA mark=enter-handA owner=null]'
   ]);
@@ -174,7 +82,7 @@ test('Dragging a card out of a holder and back before dropping it', async t => {
 
 test('A card dragged onto a full holder is refused and stays on the table', async t => {
   const state = fixtureState({ handB: { dropLimit: 1 } });
-  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'handB' };
+  state.card2 = card('card2', { parent: 'handB' });
   await openRoom(t, 'modern', state);
   await dragPath(t, CARD, [ { onto: 'handB' } ]);
 
@@ -210,7 +118,7 @@ test('alignChildren false leaves the drop coordinate alone', async t => {
 
 test('A stacked holder rearranges its children before enterRoutine and after onLeave', async t => {
   const state = fixtureState({ handB: { stackOffsetX: 40 } }, { enterFields: [ 'parent', 'mark', 'x' ], leaveFields: [ 'parent', 'mark', 'x' ] });
-  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'handB' };
+  state.card2 = card('card2', { parent: 'handB' });
   await openRoom(t, 'modern', state);
   await dragPath(t, CARD, [ { onto: 'handB' } ]);
 
@@ -222,7 +130,6 @@ test('ignoreOnLeave skips the property half of the departure but not the routine
   await dragPath(t, CARD, [ { dx: 500, dy: -400 } ]);
 
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=null owner=null]'
   ]);
 });
@@ -238,7 +145,6 @@ test('A holder with dropShadow runs its enter and leave events for the shadow wi
   await expectTrace(t, [
     'enter handB[parent=null]',
     'leave handB[parent=null]',
-    'leave handB[parent=null]',
     'enter handB[parent=handB]'
   ]);
 });
@@ -249,7 +155,7 @@ test('A holder with dropShadow runs its enter and leave events for the shadow wi
 
 test('Dropping a card onto a card inside a holder applies onEnter to both', async t => {
   const state = fixtureState({}, { enterFields: [ 'parent', 'mark' ], leaveFields: [ 'parent', 'mark' ] });
-  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'handB' };
+  state.card2 = card('card2', { parent: 'handB' });
   await openRoom(t, 'modern', state);
   await dragPath(t, CARD, [ { onto: 'card2' } ]);
 
@@ -263,7 +169,7 @@ test('Dragging a pile into a holder applies onEnter to every card in it', async 
   const state = fixtureState();
   state.pile1 = { id: 'pile1', type: 'pile', x: 600, y: 250 };
   state.card1.parent = 'pile1';
-  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'pile1' };
+  state.card2 = card('card2', { parent: 'pile1' });
   await openRoom(t, 'modern', state);
   await dragPath(t, 'pile1', [ { onto: 'handB' } ]);
 
@@ -287,12 +193,9 @@ test('MOVE from one holder to another', async t => {
   }));
   await clickGo(t);
 
-  // #1212 wants onLeave + leaveRoutine, then the arrival, then afterLeaveRoutine and
-  // enterRoutine. What the engine does is the same doubled leave as the drag (moveToHolder()
-  // detaches through the same two paths), and the second one runs *after* the card has already
-  // arrived in handB - so a leaveRoutine reading its child's parent sees the destination.
+  // A routine-driven move produces the same trace as the drag above: MOVE goes through
+  // moveToHolder(), which detaches the card first, and the detach is the departure.
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=leave-handA owner=null]',
     'enter handB[parent=handB mark=enter-handB owner=null]'
   ]);
@@ -306,7 +209,6 @@ test('MOVE of a collection into a holder', async t => {
   await clickGo(t);
 
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=leave-handA owner=null]',
     'enter handB[parent=handB mark=enter-handB owner=null]'
   ]);
@@ -319,28 +221,24 @@ test('MOVEXY out of a holder', async t => {
   }));
   await clickGo(t);
 
-  // MOVEXY writes parent directly instead of going through checkParent(), so dispenseCard()
-  // never runs: onLeave is not applied (mark stays null) and leaveRoutine fires once rather
-  // than twice. #1212 asks for onLeave + leaveRoutine + afterLeaveRoutine here, so this is the
-  // operation furthest from the description - and the difference to MOVE, which does apply
-  // onLeave, is invisible in a game until a card comes out of a holder the wrong way.
+  // MOVEXY writes parent directly rather than going through checkParent(), and the departure is
+  // the parent change itself - so it applies onLeave exactly like MOVE and the drag do (#1371).
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]'
+    'leave handA[parent=null mark=leave-handA owner=null]'
   ]);
 });
 
-test('SET parent is the plain property write and fires only the parent-change half', async t => {
+test('SET parent raises the same departure and arrival as a drag', async t => {
   await openRoom(t, 'modern', fixtureState({
     card1: { parent: 'handA', x: 4, y: 4 },
     go: { clickRoutine: [ { func: 'SELECT', property: 'id', value: CARD }, { func: 'SET', property: 'parent', value: 'handB' } ] }
   }));
   await clickGo(t);
 
-  // No dispenseCard() on this path, so onLeave is never applied and leaveRoutine fires once
-  // instead of twice. A game that moves cards with SET therefore sees a different event
-  // sequence than one that uses MOVE, which is worth knowing before the order is changed.
+  // SET writes the destination before the event runs, which is why the departing routine reads
+  // parent=handB - but it is still a departure, so onLeave is applied first (#1836).
   await expectTrace(t, [
-    'leave handA[parent=handB mark=null owner=null]',
+    'leave handA[parent=handB mark=leave-handA owner=null]',
     'enter handB[parent=handB mark=enter-handB owner=null]'
   ]);
 });
@@ -398,34 +296,31 @@ test('enterRoutine and leaveRoutine are handed the widget in the child collectio
 });
 
 // ---------------------------------------------------------------------------------------------
-// The same ordering with every legacy mode on
+// The rendering legacy modes do not reach the event methods
 // ---------------------------------------------------------------------------------------------
 //
-// None of the four modes is about holder events, so the answer has to be the same in both
-// combinations - which is exactly why it is worth asserting: disableHolderImageWidget swaps the
-// holder's prototype, and a prototype swap that reached the event methods would show up here
-// and nowhere else.
+// disableHolderImageWidget swaps the holder's prototype, which is the one legacy mode that could
+// reach the event methods by accident - so the modern trace has to survive it. The mode that is
+// about holder events, legacyHolderEnterLeaveEvents, has its own fixture in enterleave.js.
 
-test('The holder-to-holder order is the same with every legacy mode on', async t => {
-  await openRoom(t, 'legacy-all', fixtureState({ card1: { parent: 'handA', x: 4, y: 4 } }));
+test('The holder-to-holder order survives disableHolderImageWidget', async t => {
+  await openRoom(t, 'only-disableHolderImageWidget', fixtureState({ card1: { parent: 'handA', x: 4, y: 4 } }));
   await dragPath(t, CARD, [ { onto: 'handB' } ]);
 
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=leave-handA owner=null]',
     'enter handB[parent=handB mark=enter-handB owner=null]'
   ]);
 });
 
-test('The MOVE order is the same with every legacy mode on', async t => {
-  await openRoom(t, 'legacy-all', fixtureState({
+test('The MOVE order survives disableHolderImageWidget', async t => {
+  await openRoom(t, 'only-disableHolderImageWidget', fixtureState({
     card1: { parent: 'handA', x: 4, y: 4 },
     go: { clickRoutine: [ { func: 'MOVE', from: 'handA', to: 'handB', count: 1 } ] }
   }));
   await clickGo(t);
 
   await expectTrace(t, [
-    'leave handA[parent=null mark=null owner=null]',
     'leave handA[parent=null mark=leave-handA owner=null]',
     'enter handB[parent=handB mark=enter-handB owner=null]'
   ]);

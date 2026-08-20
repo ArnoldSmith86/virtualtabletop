@@ -102,7 +102,7 @@ describe('legacy mode detection', () => {
     // a mode nothing can turn on would be dead weight in the sidebar and in the matrix
     const everything = at(1, {
       b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] },
-      h: { id: 'h', type: 'holder', color: 'red' },
+      h: { id: 'h', type: 'holder', color: 'red', onEnter: { activeFace: 1 } },
       d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'html', value: 'x' } ] } ] }
     });
     expect(Object.keys(flagsFor(everything)).sort()).toEqual([ ...ALL_LEGACY_MODES ].sort());
@@ -214,18 +214,20 @@ function migrated(widget, version = VERSION - 1) {
 }
 
 describe('the dragLimit sides written as null', () => {
+  // the v22 step, so the file has to be older than that rather than just older than the current version
+  const migratedFrom21 = widget => migrated(widget, 21);
   test('become the 0 they always clamped to', () => {
-    expect(migrated({ dragLimit: { minX: null, maxY: 10 } }).dragLimit).toEqual({ minX: 0, maxY: 10 });
-    expect(migrated({ dragLimit: { minX: null, maxX: null, minY: null, maxY: null } }).dragLimit)
+    expect(migratedFrom21({ dragLimit: { minX: null, maxY: 10 } }).dragLimit).toEqual({ minX: 0, maxY: 10 });
+    expect(migratedFrom21({ dragLimit: { minX: null, maxX: null, minY: null, maxY: null } }).dragLimit)
       .toEqual({ minX: 0, maxX: 0, minY: 0, maxY: 0 });
   });
 
   test('leave every other limit as it was written', () => {
-    expect(migrated({ dragLimit: { minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' } }).dragLimit)
+    expect(migratedFrom21({ dragLimit: { minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' } }).dragLimit)
       .toEqual({ minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' });
-    expect(migrated({ dragLimit: {} }).dragLimit).toEqual({});
-    expect(migrated({ dragLimit: 'nonsense' }).dragLimit).toBe('nonsense');
-    expect(migrated({}).dragLimit).toBe(undefined);
+    expect(migratedFrom21({ dragLimit: {} }).dragLimit).toEqual({});
+    expect(migratedFrom21({ dragLimit: 'nonsense' }).dragLimit).toBe('nonsense');
+    expect(migratedFrom21({}).dragLimit).toBe(undefined);
   });
 
   test('are left alone in a file that was written with the new meaning', () => {

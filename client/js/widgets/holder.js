@@ -90,21 +90,57 @@ class Holder extends ImageWidget {
     return p;
   }
 
-  async dispenseCard(card) {
-    let toProcess = [ card ];
-    if(card.get('type') == 'pile')
-      toProcess = card.children();
+  // childrenPerOwner makes the holder a per-player hand: what it receives becomes the receiving
+  // player's, and what leaves belongs to nobody again.
+  async applyEnter(child, oldParentID) {
+    if(child.get('type') != 'deck' && this.get('childrenPerOwner'))
+      await child.set('owner', child.targetPlayer||playerName);
+    await super.applyEnter(child, oldParentID);
+  }
+
+  async applyLeave(child) {
+    if(child.get('type') != 'deck' && !child.isBeingRemoved && this.get('childrenPerOwner'))
+      await child.set('owner', null);
+    await super.applyLeave(child);
+  }
+
+  // onEnter and onLeave hold properties to apply to what entered or left. A pile is one widget
+  // for the event and a stack of cards for the properties, so they reach the cards it holds
+  // rather than the pile itself.
+  async applyEnterProperties(child) {
+    if(child.get('type') == 'deck')
+      return;
+
+    const toProcess = child.get('type') == 'pile' ? child.children() : [ child ];
+    for(const property in this.get('onEnter')) {
+      for(const w of toProcess) {
+        if(tracingEnabled)
+          sendTraceEvent('onEnter', { w: w.get('id'), child: child.get('id'), property, value: this.get('onEnter')[property], toProcess: toProcess.map(w=>w.get('id')) });
+        await w.set(property, this.get('onEnter')[property]);
+      }
+    }
+  }
+
+  async applyLeaveProperties(child) {
+    const toProcess = child.get('type') == 'pile' ? child.children() : [ child ];
     for(const w of toProcess) {
       if(!w.get('ignoreOnLeave')) {
         for(const property in this.get('onLeave')) {
           if(tracingEnabled)
-            sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
+            sendTraceEvent('onLeave', { w: w.get('id'), child: child.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
           await w.set(property, this.get('onLeave')[property]);
         }
       }
     }
+    // a gap in a stacked holder closes as soon as the card that left it is gone
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
+  }
+
+  // The leave half as the legacy pipeline ran it: from checkParent() once the widget really is
+  // outside the holder, and from a pile that handed a card back while sitting in one.
+  async dispenseCard(card) {
+    await this.applyLeaveProperties(card);
     if(Array.isArray(this.get('leaveRoutine')))
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
   }
@@ -122,20 +158,15 @@ class Holder extends ImageWidget {
     if(child.get('type') == 'deck')
       return;
 
-    if(this.get('childrenPerOwner'))
-      await child.set('owner', child.targetPlayer||playerName);
+    // the legacy pipeline runs the enter half from here, which is why it applied onEnter to
+    // every parent change into the holder except one: a drop back into the holder the drag
+    // started in, which it recognised by the widget still remembering it as currentParent
+    if(legacyMode('legacyHolderEnterLeaveEvents')) {
+      if(this.get('childrenPerOwner'))
+        await child.set('owner', child.targetPlayer||playerName);
 
-    if(this != child.currentParent) { // FIXME: this isn't exactly pretty
-      let toProcess = [ child ];
-      if(child.get('type') == 'pile')
-        toProcess = child.children();
-      for(const property in this.get('onEnter')) {
-        for(const w of toProcess) {
-          if(tracingEnabled)
-            sendTraceEvent('onEnter', { w: w.get('id'), child: child.get('id'), property, value: this.get('onEnter')[property], toProcess: toProcess.map(w=>w.get('id')) });
-          await w.set(property, this.get('onEnter')[property]);
-        }
-      }
+      if(this != child.currentParent) // FIXME: this isn't exactly pretty
+        await this.applyEnterProperties(child);
     }
   }
 
