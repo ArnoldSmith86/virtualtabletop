@@ -665,7 +665,25 @@ class WidgetsModule extends SidebarModule {
     return list;
   }
 
+  // The legacy mode badges compare the current game against the modes an entry was saved with,
+  // so they go stale when a mode is switched under Game settings while the module is open.
+  // Rendering the library fetches the server-wide widget list, so only a changed set of modes is
+  // worth the rerender - not every unrelated meta or state event.
+  rerenderOnLegacyModeChange() {
+    if(JSON.stringify(currentLegacyModes()) != this.renderedLegacyModes)
+      this.renderWidgetBuffer($('#widgetFilter') ? $('#widgetFilter').value : '');
+  }
+
+  onMetaReceivedWhileActive(meta) {
+    this.rerenderOnLegacyModeChange();
+  }
+
+  onStateReceivedWhileActive(state) {
+    this.rerenderOnLegacyModeChange();
+  }
+
   async renderWidgetBuffer(filter = '') {
+    this.renderedLegacyModes = JSON.stringify(currentLegacyModes());
     const { widgets: serverWidgets, groups: serverGroups } = await this.getWidgets('server');
     const { widgets: localWidgets, groups: localGroups } = await this.getWidgets('local');
 

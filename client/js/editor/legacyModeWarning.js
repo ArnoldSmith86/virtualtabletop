@@ -41,8 +41,11 @@ function legacyModeDifferenceText(difference) {
   return `${difference.label}: ${difference.inSource ? 'on' : 'off'} where these widgets were copied from, ${difference.inSource ? 'off' : 'on'} in this game`;
 }
 
+// The dialog and the badge tooltip take plain text, where the newlines survive (innerText turns
+// them into line breaks, a title attribute keeps them) but leading indentation does not, so a
+// bullet is what keeps two entries apart once they wrap.
 function legacyModeWarningText(differences) {
-  const list = differences.map(difference=>`  ${legacyModeDifferenceText(difference)}`).join('\n');
+  const list = differences.map(difference=>`• ${legacyModeDifferenceText(difference)}`).join('\n');
   return `${legacyModeWarningHeading}\n\n${list}\n\n${legacyModeWarningExplanation}`;
 }
 

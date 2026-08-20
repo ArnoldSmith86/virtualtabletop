@@ -105,6 +105,15 @@ describe('how the difference is put to the user', () => {
     expect(confirmDialog.cancelButton).toBe('Cancel');
   });
 
+  test('the dialog keeps several differences apart, one bulleted line each', async () => {
+    await warning.confirmLegacyModeDifferences([ difference, { label: 'Convert numeric var parameters to numbers', inSource: false } ]);
+    const lines = confirmDialog.text.split('\n').filter(line=>line.startsWith('•'));
+    expect(lines).toEqual([
+      '• Disable holder image support: on where these widgets were copied from, off in this game',
+      '• Convert numeric var parameters to numbers: off where these widgets were copied from, on in this game'
+    ]);
+  });
+
   test('closing the dialog without choosing counts as not adding', async () => {
     confirmAnswer = null;
     expect(await warning.confirmLegacyModeDifferences([ difference ])).toBe(false);
