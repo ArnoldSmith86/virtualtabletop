@@ -14,8 +14,8 @@ function logFatal(message) {
   console.error(new Date().toISOString(), String(message).replace(/\n/g, '\\n'));
 }
 
-function logError(message, e) {
-  log(`ERROR - ${message} - ${e.stack}`);
+function logError(message, e, logFunction=log) {
+  logFunction(`ERROR - ${message} - ${e.stack}`);
 }
 
 function fileSize(bytes) {
@@ -44,6 +44,10 @@ function handleGenericException(origin, e) {
   logError(`GENERIC ${origin}`, e);
 }
 
+function handleFatalException(origin, e) {
+  logError(`GENERIC ${origin}`, e, logFatal);
+}
+
 export default {
   UserError,
   log,
@@ -51,5 +55,6 @@ export default {
   userErrorHandler,
   errorHandler,
   handleWebSocketException,
-  handleGenericException
+  handleGenericException,
+  handleFatalException
 }

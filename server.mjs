@@ -625,7 +625,7 @@ MinifyHTML().then(function(result) {
     else if(e.code == 'EACCES')
       Logging.logFatal(`ERROR - Not allowed to listen on port ${port}. Ports below 1024 usually require root privileges. Run VirtualTabletop with sudo, put it behind a reverse proxy, or set a different port via ${portSource}.`);
     else
-      Logging.handleGenericException(`listening on port ${port}`, e);
+      Logging.handleFatalException(`listening on port ${port}`, e);
     process.exit(1);
   });
 
