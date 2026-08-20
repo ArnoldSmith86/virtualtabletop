@@ -54,12 +54,12 @@ class ToolboxModule extends SidebarModule {
 
   async button_loadWidgetsFromBuffer() {
     const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    if (!confirmLegacyModeDifferences(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer)))
+    if (!await confirmLegacyModeDifferences(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer)))
       return;
     const duplicates = widgetBuffer.filter(state=>widgets.has(state.id)).map(state=>state.id);
     if (duplicates.length) {
       const duplicatesList = duplicates.join(', ');
-      const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
+      const overwriteAll = await confirmOverlay('Widget IDs already exist', `These widget IDs are already in this game:\n\n  ${duplicatesList}\n\nAdding the buffer replaces those widgets.`, 'Overwrite', 'Cancel', 'content_paste', 'close');
       if (!overwriteAll) return;
     }
     batchStart();
@@ -144,10 +144,20 @@ class ToolboxModule extends SidebarModule {
 
   renderWidgetBuffer() {
     const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    let list = '';
-    for(const state of widgetBuffer)
-      list += `<li>${html(state.id)}</li>`;
-    this.currentContents.innerHTML = `<ul>${list}</ul>${legacyModeWarningHTML(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer))}`;
+    let contents = '';
+    if(widgetBuffer.length) {
+      let list = '';
+      for(const state of widgetBuffer)
+        list += `<li>${html(state.id)}</li>`;
+      contents = `<p class=widgetBufferLabel>In the buffer (${widgetBuffer.length} widget${widgetBuffer.length == 1 ? '' : 's'}):</p><ul>${list}</ul>`;
+    }
+    contents += legacyModeWarningHTML(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer));
+    // every state the room receives re-renders the module, so an unchanged buffer keeps the DOM
+    // it has instead of losing the reader's text selection in it
+    if(contents == this.renderedWidgetBuffer)
+      return;
+    this.renderedWidgetBuffer = contents;
+    this.currentContents.innerHTML = contents;
   }
 
   cicleAlign(target) {
@@ -184,15 +194,21 @@ class ToolboxModule extends SidebarModule {
 
   widgetBuffer(target) {
     this.addSubHeader('Widget buffer');
-    div(target, 'buttonBar', `
+    div(target, '', `
       <p>Here you can save the currently selected widgets (and their children) to a buffer so you can paste them later into a different game or room.</p>
+    `);
+
+    // the buffer contents and the legacy mode advisory sit above the buttons: they qualify what
+    // pressing them does, and below them they fall off a short viewport unseen
+    this.currentContents = div(target);
+    this.renderedWidgetBuffer = null;
+    this.renderWidgetBuffer();
+
+    div(target, 'buttonBar', `
       <button icon=content_copy id=saveWidgetsToBuffer>Save widgets to buffer</button>
       <button icon=content_paste id=loadWidgetsFromBuffer>Put widgets into the game</button>
     `);
     $('#saveWidgetsToBuffer').onclick = e=>this.button_saveWidgetsToBuffer();
     $('#loadWidgetsFromBuffer').onclick = e=>this.button_loadWidgetsFromBuffer();
-
-    this.currentContents = div(target);
-    this.renderWidgetBuffer();
   }
 }

@@ -31,12 +31,20 @@ function legacyModeDifferences(sourceModes, widgetStates) {
   }));
 }
 
-// One wording for the panel and the confirmation, so that the two cannot drift apart.
+// One wording for the panel, the badge tooltip and the confirmation, so that they cannot drift
+// apart. "where these widgets were copied from" rather than "the source game" because the game
+// they were copied from may well be one the reader can no longer name.
+const legacyModeWarningHeading = 'These widgets were saved in a game with different legacy modes:';
+const legacyModeWarningExplanation = 'Legacy modes change how widgets behave, so these widgets can work differently here. Check them after adding, or switch the mode on under Game settings.';
+
 function legacyModeDifferenceText(difference) {
-  return `${difference.label}: ${difference.inSource ? 'on' : 'off'} in the source game, ${difference.inSource ? 'off' : 'on'} here`;
+  return `${difference.label}: ${difference.inSource ? 'on' : 'off'} where these widgets were copied from, ${difference.inSource ? 'off' : 'on'} in this game`;
 }
 
-const legacyModeWarningExplanation = 'Legacy modes change how widgets behave, so the widgets can work differently in this game.';
+function legacyModeWarningText(differences) {
+  const list = differences.map(difference=>`  ${legacyModeDifferenceText(difference)}`).join('\n');
+  return `${legacyModeWarningHeading}\n\n${list}\n\n${legacyModeWarningExplanation}`;
+}
 
 function legacyModeWarningHTML(differences) {
   if(!differences.length)
@@ -44,18 +52,21 @@ function legacyModeWarningHTML(differences) {
   let list = '';
   for(const difference of differences)
     list += `<li>${html(legacyModeDifferenceText(difference))}</li>`;
-  return `<div class=legacyModeWarning>
-    <b>These widgets come from a game with different legacy modes:</b>
+  return `<div class="settings-tile legacyModeWarning">
+    <div class=legacyModeWarningHeader>${html(legacyModeWarningHeading)}</div>
     <ul>${list}</ul>
-    ${legacyModeWarningExplanation}
+    <p>${html(legacyModeWarningExplanation)}</p>
   </div>`;
 }
 
+// the badge the widget library puts on an entry that was saved elsewhere, so the reader sees it
+// before clicking or dragging rather than only in the dialog afterwards
+const legacyModeWarningBadgeSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="legacyModeMismatch" fill="currentColor"><path d="M109-120q-11 0-20-5.5T75-140q-5-9-5.5-19.5T75-180l371-640q6-10 15.5-15t19.5-5q10 0 19.5 5t15.5 15l371 640q6 10 5.5 20.5T887-140q-5 9-14 14.5t-20 5.5H109Zm71-80h600L480-720 180-200Zm300-45q17 0 28.5-11.5T520-285q0-17-11.5-28.5T480-325q-17 0-28.5 11.5T440-285q0 17 11.5 28.5T480-245Zm-40-125h80v-200h-80v200Zm40-100Z"/></svg>';
+
 // true if the widgets should be added anyway - adding across a difference is allowed, it just
 // asks first.
-function confirmLegacyModeDifferences(differences) {
+async function confirmLegacyModeDifferences(differences) {
   if(!differences.length)
     return true;
-  const list = differences.map(difference=>`  ${legacyModeDifferenceText(difference)}`).join('\n');
-  return confirm(`These widgets were saved in a game with different legacy modes:\n\n${list}\n\n${legacyModeWarningExplanation}\n\nPress OK to add them anyway, or Cancel to abort.`);
+  return !!await confirmOverlay('Different legacy modes', legacyModeWarningText(differences), 'Add anyway', 'Cancel', 'warning', 'close');
 }

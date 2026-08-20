@@ -11,15 +11,15 @@ const source = fs.readFileSync(path.join(dir, '../../client/js/editor/legacyMode
 
 let currentModes = {};
 let confirmAnswer = true;
-let confirmMessage = null;
+let confirmDialog = null;
 
-const warning = new Function('LEGACY_MODES', 'legacyMode', 'html', 'confirm', `${source}
+const warning = new Function('LEGACY_MODES', 'legacyMode', 'html', 'confirmOverlay', `${source}
   return { currentLegacyModes, legacyModeDifferences, legacyModeWarningHTML, confirmLegacyModeDifferences };
 `)(
   LEGACY_MODES,
   name=>currentModes[name],
   value=>String(value),
-  message=>{ confirmMessage = message; return confirmAnswer; }
+  (title, text, confirmButton, cancelButton)=>{ confirmDialog = { title, text, confirmButton, cancelButton }; return confirmAnswer; }
 );
 
 // a widget of a kind every mode's detect() ignores, so a test only sees the modes it sets up
@@ -30,7 +30,7 @@ const decoratedHolder = [ { id: 'h', type: 'holder', image: '/i/box.svg' } ];
 beforeEach(() => {
   currentModes = {};
   confirmAnswer = true;
-  confirmMessage = null;
+  confirmDialog = null;
 });
 
 describe('the legacy modes recorded next to travelling widgets', () => {
@@ -93,19 +93,26 @@ describe('how the difference is put to the user', () => {
 
   test('the panel names both sides and stays away when there is nothing to say', () => {
     const html = warning.legacyModeWarningHTML([ difference ]);
-    expect(html).toContain('Disable holder image support: on in the source game, off here');
+    expect(html).toContain('Disable holder image support: on where these widgets were copied from, off in this game');
     expect(warning.legacyModeWarningHTML([])).toBe('');
   });
 
-  test('adding across a difference asks first and can be aborted', () => {
+  test('adding across a difference asks first, in a dialog of its own, and can be aborted', async () => {
     confirmAnswer = false;
-    expect(warning.confirmLegacyModeDifferences([ difference ])).toBe(false);
-    expect(confirmMessage).toContain('Disable holder image support: on in the source game, off here');
+    expect(await warning.confirmLegacyModeDifferences([ difference ])).toBe(false);
+    expect(confirmDialog.text).toContain('Disable holder image support: on where these widgets were copied from, off in this game');
+    expect(confirmDialog.confirmButton).toBe('Add anyway');
+    expect(confirmDialog.cancelButton).toBe('Cancel');
   });
 
-  test('adding without a difference does not ask at all', () => {
+  test('closing the dialog without choosing counts as not adding', async () => {
+    confirmAnswer = null;
+    expect(await warning.confirmLegacyModeDifferences([ difference ])).toBe(false);
+  });
+
+  test('adding without a difference does not ask at all', async () => {
     confirmAnswer = false;
-    expect(warning.confirmLegacyModeDifferences([])).toBe(true);
-    expect(confirmMessage).toBe(null);
+    expect(await warning.confirmLegacyModeDifferences([])).toBe(true);
+    expect(confirmDialog).toBe(null);
   });
 });

@@ -1562,6 +1562,14 @@
   fill: red;
 }
 
+.widgets.editorModule .widget-grid-item .widget-name svg {
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0 0 0 3px;
+}
+
 .widgets.editorModule li .actions {
   display: flex;
   align-items: center;
@@ -1920,9 +1928,9 @@ div.widget-name {
   background-color: #f0f0f0;
 }
 
-/* The tiles in the Game Settings module. The legacy mode and cursor tiles used to repeat
-   this as inline styles on every tile; it lives here now so every tile in the module is
-   framed the same way and follows theme changes. */
+/* The framed tiles of the editor modules - the Game Settings ones and the Toolbox's legacy
+   mode advisory. The legacy mode and cursor tiles used to repeat this as inline styles on every
+   tile; it lives here now so every tile is framed the same way and follows theme changes. */
 .settings-tile {
   border: 1px solid var(--modalBorderColor);
   border-radius: 4px;
@@ -2082,7 +2090,8 @@ div.widget-name {
 }
 
 .boardSizeSetting .boardSizeMessage.warning,
-.editorModule .legacyModeWarning {
+.editorModule .legacyModeWarning,
+.editorModule .legacyModeMismatch {
   color: #8a5300;
 }
 
@@ -2095,7 +2104,8 @@ body.darkMode .boardSizeSetting .boardSizeMessage.error {
 }
 
 body.darkMode .boardSizeSetting .boardSizeMessage.warning,
-body.darkMode .editorModule .legacyModeWarning {
+body.darkMode .editorModule .legacyModeWarning,
+body.darkMode .editorModule .legacyModeMismatch {
   color: #f0be5a;
 }
 
@@ -2110,8 +2120,30 @@ body.darkMode .boardSizeSetting .boardSizeMessage.success {
 
 /* widgets are saved in one game and added in another, so the toolbox says so when the two run
    with different legacy modes - it shares the amber of the advisories above, since adding them
-   is still allowed */
-.editorModule .legacyModeWarning {
-  font-size: 0.9em;
-  margin-top: 8px;
+   is still allowed. It is a framed tile like the ones in Game Settings so it does not read as a
+   footnote to the widget list it follows. */
+.editorModule .legacyModeWarning ul {
+  margin: 6px 0;
+}
+
+.editorModule .legacyModeWarning p {
+  margin: 0;
+}
+
+.editorModule .legacyModeWarningHeader {
+  font-weight: bold;
+}
+
+.editorModule .legacyModeWarningHeader::before {
+  content: 'warning';
+  font-family: "Material Symbols";
+  font-weight: normal;
+  font-size: 1.3em;
+  line-height: 0;
+  vertical-align: -3px;
+  margin-right: 6px;
+}
+
+.editorModule .widgetBufferLabel {
+  margin: 0;
 }
