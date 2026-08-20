@@ -250,7 +250,8 @@ export async function loadSymbolPicker() {
           // find the icon without spending one of its tags on it
           const name = symbol.split('/')[1];
           symbolSearch.push(iconSearchEntry(name, keywords));
-          // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
+          // --x and --y address the icon in the sprite sheets by its position in the montage; the
+          // _instructions of assets/game-icons.net/icon-metadata.json say how those are rebuilt
           list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);

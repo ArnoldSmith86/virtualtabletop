@@ -48,6 +48,23 @@ test('the sprite sheet indices are the glob order of the SVG files', () => {
   expect(svgFiles.map(name => pickerIcons[name].index)).toEqual(svgFiles.map((_, index) => index));
 });
 
+test('the sprite sheets cover every icon and fonts.css has a row for each of them', () => {
+  // the pickers place an icon in the sheet with --x/--y and scale the sheet with --spritesheetX/Y,
+  // so a sheet that gained a row without fonts.css following draws every icon at the wrong offset
+  const rows = Math.ceil(svgFiles.length / 60);
+  const fonts = fs.readFileSync(path.join(dir, '../client/css/fonts.css'), 'utf8');
+  expect(+fonts.match(/--spritesheetX:\s*(\d+)/)[1]).toBe(60);
+  expect(+fonts.match(/--spritesheetY:\s*(\d+)/)[1]).toBe(rows);
+  for(const size of [ 24, 48 ]) {
+    // the IHDR of a PNG: width, height, bit depth and color type, right behind the signature
+    const ihdr = fs.readFileSync(path.join(assets, `game-icons.net/overview${size}.png`)).subarray(16, 26);
+    expect([ ihdr.readUInt32BE(0), ihdr.readUInt32BE(4) ]).toEqual([ 60 * size, rows * size ]);
+    // color type 4 is grayscale + alpha - the artwork is black on transparent, and keeping that
+    // one gray in three RGBA channels costs 1.7 MB on overview48.png alone
+    expect(ihdr[9]).toBe(4);
+  }
+});
+
 test('symbols.json and icon-metadata.json agree on every tag', () => {
   expect(collect((name, fail) => {
     if(pickerIcons[name].tags.join('|') != metadata.icons[name].tags.join('|'))
@@ -106,7 +123,7 @@ test('the tags of an icon are searchable, distinct and add something to its name
 
 // The rest of the file checks the data; this checks what the pickers make of it. Both of them
 // score a query with client/js/symbols.js, which is a plain script the bundler concatenates, so
-// evaluate it the way tests/client/property-inputs.test.js does and search the real 13288 icons.
+// evaluate it the way tests/client/property-inputs.test.js does and search the real picker index.
 const searchSource = fs.readFileSync(path.join(dir, '../client/js/symbols.js'), 'utf8')
   .replace(/^import\s+[^;]+;\r?\n/gm, '')
   .replace(/^export\s+/gm, '');
@@ -155,6 +172,15 @@ test('a word that only ends in s is not searched as a plural', () => {
   // "cross" is not the plural of "cros" either, and "crosses" still finds the crosses
   expect(searchSymbols('crosses')).toContain('delapouite/jerusalem-cross');
   expect(searchSymbols('lens')).toContain('lorc/microscope-lens');
+});
+
+test('an icon game-icons.net has renamed is found by the name the site uses now', () => {
+  // the file names stay as they are - renaming one breaks every game that references it by URL -
+  // so the name of today has to be in the tags, and as one phrase: every word of a query has to
+  // match something, down to the "in" that no single-word tag carries
+  expect(searchSymbols('person in blizzard')).toContain('lorc/eskimo');
+  expect(searchSymbols('satellite')).toContain('lorc/sattelite');
+  expect(searchSymbols('star satellites')).toContain('lorc/star-sattelites');
 });
 
 // The emoji categories name their SVG by code point, the way emojiToFilename() spells it. A key

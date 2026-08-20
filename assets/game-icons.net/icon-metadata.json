@@ -6,12 +6,18 @@
   "",
   "HOW TO ADD NEW ICONS FROM GAME-ICONS.NET (for a future AI run):",
   "1. Drop the new SVGs into assets/game-icons.net/<artist>/<icon-name>.svg, keeping game-icons.net's own artist folder and file name. game-icons.net ships them as white artwork on a black background rect - the copies here are the bare artwork, so drop the <path d=\"M0 0h512v512H0z\"/> background and turn fill=\"#fff\" into fill=\"#000\".",
+  "   Upstream's badges/ folder is not imported: those are small overlay badges of the other icons, a different visual family.",
+  "   An icon game-icons.net RENAMES keeps the file name it has here - renaming it breaks every game that references it by URL - so give it",
+  "   the name the site shows today as one multi-word tag instead: 'person in blizzard' has to find lorc/eskimo, and it only does because",
+  "   the whole phrase is a tag (a query matches every one of its words, including short ones like 'in' that no other tag carries).",
   "2. Rebuild the sprite sheets, because symbols.json addresses them by index:",
   "   raise the resource limits in /etc/ImageMagick-6/policy.xml to 8GiB, then run",
   "   montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview48.png",
   "   (and the same with -geometry 24x24+0+0 for overview24.png). The montage order is the shell glob order of */*.svg,",
   "   so EVERY icon's index shifts when a name sorts before an existing one - always regenerate all indices, never patch a single entry.",
   "   Any renderer that lays the same glob order out 60 per row in cells of that size does - ImageMagick is not required. When the number of rows changes, update --spritesheetY in client/css/fonts.css to match, or the whole picker shows the wrong artwork.",
+  "   The artwork is black on transparent, so write both sheets as PNG color type 4 (grayscale + alpha, -define png:color-type=4): an RGBA sheet",
+  "   stores the same gray in three channels and costs ~1.7 MB more on overview48.png alone, and overview24.png is fetched every time a picker opens.",
   "3. LOOK AT EACH NEW ICON as an image - render it, do not guess from the file name - and write, for each one:",
   "   - description: one sentence describing what is actually drawn.",
   "   - tags: up to 20 lowercase search terms for discoverability (synonyms, uses, materials, themes, related concepts).",
@@ -4694,13 +4700,13 @@
     "scrub"
    ],
    "categories": [
-    "Water",
     "Furniture",
+    "Water",
     "Building",
     "Tool",
     "Body"
    ],
-   "category": "Sea & Water"
+   "category": "Furniture & Containers"
   },
   "caro-asercion/skateboarding-01": {
    "description": "A skateboarder in mid-air performing a trick above the deck.",
@@ -89667,6 +89673,7 @@
   "lorc/eskimo": {
    "description": "A figure in a fur parka with snowflakes around.",
    "tags": [
+    "person in blizzard",
     "inuit",
     "parka",
     "arctic",
@@ -89685,8 +89692,7 @@
     "apparel",
     "culture",
     "chill",
-    "traveler",
-    "people"
+    "traveler"
    ],
    "categories": [
     "Clothing",
@@ -126297,13 +126303,13 @@
     "chart"
    ],
    "categories": [
-    "Writing",
     "Armor",
+    "Writing",
     "Art",
     "Tool",
     "Technology"
    ],
-   "category": "Writing & Communication"
+   "category": "Armor & Clothing"
   },
   "seregacthtuf/pouch-with-beads": {
    "description": "An open drawstring sack spilling over with round beads.",
