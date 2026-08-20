@@ -32,6 +32,7 @@ const customWidgets = fs.existsSync(path.resolve() + '/assets/widgets.json') ? J
 
 
 const serverStart = +new Date();
+let serverIsListening = false;
 
 app.use(Config.get('urlPrefix'), router);
 
@@ -610,7 +611,24 @@ MinifyHTML().then(function(result) {
 
   router.use(Logging.errorHandler);
 
+  server.on('error', function(e) {
+    if(serverIsListening) {
+      Logging.handleGenericException('HTTP server', e);
+      return;
+    }
+
+    const port = Config.get('port');
+    if(e.code == 'EADDRINUSE')
+      Logging.log(`ERROR - Port ${port} is already in use. Another VirtualTabletop instance or a different program is listening on it. Stop that program or set a different "port" in config.json.`);
+    else if(e.code == 'EACCES')
+      Logging.log(`ERROR - Not allowed to listen on port ${port}. Ports below 1024 usually require elevated privileges - set a different "port" in config.json.`);
+    else
+      Logging.handleGenericException(`listening on port ${port}`, e);
+    process.exit(1);
+  });
+
   server.listen(Config.get('port'), function() {
+    serverIsListening = true;
     Logging.log(`Listening on ${server.address().port}`);
   });
 });
@@ -627,9 +645,13 @@ autosaveRooms();
 
 ['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
   process.on(eventType, function() {
-    for(const [ _, room ] of activeRooms)
-      room.unload();
-    Statistics.writeToFilesystem();
+    // a process that never took over the port shares its save directory with the instance that
+    // did, so it must not write anything back on the way out
+    if(serverIsListening) {
+      for(const [ _, room ] of activeRooms)
+        room.unload();
+      Statistics.writeToFilesystem();
+    }
     if(eventType != 'exit')
       process.exit();
   });
