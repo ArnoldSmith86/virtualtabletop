@@ -900,8 +900,9 @@ export default class Room {
       this.state._meta.states[stateID].variants = [];
       this.writePublicLibraryAssetsToFilesystem(stateID);
 
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets'));
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''));
+      // removes the assets directory along with anything else left in the game directory, like a
+      // temporary file from a write that was interrupted
+      fs.rmSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''), { recursive: true, force: true });
     }
 
     delete this.state._meta.states[stateID];
