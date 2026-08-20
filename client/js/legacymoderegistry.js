@@ -119,7 +119,20 @@ export const LEGACY_MODES = {
     since: 23,
     pr: 3134,
     interactsWith: [ 'disableHolderImageWidget' ],
-    detect: state => /"(enterRoutine|leaveRoutine|onEnter|onLeave|childrenPerOwner)"\s*:/.test(JSON.stringify(state)),
+    detect: function(state) {
+      if(/"(enterRoutine|leaveRoutine|onEnter|onLeave|childrenPerOwner)"\s*:/.test(JSON.stringify(state)))
+        return true;
+      // a stacked holder re-compacts on every departure now, which a game notices even when it
+      // uses none of the event names above
+      for(const id in state) {
+        const properties = state[id];
+        if(!properties || properties.type != 'holder' || properties.alignChildren === false)
+          continue;
+        if([ properties.stackOffsetX, properties.stackOffsetY ].some(offset=>offset !== undefined && offset !== null && parseFloat(offset) != 0))
+          return true;
+      }
+      return false;
+    },
     label: 'Fire holder leave events twice',
     summary: 'Holders raise the leave event twice per move, and apply onLeave only for drags and MOVE.',
     description: `
@@ -132,6 +145,7 @@ export const LEGACY_MODES = {
         <li>dropping a card back into the holder it came from is a real leave and a real enter</li>
         <li>a <code>childrenPerOwner</code> holder releases the owner however the card left it - a dragged card once it is outside the box, so rearranging a hand never uncovers it</li>
         <li>joining or leaving a pile inside a holder raises nothing</li>
+        <li>a stacked holder closes the gap a card left however it left, <code>DELETE</code> included</li>
       </ul>
       <b>Example:</b> a holder whose <code>leaveRoutine</code> counts the cards that left it.
       <br><br>

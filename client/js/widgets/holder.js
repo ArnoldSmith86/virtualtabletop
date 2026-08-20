@@ -139,6 +139,15 @@ class Holder extends ImageWidget {
     await this.closeStackGap();
   }
 
+  // A drop shadow is a preview and raises no leave, but it does take a slot in a stacked holder
+  // while it is there, and that slot has to close again when the pointer moves on. The legacy
+  // pipeline closes it from dispenseCard() instead, along with the rest of the shadow's leave.
+  async onChildRemove(child) {
+    await super.onChildRemove(child);
+    if(child.get('dropShadowOwner') && !legacyMode('legacyHolderEnterLeaveEvents'))
+      await this.closeStackGap();
+  }
+
   // a gap in a stacked holder closes as soon as the card that left it is gone
   async closeStackGap() {
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))

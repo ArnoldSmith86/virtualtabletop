@@ -63,6 +63,26 @@ describe('legacy mode detection', () => {
     expect(flagsFor(at(20, { h: { id: 'h', type: 'holder' } })).disableHolderImageWidget).toBe(undefined);
   });
 
+  test('a v22 save with a stacked holder gets legacyHolderEnterLeaveEvents', () => {
+    // it names none of the event properties, but its children re-compact on every departure now
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetY: 40 } }))).toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
+  test('a stacked holder written as an expression counts as stacked', () => {
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetX: '${PROPERTY offset OF board}' } })))
+      .toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
+  test('a holder that stacks nothing does not get legacyHolderEnterLeaveEvents', () => {
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetY: 0 } }))).toEqual({});
+  });
+
+  test('a stacked holder that does not align its children does not get it either', () => {
+    // without alignChildren the holder never repositions what stayed, so the gap it leaves is
+    // wherever the player put the cards
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetY: 40, alignChildren: false } }))).toEqual({});
+  });
+
   test('a mode is not applied to a save that is already at or past its version', () => {
     // a v20 save predates v21, so the holder mode applies, but the var modes (v18) do not
     const state = at(20, {

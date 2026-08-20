@@ -134,19 +134,27 @@ test('ignoreOnLeave skips the property half of the departure but not the routine
   ]);
 });
 
-test('A holder with dropShadow runs its enter and leave events for the shadow widget as well', async t => {
+test('A holder with dropShadow raises nothing for the shadow widget', async t => {
   await openRoom(t, 'modern', fixtureState({ handB: { dropShadow: true } }, { enterFields: [ 'parent' ], leaveFields: [ 'parent' ] }));
   await dragPath(t, CARD, [ { onto: 'handB' } ]);
 
   // The shadow is a real widget that is put into the holder and taken out again while the drag
-  // is still going on, so the holder's routines run for something the player never dropped. The
-  // trace is about card1, which is why the shadow's own entries read parent=null: at that
-  // moment the card is still being dragged.
-  await expectTrace(t, [
-    'enter handB[parent=null]',
-    'leave handB[parent=null]',
-    'enter handB[parent=handB]'
-  ]);
+  // is still going on, but it only paints where the card would land. The holder's routines run
+  // once, for the card the player actually dropped.
+  await expectTrace(t, [ 'enter handB[parent=handB]' ]);
+});
+
+test('Hovering a dropShadow holder and dropping elsewhere changes nothing', async t => {
+  await openRoom(t, 'modern', fixtureState({ handB: { dropShadow: true } }, { enterFields: [ 'parent' ], leaveFields: [ 'parent' ] }));
+  await dragPath(t, CARD, [ { onto: 'handB' }, { dx: 0, dy: -450 } ]);
+
+  // A holder routine can score, deal, delete or move widgets, so previewing a drop the player
+  // then thinks better of has to leave the room exactly as it was: no trace, no onEnter mark
+  // and the card back on the table.
+  await t.expect(await readTrace(t, 0)).eql([], 'the preview raised no event');
+  const after = await getStateObject();
+  await t.expect(after[CARD].mark).eql(undefined, 'onEnter never reached the card');
+  await t.expect(after[CARD].parent).notEql('handB', 'the card is not in the holder');
 });
 
 // ---------------------------------------------------------------------------------------------

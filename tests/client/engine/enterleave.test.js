@@ -447,6 +447,23 @@ describe('holder properties', () => {
       legacy: []
     });
 
+  scenario('a drop shadow passes through a holder without raising anything',
+    () => room({ shadow: { type: 'card', dropShadowOwner: 'jestPlayer' } }),
+    async () => {
+      await clickRoutine([ { func: 'SELECT', property: 'id', value: 'shadow' }, { func: 'SET', property: 'parent', value: 'handB' } ]);
+      await clickRoutine([ { func: 'SELECT', property: 'id', value: 'shadow' }, { func: 'SET', property: 'parent', value: null } ]);
+    },
+    {
+      // the preview a drag paints in the holder under the pointer is a real widget for the
+      // layout and nothing at all for the events - hovering over a holder must not run the
+      // routines that a drop into it would
+      modern: [],
+      legacy: [
+        'enter handB shadow[parent=handB mark=enter-handB owner=null]',
+        'leave handB shadow[parent=null mark=enter-handB owner=null]'
+      ]
+    });
+
   scenario('a deck is exempt from onEnter',
     () => room({ d1: { type: 'deck' } }, {}, [ 'mark' ]),
     () => clickRoutine([ { func: 'SELECT', property: 'id', value: 'd1' }, { func: 'SET', property: 'parent', value: 'handB' } ]),

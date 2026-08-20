@@ -3165,17 +3165,20 @@ export class Widget extends StateManaged {
     const newParent = newValue && widgets.has(newValue) ? widgets.get(newValue) : null;
     const leaveTarget = enterLeaveContainer(oldParent);
     const enterTarget = enterLeaveContainer(newParent);
-    const changesContainer = leaveTarget !== enterTarget;
+    // a drop shadow is a preview of where the dragged widget would land: it is parented into the
+    // holder under the pointer and taken out again while the drag is still going on, so it takes
+    // part in the layout but enters and leaves nothing
+    const raisesEvents = leaveTarget !== enterTarget && !this.get('dropShadowOwner');
 
     if(oldParent)
       await oldParent.onChildRemove(this);
     // a pile is created with its parent already set and destroyed once it holds one card, so
     // neither end of its life is a widget entering or leaving the holder it forms in
-    if(leaveTarget && changesContainer && !(this.isBeingRemoved && this.get('type') == 'pile'))
+    if(leaveTarget && raisesEvents && !(this.isBeingRemoved && this.get('type') == 'pile'))
       await leaveTarget.applyLeave(this);
     if(newParent)
       await newParent.onChildAdd(this, oldValue);
-    if(enterTarget && changesContainer)
+    if(enterTarget && raisesEvents)
       await enterTarget.applyEnter(this, oldValue);
   }
 

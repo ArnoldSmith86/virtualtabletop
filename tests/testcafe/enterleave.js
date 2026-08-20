@@ -252,53 +252,76 @@ test('A preventPiles holder unpacks a dropped pile without extra events', async 
 // Holders that are not plain top-left stackers
 // ---------------------------------------------------------------------------------------------
 
-test('A stacked holder closes the gap when a card is taken out', async t => {
-  const state = fixtureState({ handB: { stackOffsetY: 40 } }, { enterFields: [ 'parent' ], leaveFields: [ 'parent' ] });
+// Three cards in one column of a stacked holder, and a button to run an operation from.
+function stackedHolder(clickRoutine = []) {
+  const state = fixtureState({ handB: { stackOffsetY: 40 }, go: { clickRoutine } },
+    { enterFields: [ 'parent' ], leaveFields: [ 'parent' ] });
   Object.assign(state.card1, { parent: 'handB', x: 4, y: 4 });
   state.card2 = card('card2', { parent: 'handB', x: 4, y: 44 });
   state.card3 = card('card3', { parent: 'handB', x: 4, y: 84 });
-  await openRoom(t, MODERN, state);
+  return state;
+}
+
+// The positions the two cards that stayed ended up at, once the third one is out.
+async function remainingStack(done) {
+  const after = await stateWhen(done);
+  return Object.values(after).filter(w=>w.parent == 'handB').map(w=>w.y).sort((a, b)=>a-b);
+}
+
+test('A stacked holder closes the gap when a card is taken out', async t => {
+  await openRoom(t, MODERN, stackedHolder());
   await dragPath(t, CARD, [ { dx: 0, dy: -500 } ]);
 
   // the departure re-compacts the holder, so the two cards that stayed sit at the first two
   // stack positions rather than leaving a hole where the third one was
-  const after = await stateWhen(s=>Object.values(s).filter(w=>w.parent == 'handB').length == 2);
-  const remaining = Object.values(after).filter(w=>w.parent == 'handB').map(w=>w.y).sort((a, b)=>a-b);
-  await t.expect(remaining).eql([ 4, 44 ], 'the two cards that stayed sit at the first two stack positions');
+  await t.expect(await remainingStack(s=>!s[CARD].parent)).eql([ 4, 44 ], 'the gap closed');
 });
 
 test('MOVEXY out of a stacked holder closes the gap as well', async t => {
-  const state = fixtureState({
-    handB: { stackOffsetY: 40 },
-    go: { clickRoutine: [ { func: 'MOVEXY', from: 'handB', x: 700, y: 200 } ] }
-  }, { enterFields: [ 'parent' ], leaveFields: [ 'parent' ] });
-  Object.assign(state.card1, { parent: 'handB', x: 4, y: 4 });
-  state.card2 = card('card2', { parent: 'handB', x: 4, y: 44 });
-  state.card3 = card('card3', { parent: 'handB', x: 4, y: 84 });
-  await openRoom(t, MODERN, state);
+  await openRoom(t, MODERN, stackedHolder([ { func: 'MOVEXY', from: 'handB', x: 700, y: 200 } ]));
   await clickGo(t);
 
-  const after = await stateWhen(s=>Object.values(s).filter(w=>w.parent == 'handB').length == 2);
-  const remaining = Object.entries(after).filter(([ , w ])=>w.parent == 'handB').map(([ , w ])=>w.y);
-  await t.expect(remaining.sort((a, b)=>a-b)).eql([ 4, 44 ]);
+  await t.expect(await remainingStack(s=>Object.values(s).filter(w=>w.parent == 'handB').length == 2)).eql([ 4, 44 ], 'the gap closed');
 });
 
 test('DELETE closes the gap in a stacked holder as well', async t => {
-  const state = fixtureState({
-    handB: { stackOffsetY: 40 },
-    go: { clickRoutine: [ { func: 'SELECT', property: 'id', value: CARD }, { func: 'DELETE' } ] }
-  }, { enterFields: [ 'parent' ], leaveFields: [ 'parent' ] });
-  Object.assign(state.card1, { parent: 'handB', x: 4, y: 4 });
-  state.card2 = card('card2', { parent: 'handB', x: 4, y: 44 });
-  state.card3 = card('card3', { parent: 'handB', x: 4, y: 84 });
-  await openRoom(t, MODERN, state);
+  await openRoom(t, MODERN, stackedHolder([ { func: 'SELECT', property: 'id', value: CARD }, { func: 'DELETE' } ]));
   await clickGo(t);
 
   // a card removed from the room applies no onLeave - it is gone - but the holder it was taken
   // out of is still one card shorter and re-stacks what is left
-  const after = await stateWhen(s=>!s[CARD]);
-  const remaining = Object.values(after).filter(w=>w.parent == 'handB').map(w=>w.y).sort((a, b)=>a-b);
-  await t.expect(remaining).eql([ 4, 44 ], 'the two cards that stayed sit at the first two stack positions');
+  await t.expect(await remainingStack(s=>!s[CARD])).eql([ 4, 44 ], 'the gap closed');
+});
+
+// The legacy pipeline raised a leave only for a drag or a MOVE, so an operation that never
+// reached dispenseCard() left the hole where the card had been - which is what an old game
+// positioned the rest of its board around.
+test('Legacy: DELETE leaves the hole in a stacked holder open', async t => {
+  await openRoom(t, LEGACY, stackedHolder([ { func: 'SELECT', property: 'id', value: CARD }, { func: 'DELETE' } ]));
+  await clickGo(t);
+
+  await t.expect(await remainingStack(s=>!s[CARD])).eql([ 44, 84 ], 'nothing moved up into the gap');
+});
+
+test('Legacy: SET parent leaves the hole in a stacked holder open as well', async t => {
+  await openRoom(t, LEGACY, stackedHolder([ { func: 'SELECT', property: 'id', value: CARD }, { func: 'SET', property: 'parent', value: null } ]));
+  await clickGo(t);
+
+  await t.expect(await remainingStack(s=>!s[CARD].parent)).eql([ 44, 84 ], 'nothing moved up into the gap');
+});
+
+test('A stacked holder with dropShadow closes the preview gap again when the pointer moves on', async t => {
+  const state = stackedHolder();
+  state.handB.dropShadow = true;
+  Object.assign(state.card1, { parent: null, x: 700, y: 60 });
+  state.card2.y = 4;
+  state.card3.y = 44;
+  await openRoom(t, MODERN, state);
+  await dragPath(t, CARD, [ { onto: 'handB' }, { dx: 0, dy: -450 } ]);
+
+  // the shadow takes a slot in the stack while it is over the holder, so the two cards that
+  // were there sit one row lower - and go back up as soon as the preview is gone
+  await t.expect(await remainingStack(s=>!s[CARD].parent)).eql([ 4, 44 ], 'the preview left no gap behind');
 });
 
 test('An alignChildren:false holder keeps the drop coordinate and still enters', async t => {
