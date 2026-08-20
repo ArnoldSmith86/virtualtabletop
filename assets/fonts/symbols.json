@@ -53327,6 +53327,14 @@
       "night",
       "zzz"
     ],
+    "🫩": [
+      "face_with_bags_under_eyes",
+      "tired",
+      "sleepy",
+      "exhausted",
+      "eyebags",
+      "weary"
+    ],
     "😷": [
       "face_with_medical_mask",
       "face",
@@ -53528,6 +53536,14 @@
       "blush",
       "shy",
       "flattered"
+    ],
+    "🫪": [
+      "distorted_face",
+      "surprised",
+      "fluttered",
+      "wide_eyed",
+      "warped",
+      "shocked"
     ],
     "🥺": [
       "pleading_face",
@@ -54046,6 +54062,15 @@
       "anger_symbol",
       "angry",
       "mad"
+    ],
+    "🫯": [
+      "fight_cloud",
+      "brawl",
+      "conflict",
+      "fight",
+      "dust_cloud",
+      "scuffle",
+      "punch"
     ],
     "💥": [
       "collision",
@@ -55580,6 +55605,14 @@
       "mystical",
       "monster"
     ],
+    "🫈": [
+      "hairy_creature",
+      "sasquatch",
+      "bigfoot",
+      "treeman",
+      "yeti",
+      "monster"
+    ],
     "💆": [
       "person_getting_massage",
       "relax"
@@ -55775,6 +55808,13 @@
     ],
     "🏃‍♂️‍➡️": [
       "man running facing right"
+    ],
+    "🧑‍🩰": [
+      "ballet_dancer",
+      "ballet",
+      "dance",
+      "dancer",
+      "ballerina"
     ],
     "💃": [
       "woman_dancing",
@@ -56527,6 +56567,14 @@
       "tracking",
       "walking",
       "beach"
+    ],
+    "🫆": [
+      "fingerprint",
+      "thumbprint",
+      "id",
+      "biometric",
+      "security",
+      "identity"
     ]
   },
   "Emoji - Animals & Nature": {
@@ -57178,6 +57226,14 @@
       "fins",
       "beach"
     ],
+    "🫍": [
+      "orca",
+      "ocean",
+      "whale",
+      "dolphin",
+      "animal",
+      "killer_whale"
+    ],
     "🦭": [
       "seal",
       "animal",
@@ -57522,6 +57578,14 @@
       "mushroom",
       "plant",
       "vegetable"
+    ],
+    "🪾": [
+      "leafless_tree",
+      "dead_tree",
+      "bare_tree",
+      "winter",
+      "branch",
+      "nature"
     ]
   },
   "Emoji - Food & Drink": {
@@ -57750,6 +57814,14 @@
       "fungus",
       "nature",
       "vegetable"
+    ],
+    "🫜": [
+      "root_vegetable",
+      "radish",
+      "turnip",
+      "beet",
+      "vegetable",
+      "food"
     ],
     "🍞": [
       "bread",
@@ -58499,6 +58571,14 @@
       "photo",
       "nature",
       "environment"
+    ],
+    "🛘": [
+      "landslide",
+      "disaster",
+      "accident",
+      "rockslide",
+      "mountain",
+      "avalanche"
     ],
     "🌋": [
       "volcano",
@@ -60936,6 +61016,13 @@
       "music",
       "brass"
     ],
+    "🪊": [
+      "trombone",
+      "music",
+      "instrument",
+      "brass",
+      "jazz"
+    ],
     "🎻": [
       "violin",
       "music",
@@ -60971,6 +61058,13 @@
       "music",
       "instrument",
       "pied piper"
+    ],
+    "🪉": [
+      "harp",
+      "music",
+      "instrument",
+      "strings",
+      "orchestra"
     ],
     "📱": [
       "mobile_phone",
@@ -61309,6 +61403,15 @@
       "payment",
       "coins",
       "sale"
+    ],
+    "🪎": [
+      "treasure_chest",
+      "gold",
+      "haul",
+      "mimic",
+      "crate",
+      "jewelry",
+      "riches"
     ],
     "🪙": [
       "coin",
@@ -61826,6 +61929,13 @@
     "🪜": [
       "ladder",
       "tools"
+    ],
+    "🪏": [
+      "shovel",
+      "tool",
+      "dig",
+      "spade",
+      "garden"
     ],
     "⚗️": [
       "alembic",
@@ -63001,6 +63111,14 @@
       "law",
       "legal"
     ],
+    "🫟": [
+      "splatter",
+      "splash",
+      "stain",
+      "paint",
+      "blob",
+      "spill"
+    ],
     "#️⃣": [
       "keycap_",
       "symbol",
@@ -64064,6 +64182,14 @@
     ],
     "🇨🇵": [
       "flag_clipperton_island"
+    ],
+    "🇨🇶": [
+      "flag_sark",
+      "flag",
+      "nation",
+      "country",
+      "banner",
+      "sark"
     ],
     "🇨🇷": [
       "flag_costa_rica",
