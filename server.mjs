@@ -11,7 +11,8 @@ import FileLoader from './server/fileloader.mjs';
 import FileUpdater from './server/fileupdater.mjs';
 import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
-import Room       from './server/room.mjs';
+import Room, { pathSafeRoomID } from './server/room.mjs';
+import Collections from './server/collections.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
@@ -40,6 +41,7 @@ fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
 fs.mkdirSync(savedir + '/links',  { recursive: true });
 fs.mkdirSync(savedir + '/errors', { recursive: true });
+fs.mkdirSync(savedir + '/collections', { recursive: true });
 
 async function ensureRoomIsLoaded(id) {
   if(!id.match(/^[A-Za-z0-9_-]+$/))
@@ -59,11 +61,29 @@ async function ensureRoomIsLoaded(id) {
   return true;
 }
 
+// remembering issued IDs closes the race where a second request draws the same ID
+// while the first room is still loading and neither active nor saved to disk
+const recentlyIssuedRoomIDs = new Map();
 function getEmptyRoomID() {
   let id = null;
-  while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+  while(!id || activeRooms.has(id) || recentlyIssuedRoomIDs.get(id) > Date.now() - 60000 || fs.existsSync(savedir + '/rooms/' + id + '.json'))
     id = Math.random().toString(36).substring(3, 7);
+  for(const [ issuedID, issuedAt ] of recentlyIssuedRoomIDs)
+    if(issuedAt < Date.now() - 60000)
+      recentlyIssuedRoomIDs.delete(issuedID);
+  recentlyIssuedRoomIDs.set(id, Date.now());
   return id;
+}
+
+function roomExists(roomID) {
+  if(!String(roomID).match(/^[A-Za-z0-9_-]+$/))
+    return false;
+  return activeRooms.has(roomID) || fs.existsSync(savedir + '/rooms/' + pathSafeRoomID(roomID) + '.json');
+}
+
+function roomIsLocked(roomID) {
+  const room = activeRooms.get(roomID);
+  return !!(room && room.state && room.state._meta && room.state._meta.locked);
 }
 
 function validateInput(res, next, values) {
@@ -76,8 +96,20 @@ function validateInput(res, next, values) {
   return true;
 }
 
+// the admin of a protected room wants nothing handed out that can be turned back into the game,
+// and none of these endpoints carries a collection ID, so they are closed for everybody - the
+// admin turns the protection off for as long as they need to export something
+function roomContentIsProtected(roomID) {
+  const room = activeRooms.get(roomID);
+  return !!(room && room.state && room.state._meta && room.state._meta.contentProtected);
+}
+
+const contentProtectedMessage = 'The admin of this room protected its content.';
+
 async function downloadState(res, roomID, stateID, variantID) {
   if(await ensureRoomIsLoaded(roomID)) {
+    if(roomContentIsProtected(roomID))
+      return res.status(403).send(contentProtectedMessage);
     const d = await activeRooms.get(roomID).download(stateID, variantID);
     res.setHeader('Content-Type', d.type);
     res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
@@ -236,6 +268,8 @@ MinifyHTML().then(function(result) {
   async function handleGetState(req, res, next, includeMeta) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(roomContentIsProtected(req.params.room))
+          return res.status(403).send(contentProtectedMessage);
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
         const roomState = activeRooms.get(req.params.room).state;
@@ -263,6 +297,8 @@ MinifyHTML().then(function(result) {
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
         if(isLoaded) {
+          if(roomIsLocked(req.params.room))
+            return res.status(403).send('Room is locked.');
           activeRooms.get(req.params.room).setState(req.body);
           res.send('OK');
         } else {
@@ -277,6 +313,8 @@ MinifyHTML().then(function(result) {
   router.put('/setLegacyMode/:room/:name/:value', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(roomIsLocked(req.params.room))
+          return res.status(403).send('Room is locked.');
         activeRooms.get(req.params.room).setLegacyMode(req.params.name, req.params.value);
         res.send('OK');
       }
@@ -292,6 +330,8 @@ MinifyHTML().then(function(result) {
 
     ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded) {
+        if(roomIsLocked(req.params.room))
+          return res.status(403).send('Room is locked.');
         const newStateID = await activeRooms.get(req.params.room).addShare(req.params.share);
         res.send(newStateID);
       } else {
@@ -355,6 +395,74 @@ MinifyHTML().then(function(result) {
     }
     fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
+  });
+
+  router.get('/api/roomcollection/:collection', function(req, res, next) {
+    (async function() {
+      if(!Collections.isValidID(req.params.collection))
+        return res.status(400).send('Invalid collection ID.');
+      const rooms = [];
+      for(const roomID of Collections.get(req.params.collection).rooms) {
+        // don't let listing instantiate rooms that don't exist (anymore)
+        if(!roomExists(roomID))
+          continue;
+        if(await ensureRoomIsLoaded(roomID))
+          rooms.push(await activeRooms.get(roomID).getRoomDetails(req.params.collection));
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({ rooms }));
+    })().catch(next);
+  });
+
+  router.put('/api/roomcollection/:collection/add/:room', function(req, res, next) {
+    if(!Collections.isValidID(req.params.collection) || !req.params.room.match(/^[A-Za-z0-9_-]+$/))
+      return res.status(400).send('Invalid collection or room ID.');
+    if(!roomExists(req.params.room))
+      return res.status(404).send('Room does not exist.');
+    if(!Collections.addRoom(req.params.collection, req.params.room))
+      return res.status(400).send('Collection is full.');
+    res.send('OK');
+  });
+
+  router.put('/api/roomcollection/:collection/remove/:room', function(req, res, next) {
+    if(!Collections.isValidID(req.params.collection) || !req.params.room.match(/^[A-Za-z0-9_-]+$/))
+      return res.status(400).send('Invalid collection or room ID.');
+    Collections.removeRoom(req.params.collection, req.params.room);
+    res.send('OK');
+  });
+
+  router.post('/api/room/:room/:action', express.json({ limit: '10kb' }), function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
+      if(!isLoaded)
+        return res.status(404).send('Invalid room.');
+      await activeRooms.get(req.params.room).collectionAction(req.params.action, req.body || {});
+      res.send('OK');
+    }).catch(next);
+  });
+
+  router.post('/api/copyRoom', express.json({ limit: '10kb' }), function(req, res, next) {
+    (async function() {
+      const { source, mode } = req.body || {};
+      if(typeof source != 'string' || !source.match(/^[A-Za-z0-9_-]+$/))
+        return res.status(400).send('Invalid source room.');
+      if(!await ensureRoomIsLoaded(source))
+        return res.status(404).send('Invalid room.');
+      const sourceRoom = activeRooms.get(source);
+      if(!await sourceRoom.mayJoin(req.body.collection, req.body.password))
+        return res.status(403).send('Room is password protected.');
+      // unlike the download endpoints this one does carry a collection ID, so the admin of a
+      // protected room can still copy their own room
+      if(sourceRoom.contentIsProtected() && !await sourceRoom.isAdmin(req.body.collection))
+        return res.status(403).send(contentProtectedMessage);
+      const name = typeof req.body.name == 'string' ? req.body.name : undefined;
+      const targetID = getEmptyRoomID();
+      await ensureRoomIsLoaded(targetID);
+      if(mode == 'link')
+        await activeRooms.get(targetID).linkFromRoom(sourceRoom, !!req.body.autoLink, name);
+      else
+        await activeRooms.get(targetID).copyFromRoom(sourceRoom, name);
+      res.send(targetID);
+    })().catch(next);
   });
 
   router.post('/api/decksFromLink', express.json({ limit: '1mb' }), function(req, res, next) {
@@ -437,8 +545,11 @@ MinifyHTML().then(function(result) {
         return res.send(Config.get('urlPrefix') + link.replace(/^\/s\//, '/game/'));
 
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
-      if(isLoaded)
+      if(isLoaded) {
+        if(roomContentIsProtected(req.params.room))
+          return res.status(403).send(contentProtectedMessage);
         activeRooms.get(req.params.room).writeToFilesystem();
+      }
 
       const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
       sharedLinks[newLink] = target;
@@ -565,6 +676,8 @@ MinifyHTML().then(function(result) {
     if(!validateInput(res, next, [ req.params.id, req.params.addAsVariant ])) return;
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(roomIsLocked(req.params.room))
+          return res.status(403).send('Room is locked.');
         activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
           res.send('OK');
         }).catch(next);
@@ -579,6 +692,8 @@ MinifyHTML().then(function(result) {
     if(!validateInput(res, next, [ req.params.mode ])) return;
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(roomIsLocked(req.params.room))
+          return res.status(403).send('Room is locked.');
         activeRooms.get(req.params.room).saveCurrentState(req.params.mode, req.params.name);
         res.send('OK');
       }
@@ -588,6 +703,8 @@ MinifyHTML().then(function(result) {
   router.put('/moveServer/:room/:returnServer/:returnState', express.raw({ limit: '500mb' }), async function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(roomIsLocked(req.params.room))
+          return res.status(403).send('Room is locked.');
         activeRooms.get(req.params.room).receiveState(req.body, req.params.returnServer, req.params.returnState).then(function() {
           res.send('OK');
         }).catch(next);
@@ -616,10 +733,22 @@ MinifyHTML().then(function(result) {
 });
 
 const activeRooms = new Map();
-const ws = new WebSocket(server, serverStart, function(connection, { playerName, roomID }) {
-  ensureRoomIsLoaded(roomID).then(function(isLoaded) {
-    if(isLoaded)
-      activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
+const ws = new WebSocket(server, serverStart, function(connection, { playerName, roomID, collection, password }) {
+  ensureRoomIsLoaded(roomID).then(async function(isLoaded) {
+    if(!isLoaded)
+      return;
+    const room = activeRooms.get(roomID);
+    if(!await room.mayJoin(collection, password))
+      return connection.toClient('passwordRequired', typeof password == 'string');
+
+    // the connection might switch from another room without reconnecting
+    if(connection.currentPlayer) {
+      connection.currentPlayer.detach();
+      connection.currentPlayer.room.removePlayer(connection.currentPlayer);
+    }
+    const player = new Player(connection, playerName, room, collection);
+    connection.currentPlayer = player;
+    await room.addPlayer(player);
   }).catch(e=>Logging.handleGenericException(`player ${playerName} connected to room ${roomID}`, e));
 });
 
