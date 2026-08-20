@@ -12,6 +12,8 @@
 // what the tests are about.
 
 import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
 import { asArray, mapAssetURLs } from '../../../client/js/domhelpers.js';
 import { compareDropTarget, dropTargets, exceedsDropLimit, getMaxZ, getSVG, resetMaxZ, showOverlay, shuffleWidgets, sortWidgets, updateMaxZ } from '../../../client/js/main.js';
@@ -29,8 +31,12 @@ export function resetGeneratedIDs() {
   generatedIDs = 0;
 }
 
+// jsdom replaces the global URL with its own, which fs does not accept as a path - so the
+// directory is resolved once, through Node's own url module
+const widgetsDirectory = join(dirname(fileURLToPath(import.meta.url)), '../../../client/js/widgets');
+
 function bundleSource(file) {
-  return readFileSync(new URL(`../../../client/js/widgets/${file}`, import.meta.url), 'utf8');
+  return readFileSync(join(widgetsDirectory, file), 'utf8');
 }
 
 function bundleClass(file, name) {
