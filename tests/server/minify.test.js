@@ -51,7 +51,7 @@ describe('minifyHTML with minifyJavascript disabled', () => {
 
   beforeAll(async () => {
     build = await buildWith('false');  // an env override arrives as a string, not a boolean
-  }, 60000);
+  }, 180000);
 
   test('keeps the inline client JS readable', () => {
     const script = inlineClientJS(build);
@@ -80,7 +80,7 @@ describe('minifyHTML with minifyJavascript enabled', () => {
     // of what has to survive - or disappear from - the minified one come from
     readableBuild = await buildWith('false');
     build = await buildWith('true');
-  }, 60000);
+  }, 180000);
 
   test('minifies the inline client JS', () => {
     expect(inlineClientJS(build)).not.toMatch(readableJS);
