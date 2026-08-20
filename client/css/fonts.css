@@ -549,10 +549,19 @@
   vertical-align: top;
 }
 
-#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
+#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiAsImage, #symbolPickerOverlay.fewResults .emoji-color {
   background: var(--url) center no-repeat;
   color: transparent;
   top: -3px;
+}
+
+/* An emoji drawn from its artwork gets the box of the game icons instead of the one its character has:
+   a character the browser's font does not know is a "not defined" box a third of an emoji's width, so
+   the artwork would end up tiny between the emoji the font can draw. */
+#symbolPickerOverlay .emojiAsImage {
+  display: inline-block;
+  width: var(--symbolSize);
+  height: var(--symbolSize);
 }
 
 #symbolPickerOverlay .gameicons {
