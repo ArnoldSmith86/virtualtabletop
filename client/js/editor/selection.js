@@ -68,6 +68,11 @@ function showDrillBadge(clientX, clientY) {
 }
 
 export function editInputHandler(name, e) {
+  // While a routine is being recorded the room belongs to the recording: a
+  // selection band drawn over it would swallow every drag before it reaches the
+  // widget, and a drag is what is being recorded
+  if(isRoutineRecording())
+    return;
   // While Space is held (edit-space-pan), never show selection rectangles
   if(document.body.classList.contains('spacePanActive')) {
     if(selectionRectangleActive)
@@ -315,6 +320,11 @@ export async function editClick(widget, button, e) {
   // because that one is selected the whole time the picker runs
   if(handleWidgetPickerClick(widget))
     return true;
+  // and so does a running recording: selecting the clicked widget would take the
+  // editor off the routine the click is being recorded into, and running its
+  // click routine would play the game instead of describing it
+  if(handleRoutineRecorderClick())
+    return true;
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
     return true;
@@ -322,6 +332,10 @@ export async function editClick(widget, button, e) {
 }
 
 export function editorReceiveDelta(delta) {
+  // what the room did on its own while a gesture was being recorded (a holder
+  // turning a card face up as it enters) only shows up here
+  routineRecorderReceiveDelta(delta);
+
   // a widget can disappear while it is selected - a pile removes itself as soon
   // as it holds a single card. Its sidebar inputs would keep writing to the
   // dead id, and the server re-creates an unknown id as a typeless widget that

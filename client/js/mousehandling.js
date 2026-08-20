@@ -66,6 +66,12 @@ async function inputHandler(name, e) {
   } finally {
     if(name == 'mouseup')
       await endDrag(dragTarget);
+    // A recorded gesture ends wherever the button comes up, which is not always
+    // in the room: a release over the sidebar or an overlay never reaches the
+    // widget handling above, and the recording must not stay open for it and
+    // then report the next gesture as this one.
+    if(edit && (name == 'mouseup' || name == 'touchend' || name == 'touchcancel'))
+      routineRecorderPointerUp();
   }
 }
 
@@ -125,6 +131,12 @@ async function handleInput(name, e, dragTarget) {
     // The drag still has to end - endDrag() only discards its state in that case.
     if(!widget)
       return;
+
+    // where a recorded gesture starts: which widget was pressed and where
+    // everything around it was, so the release can say what the drag did
+    if(edit && (name == 'mousedown' || name == 'touchstart'))
+      routineRecorderPointerDown(widget);
+
     batchStart();
     // batchEnd() has to run even if a routine triggered by the drop or click below
     // throws: batchStart() increments batchDepth and sendDelta() only sends anything
