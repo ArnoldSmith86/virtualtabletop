@@ -110,8 +110,8 @@ test('the tags of an icon are searchable, distinct and add something to its name
 const searchSource = fs.readFileSync(path.join(dir, '../client/js/symbols.js'), 'utf8')
   .replace(/^import\s+[^;]+;\r?\n/gm, '')
   .replace(/^export\s+/gm, '');
-const { iconSearchEntry, iconSearchScores } = new Function(`${searchSource}
-  ; return { iconSearchEntry, iconSearchScores };`)();
+const { iconSearchEntry, iconSearchScores, emojiToFilename, emojiRegex } = new Function(`${searchSource}
+  ; return { iconSearchEntry, iconSearchScores, emojiToFilename, emojiRegex };`)();
 
 const searchIndex = Object.entries(symbols).filter(([ category ]) => category != 'Emoji - Flags')
   .flatMap(([ , entries ]) => Object.entries(entries).map(([ symbol, keywords ]) => symbol.includes('/')
@@ -155,4 +155,25 @@ test('a word that only ends in s is not searched as a plural', () => {
   // "cross" is not the plural of "cros" either, and "crosses" still finds the crosses
   expect(searchSymbols('crosses')).toContain('delapouite/jerusalem-cross');
   expect(searchSymbols('lens')).toContain('lorc/microscope-lens');
+});
+
+// The emoji categories name their SVG by code point, the way emojiToFilename() spells it. A key
+// with a stray variation selector or a sequence added without its artwork is an empty box in the
+// picker and a broken <img> in a label, with nothing else noticing.
+const pickerEmojis = Object.entries(symbols).filter(([ category ]) => category.startsWith('Emoji'))
+  .flatMap(([ , entries ]) => Object.keys(entries));
+
+test('every emoji of the pickers has its noto-emoji SVG', () => {
+  expect(pickerEmojis.filter(emoji => !fs.existsSync(path.join(assets, `noto-emoji/emoji_u${emojiToFilename(emoji)}.svg`)))).toEqual([]);
+});
+
+test('every emoji of the pickers is recognized in text', () => {
+  // emojis2images() replaces what this regex matches, so an emoji it does not know stays browser
+  // text in a label - which is a box on every machine whose font is older than the emoji
+  expect(pickerEmojis.filter(emoji => {
+    emojiRegex.lastIndex = 0;
+    const match = emojiRegex.exec(emoji);
+    // the match may drop a variation selector, which addresses the same file
+    return !match || match.index || emojiToFilename(match[0]) != emojiToFilename(emoji);
+  })).toEqual([]);
 });
