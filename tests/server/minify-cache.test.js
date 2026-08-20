@@ -154,6 +154,15 @@ describe('a stored client bundle cache entry', function() {
     expect(() => loadFromCache(directory, key)).toThrow();
   });
 
+  // Storing does not overwrite an entry that is already there, so an entry that lost a file would
+  // stay broken and cost every start a rebuild if it were treated like a good one.
+  test('replaces an entry that no longer loads', function() {
+    storeInCache(directory, key, build);
+    fs.rmSync(`${directory}/${key}/symbols.json.gz`);
+    storeInCache(directory, key, build);
+    expectSameBuild(loadFromCache(directory, key), build);
+  });
+
   test('is refused when its index is unreadable', function() {
     storeInCache(directory, key, build);
     fs.writeFileSync(`${directory}/${key}/entry.json`, '{ this is not json');
@@ -182,6 +191,23 @@ describe('minifyHTML with a cache directory', function() {
 
   test('hands out the identical build on the next call', async function() {
     expectSameBuild(await minifyHTML(), built);
+  }, 180000);
+
+  // Stamping an entry as recently used needs ownership of it, which a server that did not write
+  // it - the prebuild ran as the deploy user - does not have. That must not cost it the hit.
+  test('serves an entry it cannot stamp as used', async function() {
+    const utimesSync = fs.utimesSync;
+    let stamped = false;
+    fs.utimesSync = function() {
+      stamped = true;
+      throw Object.assign(new Error('EPERM: operation not permitted, utime'), { code: 'EPERM' });
+    };
+    try {
+      expectSameBuild(await minifyHTML(), built);
+      expect(stamped).toBe(true);  // the entry was read before the stamp failed, so this was a hit
+    } finally {
+      fs.utimesSync = utimesSync;
+    }
   }, 180000);
 
   // A cache that can break the server is worse than no cache at all, so anything unreadable has

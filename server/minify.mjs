@@ -449,9 +449,19 @@ export function loadFromCache(directory, key) {
   return build;
 }
 
+function entryIsUsable(directory, key) {
+  try {
+    loadFromCache(directory, key);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+
 export function storeInCache(directory, key, build) {
-  const temporary = `${directory}/.tmp-${process.pid}-${key.slice(0, 8)}`;
-  fs.rmSync(temporary, { recursive: true, force: true });
+  // the random part keeps two processes that happen to share a PID - which containers on a common
+  // save volume do - from writing into the half-built directory of the other
+  const temporary = `${directory}/.tmp-${process.pid}-${crypto.randomUUID().slice(0, 8)}`;
   fs.mkdirSync(temporary, { recursive: true });
 
   try {
@@ -462,6 +472,11 @@ export function storeInCache(directory, key, build) {
       sizes[file] = content.length;
     }
     fs.writeFileSync(`${temporary}/entry.json`, JSON.stringify({ format: CACHE_FORMAT, key, sizes }));
+
+    // an entry that is already there was written by a build that agrees with this one, so it is
+    // just as good - unless it does not load, in which case nothing else would ever repair it
+    if(fs.existsSync(`${directory}/${key}`) && !entryIsUsable(directory, key))
+      fs.rmSync(`${directory}/${key}`, { recursive: true, force: true });
 
     // the rename is what makes the entry visible, in one step: a crash before it leaves a stale
     // temporary directory behind - which pruneCache removes later - but never half an entry
@@ -475,16 +490,19 @@ export function storeInCache(directory, key, build) {
 
 function pruneCache(directory) {
   const names = fs.readdirSync(directory);
+  // another process pruning the same directory can take a name away between the readdir and the
+  // stat, which says the same thing as an old entry does: it is gone or on its way out
+  const modified = name => fs.statSync(`${directory}/${name}`, { throwIfNoEntry: false })?.mtimeMs;
 
   const entries = names.filter(name => /^[0-9a-f]{64}$/.test(name))
-    .map(name => ({ name, time: fs.statSync(`${directory}/${name}`).mtimeMs }))
+    .map(name => ({ name, time: modified(name) ?? 0 }))
     .sort((a, b) => b.time - a.time);
   for(const { name } of entries.slice(CACHE_ENTRIES))
     fs.rmSync(`${directory}/${name}`, { recursive: true, force: true });
 
   const anHourAgo = Date.now() - 60*60*1000;
   for(const name of names.filter(name => name.startsWith('.tmp-')))
-    if(fs.statSync(`${directory}/${name}`).mtimeMs < anHourAgo)
+    if(modified(name) < anHourAgo)
       fs.rmSync(`${directory}/${name}`, { recursive: true, force: true });
 }
 
@@ -508,14 +526,26 @@ export default async function minifyHTML() {
 
   const shortKey = key.slice(0, 8);
 
-  try {
-    const build = loadFromCache(directory, key);
-    fs.utimesSync(`${directory}/${key}`, new Date(), new Date());  // youngest by use, not by build
-    Logging.log(`Client bundles: cache hit ${shortKey}`);
-    return build;
-  } catch(e) {
-    if(e.code != 'ENOENT')
+  // having no entry for this key is the normal case and stays silent, but once entry.json is
+  // there the rest of the entry has to be readable as well - anything else is worth a warning
+  let cached = null;
+  if(fs.existsSync(`${directory}/${key}/entry.json`)) {
+    try {
+      cached = loadFromCache(directory, key);
+    } catch(e) {
       Logging.log(`WARNING - Client bundles: discarding cache entry ${shortKey} (${e.message})`);
+    }
+  }
+
+  if(cached) {
+    try {
+      fs.utimesSync(`${directory}/${key}`, new Date(), new Date());  // youngest by use, not by build
+    } catch(e) {
+      // an entry written by another user can be read but not re-stamped, which only costs it its
+      // place in the pruning order - it never invalidates a build that already loaded
+    }
+    Logging.log(`Client bundles: cache hit ${shortKey}`);
+    return cached;
   }
 
   const started = Date.now();
@@ -524,10 +554,17 @@ export default async function minifyHTML() {
 
   try {
     storeInCache(directory, key, build);
-    pruneCache(directory);
     Logging.log(`Client bundles: cache miss, built in ${seconds} s, stored as ${shortKey}`);
   } catch(e) {
     Logging.log(`WARNING - Client bundles: cache miss, built in ${seconds} s, could not be stored (${e.message})`);
+  }
+
+  // housekeeping of entries this build does not depend on, so whether it works says nothing about
+  // the entry that was just stored
+  try {
+    pruneCache(directory);
+  } catch(e) {
+    Logging.log(`WARNING - Client bundles: could not prune the cache (${e.message})`);
   }
 
   return build;
