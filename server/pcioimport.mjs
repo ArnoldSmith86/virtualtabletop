@@ -629,8 +629,11 @@ export default async function convertPCIO(content) {
       if(widget.kinged)
         w.activeFace = 1;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
-      w.width  = 90;
-      w.height = 90;
+      // the PCIO piece is a 90x90 box while the pawn shape only fills 56x84 of it
+      w.width  = 56;
+      w.height = 84;
+      w.x = (w.x || 0) + 17;
+      w.y = (w.y || 0) + 3;
       w.classes = 'classicPiece';
       w.color = pieceColors[widget.color] || pieceColors.default;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
@@ -1719,6 +1722,8 @@ export default async function convertPCIO(content) {
           if(c.to == 'hand') {
             delete c.to;
             c.func = 'MOVEXY';
+            // the objects land on the table but stay the property of whoever held them
+            c.resetOwner = false;
           }
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
@@ -1796,6 +1801,8 @@ export default async function convertPCIO(content) {
           if(!decks.length)
             return;
 
+          // a deck that sits on the table has no holder to recall into, so its cards are
+          // gathered on its position instead - the ones a player owns stay that player's
           for(const deckID of decks) {
             if(!byID[deckID].parent) {
               output.tempHolderForDeckRecall = {
@@ -1818,7 +1825,8 @@ export default async function convertPCIO(content) {
                 from: 'tempHolderForDeckRecall',
                 x: byID[deckID].x + (86-(byID[deckID].cardWidth ||103))/2,
                 y: byID[deckID].y + (86-(byID[deckID].cardHeight||160))/2,
-                count: 'all'
+                count: 'all',
+                resetOwner: false
               });
             }
           }
@@ -2218,8 +2226,7 @@ export default async function convertPCIO(content) {
       // striped block where the widget used to be
       const typeName = pcioTypeNames[widget.type] || widget.type;
       w.width = widget.width || 100;
-      // a label shorter than one line of text shows nothing at all
-      w.height = Math.max(widget.height || 100, 18);
+      w.height = widget.height || 100;
       w.type = 'label';
       w.text = `${typeName} not imported`;
       w.css ='background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px); color: white; text-shadow: 0 0 4px black;';
@@ -2236,6 +2243,16 @@ export default async function convertPCIO(content) {
   for(const seatID in turnAtSeat)
     if(output[seatID])
       output[seatID].turn = true;
+
+  // a label whose box is shorter than one line of its text shows nothing at all
+  for(const w of Object.values(output)) {
+    if(w.type != 'label')
+      continue;
+    const match = JSON.stringify(w.css || '').match(/font-size"?:"? *([0-9]+) *px/);
+    const minHeight = (match ? +match[1] : 16) + 2;
+    if((w.height || 20) < minHeight)
+      w.height = minHeight;
+  }
 
   for(const group of Object.values(groupedWarnings))
     warn(group.message(widgetNames(group.names), group.names.length));

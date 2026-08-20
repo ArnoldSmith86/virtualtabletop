@@ -17,8 +17,19 @@ function png(width, height) {
 
 async function convert(save) {
   const widgets = (await TTS.fromBSON(BSON.serialize(save))).TTS['0.json'];
+  expectNoLegacyModes(widgets);
   delete widgets._meta;
   return widgets;
+}
+
+// the importer writes the current file version, so nothing it produces may be rewritten
+// on load: a migration that would still have changed it never runs again
+function expectNoLegacyModes(state) {
+  expect(state._meta.version).toBe(VERSION);
+  expect(state._meta.gameSettings).toBeUndefined();
+  // NaN and undefined do not survive the save file, so compare what is actually stored
+  const stored = JSON.stringify(state);
+  expect(FileUpdater(JSON.parse(stored))).toEqual(JSON.parse(stored));
 }
 
 // what the importer could not bring over - the game details show it as import notes
@@ -229,6 +240,17 @@ describe('TTS import: stacks', () => {
   });
 });
 
+describe('TTS import: notecards', () => {
+  it('keeps the line breaks and the runs of spaces the author typed', async () => {
+    const widgets = await convert(objects(
+      { Name: 'Notecard', GUID: 'note', Transform: { posX: 0, posZ: 0 }, Nickname: 'Title', Description: 'a   b\nsecond line' }
+    ));
+
+    expect(widgets.note.html).toBe('<b>Title</b><br><br>a   b<br>second line');
+    expect(widgets.note.css).toContain('white-space: pre-wrap');
+  });
+});
+
 describe('TTS import: files', () => {
   it('converts a save from a workshop upload zip', async () => {
     const zip = await Zip.create({
@@ -242,19 +264,17 @@ describe('TTS import: files', () => {
   });
 
   it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
-    const state = (await TTS.fromBSON(BSON.serialize({
+    // convert() checks the version and the round trip through FileUpdater for every
+    // conversion of this suite - this one holds the widgets the legacy modes look for
+    const widgets = await convert({
       SaveName: 'test',
       Hands: { Enable: true },
       ObjectStates: [ die('a', 0), { Name: 'HandTrigger', GUID: 'h1', FogColor: 'Red' } ]
-    }))).TTS['0.json'];
+    });
 
     // the caption of the hand is what the legacy mode for holders without image support
     // looks for in an old file - it would hide the very text the importer just wrote
-    expect(state.hand.text).toBe('Hand');
-    expect(state._meta.version).toBe(VERSION);
-    expect(state._meta.gameSettings).toBeUndefined();
-    // loading the imported file leaves it exactly as it is
-    expect(FileUpdater(JSON.parse(JSON.stringify(state)))).toEqual(state);
+    expect(widgets.hand.text).toBe('Hand');
   });
 
   it('keeps the widget IDs of two imports that run at the same time apart', async () => {

@@ -682,7 +682,8 @@ function addNotecard(o, imp, parent) {
     height: clamp(rows*15 + 16, 60, 500),
     movable: true,
     html: (title ? `<b>${escapeHTML(title)}</b><br>${body ? '<br>' : ''}` : '') + escapeHTML(body).replace(/\n/g, '<br>'),
-    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden'
+    // the text is escaped and joined with <br>, so the runs of spaces the author typed have to survive
+    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden; white-space: pre-wrap'
   };
 
   return { [widget.id]: place(o, widget) };

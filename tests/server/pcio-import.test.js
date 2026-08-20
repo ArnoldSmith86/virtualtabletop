@@ -9,7 +9,19 @@ async function importWidgets(widgets, schemaVersion, files={}) {
   // a null content means a folder entry, which is stored as an empty entry ending in a slash
   for(const [ name, content ] of Object.entries(files))
     entries[content === null ? `${name}/` : name] = content === null ? new Uint8Array(0) : content;
-  return await convertPCIO(await Zip.create(entries));
+  const state = await convertPCIO(await Zip.create(entries));
+  expectNoLegacyModes(state);
+  return state;
+}
+
+// the importer writes the current file version, so nothing it produces may be rewritten
+// on load: a migration that would still have changed it never runs again
+function expectNoLegacyModes(state) {
+  expect(state._meta.version).toBe(VERSION);
+  expect(state._meta.gameSettings).toBeUndefined();
+  // NaN and undefined do not survive the save file, so compare what is actually stored
+  const stored = JSON.stringify(state);
+  expect(FileUpdater(JSON.parse(stored))).toEqual(JSON.parse(stored));
 }
 
 const deck = {
@@ -698,6 +710,28 @@ describe('PCIO importer', () => {
     expect(state.long.height).toBeGreaterThan(60);
   });
 
+  it('puts a classic game piece into the box its pawn shape fills', async () => {
+    const state = await importWidgets([
+      { id: 'pawn',   type: 'gamePiece', pieceType: 'classic', color: 'red',  x: 300, y: 300 },
+      { id: 'origin', type: 'gamePiece', pieceType: 'classic', color: 'blue' }
+    ], 8);
+
+    // PCIO gives the piece a 90x90 box while the pawn only fills 56x84 of it, at 17,3
+    expect(state.pawn).toMatchObject({ x: 317, y: 303, width: 56, height: 84, classes: 'classicPiece' });
+    expect(state.origin).toMatchObject({ x: 17, y: 3, width: 56, height: 84 });
+  });
+
+  it('grows a label whose box is shorter than one line of its own text', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter',     x: 0, y: 100, height: 10, counterValue: 3 },
+      { id: 'unknown', type: 'videoPlayer', x: 0, y: 200, height:  5 }
+    ], 8);
+
+    // the value of a counter is written in 30px, the placeholder in the default 16px
+    expect(state.counter.height).toBe(32);
+    expect(state.unknown.height).toBe(18);
+  });
+
   it('imports a turn button at the size PCIO gives it', async () => {
     const state = await importWidgets([
       { id: 'turn', type: 'turnButton', x: 0, y: 0, label: 'End Turn', clickRoutine: { steps: [] } }
@@ -758,6 +792,33 @@ describe('PCIO importer', () => {
     ], 8);
 
     expect(state.button.clickRoutine).toEqual([ { func: 'MOVE', from: 'source', to: 'target', count: 'all' } ]);
+  });
+
+  it('leaves the objects with their owner when it takes them out of a hand', async () => {
+    const state = await importWidgets([
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 800 },
+      { id: 'deck', type: 'cardDeck', x: 100, y: 0, cardTypes: { a: { label: 'A' } }, faceTemplate: { objects: [] } },
+      {
+        id: 'button', type: 'automationButton', label: 'Hand', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+            from:     { type: 'literal', value: [ 'source' ] },
+            to:       { type: 'literal', value: [ 'hand' ] },
+            quantity: { type: 'literal', value: 1 }
+          } } ] },
+          { id: 'b', branches: [ { func: 'RECALL_CARDS', args: {
+            decks: { type: 'literal', value: [ 'deck' ] }
+          } } ] }
+        ] }
+      }
+    ], 8);
+
+    // moving to the hand and recalling a deck that has no holder both drop the objects
+    // onto the table - the ones a player owns stay that player's
+    const moves = state.button.clickRoutine.filter(operation=>operation.func == 'MOVEXY');
+    expect(moves.length).toBe(2);
+    expect(moves.map(operation=>operation.resetOwner)).toEqual([ false, false ]);
   });
 
   it('puts objects under the ones a pile already holds, starting at the given destination', async () => {
@@ -964,6 +1025,8 @@ describe('PCIO importer', () => {
   });
 
   it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
+    // importWidgets checks the version and the round trip through FileUpdater for every
+    // import of this suite - this one holds the widgets the legacy modes look for
     const state = await importWidgets([
       { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 1, counterMin: 0 },
       { id: 'hand', type: 'hand', x: 0, y: 800 }
@@ -972,10 +1035,6 @@ describe('PCIO importer', () => {
     // the var expressions of the counter buttons are what the legacy modes for the old var
     // semantics look for in an old file
     expect(JSON.stringify(state)).toContain('var pcioCounter');
-    expect(state._meta.version).toBe(VERSION);
-    expect(state._meta.gameSettings).toBeUndefined();
-    // loading the imported file leaves it exactly as it is
-    expect(FileUpdater(JSON.parse(JSON.stringify(state)))).toEqual(state);
   });
 
   it('imports a file whose schema version is missing or unreadable', async () => {
