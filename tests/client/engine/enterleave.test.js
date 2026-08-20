@@ -69,8 +69,9 @@ function trace() {
 // The parent bookkeeping a drag performs, without the pointer: moveStart() detaches the widget,
 // move() lets checkParent() drop it once it is out of the holder's box, and moveEnd() hands it
 // to the holder it was released over. `leavesBox: false` is a drag that never left the holder
-// it started in, which is the one case where the two differ.
-async function dragWidget(id, { to = null, leavesBox = true } = {}) {
+// it started in, which is the one case where the two differ. `whileDragging` is called at the
+// point the widget hangs on the cursor, which is where a drag is visible to the other players.
+async function dragWidget(id, { to = null, leavesBox = true, whileDragging = null } = {}) {
   const widget = widgets.get(id);
   const ancestor = widget.get('_ancestor');
 
@@ -82,6 +83,9 @@ async function dragWidget(id, { to = null, leavesBox = true } = {}) {
 
   if(leavesBox)
     await widget.checkParent(true);
+
+  if(whileDragging)
+    whileDragging(widget);
 
   widget.pileUpdateFromDrag = true;
   if(to)
@@ -363,8 +367,10 @@ describe('holder properties', () => {
     () => room({ handA: { childrenPerOwner: true }, handB: { childrenPerOwner: true }, c1: { type: 'card', parent: 'handA', owner: 'jestPlayer' } }),
     () => dragWidget('c1', { to: 'handB' }),
     {
+      // a hand lets go of a dragged card when it is out of its box, which is after the leave
+      // event but before the card can land anywhere else
       modern: [
-        'leave handA c1[parent=null mark=leave-handA owner=null]',
+        'leave handA c1[parent=null mark=leave-handA owner=jestPlayer]',
         'enter handB c1[parent=handB mark=enter-handB owner=jestPlayer]'
       ],
       // the owner was still set when the first of the two legacy calls ran: checkParent() reset
@@ -384,6 +390,31 @@ describe('holder properties', () => {
       // the owner reset lived in checkParent(), which a SET never reaches
       legacy: [ 'leave handA c1[parent=null mark=null owner=jestPlayer]' ]
     });
+
+  // A per-owner hand is the one place where "when did the widget leave" is visible to somebody
+  // other than the player doing the moving: without an owner a card loses the `foreign` class
+  // and is rendered on every other screen. A drag detaches the card at the pickup, so these two
+  // pin down that the hand only lets go of it in checkParent().
+  for(const combination of [ 'modern', 'legacy' ]) {
+    const legacy = combination == 'legacy' ? { legacyHolderEnterLeaveEvents: true } : {};
+    const hand = () => room({ handA: { childrenPerOwner: true }, c1: { type: 'card', parent: 'handA', owner: 'jestPlayer' } });
+
+    test(`a card rearranged inside a per-owner hand stays owned for the whole drag [${combination}]`, async () => {
+      setupRoom(hand(), { legacy });
+      let ownerWhileDragging;
+      await dragWidget('c1', { to: 'handA', leavesBox: false, whileDragging: w=>ownerWhileDragging = w.get('owner') });
+      expect(ownerWhileDragging).toBe('jestPlayer');
+      expect(widgets.get('c1').get('owner')).toBe('jestPlayer');
+    });
+
+    test(`a card dragged out of a per-owner hand is released when it leaves the box [${combination}]`, async () => {
+      setupRoom(hand(), { legacy });
+      let ownerWhileDragging;
+      await dragWidget('c1', { whileDragging: w=>ownerWhileDragging = w.get('owner') });
+      expect(ownerWhileDragging).toBe(null);
+      expect(widgets.get('c1').get('owner')).toBe(null);
+    });
+  }
 
   scenario('ignoreOnLeave skips the property half but not the routine',
     () => room({ c1: { type: 'card', parent: 'handA', ignoreOnLeave: true } }),

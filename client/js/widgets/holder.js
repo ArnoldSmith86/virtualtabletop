@@ -93,9 +93,18 @@ class Holder extends ImageWidget {
   // childrenPerOwner makes the holder a per-player hand, so what leaves it belongs to nobody
   // again. The other half of that is in onChildAdd(), because becoming a child is what claims
   // a widget, not the arrival event.
+  //
+  // A drag is the exception: it detaches the card at the pickup, long before it is anywhere
+  // else, and a card without an owner is one every other player can see. So a hand holds on to
+  // a dragged card until it is really out of its box, which is what checkParent() decides -
+  // rearranging a hand never exposes a card, because that drag never gets there.
   async applyLeave(child) {
-    if(child.get('type') != 'deck' && !child.isBeingRemoved && this.get('childrenPerOwner'))
+    if(child.get('type') != 'deck' && !child.isBeingRemoved && this.get('childrenPerOwner') && child.currentParent !== this)
       await child.set('owner', null);
+    // a widget on its way out of the room has no properties left to apply, but the gap it
+    // leaves in a stacked holder closes all the same
+    if(child.isBeingRemoved)
+      await this.closeStackGap();
     await super.applyLeave(child);
   }
 
@@ -127,13 +136,18 @@ class Holder extends ImageWidget {
         }
       }
     }
-    // a gap in a stacked holder closes as soon as the card that left it is gone
+    await this.closeStackGap();
+  }
+
+  // a gap in a stacked holder closes as soon as the card that left it is gone
+  async closeStackGap() {
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
   }
 
   // The leave half as the legacy pipeline ran it: from checkParent() once the widget really is
-  // outside the holder, and from a pile that handed a card back while sitting in one.
+  // outside the holder, and from a pile that handed a card back while sitting in one. Nothing
+  // outside legacy mode calls this - applyLeave() is where a leave happens now.
   async dispenseCard(card) {
     await this.applyLeaveProperties(card);
     if(Array.isArray(this.get('leaveRoutine')))

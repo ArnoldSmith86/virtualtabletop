@@ -283,6 +283,24 @@ test('MOVEXY out of a stacked holder closes the gap as well', async t => {
   await t.expect(remaining.sort((a, b)=>a-b)).eql([ 4, 44 ]);
 });
 
+test('DELETE closes the gap in a stacked holder as well', async t => {
+  const state = fixtureState({
+    handB: { stackOffsetY: 40 },
+    go: { clickRoutine: [ { func: 'SELECT', property: 'id', value: CARD }, { func: 'DELETE' } ] }
+  }, { enterFields: [ 'parent' ], leaveFields: [ 'parent' ] });
+  Object.assign(state.card1, { parent: 'handB', x: 4, y: 4 });
+  state.card2 = card('card2', { parent: 'handB', x: 4, y: 44 });
+  state.card3 = card('card3', { parent: 'handB', x: 4, y: 84 });
+  await openRoom(t, MODERN, state);
+  await clickGo(t);
+
+  // a card removed from the room applies no onLeave - it is gone - but the holder it was taken
+  // out of is still one card shorter and re-stacks what is left
+  const after = await stateWhen(s=>!s[CARD]);
+  const remaining = Object.values(after).filter(w=>w.parent == 'handB').map(w=>w.y).sort((a, b)=>a-b);
+  await t.expect(remaining).eql([ 4, 44 ], 'the two cards that stayed sit at the first two stack positions');
+});
+
 test('An alignChildren:false holder keeps the drop coordinate and still enters', async t => {
   const state = fixtureState({ handB: { alignChildren: false } }, { enterFields: [ 'parent', 'mark' ], leaveFields: [ 'parent', 'mark' ] });
   state.card1.parent = 'handA';
@@ -299,12 +317,33 @@ test('An alignChildren:false holder keeps the drop coordinate and still enters',
 // Seats and per-owner hands
 // ---------------------------------------------------------------------------------------------
 
-test('Dragging a card out of a per-owner hand releases it before leaveRoutine runs', async t => {
+test('Dragging a card out of a per-owner hand releases it once it is out of the box', async t => {
   await openRoom(t, MODERN, fixtureState({ handA: { childrenPerOwner: true }, card1: { parent: 'handA', x: 4, y: 4, owner: 'Alice' } }));
   await setName(t, 'Alice');
   await dragPath(t, CARD, [ { dx: 500, dy: -400 } ]);
 
-  await expectTrace(t, [ 'leave handA[parent=null mark=leave-handA owner=null]' ]);
+  // the hand still holds the card while the drag is over it, so leaveRoutine reads the owner it
+  // had; the release follows a moment later, when the card is really outside
+  await expectTrace(t, [ 'leave handA[parent=null mark=leave-handA owner=Alice]' ]);
+  // an owner back at its default is not serialized at all, so the state simply stops naming one
+  const after = await stateWhen(s=>!s[CARD].owner);
+  await t.expect(after[CARD].owner).notOk('the card on the table belongs to nobody');
+});
+
+test('Rearranging a card inside a per-owner hand never takes its owner away', async t => {
+  await openRoom(t, MODERN, fixtureState({ handA: { childrenPerOwner: true }, card1: { parent: 'handA', x: 4, y: 4, owner: 'Alice' } }));
+  await setName(t, 'Alice');
+  await dragPath(t, CARD, [ { dx: 150, dy: 0 } ]);
+
+  // A card without an owner is one every other player can see. The drag detaches it at the
+  // pickup, so both halves of this rearrange have to find it still owned - otherwise the other
+  // players watch Alice sort her hand.
+  await expectTrace(t, [
+    'leave handA[parent=null mark=leave-handA owner=Alice]',
+    'enter handA[parent=handA mark=enter-handA owner=Alice]'
+  ]);
+  const after = await stateWhen(s=>s[CARD].parent == 'handA');
+  await t.expect(after[CARD].owner).eql('Alice', 'the card is still in Alice\'s hand');
 });
 
 test('Legacy: the per-owner hand released the card between its two leave calls', async t => {

@@ -39,11 +39,11 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteY'
 ]);
 
-// The widget whose enter and leave events a child of `parent` belongs to. A pile inside a
-// holder is transparent: it is a stack of cards in that holder, not a container a card can
-// enter or leave on its own, so a card that joins or leaves it stays in the holder. A pile on
-// the table has nothing behind it and is its own container. Returns null for a widget that
-// sits on the table itself.
+// The widget whose enter and leave events a child of `parent` belongs to. A pile inside
+// another widget is transparent: it is a stack of cards in that widget, not a container a card
+// can enter or leave on its own, so a card that joins or leaves it stays in whatever holds the
+// pile. A pile on the table has nothing behind it and is its own container. Returns null for a
+// widget that sits on the table itself.
 function enterLeaveContainer(parent) {
   if(parent && parent.get('type') == 'pile' && widgets.has(parent.get('parent')))
     return widgets.get(parent.get('parent'));
@@ -471,17 +471,17 @@ export class Widget extends StateManaged {
 
   // Detach a dragged widget from the container it was picked up in, once it no longer overlaps
   // it (or right away when the caller forces it). Clearing the parent is what raises the leave
-  // event; this method only forgets where the drag came from.
+  // event; this method only forgets where the drag came from - and hands a per-player hand the
+  // card back, which happens here rather than with the rest of the event because a card is only
+  // out of a hand once it is out of its box (see Holder.applyLeave).
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
       await this.set('hoverParent', null);
-      if(legacyMode('legacyHolderEnterLeaveEvents')) {
-        if(this.currentParent.get('childrenPerOwner'))
-          await this.set('owner',  null);
-        if(this.currentParent.dispenseCard)
-          await this.currentParent.dispenseCard(this);
-      }
+      if(this.currentParent.get('childrenPerOwner'))
+        await this.set('owner',  null);
+      if(legacyMode('legacyHolderEnterLeaveEvents') && this.currentParent.dispenseCard)
+        await this.currentParent.dispenseCard(this);
       delete this.currentParent;
     }
   }
@@ -3041,8 +3041,8 @@ export class Widget extends StateManaged {
       if(!this.get('fixedParent'))
         await this.moveToHolder(line);
     } else if(from && from.get('type') == 'line' && !this.get('fixedParent')) {
-      // dropping it off the line hands it back to the room, which lets the line
-      // dispense it: onLeave is applied and the stop comes off the list
+      // dropping it off the line hands it back to the room, which is the line's
+      // leave event: onLeave is applied and the stop comes off the list
       this.currentParent = from;
       await this.checkParent(true);
     }

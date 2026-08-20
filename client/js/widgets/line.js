@@ -673,7 +673,7 @@ export class Line extends Widget {
   // of the line, gets the onEnter properties applied and triggers enterRoutine
   // (which Widget.onPropertyChange does for every parent change).
   async onChildAdd(child, oldParentID) {
-    const entering = this != child.currentParent;
+    const enteringInLegacyMode = legacyMode('legacyHolderEnterLeaveEvents') && this != child.currentParent;
     await super.onChildAdd(child, oldParentID);
     // a rename re-adds the same stop under a new id; it carries no positioning
     // change, so skip the layout pass a real add/remove would trigger
@@ -685,7 +685,7 @@ export class Line extends Widget {
       await this.addStop(child.id, this.positionAtPoint(this.childCenter(child)));
     if(this.stopList().some(entry=>entry.widget == child.id))
       await this.layoutStops();
-    if(legacyMode('legacyHolderEnterLeaveEvents') && entering)
+    if(enteringInLegacyMode)
       await this.applyEnterLeave(child, 'onEnter');
   }
 
@@ -708,10 +708,10 @@ export class Line extends Widget {
   // Leaving the line again is the mirror of that: checkParent calls this hook -
   // named after the holder method it stands in for - once a widget is really
   // out, so the stop comes off the list and onLeave is applied. leaveRoutine is
-  // triggered by the parent change itself.
+  // triggered by the parent change itself. Nothing outside legacy mode calls
+  // this - applyLeaveProperties() is where a leave happens now.
   async dispenseCard(child) {
-    await this.removeStop(child.id);
-    await this.applyEnterLeave(child, 'onLeave');
+    await this.applyLeaveProperties(child);
   }
 
   // onEnter / onLeave hold properties to apply to the widget that entered or
