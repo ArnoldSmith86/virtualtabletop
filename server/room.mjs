@@ -755,6 +755,8 @@ export default class Room {
   }
 
   moveFile(source, target) {
+    if(source == target)
+      return;
     FileWriter.copyFileSync(source, target);
     fs.unlinkSync(source);
   }
