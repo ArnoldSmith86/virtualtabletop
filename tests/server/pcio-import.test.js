@@ -15,13 +15,18 @@ async function importWidgets(widgets, schemaVersion, files={}) {
 }
 
 // the importer writes the current file version, so nothing it produces may be rewritten
-// on load: a migration that would still have changed it never runs again
+// on load: a migration that would still have changed it never runs again. FileUpdater hands
+// back a state that already is at VERSION untouched, so the check migrates a copy stamped
+// with the version before it - that runs the newest migration on what the importer writes
+// and fails as soon as one is added which the importer does not produce the result of.
 function expectNoLegacyModes(state) {
   expect(state._meta.version).toBe(VERSION);
   expect(state._meta.gameSettings).toBeUndefined();
   // NaN and undefined do not survive the save file, so compare what is actually stored
-  const stored = JSON.stringify(state);
-  expect(FileUpdater(JSON.parse(stored))).toEqual(JSON.parse(stored));
+  const stored = JSON.parse(JSON.stringify(state));
+  const previousVersion = JSON.parse(JSON.stringify(stored));
+  previousVersion._meta.version = VERSION - 1;
+  expect(FileUpdater(previousVersion)).toEqual(stored);
 }
 
 const deck = {
