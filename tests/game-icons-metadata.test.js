@@ -30,7 +30,7 @@ for(const [ category, entries ] of Object.entries(symbols))
     for(const [ name, entry ] of Object.entries(entries))
       pickerIcons[name] = { category, index: entry[0], tags: entry.slice(1) };
 
-// the checks below run over 4131 icons and 70000 tags, so they collect what is wrong and assert once
+// the checks below run over 4181 icons and 80000 tags, so they collect what is wrong and assert once
 // instead of asserting per icon - a failure names the icons, an empty list is the passing case
 function collect(check) {
   const problems = [];

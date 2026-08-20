@@ -566,7 +566,7 @@
 
 #symbolPickerOverlay .gameicons {
   --spritesheetX: 60;
-  --spritesheetY: 69;
+  --spritesheetY: 70;
 
   display: inline-block;
   background: url(i/game-icons.net/overview24.png);
