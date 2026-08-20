@@ -39,13 +39,14 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteY'
 ]);
 
-// The widget whose enter and leave events a child of `parent` belongs to. A pile is transparent
-// here: it is a stack of cards inside whatever holds it, not a container a card can enter or
-// leave on its own, so a card that joins or leaves a pile inside its holder stays in that
-// holder. Returns null for a widget that sits on the table.
+// The widget whose enter and leave events a child of `parent` belongs to. A pile inside a
+// holder is transparent: it is a stack of cards in that holder, not a container a card can
+// enter or leave on its own, so a card that joins or leaves it stays in the holder. A pile on
+// the table has nothing behind it and is its own container. Returns null for a widget that
+// sits on the table itself.
 function enterLeaveContainer(parent) {
-  if(parent && parent.get('type') == 'pile')
-    return widgets.has(parent.get('parent')) ? widgets.get(parent.get('parent')) : null;
+  if(parent && parent.get('type') == 'pile' && widgets.has(parent.get('parent')))
+    return widgets.get(parent.get('parent'));
   return parent || null;
 }
 

@@ -520,6 +520,25 @@ describe('piles', () => {
     ]);
   });
 
+  // A pile on the table has no holder behind it, so it is a container of its own and its own
+  // routines are what a card entering or leaving it raises.
+  // away from the origin, so a card that leaves it keeps coordinates far enough away for
+  // updatePiles() not to put it straight back
+  const tracedPile = { type: 'pile', x: 500, y: 500, enterRoutine: traceRoutine('enter pile1'), leaveRoutine: traceRoutine('leave pile1') };
+
+  test('a card leaving a pile on the table raises that pile\'s leave event', async () => {
+    // three cards, so taking one out does not dissolve the pile in the same breath
+    setupRoom(room({ pile1: tracedPile, c1: { type: 'card', parent: 'pile1' }, c2: { type: 'card', parent: 'pile1' }, c3: { type: 'card', parent: 'pile1' } }));
+    await clickRoutine([ { func: 'SELECT', property: 'id', value: 'c1' }, { func: 'SET', property: 'parent', value: null } ]);
+    expect(trace()).toEqual([ 'leave pile1 c1[parent=null mark=null owner=null]' ]);
+  });
+
+  test('a card joining a pile on the table raises that pile\'s enter event', async () => {
+    setupRoom(room({ pile1: tracedPile, c2: { type: 'card', parent: 'pile1' }, c3: { type: 'card', parent: 'pile1' } }));
+    await clickRoutine([ { func: 'SELECT', property: 'id', value: 'c1' }, { func: 'SET', property: 'parent', value: 'pile1' } ]);
+    expect(trace()).toEqual([ 'enter pile1 c1[parent=pile1 mark=null owner=null]' ]);
+  });
+
   test('a preventPiles holder unpacks a dropped pile without extra events', async () => {
     setupRoom(room({ pile1: { type: 'pile' }, c1: { type: 'card', parent: 'pile1' }, c2: { type: 'card', parent: 'pile1' } },
       { preventPiles: true }));
