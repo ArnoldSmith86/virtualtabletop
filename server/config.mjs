@@ -1,6 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 
+// The client config is inlined into room.html and therefore readable by every visitor, so it only
+// contains the entries the client code actually uses - the rest (directory layout, the secret
+// adminURL, the port, ...) stays on the server. A new "config.foo" in the client needs its key
+// listed here; tests/server/config.test.js checks that the two sides agree.
+const clientConfigKeys = [
+  'allowPublicLibraryEdits',
+  'betaServers',
+  'customTab',
+  'libraries',
+  'roomNamesCaseSensitive',
+  'serverName',
+  'urlPrefix'
+];
+
 class Config {
   constructor() {
     if(!fs.existsSync(path.resolve() + '/config.json'))
@@ -30,7 +44,7 @@ class Config {
 
   getClientConfig() {
     return Object.fromEntries(
-      Object.keys(this.config).map(key => [key, this.get(key)])
+      clientConfigKeys.map(key => [key, this.get(key)])
     );
   }
 
