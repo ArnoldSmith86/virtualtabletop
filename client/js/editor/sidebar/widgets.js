@@ -197,6 +197,8 @@ async function placeSavedWidget(widgetId, source, coords, options = {}) {
 // specific (e.g. as a stop on a line) without duplicating any of this.
 async function placeSavedWidgetFromBuffer(widgetData, coords, options = {}) {
     const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
+    if (!confirmLegacyModeDifferences(legacyModeDifferences(widgetData.legacyModes, widgetBuffer)))
+      return [];
     const idMap = {};
 
     const newIds = new Set();
@@ -1441,7 +1443,7 @@ class WidgetsModule extends SidebarModule {
       const type = w.state.type || 'widget';
       name = `${w.id} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
     }
-    this.createWidget({ name, widgets: widgetBuffer }, defaultTarget)
+    this.createWidget({ name, widgets: widgetBuffer, legacyModes: currentLegacyModes() }, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }
 

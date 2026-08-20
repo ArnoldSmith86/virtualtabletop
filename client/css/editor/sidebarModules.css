@@ -2081,7 +2081,8 @@ div.widget-name {
   color: var(--negativeInput);
 }
 
-.boardSizeSetting .boardSizeMessage.warning {
+.boardSizeSetting .boardSizeMessage.warning,
+.editorModule .legacyModeWarning {
   color: #8a5300;
 }
 
@@ -2093,7 +2094,8 @@ body.darkMode .boardSizeSetting .boardSizeMessage.error {
   color: #ff8f8f;
 }
 
-body.darkMode .boardSizeSetting .boardSizeMessage.warning {
+body.darkMode .boardSizeSetting .boardSizeMessage.warning,
+body.darkMode .editorModule .legacyModeWarning {
   color: #f0be5a;
 }
 
@@ -2106,15 +2108,10 @@ body.darkMode .boardSizeSetting .boardSizeMessage.success {
   font-size: 1em;
 }
 
-/* the widget buffer is filled in one game and emptied in another, so it says so when the two
-   run with different legacy modes - the amber the other advisories in the editor use, since
-   pasting is still allowed */
-.editorModule .widgetBufferWarning {
-  color: #8a5300;
+/* widgets are saved in one game and added in another, so the toolbox says so when the two run
+   with different legacy modes - it shares the amber of the advisories above, since adding them
+   is still allowed */
+.editorModule .legacyModeWarning {
   font-size: 0.9em;
   margin-top: 8px;
-}
-
-body.darkMode .editorModule .widgetBufferWarning {
-  color: #f0be5a;
 }

@@ -48,18 +48,14 @@ class ToolboxModule extends SidebarModule {
     for(const widget of selectedWidgets)
       addRecursively(widget);
     localStorage.setItem('widgetBuffer', JSON.stringify(widgetBuffer));
-    localStorage.setItem('widgetBufferLegacyModes', JSON.stringify(this.currentLegacyModes()));
+    localStorage.setItem('widgetBufferLegacyModes', JSON.stringify(currentLegacyModes()));
     this.renderWidgetBuffer();
   }
 
   async button_loadWidgetsFromBuffer() {
     const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    const differences = widgetBuffer.length ? this.legacyModeDifferences() : [];
-    if (differences.length) {
-      const differencesList = differences.map(d=>`  ${d.label}: ${d.inSource ? 'on' : 'off'} in the source game, ${d.inSource ? 'off' : 'on'} here`).join('\n');
-      const loadAnyway = confirm(`The widgets in the buffer were saved in a game with different legacy modes:\n\n${differencesList}\n\nLegacy modes change how widgets behave, so the widgets can work differently in this game.\n\nPress OK to load them anyway, or Cancel to abort loading.`);
-      if (!loadAnyway) return;
-    }
+    if (!confirmLegacyModeDifferences(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer)))
+      return;
     const duplicates = widgetBuffer.filter(state=>widgets.has(state.id)).map(state=>state.id);
     if (duplicates.length) {
       const duplicatesList = duplicates.join(', ');
@@ -121,42 +117,14 @@ class ToolboxModule extends SidebarModule {
     batchEnd();
   }
 
-  // Legacy modes decide what widget JSON means, so the modes of the game a buffer was filled
-  // in are remembered next to it: the game it is pasted into can run with different ones.
-  currentLegacyModes() {
-    const modes = {};
-    for(const name in LEGACY_MODES)
-      modes[name] = !!legacyMode(name);
-    return modes;
-  }
-
-  // The modes the source game and the current game disagree on. A buffer that was saved before
-  // the modes were recorded has none - unknown is not the same as different.
-  legacyModeDifferences() {
-    let sourceModes = null;
+  // The legacy modes of the game the buffer was filled in, or null for a buffer that was saved
+  // before they were recorded.
+  bufferLegacyModes() {
     try {
-      sourceModes = JSON.parse(localStorage.getItem('widgetBufferLegacyModes'));
+      return JSON.parse(localStorage.getItem('widgetBufferLegacyModes'));
     } catch(e) {
+      return null;
     }
-    if(!sourceModes)
-      return [];
-    return Object.keys(LEGACY_MODES).filter(name=>!!sourceModes[name] != !!legacyMode(name)).map(name=>({
-      label: LEGACY_MODES[name].label,
-      inSource: !!sourceModes[name]
-    }));
-  }
-
-  legacyModeWarningHTML(differences) {
-    if(!differences.length)
-      return '';
-    let list = '';
-    for(const difference of differences)
-      list += `<li>${html(difference.label)}: <b>${difference.inSource ? 'on' : 'off'}</b> in the source game, <b>${difference.inSource ? 'off' : 'on'}</b> here</li>`;
-    return `<div class=widgetBufferWarning>
-      <b>These widgets come from a game with different legacy modes:</b>
-      <ul>${list}</ul>
-      Legacy modes change how widgets behave, so the widgets can work differently in this game.
-    </div>`;
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -179,8 +147,7 @@ class ToolboxModule extends SidebarModule {
     let list = '';
     for(const state of widgetBuffer)
       list += `<li>${html(state.id)}</li>`;
-    const differences = widgetBuffer.length ? this.legacyModeDifferences() : [];
-    this.currentContents.innerHTML = `<ul>${list}</ul>${this.legacyModeWarningHTML(differences)}`;
+    this.currentContents.innerHTML = `<ul>${list}</ul>${legacyModeWarningHTML(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer))}`;
   }
 
   cicleAlign(target) {
@@ -225,10 +192,6 @@ class ToolboxModule extends SidebarModule {
     $('#saveWidgetsToBuffer').onclick = e=>this.button_saveWidgetsToBuffer();
     $('#loadWidgetsFromBuffer').onclick = e=>this.button_loadWidgetsFromBuffer();
 
-    const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    let list = '';
-    for(const state of widgetBuffer)
-      list += `<li>${html(state.id)}</li>`;
     this.currentContents = div(target);
     this.renderWidgetBuffer();
   }
