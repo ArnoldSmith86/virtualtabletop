@@ -1145,6 +1145,15 @@ describe('property input helpers', () => {
     // the whole name and nothing else: a name that only contains the word has more to it, however
     // early it sits in the index
     expect(inputHelpers.searchIconIndex('dragon').values).toEqual([ 'lorc/dragon', 'lorc/dragon-head', 'delapouite/scales' ]);
+    // the number of the query is as irrelevant here as it is to the rest of the search
+    expect(inputHelpers.searchIconIndex('dragons').values).toEqual([ 'lorc/dragon', 'lorc/dragon-head', 'delapouite/scales' ]);
+
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/crossed-sabres', ...inputHelpers.iconSearchEntry('crossed-sabres', [ 'cavalry' ]), image: true },
+      { value: 'lorc/sabre',          ...inputHelpers.iconSearchEntry('sabre', [ 'blade' ]),            image: true }
+    ]);
+    // and so is its spelling: the icon spelled the other way is still the one that is called this
+    expect(inputHelpers.searchIconIndex('saber').values).toEqual([ 'lorc/sabre', 'lorc/crossed-sabres' ]);
   });
 
   test('icon search understands accents and both English spellings', () => {

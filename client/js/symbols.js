@@ -187,6 +187,14 @@ function iconSearchTermScore(entry, term) {
     : term.forms.some(form => entry.tags.has(form)) ? 1 : 0;
 }
 
+// The icon that is called exactly what was typed and nothing else: as many words in the name as
+// there are in the query, each of them one of the forms its term stands for. The forms rather than
+// the literal query, so that the number and the spelling of what was typed matter as little here
+// as they do everywhere else - "souls" and "sabre" lead with the same icon as "soul" and "saber".
+function iconSearchExactName(entry, terms) {
+  return entry.name.length == terms.length && terms.every((term, i) => term.forms.includes(entry.name[i]));
+}
+
 // An entry has to match every term and is worth as much as its weakest one.
 function iconSearchScore(entry, terms) {
   let score = 3;
@@ -210,10 +218,8 @@ function iconSearchScore(entry, terms) {
 function iconSearchScores(entries, query) {
   if(!query.trim())
     return entries.map(_=>1);
-  const words = iconSearchWords(query);
-  const terms = words.map(iconSearchTerm);
-  const wholeName = words.join(' ');
-  const scores = terms.length ? entries.map(entry => entry.name.join(' ') == wholeName ? 4 : iconSearchScore(entry, terms)) : [];
+  const terms = iconSearchWords(query).map(iconSearchTerm);
+  const scores = terms.length ? entries.map(entry => iconSearchExactName(entry, terms) ? 4 : iconSearchScore(entry, terms)) : [];
   if(scores.some(score => score))
     return scores;
   // a half typed tag ("cthulh") or a pasted emoji has no word to match, so rather than showing an

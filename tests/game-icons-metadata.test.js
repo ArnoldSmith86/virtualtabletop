@@ -207,6 +207,11 @@ test('the icon that is called exactly what was typed comes first', () => {
   expect(rankedSymbols('soul')[0]).toBe('delapouite/soul');
   expect(rankedSymbols('anvil')[0]).toBe('lorc/anvil');
   expect(rankedSymbols('shield')[0]).toBe('sbed/shield');
+  // in whichever number it was typed: the search treats "souls" and "soul" as the same word
+  // everywhere else, so the icon that owns it leads either way
+  expect(rankedSymbols('souls')[0]).toBe('delapouite/soul');
+  expect(rankedSymbols('anvils')[0]).toBe('lorc/anvil');
+  expect(rankedSymbols('shields')[0]).toBe('sbed/shield');
   // and the ranking still puts the names in front of the icons that are only tagged with the word
   expect(rankedSymbols('dragon').slice(0, 3).every(symbol => symbol.includes('dragon'))).toBe(true);
 });
