@@ -236,12 +236,9 @@
 }
 
 .editorModule .propertyValueChip {
-  /* chips of a list sit on a fixed pitch (their own size plus the list's gap) - see the skin tone
-     forms further down, which need to know it to leave a gap without breaking the columns */
-  --propertyChipSize: 34px;
-  width: var(--propertyChipSize);
-  height: var(--propertyChipSize);
-  min-width: var(--propertyChipSize);
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -478,18 +475,10 @@
 
 /* icon search previews are shown ~50% bigger than other chips */
 .editorModule .iconInput .propertyPickerChips .propertyValueChip {
-  --propertyChipSize: 50px;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
   font-size: 36px;
-}
-
-/* Once a search is narrow enough, the toned forms of an emoji go into the chip list itself
-   (client/js/emojivariants.js). The run of them needs a gap on either side to read as belonging to
-   the icon in front of it rather than as more results - and that gap is exactly one chip wide,
-   because these chips are a wrapped grid: any other width would put every row after the group out
-   of the columns of the rows above it, which is the whole list looking broken over one space. */
-.editorModule .propertyPickerChips.emojiVariantsExpanded .hasEmojiVariants,
-.editorModule .propertyPickerChips.emojiVariantsExpanded .emojiVariantInline + :not(.emojiVariantInline) {
-  margin-left: calc(var(--propertyChipSize) + 4px);
 }
 
 .editorModule .iconInput .propertyPickerChips .symbols,

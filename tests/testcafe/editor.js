@@ -1250,10 +1250,9 @@ test('A search narrow enough shows the skin tones in the icon list itself', asyn
 // (and, through the same control, the picker of a deck editor property row). Its limit is the
 // number of icons the search shows at all, so which searches fit is decided by the real index here
 // as well - "woman" has more matches than it can show, "thumbs" has eighteen.
-// The gap that separates a run of forms is one whole chip wide, because these chips are a wrapped
-// grid: a gap of any other width puts every row after the group out of the columns of the ones
-// above it, which is the list looking broken over one space (offColumn counts the chips that are
-// not on the pitch).
+// The forms sit in the list like every other chip, so a wrapped row of them keeps the columns of
+// the rows above it: anything the forms added between the chips would put every row after a group
+// out of those columns (offColumn counts the chips that are not on the pitch).
 const inlineChips = ClientFunction(() => {
   const lists = document.querySelectorAll('.propertyPickerChips');
   const results = lists[lists.length-1];

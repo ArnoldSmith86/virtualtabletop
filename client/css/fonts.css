@@ -617,18 +617,10 @@
 }
 
 /* Once a search has narrowed a picker down far enough, the forms go into its list itself instead
-   (symbols.js for the overlay grid, propertyInputs.js for the sidebar and the deck editor): the
-   corner marker then has nothing left to point at, and the run of forms needs a gap on either side
-   to read as belonging to the icon in front of it rather than as more results. */
+   (symbols.js for the overlay grid, propertyInputs.js for the sidebar and the deck editor), where
+   they sit like every other icon of the list - and the corner marker has nothing left to point at. */
 .emojiVariantsExpanded .hasEmojiVariants::after {
   display: none;
-}
-/* The gap is per list: the icons of the overlay grid have no box around them, so 20px of air is
-   what separates a run there, while the chips of the sidebar are a grid of bordered squares whose
-   columns a gap of that width would break (editor/propertyInputs.css). */
-#symbolList.emojiVariantsExpanded .hasEmojiVariants,
-#symbolList .emojiVariantInline + i:not(.emojiVariantInline) {
-  margin-left: 20px;
 }
 
 /* the flyout hangs off an icon of a grid that scrolls (and, in the sidebar, of a 340px column), so
