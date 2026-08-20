@@ -2105,3 +2105,16 @@ body.darkMode .boardSizeSetting .boardSizeMessage.success {
   margin: 4px 0 0 0;
   font-size: 1em;
 }
+
+/* the widget buffer is filled in one game and emptied in another, so it says so when the two
+   run with different legacy modes - the amber the other advisories in the editor use, since
+   pasting is still allowed */
+.editorModule .widgetBufferWarning {
+  color: #8a5300;
+  font-size: 0.9em;
+  margin-top: 8px;
+}
+
+body.darkMode .editorModule .widgetBufferWarning {
+  color: #f0be5a;
+}
