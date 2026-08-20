@@ -1006,7 +1006,7 @@ async function convertTTS(content, linkContent, workshop={}) {
       childrenPerOwner: true,
       dropShadow: true,
       hidePlayerCursors: true,
-      text: 'Hand', // an empty holder is a blank band otherwise
+      text: 'Your hand', // an empty holder is a blank band otherwise
       x: 50,
       y: 820,
       width: 1500,

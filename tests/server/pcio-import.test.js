@@ -724,12 +724,26 @@ describe('PCIO importer', () => {
   it('grows a label whose box is shorter than one line of its own text', async () => {
     const state = await importWidgets([
       { id: 'counter', type: 'counter',     x: 0, y: 100, height: 10, counterValue: 3 },
-      { id: 'unknown', type: 'videoPlayer', x: 0, y: 200, height:  5 }
+      { id: 'unknown', type: 'videoPlayer', x: 0, y: 200, height:  5 },
+      { id: 'spaced',  type: 'counter',     x: 0, y: 300, height: 24, counterValue: 3,
+        mainTextStyle: { size: 20, lineHeight: 1.6 } }
     ], 8);
 
     // the value of a counter is written in 30px, the placeholder in the default 16px
     expect(state.counter.height).toBe(32);
     expect(state.unknown.height).toBe(18);
+    // a line of 20px text in a 1.6 line height is 32px tall
+    expect(state.spaced.height).toBe(34);
+  });
+
+  it('sizes the buttons of a counter from the height its value needs', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 100, height: 10, counterValue: 3 }
+    ], 8);
+
+    // 32px tall value, so the buttons are square with the 4px margin on both sides
+    expect(state.counter_decrementButton).toMatchObject({ x: 4, width: 24, height: 24 });
+    expect(state.counter_incrementButton).toMatchObject({ x: 112, width: 24, height: 24 });
   });
 
   it('imports a turn button at the size PCIO gives it', async () => {
@@ -1016,12 +1030,19 @@ describe('PCIO importer', () => {
     });
   });
 
-  it('gives a hand the drop shadow and the hidden cursors of a VirtualTabletop hand', async () => {
+  it('gives a hand the drop shadow, the hidden cursors and the caption of a VirtualTabletop hand', async () => {
     const state = await importWidgets([ { id: 'hand', type: 'hand', x: 0, y: 800 } ], 8);
 
     expect(state.hand.childrenPerOwner).toBe(true);
     expect(state.hand.dropShadow).toBe(true);
     expect(state.hand.hidePlayerCursors).toBe(true);
+    expect(state.hand.text).toBe('Your hand');
+  });
+
+  it('captions a hand with the name it was given in PlayingCards.io', async () => {
+    const state = await importWidgets([ { id: 'hand', type: 'hand', x: 0, y: 800, label: 'Your cards' } ], 8);
+
+    expect(state.hand.text).toBe('Your cards');
   });
 
   it('writes the file at the current version so that no legacy mode is turned on for it', async () => {

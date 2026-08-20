@@ -319,6 +319,13 @@ export default async function convertPCIO(content) {
       w.height = widget.height;
   }
 
+  // a label whose box is shorter than one line of its text shows nothing at all,
+  // so this is the smallest height that one line of its own font still fits into
+  function labelMinHeight(w) {
+    const sizes = [ ...JSON.stringify(w.css || '').matchAll(/(?:font-size|line-height)"?:"? *([0-9.]+) *px/g) ].map(match=>+match[1]);
+    return Math.max(16, ...sizes) + 2;
+  }
+
   // The objects an automation works on: either a holder parameter on the
   // operation itself or a SELECT into a collection. Returns null for a query
   // that matches nothing so that the caller can skip the whole step, which is
@@ -733,6 +740,8 @@ export default async function convertPCIO(content) {
       w.childrenPerOwner = true;
       w.dropShadow = true;
       w.hidePlayerCursors = true;
+      // an empty holder is a blank band otherwise
+      w.text = widget.label || 'Your hand';
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
       if(widget.allowedDecks && widget.allowedDecks.length)
@@ -1090,6 +1099,10 @@ export default async function convertPCIO(content) {
         warn(`Counter ${widgetName(widget)} was outside its ${boundsText(bounds)} and starts at ${w.text} instead of ${widget.counterValue}.`);
       if(bounds && widget.allowPlayerEditValue !== false)
         warnAbout(`bounds ${boundsText(bounds)}`, widget, (names, count)=>`Typing a value into the counter${count > 1 ? 's' : ''} ${names} is not restricted to ${count > 1 ? 'their' : 'its'} ${boundsText(bounds)} - the buttons and the automations that change ${count > 1 ? 'them' : 'it'} are.`);
+
+      // the +/- buttons are sized from the counter, so its box has to have room
+      // for one line of the value before they are created
+      w.height = Math.max(w.height, labelMinHeight(w));
 
       const counterStep = Math.abs(+widget.counterStep) || 1;
 
@@ -2244,13 +2257,12 @@ export default async function convertPCIO(content) {
     if(output[seatID])
       output[seatID].turn = true;
 
-  // a label whose box is shorter than one line of its text shows nothing at all
+  // grow every label that ended up shorter than one line of its own text
   for(const w of Object.values(output)) {
     if(w.type != 'label')
       continue;
-    const match = JSON.stringify(w.css || '').match(/font-size"?:"? *([0-9]+) *px/);
-    const minHeight = (match ? +match[1] : 16) + 2;
-    if((w.height || 20) < minHeight)
+    const minHeight = labelMinHeight(w);
+    if((w.height ?? 20) < minHeight)
       w.height = minHeight;
   }
 

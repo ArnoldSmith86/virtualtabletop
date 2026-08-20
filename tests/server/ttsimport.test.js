@@ -274,7 +274,7 @@ describe('TTS import: files', () => {
 
     // the caption of the hand is what the legacy mode for holders without image support
     // looks for in an old file - it would hide the very text the importer just wrote
-    expect(widgets.hand.text).toBe('Hand');
+    expect(widgets.hand.text).toBe('Your hand');
   });
 
   it('keeps the widget IDs of two imports that run at the same time apart', async () => {
