@@ -9,6 +9,11 @@ function log(message) {
   console.log(new Date().toISOString(), String(message).replace(/\n/g, '\\n'));
 }
 
+// the last line before a failed startup exits - operators and log wrappers watch stderr for that
+function logFatal(message) {
+  console.error(new Date().toISOString(), String(message).replace(/\n/g, '\\n'));
+}
+
 function logError(message, e) {
   log(`ERROR - ${message} - ${e.stack}`);
 }
@@ -42,6 +47,7 @@ function handleGenericException(origin, e) {
 export default {
   UserError,
   log,
+  logFatal,
   userErrorHandler,
   errorHandler,
   handleWebSocketException,

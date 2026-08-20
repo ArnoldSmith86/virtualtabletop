@@ -23,16 +23,17 @@ function startServer(port, saveDir) {
   });
   // a server that manages to bind would otherwise run forever and outlive the test run
   const result = new Promise(function(resolve) {
-    let output = '';
+    let stdout = '';
+    let stderr = '';
     const giveUp = setTimeout(function() {
       child.kill('SIGKILL');
-      resolve({ code: null, output });
+      resolve({ code: null, stdout, stderr });
     }, 30000);
-    child.stdout.on('data', d=>output += d);
-    child.stderr.on('data', d=>output += d);
+    child.stdout.on('data', d=>stdout += d);
+    child.stderr.on('data', d=>stderr += d);
     child.on('close', function(code) {
       clearTimeout(giveUp);
-      resolve({ code, output });
+      resolve({ code, stdout, stderr });
     });
   });
   return { child, result };
@@ -55,13 +56,17 @@ describe('server startup with an unavailable port', function() {
   });
 
   test('explains what is wrong instead of dumping an unhandled error event', function() {
-    expect(result.output).toContain(`Port ${blocked.port} is already in use`);
-    expect(result.output).not.toContain('Unhandled \'error\' event');
-    expect(result.output).not.toContain('EADDRINUSE');
+    expect(result.stderr).toContain(`Port ${blocked.port} is already in use`);
+    expect(result.stderr).not.toContain('Unhandled \'error\' event');
+    expect(result.stderr).not.toContain('EADDRINUSE');
   });
 
   test('names the environment variable the port came from', function() {
-    expect(result.output).toContain('set a different port via the PORT environment variable');
+    expect(result.stderr).toContain('set a different port via the PORT environment variable');
+  });
+
+  test('reports the failure on stderr so it survives a redirected stdout', function() {
+    expect(result.stdout).not.toContain('is already in use');
   });
 
   test('exits with a failure code', function() {

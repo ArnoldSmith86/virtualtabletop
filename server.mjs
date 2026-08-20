@@ -621,9 +621,9 @@ MinifyHTML().then(function(result) {
     // advice for a deployment that sets PORT - the documented way to configure the Docker image
     const portSource = process.env.PORT !== undefined ? 'the PORT environment variable' : '"port" in config.json';
     if(e.code == 'EADDRINUSE')
-      Logging.log(`ERROR - Port ${port} is already in use. Another VirtualTabletop instance or a different program is listening on it. Stop that program or set a different port via ${portSource}.`);
+      Logging.logFatal(`ERROR - Port ${port} is already in use. Stop the program listening on it or set a different port via ${portSource}. If you just restarted VirtualTabletop, wait a few seconds and try again.`);
     else if(e.code == 'EACCES')
-      Logging.log(`ERROR - Not allowed to listen on port ${port}. Ports below 1024 usually require elevated privileges - set a different port via ${portSource}.`);
+      Logging.logFatal(`ERROR - Not allowed to listen on port ${port}. Ports below 1024 usually require root privileges. Run VirtualTabletop with sudo, put it behind a reverse proxy, or set a different port via ${portSource}.`);
     else
       Logging.handleGenericException(`listening on port ${port}`, e);
     process.exit(1);
