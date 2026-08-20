@@ -140,6 +140,14 @@ function searchSymbols(query) {
   return searchIndex.filter((entry, i) => scores[i]).map(entry => entry.symbol);
 }
 
+// what the pickers show: the sidebar sorts its matches by their score, the picker of the room lays
+// them out in the CSS orders of the same score, so both of them read in this order
+function rankedSymbols(query) {
+  const scores = iconSearchScores(searchIndex, query);
+  return searchIndex.map((entry, i) => ({ symbol: entry.symbol, score: scores[i] })).filter(match => match.score)
+    .sort((a, b) => b.score - a.score).map(match => match.symbol);
+}
+
 test('a plural finds what its singular finds', () => {
   // Neither the file names nor the tags settle on a number - the icon is "delapouite/horse-head"
   // but "lorc/kitchen-knives", and a tag may not repeat a word of the name, so an icon named
@@ -172,6 +180,35 @@ test('a word that only ends in s is not searched as a plural', () => {
   // "cross" is not the plural of "cros" either, and "crosses" still finds the crosses
   expect(searchSymbols('crosses')).toContain('delapouite/jerusalem-cross');
   expect(searchSymbols('lens')).toContain('lorc/microscope-lens');
+});
+
+test('an icon is found by the name of the set it belongs to', () => {
+  // the 22 major arcana are one set, and are looked for as one: their file names carry "tarot" and
+  // the number, so without the tags "major arcana" answered with nothing and "tarot card" with the
+  // joker while all 22 of them sat in the picker
+  const arcana = svgFiles.filter(name => name.startsWith('caro-asercion/tarot-'));
+  expect(arcana.length).toBe(22);
+  for(const query of [ 'major arcana', 'tarot card', 'tarot deck' ])
+    expect(searchSymbols(query)).toEqual(expect.arrayContaining(arcana));
+});
+
+test('two icons of the same subject are told apart by their tags', () => {
+  // the two Schroedinger cats share their box, their trefoil and 16 of their tags, and at the size
+  // of the picker grid they are the same picture - the tags that differ are what names them
+  expect(searchSymbols('live cat')).toContain('caro-asercion/schrodingers-cat-alive');
+  expect(searchSymbols('awake cat')).toContain('caro-asercion/schrodingers-cat-alive');
+  expect(searchSymbols('dead cat')).not.toContain('caro-asercion/schrodingers-cat-alive');
+  expect(searchSymbols('limp cat')).toEqual([ 'caro-asercion/schrodingers-cat-dead' ]);
+});
+
+test('the icon that is called exactly what was typed comes first', () => {
+  // a whole-word match says nothing about how much of the name is left over, so the icon that owns
+  // the word used to rank wherever the montage order happened to put it
+  expect(rankedSymbols('soul')[0]).toBe('delapouite/soul');
+  expect(rankedSymbols('anvil')[0]).toBe('lorc/anvil');
+  expect(rankedSymbols('shield')[0]).toBe('sbed/shield');
+  // and the ranking still puts the names in front of the icons that are only tagged with the word
+  expect(rankedSymbols('dragon').slice(0, 3).every(symbol => symbol.includes('dragon'))).toBe(true);
 });
 
 test('an icon game-icons.net has renamed is found by the name the site uses now', () => {

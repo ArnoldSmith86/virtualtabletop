@@ -200,14 +200,20 @@ function iconSearchScore(entry, terms) {
 }
 
 // Scores a whole list of search entries against one query: 0 for the entries that do not match,
-// 1 to 3 for the ones that do. Both pickers rank by it, which is what makes them agree on what a
-// query means - the sidebar sorts its result list, the picker below lays its matches out in three
+// 1 to 4 for the ones that do. Both pickers rank by it, which is what makes them agree on what a
+// query means - the sidebar sorts its result list, the picker below lays its matches out in four
 // CSS orders because its list is built once and only filtered afterwards.
+//
+// 4 is the icon that is called exactly what was typed and nothing else: a whole-word match says
+// nothing about how much of the name it leaves over, so "soul" led with soul-vessel and "anvil"
+// with anvil-impact - the icon that owns the word sat among the ones that only contain it.
 function iconSearchScores(entries, query) {
   if(!query.trim())
     return entries.map(_=>1);
-  const terms = iconSearchWords(query).map(iconSearchTerm);
-  const scores = terms.length ? entries.map(entry => iconSearchScore(entry, terms)) : [];
+  const words = iconSearchWords(query);
+  const terms = words.map(iconSearchTerm);
+  const wholeName = words.join(' ');
+  const scores = terms.length ? entries.map(entry => entry.name.join(' ') == wholeName ? 4 : iconSearchScore(entry, terms)) : [];
   if(scores.some(score => score))
     return scores;
   // a half typed tag ("cthulh") or a pasted emoji has no word to match, so rather than showing an
@@ -308,10 +314,11 @@ export async function loadSymbolPicker() {
       for(const [ i, icon ] of icons.entries()) {
         toggleClass(icon, 'hidden', !scores[i]);
         // the list is built once and is only filtered afterwards, so the matches cannot be
-        // re-sorted: these two classes lay them out in the three CSS orders of their score
+        // re-sorted: these three classes lay them out in the four CSS orders of their score
         // instead, which is the ranking the sidebar's icon picker sorts its own results by
-        toggleClass(icon, 'nameMatch', ranked && scores[i] == 3);
-        toggleClass(icon, 'tagMatch',  ranked && scores[i] == 1);
+        toggleClass(icon, 'exactMatch', ranked && scores[i] == 4);
+        toggleClass(icon, 'nameMatch',  ranked && scores[i] == 3);
+        toggleClass(icon, 'tagMatch',   ranked && scores[i] == 1);
       }
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);

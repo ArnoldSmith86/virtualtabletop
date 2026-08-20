@@ -1136,6 +1136,17 @@ describe('property input helpers', () => {
     expect(inputHelpers.searchIconIndex('dragon').values).toEqual([ 'lorc/dragon-head', 'lorc/dragonfly', 'delapouite/scales' ]);
   });
 
+  test('icon search leads with the icon that is called exactly what was typed', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/dragon-head',  ...inputHelpers.iconSearchEntry('dragon-head', [ 'beast' ]),   image: true },
+      { value: 'delapouite/scales', ...inputHelpers.iconSearchEntry('fish-scales', [ 'dragon' ]),  image: true },
+      { value: 'lorc/dragon',       ...inputHelpers.iconSearchEntry('dragon', [ 'wyrm' ]),         image: true }
+    ]);
+    // the whole name and nothing else: a name that only contains the word has more to it, however
+    // early it sits in the index
+    expect(inputHelpers.searchIconIndex('dragon').values).toEqual([ 'lorc/dragon', 'lorc/dragon-head', 'delapouite/scales' ]);
+  });
+
   test('icon search understands accents and both English spellings', () => {
     inputHelpers.setIconSearchIndex([
       { value: 'delapouite/fencer',    ...inputHelpers.iconSearchEntry('fencer', [ 'epee', 'fencing' ]), image: true },

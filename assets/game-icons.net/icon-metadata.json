@@ -29,6 +29,8 @@
   "     search for beards and bearings, which is what a user typing them wants - a razor in a search for 'bear' is not. Write fewer",
   "     than 20 tags rather than padding with words that fit every icon of the family alike: the search shows the first 100 matches,",
   "     name matches first, so a word carried by a whole section buries the icons that are really about it.",
+  "     An icon that is part of a SET carries the name of the set as a tag, again as one phrase: the 22 tarot cards are looked",
+  "     for as 'major arcana' or 'tarot card' at least as often as by the name of a single card, and only a tag answers those.",
   "     Tags are plain lowercase ASCII (no accents, no '&'): they are what a user types into the search box. Use US spelling -",
   "     'defense', 'armor', 'color' - because the match never bridges the two.",
   "   - categories: 5 broad category suggestions, most specific first, taken from the vocabulary in `categoryVocabulary` below.",
@@ -4585,6 +4587,8 @@
   "caro-asercion/schrodingers-cat-alive": {
    "description": "A cat sitting up wide awake inside an open box marked with a radioactive trefoil.",
    "tags": [
+    "awake",
+    "live",
     "quantum",
     "thought experiment",
     "physics",
@@ -4616,6 +4620,8 @@
   "caro-asercion/schrodingers-cat-dead": {
    "description": "A cat with crossed-out eyes and a limp tail slumped over an open box marked with a radioactive trefoil.",
    "tags": [
+    "limp",
+    "slumped",
     "quantum",
     "thought experiment",
     "physics",
@@ -5139,7 +5145,7 @@
   "caro-asercion/tarot-00-the-fool": {
    "description": "A wanderer striding off a ledge with a bundle slung from a staff over the shoulder.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "wanderer",
     "beginning",
@@ -5156,7 +5162,9 @@
     "new start",
     "traveler",
     "bundle",
-    "risk"
+    "risk",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5170,7 +5178,7 @@
   "caro-asercion/tarot-01-the-magician": {
    "description": "A robed magician at a table of tools, one hand raised with a wand beneath an infinity sign.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "wizard",
     "conjurer",
@@ -5187,7 +5195,9 @@
     "skill",
     "creation",
     "mage",
-    "one"
+    "one",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5201,7 +5211,7 @@
   "caro-asercion/tarot-02-the-high-priestess": {
    "description": "A veiled woman in a horned crown seated between two tall pillars.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "veiled woman",
     "pillars",
@@ -5218,7 +5228,9 @@
     "lunar horns",
     "sanctuary",
     "silence",
-    "robe"
+    "robe",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5232,7 +5244,7 @@
   "caro-asercion/tarot-03-the-empress": {
    "description": "A crowned empress seated with a scepter, a heart-shaped shield resting at her side.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "queen",
     "throne",
@@ -5249,7 +5261,9 @@
     "grace",
     "matriarch",
     "romance",
-    "garden"
+    "garden",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5263,7 +5277,7 @@
   "caro-asercion/tarot-04-the-emperor": {
    "description": "A crowned emperor on a blocky throne holding a cross-topped scepter.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "king",
     "throne",
@@ -5280,7 +5294,9 @@
     "discipline",
     "empire",
     "crown",
-    "father"
+    "father",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5294,7 +5310,7 @@
   "caro-asercion/tarot-05-the-hierophant": {
    "description": "A mitred hierophant raising a hand in blessing and holding a triple-barred papal cross.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "pope",
     "priest",
@@ -5311,7 +5327,9 @@
     "hierarchy",
     "faith",
     "spiritual guide",
-    "sermon"
+    "sermon",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5325,7 +5343,7 @@
   "caro-asercion/tarot-06-the-lovers": {
    "description": "Two figures standing apart beneath a winged angel with outstretched wings.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "couple",
     "angel",
@@ -5342,7 +5360,9 @@
     "relationship",
     "temptation",
     "pair",
-    "bond"
+    "bond",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5356,7 +5376,7 @@
   "caro-asercion/tarot-07-the-chariot": {
    "description": "A crowned charioteer riding a chariot drawn by two crouching beasts.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "charioteer",
     "sphinxes",
@@ -5373,7 +5393,9 @@
     "steeds",
     "procession",
     "forward",
-    "determination"
+    "determination",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5387,7 +5409,7 @@
   "caro-asercion/tarot-08-strength": {
    "description": "A figure calmly holding open the jaws of a maned lion.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "lion",
     "courage",
@@ -5404,7 +5426,9 @@
     "will",
     "control",
     "valor",
-    "wild animal"
+    "wild animal",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5418,7 +5442,7 @@
   "caro-asercion/tarot-09-the-hermit": {
    "description": "A hooded hermit leaning on a staff and holding up a lantern.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "lantern",
     "solitude",
@@ -5435,7 +5459,9 @@
     "monk",
     "search",
     "quiet",
-    "mountain path"
+    "mountain path",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5449,7 +5475,7 @@
   "caro-asercion/tarot-10-wheel-of-fortune": {
    "description": "A spoked wheel ringed by four winged creatures at the corners.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "spokes",
     "destiny",
@@ -5466,7 +5492,9 @@
     "revolve",
     "providence",
     "ups and downs",
-    "wings"
+    "wings",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5480,7 +5508,7 @@
   "caro-asercion/tarot-11-justice": {
    "description": "A crowned figure holding an upright sword in one hand and a pair of scales in the other.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "scales",
     "sword",
@@ -5497,7 +5525,9 @@
     "impartial",
     "ruling",
     "crown",
-    "consequence"
+    "consequence",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5511,7 +5541,7 @@
   "caro-asercion/tarot-12-the-hanged-man": {
    "description": "A figure suspended upside down by one foot, arms folded behind the back.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "upside down",
     "suspended",
@@ -5528,7 +5558,9 @@
     "patience",
     "odin",
     "limbo",
-    "stillness"
+    "stillness",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5542,7 +5574,7 @@
   "caro-asercion/tarot-13-death": {
    "description": "An armored reaper carrying a banner on a staff, striding over a fallen figure.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "reaper",
     "skeleton",
@@ -5559,7 +5591,9 @@
     "rebirth",
     "omen",
     "passing",
-    "funeral"
+    "funeral",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5573,7 +5607,7 @@
   "caro-asercion/tarot-14-temperance": {
    "description": "A winged angel in a patterned robe pouring liquid from one vessel into another.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "angel",
     "wings",
@@ -5590,7 +5624,9 @@
     "guardian spirit",
     "restraint",
     "synthesis",
-    "calm"
+    "calm",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5604,7 +5640,7 @@
   "caro-asercion/tarot-15-the-devil": {
    "description": "A horned, bat-winged devil looming over two small captive figures.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "demon",
     "horns",
@@ -5621,7 +5657,9 @@
     "materialism",
     "imp",
     "fiend",
-    "hell"
+    "hell",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5635,7 +5673,7 @@
   "caro-asercion/tarot-16-the-tower": {
    "description": "A tower struck by lightning, flames bursting from its window as a crowned figure falls.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "lightning",
     "ruin",
@@ -5652,7 +5690,9 @@
     "downfall",
     "keep",
     "revelation",
-    "crown"
+    "crown",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5666,7 +5706,7 @@
   "caro-asercion/tarot-17-the-star": {
    "description": "A kneeling figure pouring water from two bowls beneath a four-pointed star in a circle.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "hope",
     "pouring water",
@@ -5683,7 +5723,9 @@
     "calm",
     "spring",
     "faith",
-    "promise"
+    "promise",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5697,7 +5739,7 @@
   "caro-asercion/tarot-18-the-moon": {
    "description": "A crescent in a rayed circle above two howling beasts facing each other.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "crescent",
     "wolves",
@@ -5714,7 +5756,9 @@
     "fear",
     "path",
     "shadowy",
-    "hound"
+    "hound",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5728,7 +5772,7 @@
   "caro-asercion/tarot-19-the-sun": {
    "description": "A radiant sun with a human face shining over a child riding a horse.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "radiant face",
     "rays",
@@ -5745,7 +5789,9 @@
     "rider",
     "blessing",
     "glow",
-    "clarity"
+    "clarity",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5759,7 +5805,7 @@
   "caro-asercion/tarot-20-judgement": {
    "description": "A winged figure blowing a long trumpet over a person rising from a tomb.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "judgment",
     "trumpet",
@@ -5776,7 +5822,9 @@
     "salvation",
     "verdict",
     "wings",
-    "afterlife"
+    "afterlife",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
@@ -5790,7 +5838,7 @@
   "caro-asercion/tarot-21-the-world": {
    "description": "A dancing figure framed by a thick wreath of leaves.",
    "tags": [
-    "arcana",
+    "major arcana",
     "divination",
     "wreath",
     "laurel",
@@ -5807,7 +5855,9 @@
     "leaves",
     "finale",
     "journey end",
-    "unity"
+    "unity",
+    "card",
+    "deck"
    ],
    "categories": [
     "Occult",
