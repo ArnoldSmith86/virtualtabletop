@@ -584,19 +584,8 @@
   background-image: url(i/game-icons.net/overview48.png);
 }
 
-/* hovering an icon draws it from its own file instead of from the sprite sheet, in every picker: the help text
-   above the list promises the real image on hover, and the rich text picker draws from the sheet as well */
-#symbolPickerOverlay .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {
+#symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {
   background: var(--url);
-}
-
-/* a 24px tile is too small to tell apart two icons that differ in a detail - the Schroedinger cats are the same
-   cat in the same box either way - so hovering one also lifts it out of the grid. Only where the tiles are that
-   small: a narrowed search already draws them at 64px. The transform leaves the grid it sits in where it is. */
-#symbolPickerOverlay:not(.bigPreviews.fewResults) .gameicons:hover {
-  transform: scale(2.5);
-  position: relative;
-  z-index: 1;
 }
 
 /* every icon and category heading carries data-family=image|font, so the restriction to one of the two
