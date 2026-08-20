@@ -90,14 +90,9 @@ class Holder extends ImageWidget {
     return p;
   }
 
-  // childrenPerOwner makes the holder a per-player hand: what it receives becomes the receiving
-  // player's, and what leaves belongs to nobody again.
-  async applyEnter(child, oldParentID) {
-    if(child.get('type') != 'deck' && this.get('childrenPerOwner'))
-      await child.set('owner', child.targetPlayer||playerName);
-    await super.applyEnter(child, oldParentID);
-  }
-
+  // childrenPerOwner makes the holder a per-player hand, so what leaves it belongs to nobody
+  // again. The other half of that is in onChildAdd(), because becoming a child is what claims
+  // a widget, not the arrival event.
   async applyLeave(child) {
     if(child.get('type') != 'deck' && !child.isBeingRemoved && this.get('childrenPerOwner'))
       await child.set('owner', null);
@@ -158,16 +153,19 @@ class Holder extends ImageWidget {
     if(child.get('type') == 'deck')
       return;
 
-    // the legacy pipeline runs the enter half from here, which is why it applied onEnter to
-    // every parent change into the holder except one: a drop back into the holder the drag
-    // started in, which it recognised by the widget still remembering it as currentParent
-    if(legacyMode('legacyHolderEnterLeaveEvents')) {
-      if(this.get('childrenPerOwner'))
-        await child.set('owner', child.targetPlayer||playerName);
+    // A per-player hand claims every widget that becomes a direct child of it, which is not the
+    // same thing as an arrival: a hand that unpacks a dropped pile hands the cards over one by
+    // one, and none of those is a move between containers. The pile the cards came from is gone
+    // by the time the last one is out, so it is not claimed along with them.
+    if(this.get('childrenPerOwner') && !child.isBeingRemoved)
+      await child.set('owner', child.targetPlayer||playerName);
 
-      if(this != child.currentParent) // FIXME: this isn't exactly pretty
-        await this.applyEnterProperties(child);
-    }
+    // the legacy pipeline runs the property half of the arrival from here too, which is why it
+    // applied onEnter to every parent change into the holder except one: a drop back into the
+    // holder the drag started in, which it recognised by the widget still remembering it as
+    // currentParent
+    if(legacyMode('legacyHolderEnterLeaveEvents') && this != child.currentParent)
+      await this.applyEnterProperties(child);
   }
 
   async onChildAddAlign(child, oldParentID) {

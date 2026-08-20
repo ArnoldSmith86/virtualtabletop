@@ -539,6 +539,15 @@ describe('piles', () => {
     expect(trace()).toEqual([ 'enter pile1 c1[parent=pile1 mark=null owner=null]' ]);
   });
 
+  test('a per-owner holder claims every card of a pile it unpacks', async () => {
+    setupRoom(room({ pile1: { type: 'pile' }, c1: { type: 'card', parent: 'pile1' }, c2: { type: 'card', parent: 'pile1' } },
+      { preventPiles: true, childrenPerOwner: true }));
+    await dragWidget('pile1', { to: 'handB' });
+    // the cards become children of the holder one by one, which is not an arrival from outside -
+    // so the owner cannot hang off the enter event
+    expect([ widgets.get('c1').get('owner'), widgets.get('c2').get('owner') ]).toEqual([ 'jestPlayer', 'jestPlayer' ]);
+  });
+
   test('a preventPiles holder unpacks a dropped pile without extra events', async () => {
     setupRoom(room({ pile1: { type: 'pile' }, c1: { type: 'card', parent: 'pile1' }, c2: { type: 'card', parent: 'pile1' } },
       { preventPiles: true }));
