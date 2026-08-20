@@ -17,28 +17,39 @@ function occupyPort() {
 }
 
 function startServer(port, saveDir) {
-  return new Promise(function(resolve) {
-    const child = spawn(process.execPath, [ 'server.mjs' ], {
-      cwd: rootDir,
-      env: Object.assign({}, process.env, { PORT: String(port), VTT_SAVE_DIR: saveDir })
-    });
+  const child = spawn(process.execPath, [ 'server.mjs' ], {
+    cwd: rootDir,
+    env: Object.assign({}, process.env, { PORT: String(port), VTT_SAVE_DIR: saveDir })
+  });
+  // a server that manages to bind would otherwise run forever and outlive the test run
+  const result = new Promise(function(resolve) {
     let output = '';
+    const giveUp = setTimeout(function() {
+      child.kill('SIGKILL');
+      resolve({ code: null, output });
+    }, 30000);
     child.stdout.on('data', d=>output += d);
     child.stderr.on('data', d=>output += d);
-    child.on('close', code=>resolve({ code, output }));
+    child.on('close', function(code) {
+      clearTimeout(giveUp);
+      resolve({ code, output });
+    });
   });
+  return { child, result };
 }
 
 describe('server startup with an unavailable port', function() {
-  let blocked, saveDir, result;
+  let blocked, saveDir, server, result;
 
   beforeAll(async function() {
     blocked = await occupyPort();
     saveDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vtt-startup-'));
-    result = await startServer(blocked.port, saveDir);
+    server = startServer(blocked.port, saveDir);
+    result = await server.result;
   }, 60000);
 
   afterAll(async function() {
+    server.child.kill('SIGKILL');
     await blocked.release();
     fs.rmSync(saveDir, { recursive: true, force: true });
   });
@@ -49,11 +60,15 @@ describe('server startup with an unavailable port', function() {
     expect(result.output).not.toContain('EADDRINUSE');
   });
 
+  test('names the environment variable the port came from', function() {
+    expect(result.output).toContain('set a different port via the PORT environment variable');
+  });
+
   test('exits with a failure code', function() {
     expect(result.code).toBe(1);
   });
 
-  test('leaves the save directory of the running instance alone', function() {
+  test('does not write statistics into the save directory of the running instance', function() {
     expect(fs.existsSync(path.join(saveDir, 'statistics.json'))).toBe(false);
   });
 });
