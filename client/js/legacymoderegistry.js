@@ -120,19 +120,23 @@ export const LEGACY_MODES = {
     pr: 3134,
     interactsWith: [ 'disableHolderImageWidget' ],
     detect: state => /"(enterRoutine|leaveRoutine|onEnter|onLeave|childrenPerOwner)"\s*:/.test(JSON.stringify(state)),
-    label: 'Legacy holder enter/leave events',
-    summary: 'leaveRoutine fires twice per move, onLeave only for drags and MOVE.',
+    label: 'Fire holder leave events twice',
+    summary: 'Holders raise the leave event twice per move, and apply onLeave only for drags and MOVE.',
     description: `
-      <b>Old behavior</b>: Two different places raised the leave event, so every drag and every <code>MOVE</code> called <code>leaveRoutine</code> twice - once when the widget was detached and once when it was really out of the holder. The <code>onLeave</code> properties were only applied on the second of those, which meant <code>SET parent</code> and <code>MOVEXY</code> never applied them at all. A card that joined a pile inside the holder it was already in raised a leave event with no matching enter, and a card dropped back into the holder it was picked up from ran <code>enterRoutine</code> without applying <code>onEnter</code>. A card taken out of a <code>childrenPerOwner</code> holder by <code>SET parent</code> or <code>MOVEXY</code> kept its owner.
+      <b>Old behavior</b>: A holder raises a <i>leave</i> when a widget stops being its child and an <i>enter</i> when one becomes its child. Two places raised the leave, so a drag or a <code>MOVE</code> called <code>leaveRoutine</code> twice, and <code>onLeave</code> was applied only on the second call.
       <br><br>
-      <b>New behavior</b>: A parent change raises at most one leave and one enter, whichever way the widget was moved. Each event applies its properties first and calls its routine afterwards, so the routine always sees the values the event wrote. Piles are transparent: joining, leaving or dissolving a pile inside another container is not a move between containers and raises no event. Picking a card up and dropping it back into the same holder is a real leave and a real enter, so both apply their properties. A <code>childrenPerOwner</code> holder releases the owner however the card left it, dragged or not - but a dragged card only once it is outside the holder's box, so rearranging a hand never uncovers a card.
-      <br><br>
+      <b>New behavior</b>: one leave and one enter per move, properties before routine. In detail:
+      <ul>
+        <li><code>leaveRoutine</code> runs once per departure, not twice</li>
+        <li><code>SET parent</code> and <code>MOVEXY</code> now apply <code>onLeave</code></li>
+        <li>dropping a card back into the holder it came from is a real leave and a real enter</li>
+        <li>a <code>childrenPerOwner</code> holder releases the owner however the card left it - a dragged card once it is outside the box, so rearranging a hand never uncovers it</li>
+        <li>joining or leaving a pile inside a holder raises nothing</li>
+      </ul>
       <b>Example:</b> a holder whose <code>leaveRoutine</code> counts the cards that left it.
       <br><br>
       Old result: dragging one card out counts <code>2</code><br>
       New result: dragging one card out counts <code>1</code>
-      <br><br>
-      Enable this mode for a game that was built around the double call - or around <code>MOVEXY</code> not applying <code>onLeave</code>.
       `
   }
 };
