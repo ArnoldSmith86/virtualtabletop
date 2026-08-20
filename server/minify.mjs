@@ -264,14 +264,19 @@ export async function buildHTML() {
   // express.static sends it as it is, so keep it gzipped here as well - it compresses to about a fifth
   const symbols = readInputFile(SYMBOLS_JSON);
 
+  // none of these three depend on each other and zlib does its work in the libuv threadpool, so
+  // waiting for them together instead of one after the other shortens the tail of the build by
+  // roughly the two smaller ones. What comes out is the same either way.
+  const [ editorJSgzipped, fflateGzipped, symbolsGzipped ] = await Promise.all([ gzip(editorJS), gzip(fflate), gzip(symbols) ]);
+
   return {
     min: room.min,
     gzipped: room.gzipped,
     editorJSmin: editorJS,
-    editorJSgzipped: await gzip(editorJS),
+    editorJSgzipped,
     fflateMin: fflate,
-    fflateGzipped: await gzip(fflate),
-    symbolsGzipped: await gzip(symbols)
+    fflateGzipped,
+    symbolsGzipped
   };
 }
 
