@@ -1,5 +1,6 @@
 import { BSON } from 'bson';
 
+import FileUpdater, { VERSION } from '../../server/fileupdater.mjs';
 import TTS from '../../server/ttsimport.mjs';
 import Zip from '../../server/zip.mjs';
 
@@ -240,6 +241,22 @@ describe('TTS import: files', () => {
     expect(widgets._meta.info.importerTemp).toBe('TTS');
   });
 
+  it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
+    const state = (await TTS.fromBSON(BSON.serialize({
+      SaveName: 'test',
+      Hands: { Enable: true },
+      ObjectStates: [ die('a', 0), { Name: 'HandTrigger', GUID: 'h1', FogColor: 'Red' } ]
+    }))).TTS['0.json'];
+
+    // the caption of the hand is what the legacy mode for holders without image support
+    // looks for in an old file - it would hide the very text the importer just wrote
+    expect(state.hand.text).toBe('Hand');
+    expect(state._meta.version).toBe(VERSION);
+    expect(state._meta.gameSettings).toBeUndefined();
+    // loading the imported file leaves it exactly as it is
+    expect(FileUpdater(JSON.parse(JSON.stringify(state)))).toEqual(state);
+  });
+
   it('keeps the widget IDs of two imports that run at the same time apart', async () => {
     // two objects with the same GUID: the second one has to get an ID of its own
     const twins = SaveName=>({ SaveName, ObjectStates: [ die('twin', -2), die('twin', 2) ] });
@@ -437,6 +454,18 @@ describe('TTS import: seats', () => {
 
     expect(typed(widgets, 'seat').map(s=>s.color)).toEqual([ '#da1917', '#118ed7' ]);
     expect(widgets.hand.type).toBe('holder');
+  });
+
+  it('gives the hand the drop shadow and the hidden cursors of a VirtualTabletop hand', async () => {
+    const widgets = await convert({
+      SaveName: 'test',
+      Hands: { Enable: true },
+      ObjectStates: [ die('a', 0), { Name: 'HandTrigger', GUID: 'h1', FogColor: 'Red' } ]
+    });
+
+    expect(widgets.hand.childrenPerOwner).toBe(true);
+    expect(widgets.hand.dropShadow).toBe(true);
+    expect(widgets.hand.hidePlayerCursors).toBe(true);
   });
 
   it('fits the seats onto the surface even with a hand zone per TTS color', async () => {

@@ -2,6 +2,7 @@ import fs from 'fs';
 import CRC32 from 'crc-32';
 
 import Config from './config.mjs';
+import { VERSION } from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Zip from './zip.mjs';
 
@@ -568,7 +569,7 @@ export default async function convertPCIO(content) {
         importerTemp: 'PCIO',
         importerTime: +new Date()
       },
-      version: 4
+      version: VERSION
     }
   };
 
@@ -727,6 +728,8 @@ export default async function convertPCIO(content) {
       }
       w.inheritChildZ = true;
       w.childrenPerOwner = true;
+      w.dropShadow = true;
+      w.hidePlayerCursors = true;
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
       if(widget.allowedDecks && widget.allowedDecks.length)
@@ -1009,6 +1012,18 @@ export default async function convertPCIO(content) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key], nativeDiceDecks[widget.id]);
         w.cardTypes[type].sortingOrder = ++sortingOrder;
+      }
+
+      // PCIO marks a face object that takes its content from a card type property with
+      // valueType/value, which VirtualTabletop writes as a dynamicProperties entry instead
+      for(const face of w.faceTemplates) {
+        for(const object of face.objects) {
+          if(object.valueType != 'static' && object.value) {
+            object.dynamicProperties = Object.assign({}, object.dynamicProperties, { value: object.value });
+            delete object.value;
+          }
+          delete object.valueType;
+        }
       }
     } else if(widget.type == 'card' || widget.type == 'piece' || widget.type == 'chooser') {
       if(!byID[widget.deck]) // orphan card without deck
@@ -2203,7 +2218,8 @@ export default async function convertPCIO(content) {
       // striped block where the widget used to be
       const typeName = pcioTypeNames[widget.type] || widget.type;
       w.width = widget.width || 100;
-      w.height = widget.height || 100;
+      // a label shorter than one line of text shows nothing at all
+      w.height = Math.max(widget.height || 100, 18);
       w.type = 'label';
       w.text = `${typeName} not imported`;
       w.css ='background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px); color: white; text-shadow: 0 0 4px black;';

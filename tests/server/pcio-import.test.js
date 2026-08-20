@@ -1,3 +1,4 @@
+import FileUpdater, { VERSION } from '../../server/fileupdater.mjs';
 import convertPCIO from '../../server/pcioimport.mjs';
 import Zip from '../../server/zip.mjs';
 
@@ -944,6 +945,37 @@ describe('PCIO importer', () => {
     expect(state._meta.info.importerWarnings).toEqual([
       'Asset userassets/huge.png is bigger than 10 MiB and was not imported.'
     ]);
+  });
+
+  it('writes face objects that follow a card type property as dynamic properties', async () => {
+    const state = await importWidgets([ deck, { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 0, y: 0 } ], 8);
+
+    expect(state.deck.faceTemplates[0].objects[1]).toEqual({
+      type: 'image', x: 0, y: 0, width: 103, height: 160, dynamicProperties: { value: 'image' }
+    });
+  });
+
+  it('gives a hand the drop shadow and the hidden cursors of a VirtualTabletop hand', async () => {
+    const state = await importWidgets([ { id: 'hand', type: 'hand', x: 0, y: 800 } ], 8);
+
+    expect(state.hand.childrenPerOwner).toBe(true);
+    expect(state.hand.dropShadow).toBe(true);
+    expect(state.hand.hidePlayerCursors).toBe(true);
+  });
+
+  it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 1, counterMin: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 800 }
+    ], 8);
+
+    // the var expressions of the counter buttons are what the legacy modes for the old var
+    // semantics look for in an old file
+    expect(JSON.stringify(state)).toContain('var pcioCounter');
+    expect(state._meta.version).toBe(VERSION);
+    expect(state._meta.gameSettings).toBeUndefined();
+    // loading the imported file leaves it exactly as it is
+    expect(FileUpdater(JSON.parse(JSON.stringify(state)))).toEqual(state);
   });
 
   it('imports a file whose schema version is missing or unreadable', async () => {
