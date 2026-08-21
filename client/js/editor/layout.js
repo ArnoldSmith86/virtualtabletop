@@ -50,8 +50,9 @@ function initializeEditor(currentMetaData) {
     new ToolbarDivider(),
 
     new TutorialsButton(),
-    new WikiButton()
-    
+    new WikiButton(),
+    new FeedbackButton()
+
   ]);
 
   renderDragToolbar(dragToolbarButtons = [

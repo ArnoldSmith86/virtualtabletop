@@ -211,6 +211,7 @@ const EDITOR_JS = [
   'client/js/editor/toolbar/deckeditor.js',
   'client/js/editor/toolbar/tutorials.js',
   'client/js/editor/toolbar/wiki.js',
+  'client/js/editor/toolbar/feedback.js',
   'client/js/editor/dragButton.js',
   'client/js/editor/dragbuttons/drag.js',
   'client/js/editor/dragbuttons/settings.js',
