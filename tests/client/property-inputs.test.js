@@ -889,6 +889,13 @@ describe('timer time helpers', () => {
     expect(cssHelpers.formatTimerMs(null)).toBe('');
   });
 
+  test('formatTimerMs renders an hour or more as h:mm:ss', () => {
+    expect(cssHelpers.formatTimerMs(3600000)).toBe('1:00:00');
+    expect(cssHelpers.formatTimerMs(3661000)).toBe('1:01:01');
+    expect(cssHelpers.formatTimerMs(11587000)).toBe('3:13:07');
+    expect(cssHelpers.formatTimerMs(-11587000)).toBe('-3:13:07');
+  });
+
   test('parseTimerInput accepts mm:ss and plain seconds', () => {
     expect(cssHelpers.parseTimerInput('1:01')).toBe(61000);
     expect(cssHelpers.parseTimerInput('90')).toBe(90000);
@@ -898,8 +905,16 @@ describe('timer time helpers', () => {
     expect(cssHelpers.parseTimerInput('abc')).toBe(undefined);
   });
 
+  test('parseTimerInput accepts h:mm:ss', () => {
+    expect(cssHelpers.parseTimerInput('1:00:00')).toBe(3600000);
+    expect(cssHelpers.parseTimerInput('3:13:07')).toBe(11587000);
+    expect(cssHelpers.parseTimerInput('-3:13:07')).toBe(-11587000);
+    expect(cssHelpers.parseTimerInput('0:90:00')).toBe(5400000);
+    expect(cssHelpers.parseTimerInput('1:2:3:4')).toBe(undefined);
+  });
+
   test('formatTimerMs and parseTimerInput round-trip', () => {
-    for(const ms of [ 0, 1000, 61000, 5500, 3600000, -90000 ])
+    for(const ms of [ 0, 1000, 61000, 5500, 3600000, 11587000, -90000, -11587500 ])
       expect(cssHelpers.parseTimerInput(cssHelpers.formatTimerMs(ms))).toBe(ms);
   });
 });
