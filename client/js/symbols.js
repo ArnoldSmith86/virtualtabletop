@@ -188,6 +188,14 @@ function iconSearchTermScore(entry, term) {
     : term.forms.some(form => entry.tags.has(form)) ? 1 : 0;
 }
 
+// The icon that is called exactly what was typed and nothing else: as many words in the name as
+// there are in the query, each of them one of the forms its term stands for. The forms rather than
+// the literal query, so that the number and the spelling of what was typed matter as little here
+// as they do everywhere else - "souls" and "sabre" lead with the same icon as "soul" and "saber".
+function iconSearchExactName(entry, terms) {
+  return entry.name.length == terms.length && terms.every((term, i) => term.forms.includes(entry.name[i]));
+}
+
 // An entry has to match every term and is worth as much as its weakest one.
 function iconSearchScore(entry, terms) {
   let score = 3;
@@ -205,10 +213,14 @@ function iconSearchScore(entry, terms) {
 // this the icon actually called "star" sits somewhere in the middle of them. The name is compared
 // as its words joined by spaces - "arrow_back" and the game-icons "lorc/arrow-back" both read
 // "arrow back", which is the spelling Google's own icon site uses and the natural way to type it.
+// The 5 goes through iconSearchExactName rather than that spelling, so that the number and the
+// spelling of what was typed matter as little here as they do everywhere else - "souls" and
+// "sabre" lead with the same icon as "soul" and "saber"; the 4 stays literal, since a prefix of a
+// longer name has no term of its own to offer a form of.
 // Only entries that matched at all are offered the bonus, so it can never resurrect a non-match.
-function iconSearchNameScore(entry, spelledOutQuery) {
-  const name = entry.name.join(' ');
-  return name == spelledOutQuery ? 5 : name.startsWith(`${spelledOutQuery} `) ? 4 : 0;
+function iconSearchNameScore(entry, terms, spelledOutQuery) {
+  return iconSearchExactName(entry, terms) ? 5
+    : entry.name.join(' ').startsWith(`${spelledOutQuery} `) ? 4 : 0;
 }
 
 // Scores a whole list of search entries against one query: 0 for the entries that do not match,
@@ -223,7 +235,7 @@ function iconSearchScores(entries, query) {
   const terms = words.map(iconSearchTerm);
   const scores = terms.length ? entries.map(entry => {
     const score = iconSearchScore(entry, terms);
-    return score ? Math.max(score, iconSearchNameScore(entry, spelledOutQuery)) : 0;
+    return score ? Math.max(score, iconSearchNameScore(entry, terms, spelledOutQuery)) : 0;
   }) : [];
   if(scores.some(score => score))
     return scores;
@@ -310,7 +322,8 @@ async function buildSymbolPicker() {
         // the file name is searched word by word, so that both "polar-bear" and "polar bear" find the
         // icon without spending one of its tags on it
         symbolSearch.push(iconSearchEntry(symbol.split('/')[1], keywords));
-        // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
+        // --x and --y address the icon in the sprite sheets by its position in the montage; the
+        // _instructions of assets/game-icons.net/icon-metadata.json say how those are rebuilt
         list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
       } else {
         const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
