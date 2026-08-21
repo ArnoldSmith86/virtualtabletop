@@ -4049,18 +4049,15 @@ test('Back and forward give the keyboard back to the JSON editor', async t => {
 // clicked, by which time the selection lives in the button, not in the editor. The offsets
 // getSelection() reports then say nothing about the editor, so the command has to work on the line
 // the cursor was left on - otherwise it applies to whatever the top of the JSON happens to be.
-const editorLineOffset = ClientFunction(needle => {
+// TestCafe drives Chrome natively but Firefox through synthetic events, and a synthetic click
+// does not place the caret in a contenteditable - so the cursor goes onto the line through the
+// selection API, followed by the mouseup the editor picks its context up on.
+const putCursorBehind = ClientFunction(needle => {
   const editor = document.querySelector('#jeText');
   const position = editor.textContent.indexOf(needle) + needle.length;
-  const range = document.createRange();
-  range.setStart(editor.firstChild, position-1);
-  range.setEnd(editor.firstChild, position);
-  const character = range.getBoundingClientRect();
-  const box = editor.getBoundingClientRect();
-  return {
-    offsetX: Math.round(character.x - box.x + character.width/2),
-    offsetY: Math.round(character.y - box.y + character.height/2)
-  };
+  editor.focus();
+  getSelection().setBaseAndExtent(editor.firstChild, position, editor.firstChild, position);
+  editor.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
 });
 const widgetProperty = ClientFunction((id, property) => widgets.get(id).get(property));
 const jsonEditorText = ClientFunction(() => document.querySelector('#jeText').textContent);
@@ -4083,8 +4080,8 @@ test('The shift command offsets the property the cursor was left on', async t =>
     // both widgets share the x the command is about to shift, so the editor shows it as one value
     .expect(jsonEditorText()).contains('"x": 200');
 
+  await putCursorBehind('"x": 200');
   await t
-    .click('#jeText', await editorLineOffset('"x": 200'))
     .click('#je_multiShift')
     .typeText('#je_multiShift_Offset', '50', { replace: true })
     .click(Selector('#jeCommandOptions button').withExactText('Go'))
