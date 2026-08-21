@@ -2184,7 +2184,11 @@ let jeLastCursorOffsets = [ 0, 0 ];
 
 function jeCursorOffsets() {
   const selection = getSelection();
-  if(selection.anchorNode && $('#jeText').contains(selection.anchorNode))
+  // both ends have to sit in the text node #jeText holds: a selection dragged out of the editor
+  // reports its two ends in different nodes, and one anchored on #jeText itself counts child
+  // nodes rather than characters - neither pair says where the cursor is in the JSON
+  const text = $('#jeText').firstChild;
+  if(text && selection.anchorNode === text && selection.focusNode === text)
     jeLastCursorOffsets = [ Math.min(selection.anchorOffset, selection.focusOffset), Math.max(selection.anchorOffset, selection.focusOffset) ];
   return jeLastCursorOffsets;
 }
@@ -3553,6 +3557,8 @@ function jeSetAndSelect(replaceBy, insideString) {
 }
 
 function jeSetEditorContent(content) {
+  // the remembered offsets index the text that is replaced here, so they say nothing afterwards
+  jeLastCursorOffsets = [ 0, 0 ];
   $('#jeText').textContent = content.replace(/\u00a0/g, ' ');
 }
 

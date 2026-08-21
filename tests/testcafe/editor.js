@@ -4089,3 +4089,70 @@ test('The shift command offsets the property the cursor was left on', async t =>
     .expect(widgetProperty('two', 'x')).eql(250);
   await setEditorState(null);
 });
+
+test('The align command aligns the property the cursor was left on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 600, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    // the widgets differ in y, so the editor lists it per widget instead of showing a single value
+    .expect(jsonEditorText()).contains('"y": {');
+
+  await putCursorBehind('"y"');
+  await t
+    .click('#jeMultiAlign')
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'y')).eql(200)
+    .expect(widgetProperty('two', 'y')).eql(200)
+    // aligning y leaves x alone - picking the wrong property up would move these
+    .expect(widgetProperty('one', 'x')).eql(200)
+    .expect(widgetProperty('two', 'x')).eql(400);
+  await setEditorState(null);
+});
+
+// A selection that is dragged out of the editor reports its two ends in different nodes, so the
+// offsets it gives are not a position in the JSON and must not replace the one the editor is at.
+const selectOutOfEditor = ClientFunction(needle => {
+  const editor = document.querySelector('#jeText');
+  const position = editor.textContent.indexOf(needle) + needle.length;
+  editor.focus();
+  getSelection().setBaseAndExtent(editor.firstChild, position, document.querySelector('#jeCommands'), 0);
+});
+
+test('A command ignores a selection that reaches out of the editor', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await selectOutOfEditor('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '50', { replace: true })
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
