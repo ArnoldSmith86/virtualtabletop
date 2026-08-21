@@ -9126,7 +9126,7 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
-  // a text input showing a milliseconds property as mm:ss
+  // a text input showing a milliseconds property as mm:ss, with an hours field from an hour on
   renderTimerTimeInput(widget, labelText, property, target, options = {}) {
     const wrap = div(target, 'propertyInput timeInput');
     const label = document.createElement('label');
@@ -9137,7 +9137,7 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.placeholder = 'mm:ss';
+    input.placeholder = '[h:]mm:ss';
     input.onchange = () => {
       const ms = parseTimerInput(input.value);
       if(ms === undefined || (ms === null && !options.nullable)) {
