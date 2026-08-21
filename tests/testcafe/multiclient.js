@@ -1,7 +1,7 @@
 import { ClientFunction, Selector } from 'testcafe';
 
 import { prepareClient, roomURL, setupTestEnvironment } from './test-util.js';
-import { openRoom, stateWhen } from './interaction-util.js';
+import { dragPath, openRoom, releaseDrag, stateWhen } from './interaction-util.js';
 
 setupTestEnvironment();
 
@@ -153,6 +153,38 @@ test('A card owned by one player is foreign to the other', async t => {
   await t.switchToWindow(second);
   await t.expect(Selector('#w_mine').exists).ok();
   await t.expect(isForeign('mine')).eql(true, 'the other player does not');
+
+  await t.closeWindow(second);
+});
+
+test('Rearranging a per-owner hand keeps the card hidden from the other player', async t => {
+  await openClient(t, 'Alice');
+  await openRoom(t, 'modern', twoPlayerState());
+  const first = await t.getCurrentWindow();
+  const second = await openSecondClient(t, 'Bob');
+
+  await t.switchToWindow(first);
+  await openRoom(t, 'modern', twoPlayerState({
+    deck: { type: 'deck', cardTypes: { plain: {} }, x: 1450, y: 20 },
+    hand: { type: 'holder', x: 400, y: 600, width: 500, height: 250, childrenPerOwner: true, dropTarget: { type: 'card' } },
+    mine: { type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand', x: 4, y: 4, owner: 'Alice' }
+  }));
+
+  // The card is detached from the hand at the pickup, so this asserts in the middle of the
+  // gesture: a hand that let go of its owner there would uncover the card on Bob's screen for
+  // as long as Alice keeps sorting.
+  const held = await dragPath(t, 'mine', [ { dx: 150, dy: 0 } ], { hold: true });
+
+  await t.switchToWindow(second);
+  await t.expect(isForeign('mine')).eql(true, 'Bob does not see the card Alice is moving inside her hand');
+
+  await t.switchToWindow(first);
+  await releaseDrag(held);
+  const state = await stateWhen(s=>(s.mine||{}).parent == 'hand');
+  await t.expect(state.mine.owner).eql('Alice', 'and it is still hers after the drop');
+
+  await t.switchToWindow(second);
+  await t.expect(isForeign('mine')).eql(true, 'Bob still does not see it');
 
   await t.closeWindow(second);
 });

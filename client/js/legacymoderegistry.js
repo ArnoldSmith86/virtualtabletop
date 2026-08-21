@@ -95,7 +95,7 @@ export const LEGACY_MODES = {
   disableHolderImageWidget: {
     since: 21,
     pr: 2634,
-    interactsWith: [],
+    interactsWith: [ 'legacyHolderEnterLeaveEvents' ],
     detect: function(state) {
       for(const id in state) {
         const properties = state[id];
@@ -113,6 +113,50 @@ export const LEGACY_MODES = {
       <b>New behavior</b>: Holders display image, icon and text properties directly. Games that built those manual workarounds can look broken because both are drawn at once.
       <br><br>
       This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
+      `
+  },
+  legacyHolderEnterLeaveEvents: {
+    since: 23,
+    pr: 3134,
+    interactsWith: [ 'disableHolderImageWidget' ],
+    detect: function(state) {
+      const json = JSON.stringify(state);
+      if(/"(enterRoutine|leaveRoutine|onEnter|onLeave|childrenPerOwner)"\s*:/.test(json))
+        return true;
+      // A stacked holder re-compacts on every departure now, which a game notices even when it
+      // uses none of the event names above. A stack offset counts wherever it comes from: set
+      // by a routine while the game runs, or written on a widget - which does not have to be
+      // the holder itself, since it can be the template another widget inherits from or clones.
+      if(/"property"\s*:\s*"stackOffset[XY]"/.test(json))
+        return true;
+      for(const id in state) {
+        const properties = state[id];
+        if(!properties || properties.alignChildren === false)
+          continue;
+        if([ properties.stackOffsetX, properties.stackOffsetY ].some(offset=>offset !== undefined && offset !== null && parseFloat(offset) != 0))
+          return true;
+      }
+      return false;
+    },
+    label: 'Fire holder leave events twice',
+    summary: 'Holders raise the leave event twice per move, and apply onLeave only for drags and MOVE.',
+    description: `
+      <b>Old behavior</b>: A holder raises a <i>leave</i> when a widget stops being its child and an <i>enter</i> when one becomes its child. Two places raised the leave, so a drag or a <code>MOVE</code> called <code>leaveRoutine</code> twice, and <code>onLeave</code> was applied only on the second call.
+      <br><br>
+      <b>New behavior</b>: one leave and one enter per move, properties before routine. In detail:
+      <ul>
+        <li><code>leaveRoutine</code> runs once per departure, not twice</li>
+        <li><code>SET parent</code> and <code>MOVEXY</code> now apply <code>onLeave</code></li>
+        <li>dropping a card back into the holder it came from is a real leave and a real enter</li>
+        <li>a <code>childrenPerOwner</code> holder releases the owner however the card left it - a dragged card once it is outside the box, so rearranging a hand never uncovers it</li>
+        <li>joining or leaving a pile inside a holder raises nothing</li>
+        <li>a stacked holder closes the gap a card left however it left, <code>DELETE</code> included</li>
+        <li>the preview a <code>dropShadow</code> holder paints under the pointer raises nothing, so hovering over a holder no longer runs its routines</li>
+      </ul>
+      <b>Example:</b> a holder whose <code>leaveRoutine</code> counts the cards that left it.
+      <br><br>
+      Old result: dragging one card out counts <code>2</code><br>
+      New result: dragging one card out counts <code>1</code>
       `
   }
 };

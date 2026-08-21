@@ -1,5 +1,7 @@
 import { widgets } from '../../client/js/serverstate.js';
 
+import { legacyMode } from '../../client/js/legacymodes.js';
+
 import { createWidget, removeWidget } from './client-util.js';
 
 // updatePiles() reads pile.js's defaultPileSnapRange and creates a new pile
@@ -16,6 +18,7 @@ beforeAll(() => {
     return id;
   };
   globalThis.playerName = 'jestPlayer';
+  globalThis.legacyMode = legacyMode;
   globalThis.getMaxZ = () => 0;
   globalThis.updateMaxZ = () => {};
 });

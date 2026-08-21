@@ -63,6 +63,42 @@ describe('legacy mode detection', () => {
     expect(flagsFor(at(20, { h: { id: 'h', type: 'holder' } })).disableHolderImageWidget).toBe(undefined);
   });
 
+  test('a v22 save with a stacked holder gets legacyHolderEnterLeaveEvents', () => {
+    // it names none of the event properties, but its children re-compact on every departure now
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetY: 40 } }))).toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
+  test('a stacked holder written as an expression counts as stacked', () => {
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetX: '${PROPERTY offset OF board}' } })))
+      .toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
+  test('a holder that stacks nothing does not get legacyHolderEnterLeaveEvents', () => {
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetY: 0 } }))).toEqual({});
+  });
+
+  test('a stacked holder that does not align its children does not get it either', () => {
+    // without alignChildren the holder never repositions what stayed, so the gap it leaves is
+    // wherever the player put the cards
+    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetY: 40, alignChildren: false } }))).toEqual({});
+  });
+
+  test('a holder that only becomes stacked at runtime gets legacyHolderEnterLeaveEvents', () => {
+    // the offset is a value inside a routine rather than a property of the holder, so only the
+    // textual pass can see it
+    expect(flagsFor(at(22, {
+      h: { id: 'h', type: 'holder' },
+      b: { id: 'b', type: 'button', clickRoutine: [ { func: 'SET', property: 'stackOffsetY', value: 40 } ] }
+    }))).toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
+  test('a template a holder inherits its stack offset from counts as stacked', () => {
+    expect(flagsFor(at(22, {
+      template: { id: 'template', type: 'basic', stackOffsetY: 40 },
+      h: { id: 'h', type: 'holder', inheritFrom: { template: '*' } }
+    }))).toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
   test('a mode is not applied to a save that is already at or past its version', () => {
     // a v20 save predates v21, so the holder mode applies, but the var modes (v18) do not
     const state = at(20, {
@@ -102,7 +138,7 @@ describe('legacy mode detection', () => {
     // a mode nothing can turn on would be dead weight in the sidebar and in the matrix
     const everything = at(1, {
       b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] },
-      h: { id: 'h', type: 'holder', color: 'red' },
+      h: { id: 'h', type: 'holder', color: 'red', onEnter: { activeFace: 1 } },
       d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'html', value: 'x' } ] } ] }
     });
     expect(Object.keys(flagsFor(everything)).sort()).toEqual([ ...ALL_LEGACY_MODES ].sort());
@@ -214,18 +250,20 @@ function migrated(widget, version = VERSION - 1) {
 }
 
 describe('the dragLimit sides written as null', () => {
+  // the v22 step, so the file has to be older than that rather than just older than the current version
+  const migratedFrom21 = widget => migrated(widget, 21);
   test('become the 0 they always clamped to', () => {
-    expect(migrated({ dragLimit: { minX: null, maxY: 10 } }).dragLimit).toEqual({ minX: 0, maxY: 10 });
-    expect(migrated({ dragLimit: { minX: null, maxX: null, minY: null, maxY: null } }).dragLimit)
+    expect(migratedFrom21({ dragLimit: { minX: null, maxY: 10 } }).dragLimit).toEqual({ minX: 0, maxY: 10 });
+    expect(migratedFrom21({ dragLimit: { minX: null, maxX: null, minY: null, maxY: null } }).dragLimit)
       .toEqual({ minX: 0, maxX: 0, minY: 0, maxY: 0 });
   });
 
   test('leave every other limit as it was written', () => {
-    expect(migrated({ dragLimit: { minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' } }).dragLimit)
+    expect(migratedFrom21({ dragLimit: { minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' } }).dragLimit)
       .toEqual({ minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' });
-    expect(migrated({ dragLimit: {} }).dragLimit).toEqual({});
-    expect(migrated({ dragLimit: 'nonsense' }).dragLimit).toBe('nonsense');
-    expect(migrated({}).dragLimit).toBe(undefined);
+    expect(migratedFrom21({ dragLimit: {} }).dragLimit).toEqual({});
+    expect(migratedFrom21({ dragLimit: 'nonsense' }).dragLimit).toBe('nonsense');
+    expect(migratedFrom21({}).dragLimit).toBe(undefined);
   });
 
   test('are left alone in a file that was written with the new meaning', () => {
