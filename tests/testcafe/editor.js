@@ -917,7 +917,7 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     .selectText(radius)
     .pressKey('delete')
     .expect(radius.value).eql('')
-    .pressKey('tab')
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'))
     .expect(radius.value).eql('200')
     // and a circle of radius 0, which would stack the selection on one point,
     // is not one of the values the field takes

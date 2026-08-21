@@ -2144,8 +2144,10 @@ class PropertiesModule extends SidebarModule {
     radius.render(options);
     radius.update(radius.getValue());
     // an emptied field keeps the last valid radius, which the button then uses
-    // while the field reads as blank - put the value that is used back
-    radius.input.onblur = _=>radius.update(radius.getValue());
+    // while the field reads as blank - put the value that is used back. The
+    // input is written directly because a browser can still name it as the
+    // active element while its own blur handler runs.
+    radius.input.onblur = _=>radius.input.value = this.circleAlignRadius;
 
     const rotate = new CheckboxInput(this, null, 'Rotate away from center', {
       listenTo: [],
