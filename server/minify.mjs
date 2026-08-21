@@ -241,6 +241,7 @@ const EDITOR_JS = [
   'client/js/editor/deckeditor.js',
 
   'client/js/editor/controls/routine.js',
+  'client/js/editor/controls/routinerecorder.js',
   'client/js/editor/controls/popup.js',
   'client/js/editor/controls/events.js',
 

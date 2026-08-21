@@ -46,6 +46,10 @@ body {
      the 4.5:1 the rest of this file budgets for. Dark mode is fine as it is. */
   --routineBlankColor: #d32f2f;
 
+  /* Watching the room to record a routine: the red every recorder anywhere is,
+     darkened to the same 4.5:1 the blank above is tuned for. */
+  --routineRecordColor: #c62828;
+
   /* The card of the routine editor that was worked on last: a clear step lighter
      than the other cards (--backgroundHighlightColor1) so it is spotted without
      reading, while the chrome on it (see --routineChromeOpacity) still clears
@@ -99,6 +103,7 @@ body.edit.darkMode {
   --routinePropertyColor: #ff8fb1;
   --routineNumberColor: #40e0d0;
   --routineBlankColor: red;
+  --routineRecordColor: #ff6b6b;
   --routineActiveCardColor: #626262;
 
   color-scheme: dark;
