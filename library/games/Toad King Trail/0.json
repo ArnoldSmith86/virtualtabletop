@@ -1,0 +1,2767 @@
+{
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "Toad King Trail",
+      "image": "/assets/1238540133_33626",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/191687/jungle-party",
+      "year": "2016",
+      "mode": "vs",
+      "time": "20",
+      "players": "2-4",
+      "language": "en-US",
+      "showName": true,
+      "lastUpdate": 1787184000000,
+      "skill": "Memory",
+      "similarName": "Jungle Party",
+      "similarDesigner": "Stefan Dorra, Manfred Reindl",
+      "similarAwards": "2018 Årets Spill Best Children's Game Winner (Scandinavian edition \"Baluba\")\n2016 Kinderspiel des Jahres Recommendation List",
+      "similarImage": "",
+      "variant": "",
+      "variantImage": "",
+      "usesAIImagery": false,
+      "description": "The jungle gang splashes down the river at night and keeps diving under the hanging bridge, so you have to remember who is hiding where. Slide a tile into the right arm of the river, count how many of your rolled animals are swimming in the open water and walk that many steps. First explorer to reach the toad king wins.",
+      "attribution": "Board artwork, layout, tile and board design by VTT-AI-Agent, released to the public domain (CC0).\n\nAnimal, snake, bubble, campfire, crown, bridge, robot, hand and arrow silhouettes are VirtualTabletop's bundled game-icons.net set (CC BY 3.0, https://game-icons.net) by Lorc, Delapouite and Caro Asercion. The explorer figures are VirtualTabletop's bundled 3D meeple piece.\n\nNo AI-generated imagery is used.",
+      "ruleText": "",
+      "helpText": "<div><b>Take a seat</b> - every seated player gets an explorer at the campfire and, unless you switch them off, a best-friend chip on the right (click a chip to pick another animal).</div><div><br></div><div><b>1 - Roll the die.</b> Click the big die. Rolling an animal turns the next tile face up next to it, so everybody sees which animal is about to go into the river. Rolling the snake sends the leading explorer one space back (never behind space 7) and you roll again; a second snake ends your turn.</div><div><b>2 - Push the tile in.</b> Click one of the four green arrows above the river. The tile slides under the hanging bridge and disappears, the tile that was there surfaces at the front water spot, everything else moves one place down and the last tile drops over the waterfall.</div><div><b>3 - Walk.</b> Click the orange paw. It counts how often the rolled animal is visible in the eight open water spots, adds the best-friend bonus when your explorer stands on a crossing right next to a tile showing your friend, moves your explorer and passes the die on.</div><div><br></div><div><b>Automated:</b> setup and reshuffling, the sliding of the river, drawing tiles and passing the turn.</div><div><b>Optional:</b> the rules are applied for you - the paw counts and walks, and the snake sends the leading explorer back the moment it is rolled. Click the green robot to switch that off: the paw then only shows the number it counted and you move your own explorer by dragging it. Explorers and tiles can be dragged by hand in either mode.</div><div><br></div><div>The red button starts a new game and lets you leave the best-friend chips in the box for the beginner version. The blue button passes the turn on manually.</div>"
+    }
+  },
+  "board": {
+    "type": "basic",
+    "id": "board",
+    "x": 0,
+    "y": 0,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "image": "/assets/1663796806_29355",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false
+  },
+  "campfire": {
+    "type": "basic",
+    "id": "campfire",
+    "x": 208,
+    "y": 176,
+    "width": 92,
+    "height": 92,
+    "layer": -3,
+    "icon": {
+      "name": "lorc/campfire",
+      "color": "#ffb347",
+      "scale": 1
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false
+  },
+  "toadKing": {
+    "type": "basic",
+    "id": "toadKing",
+    "x": 1032,
+    "y": 650,
+    "width": 100,
+    "height": 100,
+    "layer": 2,
+    "icon": {
+      "name": "delapouite/frog-prince",
+      "color": "#7fe0a8",
+      "scale": 1
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false
+  },
+  "tiles": {
+    "type": "deck",
+    "id": "tiles",
+    "parent": "drawPile",
+    "x": 30,
+    "y": 30,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "clickable": false,
+      "borderRadius": 16,
+      "ink": "#fff8e7"
+    },
+    "cardTypes": {
+      "monkey": {
+        "image": "/i/game-icons.net/lorc/monkey.svg",
+        "tint": "#b5651d"
+      },
+      "elephant": {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "tint": "#6e86a8"
+      },
+      "tiger": {
+        "image": "/i/game-icons.net/delapouite/tiger.svg",
+        "tint": "#e8a33d"
+      },
+      "toucan": {
+        "image": "/i/game-icons.net/delapouite/toucan.svg",
+        "tint": "#2f8f6f"
+      },
+      "anteater": {
+        "image": "/i/game-icons.net/caro-asercion/anteater.svg",
+        "tint": "#9b5fa8"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 16,
+        "css": "background: linear-gradient(160deg,#0f4b63,#0a2f42)",
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "value": "/i/game-icons.net/lorc/bubbles.svg",
+            "color": "#0d3b50",
+            "svgReplaces": {
+              "#000": "backInk"
+            },
+            "css": "background-size: 62% 62%; background-position: center; background-repeat: no-repeat; border-radius: 16px"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "tint"
+            },
+            "svgReplaces": {
+              "#000": "ink"
+            },
+            "css": "background-size: 76% 76%; background-position: center; background-repeat: no-repeat; border-radius: 16px; box-shadow: inset 0 0 0 4px rgba(255,248,231,.55)"
+          }
+        ]
+      }
+    ]
+  },
+  "tile01": {
+    "type": "card",
+    "id": "tile01",
+    "deck": "tiles",
+    "cardType": "monkey",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile02": {
+    "type": "card",
+    "id": "tile02",
+    "deck": "tiles",
+    "cardType": "monkey",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile03": {
+    "type": "card",
+    "id": "tile03",
+    "deck": "tiles",
+    "cardType": "monkey",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile04": {
+    "type": "card",
+    "id": "tile04",
+    "deck": "tiles",
+    "cardType": "monkey",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile05": {
+    "type": "card",
+    "id": "tile05",
+    "deck": "tiles",
+    "cardType": "monkey",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile06": {
+    "type": "card",
+    "id": "tile06",
+    "deck": "tiles",
+    "cardType": "monkey",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile07": {
+    "type": "card",
+    "id": "tile07",
+    "deck": "tiles",
+    "cardType": "elephant",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile08": {
+    "type": "card",
+    "id": "tile08",
+    "deck": "tiles",
+    "cardType": "elephant",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile09": {
+    "type": "card",
+    "id": "tile09",
+    "deck": "tiles",
+    "cardType": "elephant",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile10": {
+    "type": "card",
+    "id": "tile10",
+    "deck": "tiles",
+    "cardType": "elephant",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile11": {
+    "type": "card",
+    "id": "tile11",
+    "deck": "tiles",
+    "cardType": "elephant",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile12": {
+    "type": "card",
+    "id": "tile12",
+    "deck": "tiles",
+    "cardType": "elephant",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile13": {
+    "type": "card",
+    "id": "tile13",
+    "deck": "tiles",
+    "cardType": "tiger",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile14": {
+    "type": "card",
+    "id": "tile14",
+    "deck": "tiles",
+    "cardType": "tiger",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile15": {
+    "type": "card",
+    "id": "tile15",
+    "deck": "tiles",
+    "cardType": "tiger",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile16": {
+    "type": "card",
+    "id": "tile16",
+    "deck": "tiles",
+    "cardType": "tiger",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile17": {
+    "type": "card",
+    "id": "tile17",
+    "deck": "tiles",
+    "cardType": "tiger",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile18": {
+    "type": "card",
+    "id": "tile18",
+    "deck": "tiles",
+    "cardType": "tiger",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile19": {
+    "type": "card",
+    "id": "tile19",
+    "deck": "tiles",
+    "cardType": "toucan",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile20": {
+    "type": "card",
+    "id": "tile20",
+    "deck": "tiles",
+    "cardType": "toucan",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile21": {
+    "type": "card",
+    "id": "tile21",
+    "deck": "tiles",
+    "cardType": "toucan",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile22": {
+    "type": "card",
+    "id": "tile22",
+    "deck": "tiles",
+    "cardType": "toucan",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile23": {
+    "type": "card",
+    "id": "tile23",
+    "deck": "tiles",
+    "cardType": "toucan",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile24": {
+    "type": "card",
+    "id": "tile24",
+    "deck": "tiles",
+    "cardType": "toucan",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile25": {
+    "type": "card",
+    "id": "tile25",
+    "deck": "tiles",
+    "cardType": "anteater",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile26": {
+    "type": "card",
+    "id": "tile26",
+    "deck": "tiles",
+    "cardType": "anteater",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile27": {
+    "type": "card",
+    "id": "tile27",
+    "deck": "tiles",
+    "cardType": "anteater",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile28": {
+    "type": "card",
+    "id": "tile28",
+    "deck": "tiles",
+    "cardType": "anteater",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile29": {
+    "type": "card",
+    "id": "tile29",
+    "deck": "tiles",
+    "cardType": "anteater",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "tile30": {
+    "type": "card",
+    "id": "tile30",
+    "deck": "tiles",
+    "cardType": "anteater",
+    "parent": "drawPile",
+    "activeFace": 0,
+    "backInk": "#2b93b8"
+  },
+  "a1": {
+    "type": "holder",
+    "id": "a1",
+    "x": 481,
+    "y": 112,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "b1": {
+    "type": "holder",
+    "id": "b1",
+    "x": 481,
+    "y": 312,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "c1": {
+    "type": "holder",
+    "id": "c1",
+    "x": 481,
+    "y": 512,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "a2": {
+    "type": "holder",
+    "id": "a2",
+    "x": 626,
+    "y": 112,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "b2": {
+    "type": "holder",
+    "id": "b2",
+    "x": 626,
+    "y": 312,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "c2": {
+    "type": "holder",
+    "id": "c2",
+    "x": 626,
+    "y": 512,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "a3": {
+    "type": "holder",
+    "id": "a3",
+    "x": 771,
+    "y": 112,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "b3": {
+    "type": "holder",
+    "id": "b3",
+    "x": 771,
+    "y": 312,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "c3": {
+    "type": "holder",
+    "id": "c3",
+    "x": 771,
+    "y": 512,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "a4": {
+    "type": "holder",
+    "id": "a4",
+    "x": 916,
+    "y": 112,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "b4": {
+    "type": "holder",
+    "id": "b4",
+    "x": 916,
+    "y": 312,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "c4": {
+    "type": "holder",
+    "id": "c4",
+    "x": 916,
+    "y": 512,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "drawPile": {
+    "type": "holder",
+    "id": "drawPile",
+    "x": 1418,
+    "y": 48,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)"
+  },
+  "tileSpot": {
+    "type": "holder",
+    "id": "tileSpot",
+    "x": 1215,
+    "y": 222,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(18,86,58,.85); border: 3px solid #7fe0a8"
+  },
+  "discardPile": {
+    "type": "holder",
+    "id": "discardPile",
+    "x": 771,
+    "y": 750,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)"
+  },
+  "sp0": {
+    "type": "holder",
+    "id": "sp0",
+    "x": 150,
+    "y": 109,
+    "width": 200,
+    "height": 62,
+    "spaceIndex": 0,
+    "nextTo": [],
+    "dropOffsetX": 12,
+    "dropOffsetY": 7,
+    "stackOffsetX": 46,
+    "stackOffsetY": 0,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: rgba(126,102,58,.65); border: 3px solid rgba(255,226,164,.75)"
+  },
+  "sp1": {
+    "type": "holder",
+    "id": "sp1",
+    "x": 301,
+    "y": 174,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 1,
+    "nextTo": [],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp2": {
+    "type": "holder",
+    "id": "sp2",
+    "x": 377,
+    "y": 231,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 2,
+    "nextTo": [],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp3": {
+    "type": "holder",
+    "id": "sp3",
+    "x": 504,
+    "y": 235,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 3,
+    "nextTo": [
+      "b1"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp4": {
+    "type": "holder",
+    "id": "sp4",
+    "x": 649,
+    "y": 235,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 4,
+    "nextTo": [
+      "b2"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp5": {
+    "type": "holder",
+    "id": "sp5",
+    "x": 794,
+    "y": 235,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 5,
+    "nextTo": [
+      "b3"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp6": {
+    "type": "holder",
+    "id": "sp6",
+    "x": 939,
+    "y": 235,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 6,
+    "nextTo": [
+      "b4"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp7": {
+    "type": "holder",
+    "id": "sp7",
+    "x": 1054,
+    "y": 299,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 7,
+    "nextTo": [],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp8": {
+    "type": "holder",
+    "id": "sp8",
+    "x": 1077,
+    "y": 381,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 8,
+    "nextTo": [],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp9": {
+    "type": "holder",
+    "id": "sp9",
+    "x": 939,
+    "y": 435,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 9,
+    "nextTo": [
+      "b4",
+      "c4"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp10": {
+    "type": "holder",
+    "id": "sp10",
+    "x": 794,
+    "y": 435,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 10,
+    "nextTo": [
+      "b3",
+      "c3"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp11": {
+    "type": "holder",
+    "id": "sp11",
+    "x": 649,
+    "y": 435,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 11,
+    "nextTo": [
+      "b2",
+      "c2"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp12": {
+    "type": "holder",
+    "id": "sp12",
+    "x": 504,
+    "y": 435,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 12,
+    "nextTo": [
+      "b1",
+      "c1"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp13": {
+    "type": "holder",
+    "id": "sp13",
+    "x": 385,
+    "y": 501,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 13,
+    "nextTo": [],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp14": {
+    "type": "holder",
+    "id": "sp14",
+    "x": 367,
+    "y": 583,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 14,
+    "nextTo": [],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp15": {
+    "type": "holder",
+    "id": "sp15",
+    "x": 504,
+    "y": 645,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 15,
+    "nextTo": [
+      "c1"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp16": {
+    "type": "holder",
+    "id": "sp16",
+    "x": 649,
+    "y": 645,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 16,
+    "nextTo": [
+      "c2"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp17": {
+    "type": "holder",
+    "id": "sp17",
+    "x": 794,
+    "y": 645,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 17,
+    "nextTo": [
+      "c3"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp18": {
+    "type": "holder",
+    "id": "sp18",
+    "x": 939,
+    "y": 645,
+    "width": 62,
+    "height": 62,
+    "spaceIndex": 18,
+    "nextTo": [
+      "c4"
+    ],
+    "dropOffsetX": 8,
+    "dropOffsetY": 7,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
+  },
+  "sp19": {
+    "type": "holder",
+    "id": "sp19",
+    "x": 1036,
+    "y": 740,
+    "width": 92,
+    "height": 92,
+    "spaceIndex": 19,
+    "nextTo": [],
+    "dropOffsetX": 23,
+    "dropOffsetY": 22,
+    "stackOffsetX": 8,
+    "stackOffsetY": 5,
+    "dropTarget": {
+      "pawn": true
+    },
+    "preventPiles": true,
+    "alignChildren": true,
+    "borderRadius": "50%",
+    "layer": -3,
+    "css": "background: radial-gradient(circle at 34% 28%, #fff3c8, #ffcf5e 62%, #d79b1c); border: 4px solid #7a4f0b"
+  },
+  "pawn1": {
+    "type": "basic",
+    "id": "pawn1",
+    "parent": "sp0",
+    "pawn": true,
+    "width": 46,
+    "height": 48,
+    "layer": 3,
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "color": "#d55e00",
+    "borderColor": "#20130a",
+    "borderWidth": 2,
+    "display": false
+  },
+  "pawn2": {
+    "type": "basic",
+    "id": "pawn2",
+    "parent": "sp0",
+    "pawn": true,
+    "width": 46,
+    "height": 48,
+    "layer": 3,
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "color": "#f0e442",
+    "borderColor": "#20130a",
+    "borderWidth": 2,
+    "display": false
+  },
+  "pawn3": {
+    "type": "basic",
+    "id": "pawn3",
+    "parent": "sp0",
+    "pawn": true,
+    "width": 46,
+    "height": 48,
+    "layer": 3,
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "color": "#009e73",
+    "borderColor": "#20130a",
+    "borderWidth": 2,
+    "display": false
+  },
+  "pawn4": {
+    "type": "basic",
+    "id": "pawn4",
+    "parent": "sp0",
+    "pawn": true,
+    "width": 46,
+    "height": 48,
+    "layer": 3,
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "color": "#0072b2",
+    "borderColor": "#20130a",
+    "borderWidth": 2,
+    "display": false
+  },
+  "die": {
+    "type": "dice",
+    "id": "die",
+    "x": 1215,
+    "y": 48,
+    "width": 128,
+    "height": 128,
+    "borderRadius": 22,
+    "imageScale": 0.74,
+    "ink": "#fff8e7",
+    "movable": false,
+    "svgReplaces": {
+      "#000": "ink"
+    },
+    "faces": [
+      {
+        "image": "/i/game-icons.net/lorc/monkey.svg",
+        "color": "#b5651d",
+        "value": "monkey"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "color": "#6e86a8",
+        "value": "elephant"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/tiger.svg",
+        "color": "#e8a33d",
+        "value": "tiger"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/toucan.svg",
+        "color": "#2f8f6f",
+        "value": "toucan"
+      },
+      {
+        "image": "/i/game-icons.net/caro-asercion/anteater.svg",
+        "color": "#9b5fa8",
+        "value": "anteater"
+      },
+      {
+        "image": "/i/game-icons.net/lorc/snake.svg",
+        "color": "#7a2e3b",
+        "value": "snake"
+      }
+    ],
+    "clickRoutine": [
+      "// roll the animal die, then turn over the next tile unless the snake showed up",
+      "var face = randInt 0 5",
+      {
+        "func": "SET",
+        "collection": [
+          "die"
+        ],
+        "property": "activeFace",
+        "value": "${face}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "die"
+        ],
+        "property": "rollCount",
+        "relation": "+",
+        "value": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "lblCount",
+        "value": ""
+      },
+      {
+        "func": "IF",
+        "operand1": "${face}",
+        "relation": "==",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "rules"
+            ],
+            "property": "resolved",
+            "value": 1
+          },
+          "var auto = ${PROPERTY autoMode OF btnHelper}",
+          {
+            "func": "IF",
+            "condition": "${auto}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "rules",
+                "routine": "snakeRoutine"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "rules"
+            ],
+            "property": "snakes",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "rules"
+            ],
+            "property": "resolved",
+            "value": 0
+          },
+          {
+            "func": "CALL",
+            "widget": "rules",
+            "routine": "revealRoutine"
+          }
+        ]
+      }
+    ]
+  },
+  "arrow1": {
+    "type": "button",
+    "id": "arrow1",
+    "x": 499,
+    "y": 58,
+    "width": 72,
+    "height": 46,
+    "borderRadius": 14,
+    "backgroundColor": "#14603f",
+    "backgroundColorOH": "#1d8a5a",
+    "borderColor": "#7fe0a8",
+    "icon": {
+      "name": "arrow_downward",
+      "color": "#fff8e7",
+      "scale": 1.15
+    },
+    "clickRoutine": [
+      "// push the revealed tile into this arm of the river, everything below it slides on",
+      {
+        "func": "COUNT",
+        "holder": [
+          "tileSpot"
+        ],
+        "variable": "nSpot"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nSpot}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "c1",
+            "to": "discardPile",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "b1",
+            "to": "c1",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "a1",
+            "to": "b1",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "tileSpot",
+            "to": "a1",
+            "count": 1,
+            "face": 0
+          }
+        ]
+      }
+    ]
+  },
+  "arrow2": {
+    "type": "button",
+    "id": "arrow2",
+    "x": 644,
+    "y": 58,
+    "width": 72,
+    "height": 46,
+    "borderRadius": 14,
+    "backgroundColor": "#14603f",
+    "backgroundColorOH": "#1d8a5a",
+    "borderColor": "#7fe0a8",
+    "icon": {
+      "name": "arrow_downward",
+      "color": "#fff8e7",
+      "scale": 1.15
+    },
+    "clickRoutine": [
+      "// push the revealed tile into this arm of the river, everything below it slides on",
+      {
+        "func": "COUNT",
+        "holder": [
+          "tileSpot"
+        ],
+        "variable": "nSpot"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nSpot}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "c2",
+            "to": "discardPile",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "b2",
+            "to": "c2",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "a2",
+            "to": "b2",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "tileSpot",
+            "to": "a2",
+            "count": 1,
+            "face": 0
+          }
+        ]
+      }
+    ]
+  },
+  "arrow3": {
+    "type": "button",
+    "id": "arrow3",
+    "x": 789,
+    "y": 58,
+    "width": 72,
+    "height": 46,
+    "borderRadius": 14,
+    "backgroundColor": "#14603f",
+    "backgroundColorOH": "#1d8a5a",
+    "borderColor": "#7fe0a8",
+    "icon": {
+      "name": "arrow_downward",
+      "color": "#fff8e7",
+      "scale": 1.15
+    },
+    "clickRoutine": [
+      "// push the revealed tile into this arm of the river, everything below it slides on",
+      {
+        "func": "COUNT",
+        "holder": [
+          "tileSpot"
+        ],
+        "variable": "nSpot"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nSpot}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "c3",
+            "to": "discardPile",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "b3",
+            "to": "c3",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "a3",
+            "to": "b3",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "tileSpot",
+            "to": "a3",
+            "count": 1,
+            "face": 0
+          }
+        ]
+      }
+    ]
+  },
+  "arrow4": {
+    "type": "button",
+    "id": "arrow4",
+    "x": 934,
+    "y": 58,
+    "width": 72,
+    "height": 46,
+    "borderRadius": 14,
+    "backgroundColor": "#14603f",
+    "backgroundColorOH": "#1d8a5a",
+    "borderColor": "#7fe0a8",
+    "icon": {
+      "name": "arrow_downward",
+      "color": "#fff8e7",
+      "scale": 1.15
+    },
+    "clickRoutine": [
+      "// push the revealed tile into this arm of the river, everything below it slides on",
+      {
+        "func": "COUNT",
+        "holder": [
+          "tileSpot"
+        ],
+        "variable": "nSpot"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nSpot}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "c4",
+            "to": "discardPile",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "b4",
+            "to": "c4",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "a4",
+            "to": "b4",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "tileSpot",
+            "to": "a4",
+            "count": 1,
+            "face": 0
+          }
+        ]
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "index": 1,
+    "x": 1196,
+    "y": 428,
+    "width": 316,
+    "height": 60,
+    "color": "#d55e00",
+    "colorEmpty": "#d55e00",
+    "borderRadius": 14,
+    "hand": "hand1",
+    "css": "background: #10322c; font-size: 21px; color: #fff8e7; border-color: #d55e00; --wcShadowTurn: 0 0 22px 7px #d55e00"
+  },
+  "friend1": {
+    "type": "basic",
+    "id": "friend1",
+    "x": 1520,
+    "y": 431,
+    "width": 54,
+    "height": 54,
+    "borderRadius": 12,
+    "layer": 1,
+    "display": false,
+    "movable": false,
+    "svgReplaces": {
+      "#000": "ink"
+    },
+    "ink": "#fff8e7",
+    "faces": [
+      {
+        "image": "/i/game-icons.net/lorc/monkey.svg",
+        "friendKey": "monkey",
+        "css": "background-color: #b5651d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "friendKey": "elephant",
+        "css": "background-color: #6e86a8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/tiger.svg",
+        "friendKey": "tiger",
+        "css": "background-color: #e8a33d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/toucan.svg",
+        "friendKey": "toucan",
+        "css": "background-color: #2f8f6f; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/caro-asercion/anteater.svg",
+        "friendKey": "anteater",
+        "css": "background-color: #9b5fa8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      }
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 1196,
+    "y": 496,
+    "width": 316,
+    "height": 60,
+    "color": "#f0e442",
+    "colorEmpty": "#f0e442",
+    "borderRadius": 14,
+    "hand": "hand2",
+    "css": "background: #10322c; font-size: 21px; color: #fff8e7; border-color: #f0e442; --wcShadowTurn: 0 0 22px 7px #f0e442"
+  },
+  "friend2": {
+    "type": "basic",
+    "id": "friend2",
+    "x": 1520,
+    "y": 499,
+    "width": 54,
+    "height": 54,
+    "borderRadius": 12,
+    "layer": 1,
+    "display": false,
+    "movable": false,
+    "svgReplaces": {
+      "#000": "ink"
+    },
+    "ink": "#fff8e7",
+    "faces": [
+      {
+        "image": "/i/game-icons.net/lorc/monkey.svg",
+        "friendKey": "monkey",
+        "css": "background-color: #b5651d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "friendKey": "elephant",
+        "css": "background-color: #6e86a8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/tiger.svg",
+        "friendKey": "tiger",
+        "css": "background-color: #e8a33d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/toucan.svg",
+        "friendKey": "toucan",
+        "css": "background-color: #2f8f6f; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/caro-asercion/anteater.svg",
+        "friendKey": "anteater",
+        "css": "background-color: #9b5fa8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      }
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 1196,
+    "y": 564,
+    "width": 316,
+    "height": 60,
+    "color": "#009e73",
+    "colorEmpty": "#009e73",
+    "borderRadius": 14,
+    "hand": "hand3",
+    "css": "background: #10322c; font-size: 21px; color: #fff8e7; border-color: #009e73; --wcShadowTurn: 0 0 22px 7px #009e73"
+  },
+  "friend3": {
+    "type": "basic",
+    "id": "friend3",
+    "x": 1520,
+    "y": 567,
+    "width": 54,
+    "height": 54,
+    "borderRadius": 12,
+    "layer": 1,
+    "display": false,
+    "movable": false,
+    "svgReplaces": {
+      "#000": "ink"
+    },
+    "ink": "#fff8e7",
+    "faces": [
+      {
+        "image": "/i/game-icons.net/lorc/monkey.svg",
+        "friendKey": "monkey",
+        "css": "background-color: #b5651d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "friendKey": "elephant",
+        "css": "background-color: #6e86a8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/tiger.svg",
+        "friendKey": "tiger",
+        "css": "background-color: #e8a33d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/toucan.svg",
+        "friendKey": "toucan",
+        "css": "background-color: #2f8f6f; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/caro-asercion/anteater.svg",
+        "friendKey": "anteater",
+        "css": "background-color: #9b5fa8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      }
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 1196,
+    "y": 632,
+    "width": 316,
+    "height": 60,
+    "color": "#0072b2",
+    "colorEmpty": "#0072b2",
+    "borderRadius": 14,
+    "hand": "hand4",
+    "css": "background: #10322c; font-size: 21px; color: #fff8e7; border-color: #0072b2; --wcShadowTurn: 0 0 22px 7px #0072b2"
+  },
+  "friend4": {
+    "type": "basic",
+    "id": "friend4",
+    "x": 1520,
+    "y": 635,
+    "width": 54,
+    "height": 54,
+    "borderRadius": 12,
+    "layer": 1,
+    "display": false,
+    "movable": false,
+    "svgReplaces": {
+      "#000": "ink"
+    },
+    "ink": "#fff8e7",
+    "faces": [
+      {
+        "image": "/i/game-icons.net/lorc/monkey.svg",
+        "friendKey": "monkey",
+        "css": "background-color: #b5651d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "friendKey": "elephant",
+        "css": "background-color: #6e86a8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/tiger.svg",
+        "friendKey": "tiger",
+        "css": "background-color: #e8a33d; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/toucan.svg",
+        "friendKey": "toucan",
+        "css": "background-color: #2f8f6f; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/caro-asercion/anteater.svg",
+        "friendKey": "anteater",
+        "css": "background-color: #9b5fa8; background-size: 76%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      }
+    ]
+  },
+  "lblCount": {
+    "type": "label",
+    "id": "lblCount",
+    "x": 1200,
+    "y": 360,
+    "width": 380,
+    "height": 56,
+    "text": "",
+    "css": "font-size: 44px; color: #fff8e7; text-align: center; font-weight: bold; background: transparent"
+  },
+  "winBanner": {
+    "type": "basic",
+    "id": "winBanner",
+    "x": 1200,
+    "y": 846,
+    "width": 380,
+    "height": 110,
+    "display": false,
+    "borderRadius": 24,
+    "movable": false,
+    "clickable": false,
+    "layer": 2,
+    "icon": {
+      "name": "delapouite/crenel-crown",
+      "color": "#fff8e7",
+      "scale": 0.9
+    },
+    "css": "background: #444; box-shadow: inset 0 0 0 6px rgba(255,248,231,.8)"
+  },
+  "badge1": {
+    "type": "basic",
+    "id": "badge1",
+    "x": 1176,
+    "y": 40,
+    "width": 36,
+    "height": 36,
+    "layer": 2,
+    "movable": false,
+    "clickable": false,
+    "text": "1",
+    "borderRadius": "50%",
+    "css": "background: #fff8e7; color: #0a2f42; font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center"
+  },
+  "badge2": {
+    "type": "basic",
+    "id": "badge2",
+    "x": 443,
+    "y": 63,
+    "width": 36,
+    "height": 36,
+    "layer": 2,
+    "movable": false,
+    "clickable": false,
+    "text": "2",
+    "borderRadius": "50%",
+    "css": "background: #fff8e7; color: #0a2f42; font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center"
+  },
+  "badge3": {
+    "type": "basic",
+    "id": "badge3",
+    "x": 1376,
+    "y": 210,
+    "width": 36,
+    "height": 36,
+    "layer": 2,
+    "movable": false,
+    "clickable": false,
+    "text": "3",
+    "borderRadius": "50%",
+    "css": "background: #fff8e7; color: #0a2f42; font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center"
+  },
+  "btnResolve": {
+    "type": "button",
+    "id": "btnResolve",
+    "x": 1420,
+    "y": 222,
+    "width": 126,
+    "height": 126,
+    "borderRadius": 24,
+    "backgroundColor": "#c8781f",
+    "backgroundColorOH": "#e8a33d",
+    "borderColor": "#fff8e7",
+    "icon": {
+      "name": "lorc/flat-paw-print",
+      "color": "#fff8e7",
+      "scale": 0.95
+    },
+    "clickRoutine": [
+      "// count the rolled animal in the eight water spots and walk that many steps",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "turnSeat"
+      },
+      {
+        "func": "COUNT",
+        "collection": "turnSeat",
+        "variable": "nSeat"
+      },
+      "var done = ${PROPERTY resolved OF rules}",
+      {
+        "func": "COUNT",
+        "holder": [
+          "tileSpot"
+        ],
+        "variable": "waiting"
+      },
+      "var seated = ${nSeat} > 0",
+      "var pending = ${done} == 0",
+      "var pushed = ${waiting} == 0",
+      "var ready = ${seated} && ${pending} && ${pushed}",
+      {
+        "func": "IF",
+        "condition": "${ready}",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "turnSeat",
+            "property": "index",
+            "variable": "si"
+          },
+          "var pawnID = 'pawn' + ${si}",
+          "var chipID = 'friend' + ${si}",
+          "var face = ${PROPERTY activeFace OF die}",
+          {
+            "func": "VAR",
+            "variables": {
+              "animals": [
+                "monkey",
+                "elephant",
+                "tiger",
+                "toucan",
+                "anteater",
+                "snake"
+              ]
+            }
+          },
+          "var animal = ${animals.$face}",
+          "var auto = ${PROPERTY autoMode OF btnHelper}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "relation": "in",
+            "value": [
+              "b1",
+              "b2",
+              "b3",
+              "b4",
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "collection": "seen"
+          },
+          {
+            "func": "SELECT",
+            "source": "seen",
+            "type": "card",
+            "property": "cardType",
+            "value": "${animal}",
+            "collection": "seen"
+          },
+          {
+            "func": "COUNT",
+            "collection": "seen",
+            "variable": "steps"
+          },
+          {
+            "func": "LABEL",
+            "label": "lblCount",
+            "value": "${steps}"
+          },
+          {
+            "func": "IF",
+            "condition": "${auto}",
+            "thenRoutine": [
+              "var friendKey = ${PROPERTY friendKey OF $chipID}",
+              "var uf = ${PROPERTY useFriends OF rules}",
+              {
+                "func": "IF",
+                "condition": "${uf}",
+                "elseRoutine": [
+                  "var friendKey = 'none'"
+                ]
+              },
+              "var fromSpace = ${PROPERTY parent OF $pawnID}",
+              "var fromIdx = ${PROPERTY spaceIndex OF $fromSpace}",
+              {
+                "func": "CALL",
+                "widget": "rules",
+                "routine": "friendCountRoutine",
+                "variable": "bonusA",
+                "arguments": {
+                  "spaceID": "${fromSpace}",
+                  "friendKey": "${friendKey}"
+                }
+              },
+              "var target = ${fromIdx} + ${bonusA} + ${steps}",
+              "var target = min ${target} 19",
+              {
+                "func": "SELECT",
+                "type": "holder",
+                "property": "spaceIndex",
+                "value": "${target}",
+                "collection": "destH"
+              },
+              {
+                "func": "GET",
+                "collection": "destH",
+                "property": "id",
+                "variable": "destID"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "${pawnID}",
+                "collection": "myPawn"
+              },
+              {
+                "func": "MOVE",
+                "collection": "myPawn",
+                "to": "${destID}",
+                "count": 1
+              },
+              {
+                "func": "CALL",
+                "widget": "rules",
+                "routine": "friendCountRoutine",
+                "variable": "bonusB",
+                "arguments": {
+                  "spaceID": "${destID}",
+                  "friendKey": "${friendKey}"
+                }
+              },
+              {
+                "func": "IF",
+                "operand1": "${bonusB}",
+                "relation": ">",
+                "operand2": 0,
+                "thenRoutine": [
+                  "var target = ${target} + ${bonusB}",
+                  "var target = min ${target} 19",
+                  {
+                    "func": "SELECT",
+                    "type": "holder",
+                    "property": "spaceIndex",
+                    "value": "${target}",
+                    "collection": "destH"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": "destH",
+                    "property": "id",
+                    "variable": "destID"
+                  },
+                  {
+                    "func": "MOVE",
+                    "collection": "myPawn",
+                    "to": "${destID}",
+                    "count": 1
+                  }
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${target}",
+                "relation": ">=",
+                "operand2": 19,
+                "thenRoutine": [
+                  {
+                    "func": "GET",
+                    "collection": "myPawn",
+                    "property": "color",
+                    "variable": "wc"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "winBanner"
+                    ],
+                    "property": "css",
+                    "value": "background: ${wc}; box-shadow: inset 0 0 0 6px rgba(255,248,231,.8)"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "winBanner"
+                    ],
+                    "property": "display",
+                    "value": true
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "CALL",
+                    "widget": "rules",
+                    "routine": "nextTurnRoutine"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "rules"
+            ],
+            "property": "resolved",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "btnHelper": {
+    "type": "basic",
+    "id": "btnHelper",
+    "x": 1310,
+    "y": 724,
+    "width": 92,
+    "height": 92,
+    "borderRadius": 20,
+    "movable": false,
+    "svgReplaces": {
+      "#000": "ink"
+    },
+    "ink": "#fff8e7",
+    "faces": [
+      {
+        "image": "/i/game-icons.net/delapouite/robot-antennas.svg",
+        "autoMode": true,
+        "css": "background-color: #14603f; background-size: 66%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      },
+      {
+        "image": "/i/game-icons.net/lorc/hand.svg",
+        "autoMode": false,
+        "css": "background-color: #5c5346; background-size: 66%; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 0 3px rgba(255,248,231,.6)"
+      }
+    ]
+  },
+  "btnNext": {
+    "type": "button",
+    "id": "btnNext",
+    "x": 1416,
+    "y": 724,
+    "width": 92,
+    "height": 92,
+    "borderRadius": 20,
+    "backgroundColor": "#1f5ca6",
+    "backgroundColorOH": "#3d86d8",
+    "borderColor": "#fff8e7",
+    "icon": {
+      "name": "arrow_forward",
+      "color": "#fff8e7",
+      "scale": 1.15
+    },
+    "clickRoutine": [
+      "// hand the die to the next explorer",
+      {
+        "func": "CALL",
+        "widget": "rules",
+        "routine": "nextTurnRoutine"
+      },
+      {
+        "func": "LABEL",
+        "label": "lblCount",
+        "value": ""
+      }
+    ]
+  },
+  "btnRestart": {
+    "type": "button",
+    "id": "btnRestart",
+    "x": 1204,
+    "y": 724,
+    "width": 92,
+    "height": 92,
+    "borderRadius": 20,
+    "backgroundColor": "#8c3b3b",
+    "backgroundColorOH": "#b85555",
+    "borderColor": "#fff8e7",
+    "icon": {
+      "name": "lorc/cycle",
+      "color": "#fff8e7",
+      "scale": 0.85
+    },
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Toad King Trail",
+        "fields": [
+          {
+            "type": "switch",
+            "label": "Best-friend chips",
+            "variable": "uf",
+            "value": "on"
+          }
+        ],
+        "confirmButtonText": "New game"
+      },
+      "var ufb = ${uf} == 'on'",
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "useFriends",
+        "value": "${ufb}"
+      },
+      {
+        "func": "CALL",
+        "widget": "rules",
+        "routine": "setupRoutine"
+      }
+    ]
+  },
+  "rules": {
+    "type": "basic",
+    "id": "rules",
+    "x": 1560,
+    "y": 960,
+    "width": 20,
+    "height": 20,
+    "display": false,
+    "movable": false,
+    "clickable": false,
+    "snakes": 0,
+    "resolved": 1,
+    "useFriends": true,
+    "gameStartRoutine": [
+      {
+        "func": "CALL",
+        "routine": "setupRoutine"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "seatVisRoutine"
+      }
+    ],
+    "setupRoutine": [
+      "// gather every tile, shuffle it face down and fill the river again",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "tiles",
+        "collection": "allTiles"
+      },
+      {
+        "func": "FLIP",
+        "collection": "allTiles",
+        "face": 0
+      },
+      {
+        "func": "MOVE",
+        "collection": "allTiles",
+        "to": "drawPile",
+        "count": "all"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "drawPile"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4
+        ],
+        "loopRoutine": [
+          "var hidden = 'a' + ${value}",
+          "var front = 'b' + ${value}",
+          {
+            "func": "MOVE",
+            "from": "drawPile",
+            "to": "${hidden}",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "drawPile",
+            "to": "${front}",
+            "count": 1,
+            "face": 1
+          }
+        ]
+      },
+      "// every explorer starts at the campfire",
+      {
+        "func": "SELECT",
+        "property": "pawn",
+        "value": true,
+        "collection": "pawns"
+      },
+      {
+        "func": "MOVE",
+        "collection": "pawns",
+        "to": "sp0",
+        "count": "all"
+      },
+      "// deal a different best friend to every seat",
+      {
+        "func": "VAR",
+        "variables": {
+          "pool": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "var pool = shuffle ${pool}",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4
+        ],
+        "loopRoutine": [
+          "var slot = ${value} - 1",
+          "var pick = ${pool.$slot}",
+          {
+            "func": "SET",
+            "collection": [
+              "friend${value}"
+            ],
+            "property": "activeFace",
+            "value": "${pick}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "snakes",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "resolved",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "die"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "lblCount",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "winBanner"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "CALL",
+        "routine": "seatVisRoutine"
+      },
+      {
+        "func": "TURN",
+        "turn": "first",
+        "turnCycle": "position"
+      },
+      "// the four tiles are shown to everybody before they dive under the hanging bridge",
+      {
+        "func": "DELAY",
+        "milliseconds": 3200
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "a1",
+          "a2",
+          "a3",
+          "a4"
+        ],
+        "face": 0
+      }
+    ],
+    "seatVisRoutine": [
+      "var uf = ${PROPERTY useFriends OF rules}",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4
+        ],
+        "loopRoutine": [
+          "var seat = 'seat' + ${value}",
+          "var who = ${PROPERTY player OF $seat}",
+          {
+            "func": "IF",
+            "condition": "${who}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "pawn${value}"
+                ],
+                "property": "display",
+                "value": true
+              },
+              {
+                "func": "IF",
+                "condition": "${uf}",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "friend${value}"
+                    ],
+                    "property": "display",
+                    "value": true
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "friend${value}"
+                    ],
+                    "property": "display",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "pawn${value}"
+                ],
+                "property": "display",
+                "value": false
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "friend${value}"
+                ],
+                "property": "display",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "whoseTurn"
+      },
+      {
+        "func": "COUNT",
+        "collection": "whoseTurn",
+        "variable": "nTurn"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nTurn}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "TURN",
+            "turn": "first",
+            "turnCycle": "position"
+          }
+        ]
+      }
+    ],
+    "snakeRoutine": [
+      "// the snake sends the leading explorer one space back, but never behind space 7",
+      {
+        "func": "SELECT",
+        "property": "pawn",
+        "value": true,
+        "collection": "pawns"
+      },
+      "var maxIdx = 0",
+      {
+        "func": "FOREACH",
+        "collection": "pawns",
+        "loopRoutine": [
+          "var pp = ${PROPERTY parent OF $widgetID}",
+          "var pv = ${PROPERTY display OF $widgetID}",
+          "var pi = ${PROPERTY spaceIndex OF $pp}",
+          {
+            "func": "IF",
+            "condition": "${pv}",
+            "thenRoutine": [
+              "var maxIdx = max ${maxIdx} ${pi}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${maxIdx}",
+        "relation": ">",
+        "operand2": 7,
+        "thenRoutine": [
+          "var back = ${maxIdx} - 1",
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "spaceIndex",
+            "value": "${back}",
+            "collection": "destH"
+          },
+          {
+            "func": "GET",
+            "collection": "destH",
+            "property": "id",
+            "variable": "destID"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "pawns",
+            "loopRoutine": [
+              "var pp = ${PROPERTY parent OF $widgetID}",
+              "var pv = ${PROPERTY display OF $widgetID}",
+              "var pi = ${PROPERTY spaceIndex OF $pp}",
+              {
+                "func": "IF",
+                "condition": "${pv}",
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${pi}",
+                    "relation": "==",
+                    "operand2": "${maxIdx}",
+                    "thenRoutine": [
+                      {
+                        "func": "MOVE",
+                        "to": "${destID}",
+                        "count": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "var sn = ${PROPERTY snakes OF rules} + 1",
+          {
+            "func": "SET",
+            "collection": [
+              "rules"
+            ],
+            "property": "snakes",
+            "value": "${sn}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${sn}",
+            "relation": ">=",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "nextTurnRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "revealRoutine": [
+      "// turn the next tile face up; the waterfall pile is reshuffled when the stack runs dry",
+      {
+        "func": "COUNT",
+        "holder": [
+          "tileSpot"
+        ],
+        "variable": "nSpot"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nSpot}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "COUNT",
+            "holder": [
+              "drawPile"
+            ],
+            "variable": "nDraw"
+          },
+          {
+            "func": "IF",
+            "operand1": "${nDraw}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "discardPile",
+                "to": "drawPile",
+                "count": "all",
+                "face": 0
+              },
+              {
+                "func": "SHUFFLE",
+                "holder": "drawPile"
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "drawPile",
+            "to": "tileSpot",
+            "count": 1,
+            "face": 1
+          }
+        ]
+      }
+    ],
+    "friendCountRoutine": [
+      "// how many best friends swim right next to the given trail space",
+      "var adjacent = ${PROPERTY nextTo OF $spaceID}",
+      "var result = 0",
+      {
+        "func": "FOREACH",
+        "in": "${adjacent}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${value}",
+            "collection": "near"
+          },
+          {
+            "func": "SELECT",
+            "source": "near",
+            "type": "card",
+            "property": "cardType",
+            "value": "${friendKey}",
+            "collection": "near"
+          },
+          {
+            "func": "COUNT",
+            "collection": "near",
+            "variable": "nNear"
+          },
+          "var result = ${result} + ${nNear}"
+        ]
+      }
+    ],
+    "nextTurnRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "snakes",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "resolved",
+        "value": 1
+      },
+      {
+        "func": "TURN",
+        "turn": 1,
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "hand1": {
+    "type": "holder",
+    "id": "hand1",
+    "x": 1560,
+    "y": 960,
+    "width": 20,
+    "height": 20,
+    "display": false,
+    "childrenPerOwner": true
+  },
+  "hand2": {
+    "type": "holder",
+    "id": "hand2",
+    "x": 1560,
+    "y": 960,
+    "width": 20,
+    "height": 20,
+    "display": false,
+    "childrenPerOwner": true
+  },
+  "hand3": {
+    "type": "holder",
+    "id": "hand3",
+    "x": 1560,
+    "y": 960,
+    "width": 20,
+    "height": 20,
+    "display": false,
+    "childrenPerOwner": true
+  },
+  "hand4": {
+    "type": "holder",
+    "id": "hand4",
+    "x": 1560,
+    "y": 960,
+    "width": 20,
+    "height": 20,
+    "display": false,
+    "childrenPerOwner": true
+  }
+}
