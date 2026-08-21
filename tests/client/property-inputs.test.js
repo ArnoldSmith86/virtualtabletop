@@ -23,6 +23,7 @@ const inputHelpers = new Function(symbolsSource + inputsSource + `;
     propertyInputValueSet,
     numericInputValue,
     searchIconIndex,
+    iconChipTitle,
     searchImageIndex,
     iconSearchEntry,
     iconSearchScores,
@@ -1025,13 +1026,17 @@ describe('property input helpers', () => {
   test('searchIconIndex lists name matches first and keeps symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
       { value: 'grade',          ...inputHelpers.iconSearchEntry('grade', [ 'star' ]),  image: false },
+      { value: 'star_rate',      ...inputHelpers.iconSearchEntry('star_rate', [ 'rate' ]), image: false },
+      { value: 'stadium',        ...inputHelpers.iconSearchEntry('stadium', [ 'star' ]), image: false },
       { value: 'star',           ...inputHelpers.iconSearchEntry('star', [ 'favorite' ]), image: false },
       { value: 'lorc/star',      ...inputHelpers.iconSearchEntry('star', [ 'shiny' ]),  image: true },
       { value: 'delapouite/sun', ...inputHelpers.iconSearchEntry('sun', [ 'light' ]),   image: true }
     ]);
-    // the two icons called "star" come before the one that is only tagged with it, both groups
-    // in the order of the index
-    expect(inputHelpers.searchIconIndex('star').values).toEqual([ 'star', 'lorc/star', 'grade' ]);
+    // the icons that ARE called "star" (in both families) come before the one whose name merely
+    // starts with it, and that one before the two that are only tagged with it - each group in the
+    // order of the index. "star" is a tag of 400 icons, so without this the icon called "star" is
+    // somewhere in the middle of them.
+    expect(inputHelpers.searchIconIndex('star').values).toEqual([ 'star', 'lorc/star', 'star_rate', 'grade', 'stadium' ]);
     expect(inputHelpers.searchIconIndex('sun').values).toEqual([ 'delapouite/sun' ]);
     expect(inputHelpers.searchIconIndex('nothing').values).toEqual([]);
   });
@@ -1085,6 +1090,31 @@ describe('property input helpers', () => {
     expect(inputHelpers.searchIconIndex('new').values).toEqual([ 'lorc/new-shoot', 'delapouite/newspaper' ]);
   });
 
+  test('an icon name typed with spaces ranks like the underscored/hyphenated name', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'keyboard_arrow_back', ...inputHelpers.iconSearchEntry('keyboard_arrow_back', []), image: false },
+      { value: 'arrow_back_ios',      ...inputHelpers.iconSearchEntry('arrow_back_ios', []),      image: false },
+      { value: 'arrow_back',          ...inputHelpers.iconSearchEntry('arrow_back', [ 'previous', 'left' ]), image: false },
+      { value: 'lorc/arrow-back',     ...inputHelpers.iconSearchEntry('arrow-back', [ 'return' ]), image: true  }
+    ]);
+    // "arrow back" is how Google's icon site spells arrow_back, so it has to rank the icons named that way
+    // first, then the one whose name merely begins with it - underscores in the name and hyphens in the
+    // game-icons name alike
+    expect(inputHelpers.searchIconIndex('arrow back').values).toEqual([ 'arrow_back', 'lorc/arrow-back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
+    // names are matched word by word, so the underscored spelling is the very same query
+    expect(inputHelpers.searchIconIndex('arrow_back').values).toEqual([ 'arrow_back', 'lorc/arrow-back', 'arrow_back_ios', 'keyboard_arrow_back' ]);
+  });
+
+  test('an icon can be found by its own name even when it matches later than the result limit', () => {
+    const index = Array.from({ length: 120 }, (_, i) => ({ value: `icon_${i}`, ...inputHelpers.iconSearchEntry(`icon_${i}`, [ 'save' ]), image: false }));
+    index.push({ value: 'save', ...inputHelpers.iconSearchEntry('save', [ 'disk' ]), image: false });
+    inputHelpers.setIconSearchIndex(index);
+
+    const { values } = inputHelpers.searchIconIndex('save');
+    expect(values).toHaveLength(100);
+    expect(values[0]).toBe('save');
+  });
+
   test('searchImageIndex returns image URLs for matching glyphs', () => {
     inputHelpers.setIconSearchIndex([
       { value: 'lorc/dice-six-faces-six', ...inputHelpers.iconSearchEntry('dice-six-faces-six', [ 'six' ]), image: true },
@@ -1111,6 +1141,21 @@ describe('property input helpers', () => {
       { value: 'star', type: 'material-symbols', ...inputHelpers.iconSearchEntry('star', []), image: false }
     ]);
     expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ])).values).toEqual([ 'star' ]);
+  });
+
+  test('a truncated icon search reports how many matches it left out', () => {
+    inputHelpers.setIconSearchIndex(Array.from({ length: 120 }, (_, i) => ({ value: `icon_${i}`, ...inputHelpers.iconSearchEntry(`icon_${i}`, [ 'save' ]), image: false })));
+
+    expect(inputHelpers.searchIconIndex('save').values).toHaveLength(100);
+    expect(inputHelpers.searchIconIndex('save').total).toBe(120);
+    // nothing was left out, so there is nothing to report
+    expect(inputHelpers.searchIconIndex('icon_77').total).toBe(1);
+  });
+
+  test('the outlined variant of a Material Symbol says so instead of showing _NOFILL', () => {
+    expect(inputHelpers.iconChipTitle('save_NOFILL')).toBe('save (outlined)');
+    expect(inputHelpers.iconChipTitle('save')).toBe('save');
+    expect(inputHelpers.iconChipTitle('lorc/star')).toBe('lorc/star');
   });
 
   test('picker searches show up to 100 results', () => {

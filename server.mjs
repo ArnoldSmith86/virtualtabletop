@@ -165,12 +165,21 @@ MinifyHTML().then(function(result) {
 
   // the icon pickers fetch symbols.json whole, so it is served from the buffer that was gzipped at
   // startup; a client that does not accept gzip falls through to express.static below
+  const symbolsLastModified = (function() {
+    try {
+      return fs.statSync(path.resolve() + '/assets/fonts/symbols.json').mtime.toUTCString();
+    } catch(e) {
+      return null;
+    }
+  })();
   router.get('/i/fonts/symbols.json', function(req, res, next) {
     res.setHeader('Vary', 'Accept-Encoding');
-    if(!req.headers['accept-encoding'] || !req.headers['accept-encoding'].match(/\bgzip\b/))
+    if(!result.symbolsGzipped || !req.headers['accept-encoding'] || !req.headers['accept-encoding'].match(/\bgzip\b/))
       return next();
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Content-Encoding', 'gzip');
+    if(symbolsLastModified)
+      res.setHeader('Last-Modified', symbolsLastModified); // express.static sent this - keep revalidation working
     res.send(result.symbolsGzipped);
   });
 

@@ -261,6 +261,12 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   return symbol;
 }
 
+// "save_NOFILL" is how the outlined variant of a Material Symbol is stored, but as the tooltip of a chip it
+// is developer vocabulary that does not explain why the same-looking glyph is offered twice.
+function iconChipTitle(value) {
+  return /^[a-z0-9].*_NOFILL$/.test(value) ? `${value.replace(/_NOFILL$/, '')} (outlined)` : value;
+}
+
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
@@ -275,7 +281,7 @@ function renderIconChip(value, target) {
     icon = Array.isArray(value) ? value[0] : value;
     icon = icon && typeof icon == 'object' ? icon.name : icon;
   } else {
-    chip.title = value;
+    chip.title = iconChipTitle(value);
   }
   if(typeof icon != 'string')
     return chip; // nothing renderable (e.g. an empty or malformed icon object)
@@ -1415,8 +1421,22 @@ class IconInput extends PickerInput {
       .slice(0, 100);
     const updateResults = async _=>{
       const query = search.value.trim();
-      if(query)
+      if(query && !iconSearchIndex) {
+        // the index is a half-megabyte fetch: say so instead of leaving the frequently-used icons up, which
+        // look like the (wrong) answer to what was just typed
+        results.innerHTML = '';
+        div(results, 'propertyPickerEmpty', 'Loading icons…');
+        resultCount.textContent = '';
         await loadIconSearchIndex().catch(_=>null);
+        if(search.value.trim() != query)
+          return; // the user kept typing while it loaded - that keystroke's own update is in charge now
+        if(!iconSearchIndex) {
+          // the fetch failed - "No results." would blame the query for it
+          results.innerHTML = '';
+          div(results, 'propertyPickerEmpty', 'Could not load the icon list.');
+          return;
+        }
+      }
       if(!query)
         return showResults(frequentlyUsed());
       const { total, values } = searchIconIndex(query, 100, enabledTypes);
@@ -1523,8 +1543,20 @@ class ImageInput extends PickerInput {
     searchSection.appendChild(showAll);
 
     search.oninput = async _=>{
-      await loadIconSearchIndex().catch(_=>null);
       const query = search.value.trim();
+      if(query && !iconSearchIndex) {
+        results.innerHTML = '';
+        div(results, 'propertyPickerEmpty', 'Loading icons…');
+        resultCount.textContent = '';
+        await loadIconSearchIndex().catch(_=>null);
+        if(search.value.trim() != query)
+          return; // the user kept typing while it loaded - that keystroke's own update is in charge now
+        if(!iconSearchIndex) {
+          results.innerHTML = '';
+          div(results, 'propertyPickerEmpty', 'Could not load the icon list.');
+          return;
+        }
+      }
       if(!query)
         return showResults(frequentlyUsed);
       const { total, values } = searchImageIndex(query);

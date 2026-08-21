@@ -1182,13 +1182,15 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
-    // the same search in the unrestricted picker does find its one match
+    // the same search in the unrestricted picker does find its match (filled and outlined variant)
     .typeText('#symbolPickerOverlay input', '10k')
     .expect(Selector('#symbolNoResults').visible).notOk()
-    .expect(Selector('#symbolList i:not(.hidden)').count).eql(1)
+    .expect(Selector('#symbolList i:not(.hidden)').count).eql(2)
     .selectText('#symbolPickerOverlay input')
     .pressKey('delete')
-    .click(Selector('#symbolList .material-symbols').nth(0))
+    // pinned for the same reason as the game-icon above: which one comes first depends on the order
+    // of the Material Symbols sections in symbols.json, so updating the font would change the hash
+    .click(Selector('#symbolList .material-symbols[data-symbol="view_object_track"]'))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 1 });
 
   await t

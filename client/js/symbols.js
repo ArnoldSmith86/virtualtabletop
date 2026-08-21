@@ -173,7 +173,7 @@ function iconSearchTerm(term) {
 
 // What the tags of an icon say it shows, for its tooltip: nothing else tells a user that the
 // search knows an icon as "first aid" or "trick taking". Read back out of entry.text (see
-// iconSearchEntry above) rather than kept a second time - there are 13288 of these.
+// iconSearchEntry above) rather than kept a second time - there are 14000 of these.
 function iconSearchTagText(entry) {
   return entry.text.split(',').slice(2).filter(tag => tag).join(', ');
 }
@@ -199,21 +199,37 @@ function iconSearchScore(entry, terms) {
   return score;
 }
 
+// On top of the per-term score: 5 for an icon that IS called what was typed, 4 for one whose name
+// begins with it. A word like "star" is in the name of 60 icons and a tag of 400 more, so without
+// this the icon actually called "star" sits somewhere in the middle of them. The name is compared
+// as its words joined by spaces - "arrow_back" and the game-icons "lorc/arrow-back" both read
+// "arrow back", which is the spelling Google's own icon site uses and the natural way to type it.
+// Only entries that matched at all are offered the bonus, so it can never resurrect a non-match.
+function iconSearchNameScore(entry, spelledOutQuery) {
+  const name = entry.name.join(' ');
+  return name == spelledOutQuery ? 5 : name.startsWith(`${spelledOutQuery} `) ? 4 : 0;
+}
+
 // Scores a whole list of search entries against one query: 0 for the entries that do not match,
-// 1 to 3 for the ones that do. Both pickers rank by it, which is what makes them agree on what a
-// query means - the sidebar sorts its result list, the picker below lays its matches out in three
-// CSS orders because its list is built once and only filtered afterwards.
+// 1 to 5 for the ones that do. Both pickers rank by it, which is what makes them agree on what a
+// query means - the sidebar sorts its result list, the picker below lays its matches out in the
+// CSS orders of their score because its list is built once and only filtered afterwards.
 function iconSearchScores(entries, query) {
   if(!query.trim())
     return entries.map(_=>1);
-  const terms = iconSearchWords(query).map(iconSearchTerm);
-  const scores = terms.length ? entries.map(entry => iconSearchScore(entry, terms)) : [];
+  const words = iconSearchWords(query);
+  const spelledOutQuery = words.join(' '); // what an icon would have to be called to be an exact hit
+  const terms = words.map(iconSearchTerm);
+  const scores = terms.length ? entries.map(entry => {
+    const score = iconSearchScore(entry, terms);
+    return score ? Math.max(score, iconSearchNameScore(entry, spelledOutQuery)) : 0;
+  }) : [];
   if(scores.some(score => score))
     return scores;
   // a half typed tag ("cthulh") or a pasted emoji has no word to match, so rather than showing an
   // empty picker, fall back to the old "appears anywhere in the name or the tags". A query with no
   // letter of the tags' alphabet at all ("меч", "???") leaves no term either, and every entry
-  // matching no term used to unhide all 13288 icons - it takes the same fallback now and ends up
+  // matching no term used to unhide all 14000 icons - it takes the same fallback now and ends up
   // in the honest "no results" state when that finds nothing either.
   const looseTerms = query.toLowerCase().split(/\s+/).filter(term => term);
   return entries.map(entry => looseTerms.every(term => entry.text.includes(term)) ? 1 : 0);
@@ -227,141 +243,220 @@ const iconSearchPlaceholder = 'Search by name or by what the icon shows (first a
 // a rare synonym or a spelling they do not use
 const iconSearchNoResultsHint = 'Try a shorter or more common word.';
 
-let symbolData = null;
-export async function loadSymbolPicker() {
-  if(symbolData === null) {
-    symbolData = 'loading';
-    try {
-      symbolData = await (await fetch('i/fonts/symbols.json')).json();
-    } catch(e) {
-      symbolData = null; // a failed fetch must not leave the picker stuck in 'loading' for the whole session
-      throw e;
-    }
-    let list = '';
-    const symbolSearch = []; // one entry per <i> below, in the order they are added to #symbolList
-    for(const [ category, symbols ] of Object.entries(symbolData)) {
-      if(category == 'Emoji - Flags')
-        continue;
-      list += `<h2 data-family="${category.match(/^(Material|VTT|Emoji)/)?'font':'image'}">${category}</h2>`;
-      for(let [ symbol, keywords ] of Object.entries(symbols)) {
-        if(symbol.includes('/')) {
-          const gameIconsIndex = keywords.shift();
-          // the file name is searched word by word, so that both "polar-bear" and "polar bear"
-          // find the icon without spending one of its tags on it
-          const name = symbol.split('/')[1];
-          symbolSearch.push(iconSearchEntry(name, keywords));
-          // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
-          list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
-        } else {
-          const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
-          symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
-          let className = 'emoji-monochrome';
-          if(symbol[0] == '[')
-            className = 'symbols';
-          else if(symbol.match(/^[a-z0-9_]+$/))
-            className = 'material-symbols';
-          if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
-            const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
-            symbolSearch.push(iconSearchEntry(symbol, keywords));
-            list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
-          }
-          if(className == 'material-symbols' && hasNoFillVariant) {
-            symbolSearch.push(iconSearchEntry(symbol, keywords));
-            list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL">${symbol}</i>`;
-          }
-        }
-      }
-    }
-    for(const [ category, symbols ] of Object.entries(symbolData)) {
-      if(category.match(/Emoji/)) {
-        list += `<h2 data-family="image">${category}</h2>`;
-        for(const [ symbol, keywords ] of Object.entries(symbols)) {
-          let className = 'emoji-color';
-          if(category == 'Emoji - Flags' || tooNewForBrowserEmojiFont(symbol))
-            className += ' emojiAsImage';
-          symbolSearch.push(iconSearchEntry(symbol, keywords));
-          list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
-        }
-      }
-    }
-    $('#symbolList').innerHTML = list;
-    const icons = Array.from($a('#symbolList i')); // one per symbolSearch entry, in the same order
-
-    // The tooltip said "game-icons.net: delapouite/first-aid-kit" and nothing else, so the words
-    // the search actually knows the icon by stayed invisible. They are added on hover, not into
-    // 13288 title attributes: that much DOM text is what made the TestCafe editor run take 48
-    // minutes when the search data still lived in a data-keywords attribute.
-    $('#symbolList').onmouseover = function(e) {
-      const icon = e.target.closest('i');
-      const index = icon ? icons.indexOf(icon) : -1;
-      if(index != -1 && !icon.dataset.described) {
-        icon.dataset.described = 1;
-        icon.title = `${icon.title}\n${iconSearchTagText(symbolSearch[index])}`;
-      }
-    };
-
-    $('#symbolPickerOverlay input').onkeyup = function() {
-      const text = $('#symbolPickerOverlay input').value;
-      const scores = iconSearchScores(symbolSearch, text);
-      const ranked = !!text.trim();
-      for(const [ i, icon ] of icons.entries()) {
-        toggleClass(icon, 'hidden', !scores[i]);
-        // the list is built once and is only filtered afterwards, so the matches cannot be
-        // re-sorted: these two classes lay them out in the three CSS orders of their score
-        // instead, which is the ranking the sidebar's icon picker sorts its own results by
-        toggleClass(icon, 'nameMatch', ranked && scores[i] == 3);
-        toggleClass(icon, 'tagMatch',  ranked && scores[i] == 1);
-      }
-      for(const title of $a('#symbolList h2'))
-        toggleClass(title, 'hidden', text);
-      // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
-      // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
-      const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
-                         : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
-      const matches = $a(`#symbolList i:not(.hidden)${hiddenFamily ? `:not([data-family=${hiddenFamily}])` : ''}`).length;
-      toggleClass($('#symbolPickerOverlay'), 'fewResults', matches < 100);
-      toggleClass($('#symbolPickerOverlay'), 'noResults', !matches);
-      $('#symbolNoResults').textContent = `No icons match "${$('#symbolPickerOverlay input').value}". ${iconSearchNoResultsHint}`;
-    };
-    $('#symbolPickerOverlay input').placeholder = iconSearchPlaceholder;
+// pickSymbol() binds its click handlers to the entries right after awaiting this, so a second caller
+// must not resume while the first one is still fetching: the list would still be the "Loading..."
+// card and the icons that arrive afterwards would never become clickable. Everybody awaits the same
+// promise instead - including the unawaited preload of addRichtextControls().
+let symbolPickerPromise = null;
+export function loadSymbolPicker() {
+  if(!symbolPickerPromise) {
+    symbolPickerPromise = buildSymbolPicker();
+    symbolPickerPromise.catch(_=>symbolPickerPromise = null); // allow retrying after a failed fetch
   }
+  return symbolPickerPromise;
+}
+
+async function buildSymbolPicker() {
+  // the "Material Symbols - *" categories, names and keywords come from Google's icon metadata:
+  // https://fonts.google.com/metadata/icons?incomplete=true&key=material_symbols (strip the )]}' prefix).
+  // The two font files are the instances Google Fonts itself serves, which are much smaller than the
+  // variable fonts in the material-design-icons repository:
+  // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0 (NoFill)
+  // https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0 (Fill)
+  // An icon is marked "(FILL+NOFILL)" only if those two files actually render it differently.
+  const symbolData = await (await fetch('i/fonts/symbols.json')).json();
+  // the search floats its best matches to the top of the list (see filterSymbolList), so this separates
+  // them from the rest of the matches, which stay in their symbols.json order below
+  let list = '<h2 id="symbolMoreMatches" class="hidden">More matches</h2>';
+  // What the search reads, one entry per <i> below and in the same order. It is kept here rather than
+  // in the elements because 14000 data-keywords attributes are what made the TestCafe editor run take
+  // 48 minutes - and because filtering must not re-parse them on every keystroke.
+  const symbolSearch = [];
+  for(const [ category, symbols ] of Object.entries(symbolData)) {
+    if(category == 'Emoji - Flags')
+      continue;
+    list += `<h2 data-family="${category.match(/^(Material|VTT|Emoji)/)?'font':'image'}">${category}</h2>`;
+    for(let [ symbol, keywords ] of Object.entries(symbols)) {
+      if(symbol.includes('/')) {
+        const gameIconsIndex = keywords.shift();
+        // the file name is searched word by word, so that both "polar-bear" and "polar bear" find the
+        // icon without spending one of its tags on it
+        symbolSearch.push(iconSearchEntry(symbol.split('/')[1], keywords));
+        // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
+        list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
+      } else {
+        const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
+        symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
+        let className = 'emoji-monochrome';
+        if(symbol[0] == '[')
+          className = 'symbols';
+        else if(symbol.match(/^[a-z0-9_]+$/))
+          className = 'material-symbols';
+        if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
+          const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
+          symbolSearch.push(iconSearchEntry(symbol, keywords));
+          list += `<i class="${className}" data-family="font" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+        }
+        // "material-symbols-nofill: save" told the reader nothing about why the same glyph is listed
+        // twice, and the value it inserts (save_NOFILL) is not what a tooltip should be teaching
+        if(className == 'material-symbols' && hasNoFillVariant) {
+          symbolSearch.push(iconSearchEntry(symbol, keywords));
+          list += `<i class="material-symbols-nofill" data-family="font" title="material-symbols: ${symbol} (outlined)" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL">${symbol}</i>`;
+        }
+      }
+    }
+  }
+  for(const [ category, symbols ] of Object.entries(symbolData)) {
+    if(category.match(/Emoji/)) {
+      list += `<h2 data-family="image">${category}</h2>`;
+      for(const [ symbol, keywords ] of Object.entries(symbols)) {
+        let className = 'emoji-color';
+        if(category == 'Emoji - Flags' || tooNewForBrowserEmojiFont(symbol))
+          className += ' emojiAsImage';
+        symbolSearch.push(iconSearchEntry(symbol, keywords));
+        list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+      }
+    }
+  }
+  $('#symbolList').innerHTML = list;
+
+  // Filtering visits every one of the ~14000 entries, so pair each one with its element once here. The
+  // cached shown/order/big is what the entry currently looks like, so a keystroke only writes to the
+  // elements that actually change.
+  const entryOfIcon = new Map();
+  for(const [ index, el ] of $a('#symbolList i').entries()) {
+    const entry = Object.assign(symbolSearch[index], { el, family: el.dataset.family, shown: true, order: 0, big: false });
+    symbolIndex.push(entry);
+    entryOfIcon.set(el, entry);
+  }
+
+  // The tooltip said "game-icons.net: delapouite/first-aid-kit" and nothing else, so the words the
+  // search actually knows the icon by stayed invisible. They are added on hover rather than into 14000
+  // title attributes, for the same reason the search data does not live in the elements either.
+  $('#symbolList').onmouseover = function(e) {
+    const icon = e.target.closest('i');
+    const entry = icon && entryOfIcon.get(icon);
+    if(entry && !icon.dataset.described) {
+      icon.dataset.described = 1;
+      icon.title = `${icon.title}\n${iconSearchTagText(entry)}`;
+    }
+  };
+
+  $('#symbolPickerOverlay input').onkeyup = scheduleSymbolFilter;
+  $('#symbolPickerOverlay input').placeholder = iconSearchPlaceholder;
+}
+
+// Even though a keystroke only writes to the entries that change, showing and hiding hundreds of them costs
+// the browser a layout pass over the whole 14000-entry list - which is a stutter per character while typing.
+// Filter once the typing pauses instead.
+let symbolFilterTimeout = null;
+function scheduleSymbolFilter() {
+  clearTimeout(symbolFilterTimeout);
+  symbolFilterTimeout = setTimeout(filterSymbolList, 120);
+}
+
+// The best matches are shown large, the rest of them in the compact grid below the "More matches" heading.
+const bigPreviewLimit = 100;
+const symbolIndex = [];
+// The CSS order a match is laid out at is its score subtracted from this: score 5 (the icon IS called what
+// was typed) ends up first, score 1 (only its tags say so) last, then the "More matches" heading itself,
+// then everything the big previews had no room for.
+const moreMatchesOrder = 5;
+const overflowOrder = 6;
+
+// Same ranking as the inline icon search of the property editor (see iconSearchMatches in
+// editor/propertyInputs.js): both score with iconSearchScores above, so the two pickers cannot disagree
+// about what a query means. The list is not reordered in the DOM (that would mean moving thousands of
+// nodes per keystroke): #symbolList is a flex container, so setting the score as the CSS order is enough.
+function filterSymbolList() {
+  clearTimeout(symbolFilterTimeout);
+  if(!symbolIndex.length)
+    return; // the list is still being fetched/built - nothing to filter yet
+
+  const query = $('#symbolPickerOverlay input').value;
+  const ranked = !!query.trim();
+  const scores = iconSearchScores(symbolIndex, query);
+  // the picker can be restricted to one family of icons, which hides the other one in CSS instead of
+  // adding .hidden - so only counting the search matches would call a blank card "few" or "some results"
+  const hiddenFamily = $('#symbolPickerOverlay').classList.contains('hideImages') ? 'image'
+                     : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
+
+  const matches = [];
+  for(const [ index, entry ] of symbolIndex.entries()) {
+    entry.score = scores[index];
+    entry.rank = overflowOrder;
+    if(entry.score && entry.family != hiddenFamily)
+      matches.push(entry);
+  }
+  // stable, so matches of the same score keep their symbols.json order and icon families stay together
+  matches.sort((a, b) => b.score - a.score);
+  matches.forEach((entry, index) => entry.rank = index < bigPreviewLimit ? moreMatchesOrder - entry.score : overflowOrder);
+
+  for(const entry of symbolIndex) {
+    const order = ranked ? entry.rank : 0; // unfiltered, the list keeps its category order
+    const big = ranked && entry.rank < moreMatchesOrder;
+    if(entry.shown != !!entry.score)
+      toggleClass(entry.el, 'hidden', !(entry.shown = !!entry.score));
+    if(entry.order != order)
+      entry.el.style.order = (entry.order = order) || '';
+    if(entry.big != big)
+      toggleClass(entry.el, 'bigPreview', entry.big = big);
+  }
+
+  for(const title of $a('#symbolList h2:not(#symbolMoreMatches)'))
+    toggleClass(title, 'hidden', ranked);
+  toggleClass($('#symbolMoreMatches'), 'hidden', !ranked || matches.length <= bigPreviewLimit);
+  toggleClass($('#symbolPickerOverlay'), 'fewResults', matches.length <= bigPreviewLimit);
+  toggleClass($('#symbolPickerOverlay'), 'noResults', !matches.length);
+  $('#symbolNoResults').textContent = `No icons match "${query}". ${iconSearchNoResultsHint}`;
 }
 
 export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
   if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
     $('#statesButton').dataset.overlay = detailsOverlay;
 
-  await loadSymbolPicker();
-  return new Promise((resolve, reject) => {
-    showOverlay('symbolPickerOverlay');
-    $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
-    $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
-    $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
-    $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
-    $('#symbolPickerOverlay input').value = '';
-    $('#symbolPickerOverlay input').focus();
-    $('#symbolPickerOverlay input').onkeyup();
+  let resolve;
+  const symbol = new Promise(r => resolve = r);
 
-    $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+  // symbols.json is half a megabyte, so the first open of the picker waits on a fetch: show the (empty,
+  // "Loading...") card right away instead of leaving the user with nothing at all after their click
+  $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
+  $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
+  $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
+  $('#symbolPickerOverlay').classList.remove('fewResults', 'noResults');
+  $('#symbolPickerOverlay input').value = '';
+  showOverlay('symbolPickerOverlay');
+  $('#symbolPickerOverlay input').focus();
+  $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+    if(closeOverlay)
+      showOverlay(null);
+    resolve(null);
+  };
+
+  try {
+    await loadSymbolPicker();
+  } catch(e) {
+    if(closeOverlay)
+      showOverlay(null); // do not leave the "Loading..." card up when the list never arrives
+    throw e;
+  }
+  $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
+  filterSymbolList();
+
+  for(const icon of $a('#symbolList i')) {
+    icon.onclick = function(e) {
       if(closeOverlay)
         showOverlay(null);
-      resolve(null);
+      const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
+      let url = null;
+      if(icon.dataset.type == 'emoji-color')
+        url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
+      if(icon.dataset.type == 'game-icons')
+        url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
+      resolve(Object.assign({...icon.dataset}, { isImage, url }));
     };
-
-    for(const icon of $a('#symbolList i')) {
-      icon.onclick = function(e) {
-        if(closeOverlay)
-          showOverlay(null);
-        const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
-        let url = null;
-        if(icon.dataset.type == 'emoji-color')
-          url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
-        if(icon.dataset.type == 'game-icons')
-          url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
-        resolve(Object.assign({...icon.dataset}, { isImage, url }));
-      };
-    }
-  });
+  }
+  return symbol;
 }
 
 export function addRichtextControls(dom) {
@@ -434,14 +529,23 @@ export function addRichtextControls(dom) {
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
-    $('#symbolList').scrollTop = 0;
     for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
       $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
-    $('#symbolPickerOverlay input').onkeyup();
 
     $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
+
+    // the preload started above may still be running: binding the handlers now would bind them to the
+    // "Loading..." card, so the icons that appear a moment later would do nothing when clicked
+    try {
+      await loadSymbolPicker();
+    } catch(e) {
+      showStatesOverlay(detailsOverlay);
+      throw e;
+    }
+    $('#symbolList').scrollTop = 0;
+    filterSymbolList();
 
     for(const icon of $a('#symbolList i')) {
       icon.onclick = function() {
