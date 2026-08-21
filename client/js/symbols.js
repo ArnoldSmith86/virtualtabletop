@@ -550,7 +550,7 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight, initialFon
   element.style.setProperty('--maxHeight', `${maxHeight}px`);
 }
 
-function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1) {
+function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1, defaultTextColor=defaultColor, defaultTextHoverColor=defaultHoverColor) {
   const outerWrapper = div(target, 'symbolOuterWrapper', `
     <div class="symbolWrapper"></div>
     <div class="symbolText"></div>
@@ -580,8 +580,8 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     }
     wrapper.style.setProperty('--width', `${iconsWidth}px`);
     wrapper.style.setProperty('--height', `${iconsHeight}px`);
-    $('.symbolText', outerWrapper).style.setProperty('--color', `${defaultColor}`);
-    $('.symbolText', outerWrapper).style.setProperty('--hoverColor', `${defaultHoverColor}`);
+    $('.symbolText', outerWrapper).style.setProperty('--color', `${defaultTextColor}`);
+    $('.symbolText', outerWrapper).style.setProperty('--hoverColor', `${defaultTextHoverColor}`);
     setTextAndAdjustFontSize($('.symbolText', outerWrapper), normalizedText, textWidth, textHeight);
   }
   const maxSize = optimalSquareSize(asArray(symbols).length, iconsWidth, iconsHeight);
