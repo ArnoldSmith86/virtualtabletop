@@ -1,6 +1,6 @@
 import { BSON } from 'bson';
 
-import FileUpdater, { VERSION } from '../../server/fileupdater.mjs';
+import { expectNoLegacyModes } from './fileupdater-util.js';
 import TTS from '../../server/ttsimport.mjs';
 import Zip from '../../server/zip.mjs';
 
@@ -20,21 +20,6 @@ async function convert(save) {
   expectNoLegacyModes(widgets);
   delete widgets._meta;
   return widgets;
-}
-
-// the importer writes the current file version, so nothing it produces may be rewritten
-// on load: a migration that would still have changed it never runs again. FileUpdater hands
-// back a state that already is at VERSION untouched, so the check migrates a copy stamped
-// with the version before it - that runs the newest migration on what the importer writes
-// and fails as soon as one is added which the importer does not produce the result of.
-function expectNoLegacyModes(state) {
-  expect(state._meta.version).toBe(VERSION);
-  expect(state._meta.gameSettings).toBeUndefined();
-  // NaN and undefined do not survive the save file, so compare what is actually stored
-  const stored = JSON.parse(JSON.stringify(state));
-  const previousVersion = JSON.parse(JSON.stringify(stored));
-  previousVersion._meta.version = VERSION - 1;
-  expect(FileUpdater(previousVersion)).toEqual(stored);
 }
 
 // what the importer could not bring over - the game details show it as import notes

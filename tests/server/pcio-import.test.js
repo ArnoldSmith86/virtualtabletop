@@ -1,4 +1,4 @@
-import FileUpdater, { VERSION } from '../../server/fileupdater.mjs';
+import { expectNoLegacyModes } from './fileupdater-util.js';
 import convertPCIO from '../../server/pcioimport.mjs';
 import Zip from '../../server/zip.mjs';
 
@@ -12,21 +12,6 @@ async function importWidgets(widgets, schemaVersion, files={}) {
   const state = await convertPCIO(await Zip.create(entries));
   expectNoLegacyModes(state);
   return state;
-}
-
-// the importer writes the current file version, so nothing it produces may be rewritten
-// on load: a migration that would still have changed it never runs again. FileUpdater hands
-// back a state that already is at VERSION untouched, so the check migrates a copy stamped
-// with the version before it - that runs the newest migration on what the importer writes
-// and fails as soon as one is added which the importer does not produce the result of.
-function expectNoLegacyModes(state) {
-  expect(state._meta.version).toBe(VERSION);
-  expect(state._meta.gameSettings).toBeUndefined();
-  // NaN and undefined do not survive the save file, so compare what is actually stored
-  const stored = JSON.parse(JSON.stringify(state));
-  const previousVersion = JSON.parse(JSON.stringify(stored));
-  previousVersion._meta.version = VERSION - 1;
-  expect(FileUpdater(previousVersion)).toEqual(stored);
 }
 
 const deck = {
@@ -751,6 +736,16 @@ describe('PCIO importer', () => {
     expect(state.counter_incrementButton).toMatchObject({ x: 112, width: 24, height: 24 });
   });
 
+  it('keeps the two buttons of a narrow counter next to each other', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 100, width: 40, height: 10, counterValue: 3 }
+    ], 8);
+
+    // two 24px buttons would overlap on a 40px counter and cover the value between them
+    expect(state.counter_decrementButton).toMatchObject({ x: 4, width: 14, height: 14 });
+    expect(state.counter_incrementButton).toMatchObject({ x: 22, width: 14, height: 14 });
+  });
+
   it('imports a turn button at the size PCIO gives it', async () => {
     const state = await importWidgets([
       { id: 'turn', type: 'turnButton', x: 0, y: 0, label: 'End Turn', clickRoutine: { steps: [] } }
@@ -838,6 +833,50 @@ describe('PCIO importer', () => {
     const moves = state.button.clickRoutine.filter(operation=>operation.func == 'MOVEXY');
     expect(moves.length).toBe(2);
     expect(moves.map(operation=>operation.resetOwner)).toEqual([ false, false ]);
+  });
+
+  it('moves as many objects as the counter says and none at all when it says zero', async () => {
+    const dealing = args=>[
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'target', type: 'holder', x: 200, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 800 },
+      { id: 'counter', type: 'counter', x: 400, y: 0, counterValue: 2 },
+      {
+        id: 'button', type: 'automationButton', label: 'Deal', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: Object.assign({
+          from:     { type: 'literal', value: [ 'source' ] },
+          quantity: { counterId: 'counter' }
+        }, args) } ] } ] }
+      }
+    ];
+
+    // the count is the counter itself. A file old enough for the count migration has the
+    // operation wrapped in an IF that moves *everything* when the count comes out as 0,
+    // while PlayingCards.io moves nothing then - which is what the plain operation does
+    const toHand = await importWidgets(dealing({ to: { type: 'literal', value: [ 'hand' ] } }), 8);
+    expect(toHand.button.clickRoutine).toEqual([
+      { func: 'MOVEXY', count: '${PROPERTY text OF counter}', from: 'source', resetOwner: false }
+    ]);
+
+    // moving the objects in one go rather than one at a time, and turning them afterwards
+    const wholePile = await importWidgets(dealing({
+      to:             { type: 'literal', value: [ 'target' ] },
+      moveMethod:     { type: 'literal', value: 'all' },
+      changeRotation: { type: 'literal', value: 'cw' }
+    }), 8);
+    expect(wholePile.button.clickRoutine).toEqual([
+      { func: 'MOVE',   count: '${PROPERTY text OF counter}', from: 'source', to: 'target' },
+      { func: 'ROTATE', count: '${PROPERTY text OF counter}', holder: 'target', angle: 90 }
+    ]);
+
+    // the same case with the zero spelled out in the file
+    const nothing = await importWidgets(dealing({
+      to:       { type: 'literal', value: [ 'hand' ] },
+      quantity: { type: 'literal', value: 0 }
+    }), 8);
+    expect(nothing.button.clickRoutine).toEqual([
+      { func: 'MOVEXY', count: 0, from: 'source', resetOwner: false }
+    ]);
   });
 
   it('puts objects under the ones a pile already holds, starting at the given destination', async () => {
@@ -1045,9 +1084,16 @@ describe('PCIO importer', () => {
   });
 
   it('captions a hand with the name it was given in PlayingCards.io', async () => {
-    const state = await importWidgets([ { id: 'hand', type: 'hand', x: 0, y: 800, label: 'Your cards' } ], 8);
+    const state = await importWidgets([
+      { id: 'hand',    type: 'hand', x: 0, y: 800, label: 'Your cards' },
+      { id: 'hand2',   type: 'hand', x: 0, y: 600, label: 'Tricks you won' },
+      { id: 'hand3',   type: 'hand', x: 0, y: 400 }
+    ], 8);
 
     expect(state.hand.text).toBe('Your cards');
+    expect(state.hand2.text).toBe('Tricks you won');
+    // only the main hand is the player's hand - the other private zones say what they are
+    expect(state.hand3.text).toBe('Private');
   });
 
   it('writes the file at the current version so that no legacy mode is turned on for it', async () => {

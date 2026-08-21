@@ -319,8 +319,9 @@ export default async function convertPCIO(content) {
       w.height = widget.height;
   }
 
-  // a label whose box is shorter than one line of its text shows nothing at all,
-  // so this is the smallest height that one line of its own font still fits into
+  // a label whose box is shorter than one line of its text shows nothing at all, so this is
+  // the smallest height that one line of its own font still fits into - never below the 16px
+  // a label in the default font needs, however tiny the font it was styled with is
   function labelMinHeight(w) {
     const sizes = [ ...JSON.stringify(w.css || '').matchAll(/(?:font-size|line-height)"?:"? *([0-9.]+) *px/g) ].map(match=>+match[1]);
     return Math.max(16, ...sizes) + 2;
@@ -740,8 +741,9 @@ export default async function convertPCIO(content) {
       w.childrenPerOwner = true;
       w.dropShadow = true;
       w.hidePlayerCursors = true;
-      // an empty holder is a blank band otherwise
-      w.text = widget.label || 'Your hand';
+      // an empty holder is a blank band otherwise. Only the main hand is captioned as one:
+      // a PCIO table can carry any number of further private zones next to it
+      w.text = widget.label || (widget.id == 'hand' ? 'Your hand' : 'Private');
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
       if(widget.allowedDecks && widget.allowedDecks.length)
@@ -1106,14 +1108,18 @@ export default async function convertPCIO(content) {
 
       const counterStep = Math.abs(+widget.counterStep) || 1;
 
+      // square buttons in the corners of the counter, shrunk to fit next to each
+      // other on a counter too narrow for two of them at the height's size
+      const buttonSize = Math.max(0, Math.min(w.height - 8, Math.floor((w.width - 12)/2)));
+
       function addCounterButton(suffix, x, text, value) {
         output[widget.id + suffix] = {
           id: widget.id + suffix,
           parent: widget.id,
           x: 4,
           y: -2,
-          width: w.height - 8,
-          height: w.height - 8,
+          width: buttonSize,
+          height: buttonSize,
           type: 'button',
           movableInEdit: false,
           text,
@@ -1132,8 +1138,8 @@ export default async function convertPCIO(content) {
           output[widget.id + suffix].x += x;
       }
       if(widget.counterShowButtons !== false) {
-        addCounterButton('_decrementButton', 0,                  '-', -counterStep);
-        addCounterButton('_incrementButton', w.width - w.height, '+',  counterStep);
+        addCounterButton('_decrementButton', 0,                        '-', -counterStep);
+        addCounterButton('_incrementButton', w.width - 8 - buttonSize, '+',  counterStep);
       }
 
       if(widget.label) {
