@@ -1038,19 +1038,24 @@ function formatTimerMs(ms) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds - minutes * 60;
   const secondsString = (seconds < 10 ? '0' : '') + (Number.isInteger(seconds) ? seconds : +seconds.toFixed(3));
-  return `${negative ? '-' : ''}${minutes}:${secondsString}`;
+  // an hour or more gets an hours field, the same way the timer widget shows it
+  const hours = Math.floor(minutes / 60);
+  const minutesString = hours ? `${hours}:${String(minutes - hours*60).padStart(2, '0')}` : `${minutes}`;
+  return `${negative ? '-' : ''}${minutesString}:${secondsString}`;
 }
 
-// accepts "mm:ss", "m:ss.s" or plain seconds; returns milliseconds,
+// accepts "mm:ss", "m:ss.s", "h:mm:ss" or plain seconds; returns milliseconds,
 // null for empty input and undefined for unparseable input
 function parseTimerInput(text) {
   const trimmed = String(text).trim();
   if(trimmed === '')
     return null;
-  const match = trimmed.match(/^(-)?(?:(\d+):)?(\d+(?:\.\d+)?)$/);
+  const match = trimmed.match(/^(-)?(?:(\d+):)?(?:(\d+):)?(\d+(?:\.\d+)?)$/);
   if(!match)
     return undefined;
-  return Math.round(((+match[2] || 0) * 60 + +match[3]) * 1000) * (match[1] ? -1 : 1);
+  // one number in front of the seconds is the minutes, two are hours and minutes
+  const [ hours, minutes ] = match[3] === undefined ? [ 0, +match[2] || 0 ] : [ +match[2], +match[3] ];
+  return Math.round(((hours * 60 + minutes) * 60 + +match[4]) * 1000) * (match[1] ? -1 : 1);
 }
 
 function parseFontSize(fontSize) {

@@ -130,9 +130,13 @@ export class Timer extends Widget {
     }
   }
 
+  // below an hour the value reads as it always has, m:ss with unbounded minutes; from an hour on it
+  // gets an hours field, so that a timer somebody left running says 1:00:00 instead of 60:00
   renderMilliseconds(milliseconds) {
     const s = Math.floor(Math.abs(milliseconds)/1000);
-    setText(this.domElement, `${milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
+    const pad = value => String(value).padStart(2, '0');
+    const time = s < 3600 ? `${Math.floor(s/60)}:${pad(s%60)}` : `${Math.floor(s/3600)}:${pad(Math.floor(s/60)%60)}:${pad(s%60)}`;
+    setText(this.domElement, `${milliseconds < 0 ? '-' : ''}${time}`);
   }
 
   async setMilliseconds(value, mode) {

@@ -161,4 +161,34 @@ describe('Timer ticking', () => {
       expect(timer.get('milliseconds')).toBe(8000);
     });
   });
+
+  describe('the value it displays', () => {
+    let timer;
+    beforeEach(() => timer = createTimer({ id: 'displayed' }));
+    afterEach(() => removeWidget('displayed'));
+
+    function shown(milliseconds) {
+      timer.renderMilliseconds(milliseconds);
+      return timer.domElement.textContent;
+    }
+
+    test('reads as minutes and seconds below an hour', () => {
+      expect(shown(0)).toBe('0:00');
+      expect(shown(5000)).toBe('0:05');
+      expect(shown(65000)).toBe('1:05');
+      expect(shown(3599000)).toBe('59:59');
+    });
+
+    test('gains an hours field from an hour on', () => {
+      expect(shown(3600000)).toBe('1:00:00');
+      expect(shown(3661000)).toBe('1:01:01');
+      // a tab that slept for three hours
+      expect(shown(11587000)).toBe('3:13:07');
+    });
+
+    test('keeps the minus sign of a countdown that ran past its end', () => {
+      expect(shown(-65000)).toBe('-1:05');
+      expect(shown(-11587000)).toBe('-3:13:07');
+    });
+  });
 });
