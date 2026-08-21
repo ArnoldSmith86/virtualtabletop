@@ -1,9 +1,11 @@
 // A running timer is written by one client only so that its shared millisecond count moves on once
-// per interval no matter how many people watch it. Normally that is the primary session, but a tab
-// that its browser has frozen or throttled stops writing without disconnecting, so every other
-// client takes over once the value has not moved for a whole interval plus this grace period. For
-// the moment two of them write, both derive the same number from the same wall clock, so the count
-// stays true - but each of them runs the timer's routines for the tick it writes.
+// per interval no matter how many people watch it. That client is the one whose player started the
+// timer, so that the timer's routines keep running for that player. Anybody else steps in only once
+// the value has stood still for a whole interval plus this grace period - a tab that its browser has
+// frozen or throttled stops writing without disconnecting - and a timer nobody in the room started
+// goes to the primary session straight away. For the moment two clients write, both derive the same
+// number from the same wall clock, so the count stays true - but each of them runs the timer's
+// routines for the tick it writes.
 const timerTakeoverGrace = 3000;
 
 export class Timer extends Widget {
@@ -56,6 +58,14 @@ export class Timer extends Widget {
       }
     }
 
+    // a timer that stops or starts puts the writing up for election again, and a start goes to the
+    // client whose own change it is - the one whose player started the timer
+    if(delta.paused !== undefined) {
+      this.startedTicking = delta.paused === false && this.locallyPausedTo === false;
+      this.startedWhileHere = delta.paused === false;
+      delete this.locallyPausedTo;
+    }
+
     if(delta.paused !== undefined || delta.precision !== undefined || delta.countdown !== undefined) {
       this.stopTimer();
       this.updateTicking();
@@ -64,6 +74,9 @@ export class Timer extends Widget {
 
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
+    // a timer that was already running when this client got the room was started by nobody who is
+    // here, so there is no client to leave the writing to
+    delete this.startedWhileHere;
     this.updateTicking();
   }
 
@@ -117,8 +130,13 @@ export class Timer extends Widget {
     return Math.floor((now - this.tickTime)/this.getPrecision());
   }
 
+  // what one interval adds to the value - a countdown subtracts it
+  intervalStep() {
+    return this.getPrecision()*(this.get('countdown') ? -1 : 1);
+  }
+
   millisecondsAt(now) {
-    return this.tickMilliseconds + Math.max(this.intervalsSince(now), 0)*this.getPrecision()*(this.get('countdown') ? -1 : 1);
+    return this.tickMilliseconds + Math.max(this.intervalsSince(now), 0)*this.intervalStep();
   }
 
   async onPropertyChange(property, oldValue, newValue) {
@@ -162,30 +180,83 @@ export class Timer extends Widget {
     const intervals = this.intervalsSince(now);
     if(intervals < 1)
       return;
-    // lastMillisecondsUpdate only moves for values somebody else wrote, so a client that had to
-    // take over keeps the timer running until it leaves and the primary session picks the job up
-    // again. Waiting out the grace period only keeps this client from writing, not from showing the
-    // time - the value comes from the wall clock, so a stalled writer freezes nobody's display
-    if(!isPrimarySession() && now - this.lastMillisecondsUpdate < this.getPrecision() + timerTakeoverGrace) {
-      this.renderMilliseconds(this.millisecondsAt(now));
+    if(!this.writesTicks(now)) {
+      // leaving the writing to somebody else does not keep this client from showing the time: the
+      // value comes from the wall clock, so a stalled writer freezes nobody's display. A timer
+      // something watches does not catch up, though, so the clock would run its display ahead of the
+      // value it is going to take - that one shows what it was last told.
+      if(!this.valueIsWatched())
+        this.renderMilliseconds(this.millisecondsAt(now));
       return;
     }
 
-    // consecutive ticks share one undo entry instead of filling the protocol one second at a time
+    if(this.valueIsWatched()) {
+      // a routine can be watching for an exact value - a countdown that changes the turn at
+      // "milliseconds == 100" has to be given that value - so a timer something watches moves on by
+      // one interval per tick however many intervals its browser skipped. The ones it skipped are
+      // time the timer did not count, as they have always been, rather than values it jumps over.
+      // Its base never trails the clock by more than the interval just taken, so that the tick after
+      // a frozen tab wakes up is paced by the precision again instead of racing through a backlog.
+      this.tickTime = Math.max(this.tickTime, now - this.getPrecision()) + this.getPrecision();
+      await this.writeTick(this.tickMilliseconds + this.intervalStep());
+    } else {
+      // nothing in the room can tell which values it passed through, so it lands straight on the
+      // time that really passed instead of falling behind by every interval the browser skipped
+      this.tickTime += intervals*this.getPrecision();
+      await this.writeTick(this.tickMilliseconds + intervals*this.intervalStep());
+    }
+  }
+
+  // whether anything in the room is given every value the timer passes through: a routine on the
+  // timer itself, or another widget listening for updates
+  valueIsWatched() {
+    return Array.isArray(this.get('millisecondsChangeRoutine')) || Array.isArray(this.get('changeRoutine'))
+        || (StateManaged.globalUpdateListeners.milliseconds || []).length > 0
+        || (StateManaged.globalUpdateListeners['*'] || []).length > 0;
+  }
+
+  // Which client writes the timer. The one whose player started it does, so that the timer's
+  // routines keep running for that player.
+  writesTicks(now) {
+    if(this.startedTicking)
+      return true;
+
+    const grace = this.getPrecision() + timerTakeoverGrace;
+    const silence = now - this.lastMillisecondsUpdate;
+    // a timer that was started while this client was in the room belongs to the client that started
+    // it, and as long as that one keeps writing nobody else does
+    if(this.startedWhileHere && silence < grace)
+      return false;
+    // a timer nobody here started - one that was already running when this client got the room - and
+    // one whose writer has fallen silent go to the primary session, so that exactly one client takes
+    // them over. The rest of the room waits out a second grace period, which only ever elapses if
+    // the primary session is itself the one that stalled.
+    return isPrimarySession() || silence >= 2*grace;
+  }
+
+  // Consecutive ticks share one undo entry instead of filling the protocol one second at a time. A
+  // tick that writes nothing - for the moment two clients write, the other one got there first -
+  // must not leave that cause behind for whatever the player does next.
+  async writeTick(milliseconds) {
+    this.tickMilliseconds = milliseconds;
+    if(milliseconds === this.get('milliseconds'))
+      return;
+    this.tickedMilliseconds = milliseconds;
     setDeltaCause('timer ticked');
-    this.tickedMilliseconds = this.millisecondsAt(now);
-    this.tickTime += intervals*this.getPrecision();
-    this.tickMilliseconds = this.tickedMilliseconds;
-    await this.set('milliseconds', this.tickedMilliseconds);
+    await this.set('milliseconds', milliseconds);
   }
 
   async setPaused(mode) {
-    if(mode == 'pause' || mode == 'reset')
-      await this.set('paused',  true);
-    else if(mode == 'start')
-      await this.set('paused',  false);
-    else
-      await this.set('paused',  !this.get('paused'));
+    const paused = mode == 'pause' || mode == 'reset' ? true : mode == 'start' ? false : !this.get('paused');
+
+    // Starting a timer here makes this the client that writes it, so that its routines run for the
+    // player who started it rather than for whoever the room's oldest connection belongs to. The
+    // claim is noted for applyDeltaToDOM to pick up rather than made here, because the change comes
+    // back either from inside set() or, for a routine, only when its batch of changes ends - a
+    // change that is already the current value sends nothing, so it must not leave a claim behind.
+    if(this.get('paused') !== paused)
+      this.locallyPausedTo = paused;
+    await this.set('paused', paused);
   }
 
   startTimer() {

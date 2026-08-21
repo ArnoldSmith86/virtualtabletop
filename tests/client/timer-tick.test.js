@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 
-import { widgets, addWidget } from '../../client/js/serverstate.js';
+import { batchEnd, batchStart, widgets, addWidget } from '../../client/js/serverstate.js';
+import { StateManaged } from '../../client/js/statemanaged.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 import { setText, timeToMS } from '../../client/js/domhelpers.js';
 
@@ -10,22 +11,26 @@ import { removeWidget } from './client-util.js';
 // so expose the identifiers it references before importing it.
 let Timer;
 let isPrimary = true;
+let deltaCauses = [];
 beforeAll(async () => {
   globalThis.Widget = Widget;
   globalThis.widgets = widgets;
+  globalThis.StateManaged = StateManaged;
   globalThis.setText = setText;
   globalThis.timeToMS = timeToMS;
   globalThis.getSVG = url => url;
   globalThis.isPrimarySession = () => isPrimary;
-  globalThis.setDeltaCause = () => {};
+  globalThis.setDeltaCause = cause => deltaCauses.push(cause);
   globalThis.getMaxZ = () => 0;
   globalThis.updateMaxZ = () => {};
   globalThis.playerName = 'jestPlayer';
+  globalThis.jeRoutineLogging = false;
   ({ Timer } = await import('../../client/js/widgets/timer.js'));
 });
 
 beforeEach(() => {
   isPrimary = true;
+  deltaCauses = [];
   jest.useFakeTimers();
 });
 
@@ -104,11 +109,11 @@ describe('Timer ticking', () => {
   });
 
   test('updates that arrive late do not push the value behind the clock', async () => {
-    isPrimary = false;
-    const timer = createTimer({ id: 'late', paused: false });
+    const timer = createTimer({ id: 'late' });
     const started = Date.now();
+    // another client in the room started it and owns the ticking, 30ms late with every update
+    timer.applyDelta({ paused: false });
 
-    // the client that owns the ticking is 30ms late with every update
     await jest.advanceTimersByTimeAsync(1030);
     timer.applyDelta({ milliseconds: 1000 });
     for(const milliseconds of [ 2000, 3000 ]) {
@@ -126,7 +131,8 @@ describe('Timer ticking', () => {
     let timer;
     beforeEach(async () => {
       isPrimary = false;
-      timer = createTimer({ id: 'watched', paused: false });
+      timer = createTimer({ id: 'watched' });
+      timer.applyDelta({ paused: false });
       // three seconds of updates from the client that owns the ticking
       for(let milliseconds = 1000; milliseconds <= 3000; milliseconds += 1000) {
         await jest.advanceTimersByTimeAsync(1000);
@@ -153,13 +159,115 @@ describe('Timer ticking', () => {
       written.mockRestore();
     });
 
-    test('it takes over once the updates stop coming in', async () => {
-      await jest.advanceTimersByTimeAsync(4000);
-      expect(timer.get('milliseconds')).toBe(7000);
+    test('it leaves the first turn at a stalled writer to the primary session', async () => {
+      const written = jest.spyOn(timer, 'set');
+      await jest.advanceTimersByTimeAsync(5000);
+      expect(written).not.toHaveBeenCalled();
+      written.mockRestore();
+    });
+
+    test('it takes over once even the primary session stops writing', async () => {
+      await jest.advanceTimersByTimeAsync(8000);
+      expect(timer.get('milliseconds')).toBe(11000);
 
       await jest.advanceTimersByTimeAsync(1000);
-      expect(timer.get('milliseconds')).toBe(8000);
+      expect(timer.get('milliseconds')).toBe(12000);
     });
+
+    test('the primary session takes over after one grace period', async () => {
+      isPrimary = true;
+      await jest.advanceTimersByTimeAsync(4000);
+      expect(timer.get('milliseconds')).toBe(7000);
+    });
+  });
+
+  describe('the client that started it', () => {
+    test('writes the timer even when it is not the primary session', async () => {
+      isPrimary = false;
+      const timer = createTimer({ id: 'starter' });
+      await timer.setPaused('start');
+
+      await jest.advanceTimersByTimeAsync(3000);
+      expect(timer.get('milliseconds')).toBe(3000);
+      removeWidget('starter');
+    });
+
+    test('claims the writing for a start that a routine only sends when it ends', async () => {
+      isPrimary = false;
+      const timer = createTimer({ id: 'batched' });
+
+      // a routine collects its changes and sends them in one delta once it has run
+      batchStart();
+      await timer.setPaused('start');
+      batchEnd();
+
+      await jest.advanceTimersByTimeAsync(2000);
+      expect(timer.get('milliseconds')).toBe(2000);
+      removeWidget('batched');
+    });
+
+    test('hands the writing back once somebody else restarts the timer', async () => {
+      isPrimary = false;
+      const timer = createTimer({ id: 'handed' });
+      await timer.setPaused('start');
+      await jest.advanceTimersByTimeAsync(2000);
+      expect(timer.get('milliseconds')).toBe(2000);
+
+      // another client resets and restarts it in one routine, so its delta carries the start only -
+      // the claim still moves to that client
+      timer.applyDelta({ paused: false, milliseconds: 0 });
+
+      const written = jest.spyOn(timer, 'set');
+      await jest.advanceTimersByTimeAsync(3000);
+      expect(written).not.toHaveBeenCalled();
+      written.mockRestore();
+      removeWidget('handed');
+    });
+  });
+
+  test('a timer a routine watches passes on every value instead of jumping', async () => {
+    const timer = createTimer({ id: 'routine', paused: false, millisecondsChangeRoutine: [] });
+    await jest.advanceTimersByTimeAsync(1000);
+    const written = jest.spyOn(timer, 'set');
+
+    // the browser stopped running the interval for half a minute
+    jest.setSystemTime(Date.now() + 30000);
+    await jest.advanceTimersByTimeAsync(3000);
+
+    expect(written.mock.calls.filter(c=>c[0] == 'milliseconds').map(c=>c[1])).toEqual([ 2000, 3000, 4000 ]);
+    expect(timer.get('milliseconds')).toBe(4000);
+    written.mockRestore();
+    removeWidget('routine');
+  });
+
+  test('a timer a routine watches never shows a time it will not reach', async () => {
+    isPrimary = false;
+    const timer = createTimer({ id: 'shown', millisecondsChangeRoutine: [] });
+    timer.applyDelta({ paused: false });
+    await jest.advanceTimersByTimeAsync(1000);
+    timer.applyDelta({ milliseconds: 1000 });
+
+    // the client that writes it is throttled, so the value stays where it is until it gets there
+    await jest.advanceTimersByTimeAsync(2000);
+    expect(timer.domElement.textContent).toBe('0:01');
+    removeWidget('shown');
+  });
+
+  test('a tick that another client got to first leaves no cause behind', async () => {
+    const timer = createTimer({ id: 'overlap', paused: false });
+    await jest.advanceTimersByTimeAsync(1000);
+    expect(deltaCauses).toEqual([ 'timer ticked' ]);
+
+    // during the moment two clients write, the other one wrote this value already
+    timer.applyDelta({ milliseconds: 2000 });
+    deltaCauses = [];
+    const written = jest.spyOn(timer, 'set');
+    await timer.writeTick(2000);
+
+    expect(written).not.toHaveBeenCalled();
+    expect(deltaCauses).toEqual([]);
+    written.mockRestore();
+    removeWidget('overlap');
   });
 
   describe('the value it displays', () => {
