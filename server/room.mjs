@@ -776,6 +776,13 @@ export default class Room {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
       } else if(this.state[widgetID] === undefined) {
+        if(!delta.s[widgetID].id) {
+          // storing this would add the widget to the room as a partial widget and break every client that receives it.
+          // deltas that are broadcast without going through here (see renamePlayerInWidgets) have to keep this invariant themselves.
+          Logging.log(`WARNING: ignoring delta data for missing widget ${widgetID} in room ${this.id}`);
+          delete delta.s[widgetID];
+          continue;
+        }
         this.state[widgetID] = delta.s[widgetID];
       } else {
         for(const property in delta.s[widgetID]) {
@@ -808,7 +815,8 @@ export default class Room {
       if (this.state[widgetID].dropShadowOwner == player.name) {
         const clonedFrom = this.state[widgetID].clonedFrom;
         serverDelta.s[widgetID] = null;
-        if (clonedFrom) {
+        // only if the original still exists - otherwise this delta would re-add it as a partial widget
+        if (clonedFrom && this.state[clonedFrom]) {
           serverDelta.s[clonedFrom] = {
             dropShadowWidget: null
           };
