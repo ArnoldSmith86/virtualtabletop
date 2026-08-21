@@ -808,6 +808,15 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   display: block;
 }
 
+/* A finished deck can look like something that is taken as it is, so the group offering them says up front
+   that it is only the starting point of a deck of this game. */
+.deckEditorNewDeckGroupNote {
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 1.35;
+  opacity: 0.85;
+}
+
 .deckEditorNewDeckModes {
   display: flex;
   flex-direction: column;
