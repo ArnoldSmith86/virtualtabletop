@@ -5334,6 +5334,8 @@ test('A multi-widget selection is not given a parent that does not exist', async
   await ClientFunction(() => {
     window.jsonEditErrors = [];
     window.addEventListener('error', event => window.jsonEditErrors.push(String(event.error || event.message)));
+    // set() is not awaited anywhere in the editor, so a throw inside it arrives as a rejected promise
+    window.addEventListener('unhandledrejection', event => window.jsonEditErrors.push(String(event.reason)));
   })();
 
   await t
