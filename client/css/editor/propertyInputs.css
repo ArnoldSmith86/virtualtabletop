@@ -494,6 +494,16 @@
   font-style: italic;
 }
 
+/* the result list is capped at 100, which used to be invisible: "hand" matches 182 icons */
+.editorModule .propertyPickerCount {
+  color: var(--textHelpColor, #666);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.editorModule .propertyPickerCount:empty {
+  display: none;
+}
+
 .editorModule .iconBasicOptionsRow {
   display: flex;
   flex-wrap: wrap;
@@ -561,6 +571,13 @@
   margin-bottom: 6px;
 }
 
+/* same warning colour the css and pile editors use for "this does nothing" */
+.editorModule .svgReplacesNotice {
+  color: #cc7722;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
 .editorModule .svgReplacesList {
   display: flex;
   flex-direction: column;
@@ -578,6 +595,27 @@
   width: auto;
   flex: 1 1 0;
   min-width: 0;
+  /* same height as the button next to them and the one below the list */
+  box-sizing: border-box;
+  min-height: 34px;
+}
+
+/* one label per input, since their placeholders are gone once they are filled */
+.editorModule .svgReplaceHeader > .svgReplaceHeaderLabel {
+  flex: 1 1 0;
+  min-width: 0;
+  color: var(--textHelpColor, #666);
+  font-size: 12px;
+}
+
+/* the two slots that hold no label: the arrow and the delete button */
+.editorModule .svgReplaceHeader > .svgReplaceArrow::before {
+  content: '→';
+  visibility: hidden;
+}
+
+.editorModule .svgReplaceHeader > .svgReplaceHeaderSpacer {
+  min-width: 34px;
 }
 
 .editorModule .svgColorsList {
@@ -1195,9 +1233,6 @@
 .editorModule .widgetHeader {
   text-align: center;
   margin: 0.4em 0;
-  /* the close button sits in the top right corner of the header (SidebarModule.addCloseButton) */
-  position: relative;
-  padding-right: 40px;
 }
 
 .editorModule .widgetHeader .widgetHeaderType {
