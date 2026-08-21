@@ -24,6 +24,22 @@ const propertiesModuleOpen = { modules: { 'Edit Widgets': 'editorModuleTopLeft' 
 // above restores is what tells "the editor is there" from "the click has not arrived yet"
 const propertiesModule = Selector('#editorModuleTopLeft.tune');
 
+// Where the board sits in the window, so a test can put the pointer on a board coordinate
+const boardGeometry = ClientFunction(() => {
+  const surface = document.getElementById('topSurface').getBoundingClientRect();
+  const room = document.getElementById('roomArea').getBoundingClientRect();
+  return { left: surface.left - room.left, top: surface.top - room.top, scale: surface.width/1600 };
+});
+
+// Selecting more than one widget means dragging a rubber band around them: a click in the room
+// always selects the single widget under it.
+async function bandSelect(t, x1, y1, x2, y2) {
+  const geometry = await boardGeometry();
+  const point = (x, y) => ({ x: Math.round(geometry.left + x*geometry.scale), y: Math.round(geometry.top + y*geometry.scale) });
+  const from = point(x1, y1), to = point(x2, y2);
+  await t.drag('#roomArea', to.x - from.x, to.y - from.y, { offsetX: from.x, offsetY: from.y, speed: 0.5 });
+}
+
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -952,6 +968,92 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     .click(seatsMode)
     .click(seatsMode.find('option').withExactText('All seats'))
     .expect(value('board', 'seats')).eql('null');
+});
+
+test('The arrange bar puts a multi-selection on a circle around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    c1: { id: 'c1', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
+    c2: { id: 'c2', type: 'basic', x: 400, y: 100, width: 100, height: 100, rotation: 45 },
+    c3: { id: 'c3', type: 'basic', x: 400, y: 400, width: 100, height: 100, rotation: -30 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // where a widget ended up, in board coordinates, and how far it was turned
+  const placement = ClientFunction(() => [ 'c1', 'c2', 'c3' ].map(id => {
+    const widget = widgets.get(id);
+    return `${id}: ${widget.get('x')},${widget.get('y')} @${Math.round(widget.get('rotation') || 0)}`;
+  }).join(' | '));
+  const dragRadiusSlider = ClientFunction(() => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = '150';
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const start = 'c1: 100,100 @0 | c2: 400,100 @45 | c3: 400,400 @-30';
+  const circleButton = Selector('.arrangeButtons button[icon=circle]');
+  const options = Selector('.arrangeCircleOptions');
+  const radius = options.find('input[type=number]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  // two widgets are not a circle - the button stays there and says why
+  await bandSelect(t, 40, 40, 560, 260);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('2 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).ok()
+    .expect(circleButton.getAttribute('title')).contains('needs 3+ widgets');
+
+  // the button arranges the selection right away, with the settings it comes
+  // with, and only then shows them: the circle is centered on the selection
+  // (100,100 to 500,500, so 300,300) with each widget 200 from that center
+  await bandSelect(t, 40, 40, 560, 560);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).notOk()
+    .expect(options.find('input').exists).notOk()
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    .expect(radius.value).eql('200')
+    .expect(placement()).eql('c1: 450,250 @0 | c2: 150,423 @45 | c3: 149,76 @-30')
+    // a radius that is typed in arranges the selection again, from where it was
+    // before the tool ran - so the widgets do not walk outwards step by step
+    .typeText(radius, '250', { replace: true })
+    .pressKey('enter')
+    .expect(placement()).eql('c1: 500,250 @0 | c2: 125,466 @45 | c3: 124,33 @-30')
+    // the slider is the other half of the same setting: it takes over from the
+    // field once that is no longer the one being typed in
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'));
+
+  await dragRadiusSlider();
+  await t
+    .expect(radius.value).eql('150')
+    .expect(placement()).eql('c1: 400,250 @0 | c2: 175,379 @45 | c3: 174,120 @-30')
+    // rotation goes on and off again, which gives every widget the rotation it
+    // brought rather than leaving it turned away from the center
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 400,250 @90 | c2: 175,379 @210 | c3: 174,120 @330')
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 400,250 @0 | c2: 175,379 @45 | c3: 174,120 @-30')
+    // an emptied field keeps the radius the arrangement is standing on, so it
+    // has to show that radius again rather than read as blank
+    .selectText(radius)
+    .pressKey('delete')
+    .expect(radius.value).eql('')
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'))
+    .expect(radius.value).eql('150')
+    // and a circle of radius 0, which would stack the selection on one point,
+    // is not one of the values the field takes
+    .typeText(radius, '0', { replace: true })
+    .expect(radius.value).eql('1')
+    // cancel puts the whole selection back, rotations included, and closes the
+    // settings again
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start)
+    .expect(options.find('input').exists).notOk();
 });
 
 test('Create game using edit mode', async t => {

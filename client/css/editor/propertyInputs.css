@@ -1474,6 +1474,16 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   gap: 4px;
 }
 
+/* radius and rotation of the circle align button, shown while an arrangement is
+   being adjusted: they belong to the button bar above them, so they sit closer
+   to it than to what follows and are boxed in as one tool */
+.editorModule .arrangeButtons + .arrangeCircleOptions:not(:empty) {
+  margin: -6px 0 10px;
+  padding: 4px 8px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+}
+
 /* dice per-face editor */
 .editorModule .diceAddFace {
   margin: 4px 0;

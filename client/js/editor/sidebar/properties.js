@@ -1606,6 +1606,12 @@ class PropertiesModule extends SidebarModule {
     // per line: the widget new stops inherit from. Kept outside the panel because
     // picking a widget in the room re-selects the line and re-renders the panel.
     this.lineStopInheritIDs = {};
+    // circle align settings: tool parameters rather than widget properties, so
+    // they are kept for the editing session instead of in the game state
+    this.circleAlignRadius = 200;
+    this.circleAlignRotate = false;
+    // where the widgets of the arrangement being adjusted were before it ran
+    this.circleAlignOriginals = null;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -2117,6 +2123,144 @@ class PropertiesModule extends SidebarModule {
         groupWrap.appendChild(groupDOM);
       }
     }
+    // the circle settings belong to the bar above them (the CSS pulls them up
+    // against it), so both are appended here, next to each other
+    this.renderCircleAlign(bar, div(this.moduleDOM, 'arrangeCircleOptions'));
+  }
+
+  // Circle align is the one arranging tool with settings of its own. The button
+  // arranges the selection right away with the settings it has, and opens them
+  // below the bar: every change re-arranges the selection from where the button
+  // found it, and Cancel puts it back there.
+  renderCircleAlign(bar, options) {
+    const groupWrap = div(bar, 'arrangeGroupWrap');
+    div(groupWrap, 'arrangeGroupLabel', 'Circle');
+    const groupDOM = div(groupWrap, 'arrangeGroup');
+
+    const button = document.createElement('button');
+    button.setAttribute('icon', 'circle');
+    button.disabled = selectedWidgets.length < 3;
+    button.title = 'Arrange the selected widgets evenly on a circle around the center of the selection.' + (button.disabled ? ' (needs 3+ widgets)' : '');
+    button.onclick = _=>this.startCircleAlign(options);
+    groupDOM.appendChild(button);
+
+    // an arrangement that is still being adjusted survives a re-render of the
+    // panel; one of a selection that is gone is nobody's to take back
+    if(this.circleAlignOriginals && this.circleAlignOriginals.map(original=>original.id).join(' ') == selectedWidgets.map(widget=>widget.id).join(' '))
+      this.renderCircleAlignOptions(options);
+    else
+      this.circleAlignOriginals = null;
+  }
+
+  startCircleAlign(options) {
+    if(selectedWidgets.length < 3)
+      return;
+    // where the widgets were before the tool touched them: every change of the
+    // settings arranges them from here again, and Cancel puts them back
+    if(!this.circleAlignOriginals)
+      this.circleAlignOriginals = selectedWidgets.map(widget=>({
+        id: widget.id,
+        x: widget.get('x'),
+        y: widget.get('y'),
+        rotation: widget.get('rotation')
+      }));
+    this.renderCircleAlignOptions(options);
+    this.applyCircleAlign();
+  }
+
+  renderCircleAlignOptions(options) {
+    options.textContent = '';
+
+    // listenTo is empty for both inputs (neither edits a widget property), so
+    // nothing fires the initial update a property listener would give them
+    const radius = new NumberInput(this, null, 'Radius', {
+      listenTo: [],
+      min: 1,
+      max: Math.round(Math.max(viewportConfig.targetWidth, viewportConfig.targetHeight) / 2),
+      step: 1,
+      slider: true,
+      getValue: _=>this.circleAlignRadius,
+      setValue: value=>{
+        this.circleAlignRadius = value;
+        this.applyCircleAlign();
+      },
+      hint: 'Distance between the center of the circle and the center of each widget, in pixels. The circle is centered on the selection.'
+    });
+    radius.render(options);
+    radius.update(radius.getValue());
+    // an emptied field keeps the last radius, which the arrangement on screen is
+    // still standing on - put the value that is in use back. The input is
+    // written directly because a browser can still name it as the active
+    // element while its own blur handler runs.
+    radius.input.onblur = _=>radius.input.value = this.circleAlignRadius;
+
+    const rotate = new CheckboxInput(this, null, 'Rotate away from center', {
+      listenTo: [],
+      getValue: _=>this.circleAlignRotate,
+      setValue: value=>{
+        this.circleAlignRotate = value;
+        this.applyCircleAlign();
+      },
+      hint: 'Turn each widget so that its top points away from the center of the circle. Switched off again, every widget gets the rotation it had back.'
+    });
+    rotate.render(options);
+    rotate.update(rotate.getValue());
+
+    const cancel = document.createElement('button');
+    cancel.setAttribute('icon', 'undo');
+    cancel.textContent = 'Cancel';
+    cancel.title = 'Put the widgets back where they were before the circle was applied.';
+    cancel.onclick = _=>this.cancelCircleAlign(options);
+    div(options, 'buttonBar').appendChild(cancel);
+  }
+
+  // Spreads the selection evenly over a circle centered on the middle of the
+  // selection - the same reference the align and distribute buttons use, and
+  // the one that keeps the arrangement where the widgets already are. Both that
+  // center and the rotation of a widget come from where it was before the tool
+  // ran, so changing a setting arranges the same selection again instead of
+  // moving the widgets that are already on the circle.
+  applyCircleAlign() {
+    const arranged = (this.circleAlignOriginals || []).map(original=>({ original, widget: widgets.get(original.id) })).filter(entry=>entry.widget);
+    if(arranged.length < 3)
+      return;
+
+    const centerX = (Math.min(...arranged.map(e=>e.original.x)) + Math.max(...arranged.map(e=>e.original.x + e.widget.get('width')))) / 2;
+    const centerY = (Math.min(...arranged.map(e=>e.original.y)) + Math.max(...arranged.map(e=>e.original.y + e.widget.get('height')))) / 2;
+    const angleStep = 2 * Math.PI / arranged.length;
+    const radius = +this.circleAlignRadius || 0;
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} aligned selected widgets in a circle in editor`);
+    let index = 0;
+    for(const { original, widget } of arranged) {
+      const angle = angleStep * index;
+      widget.set('x', Math.floor(centerX + radius * Math.cos(angle)) - widget.get('width') / 2);
+      widget.set('y', Math.floor(centerY + radius * Math.sin(angle)) - widget.get('height') / 2);
+      widget.set('rotation', this.circleAlignRotate ? (angle + Math.PI) * 180 / Math.PI - 90 : original.rotation);
+      index++;
+    }
+    batchEnd();
+  }
+
+  // Takes the whole arrangement back, down to the rotation each widget had, and
+  // closes the settings: the tool is done with this selection either way.
+  cancelCircleAlign(options) {
+    const originals = this.circleAlignOriginals || [];
+    this.circleAlignOriginals = null;
+    options.textContent = '';
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} took back the circle arrangement of the selected widgets in editor`);
+    for(const original of originals) {
+      const widget = widgets.get(original.id);
+      if(!widget)
+        continue;
+      widget.set('x', original.x);
+      widget.set('y', original.y);
+      widget.set('rotation', original.rotation);
+    }
+    batchEnd();
   }
 
   // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
