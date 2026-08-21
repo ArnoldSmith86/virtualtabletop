@@ -24,6 +24,22 @@ const propertiesModuleOpen = { modules: { 'Edit Widgets': 'editorModuleTopLeft' 
 // above restores is what tells "the editor is there" from "the click has not arrived yet"
 const propertiesModule = Selector('#editorModuleTopLeft.tune');
 
+// Where the board sits in the window, so a test can put the pointer on a board coordinate
+const boardGeometry = ClientFunction(() => {
+  const surface = document.getElementById('topSurface').getBoundingClientRect();
+  const room = document.getElementById('roomArea').getBoundingClientRect();
+  return { left: surface.left - room.left, top: surface.top - room.top, scale: surface.width/1600 };
+});
+
+// Selecting more than one widget means dragging a rubber band around them: a click in the room
+// always selects the single widget under it.
+async function bandSelect(t, x1, y1, x2, y2) {
+  const geometry = await boardGeometry();
+  const point = (x, y) => ({ x: Math.round(geometry.left + x*geometry.scale), y: Math.round(geometry.top + y*geometry.scale) });
+  const from = point(x1, y1), to = point(x2, y2);
+  await t.drag('#roomArea', to.x - from.x, to.y - from.y, { offsetX: from.x, offsetY: from.y, speed: 0.5 });
+}
+
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -859,6 +875,62 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     .click(seatsMode)
     .click(seatsMode.find('option').withExactText('All seats'))
     .expect(value('board', 'seats')).eql('null');
+});
+
+test('The arrange bar puts a multi-selection on a circle around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    c1: { id: 'c1', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
+    c2: { id: 'c2', type: 'basic', x: 400, y: 100, width: 100, height: 100 },
+    c3: { id: 'c3', type: 'basic', x: 400, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // where a widget ended up, in board coordinates, and how far it was turned
+  const placement = ClientFunction(() => [ 'c1', 'c2', 'c3' ].map(id => {
+    const widget = widgets.get(id);
+    return `${id}: ${widget.get('x')},${widget.get('y')} @${Math.round(widget.get('rotation') || 0)}`;
+  }).join(' | '));
+  const circleButton = Selector('.arrangeButtons button[icon=circle]');
+  const radius = Selector('.arrangeCircleOptions input[type=number]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  // two widgets are not a circle - the button stays there and says why
+  await bandSelect(t, 40, 40, 560, 260);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('2 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).ok()
+    .expect(circleButton.getAttribute('title')).contains('needs 3+ widgets');
+
+  await bandSelect(t, 40, 40, 560, 560);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).notOk()
+    .expect(radius.value).eql('200')
+    // an emptied field keeps the radius it had, so it has to show that radius
+    // again rather than leave the button using a value nobody can see
+    .selectText(radius)
+    .pressKey('delete')
+    .expect(radius.value).eql('')
+    .pressKey('tab')
+    .expect(radius.value).eql('200')
+    // and a circle of radius 0, which would stack the selection on one point,
+    // is not one of the values the field takes
+    .typeText(radius, '0', { replace: true })
+    .expect(radius.value).eql('1')
+    .typeText(radius, '200', { replace: true })
+    .click(Selector('.arrangeCircleOptions label.switchbox'));
+
+  // the circle is centered on the selection (100,100 to 500,500, so 300,300),
+  // each widget 200 from that center and turned to face away from it
+  await t
+    .click(circleButton)
+    .expect(placement()).eql('c1: 450,250 @90 | c2: 150,423 @210 | c3: 149,76 @330');
 });
 
 test('Create game using edit mode', async t => {

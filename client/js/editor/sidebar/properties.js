@@ -2111,13 +2111,15 @@ class PropertiesModule extends SidebarModule {
         groupWrap.appendChild(groupDOM);
       }
     }
-    this.renderCircleAlign(bar);
+    // the circle options row belongs to the bar above it (the CSS pulls it up
+    // against it), so both are appended here, next to each other
+    this.renderCircleAlign(bar, div(this.moduleDOM, 'propertyInlineRow arrangeCircleOptions'));
   }
 
   // Circle align is the one arranging tool with settings of its own, so it gets
   // a group next to the other ones and puts its radius and rotation inputs into
-  // a row below the button bar.
-  renderCircleAlign(bar) {
+  // the row below the button bar.
+  renderCircleAlign(bar, options) {
     const groupWrap = div(bar, 'arrangeGroupWrap');
     div(groupWrap, 'arrangeGroupLabel', 'Circle');
     const groupDOM = div(groupWrap, 'arrangeGroup');
@@ -2125,24 +2127,25 @@ class PropertiesModule extends SidebarModule {
     const button = document.createElement('button');
     button.setAttribute('icon', 'circle');
     button.disabled = selectedWidgets.length < 3;
-    button.title = 'Arrange the selected widgets evenly on a circle around the first one.' + (button.disabled ? ' (needs 3+ widgets)' : '');
+    button.title = 'Arrange the selected widgets evenly on a circle around the center of the selection.' + (button.disabled ? ' (needs 3+ widgets)' : '');
     button.onclick = _=>this.circleAlign();
     groupDOM.appendChild(button);
-
-    const options = div(this.moduleDOM, 'propertyInlineRow arrangeCircleOptions');
 
     // listenTo is empty for both inputs (neither edits a widget property), so
     // nothing fires the initial update a property listener would give them
     const radius = new NumberInput(this, null, 'Circle radius', {
       listenTo: [],
-      min: 0,
+      min: 1,
       step: 1,
       getValue: _=>this.circleAlignRadius,
       setValue: value=>this.circleAlignRadius = value,
-      hint: 'Distance between the center of the circle and the center of each widget, in pixels. The first selected widget marks the center.'
+      hint: 'Distance between the center of the circle and the center of each widget, in pixels. The circle is centered on the selection.'
     });
     radius.render(options);
     radius.update(radius.getValue());
+    // an emptied field keeps the last valid radius, which the button then uses
+    // while the field reads as blank - put the value that is used back
+    radius.input.onblur = _=>radius.update(radius.getValue());
 
     const rotate = new CheckboxInput(this, null, 'Rotate away from center', {
       listenTo: [],
@@ -2154,14 +2157,15 @@ class PropertiesModule extends SidebarModule {
     rotate.update(rotate.getValue());
   }
 
-  // Spreads the selection evenly over a circle centered on the first selected
-  // widget, which ends up on the circle itself like all the others.
+  // Spreads the selection evenly over a circle centered on the middle of the
+  // selection - the same reference the align and distribute buttons use, and
+  // the one that keeps the arrangement where the widgets already are.
   async circleAlign() {
     if(selectedWidgets.length < 3)
       return;
 
-    const centerX = selectedWidgets[0].get('x') + selectedWidgets[0].get('width') / 2;
-    const centerY = selectedWidgets[0].get('y') + selectedWidgets[0].get('height') / 2;
+    const centerX = (Math.min(...selectedWidgets.map(w=>w.get('x'))) + Math.max(...selectedWidgets.map(w=>w.get('x') + w.get('width')))) / 2;
+    const centerY = (Math.min(...selectedWidgets.map(w=>w.get('y'))) + Math.max(...selectedWidgets.map(w=>w.get('y') + w.get('height')))) / 2;
     const angleStep = 2 * Math.PI / selectedWidgets.length;
     const radius = +this.circleAlignRadius || 0;
 
