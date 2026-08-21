@@ -178,7 +178,9 @@ const COMMON_PROPERTIES = {
     enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
-    gameStartRoutine: 'routine',
+    // the engine starts it with the widget it is on (serverstate.js), so a game
+    // may use widgetID/widget instead of thisID/thisButton
+    gameStartRoutine: getRoutineValidator({'widgetID': 1}, {'widget': 1}),
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
     lineOriginalRotation: 'object',
@@ -1367,7 +1369,10 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue) && !calledCustomRoutines.includes(propName) && !propName.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
-                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
+                // a custom routine is run by CALL, which hands it the caller
+                // collection - even this one, which no CALL in the file reaches
+                // (that is reported separately, right below)
+                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections, caller: 1}, customProperties, calledCustomRoutines };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
                 problems.push({
                     widget: key,
