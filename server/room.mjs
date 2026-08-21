@@ -773,8 +773,9 @@ export default class Room {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
       } else if(this.state[widgetID] === undefined) {
-        if(delta.s[widgetID].id === undefined) {
-          // storing this would add the widget to the room as a partial widget and break every client that receives it
+        if(!delta.s[widgetID].id) {
+          // storing this would add the widget to the room as a partial widget and break every client that receives it.
+          // deltas that are broadcast without going through here (see renamePlayerInWidgets) have to keep this invariant themselves.
           Logging.log(`WARNING: ignoring delta data for missing widget ${widgetID} in room ${this.id}`);
           delete delta.s[widgetID];
           continue;
