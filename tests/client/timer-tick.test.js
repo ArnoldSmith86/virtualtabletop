@@ -240,6 +240,21 @@ describe('Timer ticking', () => {
     removeWidget('routine');
   });
 
+  test('a timer a routine watches carries on from the value it was last told', async () => {
+    const timer = createTimer({ id: 'carried', millisecondsChangeRoutine: [] });
+    timer.applyDelta({ paused: false });
+    // three seconds of updates from the client that was writing it
+    for(let milliseconds = 1000; milliseconds <= 3000; milliseconds += 1000) {
+      await jest.advanceTimersByTimeAsync(1000);
+      timer.applyDelta({ milliseconds });
+    }
+
+    // ... and then it stops, so this client takes the writing over
+    await jest.advanceTimersByTimeAsync(4200);
+    expect(timer.get('milliseconds')).toBe(4000);
+    removeWidget('carried');
+  });
+
   test('a timer a routine watches never shows a time it will not reach', async () => {
     isPrimary = false;
     const timer = createTimer({ id: 'shown', millisecondsChangeRoutine: [] });

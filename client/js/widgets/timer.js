@@ -195,10 +195,14 @@ export class Timer extends Widget {
       // "milliseconds == 100" has to be given that value - so a timer something watches moves on by
       // one interval per tick however many intervals its browser skipped. The ones it skipped are
       // time the timer did not count, as they have always been, rather than values it jumps over.
-      // Its base never trails the clock by more than the interval just taken, so that the tick after
-      // a frozen tab wakes up is paced by the precision again instead of racing through a backlog.
-      this.tickTime = Math.max(this.tickTime, now - this.getPrecision()) + this.getPrecision();
-      await this.writeTick(this.tickMilliseconds + this.intervalStep());
+      // The base moves on by exactly the interval that was taken, so that the jitter of the
+      // browser's callbacks - which are never early, only late - can not drop a tick. It may trail
+      // the clock by two whole intervals before it is pulled along, which is far beyond that jitter
+      // and keeps a tab that has just woken up from racing through the backlog.
+      this.tickTime = Math.max(this.tickTime, now - 2*this.getPrecision()) + this.getPrecision();
+      // measured from the value the timer actually holds, not from the base the wall clock is
+      // derived from: taking over from another client means carrying on from what it last wrote
+      await this.writeTick(this.get('milliseconds') + this.intervalStep());
     } else {
       // nothing in the room can tell which values it passed through, so it lands straight on the
       // time that really passed instead of falling behind by every interval the browser skipped
