@@ -1,4 +1,5 @@
 import fs from 'fs';
+import zlib from 'zlib';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -62,6 +63,79 @@ test('the sprite sheets cover every icon and fonts.css has a row for each of the
     // color type 4 is grayscale + alpha - the artwork is black on transparent, and keeping that
     // one gray in three RGBA channels costs 1.7 MB on overview48.png alone
     expect(ihdr[9]).toBe(4);
+  }
+});
+
+// The pixels of a grayscale+alpha PNG, one gray and one alpha byte each: enough of a decoder to look at
+// the sheets, and no dependency to add for it. Every scanline of the inflated image data carries the
+// filter it was written with in front of it, and each of the five undoes to the pixel two bytes to the
+// left (a), the one above (b) and the one above that one (c).
+function decodeGrayAlphaPNG(file) {
+  const png = fs.readFileSync(file);
+  const idat = [];
+  let pos = 8, width = 0, height = 0;
+  while(pos < png.length) {
+    const length = png.readUInt32BE(pos), type = png.toString('ascii', pos + 4, pos + 8);
+    if(type == 'IHDR') {
+      width = png.readUInt32BE(pos + 8);
+      height = png.readUInt32BE(pos + 12);
+    }
+    if(type == 'IDAT')
+      idat.push(png.subarray(pos + 8, pos + 8 + length));
+    pos += length + 12;
+  }
+  const raw = zlib.inflateSync(Buffer.concat(idat)), bpp = 2, stride = width * bpp;
+  const pixels = Buffer.alloc(height * stride);
+  for(let y = 0; y < height; y++) {
+    const filter = raw[y * (stride + 1)];
+    for(let x = 0; x < stride; x++) {
+      const a = x >= bpp ? pixels[y * stride + x - bpp] : 0;
+      const b = y ? pixels[(y - 1) * stride + x] : 0;
+      const c = x >= bpp && y ? pixels[(y - 1) * stride + x - bpp] : 0;
+      let value = raw[y * (stride + 1) + 1 + x];
+      if(filter == 1)
+        value += a;
+      else if(filter == 2)
+        value += b;
+      else if(filter == 3)
+        value += (a + b) >> 1;
+      else if(filter == 4) {
+        const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
+        value += pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+      }
+      pixels[y * stride + x] = value;
+    }
+  }
+  return { width, height, pixels };
+}
+
+test('the sprite sheets hold artwork up to the last icon and nothing after it', () => {
+  // The test above sees a montage of the right size; this one sees where the artwork sits in it. A run
+  // that stopped short of the last icon, left a gap, or laid the cells out from another offset writes a
+  // sheet of exactly the right dimensions in which the icons sit at each other's indices - the one thing
+  // an index into a sprite sheet cannot survive, and the one thing nothing else here would notice.
+  const cells = 60 * Math.ceil(svgFiles.length / 60);
+  for(const size of [ 24, 48 ]) {
+    const { width, pixels } = decodeGrayAlphaPNG(path.join(assets, `game-icons.net/overview${size}.png`));
+    const empty = [];
+    let lightest = 0;
+    for(let cell = 0; cell < cells; cell++) {
+      const left = cell % 60 * size, top = Math.floor(cell / 60) * size;
+      let opaque = false;
+      for(let y = top; y < top + size; y++)
+        for(let x = left; x < left + size; x++)
+          if(pixels[(y * width + x) * 2 + 1]) {
+            opaque = true;
+            lightest = Math.max(lightest, pixels[(y * width + x) * 2]);
+          }
+      if(!opaque)
+        empty.push(cell);
+    }
+    // every icon has artwork, so the cells that hold some are the first svgFiles.length and no others
+    expect(empty).toEqual(Array.from({ length: cells - svgFiles.length }, (_, index) => svgFiles.length + index));
+    // the sheets are the artwork of the SVGs, which is black on transparent - a montage of
+    // game-icons.net's own downloads (white on a black background rect) fills the same cells with its negative
+    expect(lightest).toBe(0);
   }
 });
 
@@ -188,8 +262,11 @@ test('an icon is found by the name of the set it belongs to', () => {
   // joker while all 22 of them sat in the picker
   const arcana = svgFiles.filter(name => name.startsWith('caro-asercion/tarot-'));
   expect(arcana.length).toBe(22);
-  for(const query of [ 'major arcana', 'tarot card', 'tarot deck' ])
+  for(const query of [ 'major arcana', 'tarot card' ])
     expect(searchSymbols(query)).toEqual(expect.arrayContaining(arcana));
+  // and the set is found by its own name only: 22 icons joining a query the picker already fills
+  // twice over push 22 icons that are really about it past the 100 results it shows
+  expect(searchSymbols('deck').filter(symbol => arcana.includes(symbol))).toEqual([]);
 });
 
 test('two icons of the same subject are told apart by their tags', () => {

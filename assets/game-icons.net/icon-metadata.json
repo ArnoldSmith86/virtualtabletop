@@ -33,6 +33,9 @@
   "     name matches first, so a word carried by a whole section buries the icons that are really about it.",
   "     An icon that is part of a SET carries the name of the set as a tag, again as one phrase: the 22 tarot cards are looked",
   "     for as 'major arcana' or 'tarot card' at least as often as by the name of a single card, and only a tag answers those.",
+  "     The words of that phrase are still tags of their own, so the name of the set may not smuggle in a broad word another family",
+  "     owns: tagging the 22 arcana 'deck' grows the query 'deck' from 102 icons to 124 and pushes 22 playing-card icons out of the",
+  "     100 the picker shows, to buy the one phrasing 'tarot deck' that 'tarot' and 'tarot card' already answer.",
   "     Tags are plain lowercase ASCII (no accents, no '&'): they are what a user types into the search box. Use US spelling -",
   "     'defense', 'armor', 'color' - because the match never bridges the two.",
   "   - categories: 5 broad category suggestions, most specific first, taken from the vocabulary in `categoryVocabulary` below.",
@@ -5165,8 +5168,7 @@
     "traveler",
     "bundle",
     "risk",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5198,8 +5200,7 @@
     "creation",
     "mage",
     "one",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5231,8 +5232,7 @@
     "sanctuary",
     "silence",
     "robe",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5264,8 +5264,7 @@
     "matriarch",
     "romance",
     "garden",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5297,8 +5296,7 @@
     "empire",
     "crown",
     "father",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5330,8 +5328,7 @@
     "faith",
     "spiritual guide",
     "sermon",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5363,8 +5360,7 @@
     "temptation",
     "pair",
     "bond",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5396,8 +5392,7 @@
     "procession",
     "forward",
     "determination",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5429,8 +5424,7 @@
     "control",
     "valor",
     "wild animal",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5462,8 +5456,7 @@
     "search",
     "quiet",
     "mountain path",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5495,8 +5488,7 @@
     "providence",
     "ups and downs",
     "wings",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5528,8 +5520,7 @@
     "ruling",
     "crown",
     "consequence",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5561,8 +5552,7 @@
     "odin",
     "limbo",
     "stillness",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5594,8 +5584,7 @@
     "omen",
     "passing",
     "funeral",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5627,8 +5616,7 @@
     "restraint",
     "synthesis",
     "calm",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5660,8 +5648,7 @@
     "imp",
     "fiend",
     "hell",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5693,8 +5680,7 @@
     "keep",
     "revelation",
     "crown",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5726,8 +5712,7 @@
     "spring",
     "faith",
     "promise",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5759,8 +5744,7 @@
     "path",
     "shadowy",
     "hound",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5792,8 +5776,7 @@
     "blessing",
     "glow",
     "clarity",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5825,8 +5808,7 @@
     "verdict",
     "wings",
     "afterlife",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
@@ -5858,8 +5840,7 @@
     "finale",
     "journey end",
     "unity",
-    "card",
-    "deck"
+    "card"
    ],
    "categories": [
     "Occult",
