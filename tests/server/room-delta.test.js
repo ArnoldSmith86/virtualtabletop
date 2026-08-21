@@ -46,6 +46,14 @@ describe("Scenarios: Applying a delta to the room state", () => {
       expect(room.state.orig).toBeUndefined();
       expect(room.broadcastedDeltas[0].args.s).toEqual({});
     });
+
+    // an empty id does not create a valid widget either - storing it would write a partial widget into the save file
+    test("Then a delta carrying an empty id is ignored the same way", () => {
+      const room = createRoom({});
+      room.receiveDelta(player, { s: { orig: { id: null, x: 5 } } });
+      expect(room.state.orig).toBeUndefined();
+      expect(room.broadcastedDeltas[0].args.s).toEqual({});
+    });
   });
 });
 

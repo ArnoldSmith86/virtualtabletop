@@ -340,7 +340,7 @@ function getDeltaID() {
   return deltaID;
 }
 
-function receiveDelta(delta) {
+export function receiveDelta(delta) {
   addDeltaEntryToUndoProtocol(delta);
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
