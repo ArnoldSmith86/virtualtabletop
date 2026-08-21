@@ -447,12 +447,42 @@ body.jsonEdit #toolbar {
   margin-top: 8px;
 }
 
+/* the hint above the command buttons - the key caps in it need room for their 3D outline */
+#jeCommands .jeHint {
+  color: var(--textDimColor2);
+  font-size: 12px;
+  line-height: 1.9;
+  margin-bottom: 8px;
+}
+
+#jeCommands .jeHintValue {
+  color: var(--textColor);
+  font-weight: bold;
+}
+
+#jePrefillProperties {
+  align-self: flex-start;
+  background: none;
+  border: 1px solid var(--textDimColor2);
+  border-radius: 10px;
+  color: var(--textColor);
+  cursor: pointer;
+  font-size: 12px;
+  margin: 0 0 8px 0;
+  padding: 2px 8px;
+}
+
+#jePrefillProperties.onState {
+  border-color: var(--textHighlightColor1);
+  color: var(--textHighlightColor1);
+}
+
 #jeCommands .key {
   font-size: inherit;
   line-height: inherit;
   margin-bottom: 0.4375rem;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
   margin-top: 0.25rem;
   padding: 0.1rem 0.2rem;
   box-shadow: 0 0 #d9d9d9, 0 0px #d9d9d9, 0 1px #d9d9d9, 0 2px #d9d9d9, 0 3px #d9d9d9, 0 4px #d9d9d9, 0 5px #d9d9d9, 2px 2.5px 4px #adb5bd, 0 -1px 2.5px #adb5bd;

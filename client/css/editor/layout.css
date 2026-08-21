@@ -19,6 +19,8 @@ body {
   --textHighlightColor7: darkcyan;
 
   --textDimColor1: #ccc;
+  /* dimmed, but still comfortably readable - for text that explains something */
+  --textDimColor2: #6b6b6b;
   /* dimmed, but still readable, body text (help copy, empty states) -
      --textDimColor1 is tuned for borders/dashes, not text: at #ccc on white
      it measures ~1.6:1 contrast, far under the 4.5:1 minimum */
@@ -85,6 +87,7 @@ body.edit.darkMode {
   --textHighlightColor7: #40e0d0;
 
   --textDimColor1: #606060;
+  --textDimColor2: #8a8a8a;
   --textHelpColor: #a0a0a0;
   /* the blue of light mode is barely readable on the dark input background */
   --cssDeclarationNameColor: #8ab4f8;
