@@ -1,6 +1,7 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { setCurrentOverlayId, getCurrentOverlayId, getEditMode } from './overlaystate.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -113,17 +114,19 @@ export function showOverlay(id, forced) {
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
+    setCurrentOverlayId(overlayActive ? id : null);
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
-    if(!isLoading)
-      toServer('mouse',{inactive:true})
   } else {
+    setCurrentOverlayId(null);
     overlayActive = false;
   }
   $('body').classList.toggle('overlayActive', overlayActive);
+  if(!isLoading)
+    toServer('mouse', { inactive: !!overlayActive, activeOverlay: getCurrentOverlayId(), editMode: getEditMode() });
 }
 
 export function showStatesOverlay(id) {

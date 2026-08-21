@@ -407,7 +407,6 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
       background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
-      transition: color 0.3s ease;   
     }
 
     body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
@@ -742,7 +741,8 @@ body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
-  overflow: auto
+  overflow: auto;
+  z-index: 10;
 }
 
 .overlay h1 {
@@ -974,11 +974,6 @@ button {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin: 1px;
-  transition: color 0.3s ease
-}
-
-button.playerChange .tooltip.playerChange {
-  color: yellow
 }
 
 button:hover {
