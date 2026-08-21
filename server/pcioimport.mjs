@@ -1,6 +1,7 @@
 import CRC32 from 'crc-32';
 
 import Config from './config.mjs';
+import { VERSION } from './fileupdater.mjs';
 import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
 import Zip from './zip.mjs';
@@ -266,10 +267,13 @@ export default async function convertPCIO(content) {
 
     const text = options.noTextStyle ? null : widget.mainTextStyle;
     if(text && typeof text == 'object') {
-      if(text.size)
-        textCSS['font-size'] = `${Math.round(text.size)}px`;
-      if(text.size && text.lineHeight)
-        textCSS['line-height'] = `${Math.round(text.size*text.lineHeight)}px`;
+      // options.textSize is the size the text is actually drawn at where that is
+      // not the size of the style itself - a counter enlarges its value
+      const size = options.textSize || text.size;
+      if(size)
+        textCSS['font-size'] = `${Math.round(size)}px`;
+      if(size && text.lineHeight)
+        textCSS['line-height'] = `${Math.round(size*text.lineHeight)}px`;
       if(text.align)
         textCSS['text-align'] = text.align;
       Object.assign(textCSS, textFill(text.mainFill, !!options.textSelector, widget));
@@ -316,6 +320,14 @@ export default async function convertPCIO(content) {
       w.width = widget.width;
     if(widget.height != defaultHeight && widget.height !== undefined)
       w.height = widget.height;
+  }
+
+  // a label whose box is shorter than one line of its text shows nothing at all, so this is
+  // the smallest height that one line of its own font still fits into - never below the 16px
+  // a label in the default font needs, however tiny the font it was styled with is
+  function labelMinHeight(w) {
+    const sizes = [ ...JSON.stringify(w.css || '').matchAll(/(?:font-size|line-height)"?:"? *([0-9.]+) *px/g) ].map(match=>+match[1]);
+    return Math.max(16, ...sizes) + 2;
   }
 
   // The objects an automation works on: either a holder parameter on the
@@ -492,6 +504,47 @@ export default async function convertPCIO(content) {
     return decimals ? [ `var ${variable} = \${${variable}} toFixed ${decimals}` ] : [];
   }
 
+  // PCIO does not lay a counter out from the width and height in the file - it
+  // ignores both and builds the box from the size of the value: room for the
+  // widest number the bounds allow (at least 52px) plus a 44px button at each
+  // end, and a line of the value's own font, never shorter than those buttons.
+  // The value itself is drawn a quarter larger while it is shorter than four
+  // characters.
+  function counterLayout(widget) {
+    const style   = widget.mainTextStyle || {};
+    const size    = +style.size || 21;
+    const buttons = widget.counterShowButtons !== false;
+
+    // the bounds every PCIO counter has, which are what its box is wide enough for
+    const min = Math.max(-1e10, Math.min(1e10, isNaN(parseFloat(widget.counterMin)) ? -9999 : parseFloat(widget.counterMin)));
+    let   max = Math.max(-1e10, Math.min(1e10, isNaN(parseFloat(widget.counterMax)) ?  9999 : parseFloat(widget.counterMax)));
+    if(min >= max)
+      max = min + 1;
+    const characters = Math.max(String(Math.abs(min)).length + (min < 0 ? 0.5 : 0), String(max).length);
+
+    const value      = counterValue(widget);
+    const boosted    = widget.counterBoostFontSize !== false && String(value).length < 4 ? Math.min(size*1.25, 150) : size;
+    const fontSize   = Math.round(boosted);
+    const lineHeight = Math.round(fontSize*(style.lineHeight || 1));
+    return {
+      buttons,
+      buttonSize: 32,
+      buttonMargin: 6,
+      fontSize,
+      lineHeight,
+      width:  Math.max(52, characters*0.62*size) + (buttons ? 88 : 0),
+      // PCIO lets a value taller than the box overflow it while a VTT label cuts
+      // it off, so the box is never shorter than the line the value takes
+      height: Math.max(buttons ? 44 : 0, size, lineHeight + 2)
+    };
+  }
+
+  // the value a counter starts at, kept inside its bounds the way PCIO does
+  function counterValue(widget) {
+    const bounds = counterBounds[widget.id];
+    return bounds ? Math.min(Math.max(+widget.counterValue || 0, bounds.min), bounds.max) : widget.counterValue;
+  }
+
   // the operations that keep a variable within the bounds of a counter
   function clampCounter(id, variable) {
     const bounds = counterBounds[id] || { min: -Infinity, max: Infinity };
@@ -568,7 +621,7 @@ export default async function convertPCIO(content) {
         importerTemp: 'PCIO',
         importerTime: +new Date()
       },
-      version: 4
+      version: VERSION
     }
   };
 
@@ -628,8 +681,11 @@ export default async function convertPCIO(content) {
       if(widget.kinged)
         w.activeFace = 1;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
-      w.width  = 90;
-      w.height = 90;
+      // the PCIO piece is a 90x90 box while the pawn shape only fills 56x84 of it
+      w.width  = 56;
+      w.height = 84;
+      w.x = (w.x || 0) + 17;
+      w.y = (w.y || 0) + 3;
       w.classes = 'classicPiece';
       w.color = pieceColors[widget.color] || pieceColors.default;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
@@ -727,6 +783,11 @@ export default async function convertPCIO(content) {
       }
       w.inheritChildZ = true;
       w.childrenPerOwner = true;
+      w.dropShadow = true;
+      w.hidePlayerCursors = true;
+      // an empty holder is a blank band otherwise. Only the main hand is captioned as one:
+      // a PCIO table can carry any number of further private zones next to it
+      w.text = widget.label || (widget.id == 'hand' ? 'Your hand' : 'Private');
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
       if(widget.allowedDecks && widget.allowedDecks.length)
@@ -1010,6 +1071,18 @@ export default async function convertPCIO(content) {
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key], nativeDiceDecks[widget.id]);
         w.cardTypes[type].sortingOrder = ++sortingOrder;
       }
+
+      // PCIO marks a face object that takes its content from a card type property with
+      // valueType/value, which VirtualTabletop writes as a dynamicProperties entry instead
+      for(const face of w.faceTemplates) {
+        for(const object of face.objects) {
+          if(object.valueType != 'static' && object.value) {
+            object.dynamicProperties = Object.assign({}, object.dynamicProperties, { value: object.value });
+            delete object.value;
+          }
+          delete object.valueType;
+        }
+      }
     } else if(widget.type == 'card' || widget.type == 'piece' || widget.type == 'chooser') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
@@ -1057,16 +1130,18 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'counter') {
       w.type = 'label';
       w.y = (w.y || 0) + 5;
-      w.width = widget.width || 140;
-      w.height = widget.height || 44;
+      const counter = counterLayout(widget);
+      w.width = counter.width;
+      w.height = counter.height;
       const bounds = counterBounds[widget.id];
-      w.text = bounds ? Math.min(Math.max(+widget.counterValue || 0, bounds.min), bounds.max) : widget.counterValue;
+      w.text = counterValue(widget);
       if(widget.allowPlayerEditValue !== false)
         w.editable = true;
       // the text style belongs on the value, not on the caption and +/- buttons
       pcioStyle(widget, w, [], {
         textSelector: ' > textarea',
-        text: (widget.mainTextStyle || {}).size ? {} : { 'font-size': '30px' }
+        textSize: counter.fontSize,
+        text: { 'font-size': `${counter.fontSize}px`, 'line-height': `${counter.lineHeight}px` }
       });
       if(bounds && !isNaN(parseFloat(widget.counterValue)) && w.text != parseFloat(widget.counterValue))
         warn(`Counter ${widgetName(widget)} was outside its ${boundsText(bounds)} and starts at ${w.text} instead of ${widget.counterValue}.`);
@@ -1079,10 +1154,10 @@ export default async function convertPCIO(content) {
         output[widget.id + suffix] = {
           id: widget.id + suffix,
           parent: widget.id,
-          x: 4,
-          y: -2,
-          width: w.height - 8,
-          height: w.height - 8,
+          x: counter.buttonMargin,
+          y: Math.round((counter.height - counter.buttonSize)/2),
+          width: counter.buttonSize,
+          height: counter.buttonSize,
           type: 'button',
           movableInEdit: false,
           text,
@@ -1100,9 +1175,9 @@ export default async function convertPCIO(content) {
         if(x)
           output[widget.id + suffix].x += x;
       }
-      if(widget.counterShowButtons !== false) {
-        addCounterButton('_decrementButton', 0,                  '-', -counterStep);
-        addCounterButton('_incrementButton', w.width - w.height, '+',  counterStep);
+      if(counter.buttons) {
+        addCounterButton('_decrementButton', 0, '-', -counterStep);
+        addCounterButton('_incrementButton', counter.width - 2*counter.buttonMargin - counter.buttonSize, '+', counterStep);
       }
 
       if(widget.label) {
@@ -1678,10 +1753,13 @@ export default async function convertPCIO(content) {
           const quantity = numberArgument(routine, args.quantity, 1);
           const fill = args.fillAdd && args.fillAdd.value == 'fill' && quantity !== 'all';
 
+          // a hand PCIO does not show is nowhere to move objects to, and without
+          // any destination left there is nothing to move
+          const destinations = args.to.value.filter(id=>!byID[id] || byID[id].type != 'hand' || byID[id].enabled !== false);
+          if(!destinations.length)
+            return;
           // PCIO starts dealing at the n-th of its destinations
-          const destinations = args.to.value.slice();
-          if(destinations.length)
-            destinations.push(...destinations.splice(0, (+(args.startingOffset || {}).value || 0) % destinations.length));
+          destinations.push(...destinations.splice(0, (+(args.startingOffset || {}).value || 0) % destinations.length));
 
           c = importWidgetQuery(routine, args, 'from', 'from', 'collection', {
             func:  'MOVE',
@@ -1701,10 +1779,6 @@ export default async function convertPCIO(content) {
             delete c.count;
           if(c.to.length == 1)
             c.to = c.to[0];
-          if(c.to == 'hand') {
-            delete c.to;
-            c.func = 'MOVEXY';
-          }
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
 
@@ -1781,6 +1855,9 @@ export default async function convertPCIO(content) {
           if(!decks.length)
             return;
 
+          // a deck that sits on the table has no holder to recall into, so its cards are
+          // gathered on its position instead - a recall takes them back from their owner
+          // as much as it takes them out of a holder
           for(const deckID of decks) {
             if(!byID[deckID].parent) {
               output.tempHolderForDeckRecall = {
@@ -2220,6 +2297,15 @@ export default async function convertPCIO(content) {
   for(const seatID in turnAtSeat)
     if(output[seatID])
       output[seatID].turn = true;
+
+  // grow every label that ended up shorter than one line of its own text
+  for(const w of Object.values(output)) {
+    if(w.type != 'label')
+      continue;
+    const minHeight = labelMinHeight(w);
+    if((w.height ?? 20) < minHeight)
+      w.height = minHeight;
+  }
 
   for(const group of Object.values(groupedWarnings))
     warn(group.message(widgetNames(group.names), group.names.length));

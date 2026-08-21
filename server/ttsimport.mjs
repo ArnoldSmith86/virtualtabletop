@@ -2,6 +2,7 @@ import CRC32 from 'crc-32';
 import { BSON } from 'bson';
 
 import Config from './config.mjs';
+import { VERSION } from './fileupdater.mjs';
 import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
 import Zip from './zip.mjs';
@@ -680,7 +681,8 @@ function addNotecard(o, imp, parent) {
     height: clamp(rows*15 + 16, 60, 500),
     movable: true,
     html: (title ? `<b>${escapeHTML(title)}</b><br>${body ? '<br>' : ''}` : '') + escapeHTML(body).replace(/\n/g, '<br>'),
-    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden'
+    // the text is escaped and joined with <br>, so the runs of spaces the author typed have to survive
+    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden; white-space: pre-wrap'
   };
 
   return { [widget.id]: place(o, widget) };
@@ -1001,7 +1003,9 @@ async function convertTTS(content, linkContent, workshop={}) {
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
-      text: 'Hand', // an empty holder is a blank band otherwise
+      dropShadow: true,
+      hidePlayerCursors: true,
+      text: 'Your hand', // an empty holder is a blank band otherwise
       x: 50,
       y: 820,
       width: 1500,
@@ -1044,7 +1048,7 @@ async function convertTTS(content, linkContent, workshop={}) {
     Logging.log(`TTS import: ${warnings.length} import notes: ${warnings.join(' ')}`);
   }
 
-  widgets._meta = { info, version: 5 };
+  widgets._meta = { info, version: VERSION };
 
   return widgets;
 }
