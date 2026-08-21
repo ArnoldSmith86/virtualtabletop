@@ -1606,6 +1606,10 @@ class PropertiesModule extends SidebarModule {
     // per line: the widget new stops inherit from. Kept outside the panel because
     // picking a widget in the room re-selects the line and re-renders the panel.
     this.lineStopInheritIDs = {};
+    // circle align settings: tool parameters rather than widget properties, so
+    // they are kept for the editing session instead of in the game state
+    this.circleAlignRadius = 200;
+    this.circleAlignRotate = false;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -2107,6 +2111,72 @@ class PropertiesModule extends SidebarModule {
         groupWrap.appendChild(groupDOM);
       }
     }
+    this.renderCircleAlign(bar);
+  }
+
+  // Circle align is the one arranging tool with settings of its own, so it gets
+  // a group next to the other ones and puts its radius and rotation inputs into
+  // a row below the button bar.
+  renderCircleAlign(bar) {
+    const groupWrap = div(bar, 'arrangeGroupWrap');
+    div(groupWrap, 'arrangeGroupLabel', 'Circle');
+    const groupDOM = div(groupWrap, 'arrangeGroup');
+
+    const button = document.createElement('button');
+    button.setAttribute('icon', 'circle');
+    button.disabled = selectedWidgets.length < 3;
+    button.title = 'Arrange the selected widgets evenly on a circle around the first one.' + (button.disabled ? ' (needs 3+ widgets)' : '');
+    button.onclick = _=>this.circleAlign();
+    groupDOM.appendChild(button);
+
+    const options = div(this.moduleDOM, 'propertyInlineRow arrangeCircleOptions');
+
+    // listenTo is empty for both inputs (neither edits a widget property), so
+    // nothing fires the initial update a property listener would give them
+    const radius = new NumberInput(this, null, 'Circle radius', {
+      listenTo: [],
+      min: 0,
+      step: 1,
+      getValue: _=>this.circleAlignRadius,
+      setValue: value=>this.circleAlignRadius = value,
+      hint: 'Distance between the center of the circle and the center of each widget, in pixels. The first selected widget marks the center.'
+    });
+    radius.render(options);
+    radius.update(radius.getValue());
+
+    const rotate = new CheckboxInput(this, null, 'Rotate away from center', {
+      listenTo: [],
+      getValue: _=>this.circleAlignRotate,
+      setValue: value=>this.circleAlignRotate = value,
+      hint: 'Turn each widget so that its top points away from the center of the circle.'
+    });
+    rotate.render(options);
+    rotate.update(rotate.getValue());
+  }
+
+  // Spreads the selection evenly over a circle centered on the first selected
+  // widget, which ends up on the circle itself like all the others.
+  async circleAlign() {
+    if(selectedWidgets.length < 3)
+      return;
+
+    const centerX = selectedWidgets[0].get('x') + selectedWidgets[0].get('width') / 2;
+    const centerY = selectedWidgets[0].get('y') + selectedWidgets[0].get('height') / 2;
+    const angleStep = 2 * Math.PI / selectedWidgets.length;
+    const radius = +this.circleAlignRadius || 0;
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} aligned selected widgets in a circle in editor`);
+    let index = 0;
+    for(const widget of selectedWidgets) {
+      const angle = angleStep * index;
+      await widget.set('x', Math.floor(centerX + radius * Math.cos(angle)) - widget.get('width') / 2);
+      await widget.set('y', Math.floor(centerY + radius * Math.sin(angle)) - widget.get('height') / 2);
+      if(this.circleAlignRotate)
+        await widget.set('rotation', (angle + Math.PI) * 180 / Math.PI - 90);
+      index++;
+    }
+    batchEnd();
   }
 
   // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
