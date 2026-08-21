@@ -101,7 +101,7 @@ function switchRoom(newRoomID, pushHistory=true) {
   toServer('room', { playerName, roomID: newRoomID, collection: getCollectionID(), password: getRoomPassword(newRoomID) });
 }
 
-function createRoomTile(room) {
+function createRoomTile(room, isPublicTile) {
   const tile = domByTemplate('template-roomslist-entry');
   tile.className = 'roomTile';
   if(!room.image)
@@ -111,11 +111,19 @@ function createRoomTile(room) {
 
   $('h3', tile).textContent = room.name;
   $('h4', tile).textContent = room.gameName || 'No game loaded';
+  if(isPublicTile) {
+    $('h4', tile).textContent += ` — ${room.playerCount} ${room.playerCount == 1 ? 'player' : 'players'} online`;
+    if(room.description) {
+      $('.description', tile).textContent = room.description;
+      $('.description', tile).classList.remove('hidden');
+    }
+  }
   if(room.image)
     $('img', tile).src = mapAssetURLs(room.image);
   toggleClass($('.lockedIcon', tile), 'hidden', !room.locked);
   toggleClass($('.protectedIcon', tile), 'hidden', !room.contentProtected);
   toggleClass($('.passwordIcon', tile), 'hidden', !room.hasPassword);
+  toggleClass($('.publicIcon', tile), 'hidden', !room.isPublic || !!isPublicTile);
   toggleClass($('.adminIcon', tile), 'hidden', !room.isAdmin);
 
   for(const player of Array.isArray(room.players) ? room.players : []) {
@@ -171,6 +179,15 @@ function createRoomTile(room) {
       if(password !== null)
         roomAction(room.id, 'setPassword', { password });
     });
+    addMenuButton('public', room.isPublic ? 'Edit public listing' : 'Make room public', null, function() {
+      const description = prompt('Enter a description for the public rooms list so people know what to expect in your room:', room.description || '');
+      if(description !== null)
+        roomAction(room.id, 'setPublic', { public: true, description });
+    });
+    if(room.isPublic)
+      addMenuButton('public_off', 'Make room private', null, function() {
+        roomAction(room.id, 'setPublic', { public: false });
+      });
     addMenuButton('remove_moderator', 'Release claim', null, function() {
       roomAction(room.id, 'unclaim');
     });
@@ -192,14 +209,15 @@ function createRoomTile(room) {
         showOverlay('roomsOverlay');
       }
     });
-  addMenuButton('visibility_off', 'Remove from list', null, async function() {
-    await fetch(`api/roomcollection/${getCollectionID()}/remove/${room.id}`, { method: 'PUT' });
-    await refreshRoomsList();
-  });
+  if(!isPublicTile)
+    addMenuButton('visibility_off', 'Remove from list', null, async function() {
+      await fetch(`api/roomcollection/${getCollectionID()}/remove/${room.id}`, { method: 'PUT' });
+      await refreshRoomsList();
+    });
 
   $('.menuButton', tile).onclick = function(e) {
     const wasHidden = menu.classList.contains('hidden');
-    for(const m of $a('#roomsList .roomMenu'))
+    for(const m of $a('#roomsOverlay .roomMenu'))
       m.classList.add('hidden');
     toggleClass(menu, 'hidden', !wasHidden);
     e.stopPropagation();
@@ -220,22 +238,44 @@ function createRoomTile(room) {
 async function refreshRoomsList() {
   $('#collectionIDinput').value = getCollectionID();
   let rooms = null;
+  let publicRooms = null;
   try {
     const result = await fetch(`api/roomcollection/${getCollectionID()}`);
     if(result.ok)
       rooms = (await result.json()).rooms;
   } catch(e) {}
-  removeFromDOM('#roomsList .roomTile');
+  try {
+    const result = await fetch('api/publicrooms');
+    if(result.ok)
+      publicRooms = (await result.json()).rooms;
+  } catch(e) {}
+  removeFromDOM('#roomsOverlay .roomTile');
+
   if(rooms === null) {
     $('#emptyRoomsList').textContent = 'Could not load your room collection. Please try again.';
     $('#emptyRoomsList').style.display = 'block';
-    return;
+  } else {
+    rooms.sort((a, b)=>(b.id == roomID) - (a.id == roomID));
+    for(const room of rooms)
+      $('#roomsList').appendChild(createRoomTile(room));
+    $('#emptyRoomsList').style.display = rooms.length ? 'none' : 'block';
+    $('#emptyRoomsList').textContent = 'No rooms yet. Rooms you visit with this browser show up here automatically.';
   }
-  rooms.sort((a, b)=>(b.id == roomID) - (a.id == roomID));
-  for(const room of rooms)
-    $('#roomsList').appendChild(createRoomTile(room));
-  $('#emptyRoomsList').style.display = rooms.length ? 'none' : 'block';
-  $('#emptyRoomsList').textContent = 'No rooms yet. Rooms you visit with this browser show up here automatically.';
+
+  if(publicRooms === null) {
+    $('#emptyPublicRoomsList').textContent = 'Could not load the public rooms. Please try again.';
+    $('#emptyPublicRoomsList').style.display = 'block';
+  } else {
+    // the public listing is anonymous, so admin status comes from the user's own collection
+    const adminRoomIDs = new Set((rooms || []).filter(r=>r.isAdmin).map(r=>r.id));
+    for(const room of publicRooms)
+      room.isAdmin = adminRoomIDs.has(room.id);
+    publicRooms.sort((a, b)=>b.playerCount - a.playerCount);
+    for(const room of publicRooms)
+      $('#publicRoomsList').appendChild(createRoomTile(room, true));
+    $('#emptyPublicRoomsList').style.display = publicRooms.length ? 'none' : 'block';
+    $('#emptyPublicRoomsList').textContent = 'No public rooms right now.';
+  }
 }
 
 onLoad(function() {
@@ -309,7 +349,7 @@ onLoad(function() {
   });
 
   document.addEventListener('click', function() {
-    for(const m of $a('#roomsList .roomMenu'))
+    for(const m of $a('#roomsOverlay .roomMenu'))
       m.classList.add('hidden');
   });
 
