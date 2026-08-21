@@ -83,6 +83,22 @@ describe('legacy mode detection', () => {
     expect(flagsFor(at(22, { h: { id: 'h', type: 'holder', stackOffsetY: 40, alignChildren: false } }))).toEqual({});
   });
 
+  test('a holder that only becomes stacked at runtime gets legacyHolderEnterLeaveEvents', () => {
+    // the offset is a value inside a routine rather than a property of the holder, so only the
+    // textual pass can see it
+    expect(flagsFor(at(22, {
+      h: { id: 'h', type: 'holder' },
+      b: { id: 'b', type: 'button', clickRoutine: [ { func: 'SET', property: 'stackOffsetY', value: 40 } ] }
+    }))).toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
+  test('a template a holder inherits its stack offset from counts as stacked', () => {
+    expect(flagsFor(at(22, {
+      template: { id: 'template', type: 'basic', stackOffsetY: 40 },
+      h: { id: 'h', type: 'holder', inheritFrom: { template: '*' } }
+    }))).toEqual({ legacyHolderEnterLeaveEvents: true });
+  });
+
   test('a mode is not applied to a save that is already at or past its version', () => {
     // a v20 save predates v21, so the holder mode applies, but the var modes (v18) do not
     const state = at(20, {

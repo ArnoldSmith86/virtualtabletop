@@ -94,12 +94,13 @@ class Holder extends ImageWidget {
   // again. The other half of that is in onChildAdd(), because becoming a child is what claims
   // a widget, not the arrival event.
   //
-  // A drag is the exception: it detaches the card at the pickup, long before it is anywhere
-  // else, and a card without an owner is one every other player can see. So a hand holds on to
-  // a dragged card until it is really out of its box, which is what checkParent() decides -
-  // rearranging a hand never exposes a card, because that drag never gets there.
+  // Two exceptions. A drag detaches the card at the pickup, long before it is anywhere else,
+  // and a card without an owner is one every other player can see - so a hand holds on to a
+  // card that is still on the cursor until checkParent() decides it is really out of the box,
+  // which is why rearranging a hand never exposes a card. And MOVEXY has resetOwner, an
+  // explicit "put this on the table but keep it owned", which the leave must not override.
   async applyLeave(child) {
-    if(child.get('type') != 'deck' && !child.isBeingRemoved && this.get('childrenPerOwner') && child.currentParent !== this)
+    if(child.get('type') != 'deck' && !child.isBeingRemoved && this.get('childrenPerOwner') && !child.get('dragging') && !child.keepOwner)
       await child.set('owner', null);
     // a widget on its way out of the room has no properties left to apply, but the gap it
     // leaves in a stacked holder closes all the same

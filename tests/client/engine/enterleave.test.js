@@ -66,15 +66,17 @@ function trace() {
   return String(widgets.get('log').get('trace') || '').split(';').filter(entry => entry);
 }
 
-// The parent bookkeeping a drag performs, without the pointer: moveStart() detaches the widget,
-// move() lets checkParent() drop it once it is out of the holder's box, and moveEnd() hands it
-// to the holder it was released over. `leavesBox: false` is a drag that never left the holder
-// it started in, which is the one case where the two differ. `whileDragging` is called at the
-// point the widget hangs on the cursor, which is where a drag is visible to the other players.
+// The bookkeeping a drag performs, without the pointer: moveStart() marks the widget as being
+// dragged and detaches it, move() lets checkParent() drop it once it is out of the holder's box,
+// and moveEnd() drops the drag marks again and hands the widget to the holder it was released
+// over. `leavesBox: false` is a drag that never left the holder it started in, which is the one
+// case where the two differ. `whileDragging` is called at the point the widget hangs on the
+// cursor, which is where a drag is visible to the other players.
 async function dragWidget(id, { to = null, leavesBox = true, whileDragging = null } = {}) {
   const widget = widgets.get(id);
   const ancestor = widget.get('_ancestor');
 
+  await widget.set('dragging', 'jestPlayer');
   if(widgets.has(ancestor))
     widget.currentParent = widgets.get(ancestor);
   widget.disablePileUpdateAfterParentChange = true;
@@ -87,6 +89,7 @@ async function dragWidget(id, { to = null, leavesBox = true, whileDragging = nul
   if(whileDragging)
     whileDragging(widget);
 
+  await widget.set('dragging', null);
   widget.pileUpdateFromDrag = true;
   if(to)
     await widget.moveToHolder(widgets.get(to));
@@ -414,7 +417,27 @@ describe('holder properties', () => {
       expect(ownerWhileDragging).toBe(null);
       expect(widgets.get('c1').get('owner')).toBe(null);
     });
+
+    // The hand holds on to a card that is on the cursor, so "a drag is in progress" has to stop
+    // being true the moment the drag ends - including the drag that ended inside the hand it
+    // started in, which never gets anywhere near checkParent().
+    test(`a rearrange inside a per-owner hand does not stop the next SET parent from releasing the card [${combination}]`, async () => {
+      setupRoom(hand(), { legacy });
+      await dragWidget('c1', { to: 'handA', leavesBox: false });
+      await clickRoutine([ { func: 'SELECT', property: 'id', value: 'c1' }, { func: 'SET', property: 'parent', value: null } ]);
+      expect(widgets.get('c1').get('owner')).toBe(combination == 'legacy' ? 'jestPlayer' : null);
+    });
   }
+
+  scenario('MOVEXY keeps the owner of a card taken out of a per-owner hand when resetOwner is off',
+    () => room({ handA: { childrenPerOwner: true }, c1: { type: 'card', parent: 'handA', owner: 'jestPlayer' } }),
+    () => clickRoutine([ { func: 'MOVEXY', from: 'handA', x: 100, y: 100, resetOwner: false } ]),
+    {
+      // resetOwner is the operation's explicit "put this on the table but keep it owned", so the
+      // leave the parent write raises must not take the owner away behind its back
+      modern: [ 'leave handA c1[parent=null mark=leave-handA owner=jestPlayer]' ],
+      legacy: [ 'leave handA c1[parent=null mark=null owner=jestPlayer]' ]
+    });
 
   scenario('ignoreOnLeave skips the property half but not the routine',
     () => room({ c1: { type: 'card', parent: 'handA', ignoreOnLeave: true } }),

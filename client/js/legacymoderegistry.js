@@ -120,13 +120,18 @@ export const LEGACY_MODES = {
     pr: 3134,
     interactsWith: [ 'disableHolderImageWidget' ],
     detect: function(state) {
-      if(/"(enterRoutine|leaveRoutine|onEnter|onLeave|childrenPerOwner)"\s*:/.test(JSON.stringify(state)))
+      const json = JSON.stringify(state);
+      if(/"(enterRoutine|leaveRoutine|onEnter|onLeave|childrenPerOwner)"\s*:/.test(json))
         return true;
-      // a stacked holder re-compacts on every departure now, which a game notices even when it
-      // uses none of the event names above
+      // A stacked holder re-compacts on every departure now, which a game notices even when it
+      // uses none of the event names above. A stack offset counts wherever it comes from: set
+      // by a routine while the game runs, or written on a widget - which does not have to be
+      // the holder itself, since it can be the template another widget inherits from or clones.
+      if(/"property"\s*:\s*"stackOffset[XY]"/.test(json))
+        return true;
       for(const id in state) {
         const properties = state[id];
-        if(!properties || properties.type != 'holder' || properties.alignChildren === false)
+        if(!properties || properties.alignChildren === false)
           continue;
         if([ properties.stackOffsetX, properties.stackOffsetY ].some(offset=>offset !== undefined && offset !== null && parseFloat(offset) != 0))
           return true;
@@ -146,6 +151,7 @@ export const LEGACY_MODES = {
         <li>a <code>childrenPerOwner</code> holder releases the owner however the card left it - a dragged card once it is outside the box, so rearranging a hand never uncovers it</li>
         <li>joining or leaving a pile inside a holder raises nothing</li>
         <li>a stacked holder closes the gap a card left however it left, <code>DELETE</code> included</li>
+        <li>the preview a <code>dropShadow</code> holder paints under the pointer raises nothing, so hovering over a holder no longer runs its routines</li>
       </ul>
       <b>Example:</b> a holder whose <code>leaveRoutine</code> counts the cards that left it.
       <br><br>

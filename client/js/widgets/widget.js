@@ -2097,9 +2097,12 @@ export class Widget extends StateManaged {
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
               if(a.resetOwner)
                 await c.set('owner', null);
+              else
+                c.keepOwner = true;
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
+              delete c.keepOwner;
             }
           });
           if(routineLogging) {
@@ -3105,6 +3108,10 @@ export class Widget extends StateManaged {
 
     await this.updatePiles();
     delete this.pileUpdateFromDrag;
+    // currentParent only means "the container this drag started in". A drag that ends inside
+    // that container never gets to the branch in checkParent() that forgets it, so the drag has
+    // to drop it here - a leftover would tell the next move that a drag is still going on.
+    delete this.currentParent;
   }
 
   async hideShadowWidget() {

@@ -369,6 +369,38 @@ test('Rearranging a card inside a per-owner hand never takes its owner away', as
   await t.expect(after[CARD].owner).eql('Alice', 'the card is still in Alice\'s hand');
 });
 
+test('A rearrange inside a per-owner hand leaves nothing behind that keeps the next card owned', async t => {
+  await openRoom(t, MODERN, fixtureState({
+    handA: { childrenPerOwner: true },
+    card1: { parent: 'handA', x: 4, y: 4, owner: 'Alice' },
+    go: { clickRoutine: [ { func: 'SELECT', property: 'id', value: CARD }, { func: 'SET', property: 'parent', value: null } ] }
+  }));
+  await setName(t, 'Alice');
+  await dragPath(t, CARD, [ { dx: 150, dy: 0 } ]);
+  await clickGo(t);
+
+  // A rearrange is the one drag that never reaches checkParent(), so it is the one that can
+  // leave "a drag is in progress" set behind it. A card played out of the hand afterwards has
+  // to lose its owner all the same - otherwise it lies on the table invisible to everybody else.
+  const after = await stateWhen(s=>!s[CARD].parent);
+  await t.expect(after[CARD].owner).notOk('the card played out of the hand belongs to nobody');
+});
+
+test('MOVEXY with resetOwner off keeps the owner of a card taken out of a per-owner hand', async t => {
+  await openRoom(t, MODERN, fixtureState({
+    handA: { childrenPerOwner: true },
+    card1: { parent: 'handA', x: 4, y: 4, owner: 'Alice' },
+    go: { clickRoutine: [ { func: 'MOVEXY', from: 'handA', x: 700, y: 200, resetOwner: false } ] }
+  }));
+  await setName(t, 'Alice');
+  await clickGo(t);
+
+  // dealing a card onto the table that only its owner may see is what the parameter is for
+  await expectTrace(t, [ 'leave handA[parent=null mark=leave-handA owner=Alice]' ]);
+  const after = await stateWhen(s=>!s[CARD].parent);
+  await t.expect(after[CARD].owner).eql('Alice', 'the card on the table is still Alice\'s');
+});
+
 test('Legacy: the per-owner hand released the card between its two leave calls', async t => {
   await openRoom(t, LEGACY, fixtureState({ handA: { childrenPerOwner: true }, card1: { parent: 'handA', x: 4, y: 4, owner: 'Alice' } }));
   await setName(t, 'Alice');
