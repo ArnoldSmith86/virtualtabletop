@@ -1967,32 +1967,38 @@ class PropertiesModule extends SidebarModule {
       this.renderForMulti(newSelection);
     } else if(newSelection.length == 1) {
       const widget = newSelection[0];
-      switch(widget.get('type')) {
-        case 'button':     this.renderForButton(widget);     break;
-        case 'canvas':     this.renderForCanvas(widget);     break;
-        case 'card':       this.renderForCard(widget);       break;
-        case 'deck':       this.renderForDeck(widget);       break;
-        case 'dice':       this.renderForDice(widget);       break;
-        case 'holder':     this.renderForHolder(widget);     break;
-        case 'label':      this.renderForLabel(widget);      break;
-        case 'line':       this.renderForLine(widget);       break;
-        case 'pile':       this.renderForPile(widget);       break;
-        case 'scoreboard': this.renderForScoreboard(widget); break;
-        case 'seat':       this.renderForSeat(widget);       break;
-        case 'spinner':    this.renderForSpinner(widget);    break;
-        case 'timer':      this.renderForTimer(widget);      break;
+      // a smart clone mirrors its source, so what is editable on it are the
+      // options of the link itself - everything else is written by the source
+      if(widget.get('editorSmartClone')) {
+        this.renderForSmartClone(widget);
+      } else {
+        switch(widget.get('type')) {
+          case 'button':     this.renderForButton(widget);     break;
+          case 'canvas':     this.renderForCanvas(widget);     break;
+          case 'card':       this.renderForCard(widget);       break;
+          case 'deck':       this.renderForDeck(widget);       break;
+          case 'dice':       this.renderForDice(widget);       break;
+          case 'holder':     this.renderForHolder(widget);     break;
+          case 'label':      this.renderForLabel(widget);      break;
+          case 'line':       this.renderForLine(widget);       break;
+          case 'pile':       this.renderForPile(widget);       break;
+          case 'scoreboard': this.renderForScoreboard(widget); break;
+          case 'seat':       this.renderForSeat(widget);       break;
+          case 'spinner':    this.renderForSpinner(widget);    break;
+          case 'timer':      this.renderForTimer(widget);      break;
 
-        default:
-          this.renderForBasic(widget);
-          break;
+          default:
+            this.renderForBasic(widget);
+            break;
+        }
+
+        // every widget can have routines, so the section is always there - piles
+        // are the exception because they are temporary and not editable, and a
+        // deck hands the module over to the deck editor, leaving no DOM to render
+        // into (its routines are edited there)
+        if(widget.get('type') != 'pile' && this.moduleDOM)
+          this.renderEvents(widget);
       }
-
-      // every widget can have routines, so the section is always there - piles
-      // are the exception because they are temporary and not editable, and a
-      // deck hands the module over to the deck editor, leaving no DOM to render
-      // into (its routines are edited there)
-      if(widget.get('type') != 'pile' && this.moduleDOM)
-        this.renderEvents(widget);
     } else {
       this.addDeck();
     }
@@ -11175,6 +11181,28 @@ class PropertiesModule extends SidebarModule {
         }
       };
     }
+  }
+
+  // A smart clone is written by its source, so the panel offers the options of
+  // that link and the way out of it rather than properties an update overwrites.
+  renderForSmartClone(widget) {
+    this.renderTypeHeader(widget);
+    this.addSubHeader('Smart clone');
+    const cloneDiv = div(this.moduleDOM, '', `
+      <p>This widget was created using the smart clone tool. This means that the editor will keep it and its children updated when you change the source.</p>
+      <p>Click the button below to unlink this widget from its source if you want to make changes to its children.</p>
+      <label><input type=checkbox class=flipX> Flip X</label><br>
+      <label><input type=checkbox class=flipY> Flip Y</label><br>
+      <label><input type=checkbox class=includeCards> Include cards without their deck</label><br>
+      <button icon=link_off>Unlink</button>
+    `);
+    $('.flipX', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipX: e.target.checked }));
+    $('.flipY', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipY: e.target.checked }));
+    $('.includeCards', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { includeCards: e.target.checked }));
+    $('.flipX', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipX;
+    $('.flipY', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipY;
+    $('.includeCards', cloneDiv).checked = (widget.get('editorSmartClone') || {}).includeCards;
+    $('[icon=link_off]', cloneDiv).onclick = e=>smartCloneUnlink(widget.id);
   }
 
   renderEvents(widget) {

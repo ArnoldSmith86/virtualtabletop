@@ -60,8 +60,12 @@ function initializeEditor(currentMetaData) {
 
     new ToolbarDivider(),
 
-    new CloneDragButton(),
+    new CloneDragButton(false),
+    new CloneDragButton(true),
     new SpacingDragButton(),
+
+    new ToolbarDivider(),
+
     new RotateDragButton(),
     new ResizeDragButton(false),
     new ResizeDragButton(true),
@@ -98,6 +102,7 @@ export function openEditor() {
   // way in as well as on the way out
   selectionBarResetStack();
   endDrill();
+  smartCloneInit();
   for(const module of sidebarModules)
     module.onEditorOpen();
   for(const button of toolbarButtons)
