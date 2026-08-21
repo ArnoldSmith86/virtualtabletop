@@ -60,7 +60,7 @@ test('The toolbar keeps all buttons reachable at every window size', async t => 
     await t.resizeWindow(width, height).wait(300);
 
     const layout = await toolbarLayout();
-    await t.expect(layout.buttons).eql(9, `${size}: not all toolbar buttons are displayed`);
+    await t.expect(layout.buttons).eql(11, `${size}: not all toolbar buttons are displayed`);
     if(layout.overflow) {
       await t.expect(layout.scrollable).ok(`${size}: the toolbar overflows but cannot be scrolled`);
       await scrollToolbarToEnd();

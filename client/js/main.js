@@ -175,7 +175,7 @@ function checkURLproperties(connected) {
     if(urlProperties.askID) {
       on('#askIDoverlay button', 'click', function() {
         roomID = normalizeRoomID(urlProperties.askID + $('#enteredID').value);
-        toServer('room', { playerName, roomID });
+        toServer('room', { playerName, roomID, collection: getCollectionID(), password: getRoomPassword(roomID) });
         showOverlay();
       });
       showOverlay('askIDoverlay');
@@ -833,7 +833,7 @@ async function loadEditMode() {
 }
 
 window.addEventListener('keydown', async function(e) {
-  if(e.ctrlKey && e.key == 'j') {
+  if(e.ctrlKey && e.key == 'j' && !document.body.classList.contains('roomEditingDisabled')) {
     e.preventDefault();
     if(edit) {
       $('#editorToolbar button[icon=close]').click();
