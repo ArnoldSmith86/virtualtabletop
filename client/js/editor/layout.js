@@ -86,7 +86,7 @@ function initializeEditor(currentMetaData) {
 }
 
 // restoring an earlier state replaces the undo protocol, which invalidates what the
-// history module has rendered from it
+// modules have rendered from it
 function undoProtocolChanged() {
   for(const module of sidebarModules)
     module.onUndoProtocolChanged();

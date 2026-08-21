@@ -138,8 +138,8 @@ test('A module is closed again through its sidebar button', async t => {
 
 // The toolbar's undo button cuts the undo protocol short behind the History module's back, so the
 // rows the module has rendered describe entries that are no longer in the protocol. It has to drop
-// them instead of writing to a row that has no entry behind it - the second undo in a row lands on
-// exactly that row.
+// them instead of writing to a row that has no entry behind it - the next change of any kind, and
+// a second undo in a row, both land on exactly that row.
 test('Undoing from the toolbar keeps the History module in sync', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -168,9 +168,67 @@ test('Undoing from the toolbar keeps the History module in sync', async t => {
     .click('#editorToolbar [icon=undo]')
     .expect(historyRows.count).eql(rowsBefore+1)
     .expect(widgetCount()).eql(4)
+    // the sequence the crash reports arrived from: one undo, and then a change of any kind
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5)
+    .click('#editorToolbar [icon=undo]')
+    .expect(historyRows.count).eql(rowsBefore+1)
+    .expect(widgetCount()).eql(4)
     .click('#editorToolbar [icon=undo]')
     .expect(historyRows.count).eql(rowsBefore)
     .expect(widgetCount()).eql(1);
+  await setEditorState(null);
+});
+
+// A row click cuts the protocol short as well, but keeps the rows above it in the DOM so the user
+// can return to that future state - so those rows have to survive until the next change makes them
+// unreachable, and go when it arrives.
+test('Clicking a History row returns to that state and keeps the newer rows until a new change', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const widgetCount = ClientFunction(() => widgets.size);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5)
+    // the newest row is the first one in the panel, so the second one is the line
+    .click(historyRows.nth(1))
+    .expect(widgetCount()).eql(4)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    // the row of the holder is still there and returns the room to that future state
+    .click(historyRows.nth(0))
+    .expect(widgetCount()).eql(5)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    // going back once more and then adding a widget makes that state unreachable, so its row is
+    // replaced by the one of the new change
+    .click(historyRows.nth(1))
+    .expect(widgetCount()).eql(4)
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .click('#editorToolbar [icon=undo]')
+    .expect(historyRows.count).eql(rowsBefore+1)
+    .expect(widgetCount()).eql(4);
   await setEditorState(null);
 });
 

@@ -175,6 +175,11 @@ class SidebarModule {
   }
 
   onUndoProtocolChanged() {
+    if(this.moduleDOM)
+      this.onUndoProtocolChangedWhileActive();
+  }
+
+  onUndoProtocolChangedWhileActive() {
   }
 
   openInTarget(target) {

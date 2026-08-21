@@ -2,13 +2,13 @@ class UndoModule extends SidebarModule {
   constructor() {
     super('undo', 'History', 'Undo changes from editing or playing.');
     this.lastRenderedIndex = -2;
-    this.lastRenderedEntry = null;
+    this.renderedEntries = [];
     this.latestEntryDOM = null;
   }
 
   onClose() {
     this.lastRenderedIndex = -2;
-    this.lastRenderedEntry = null;
+    this.renderedEntries = [];
     this.latestEntryDOM = null;
   }
 
@@ -24,28 +24,31 @@ class UndoModule extends SidebarModule {
     for(let i=this.activeIndex+1; i<=index; ++i)
       sendRawDelta(this.protocol[i].delta);
     this.setActiveIndex(index, dom);
-    this.inUndoMode = false;
 
     // the rows above the clicked one stay in the DOM and this.protocol keeps their
     // entries, so they can be clicked to return to that state - until the next
     // change arrives and renderModule drops the now unreachable timeline
     setUndoProtocol(this.protocol.slice(0, index+1));
+    undoProtocolChanged();
+    this.inUndoMode = false;
 
     setSelection([...selectedWidgets].filter(w=>widgets.has(w.id)));
   }
 
-  onUndoProtocolChanged() {
-    if(this.moduleDOM)
+  onUndoProtocolChangedWhileActive() {
+    if(!this.inUndoMode)
       this.renderModule(this.moduleDOM);
   }
 
-  removeEntries() {
-    for(const entry of $a('.undoEntry', this.moduleDOM))
-      entry.remove();
-    this.lastRenderedIndex = -1;
-    this.lastRenderedEntry = null;
-    this.latestEntryDOM = null;
-    this.activeDOM = null;
+  // the newest row is the first one in the DOM, so the row of the last rendered entry
+  // is what a shortened protocol drops
+  removeLatestEntry() {
+    if(this.activeDOM === this.latestEntryDOM)
+      this.activeDOM = null;
+    this.latestEntryDOM.remove();
+    this.renderedEntries.pop();
+    this.lastRenderedIndex = this.renderedEntries.length - 1;
+    this.latestEntryDOM = $('.undoEntry', this.moduleDOM);
   }
 
   renderModule(target) {
@@ -58,11 +61,16 @@ class UndoModule extends SidebarModule {
 
     this.protocol = [...getUndoProtocol()];
 
-    // returning to an earlier state cuts the protocol short, so the rows rendered so
-    // far can describe entries that are gone by now - start over instead of writing
-    // to a row that has no entry behind it anymore
-    if(this.lastRenderedIndex >= 0 && this.protocol[this.lastRenderedIndex] !== this.lastRenderedEntry)
-      this.removeEntries();
+    // returning to an earlier state cuts the protocol short, so the rows rendered so far
+    // can describe entries that are gone by now - drop those rows instead of writing to a
+    // row that has no entry behind it anymore
+    while(this.lastRenderedIndex >= 0 && this.protocol[this.lastRenderedIndex] !== this.renderedEntries[this.lastRenderedIndex])
+      this.removeLatestEntry();
+
+    // the row of the entry that was dropped can have been the active one, in which case the
+    // room is now in the state the row below it describes
+    if(!this.activeDOM && this.latestEntryDOM)
+      this.setActiveIndex(this.lastRenderedIndex, this.latestEntryDOM);
 
     if(this.latestEntryDOM) {
       const d = this.protocol[this.lastRenderedIndex].delta;
@@ -77,13 +85,13 @@ class UndoModule extends SidebarModule {
       div.className = 'undoEntry';
       this.moduleDOM.insertBefore(div, $('.undoEntry', this.moduleDOM));
       this.latestEntryDOM = div;
+      this.renderedEntries[i] = this.protocol[i];
 
       if(i == this.protocol.length-1)
         this.setActiveIndex(i, div);
     }
 
     this.lastRenderedIndex = this.protocol.length - 1;
-    this.lastRenderedEntry = this.protocol[this.lastRenderedIndex] || null;
   }
 
   setActiveIndex(index, dom) {
