@@ -1587,8 +1587,11 @@ class RoutineWidgetIDPopup extends RoutinePopup {
 }
 
 class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
+  // the parameter says what it is asking for where the two widget parameters of
+  // an operation would otherwise open under the same question: what to look
+  // inside is not which widgets to work on
   parameterQuestion() {
-    return 'which widgets';
+    return this.options.question || 'which widgets';
   }
 
   constructor(options={}) {
@@ -2362,17 +2365,19 @@ function commonParameterInfoButton(appendTo, func, parameter) {
 // with. Operations without a text of their own get nothing.
 function parameterInfoTopic(func, parameter) {
   // a chip standing for a part of another parameter (a VAR's variableName is the
-  // first half of variables) is described by the one it is a part of
+  // first half of variables), or for one the text explains under another name,
+  // falls back to the one describedBy names - but only when the parameter has
+  // nothing of its own: an old spelling and the name that replaced it both have
+  // a line now, and each chip should open its own
   const spec = ((routineOperationMetadata[func] || {}).parameters || {})[parameter];
-  if(spec && spec.describedBy)
-    parameter = spec.describedBy;
-  const own = commonInfoTopic(`${func}.${parameter}`);
+  const alias = spec && spec.describedBy;
+  const own = commonInfoTopic(`${func}.${parameter}`) || (alias ? commonInfoTopic(`${func}.${alias}`) : null);
   if(own)
     return own;
   const operation = commonInfoTopic(func);
   if(!operation)
     return null;
-  const line = parameterInfoLine(operation.info, parameter);
+  const line = parameterInfoLine(operation.info, parameter) || (alias ? parameterInfoLine(operation.info, alias) : null);
   // no line of its own (the wiki text does not mention it): the whole text is
   // still the best the editor can offer
   if(!line)
@@ -2406,27 +2411,31 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      collection: collection - specifies the collection of widgets to counts (defaults to DEFAULT collection).
-      holder: holder id (or an array) - specifies the holder that contains the widgets to count (optional). When counting a holder, only child widgets that match the holder's dropTarget property are included. Note that the widgets specified here need not be holders.
-      owner: playerName - filters the widgets in the collection or holder to only count widgets owned by the specified player. The default value, null, results in no filtering by owner.
+      target: collection or widget ids - specifies the widgets to count (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - counts what these widgets contain instead of the ones target names (optional). See [holder].
+      owner: playerName - filters the widgets in the target or holder to only count widgets owned by the specified player. The default value, null, results in no filtering by owner.
       variable: variable name - specifies the variable to store the result in (defaults to variable "COUNT").
+      collection: deprecated - use target instead. A COUNT that names no target still reads the widgets to count from here.
       </pre>
     `, tutorial: 'functions-count' };
   }
   if(topicName == 'MOVE') {
     return { info: `
       <pre>
-      This function moves widgets into a target [holder]. If the target of the move is an occupied seat, then the move will instead direct the widgets to the hand associated with the seat. In this case, if the hand is set to childPerOwner, the owner will be set to the player in the seat.
+      This function moves widgets into a destination [holder]. If the destination of the move is an occupied seat, then the move will instead direct the widgets to the hand associated with the seat. In this case, if the hand is set to childPerOwner, the owner will be set to the player in the seat.
 
       Parameters:
 
-      [MOVE.from](from): widgetID (or an array) - specifies the widget(s) that contains the widgets to move. In the typical case, this would be a holder, but could be any widget with child widgets. If from is not specified, then the "DEFAULT" collection will be moved.
-      collection: collection - specifies the collection that is to be moved (defaults to "DEFAULT"). When using a collection, omit the from parameter.
-      to: widgetID (or an array) - specifies the widget(s) that widgets should be moved into. In the typical case, this would be a holder or seats, but could be any widget.
+      target: collection or widget ids - specifies the widget(s) that are to be moved (defaults to the "DEFAULT" collection). Ignored when fromHolder is given. See [holder].
+      [MOVE.from](fromHolder): collection or widget ids - specifies the widget(s) that contain the widgets to move. In the typical case, this would be a holder, but could be any widget with child widgets (optional). The count is spent per widget named here. See [holder].
+      [MOVE.to](toHolder): collection or widget ids - specifies the widget(s) that widgets should be moved into. In the typical case, this would be a holder or seats, but could be any widget.
       count: number - limits the amount of moved widgets (defaults to 1). Can be 0 to move none, "all" to move every selected widget, a positive number to move that many of the selected widgets, or a negative number to leave that many of the selected widgets not moved.
-      fillTo: number - fills the target holders/seats up to this number (defaults to null). If specified, then count is ignored.
+      fillTo: number - fills the destination holders/seats up to this number (defaults to null). If specified, then count is ignored.
       face: number - optionally sets the face of the moved widgets to the given value (see FLIP). If omitted, the widgets will be left as they are.
-      Note that both count and fillTo will move an entire group to one of the to widgets. If there are enough widgets remaining in the from source, then it will move to the next destination. The order that the function picks targets for moving to is not well understood, so if there are less widgets in the from source than are required, game designers may want to account for that in the JSON in some other way.
+      from: deprecated - use fromHolder instead. A MOVE that names no fromHolder still takes the widgets to move out of the widgets from names.
+      to: deprecated - use toHolder instead. A MOVE that names no toHolder still moves its widgets into the widgets to names.
+      collection: deprecated - use target instead. A MOVE that names no target still reads the widgets to move from here.
+      Note that both count and fillTo will move an entire group to one of the destination widgets. If there are enough widgets remaining in the source, then it will move to the next destination. The order that the function picks destinations for moving to is not well understood, so if there are less widgets in the source than are required, game designers may want to account for that in the JSON in some other way.
 
       If the dropTarget property (when moving to a holder) does not match the widgets being moved, the widgets will become children of the holder, but will keep the original x,y coordinates. In other words, they will not follow the stackOffset rules for aligning child widgets.
       </pre>
@@ -2435,7 +2444,36 @@ function commonInfoTopic(topicName) {
   if(topicName == 'MOVE.from') {
     return { info: `
       <pre>
-      The from parameter specifies the widget(s) that contains the widgets to move. In the typical case, this would be a holder, but could be any widget with child widgets. If from is not specified, then the "DEFAULT" collection will be moved.
+      The fromHolder parameter specifies the widget(s) that contains the widgets to move. In the typical case, this would be a holder, but could be any widget with child widgets - see [holder]. If fromHolder is not specified, then the widgets named by target (the "DEFAULT" collection unless the MOVE says otherwise) will be moved.
+
+      from is the old spelling of the same parameter and still works: a MOVE only reads it while fromHolder is absent.
+      </pre>
+    ` };
+  }
+  if(topicName == 'MOVE.to') {
+    return { info: `
+      <pre>
+      The toHolder parameter specifies the widget(s) the widgets are moved into. In the typical case, this would be a holder or seats, but could be any widget. Moving into an occupied seat puts the widgets into the hand of that seat instead.
+
+      to is the old spelling of the same parameter and still works: a MOVE only reads it while toHolder is absent.
+      </pre>
+    ` };
+  }
+  if(topicName == 'MOVEXY.from') {
+    return { info: `
+      <pre>
+      The fromHolder parameter specifies the widget(s) that contain the widgets to move: in the typical case a holder, but it could be any widget with child widgets - see [holder]. Without it, a MOVEXY moves the widgets its target names.
+
+      from is the old spelling of the same parameter and still works: a MOVEXY only reads it while fromHolder is absent.
+      </pre>
+    ` };
+  }
+  if(topicName == 'DELETE.collection') {
+    return { info: `
+      <pre>
+      The widgets a DELETE removes are the ones its target names (the "DEFAULT" collection unless the DELETE says otherwise), or what the widgets its holder names contain.
+
+      collection is the old spelling of target and still works: a DELETE only reads it while target is absent.
       </pre>
     ` };
   }
@@ -2443,6 +2481,12 @@ function commonInfoTopic(topicName) {
     return { info: `
       <pre>
       A holder is a widget that contains other widgets.
+
+      Most operations also have a holder parameter, and that one is not limited to holder widgets: it names the widgets whose content the operation works on, instead of the widgets target names directly. For a seat that content is what lies in its hand and belongs to its player, for a holder only the children matching its dropTarget property (a single pile in it is looked into), and for any other widget simply its children.
+
+      Like target, a holder is either the name of a collection or a list of widget ids. A list of ids always names those widgets. A plain string is read as a widget id here and in from/to, because that is all these parameters ever took, while target and source read it as a collection first and only as a widget id when no collection carries the name. Where both exist under one name, the routine says which one it used, so writing [ "name" ] for the widget takes the doubt out. The old spellings (collection, and source in CLONE/SELECT/SWAPHANDS) still name a collection and nothing else.
+
+      While a holder is given, target is ignored, and a count is spent per widget named here: one card off every holder rather than one card in total.
       </pre>
     ` };
   }
@@ -2526,14 +2570,18 @@ function commonInfoTopic(topicName) {
 
       Each CALL returns a variable and a collection. The variable named "result" inside the called routine becomes the variable named by "variable" (defaults to "result") in the caller; the collection named "result" inside the called routine becomes the collection named by "collection" (defaults to "result") in the caller.
 
+      When target or holder names more than one widget, the routine is run on each of them in turn, and what the caller gets back in "variable" and "collection" is the result of the last one. A CALL with "return": false runs the routine on the first widget only, because the calling routine ends there anyway.
+
       Parameters:
 
       routine: routine name - the routine to execute (must end in "Routine").
-      widget: widget id - the widget containing the routine (defaults to the current widget).
+      target: collection or widget ids - the widgets containing the routine (defaults to the current widget). See [holder].
+      holder: collection or widget ids - runs the routine on what these widgets contain instead of on the ones target names (optional). See [holder].
       variable: variable name - stores the value returned from the called routine (defaults to "result").
       collection: collection name - stores the collection returned from the called routine (defaults to "result").
-      return: true/false - if false, no further statements in the calling routine are executed after the CALL (defaults to true).
+      return: true/false - if false, no further statements in the calling routine are executed after the CALL, and the routine is run on the first widget only (defaults to true).
       arguments: JSON object - properties of this object are passed as variables to the called routine (optional).
+      widget: deprecated - use target instead. A CALL that names no target still reads the widget containing the routine from here.
       </pre>
     `, tutorial: 'functions-call' };
   }
@@ -2544,48 +2592,56 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      collection: collection - the collection of canvases to change (defaults to DEFAULT collection).
-      canvas: canvasID (or an array) - deprecated, use collection instead: the canvas widget(s) to change.
-      count: number - limits how many canvases of the collection are changed (defaults to 0, which changes all of them).
+      target: collection or widget ids - the canvases to change (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - changes the canvases these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
+      count: number - limits how many canvases are changed (defaults to 0, which changes all of them).
       mode: set/inc/dec/change/reset/setPixel - which automation to apply. set/inc/dec change the activeColor index into colorMap using value. change replaces the colorMap entry at index value with color. reset sets every pixel back to the first color of colorMap. setPixel sets the pixel at (x, y) to the colorMap index given by value.
       value: number - index into colorMap (defaults to 1).
       color: string - the new color used by mode "change" (defaults to VTT blue).
       x and y: number - the pixel coordinates used by mode "setPixel" (defaults to 0).
+      canvas: deprecated - use target instead. It names the same canvas widget(s) to change.
+      collection: deprecated - use target instead. A CANVAS that names no target still reads the canvases to change from here.
       </pre>
     `, tutorial: 'functions-canvas' };
   }
   if(topicName == 'CLICK') {
     return { info: `
       <pre>
-      This function clicks widgets as if they were clicked by a player. When a collection is used with a count greater than one, each widget in the collection is clicked once before repeating.
+      This function clicks widgets as if they were clicked by a player. When several widgets are clicked with a count greater than one, each of them is clicked once before repeating.
 
       Parameters:
 
-      collection: collection - the collection of widgets to click (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to click (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - clicks what these widgets contain instead of the ones target names (optional). See [holder].
       count: number - how many times the click is triggered (defaults to 1).
       mode: respect/ignoreClickable/ignoreClickRoutine/ignoreAll - controls how the clickable property and any clickRoutine are honored (defaults to respect). respect performs the normal click behavior; ignoreClickable ignores the clickable property; ignoreClickRoutine ignores any clickRoutine and performs the default widget action instead; ignoreAll combines both.
+      collection: deprecated - use target instead. A CLICK that names no target still reads the widgets to click from here.
       </pre>
     `, tutorial: 'functions-click' };
   }
   if(topicName == 'CLONE' || topicName == 'DELETE') {
     return { info: `
       <pre>
-      CLONE creates copies of every widget in a collection, replicating all properties of the original except id. Each clone also gets a clonedFrom property set to the id of the original. Children of the source widgets are not cloned unless recursive is used.
+      CLONE creates copies of every widget it works on, replicating all properties of the original except id. Each clone also gets a clonedFrom property set to the id of the original. Children of the copied widgets are not cloned unless recursive is used.
 
-      DELETE removes every widget in a collection. It does not delete any children of the removed widgets; they become children of the tabletop instead.
+      DELETE removes every widget it works on. It does not delete any children of the removed widgets; they become children of the tabletop instead.
 
       CLONE parameters:
 
-      source: collection - the input collection to clone (defaults to DEFAULT).
+      target: collection or widget ids - the widgets to copy (defaults to DEFAULT). See [holder].
+      holder: collection or widget ids - works on what these widgets contain instead of on the ones target names (optional). See [holder].
       count: number - how many copies of each original to create (defaults to 1).
       xOffset / yOffset: number - offset applied to each clone relative to the original (defaults to 0).
       properties: object - properties to set on each cloned widget.
-      recursive: true/false - if true, all descendants of the source are cloned too (defaults to false).
+      recursive: true/false - if true, all descendants of the copied widgets are cloned too (defaults to false).
       collection: collection name - receives the widgets created by this operation (defaults to DEFAULT). Must be a named collection.
+      source: deprecated - use target instead. A CLONE that names no target still reads the widgets to copy from here.
 
       DELETE parameters:
 
-      collection: collection - the collection containing the widgets to delete (defaults to DEFAULT).
+      [DELETE.collection](target): collection or widget ids - the widgets to delete (defaults to DEFAULT). See [holder].
+      holder: collection or widget ids - deletes what these widgets contain instead of the ones target names (optional). See [holder].
+      [DELETE.collection](collection): deprecated - use target instead. A DELETE that names no target still reads the widgets to delete from here.
       </pre>
     `, tutorial: 'functions-clone-and-delete' };
   }
@@ -2607,11 +2663,12 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      holder: holderID (or an array) - the holder containing the widgets to flip (optional).
-      collection: collection - the collection of widgets to flip (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to flip (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - flips what these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
       count: number - limits how many widgets are flipped (defaults to "all"). 0 flips none, "all" flips every selected widget, a positive number flips that many, a negative number leaves that many unflipped.
-      face: number - the target face. When omitted, flips to the next/random face per faceCycle.
+      face: number - the face to flip to. When omitted, flips to the next/random face per faceCycle.
       faceCycle: forward/backward/random - temporarily overrides the widget's faceCycle property for this operation.
+      collection: deprecated - use target instead. A FLIP that names no target still reads the widgets to flip from here.
       </pre>
     `, tutorial: 'functions-flip' };
   }
@@ -2622,11 +2679,13 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      collection: collection - the collection of widgets to read from (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to read from (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - reads from what these widgets contain instead of from the ones target names (optional). See [holder].
       property: property name (or an array, to read a nested sub-property) - the property to read.
       variable: variable name - stores the result (defaults to the name of property).
       aggregation: first/last/sum/average/median/min/max/array - how to combine values across multiple widgets (defaults to "first").
       skipMissing: true/false - skip widgets where the property has no value at all.
+      collection: deprecated - use target instead. A GET that names no target still reads its widgets from here.
       </pre>
     `, tutorial: 'functions-get' };
   }
@@ -2655,10 +2714,12 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      label: labelID (or an array) - the widget(s) to change (optional).
-      collection: collection - the collection of widgets to change if label is not given (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to change (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - changes what these widgets contain instead of the ones target names (optional). See [holder].
       mode: set/inc/dec/append - how the value is applied (defaults to set). inc/dec always treat the current value as a number.
       value: string or number - the value to apply (defaults to 0).
+      label: deprecated - use target instead. It names the same widget(s) whose text is changed.
+      collection: deprecated - use target instead. A LABEL that names no target still reads the widgets to change from here.
       </pre>
     `, tutorial: 'functions-label' };
   }
@@ -2669,13 +2730,15 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      from: holderID (or an array) - the holder containing the widgets to move.
+      target: collection or widget ids - the widgets to move (defaults to DEFAULT collection). Ignored when fromHolder is given. See [holder].
+      [MOVEXY.from](fromHolder): collection or widget ids - moves what these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
       count: number - limits how many widgets are moved (defaults to 1). 0 moves none, "all" moves every selected widget, a positive number moves that many, a negative number leaves that many unmoved.
       face: number - optionally sets the face of the moved widgets (see FLIP). If omitted, widgets keep their current face.
-      x / y: number - the target position on the surface (defaults to 0).
+      x / y: number - the position on the surface the widgets are moved to (defaults to 0).
       z: number - the stacking order the moved widgets get (defaults to 0, which keeps the z each widget already has).
       resetOwner: true/false - resets the owner property to null (defaults to true).
       snapToGrid: true/false - aligns x/y to the widget's grid, if any (defaults to true).
+      from: deprecated - use fromHolder instead. A MOVEXY that names no fromHolder still takes the widgets to move out of the widgets from names.
 
       The moved widgets can form piles as if a player moved them, but will never be placed into a holder - use MOVE for that.
       </pre>
@@ -2688,7 +2751,8 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      holder: holderID (or an array) - the holder(s) that cards should be recalled to.
+      holder: collection or widget ids - the holder(s) that cards should be recalled to. Each one needs a deck lying in it; the cards of that deck are gathered back into it.
+      target: collection or widget ids - decks, or the widgets a deck lies on. Their cards are recalled into whatever the deck sits in; a deck lying on no widget is reported as having nowhere to recall to. Ignored when holder is given.
       excludeCollection: collection - cards in this collection are not recalled (defaults to null).
       inHolder: true/false - whether cards already in some holder are recalled too (defaults to true).
       owned: true/false - whether cards owned by a player are recalled too (defaults to true).
@@ -2714,11 +2778,12 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      holder: holderID (or an array) - the holder containing the widgets to rotate (optional).
-      collection: collection - the collection of widgets to change (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to rotate (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - rotates what these widgets contain instead of the ones target names (optional). The count is spent per widget named here. See [holder].
       angle: number - degrees to rotate by; positive is clockwise (defaults to 90).
       count: number - limits how many widgets are rotated (defaults to 1). 0 rotates none, "all" rotates every selected widget, a positive number rotates that many, a negative number leaves that many unrotated.
       mode: set/add - whether the rotation is set to, or changed by, angle (defaults to add).
+      collection: deprecated - use target instead. A ROTATE that names no target still reads the widgets to rotate from here.
       </pre>
     `, tutorial: 'functions-rotate' };
   }
@@ -2746,10 +2811,12 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      collection: collection - the collection of widgets to change (defaults to DEFAULT collection).
+      target: collection or widget ids - the widgets to change (defaults to DEFAULT collection). See [holder].
+      holder: collection or widget ids - changes what these widgets contain instead of the ones target names (optional). See [holder].
       property: property name - the property to change (defaults to "parent").
       relation: = or an operation (+, -, *, /, ...) - whether value is set outright or computed against the current value.
       value: any type - the value to apply (defaults to null).
+      collection: deprecated - use target instead. A SET that names no target still reads the widgets to change from here.
       </pre>
     `, tutorial: 'functions-set' };
   }
@@ -2760,10 +2827,11 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      holder: holderID or seatID (or an array) - the holder containing the widgets to shuffle (optional).
-      collection: collection - the collection of widgets to shuffle (defaults to DEFAULT collection).
+      source: collection or widget ids - the widgets to shuffle (defaults to DEFAULT collection). A named collection is put into the new order itself. See [holder].
+      holder: collection or widget ids - shuffles what these widgets contain instead of the ones source names (optional). See [holder].
       mode: true random/overhand/reverse/riffle/seeded - the shuffling technique (defaults to "true random").
       modeValue: number - meaning depends on mode: number of overhand or riffle shuffles, or the seed for seeded (defaults to 1).
+      collection: deprecated - use source instead. A SHUFFLE that names no source still reads the widgets to shuffle from here.
       </pre>
     `, tutorial: 'functions-shuffle' };
   }
@@ -2774,13 +2842,14 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      holder: holderID (or an array) - the holder containing the widgets to sort (optional).
-      collection: collection - the collection of widgets to sort if holder is not given (defaults to DEFAULT collection).
+      source: collection or widget ids - the widgets to sort (defaults to DEFAULT collection). A named collection is put into the new order itself. See [holder].
+      holder: collection or widget ids - sorts what these widgets contain instead of the ones source names (optional). See [holder].
       key: property name, key object ({key, order, reverse}), or an array of either - what to sort by; an array is applied left to right until values differ.
       reverse: true/false - reverses the order after sorting by key (defaults to false).
       rearrange: true/false - if false, only the order within the collection changes, without moving widgets in the room (only applies to collections, defaults to true).
       locales: locale string (or an array of them) - the locale used when comparing text values, e.g. "de" (defaults to the locale of the player's browser).
       options: object - the collator options used when comparing text values, e.g. {"numeric": true} to sort "9" before "10" (defaults to none).
+      collection: deprecated - use source instead. A SORT that names no source still reads the widgets to sort from here.
 
       Sorting compares values as strings unless they're numbers; pad numeric strings with zeros, or use {"numeric": true} in options, to sort them numerically.
       </pre>
@@ -2807,11 +2876,13 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      timer: timerID - the timer to modify. The operation is ignored if this isn't the id of a timer.
-      collection: collection - the collection of timers to use if timer is not given (defaults to DEFAULT collection). Non-timer widgets in the collection are ignored.
+      target: collection or widget ids - the timers to modify (defaults to DEFAULT collection). Widgets that are not timers are ignored. See [holder].
+      holder: collection or widget ids - modifies the timers these widgets contain instead of the ones target names (optional). See [holder].
       mode: set/inc/dec/pause/start/toggle/reset - which automation to apply (defaults to "toggle"). set/inc/dec change milliseconds; pause/start/toggle change paused; reset sets milliseconds back to the timer's start value and pauses it.
       value: number or string - the value (in milliseconds) used by set/inc/dec; a string is treated as the name of a property on the timer to read the value from (defaults to 0).
       seconds: number - like value, but expressed in seconds and multiplied by 1000 (defaults to 0).
+      timer: deprecated - use target instead. It names the same timer(s) to modify.
+      collection: deprecated - use target instead. A TIMER that names no target still reads the timers to use from here.
       </pre>
     `, tutorial: 'timer' };
   }
@@ -2824,8 +2895,9 @@ function commonInfoTopic(topicName) {
 
       turn: integer, seat id, "first", or "last" - which seat becomes active, interpreted according to turnCycle.
       turnCycle: forward/backward/random/position/seat - how the next player is chosen. forward/backward sort the active seats by index and move that many turn positions from the current seat; random picks a random active seat (turn is ignored); position uses turn "first"/"last" to pick the active seat with the smallest/largest index; seat uses turn as the id of the seat whose turn it becomes.
-      source: all or collection - which seats are considered (defaults to all). Seats with skipTurn set to true are never chosen.
+      target: all, a collection or seat ids - which seats are considered (defaults to all). Seats with skipTurn set to true are never chosen.
       collection: collection name - receives the seat whose turn it now is (defaults to "TURN"). Must be a named collection.
+      source: deprecated - use target instead. A TURN that names no target still reads the seats to use from here.
       </pre>
     `, tutorial: 'seats' };
   }

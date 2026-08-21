@@ -1,0 +1,311 @@
+{
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - Widget Inputs",
+      "image": "/assets/-1354062221_3242",
+      "rules": "",
+      "bgg": "",
+      "year": "2026",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1786320000000,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "MOVE",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    }
+  },
+  "title": {
+    "id": "title",
+    "type": "label",
+    "x": 100,
+    "y": -2,
+    "width": 1400,
+    "height": 80,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: widget inputs (MOVE)"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px"
+    },
+    "html": "MOVE is the one function that needs two holders at once, so it spells them out: <b>fromHolder</b> is where the widgets come from, <b>toHolder</b> is where they go. Its third input is the usual <b>target</b>, for moving widgets that are in no holder at all. All three accept a list of widget ids or the name of a collection, and fromHolder wins over target the same way holder does everywhere else."
+  },
+  "holderFrom": {
+    "id": "holderFrom",
+    "type": "holder",
+    "x": 180,
+    "y": 280,
+    "width": 320,
+    "height": 110,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "token1": {
+    "id": "token1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "1",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holderFrom",
+    "overlap": false
+  },
+  "token2": {
+    "id": "token2",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "2",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holderFrom",
+    "overlap": false
+  },
+  "token3": {
+    "id": "token3",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "3",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holderFrom",
+    "overlap": false
+  },
+  "token4": {
+    "id": "token4",
+    "x": 196,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "4",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holderFrom",
+    "overlap": false
+  },
+  "holderTo": {
+    "id": "holderTo",
+    "type": "holder",
+    "x": 640,
+    "y": 280,
+    "width": 320,
+    "height": 110,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "looseA": {
+    "id": "looseA",
+    "x": 1080,
+    "y": 300,
+    "width": 60,
+    "height": 60,
+    "text": "A",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false
+  },
+  "looseB": {
+    "id": "looseB",
+    "x": 1160,
+    "y": 300,
+    "width": 60,
+    "height": 60,
+    "text": "B",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false
+  },
+  "button1": {
+    "id": "button1",
+    "type": "button",
+    "x": 180,
+    "y": 430,
+    "width": 240,
+    "height": 50,
+    "text": "fromHolder \u2192 toHolder",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "fromHolder": [
+          "holderFrom"
+        ],
+        "toHolder": [
+          "holderTo"
+        ],
+        "count": 1
+      }
+    ]
+  },
+  "button2": {
+    "id": "button2",
+    "type": "button",
+    "x": 640,
+    "y": 430,
+    "width": 240,
+    "height": 50,
+    "text": "target \u2192 toHolder",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "target": [
+          "looseA",
+          "looseB"
+        ],
+        "toHolder": [
+          "holderTo"
+        ],
+        "count": "all"
+      }
+    ]
+  },
+  "button3": {
+    "id": "button3",
+    "type": "button",
+    "x": 1080,
+    "y": 430,
+    "width": 240,
+    "height": 50,
+    "text": "everything back",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "fromHolder": [
+          "holderTo"
+        ],
+        "toHolder": [
+          "holderFrom"
+        ],
+        "count": "all"
+      }
+    ]
+  },
+  "text1": {
+    "id": "text1",
+    "x": 160,
+    "y": 500,
+    "width": 320,
+    "height": 130,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>fromHolder</b> moves what is inside the holders it names. <i>count</i> is spent per holder &ndash; this button moves one token per click."
+  },
+  "text2": {
+    "id": "text2",
+    "x": 620,
+    "y": 500,
+    "width": 320,
+    "height": 130,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>target</b> moves the widgets themselves, wherever they are. The two loose tokens on the right sit in no holder to be taken out of."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 1040,
+    "y": 500,
+    "width": 320,
+    "height": 130,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>toHolder</b> is the destination and takes a list or a collection too. Point it at a seat and the widgets land in that seat's hand."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 108,
+    "y": 700,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px"
+    },
+    "html": "The old names still work: a game written with <i>from</i>, <i>to</i> and <i>collection</i> keeps running unchanged, and so does a plain widget id where a list is expected. The new names are what the editor writes from now on, so every function reads the same way."
+  }
+}
