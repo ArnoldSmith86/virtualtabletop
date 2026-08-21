@@ -1,6 +1,7 @@
 import { $, asArray } from "./domhelpers";
+import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout, collapseEmojiVariants, expandEmojiVariants, loadEmojiVariants } from "./emojivariants";
 
-function emojiToFilename(emoji) {
+export function emojiToFilename(emoji) {
   return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
 }
 
@@ -243,6 +244,33 @@ const iconSearchPlaceholder = 'Search by name or by what the icon shows (first a
 // a rare synonym or a spelling they do not use
 const iconSearchNoResultsHint = 'Try a shorter or more common word.';
 
+// The name the skin tone flyout says a set of forms belongs to. The elements carry no keywords (see
+// buildSymbolPicker), so it is read out of the icon's search entry: entry.text is the symbol, the
+// symbol with its separators spelled out, and then its keywords - the first of which is the name.
+function symbolName(icon) {
+  const entry = entryOfIcon.get(icon);
+  return entry ? (entry.text.split(',')[2] || '').replace(/_/g, ' ') : '';
+}
+
+// How long the list may get for the skin tones to be put into it instead of behind a hover of their
+// own: a search this narrow is a handful of rows, and a flyout per icon is then more work to open
+// than the whole result is to read. It fits the largest set an icon has (a 5x5 matrix is 25 forms)
+// twice over, so the single icon a search is often meant to find always shows what it offers.
+const inlineVariantLimit = 50;
+
+// A toned form put into the grid is a copy of the icon it belongs to - same category, same family,
+// same CSS order and big-preview state - so the picker's own click handling and its previews treat
+// it as one of its icons. Only what it shows and what it stands for differ.
+function inlineVariantIcon(icon, variant, description) {
+  const inline = icon.cloneNode(false);
+  inline.classList.remove('hasEmojiVariants');
+  inline.dataset.symbol = variant;
+  inline.textContent = variant;
+  inline.title = `${icon.dataset.type}: ${variant} (${description})`;
+  inline.style.setProperty('--url', `url('i/noto-emoji/emoji_u${emojiToFilename(variant)}.svg')`);
+  return inline;
+}
+
 // pickSymbol() binds its click handlers to the entries right after awaiting this, so a second caller
 // must not resume while the first one is still fetching: the list would still be the "Loading..."
 // card and the icons that arrive afterwards would never become clickable. Everybody awaits the same
@@ -323,7 +351,6 @@ async function buildSymbolPicker() {
   // Filtering visits every one of the ~14000 entries, so pair each one with its element once here. The
   // cached shown/order/big is what the entry currently looks like, so a keystroke only writes to the
   // elements that actually change.
-  const entryOfIcon = new Map();
   for(const [ index, el ] of $a('#symbolList i').entries()) {
     const entry = Object.assign(symbolSearch[index], { el, family: el.dataset.family, shown: true, order: 0, big: false });
     symbolIndex.push(entry);
@@ -344,6 +371,13 @@ async function buildSymbolPicker() {
 
   $('#symbolPickerOverlay input').onkeyup = scheduleSymbolFilter;
   $('#symbolPickerOverlay input').placeholder = iconSearchPlaceholder;
+
+  // the toned forms come from a list of their own, fetched next to this one - a search that ran
+  // before it arrived puts them in as soon as it does instead of waiting for the next keystroke
+  loadEmojiVariants().then(_=>{
+    if($('#symbolPickerOverlay input').value)
+      filterSymbolList();
+  }, _=>null);
 }
 
 // Even though a keystroke only writes to the entries that change, showing and hiding hundreds of them costs
@@ -358,6 +392,9 @@ function scheduleSymbolFilter() {
 // The best matches are shown large, the rest of them in the compact grid below the "More matches" heading.
 const bigPreviewLimit = 100;
 const symbolIndex = [];
+// the search entry of an icon element, for whoever holds the element and needs what the search knows
+// about it: the tag text its tooltip grows on hover, the name its skin tone flyout is headed with
+const entryOfIcon = new Map();
 // The CSS order a match is laid out at is its score subtracted from this: score 5 (the icon IS called what
 // was typed) ends up first, score 1 (only its tags say so) last, then the "More matches" heading itself,
 // then everything the big previews had no room for.
@@ -372,6 +409,8 @@ function filterSymbolList() {
   clearTimeout(symbolFilterTimeout);
   if(!symbolIndex.length)
     return; // the list is still being fetched/built - nothing to filter yet
+
+  collapseEmojiVariants($('#symbolList')); // the forms of the last search are icons of the grid too
 
   const query = $('#symbolPickerOverlay input').value;
   const ranked = !!query.trim();
@@ -409,6 +448,18 @@ function filterSymbolList() {
   toggleClass($('#symbolPickerOverlay'), 'fewResults', matches.length <= bigPreviewLimit);
   toggleClass($('#symbolPickerOverlay'), 'noResults', !matches.length);
   $('#symbolNoResults').textContent = `No icons match "${query}". ${iconSearchNoResultsHint}`;
+
+  // Once the result is short enough to take in at a glance, the toned forms are better off in the
+  // grid than behind a hover of their own. A result nowhere near that short is not even asked for
+  // its emoji - that question is another pass over the matches on every keystroke. The forms are
+  // built from `matches`, which already leaves out whatever family the picker is hiding in CSS.
+  const emojiIcons = matches.length <= inlineVariantLimit
+                   ? matches.filter(entry => entry.el.classList.contains('emoji-color')).map(entry => entry.el) : [];
+  expandEmojiVariants($('#symbolList'), emojiIcons, {
+    emoji: icon=>icon.dataset.symbol,
+    create: inlineVariantIcon,
+    budget: inlineVariantLimit - matches.length
+  });
 }
 
 export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
@@ -428,6 +479,7 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
   showOverlay('symbolPickerOverlay');
   $('#symbolPickerOverlay input').focus();
   $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
+    closeEmojiVariantFlyout();
     if(closeOverlay)
       showOverlay(null);
     resolve(null);
@@ -443,19 +495,36 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
   $('#symbolList').scrollTop = 0; // the list is built once and is the picker's scroller, so open it at the top
   filterSymbolList();
 
-  for(const icon of $a('#symbolList i')) {
-    icon.onclick = function(e) {
-      if(closeOverlay)
-        showOverlay(null);
-      const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
-      let url = null;
-      if(icon.dataset.type == 'emoji-color')
-        url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
-      if(icon.dataset.type == 'game-icons')
-        url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
-      resolve(Object.assign({...icon.dataset}, { isImage, url }));
-    };
+  // the symbol a picked icon stands for is its own most of the time, but the skin tone flyout of an
+  // emoji resolves the same pick with one of its variants instead
+  function pick(icon, symbol) {
+    closeEmojiVariantFlyout();
+    if(closeOverlay)
+      showOverlay(null);
+    const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
+    let url = null;
+    if(icon.dataset.type == 'emoji-color')
+      url = `/i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg`;
+    if(icon.dataset.type == 'game-icons')
+      url = `/i/game-icons.net/${symbol}.svg`;
+    resolve(Object.assign({...icon.dataset}, { symbol, isImage, url }));
   }
+
+  // One listener for the whole grid: it holds over 13000 icons, and giving each of them its own click
+  // handler every time the picker opens is a tenth of a second the picker does not have - and the toned
+  // forms a narrow search puts into the grid (expandEmojiVariants) are clones, which carry none at all.
+  $('#symbolList').onclick = e=>{
+    const icon = e.target.closest('i');
+    if(icon)
+      pick(icon, icon.dataset.symbol);
+  };
+  enableEmojiVariantFlyouts($('#symbolList'), {
+    selector: 'i.emoji-color',
+    emoji: icon=>icon.dataset.symbol,
+    onPick: (icon, variant)=>pick(icon, variant),
+    label: symbolName
+  });
+
   return symbol;
 }
 
@@ -534,7 +603,10 @@ export function addRichtextControls(dom) {
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
 
-    $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
+    $('#symbolPickerOverlay [icon=close]').onclick = function() {
+      closeEmojiVariantFlyout();
+      showStatesOverlay(detailsOverlay);
+    };
 
     // the preload started above may still be running: binding the handlers now would bind them to the
     // "Loading..." card, so the icons that appear a moment later would do nothing when clicked
@@ -547,23 +619,34 @@ export function addRichtextControls(dom) {
     $('#symbolList').scrollTop = 0;
     filterSymbolList();
 
-    for(const icon of $a('#symbolList i')) {
-      icon.onclick = function() {
-        showStatesOverlay(detailsOverlay);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        if(icon.classList.contains('gameicons')) {
-          document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="i/game-icons.net/${icon.dataset.symbol}.svg"></i>`);
-        } else {
-          if(icon.classList.contains('emoji-color'))
-            document.execCommand('inserthtml', false, icon.innerText);
-          else
-            document.execCommand('inserthtml', false, `<i class="richtextSymbol ${icon.className}">${icon.innerText}</i>`);
-        }
-        for(const insertedSymbol of $a('.richtextSymbol'))
-          insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
-      };
+    function insert(icon, symbol) {
+      closeEmojiVariantFlyout();
+      showStatesOverlay(detailsOverlay);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      if(icon.classList.contains('gameicons')) {
+        document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="i/game-icons.net/${symbol}.svg"></i>`);
+      } else {
+        if(icon.classList.contains('emoji-color'))
+          document.execCommand('inserthtml', false, symbol);
+        else
+          document.execCommand('inserthtml', false, `<i class="richtextSymbol ${icon.className}">${icon.innerText}</i>`);
+      }
+      for(const insertedSymbol of $a('.richtextSymbol'))
+        insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
     }
+
+    $('#symbolList').onclick = e=>{
+      const icon = e.target.closest('i');
+      if(icon)
+        insert(icon, icon.dataset.symbol);
+    };
+    enableEmojiVariantFlyouts($('#symbolList'), {
+      selector: 'i.emoji-color',
+      emoji: icon=>icon.dataset.symbol,
+      onPick: (icon, variant)=>insert(icon, variant),
+      label: symbolName
+    });
   };
 }
 

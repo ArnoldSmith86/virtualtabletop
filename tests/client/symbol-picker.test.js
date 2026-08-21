@@ -21,7 +21,8 @@ function loadPicker(symbolData, fetchGate=Promise.resolve()) {
     </div>
   `;
 
-  const scope = new Function('$', '$a', 'showOverlay', 'showStatesOverlay', 'domByTemplate', 'toggleClass', 'fetch', 'detailsOverlay', `
+  const scope = new Function('$', '$a', 'showOverlay', 'showStatesOverlay', 'domByTemplate', 'toggleClass', 'fetch', 'detailsOverlay',
+    'enableEmojiVariantFlyouts', 'closeEmojiVariantFlyout', 'collapseEmojiVariants', 'expandEmojiVariants', 'loadEmojiVariants', `
     ${symbolsSource};
     return { pickSymbol, loadSymbolPicker, addRichtextControls };
   `)(
@@ -38,7 +39,14 @@ function loadPicker(symbolData, fetchGate=Promise.resolve()) {
     },
     (element, className, active) => element.classList.toggle(className, !!active),
     async () => { await fetchGate; return { json: async () => symbolData }; },
-    null
+    null,
+    // the skin tone flyouts are their own module with their own tests (emoji-variants.test.js);
+    // here they only have to exist, so that what the picker does around them can be observed
+    () => {},
+    () => {},
+    () => {},
+    () => false,
+    () => Promise.resolve(new Set())
   );
 
   const overlay = document.getElementById('symbolPickerOverlay');
