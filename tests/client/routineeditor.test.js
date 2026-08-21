@@ -1967,11 +1967,21 @@ describe('the values a parameter popup offers', () => {
     popup.hide();
   });
 
-  test('what an entry is stays a hover tip instead of a line of its own', () => {
+  test('what an entry is fills one line at the foot of the section, not a line under every entry', () => {
     const popup = showPopup(RoutineStringPopup, { func: 'LABEL' }, [ 'value' ], [ 'cards' ]);
-    expect(popup.domElement.querySelector('.popup-entry-description')).toBeNull();
-    const playerName = [...popup.domElement.querySelectorAll('.popup-entry button')].find(b => b.textContent == 'playerName');
+    const section = popup.domElement.querySelector('.accordion-section[data-kind=variable]');
+    expect(section.querySelectorAll('.popup-entry-description')).toHaveLength(1);
+    const description = section.querySelector('.popup-entry-description');
+    expect(description.textContent).toBe('Point at one of the names above to see what it holds.');
+    const playerName = [...section.querySelectorAll('.popup-entry button')].find(b => b.textContent == 'playerName');
+    // a hover tip as well, but a tip is never shown to a touch screen or the keyboard
     expect(playerName.title).toBe('name of the player who started the routine');
+    playerName.dispatchEvent(new Event('mouseenter'));
+    expect(description.textContent).toBe('name of the player who started the routine');
+    playerName.dispatchEvent(new Event('mouseleave'));
+    expect(description.textContent).toBe('Point at one of the names above to see what it holds.');
+    playerName.dispatchEvent(new Event('focus'));
+    expect(description.textContent).toBe('name of the player who started the routine');
     popup.hide();
   });
 
