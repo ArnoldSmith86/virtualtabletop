@@ -174,6 +174,9 @@ class SidebarModule {
   onStateReceivedWhileActive(state) {
   }
 
+  onUndoProtocolChanged() {
+  }
+
   openInTarget(target) {
     // the content width is only for the panel that opened itself - once a module is opened or closed
     // by hand, the panel goes back to the width the user has (or hasn't) set (see renderSidebar)

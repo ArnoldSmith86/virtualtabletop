@@ -136,6 +136,44 @@ test('A module is closed again through its sidebar button', async t => {
   await setEditorState(null);
 });
 
+// The toolbar's undo button cuts the undo protocol short behind the History module's back, so the
+// rows the module has rendered describe entries that are no longer in the protocol. It has to drop
+// them instead of writing to a row that has no entry behind it - the second undo in a row lands on
+// exactly that row.
+test('Undoing from the toolbar keeps the History module in sync', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const widgetCount = ClientFunction(() => widgets.size);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  // the room states the client loaded with - one per state message it has seen so far
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5) // the widget of the room state, the line with its two stops, the holder
+    // each undo drops the row of the entry it removes instead of adding one for itself
+    .click('#editorToolbar [icon=undo]')
+    .expect(historyRows.count).eql(rowsBefore+1)
+    .expect(widgetCount()).eql(4)
+    .click('#editorToolbar [icon=undo]')
+    .expect(historyRows.count).eql(rowsBefore)
+    .expect(widgetCount()).eql(1);
+  await setEditorState(null);
+});
+
 test('Pan in edit mode while holding Space', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({

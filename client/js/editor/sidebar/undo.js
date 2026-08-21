@@ -2,25 +2,19 @@ class UndoModule extends SidebarModule {
   constructor() {
     super('undo', 'History', 'Undo changes from editing or playing.');
     this.lastRenderedIndex = -2;
+    this.lastRenderedEntry = null;
     this.latestEntryDOM = null;
   }
 
   onClose() {
     this.lastRenderedIndex = -2;
+    this.lastRenderedEntry = null;
     this.latestEntryDOM = null;
   }
 
   onDeltaReceivedWhileActive(delta) {
-    if(!this.inUndoMode) {
-      if(this.resetOnNextDelta) {
-        for(const entry of $a('.undoEntry', this.moduleDOM))
-          entry.remove();
-        this.lastRenderedIndex = -1;
-        this.resetOnNextDelta = false;
-        this.latestEntryDOM = null;
-      }
+    if(!this.inUndoMode)
       this.renderModule(this.moduleDOM);
-    }
   }
 
   onEntryClick(index, dom) {
@@ -32,10 +26,26 @@ class UndoModule extends SidebarModule {
     this.setActiveIndex(index, dom);
     this.inUndoMode = false;
 
+    // the rows above the clicked one stay in the DOM and this.protocol keeps their
+    // entries, so they can be clicked to return to that state - until the next
+    // change arrives and renderModule drops the now unreachable timeline
     setUndoProtocol(this.protocol.slice(0, index+1));
-    this.resetOnNextDelta = true;
 
     setSelection([...selectedWidgets].filter(w=>widgets.has(w.id)));
+  }
+
+  onUndoProtocolChanged() {
+    if(this.moduleDOM)
+      this.renderModule(this.moduleDOM);
+  }
+
+  removeEntries() {
+    for(const entry of $a('.undoEntry', this.moduleDOM))
+      entry.remove();
+    this.lastRenderedIndex = -1;
+    this.lastRenderedEntry = null;
+    this.latestEntryDOM = null;
+    this.activeDOM = null;
   }
 
   renderModule(target) {
@@ -47,6 +57,12 @@ class UndoModule extends SidebarModule {
     }
 
     this.protocol = [...getUndoProtocol()];
+
+    // returning to an earlier state cuts the protocol short, so the rows rendered so
+    // far can describe entries that are gone by now - start over instead of writing
+    // to a row that has no entry behind it anymore
+    if(this.lastRenderedIndex >= 0 && this.protocol[this.lastRenderedIndex] !== this.lastRenderedEntry)
+      this.removeEntries();
 
     if(this.latestEntryDOM) {
       const d = this.protocol[this.lastRenderedIndex].delta;
@@ -67,6 +83,7 @@ class UndoModule extends SidebarModule {
     }
 
     this.lastRenderedIndex = this.protocol.length - 1;
+    this.lastRenderedEntry = this.protocol[this.lastRenderedIndex] || null;
   }
 
   setActiveIndex(index, dom) {
