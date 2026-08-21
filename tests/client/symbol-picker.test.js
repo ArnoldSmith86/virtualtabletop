@@ -14,8 +14,10 @@ function loadPicker(symbolData, fetchGate=Promise.resolve()) {
   document.body.innerHTML = `
     <button id="statesButton"></button>
     <div id="symbolPickerOverlay">
+      <h1>Pick icon</h1>
       <button icon="close"></button>
-      <input placeholder="Search icons" />
+      <input type="search" />
+      <div id="symbolSearchStatus"><span></span><button icon="apps">Show all icons</button></div>
       <div id="symbolList"></div>
       <div id="symbolNoResults"></div>
     </div>
@@ -53,10 +55,11 @@ function loadPicker(symbolData, fetchGate=Promise.resolve()) {
   return Object.assign(scope, {
     overlay,
     input: overlay.querySelector('input'),
-    // the filter waits for a pause in the typing, so give it one
+    // the filter listens for input (not for a keystroke: the field's own clear button, paste and drop
+    // all reach it that way too) and waits for a pause in the typing, so give it one
     search: async query => {
       overlay.querySelector('input').value = query;
-      overlay.querySelector('input').onkeyup();
+      overlay.querySelector('input').dispatchEvent(new Event('input', { bubbles: true }));
       await new Promise(resolve => setTimeout(resolve, 200));
     },
     icon: symbol => document.querySelector(`#symbolList i[data-symbol="${symbol}"]`),

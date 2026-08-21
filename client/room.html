@@ -596,8 +596,10 @@
       </div>
       <div>
         <div icon="add_reaction">
-          <!-- the placeholder is set from symbols.js, so both icon pickers word it the same way -->
-          <input />
+          <!-- type=search for the browser's own clear button; the placeholder is set from symbols.js, so both
+               icon pickers word it the same way and the image picker says "image" -->
+          <input type="search" />
+          <div id="symbolSearchStatus"><span aria-live="polite"></span><button icon="apps">Show all icons</button></div>
           <p icon="blur_on">Click an icon to pick it. Emoji use your browser font<span>. The best matches are shown large; below "More matches", game-icons are previewed in low resolution - hover one to see the real image</span>. Icons with a blue corner offer skin tones &ndash; hover one, press and hold, or narrow the search until they fit into the list itself.</p>
           <div id="symbolList">
             Loading...

@@ -338,11 +338,15 @@ async function buildSymbolPicker() {
     if(category.match(/Emoji/)) {
       list += `<h2 data-family="image">${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
+        // the flags and the newest emoji need a class of their own because no browser font draws them, but
+        // their type stays emoji-color: that is the library they belong to, and the library filter below,
+        // the click handler of pickSymbol and the variant tooltips all match data-type exactly, so a class
+        // list in there loses every one of them
         let className = 'emoji-color';
         if(category == 'Emoji - Flags' || tooNewForBrowserEmojiFont(symbol))
           className += ' emojiAsImage';
         symbolSearch.push(iconSearchEntry(symbol, keywords));
-        list += `<i class="${className}" data-family="image" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+        list += `<i class="${className}" data-family="image" title="emoji-color: ${symbol}" data-type="emoji-color" data-symbol="${symbol}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
       }
     }
   }
@@ -352,7 +356,7 @@ async function buildSymbolPicker() {
   // cached shown/order/big is what the entry currently looks like, so a keystroke only writes to the
   // elements that actually change.
   for(const [ index, el ] of $a('#symbolList i').entries()) {
-    const entry = Object.assign(symbolSearch[index], { el, family: el.dataset.family, shown: true, order: 0, big: false });
+    const entry = Object.assign(symbolSearch[index], { el, family: el.dataset.family, type: el.dataset.type, shown: true, order: 0, big: false });
     symbolIndex.push(entry);
     entryOfIcon.set(el, entry);
   }
@@ -369,8 +373,16 @@ async function buildSymbolPicker() {
     }
   };
 
-  $('#symbolPickerOverlay input').onkeyup = scheduleSymbolFilter;
-  $('#symbolPickerOverlay input').placeholder = iconSearchPlaceholder;
+  // the search field is a type=search input with the browser's own clear button, and terms also arrive by
+  // paste, cut or drop - none of which is a keystroke, so listen for input like the inline pickers do
+  $('#symbolPickerOverlay input').oninput = scheduleSymbolFilter;
+
+  $('#symbolSearchStatus button').onclick = function() {
+    setLibraryFilter(null); // the one control the picker has for a library filter it was opened with
+    $('#symbolPickerOverlay input').value = '';
+    $('#symbolPickerOverlay input').focus();
+    filterSymbolList();
+  };
 
   // the toned forms come from a list of their own, fetched next to this one - a search that ran
   // before it arrived puts them in as soon as it does instead of waiting for the next keystroke
@@ -401,6 +413,36 @@ const entryOfIcon = new Map();
 const moreMatchesOrder = 5;
 const overflowOrder = 6;
 
+// the inline icon picker's "Libraries:" checkboxes, translated into the data-type of the icons here. A
+// picker opened from there searches the libraries the user left checked, instead of answering a term they
+// narrowed down with icons from the libraries they just switched off.
+const symbolLibraries = {
+  'game-icons':       [ 'game-icons' ],
+  'material-symbols': [ 'material-symbols', 'material-symbols-nofill' ],
+  'emoji-color':      [ 'emoji-color' ],
+  'emoji-monochrome': [ 'emoji-monochrome' ],
+  'vtt-symbols':      [ 'symbols' ]
+};
+let libraryFilter = null; // { types, count } - null means every library, which is how the picker opens elsewhere
+function setLibraryFilter(libraries) {
+  const all = Object.keys(symbolLibraries);
+  libraryFilter = libraries && libraries.length < all.length
+    ? { types: new Set(libraries.flatMap(library => symbolLibraries[library] || [])), count: libraries.length } : null;
+}
+
+// the picker is also the image picker (type=='images'), so a user who typed into a field labeled "Search
+// images..." and pressed "Browse more..." no longer lands in a dialog that calls everything in it an icon
+let itemName = 'icon';
+function setPickerWording(type) {
+  itemName = type == 'images' ? 'image' : 'icon';
+  $('#symbolPickerOverlay h1').textContent = `Pick ${itemName}`;
+  // the same wording as the inline pickers (see iconSearchPlaceholder): both search the tags that say what
+  // an icon shows, not just its file name
+  $('#symbolPickerOverlay input').placeholder = itemName == 'image'
+    ? 'Search by name or by what the image shows (first aid, cthulhu, …)' : iconSearchPlaceholder;
+  $('#symbolSearchStatus button').textContent = `Show all ${itemName}s`;
+}
+
 // Same ranking as the inline icon search of the property editor (see iconSearchMatches in
 // editor/propertyInputs.js): both score with iconSearchScores above, so the two pickers cannot disagree
 // about what a query means. The list is not reordered in the DOM (that would mean moving thousands of
@@ -421,11 +463,17 @@ function filterSymbolList() {
                      : $('#symbolPickerOverlay').classList.contains('hideFonts')  ? 'font' : null;
 
   const matches = [];
+  let total = 0; // everything the picker could show right now, for the status line to compare against
   for(const [ index, entry ] of symbolIndex.entries()) {
-    entry.score = scores[index];
+    // a library the picker was opened without is scored to zero, so hiding, ranking and the counts below
+    // all follow from the one number the same way a non-matching search term does
+    entry.score = libraryFilter && !libraryFilter.types.has(entry.type) ? 0 : scores[index];
     entry.rank = overflowOrder;
-    if(entry.score && entry.family != hiddenFamily)
-      matches.push(entry);
+    if(entry.family != hiddenFamily) {
+      ++total;
+      if(entry.score)
+        matches.push(entry);
+    }
   }
   // stable, so matches of the same score keep their symbols.json order and icon families stay together
   matches.sort((a, b) => b.score - a.score);
@@ -447,7 +495,20 @@ function filterSymbolList() {
   toggleClass($('#symbolMoreMatches'), 'hidden', !ranked || matches.length <= bigPreviewLimit);
   toggleClass($('#symbolPickerOverlay'), 'fewResults', matches.length <= bigPreviewLimit);
   toggleClass($('#symbolPickerOverlay'), 'noResults', !matches.length);
-  $('#symbolNoResults').textContent = `No icons match "${query}". ${iconSearchNoResultsHint}`;
+
+  // a search or a library filter - typed here or carried over from the inline picker - leaves a slice of
+  // ~13000 icons with nothing on screen saying so, so state how much is left and offer the one click back
+  // to all of it. The count comes first because it is what the narrow layouts keep. The libraries are the
+  // less obvious half of that handover: the picker has no checkboxes of its own, so without a word about
+  // them a list missing every emoji looks like the whole one.
+  const filtered = ranked || !!libraryFilter;
+  const libraries = libraryFilter ? ` from ${libraryFilter.count} of ${Object.keys(symbolLibraries).length} libraries` : '';
+  toggleClass($('#symbolPickerOverlay'), 'filtered', filtered);
+  $('#symbolSearchStatus span').textContent = filtered && matches.length
+    ? `${matches.length} of ${total} ${itemName}s${libraries}${ranked ? ` match${matches.length == 1 ? 'es' : ''} "${query}"` : ''}` : '';
+  $('#symbolNoResults').textContent = ranked
+    ? `No ${itemName}s${libraries} match "${query}". ${iconSearchNoResultsHint}`
+    : `No ${itemName}s in the chosen libraries.`;
 
   // Once the result is short enough to take in at a glance, the toned forms are better off in the
   // grid than behind a hover of their own. A result nowhere near that short is not even asked for
@@ -462,7 +523,10 @@ function filterSymbolList() {
   });
 }
 
-export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true) {
+// search and libraries prefill the picker's search field and library filter, so a picker opened from a place
+// that already has both (the property editor's inline icon picker and its "Browse more..." button) starts out
+// filtered the same way instead of contradicting what the user just narrowed down
+export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true, search='', libraries=null) {
   if($('#statesButton').dataset.overlay == 'symbolPickerOverlay')
     $('#statesButton').dataset.overlay = detailsOverlay;
 
@@ -474,10 +538,20 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
   $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
   $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
   $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
-  $('#symbolPickerOverlay').classList.remove('fewResults', 'noResults');
-  $('#symbolPickerOverlay input').value = '';
+  // the status line has nothing to count until the list is there, so it stays down over the "Loading..." card
+  $('#symbolPickerOverlay').classList.remove('fewResults', 'noResults', 'filtered');
+  setPickerWording(type);
+  setLibraryFilter(libraries);
+  $('#symbolPickerOverlay input').value = search;
   showOverlay('symbolPickerOverlay');
   $('#symbolPickerOverlay input').focus();
+  // a transferred search term is fully replaced by typing a new one - but on a touch device selecting it
+  // also pops the selection handles and their context bar over the first row of a picker that is short
+  // anyway. Selecting is the fallback where there is nothing to ask: it is the cosmetic half of opening
+  // the picker, and must not be what keeps the picker from opening at all.
+  const coarsePointer = typeof matchMedia == 'function' && matchMedia('(pointer: coarse)').matches;
+  if(search && !coarsePointer)
+    $('#symbolPickerOverlay input').select();
   $('#symbolPickerOverlay [icon=close]').onclick = function(e) {
     closeEmojiVariantFlyout();
     if(closeOverlay)
@@ -598,7 +672,11 @@ export function addRichtextControls(dom) {
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
-    for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
+    // the richtext editor picks from everything there is, so whatever the last caller narrowed the picker
+    // down to has to be handed back before it opens
+    setPickerWording('all');
+    setLibraryFilter(null);
+    for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages', 'filtered' ])
       $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
