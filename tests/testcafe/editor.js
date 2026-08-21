@@ -4044,3 +4044,51 @@ test('Back and forward give the keyboard back to the JSON editor', async t => {
     .expect(activeElementID()).eql('jeText');
   await setEditorState(null);
 });
+
+// A command with options does not run on the click that opens it: it runs when its Go button is
+// clicked, by which time the selection lives in the button, not in the editor. The offsets
+// getSelection() reports then say nothing about the editor, so the command has to work on the line
+// the cursor was left on - otherwise it applies to whatever the top of the JSON happens to be.
+const editorLineOffset = ClientFunction(needle => {
+  const editor = document.querySelector('#jeText');
+  const position = editor.textContent.indexOf(needle) + needle.length;
+  const range = document.createRange();
+  range.setStart(editor.firstChild, position-1);
+  range.setEnd(editor.firstChild, position);
+  const character = range.getBoundingClientRect();
+  const box = editor.getBoundingClientRect();
+  return {
+    offsetX: Math.round(character.x - box.x + character.width/2),
+    offsetY: Math.round(character.y - box.y + character.height/2)
+  };
+});
+const widgetProperty = ClientFunction((id, property) => widgets.get(id).get(property));
+const jsonEditorText = ClientFunction(() => document.querySelector('#jeText').textContent);
+
+test('The shift command offsets the property the cursor was left on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    // both widgets share the x the command is about to shift, so the editor shows it as one value
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await t
+    .click('#jeText', await editorLineOffset('"x": 200'))
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '50', { replace: true })
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});

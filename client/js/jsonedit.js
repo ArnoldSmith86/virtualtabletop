@@ -253,9 +253,7 @@ const jeCommands = [
       
       // Get current indentation from the JSON structure
       // Find the line with the property key
-      const aO = getSelection().anchorOffset;
-      const fO = getSelection().focusOffset;
-      const s = Math.min(aO, fO);
+      const s = jeCursorOffsets()[0];
       const v = jeGetEditorContent();
       const lines = v.split('\n');
       
@@ -1175,8 +1173,7 @@ const jeCommands = [
       else
         delete pointer[jeContext[jeContext.length-1]];
 
-      const oldStart = getSelection().anchorOffset;
-      const oldEnd   = getSelection().focusOffset;
+      const [ oldStart, oldEnd ] = jeCursorOffsets();
       jeSet(JSON.stringify(jeStateNow, null, '  '));
       jeSelect(oldStart, oldEnd, true);
     },
@@ -2178,11 +2175,22 @@ export async function jeClick(widget, e) {
   }
 }
 
+// The offsets getSelection() reports are indices into whichever node holds the selection, so
+// they only describe the editor while the editor holds it. Clicking a command button - or
+// typing into the option fields of a command that has some - moves the selection out of
+// #jeText, so the position the editor was last at is remembered here and used instead. Every
+// read of the editor cursor goes through this, which keeps that memory up to date.
+let jeLastCursorOffsets = [ 0, 0 ];
+
+function jeCursorOffsets() {
+  const selection = getSelection();
+  if(selection.anchorNode && $('#jeText').contains(selection.anchorNode))
+    jeLastCursorOffsets = [ Math.min(selection.anchorOffset, selection.focusOffset), Math.max(selection.anchorOffset, selection.focusOffset) ];
+  return jeLastCursorOffsets;
+}
+
 function jeCursorStateGet() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
   const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
   const currentLine = linesUntilCursor.pop();
@@ -2714,10 +2722,7 @@ function jeDisplayFilteredWidgets(e) {
 /* End of tree subpane control */
 
 function jeGetContext() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
@@ -3316,16 +3321,13 @@ function jeLoggingFilterLog(filter) {
 // END routine logging
 
 function jeNewline() {
-  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const s = jeCursorOffsets()[0];
   const match = jeGetEditorContent().substr(0,s).match(/( *)[^\n]*$/);
   jePasteText('\n' + match[1], false);
 }
 
 function jePasteText(text, select) {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   jeSetEditorContent(v.substr(0, s) + text + v.substr(e));
@@ -3917,8 +3919,7 @@ function jeShowCommands() {
       }
     } else if (jeContext && jeContext[jeContext.length - 1] == '(var expression)') {
       const v = jeGetEditorContent();
-      const aO = getSelection().anchorOffset;
-      const s = Math.min(aO, getSelection().focusOffset);
+      const s = jeCursorOffsets()[0];
       const before = v.substr(0, s);
       const after = v.substr(s);
       const newContent = before + sample + after;
