@@ -2052,12 +2052,12 @@ async function jeApplyChangesMulti() {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
-    const widgets = jeMultiSelectedWidgets();
-    const widgetIDs = widgets.map(w=>w.get('id'));
+    const selection = jeMultiSelectedWidgets();
+    const widgetIDs = selection.map(w=>w.get('id'));
     for(const key in currentState) {
       if(key != 'widgets') {
-        for(const w of widgets) {
-          if(typeof currentState[key] != 'object' || currentState[key] === null || Object.keys(currentState[key]).filter(k=>!widgetIDs.includes(k)).length)
+        for(const w of selection) {
+          if(!jeMultiValueIsPerWidget(currentState[key], widgetIDs))
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
             await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
@@ -2389,6 +2389,17 @@ function jeMultiSelectedWidgets() {
     }));
   }
   return selected;
+}
+
+// In the multi-selection editor a property is either one value that goes to all
+// selected widgets or an object that maps each selected widget id to its own.
+function jeMultiValueIsPerWidget(value, widgetIDs) {
+  return typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!widgetIDs.includes(k)).length;
+}
+
+function jeMultiParentValues(state) {
+  const widgetIDs = jeMultiSelectedWidgets().map(w=>w.get('id'));
+  return jeMultiValueIsPerWidget(state.parent, widgetIDs) ? Object.values(state.parent) : [ state.parent ];
 }
 
 function jeSelectedIDs() {
@@ -2965,10 +2976,14 @@ function jeGetContext() {
     try {
       jeStateNow = JSON.parse(v);
 
-      if(!Array.isArray(jeStateNow.widgets))
+      if(!Array.isArray(jeStateNow.widgets)) {
         jeJSONerror = 'Key widgets is not an array.';
-      else
-        jeJSONerror = null;
+      } else {
+        // the same check the single widget mode does above - a parent no widget
+        // in the room has would leave the whole selection in limbo
+        const missingParent = jeMultiParentValues(jeStateNow).find(parent=>parent !== undefined && parent !== null && !widgets.has(parent));
+        jeJSONerror = missingParent === undefined ? null : `Parent ${missingParent} does not exist.`;
+      }
     } catch(e) {
       jeStateNow = null;
       jeJSONerror = e;

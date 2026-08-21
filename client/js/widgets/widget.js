@@ -3244,13 +3244,16 @@ export class Widget extends StateManaged {
       if(this.isBeingRemoved && !this.isBeingRenamed)
         for(const line of linesWithStop(this.id))
           await line.removeStop(this.id);
-      if(oldValue) {
+      // a parent id no widget in the room has leaves this one in limbo (the
+      // editor marks it "Invalid Parent") - there is nothing to hand the widget
+      // over to or take it from, so that half of the move is simply skipped
+      if(oldValue && widgets.has(oldValue)) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
         if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
-      if(newValue) {
+      if(newValue && widgets.has(newValue)) {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
         if(Array.isArray(newParent.get('enterRoutine')))
