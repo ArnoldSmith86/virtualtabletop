@@ -10,6 +10,7 @@ class UndoButton extends ToolbarButton {
       sendRawDelta({s:protocol[protocol.length-1].undoDelta});
       setUndoProtocol(protocol.slice(0, protocol.length-1));
       setSelection([...selectedWidgets].filter(w=>widgets.has(w.id)));
+      undoProtocolChanged();
     }
   }
 }
