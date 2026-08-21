@@ -5,7 +5,7 @@ import { StateManaged } from '../../client/js/statemanaged.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 import { setText, timeToMS } from '../../client/js/domhelpers.js';
 
-import { removeWidget } from './client-util.js';
+import { createWidget, removeWidget } from './client-util.js';
 
 // timer.js relies on the concatenated global scope of the shipped bundle rather than on imports,
 // so expose the identifiers it references before importing it.
@@ -222,6 +222,59 @@ describe('Timer ticking', () => {
       removeWidget('batched');
     });
 
+    test('stops writing once a frozen tab comes back to somebody else ticking', async () => {
+      isPrimary = false;
+      const timer = createTimer({ id: 'frozenStarter' });
+      await timer.setPaused('start');
+      await jest.advanceTimersByTimeAsync(2000);
+      expect(timer.get('milliseconds')).toBe(2000);
+
+      // its browser froze the tab, so the primary session took the timer over
+      jest.setSystemTime(Date.now() + 10000);
+      timer.applyDelta({ milliseconds: 12000 });
+
+      const written = jest.spyOn(timer, 'set');
+      await jest.advanceTimersByTimeAsync(1000);
+      expect(written).not.toHaveBeenCalled();
+      expect(timer.get('milliseconds')).toBe(12000);
+      written.mockRestore();
+      removeWidget('frozenStarter');
+    });
+
+    test('stops writing a watched timer that fell behind the clock in somebody else\'s hands', async () => {
+      isPrimary = false;
+      const timer = createTimer({ id: 'frozenWatched', millisecondsChangeRoutine: [] });
+      await timer.setPaused('start');
+      await jest.advanceTimersByTimeAsync(2000);
+      expect(timer.get('milliseconds')).toBe(2000);
+
+      // its browser froze the tab; the client that took over passes on one interval per tick, so
+      // the value it writes trails the time that really passed
+      jest.setSystemTime(Date.now() + 10000);
+      timer.applyDelta({ milliseconds: 5000 });
+
+      const written = jest.spyOn(timer, 'set');
+      await jest.advanceTimersByTimeAsync(1000);
+      expect(written).not.toHaveBeenCalled();
+      expect(timer.get('milliseconds')).toBe(5000);
+      written.mockRestore();
+      removeWidget('frozenWatched');
+    });
+
+    test('keeps the writing when somebody else only adds time', async () => {
+      isPrimary = false;
+      const timer = createTimer({ id: 'topped' });
+      await timer.setPaused('start');
+      await jest.advanceTimersByTimeAsync(2000);
+
+      // another client's routine puts a minute on the clock without taking the ticking over
+      timer.applyDelta({ milliseconds: 62000 });
+
+      await jest.advanceTimersByTimeAsync(2000);
+      expect(timer.get('milliseconds')).toBe(64000);
+      removeWidget('topped');
+    });
+
     test('hands the writing back once somebody else restarts the timer', async () => {
       isPrimary = false;
       const timer = createTimer({ id: 'handed' });
@@ -254,6 +307,23 @@ describe('Timer ticking', () => {
     expect(timer.get('milliseconds')).toBe(4000);
     written.mockRestore();
     removeWidget('routine');
+  });
+
+  test('a globalUpdateRoutine in the room makes every timer pass on its values', async () => {
+    const watcher = createWidget({ id: 'logger', type: 'basic' });
+    watcher.applyDelta({ globalUpdateRoutine: [] });
+    const timer = createTimer({ id: 'logged', paused: false });
+    await jest.advanceTimersByTimeAsync(1000);
+    const written = jest.spyOn(timer, 'set');
+
+    // the browser stopped running the interval for half a minute
+    jest.setSystemTime(Date.now() + 30000);
+    await jest.advanceTimersByTimeAsync(2000);
+
+    expect(written.mock.calls.filter(c=>c[0] == 'milliseconds').map(c=>c[1])).toEqual([ 2000, 3000 ]);
+    written.mockRestore();
+    removeWidget('logged');
+    removeWidget('logger');
   });
 
   test('a timer a routine watches carries on from the value it was last told', async () => {

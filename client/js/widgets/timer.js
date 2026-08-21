@@ -212,7 +212,11 @@ export class Timer extends Widget {
   }
 
   // whether anything in the room is given every value the timer passes through: a routine on the
-  // timer itself, or another widget listening for updates
+  // timer itself, or another widget listening for updates. The listener registries are room-wide -
+  // a globalUpdateRoutine is told about every widget - so one of them anywhere in the game puts
+  // every timer on the one-interval-per-tick path. That is deliberate: no value may be skipped for
+  // a routine that might be looking for it, and the registries say nothing about which widget an
+  // update came from.
   valueIsWatched() {
     return Array.isArray(this.get('millisecondsChangeRoutine')) || Array.isArray(this.get('changeRoutine'))
         || (StateManaged.globalUpdateListeners.milliseconds || []).length > 0
@@ -222,11 +226,18 @@ export class Timer extends Widget {
   // Which client writes the timer. The one whose player started it does, so that the timer's
   // routines keep running for that player.
   writesTicks(now) {
+    const grace = this.getPrecision() + timerTakeoverGrace;
+    const silence = now - this.lastMillisecondsUpdate;
+    // a tab that comes back from being frozen to find the value moving without it gives up its
+    // claim, so that it does not put another interval on top of what the client that took over
+    // writes. It takes both to lose the claim - having stopped writing for long enough to be taken
+    // over, and having been overtaken since - so a one-off change from somebody else, a routine
+    // adding time, leaves the writing where it is.
+    if(this.startedTicking && now - this.lastTickWrite >= grace && this.lastMillisecondsUpdate > this.lastTickWrite)
+      delete this.startedTicking;
     if(this.startedTicking)
       return true;
 
-    const grace = this.getPrecision() + timerTakeoverGrace;
-    const silence = now - this.lastMillisecondsUpdate;
     // a timer that was started while this client was in the room belongs to the client that started
     // it, and as long as that one keeps writing nobody else does
     if(this.startedWhileHere && silence < grace)
@@ -247,6 +258,7 @@ export class Timer extends Widget {
     if(widgets.get(this.id) !== this)
       return;
     this.tickMilliseconds = milliseconds;
+    this.lastTickWrite = Date.now();
     if(milliseconds === this.get('milliseconds'))
       return;
     this.tickedMilliseconds = milliseconds;
@@ -272,6 +284,9 @@ export class Timer extends Widget {
     if(this.isReadonlyCopy)
       return;
     this.anchorTicking(this.get('milliseconds'));
+    // the moment this client last wrote a tick itself - it starts out as the moment it started
+    // ticking, so that a claim on the writing is not dropped before the first tick
+    this.lastTickWrite = Date.now();
     // checking at least once a second keeps a takeover from a stalled client from being delayed by
     // a long precision - the value itself only ever moves in whole intervals
     this.interval = setInterval(_=>this.tick(), Math.min(this.getPrecision(), 1000));
