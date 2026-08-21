@@ -10094,8 +10094,16 @@ class PropertiesModule extends SidebarModule {
     let entries = null;
     let searchTerm = '';
 
+    // Placing can decline to place anything - the widget asks before it is pasted across
+    // differing legacy modes - and then the picker stays open instead of reporting a stop that
+    // is not there.
     const place = async entry=>{
-      await lineEdit(`added stop from the library to line ${line.id}`, _=>placeSavedWidget(entry.id, entry.source, null, { line }));
+      let placed = [];
+      await lineEdit(`added stop from the library to line ${line.id}`, async _=>{
+        placed = await placeSavedWidget(entry.id, entry.source, null, { line });
+      });
+      if(!placed.length)
+        return;
       popout.style.display = 'none';
       onPlaced();
     };
