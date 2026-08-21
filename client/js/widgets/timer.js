@@ -1,7 +1,9 @@
 // A running timer is written by one client only so that its shared millisecond count moves on once
 // per interval no matter how many people watch it. Normally that is the primary session, but a tab
 // that its browser has frozen or throttled stops writing without disconnecting, so every other
-// client takes over once the value has not moved for a whole interval plus this grace period.
+// client takes over once the value has not moved for a whole interval plus this grace period. For
+// the moment two of them write, both derive the same number from the same wall clock, so the count
+// stays true - but each of them runs the timer's routines for the tick it writes.
 const timerTakeoverGrace = 3000;
 
 export class Timer extends Widget {
@@ -24,6 +26,10 @@ export class Timer extends Widget {
       start: 0,
       end: null
     });
+
+    // the wall clock base exists from the start, so that the value can be derived before the first
+    // update anchors it
+    this.anchorTicking(this.get('milliseconds'));
   }
 
   // the value the elapsed time is measured from and the moment it was current. The last update
@@ -37,8 +43,7 @@ export class Timer extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.milliseconds !== undefined) {
-      const s = Math.floor(Math.abs(delta.milliseconds)/1000);
-      setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
+      this.renderMilliseconds(delta.milliseconds);
 
       if(delta.milliseconds !== this.tickedMilliseconds) {
         const now = Date.now();
@@ -125,6 +130,11 @@ export class Timer extends Widget {
     }
   }
 
+  renderMilliseconds(milliseconds) {
+    const s = Math.floor(Math.abs(milliseconds)/1000);
+    setText(this.domElement, `${milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
+  }
+
   async setMilliseconds(value, mode) {
     let ms = timeToMS(this.get('start'));
 
@@ -149,10 +159,16 @@ export class Timer extends Widget {
     if(intervals < 1)
       return;
     // lastMillisecondsUpdate only moves for values somebody else wrote, so a client that had to
-    // take over keeps the timer running until the one that should be writing shows up again
-    if(!isPrimarySession() && now - this.lastMillisecondsUpdate < this.getPrecision() + timerTakeoverGrace)
+    // take over keeps the timer running until it leaves and the primary session picks the job up
+    // again. Waiting out the grace period only keeps this client from writing, not from showing the
+    // time - the value comes from the wall clock, so a stalled writer freezes nobody's display
+    if(!isPrimarySession() && now - this.lastMillisecondsUpdate < this.getPrecision() + timerTakeoverGrace) {
+      this.renderMilliseconds(this.millisecondsAt(now));
       return;
+    }
 
+    // consecutive ticks share one undo entry instead of filling the protocol one second at a time
+    setDeltaCause('timer ticked');
     this.tickedMilliseconds = this.millisecondsAt(now);
     this.tickTime += intervals*this.getPrecision();
     this.tickMilliseconds = this.tickedMilliseconds;

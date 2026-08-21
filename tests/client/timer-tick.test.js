@@ -144,6 +144,15 @@ describe('Timer ticking', () => {
       written.mockRestore();
     });
 
+    test('its display follows the clock while it waits for the updates to come back', async () => {
+      const written = jest.spyOn(timer, 'set');
+      await jest.advanceTimersByTimeAsync(2000);
+      expect(written).not.toHaveBeenCalled();
+      expect(timer.get('milliseconds')).toBe(3000);
+      expect(timer.domElement.textContent).toBe('0:05');
+      written.mockRestore();
+    });
+
     test('it takes over once the updates stop coming in', async () => {
       await jest.advanceTimersByTimeAsync(4000);
       expect(timer.get('milliseconds')).toBe(7000);
