@@ -866,6 +866,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   opacity: 0.55;
 }
 
+/* compat-fallback css.selectors.has: only the highlight on the picked mode's icon is lost - the radio button in the same label is what says which mode is picked, and the browser draws that itself */
 .deckEditorNewDeckModesIllustrated label:has(input:checked) .deckEditorNewDeckModeIcon {
   opacity: 1;
   color: var(--VTTblue);
@@ -908,6 +909,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
 
 /* the reset button needs a holder to recall the cards into, so without one its option is off, not just
    greyed out while still looking ticked */
+/* compat-fallback css.selectors.has: a browser without :has() drops the rule and leaves the label at full opacity - the option it belongs to is disabled either way */
 .deckEditorNewDeckOptions label:has(input:disabled) {
   opacity: 0.5;
   cursor: default;
@@ -920,6 +922,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   opacity: 0.85;
 }
 
+/* compat-fallback css.selectors.has: a browser without :has() never shows this hint, which is what it did before the hint existed */
 .deckEditorNewDeckOptions:has(#deckEditorNewDeckHolder:not(:checked)) .deckEditorNewDeckOptionsHint {
   display: block;
 }

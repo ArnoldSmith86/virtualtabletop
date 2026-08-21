@@ -283,6 +283,7 @@ body.gridLines33 #topSurface {
   width: 100%;
   height: 100%;
   opacity: 0.3;
+  /* compat-fallback css.properties.image-rendering.pixelated: the value is dropped and the preview is smoothed instead, which reads as a softer edge on the same shaded area rather than as a wrong one */
   image-rendering: pixelated;
   pointer-events: none;
   z-index: 2000000;

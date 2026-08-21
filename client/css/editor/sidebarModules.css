@@ -730,6 +730,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: -moz-fit-content;
   width: fit-content;
   margin: 10px auto;
   padding: 10px;
@@ -800,8 +801,12 @@
 /* validation */
 
 
-.pest_control.editorModule .staticErrors {
-  container-type: inline-size;
+/* Named, and declared on the class by itself, for containerQueryFallback.js: it reads the
+   at-rules out of the stylesheet text, so an unnamed query has nothing to resolve to, and it
+   finds the container with a single document.querySelector. The class is only ever the
+   pest_control module's validation panel (sidebar/json.js), so this is the same element. */
+.staticErrors {
+  container: staticErrors / inline-size;
 }
 
 .pest_control.editorModule .validation-summary {
@@ -857,7 +862,7 @@
 }
 
 /* docked next to the JSON editor the module is far too narrow for three columns */
-@container (max-width: 400px) {
+@container staticErrors (max-width: 400px) {
   .pest_control.editorModule .validation-table thead {
     display: none;
   }
@@ -1010,6 +1015,13 @@
 .image.editorModule td > label {
   white-space: pre;
   display: inline-block;
+}
+
+/* the WebP and PNG columns of a row that has neither - a sound, an SVG */
+.image.editorModule td.nothingToCompress {
+  text-align: center;
+  font-style: italic;
+  opacity: 0.7;
 }
 
 /* widgets */

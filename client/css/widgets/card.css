@@ -25,6 +25,7 @@
 }
 
 .card > .cardFace > .cardFaceObject.html {
+  white-space: normal;  /* the same thing before white-space became a shorthand */
   white-space: collapse;
 }
 
@@ -50,6 +51,7 @@
   user-select: text;
   -webkit-user-select: text;
   scrollbar-width: thin;
+  /* compat-fallback css.properties.scrollbar-color: the scrollbar keeps the browser's own colors, so it is still there as the cue that there is more text - only its tint on a dark card face is lost */
   scrollbar-color: currentColor transparent;
 }
 
