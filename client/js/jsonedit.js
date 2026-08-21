@@ -2833,8 +2833,10 @@ function jeGetContext() {
         jeJSONerror = 'Key widgets is not an array.';
       } else {
         // the same check the single widget mode does above - a parent no widget
-        // in the room has would leave the whole selection in limbo
-        const missingParent = jeMultiParentValues(jeStateNow).find(parent=>parent !== undefined && parent !== null && !widgets.has(parent));
+        // in the room has would leave the whole selection in limbo. While the
+        // widgets array itself is being edited, the parent values still describe
+        // the previous selection, so there is nothing to check yet.
+        const missingParent = keys[1] == 'widgets' ? undefined : jeMultiParentValues(jeStateNow).find(parent=>parent !== undefined && parent !== null && !widgets.has(parent));
         jeJSONerror = missingParent === undefined ? null : `Parent ${missingParent} does not exist.`;
       }
     } catch(e) {

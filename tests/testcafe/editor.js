@@ -4109,3 +4109,54 @@ test('A multi-widget selection is not given a parent that does not exist', async
     .expect(parentOf('two')).eql('target');
   await setEditorState(null);
 });
+
+// The widgets array holds the search terms of the selection, so while it is
+// being edited the parent values still belong to the widgets selected before.
+const caretAfter = ClientFunction(needle => {
+  const root = document.querySelector('#jeText');
+  const index = root.textContent.indexOf(needle) + needle.length;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let seen = 0, node;
+  while(node = walker.nextNode()) {
+    if(seen + node.length >= index) {
+      const range = document.createRange();
+      range.setStart(node, index - seen);
+      range.collapse(true);
+      getSelection().removeAllRanges();
+      getSelection().addRange(range);
+      return true;
+    }
+    seen += node.length;
+  }
+  return false;
+});
+
+test('Editing the widgets array of a selection with different parents works', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    container: { id: 'container', type: 'basic', x: 0, y: 0, width: 40, height: 40 },
+    one: { id: 'one', type: 'basic', parent: 'container', x: 200, y: 300, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 500, y: 300, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok();
+
+  const band = await selectionBand();
+  await t
+    .drag('#topSurface', band.dx, band.dy, { offsetX: band.offsetX, offsetY: band.offsetY })
+    .expect(jsonText()).contains('"parent": {')
+    .click('#jeText');
+
+  await t.expect(caretAfter('"one')).ok();
+  await t
+    .pressKey('x')
+    .expect(jsonError()).eql('')
+    .expect(ClientFunction(() => JSON.parse(document.querySelector('#jeText').textContent))()).contains({ parent: null })
+    .expect(parentOf('one')).eql('container');
+  await setEditorState(null);
+});
